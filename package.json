@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@esri/react-arcgis": "^4.0.0",
+    "directory-named-webpack-plugin": "^4.0.1",
     "react": "^16.8.6",
+    "react-app-rewire-hot-loader": "^2.0.1",
     "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.8.2",
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -21,5 +25,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-app-rewired": "^2.1.1"
+  }
 }
