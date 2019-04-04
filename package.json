@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@esri/react-arcgis": "^4.0.0",
+    "classnames": "^2.2.6",
     "directory-named-webpack-plugin": "^4.0.1",
+    "node-sass": "^4.11.0",
     "react": "^16.8.6",
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-dom": "^16.8.6",
