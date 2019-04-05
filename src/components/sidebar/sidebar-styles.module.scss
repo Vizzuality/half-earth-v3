@@ -1,13 +1,11 @@
 @import 'styles/settings';
 
-$animation-time: 0.3s;
-$transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-
 .sidebar {
-  // font-family: $font-family-1;
+  position: absolute;
+  top: 0;
   height: 100vh;
+  min-width: $sidebar-width;
   padding: 25px 30px;
-  position: relative;
   display: inline-block;
   box-sizing: border-box;
   background-color: $white;
@@ -21,8 +19,8 @@ $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
 .button {
   position: absolute;
-  right: -58px;
-  top: 60px;
+  right: -43px;
+  top: 30px;
   height: 30px;
   width: auto;
   border: none;
@@ -30,8 +28,8 @@ $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   background-color: $white;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
-  // font-size: $font-size-s;
-  // font-weight: $font-weight-bold;
+  font-size: $font-size-s;
+  font-weight: $font-weight-bold;
 }
 
 .buttonText {
@@ -44,9 +42,9 @@ $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .iconHide {
-  transform: rotate(90deg) translate(-2px);;
+  transform: rotate(-90deg) translate(-2px);;
 }
 
 .iconOpen {
-  transform: rotate(-90deg) translate(-2px);
+  transform: rotate(90deg) translate(-2px);
 }
