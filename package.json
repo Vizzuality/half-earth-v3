@@ -17,7 +17,7 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-first-router": "^2.1.1",
-    "redux-tools": "^3.2.0"
+    "redux-tools": "github:vizzuality/redux-tools#3.4.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

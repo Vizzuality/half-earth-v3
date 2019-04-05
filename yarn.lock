@@ -5646,7 +5646,7 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-ms@^2.1.1:
+ms@^2.0.0, ms@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
@@ -7371,6 +7371,10 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
+reduce-reducers@^0.1.2:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.5.tgz#ff77ca8068ff41007319b8b4b91533c7e0e54576"
+
 redux-first-router@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/redux-first-router/-/redux-first-router-2.1.1.tgz#500acc1f78b545e8d0da7b430c5842a17dbb8619"
@@ -7378,9 +7382,13 @@ redux-first-router@^2.1.1:
     rudy-history "^1.0.0"
     rudy-match-path "^0.3.0"
 
-redux-tools@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/redux-tools/-/redux-tools-3.2.0.tgz#67c388f3537f4721e62fc571786c9e9860ecb9cc"
+"redux-tools@github:vizzuality/redux-tools#3.4.1":
+  version "3.3.0"
+  resolved "https://codeload.github.com/vizzuality/redux-tools/tar.gz/5efeb7fb90b2a1602d5d70583c5f17a104d75cc4"
+  dependencies:
+    ms "^2.0.0"
+    reduce-reducers "^0.1.2"
+    uuid "^3.2.1"
 
 redux@^4.0.1:
   version "4.0.1"
@@ -8752,7 +8760,7 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
 
-uuid@^3.0.1, uuid@^3.3.2:
+uuid@^3.0.1, uuid@^3.2.1, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
