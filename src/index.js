@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import App from './App.jsx';
 import store from './store';
+import 'styles/base';
 
 const Root = () => {
   return (

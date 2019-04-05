@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { ReactComponent as ChevronIcon } from 'icons/chevron.svg';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ theme, children }) => {
-  const [isOpen, setSidebarState] = useState(true);
-  const toggleSidebar = () => setSidebarState(!isOpen);
+const Sidebar = ({ theme, children, sideBarToggle, isSidebarOpen }) => {
+  const toggleSidebar = () => {
+    sideBarToggle();
+  }
 
   return (
     <aside
       className={cx(
         styles.sidebar,
-        { [styles.visible]: isOpen },
+        { [styles.visible]: isSidebarOpen },
         theme.sidebar
       )}
     >
@@ -22,9 +23,9 @@ const Sidebar = ({ theme, children }) => {
         onClick={toggleSidebar}
       >
         <span>
-          {isOpen ? 'Hide' : 'Open'}
+          {isSidebarOpen ? 'Hide' : 'Open'}
         </span>
-        <ChevronIcon className={cx(styles.icon, { [styles.iconHide] : !isOpen, [styles.iconOpen] : isOpen })}/>
+        <ChevronIcon className={cx(styles.icon, { [styles.iconHide] : !isSidebarOpen, [styles.iconOpen] : isSidebarOpen })}/>
       </button>
       { children }
     </aside>

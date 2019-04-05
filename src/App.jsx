@@ -9,10 +9,7 @@ class App extends Component {
       <div className="App">
         <Globe />
         <Sidebar>
-          <div>COnnnannan</div>
-          <div>COnnnannan</div>
-          <div>COnnnannan</div>
-          <div>COnnnannan</div>
+          <div>This is a sidebar child</div>
         </Sidebar>
       </div>
     );
