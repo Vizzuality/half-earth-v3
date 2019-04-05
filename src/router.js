@@ -1,9 +1,8 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
-
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import querySerializer from 'qs';
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 export const APP = 'location/APP';
 
