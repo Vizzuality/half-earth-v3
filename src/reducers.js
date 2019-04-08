@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import { handleModule } from 'redux-tools';
 import router from './router';
 
-// Components
-import { reduxConfig as sidebarRedux } from 'components/sidebar';
+// Shared Components
+import { reduxConfig as sidebarRedux } from 'components/shared/sidebar';
 
 const componentReducers = {
   sidebar: handleModule(sidebarRedux)
