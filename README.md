@@ -36,3 +36,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### `config-overrides`
 
 This file is ised to override/extend the default `create-react-app` webpack configuration.
+
+Since `create-react-app` version 2 is used under the hoods no configuration to allow the use of [`CSSModules`](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) is needed. Just have in mind that for it to work the file naming convention `file-name.module.scss` should be followed.
+
+
+

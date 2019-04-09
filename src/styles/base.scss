@@ -1,0 +1,37 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body * {
+  font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1.6rem;
+  font-family: PierSans;
+}
+
+#root :global {
+  width: 100vw;
+  height: 100vh;
+  // z-index: $zforeground;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}

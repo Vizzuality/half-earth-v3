@@ -1,0 +1,50 @@
+@import 'styles/settings';
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  min-width: $sidebar-width;
+  padding: 25px 30px;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: $white;
+  transform: translate(-100%, 0);
+  transition: transform $animation-time $transition;
+
+  &.visible {
+    transform: translate(0, 0);
+  }
+}
+
+.button {
+  position: absolute;
+  right: -43px;
+  top: 30px;
+  height: 30px;
+  width: auto;
+  border: none;
+  transform: rotate(-90deg);
+  background-color: $white;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  font-size: $font-size-s;
+  font-weight: $font-weight-bold;
+}
+
+.buttonText {
+  margin-right: 10px;
+}
+
+.icon {
+  transition: transform $animation-time $transition;
+  fill: pink;
+}
+
+.iconHide {
+  transform: rotate(-90deg) translate(-2px);;
+}
+
+.iconOpen {
+  transform: rotate(90deg) translate(-2px);
+}
