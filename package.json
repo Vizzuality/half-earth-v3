@@ -6,7 +6,6 @@
     "@esri/react-arcgis": "^4.0.0",
     "classnames": "^2.2.6",
     "directory-named-webpack-plugin": "^4.0.1",
-    "history": "^4.9.0",
     "node-sass": "^4.11.0",
     "qs": "^6.7.0",
     "react": "^16.8.6",
@@ -16,7 +15,10 @@
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
-    "redux-first-router": "^2.1.1",
+    "redux-actions": "^2.6.5",
+    "redux-first-router": "0.0.9-rudy",
+    "redux-first-router-link": "1.4.2",
+    "redux-first-router-restore-scroll": "1.2.1",
     "redux-tools": "github:vizzuality/redux-tools#3.4.1"
   },
   "scripts": {
