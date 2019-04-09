@@ -39,5 +39,11 @@ This file is ised to override/extend the default `create-react-app` webpack conf
 
 Since `create-react-app` version 2 is used under the hoods no configuration to allow the use of [`CSSModules`](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) is needed. Just have in mind that for it to work the file naming convention `file-name.module.scss` should be followed.
 
+### Routing
+
+[`0.0.9-rudy`](https://www.npmjs.com/package/redux-first-router/v/0.0.9-rudy) version of `redux-first-router` is used.
+This routing approach let us fetch and add data to the store on a route basis, via [`thunks`](https://www.npmjs.com/package/redux-first-router/v/0.0.9-rudy#routesmap-with-thunk).
+It also allows the updating of URL params through actions easing the reaction to those updates in all the connected components (and even triggering side effects through sagas middleware).
+
 
 
