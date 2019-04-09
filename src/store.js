@@ -1,7 +1,8 @@
-import { createStore, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 
 import router from './router';
 import reducers from './reducers';
+const middlewares = [router.middleware];
 
 // check release notes for more context
 // https://github.com/zalmoxisus/redux-devtools-extension/releases/tag/v2.7.0
@@ -9,5 +10,5 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default createStore(
   reducers,
-  composeEnhancers(router.enhancer)
+  composeEnhancers(router.enhancer, applyMiddleware(...middlewares))
 );
