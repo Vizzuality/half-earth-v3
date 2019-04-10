@@ -1,8 +1,5 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
-import { createBrowserHistory } from 'history';
-import querySerializer from 'qs';
-
-const history = createBrowserHistory();
+import qs from 'qs';
 
 export const APP = 'location/APP';
 
@@ -14,4 +11,8 @@ export const routes = {
   [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: APP })) }
 };
 
-export default connectRoutes(history, routes, { querySerializer });
+const options = {
+  querySerializer: qs
+}
+
+export default connectRoutes(routes, options);

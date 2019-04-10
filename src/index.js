@@ -7,7 +7,7 @@ import 'styles/base';
 
 const Root = () => {
   return (
-    <Provider store={store}>
+    <Provider store={store()}>
       <App />
     </Provider>
   );
