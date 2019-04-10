@@ -66,7 +66,7 @@ To avoid loading all redux modules on the first load when we initialize the `sto
     initialState
   });
   ```
-  ![redux devtools](../half-earth-v3/public/redux-tools.jpg)
+  ![redux devtools](public/redux-tools.jpg)
 
 
 
