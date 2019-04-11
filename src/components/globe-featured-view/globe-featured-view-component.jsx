@@ -3,23 +3,27 @@ import cx from 'classnames';
 import { WebScene } from '@esri/react-arcgis';
 import styles from 'styles/themes/scene-theme.module.scss'
 import ArcgisLayerManager from 'components/shared/arcgis-layer-manager';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
 import Sidebar from 'components/shared/sidebar';
 
-const GlobeComponent = ({ sceneConfig, isSidebarOpen }) => {
+const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateFeaturedGlobeQueryParam, activeLayers, query }) => {
+  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", activeLayers, query, updateFeaturedGlobeQueryParam);
   return (
     <Fragment>
       <WebScene
         className={cx(styles.sceneContainer, { [styles.expanded]: isSidebarOpen})}
-        id="f430e65f20bc47ff846c9c9853fe855b"
+        id={sceneConfig.id}
         viewProperties={sceneConfig}
       >
-        <ArcgisLayerManager />
+        <ArcgisLayerManager activeLayers={activeLayers}/>
       </WebScene>
       <Sidebar>
-        <label>
-          <span>layer</span>
-          <input type="checkbox"/>
-        </label>
+        {
+          sceneLayers &&
+          sceneLayers.map(l => (
+              <button key={l.id} data-layer-id={l.id} onClick={toggleLayer}>{l.title}</button>
+          ))
+        }
       </Sidebar>
     </Fragment>
   )
