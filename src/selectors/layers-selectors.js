@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { getQuery } from 'selectors/location-selectors';
 
-const getQuery = ({ location }) => location.query || null;
 export const getFeaturedGlobeSpec = ({ featuredGlobeSpec }) => featuredGlobeSpec && (featuredGlobeSpec.data || null);
 export const getDataGlobeSpec = ({ dataGlobeSpec }) => dataGlobeSpec && (dataGlobeSpec.data || null);
 
