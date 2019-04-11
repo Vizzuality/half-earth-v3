@@ -13,6 +13,7 @@ module.exports = function override(config, env) {
       icons: path.resolve(__dirname, 'src/assets/icons'),
       styles: path.resolve(__dirname, 'src/styles'),
       router: path.resolve(__dirname, 'src/router'),
+      selectors: path.resolve(__dirname, 'src/selectors'),
       redux_modules: path.resolve(__dirname, 'src/redux-modules'),
       reducerRegistry: path.resolve(__dirname, 'src/reducerRegistry')
     }
