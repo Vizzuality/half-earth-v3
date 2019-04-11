@@ -1,20 +1,14 @@
-// import { useState, useEffect } from 'react';
-import { loadModules } from '@esri/react-arcgis';
-
-const tileTypeLoadersMap = {
-  tile: 'esri/layers/TileLayer'
-}
-
-const ArcgisLagerManager = ({ map, view }) => {
+const ArcgisLagerManager = ({ map, activeLayers }) => {
+  // Map prop is inherited from Webscene component
+  // reference: https://github.com/Esri/react-arcgis#advanced-usage
   const { layers } = map;
-  const inactiveLayers = layers.items.filter(l => l.visible === false)
-  loadModules([`${tileTypeLoadersMap[inactiveLayers[0].type]}`]).then(([tileLayer]) => {
-    var layer = new tileLayer({
-      url: inactiveLayers[0].url
-    });
-    console.log(layer)
-    layer.opacity = 0.5;
-    map.add(layer, 1)
+  layers.items.forEach(mapLayer => {
+    const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.id === mapLayer.id);
+    if (setActive) {
+      mapLayer.visible = true;
+    } else {
+      mapLayer.visible = false;
+    }
   })
   return null
 }
