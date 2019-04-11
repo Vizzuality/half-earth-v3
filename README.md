@@ -46,4 +46,30 @@ This routing approach let us fetch and add data to the store on a route basis, v
 It also allows the updating of URL params through actions easing the reaction to those updates in all the connected components (and even triggering side effects through sagas middleware).
 
 
+### State Management
+
+For state management we are using `Redux`.
+To avoid loading all redux modules on the first load when we initialize the `store` (for detailed implementation check out `store.js` file) we introduced code-splitting as indicated in this [`article`](http://nicolasgallagher.com/redux-modules-and-code-splitting/). There are few files that make it possible:
+* reducerRegistry.js - class that enables adding redux reducers to the store's reducer after the store has been already created - loading on-demand. This class has a `register` method that we use for adding reducers to the store on-demand.
+* store.js
+  * first we register reducers that we need on first load
+  ```
+    import reducerRegistry from 'reducerRegistry';
+    reducerRegistry.register('location', router.reducer);
+  ```
+  * we add a listener that listens for new reducers to be registered and replace store's reducer whenever that happens (whenever `register` method from `reducerRegistry` class is called).
+* some-example-redux-module.js - we split redux code into self-contained modules that comprise of a reducer, actions and initial state. In their index files that combine all of them together (we give them module's name, i.e. `sidebar.js`) we register module into redux's store:
+  ```
+  reducerRegistry.registerModule('sidebar', {
+    actions,
+    reducers,
+    initialState
+  });
+  ```
+  ![redux devtools](public/redux-tools.jpg)
+
+
+
+
+
 
