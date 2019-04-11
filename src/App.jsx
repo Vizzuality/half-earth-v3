@@ -4,16 +4,12 @@ import { hot } from 'react-hot-loader'
 // import dataGlobeViewConfig from './sceneConfigs/dataGlobeViewConfig';
 import featuredGlobeViewConfig from './sceneConfigs/featuredGlobeViewConfig';
 import FeaturedGlobe from 'components/globe-featured-view';
-import Sidebar from 'components/shared/sidebar';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <FeaturedGlobe sceneConfig={featuredGlobeViewConfig} />
-        <Sidebar>
-          <div>This is a sidebar child</div>
-        </Sidebar>
       </div>
     );
   }
