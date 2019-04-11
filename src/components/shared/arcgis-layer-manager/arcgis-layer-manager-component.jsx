@@ -1,4 +1,4 @@
-const ArcgisLagerManager = ({ map, activeLayers }) => {
+const ArcgisLayerManager = ({ map, activeLayers }) => {
   // Map prop is inherited from Webscene component
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
   const { layers } = map;
@@ -13,4 +13,4 @@ const ArcgisLagerManager = ({ map, activeLayers }) => {
   return null
 }
 
-export default ArcgisLagerManager;
+export default ArcgisLayerManager;
