@@ -4,11 +4,11 @@ import qs from 'qs';
 const lazyLoadDataGlobe = (dispatch, getState) => import('redux_modules/data-globe/data-globe-thunks').then(module => module.default(dispatch, getState));
 const lazyLoadFeaturedGlobe = (dispatch, getState) => import('redux_modules/featured-globe/featured-globe-thunks').then(module => module.default(dispatch, getState));
 
-export const APP = 'location/APP';
+export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
 
 export const routes = {
-  [APP]: {
+  [DATA]: {
     path: '/dataGlobe',
     page: 'index.js',
     thunk: lazyLoadDataGlobe
@@ -18,7 +18,7 @@ export const routes = {
     page: 'index.js',
     thunk: lazyLoadFeaturedGlobe
   },
-  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: APP })) }
+  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: FEATURED })) }
 };
 
 const options = {
