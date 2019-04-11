@@ -1,11 +1,11 @@
 import { setDataGlobeLoading, setDataGlobeReady, setDataGlobeError } from './data-globe-actions';
 
-export async function dataGlobeThunk(dispatch, getState) {
+export default async function dataGlobeThunk(dispatch, getState) {
   const { data } = getState().dataGlobeSpec;
   if (!data) {
     dispatch(setDataGlobeLoading());
     try {
-      const dataGlobe = await fetch('https://www.arcgis.com/sharing/rest/content/items/f430e65f20bc47ff846c9c9853fe855b/data?f=json').then(response => response.json());
+      const dataGlobe = await fetch('https://www.arcgis.com/sharing/rest/content/items/cb5148d43124477f88d5e36e5fd566ea/data?f=json').then(response => response.json());
       dispatch(setDataGlobeReady(dataGlobe));
     } catch (e) {
       console.warn(e);
@@ -13,3 +13,5 @@ export async function dataGlobeThunk(dispatch, getState) {
     }
   }
 }
+
+
