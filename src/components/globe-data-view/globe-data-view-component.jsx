@@ -7,7 +7,7 @@ const GlobeComponent = ({ sceneConfig, isSidebarOpen }) => {
   return (
     <WebScene
       className={cx(styles.sceneContainer, { [styles.expanded]: isSidebarOpen})}
-      id="cb5148d43124477f88d5e36e5fd566ea"
+      id={sceneConfig.id}
       viewProperties={sceneConfig}
     />
   )
