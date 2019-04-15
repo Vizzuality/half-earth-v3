@@ -1,4 +1,6 @@
 import { createAction } from 'redux-tools';
-import { APP } from 'router';
+import { DATA } from 'router';
+import { FEATURED } from 'router';
 
-export const updateQueryParam = createAction(APP, payload => payload);
+export const updateFeaturedGlobeQueryParam = createAction(FEATURED);
+export const updateDataGlobeQueryParam = createAction(DATA);

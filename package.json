@@ -19,7 +19,8 @@
     "redux-first-router": "0.0.9-rudy",
     "redux-first-router-link": "1.4.2",
     "redux-first-router-restore-scroll": "1.2.1",
-    "redux-tools": "github:vizzuality/redux-tools#3.4.1"
+    "redux-tools": "github:vizzuality/redux-tools#3.4.1",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
