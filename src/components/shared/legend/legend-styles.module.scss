@@ -1,0 +1,37 @@
+$site-gutter: 20px;
+
+.legend {
+  position: absolute;
+  bottom: $site-gutter;
+  right: $site-gutter;
+  width: 400px;
+  height: 50px;
+
+  :global {
+    .wri_api__c-legend-map {
+      border: none;
+      border-radius: 0;
+    }
+
+    .wri_api__toggle-legend {
+      background-color: white;
+      width: 32px;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+  }
+}
+
+body {
+  :global {
+    .wri_api__slider-tooltip-container {
+      .rc-slider-track,
+      .rc-slider-handle,
+      .rc-slider-step {
+        background-color: #1bcec7 !important;
+      }
+    }
+  }
+}

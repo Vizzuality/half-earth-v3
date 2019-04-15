@@ -5,6 +5,8 @@ import App from './App.jsx';
 import store from './store';
 import 'styles/base';
 
+import 'vizzuality-components/dist/legend.css';
+
 const Root = () => {
   return (
     <Provider store={store()}>

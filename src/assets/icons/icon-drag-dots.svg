@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="32px" viewBox="0 0 20 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-drag-dots</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-drag-dots" fill="#000000" fill-rule="nonzero">
+            <path d="M3.2,12.8 C4.967,12.8 6.4,14.233 6.4,16 C6.4,17.767 4.967,19.2 3.2,19.2 C1.433,19.2 0,17.767 0,16 C0,14.233 1.433,12.8 3.2,12.8 Z" id="Shape"></path>
+            <path d="M16,12.8 C17.767,12.8 19.2,14.233 19.2,16 C19.2,17.767 17.767,19.2 16,19.2 C14.233,19.2 12.8,17.767 12.8,16 C12.8,14.233 14.233,12.8 16,12.8 Z" id="Shape"></path>
+            <path d="M3.2,0 C4.967,0 6.4,1.433 6.4,3.2 C6.4,4.967 4.967,6.4 3.2,6.4 C1.433,6.4 0,4.967 0,3.2 C0,1.433 1.433,0 3.2,0 Z" id="Shape"></path>
+            <path d="M16,0 C17.767,0 19.2,1.433 19.2,3.2 C19.2,4.967 17.767,6.4 16,6.4 C14.233,6.4 12.8,4.967 12.8,3.2 C12.8,1.433 14.233,0 16,0 Z" id="Shape"></path>
+            <path d="M3.2,25.6 C4.967,25.6 6.4,27.033 6.4,28.8 C6.4,30.567 4.967,32 3.2,32 C1.433,32 0,30.567 0,28.8 C0,27.033 1.433,25.6 3.2,25.6 Z" id="Shape"></path>
+            <path d="M16,25.6 C17.767,25.6 19.2,27.033 19.2,28.8 C19.2,30.567 17.767,32 16,32 C14.233,32 12.8,30.567 12.8,28.8 C12.8,27.033 14.233,25.6 16,25.6 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

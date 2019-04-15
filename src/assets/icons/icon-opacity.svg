@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="14px" viewBox="0 0 12 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/Drag Copy 6</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Half-Earth-map" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="guidelines" transform="translate(-265.000000, -2816.000000)">
+            <g id="Icons/Transparency" transform="translate(263.000000, 2815.000000)">
+                <rect id="Rectangle-2" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                <path d="M3.5,9 C3.5,11.4852814 5.51471863,13.5 8,13.5 C10.4852814,13.5 12.5,11.4852814 12.5,9 C12.5,7.53699664 11.0447588,5.45691016 8.0000004,2.92548516 C4.95523011,5.45692594 3.5,7.53700231 3.5,9 Z M8,15 C4.6862915,15 2,12.3137085 2,9 C2,6.91017966 3.78978892,4.41092034 7.36936677,1.50222204 C7.73677741,1.203671 8.26319699,1.20367086 8.63060778,1.50222172 C12.2102059,4.41091313 14,6.91017664 14,9 C14,12.3137085 11.3137085,15 8,15 Z M8.00406941,5.28951573 L8,12 C9.65685425,12 11,10.6568542 11,9 C11,8.02213809 10.2162655,6.86498607 8.6487965,5.52854394 C8.46298481,5.3701229 8.2336548,5.29044663 8.00406941,5.28951573 Z" id="Oval-2" fill="#495A64" fill-rule="evenodd"></path>
+            </g>
+        </g>
+    </g>
+</svg>
