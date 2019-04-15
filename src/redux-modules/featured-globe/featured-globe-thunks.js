@@ -1,4 +1,6 @@
 import reducerRegistry from 'reducerRegistry';
+import featuredGlobeViewConfig from 'sceneConfigs/featuredGlobeViewConfig';
+
 import { setFeaturedGlobeLoading, setFeaturedGlobeReady, setFeaturedGlobeError } from './featured-globe-actions';
 import { reduxConfig } from './featured-globe';
 
@@ -10,7 +12,7 @@ export default async function featuredGlobeThunk(dispatch, getState) {
     dispatch(setFeaturedGlobeLoading());
     try {
       // This API call fetches Arcgis js Web Scene Specification for the given item
-      const dataGlobe = await fetch('https://www.arcgis.com/sharing/rest/content/items/f430e65f20bc47ff846c9c9853fe855b/data?f=json').then(response => response.json());
+      const dataGlobe = await fetch(`https://www.arcgis.com/sharing/rest/content/items/${featuredGlobeViewConfig.id}/data?f=json`).then(response => response.json());
       dispatch(setFeaturedGlobeReady(dataGlobe));
     } catch (e) {
       console.warn(e);
