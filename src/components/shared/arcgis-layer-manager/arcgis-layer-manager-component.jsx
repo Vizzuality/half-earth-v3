@@ -4,11 +4,7 @@ const ArcgisLayerManager = ({ map, activeLayers }) => {
   const { layers } = map;
   layers.items.forEach(mapLayer => {
     const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.id === mapLayer.id);
-    if (setActive) {
-      mapLayer.visible = true;
-    } else {
-      mapLayer.visible = false;
-    }
+    mapLayer.visible = !!setActive;
   })
   return null
 }
