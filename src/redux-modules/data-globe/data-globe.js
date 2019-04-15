@@ -1,4 +1,8 @@
+import reducerRegistry from 'reducerRegistry';
+
 import * as actions from './data-globe-actions';
 import reducers, { initialState } from './data-globe-reducers';
 
-export const reduxConfig = { actions, reducers, initialState };
+const reduxConfig = { actions, reducers, initialState };
+
+export default reducerRegistry.registerModule('dataGlobeSpec', reduxConfig);

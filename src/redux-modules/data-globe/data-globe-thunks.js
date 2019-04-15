@@ -1,12 +1,10 @@
-import reducerRegistry from 'reducerRegistry';
 import dataGlobeViewConfig from 'sceneConfigs/dataGlobeViewConfig';
 
 import { setDataGlobeLoading, setDataGlobeReady, setDataGlobeError } from './data-globe-actions';
-import { reduxConfig } from './data-globe';
+
+import './data-globe';
 
 export default async function dataGlobeThunk(dispatch, getState) {
-  // Register reducer to have the dataGlobeSpec available on the store in case it is not registered
-  if (!getState().dataGlobeSpec) { reducerRegistry.registerModule('dataGlobeSpec', reduxConfig) };
   const { data } = getState().dataGlobeSpec;
   if (!data) {
     dispatch(setDataGlobeLoading());

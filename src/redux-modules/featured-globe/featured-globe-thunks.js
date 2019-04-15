@@ -1,12 +1,10 @@
-import reducerRegistry from 'reducerRegistry';
 import featuredGlobeViewConfig from 'sceneConfigs/featuredGlobeViewConfig';
 
 import { setFeaturedGlobeLoading, setFeaturedGlobeReady, setFeaturedGlobeError } from './featured-globe-actions';
-import { reduxConfig } from './featured-globe';
+
+import './featured-globe';
 
 export default async function featuredGlobeThunk(dispatch, getState) {
-  // Register reducer to have the featuredGlobeSpec available on the store in case it is not registered
-  if (!getState().featuredGlobeSpec) { reducerRegistry.registerModule('featuredGlobeSpec', reduxConfig) };
   const { data } = getState().featuredGlobeSpec;
   if (!data) {
     dispatch(setFeaturedGlobeLoading());
