@@ -7,15 +7,12 @@ import FeaturedGlobe from 'components/globe-featured-view';
 
 import { Icons as VizzIcons } from 'vizzuality-components';
 
-import Legend from 'components/shared/legend';
-
 class App extends Component {
   render() {
     return (
       <div className="App">
         <FeaturedGlobe sceneConfig={featuredGlobeViewConfig} />
         <VizzIcons />
-        <Legend />
       </div>
     );
   }

@@ -5,9 +5,11 @@ import styles from 'styles/themes/scene-theme.module.scss'
 import ArcgisLayerManager from 'components/shared/arcgis-layer-manager';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import Sidebar from 'components/shared/sidebar';
+
 import LocationWidget from 'components/shared/widgets/location-widget';
 import NavigationToggleWidget from 'components/shared/widgets/navigation-toggle-widget';
 import ZoomWidget from 'components/shared/widgets/zoom-widget';
+import Legend from 'components/shared/legend';
 
 const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateFeaturedGlobeQueryParam, activeLayers, query }) => {
   const toggleLayer = e => layerManagerToggle(e, "data-layer-id", activeLayers, query, updateFeaturedGlobeQueryParam);
@@ -31,6 +33,7 @@ const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateFeature
           ))
         }
       </Sidebar>
+      <Legend />
     </>
   )
 }
