@@ -16,7 +16,7 @@ const ZoomWidgetComponent = ({ view }) => {
     return function cleanup() {
       view.ui.remove(zoomWidget);
     };
-  }, [])
+  }, [view])
 
   return null;
 }

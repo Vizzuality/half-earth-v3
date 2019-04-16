@@ -16,7 +16,7 @@ const NavigationToggleWidgetComponent = ({ view }) => {
     return function cleanup() {
       view.ui.remove(navigationToggleWidget);
     };
-  }, [])
+  }, [view])
 
   return null;
 }

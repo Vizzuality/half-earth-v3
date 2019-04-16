@@ -18,7 +18,7 @@ const LocationWidgetComponent = ({ view }) => {
     return function cleanup() {
       view.ui.remove(locationWidget);
     };
-  }, [])
+  }, [view])
 
   return null;
 }
