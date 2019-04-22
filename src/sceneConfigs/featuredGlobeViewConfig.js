@@ -7,7 +7,7 @@ export default {
     atmosphereEnabled: false
   },
   ui: {
-    components: ['zoom', 'navigation-toggle']
+    components: []
   },
   center: [-0, 0],
   zoom: 3
