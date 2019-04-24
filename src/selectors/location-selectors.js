@@ -8,3 +8,10 @@ export const getActiveLayers = createSelector(
     return query.activeLayers;
   }
 )
+
+export const getLandscapeModeParam = createSelector(
+  getQuery, query => {
+    if (!query || !query.landscapeView) return null;
+    return query.landscapeView;
+  }
+)
