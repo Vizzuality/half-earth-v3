@@ -29,12 +29,13 @@ const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isL
     return function cleanUp() {
       interactionWatcher.remove();
       updateWatcher.remove();
+      zoomWatcher.remove();
     }
   }, [isLandscapeMode])
 
+  
   if (!isInteracting || !isUpdating) {
     onZoomChange({ query: { ...query, landscapeView: zoomLevel >= zoomLevelTrigger }})
-    zoomWatcher && zoomWatcher.remove();
   }
   return null
 }
