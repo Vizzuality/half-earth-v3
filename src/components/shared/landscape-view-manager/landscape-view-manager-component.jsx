@@ -34,7 +34,7 @@ const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isL
   }, [isLandscapeMode])
 
   
-  if (!isInteracting || !isUpdating) {
+  if (!isInteracting && !isUpdating) {
     onZoomChange({ query: { ...query, landscapeView: zoomLevel >= zoomLevelTrigger }})
   }
   return null
