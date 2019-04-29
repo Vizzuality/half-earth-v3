@@ -5,11 +5,14 @@ import dataGlobeViewConfig from './sceneConfigs/dataGlobeViewConfig';
 // import featuredGlobeViewConfig from './sceneConfigs/featuredGlobeViewConfig';
 // import FeaturedGlobe from 'components/globe-featured-view';
 
+import { Icons as VizzIcons } from 'vizzuality-components';
+
 class App extends Component {
   render() {
     return (
       <div className="App">
         <DataGlobe sceneConfig={dataGlobeViewConfig} />
+        <VizzIcons />
       </div>
     );
   }

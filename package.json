@@ -20,7 +20,9 @@
     "redux-first-router-link": "1.4.2",
     "redux-first-router-restore-scroll": "1.2.1",
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "vega-lib": "^4.4.0",
+    "vizzuality-components": "github:vizzuality/vizzuality-components#2.4.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
