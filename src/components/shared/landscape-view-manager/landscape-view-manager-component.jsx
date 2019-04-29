@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isLandscapeMode }) => {
+const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode }) => {
   const [ isInteracting, setInteracting ] = useState(false);
   const [ isUpdating, setUpdating ] = useState(false);
   const [ landscapeView, setLandscapeView ] = useState(false);
@@ -32,6 +32,32 @@ const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isL
       duration: 1000
     }
     view.goTo(target, options)
+
+    if (isLandscapeMode) {
+      const { layers } = map;
+  layers.items.forEach(mapLayer => {
+    if (mapLayer.type === 'feature') {
+      view.whenLayerView(mapLayer).then(function(layerView) {
+        console.log('LAYER VIEW',layerView)
+        layerView.watch('updating', function(value) {
+          console.log('updating', value)
+          if (!value) {
+            // wait for the layer view to finish updating
+console.log(view.extent)
+            // query all the features available for drawing.
+            layerView
+              .queryFeatures({
+                geometry: view.extent,
+                spatialRelationship: 'intersects'
+              }).then(function(results) {
+                console.log('RESULTS',results)
+              })
+          }
+        })
+      })
+    }
+  })
+    }
 
     return function cleanUp() {
       interactionWatcher.remove();
