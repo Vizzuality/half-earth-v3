@@ -5,8 +5,8 @@ const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isL
   const [ isUpdating, setUpdating ] = useState(false);
   const [ landscapeView, setLandscapeView ] = useState(false);
 
-  const isLandscapeViewOnEvent = (zoomValue, landscapeView) => zoomValue >= zoomLevelTrigger && landscapeView === false;
-  const isLandscapeViewOffEvent = (zoomValue, landscapeView) => zoomValue < zoomLevelTrigger && landscapeView === true;
+  const isLandscapeViewOnEvent = (zoomValue, landscapeView) => zoomValue >= zoomLevelTrigger && !landscapeView;
+  const isLandscapeViewOffEvent = (zoomValue, landscapeView) => zoomValue < zoomLevelTrigger && landscapeView;
 
   const interactionWatcher = view.watch('interacting', function(interactionState) {
     setInteracting(interactionState)
