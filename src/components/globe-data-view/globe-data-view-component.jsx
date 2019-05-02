@@ -10,8 +10,8 @@ import LocationWidget from 'components/shared/widgets/location-widget';
 import NavigationToggleWidget from 'components/shared/widgets/navigation-toggle-widget';
 import ZoomWidget from 'components/shared/widgets/zoom-widget';
 
-const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateFeaturedGlobeQueryParam, activeLayers, query }) => {
-  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", activeLayers, query, updateFeaturedGlobeQueryParam);
+const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateDataGlobeQueryParam, activeLayers, query }) => {
+  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", activeLayers, query, updateDataGlobeQueryParam);
   return (
     <>
       <WebScene
@@ -21,7 +21,7 @@ const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateFeature
         loaderOptions={{ url: 'http://js.arcgis.com/4.11' }}
       >
         <ArcgisLayerManager />
-        <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={updateFeaturedGlobeQueryParam}/>
+        <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={updateDataGlobeQueryParam}/>
         <LocationWidget />
         <ZoomWidget />
         <NavigationToggleWidget />
@@ -29,7 +29,7 @@ const GlobeComponent = ({ sceneConfig, isSidebarOpen, sceneLayers, updateFeature
       <Sidebar>
         {
           sceneLayers &&
-          sceneLayers.map(l => console.log(sceneLayers) || (
+          sceneLayers.map(l => (
               <button key={l.id} data-layer-id={l.id} onClick={toggleLayer}>{l.title}</button>
           ))
         }

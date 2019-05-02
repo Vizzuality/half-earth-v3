@@ -7,7 +7,6 @@ function setDataGlobeLoading(state) {
 }
 
 function setDataGlobeReady(state, { payload }) {
-  console.log(payload)
   return { ...state, loading: false, data: payload };
 }
 

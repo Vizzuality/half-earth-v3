@@ -18,7 +18,7 @@ export const routes = {
     page: 'index.js',
     thunk: lazyLoadFeaturedGlobe
   },
-  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: FEATURED })) }
+  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
 };
 
 const options = {
