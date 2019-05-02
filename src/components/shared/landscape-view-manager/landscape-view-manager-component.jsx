@@ -60,7 +60,6 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
                 spatialRelationship: 'intersects'
               }).then(function(results) {
                 const containedGridCells = results.features.filter(gridCell => extent.contains(gridCell.geometry.extent)).map(gc => gc.geometry)
-                console.log('NUMBER OF GRID CELLS PAINTED', containedGridCells.length)
                 containedGridCells && geometryEngineAsync.union(containedGridCells).then(result => {
                   removeGridCell(view, gridCellRef.current);
                   // Create a symbol for rendering the graphic
