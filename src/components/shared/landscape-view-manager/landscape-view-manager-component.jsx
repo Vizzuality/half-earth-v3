@@ -1,6 +1,14 @@
 import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
-import { setGridCellStyles, setGridCellGraphic, paintGridCell, removeGridCell, isLandscapeViewOnEvent, isLandscapeViewOffEvent } from 'utils/landscape-view-manager-utils';
+import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
+import {
+  setGridCellStyles,
+  setGridCellGraphic,
+  paintGridCell,
+  removeGridCell,
+  isLandscapeViewOnEvent,
+  isLandscapeViewOffEvent
+} from 'utils/landscape-view-manager-utils';
 
 const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode }) => {
   const [watchUtils, setWatchUtils] = useState(null);
@@ -61,9 +69,11 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
               }).then(function(results) {
                 const containedGridCells = results.features.filter(gridCell => extent.contains(gridCell.geometry.extent)).map(gc => gc.geometry)
                 containedGridCells && geometryEngineAsync.union(containedGridCells).then(result => {
+                  // Remove current grid cell before painting a new one
                   removeGridCell(view, gridCellRef.current);
                   // Create a symbol for rendering the graphic
-                  const gridCellSymbol = setGridCellStyles(0.1, 0.9, 2, [24, 186, 180]);
+                  const { fillOpacity, outlineOpacity, outlineWidth, colorRGB} = gridCellDefaultStyles;
+                  const gridCellSymbol = setGridCellStyles(fillOpacity, outlineOpacity, outlineWidth, colorRGB);
                   // Create the graphic
                   const gridCellGraphic = setGridCellGraphic(Graphic, result, gridCellSymbol);
                   // Store a reference to the gridCell polygon created
