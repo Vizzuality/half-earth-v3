@@ -10,15 +10,15 @@ export const FEATURED = 'location/FEATURED';
 export const routes = {
   [DATA]: {
     path: '/dataGlobe',
-    page: 'index.js',
+    page: 'data-globe',
     thunk: lazyLoadDataGlobe
   },
   [FEATURED]: {
     path: '/featuredGlobe',
-    page: 'index.js',
+    page: 'featured-globe',
     thunk: lazyLoadFeaturedGlobe
   },
-  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: FEATURED })) }
+  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
 };
 
 const options = {
