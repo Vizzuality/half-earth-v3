@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getFeaturedGlobeSpec, getFeaturedGlobeLayers } from 'selectors/layers-selectors';
-import { getQuery, selectGlobeUrlState } from 'selectors/location-selectors';
+import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
+import { selectGlobeUrlState } from 'selectors/location-selectors';
 import initialState from './initial-state';
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
@@ -14,8 +14,6 @@ const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeS
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 
 export default createStructuredSelector({
-  query: getQuery,
-  layerSpec: getFeaturedGlobeSpec,
   sceneLayers: getFeaturedGlobeLayers,
   activeLayers: getActiveLayers,
   globeSettings: getGlobeSettings,

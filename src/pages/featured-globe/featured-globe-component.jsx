@@ -27,13 +27,13 @@ const FeaturedGlobeComponent = ({ setFeaturedGlobeSettings, sceneLayers, activeL
         <NavigationToggleWidget />
       </Globe>
       <Sidebar>
-          {
-            sceneLayers &&
-            sceneLayers.map(l => (
-                <button key={l.id} data-layer-id={l.id} onClick={toggleLayer}>{l.title}</button>
-            ))
-          }
-        </Sidebar>
+        {
+          sceneLayers &&
+          sceneLayers.map(l => (
+              <button key={l.id} data-layer-id={l.id} onClick={toggleLayer}>{l.title}</button>
+          ))
+        }
+      </Sidebar>
       <Legend />
     </>
   );
