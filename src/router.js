@@ -1,5 +1,5 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
-import qs from 'qs';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 const lazyLoadDataGlobe = (dispatch, getState) => import('redux_modules/data-globe/data-globe-thunks').then(module => module.default(dispatch, getState));
 const lazyLoadFeaturedGlobe = (dispatch, getState) => import('redux_modules/featured-globe/featured-globe-thunks').then(module => module.default(dispatch, getState));
@@ -22,7 +22,10 @@ export const routes = {
 };
 
 const options = {
-  querySerializer: qs
+  querySerializer: {
+    parse: decodeUrlForState,
+    stringify: encodeStateForUrl
+  },
 }
 
 export default connectRoutes(routes, options);
