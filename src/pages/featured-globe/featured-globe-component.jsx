@@ -15,13 +15,13 @@ import ZoomWidget from 'components/shared/widgets/zoom-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const FeaturedGlobeComponent = ({ updateQueryParam, sceneLayers, activeLayers, query }) => {
-  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", activeLayers, query, updateQueryParam);
+const FeaturedGlobeComponent = ({ setFeaturedGlobeSettings, sceneLayers, activeLayers, isLandscapeMode }) => {
+  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", activeLayers, setFeaturedGlobeSettings);
   return (
     <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
-        <ArcgisLayerManager />
-        <LandscapeViewManager zoomLevelTrigger={10} onZoomChange={updateQueryParam}/>
+        <ArcgisLayerManager activeLayers={activeLayers}/>
+        <LandscapeViewManager zoomLevelTrigger={10} onZoomChange={setFeaturedGlobeSettings} isLandscapeMode={isLandscapeMode}/>
         <LocationWidget />
         <ZoomWidget />
         <NavigationToggleWidget />

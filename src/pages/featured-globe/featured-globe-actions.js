@@ -1,8 +1,18 @@
-import { createAction } from 'redux-tools';
-import { FEATURED } from 'router';
+import { createThunkAction } from 'redux-tools';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-const updateQueryParam = createAction(FEATURED);
+export const setFeaturedGlobeSettings = createThunkAction(
+  'setFeaturedGlobeSettings',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'globe',
+        change,
+        state
+      })
+    )
+);
 
 export default {
-  updateQueryParam
+  setFeaturedGlobeSettings
 }
