@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { WebScene } from '@esri/react-arcgis';
 import styles from 'styles/themes/scene-theme.module.scss';
+const { REACT_APP_ARGISJS_API_VERSION:API_VERSION} = process.env
 
 const GlobeComponent = ({ sceneId, sceneSettings, children }) => {
   return (
@@ -9,6 +10,7 @@ const GlobeComponent = ({ sceneId, sceneSettings, children }) => {
       className={cx(styles.sceneContainer)}
       id={sceneId}
       viewProperties={sceneSettings}
+      loaderOptions={{ url: `http://js.arcgis.com/${API_VERSION}` }}
     >
       {children}
     </WebScene>
