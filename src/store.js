@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-
+import thunk from 'redux-thunk';
 import router from './router';
 import reducerRegistry from './reducerRegistry';
 
-const middlewares = [router.middleware];
+const middlewares = [thunk, router.middleware];
 
 reducerRegistry.register('location', router.reducer);
 
