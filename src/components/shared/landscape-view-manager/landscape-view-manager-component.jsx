@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isLandscapeMode }) => {
+const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, isLandscapeMode }) => {
   const [ isInteracting, setInteracting ] = useState(false);
   const [ isUpdating, setUpdating ] = useState(false);
   const [ landscapeView, setLandscapeView ] = useState(false);
@@ -42,7 +42,7 @@ const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, query, isL
 
   
   if (!isInteracting && !isUpdating) {
-    onZoomChange({ query: { ...query, landscapeView: landscapeView }})
+    onZoomChange({ landscapeView: landscapeView })
   }
   return null
 }
