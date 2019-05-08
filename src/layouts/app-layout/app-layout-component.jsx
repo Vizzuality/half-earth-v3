@@ -7,7 +7,7 @@ const universalConfig = {
 };
 
 const PageComponent = universal(
-  ({ page } /* webpackChunkName: "[request]" */) => import(`../../pages/${page}/index.js`),
+  ({ page } /* webpackChunkName: "[request]" */) => import(`../../pages/${page}/${page}.js`),
   universalConfig
 );
 
