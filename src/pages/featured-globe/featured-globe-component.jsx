@@ -1,16 +1,16 @@
 import React from 'react';
 import Globe from 'components/globe';
-import ArcgisLayerManager from 'components/shared/arcgis-layer-manager';
-import LandscapeViewManager from 'components/shared/landscape-view-manager';
+import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import LandscapeViewManager from 'components/landscape-view-manager';
 import sceneSettings from './featured-globe-settings.js';
 
-import Legend from 'components/shared/legend';
-import Sidebar from 'components/shared/sidebar';
+import Legend from 'components/legend';
+import Sidebar from 'components/sidebar';
 
 // WIDGETS
-import LocationWidget from 'components/shared/widgets/location-widget';
-import NavigationToggleWidget from 'components/shared/widgets/navigation-toggle-widget';
-import ZoomWidget from 'components/shared/widgets/zoom-widget';
+import LocationWidget from 'components/widgets/location-widget';
+import NavigationToggleWidget from 'components/widgets/navigation-toggle-widget';
+import ZoomWidget from 'components/widgets/zoom-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 

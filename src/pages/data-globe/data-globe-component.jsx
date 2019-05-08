@@ -1,8 +1,8 @@
 import React from 'react';
 import Globe from 'components/globe';
-import ArcgisLayerManager from 'components/shared/arcgis-layer-manager';
-import LandscapeViewManager from 'components/shared/landscape-view-manager';
-import Sidebar from 'components/shared/sidebar';
+import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import LandscapeViewManager from 'components/landscape-view-manager';
+import Sidebar from 'components/sidebar';
 import sceneSettings from './data-globe-settings.js';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
