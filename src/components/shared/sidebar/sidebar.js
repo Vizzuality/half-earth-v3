@@ -1,16 +1,13 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import reducerRegistry from 'reducerRegistry';
-import SidebarComponent from './sidebar-component';
+import Component from './sidebar-component';
 
+import mapStateToProps from './sidebar-selectors';
 import * as actions from './sidebar-actions';
-import reducers, { initialState } from './sidebar-reducers';
 
-const mapStateToProps = ({ sidebar }) => ({ isSidebarOpen: sidebar.open })
+const SideBarContainer = props => {
+  const handleSidebarToggle = () => props.setScenePadding({ isPaddingActive: !props.isPaddingActive });
+  return <Component handleSidebarToggle={handleSidebarToggle} {...props} />; 
+}
 
-reducerRegistry.registerModule('sidebar', {
-  actions,
-  reducers,
-  initialState
-});
-
-export default connect(mapStateToProps, actions)(SidebarComponent);
+export default connect(mapStateToProps, actions)(SideBarContainer);
