@@ -1,17 +1,3 @@
-import { createSelector } from 'reselect';
-
-export const getQuery = ({ location }) => location.query || null;
-
-export const getActiveLayers = createSelector(
-  getQuery, query => {
-    if (!query || !query.activeLayers) return null;
-    return query.activeLayers;
-  }
-)
-
-export const getLandscapeModeParam = createSelector(
-  getQuery, query => {
-    if (!query || !query.landscapeView) return null;
-    return query.landscapeView;
-  }
-)
+export const selectQuery = ({ location }) => location.query || null;
+export const selectGlobeUrlState = ({ location }) => location.query && (location.query.globe || {});
+export const selectUiUrlState = ({ location }) => location.query && (location.query.ui || {});

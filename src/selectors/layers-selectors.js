@@ -1,19 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getQuery } from 'selectors/location-selectors';
 
-export const getFeaturedGlobeSpec = ({ featuredGlobeSpec }) => featuredGlobeSpec && (featuredGlobeSpec.data || null);
-export const getDataGlobeSpec = ({ dataGlobeSpec }) => dataGlobeSpec && (dataGlobeSpec.data || null);
-
-export const getActiveLayers = createSelector(
-  getQuery,
-  query => {
-    if (!query || !query.activeLayers) return null;
-    return query.activeLayers;
-  }
-)
+export const selectFeaturedGlobeSpec = ({ featuredGlobeSpec }) => featuredGlobeSpec && (featuredGlobeSpec.data || null);
+export const selectDataGlobeSpec = ({ dataGlobeSpec }) => dataGlobeSpec && (dataGlobeSpec.data || null);
 
 export const getFeaturedGlobeLayers = createSelector(
-  getFeaturedGlobeSpec,
+  selectFeaturedGlobeSpec,
   layerSpec => {
     if (!layerSpec) return null;
     return layerSpec.operationalLayers.map(l => ({
@@ -24,7 +15,7 @@ export const getFeaturedGlobeLayers = createSelector(
 )
 
 export const getDataGlobeLayers = createSelector(
-  getDataGlobeSpec,
+  selectDataGlobeSpec,
   layerSpec => {
     if (!layerSpec) return null;
     return layerSpec.operationalLayers.map(l => ({
@@ -35,9 +26,8 @@ export const getDataGlobeLayers = createSelector(
 )
 
 export default createStructuredSelector({
-  featuredGlobeSpec: getFeaturedGlobeSpec,
+  featuredGlobeSpec: selectFeaturedGlobeSpec,
   featuredGlobeLayers: getFeaturedGlobeLayers,
-  dataGlobeSpec: getDataGlobeSpec,
-  dataGlobeLayers: getDataGlobeLayers,
-  activeLayers: getActiveLayers
+  dataGlobeSpec: selectDataGlobeSpec,
+  dataGlobeLayers: getDataGlobeLayers
 })

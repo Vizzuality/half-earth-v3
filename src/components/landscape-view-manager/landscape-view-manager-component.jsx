@@ -29,10 +29,10 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
   useEffect(() => {
     const watchHandle = watchUtils && watchUtils.whenTrue(view, "stationary", function() {
       if (isLandscapeViewOnEvent(view.zoom, zoomLevelTrigger, isLandscapeMode)) {
-        onZoomChange({ query: { ...query, landscapeView: true }})
+        onZoomChange({ landscapeView: true })
         landscapeModeRef.current = true;
       } else if (isLandscapeViewOffEvent(view.zoom, zoomLevelTrigger, isLandscapeMode)) {
-        onZoomChange({ query: { ...query, landscapeView: false }})
+        onZoomChange({ landscapeView: false })
         landscapeModeRef.current = false;
       }
     })
