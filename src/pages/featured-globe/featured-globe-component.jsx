@@ -17,7 +17,7 @@ const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isPaddingActive, handleLayerToggle, handleZoomChange }) => (
   <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
     <ArcgisLayerManager activeLayers={activeLayers}/>
-    <LandscapeViewManager zoomLevelTrigger={10} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
+    <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
     <LocationWidget />
     <ZoomWidget />
     <NavigationToggleWidget />
