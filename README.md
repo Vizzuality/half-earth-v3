@@ -75,7 +75,9 @@ On the other hand, reliyng on [redux-first-router](https://www.npmjs.com/package
 
 - So inside the pages `selectors` we merge the `location` state with the `initial state` defined for each page to get the _actual_ state of the app and pass it to page components to define the way they should be displayed (both `globe` and `ui` state).
 
+ ![`location` with UI and GLOBE keys](public/store-example1.png)
 
+ ![`dataGlobeSpec` on the `store`](public/store-example2.png)
 
 
 
