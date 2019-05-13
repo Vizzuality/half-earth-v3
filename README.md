@@ -39,36 +39,31 @@ This file is ised to override/extend the default `create-react-app` webpack conf
 
 Since `create-react-app` version 2 is used under the hoods no configuration to allow the use of [`CSSModules`](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet) is needed. Just have in mind that for it to work the file naming convention `file-name.module.scss` should be followed.
 
-### Routing
+## State Management
 
-[`0.0.9-rudy`](https://www.npmjs.com/package/redux-first-router/v/0.0.9-rudy) version of `redux-first-router` is used.
-This routing approach let us fetch and add data to the store on a route basis, via [`thunks`](https://www.npmjs.com/package/redux-first-router/v/0.0.9-rudy#routesmap-with-thunk).
-It also allows the updating of URL params through actions easing the reaction to those updates in all the connected components (and even triggering side effects through sagas middleware).
-
-
-### State Management
+### `ReduceRegistry`
 
 For state management we are using `Redux`.
 To avoid loading all redux modules on the first load when we initialize the `store` (for detailed implementation check out `store.js` file) we introduced code-splitting as indicated in this [`article`](http://nicolasgallagher.com/redux-modules-and-code-splitting/). There are few files that make it possible:
-* reducerRegistry.js - class that enables adding redux reducers to the store's reducer after the store has been already created - loading on-demand. This class has a `register` method that we use for adding reducers to the store on-demand.
-* store.js
+* `reducerRegistry` - class that enables adding redux reducers to the store's reducer after the store has been already created - loading on-demand. This class has a `register` method that we use for adding reducers to the store on-demand.
+* `store`
   * first we register reducers that we need on first load
   ```
     import reducerRegistry from 'reducerRegistry';
     reducerRegistry.register('location', router.reducer);
   ```
   * we add a listener that listens for new reducers to be registered and replace store's reducer whenever that happens (whenever `register` method from `reducerRegistry` class is called).
-* some-example-redux-module.js - we split redux code into self-contained modules that comprise of a reducer, actions and initial state. In their index files that combine all of them together (we give them module's name, i.e. `sidebar.js`) we register module into redux's store:
+* `some-example-redux-module` - we split redux code into self-contained modules that comprise of a reducer, actions and initial state. In their index files that combine all of them together (we give them module's name, i.e. `dataGlobeSpec.js`) we register module into redux's store:
   ```
-  reducerRegistry.registerModule('sidebar', {
+  reducerRegistry.registerModule('dataGlobeSpec', {
     actions,
     reducers,
     initialState
   });
   ```
-  ![redux devtools](public/redux-tools.jpg)
 
 
+### Redux-modules and `location` state
 
 As described before we create dedicated `store` keys by registering `reducers` through the `reducerRegistry` `class`. We do that to store the data that would back the different components of the app; so content of modals, charts or even the ArcGIS Online portal items specs would be stored that way.
 A dedicated folder under `redux-modules` should be created to take care of this flow.
