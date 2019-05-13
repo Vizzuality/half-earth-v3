@@ -10,7 +10,7 @@ const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isPaddingActive, handleZoomChange, handleLayerToggle }) => (
   <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
     <ArcgisLayerManager activeLayers={activeLayers}/>
-    <LandscapeViewManager zoomLevelTrigger={10} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
+    <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
     <Sidebar isPaddingActive={isPaddingActive}>
       {
         sceneLayers &&
