@@ -3,6 +3,8 @@ export default {
     activeLayers: []
   },
   ui: {
-    isPaddingActive: true
+    isPaddingActive: false,
+    isCategoriesBoxesVisible: true,
+    activeCategory: ''
   }
 }

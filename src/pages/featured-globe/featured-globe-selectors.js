@@ -20,10 +20,12 @@ const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
 const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getScenePadding = createSelector(getUiSettings, uiSettings => uiSettings.isPaddingActive)
+const getCategoriesBoxesVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isCategoriesBoxesVisible)
 
 export default createStructuredSelector({
   sceneLayers: getFeaturedGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
-  isPaddingActive: getScenePadding
+  isPaddingActive: getScenePadding,
+  isCategoriesBoxesVisible: getCategoriesBoxesVisibility
 })
