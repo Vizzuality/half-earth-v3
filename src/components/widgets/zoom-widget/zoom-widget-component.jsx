@@ -8,11 +8,11 @@ import styles from './zoom-widget.module.scss';
 const ZoomWidgetComponent = ({ zoomWidget }) => (
   <div className={styles.zoomComponent}>
     <button className={styles.zoomButton} onClick={() => zoomWidget.zoomIn()}>
-      <ZoomInIcon className={styles.buttonWidget} />
+      <ZoomInIcon />
     </button>
     <span className={styles.spacer} />
     <button className={styles.zoomButton} onClick={() => zoomWidget.zoomOut()}>
-      <ZoomOutIcon className={styles.buttonWidget} />
+      <ZoomOutIcon />
     </button>
   </div>
 );

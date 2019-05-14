@@ -5,7 +5,7 @@ import styles from './location-widget.module.scss';
 
 const LocationWidgetComponent = ({ locationWidget }) => (
   <button className={styles.locationButton} onClick={() => locationWidget.locate()}>
-    <LocationIcon className={styles.buttonWidget} />
+    <LocationIcon />
   </button>
 );
 

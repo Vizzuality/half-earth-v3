@@ -14,12 +14,11 @@
   position: relative;
   width: $widget-button-size;
 
-  &:hover {
-    .buttonWidget {
-      fill: $robinsEggBlue;
-    }
-  } 
-  .buttonWidget {
+  &:hover svg {
+    fill: $robinsEggBlue;
+  }
+  
+  svg {
     fill: $white;
   }
 }

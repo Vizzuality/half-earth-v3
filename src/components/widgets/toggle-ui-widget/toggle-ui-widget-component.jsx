@@ -10,7 +10,7 @@ const ToggleUiWidgetComponent = () => {
 
   return (
     <button  className={styles.locationButton} onClick={() => setHidden(!isHidden)}>
-      {isHidden ? <HideUiIcon  className={styles.buttonWidget} /> : <ShowUiIcon />}
+      {isHidden ? <HideUiIcon /> : <ShowUiIcon />}
     </button>
   );
 }

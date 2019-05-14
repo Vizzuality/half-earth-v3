@@ -9,13 +9,11 @@
   position: relative;
   width: $widget-button-size;
   
-  &:hover {
-    .buttonWidget {
-      stroke: $robinsEggBlue;
-    }
+  &:hover svg {
+    stroke: $robinsEggBlue;
   }
   
-  .buttonWidget {
+  svg {
     stroke: $white;
   }
 }
