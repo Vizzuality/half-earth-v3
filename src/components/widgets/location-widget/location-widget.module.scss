@@ -1,0 +1,18 @@
+
+@import 'styles/settings';
+
+.locationButton {
+  background-color: $elephant;
+  border-radius: 2px;
+  display: flex;
+  height: $widget-button-size;
+  position: relative;
+  width: $widget-button-size;
+
+  &:hover svg g {
+    stroke: $robinsEggBlue;
+    g g circle {
+      stroke: $robinsEggBlue;
+    }
+  }
+}
