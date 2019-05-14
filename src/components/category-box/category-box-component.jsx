@@ -13,7 +13,9 @@ const CategoryBox = ({ title, category, isCategoriesBoxesVisible }) => (
     <p className={styles.title}>{title}</p>
     <div className={styles.categoryContainer}>
       <p className={styles.category}>{category}</p>
-      <ArrowExpandIcon className={styles.icon} />
+      <div className={styles.icon}>
+        <ArrowExpandIcon />
+      </div>
     </div>
   </div>
 );

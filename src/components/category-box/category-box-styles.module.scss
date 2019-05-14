@@ -36,4 +36,10 @@
   color: white;
   font-size: 28px;
   letter-spacing: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  margin-left: auto;
 }
