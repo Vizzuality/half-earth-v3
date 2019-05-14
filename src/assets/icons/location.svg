@@ -3,7 +3,7 @@
     <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
     <title>39EEBA83-FE8C-4A09-8FC2-B0117D3A15F7</title>
     <desc>Created with sketchtool.</desc>
-    <g id="visual" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="visual" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="HE-map---Legend-opacity" transform="translate(-1240.000000, -108.000000)">
             <g id="Group-3" transform="translate(1236.000000, 20.000000)">
                 <g id="Group-2" transform="translate(4.000000, 88.000000)">
@@ -12,7 +12,7 @@
                     <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="7.25" y="12.5" width="1.5" height="3" rx="0.75"></rect>
                     <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="0.5" y="7.25" width="3" height="1.5" rx="0.75"></rect>
                     <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="12.5" y="7.25" width="3" height="1.5" rx="0.75"></rect>
-                    <circle id="Oval" stroke="#FFFFFF" stroke-width="1.5" cx="8" cy="8" r="5"></circle>
+                    <circle id="Oval" stroke-width="1.5" cx="8" cy="8" r="5"></circle>
                 </g>
             </g>
         </g>

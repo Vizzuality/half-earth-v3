@@ -12,6 +12,7 @@ import EntryBoxes from 'components/entry-boxes';
 import LocationWidget from 'components/widgets/location-widget';
 import NavigationToggleWidget from 'components/widgets/navigation-toggle-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
+import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -22,6 +23,9 @@ const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, is
       <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
       <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
       <LocationWidget />
+      <ToggleUiWidget />
+      <ZoomWidget />
+      <NavigationToggleWidget />
       <Sidebar isSidebarOpen={isSidebarOpen}>
         {
           sceneLayers &&
