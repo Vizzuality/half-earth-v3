@@ -1,0 +1,28 @@
+
+@import 'styles/settings';
+
+.zoomComponent {
+  display: flex;
+  flex-direction: column;
+  background-color: $elephant;
+  border-radius: 2px;
+}
+
+.zoomButton {
+  display: flex;
+  height: $widget-button-size;
+  position: relative;
+  width: $widget-button-size;
+
+  &:hover svg g g {
+    fill: $robinsEggBlue;
+  }
+}
+
+.spacer {
+  background-color: $white;
+  height: 0.5px;
+  opacity: 0.5;
+  margin: auto;
+  width: 16px;
+}
