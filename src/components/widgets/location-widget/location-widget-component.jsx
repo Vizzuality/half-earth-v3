@@ -21,7 +21,7 @@ const LocationWidgetComponent = ({ locationWidget }) => {
 
   return (
     <button className={styles.locationButton} onClick={locate}>
-      {isAnimated ? <HideUiIcon /> : <LocationIcon />}
+      {isAnimated ? <LocationIcon style={{ stroke: 'red' }} /> : <LocationIcon />}
     </button>
   );
 };
