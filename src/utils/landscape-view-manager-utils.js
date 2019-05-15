@@ -1,19 +1,8 @@
-export const setGridCellStyles = (outlineOpacity, outlineWidth, colorRGB = [24, 186, 180]) => {
+export const setGridCellStyles = (fillOpacity, outlineOpacity, outlineWidth, colorRGB = [24, 186, 180]) => {
   return (
     {
-      // type: "polygon-3d",
-      // symbolLayers: [
-      //   {
-      //     type: "fill",
-      //     material: { color: [0, 255, 255, 0.2] },
-      //     outline: {
-      //       color: [...colorRGB, outlineOpacity],
-      //       size: outlineWidth
-      //     }
-      //   }
-      // ]
       type: "simple-fill", // autocasts as new SimpleFillSymbol()
-      color: [...colorRGB, 1],
+      color: [...colorRGB, fillOpacity],
       outline: { // autocasts as new SimpleLineSymbol()
         color: [...colorRGB, outlineOpacity],
         width: outlineWidth
@@ -22,16 +11,10 @@ export const setGridCellStyles = (outlineOpacity, outlineWidth, colorRGB = [24, 
   )
 };
 
-export const setGridCellGraphic = (Graphic, symbol) => {
+export const setGridCellGraphic = (Graphic, geometry, symbol) => {
   return new Graphic({
+    geometry,
     symbol
-  });
-}
-
-export const setAggregatedCellsLayer = (GraphicsLayer, gridCellGraphic) => {
-  return new GraphicsLayer({
-    title: "Aggregated grid cells",
-    graphics: [gridCellGraphic]
   });
 }
 

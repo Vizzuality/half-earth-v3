@@ -10,12 +10,11 @@ import {
   isLandscapeViewOffEvent
 } from 'utils/landscape-view-manager-utils';
 
-const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode }) => {
+const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData }) => {
   const [watchUtils, setWatchUtils] = useState(null);
   const [viewExtent, setViewExtent] = useState();
   // References for cleaning up graphics
-  const gridCellsGraphicRef = useRef();
-  const gridCellsLayerRef = useRef();
+  const gridCellRef = useRef();
   const landscapeModeRef = useRef()
 
 
@@ -25,42 +24,6 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
       setWatchUtils(watchUtils);
     })
   }, []);
-
-  // Create graphics layer to store grid cells graphics
-  useEffect(() => {
-    if (isLandscapeMode) {
-      const {colorRGB, outlineOpacity, outlineWidth} = gridCellDefaultStyles;
-      loadModules(["esri/Graphic", "esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
-        const graphic= new Graphic({
-          symbol: {
-            type: "polygon-3d",
-            symbolLayers: [
-              {
-                type: "fill",
-                material: { color: [0, 255, 255, 0] },
-                outline: {
-                  color: [...colorRGB, outlineOpacity],
-                  size: outlineWidth
-                }
-              }
-            ]
-          },
-          geometry: gridCellsGraphicRef.current || null
-        });
-        gridCellsLayerRef.current = new GraphicsLayer({
-          title: "Selection Layer",
-          graphics: [graphic]
-        });
-        view.map.add(gridCellsLayerRef.current);
-      })
-    } else {
-      view.map.remove(gridCellsLayerRef.current);
-    }
-    return function cleanUp() {
-      view.map.remove(gridCellsLayerRef.current);
-      gridCellsGraphicRef.current = null;
-    }
-  }, [isLandscapeMode, gridCellsGraphicRef.current]);
 
   // Update url param
   useEffect(() => {
@@ -81,7 +44,8 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
   // CAMERA change effect
   useEffect(() => {
     const tilt = isLandscapeMode ? 45 : 0;
-    const target = { tilt };
+    const heading = 0;
+    const target = { tilt, heading };
     const options = {
       speedFactor: 0.5,
       duration: 1000
@@ -93,57 +57,54 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
   useEffect(() => {
     let watchHandle;
     let queryHandle;
-    let selectionGraphic;
-    let selectionLayer;
-    loadModules(["esri/core/watchUtils", "esri/Graphic", "esri/layers/GraphicsLayer", "esri/geometry/geometryEngine"]).then(([watchUtils, Graphic, GraphicsLayer, geometryEngine]) => {
+    loadModules(
+      [
+        "esri/core/watchUtils",
+        "esri/Graphic",
+        "esri/layers/GraphicsLayer",
+        "esri/geometry/geometryEngine"
+      ]).then(([watchUtils, Graphic, GraphicsLayer, geometryEngine]) => {
       const { layers } = map;
       const gridLayer = layers.items.find(l => l.title === "rarity-richness-GRID");
       gridLayer.outFields = ["*"];
-        view.whenLayerView(gridLayer).then(function(layerView) {
-                  
-          watchHandle = watchUtils.whenTrue(view, "stationary", function() {
-            if (landscapeModeRef.current) {
-              const { extent } = view;
-              const scaledDownExtent = extent.clone().expand(0.9);
-              setViewExtent(extent);
-              queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
-              queryHandle = layerView.queryFeatures({
-                geometry: scaledDownExtent,
-                spatialRelationship: 'intersects'
-              }).then(function(results) {
-                const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
-                // const containedData = containedGridCells.reduce((acc, current) => {
-                //   return {
-                //     ...acc,
-                //     [current.attributes.CELL_ID]: {
-                //       CELL_DATA: {
-                //         RAINFED: current.attributes.RAINFED,
-                //         URBAN: current.attributes.URBAN,
-                //         AGRICULTUR: current.attributes.AGRICULTUR,
-                //         Shape__Area: current.attributes.Shape__Area,
-                //         PROP_LAND: current.attributes.PROP_LAND,
-                //         ISISLAND: current.attributes.ISISLAND
-                //       },
-                //       ...acc[current.attributes.CELL_ID],
-                //       [current.attributes.TAXA]: {
-                //         AVE_RSR_PC: current.attributes.AVE_RSR_PC,
-                //         SR_PC: current.attributes.SR_PC,
-                //         FOCAL_SPP: current.attributes.FOCAL_SPP
-                //       }
-                //     }
-                //   }
-                // }, {})
-                // console.log(containedData)
-                const containedGridCellsGeometries = containedGridCells && containedGridCells.map(gc => gc.geometry.extent)
-                gridCellsGraphicRef.current = geometryEngine.union(containedGridCellsGeometries);
-            }).catch((err) => console.error(err));
-           } else {
-            // Remove any created gridCell polygon when not in landscape view
-            // selectionGraphic.geometry = null;
-            // removeGridCell(view, gridCellRef.current);
-           }
-          })
-        }).catch((err) => console.error(err));
+      view.whenLayerView(gridLayer).then(function(layerView) {
+        watchHandle = watchUtils.whenTrue(view, "stationary", function() {
+          if (landscapeModeRef.current) {
+            const { extent } = view;
+            const scaledDownExtent = extent.clone().expand(0.9);
+            setViewExtent(extent);
+            queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
+            queryHandle = layerView.queryFeatures({
+              geometry: extent,
+              spatialRelationship: 'intersects'
+            }).then(function(results) {
+              const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
+              const hasContainedGridCells = containedGridCells.length;
+              const containedGridCellsGeometries = hasContainedGridCells && containedGridCells.map(gc => gc.geometry);
+              // If there are not a group of cells pick the one in the center
+              const singleGridCell = !hasContainedGridCells && results.features.filter(gridCell => gridCell.geometry.contains(view.center));
+              const gridCellGeometry = hasContainedGridCells ? geometryEngine.union(containedGridCellsGeometries) : singleGridCell[0].geometry;
+              const cellData = hasContainedGridCells ? containedGridCells : singleGridCell;
+              // Add data to the store
+              setGridCellData(cellData);
+              // Remove current grid cell before painting a new one
+              removeGridCell(view, gridCellRef.current);
+              // Create a symbol for rendering the graphic
+              const { fillOpacity, outlineOpacity, outlineWidth, colorRGB } = gridCellDefaultStyles;
+              const gridCellSymbol = setGridCellStyles(fillOpacity, outlineOpacity, outlineWidth, colorRGB);
+              // Create the graphic
+              const gridCellGraphic = setGridCellGraphic(Graphic, gridCellGeometry, gridCellSymbol);
+              // Store a reference to the gridCell polygon created
+              gridCellRef.current = gridCellGraphic;
+              // Add it to the view
+              paintGridCell(view, gridCellGraphic);
+          }).catch((err) => console.error(err));
+          } else {
+          // Remove any created gridCell polygon when not in landscape view
+          removeGridCell(view, gridCellRef.current);
+          }
+        })
+      }).catch((err) => console.error(err));
     }).catch((err) => console.error(err));
     return function cleanUp() {
       watchHandle && watchHandle.remove();
