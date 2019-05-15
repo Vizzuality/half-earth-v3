@@ -21,7 +21,8 @@ const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
 const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
   return {
     ...sceneSettings,
-    zoom: globeSettings.zoom 
+    zoom: globeSettings.zoom,
+    center: globeSettings.center
   }
 })
 

@@ -3,10 +3,16 @@
 import { loadModules } from '@esri/react-arcgis';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import LocationWidgetComponent from './location-widget-component';
+import { connect } from 'react-redux';
 
-const LocationWidget = ({ view }) => {
+import LocationWidgetComponent from './location-widget-component';
+import * as actions from './location-widget-actions';
+
+const LocationWidget = props => {
+  const { view, setGlobeChange } = props;
   const [locationWidget, setLocationWidget] = useState(null);
+  const [watchUtils, setWatchUtils] = useState(null);
+  const handleLocationChange = (center) => setGlobeChange({ center });
 
   useEffect(() => {
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {
@@ -24,7 +30,25 @@ const LocationWidget = ({ view }) => {
     };
   }, [view])
 
+  // Load watchUtils module to follow location change
+  useEffect(() => {
+    loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
+      setWatchUtils(watchUtils);
+    })
+  }, []);
+
+  // Update location in URL
+  useEffect(() => {
+    const watchHandle = watchUtils && locationWidget && watchUtils.whenTrue(locationWidget.view, "stationary", function() {
+      const center = [locationWidget.view.center.longitude, locationWidget.view.center.latitude];
+      handleLocationChange(center);
+    });
+    return function cleanUp() {
+      watchHandle && watchHandle.remove()
+    }
+  }, [watchUtils, locationWidget]);
+
   return null;
 }
 
-export default LocationWidget;
+export default connect(null, actions)(LocationWidget);
