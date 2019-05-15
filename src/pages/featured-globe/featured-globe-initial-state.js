@@ -1,7 +1,8 @@
 export default {
   globe: {
     activeLayers: [],
-    isPaddingActive: true
+    isPaddingActive: true,
+    zoom: 3
   },
   ui: {
     isSidebarOpen: false,

@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
 import initialState from './featured-globe-initial-state';
+import sceneSettings from './featured-globe-settings.js';
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -17,6 +18,13 @@ const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
   }
 })
 
+const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
+  return {
+    ...sceneSettings,
+    zoom: globeSettings.zoom 
+  }
+})
+
 const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
@@ -27,5 +35,7 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
-  isCategoriesBoxesVisible: getCategoriesBoxesVisibility
+  isCategoriesBoxesVisible: getCategoriesBoxesVisibility,
+  isPaddingActive: getScenePadding,
+  sceneSettings: getSceneSettings
 })

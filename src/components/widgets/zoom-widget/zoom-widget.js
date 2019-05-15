@@ -3,11 +3,17 @@
 import { loadModules } from '@esri/react-arcgis';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import ZoomWidgetComponent from './zoom-widget-component';
+import * as actions from './zoom-widget-actions';
 
-const ZoomWidget = ({ view }) => {
+const ZoomWidget = props => {
+  const { view, setGlobeChange } = props;
   const [zoomWidget, setZoomWidget] = useState(null);
+  const [watchUtils, setWatchUtils] = useState(null);
+  const handleZoomChange = (zoom) => setGlobeChange({ zoom });
 
+  // Load custom zoom widget
   useEffect(() => {
     loadModules(["esri/widgets/Zoom/ZoomViewModel"]).then(([ZoomView]) => {
       const zoomWidget = new ZoomView({
@@ -24,7 +30,24 @@ const ZoomWidget = ({ view }) => {
     };
   }, [view])
 
+  // Load watchUtils module to follow zoom state change
+  useEffect(() => {
+    loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
+      setWatchUtils(watchUtils);
+    })
+  }, []);
+
+  // Update zoom in URL
+  useEffect(() => {
+    const watchHandle = watchUtils && zoomWidget && watchUtils.whenTrue(zoomWidget.view, "stationary", function() {
+      handleZoomChange(zoomWidget.view.zoom);
+    });
+    return function cleanUp() {
+      watchHandle && watchHandle.remove()
+    }
+  }, [watchUtils]);
+
   return null;
 }
 
-export default ZoomWidget;
+export default connect(null, actions)(ZoomWidget);
