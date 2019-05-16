@@ -6,13 +6,13 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
 import LocationWidgetComponent from './location-widget-component';
-import * as actions from './location-widget-actions';
+import * as actions from 'actions/url-actions';
 
 const LocationWidget = props => {
-  const { view, setGlobeChange } = props;
+  const { view, changeGlobe } = props;
   const [locationWidget, setLocationWidget] = useState(null);
   const [watchUtils, setWatchUtils] = useState(null);
-  const handleLocationChange = (center) => setGlobeChange({ center });
+  const handleLocationChange = (center) => changeGlobe({ center });
 
   useEffect(() => {
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {

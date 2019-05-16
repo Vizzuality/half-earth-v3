@@ -37,6 +37,5 @@ export default createStructuredSelector({
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isCategoriesBoxesVisible: getCategoriesBoxesVisibility,
-  isPaddingActive: getScenePadding,
   sceneSettings: getSceneSettings
 })

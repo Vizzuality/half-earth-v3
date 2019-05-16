@@ -5,13 +5,13 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ZoomWidgetComponent from './zoom-widget-component';
-import * as actions from './zoom-widget-actions';
+import * as actions from 'actions/url-actions';
 
 const ZoomWidget = props => {
-  const { view, setGlobeChange } = props;
+  const { view, changeGlobe } = props;
   const [zoomWidget, setZoomWidget] = useState(null);
   const [watchUtils, setWatchUtils] = useState(null);
-  const handleZoomChange = (zoom) => setGlobeChange({ zoom });
+  const handleZoomChange = (zoom) => changeGlobe({ zoom });
 
   // Load custom zoom widget
   useEffect(() => {

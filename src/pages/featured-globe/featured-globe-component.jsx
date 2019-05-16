@@ -15,8 +15,7 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-<<<<<<< HEAD
-const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleLayerToggle, handleZoomChange }) => {
+const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleLayerToggle, handleZoomChange, sceneSettings }) => {
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
       <ArcgisLayerManager activeLayers={activeLayers}/>
@@ -38,26 +37,5 @@ const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, is
     </Globe>
   )
 };
-=======
-const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isPaddingActive, handleLayerToggle, handleZoomChange, sceneSettings }) => (
-  <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
-    <ArcgisLayerManager activeLayers={activeLayers}/>
-    <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
-    <LocationWidget />
-    <ToggleUiWidget />
-    <ZoomWidget />
-    <NavigationToggleWidget />
-    <Sidebar isPaddingActive={isPaddingActive}>
-      {
-        sceneLayers &&
-        sceneLayers.map(l => (
-            <button key={l.id} data-layer-id={l.id} onClick={handleLayerToggle}>{l.title}</button>
-        ))
-      }
-    </Sidebar>
-    <Legend />
-  </Globe>
-);
->>>>>>> Set zoom level as url param & enable reading zoom level & landscape mode params from url
 
 export default FeaturedGlobeComponent;
