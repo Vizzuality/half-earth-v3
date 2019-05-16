@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactComponent as LocationIcon } from 'icons/location.svg';
-import { ReactComponent as HideUiIcon } from 'icons/hideUI.svg';
+import { ReactComponent as SpinnerIcon } from 'icons/spinner.svg';
 
 import styles from './location-widget.module.scss';
 
@@ -21,7 +21,7 @@ const LocationWidgetComponent = ({ locationWidget }) => {
 
   return (
     <button className={styles.locationButton} onClick={locate}>
-      {isAnimated ? <LocationIcon style={{ stroke: 'red' }} /> : <LocationIcon />}
+      {isAnimated ? <SpinnerIcon className={styles.spinnerAnimation} /> : <LocationIcon />}
     </button>
   );
 };
