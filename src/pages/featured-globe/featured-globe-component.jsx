@@ -6,6 +6,7 @@ import sceneSettings from './featured-globe-settings.js';
 
 import Legend from 'components/legend';
 import Sidebar from 'components/sidebar';
+import EntryBoxes from 'components/entry-boxes';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -14,23 +15,24 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isPaddingActive, handleLayerToggle, handleZoomChange }) => (
-  <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
-    <ArcgisLayerManager activeLayers={activeLayers}/>
-    <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
-    <LocationWidget />
-    <ZoomWidget />
-    <NavigationToggleWidget />
-    <Sidebar isPaddingActive={isPaddingActive}>
-      {
-        sceneLayers &&
-        sceneLayers.map(l => (
-            <button key={l.id} data-layer-id={l.id} onClick={handleLayerToggle}>{l.title}</button>
-        ))
-      }
-    </Sidebar>
-    <Legend />
-  </Globe>
-);
+const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleLayerToggle, handleZoomChange }) => {
+  return (
+    <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
+      <ArcgisLayerManager activeLayers={activeLayers}/>
+      <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
+      <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
+      <LocationWidget />
+      <Sidebar isSidebarOpen={isSidebarOpen}>
+        {
+          sceneLayers &&
+          sceneLayers.map(l => (
+              <button key={l.id} data-layer-id={l.id} onClick={handleLayerToggle}>{l.title}</button>
+          ))
+        }
+      </Sidebar>
+      <Legend />
+    </Globe>
+  )
+};
 
 export default FeaturedGlobeComponent;

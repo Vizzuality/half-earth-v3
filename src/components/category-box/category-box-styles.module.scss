@@ -1,0 +1,58 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+
+.box {
+  @extend .backdropBlur;
+  box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
+  padding: 35px 30px 30px 20px;
+  width: $sidebar-width;
+  margin-bottom: 5px;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    transform: translate(20px, 0);
+
+    .category {
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .icon {
+      opacity: 1;
+    }
+  }
+}
+
+.visible {
+  cursor: pointer;
+}
+
+.title {
+  color: $white;
+  font-size: $font-size-xxs;
+  font-family: $font-family-1;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.categoryContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category {
+  margin: 0;
+  color: $white;
+  font-size: $font-size-xl;
+  letter-spacing: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  margin-left: auto;
+  opacity: 0;
+}
