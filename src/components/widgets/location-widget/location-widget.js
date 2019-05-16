@@ -40,8 +40,8 @@ const LocationWidget = props => {
   // Update location in URL
   useEffect(() => {
     const watchHandle = watchUtils && locationWidget && watchUtils.whenTrue(locationWidget.view, "stationary", function() {
-      const center = [locationWidget.view.center.longitude, locationWidget.view.center.latitude];
-      handleLocationChange(center);
+      const { longitude, latitude } = locationWidget.view.center;
+      handleLocationChange([longitude, latitude]);
     });
     return function cleanUp() {
       watchHandle && watchHandle.remove()

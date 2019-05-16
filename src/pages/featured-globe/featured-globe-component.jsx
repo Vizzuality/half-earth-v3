@@ -2,7 +2,6 @@ import React from 'react';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
-// import sceneSettings from './featured-globe-settings.js';
 
 import Legend from 'components/legend';
 import Sidebar from 'components/sidebar';
