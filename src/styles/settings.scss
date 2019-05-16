@@ -4,20 +4,24 @@ $white: #fff;
 $animation-time: 0.3s;
 $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 // Font sizes
+$font-size-xxs: 10px;
 $font-size-xs: 12px;
 $font-size-s: 13px;
 $font-size-sm: 14px;
 $font-size: 16px;
 $font-size-m: 19px;
 $font-size-l: 24px;
-$font-size-xl: 44px;
-$font-size-xxl: 54px;
+$font-size-xl: 28px;
+$font-size-xxl: 44px;
+$font-size-xxxl: 54px;
 
 //font-weights
 $font-weight-light: 300;
 $font-weight: 400;
 $font-weight-semi-bold: 500;
 $font-weight-bold: 600;
+
+$font-family-1: 'PierSans';
 
 // Layout 
 $sidebar-width: 280px;

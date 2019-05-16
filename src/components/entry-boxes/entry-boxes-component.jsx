@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTrail, animated } from 'react-spring';
+import styles from 'styles/ui.module';
 
 import CategoryBox from 'components/category-box';
 
@@ -17,7 +18,7 @@ const EntryBoxesComponent = ({ view, isCategoriesBoxesVisible, closeEntryBoxes, 
     opacity: isCategoriesBoxesVisible ? 1 : 0,
     marginLeft: isCategoriesBoxesVisible ? 0 : -200,
     from: { opacity: 0, marginLeft: -200 },
-    delay: 200
+    delay: 300
   })
 
   const interfaceLoaded = view.ready;
@@ -29,10 +30,10 @@ const EntryBoxesComponent = ({ view, isCategoriesBoxesVisible, closeEntryBoxes, 
   }
 
   return (
-    <div className='uiTopLeft'>
+    <div className={styles.uiTopLeft}>
       {interfaceLoaded && trail.map((props, index) => (
         <animated.div
-          key={categories[index]}
+          key={categories[index].id}
           style={props}>
             <div onClick={() => handleCategoryEnter(categories[index])}>
               <CategoryBox

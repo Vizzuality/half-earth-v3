@@ -1,6 +1,10 @@
 export default {
-  globe: {},
+  globe: {
+    isPaddingActive: true
+  },
   ui: {
-    isPaddingActive: false
+    isSidebarOpen: false,
+    isCategoriesBoxesVisible: true,
+    activeCategory: ''
   }
 }

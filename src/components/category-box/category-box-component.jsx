@@ -21,13 +21,15 @@ const CategoryBox = ({ title, category, isCategoriesBoxesVisible }) => (
 );
 
 CategoryBox.propTypes = {
-  category: PropTypes.object,
-  title: PropTypes.string
+  category: PropTypes.string,
+  title: PropTypes.string,
+  isCategoriesBoxesVisible: PropTypes.bool
 };
 
 CategoryBox.defaultProps = {
   category: {},
-  title: PropTypes.string
+  title: PropTypes.string,
+  isCategoriesBoxesVisible: true
 };
 
 export default CategoryBox;

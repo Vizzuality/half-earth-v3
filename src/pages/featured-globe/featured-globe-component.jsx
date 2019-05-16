@@ -15,16 +15,14 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isPaddingActive, isCategoriesBoxesVisible, handleLayerToggle, handleZoomChange }) => {
+const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleLayerToggle, handleZoomChange }) => {
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
       <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
       <LocationWidget />
-      <ZoomWidget />
-      <NavigationToggleWidget />
-      <Sidebar isPaddingActive={isPaddingActive}>
+      <Sidebar isSidebarOpen={isSidebarOpen}>
         {
           sceneLayers &&
           sceneLayers.map(l => (
