@@ -2,6 +2,7 @@
   "name": "half-earth-2019",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@esri/react-arcgis": "^4.0.0",
     "directory-named-webpack-plugin": "^4.0.1",
