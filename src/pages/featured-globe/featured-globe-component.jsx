@@ -11,6 +11,7 @@ import EntryBoxes from 'components/entry-boxes';
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
+import SearchWidget from 'components/widgets/search-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -23,6 +24,7 @@ const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, is
       <LocationWidget />
       <ToggleUiWidget />
       <ZoomWidget />
+      <SearchWidget />
       <Sidebar isSidebarOpen={isSidebarOpen}>
         {
           sceneLayers &&

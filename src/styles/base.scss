@@ -1,3 +1,6 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
 @font-face {
   font-family: 'PierSans';
   src: url('../assets/fonts/PierSans-Regular.otf');
@@ -41,4 +44,58 @@ button {
 
 button:focus {
   outline: 0;
+}
+
+:global .esri-icon-search {
+  &::before {
+    content: url('../assets/icons/search.svg');
+  }
+}
+
+:global .esri-search {
+  @extend .backdropBlur;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 100000;
+
+  .esri-search__submit-button {
+    background-color: transparent;
+  }
+
+  .esri-search__clear-button {
+    background-color: transparent;
+    position: fixed;
+    right: 60px;
+    top: 40px;
+
+    .esri-icon-close:before {
+      content: url('../assets/icons/x.svg');
+    }
+  }
+
+  .esri-search__container {
+    flex: none;
+  }
+
+  .esri-input  {
+    background-color: transparent;
+    border-bottom: 0.5px solid white;
+    color: #FFFFFF;
+    font-family: $font-family-1;	
+    font-size: 28px;
+    height: 50px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    margin: auto;
+    outline: none;
+    padding-bottom: 20px;
+    width: 700px;
+  }
+}
+
+:global .esri-component {
+  box-shadow: none !important;
 }
