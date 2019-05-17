@@ -5,9 +5,11 @@ import LandscapeViewManager from 'components/landscape-view-manager';
 import Sidebar from 'components/sidebar';
 import EntryBoxes from 'components/entry-boxes';
 
+// WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
+
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
 const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleZoomChange, handleLayerToggle, sceneSettings }) => (

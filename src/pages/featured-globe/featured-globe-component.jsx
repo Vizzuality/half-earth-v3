@@ -9,7 +9,6 @@ import EntryBoxes from 'components/entry-boxes';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
-import NavigationToggleWidget from 'components/widgets/navigation-toggle-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 
