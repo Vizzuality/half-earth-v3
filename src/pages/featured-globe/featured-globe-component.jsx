@@ -24,7 +24,6 @@ const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, is
       <LocationWidget />
       <ToggleUiWidget />
       <ZoomWidget />
-      <NavigationToggleWidget />
       <Sidebar isSidebarOpen={isSidebarOpen}>
         {
           sceneLayers &&
