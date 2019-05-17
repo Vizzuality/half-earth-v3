@@ -63,6 +63,9 @@ button:focus {
 
   .esri-search__submit-button {
     background-color: transparent;
+    outline: none;
+    padding-bottom: 20px;
+    height: 50px;
   }
 
   .esri-search__clear-button {
@@ -77,12 +80,13 @@ button:focus {
   }
 
   .esri-search__container {
+    border-bottom: 0.5px solid white;
     flex: none;
+    padding-right: 20px;
   }
 
   .esri-input  {
     background-color: transparent;
-    border-bottom: 0.5px solid white;
     color: #FFFFFF;
     font-family: $font-family-1;	
     font-size: 28px;
@@ -93,6 +97,32 @@ button:focus {
     outline: none;
     padding-bottom: 20px;
     width: 700px;
+  }
+
+  .esri-menu.esri-search__suggestions-menu {
+    background-color: transparent;
+    box-shadow: none;
+
+    li {
+      color: $robinsEggBlue;
+      font-family: $font-family-1;	
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      line-height: 14px;
+      outline: none;
+      padding: 10px;
+      text-transform: uppercase;
+
+      &:hover {
+        background-color: transparent;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+    }
+
+    strong {
+      color: $white;
+    }
   }
 }
 
