@@ -9,11 +9,13 @@ const EntryBoxesContainer = props => {
   const openSidebar = () => props.changeUI({ isSidebarOpen: true });
   const setActiveCategory = 
     (activeCategory) => props.changeUI({ activeCategory: activeCategory });
+  const setCategoryBoxesAnimationEnded = () => props.changeAnimations({ categoryBoxesAnimationEnded: true });
   return (
-    <Component 
+    <Component
       closeEntryBoxes={closeEntryBoxes}
       openSidebar={openSidebar}
       setActiveCategory={setActiveCategory}
+      setCategoryBoxesAnimationEnded={setCategoryBoxesAnimationEnded}
       {...props} 
     />
   ) 

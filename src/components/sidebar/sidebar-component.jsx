@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { ReactComponent as ChevronIcon } from 'icons/chevron.svg';
+import uiStyles from 'styles/ui.module';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ theme, children, handleSidebarToggle, isSidebarOpen }) => (
+const Sidebar = ({ theme, children, handleSidebarToggle, isSidebarOpen, isCategoryBoxesAnimationEnded }) => (
   <aside
     className={cx(
+      uiStyles.uiTopLeft,
       styles.sidebar,
-      { [styles.visible]: isSidebarOpen },
+      { [styles.visible]: isSidebarOpen && isCategoryBoxesAnimationEnded },
       theme.sidebar
     )}
   >

@@ -10,23 +10,25 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ view, isCategoriesBoxesVisible, closeEntryBoxes, openSidebar, setActiveCategory }) => {
+const EntryBoxesComponent = ({ view, isCategoriesBoxesVisible, activeCategory, closeEntryBoxes, openSidebar, setActiveCategory, setCategoryBoxesAnimationEnded }) => {
   const config = { mass: 5, tension: 2000, friction: 200 }
+
+  const interfaceLoaded = view.ready;
+  const isCategorySelected = activeCategory;
 
   const trail = useTrail(categories.length, {
     config,
     opacity: isCategoriesBoxesVisible ? 1 : 0,
     marginLeft: isCategoriesBoxesVisible ? 0 : -200,
     from: { opacity: 0, marginLeft: -200 },
-    delay: 300
+    delay: 100,
+    onRest: () => isCategorySelected && setCategoryBoxesAnimationEnded() // needed for sidebar to open only after entry boxes animations ended (they animate on initial load as well)
   })
 
-  const interfaceLoaded = view.ready;
-
   const handleCategoryEnter = (category) => {
+    setActiveCategory(category.name);
     closeEntryBoxes();
     openSidebar();
-    setActiveCategory(category.name);
   }
 
   return (

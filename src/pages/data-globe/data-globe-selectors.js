@@ -30,6 +30,7 @@ const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeS
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
 const getCategoriesBoxesVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isCategoriesBoxesVisible)
+const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
@@ -37,5 +38,6 @@ export default createStructuredSelector({
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isCategoriesBoxesVisible: getCategoriesBoxesVisibility,
-  sceneSettings: getSceneSettings
+  sceneSettings: getSceneSettings,
+  activeCategory: getActiveCategory
 })

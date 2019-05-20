@@ -11,5 +11,8 @@ export default {
     isSidebarOpen: false,
     isCategoriesBoxesVisible: true,
     activeCategory: ''
+  },
+  animations: {
+    categoryBoxesAnimationEnded: false
   }
 }

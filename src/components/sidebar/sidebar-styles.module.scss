@@ -1,15 +1,14 @@
+@import 'styles/ui.module';
 @import 'styles/settings';
 
 .sidebar {
-  position: absolute;
-  top: 0;
-  height: 100vh;
+  @extend .backdropBlur;
+  height: calc(100vh - 20px);
   min-width: $sidebar-width;
   padding: 25px 30px;
   display: inline-block;
   box-sizing: border-box;
-  background-color: $white;
-  transform: translate(-100%, 0);
+  transform: translate(-120%, 0);
   transition: transform $animation-time $transition;
 
   &.visible {
