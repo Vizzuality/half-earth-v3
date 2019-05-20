@@ -61,8 +61,13 @@ button:focus {
   width: 100vw;
   z-index: 100000;
 
+  .esri-search--searching::before, .esri-search--searching::after {
+    content: none;
+  }
+
   .esri-search__submit-button {
     background-color: transparent;
+    border: 0;
     outline: none;
     padding-bottom: 20px;
     height: 50px;
@@ -70,6 +75,7 @@ button:focus {
 
   .esri-search__clear-button {
     background-color: transparent;
+    outline: none;
     position: fixed;
     right: 60px;
     top: 40px;
@@ -87,7 +93,7 @@ button:focus {
 
   .esri-input  {
     background-color: transparent;
-    color: #FFFFFF;
+    color: $white;
     font-family: $font-family-1;	
     font-size: 28px;
     height: 50px;
@@ -104,6 +110,7 @@ button:focus {
     box-shadow: none;
 
     li {
+      border: 0;
       color: $robinsEggBlue;
       font-family: $font-family-1;	
       font-size: 10px;
@@ -114,9 +121,8 @@ button:focus {
       padding: 10px;
       text-transform: uppercase;
 
-      &:hover {
-        background-color: transparent;
-        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      &:hover, &:focus, &:active {
+        background-color: rgba(255,255,255,0.05);
       }
     }
 
