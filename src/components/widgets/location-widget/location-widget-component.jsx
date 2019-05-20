@@ -1,26 +1,29 @@
-// Docs for Locate ui widget
-// https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Locate.html
-import { loadModules } from '@esri/react-arcgis';
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { ReactComponent as LocationIcon } from 'icons/location.svg';
+import { ReactComponent as SpinnerIcon } from 'icons/spinner.svg';
 
-const LocationWidgetComponent = ({ view }) => {
-  const [locationWidget, setLocationWidget] = useState(null);
+import styles from './location-widget.module.scss';
 
-  useEffect(() => {
-    loadModules(["esri/widgets/Locate"]).then(([Locate]) => {
-      const locationWidget = new Locate({
-        view: view
-      });
-      setLocationWidget(locationWidget);
-      view.ui.add(locationWidget, "top-right");
+const LocationWidgetComponent = ({ locationWidget }) => {
+  const [isAnimated, setAnimated] = useState(false);
+  
+  const locate = () => {
+    if(!isAnimated) {
+      setAnimated(true)
+      locationWidget.locate()
+        .then(() => setAnimated(false))
+        .catch(() => setAnimated(false));
+    } else {
+      locationWidget.cancelLocate()
+      setAnimated(false);
+    }
+  };
 
-    }).catch((err) => console.error(err));
-    return function cleanup() {
-      view.ui.remove(locationWidget);
-    };
-  }, [view])
-
-  return null;
-}
+  return (
+    <button className={styles.locationButton} onClick={locate}>
+      {isAnimated ? <SpinnerIcon className={styles.spinnerAnimation} /> : <LocationIcon />}
+    </button>
+  );
+};
 
 export default LocationWidgetComponent;

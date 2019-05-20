@@ -15,7 +15,7 @@ export const changeUI = createThunkAction(
 );
 
 export const changeGlobe = createThunkAction(
-  'changeUI',
+  'changeGlobe',
   change => (dispatch, state) =>
     dispatch(
       setComponentStateToUrl({

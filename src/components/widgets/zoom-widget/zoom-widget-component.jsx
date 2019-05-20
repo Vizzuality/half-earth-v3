@@ -1,24 +1,20 @@
-import { loadModules } from '@esri/react-arcgis';
-import { useState, useEffect } from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
+import { ReactComponent as ZoomInIcon } from 'icons/zoomIn.svg';
+import { ReactComponent as ZoomOutIcon } from 'icons/zoomOut.svg';
 
-const ZoomWidgetComponent = ({ view }) => {
-  const [zoomWidget, setZoomWidget] = useState(null);
+import styles from './zoom-widget.module.scss';
 
-  useEffect(() => {
-    loadModules(["esri/widgets/Zoom"]).then(([Zoom]) => {
-      const zoomWidget = new Zoom({
-        view: view
-      });
-      setZoomWidget(zoomWidget);
-      view.ui.add(zoomWidget, "top-left");
-
-    }).catch((err) => console.error(err));
-    return function cleanup() {
-      view.ui.remove(zoomWidget);
-    };
-  }, [view])
-
-  return null;
-}
+const ZoomWidgetComponent = ({ zoomWidget }) => (
+  <div className={styles.zoomComponent}>
+    <button className={styles.zoomButton} onClick={() => zoomWidget.zoomIn()}>
+      <ZoomInIcon />
+    </button>
+    <span className={styles.spacer} />
+    <button className={styles.zoomButton} onClick={() => zoomWidget.zoomOut()}>
+      <ZoomOutIcon />
+    </button>
+  </div>
+);
 
 export default ZoomWidgetComponent;
