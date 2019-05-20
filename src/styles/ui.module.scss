@@ -1,0 +1,20 @@
+@import 'styles/settings';
+
+.uiTopLeft {
+  position: absolute;
+  top: $site-gutter;
+  left: $site-gutter;
+}
+
+// blur effect && transparent fallback if no browser support
+.backdropBlur {
+  background-color: rgba(9, 20, 26, 0.45);
+}
+
+@supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
+  .backdropBlur {
+    background-color: rgba(9, 20, 26, 0.3);
+    -webkit-backdrop-filter: blur($blur-level);
+    backdrop-filter: blur($blur-level);
+  }
+}

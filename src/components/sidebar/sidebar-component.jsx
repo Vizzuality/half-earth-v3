@@ -5,11 +5,11 @@ import cx from 'classnames';
 import { ReactComponent as ChevronIcon } from 'icons/chevron.svg';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ theme, children, handleSidebarToggle, isPaddingActive }) => (
+const Sidebar = ({ theme, children, handleSidebarToggle, isSidebarOpen }) => (
   <aside
     className={cx(
       styles.sidebar,
-      { [styles.visible]: isPaddingActive },
+      { [styles.visible]: isSidebarOpen },
       theme.sidebar
     )}
   >
@@ -18,9 +18,9 @@ const Sidebar = ({ theme, children, handleSidebarToggle, isPaddingActive }) => (
       onClick={handleSidebarToggle}
     >
       <span>
-        {isPaddingActive ? 'Hide' : 'Open'}
+        {isSidebarOpen ? 'Hide' : 'Open'}
       </span>
-      <ChevronIcon className={cx(styles.icon, { [styles.iconHide] : !isPaddingActive, [styles.iconOpen] : isPaddingActive })}/>
+      <ChevronIcon className={cx(styles.icon, { [styles.iconHide] : !isSidebarOpen, [styles.iconOpen] : isSidebarOpen })}/>
     </button>
     { children }
   </aside>

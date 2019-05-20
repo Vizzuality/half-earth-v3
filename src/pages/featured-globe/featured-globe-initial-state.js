@@ -1,8 +1,11 @@
 export default {
   globe: {
-    activeLayers: []
+    activeLayers: [],
+    isPaddingActive: true
   },
   ui: {
-    isPaddingActive: true
+    isSidebarOpen: false,
+    isCategoriesBoxesVisible: true,
+    activeCategory: ''
   }
 }
