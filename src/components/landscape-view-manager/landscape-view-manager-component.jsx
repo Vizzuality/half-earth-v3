@@ -35,6 +35,9 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
         onZoomChange({ landscapeView: false })
         landscapeModeRef.current = false;
       }
+       else {
+        landscapeModeRef.current = isLandscapeMode;
+      }
     })
     return function cleanUp() {
       watchHandle && watchHandle.remove()
