@@ -10,8 +10,6 @@ import EntryBoxes from 'components/entry-boxes';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
-import NavigationToggleWidget from 'components/widgets/navigation-toggle-widget';
-import ZoomWidget from 'components/widgets/zoom-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 

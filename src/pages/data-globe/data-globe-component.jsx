@@ -2,7 +2,6 @@ import React from 'react';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
-import Sidebar from 'components/sidebar';
 import EntryBoxes from 'components/entry-boxes';
 import sceneSettings from './data-globe-settings.js';
 
@@ -13,14 +12,6 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSide
     <ArcgisLayerManager activeLayers={activeLayers}/>
     <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
     <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
-    <Sidebar isSidebarOpen={isSidebarOpen}>
-      {
-        sceneLayers &&
-        sceneLayers.map(l => (
-            <button key={l.id} data-layer-id={l.id} onClick={handleLayerToggle}>{l.title}</button>
-        ))
-      }
-    </Sidebar>
   </Globe>
 );
 
