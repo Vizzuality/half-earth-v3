@@ -15,7 +15,7 @@ function setGridCellData(state, { payload }) {
           PROP_LAND: current.attributes.PROP_LAND,
           ISISLAND: current.attributes.ISISLAND
         },
-        SPECIES: current.attributes.FOCAL_SPP + previousSpecies
+        SPECIES: `${current.attributes.FOCAL_SPP}, ${previousSpecies}`
       }
     })
   return { ...state, data: gridCellsData };
