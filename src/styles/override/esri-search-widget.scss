@@ -35,7 +35,7 @@
   }
 
   .esri-search__container {
-    border-bottom: 0.5px solid white;
+    border-bottom: 0.5px solid $white;
     flex: none;
     padding-right: 20px;
   }
@@ -53,6 +53,11 @@
     outline: none;
     padding-bottom: 20px;
     width: 700px;
+
+    &::placeholder {
+      color: $white;
+      opacity: 0.5;
+    }
   }
 
   .esri-menu.esri-search__suggestions-menu {

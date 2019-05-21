@@ -1,3 +1,5 @@
+// Docs for Search ui widget
+//https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Search.html
 import { loadModules } from '@esri/react-arcgis';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -7,7 +9,6 @@ const SearchWidget = ({ view }) => {
   const [searchWidget, setSearchWidget ] = useState();
 
   const keyEscapeEventListener = (evt) => { 
-    console.log('escape pressed!');
     evt = evt || window.event;
     if (evt.keyCode == 27 && view && searchWidget) {
       handleCloseSearch();
@@ -18,7 +19,7 @@ const SearchWidget = ({ view }) => {
     loadModules(["esri/widgets/Search"]).then(([Search]) => {
       const sWidget = new Search({
         view: view,
-        locationEnabled: false // don't show the Use current location box when clicking in the input field\
+        locationEnabled: false // don't show the Use current location box when clicking in the input field
       });
       setSearchWidget(sWidget);
 
@@ -35,10 +36,8 @@ const SearchWidget = ({ view }) => {
     if( searchWidget ) {
       view.ui.add(searchWidget, "top-left");
       document.addEventListener('keydown', keyEscapeEventListener);
-      searchWidget.viewModel.on("search-start", () => {
-        handleCloseSearch();
-      });
-      searchWidget.watch('activeSource', (evt) => {
+      searchWidget.viewModel.on("search-start", handleCloseSearch);
+      searchWidget.watch('activeSource', function(evt) {
         evt.placeholder = "Search for a location";
       });
     }

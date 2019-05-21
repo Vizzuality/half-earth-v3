@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
-    <title>CBEBD38C-3425-4287-912A-F1B04E632C37</title>
-    <desc>Created with sketchtool.</desc>
-    <g id="visual" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="HE-map---Search-filled" transform="translate(-1216.000000, -35.000000)" stroke-width="3">
-            <g id="x" transform="translate(1218.000000, 37.000000)">
-                <path d="M18,0 L0,18" id="Path"></path>
-                <path d="M0,0 L18,18" id="Path"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"><g stroke-width="3" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M20 2L2 20M2 2l18 18"/></g></svg>
