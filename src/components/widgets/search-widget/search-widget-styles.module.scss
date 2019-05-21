@@ -34,3 +34,22 @@
     fill: $white;
   }
 }
+
+.closeButton {
+  color: $white;
+  position: fixed;
+  right: 60px;
+  top: 40px;
+  z-index: 100001;
+
+  svg {
+    height: 18px;
+    stroke: $osloGray;
+    width: 18px;
+  }
+
+  &:hover svg {
+    stroke: $white;
+  }
+  
+}

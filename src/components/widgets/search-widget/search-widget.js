@@ -1,30 +1,59 @@
 import { loadModules } from '@esri/react-arcgis';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import SearchWidgetComponent from './search-widget-components';
 
 const SearchWidget = ({ view }) => {
-  const onClick = () => {
+  const [searchWidget, setSearchWidget ] = useState();
+
+  const keyEscapeEventListener = (evt) => { 
+    console.log('escape pressed!');
+    evt = evt || window.event;
+    if (evt.keyCode == 27 && view && searchWidget) {
+      handleCloseSearch();
+    }
+  };
+
+  const handleOpenSearch = () => {
     loadModules(["esri/widgets/Search"]).then(([Search]) => {
       const sWidget = new Search({
         view: view,
-        locationEnabled: false // don't show the Use current location box when clicking in the input field
+        locationEnabled: false // don't show the Use current location box when clicking in the input field\
       });
-      view.ui.add(sWidget, "top-left");
-      sWidget.viewModel.on("search-clear", function(event){
-        view.ui.remove(sWidget);
-      });
-      sWidget.watch('activeSource', function(evt){
-        evt.placeholder = "Find Place";
-      });
+      setSearchWidget(sWidget);
+
     }).catch((err) => console.error(err));
   };
 
+  const handleCloseSearch = () => {
+    view.ui.remove(searchWidget);
+    document.removeEventListener('keydown', keyEscapeEventListener);
+    setSearchWidget(null);
+  }
+  
   useEffect(() => {
+    if( searchWidget ) {
+      view.ui.add(searchWidget, "top-left");
+      document.addEventListener('keydown', keyEscapeEventListener);
+      searchWidget.viewModel.on("search-start", () => {
+        handleCloseSearch();
+      });
+      searchWidget.watch('activeSource', (evt) => {
+        evt.placeholder = "Search for a location";
+      });
+    }
+
     const node = document.createElement("div");
     view.ui.add(node, "top-left");
-    ReactDOM.render(<SearchWidgetComponent onClick={onClick} />, node);
-  }, [view])
+    const component = <SearchWidgetComponent handleOpenSearch={handleOpenSearch} handleCloseSearch={handleCloseSearch} showCloseButton={!!searchWidget}/>;
+    ReactDOM.render(component, node);
+    
+    return function cleanUp() {
+      view.ui.remove(node);
+      ReactDOM.unmountComponentAtNode(node)
+      document.removeEventListener('keydown', keyEscapeEventListener);
+    }
+  }, [searchWidget]);
 
   return null;
 }
