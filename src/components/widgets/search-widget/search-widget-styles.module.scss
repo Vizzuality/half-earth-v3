@@ -38,14 +38,14 @@
 .closeButton {
   color: $white;
   position: fixed;
-  right: 60px;
-  top: 40px;
+  right: calc(2 * #{$site-gutter});
+  top: calc(2 * #{$site-gutter});
   z-index: 100001;
 
   svg {
-    height: 18px;
+    height: 22px;
     stroke: $osloGray;
-    width: 18px;
+    width: 22px;
   }
 
   &:hover svg {

@@ -38,6 +38,7 @@
     border-bottom: 0.5px solid $white;
     flex: none;
     padding-right: 20px;
+    margin: 0 auto 5%;
   }
 
   // search input
@@ -60,6 +61,7 @@
     }
   }
 
+  // suggestions list
   .esri-menu.esri-search__suggestions-menu {
     background-color: transparent;
     box-shadow: none;
