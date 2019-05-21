@@ -23,6 +23,7 @@
     "redux-first-router": "0.0.9-rudy",
     "redux-first-router-link": "1.4.2",
     "redux-first-router-restore-scroll": "1.2.1",
+    "redux-saga": "^1.0.2",
     "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
