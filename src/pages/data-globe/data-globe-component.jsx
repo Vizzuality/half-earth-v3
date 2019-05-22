@@ -11,8 +11,8 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleZoomChange, handleLayerToggle, sceneSettings }) => (
-  <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
+const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, onLoad, isSidebarOpen, isCategoriesBoxesVisible, handleZoomChange, handleLayerToggle, sceneSettings }) => (
+  <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
     <ArcgisLayerManager activeLayers={activeLayers}/>
     <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
     <LocationWidget />
