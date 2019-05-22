@@ -3,7 +3,7 @@
 import { loadModules } from '@esri/react-arcgis';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import SearchWidgetComponent from './search-widget-components';
+import SearchWidgetComponent from './search-widget-component';
 
 const SearchWidget = ({ view }) => {
   const [searchWidget, setSearchWidget ] = useState();
@@ -44,19 +44,19 @@ const SearchWidget = ({ view }) => {
       });
     }
 
-    const node = document.createElement("div");
-    view.ui.add(node, "top-left");
-    const component = <SearchWidgetComponent handleOpenSearch={handleOpenSearch} handleCloseSearch={handleCloseSearch} showCloseButton={!!searchWidget}/>;
-    ReactDOM.render(component, node);
+    // const node = document.createElement("div");
+    // view.ui.add(node, "top-left");
+    // const component = <SearchWidgetComponent handleOpenSearch={handleOpenSearch} handleCloseSearch={handleCloseSearch} showCloseButton={!!searchWidget}/>;
+    // ReactDOM.render(component, node);
     
     return function cleanUp() {
-      view.ui.remove(node);
-      ReactDOM.unmountComponentAtNode(node)
+      // view.ui.remove(node);
+      // ReactDOM.unmountComponentAtNode(node)
       document.removeEventListener('keydown', keyEscapeEventListener);
     }
   }, [searchWidget]);
 
-  return null;
+  return <SearchWidgetComponent handleOpenSearch={handleOpenSearch} handleCloseSearch={handleCloseSearch} showCloseButton={!!searchWidget}/>;
 }
 
 export default SearchWidget;
