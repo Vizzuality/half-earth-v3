@@ -19,7 +19,9 @@ const SearchWidget = ({ view }) => {
     loadModules(["esri/widgets/Search"]).then(([Search]) => {
       const sWidget = new Search({
         view: view,
-        locationEnabled: false // don't show the Use current location box when clicking in the input field
+        locationEnabled: false, // don't show the Use current location box when clicking in the input field
+        popupEnabled: false, // hide location popup
+        resultGraphicEnabled: false // hide location pin
       });
       setSearchWidget(sWidget);
 
