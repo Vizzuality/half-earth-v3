@@ -1,6 +1,6 @@
 import { all, takeLatest, call, select, put, cancelled } from 'redux-saga/effects'
 import 'redux_modules/species/species.js';
-import { SPECIES_FETCH_DATA_READY } from 'redux_modules/species/species-actions';
+import { SPECIES_FETCH_DATA_READY, SPECIES_FETCH_DATA_LOADING, SPECIES_FETCH_DATA_ERROR } from 'redux_modules/species/species-actions';
 import axios from 'axios';
 
 const molAPI = 'https://api.mol.org/1.x/species/info?scientificname='
@@ -20,11 +20,12 @@ function* fetchSpeciesData() {
     species => call(axios.get, `${molAPI}${species}`, { cancelToken: cancelSource.token })
   );
   try {
+    yield put(SPECIES_FETCH_DATA_LOADING());
     const data = yield all(promises);
     // Trigger species ready action
     yield put(SPECIES_FETCH_DATA_READY(data))
   } catch (error) {
-    console.log('error', error)
+    yield put(SPECIES_FETCH_DATA_ERROR(error));
   } finally {
     if (yield cancelled()) {
       // Cancel the fetch whenever the takeLatest send a new action
