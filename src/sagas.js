@@ -1,7 +1,10 @@
 import { all, takeLatest, call, select, put, cancelled } from 'redux-saga/effects'
-import 'redux_modules/species/species.js';
-import { SPECIES_FETCH_DATA_READY, SPECIES_FETCH_DATA_LOADING, SPECIES_FETCH_DATA_ERROR } from 'redux_modules/species/species-actions';
+import { reduxConfig as speciesModule } from 'redux_modules/species';
 import axios from 'axios';
+
+const SPECIES_FETCH_DATA_READY = speciesModule.actions.SPECIES_FETCH_DATA_READY
+const SPECIES_FETCH_DATA_LOADING = speciesModule.actions.SPECIES_FETCH_DATA_LOADING
+const SPECIES_FETCH_DATA_ERROR = speciesModule.actions.SPECIES_FETCH_DATA_ERROR
 
 const molAPI = 'https://api.mol.org/1.x/species/info?scientificname='
 
