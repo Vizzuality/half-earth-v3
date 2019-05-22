@@ -2,7 +2,6 @@
 //https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Search.html
 import { loadModules } from '@esri/react-arcgis';
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import SearchWidgetComponent from './search-widget-component';
 
 const SearchWidget = ({ view }) => {
@@ -43,15 +42,8 @@ const SearchWidget = ({ view }) => {
         evt.placeholder = "Search for a location";
       });
     }
-
-    // const node = document.createElement("div");
-    // view.ui.add(node, "top-left");
-    // const component = <SearchWidgetComponent handleOpenSearch={handleOpenSearch} handleCloseSearch={handleCloseSearch} showCloseButton={!!searchWidget}/>;
-    // ReactDOM.render(component, node);
     
     return function cleanUp() {
-      // view.ui.remove(node);
-      // ReactDOM.unmountComponentAtNode(node)
       document.removeEventListener('keydown', keyEscapeEventListener);
     }
   }, [searchWidget]);

@@ -12,8 +12,9 @@
   letter-spacing: 2px;
   line-height: 14px;
   padding: 0;
-  position: fixed;
-  
+  position: absolute;
+  top: $site-gutter;
+
   .iconWrapper{
     align-items: center;
     background-color: $elephant;
