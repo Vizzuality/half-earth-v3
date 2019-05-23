@@ -9,6 +9,7 @@ import EntryBoxes from 'components/entry-boxes';
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
+import SearchWidget from 'components/widgets/search-widget';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -19,6 +20,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSide
     <LocationWidget />
     <ToggleUiWidget />
     <ZoomWidget />
+    <SearchWidget />
     <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
     <Sidebar isSidebarOpen={isSidebarOpen}>
       {

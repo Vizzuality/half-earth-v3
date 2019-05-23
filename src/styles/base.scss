@@ -1,3 +1,8 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/override/esri-component.scss';
+@import 'styles/override/esri-search-widget.scss';
+
 @font-face {
   font-family: 'PierSans';
   src: url('../assets/fonts/PierSans-Regular.otf');

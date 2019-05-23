@@ -1,0 +1,56 @@
+@import 'styles/settings';
+
+.searchButton {
+  align-items: center;
+  color: $white;
+  display: flex;
+  font-family: $font-family-1;
+  font-size: 10px;
+  font-weight: bold;
+  height: 32px;
+  left: $site-gutter;
+  letter-spacing: 2px;
+  line-height: 14px;
+  padding: 0;
+  position: absolute;
+  top: $site-gutter;
+
+  .iconWrapper{
+    align-items: center;
+    background-color: $elephant;
+    border-radius: 2px;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    margin-right: 10px;
+    padding: 0;
+    width: 32px;
+  }
+
+  &:hover svg {
+    fill: $robinsEggBlue;
+  }
+  
+  svg {
+    fill: $white;
+  }
+}
+
+.closeButton {
+  color: $white;
+  position: fixed;
+  right: calc(2 * #{$site-gutter});
+  top: calc(2 * #{$site-gutter});
+  z-index: 100001;
+
+  svg {
+    height: 22px;
+    stroke: $osloGray;
+    width: 22px;
+  }
+
+  &:hover svg {
+    stroke: $white;
+  }
+  
+}
