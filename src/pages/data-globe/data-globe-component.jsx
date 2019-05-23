@@ -41,4 +41,5 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
   )
 };
 
+
 export default DataGlobeComponent;

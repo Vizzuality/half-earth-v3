@@ -8,8 +8,7 @@ import FixedHeader from 'components/fixed-header';
 import uiStyles from 'styles/ui.module';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ theme, children, activeCategory, handleSidebarToggle, isSidebarOpen }) => {
-
+const Sidebar = ({ map, theme, children, activeCategory, handleSidebarToggle, isSidebarOpen }) => {
   const slide = useSpring({
     from: { marginLeft: -400 },
     marginLeft: isSidebarOpen ? 0 : -400,
@@ -28,7 +27,9 @@ const Sidebar = ({ theme, children, activeCategory, handleSidebarToggle, isSideb
       <div className={styles.wrapper}>
         <FixedHeader closeSidebar={handleSidebarToggle} activeCategory={activeCategory} />
         <div className={styles.content}>
-          {children}
+          {React.Children.map(children || null, (child, i) => {
+            return <child.type {...child.props} key={i} map={map} />;
+          })}
         </div>
       </div>
     </animated.aside>
