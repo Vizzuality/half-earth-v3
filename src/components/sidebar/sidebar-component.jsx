@@ -8,7 +8,7 @@ import FixedHeader from 'components/fixed-header';
 import uiStyles from 'styles/ui.module';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ theme, children, activeCategory, handleSidebarToggle, isSidebarOpen, isCategoryBoxesAnimationEnded }) => {
+const Sidebar = ({ theme, children, activeCategory, handleSidebarToggle, isSidebarOpen }) => {
 
   const slide = useSpring({
     from: { marginLeft: -400 },
@@ -21,7 +21,6 @@ const Sidebar = ({ theme, children, activeCategory, handleSidebarToggle, isSideb
       className={cx(
         uiStyles.uiTopLeft,
         styles.sidebar,
-        { [styles.visible]: isSidebarOpen && isCategoryBoxesAnimationEnded },
         theme.sidebar
       )}
       style={slide}
