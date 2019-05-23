@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 import styles from './fixed-header-styles.module.scss';
+
+const BACK = 'BACK';
 
 const FixedHeader = ({ closeSidebar, activeCategory }) => (
   <div className={styles.header}>
@@ -12,7 +13,7 @@ const FixedHeader = ({ closeSidebar, activeCategory }) => (
       onClick={closeSidebar}
     >
       <ArrowExpandIcon className={styles.icon} />
-      <span>BACK</span>
+      <span>{BACK}</span>
     </button>
     <h1 className={styles.title}>{activeCategory}</h1>
     <div className={styles.spacer} />
@@ -21,9 +22,13 @@ const FixedHeader = ({ closeSidebar, activeCategory }) => (
 
 
 FixedHeader.propTypes = {
+  closeSidebar: PropTypes.func,
+  activeCategory: PropTypes.string
 };
 
 FixedHeader.defaultProps = {
+  closeSidebar: () => {},
+  activeCategory: ''
 };
 
 export default FixedHeader;

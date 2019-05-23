@@ -22,9 +22,11 @@ const RadioGroup = ({ options }) => {
 
 
 RadioGroup.propTypes = {
+  options: PropTypes.array
 };
 
 RadioGroup.defaultProps = {
+  options: []
 };
 
 export default RadioGroup;

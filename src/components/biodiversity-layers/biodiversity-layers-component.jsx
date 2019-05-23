@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import RadioGroup from 'components/radio-group';
 
@@ -18,9 +17,15 @@ const BiodiversityLayers = ({ title, description, options }) => (
 
 
 BiodiversityLayers.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  options: PropTypes.array
 };
 
 BiodiversityLayers.defaultProps = {
+  title: '',
+  description: '',
+  options: []
 };
 
 export default BiodiversityLayers;
