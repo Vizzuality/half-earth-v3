@@ -18,7 +18,7 @@ $margin: 20px;
   }
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 40px); // 40px => 2 * $margin
+  height: calc(100vh - 92px); // 40px => 2 * $margin + search widget height and margin
 }
 
 .content {
