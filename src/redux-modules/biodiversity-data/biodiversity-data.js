@@ -5,4 +5,6 @@ import reducers, { initialState } from './biodiversity-data-reducers';
 
 const reduxConfig = { actions, reducers, initialState };
 
-export default reducerRegistry.registerModule('biodiversityData', reduxConfig);
+reducerRegistry.registerModule('biodiversityData', reduxConfig);
+
+export default actions;

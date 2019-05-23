@@ -1,0 +1,41 @@
+@import 'styles/settings';
+
+$spacer-edge-opacity: 0;
+$spacer-middle-opacity: 0.6;
+
+.header {}
+
+.button {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xxs;
+  font-weight: $font-weight-bold;
+  font-family: $font-family-1;
+  letter-spacing: 2px;
+  color: $robinsEggBlue;
+  padding: 0;
+  margin-left: -8px; // svg icon has some padding
+}
+
+.buttonText {
+  margin-right: 10px;
+}
+
+.icon {
+  transform: rotate(180deg);
+  height: 25px;
+}
+
+.title {
+  color: $white;
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  letter-spacing: 1px;
+}
+
+.spacer {
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(#d6d3d3, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba(#d6d3d3, $spacer-edge-opacity))
+}

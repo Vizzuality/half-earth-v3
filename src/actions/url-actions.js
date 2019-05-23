@@ -26,20 +26,7 @@ export const changeGlobe = createThunkAction(
     )
 );
 
-export const changeAnimations = createThunkAction(
-  'changeAnimations',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'animations',
-        change,
-        state
-      })
-    )
-);
-
 export default {
   changeUI,
-  changeGlobe,
-  changeAnimations
+  changeGlobe
 }

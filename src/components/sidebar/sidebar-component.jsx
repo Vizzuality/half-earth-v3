@@ -2,31 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { ReactComponent as ChevronIcon } from 'icons/chevron.svg';
+import { useSpring, animated } from 'react-spring';
+import FixedHeader from 'components/fixed-header';
+
 import uiStyles from 'styles/ui.module';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ theme, children, handleSidebarToggle, isSidebarOpen, isCategoryBoxesAnimationEnded }) => (
-  <aside
-    className={cx(
-      uiStyles.uiTopLeft,
-      styles.sidebar,
-      { [styles.visible]: isSidebarOpen && isCategoryBoxesAnimationEnded },
-      theme.sidebar
-    )}
-  >
-    <button
-      className={styles.button}
-      onClick={handleSidebarToggle}
+const Sidebar = ({ theme, children, activeCategory, handleSidebarToggle, isSidebarOpen, isCategoryBoxesAnimationEnded }) => {
+
+  const slide = useSpring({
+    from: { marginLeft: -400 },
+    marginLeft: isSidebarOpen ? 0 : -400,
+    delay: isSidebarOpen ? 400 : 0
+  })
+
+  return (
+    <animated.aside
+      className={cx(
+        uiStyles.uiTopLeft,
+        styles.sidebar,
+        { [styles.visible]: isSidebarOpen && isCategoryBoxesAnimationEnded },
+        theme.sidebar
+      )}
+      style={slide}
     >
-      <span>
-        {isSidebarOpen ? 'Hide' : 'Open'}
-      </span>
-      <ChevronIcon className={cx(styles.icon, { [styles.iconHide] : !isSidebarOpen, [styles.iconOpen] : isSidebarOpen })}/>
-    </button>
-    { children }
-  </aside>
-)
+      <div className={styles.wrapper}>
+        <FixedHeader closeSidebar={handleSidebarToggle} activeCategory={activeCategory} />
+        <div className={styles.content}>
+          {children}
+        </div>
+      </div>
+    </animated.aside>
+  )
+}
 
 
 Sidebar.propTypes = {

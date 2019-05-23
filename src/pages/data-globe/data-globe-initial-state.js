@@ -9,10 +9,6 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
-    isCategoriesBoxesVisible: true,
     activeCategory: ''
-  },
-  animations: {
-    categoryBoxesAnimationEnded: false
   }
 }

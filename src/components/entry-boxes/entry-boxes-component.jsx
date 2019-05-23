@@ -10,37 +10,34 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ view, isCategoriesBoxesVisible, activeCategory, closeEntryBoxes, openSidebar, setActiveCategory, setCategoryBoxesAnimationEnded }) => {
+const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCategory }) => {
   const config = { mass: 5, tension: 2000, friction: 200 }
 
   const interfaceLoaded = view.ready;
-  const isCategorySelected = activeCategory;
 
   const trail = useTrail(categories.length, {
     config,
-    opacity: isCategoriesBoxesVisible ? 1 : 0,
-    marginLeft: isCategoriesBoxesVisible ? 0 : -200,
     from: { opacity: 0, marginLeft: -200 },
-    delay: 100,
-    onRest: () => isCategorySelected && setCategoryBoxesAnimationEnded() // needed for sidebar to open only after entry boxes animations ended (they animate on initial load as well)
+    opacity: isSidebarOpen ? 0 : 1,
+    marginLeft: isSidebarOpen ? -200 : 0,
+    delay: 200
   })
 
   const handleCategoryEnter = (category) => {
     setActiveCategory(category.name);
-    closeEntryBoxes();
     openSidebar();
   }
 
   return (
     <div className={styles.uiTopLeft}>
-      {interfaceLoaded && trail.map((props, index) => (
+      {interfaceLoaded && trail.map((styles, index) => (
         <animated.div
           key={categories[index].id}
-          style={props}>
+          style={styles}>
             <div onClick={() => handleCategoryEnter(categories[index])}>
               <CategoryBox
                 title='mapping'
-                isCategoriesBoxesVisible={isCategoriesBoxesVisible}
+                isSidebarOpen={isSidebarOpen}
                 category={categories[index].name} 
               />
             </div>
