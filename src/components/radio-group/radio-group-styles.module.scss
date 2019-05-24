@@ -5,12 +5,21 @@ $circle-size: 15px;
 .radioOption {
   color: $white;
   font-size: $font-size-sm;
+  padding: 5px 0 5px 0;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
+}
+
+.radioOptionSelected {
+  background-color: rgba(255,255,255,0.05);
+  margin-left: -($sidebar-margin);
+  padding-left: $sidebar-margin;
 }
 
 input[type="radio"] {
   opacity: 0;
-  position: absolute; 
+  position: absolute;
   // prevent the default radio button from taking up the space
   // display: none would screw up the keyboard navigation, so let's go for opacity
 }
@@ -19,6 +28,7 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   cursor: pointer;
+  text-transform: capitalize;
 
   &:before {
     content: "";
@@ -32,4 +42,18 @@ input[type="radio"] {
 
 .radioOption input[type="radio"]:checked + .radioInput::before {
   background: linear-gradient(270deg, $vida-loca 0%, $cobalt 100%);
+}
+
+.toggle {
+  display: flex;
+  margin-right: 18px;
+}
+
+.button {
+  color: $white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: $font-size-xxs;
+  padding: 0 5px 0 5px;
 }
