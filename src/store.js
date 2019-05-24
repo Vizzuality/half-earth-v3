@@ -1,9 +1,13 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga'
 import router from './router';
 import reducerRegistry from './reducerRegistry';
+import rootSaga from './sagas';
 
-const middlewares = [thunk, router.middleware];
+const sagaMiddleware = createSagaMiddleware();
+
+const middlewares = [thunk, router.middleware, sagaMiddleware];
 
 reducerRegistry.register('location', router.reducer);
 
@@ -21,6 +25,7 @@ export default () => {
   reducerRegistry.setChangeListener(asyncReducers =>
     store.replaceReducer(combineReducers(asyncReducers))
   );
+  sagaMiddleware.run(rootSaga)
 
   return store;
 };

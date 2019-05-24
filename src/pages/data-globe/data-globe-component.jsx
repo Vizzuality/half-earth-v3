@@ -2,7 +2,6 @@ import React from 'react';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
-import Sidebar from 'components/sidebar';
 import EntryBoxes from 'components/entry-boxes';
 
 // WIDGETS
@@ -13,8 +12,8 @@ import SearchWidget from 'components/widgets/search-widget';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleZoomChange, handleLayerToggle, sceneSettings }) => (
-  <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
+const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, onLoad, isSidebarOpen, isCategoriesBoxesVisible, handleZoomChange, handleLayerToggle, sceneSettings }) => (
+  <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
     <ArcgisLayerManager activeLayers={activeLayers}/>
     <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
     <LocationWidget />
@@ -22,14 +21,6 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSide
     <ZoomWidget />
     <SearchWidget />
     <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
-    <Sidebar isSidebarOpen={isSidebarOpen}>
-      {
-        sceneLayers &&
-        sceneLayers.map(l => (
-            <button key={l.id} data-layer-id={l.id} onClick={handleLayerToggle}>{l.title}</button>
-        ))
-      }
-    </Sidebar>
   </Globe>
 );
 
