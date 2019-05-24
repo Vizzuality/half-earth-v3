@@ -12,7 +12,6 @@ const GlobeComponent = ({ sceneId, sceneSettings, onLoad, children }) => {
       onLoad={onLoad}
       viewProperties={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
-      onLoad={onLoad}
     >
       {children}
     </WebScene>

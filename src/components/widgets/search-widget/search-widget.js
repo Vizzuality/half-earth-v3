@@ -9,7 +9,7 @@ const SearchWidget = ({ view }) => {
 
   const keyEscapeEventListener = (evt) => { 
     evt = evt || window.event;
-    if (evt.keyCode == 27 && view && searchWidget) {
+    if (evt.keyCode === 27 && view && searchWidget) {
       handleCloseSearch();
     }
   };
