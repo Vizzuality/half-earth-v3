@@ -10,7 +10,7 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCategory }) => {
+const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode }) => {
   const config = { mass: 5, tension: 2000, friction: 200 }
 
   const interfaceLoaded = view.ready;
@@ -18,8 +18,8 @@ const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCatego
   const trail = useTrail(categories.length, {
     config,
     from: { opacity: 0, marginLeft: -200 },
-    opacity: isSidebarOpen ? 0 : 1,
-    marginLeft: isSidebarOpen ? -200 : 0,
+    opacity: (isSidebarOpen || isLandscapeMode) ? 0 : 1,
+    marginLeft: (isSidebarOpen || isLandscapeMode) ? -200 : 0,
     delay: 200
   })
 

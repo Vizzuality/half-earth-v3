@@ -8,10 +8,10 @@ import FixedHeader from 'components/fixed-header';
 import uiStyles from 'styles/ui.module';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ map, theme, children, activeCategory, handleSidebarToggle, isSidebarOpen }) => {
+const Sidebar = ({ map, theme, children, activeCategory, handleSidebarToggle, isSidebarOpen, isLandscapeMode }) => {
   const slide = useSpring({
     from: { marginLeft: -400 },
-    marginLeft: isSidebarOpen ? 0 : -400,
+    marginLeft: isSidebarOpen && !isLandscapeMode ? 0 : -400,
     delay: isSidebarOpen ? 400 : 0
   })
 
