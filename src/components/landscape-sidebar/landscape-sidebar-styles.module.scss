@@ -1,0 +1,16 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+
+$margin: 20px;
+
+.sidebar {
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.wrapper {
+  width: $sidebar-width - $margin;
+  display: flex;
+  flex-direction: column;
+}

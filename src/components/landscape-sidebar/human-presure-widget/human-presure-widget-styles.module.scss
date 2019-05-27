@@ -1,0 +1,8 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+
+.container {
+  @extend .backdropBlur;
+  height: 360px;
+  border-radius: 2px;
+}
