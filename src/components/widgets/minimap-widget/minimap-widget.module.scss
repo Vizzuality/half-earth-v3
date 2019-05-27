@@ -1,0 +1,341 @@
+@import 'styles/settings';
+
+
+$green: #03C700;
+$blue: #54a9ff;
+$grey: rgb(63, 66, 70);
+// height: 84px;	width: 84px;
+$background-color: rgba(9,20,26,0.2);
+$background-color-solid: rgba(9,20,26,1);
+
+$box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
+
+.wrapper {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  align-items: center;
+  /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+  
+  
+}
+.title {
+  height: 14px;	
+  width: 33px;	
+  color: #FFFFFF;	
+  font-family: $font-family-1;	
+  font-size: 10px;	
+  font-weight: bold;	
+  letter-spacing: 1.5px;	
+  line-height: 14px;	
+  margin-bottom: 4px;
+  text-align: center;
+  text-transform: uppercase;
+
+  &::after {
+    width:  2px;
+    height: 10px;
+  }
+}
+.uberWrapper {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  &::before {
+    content: '';
+    width: 90px;
+    height: 90px;
+    background-color: $background-color;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+    top: -3px;
+    left: -3px;
+  }
+  &::after {
+    content: '';
+    width: 90px;
+    height: 90px;
+    background-color: $background-color;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+    top: -3px;
+    left: -3px;
+  }
+}
+
+.moduleBorderWrap {
+  max-width: 250px;
+  padding: 1rem;
+  position: absolute;
+  background: linear-gradient(
+    to bottom,
+    $grey 40%,
+    $blue 70%,
+    $blue 90%,
+    $background-color-solid 90%
+ );
+
+  overflow: hidden;
+  padding: 4px;
+  border-radius: 50%;
+
+  &:before {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    content: "";
+    /* border-radius: 0 100px 100px 100px; */
+    background-color: $background-color-solid;
+    /* -webkit-transform-origin: 50% 100%; */
+    /* transform-origin: -20% 63%; */
+    /* -webkit-transform: rotate(140deg); */
+    transform: rotate(45deg);
+    top: 54px;
+    left: 0px;
+    width: 84px;
+    left: 0px;
+    height: 84px;
+  }
+}
+
+.module {
+  background: $background-color-solid;
+  color: white;
+  padding: 38px;  border-radius: 50%;
+}
+
+ .moduleBorderWrapGreen {
+   @extend .moduleBorderWrap;
+    background: linear-gradient(
+      to bottom,
+      $grey 40%,
+      $green 50%,
+      $green 80%,
+      $background-color 80%
+    );
+   left: 6px;
+   top: 6px;
+   overflow: hidden;
+
+   .module {
+    padding: 32px;
+    background: $background-color-solid;
+
+   }
+   width: 72px;
+   height: 72px;
+
+   &:before {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    content: "";
+    /* border-radius: 0 100px 100px 100px; */
+    background-color: $background-color-solid;
+    /* -webkit-transform-origin: 50% 100%; */
+    /* transform-origin: -20% 63%; */
+    /* -webkit-transform: rotate(140deg); */
+    transform: rotate(45deg);
+    top: 45px;
+    left: 0px;
+  }
+  &:after {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    content: "";
+    /* border-radius: 0 100px 100px 100px; */
+    background-color: red;
+    /* -webkit-transform-origin: 50% 100%; */
+    /* transform-origin: -20% 63%; */
+    /* -webkit-transform: rotate(140deg); */
+    transform: rotate(125deg);
+    transform-origin: top left;
+    top: 50%;
+    left: 50%
+  }
+ }
+
+ .miniGlobeIcon {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 60px;
+ }
+
+
+// @import 'styles/settings';
+
+
+// $green: #03C700;
+// $blue: #54a9ff;
+// $grey: rgb(63, 66, 70);
+// // height: 84px;	width: 84px;
+// $background-color: rgba(9,20,26,0.2);
+// $background-color-solid: rgba(9,20,26,1);
+
+// $box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
+
+// .wrapper {
+//   position: absolute;
+//   top: 20px;
+//   right: 60px;
+//   align-items: center;
+//   /* justify-content: center; */
+//   display: flex;
+//   flex-direction: column;
+  
+  
+// }
+// .title {
+//   height: 14px;	
+//   width: 33px;	
+//   color: #FFFFFF;	
+//   font-family: $font-family-1;	
+//   font-size: 10px;	
+//   font-weight: bold;	
+//   letter-spacing: 1.5px;	
+//   line-height: 14px;	
+//   margin-bottom: 4px;
+//   text-align: center;
+//   text-transform: uppercase;
+
+//   &::after {
+//     width:  2px;
+//     height: 10px;
+//   }
+// }
+// .uberWrapper {
+//   position: relative;
+//   width: 84px;
+//   height: 84px;
+//   &::before {
+//     content: '';
+//     width: 90px;
+//     height: 90px;
+//     background-color: $background-color;
+//     border-radius: 50%;
+//     display: block;
+//     position: absolute;
+//     top: 0;
+//     top: -3px;
+//     left: -3px;
+//   }
+//   &::after {
+//     content: '';
+//     width: 90px;
+//     height: 90px;
+//     background-color: $background-color;
+//     border-radius: 50%;
+//     display: block;
+//     position: absolute;
+//     top: 0;
+//     top: -3px;
+//     left: -3px;
+//   }
+// }
+
+// .moduleBorderWrap {
+//   max-width: 250px;
+//   padding: 1rem;
+//   position: absolute;
+//   background: linear-gradient(
+//     to bottom,
+//     $grey 40%,
+//     $blue 70%,
+//     $blue 90%,
+//     $background-color-solid 90%
+//  );
+
+//   overflow: hidden;
+//   padding: 4px;
+//   border-radius: 50%;
+
+//   &:before {
+//     height: inherit;
+//     width: inherit;
+//     position: absolute;
+//     content: "";
+//     /* border-radius: 0 100px 100px 100px; */
+//     background-color: $background-color-solid;
+//     /* -webkit-transform-origin: 50% 100%; */
+//     /* transform-origin: -20% 63%; */
+//     /* -webkit-transform: rotate(140deg); */
+//     transform: rotate(45deg);
+//     top: 54px;
+//     left: 0px;
+//     width: 84px;
+//     left: 0px;
+//     height: 84px;
+//   }
+// }
+
+// .module {
+//   background: $background-color-solid;
+//   color: white;
+//   padding: 38px;  border-radius: 50%;
+// }
+
+//  .moduleBorderWrapGreen {
+//    @extend .moduleBorderWrap;
+//     background: linear-gradient(
+//       to bottom,
+//       $grey 40%,
+//       $green 50%,
+//       $green 80%,
+//       $background-color 80%
+//     );
+//    left: 6px;
+//    top: 6px;
+//    overflow: hidden;
+
+//    .module {
+//     padding: 32px;
+//     background: $background-color-solid;
+
+//    }
+//    width: 72px;
+//    height: 72px;
+
+//    &:before {
+//     height: inherit;
+//     width: inherit;
+//     position: absolute;
+//     content: "";
+//     /* border-radius: 0 100px 100px 100px; */
+//     background-color: $background-color-solid;
+//     /* -webkit-transform-origin: 50% 100%; */
+//     /* transform-origin: -20% 63%; */
+//     /* -webkit-transform: rotate(140deg); */
+//     transform: rotate(45deg);
+//     top: 45px;
+//     left: 0px;
+//   }
+//   &:after {
+//     height: inherit;
+//     width: inherit;
+//     position: absolute;
+//     content: "";
+//     /* border-radius: 0 100px 100px 100px; */
+//     background-color: red;
+//     /* -webkit-transform-origin: 50% 100%; */
+//     /* transform-origin: -20% 63%; */
+//     /* -webkit-transform: rotate(140deg); */
+//     transform: rotate(45deg);
+//     top: 45px;
+//     left: 0px;
+//   }
+//  }
+
+//  .miniGlobeIcon {
+//   position: absolute;
+//   left: 12px;
+//   top: 12px;
+//   width: 60px;
+//  }
