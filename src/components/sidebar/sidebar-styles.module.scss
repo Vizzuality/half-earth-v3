@@ -1,35 +1,39 @@
+@import 'styles/ui.module';
 @import 'styles/settings';
 
+$margin: 20px;
+
 .sidebar {
-  position: absolute;
-  top: 0;
-  height: 100vh;
-  min-width: $sidebar-width;
-  padding: 25px 30px;
+  @extend .backdropBlur;
   display: inline-block;
   box-sizing: border-box;
-  background-color: $white;
-  transform: translate(-100%, 0);
-  transition: transform $animation-time $transition;
+  border-radius: 2px;
+}
 
-  &.visible {
-    transform: translate(0, 0);
+.wrapper {
+  width: $sidebar-width - $margin;
+  margin: {
+    left: $margin;
+    top: $margin;
   }
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 92px); // 40px => 2 * $margin + search widget height and margin
+}
+
+.content {
+  overflow-y: scroll;
 }
 
 .button {
-  position: absolute;
-  right: -43px;
-  bottom: 40px;
-  height: 30px;
-  width: auto;
-  border: none;
-  transform: rotate(-90deg);
-  background-color: $white;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  font-size: $font-size-s;
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xxs;
   font-weight: $font-weight-bold;
+  font-family: $font-family-1;
+  letter-spacing: 2px;
+  color: $robinsEggBlue;
+  padding: 0;
 }
 
 .buttonText {
@@ -37,14 +41,6 @@
 }
 
 .icon {
-  transition: transform $animation-time $transition;
-  fill: pink;
-}
-
-.iconHide {
-  transform: rotate(-90deg) translate(-2px);;
-}
-
-.iconOpen {
-  transform: rotate(90deg) translate(-2px);
+  transform: rotate(180deg);
+  height: 25px;
 }

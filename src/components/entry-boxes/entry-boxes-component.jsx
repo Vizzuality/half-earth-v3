@@ -10,35 +10,34 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ view, isCategoriesBoxesVisible, closeEntryBoxes, openSidebar, setActiveCategory }) => {
+const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCategory }) => {
   const config = { mass: 5, tension: 2000, friction: 200 }
-
-  const trail = useTrail(categories.length, {
-    config,
-    opacity: isCategoriesBoxesVisible ? 1 : 0,
-    marginLeft: isCategoriesBoxesVisible ? 0 : -200,
-    from: { opacity: 0, marginLeft: -200 },
-    delay: 300
-  })
 
   const interfaceLoaded = view.ready;
 
+  const trail = useTrail(categories.length, {
+    config,
+    from: { opacity: 0, marginLeft: -200 },
+    opacity: isSidebarOpen ? 0 : 1,
+    marginLeft: isSidebarOpen ? -200 : 0,
+    delay: 200
+  })
+
   const handleCategoryEnter = (category) => {
-    closeEntryBoxes();
-    openSidebar();
     setActiveCategory(category.name);
+    openSidebar();
   }
 
   return (
     <div className={styles.uiTopLeft}>
-      {interfaceLoaded && trail.map((props, index) => (
+      {interfaceLoaded && trail.map((styles, index) => (
         <animated.div
           key={categories[index].id}
-          style={props}>
+          style={styles}>
             <div onClick={() => handleCategoryEnter(categories[index])}>
               <CategoryBox
                 title='mapping'
-                isCategoriesBoxesVisible={isCategoriesBoxesVisible}
+                isSidebarOpen={isSidebarOpen}
                 category={categories[index].name} 
               />
             </div>

@@ -1,0 +1,19 @@
+@import 'styles/settings';
+
+.titleSection {
+  display: flex;
+}
+
+.widgetTitle {
+  color: $white;
+  font-size: $font-size-xs;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.description {
+  color: $alto;
+  font-size: $font-size-xs;
+  margin-top: 0;
+  margin-bottom: 14px;
+}

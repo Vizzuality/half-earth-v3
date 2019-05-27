@@ -15,17 +15,17 @@ import SearchWidget from 'components/widgets/search-widget';
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, isLandscapeMode, isSidebarOpen, isCategoriesBoxesVisible, handleLayerToggle, handleZoomChange, sceneSettings }) => {
+const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleLayerToggle, handleZoomChange, sceneSettings }) => {
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} >
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
-      <EntryBoxes isCategoriesBoxesVisible={isCategoriesBoxesVisible} />
+      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} />
       <LocationWidget />
       <ToggleUiWidget />
       <ZoomWidget />
       <SearchWidget />
-      <Sidebar isSidebarOpen={isSidebarOpen}>
+      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory}>
         {
           sceneLayers &&
           sceneLayers.map(l => (

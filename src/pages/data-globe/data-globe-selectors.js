@@ -4,6 +4,8 @@ import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-select
 import initialState from './data-globe-initial-state';
 import sceneSettings from './data-globe-settings';
 
+const getBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
+
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
     ...initialState.globe,
@@ -29,13 +31,14 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
-const getCategoriesBoxesVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isCategoriesBoxesVisible)
+const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
-  isCategoriesBoxesVisible: getCategoriesBoxesVisibility,
-  sceneSettings: getSceneSettings
+  sceneSettings: getSceneSettings,
+  activeCategory: getActiveCategory,
+  speciesCategories: getBiodiversityData
 })

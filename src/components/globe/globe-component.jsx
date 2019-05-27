@@ -9,9 +9,9 @@ const GlobeComponent = ({ sceneId, sceneSettings, onLoad, children }) => {
     <WebScene
       className={cx(styles.sceneContainer)}
       id={sceneId}
+      onLoad={onLoad}
       viewProperties={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
-      onLoad={onLoad}
     >
       {children}
     </WebScene>

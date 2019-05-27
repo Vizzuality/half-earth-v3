@@ -5,7 +5,12 @@ import Component from './sidebar-component';
 import * as actions from 'actions/url-actions';
 
 const SideBarContainer = props => {
-  const handleSidebarToggle = () => props.changeUI({ isSidebarOpen: !props.isSidebarOpen });
+  const closeSidebar = () => props.changeUI({ isSidebarOpen: false });
+  const resetCategory = () => props.changeUI({ activeCategory: '' });
+  const handleSidebarToggle = () => {
+    closeSidebar();
+    resetCategory();
+  }
   return <Component handleSidebarToggle={handleSidebarToggle} {...props} />; 
 }
 
