@@ -23,9 +23,10 @@ const MinimapWidgetComponent = props => {
         <div className={styles.insideCircle}>
           <div className={styles.greenLeftCircle}></div>
           <div className={styles.greenRightCircle}></div>
-          <div className={styles.smallInsideCircle}></div>
+          <div className={styles.smallInsideCircle}>
+            <MiniGlobeIcon className={styles.miniGlobeIcon} />
+          </div>
         </div>
-        {/* <MiniGlobeIcon className={styles.miniGlobeIcon} /> */}
       </div>
     </div>
   );
