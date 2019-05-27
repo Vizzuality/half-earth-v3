@@ -2,13 +2,141 @@
 
 
 $green: #03C700;
-$blue: #54a9ff;
+$blue: #0272BA;
 $grey: rgb(63, 66, 70);
 // height: 84px;	width: 84px;
 $background-color: rgba(9,20,26,0.2);
 $background-color-solid: rgba(9,20,26,1);
 
 $box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
+
+// $grey: grey;
+
+.globalWrapper {
+  position: relative;
+  width: 216px;
+  height: 216px;
+  border-radius: 50%;
+  background-color: $background-color;
+  padding: 8px;
+  display: flex;
+}
+
+.blueLeftCircle {
+    height: 200px;
+    width: 100px;
+    overflow: hidden;
+    position: relative;
+    background-color: $grey;
+    border-radius: 100px 0 0 100px;
+
+  
+    &:before {
+      height: inherit;
+      width: inherit;
+      position: absolute;
+      content: "";
+      border-radius: 100px 0 0 100px;
+      background-color: $blue;
+      transform-origin: 100% 50%;
+      transform: rotate(-90deg);
+     }
+}
+
+.blueRightCircle {
+    height: 200px;
+    width: 100px;
+    overflow: hidden;
+    position: relative;
+    background-color: $grey;
+    border-radius: 0 100px 100px 0;
+  
+    &:before {
+      height: inherit;
+      width: inherit;
+      position: absolute;
+      content: "";
+      border-radius: 0 100px 100px 0;
+      background-color: $blue;;
+      transform-origin: 0 50%;
+      transform: rotate(-180deg);
+     }
+}
+
+.greenLeftCircle {
+  height: 160px;
+  width: 80px;
+  overflow: hidden;
+  position: relative;
+  background-color: $grey;
+  border-radius: 100px 0 0 100px;
+  top: 10px;
+  left: 10px;
+
+  &:before {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    content: "";
+    border-radius: 100px 0 0 100px;
+    background-color: $green;
+    transform-origin: 100% 50%;
+    transform: rotate(-90deg);
+   }
+}
+
+.greenRightCircle {
+  height: 160px;
+  width: 80px;
+  overflow: hidden;
+  position: relative;
+  background-color: $grey;
+  border-radius: 0 100px 100px 0;
+  top: 10px;
+  left: 10px;
+
+  &:before {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    content: "";
+    border-radius: 0 100px 100px 0;
+    background-color: $green;
+    transform-origin: 0 50%;
+    transform: rotate(180deg)
+   }
+}
+
+
+.insideCircle {
+  display: flex;
+  width: 180px;
+  height:  180px;
+  background-color: $background-color-solid;
+  position: absolute;
+  top: 0;
+  transform:translate(10px,18px);
+  border-radius: 50%;
+  // top: calc(50% - 40px);
+  // left: calc(50% - 40px);
+}
+
+.smallInsideCircle {
+  width: 140px;
+  height:  140px;
+  background-color: $background-color-solid;
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  transform:translate(10px,18px);
+  border-radius: 50%;
+  // top: calc(50% - 40px);
+  // left: calc(50% - 40px);
+}
+
+
+
+
 
 .wrapper {
   position: absolute;
