@@ -1,12 +1,10 @@
 @import 'styles/settings';
 
-
 $green: #03C700;
 $blue: #0272BA;
 $grey: rgb(63, 66, 70);
 $widget-size: 94px;
 
-// height: 84px;	width: 84px;
 $background-color: rgba(9,20,26,0.2);
 $background-color-solid: rgba(9,20,26,1);
 
@@ -130,6 +128,7 @@ $box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
 }
 
 .smallInsideCircle {
+  cursor: pointer;
   width: 68px;
   height: 68px;
   background-color: $background-color-solid;
@@ -137,14 +136,27 @@ $box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
   transform: translate(4px, 4px);
   border-radius: 50%;
   padding: 4px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  // top: calc(50% - 40px);
-  // left: calc(50% - 40px);
+  &:hover {
+    svg {
+      display: none;
+    }
+    &:after {
+      color: $white;
+      content: 'THE GOAL';
+      font-family: $font-family-1;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      line-height: 14px;
+      text-align: center;
+      width: 60px;
+    }
+  }
 }
-
-
-
-
 
 .wrapper {
   position: absolute;
