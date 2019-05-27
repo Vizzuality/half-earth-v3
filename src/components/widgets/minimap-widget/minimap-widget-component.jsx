@@ -3,57 +3,41 @@ import { ReactComponent as MiniGlobeIcon } from 'icons/miniGlobe.svg';
 
 import styles from './minimap-widget.module.scss';
 
-const CircleMeter = () => {
-  return (
-    <>
-      <div className={styles.redCircle}></div>
-      <div className={styles.greenCircle}></div>
-      <div className={styles.insideCircle}></div>
-    </>
-  );
-}
+const ProtecedAreaValueStyle = ({ terrestrialValue, marineValue }) => (
+  <style dangerouslySetInnerHTML={{
+  __html: [
+    '#blueLeftCircleGlobal:before {',
+    `  transform: rotate(${180 + marineValue * 3.15}deg);`,
+    '}',
+    '#greenLeftCircle:before {',
+    `  transform: rotate(${180 + terrestrialValue * 3.15}deg);`,
+    '}'
+    ].join('\n')
+  }}>
+  </style>
+);
 
 const MinimapWidgetComponent = props => {
+  // const { terrestrialValue, marineValue } = props;
+  const terrestrialValue = 12;
+  const marineValue = 5;
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>Half</div>
       <div className={styles.globalWrapper}>
-        <div className={styles.blueLeftCircle}></div>
+        <div id='blueLeftCircleGlobal' className={styles.blueLeftCircle}></div>
         <div className={styles.blueRightCircle}></div>
         <div className={styles.insideCircle}>
-          <div className={styles.greenLeftCircle}></div>
+          <div id='greenLeftCircle' className={styles.greenLeftCircle}></div>
           <div className={styles.greenRightCircle}></div>
           <div className={styles.smallInsideCircle}>
             <MiniGlobeIcon className={styles.miniGlobeIcon} />
           </div>
         </div>
+        <ProtecedAreaValueStyle marineValue={marineValue} terrestrialValue={terrestrialValue} />
       </div>
     </div>
   );
 };
 
 export default MinimapWidgetComponent;
-
-// import React from 'react';
-// import { ReactComponent as MiniGlobeIcon } from 'icons/miniGlobe.svg';
-
-// import styles from './minimap-widget.module.scss';
-
-// const MinimapWidgetComponent = props => {
-//   return (
-//     <div className={styles.wrapper}>
-//       <div className={styles.title}>Half</div>
-//       <div className={styles.uberWrapper}>
-//         <div className={styles.moduleBorderWrap}>
-//           <div className={styles.module}></div>
-//         </div>
-//         <div className={styles.moduleBorderWrapGreen}>
-//           <div className={styles.module} ></div>
-//         </div>
-//         <MiniGlobeIcon className={styles.miniGlobeIcon} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MinimapWidgetComponent;
