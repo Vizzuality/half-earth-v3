@@ -24,6 +24,11 @@ $box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
 
   padding: 6px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../assets/icons/halfEarthMeter.svg');
+  background-position: 7px 8px;
+  background-repeat: no-repeat;
 }
 
 .blueLeftCircle {
@@ -195,9 +200,21 @@ $box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
 
 //HE-meter
 .halfEarthMeterWrapper {
-  background-image: url('../../../assets/icons/halfEarthMeter.svg');
-  background-position: 1px 2px;
-  background-repeat: no-repeat;
-  height: 100%;
-  width: 100%;
+  // background-image: url('../../../assets/icons/halfEarthMeter.svg');
+  // background-position: 1px 2px;
+  // background-repeat: no-repeat;
+  border-radius: 50%;
+  overflow: hidden;
+  // height: 70%;
+  // width: 70%;
+
+  & > * {
+    width: 60px;
+    height: 60px;
+
+   
+  }
+  .esri-ui-top-left {
+    display: none;
+  }
 }
