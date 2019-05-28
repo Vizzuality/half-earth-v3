@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactComponent as MiniGlobeIcon } from 'icons/miniGlobe.svg';
-
 import styles from './minimap-widget.module.scss';
 
 const ProtecedAreaValueStyle = ({ terrestrialValue, marineValue }) => (
@@ -25,7 +24,8 @@ const MinimapWidgetComponent = props => {
     <div className={styles.wrapper}>
       <div className={styles.title}>Half</div>
       <div className={styles.globalWrapper}>
-        <div id='blueLeftCircleGlobal' className={styles.blueLeftCircle}></div>
+      <div className={styles.halfEarthMeterWrapper}></div>
+        {/* <div id='blueLeftCircleGlobal' className={styles.blueLeftCircle}></div>
         <div className={styles.blueRightCircle}></div>
         <div className={styles.insideCircle}>
           <div id='greenLeftCircle' className={styles.greenLeftCircle}></div>
@@ -34,7 +34,7 @@ const MinimapWidgetComponent = props => {
             <MiniGlobeIcon className={styles.miniGlobeIcon} />
           </div>
         </div>
-        <ProtecedAreaValueStyle marineValue={marineValue} terrestrialValue={terrestrialValue} />
+        <ProtecedAreaValueStyle marineValue={marineValue} terrestrialValue={terrestrialValue} /> */}
       </div>
     </div>
   );
