@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ReactComponent as MiniGlobeIcon } from 'icons/miniGlobe.svg';
 import styles from './minimap-widget.module.scss';
 import GlobeComponent from 'components/globe';
+import { disableInteractions, minimapLayerStyles } from 'utils/minimap-utils';
 
 // const ProtecedAreaValueStyle = ({ terrestrialValue, marineValue }) => (
 //   <style dangerouslySetInnerHTML={{
@@ -17,8 +18,7 @@ import GlobeComponent from 'components/globe';
 //   }}>
 //   </style>
 // );
-
-const { REACT_APP_MINIMAP_SCENE_ID: SCENE_ID } = process.env;
+const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
 const settings = {
   environment: {
@@ -43,7 +43,7 @@ const MinimapWidgetComponent = ({ view }) => {
   useEffect(() => {
     loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
       setWatchUtils(watchUtils);
-    })
+    });
   }, []);
 
   useEffect(() => {
@@ -56,9 +56,6 @@ const MinimapWidgetComponent = ({ view }) => {
       watchHandle && watchHandle.remove()
     }
   }, [watchUtils])
-
-  // const terrestrialValue = 12;
-  // const marineValue = 5;
 
   return (
     <div className={styles.wrapper}>
@@ -84,48 +81,22 @@ const MinimapWidgetComponent = ({ view }) => {
   );
 };
 
-const MiniComponent = ({ view, center }) => {
+
+const MiniComponent = ({ view, map, center }) => {
   useEffect(() => {
-    view.on("key-down", function(event) {
-      var prohibitedKeys = ["+", "-", "Shift", "_", "="];
-      var keyPressed = event.key;
-      if (prohibitedKeys.indexOf(keyPressed) !== -1) {
-        event.stopPropagation();
-      }
-    });
-
-    view.on("mouse-wheel", function(event) {
-      event.stopPropagation();
-    });
-
-    view.on("double-click", function(event) {
-      event.stopPropagation();
-    });
-
-    view.on("double-click", ["Control"], function(event) {
-      event.stopPropagation();
-    });
-
-    view.on("drag", function(event) {
-      event.stopPropagation();
-    });
-
-    view.on("drag", ["Shift"], function(event) {
-      event.stopPropagation();
-    });
-    
-    view.on("drag", ["Shift", "Control"], function(event) {
-      event.stopPropagation();
+    disableInteractions(view);
+    loadModules(["esri/layers/VectorTileLayer"]).then(([VectorTileLayer]) => {
+      const minimapLayer = new VectorTileLayer(minimapLayerStyles);
+      map.add(minimapLayer);
     });
   }, []);
 
   useEffect(() => {
     const target = { center, zoom: 0 };
     view.goTo(target);
-    console.log('UPDATINF CENTER!');
   }, [center])
-  
+
   return null;
 }
- 
+
 export default MinimapWidgetComponent;
