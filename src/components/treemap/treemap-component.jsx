@@ -34,7 +34,7 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
   useEffect(() => {
     const root = hierarchy(data).sum(function(d){ return d.value})
     const tree = treemap()
-    .size([400, 400])
+    .size([250, 300])
     .padding(2)
     tree(root)
     const leaves = root.leaves();
@@ -42,17 +42,22 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
   }, [data])
 
   return (
-    <svg className={styles.container}>
+    <svg className={styles.container} width='270px' height='300px'>
       {leaves.map(d => (
-        <rect
-          x={d.x0}
-          y={d.y0}
-          width={d.x1 - d.x0}
-          height={d.theme.stroke}
-          fill={d.theme.fill}
-          onClick={d => handleOnClick(d)}
-          classNAme={styles.square}
-        />
+        <g>
+          <rect
+            x={d.x0}
+            y={d.y0}
+            width={d.x1 - d.x0}
+            height={d.y1 - d.y0}
+            stroke='white'
+            fill='red'
+            opacity='0.6'
+            onClick={d => handleOnClick(d)}
+            classNAme={styles.square}
+          />
+          <text x={d.x0+5} y={d.y0+20} fontSize='19px' fill='white'>{d.data.name}</text>
+        </g>
       ))}
     </svg>
   )
