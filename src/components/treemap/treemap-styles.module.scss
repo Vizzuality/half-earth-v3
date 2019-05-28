@@ -1,0 +1,32 @@
+.treemap {
+  cursor: pointer;
+  .square {
+    fill: #5E5C7A;
+  }
+  .text {
+    color: #DBDBDB;
+    opacity: 0.5;
+    font-size: 12px;
+    line-height: 16px;
+    pointer-events: none;
+  }
+
+  & .pressureFree {
+    fill:#0E2B3B;
+    opacity: 0.5;
+  }
+
+  & .selected {
+    fill:#3F3576;
+    stroke: white;
+
+    > .text {
+      color: #DBDBDB;
+      opacity: 1;
+    }
+  }
+}
+
+.tooltip {
+  background-color: white;
+}

@@ -11,3 +11,4 @@ function setGridCellData(state, { payload }) {
 export default {
   [actions.setGridCellData]: setGridCellData
 };
+
