@@ -3,6 +3,29 @@
 
 .container {
   @extend .backdropBlur;
-  height: 360px;
   border-radius: 2px;
+  padding: 20px;
+}
+
+.title {
+  margin: 0;
+  color: white;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.text {
+  color: #DBDBDB;
+  line-height: 16px;
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+
+.hint {
+  color: white;
+  line-height: 16px;
+  font-size: 12px;
+}
+.treemap {
+  width: 100%;
 }
