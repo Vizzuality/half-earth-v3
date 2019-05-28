@@ -91,7 +91,7 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
               // Add data to the store
               setGridCellData(cellData);
               // Remove current grid cell before painting a new one
-              removeGridCell(view, gridCellRef.current);
+              gridCellRef.current && removeGridCell(view, gridCellRef.current);
               // Create a symbol for rendering the graphic
               const { fillOpacity, outlineOpacity, outlineWidth, colorRGB } = gridCellDefaultStyles;
               const gridCellSymbol = setGridCellStyles(fillOpacity, outlineOpacity, outlineWidth, colorRGB);
