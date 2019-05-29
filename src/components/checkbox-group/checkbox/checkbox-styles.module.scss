@@ -12,10 +12,14 @@ $checkbox-size: 15px;
   align-items: center;
   margin-bottom: 4px;
   cursor: pointer;
+
+  &:hover {
+    @extend .checkboxWrapperSelected;
+  }
 }
 
 .checkboxWrapperSelected {
-  background-color: rgba(255,255,255,0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   margin-left: -($sidebar-margin);
   padding-left: $sidebar-margin;
 }

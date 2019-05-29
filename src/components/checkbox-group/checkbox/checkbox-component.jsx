@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import styles from './checkbox-styles.module.scss';
 
-const Checkbox = ({ option, onChange, checked }) => {
+const Checkbox = ({ option, onChange, checked, theme }) => {
   return (
     <div key={option.name} className={cx(
       styles.checkboxWrapper, 
-      { [styles.checkboxWrapperSelected]: checked }
+      { [styles.checkboxWrapperSelected]: checked },
+      theme
     )}>
       <input 
         type="checkbox"
@@ -15,7 +16,7 @@ const Checkbox = ({ option, onChange, checked }) => {
         name={option.name}
         id={option.name}
         defaultChecked={checked}
-        onChange={onChange} 
+        onChange={(e) => onChange(e, option)} 
       />
       <label htmlFor={option.name} className={styles.checkbox}>
         {option.name}
@@ -28,11 +29,13 @@ export default Checkbox;
 Checkbox.propTypes = {
   options: PropTypes.array,
   onChange: PropTypes.func,
-  checked: PropTypes.bool
+  checked: PropTypes.bool,
+  theme: PropTypes.string
 };
 
 Checkbox.defaultProps = {
   options: [],
   onChange: () => {},
-  checked: false
+  checked: false,
+  theme: ''
 };
