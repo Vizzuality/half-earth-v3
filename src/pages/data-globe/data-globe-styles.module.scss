@@ -2,7 +2,7 @@
 
 .overrideCheckbox {
   input[type="checkbox"]:checked + label::before {
-    background: linear-gradient(270deg, #B76958 0%, #932109 100%);
+    background: linear-gradient(270deg, $santa-fe 0%, $totem-pole 100%);
     border: 2px solid $white; 
   }
 }
