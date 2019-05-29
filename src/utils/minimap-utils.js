@@ -1,8 +1,10 @@
 // https://developers.arcgis.com/javascript/latest/sample-code/view-disable-zoom/index.html
+import { loadModules } from '@esri/react-arcgis';
+
 export const disableInteractions = view => {
   view.on("key-down", function(event) {
-    var prohibitedKeys = ["+", "-", "Shift", "_", "="];
-    var keyPressed = event.key;
+    const prohibitedKeys = ["+", "-", "Shift", "_", "="];
+    const keyPressed = event.key;
     if (prohibitedKeys.indexOf(keyPressed) !== -1) {
       event.stopPropagation();
     }
@@ -72,4 +74,94 @@ export const minimapLayerStyles = {
       }
     } 
   }
+};
+
+export const synchronizeWebScenes = (globeView, minimapView) => {
+  loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
+    const synchronizeView = (view, others) => {
+      others = Array.isArray(others) ? others : [others];
+
+      let viewpointWatchHandle;
+      let viewStationaryHandle;
+      let otherInteractHandlers;
+      let scheduleId;
+
+      const clear = () => {
+        if (otherInteractHandlers) {
+          otherInteractHandlers.forEach(handle => handle.remove());
+        }
+        viewpointWatchHandle && viewpointWatchHandle.remove();
+        viewStationaryHandle && viewStationaryHandle.remove();
+        scheduleId && clearTimeout(scheduleId);
+        otherInteractHandlers = viewpointWatchHandle = viewStationaryHandle = scheduleId = null;
+      };
+
+      const interactWatcher = view.watch("interacting,animation", 
+       newValue => {
+        if (!newValue) return;
+        if (viewpointWatchHandle || scheduleId) return;
+
+        // start updating the other views at the next frame
+        scheduleId = setTimeout(() => {
+          scheduleId = null;
+          viewpointWatchHandle = view.watch("viewpoint",
+            newValue => {
+              others.forEach((otherView) => {
+                newValue.camera.tilt = 0;
+                otherView.viewpoint = newValue;
+                otherView.zoom = 0;
+              });
+          });
+        }, 0);
+
+        // stop as soon as another view starts interacting, like if the user starts panning
+        otherInteractHandlers = others.map((otherView) => {
+          return watchUtils.watch(
+            otherView,
+            "interacting,animation",
+            (value) => { value && clear(); }
+          );
+        });
+
+        // or stop when the view is stationary again
+        viewStationaryHandle = watchUtils.whenTrue(
+          view,
+          "stationary",
+          clear
+        );
+      });
+
+      return {
+        remove: () => {
+          this.remove = () => {};
+          clear();
+          interactWatcher.remove();
+        }
+      };
+    };
+
+    /**
+     * utility method that synchronizes the viewpoints of multiple views
+     */
+    const synchronizeViews = (views) => {
+      let handles = views.map((view, idx, views) => {
+        const others = views.concat();
+        others.splice(idx, 1);
+        return synchronizeView(view, others);
+      });
+
+      return {
+        remove: () => {
+          this.remove = () => {};
+          handles.forEach((h) => {
+            h.remove();
+          });
+          handles = null;
+        }
+      };
+    };
+
+    // bind the views
+    synchronizeViews([globeView, minimapView]);
+  });
 };
