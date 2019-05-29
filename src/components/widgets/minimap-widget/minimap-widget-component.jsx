@@ -135,7 +135,9 @@ const MiniComponent = ({ view: minimapView, map, center, globeView }) => {
               newValue
             ) {
               others.forEach(function(otherView) {
+                newValue.camera.tilt = 0;
                 otherView.viewpoint = newValue;
+                otherView.zoom = 0;
               });
             });
           }, 0);
