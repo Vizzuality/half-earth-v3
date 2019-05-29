@@ -7,7 +7,6 @@ import { hierarchy, treemap } from 'd3-hierarchy';
 import styles from './treemap-styles.module.scss';
 
 const TreeMapComponent = ({ data, handleOnClick }) => {
-
   const padding = 3;
 
   const [leaves, setLeaves] = useState([])
@@ -15,12 +14,12 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
   useEffect(() => {
     const root = hierarchy(data).sum(function(d){ return d.value})
     const tree = treemap()
-    .size([220, 220])
-    .padding(padding)
+      .size([220, 220])
+      .padding(padding)
+    
     tree(root)
     const leaves = root.leaves();
     setLeaves(leaves);
-    ReactTooltip.rebuild()
   }, [data])
 
 
@@ -30,16 +29,16 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
         {leaves.map((d, index) => (
           <g
             className={styles.treemap}
-            key={d.x1 + d.y1}
+            key={d.x1 + d.y1 + Date.now()}
             data-for='treemap'
-            data-tip={`${d.data.name} ${Math.floor(d.data.value)}%`}
-          >
+            data-tip={((d.x1 - d.x0) < 30 || (d.y1 - d.y0) < 30) ? `${d.data.name} ${Math.floor(d.data.value)}%` : ''}
+            >
             <rect
               x={d.x0}
               y={d.y0}
               width={d.x1 - d.x0}
               height={d.y1 - d.y0}
-              onClick={() => { handleOnClick(leaves[index]) }}
+              onClick={handleOnClick}
               className={cx(
                 styles.square,
                 {[styles.pressureFree] : d.data.name === 'Not under pressure'}
@@ -52,12 +51,16 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
               width={d.x1 - d.x0 - (2 * padding)}
               height={d.y1 - d.y0 }
             >
-              <span>{`${d.data.name} ${Math.floor(d.data.value)}%`}</span>
+              <span
+                className={cx({[styles.removeText] : (d.x1 - d.x0) < 30 || (d.y1 - d.y0) < 30})}
+              >
+                {`${d.data.name} ${Math.floor(d.data.value)}%`}
+              </span>
             </foreignObject>
           </g>
         ))}
       </svg>
-      <ReactTooltip id='treemap' getContent={(dataTip) => `${dataTip}`}/>
+      <ReactTooltip id='treemap' getContent={dataTip => `${dataTip}`}/>
     </div>
   )
 }
