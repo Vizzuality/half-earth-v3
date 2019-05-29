@@ -5,7 +5,6 @@ import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'u
 
 const MinimapWidget = props => {
   const handleMapLoad = (map, view, globeView ) => {
-    map.removeAll();
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
     disableInteractions(view); // disable all interactions on the minimap globe
     loadModules(["esri/layers/VectorTileLayer"]).then(([VectorTileLayer]) => { // load two-colors vector-tile-layer into minimap globe

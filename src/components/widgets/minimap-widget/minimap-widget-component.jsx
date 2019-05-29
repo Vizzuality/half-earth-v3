@@ -3,7 +3,7 @@ import styles from './minimap-widget.module.scss';
 import GlobeComponent from 'components/globe';
 import sceneSettings from './minimap-settings';
 
-const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
+const { REACT_APP_MINIMAP_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
 const MinimapWidgetComponent = ({ view: globeView, handleMapLoad }) => {
   return (

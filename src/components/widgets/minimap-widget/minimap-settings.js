@@ -10,6 +10,5 @@ export default {
   zoom: 0,
   ui: {
     components: []
-  },
-  ground: { surfaceColor: '#0A212E' }
+  }
 }
