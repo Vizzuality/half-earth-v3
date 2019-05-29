@@ -15,8 +15,7 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
   const [viewExtent, setViewExtent] = useState();
   // References for cleaning up graphics
   const gridCellRef = useRef();
-  const landscapeModeRef = useRef()
-
+  const landscapeModeRef = useRef();
 
   // Load watchUtils module from ArcGis
   useEffect(() => {
@@ -82,11 +81,11 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
               spatialRelationship: 'intersects'
             }).then(function(results) {
               const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
-              const hasContainedGridCells = containedGridCells.length;
+              const hasContainedGridCells = containedGridCells.length > 0;
               const containedGridCellsGeometries = hasContainedGridCells && containedGridCells.map(gc => gc.geometry);
               // If there are not a group of cells pick the one in the center
               const singleGridCell = !hasContainedGridCells && results.features.filter(gridCell => gridCell.geometry.contains(view.center));
-              const gridCellGeometry = hasContainedGridCells ? geometryEngine.union(containedGridCellsGeometries) : singleGridCell[0].geometry;
+               const gridCellGeometry = hasContainedGridCells ? geometryEngine.union(containedGridCellsGeometries) : singleGridCell[0].geometry;
               const cellData = hasContainedGridCells ? containedGridCells : singleGridCell;
               // Add data to the store
               setGridCellData(cellData);
