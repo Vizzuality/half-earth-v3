@@ -29,7 +29,7 @@ const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isL
         {
           sceneLayers &&
           sceneLayers.map(l => (
-              <button key={l.id} data-layer-id={l.id} onClick={handleLayerToggle}>{l.title}</button>
+              <button key={l.id} data-layer-id={l.id} onClick={() => handleLayerToggle(l.id)}>{l.title}</button>
           ))
         }
       </Sidebar>

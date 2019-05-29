@@ -11,6 +11,7 @@ import ownActions from './data-globe-actions.js';
 const actions = { ...ownActions, ...biodiversityActions };
 
 const RICHNESS_RARITY_GRID = 'rarity-richness-GRID';
+const HUMAN_IMPACT_LAYER = 'Human Impact';
 const TAXA_FIELD = 'TAXA';
 
 const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError) => {
@@ -18,9 +19,19 @@ const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError
   const gridLayer = layers.items.find(l => l.title === RICHNESS_RARITY_GRID);
   // set the outFields for the rarity-richness-GRID layer
   // to get all the attributes available
+
+  // const humanImpactLayer = layers.items.find(l => l.title === HUMAN_IMPACT_LAYER);
+
   gridLayer.outFields = ["*"];
   loadModules(
-    ["esri/renderers/smartMapping/statistics/uniqueValues"]).then(([uniqueValues]) => {
+    ["esri/renderers/smartMapping/statistics/uniqueValues", "esri/layers/support/MosaicRule"]).then(([uniqueValues, MosaicRule]) => {
+
+      // TODO: MosaicRule allows to select rasters using the "where" clause. Figure out mosaic method and operation
+      // humanImpactLayer.mosaicRule = new MosaicRule({
+      //   method: "attribute",
+      //   where: `Name = 'human_impact_urban' OR Name = 'human_impact_all'`
+      // });
+
       setSpeciesLoading();
       uniqueValues({ layer: gridLayer, field: TAXA_FIELD}).then((result) => {
         setSpecies(result.uniqueValueInfos);
@@ -31,7 +42,7 @@ const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError
 }
 
 const dataGlobeContainer = props => {
-  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", props.activeLayers, props.setDataGlobeSettings);
+  const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings);
   const handleZoomChange = props.setDataGlobeSettings;
   const { setSpecies, setSpeciesLoading, setSpeciesError } = props;
   return <Component 

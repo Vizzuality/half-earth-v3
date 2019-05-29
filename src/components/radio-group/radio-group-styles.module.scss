@@ -8,6 +8,7 @@ $circle-size: 15px;
   padding: 5px 0 5px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -56,4 +57,5 @@ input[type="radio"] {
   font-weight: bold;
   font-size: $font-size-xxs;
   padding: 0 5px 0 5px;
+  cursor: pointer;
 }

@@ -1,32 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import RadioGroup from 'components/radio-group';
+import CheckboxGroup from 'components/checkbox-group';
 
-import styles from './biodiversity-layers-styles.module.scss';
+import styles from './human-pressure-layers-styles.module.scss';
 
-const BiodiversityLayers = ({ map, title, description, options, defaultSelection }) => {
+const HumanPressureLayers = ({ title, description, options }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.titleSection}>
         <h2 className={styles.widgetTitle}>{title}</h2>
       </div>
       <p className={styles.description}>{description}</p>
-      <RadioGroup options={options} title={title} defaultSelection={defaultSelection} />
+      <CheckboxGroup options={options} title={title} />
     </div>
   )}
 
 
-BiodiversityLayers.propTypes = {
+HumanPressureLayers.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   options: PropTypes.array
 };
 
-BiodiversityLayers.defaultProps = {
+HumanPressureLayers.defaultProps = {
   title: '',
   description: '',
   options: []
 };
 
-export default BiodiversityLayers;
+export default HumanPressureLayers;

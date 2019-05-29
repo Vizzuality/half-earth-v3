@@ -12,12 +12,15 @@
   color: $white;
   font-size: $font-size-xs;
   font-weight: bold;
+  text-transform: uppercase;
+  line-height: 20px;
   letter-spacing: 2px;
 }
 
 .description {
   color: $alto;
   font-size: $font-size-xs;
+  line-height: 16px;
   margin-top: 0;
   margin-bottom: 14px;
 }
