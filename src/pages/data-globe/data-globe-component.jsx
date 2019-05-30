@@ -5,7 +5,7 @@ import LandscapeViewManager from 'components/landscape-view-manager';
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
-import HumanPressureLayers from 'components/human-pressure-layers';
+import MultipleActiveLayers from 'components/multiple-active-layers';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -14,21 +14,14 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 
+// styles
+import styles from './data-globe-styles.module';
+
+// layers
+import { humanPressuresLandUse } from 'constants/human-pressures';
+import { WDPALayers } from 'constants/protected-areas';
+
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
-
-const checkboxesLandUse = [
-  { name: 'Rainfed agriculture' },
-  { name: 'Irrigated agriculture' },
-  { name: 'Urban pressures' }
-];
-
-const checkboxesFishingActivity = [
-  { name: 'Drifting longlines' },
-  { name: 'Fixed gear' },
-  { name: 'Other' },
-  { name: 'Purse seins' },
-  { name: 'Trawlers' }
-]
 
 const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, handleLayerToggle, sceneSettings, speciesCategories, onLoad, setSpeciesLoading, setSpecies, setSpeciesError }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
@@ -69,15 +62,23 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
         )}
         {isHumanPressuresActive && (
           <>
-            <HumanPressureLayers 
-              options={checkboxesLandUse} 
+            <MultipleActiveLayers 
+              options={humanPressuresLandUse} 
               title='Land use pressures'
               description='Human pressures causing habitat loss and accelerating species extinction.'
+              activeLayers={activeLayers}
             />
-            <HumanPressureLayers
-              options={checkboxesFishingActivity}
-              title='marine fishing activity'
-              description='Human pressures causing habitat loss and accelerating species extinction.'
+          </>
+        )}
+        {isProtectedAreasActive && (
+          <>
+            <MultipleActiveLayers 
+              options={WDPALayers} 
+              title='Conservation areas'
+              handleLayerToggle={handleLayerToggle}
+              theme={styles.overrideCheckbox}
+              description='Protections classified according to their management objectives.'
+              activeLayers={activeLayers}
             />
           </>
         )}

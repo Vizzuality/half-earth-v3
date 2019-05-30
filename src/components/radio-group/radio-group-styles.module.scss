@@ -12,6 +12,10 @@ $circle-size: 15px;
   align-items: center;
   margin-bottom: 4px;
   cursor: pointer;
+
+  &:hover {
+    @extend .radioOptionSelected;
+  }
 }
 
 .radioOptionSelected {
@@ -33,6 +37,7 @@ input[type="radio"] {
   text-transform: capitalize;
   width: 100%;
   height: 20px;
+  cursor: pointer;
 
   &:before {
     content: "";

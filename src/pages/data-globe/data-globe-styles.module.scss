@@ -1,0 +1,8 @@
+@import 'styles/settings';
+
+.overrideCheckbox {
+  input[type="checkbox"]:checked + label::before {
+    background: linear-gradient(270deg, $santa-fe 0%, $totem-pole 100%);
+    border: 2px solid $white; 
+  }
+}
