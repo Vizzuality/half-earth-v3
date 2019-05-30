@@ -1,0 +1,21 @@
+@import 'styles/settings';
+
+.aboutButton {
+  color: $white;
+  position: absolute;
+  bottom: $site-gutter;
+  right: $site-gutter;
+  opacity: 0.7;	
+  color: #D8D8D8;
+  font-family: $font-family-1;
+  font-size: $font-size-xxs;
+  font-weight: bold;
+  letter-spacing: $letter-spacing;
+  line-height: $line-height;
+  text-shadow: 0 0 2px 0 rgba(0,0,0,0.59);
+  text-transform: uppercase;
+
+  &:hover {
+    color: $white;
+  }
+}
