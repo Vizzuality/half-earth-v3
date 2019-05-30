@@ -17,18 +17,11 @@ import MinimapWidget from 'components/widgets/minimap-widget';
 // styles
 import styles from './data-globe-styles.module';
 
+// layers
+import { humanPressuresLandUse } from 'constants/human-pressures';
+import { WDPALayers } from 'constants/protected-areas';
+
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
-
-
-const checkboxesLandUse = [
-  { name: 'Rainfed agriculture', value: 'rainfed' },
-  { name: 'Irrigated agriculture', value: 'agriculture' },
-  { name: 'Urban pressures', value: 'urban' }
-];
-
-const checkboxesWDPA = [
-  { name: 'Protected areas', value: 'WDPA VTL for HalfEarth', id: '16b0345b8b9-layer-1' }
-]
 
 const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, handleLayerToggle, sceneSettings, speciesCategories, onLoad, setSpeciesLoading, setSpecies, setSpeciesError }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
@@ -70,7 +63,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
         {isHumanPressuresActive && (
           <>
             <MultipleActiveLayers 
-              options={checkboxesLandUse} 
+              options={humanPressuresLandUse} 
               title='Land use pressures'
               description='Human pressures causing habitat loss and accelerating species extinction.'
               activeLayers={activeLayers}
@@ -80,7 +73,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
         {isProtectedAreasActive && (
           <>
             <MultipleActiveLayers 
-              options={checkboxesWDPA} 
+              options={WDPALayers} 
               title='Conservation areas'
               handleLayerToggle={handleLayerToggle}
               theme={styles.overrideCheckbox}
