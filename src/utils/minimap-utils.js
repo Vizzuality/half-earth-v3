@@ -1,6 +1,7 @@
-// https://developers.arcgis.com/javascript/latest/sample-code/view-disable-zoom/index.html
 import { loadModules } from '@esri/react-arcgis';
 
+// Sample code for disabling interactions with the globe
+// https://developers.arcgis.com/javascript/latest/sample-code/view-disable-zoom/index.html
 export const disableInteractions = view => {
   view.on("key-down", function(event) {
     const prohibitedKeys = ["+", "-", "Shift", "_", "="];
@@ -35,6 +36,8 @@ export const disableInteractions = view => {
   });
 };
 
+// Sample code about using VectorTileLayers on the globe
+// https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer-json/index.html
 export const minimapLayerStyles = {
   style: {
     layers: [
@@ -76,6 +79,8 @@ export const minimapLayerStyles = {
   }
 };
 
+// Sample code for views synchronization
+// https://developers.arcgis.com/javascript/latest/sample-code/views-synchronize/index.html
 export const synchronizeWebScenes = (globeView, minimapView) => {
   loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
     const synchronizeView = (view, others) => {
