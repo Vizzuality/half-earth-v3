@@ -24,13 +24,22 @@ const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError
   // const humanImpactLayer = layers.items.find(l => l.title === HUMAN_IMPACT_LAYER);
 
   loadModules(
-    ["esri/renderers/smartMapping/statistics/uniqueValues", "esri/layers/support/MosaicRule"]).then(([uniqueValues, MosaicRule]) => {
+    ["esri/renderers/smartMapping/statistics/uniqueValues", "esri/layers/support/MosaicRule", "esri/layers/WebTileLayer"]).then(([uniqueValues, MosaicRule, WebTileLayer]) => {
 
       // TODO: MosaicRule allows to select rasters using the "where" clause. Figure out mosaic method and operation
       // humanImpactLayer.mosaicRule = new MosaicRule({
       //   method: "attribute",
       //   where: `Name = 'human_impact_urban' OR Name = 'human_impact_all'`
       // });
+
+      var tiledLayer2 = new WebTileLayer({
+        urlTemplate: "https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2/fishing-hours/gfw_purple/all/{level}/{col}/{row}",
+        title: 'All marine fishing types',
+        opacity: 0.5
+       });
+
+       map.add(tiledLayer2)
+       console.log(map)
 
       setSpeciesLoading();
       uniqueValues({ layer: gridLayer, field: TAXA_FIELD}).then((result) => {

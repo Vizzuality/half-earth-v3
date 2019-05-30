@@ -48,13 +48,15 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
         }
         {isBiodiversityActive && speciesCategories && (
           <>
-            <BiodiversityLayers 
+            <BiodiversityLayers
+              handleLayerToggle={handleLayerToggle}
               title='Terrestrial Species'
               description='Global km'
               options={speciesCategories.terrestrial}
-              defaultSelection={speciesCategories.terrestrial[0]}
+              defaultSelection={null}
             />
-            <BiodiversityLayers 
+            <BiodiversityLayers
+              handleLayerToggle={handleLayerToggle}
               title='Marine Species'
               description='Global km'
               options={speciesCategories.marine} 
