@@ -1,8 +1,6 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
 
-$margin: 20px;
-
 .sidebar {
   @extend .backdropBlur;
   display: inline-block;
@@ -11,18 +9,28 @@ $margin: 20px;
 }
 
 .wrapper {
-  width: $sidebar-width - $margin;
+  width: $sidebar-width;
   margin: {
-    left: $margin;
-    top: $margin;
+    top: $sidebar-margin;
   }
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 92px); // 40px => 2 * $margin + search widget height and margin
+  height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
+
+  & > * {
+    padding-left: $sidebar-margin;
+  }
 }
 
 .content {
   overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
 
 .button {
@@ -32,7 +40,7 @@ $margin: 20px;
   font-weight: $font-weight-bold;
   font-family: $font-family-1;
   letter-spacing: 2px;
-  color: $robinsEggBlue;
+  color: $robins-egg-blue;
   padding: 0;
 }
 

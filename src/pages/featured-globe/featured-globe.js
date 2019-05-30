@@ -7,7 +7,7 @@ import mapStateToProps from './featured-globe-selectors';
 import * as ownActions from './featured-globe-actions.js';
 
 const feturedGlobeContainer = props => {
-  const toggleLayer = e => layerManagerToggle(e, "data-layer-id", props.activeLayers, props.setFeaturedGlobeSettings);
+  const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setFeaturedGlobeSettings);
   const handleZoomChange = props.setFeaturedGlobeSettings;
   return <Component handleLayerToggle={toggleLayer} handleZoomChange={handleZoomChange} {...props}/>
 }

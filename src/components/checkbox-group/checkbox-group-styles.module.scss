@@ -1,0 +1,17 @@
+@import 'styles/settings';
+
+.checkboxWrapper {
+  color: $white;
+  font-size: $font-size-sm;
+  padding: 5px 0 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.checkboxWrapperSelected {
+  background-color: rgba(255,255,255,0.05);
+  margin-left: -($sidebar-margin);
+  padding-left: $sidebar-margin;
+}

@@ -1,0 +1,48 @@
+@import 'styles/settings';
+
+$checkbox-size: 15px;
+
+.checkboxWrapper {
+  color: $white;
+  font-size: $font-size-sm;
+  font-family: 'PierSans-Light';
+  padding: 5px 0 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.checkboxWrapperSelected {
+  background-color: rgba(255,255,255,0.05);
+  margin-left: -($sidebar-margin);
+  padding-left: $sidebar-margin;
+}
+
+input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: 20px;
+
+  &:before {
+    content: "";
+    margin-right: 16px;
+    height: $checkbox-size;
+    width: $checkbox-size;
+    border: 1px solid $white; 
+    border-radius: 2px;
+  }
+}
+
+input[type="checkbox"]:checked + .checkbox::before {
+  background: linear-gradient(270deg, #BCACE8 0%, #282052 100%);
+  border: 2px solid $white; 
+}
