@@ -6,6 +6,7 @@ import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import MultipleActiveLayers from 'components/multiple-active-layers';
+import LandscapeSidebar from 'components/landscape-sidebar';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -31,14 +32,14 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
-      <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
+      <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
       <LocationWidget />
       <ToggleUiWidget />
       <ZoomWidget />
       <MinimapWidget />
       <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} />
-      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory}>
+      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
+      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
         {
           sceneLayers &&
           sceneLayers.map(l => (
@@ -83,9 +84,9 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
           </>
         )}
       </Sidebar>
+      <LandscapeSidebar isLandscapeMode={isLandscapeMode}/>
     </Globe>
   )
 };
-
 
 export default DataGlobeComponent;

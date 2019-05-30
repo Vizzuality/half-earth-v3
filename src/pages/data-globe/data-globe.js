@@ -19,10 +19,10 @@ const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError
   const gridLayer = layers.items.find(l => l.title === RICHNESS_RARITY_GRID);
   // set the outFields for the rarity-richness-GRID layer
   // to get all the attributes available
+  gridLayer.outFields = ["*"];
 
   // const humanImpactLayer = layers.items.find(l => l.title === HUMAN_IMPACT_LAYER);
 
-  gridLayer.outFields = ["*"];
   loadModules(
     ["esri/renderers/smartMapping/statistics/uniqueValues", "esri/layers/support/MosaicRule"]).then(([uniqueValues, MosaicRule]) => {
 
@@ -40,15 +40,15 @@ const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError
       })
   }).catch((err) => { console.error(err); setSpeciesError(err) });
 }
-
 const dataGlobeContainer = props => {
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings);
   const handleZoomChange = props.setDataGlobeSettings;
   const { setSpecies, setSpeciesLoading, setSpeciesError } = props;
+  
   return <Component 
     handleLayerToggle={toggleLayer}
     onLoad={(map, view) => handleMapLoad(map, view, setSpecies, setSpeciesLoading, setSpeciesError)}
-    handleZoomChange={handleZoomChange} 
+    handleZoomChange={handleZoomChange}
     {...props}/>
 }
 

@@ -6,6 +6,7 @@
   "dependencies": {
     "@esri/react-arcgis": "^4.0.0",
     "classnames": "^2.2.6",
+    "d3-hierarchy": "^1.1.8",
     "directory-named-webpack-plugin": "^4.0.1",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
@@ -17,6 +18,7 @@
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
     "react-spring": "^8.0.20",
+    "react-tooltip": "^3.10.0",
     "react-universal-component": "^4.0.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
