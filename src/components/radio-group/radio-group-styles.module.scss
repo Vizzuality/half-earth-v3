@@ -9,7 +9,8 @@ $circle-size: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+  cursor: pointer;
 }
 
 .radioOptionSelected {
@@ -28,8 +29,9 @@ input[type="radio"] {
 .radioInput {
   display: flex;
   align-items: center;
-  cursor: pointer;
   text-transform: capitalize;
+  width: 100%;
+  height: 20px;
 
   &:before {
     content: "";

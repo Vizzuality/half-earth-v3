@@ -9,7 +9,8 @@ $checkbox-size: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+  cursor: pointer;
 }
 
 .checkboxWrapperSelected {
@@ -27,10 +28,12 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   cursor: pointer;
+  width: 100%;
+  height: 20px;
 
   &:before {
     content: "";
-    margin-right: 10px;
+    margin-right: 16px;
     height: $checkbox-size;
     width: $checkbox-size;
     border: 1px solid $white; 

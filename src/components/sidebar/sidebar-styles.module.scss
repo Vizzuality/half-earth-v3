@@ -9,7 +9,7 @@
 }
 
 .wrapper {
-  width: $sidebar-width - $sidebar-margin;
+  width: $sidebar-width;
   margin: {
     top: $sidebar-margin;
   }
@@ -24,6 +24,13 @@
 
 .content {
   overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
 
 .button {
