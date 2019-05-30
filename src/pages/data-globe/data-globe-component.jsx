@@ -12,6 +12,7 @@ import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
+import MinimapWidget from 'components/widgets/minimap-widget';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -41,6 +42,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
       <LocationWidget />
       <ToggleUiWidget />
       <ZoomWidget />
+      <MinimapWidget />
       <SearchWidget />
       <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} />
       <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory}>
