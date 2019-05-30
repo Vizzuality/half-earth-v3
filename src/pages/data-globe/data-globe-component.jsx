@@ -32,14 +32,14 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
-      <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode}/>
+      <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
       <LocationWidget />
       <ToggleUiWidget />
       <ZoomWidget />
       <MinimapWidget />
       <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} />
-      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory}>
+      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
+      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
         {
           sceneLayers &&
           sceneLayers.map(l => (

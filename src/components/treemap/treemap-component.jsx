@@ -8,13 +8,15 @@ import styles from './treemap-styles.module.scss';
 
 const TreeMapComponent = ({ data, handleOnClick }) => {
   const padding = 3;
+  const width = 250;
+  const height = 250;
 
   const [leaves, setLeaves] = useState([])
 
   useEffect(() => {
     const root = hierarchy(data).sum(function(d){ return d.value})
     const tree = treemap()
-      .size([220, 220])
+      .size([width, height])
       .padding(padding)
     
     tree(root)
@@ -25,7 +27,7 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
 
   return (
     <div>
-      <svg className={styles.container} width='220px' height='220px'>
+      <svg className={styles.container} width={`${width}px`} height={`${height}px`}>
         {leaves.map((d, index) => (
           <g
             className={styles.treemap}

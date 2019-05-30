@@ -12,7 +12,7 @@ const Sidebar = ({ map, theme, children, activeCategory, handleSidebarToggle, is
   const slide = useSpring({
     from: { marginLeft: -400 },
     marginLeft: isSidebarOpen && !isLandscapeMode ? 0 : -400,
-    delay: isSidebarOpen ? 400 : 0
+    delay: isSidebarOpen && !isLandscapeMode ? 400 : 0
   })
 
   return (

@@ -10,7 +10,7 @@ $margin: 20px;
 }
 
 .wrapper {
-  width: $sidebar-width - $margin;
+  width: $sidebar-width;
   display: flex;
   flex-direction: column;
 }
