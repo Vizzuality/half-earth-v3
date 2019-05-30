@@ -1,10 +1,12 @@
+@import 'styles/settings';
+
 .treemap {
   cursor: pointer;
   .square {
-    fill: #5E5C7A;
+    fill: $inactive-purple;
   }
   .text {
-    color: #DBDBDB;
+    color: $alto;
     opacity: 0.5;
     font-size: 12px;
     line-height: 16px;
@@ -15,21 +17,21 @@
   }
 
   & .pressureFree {
-    fill:#0E2B3B;
+    fill:$blue;
     opacity: 0.5;
   }
 
   & .selected {
-    fill:#3F3576;
-    stroke: white;
+    fill:$active-purple;
+    stroke: $white;
 
     > .text {
-      color: #DBDBDB;
+      color: $alto;
       opacity: 1;
     }
   }
 }
 
 .tooltip {
-  background-color: white;
+  background-color: $white;
 }
