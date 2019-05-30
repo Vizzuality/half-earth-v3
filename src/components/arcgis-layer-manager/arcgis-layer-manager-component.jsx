@@ -3,7 +3,7 @@ const ArcgisLayerManager = ({ map, activeLayers }) => {
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
   const { layers } = map;
   layers.items.forEach(mapLayer => {
-    const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.id === mapLayer.id);
+    const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === mapLayer.title);
     mapLayer.visible = !!setActive;
   })
   return null
