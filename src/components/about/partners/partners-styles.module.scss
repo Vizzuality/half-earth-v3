@@ -1,0 +1,79 @@
+
+@import 'styles/settings';
+
+.title {
+  color: $white;
+  font-family: $font-family-1;
+  font-size: $font-size-xl;
+  letter-spacing: 1px;
+  line-height: 30px;
+  text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+}
+
+.description {
+  color: $white;	
+  font-family: $font-family-1;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-light;
+  line-height: 22px;
+  text-align: center;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .coreTitle {
+    @extend .title;
+    margin-bottom: 80px;
+  }
+
+  .coreDescription {
+    @extend .description;
+    width: 500px;
+    margin-bottom: 80px;
+  }
+
+  .sponsorsTitle {
+    @extend .title;
+    margin-bottom: 34px;
+  }
+
+  .sponsorsNames {
+    @extend .description;
+    margin-bottom: 80px;
+  }
+
+  .partnersTitle {
+    @extend .title;
+    margin-bottom: 50px;
+  }
+}
+
+.coreLogosSection {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  width: 600px;
+
+  img {
+    height: min-content;
+  }
+}
+
+
+.partenrsLogosSection {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  width: 940px;
+
+  img {
+    height: min-content;
+  }
+}
+

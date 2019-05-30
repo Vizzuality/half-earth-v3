@@ -21,11 +21,12 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 80px;
-  width: 350px;
+  width: 400px;
 
   .mouseClickIcon {
     align-items: center;
     display: flex;
+    flex: 1;
     flex-direction: column;
 
     span {

@@ -36,7 +36,6 @@
   position: fixed;
   right: calc(2 * #{$site-gutter});
   top: calc(2 * #{$site-gutter});
-  z-index: 100001;
 
   svg {
     height: 22px;
@@ -47,4 +46,11 @@
   &:hover svg {
     stroke: $white;
   }
+}
+
+.navbar {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
