@@ -7,7 +7,7 @@ import styles from './radio-group-styles.module.scss';
 const RARITY = 'Rarity';
 const RICHNESS = 'Richness';
 
-const RadioGroup = ({ options, title, defaultSelection }) => {
+const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelection);
   const [toggle, setToggle] = useState(RARITY);
   
@@ -31,7 +31,10 @@ const RadioGroup = ({ options, title, defaultSelection }) => {
               id={option.value}
               value={option.value}
               defaultChecked={isSelected(option)}
-              onChange={() => setSelectedOption(option)} 
+              onChange={() => {
+                handleLayerToggle("All marine fishing types")
+                setSelectedOption(option)} 
+              } 
             />
             <label htmlFor={option.value} className={styles.radioInput}>
               {option.value}
