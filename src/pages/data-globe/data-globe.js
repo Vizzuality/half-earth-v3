@@ -11,7 +11,7 @@ import ownActions from './data-globe-actions.js';
 const actions = { ...ownActions, ...biodiversityActions };
 
 const RICHNESS_RARITY_GRID = 'rarity-richness-GRID';
-const HUMAN_IMPACT_LAYER = 'Human Impact';
+// const HUMAN_IMPACT_LAYER = 'Human Impact';
 const TAXA_FIELD = 'TAXA';
 
 const handleMapLoad = (map, view, setSpecies, setSpeciesLoading, setSpeciesError) => {
