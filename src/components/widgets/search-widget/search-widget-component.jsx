@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './search-widget-styles.module.scss';
 import { ReactComponent as PinIcon } from 'icons/pin.svg';
-import { ReactComponent as CloseIcon } from 'icons/x.svg';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 const SearchWidgetComponent = props => {
   const { handleOpenSearch, handleCloseSearch, showCloseButton} = props;

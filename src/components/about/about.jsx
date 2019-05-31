@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ReactComponent as CloseIcon } from 'icons/x.svg';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import PartnersComponent from './partners/partners-component';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
 

@@ -44,12 +44,14 @@
   z-index: 100001;
 
   svg {
+    fill: $oslo-gray;
     height: 22px;
     stroke: $oslo-gray;
     width: 22px;
   }
 
   &:hover svg {
+    fill: $white;
     stroke: $white;
   }
   
