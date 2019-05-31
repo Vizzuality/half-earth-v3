@@ -1,7 +1,5 @@
 @import 'styles/settings';
-
-// $spacer-edge-opacity: 0;
-// $spacer-middle-opacity: 0.6;
+@import 'styles/ui.module';
 
 .header {}
 
@@ -33,4 +31,8 @@
   text-overflow: ellipsis;
   padding-right: 10px;
   letter-spacing: 1px;
+}
+
+.spacer {
+  @extend %spacer;
 }

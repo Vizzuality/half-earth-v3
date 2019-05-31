@@ -26,7 +26,6 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  // padding-top: 100px;
   top: 0;
   z-index: 2;
 }
@@ -101,7 +100,7 @@
   }
 
   &::after {
-    @extend .spacer;
+    @extend %spacer;
 
     bottom: 1px;
     content: "";

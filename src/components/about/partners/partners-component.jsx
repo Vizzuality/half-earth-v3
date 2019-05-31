@@ -17,8 +17,8 @@ const Logo = ({ href, image }) => (
 const PartnersComponent = () => (
   <div className={styles.wrapper}>
     {sections.map(({ title, description, content, theme }) => (
-      <div className={cx(styles.section, theme)}>
-        <h1 class={styles.title} key={title}>{title}</h1>
+      <div className={cx(styles.section, theme)} key={`${title}-section`}>
+        <h1 className={styles.title} key={title}>{title}</h1>
         <div className={styles.logosWrapper} key={`${title}-content`}>
           {content && content.map(logo => <Logo key={logo.href} {...logo} />)}
         </div>

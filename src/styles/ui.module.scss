@@ -22,7 +22,7 @@ $spacer-middle-opacity: 0.6;
   }
 }
 
-.spacer {
+%spacer {
   height: 1px;
   background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
 }

@@ -7,7 +7,7 @@ import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 import LandscapeSidebar from 'components/landscape-sidebar';
-import About from 'components/about/about';
+import About from 'components/about';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';

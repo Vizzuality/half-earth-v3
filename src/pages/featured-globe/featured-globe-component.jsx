@@ -3,7 +3,7 @@ import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 
-import About from 'components/about/about';
+import About from 'components/about';
 import Sidebar from 'components/sidebar';
 import EntryBoxes from 'components/entry-boxes';
 
