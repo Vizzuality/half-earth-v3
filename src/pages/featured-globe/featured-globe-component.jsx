@@ -3,7 +3,7 @@ import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 
-import Legend from 'components/legend';
+import About from 'components/about/about';
 import Sidebar from 'components/sidebar';
 import EntryBoxes from 'components/entry-boxes';
 
@@ -35,7 +35,7 @@ const FeaturedGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isL
           ))
         }
       </Sidebar>
-      <Legend />
+      <About />
     </Globe>
   )
 };

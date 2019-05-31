@@ -23,6 +23,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 80vh;
+  overflow-y: scroll;
   width: 100%;
 
   .coreTitle {
@@ -50,6 +52,11 @@
     @extend .title;
     margin-bottom: 50px;
   }
+
+  .researchPartnersTitle {
+    @extend .title;
+    margin-bottom: 68px;
+  }
 }
 
 .coreLogosSection {
@@ -76,4 +83,6 @@
     height: min-content;
   }
 }
+
+
 

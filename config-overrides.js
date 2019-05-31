@@ -22,7 +22,8 @@ module.exports = function override(config, env) {
       constants: path.resolve(__dirname, 'src/constants'),
       redux_modules: path.resolve(__dirname, 'src/redux-modules'),
       reducerRegistry: path.resolve(__dirname, 'src/reducerRegistry'),
-      sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs')
+      sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
+      logos: path.resolve(__dirname, 'src/assets/logos'),
     }
   }
   config = rewireReactHotLoader(config, env);
