@@ -13,6 +13,7 @@ module.exports = function override(config, env) {
       layouts: path.resolve(__dirname, 'src/layouts'),
       pages: path.resolve(__dirname, 'src/pages'),
       icons: path.resolve(__dirname, 'src/assets/icons'),
+      logos: path.resolve(__dirname, 'src/assets/logos'),
       styles: path.resolve(__dirname, 'src/styles'),
       router: path.resolve(__dirname, 'src/router'),
       selectors: path.resolve(__dirname, 'src/selectors'),

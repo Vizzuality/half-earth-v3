@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Legend, {
+  LegendItemToolbar,
   LegendItemButtonOpacity,
-  LegendItemButtonVisibility,
-  LegendItemButtonInfo,
-  LegendItemButtonRemove,
   LegendItemTypes,
-  LegendListItem,
-  LegendItemToolbar
+  LegendListItem
 } from 'vizzuality-components/dist/legend';
+
+import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
@@ -31,17 +30,14 @@ const HELegend = ({ datasets, handlers }) => {
       onChangeOpacity={handleChangeOpacity}
     >
       <LegendItemButtonOpacity />
-      <LegendItemButtonVisibility />
-      <LegendItemButtonInfo />
-      <LegendItemButtonRemove />
     </LegendItemToolbar>
   );
 
   return (
     <div className={styles.legend}>
-      <Legend sortable={datasets && datasets.length >= 1} onChangeOrder={handleChangeOrder}>
+      <Legend sortable={false} onChangeOrder={handleChangeOrder}>
         {datasets && datasets.map((dataset, i) => (
-          <LegendListItem index={i} key={dataset.slug} layerGroup={dataset} toolbar={toolbar}>
+          <LegendListItem index={i} key={dataset.slug} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name='test name' />}>
             <LegendItemTypes />
           </LegendListItem>
         ))}

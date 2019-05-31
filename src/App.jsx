@@ -4,6 +4,8 @@ import AppLayout from 'layouts/app-layout';
 
 import { Icons as VizzIcons } from 'vizzuality-components';
 
+import 'vizzuality-components/dist/legend.css';
+
 class App extends Component {
   render() {
     return (

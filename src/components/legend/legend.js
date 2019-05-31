@@ -10,7 +10,6 @@ const datasets = [
       {
         active: true,
         type: 'layer',
-        name: 'My Example Layer',
         legendConfig: {
           type: 'basic',
           items: []
