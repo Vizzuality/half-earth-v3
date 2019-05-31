@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/ui.module';
 
 .aboutButton {
   color: $white;
@@ -52,7 +53,7 @@
   color: $white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   height: 10%;
 }
 
@@ -60,11 +61,50 @@
   -ms-overflow-style: none;  /* IE 10+ */
   height: 90%;
   overflow-y: scroll;
+  padding-top: 80px;
   scrollbar-width: none; /* Firefox */
   width: 100%;
   
   &::-webkit-scrollbar { /* WebKit */
     width: 0;
     height: 0;
+  }
+}
+
+.tabsSwitch {
+  align-items: baseline;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 620px;
+
+  button {
+    border-bottom: 4px solid transparent;
+    color: $white;
+    font-family: $font-family-1;
+    font-size: $font-size-xs;
+    font-weight: bold;
+    letter-spacing: 2px;	
+    line-height: 20px;
+
+    &:not(:last-child) {
+      margin-right: 60px;
+    }
+  }
+
+  .active {
+    color: $robins-egg-blue;
+    border-color: $robins-egg-blue;
+    padding-bottom: 14px;
+  }
+
+  &::after {
+    @extend .spacer;
+
+    bottom: 1px;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
   }
 }

@@ -29,8 +29,10 @@ const About = () => {
       {isAboutPageOpened && 
         <div className={styles.aboutPage}>
           <div className={styles.navbar}>
-            <button onClick={() => setPartnersActive(true)}>PARTNERS</button>
-            <button onClick={() => setPartnersActive(false)}>MAP INTRSUCTIONS</button>
+            <div  className={styles.tabsSwitch}>
+              <button className={isPartnersActive && styles.active} onClick={() => setPartnersActive(true)}>PARTNERS</button>
+              <button className={!isPartnersActive && styles.active} onClick={() => setPartnersActive(false)}>MAP INSTRUCTIONS</button>
+            </div>
           </div>
           <div className={styles.content}>
             { isPartnersActive && <PartnersComponent /> || <MapInstructionsComponent />}

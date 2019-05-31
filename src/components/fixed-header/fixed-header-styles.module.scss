@@ -1,7 +1,7 @@
 @import 'styles/settings';
 
-$spacer-edge-opacity: 0;
-$spacer-middle-opacity: 0.6;
+// $spacer-edge-opacity: 0;
+// $spacer-middle-opacity: 0.6;
 
 .header {}
 
@@ -33,9 +33,4 @@ $spacer-middle-opacity: 0.6;
   text-overflow: ellipsis;
   padding-right: 10px;
   letter-spacing: 1px;
-}
-
-.spacer {
-  height: 1px;
-  background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
 }
