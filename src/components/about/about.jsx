@@ -32,14 +32,15 @@ const About = () => {
             <button onClick={() => setPartnersActive(true)}>PARTNERS</button>
             <button onClick={() => setPartnersActive(false)}>MAP INTRSUCTIONS</button>
           </div>
-          { isPartnersActive && <PartnersComponent /> || <MapInstructionsComponent />}
+          <div className={styles.content}>
+            { isPartnersActive && <PartnersComponent /> || <MapInstructionsComponent />}
+          </div>
           <button 
             className={styles.closeButton}
             onClick={handleCloseAboutPage}
           >
             <CloseIcon />
           </button>
-          ABOUT
         </div>
       }
     </>

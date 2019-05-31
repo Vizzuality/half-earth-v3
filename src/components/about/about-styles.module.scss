@@ -25,7 +25,7 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  padding-top: 100px;
+  // padding-top: 100px;
   top: 0;
   z-index: 2;
 }
@@ -49,8 +49,22 @@
 }
 
 .navbar {
-  color: white;
+  color: $white;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 10%;
+}
+
+.content {
+  -ms-overflow-style: none;  /* IE 10+ */
+  height: 90%;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  width: 100%;
+  
+  &::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+  }
 }

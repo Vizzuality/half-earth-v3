@@ -1,13 +1,46 @@
 
 @import 'styles/settings';
 
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 80px;
+  width: 960px;
+}
+
 .title {
   color: $white;
   font-family: $font-family-1;
   font-size: $font-size-xl;
+  font-weight: unset;
   letter-spacing: 1px;
   line-height: 30px;
+  margin: 0;
+  margin-bottom: 50px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+}
+
+.logosWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  & > * {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 50px;
+    width: 25%;
+  }
 }
 
 .description {
@@ -16,73 +49,20 @@
   font-size: $font-size-sm;
   font-weight: $font-weight-light;
   line-height: 22px;
+  margin: 0;
   text-align: center;
 }
 
-.wrapper {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
-  overflow-y: scroll;
-  width: 100%;
-
-  .coreTitle {
-    @extend .title;
-    margin-bottom: 80px;
-  }
-
-  .coreDescription {
-    @extend .description;
+.partners {
+  .description {
     width: 500px;
-    margin-bottom: 80px;
   }
-
-  .sponsorsTitle {
-    @extend .title;
-    margin-bottom: 34px;
-  }
-
-  .sponsorsNames {
-    @extend .description;
-    margin-bottom: 80px;
-  }
-
-  .partnersTitle {
-    @extend .title;
-    margin-bottom: 50px;
-  }
-
-  .researchPartnersTitle {
-    @extend .title;
-    margin-bottom: 68px;
+  .logosWrapper {
+    justify-content: space-between;
+    width: 75%;
   }
 }
 
-.coreLogosSection {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 56px;
-  width: 600px;
-
-  img {
-    height: min-content;
-  }
+.sponsors .title {
+  margin-bottom: 34px;
 }
-
-
-.partenrsLogosSection {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 56px;
-  width: 940px;
-
-  img {
-    height: min-content;
-  }
-}
-
-
-
