@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
+
 import styles from './checkbox-styles.module.scss';
 
 const Checkbox = ({ option, onChange, checked, theme }) => {
@@ -20,7 +23,8 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
       />
       <label htmlFor={option.value} className={styles.checkbox}>
         {option.name}
-      </label>  
+      </label>
+      {checked && <InfoIcon onClick={() => console.log('info')} />}
     </div>
   )}
 

@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useSpring, useTransition, animated } from 'react-spring';
+
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
 import styles from './radio-group-styles.module.scss';
 
@@ -40,6 +41,7 @@ const RadioGroup = ({ options, title, defaultSelection }) => {
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
+              <InfoIcon onClick={() => console.log('elo')} />
               <button
                 type="button"
                 className={styles.button}
