@@ -16,11 +16,8 @@ const HumanImpactLayers = ({ map, title, rasters, setRasters, description, optio
     const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
     setRasters(rasters);
 
-    if (Object.values(rasters).some(raster => raster)) {
-      setLayerVisibility(HUMAN_PRESSURE_LAYER_ID, true);
-    } else {
-      setLayerVisibility(HUMAN_PRESSURE_LAYER_ID, false);
-    }
+    const hasRastersWithData = Object.values(rasters).some(raster => raster);
+    setLayerVisibility(HUMAN_PRESSURE_LAYER_ID, hasRastersWithData);
 
     const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
     const rasterNames = activeRasters.map(value => `human_impact_${value}`)
