@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
+import InfoModal from 'components/modal';
 
 import styles from './radio-group-styles.module.scss';
 
@@ -41,7 +42,7 @@ const RadioGroup = ({ options, title, defaultSelection }) => {
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
-              <InfoIcon onClick={() => console.log('elo')} />
+              <InfoModal />
               <button
                 type="button"
                 className={styles.button}

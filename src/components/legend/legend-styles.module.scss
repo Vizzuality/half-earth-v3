@@ -1,3 +1,5 @@
+@import 'styles/settings';
+
 $site-gutter: 20px;
 
 :global {
@@ -8,8 +10,8 @@ $site-gutter: 20px;
   }
 
   .c-rc-tooltip.-default .rc-tooltip-inner {
-    background-color: #0E2B3B;
-    color: #DBDBDB;
+    background-color: $blue;
+    color: $alto;
     font-family: 'PierSans';
   }
 
@@ -22,7 +24,7 @@ $site-gutter: 20px;
   }
 
   .rc-slider-mark-text {
-    color: #DBDBDB;
+    color: $alto;
   }
 }
 
@@ -37,11 +39,11 @@ $site-gutter: 20px;
     .wri_api__c-legend-map {
       border: none;
       border-radius: 2px;
-      background: rgba(#09141a, 0.4);
+      background: rgba($firefly, 0.4);
     }
 
     .wri_api__c-legend-item {
-      background: rgba(#09141a, 0.4);
+      background: rgba($firefly, 0.4);
     }
 
     .wri_api__toggle-legend {
@@ -54,16 +56,16 @@ body {
   :global {
     .wri_api__slider-tooltip-container .rc-slider {
       .rc-slider-track {
-        background-color: #1bcec7 !important;
+        background-color: $java !important;
         height: 4px;
       }
 
       .rc-slider-handle {
-        border: 1px solid #0E2B3B !important;
-        background-color: #FFFFFF !important;
+        border: 1px solid $blue !important;
+        background-color: $white !important;
         height: 10px !important;
         width: 10px !important;
-        box-shadow: 0 2px 4px 0 #0E2B3B;
+        box-shadow: 0 2px 4px 0 $blue;
         border-radius: 50%;
         top: 7px;
       }

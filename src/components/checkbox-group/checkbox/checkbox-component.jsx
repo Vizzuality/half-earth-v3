@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
+import InfoModal from 'components/modal';
 
 import styles from './checkbox-styles.module.scss';
 
@@ -24,7 +24,7 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
       <label htmlFor={option.value} className={styles.checkbox}>
         {option.name}
       </label>
-      {checked && <InfoIcon onClick={() => console.log('info')} />}
+      {checked && <InfoModal />}
     </div>
   )}
 

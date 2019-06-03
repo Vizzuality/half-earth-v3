@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 import Checkbox from './checkbox';
 import styles from './checkbox-group-styles.module.scss';
 
-const CheckboxGroup = ({ options, handleLayerToggle, theme, activeLayers }) => {
-  const alreadyChecked = options.reduce((acc, option) => ({ 
-    ...acc, [option.name]: activeLayers.some(layer => layer.id === option.id) 
-  }), {});
-
-  const [checkedItems, setCheckedItems] = useState(alreadyChecked);
+const CheckboxGroup = ({ options, title, handleLayerToggle, theme, checkedOptions, handleHumanPressureRasters, handleClick }) => {
+  const [checkedItems, setCheckedItems] = useState(checkedOptions);
 
   const handleChange = (e, option) => {
     const item = option.value;

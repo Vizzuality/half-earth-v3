@@ -30,7 +30,8 @@
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
     "vega-lib": "^4.4.0",
-    "vizzuality-components": "^1.1.1"
+    "vizzuality-components": "^1.1.1",
+    "he-components": "github:vizzuality/half-earth-components#0.2.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
