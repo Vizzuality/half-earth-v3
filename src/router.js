@@ -3,10 +3,6 @@ import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 const lazyLoadDataGlobe = (dispatch, getState) => import('redux_modules/data-globe/data-globe-thunks').then(module => module.default(dispatch, getState));
 const lazyLoadFeaturedGlobe = (dispatch, getState) => import('redux_modules/featured-globe/featured-globe-thunks').then(module => module.default(dispatch, getState));
-const lazyLoadCartoLayers = (dispatch, getState) => import('redux_modules/carto-layers/carto-layers-thunks').then(module => module.default(dispatch, getState));
-
-const dispatchPreFetchThunks = (...thunks) =>
-  async (...params) => thunks.forEach(thunk => thunk(...params));
 
 export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
@@ -15,10 +11,7 @@ export const routes = {
   [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe',
-    thunk: dispatchPreFetchThunks(
-      lazyLoadDataGlobe,
-      lazyLoadCartoLayers
-    )
+    thunk: lazyLoadDataGlobe
   },
   [FEATURED]: {
     path: '/featuredGlobe',
