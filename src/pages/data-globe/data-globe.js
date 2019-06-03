@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from '@esri/react-arcgis';
 
 import { layerManagerToggle, layerManagerVisibility } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
@@ -15,20 +14,11 @@ const RICHNESS_RARITY_GRID = 'rarity-richness-GRID';
 
 const handleMapLoad = (map, view) => {
   const { layers } = map;
+  console.log(layers)
   const gridLayer = layers.items.find(l => l.title === RICHNESS_RARITY_GRID);
   // set the outFields for the rarity-richness-GRID layer
   // to get all the attributes available
   gridLayer.outFields = ["*"];
-
-  // loadModules(
-  //   ["esri/renderers/smartMapping/statistics/uniqueValues"]).then(([uniqueValues]) => {
-  //     setSpeciesLoading();
-  //     uniqueValues({ layer: gridLayer, field: TAXA_FIELD}).then((result) => {
-  //       setSpecies(result.uniqueValueInfos);
-  //     }).catch((err) => {
-  //       setSpeciesError(err);
-  //     })
-  // }).catch((err) => { console.error(err); setSpeciesError(err) });
 }
 const dataGlobeContainer = props => {
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings);
