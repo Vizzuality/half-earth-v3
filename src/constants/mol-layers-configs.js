@@ -4,8 +4,9 @@ const fishingTiles = "fishing-hours/gfw_purple";
 
 export const biodiversityCategories = [
   {
-    name: 'terrestrial',
-    description: 'description for terrestrial',
+    name: 'TERRESTRIAL SPECIES',
+    description: 'Global, ~110 km cell size mapping of terrestrial species. ',
+    subcategories: false,
     taxa: [
       {
         value: 'mammals',
@@ -38,8 +39,9 @@ export const biodiversityCategories = [
     ] 
   },
   {
-    name: 'marine',
-    description: 'description for marine',
+    name: 'MARINE SPECIES',
+    description: 'Global, ~50 km cell size mapping of marine species. ',
+    subcategories: false,
     taxa: [
       {
         value: 'fishes',
@@ -48,47 +50,51 @@ export const biodiversityCategories = [
     ]
   },
   {
-    name: 'south africa',
-    description: '',
-    taxa: [
+    name: 'FINE SCALE DATA',
+    description: 'Maps with 1km cell size for select species.',
+    subcategories: [
       {
-        value: 'amphibians',
-        layers: { rarity: 'sa amphibians rarity', richness: 'sa amphibians richness' }
+        name: 'south africa',
+        taxa: [
+          {
+            value: 'amphibians',
+            layers: { rarity: 'sa amphibians rarity', richness: 'sa amphibians richness' }
+          },
+          {
+            value: 'dragonflies',
+            layers: { rarity: 'sa dragonflies rarity', richness: 'sa dragonflies richness' }
+          },
+          {
+            value: 'mammals',
+            layers: { rarity: 'sa mammals rarity', richness: 'sa mammals richness' }
+          },
+          {
+            value: 'birds',
+            layers: { rarity: 'sa birds rarity', richness: 'sa birds richness' }
+          },
+          {
+            value: 'restio',
+            layers: { rarity: 'sa restio rarity', richness: 'restio richness' }
+          },
+          {
+            value: 'protea',
+            layers: { rarity: 'sa protea rarity', richness: 'sa protea richness' }
+          },
+          {
+            value: 'reptiles',
+            layers: { rarity: 'sa reptiles rarity', richness: 'sa reptiles richness' }
+          },
+          
+        ]
       },
       {
-        value: 'dragonflies',
-        layers: { rarity: 'sa dragonflies rarity', richness: 'sa dragonflies richness' }
-      },
-      {
-        value: 'mammals',
-        layers: { rarity: 'sa mammals rarity', richness: 'sa mammals richness' }
-      },
-      {
-        value: 'birds',
-        layers: { rarity: 'sa birds rarity', richness: 'sa birds richness' }
-      },
-      {
-        value: 'restio',
-        layers: { rarity: 'sa restio rarity', richness: 'restio richness' }
-      },
-      {
-        value: 'protea',
-        layers: { rarity: 'sa protea rarity', richness: 'sa protea richness' }
-      },
-      {
-        value: 'reptiles',
-        layers: { rarity: 'sa reptiles rarity', richness: 'sa reptiles richness' }
-      },
-      
-    ]
-  },
-  {
-    name: 'hummingbirds',
-    description: '',
-    taxa: [
-      {
-        value: 'hummingbirds',
-        layers: { rarity: 'hummingbirds rarity', richness: 'hummingbirds richness' }
+        name: 'hummingbirds',
+        taxa: [
+          {
+            value: 'hummingbirds',
+            layers: { rarity: 'hummingbirds rarity', richness: 'hummingbirds richness' }
+          }
+        ]
       }
     ]
   }

@@ -49,6 +49,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
               handleLayerToggle={handleLayerToggle}
               title={cat.name}
               description={cat.description}
+              subcategories={cat.subcategories}
               options={cat.taxa}
               defaultSelection={null}
             />
