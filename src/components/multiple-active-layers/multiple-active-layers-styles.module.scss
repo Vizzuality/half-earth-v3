@@ -1,7 +1,10 @@
 @import 'styles/settings';
+@import 'styles/ui.module';
 
 .wrapper {
-  margin-bottom: 32px;
+  @include backdropBlur();
+  padding-bottom: $sidebar-paddings;
+  padding-left: $sidebar-paddings;
 }
 
 .titleSection {

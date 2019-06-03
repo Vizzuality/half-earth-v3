@@ -9,18 +9,19 @@ $spacer-middle-opacity: 0.6;
   left: $site-gutter;
 }
 
-// blur effect && transparent fallback if no browser support
-.backdropBlur {
-  background-color: rgba($firefly, 0.45);
-}
-
-@supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
-  .backdropBlur {
-    background-color: rgba(9, 20, 26, 0.3);
-    -webkit-backdrop-filter: blur($blur-level);
-    backdrop-filter: blur($blur-level);
+@mixin backdropBlur($colour: rgba(9, 20, 26, 0.3), $fallback: $firefly, $fallbackOpacity: 0.8) {
+  background-color: rgba($fallback, $fallbackOpacity);
+  
+  @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
+      background-color: $colour;
+      -webkit-backdrop-filter: blur($blur-level);
+      backdrop-filter: blur($blur-level);
   }
 }
+
+// .sidebar {
+//   @include rtl(float, left, right);
+// }
 
 %spacer {
   height: 1px;

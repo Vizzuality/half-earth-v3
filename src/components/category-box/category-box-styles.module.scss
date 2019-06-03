@@ -2,7 +2,7 @@
 @import 'styles/settings';
 
 .box {
-  @extend .backdropBlur;
+  @include backdropBlur();
   box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
   padding: 0 30px 0 20px;
   width: $sidebar-width;

@@ -1,7 +1,12 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
 
-.header {}
+.header {
+  @include backdropBlur();
+  padding-top: $sidebar-margin;
+  padding-bottom: $sidebar-paddings;
+  padding-left: $sidebar-paddings;
+}
 
 .button {
   display: flex;
