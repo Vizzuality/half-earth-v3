@@ -1,0 +1,112 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.aboutButton {
+  color: $white;
+  position: absolute;
+  bottom: $site-gutter;
+  right: $site-gutter;
+  opacity: 0.7;	
+  color: $alto;
+  font-family: $font-family-1;
+  font-size: $font-size-xxs;
+  font-weight: bold;
+  letter-spacing: $letter-spacing;
+  line-height: $line-height;
+  text-shadow: 0 0 2px 0 rgba(0,0,0,0.59);
+  text-transform: uppercase;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.aboutPage {
+  background-color: $firefly;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  z-index: 2;
+}
+
+
+.closeButton {
+  color: $white;
+  position: fixed;
+  right: calc(2 * #{$site-gutter});
+  top: calc(2 * #{$site-gutter});
+
+  svg {
+    fill: $oslo-gray;
+    height: 22px;
+    stroke: $oslo-gray;
+    width: 22px;
+  }
+
+  &:hover svg {
+    fill: $white;
+    stroke: $white;
+  }
+}
+
+.navbar {
+  color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 10%;
+}
+
+.content {
+  -ms-overflow-style: none;  /* IE 10+ */
+  height: 90%;
+  overflow-y: scroll;
+  padding-top: 80px;
+  scrollbar-width: none; /* Firefox */
+  width: 100%;
+  
+  &::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+  }
+}
+
+.tabsSwitch {
+  align-items: baseline;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 620px;
+
+  button {
+    border-bottom: 4px solid transparent;
+    color: $white;
+    font-family: $font-family-1;
+    font-size: $font-size-xs;
+    font-weight: bold;
+    letter-spacing: 2px;	
+    line-height: 20px;
+
+    &:not(:last-child) {
+      margin-right: 60px;
+    }
+  }
+
+  .active {
+    color: $robins-egg-blue;
+    border-color: $robins-egg-blue;
+    padding-bottom: 14px;
+  }
+
+  &::after {
+    @extend %spacer;
+
+    bottom: 1px;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+}

@@ -1,0 +1,68 @@
+
+@import 'styles/settings';
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 80px;
+  width: 960px;
+}
+
+.title {
+  color: $white;
+  font-family: $font-family-1;
+  font-size: $font-size-xl;
+  font-weight: unset;
+  letter-spacing: 1px;
+  line-height: 30px;
+  margin: 0;
+  margin-bottom: 50px;
+  text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+}
+
+.logosWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  & > * {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 50px;
+    width: 25%;
+  }
+}
+
+.description {
+  color: $white;	
+  font-family: $font-family-1;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-light;
+  line-height: 22px;
+  margin: 0;
+  text-align: center;
+}
+
+.partners {
+  .description {
+    width: 500px;
+  }
+  .logosWrapper {
+    justify-content: space-between;
+    width: 75%;
+  }
+}
+
+.sponsors .title {
+  margin-bottom: 34px;
+}

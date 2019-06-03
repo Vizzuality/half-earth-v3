@@ -1,5 +1,8 @@
 @import 'styles/settings';
 
+$spacer-edge-opacity: 0;
+$spacer-middle-opacity: 0.6;
+
 .uiTopLeft {
   position: absolute;
   top: 60px;
@@ -17,4 +20,9 @@
     -webkit-backdrop-filter: blur($blur-level);
     backdrop-filter: blur($blur-level);
   }
+}
+
+%spacer {
+  height: 1px;
+  background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
 }
