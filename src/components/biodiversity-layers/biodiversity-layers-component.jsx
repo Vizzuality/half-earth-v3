@@ -24,12 +24,12 @@ const BiodiversityLayers = ({ map, title, description, options, subcategories, d
           <p className={styles.description}>{description}</p>
           {
             subcategories.map(subct => (
-              <>
+              <div key={subct.name}>
                 <h2 className={styles.widgetTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
                   <RadioGroup options={subct.taxa} title={title} defaultSelection={defaultSelection} handleLayerToggle={handleLayerUpdate}/>
                 </div>
-              </>
+              </div>
             ))
           }
         </div>
