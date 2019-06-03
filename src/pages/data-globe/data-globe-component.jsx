@@ -100,7 +100,7 @@ const DataGlobeComponent = ({
           />
         )}
       </Sidebar>
-      <LandscapeSidebar isLandscapeMode={isLandscapeMode}/>
+      <LandscapeSidebar isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
       <About />
     </Globe>
   )
