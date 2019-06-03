@@ -8,6 +8,8 @@ import BiodiversityLayers from 'components/biodiversity-layers';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 import LandscapeSidebar from 'components/landscape-sidebar';
 import About from 'components/about';
+import HumanImpactLayers from 'components/human-impact-layers';
+import ProtectedAreasLayers from 'components/protected-areas-layers';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -16,16 +18,13 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 
-// styles
-import styles from './data-globe-styles.module';
-
 // layers
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { WDPALayers } from 'constants/protected-areas';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, handleLayerToggle, sceneSettings, speciesCategories, onLoad, setSpeciesLoading, setSpecies, setSpeciesError }) => {
+const DataGlobeComponent = ({ sceneLayers, rasters, setRasters, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, setLayerVisibility, handleLayerToggle, sceneSettings, speciesCategories, onLoad, setSpeciesLoading, setSpecies, setSpeciesError }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
@@ -48,7 +47,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
           ))
         }
         {isBiodiversityActive && speciesCategories && (
-          <>
+          <div>
             <BiodiversityLayers 
               title='Terrestrial Species'
               description='Global km'
@@ -60,29 +59,27 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
               description='Global km'
               options={speciesCategories.marine} 
             />
-          </>
+          </div>
         )}
         {isHumanPressuresActive && (
-          <>
-            <MultipleActiveLayers 
-              options={humanPressuresLandUse} 
-              title='Land use pressures'
-              description='Human pressures causing habitat loss and accelerating species extinction.'
-              activeLayers={activeLayers}
-            />
-          </>
+          <HumanImpactLayers 
+            options={humanPressuresLandUse} 
+            setLayerVisibility={setLayerVisibility}
+            title='Land use pressures'
+            description='Human pressures causing habitat loss and accelerating species extinction.'
+            activeLayers={activeLayers}
+            rasters={rasters}
+            setRasters={setRasters}
+          />
         )}
         {isProtectedAreasActive && (
-          <>
-            <MultipleActiveLayers 
-              options={WDPALayers} 
-              title='Conservation areas'
-              handleLayerToggle={handleLayerToggle}
-              theme={styles.overrideCheckbox}
-              description='Protections classified according to their management objectives.'
-              activeLayers={activeLayers}
-            />
-          </>
+          <ProtectedAreasLayers 
+            options={WDPALayers} 
+            title='Conservation areas'
+            handleLayerToggle={handleLayerToggle}
+            description='Protections classified according to their management objectives.'
+            activeLayers={activeLayers}
+          />
         )}
       </Sidebar>
       <LandscapeSidebar isLandscapeMode={isLandscapeMode}/>
