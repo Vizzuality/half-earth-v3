@@ -21,9 +21,11 @@ const GlobeComponent = ({ sceneId, sceneSettings, onLoad, children }) => {
       className={cx(styles.sceneContainer)}
       id={sceneId}
       onLoad={handleOnLoad}
+      // onLoad={onLoad}
       viewProperties={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
+      {/* {children} */}
       <div className={styles.content}>
         {sceneLoaded && React.Children.map(children || null, (child, i) => {
           return child && <child.type key={i} map={sceneMap} view={sceneView} {...child.props}/>;

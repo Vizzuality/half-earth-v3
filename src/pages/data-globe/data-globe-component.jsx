@@ -7,6 +7,7 @@ import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 import LandscapeSidebar from 'components/landscape-sidebar';
+import About from 'components/about';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -85,6 +86,7 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
         )}
       </Sidebar>
       <LandscapeSidebar isLandscapeMode={isLandscapeMode}/>
+      <About />
     </Globe>
   )
 };
