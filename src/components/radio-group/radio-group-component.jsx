@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -10,6 +10,12 @@ const RICHNESS = 'richness';
 const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelection);
   const [toggle, setToggle] = useState(RARITY);
+  const [selectedLayer, setSelectedLayer] = useState(null);
+
+  useEffect(() => {
+    selectedLayer && handleLayerToggle(selectedLayer[toggle])
+  }, [toggle, selectedLayer])
+
   const toggleRarityRichness = () => {
     setToggle(toggle === RARITY ? RICHNESS : RARITY);
   }
@@ -24,7 +30,7 @@ const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => 
           { [styles.radioOptionSelected]: isSelected(option) }
         )}>
           <>
-            <input 
+            <input
               type="radio"
               name={title}
               id={option.value}
@@ -33,8 +39,7 @@ const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => 
                 isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
               }}
               onClick={() => {
-                handleLayerToggle(option.layers[toggle])
-                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
+                setSelectedLayer(option.layers)
               }}
               defaultChecked={isSelected(option)}
             />
@@ -48,7 +53,6 @@ const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => 
                 type="button"
                 className={styles.button}
                 onClick={() => {
-                  handleLayerToggle(option.layers[toggle]);
                   toggleRarityRichness();
                 }}>
                 {toggle}
