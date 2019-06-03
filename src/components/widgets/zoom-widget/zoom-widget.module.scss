@@ -1,6 +1,9 @@
 @import 'styles/settings';
+@import 'styles/ui.module';
 
 .zoomComponent {
+  @extend .uiRight;
+  top: 40px;
   display: flex;
   flex-direction: column;
   background-color: $elephant;

@@ -24,7 +24,25 @@ import { WDPALayers } from 'constants/protected-areas';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const DataGlobeComponent = ({ sceneLayers, rasters, setRasters, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, setLayerVisibility, handleLayerToggle, sceneSettings, speciesCategories, onLoad, setSpeciesLoading, setSpecies, setSpeciesError }) => {
+const DataGlobeComponent = ({ 
+  sceneLayers,
+  activeLayers,
+  rasters,
+  setRasters,
+  activeCategory,
+  isLandscapeMode,
+  isFullscreenActive,
+  isSidebarOpen,
+  handleZoomChange,
+  handleLayerToggle,
+  setLayerVisibility,
+  sceneSettings,
+  speciesCategories,
+  onLoad,
+  setSpeciesLoading,
+  setSpecies,
+  setSpeciesError
+}) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
@@ -34,12 +52,12 @@ const DataGlobeComponent = ({ sceneLayers, rasters, setRasters, activeLayers, ac
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
       <LocationWidget />
-      <ToggleUiWidget />
+      <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
       <ZoomWidget />
       <MinimapWidget />
       <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
-      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
+      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
+      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive}>
         {
           sceneLayers &&
           sceneLayers.map(l => (
