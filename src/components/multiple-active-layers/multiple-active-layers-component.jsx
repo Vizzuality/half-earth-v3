@@ -1,18 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { loadModules } from '@esri/react-arcgis';
 
 import CheckboxGroup from 'components/checkbox-group';
 
+import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+
 import styles from './multiple-active-layers-styles.module.scss';
 
-const MultipleActiveLayers = ({ title, description, options, handleLayerToggle, theme, activeLayers }) => {
+const MultipleActiveLayers = ({ map, title, description, options, handleClick, theme, activeLayers, alreadyChecked }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.titleSection}>
         <h2 className={styles.widgetTitle}>{title}</h2>
       </div>
       <p className={styles.description}>{description}</p>
-      <CheckboxGroup handleLayerToggle={handleLayerToggle} activeLayers={activeLayers} options={options} title={title} theme={theme} />
+      <CheckboxGroup 
+        handleClick={handleClick}
+        checkedOptions={alreadyChecked}
+        options={options}
+        title={title}
+        theme={theme} 
+      />
     </div>
   )}
 

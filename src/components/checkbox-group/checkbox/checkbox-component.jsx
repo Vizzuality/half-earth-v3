@@ -12,13 +12,13 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
     )}>
       <input 
         type="checkbox"
-        value={option.name}
+        value={option.value}
         name={option.name}
-        id={option.name}
+        id={option.value}
         defaultChecked={checked}
         onChange={(e) => onChange(e, option)} 
       />
-      <label htmlFor={option.name} className={styles.checkbox}>
+      <label htmlFor={option.value} className={styles.checkbox}>
         {option.name}
       </label>  
     </div>
