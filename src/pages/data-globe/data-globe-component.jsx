@@ -42,12 +42,6 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
       <SearchWidget />
       <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
       <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
-        {
-          sceneLayers &&
-          sceneLayers.map(l => (
-              <button key={l.id} data-layer-id={l.id} onClick={() => handleLayerToggle(l.id)}>{l.title}</button>
-          ))
-        }
         {isBiodiversityActive && (
           biodiversityCategories.map(cat => (
             <BiodiversityLayers
