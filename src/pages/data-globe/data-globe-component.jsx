@@ -1,4 +1,5 @@
 import React from 'react';
+import { biodiversityCategories } from 'constants/mol-layers-configs';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -46,44 +47,35 @@ const DataGlobeComponent = ({ sceneLayers, activeLayers, activeCategory, isLands
               <button key={l.id} data-layer-id={l.id} onClick={() => handleLayerToggle(l.id)}>{l.title}</button>
           ))
         }
-        {isBiodiversityActive && speciesCategories && (
-          <>
+        {isBiodiversityActive && (
+          biodiversityCategories.map(cat => (
             <BiodiversityLayers
+              key={cat.name}
               handleLayerToggle={handleLayerToggle}
-              title='Terrestrial Species'
-              description='Global km'
-              options={speciesCategories.terrestrial}
+              title={cat.name}
+              description={cat.description}
+              options={cat.taxa}
               defaultSelection={null}
             />
-            <BiodiversityLayers
-              handleLayerToggle={handleLayerToggle}
-              title='Marine Species'
-              description='Global km'
-              options={speciesCategories.marine} 
-            />
-          </>
+          ))
         )}
         {isHumanPressuresActive && (
-          <>
-            <MultipleActiveLayers 
-              options={humanPressuresLandUse} 
-              title='Land use pressures'
-              description='Human pressures causing habitat loss and accelerating species extinction.'
-              activeLayers={activeLayers}
-            />
-          </>
+          <MultipleActiveLayers 
+            options={humanPressuresLandUse} 
+            title='Land use pressures'
+            description='Human pressures causing habitat loss and accelerating species extinction.'
+            activeLayers={activeLayers}
+          />
         )}
         {isProtectedAreasActive && (
-          <>
-            <MultipleActiveLayers 
-              options={WDPALayers} 
-              title='Conservation areas'
-              handleLayerToggle={handleLayerToggle}
-              theme={styles.overrideCheckbox}
-              description='Protections classified according to their management objectives.'
-              activeLayers={activeLayers}
-            />
-          </>
+          <MultipleActiveLayers
+            options={WDPALayers}
+            title='Conservation areas'
+            handleLayerToggle={handleLayerToggle}
+            theme={styles.overrideCheckbox}
+            description='Protections classified according to their management objectives.'
+            activeLayers={activeLayers}
+          />
         )}
       </Sidebar>
       <LandscapeSidebar isLandscapeMode={isLandscapeMode}/>
