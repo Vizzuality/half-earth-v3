@@ -5,7 +5,6 @@ import LandscapeViewManager from 'components/landscape-view-manager';
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
-import MultipleActiveLayers from 'components/multiple-active-layers';
 import LandscapeSidebar from 'components/landscape-sidebar';
 import About from 'components/about';
 import HumanImpactLayers from 'components/human-impact-layers';

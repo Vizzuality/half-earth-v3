@@ -4,7 +4,8 @@ import Legend, {
   LegendItemToolbar,
   LegendItemButtonOpacity,
   LegendItemTypes,
-  LegendListItem
+  LegendListItem,
+  LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
 
 import LegendTitle from './legend-title';
@@ -29,7 +30,50 @@ const HELegend = ({ datasets, handlers, isFullscreenActive }) => {
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
     >
-      <LegendItemButtonOpacity />
+    <LegendItemToolbar
+      onChangeInfo={handleInfoClick}
+      onChangeLayer={handleLayerChange}
+      onRemoveLayer={handleRemoveLayer}
+      onChangeVisibility={handleChangeVisibility}
+      onChangeOpacity={handleChangeOpacity}
+    >
+      <LegendItemButtonOpacity
+        className={styles.legendItemButtonOpacity}
+        handleStyle={[
+          {
+            border: '1px solid #0E2B3B',
+            backgroundColor: '#FFFFFF',
+            height: '10px',
+            width: '10px',
+            boxShadow: '0 2px 4px 0 #0E2B3B',
+            borderRadius: '50%',
+            position: 'absolute',
+            transform: 'translate(-5px,-9px)',
+            cursor: 'pointer',
+            outline: 'none'
+          }
+        ]}
+        trackStyle={[
+          { 
+            backgroundColor: '#1bcec7',
+            height: '4px',
+            borderRadius: '4px',
+            transform: 'translate(0, -3px)'
+          },
+        ]}
+        railStyle={{
+          backgroundColor: 'rgba(255,255,255,0.3)',
+          height: '2px',
+          borderRadius: '2px'
+        }}
+        marks={
+          { 0: { style: { marginLeft: '0px', }, label: '0%'},
+            100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
+          }
+        }
+      />
+      <LegendItemButtonRemove />
+    </LegendItemToolbar>
     </LegendItemToolbar>
   );
 

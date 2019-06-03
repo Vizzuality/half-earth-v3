@@ -22,7 +22,7 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
         onChange={(e) => onChange(e, option)} 
       />
       <label htmlFor={option.value} className={styles.checkbox}>
-        {option.name}
+        <span className={styles.label}>{option.name}</span>
       </label>
       {checked && <InfoModal />}
     </div>
