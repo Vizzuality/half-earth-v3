@@ -4,13 +4,12 @@ import cx from 'classnames';
 
 import styles from './radio-group-styles.module.scss';
 
-const RARITY = 'Rarity';
-const RICHNESS = 'Richness';
+const RARITY = 'rarity';
+const RICHNESS = 'richness';
 
 const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelection);
   const [toggle, setToggle] = useState(RARITY);
-  
   const toggleRarityRichness = () => {
     setToggle(toggle === RARITY ? RICHNESS : RARITY);
   }
@@ -30,11 +29,14 @@ const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => 
               name={title}
               id={option.value}
               value={option.value}
-              defaultChecked={isSelected(option)}
               onChange={() => {
-                handleLayerToggle("All marine fishing types")
-                setSelectedOption(option)} 
-              } 
+                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
+              }}
+              onClick={() => {
+                handleLayerToggle(option.layers[toggle])
+                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
+              }}
+              defaultChecked={isSelected(option)}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
               {option.value}
@@ -45,7 +47,10 @@ const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => 
               <button
                 type="button"
                 className={styles.button}
-                onClick={toggleRarityRichness}>
+                onClick={() => {
+                  handleLayerToggle(option.layers[toggle]);
+                  toggleRarityRichness();
+                }}>
                 {toggle}
               </button>
             </div>
