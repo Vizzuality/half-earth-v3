@@ -11,7 +11,7 @@ import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive }) => {
   const { 
     handleChangeOrder,
     handleRemoveLayer,
@@ -35,13 +35,13 @@ const HELegend = ({ datasets, handlers }) => {
 
   return (
     <div className={styles.legend}>
-      <Legend sortable={false} onChangeOrder={handleChangeOrder}>
+      {!isFullscreenActive && <Legend sortable={false} onChangeOrder={handleChangeOrder}>
         {datasets && datasets.map((dataset, i) => (
           <LegendListItem index={i} key={dataset.slug} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name='test name' />}>
             <LegendItemTypes />
           </LegendListItem>
         ))}
-      </Legend>
+      </Legend>}
     </div>
   );
 }

@@ -30,7 +30,7 @@ $site-gutter: 20px;
 
 .legend {
   position: absolute;
-  bottom: $site-gutter;
+  bottom: $site-gutter * 2;
   right: $site-gutter;
   width: 240px;
   height: 80px;

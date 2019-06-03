@@ -10,6 +10,7 @@ import LandscapeSidebar from 'components/landscape-sidebar';
 import About from 'components/about';
 import HumanImpactLayers from 'components/human-impact-layers';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
+import Legend from 'components/legend';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -102,6 +103,7 @@ const DataGlobeComponent = ({
       </Sidebar>
       <LandscapeSidebar isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
       <About />
+      <Legend isFullscreenActive={isFullscreenActive} />
     </Globe>
   )
 };
