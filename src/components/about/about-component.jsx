@@ -10,7 +10,6 @@ const AboutPage = ({ handleCloseAboutPage }) => {
   const [isPartnersActive, setPartnersActive] = useState(true);
 
   const keyEscapeEventListener = (evt) => {
-    console.log('keyEscapeEventListener')
     evt = evt || window.event;
     if (evt.keyCode === 27)
       handleCloseAboutPage();
