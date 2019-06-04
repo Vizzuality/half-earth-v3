@@ -1,0 +1,76 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.halfEarthModal {
+  background-color: $firefly;
+  background-image: url('../../assets/images/stars.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  z-index: 2;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  > * {
+    width: 50%;
+  }
+}
+
+.globeWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.globe {
+  // background-image: url('../../assets/images/halfEarthGlobe.svg');
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  color: $white;
+  font-family: $font-family-1;
+  font-size: $font-size-xl;
+  font-weight: unset;
+  letter-spacing: 1px;
+  line-height: 30px;
+  margin: 0;
+  margin-bottom: 50px;
+  text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+}
+
+.description {
+  // background: 
+  color:  white;
+  -ms-overflow-style: none;  /* IE 10+ */
+  // color: linear-gradient(transparent, black);
+  // background: -webkit-linear-gradient(#eee, transparent);
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  font-family: $font-family-1;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-light;
+  line-height: 22px;
+  margin: 0;
+  text-align: center;
+  height: 500px;
+  scrollbar-width: none; /* Firefox */
+  overflow-y: scroll;
+  width: 500px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+  }
+}
