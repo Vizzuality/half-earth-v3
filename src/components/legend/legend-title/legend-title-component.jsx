@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import styles from './legend-title-styles.module.scss';
 import molLogo from 'logos/mol_short_logo.png';
 
-// const legendName = (activeLayer, name) =>
-  // activeLayer && activeLayer.id === 'gadm-grid' ? 'Country borders' : name;
-
 const LegendTitleComponent = ({ layers, name, activeLayer }) => {
   console.log('title')
   return (
