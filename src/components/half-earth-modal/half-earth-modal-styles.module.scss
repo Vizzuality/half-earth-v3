@@ -5,33 +5,38 @@
   background-color: $firefly;
   background-image: url('../../assets/images/stars.png');
   background-repeat: no-repeat;
-  position: absolute;
-  width: 100vw;
+  background-size: cover;
   height: 100vh;
+  padding: 70px 0;
+  position: absolute;
   top: 0;
-  z-index: 2;
+  width: 100vw;
+  z-index: 3;
 }
 
 .wrapper {
   display: flex;
   height: 100%;
-  > * {
-    width: 50%;
+  margin: auto;
+  width: 80%;
+
+  > :first-child {
+    width: 30%;
+  }
+
+  > :last-child {
+    width: 70%;
   }
 }
 
 .globeWrapper {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
-}
-
-.globe {
-  // background-image: url('../../assets/images/halfEarthGlobe.svg');
+  overflow: hidden;
 }
 
 .content {
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,37 +45,104 @@
 h1 {
   color: $white;
   font-family: $font-family-1;
-  font-size: $font-size-xl;
+  font-size: $font-size-xxl;
   font-weight: unset;
   letter-spacing: 1px;
-  line-height: 30px;
+  line-height: 50px;
   margin: 0;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+  width: 430px;
+}
+
+.descriptionWrapper {
+  height: 270px;
+  position: relative;
+  margin-bottom: 100px;
+
+  &::after,  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 40px;
+  }
+
+  &::after {
+    background: linear-gradient(transparent, #06101C);
+    bottom: 0;
+  }
+
+  &::before {
+    background: linear-gradient(#020D16, transparent);
+    box-shadow: -3px -10px 31px -9px rgba(2,13,22,0.81);
+  }
 }
 
 .description {
-  // background: 
-  color:  white;
+  color:  $white;
   -ms-overflow-style: none;  /* IE 10+ */
-  // color: linear-gradient(transparent, black);
-  // background: -webkit-linear-gradient(#eee, transparent);
-  // -webkit-background-clip: text;
-  // -webkit-text-fill-color: transparent;
   font-family: $font-family-1;
   font-size: $font-size-sm;
   font-weight: $font-weight-light;
   line-height: 22px;
-  margin: 0;
   text-align: center;
-  height: 500px;
+  height: 270px;
   scrollbar-width: none; /* Firefox */
   overflow-y: scroll;
-  width: 500px;
+  width: 300px;
   overflow-y: scroll;
-
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: left;
+  
   &::-webkit-scrollbar { /* WebKit */
     width: 0;
     height: 0;
   }
+}
+
+$icon-size: 40px;
+
+
+.legendItem {
+  background-color: rgba(2,114,186,0.1);
+  color: $white; 
+  display: flex;
+  flex-direction: column;
+  font-family: $font-family-1;
+  font-weight: bold;
+  justify-content: center;
+  height: 76px;
+  padding-left: 50px;
+  position: relative;
+  width: 200px;
+
+  .value {
+    font-size: $font-size-xs;
+    letter-spacing: 2px;
+    line-height: 20px;
+  }
+
+  .label {
+    font-size: $font-size-xxs;
+    letter-spacing: $letter-spacing;
+    line-height: $line-height;
+  }
+}
+
+
+.icon {
+  height: $icon-size;
+  left: calc(#{$icon-size} / -2);
+  position: absolute;
+  top: calc(50% -  #{$icon-size} / 2);
+  width: $icon-size;
+}
+
+.legendWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-left: calc(#{$icon-size} / 2);
+  width: 500px;
 }

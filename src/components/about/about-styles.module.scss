@@ -30,26 +30,6 @@
   z-index: 11;
 }
 
-
-.closeButton {
-  color: $white;
-  position: fixed;
-  right: calc(2 * #{$site-gutter});
-  top: calc(2 * #{$site-gutter});
-
-  svg {
-    fill: $oslo-gray;
-    height: 22px;
-    stroke: $oslo-gray;
-    width: 22px;
-  }
-
-  &:hover svg {
-    fill: $white;
-    stroke: $white;
-  }
-}
-
 .navbar {
   color: $white;
   display: flex;
