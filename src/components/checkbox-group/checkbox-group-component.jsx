@@ -27,7 +27,6 @@ const CheckboxGroup = ({ options, title, handleLayerToggle, theme, checkedOption
 
 CheckboxGroup.propTypes = {
   options: PropTypes.array,
-  title: PropTypes.string,
   handleLayerToggle: PropTypes.func,
   theme: PropTypes.string,
   activeLayers: PropTypes.array
@@ -35,7 +34,6 @@ CheckboxGroup.propTypes = {
 
 CheckboxGroup.defaultProps = {
   options: [],
-  title: '',
   handleLayerToggle: () => {},
   theme: '',
   activeLayers: []

@@ -1,7 +1,10 @@
 
 @import 'styles/settings';
+@import 'styles/ui.module';
 
 .locationButton {
+  @extend .uiRight;
+  top: 10px;
   align-items: center;
   background-color: $elephant;
   border-radius: 2px;

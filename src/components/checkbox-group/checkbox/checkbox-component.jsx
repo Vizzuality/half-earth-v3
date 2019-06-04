@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
+import InfoModal from 'components/modal';
+
 import styles from './checkbox-styles.module.scss';
 
 const Checkbox = ({ option, onChange, checked, theme }) => {
@@ -19,8 +22,9 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
         onChange={(e) => onChange(e, option)} 
       />
       <label htmlFor={option.value} className={styles.checkbox}>
-        {option.name}
-      </label>  
+        <span className={styles.label}>{option.name}</span>
+      </label>
+      {checked && <InfoModal />}
     </div>
   )}
 

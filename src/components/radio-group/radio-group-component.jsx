@@ -2,6 +2,9 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
+import InfoModal from 'components/modal';
+
 import styles from './radio-group-styles.module.scss';
 
 const RARITY = 'rarity';
@@ -52,6 +55,7 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
+              <InfoModal />
               <button
                 type="button"
                 className={styles.button}

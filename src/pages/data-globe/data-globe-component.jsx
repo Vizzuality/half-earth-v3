@@ -10,6 +10,7 @@ import LandscapeSidebar from 'components/landscape-sidebar';
 import About from 'components/about';
 import HumanImpactLayers from 'components/human-impact-layers';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
+import Legend from 'components/legend';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -23,8 +24,21 @@ import { humanPressuresLandUse } from 'constants/human-pressures';
 import { WDPALayers } from 'constants/protected-areas';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
-
-const DataGlobeComponent = ({ rasters, setRasters, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, setLayerVisibility, handleLayerToggle, sceneSettings, onLoad, exclusiveLayerToggle }) => {
+const DataGlobeComponent = ({
+  activeLayers,
+  rasters,
+  setRasters,
+  activeCategory,
+  isLandscapeMode,
+  isFullscreenActive,
+  isSidebarOpen,
+  handleZoomChange,
+  handleLayerToggle,
+  setLayerVisibility,
+  sceneSettings,
+  exclusiveLayerToggle,
+  onLoad
+}) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
@@ -34,7 +48,7 @@ const DataGlobeComponent = ({ rasters, setRasters, activeLayers, activeCategory,
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
       <LocationWidget />
-      <ToggleUiWidget />
+      <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
       <ZoomWidget />
       <MinimapWidget />
       <SearchWidget />
@@ -76,8 +90,9 @@ const DataGlobeComponent = ({ rasters, setRasters, activeLayers, activeCategory,
           />
         )}
       </Sidebar>
-      <LandscapeSidebar isLandscapeMode={isLandscapeMode}/>
+      <LandscapeSidebar isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
       <About />
+      <Legend isFullscreenActive={isFullscreenActive} />
     </Globe>
   )
 };
