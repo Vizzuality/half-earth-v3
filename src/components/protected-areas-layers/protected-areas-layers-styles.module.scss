@@ -1,8 +1,15 @@
 @import 'styles/settings';
 
-.overrideCheckbox {
+.overrideCheckbox-protected-areas {
   input[type="checkbox"]:checked + label::before {
     background: linear-gradient(270deg, $santa-fe 0%, $totem-pole 100%);
+    border: 2px solid $white; 
+  }
+}
+
+.overrideCheckbox-community-areas {
+  input[type="checkbox"]:checked + label::before {
+    background: linear-gradient(270deg, $marzipan 0%, $mandalay 100%);
     border: 2px solid $white; 
   }
 }

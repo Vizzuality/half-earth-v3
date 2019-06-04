@@ -4,10 +4,11 @@ import { loadModules } from '@esri/react-arcgis';
 
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
+import { humanPressuresLandUse } from 'constants/human-pressures';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 
-const HumanImpactLayers = ({ map, title, rasters, setRasters, description, options, setLayerVisibility, theme, activeLayers }) => {
-  const alreadyChecked = options.reduce((acc, option) => ({ 
+const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers }) => {
+  const alreadyChecked = humanPressuresLandUse.reduce((acc, option) => ({ 
     ...acc, [option.value]: rasters[option.value]
   }), {});
 
@@ -35,7 +36,7 @@ const HumanImpactLayers = ({ map, title, rasters, setRasters, description, optio
 
   return (
     <MultipleActiveLayers
-      options={options}
+      options={humanPressuresLandUse}
       alreadyChecked={alreadyChecked}
       handleClick={handleHumanPressureRasters}
       title='Land use pressures'
@@ -48,9 +49,7 @@ HumanImpactLayers.propTypes = {
   map: PropTypes.object,
   title: PropTypes.string,
   description: PropTypes.string,
-  options: PropTypes.array,
   setLayerVisibility: PropTypes.func,
-  theme: PropTypes.string,
   activeLayers: PropTypes.array
 };
 
@@ -58,9 +57,7 @@ HumanImpactLayers.defaultProps = {
   map: {},
   title: '',
   description: '',
-  options: [],
   setLayerVisibility: () => {},
-  theme: '',
   activeLayers: []
 };
 
