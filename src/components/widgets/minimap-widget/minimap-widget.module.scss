@@ -68,7 +68,7 @@ $ease-in-out: opacity $animation-time ease-in-out;
 }
 
 .progressBars {
-  @extend .backdropBlur;
+  @include backdropBlur();
 
   align-items: center;
   background-image: url('../../../assets/icons/halfEarthMeter.svg');

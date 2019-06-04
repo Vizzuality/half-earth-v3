@@ -1,4 +1,5 @@
 import React from 'react';
+import { biodiversityCategories } from 'constants/mol-layers-configs';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -19,9 +20,7 @@ import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
-
-const DataGlobeComponent = ({ 
-  sceneLayers,
+const DataGlobeComponent = ({
   activeLayers,
   rasters,
   setRasters,
@@ -33,11 +32,8 @@ const DataGlobeComponent = ({
   handleLayerToggle,
   setLayerVisibility,
   sceneSettings,
-  speciesCategories,
-  onLoad,
-  setSpeciesLoading,
-  setSpecies,
-  setSpeciesError
+  exclusiveLayerToggle,
+  onLoad
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -52,28 +48,22 @@ const DataGlobeComponent = ({
       <ZoomWidget />
       <MinimapWidget />
       <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
-      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive}>
-        {
-          sceneLayers &&
-          sceneLayers.map(l => (
-              <button key={l.id} data-layer-id={l.id} onClick={() => handleLayerToggle(l.id)}>{l.title}</button>
+      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
+      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
+        {isBiodiversityActive && (
+          biodiversityCategories.map(cat => (
+            <BiodiversityLayers
+              key={cat.name}
+              title={cat.name}
+              description={cat.description}
+              subcategories={cat.subcategories}
+              options={cat.taxa}
+              defaultSelection={null}
+              activeLayers={activeLayers}
+              exclusiveLayerToggle={exclusiveLayerToggle}
+              handleLayerToggle={handleLayerToggle}
+            />
           ))
-        }
-        {isBiodiversityActive && speciesCategories && (
-          <div>
-            <BiodiversityLayers 
-              title='Terrestrial Species'
-              description='Global km'
-              options={speciesCategories.terrestrial}
-              defaultSelection={speciesCategories.terrestrial[0]}
-            />
-            <BiodiversityLayers 
-              title='Marine Species'
-              description='Global km'
-              options={speciesCategories.marine} 
-            />
-          </div>
         )}
         {isHumanPressuresActive && (
           <HumanImpactLayers

@@ -22,6 +22,7 @@ module.exports = function override(config, env) {
       utils: path.resolve(__dirname, 'src/utils'),
       constants: path.resolve(__dirname, 'src/constants'),
       redux_modules: path.resolve(__dirname, 'src/redux-modules'),
+      services: path.resolve(__dirname, 'src/services'),
       reducerRegistry: path.resolve(__dirname, 'src/reducerRegistry'),
       sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
       logos: path.resolve(__dirname, 'src/assets/logos'),

@@ -1,7 +1,10 @@
+@import 'styles/ui.module';
 @import 'styles/settings';
 
 .wrapper {
-  margin-bottom: 32px;
+  @include backdropBlur();
+  padding-bottom: $sidebar-paddings;
+  padding-left: $sidebar-paddings;
 }
 
 .titleSection {
@@ -22,4 +25,14 @@
   font-size: $font-size-xs;
   margin-top: 0;
   margin-bottom: 14px;
+}
+
+.fineScaleWrapper {
+  @include backdropBlur($colour: rgba(2,114,186,0.1), $fallback: #003252, $fallbackOpacity: 0.6);
+  padding-bottom: $sidebar-paddings;
+  padding-left: $sidebar-paddings;
+  padding-top: $sidebar-paddings;
+}
+.subcategoryRadioContainer {
+  padding-left: $sidebar-margin;
 }

@@ -2,7 +2,7 @@
 @import 'styles/ui.module';
 
 .esri-search {
-  @extend .backdropBlur;
+  @include backdropBlur();
 
   height: 100vh;
   left: 0;

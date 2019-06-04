@@ -2,24 +2,19 @@
 @import 'styles/settings';
 
 .sidebar {
-  @extend .backdropBlur;
   display: inline-block;
   box-sizing: border-box;
   border-radius: 2px;
+  overflow: hidden;
 }
 
 .wrapper {
+  position: relative;
+  top: 0;
+  bottom: 0;
   width: $sidebar-width;
-  margin: {
-    top: $sidebar-margin;
-  }
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
   height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
-
-  & > * {
-    padding-left: $sidebar-margin;
-  }
 }
 
 .content {

@@ -68,7 +68,6 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
       ]).then(([watchUtils, Graphic, GraphicsLayer, geometryEngine]) => {
       const { layers } = map;
       const gridLayer = layers.items.find(l => l.title === "rarity-richness-GRID");
-      gridLayer.outFields = ["*"];
       view.whenLayerView(gridLayer).then(function(layerView) {
         watchHandle = watchUtils.whenTrue(view, "stationary", function() {
           if (landscapeModeRef.current) {
