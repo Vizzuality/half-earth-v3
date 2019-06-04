@@ -19,10 +19,6 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 
-// layers
-import { humanPressuresLandUse } from 'constants/human-pressures';
-import { WDPALayers } from 'constants/protected-areas';
-
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const DataGlobeComponent = ({
   activeLayers,
@@ -71,21 +67,15 @@ const DataGlobeComponent = ({
         )}
         {isHumanPressuresActive && (
           <HumanImpactLayers
-            options={humanPressuresLandUse}
             setLayerVisibility={setLayerVisibility}
-            title='Land use pressures'
-            description='Human pressures causing habitat loss and accelerating species extinction.'
             activeLayers={activeLayers}
             rasters={rasters}
             setRasters={setRasters}
           />
         )}
         {isProtectedAreasActive && (
-          <ProtectedAreasLayers
-            options={WDPALayers}
-            title='Conservation areas'
+          <ProtectedAreasLayers  
             handleLayerToggle={handleLayerToggle}
-            description='Protections classified according to their management objectives.'
             activeLayers={activeLayers}
           />
         )}

@@ -28,7 +28,7 @@ MultipleActiveLayers.propTypes = {
   description: PropTypes.string,
   options: PropTypes.array,
   handleLayerToggle: PropTypes.func,
-  theme: PropTypes.string,
+  theme: PropTypes.object,
   activeLayers: PropTypes.array
 };
 
@@ -37,7 +37,7 @@ MultipleActiveLayers.defaultProps = {
   description: '',
   options: [],
   handleLayerToggle: () => {},
-  theme: '',
+  theme: {},
   activeLayers: []
 };
 
