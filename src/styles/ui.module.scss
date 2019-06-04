@@ -9,6 +9,11 @@ $spacer-middle-opacity: 0.6;
   left: $site-gutter;
 }
 
+.uiRight {
+  position: absolute;
+  right: 0;
+}
+
 // blur effect && transparent fallback if no browser support
 .backdropBlur {
   background-color: rgba($firefly, 0.45);

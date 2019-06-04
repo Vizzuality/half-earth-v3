@@ -1,37 +1,107 @@
+@import 'styles/settings';
+
 $site-gutter: 20px;
+
+:global {
+  .rc-tooltip-placement-top {
+    .rc-tooltip-arrow {
+      display: none !important;
+    }
+  }
+
+  .c-rc-tooltip.-default .rc-tooltip-inner {
+    background-color: #0E2B3B;
+    color: #DBDBDB;
+    font-family: 'PierSans';
+  }
+
+  .c-rc-tooltip .rc-tooltip-content .rc-tooltip-inner {
+    .wri_api__c-legend-item-button-opacity-tooltip {
+      position: relative;
+      .wri_api__slider-tooltip-container {
+        padding: 2px 0 0px;
+      }
+    }
+  }
+
+  .rc-slider-mark-text {
+    color: #DBDBDB;
+  }
+
+  .wri_api__legend-item-header {
+    h3 {
+      color: $white !important;
+    }
+  }
+}
 
 .legend {
   position: absolute;
-  bottom: $site-gutter;
+  bottom: $site-gutter * 2;
   right: $site-gutter;
-  width: 400px;
-  height: 50px;
+  width: 240px;
+  height: 80px;
 
   :global {
     .wri_api__c-legend-map {
       border: none;
-      border-radius: 0;
+      border-radius: 2px;
+      background: rgba(#09141a, 0.4);
+    }
+
+    .wri_api__c-legend-item {
+      background: rgba(#09141a, 0.4);
     }
 
     .wri_api__toggle-legend {
-      background-color: white;
-      width: 32px;
-
-      &:hover {
-        background-color: white;
-      }
+      display: none;
     }
   }
 }
 
 body {
   :global {
-    .wri_api__slider-tooltip-container {
-      .rc-slider-track,
-      .rc-slider-handle,
-      .rc-slider-step {
-        background-color: #1bcec7 !important;
+    .wri_api__slider-ranges {
+      position: relative;
+    }
+  }
+}
+
+.itemButton {
+  position: relative;
+}
+
+.legendItemButtonOpacity {
+  left: unset !important;
+  right: $site-gutter;
+  width: 208px;
+
+  :global {
+    .rc-tooltip-content {
+      background-color: #0E2B3B;
+      border-radius: 2px;
+      padding: 8px 16px;
+
+      .rc-tooltip-inner {
+        padding: 4px;
       }
+    }
+
+    .wri_api__slider-tooltip-container {
+      margin-top: 10px;
+    }
+    
+    .rc-slider-mark {
+      display: flex;
+    }
+  }
+}
+
+:global {
+  .wri_api__opacity {
+    color: pink;
+    svg {
+      fill: $robins-egg-blue;
     }
   }
 }

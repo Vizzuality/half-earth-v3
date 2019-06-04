@@ -10,6 +10,7 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
+    isFullscreenActive: false, 
     activeCategory: ''
   }
 }

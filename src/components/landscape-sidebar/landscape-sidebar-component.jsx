@@ -6,11 +6,11 @@ import HumanPressureWidget from './human-pressure-widget';
 import uiStyles from 'styles/ui.module';
 import styles from './landscape-sidebar-styles.module.scss';
 
-const LandscapeSidebarComponent = ({ isLandscapeMode }) => {
+const LandscapeSidebarComponent = ({ isLandscapeMode, isFullscreenActive }) => {
   const animationProps = useSpring({
     from: { marginLeft: -400 },
-    marginLeft: isLandscapeMode ? 0 : -400,
-    delay: isLandscapeMode ? 400 : 0
+    marginLeft: isLandscapeMode && !isFullscreenActive ? 0 : -400,
+    delay: isLandscapeMode && !isFullscreenActive ? 400 : 0
   })
   return (
     <animated.aside
