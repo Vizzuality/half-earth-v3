@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -10,12 +10,7 @@ const RICHNESS = 'richness';
 const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelection);
   const [toggle, setToggle] = useState(RARITY);
-  const [selectedLayer, setSelectedLayer] = useState(null);
   const prevSelection = useRef();
-
-  // useEffect(() => {
-  //   selectedLayer && handleSimpleLayerToggle(selectedLayer[toggle])
-  // }, [toggle, selectedLayer])
 
   const toggleRarityRichness = () => {
     setToggle(toggle === RARITY ? RICHNESS : RARITY);
@@ -36,22 +31,20 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
               name={title}
               id={option.value}
               value={option.value}
-              // onChange={() => {
-              //   isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
-              // }}
+              onChange={() => {
+                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
+              }}
               onClick={() => {
-                //selecciona o deselecciona si estaba seleccionada
-                // setSelectedLayer(option.layers)
                 if (option.layers[toggle] === prevSelection.current) {
-                  console.log('REMOVING SAME LAYER', option.layers[toggle])
                   handleSimpleLayerToggle(option.layers[toggle]);
                   prevSelection.current = null;
+                  setSelectedOption(null);
                 } else {
                   handleExclusiveLayerToggle(option.layers[toggle], prevSelection.current)
                   prevSelection.current = option.layers[toggle];
                 }
               }}
-              defaultChecked={isSelected(option)}
+              defaultChecked={() => isSelected(option)}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
               {option.name}
@@ -63,6 +56,9 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
                 type="button"
                 className={styles.button}
                 onClick={() => {
+                  const changeToggleType = toggle === RARITY ? RICHNESS : RARITY;
+                  handleExclusiveLayerToggle(option.layers[changeToggleType], prevSelection.current)
+                  prevSelection.current = option.layers[changeToggleType];
                   toggleRarityRichness();
                 }}>
                 {toggle}
