@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadModules } from '@esri/react-arcgis';
 
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 import styles from './protected-areas-layers-styles.module';
 
-const ProtectedAreasLayers = ({ map, title, description, options, handleLayerToggle, activeLayers }) => {
+const ProtectedAreasLayers = ({ options, handleLayerToggle, activeLayers }) => {
   const toggleLayer = (layers, option) => {
     handleLayerToggle(option.id);
   }
