@@ -7,7 +7,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
-  padding: 70px 0;
   position: absolute;
   top: 0;
   width: 100vw;
@@ -17,32 +16,33 @@
 .wrapper {
   display: flex;
   height: 100%;
-  margin: auto;
-  width: 80%;
+  padding: 70px 10% 100px;
+  overflow: hidden;
 
   > :first-child {
-    width: 30%;
+    width: 40%;
   }
 
   > :last-child {
-    width: 70%;
+    width: 60%;
   }
 }
 
 .globeWrapper {
   align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
+  transform: scale(1.6)
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
 }
 
-h1 {
+.title {
   color: $white;
   font-family: $font-family-1;
   font-size: $font-size-xxl;
@@ -50,15 +50,15 @@ h1 {
   letter-spacing: 1px;
   line-height: 50px;
   margin: 0;
-  margin-bottom: 30px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
   width: 430px;
 }
 
 .descriptionWrapper {
-  height: 270px;
-  position: relative;
+  height: 50%;
   margin-bottom: 100px;
+  position: relative;
+  max-width: 300px;
 
   &::after,  &::before {
     content: '';
@@ -87,18 +87,18 @@ h1 {
   font-weight: $font-weight-light;
   line-height: 22px;
   text-align: center;
-  height: 270px;
+  height: 100%;
   scrollbar-width: none; /* Firefox */
   overflow-y: scroll;
-  width: 300px;
   overflow-y: scroll;
   padding-top: 25px;
   padding-bottom: 25px;
   text-align: left;
-  
+  width: 100%;
+
   &::-webkit-scrollbar { /* WebKit */
-    width: 0;
     height: 0;
+    width: 0;
   }
 }
 
@@ -145,4 +145,17 @@ $icon-size: 40px;
   justify-content: space-between;
   margin-left: calc(#{$icon-size} / 2);
   width: 500px;
+}
+
+
+.globeS {
+  background-image: url('../../assets/images/halfEarthGlobe.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media only screen and (max-width: 1366px) {
+  .globeWrapper {
+    transform: scale(1.2)
+  }
 }

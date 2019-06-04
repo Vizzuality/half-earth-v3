@@ -60,15 +60,3 @@ $sidebar-paddings: 30px;
 // Letter styles
 $letter-spacing: 1.5px;
 $line-height: 14px;
-
-// Breakpoints
-$breakpoint-mobile-only: 37.4375rem; // 599px / 16px
-$breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
-$breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
-$breakpoint-desktop: 75rem; // 1200px / 16px
-
-// Media queries
-$mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
-$tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
-$tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
-$desktop: 'screen and (min-width: #{$breakpoint-desktop})';

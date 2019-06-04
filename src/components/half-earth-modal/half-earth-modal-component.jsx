@@ -21,7 +21,7 @@ const HalfEarthModalComponent = ({ handleModalClose }) => {
     <div className={styles.halfEarthModal}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <h1>{title}</h1>
+          <h1 className={styles.title}>{title}</h1>
           <div className={styles.descriptionWrapper}>
             <div className={styles.description}>
               {description.map(text => <p>{text}</p>)}
@@ -38,7 +38,7 @@ const HalfEarthModalComponent = ({ handleModalClose }) => {
           </div>
         </div>
         <div className={styles.globeWrapper}>
-          <HalfEarthGlobe className={styles.globe}/>
+          <HalfEarthGlobe/>
         </div>
       </div>
       <button
