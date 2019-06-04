@@ -8,7 +8,7 @@ import FixedHeader from 'components/fixed-header';
 import uiStyles from 'styles/ui.module';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ map, theme, children, activeCategory, handleSidebarToggle, isSidebarOpen, isLandscapeMode }) => {
+const Sidebar = ({ map, view, theme, children, activeCategory, handleSidebarToggle, isSidebarOpen, isLandscapeMode }) => {
   const slide = useSpring({
     from: { marginLeft: -400 },
     marginLeft: isSidebarOpen && !isLandscapeMode ? 0 : -400,
@@ -28,7 +28,7 @@ const Sidebar = ({ map, theme, children, activeCategory, handleSidebarToggle, is
         <FixedHeader closeSidebar={handleSidebarToggle} activeCategory={activeCategory} />
         <div className={styles.content}>
           {React.Children.map(children || null, (child, i) => {
-            return child && <child.type {...child.props} key={i} map={map} />;
+            return child && <child.type {...child.props} key={i} map={map} view={view}/>;
           })}
         </div>
       </div>

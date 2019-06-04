@@ -14,7 +14,6 @@ const RICHNESS_RARITY_GRID = 'rarity-richness-GRID';
 
 const handleMapLoad = (map, view) => {
   const { layers } = map;
-  console.log(layers)
   const gridLayer = layers.items.find(l => l.title === RICHNESS_RARITY_GRID);
   // set the outFields for the rarity-richness-GRID layer
   // to get all the attributes available
