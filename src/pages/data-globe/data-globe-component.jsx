@@ -24,7 +24,7 @@ import { WDPALayers } from 'constants/protected-areas';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const DataGlobeComponent = ({ rasters, setRasters, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, setLayerVisibility, handleLayerToggle, sceneSettings, onLoad }) => {
+const DataGlobeComponent = ({ rasters, setRasters, activeLayers, activeCategory, isLandscapeMode, isSidebarOpen, handleZoomChange, setLayerVisibility, handleLayerToggle, sceneSettings, onLoad, exclusiveLayerToggle }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
@@ -44,12 +44,14 @@ const DataGlobeComponent = ({ rasters, setRasters, activeLayers, activeCategory,
           biodiversityCategories.map(cat => (
             <BiodiversityLayers
               key={cat.name}
-              handleLayerToggle={handleLayerToggle}
               title={cat.name}
               description={cat.description}
               subcategories={cat.subcategories}
               options={cat.taxa}
               defaultSelection={null}
+              activeLayers={activeLayers}
+              exclusiveLayerToggle={exclusiveLayerToggle}
+              handleLayerToggle={handleLayerToggle}
             />
           ))
         )}

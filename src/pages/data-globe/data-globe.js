@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { layerManagerToggle, layerManagerVisibility } from 'utils/layer-manager-utils';
+import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
 import biodiversityActions from 'redux_modules/biodiversity-data/biodiversity-data';
@@ -21,12 +21,14 @@ const handleMapLoad = (map, view) => {
 }
 const dataGlobeContainer = props => {
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings);
+  const exclusiveLayerToggle = (layerToActivate, layerToRemove) => exclusiveLayersToggle(layerToActivate, layerToRemove, props.activeLayers, props.setDataGlobeSettings);
   const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
   const setRasters = (rasters) => props.setDataGlobeSettings({ rasters: rasters })
   const handleZoomChange = props.setDataGlobeSettings;
   
   return <Component
     handleLayerToggle={toggleLayer}
+    exclusiveLayerToggle={exclusiveLayerToggle}
     setLayerVisibility={setLayerVisibility}
     setRasters={setRasters}
     onLoad={(map, view) => handleMapLoad(map, view)}

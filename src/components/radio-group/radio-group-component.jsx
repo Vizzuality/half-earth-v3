@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -7,14 +7,15 @@ import styles from './radio-group-styles.module.scss';
 const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
-const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => {
+const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelection);
   const [toggle, setToggle] = useState(RARITY);
   const [selectedLayer, setSelectedLayer] = useState(null);
+  const prevSelection = useRef();
 
-  useEffect(() => {
-    selectedLayer && handleLayerToggle(selectedLayer[toggle])
-  }, [toggle, selectedLayer])
+  // useEffect(() => {
+  //   selectedLayer && handleSimpleLayerToggle(selectedLayer[toggle])
+  // }, [toggle, selectedLayer])
 
   const toggleRarityRichness = () => {
     setToggle(toggle === RARITY ? RICHNESS : RARITY);
@@ -35,17 +36,26 @@ const RadioGroup = ({ options, title, defaultSelection, handleLayerToggle }) => 
               name={title}
               id={option.value}
               value={option.value}
-              onChange={() => {
-                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
-              }}
+              // onChange={() => {
+              //   isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
+              // }}
               onClick={() => {
-                setSelectedLayer(option.layers)
+                //selecciona o deselecciona si estaba seleccionada
+                // setSelectedLayer(option.layers)
+                if (option.layers[toggle] === prevSelection.current) {
+                  console.log('REMOVING SAME LAYER', option.layers[toggle])
+                  handleSimpleLayerToggle(option.layers[toggle]);
+                  prevSelection.current = null;
+                } else {
+                  handleExclusiveLayerToggle(option.layers[toggle], prevSelection.current)
+                  prevSelection.current = option.layers[toggle];
+                }
               }}
               defaultChecked={isSelected(option)}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
-              {option.value}
-            </label>          
+              {option.name}
+            </label>
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>

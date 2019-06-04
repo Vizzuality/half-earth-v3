@@ -5,7 +5,15 @@ import RadioGroup from 'components/radio-group';
 
 import styles from './biodiversity-layers-styles.module.scss';
 
-const BiodiversityLayers = ({ map, title, description, options, subcategories, defaultSelection, handleLayerUpdate }) => {
+const BiodiversityLayers = ({
+  title,
+  description,
+  options,
+  subcategories,
+  defaultSelection,
+  handleSimpleLayerToggle,
+  handleExclusiveLayerToggle
+}) => {
   return (
     <>
       {!subcategories ? (
@@ -14,7 +22,13 @@ const BiodiversityLayers = ({ map, title, description, options, subcategories, d
             <h2 className={styles.widgetTitle}>{title}</h2>
           </div>
           <p className={styles.description}>{description}</p>
-          <RadioGroup options={options} title={title} defaultSelection={defaultSelection} handleLayerToggle={handleLayerUpdate}/>
+          <RadioGroup
+            title={title}
+            options={options}
+            defaultSelection={defaultSelection}
+            handleExclusiveLayerToggle={handleExclusiveLayerToggle}
+            handleSimpleLayerToggle={handleSimpleLayerToggle}
+          />
         </div>
       ) : (
         <div className={styles.fineScaleWrapper}>
@@ -27,7 +41,13 @@ const BiodiversityLayers = ({ map, title, description, options, subcategories, d
               <div key={subct.name}>
                 <h2 className={styles.widgetTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
-                  <RadioGroup options={subct.taxa} title={title} defaultSelection={defaultSelection} handleLayerToggle={handleLayerUpdate}/>
+                  <RadioGroup
+                    options={subct.taxa}
+                    title={title}
+                    defaultSelection={defaultSelection}
+                    handleExclusiveLayerToggle={handleExclusiveLayerToggle}
+                    handleSimpleLayerToggle={handleSimpleLayerToggle}
+                  />
                 </div>
               </div>
             ))

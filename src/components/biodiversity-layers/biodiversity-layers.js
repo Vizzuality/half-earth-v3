@@ -31,21 +31,28 @@ const BiodiversityLayerContainer = props => {
     })
   }
 
-  const handleLayerUpdate = option => {
-    const { map, handleLayerToggle } = props;
-    const selectedLayer = layersConfig.find(l => l.title === option);
-    const layerExists = map.layers.items.some(l => l.id === selectedLayer.slug);
-    const { slug, bbox } = selectedLayer;
+  const handleSimpleLayerToggle = layerName => {
+    const { handleLayerToggle } = props;
+    const layer = layersConfig.find(l => l.title === layerName);
+    handleLayerToggle(layer.slug);
+  }
+
+  const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
+    const { map, exclusiveLayerToggle } = props;
+    const addLayer = layersConfig.find(l => l.title === layerToAdd);
+    const removeLayer = layersConfig.find(l => l.title === layerToRemove);
+    const layerExists = map.layers.items.some(l => l.id === addLayer.slug);
+    const removeSlug = removeLayer && removeLayer.slug;
     if (layerExists) {
-      handleLayerToggle(slug);
-      bbox && flyToLayerExtent(bbox);
+      exclusiveLayerToggle(addLayer.slug, removeSlug);
+      addLayer.bbox && flyToLayerExtent(addLayer.bbox);
     } else {
-      createLayer(selectedLayer);
-      handleLayerToggle(slug);
-      bbox && flyToLayerExtent(bbox);
+      createLayer(addLayer);
+      exclusiveLayerToggle(addLayer.slug, removeSlug);
+      addLayer.bbox && flyToLayerExtent(addLayer.bbox);
     }
   }
-  return <Component handleLayerUpdate={handleLayerUpdate} {...props}/>
+  return <Component handleExclusiveLayerToggle={handleExclusiveLayerToggle} handleSimpleLayerToggle={handleSimpleLayerToggle} {...props}/>
 }
 
 export default BiodiversityLayerContainer;
