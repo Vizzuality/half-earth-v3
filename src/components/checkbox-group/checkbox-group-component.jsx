@@ -19,7 +19,7 @@ const CheckboxGroup = ({ options, title, handleLayerToggle, theme, checkedOption
   return (
     <div className={styles.container}>
       {options.map(option => (
-        <Checkbox key={option.name} option={option} theme={theme} checked={checkedItems[option.value]} onChange={handleChange} />
+        <Checkbox key={option.name} option={option} theme={theme[option.theme]} checked={checkedItems[option.value]} onChange={handleChange} />
       ))}
     </div>
   )
@@ -28,14 +28,14 @@ const CheckboxGroup = ({ options, title, handleLayerToggle, theme, checkedOption
 CheckboxGroup.propTypes = {
   options: PropTypes.array,
   handleLayerToggle: PropTypes.func,
-  theme: PropTypes.string,
+  theme: PropTypes.object,
   activeLayers: PropTypes.array
 };
 
 CheckboxGroup.defaultProps = {
   options: [],
   handleLayerToggle: () => {},
-  theme: '',
+  theme: {},
   activeLayers: []
 };
 

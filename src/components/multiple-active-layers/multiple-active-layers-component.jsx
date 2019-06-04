@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadModules } from '@esri/react-arcgis';
 
 import CheckboxGroup from 'components/checkbox-group';
-
-import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 
 import styles from './multiple-active-layers-styles.module.scss';
 
@@ -31,7 +28,7 @@ MultipleActiveLayers.propTypes = {
   description: PropTypes.string,
   options: PropTypes.array,
   handleLayerToggle: PropTypes.func,
-  theme: PropTypes.string,
+  theme: PropTypes.object,
   activeLayers: PropTypes.array
 };
 
@@ -40,7 +37,7 @@ MultipleActiveLayers.defaultProps = {
   description: '',
   options: [],
   handleLayerToggle: () => {},
-  theme: '',
+  theme: {},
   activeLayers: []
 };
 
