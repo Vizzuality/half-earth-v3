@@ -27,6 +27,7 @@ module.exports = function override(config, env) {
       sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
       logos: path.resolve(__dirname, 'src/assets/logos'),
       hooks: path.resolve(__dirname, 'src/hooks'),
+      images: path.resolve(__dirname, 'src/assets/images'),
     }
   }
   config = rewireReactHotLoader(config, env);

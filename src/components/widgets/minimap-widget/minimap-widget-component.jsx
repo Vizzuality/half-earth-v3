@@ -5,20 +5,22 @@ import sceneSettings from './minimap-settings';
 
 const { REACT_APP_MINIMAP_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const MinimapWidgetComponent = ({ view: globeView, handleMapLoad }) => {
+const MinimapWidgetComponent = ({ view: globeView, handleMapLoad, handleModalOpen }) => {
   return (
-    <div className={styles.wrapper} onClick={() => alert('GLOBALPROGRESS PAGE')}>
-      <div className={styles.title}>Half</div>
-      <div className={styles.progressBars}>
-        <div className={styles.globeComponentWrapper}>
-          <GlobeComponent
-            sceneId={SCENE_ID}
-            sceneSettings={sceneSettings}
-            onLoad={(map, view) => handleMapLoad(map, view, globeView)}
-          />
+    <>
+      <div className={styles.wrapper} onClick={handleModalOpen}>
+        <div className={styles.title}>Half</div>
+        <div className={styles.progressBars}>
+          <div className={styles.globeComponentWrapper}>
+            <GlobeComponent
+              sceneId={SCENE_ID}
+              sceneSettings={sceneSettings}
+              onLoad={(map, view) => handleMapLoad(map, view, globeView)}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

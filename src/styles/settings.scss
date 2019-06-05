@@ -71,4 +71,4 @@ $breakpoint-desktop: 75rem; // 1200px / 16px
 $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
 $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
 $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
-$desktop: 'screen and (min-width: #{$breakpoint-desktop})';
+$desktop: 'screen and (min-width: #{$breakpoint-desktop})'; 
