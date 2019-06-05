@@ -16,6 +16,9 @@ import universityOfFloridaLogo from 'logos/universityOfFlorida.png';
 import googleEarthEngineLogo from 'logos/googleEarthEngine.png';
 import googleCloudLogo from 'logos/googleCloud.png';
 import cartoLogo from 'logos/carto.png';
+import esriLogo from 'logos/esri.png';
+import mooreFoundationLogo from 'logos/mooreFoundation.png';
+import burtsLogo from 'logos/burts.png';
 
 import styles from './partners-styles.module.scss';
 
@@ -110,6 +113,23 @@ const researchPartners = [
   }
 ];
 
+const sponsors =  [{
+    href: 'https://www.esri.com/en-us/home',
+    image: { src: esriLogo, alt: 'Esri' }
+  },
+  {
+    href: 'https://www.moore.org/',
+    image: { src: mooreFoundationLogo, alt: 'Gordon and Betty Moore Foundation' }
+  },
+  {
+    href: 'https://www.burtsbees.com/',
+    image: { src: burtsLogo, alt: 'Burt’s Bees Greater Good Foundationc' }
+  },
+  {
+    label: 'Jeff and Laurie Ubben'
+  }
+];
+
 const sections = [
   {
     title: 'Half-earth mapping core',
@@ -117,7 +137,9 @@ const sections = [
     content: partners,
     theme: styles.partners
   },
-  { title: 'Sponsors', description: 'Jeff and Laurie Ubben', theme: styles.sponsors },
+  { title: 'Sponsors',
+    content: sponsors
+  },
   { title: 'Data Partners', content: dataPartners },
   { title: 'Research Partners', content: researchPartners }
 ];
