@@ -8,8 +8,8 @@ const MOLUploader = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.buttonContainer}>
-        <button className={styles.uploadButton} onClick={handleClick}>
+      <div className={styles.buttonContainer} onClick={handleClick}>
+        <button className={styles.uploadButton}>
           <CloseIcon className={styles.icon} />
         </button>
         <h3 className={styles.title}>Help us complete our database</h3>
