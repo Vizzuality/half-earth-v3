@@ -8,7 +8,7 @@ const LegendTitleComponent = ({ name, layer }) => {
   return (
     <div className={styles.titleContainer}>
       {layer.molLogo && <a
-        href={'TODO'}
+        href='https://mol.org/'
         className={styles.imageLink}
         target="_blank"
         rel="noopener noreferrer"
