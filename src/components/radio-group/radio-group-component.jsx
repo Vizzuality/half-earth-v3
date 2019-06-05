@@ -32,7 +32,8 @@ const RadioGroup = ({ activeLayers, options, title, defaultSelection, handleSimp
   const selectedLayer = selected && selected.layerTitle;
   const variant = (selected && selected.variant) || RARITY;
 
-  const isSelected = (option) => selectedOption && selectedOption.value === option.value;
+  // this must be of boolean type!
+  const isSelected = (option) => !!(selectedOption && selectedOption.value === option.value);
 
   return (
     <>
