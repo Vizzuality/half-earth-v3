@@ -1,31 +1,45 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import InfoModal from 'components/modal';
+import { layersConfig } from 'constants/mol-layers-configs';
 
 import styles from './radio-group-styles.module.scss';
 
 const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
-const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
-  const [selectedOption, setSelectedOption] = useState(defaultSelection);
-  const [toggle, setToggle] = useState(RARITY);
-  const prevSelection = useRef();
+const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
+  const selectedLayersTitles = activeLayers
+        .map(l => layersConfig.find(lc => lc.slug === l.id))
+        .filter(l => l)
+        .map(l => l.title);
 
-  const toggleRarityRichness = () => {
-    setToggle(toggle === RARITY ? RICHNESS : RARITY);
-  }
+  const optionsLayers = [];
+  options.forEach(option => {
+    Object.keys(option.layers).forEach(variant => {
+      optionsLayers.push({
+        layerTitle: option.layers[variant],
+        variant,
+        option
+      });
+    });
+  });
 
-  const isSelected = (option) => selectedOption && selectedOption.value === option.value;
+  const selected = optionsLayers.find(o => selectedLayersTitles.includes(o.layerTitle));
+  const selectedOption = selected && selected.option;
+  const selectedLayer = selected && selected.layerTitle;
+  const variant = (selected && selected.variant) || RARITY;
+
+  // this must be of boolean type!
+  const isSelected = (option) => !!(selectedOption && selectedOption.value === option.value);
 
   return (
     <>
       {options.map(option => (
         <div key={option.value} className={cx(
-          styles.radioOption, 
+          styles.radioOption,
           { [styles.radioOptionSelected]: isSelected(option) }
         )}>
           <>
@@ -34,20 +48,14 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
               name={title}
               id={option.value}
               value={option.value}
-              onChange={() => {
-                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
-              }}
               onClick={() => {
-                if (option.layers[toggle] === prevSelection.current) {
-                  handleSimpleLayerToggle(option.layers[toggle]);
-                  prevSelection.current = null;
-                  setSelectedOption(null);
+                if (isSelected(option)) {
+                  handleSimpleLayerToggle(option.layers[variant]);
                 } else {
-                  handleExclusiveLayerToggle(option.layers[toggle], prevSelection.current)
-                  prevSelection.current = option.layers[toggle];
+                  handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
                 }
               }}
-              defaultChecked={() => isSelected(option)}
+              checked={isSelected(option)}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
               {option.name}
@@ -60,12 +68,10 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
                 type="button"
                 className={styles.button}
                 onClick={() => {
-                  const changeToggleType = toggle === RARITY ? RICHNESS : RARITY;
-                  handleExclusiveLayerToggle(option.layers[changeToggleType], prevSelection.current)
-                  prevSelection.current = option.layers[changeToggleType];
-                  toggleRarityRichness();
+                  const changeVariant = variant === RARITY ? RICHNESS : RARITY;
+                  handleExclusiveLayerToggle(option.layers[changeVariant], selectedLayer);
                 }}>
-                {toggle}
+                {variant}
               </button>
             </div>
           )}

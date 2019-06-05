@@ -58,7 +58,6 @@ const DataGlobeComponent = ({
               description={cat.description}
               subcategories={cat.subcategories}
               options={cat.taxa}
-              defaultSelection={null}
               activeLayers={activeLayers}
               exclusiveLayerToggle={exclusiveLayerToggle}
               handleLayerToggle={handleLayerToggle}
@@ -74,7 +73,7 @@ const DataGlobeComponent = ({
           />
         )}
         {isProtectedAreasActive && (
-          <ProtectedAreasLayers  
+          <ProtectedAreasLayers
             handleLayerToggle={handleLayerToggle}
             activeLayers={activeLayers}
           />
