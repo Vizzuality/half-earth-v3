@@ -10,7 +10,7 @@ import styles from './radio-group-styles.module.scss';
 const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
-const RadioGroup = ({ activeLayers, options, title, defaultSelection, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
+const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
   const selectedLayersTitles = activeLayers
         .map(l => layersConfig.find(lc => lc.slug === l.id))
         .filter(l => l)

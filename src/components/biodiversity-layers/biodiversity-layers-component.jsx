@@ -11,7 +11,6 @@ const BiodiversityLayers = ({
   description,
   options,
   subcategories,
-  defaultSelection,
   handleSimpleLayerToggle,
   handleExclusiveLayerToggle
 }) => {
@@ -27,7 +26,6 @@ const BiodiversityLayers = ({
             activeLayers={activeLayers}
             title={title}
             options={options}
-            defaultSelection={defaultSelection}
             handleExclusiveLayerToggle={handleExclusiveLayerToggle}
             handleSimpleLayerToggle={handleSimpleLayerToggle}
           />
@@ -47,7 +45,6 @@ const BiodiversityLayers = ({
                     activeLayers={activeLayers}
                     options={subct.taxa}
                     title={title}
-                    defaultSelection={defaultSelection}
                     handleExclusiveLayerToggle={handleExclusiveLayerToggle}
                     handleSimpleLayerToggle={handleSimpleLayerToggle}
                   />
