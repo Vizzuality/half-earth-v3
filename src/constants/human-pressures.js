@@ -5,3 +5,53 @@ export const humanPressuresLandUse = [
 ];
 
 export const HUMAN_PRESSURE_LAYER_ID = '16aff2bc763-layer-0'
+
+export const legendConfigs = {
+  [HUMAN_PRESSURE_LAYER_ID]: {
+    type: "gradient",
+    items: [
+      {
+        color: "#282052",
+        value: "0"
+      },
+      {
+        color: "#3f3576",
+        value: ""
+      },
+      {
+        color: "#52478d",
+        value: ""
+      },
+      {
+        color: "#63589f",
+        value: ""
+      },
+      {
+        color: "#826dba",
+        value: ""
+      },
+      {
+        color: "#9f82ce",
+        value: ""
+      },
+      {
+        color: "#b998dd",
+        value: ""
+      },
+      {
+        color: "#d1afe8",
+        value: ""
+      },
+      {
+        color: "#f3e0f7",
+        value: "100 % use"
+      }
+    ]
+  }
+}
+
+export const legendSingleRasterTitles = {
+  rainfed: 'Rainfed agriculture',
+  agriculture: 'Irrigated agriculture',
+  urban: 'Urban pressures'
+}

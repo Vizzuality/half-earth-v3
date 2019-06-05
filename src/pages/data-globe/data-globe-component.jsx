@@ -33,7 +33,8 @@ const DataGlobeComponent = ({
   setLayerVisibility,
   sceneSettings,
   exclusiveLayerToggle,
-  onLoad
+  onLoad,
+  setLayerOpacity
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -81,7 +82,11 @@ const DataGlobeComponent = ({
       </Sidebar>
       <LandscapeSidebar isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
       <About />
-      <Legend isFullscreenActive={isFullscreenActive} />
+      <Legend 
+        isFullscreenActive={isFullscreenActive}
+        setLayerOpacity={setLayerOpacity}
+        setLayerVisibility={setLayerVisibility}
+      />
     </Globe>
   )
 };

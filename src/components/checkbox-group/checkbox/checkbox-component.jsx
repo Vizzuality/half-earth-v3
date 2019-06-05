@@ -10,8 +10,7 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
   return (
     <div key={option.name} className={cx(
       styles.checkboxWrapper, 
-      { [styles.checkboxWrapperSelected]: checked },
-      theme
+      { [styles.checkboxWrapperSelected]: checked, [theme]: checked }
     )}>
       <input 
         type="checkbox"
@@ -21,7 +20,7 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
         defaultChecked={checked}
         onChange={(e) => onChange(e, option)} 
       />
-      <label htmlFor={option.value} className={styles.checkbox}>
+      <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: checked })}>
         <span className={styles.label}>{option.name}</span>
       </label>
       {checked && <InfoModal />}

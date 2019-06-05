@@ -23,7 +23,6 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers }) => {
       theme={styles}
       title='Conservation Areas'
       description='Protections classified according to their management objectives.'
-      activeLayers={activeLayers}
     />
   )}
 

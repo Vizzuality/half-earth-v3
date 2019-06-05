@@ -1,7 +1,9 @@
+import { RARITY_RICHNESS_GRID_LAYER_ID } from 'constants/biodiversity';
+
 export default {
   globe: {
     activeLayers: [
-      { id: '16ab1a82f44-layer-0'}, // rarity-richness-GRID
+      { id: RARITY_RICHNESS_GRID_LAYER_ID }, // rarity-richness-GRID
       { id: '16b23629a42-layer-0'} // half-earth firefly
     ],
     rasters: {},
