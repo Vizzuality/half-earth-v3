@@ -4,18 +4,17 @@ import PropTypes from 'prop-types';
 import styles from './legend-title-styles.module.scss';
 import molLogo from 'logos/mol_short_logo.png';
 
-const LegendTitleComponent = ({ layers, name, activeLayer }) => {
-  console.log('title')
+const LegendTitleComponent = ({ name, layer }) => {
   return (
     <div className={styles.titleContainer}>
-      <a
+      {layer.molLogo && <a
         href={'TODO'}
         className={styles.imageLink}
         target="_blank"
         rel="noopener noreferrer"
       >
         <img src={molLogo} alt="logo" />
-      </a>
+      </a>}
       <div>{name}</div>
     </div>
   );

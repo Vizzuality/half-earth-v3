@@ -8,9 +8,10 @@ import { humanPressuresLandUse } from 'constants/human-pressures';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 
 const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers }) => {
-  const alreadyChecked = humanPressuresLandUse.reduce((acc, option) => ({ 
+  const humanImpactLayerActive = activeLayers.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
+  const alreadyChecked = humanImpactLayerActive && humanPressuresLandUse.reduce((acc, option) => ({ 
     ...acc, [option.value]: rasters[option.value]
-  }), {});
+  }), {}) || {};
 
   const handleHumanPressureRasters = (rasters, option) => {
     const { layers } = map;

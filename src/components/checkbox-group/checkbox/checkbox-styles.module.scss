@@ -48,7 +48,14 @@ input[type="checkbox"] {
   margin-right: 8px;
 }
 
-input[type="checkbox"]:checked + .checkbox::before {
-  background: linear-gradient(270deg, $biloba-flower 0%, $port-gore 100%);
-  border: 2px solid $white; 
+.checkboxSelected {
+  &:before {
+    background: linear-gradient(270deg, $biloba-flower 0%, $port-gore 100%);
+    border: 2px solid $white; 
+  }
 }
+
+// input[type="checkbox"]:checked + .checkbox::before {
+//   background: linear-gradient(270deg, $biloba-flower 0%, $port-gore 100%);
+//   border: 2px solid $white; 
+// }
