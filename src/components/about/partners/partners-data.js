@@ -122,7 +122,7 @@ const sponsors =  [{
     image: { src: mooreFoundationLogo, alt: 'Gordon and Betty Moore Foundation' }
   },
   {
-    href: 'https://www.burtsbees.com/',
+    href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
     image: { src: burtsLogo, alt: 'Burt’s Bees Greater Good Foundationc' }
   },
   {
