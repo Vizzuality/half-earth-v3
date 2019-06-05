@@ -4,14 +4,18 @@ import sections from './partners-data';
 
 import styles from './partners-styles.module.scss';
 
-const Logo = ({ href, image }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <img src={image.src} alt={image.alt} className={image.className} />
-  </a>
+const Logo = ({ href, image, label }) => (
+  label ? (
+    <span>{label}</span>
+  ) : (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img src={image.src} alt={image.alt} className={image.className} />
+    </a>
+  )
 );
 
 const PartnersComponent = () => (
