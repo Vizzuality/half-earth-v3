@@ -17,7 +17,7 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
 
   const toggleRarityRichness = () => {
     setToggle(toggle === RARITY ? RICHNESS : RARITY);
-  }
+  };
 
   const isSelected = (option) => selectedOption && selectedOption.value === option.value;
 
@@ -25,7 +25,7 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
     <>
       {options.map(option => (
         <div key={option.value} className={cx(
-          styles.radioOption, 
+          styles.radioOption,
           { [styles.radioOptionSelected]: isSelected(option) }
         )}>
           <>
@@ -34,20 +34,18 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
               name={title}
               id={option.value}
               value={option.value}
-              onChange={() => {
-                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option)
-              }}
               onClick={() => {
+                isSelected(option) ? setSelectedOption(null) : setSelectedOption(option);
+
                 if (option.layers[toggle] === prevSelection.current) {
                   handleSimpleLayerToggle(option.layers[toggle]);
                   prevSelection.current = null;
-                  setSelectedOption(null);
                 } else {
-                  handleExclusiveLayerToggle(option.layers[toggle], prevSelection.current)
+                  handleExclusiveLayerToggle(option.layers[toggle], prevSelection.current);
                   prevSelection.current = option.layers[toggle];
                 }
               }}
-              defaultChecked={() => isSelected(option)}
+              checked={isSelected(option)}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
               {option.name}
@@ -61,7 +59,7 @@ const RadioGroup = ({ options, title, defaultSelection, handleSimpleLayerToggle,
                 className={styles.button}
                 onClick={() => {
                   const changeToggleType = toggle === RARITY ? RICHNESS : RARITY;
-                  handleExclusiveLayerToggle(option.layers[changeToggleType], prevSelection.current)
+                  handleExclusiveLayerToggle(option.layers[changeToggleType], prevSelection.current);
                   prevSelection.current = option.layers[changeToggleType];
                   toggleRarityRichness();
                 }}>
