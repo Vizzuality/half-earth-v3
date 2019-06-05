@@ -6,6 +6,7 @@ import RadioGroup from 'components/radio-group';
 import styles from './biodiversity-layers-styles.module.scss';
 
 const BiodiversityLayers = ({
+  activeLayers,
   title,
   description,
   options,
@@ -23,6 +24,7 @@ const BiodiversityLayers = ({
           </div>
           <p className={styles.description}>{description}</p>
           <RadioGroup
+            activeLayers={activeLayers}
             title={title}
             options={options}
             defaultSelection={defaultSelection}
@@ -42,6 +44,7 @@ const BiodiversityLayers = ({
                 <h2 className={styles.widgetTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
                   <RadioGroup
+                    activeLayers={activeLayers}
                     options={subct.taxa}
                     title={title}
                     defaultSelection={defaultSelection}
