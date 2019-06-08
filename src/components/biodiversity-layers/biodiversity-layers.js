@@ -52,7 +52,13 @@ const BiodiversityLayerContainer = props => {
       addLayer.bbox && flyToLayerExtent(addLayer.bbox);
     }
   }
-  return <Component handleExclusiveLayerToggle={handleExclusiveLayerToggle} handleSimpleLayerToggle={handleSimpleLayerToggle} {...props}/>
+  return (
+    <Component
+      handleExclusiveLayerToggle={handleExclusiveLayerToggle}
+      handleSimpleLayerToggle={handleSimpleLayerToggle}
+      {...props}
+    />
+  ) 
 }
 
 export default BiodiversityLayerContainer;

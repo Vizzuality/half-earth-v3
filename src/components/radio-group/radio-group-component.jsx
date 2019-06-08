@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import InfoModal from 'components/modal';
+import InfoModal from 'components/modal-metadata';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import styles from './radio-group-styles.module.scss';
@@ -10,7 +10,7 @@ import styles from './radio-group-styles.module.scss';
 const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
-const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle }) => {
+const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick }) => {
   const selectedLayersTitles = activeLayers
         .map(l => layersConfig.find(lc => lc.slug === l.id))
         .filter(l => l)
@@ -63,7 +63,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
-              <InfoModal />
+              <InfoModal onClick={() => handleInfoClick()}/>
               <button
                 type="button"
                 className={styles.button}
