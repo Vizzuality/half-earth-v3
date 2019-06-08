@@ -87,7 +87,7 @@ export const biodiversityCategories = [
           {
             value: 'sa_restio',
             name: 'restio',
-            layers: { rarity: 'sa restio rarity', richness: 'restio richness' }
+            layers: { rarity: 'sa restio rarity', richness: 'sa restio richness' }
           },
           {
             value: 'sa_protea',
