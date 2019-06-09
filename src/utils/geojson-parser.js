@@ -1,26 +1,19 @@
-const features_content = {
-  type: 'Feature',
-  properties: {},
-  geometry: {
-    type: 'Polygon',
-    coordinates: []
-  }
-}
-
 export const esriGeometryToGeojson = (geometry) => {
-  const geojsonObject = { 
-    geojson: { 
-      type: 'FeatureCollection', 
+  const geojsonObject = {
+    geojson: {
+      type: 'FeatureCollection',
       features: [
-        { 
-          ...features_content, 
-          geometry: { 
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Polygon',
             coordinates: geometry.rings
-          } 
+          }
         }
-      ] 
+      ]
     }
   };
 
-  return JSON.stringify(geojsonObject)
-}
+  return JSON.stringify(geojsonObject);
+};

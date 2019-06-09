@@ -65,9 +65,10 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
         "esri/core/watchUtils",
         "esri/Graphic",
         "esri/layers/GraphicsLayer",
-        "esri/geometry/geometryEngine"
-      ]).then(([watchUtils, Graphic, GraphicsLayer, geometryEngine]) => {
-      const { layers } = map;
+        "esri/geometry/geometryEngine",
+        "esri/geometry/support/webMercatorUtils"
+      ]).then(([watchUtils, Graphic, GraphicsLayer, geometryEngine, webMercatorUtils]) => {
+        const { layers } = map;
       const gridLayer = layers.items.find(l => l.title === "rarity-richness-GRID");
       view.whenLayerView(gridLayer).then(function(layerView) {
         watchHandle = watchUtils.whenTrue(view, "stationary", function() {
@@ -85,8 +86,9 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
               const containedGridCellsGeometries = hasContainedGridCells && containedGridCells.map(gc => gc.geometry);
               // If there are not a group of cells pick the one in the center
               const singleGridCell = !hasContainedGridCells && results.features.filter(gridCell => gridCell.geometry.contains(view.center));
-               const gridCellGeometry = hasContainedGridCells ? geometryEngine.union(containedGridCellsGeometries) : singleGridCell[0].geometry;
-              setGridCellGeojson(esriGeometryToGeojson(gridCellGeometry))
+              const gridCellGeometry = hasContainedGridCells ? geometryEngine.union(containedGridCellsGeometries) : singleGridCell[0].geometry;
+              const geoGeometry = webMercatorUtils.webMercatorToGeographic(gridCellGeometry);
+              setGridCellGeojson(esriGeometryToGeojson(geoGeometry))
               const cellData = hasContainedGridCells ? containedGridCells : singleGridCell;
               // Add data to the store
               setGridCellData(cellData);
