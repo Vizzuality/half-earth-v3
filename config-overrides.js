@@ -25,7 +25,6 @@ module.exports = function override(config, env) {
       services: path.resolve(__dirname, 'src/services'),
       reducerRegistry: path.resolve(__dirname, 'src/reducerRegistry'),
       sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
-      logos: path.resolve(__dirname, 'src/assets/logos'),
       hooks: path.resolve(__dirname, 'src/hooks'),
       images: path.resolve(__dirname, 'src/assets/images'),
     }
