@@ -11,37 +11,37 @@ export const biodiversityCategories = [
       {
         value: 'mammals',
         name: 'mammals',
-        layers: { rarity: 'mammals rarity', richness: 'mammals richness' }
+        layers: { rarity: 'mammals-rare', richness: 'mammals-rich' }
       },
       {
         value: 'conifers',
         name: 'conifers',
-        layers: { rarity: 'conifers rarity', richness: 'conifers richness' }
+        layers: { rarity: 'conifers-rarity', richness: 'conifers-rich' }
       },
       {
         value: 'cacti',
         name: 'cacti',
-        layers: { rarity: 'cacti rarity', richness: 'cacti richness' }
+        layers: { rarity: 'cacti-rarity', richness: 'cacti-richness' }
       },
       {
         value: 'amphibians',
         name: 'amphibians',
-        layers: { rarity: 'amphibians rarity', richness: 'amphibians richness' }
+        layers: { rarity: 'amphib-rarity', richness: 'amphib-rich' }
       },
       {
         value: 'turtles',
         name: 'turtles',
-        layers: { rarity: 'turtles rarity', richness: 'turtles richness' }
+        layers: { rarity: 'turtles-rare', richness: 'turtles-rich' }
       },
       {
         value: 'birds',
         name: 'birds',
-        layers: { rarity: 'birds rarity', richness: 'birds richness' }
+        layers: { rarity: 'birds-rarity', richness: 'birds-rich' }
       },
       {
         value: 'all groups',
         name: 'all groups',
-        layers: { rarity: 'all groups rarity', richness: 'all groups richness' }
+        layers: { rarity: 'all-taxa-rarity', richness: 'all-taxa-richness' }
       },
     ] 
   },
@@ -53,7 +53,7 @@ export const biodiversityCategories = [
       {
         value: 'fishes',
         name: 'fishes',
-        layers: { rarity: 'fishes rarity', richness: 'fishes richness' }
+        layers: { rarity: 'fishes-rarity', richness: 'fishes-rich' }
       }
     ]
   },
@@ -67,37 +67,37 @@ export const biodiversityCategories = [
           {
             value: 'sa_amphibians',
             name: 'amphibians',
-            layers: { rarity: 'sa amphibians rarity', richness: 'sa amphibians richness' }
+            layers: { rarity: 'amphib-rarity-sa', richness: 'amphib-rich-sa' }
           },
           {
             value: 'sa_dragonflies',
             name: 'dragonflies',
-            layers: { rarity: 'sa dragonflies rarity', richness: 'sa dragonflies richness' }
+            layers: { rarity: 'dragonflies-rare-sa', richness: 'dragonflies-rich-sa' }
           },
           {
             value: 'sa_mammals',
             name: 'mammals',
-            layers: { rarity: 'sa mammals rarity', richness: 'sa mammals richness' }
+            layers: { rarity: 'mammals-rare-sa', richness: 'mammals-rich-sa' }
           },
           {
             value: 'sa_birds',
             name: 'birds',
-            layers: { rarity: 'sa birds rarity', richness: 'sa birds richness' }
+            layers: { rarity: 'birds-rare-sa', richness: 'birds-rich-sa' }
           },
           {
             value: 'sa_restio',
             name: 'restio',
-            layers: { rarity: 'sa restio rarity', richness: 'sa restio richness' }
+            layers: { rarity: 'restio-rare-sa', richness: 'restio-rich-sa' }
           },
           {
             value: 'sa_protea',
             name: 'protea',
-            layers: { rarity: 'sa protea rarity', richness: 'sa protea richness' }
+            layers: { rarity: 'protea-rare-sa', richness: 'protea-rich-sa' }
           },
           {
             value: 'sa_reptiles',
             name: 'reptiles',
-            layers: { rarity: 'sa reptiles rarity', richness: 'sa reptiles richness' }
+            layers: { rarity: 'reptiles-rare-sa', richness: 'reptiles-rich-sa' }
           },
           
         ]
@@ -108,7 +108,7 @@ export const biodiversityCategories = [
           {
             value: 'hummingbirds',
             name: 'hummingbirds',
-            layers: { rarity: 'hummingbirds rarity', richness: 'hummingbirds richness' }
+            layers: { rarity: 'hummingbirds-rare', richness: 'hummingbirds-rich' }
           }
         ]
       }
@@ -125,40 +125,40 @@ export const layersConfig = [
   {title: "Purse seins", slug: 'fishing_purse', url: `${bucketUrl}/${fishingTiles}/purse_seines/${templatePattern}`},
   {title: "Trawlers", slug: 'fishing_trawlers', url: `${bucketUrl}/${fishingTiles}/trawlers/${templatePattern}`},
   // South Africa 
-  {title: "sa amphibians rarity", slug: 'amphibians_rarity_sa', url: `${bucketUrl}/rarity_1km/amphibians/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa amphibians richness", slug: 'amphibians_richness_sa', url: `${bucketUrl}/richness_1km/amphibians/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa dragonflies rarity", slug: 'dragonflies_rarity_sa', url: `${bucketUrl}/rarity_1km/dragonflies/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa dragonflies richness", slug: 'dragonflies_richness_sa', url: `${bucketUrl}/richness_1km/dragonflies/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa mammals rarity", slug: 'mammals_rarity_sa', url: `${bucketUrl}/rarity_1km/mammals/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa mammals richness", slug: 'mammals_richness_sa', url: `${bucketUrl}/richness_1km/mammals/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa birds rarity", slug: 'birds_rarity_sa', url: `${bucketUrl}/rarity_1km/birds/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa birds richness", slug: 'birds_richness_sa', url: `${bucketUrl}/richness_1km/birds/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa restio rarity", slug: 'restio_rarity_sa', url: `${bucketUrl}/rarity_1km/restio/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa restio richness", slug: 'restio_richness_sa', url: `${bucketUrl}/richness_1km/restio/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa protea rarity", slug: 'protea_rarity_sa', url: `${bucketUrl}/rarity_1km/protea/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa protea richness", slug: 'protea_richness_sa', url: `${bucketUrl}/richness_1km/protea/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa reptiles rarity", slug: 'reptiles_rarity_sa', url: `${bucketUrl}/rarity_1km/reptiles/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa reptiles richness", slug: 'reptiles_richness_sa', url: `${bucketUrl}/richness_1km/reptiles/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa amphibians rarity", slug: 'amphib-rarity-sa', url: `${bucketUrl}/rarity_1km/amphibians/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa amphibians richness", slug: 'amphib-rich-sa', url: `${bucketUrl}/richness_1km/amphibians/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa dragonflies rarity", slug: 'dragonflies-rare-sa', url: `${bucketUrl}/rarity_1km/dragonflies/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa dragonflies richness", slug: 'dragonflies-rich-sa', url: `${bucketUrl}/richness_1km/dragonflies/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa mammals rarity", slug: 'mammals-rare-sa', url: `${bucketUrl}/rarity_1km/mammals/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa mammals richness", slug: 'mammals-rich-sa', url: `${bucketUrl}/richness_1km/mammals/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa birds rarity", slug: 'birds-rare-sa', url: `${bucketUrl}/rarity_1km/birds/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa birds richness", slug: 'birds-rich-sa', url: `${bucketUrl}/richness_1km/birds/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa restio rarity", slug: 'restio-rare-sa', url: `${bucketUrl}/rarity_1km/restio/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa restio richness", slug: 'restio-rich-sa', url: `${bucketUrl}/richness_1km/restio/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa protea rarity", slug: 'protea-rare-sa', url: `${bucketUrl}/rarity_1km/protea/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa protea richness", slug: 'protea-rich-sa', url: `${bucketUrl}/richness_1km/protea/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa reptiles rarity", slug: 'reptiles-rare-sa', url: `${bucketUrl}/rarity_1km/reptiles/${templatePattern}`, bbox: [13,-37,34,-27.7]},
+  {title: "sa reptiles richness", slug: 'reptiles-rich-sa', url: `${bucketUrl}/richness_1km/reptiles/${templatePattern}`, bbox: [13,-37,34,-27.7]},
   // Hummigbirds
-  {title: "hummingbirds rarity", slug: 'hummingbirds_richness', url: `${bucketUrl}/richness_1km/hummingbirds/${templatePattern}`, bbox: [-164,-40,-35,56]},
-  {title: "hummingbirds richness", slug: 'hummingbirds_rarity', url: `${bucketUrl}/rarity_1km/hummingbirds/${templatePattern}`, bbox: [-164,-40,-35,56]},
+  {title: "hummingbirds rarity", slug: 'hummingbirds-rich', url: `${bucketUrl}/richness_1km/hummingbirds/${templatePattern}`, bbox: [-164,-40,-35,56]},
+  {title: "hummingbirds richness", slug: 'hummingbirds-rare', url: `${bucketUrl}/rarity_1km/hummingbirds/${templatePattern}`, bbox: [-164,-40,-35,56]},
   // Global data
-  {title: "mammals rarity", slug: 'mammals_rarity', url: `${bucketUrl}/rarity/mammals/${templatePattern}`},
-  {title: "mammals richness", slug: 'mammals_richness', url: `${bucketUrl}/richness/mammals/${templatePattern}`},
-  {title: "fishes rarity", slug: 'fishes_rarity', url: `${bucketUrl}/rarity/fishes/${templatePattern}`},
-  {title: "fishes richness", slug: 'fishes_richness', url: `${bucketUrl}/richness/fishes/${templatePattern}`},
-  {title: "conifers rarity", slug: 'conifers_rarity', url: `${bucketUrl}/rarity/conifers/${templatePattern}`},
-  {title: "conifers richness", slug: 'conifers_richness', url: `${bucketUrl}/richness/conifers/${templatePattern}`},
-  {title: "cacti rarity", slug: 'cacti_rarity', url: `${bucketUrl}/rarity/cacti/${templatePattern}`},
-  {title: "cacti richness", slug: 'cacti_richness', url: `${bucketUrl}/richness/cacti/${templatePattern}`},
-  {title: "amphibians rarity", slug: 'amphibians_rarity', url: `${bucketUrl}/rarity/amphibians/${templatePattern}`},
-  {title: "amphibians richness", slug: 'amphibians_richness', url: `${bucketUrl}/richness/amphibians/${templatePattern}`},
-  {title: "turtles rarity", slug: 'turtles_rarity', url: `${bucketUrl}/rarity/turtles/${templatePattern}`},
-  {title: "turtles richness", slug: 'turtles_richness', url: `${bucketUrl}/richness/turtles/${templatePattern}`},
-  {title: "birds rarity", slug: 'birds_rarity', url: `${bucketUrl}/rarity/birds/${templatePattern}`},
-  {title: "birds richness", slug: 'birds_richness', url: `${bucketUrl}/richness/birds/${templatePattern}`},
-  {title: "all groups rarity", slug: 'all_taxa_rarity', url: `${bucketUrl}/rarity/all/${templatePattern}`},
-  {title: "all groups richness", slug: 'all_taxa_richness', url: `${bucketUrl}/richness/all/${templatePattern}`}
+  {title: "mammals rarity", slug: 'mammals-rare', url: `${bucketUrl}/rarity/mammals/${templatePattern}`},
+  {title: "mammals richness", slug: 'mammals-rich', url: `${bucketUrl}/richness/mammals/${templatePattern}`},
+  {title: "fishes rarity", slug: 'fishes-rarity', url: `${bucketUrl}/rarity/fishes/${templatePattern}`},
+  {title: "fishes richness", slug: 'fishes-rich', url: `${bucketUrl}/richness/fishes/${templatePattern}`},
+  {title: "conifers rarity", slug: 'conifers-rarity', url: `${bucketUrl}/rarity/conifers/${templatePattern}`},
+  {title: "conifers richness", slug: 'conifers-rich', url: `${bucketUrl}/richness/conifers/${templatePattern}`},
+  {title: "cacti rarity", slug: 'cacti-rarity', url: `${bucketUrl}/rarity/cacti/${templatePattern}`},
+  {title: "cacti richness", slug: 'cacti-richness', url: `${bucketUrl}/richness/cacti/${templatePattern}`},
+  {title: "amphibians rarity", slug: 'amphib-rarity', url: `${bucketUrl}/rarity/amphibians/${templatePattern}`},
+  {title: "amphibians richness", slug: 'amphib-rich', url: `${bucketUrl}/richness/amphibians/${templatePattern}`},
+  {title: "turtles rarity", slug: 'turtles-rare', url: `${bucketUrl}/rarity/turtles/${templatePattern}`},
+  {title: "turtles richness", slug: 'turtles-rich', url: `${bucketUrl}/richness/turtles/${templatePattern}`},
+  {title: "birds rarity", slug: 'birds-rarity', url: `${bucketUrl}/rarity/birds/${templatePattern}`},
+  {title: "birds richness", slug: 'birds-rich', url: `${bucketUrl}/richness/birds/${templatePattern}`},
+  {title: "all groups rarity", slug: 'all-taxa-rarity', url: `${bucketUrl}/rarity/all/${templatePattern}`},
+  {title: "all groups richness", slug: 'all-taxa-richness', url: `${bucketUrl}/richness/all/${templatePattern}`}
 ]
 
 export const legendConfigs = {

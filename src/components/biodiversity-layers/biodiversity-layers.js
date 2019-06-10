@@ -33,14 +33,14 @@ const BiodiversityLayerContainer = props => {
 
   const handleSimpleLayerToggle = layerName => {
     const { handleLayerToggle } = props;
-    const layer = layersConfig.find(l => l.title === layerName);
+    const layer = layersConfig.find(l => l.slug === layerName);
     handleLayerToggle(layer.slug);
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
     const { map, exclusiveLayerToggle } = props;
-    const addLayer = layersConfig.find(l => l.title === layerToAdd);
-    const removeLayer = layersConfig.find(l => l.title === layerToRemove);
+    const addLayer = layersConfig.find(l => l.slug === layerToAdd);
+    const removeLayer = layersConfig.find(l => l.slug === layerToRemove);
     const layerExists = map.layers.items.some(l => l.id === addLayer.slug);
     const removeSlug = removeLayer && removeLayer.slug;
     if (layerExists) {
