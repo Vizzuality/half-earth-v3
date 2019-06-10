@@ -1,10 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-const selectOpen = ({ modalMetadata }) => modalMetadata.isOpen;
-const selectTitle = ({ modalMetadata }) => modalMetadata.title;
-const selectLoading = ({ modalMetadata }) => modalMetadata.loading;
-const selectSlug = ({ modalMetadata }) => modalMetadata.slug;
-const selectData = ({ modalMetadata }) => modalMetadata.data;
+const selectOpen = ({ metadata }) => metadata.isOpen;
+const selectTitle = ({ metadata }) => metadata.title;
+const selectLoading = ({ metadata }) => metadata.loading;
+const selectSlug = ({ metadata }) => metadata.slug;
+const selectData = ({ metadata }) => metadata.data;
 
 export const getMetadata = createSelector([ selectSlug, selectData ], (slug, data) => {
   if (!slug || !data) return null;
