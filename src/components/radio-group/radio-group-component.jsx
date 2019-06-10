@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import InfoModal from 'components/modal-metadata';
-import { layersConfig } from 'constants/mol-layers-configs';
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
 import styles from './radio-group-styles.module.scss';
 
@@ -11,29 +11,14 @@ const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
 const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick }) => {
-  const selectedLayersTitles = activeLayers
-        .map(l => layersConfig.find(lc => lc.slug === l.id))
-        .filter(l => l)
-        .map(l => l.title);
 
-  const optionsLayers = [];
-  options.forEach(option => {
-    Object.keys(option.layers).forEach(variant => {
-      optionsLayers.push({
-        layerTitle: option.layers[variant],
-        variant,
-        option
-      });
-    });
-  });
+  const [variant, setVariant] = useState(RARITY);
+  const prevSelection = useRef();
+  const toggleRarityRichness = () => {
+    setVariant(variant === RARITY ? RICHNESS : RARITY);
+  }
 
-  const selected = optionsLayers.find(o => selectedLayersTitles.includes(o.layerTitle));
-  const selectedOption = selected && selected.option;
-  const selectedLayer = selected && selected.layerTitle;
-  const variant = (selected && selected.variant) || RARITY;
-
-  // this must be of boolean type!
-  const isSelected = (option) => !!(selectedOption && selectedOption.value === option.value);
+  const isSelected = (option) => !!(activeLayers.find(l => l.id === option.layers[variant]))
 
   return (
     <>
@@ -49,13 +34,13 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
               id={option.value}
               value={option.value}
               onClick={() => {
-                if (isSelected(option)) {
+                if (option.layers[variant] === prevSelection.current) {
                   handleSimpleLayerToggle(option.layers[variant]);
                 } else {
-                  handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
+                  handleExclusiveLayerToggle(option.layers[variant], prevSelection.current);
                 }
+                prevSelection.current = option.layers[variant];
               }}
-              checked={isSelected(option)}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
               {option.name}
@@ -63,13 +48,15 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
-              <InfoModal onClick={() => handleInfoClick()}/>
+              <InfoIcon onClick={() => handleInfoClick(option, variant)} />
               <button
                 type="button"
                 className={styles.button}
                 onClick={() => {
-                  const changeVariant = variant === RARITY ? RICHNESS : RARITY;
-                  handleExclusiveLayerToggle(option.layers[changeVariant], selectedLayer);
+                  const changeVariantType = variant === RARITY ? RICHNESS : RARITY;
+                  handleExclusiveLayerToggle(option.layers[changeVariantType], prevSelection.current);
+                  prevSelection.current = option.layers[changeVariantType];
+                  toggleRarityRichness();
                 }}>
                 {variant}
               </button>
@@ -77,6 +64,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           )}
         </div>
       ))}
+      <InfoModal />
     </>
   )
 }

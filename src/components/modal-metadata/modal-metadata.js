@@ -1,13 +1,21 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from './modal-metadata-actions';
-import reducers, { initialState } from './modal-metadata-reducers';
 
 import ModalMetadataComponent from './modal-metadata-component';
 import { mapStateToProps } from './modal-metadata-selectors';
+import actions from 'redux_modules/metadata';
 
-export const reduxConfig = { actions, reducers, initialState };
+const ModalMetadataContainer = props => {
+  const handleModalClose = () => {
+    const { setModalMetadata } = props;
+    setModalMetadata({
+      isOpen: false
+    });
+  };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(ModalMetadataComponent);
+  return (
+    <ModalMetadataComponent {...props} handleClose={handleModalClose}/>
+  )
+}
+
+export default connect(mapStateToProps, actions)(ModalMetadataContainer);
