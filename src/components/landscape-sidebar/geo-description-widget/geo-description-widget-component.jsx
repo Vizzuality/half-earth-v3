@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from './geo-description-styles.module.scss';
+import styles from './geo-description-widget-styles.module.scss';
 
 const GEO_DESCRIBER_API = 'https://staging-api.globalforestwatch.org/v1/geodescriber/geom?lang=en&app=HE';
 
-const GeoDescription = ({ geojson }) => {
+const GeoDescriptionWidget = ({ geojson }) => {
   const [data, setData] = useState();
 
   async function fetchGeoDescription() {
@@ -39,8 +39,12 @@ const GeoDescription = ({ geojson }) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{data.title}</h2>
+      <div className={styles.line}></div>
+      <p className={styles.description}>
+        {data.description}
+      </p>
     </div>
   );
 };
 
-export default GeoDescription;
+export default GeoDescriptionWidget;

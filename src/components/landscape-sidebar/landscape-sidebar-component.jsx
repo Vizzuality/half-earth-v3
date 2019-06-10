@@ -1,7 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 import {useSpring, animated} from 'react-spring'
-import GeoDescriptionWidget from './geo-description';
+
+import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
 import MOLUploader from './mol-uploader';
 
