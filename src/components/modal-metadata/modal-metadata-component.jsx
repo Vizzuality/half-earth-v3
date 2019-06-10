@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
-
 import { Modal, Loading } from 'he-components';
-import styles from './modal-styles.module.scss';
+import MolLogo from 'logos/mol.png';
+import styles from './modal-metadata-styles.module.scss';
 
 const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata = {} }) => {
   return (
@@ -73,7 +72,7 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata = {} }) =
                 <a href="https://mol.org/" target="_blank" rel="noopener noreferrer">
                   <img
                     className={styles.logoImg}
-                    src="/img/partners/mol-logo.png"
+                    src={MolLogo}
                     alt="Mol logo"
                   />
                 </a>
@@ -97,18 +96,4 @@ ModalMetadata.propTypes = {
 
 ModalMetadata.defaultProps = { title: '', loading: false, metadata: undefined };
 
-const InfoModal = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
-
-  return (
-    <>
-      <InfoIcon onClick={handleOpenModal} />
-      {isModalOpen && <ModalMetadata isOpen={isModalOpen} handleClose={handleCloseModal} />}
-    </>
-  )
-}
-
-export default InfoModal;
+export default ModalMetadata;

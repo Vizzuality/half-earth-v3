@@ -11,13 +11,15 @@ export const WDPALayers = [
     name: 'Protected areas',
     value: 'Protected areas',
     id: WDPA_VECTORTILE_LAYER_ID,
-    theme: 'overrideCheckbox-protected-areas'
+    theme: 'overrideCheckbox-protected-areas',
+    slug: 'biosphere-reserves'
   },
   {
     name: 'Community-based',
     value: 'Community areas',
     id: COMMUNITY_VECTORTILE_LAYER_ID,
-    theme: 'overrideCheckbox-community-areas'
+    theme: 'overrideCheckbox-community-areas',
+    slug: 'community-conservation'
   }
 ]
 

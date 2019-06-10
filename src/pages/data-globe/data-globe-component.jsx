@@ -18,6 +18,7 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
+import InfoModal from 'components/modal-metadata';
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const DataGlobeComponent = ({
@@ -87,6 +88,7 @@ const DataGlobeComponent = ({
         setLayerOpacity={setLayerOpacity}
         setLayerVisibility={setLayerVisibility}
       />
+      <InfoModal />
     </Globe>
   )
 };
