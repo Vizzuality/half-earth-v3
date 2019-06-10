@@ -415,8 +415,8 @@ export const legendConfigs = {
     ],
     title: "Fishing trawlers"
   },
-  // South Africa 
-  amphibians_rarity_sa: {
+  // South Africa
+  'amphib-rarity-sa': {
     type: "gradient",
     items: [
     {
@@ -458,7 +458,7 @@ export const legendConfigs = {
     ],
     title: "Amphibian regional rarity"
   },
-  amphibians_richness_sa: {
+  'amphib-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -500,7 +500,7 @@ export const legendConfigs = {
     ],
     title: "Amphibian regional richness"
   },
-  dragonflies_rarity_sa: {
+  'dragonflies-rare-sa': {
     type: "gradient",
     items: [
     {
@@ -542,7 +542,7 @@ export const legendConfigs = {
     ],
     title: "Dragonflies rarity"
   },
-  dragonflies_richness_sa: {
+  'dragonflies-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -584,7 +584,7 @@ export const legendConfigs = {
     ],
     title: "Dragonflies richness"
   },
-  mammals_rarity_sa: {
+  'mammals-rare-sa': {
     type: "gradient",
     items: [
     {
@@ -626,7 +626,7 @@ export const legendConfigs = {
     ],
     title: "Mammals regional rarity"
   },
-  mammals_richness_sa: {
+  'mammals-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -668,7 +668,7 @@ export const legendConfigs = {
     ],
     title: "Mammals regional richness"
   },
-  birds_rarity_sa: {
+  'birds-rare-sa': {
     type: "gradient",
     items: [
     {
@@ -710,7 +710,7 @@ export const legendConfigs = {
     ],
     title: "Birds regional rarity"
   },
-  birds_richness_sa: {
+  'birds-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -752,7 +752,7 @@ export const legendConfigs = {
     ],
     title: "Birds regional richness"
   },
-  restio_rarity_sa: {
+  'restio-rare-sa': {
     type: "gradient",
     items: [
     {
@@ -794,7 +794,7 @@ export const legendConfigs = {
     ],
     title: "Restio regional rarity"
   },
-  restio_richness_sa: {
+  'restio-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -836,7 +836,7 @@ export const legendConfigs = {
     ],
     title: "Restio regional richness"
   },
-  protea_rarity_sa: {
+  'protea-rare-sa': {
     type: "gradient",
     items: [
     {
@@ -878,7 +878,7 @@ export const legendConfigs = {
     ],
     title: "Protea regional rarity"
   },
-  protea_richness_sa: {
+  'protea-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -920,7 +920,7 @@ export const legendConfigs = {
     ],
     title: "Protea regional richness"
   },
-  reptiles_rarity_sa: {
+  'reptiles-rare-sa': {
     type: "gradient",
     items: [
     {
@@ -962,7 +962,7 @@ export const legendConfigs = {
     ],
     title: "Reptiles regional rarity"
   },
-  reptiles_richness_sa: {
+  'reptiles-rich-sa': {
     type: "gradient",
     items: [
     {
@@ -1005,7 +1005,7 @@ export const legendConfigs = {
     title: "Reptiles regional richness"
   },
   // Hummingbirds
-  hummingbirds_richness: {
+  'hummingbirds-rich': {
     type: "gradient",
     items: [
     {
@@ -1047,7 +1047,7 @@ export const legendConfigs = {
     ],
     title: "Hummingbirds richness"
   },
-  hummingbirds_rarity: {
+  'hummingbirds-rare': {
     type: "gradient",
     items: [
     {
@@ -1090,7 +1090,7 @@ export const legendConfigs = {
     title: "Hummingbirds rarity"
   },
   // Global data
-  mammals_rarity: {
+  'mammals-rare': {
     type: "gradient",
     items: [
     {
@@ -1132,7 +1132,7 @@ export const legendConfigs = {
     ],
     title: "Mammals rarity"
   },
-  mammals_richness: {
+  'mammals-rich': {
     type: "gradient",
     items: [
     {
@@ -1174,7 +1174,7 @@ export const legendConfigs = {
     ],
     title: "Mammals richness"
   },
-  fishes_rarity: {
+  'fishes-rarity': {
     type: "gradient",
     items: [
     {
@@ -1216,7 +1216,7 @@ export const legendConfigs = {
     ],
     title: "Fishes rarity"
   },
-  fishes_richness: {
+  'fishes-rich': {
     type: "gradient",
     items: [
     {
@@ -1258,7 +1258,7 @@ export const legendConfigs = {
     ],
     title: "Fishes richness"
   },
-  conifers_rarity: {
+  'conifers-rarity': {
     type: "gradient",
     items: [
     {
@@ -1300,7 +1300,7 @@ export const legendConfigs = {
     ],
     title: "Conifers rarity"
   },
-  conifers_richness: {
+  'conifers-rich': {
     type: "gradient",
     items: [
     {
@@ -1342,7 +1342,7 @@ export const legendConfigs = {
     ],
     title: "Conifers richness"
   },
-  cacti_rarity: {
+  'cacti-rarity': {
     type: "gradient",
     items: [
     {
@@ -1384,7 +1384,7 @@ export const legendConfigs = {
     ],
     title: "Cacti rarity"
   },
-  cacti_richness: {
+  'cacti-richness': {
     type: "gradient",
     items: [
     {
@@ -1426,7 +1426,7 @@ export const legendConfigs = {
     ],
     title: "Cacti richness"
   },
-  amphibians_rarity: {
+  'amphib-rarity': {
     type: "gradient",
     items: [
     {
@@ -1468,7 +1468,7 @@ export const legendConfigs = {
     ],
     title: "Amphibian rarity"
   },
-  amphibians_richness: {
+  'amphib-rich': {
     type: "gradient",
     items: [
     {
@@ -1510,7 +1510,7 @@ export const legendConfigs = {
     ],
     title: "Amphibian richness"
   },
-  turtles_richness: {
+  'turtles-rich': {
     type: "gradient",
     items: [
     {
@@ -1552,7 +1552,7 @@ export const legendConfigs = {
     ],
     title: "Turtle richness"
   },
-  turtles_rarity: {
+  'turtles-rare': {
     type: "gradient",
     items: [
     {
@@ -1594,7 +1594,7 @@ export const legendConfigs = {
     ],
     title: "Turtle rarity"
   },
-  birds_rarity: {
+  'birds-rarity': {
     type: "gradient",
     items: [
     {
@@ -1636,7 +1636,7 @@ export const legendConfigs = {
     ],
     title: "Birds rarity"
   },
-  birds_richness: {
+  'birds-rich': {
     type: "gradient",
     items: [
     {
@@ -1678,7 +1678,7 @@ export const legendConfigs = {
     ],
     title: "Birds richness"
   },
-  all_taxa_rarity: {
+  'all-taxa-rarity': {
     type: "gradient",
     items: [
     {
@@ -1720,7 +1720,7 @@ export const legendConfigs = {
     ],
     title: "All groups rarity"
   },
-  all_taxa_richness: {
+  'all-taxa-richness': {
     type: "gradient",
     items: [
     {
