@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import InfoModal from 'components/modal';
+import InfoModal from 'components/modal-metadata';
 
 import styles from './checkbox-styles.module.scss';
 

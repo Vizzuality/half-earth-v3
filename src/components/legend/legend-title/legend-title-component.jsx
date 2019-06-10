@@ -5,7 +5,6 @@ import styles from './legend-title-styles.module.scss';
 import molLogo from 'logos/mol_short_logo.png';
 
 const LegendTitleComponent = ({ layers, name, activeLayer }) => {
-  console.log('title')
   return (
     <div className={styles.titleContainer}>
       <a
