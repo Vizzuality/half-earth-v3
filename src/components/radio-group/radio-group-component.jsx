@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import InfoModal from 'components/modal-metadata';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
 import styles from './radio-group-styles.module.scss';
@@ -64,7 +63,6 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           )}
         </div>
       ))}
-      <InfoModal />
     </>
   )
 }

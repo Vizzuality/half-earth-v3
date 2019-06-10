@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import InfoModal from 'components/modal-metadata';
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
 import styles from './checkbox-styles.module.scss';
 
-const Checkbox = ({ option, onChange, checked, theme }) => {
+const Checkbox = ({ option, onChange, checked, theme, handleInfoClick }) => {
   return (
     <div key={option.name} className={cx(
       styles.checkboxWrapper, 
@@ -23,7 +23,7 @@ const Checkbox = ({ option, onChange, checked, theme }) => {
       <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: checked })}>
         <span className={styles.label}>{option.name}</span>
       </label>
-      {checked && <InfoModal />}
+      {checked && <InfoIcon onClick={() => handleInfoClick(option)} />}
     </div>
   )}
 

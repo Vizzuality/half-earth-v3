@@ -1,3 +1,25 @@
+import React from 'react';
+import { connect } from 'react-redux';
 import Component from './checkbox-component';
+import actions from 'redux_modules/metadata';
 
-export default Component;
+const CheckboxContainer = props => {
+
+  const handleInfoClick = (option) => {
+    const { setModalMetadata } = props;
+    console.log(option)
+    setModalMetadata({
+      slug: `${option.slug}`,
+      title: `${option.name} metadata`,
+      isOpen: true
+    });
+  };
+ return (
+  <Component
+    handleInfoClick={handleInfoClick}
+    {...props}
+  />
+ )
+}
+
+export default connect(null, actions)(CheckboxContainer);
