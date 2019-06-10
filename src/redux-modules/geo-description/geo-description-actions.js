@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-const GEO_DESCRIBER_API = 'https://staging-api.globalforestwatch.org/v1/geodescriber/geom?lang=en&app=HE';
+const { REACT_APP_GEO_DESCRIBER_API } = process.env;
 
 export const setGeoDescriptionLoading = createAction(
   'SET_GEO_DESCRIPTION_LOADING'
@@ -21,7 +21,7 @@ export const fetchGeoDescription = createThunkAction(
 
     dispatch(setGeoDescriptionLoading(geojson));
     try {
-      const response = await fetch(GEO_DESCRIBER_API, {
+      const response = await fetch(REACT_APP_GEO_DESCRIBER_API, {
         method: 'POST',
         headers:{
           'Content-Type': 'application/json'
