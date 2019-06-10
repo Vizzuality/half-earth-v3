@@ -7,7 +7,7 @@ function setGeoDescriptionLoading(state, { payload }) {
 }
 
 function setGeoDescriptionReady(state, { payload }) {
-  return { ...state, loading: false, data: payload };
+  return { ...state, error: false, loading: false, data: payload };
 }
 
 function setGeoDescriptionError(state, { payload }) {

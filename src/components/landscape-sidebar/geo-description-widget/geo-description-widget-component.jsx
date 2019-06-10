@@ -1,8 +1,30 @@
 import React from 'react';
+import { Loading } from 'he-components';
 
 import styles from './geo-description-widget-styles.module.scss';
 
-const GeoDescriptionWidget = ({ data }) => {
+const GeoDescriptionWidget = ({ data, loading, error }) => {
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>
+          <Loading />
+          <span className={styles.loadingText}>Loading area information...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.errorText}>
+          Cannot load area information.
+        </p>
+      </div>
+    );
+  }
+
   if (!data) return null;
 
   return (
