@@ -11,11 +11,20 @@ const RICHNESS = 'richness';
 
 const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick }) => {
 
-  const [variant, setVariant] = useState(RARITY);
-  const prevSelection = useRef();
-  const toggleRarityRichness = () => {
-    setVariant(variant === RARITY ? RICHNESS : RARITY);
-  }
+  const optionsLayers = [];
+  options.forEach(option => {
+    Object.keys(option.layers).forEach(variant => {
+      optionsLayers.push({
+        layerId: option.layers[variant],
+        variant,
+        option
+      });
+    });
+  });
+  const selectedLayersIds = activeLayers.map(l => l.id);
+  const selected = optionsLayers.find(o => selectedLayersIds.includes(o.layerId));
+  const selectedLayer = selected && selected.layerId;
+  const variant = (selected && selected.variant) || RARITY;
 
   const isSelected = (option) => !!(activeLayers.find(l => l.id === option.layers[variant]))
 
@@ -37,9 +46,8 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
                 if (isSelected(option)) {
                   handleSimpleLayerToggle(option.layers[variant]);
                 } else {
-                  handleExclusiveLayerToggle(option.layers[variant], prevSelection.current);
+                  handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
                 }
-                prevSelection.current = option.layers[variant];
               }}
             />
             <label htmlFor={option.value} className={styles.radioInput}>
@@ -54,9 +62,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
                 className={styles.button}
                 onClick={() => {
                   const changeVariantType = variant === RARITY ? RICHNESS : RARITY;
-                  handleExclusiveLayerToggle(option.layers[changeVariantType], prevSelection.current);
-                  prevSelection.current = option.layers[changeVariantType];
-                  toggleRarityRichness();
+                  handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
                 }}>
                 {variant}
               </button>
