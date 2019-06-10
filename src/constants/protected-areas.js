@@ -20,3 +20,26 @@ export const WDPALayers = [
     theme: 'overrideCheckbox-community-areas'
   }
 ]
+
+export const legendConfigs = {
+  [COMMUNITY_VECTORTILE_LAYER_ID]: {
+    type: "basic",
+    items: [
+      {
+        name: "Community-based",
+        color: "#B9870D"
+      }
+    ],
+    title: "Community-based protected areas"
+  },
+  [WDPA_VECTORTILE_LAYER_ID]: {
+    type: "basic",
+    items: [
+      {
+        name: "Protected Areas",
+        color: "#AA260A"
+      }
+    ],
+    title: "All protected areas"
+  }
+}

@@ -29,3 +29,8 @@ export const layerManagerVisibility = (layerId, visible, activeLayers, callback)
     callback({ activeLayers: [ { id }] })
   }
 }
+
+export const layerManagerOpacity = (layerId, opacity, activeLayers, callback) => {
+  const updatedLayers = activeLayers.filter(l => l.id !== layerId);
+  callback({ activeLayers: [ ...updatedLayers, { id: layerId, opacity } ] })
+}

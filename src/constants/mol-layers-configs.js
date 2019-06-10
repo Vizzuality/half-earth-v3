@@ -538,8 +538,9 @@ export const legendConfigs = {
     {
     color: "#fde300",
     value: "high"
-    }
-    ]
+    },
+    ],
+    title: "Dragonflies rarity"
   },
   dragonflies_richness_sa: {
     type: "gradient",
@@ -580,7 +581,8 @@ export const legendConfigs = {
     color: "#fde300",
     value: "68 species"
     }
-    ]
+    ],
+    title: "Dragonflies richness"
   },
   mammals_rarity_sa: {
     type: "gradient",

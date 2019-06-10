@@ -1,0 +1,44 @@
+@import 'styles/settings';
+
+.wrapper {
+  background-color: #031D2E;
+  padding: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.uploadButton {
+  height: 26px;
+  width: 26px;
+  background-color: #18BAB4;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  transform: rotate(45deg);
+}
+
+.title {
+  text-transform: uppercase;
+  color: $white;
+  letter-spacing: 2px;
+  font-size: $font-size-xxs;
+  font-family: $font-family-2;
+  margin: 0;
+  padding-left: 15px;
+  align-self: flex-end;
+  line-height: 16px;
+}
+
+.question {
+  color: #DBDBDB;
+  font-size: $font-size-xxs;
+}

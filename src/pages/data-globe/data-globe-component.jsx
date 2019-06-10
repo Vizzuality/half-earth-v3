@@ -33,7 +33,8 @@ const DataGlobeComponent = ({
   setLayerVisibility,
   sceneSettings,
   exclusiveLayerToggle,
-  onLoad
+  onLoad,
+  setLayerOpacity
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -48,8 +49,8 @@ const DataGlobeComponent = ({
       <ZoomWidget />
       <MinimapWidget />
       <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
-      <Sidebar isSidebarOpen={isSidebarOpen} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
+      <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} />
+      <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
         {isBiodiversityActive && (
           biodiversityCategories.map(cat => (
             <BiodiversityLayers
@@ -81,7 +82,11 @@ const DataGlobeComponent = ({
       </Sidebar>
       <LandscapeSidebar isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
       <About />
-      <Legend isFullscreenActive={isFullscreenActive} />
+      <Legend 
+        isFullscreenActive={isFullscreenActive}
+        setLayerOpacity={setLayerOpacity}
+        setLayerVisibility={setLayerVisibility}
+      />
     </Globe>
   )
 };

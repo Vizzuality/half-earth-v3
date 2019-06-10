@@ -1,6 +1,7 @@
 @import 'styles/settings';
 
 $site-gutter: 20px;
+$map-attribution-height: 30px;
 
 :global {
   .rc-tooltip-placement-top {
@@ -31,16 +32,25 @@ $site-gutter: 20px;
   .wri_api__legend-item-header {
     h3 {
       color: $white !important;
+      font-family: $font-family-1;
+      font-size: $font-size-xs;
     }
+  }
+
+  .wri_api__c-legend-item-types {
+    background: none;
+  }
+
+  .wri_api__name {
+    color: $white;
   }
 }
 
 .legend {
   position: absolute;
-  bottom: $site-gutter * 2;
+  bottom: calc(#{$site-gutter} + #{$map-attribution-height});
   right: $site-gutter;
   width: 240px;
-  height: 80px;
 
   :global {
     .wri_api__c-legend-map {
@@ -51,6 +61,11 @@ $site-gutter: 20px;
 
     .wri_api__c-legend-item {
       background: rgba(#09141a, 0.4);
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     .wri_api__toggle-legend {
@@ -93,15 +108,6 @@ body {
     
     .rc-slider-mark {
       display: flex;
-    }
-  }
-}
-
-:global {
-  .wri_api__opacity {
-    color: pink;
-    svg {
-      fill: $robins-egg-blue;
     }
   }
 }

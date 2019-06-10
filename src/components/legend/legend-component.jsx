@@ -12,24 +12,31 @@ import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive }) => {
+const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, setLayerOpacity, setLayerVisibility }) => {
   const { 
     handleChangeOrder,
-    handleRemoveLayer,
     handleLayerChange,
     handleInfoClick,
-    handleChangeVisibility,
-    handleChangeOpacity
+    handleChangeVisibility
   } = handlers;
 
+  const { layers } = map;
+
+  const handleChangeOpacity = (layer, opacity) => {
+    layers.items.forEach(mapLayer => {
+      if (mapLayer.id === layer.id) { mapLayer.opacity = opacity; }
+      mapLayer.layers && mapLayer.layers.items && mapLayer.layers.items.forEach(nestedLayer => {
+        if (nestedLayer.id === layer.id) { nestedLayer.opacity = opacity; }
+      })
+    })
+    setLayerOpacity(layer.id, opacity);
+  }
+
+  const handleRemoveLayer = (layer) => {
+    setLayerVisibility(layer.id, false)
+  }
+
   const toolbar = (
-    <LegendItemToolbar
-      onChangeInfo={handleInfoClick}
-      onChangeLayer={handleLayerChange}
-      onRemoveLayer={handleRemoveLayer}
-      onChangeVisibility={handleChangeVisibility}
-      onChangeOpacity={handleChangeOpacity}
-    >
     <LegendItemToolbar
       onChangeInfo={handleInfoClick}
       onChangeLayer={handleLayerChange}
@@ -74,14 +81,13 @@ const HELegend = ({ datasets, handlers, isFullscreenActive }) => {
       />
       <LegendItemButtonRemove />
     </LegendItemToolbar>
-    </LegendItemToolbar>
   );
 
   return (
     <div className={styles.legend}>
       {!isFullscreenActive && <Legend sortable={false} onChangeOrder={handleChangeOrder}>
         {datasets && datasets.map((dataset, i) => (
-          <LegendListItem index={i} key={dataset.slug} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name='test name' />}>
+          <LegendListItem index={i} key={dataset.slug} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
             <LegendItemTypes />
           </LegendListItem>
         ))}

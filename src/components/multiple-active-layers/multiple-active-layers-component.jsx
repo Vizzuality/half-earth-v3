@@ -16,7 +16,6 @@ const MultipleActiveLayers = ({ title, description, options, handleClick, theme,
         handleClick={handleClick}
         checkedOptions={alreadyChecked}
         options={options}
-        title={title}
         theme={theme} 
       />
     </div>
@@ -27,18 +26,18 @@ MultipleActiveLayers.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   options: PropTypes.array,
-  handleLayerToggle: PropTypes.func,
+  handleClick: PropTypes.func,
   theme: PropTypes.object,
-  activeLayers: PropTypes.array
+  alreadyChecked: PropTypes.object
 };
 
 MultipleActiveLayers.defaultProps = {
   title: '',
   description: '',
   options: [],
-  handleLayerToggle: () => {},
+  handleClick: () => {},
   theme: {},
-  activeLayers: []
+  alreadyChecked: {}
 };
 
 export default MultipleActiveLayers;

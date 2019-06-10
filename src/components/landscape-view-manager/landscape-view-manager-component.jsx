@@ -1,6 +1,7 @@
 import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
+import { esriGeometryToGeojson } from 'utils/geojson-parser';
 import {
   setGridCellStyles,
   setGridCellGraphic,
@@ -10,7 +11,7 @@ import {
   isLandscapeViewOffEvent
 } from 'utils/landscape-view-manager-utils';
 
-const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData }) => {
+const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData, setGridCellGeojson }) => {
   const [watchUtils, setWatchUtils] = useState(null);
   const [viewExtent, setViewExtent] = useState();
   // References for cleaning up graphics
@@ -85,6 +86,7 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
               // If there are not a group of cells pick the one in the center
               const singleGridCell = !hasContainedGridCells && results.features.filter(gridCell => gridCell.geometry.contains(view.center));
                const gridCellGeometry = hasContainedGridCells ? geometryEngine.union(containedGridCellsGeometries) : singleGridCell[0].geometry;
+              setGridCellGeojson(esriGeometryToGeojson(gridCellGeometry))
               const cellData = hasContainedGridCells ? containedGridCells : singleGridCell;
               // Add data to the store
               setGridCellData(cellData);
