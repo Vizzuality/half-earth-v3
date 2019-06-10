@@ -51,7 +51,7 @@ async function getContentfulImage(assetId) {
 }
 
 async function fetchContentfulEntry(
-  { contentType = 'metadata', filterField = 'layerSlug', filterValue = 'amphib-rarity' }
+  { contentType = 'metadata', filterField = 'layerSlug', filterValue = '' }
 ) {
   let url = `${config.baseUrl}/spaces/${config.space}/environments/${config.env}/entries?content_type=${contentType}&access_token=${config.token}`;
   if (filterField && filterValue) {
