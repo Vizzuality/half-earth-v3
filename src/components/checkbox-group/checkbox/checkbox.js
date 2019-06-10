@@ -7,7 +7,6 @@ const CheckboxContainer = props => {
 
   const handleInfoClick = (option) => {
     const { setModalMetadata } = props;
-    console.log(option)
     setModalMetadata({
       slug: `${option.slug}`,
       title: `${option.name} metadata`,
