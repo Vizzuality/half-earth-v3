@@ -44,7 +44,7 @@ const BiodiversityLayers = ({
                   <RadioGroup
                     activeLayers={activeLayers}
                     options={subct.taxa}
-                    title={title}
+                    title={subct.name}
                     handleExclusiveLayerToggle={handleExclusiveLayerToggle}
                     handleSimpleLayerToggle={handleSimpleLayerToggle}
                   />
