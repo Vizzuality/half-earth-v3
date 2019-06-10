@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 import {useSpring, animated} from 'react-spring'
+
+import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
 import MOLUploader from './mol-uploader';
 
@@ -21,6 +23,7 @@ const LandscapeSidebarComponent = ({ isLandscapeMode, isFullscreenActive }) => {
       )}
       style={animationProps}>
       <div className={styles.wrapper}>
+        <GeoDescriptionWidget />
         <HumanPressureWidget />
         <MOLUploader />
       </div>
