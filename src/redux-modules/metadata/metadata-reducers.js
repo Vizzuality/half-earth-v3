@@ -1,4 +1,4 @@
-import * as actions from './modal-metadata-actions';
+import * as actions from './metadata-actions';
 
 export const initialState = {
   isOpen: false,

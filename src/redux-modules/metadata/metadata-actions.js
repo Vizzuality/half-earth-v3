@@ -1,13 +1,14 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import CONTENTFUL from 'app/services/contentful';
+import CONTENTFUL from 'services/contentful';
 
 export const setModalMetadataParams = createAction('setModalMetadataParams');
 
 // Requires payload params:
 // slug: slug to fetch
-export const setModalMetadata = createThunkAction('setModalMetadata', payload => dispatch => {
+export const setModalMetadata = createThunkAction('setModalMetadata', payload => (dispatch, state) => {
+  const { metadata: { data }} = state();
   dispatch(setModalMetadataParams(payload));
-  if (payload.slug) {
+  if (payload.slug && !data[payload.slug]) {
     dispatch(fetchModalMetaData(payload.slug));
   }
 });

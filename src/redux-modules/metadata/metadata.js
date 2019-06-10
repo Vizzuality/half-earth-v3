@@ -1,8 +1,10 @@
 import reducerRegistry from 'reducerRegistry';
 
-import * as actions from './modal-metadata-actions';
-import reducers, { initialState } from './modal-metadata-reducers';
+import * as actions from './metadata-actions';
+import reducers, { initialState } from './metadata-reducers';
 
 export const reduxConfig = { actions, reducers, initialState };
 
-export default reducerRegistry.registerModule('modalMetadata', reduxConfig);
+reducerRegistry.registerModule('metadata', reduxConfig);
+
+export default actions;
