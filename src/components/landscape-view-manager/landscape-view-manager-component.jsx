@@ -11,7 +11,7 @@ import {
   isLandscapeViewOffEvent
 } from 'utils/landscape-view-manager-utils';
 
-const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData, setGridCellGeojson, clearGeoDescription, fetchGeoDescription }) => {
+const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData, setGridCellGeojson, fetchGeoDescription }) => {
   const [watchUtils, setWatchUtils] = useState(null);
   const [viewExtent, setViewExtent] = useState();
   // References for cleaning up graphics
@@ -55,13 +55,6 @@ const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query
     }
     view.goTo(target, options)
   }, [isLandscapeMode])
-
-  // clear widgets data
-  useEffect(() => {
-    if (!isLandscapeMode) {
-      clearGeoDescription();
-    }
-  }, [isLandscapeMode]);
 
   // GRID data and painting effect
   useEffect(() => {

@@ -11,9 +11,6 @@ export const setGeoDescriptionReady = createAction(
 export const setGeoDescriptionError = createAction(
   'SET_GEO_DESCRIPTION_ERROR'
 );
-export const clearGeoDescription = createAction(
-  'CLEAR_GEO_DESCRIPTION'
-);
 export const fetchGeoDescription = createThunkAction(
   'fetchGeoDescription',
   (geojson) => async (dispatch, getState) => {

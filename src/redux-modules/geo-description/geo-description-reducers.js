@@ -14,13 +14,8 @@ function setGeoDescriptionError(state, { payload }) {
   return { ...state, loading: false, data: null, error: payload };
 }
 
-function clearGeoDescription() {
-  return initialState;
-}
-
 export default {
   [actions.setGeoDescriptionLoading]: setGeoDescriptionLoading,
   [actions.setGeoDescriptionReady]: setGeoDescriptionReady,
-  [actions.setGeoDescriptionError]: setGeoDescriptionError,
-  [actions.clearGeoDescription]: clearGeoDescription
+  [actions.setGeoDescriptionError]: setGeoDescriptionError
 };
