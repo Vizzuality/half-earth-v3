@@ -56,6 +56,8 @@ $tabsMarginBottom: 8px;
 .copyButton {
   margin-left: -10px;
   width: 100px;
+  letter-spacing: 2px;
+  font-size: $font-size-xs;
 
   &:active {
     background-color: #18bab4;
