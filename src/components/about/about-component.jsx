@@ -38,7 +38,7 @@ const AboutPage = ({ handleCloseAboutPage, textData }) => {
   );
 }
 
-const AboutComponent = ({ setPageTexts }) => {
+const AboutComponent = ({ setPageTexts, textData }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
@@ -55,7 +55,7 @@ const AboutComponent = ({ setPageTexts }) => {
       >
         About the Half-Earth map
       </button>
-      {isAboutPageOpened && <AboutPage handleCloseAboutPage={handleCloseAboutPage} />}
+      {isAboutPageOpened && <AboutPage handleCloseAboutPage={handleCloseAboutPage} textData={textData} />}
     </>
   );
 }

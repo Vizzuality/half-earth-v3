@@ -7,7 +7,7 @@ import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import LandscapeSidebar from 'components/landscape-sidebar';
-import About from 'components/about';
+import About from 'components/about/about';
 import HumanImpactLayers from 'components/human-impact-layers';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
 import Legend from 'components/legend';

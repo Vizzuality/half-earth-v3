@@ -92,7 +92,6 @@ async function getStories() {
 async function getTexts() {
   const data = await fetchContentfulEntry({ contentType: 'texts' });
   if (data && data.items && data.items.length > 0) {
-    console.log(parseTexts(data.items))
     return parseTexts(data.items);
   }
   return null;
