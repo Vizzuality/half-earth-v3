@@ -6,7 +6,7 @@ import MapInstructionsComponent from './map-instructions/map-instructions-compon
 
 import styles from './about-styles.module.scss';
 
-const AboutPage = ({ handleCloseAboutPage }) => {
+const AboutPage = ({ handleCloseAboutPage, textData }) => {
   const [isPartnersActive, setPartnersActive] = useState(true);
 
   const keyEscapeEventListener = (evt) => {
@@ -26,7 +26,7 @@ const AboutPage = ({ handleCloseAboutPage }) => {
         </div>
       </div>
       <div className={styles.content}>
-        { isPartnersActive ? <PartnersComponent /> : <MapInstructionsComponent />}
+        { isPartnersActive ? <PartnersComponent textData={textData}/> : <MapInstructionsComponent />}
       </div>
       <button 
         className={styles.closeButton}
@@ -38,10 +38,13 @@ const AboutPage = ({ handleCloseAboutPage }) => {
   );
 }
 
-const AboutComponent = () => {
+const AboutComponent = ({ setPageTexts }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
-  const handleOpenAboutPage = () => setAboutPageOpened(true);
+  const handleOpenAboutPage = () => {
+    setPageTexts();
+    setAboutPageOpened(true);
+  }
   const handleCloseAboutPage = () => setAboutPageOpened(false);
 
   return (

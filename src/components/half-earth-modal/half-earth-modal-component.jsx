@@ -6,8 +6,8 @@ import data from './half-earth-modal-data';
 
 import styles from './half-earth-modal-styles.module.scss';
 
-const HalfEarthModalComponent = ({ handleModalClose }) => {
-  const { title, description, legend } = data;
+const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
+  const { legend } = data;
 
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
@@ -21,10 +21,10 @@ const HalfEarthModalComponent = ({ handleModalClose }) => {
     <div className={styles.halfEarthModal}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <h1 className={styles.title}>{title}</h1>
+          <h1 className={styles.title}>{textData && textData.title}</h1>
           <div className={styles.descriptionWrapper}>
             <div className={styles.description}>
-              {description.map(text => <p>{text}</p>)}
+              {textData && textData.content}
             </div>
           </div>
           <div className={styles.legendWrapper}>

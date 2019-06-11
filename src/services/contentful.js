@@ -40,6 +40,13 @@ function parseStories(stories) {
   );
 }
 
+const parseTexts = items => {
+  return items.map(({ fields }) => fields).reduce((acc, item) => {
+    acc[item.view] = item;
+    return acc
+  }, {});
+}
+
 async function getContentfulImage(assetId) {
   try {
     const imageUrl = await contentfulClient.getAsset(assetId).then(asset => asset.fields.file.url);
@@ -82,4 +89,13 @@ async function getStories() {
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories };
+async function getTexts() {
+  const data = await fetchContentfulEntry({ contentType: 'texts' });
+  if (data && data.items && data.items.length > 0) {
+    console.log(parseTexts(data.items))
+    return parseTexts(data.items);
+  }
+  return null;
+}
+
+export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts };
