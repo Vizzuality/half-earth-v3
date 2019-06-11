@@ -25,11 +25,11 @@ $tabsMarginBottom: 8px;
 .coordinates {
   margin-bottom: 54px;
   font-size: $font-size-xs;
-  color: #18BAB4;
+  color: $java;
 }
 
 .inputButton {
-  border: 1px solid #D8D8D8;
+  border: 1px solid $alto;
   background-color: transparent;
   color: $white;
   padding: 10px;
@@ -46,7 +46,7 @@ $tabsMarginBottom: 8px;
 }
 
 .button {
-  border: 1px solid #D8D8D8;
+  border: 1px solid $alto;
   height: 40px;
   color: $white;
   font-weight: bold;
@@ -60,8 +60,8 @@ $tabsMarginBottom: 8px;
   font-size: $font-size-xs;
 
   &:active {
-    background-color: #18bab4;
-    color: #000000;
+    background-color: $java;
+    color: $black;
   }
 }
 
@@ -93,7 +93,7 @@ $tabsMarginBottom: 8px;
 }
 
 .activeTab {
-  color: #18bab4;
+  color: $java;
   
   &:after {
     content: '';
@@ -102,7 +102,7 @@ $tabsMarginBottom: 8px;
     bottom: -10px; // ($tabsMarginBottom + 2) * -1
     width: 100%;
     height: 4px;
-    background-color: #18BAB4;
+    background-color: $java;
   }
 }
 
