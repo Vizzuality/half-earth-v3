@@ -11,7 +11,7 @@ import {
   isLandscapeViewOffEvent
 } from 'utils/landscape-view-manager-utils';
 
-const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData, setGridCellGeojson, fetchGeoDescription }) => {
+const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData, fetchGeoDescription }) => {
   const [watchUtils, setWatchUtils] = useState(null);
   const [viewExtent, setViewExtent] = useState();
   // References for cleaning up graphics
