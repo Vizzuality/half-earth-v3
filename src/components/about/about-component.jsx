@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import PartnersComponent from './partners/partners-component';
+import PartnersComponent from './partners/partners';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
 
 import styles from './about-styles.module.scss';
