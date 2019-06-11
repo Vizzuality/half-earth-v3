@@ -15,6 +15,7 @@
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-app-rewire-hot-loader": "^2.0.1",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.2",
     "react-markdown": "4.0.8",

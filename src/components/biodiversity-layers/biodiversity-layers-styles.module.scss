@@ -2,7 +2,6 @@
 @import 'styles/settings';
 
 .wrapper {
-  @include backdropBlur();
   padding-bottom: $sidebar-paddings;
   padding-left: $sidebar-paddings;
 }
