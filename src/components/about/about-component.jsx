@@ -38,11 +38,11 @@ const AboutPage = ({ handleCloseAboutPage, textData }) => {
   );
 }
 
-const AboutComponent = ({ setPageTexts, textData }) => {
+const AboutComponent = ({ setPageTexts, textData, VIEW  }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
-    setPageTexts();
+    setPageTexts(VIEW);
     setAboutPageOpened(true);
   }
   const handleCloseAboutPage = () => setAboutPageOpened(false);

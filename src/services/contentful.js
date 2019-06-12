@@ -89,8 +89,8 @@ async function getStories() {
   return null;
 }
 
-async function getTexts() {
-  const data = await fetchContentfulEntry({ contentType: 'texts' });
+async function getTexts(slug) {
+  const data = await fetchContentfulEntry({ contentType: 'texts', filterField:'view', filterValue: slug });
   if (data && data.items && data.items.length > 0) {
     return parseTexts(data.items);
   }

@@ -5,10 +5,9 @@ import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, laye
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
 import biodiversityActions from 'redux_modules/biodiversity-data/biodiversity-data';
-import pageTextsActions from 'redux_modules/page-texts/page-texts';
 
 import ownActions from './data-globe-actions.js';
-const actions = { ...ownActions, ...biodiversityActions, ...pageTextsActions };
+const actions = { ...ownActions, ...biodiversityActions };
 
 const RICHNESS_RARITY_GRID = 'rarity-richness-GRID';
 // const TAXA_FIELD = 'TAXA';

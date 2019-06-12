@@ -7,7 +7,8 @@ const VIEW = 'partners';
 const mapStateToProps = ({ pageTexts }) => ({
   textData: pageTexts.data[VIEW],
   loading: pageTexts.loading,
-  error: pageTexts.error
+  error: pageTexts.error,
+  VIEW
 });
 
 export default connect(mapStateToProps, actions)(AboutComponent);

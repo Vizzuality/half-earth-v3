@@ -25,7 +25,7 @@ const MinimapWidget = props => {
   const handleModalOpen = () => {
     setModalOpen(true);
     const { setPageTexts } = props;
-    setPageTexts();
+    setPageTexts(VIEW);
   };
 
   const handleModalClose = () => {
