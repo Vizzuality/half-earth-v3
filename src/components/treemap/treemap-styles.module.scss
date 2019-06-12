@@ -19,6 +19,8 @@
   & .pressureFree {
     fill:$blue;
     opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
   }
 
   & .selected {
