@@ -23,12 +23,6 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
   const { layers } = map;
 
   const handleChangeOpacity = (layer, opacity) => {
-    layers.items.forEach(mapLayer => {
-      if (mapLayer.id === layer.id) { mapLayer.opacity = opacity; }
-      mapLayer.layers && mapLayer.layers.items && mapLayer.layers.items.forEach(nestedLayer => {
-        if (nestedLayer.id === layer.id) { nestedLayer.opacity = opacity; }
-      })
-    })
     setLayerOpacity(layer.id, opacity);
   }
 
