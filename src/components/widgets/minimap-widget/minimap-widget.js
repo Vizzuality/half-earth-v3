@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import MinimapWidgetComponent from './minimap-widget-component';
 import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'utils/minimap-utils';
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
-import actions from 'redux_modules/page-texts/page-texts';
+import actions from 'redux_modules/page-texts';
 
 const VIEW = 'half-earth-meter';
 

@@ -16,7 +16,7 @@ const fetchPageTextsDataReady = (state, { payload }) => {
     ...state,
     loading: false,
     loaded: true,
-    data: { ...payload.data }
+    data: { ...state.data, ...payload.data }
   })
 };
 
