@@ -44,7 +44,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
               id={option.value}
               value={option.value}
               checked={isSelected(option)}
-              onClick={() => {
+              onChange={() => {
                 if (isSelected(option)) {
                   handleSimpleLayerToggle(option.layers[variant]);
                 } else {

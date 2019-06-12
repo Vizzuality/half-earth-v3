@@ -87,7 +87,7 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
     <div className={styles.legend}>
       {!isFullscreenActive && <Legend sortable={false} onChangeOrder={handleChangeOrder}>
         {datasets && datasets.map((dataset, i) => (
-          <LegendListItem index={i} key={dataset.slug} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
+          <LegendListItem index={i} key={dataset.name} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
             <LegendItemTypes />
           </LegendListItem>
         ))}

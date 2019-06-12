@@ -12,11 +12,13 @@ import styles from './share-modal-styles.module';
 const LINK = 'link';
 const EMBED = 'embed';
 
-const ShareModal = ({ handleClose, isOpen, route, currentLocation, shareSocialMedia, view }) => {
+const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, view }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const setTab = () => {
     setActiveTab(activeTab === LINK ? EMBED : LINK);
   }
+
+  const currentLocation = window.location.href;
   
   // const currentLocation = `${APP_URL}${route}${window.location.search}`;
   const embed = `<iframe id="map-iframe" src="${currentLocation}" />`;
@@ -43,13 +45,12 @@ const ShareModal = ({ handleClose, isOpen, route, currentLocation, shareSocialMe
         </CopyToClipboard>
       </div>
       <div className={styles.coordinates}>
-        <p>coordinates: [{view.camera.position.x.toFixed(3)}, {view.camera.position.y.toFixed(3)}, {view.camera.position.z.toFixed(3)}]</p>
-        <p>orientation: [{view.camera.heading.toFixed(3)}, {view.camera.tilt.toFixed(3)}]</p>
+        <p>coordinates: [{view.center.longitude.toFixed(3)}, {view.center.latitude.toFixed(3)}]</p>
       </div>
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
           <Button
-            onClick={() => window.open(socialMedia.link)}
+            onClick={() => window.open(`${socialMedia.link}${currentLocation}`)}
             theme={{
               button: cx(styles.iconBackground, {
                 [styles.facebookIcon]: socialMedia.className === 'facebookIcon'
@@ -65,7 +66,7 @@ const ShareModal = ({ handleClose, isOpen, route, currentLocation, shareSocialMe
   );
 }
 
-const ShareModalComponent = ({ theme, route, currentLocation, shareSocialMedia, view }) => {
+const ShareModalComponent = ({ theme, route, shareSocialMedia, view }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   const handleOpenShareModal = () => setShareModalOpen(true);
@@ -83,7 +84,6 @@ const ShareModalComponent = ({ theme, route, currentLocation, shareSocialMedia, 
         isOpen={isShareModalOpen}
         handleClose={handleCloseShareModal}
         route={route}
-        currentLocation={currentLocation}
         shareSocialMedia={shareSocialMedia}
         view={view}
       />}
