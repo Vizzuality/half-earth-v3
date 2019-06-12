@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 // slug: slug to fetch
 export const setPageTexts = createThunkAction('setPageTexts', () => (dispatch, state) => {
   const { pageTexts: { data }} = state();
-  if (!data || isEmpty(data)) {
+  if (isEmpty(data)) {
     dispatch(fetchPageTextsData());
   }
 });
