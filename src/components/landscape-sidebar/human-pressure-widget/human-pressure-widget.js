@@ -1,45 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
-import { humanPressuresLandUse, HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 
 import mapStateToProps from './human-pressure-selectors';
 
-const HumanPressureWidgetContainer = (props) => {
+const HumanPressureWidgetContainer = props => {
   const {
-    activeLayers,
     rasters,
     setLayerVisibility,
     setRasters,
     map
   } = props;
-  console.log(map.layers)
 
-  const humanImpactLayerActive = activeLayers.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
-  const alreadyChecked = humanImpactLayerActive && humanPressuresLandUse.reduce((acc, option) => ({ 
-    ...acc, [option.value]: rasters[option.value]
-  }), {}) || {};
+  const activeRect = Object.keys(rasters).filter(r => rasters[r]);
 
-  const handleTreemapClick = (option) => {
-    
-    const { layers } = map;
+  const handleTreemapClick = option => {
     let newRasters;
+    const { layers } = map;
     const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
     if (!rasters[option.data.rasterId]) {
       newRasters = {...rasters, [option.data.rasterId]: true}
       setRasters(newRasters);
     } else {
-      newRasters = {...rasters, [option.data.rasterId]: undefined};
+      newRasters = Object.assign({}, rasters);
+      delete newRasters[option.data.rasterId];
+      console.log(newRasters)
       setRasters(newRasters);
     }
 
     const hasRastersWithData = Object.values(newRasters).some(raster => raster);
     setLayerVisibility(HUMAN_PRESSURE_LAYER_ID, hasRastersWithData);
 
-    const activeRasters = Object.keys(alreadyChecked).filter(rasterName => alreadyChecked[rasterName])
-    const rasterNames = [rasters].map(value => `human_impact_${value}`)
-
+    const rasterNames = Object.keys(newRasters).map(key => `human_impact_${key}`)
     const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
 
     loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
@@ -49,14 +43,9 @@ const HumanPressureWidgetContainer = (props) => {
         where: mosaicWhereClause
       });
     });
-    console.log('option', option.data)
-    console.log('humanImpactLayer', humanImpactLayer)
-    console.log('humanImpactLayerActive', humanImpactLayerActive)
-    console.log('rasters', rasters)
-    console.log('alreadyChecked', alreadyChecked)
   }
 
-  return <HumanPressureWidgetComponent {...props} handleOnClick={handleTreemapClick}/>
+  return <HumanPressureWidgetComponent {...props} activeRect={activeRect} handleOnClick={handleTreemapClick}/>
 }
 
 export default connect(mapStateToProps, null)(HumanPressureWidgetContainer);
