@@ -1,1 +1,1 @@
-export const RARITY_RICHNESS_GRID_LAYER_ID = '16ab1a82f44-layer-0';
+export const RARITY_RICHNESS_GRID_LAYER_ID = '16b4716167d-layer-0';
