@@ -63,11 +63,10 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
                 const changeVariantType = isRarityActive ? RICHNESS : RARITY;
                 handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
               }}>
-                <SwitchIcon className={cx(styles.reverseSwitchIcon, { [styles.hidden]: isRarityActive })} />
                 <span className={styles.variant}>
                   {variant}
                 </span>
-                <SwitchIcon className={cx({ [styles.hidden]: !isRarityActive })} />
+                <SwitchIcon className={cx({ [styles.reverseSwitchIcon]: !isRarityActive })} />
               </button>
             </div>
           )}
