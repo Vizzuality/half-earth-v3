@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown/with-html';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as HalfEarthGlobe } from 'images/halfEarthGlobe.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -23,13 +24,15 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
         <div className={styles.content}>
           <h1 className={styles.title}>{textData && textData.title}</h1>
           <div className={styles.descriptionWrapper}>
-            <div className={styles.description}>
-              {textData && textData.content}
-            </div>
+            <ReactMarkdown
+              className={styles.description}
+              source={textData && textData.content}
+              escapeHtml={false}
+            />
           </div>
           <div className={styles.legendWrapper}>
             {legend.map(({ value, label, imageSrc}) => (
-              <div className={styles.legendItem}>
+              <div key={label} className={styles.legendItem}>
                 <span className={styles.value}>{value}</span>
                 <span className={styles.label}>{label}</span>
                 <img src={imageSrc} className={styles.icon} alt={''}/>
