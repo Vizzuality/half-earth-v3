@@ -7,7 +7,7 @@ import { format } from 'd3-format';
 
 import styles from './treemap-styles.module.scss';
 
-const TreeMapComponent = ({ data, handleOnClick }) => {
+const TreeMapComponent = ({ data, handleOnClick, activeRect }) => {
   const padding = 3;
   const width = 250;
   const height = 250;
@@ -25,6 +25,9 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
     setLeaves(leaves);
   }, [data])
 
+  const isSelected = (array, element) => {
+    return array.some(current => current === element)
+  }
 
   return (
     <div>
@@ -44,7 +47,8 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
               onClick={() => handleOnClick(d)}
               className={cx(
                 styles.square,
-                {[styles.pressureFree] : d.data.name === 'Pressure free'}
+                {[styles.pressureFree] : d.data.name === 'Pressure free',
+                 [styles.selected] : isSelected(activeRect, d.data.rasterId)}
                 )}
             />
             <foreignObject
