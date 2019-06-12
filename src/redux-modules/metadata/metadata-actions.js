@@ -15,7 +15,6 @@ export const setModalMetadata = createThunkAction('setModalMetadata', payload =>
 
 export const fetchModalMetaDataFail = createAction('fetchModalMetaDataFail');
 export const fetchModalMetaDataReady = createAction('fetchModalMetaDataReady');
-
 export const fetchModalMetaData = createThunkAction('fetchModalMetaData', slug => async dispatch => {
   try {
     const data = await CONTENTFUL.getMetadata(slug);
