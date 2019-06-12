@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
-import { hierarchy, treemap } from 'd3-hierarchy';
+import { hierarchy, treemap, treemapBinary } from 'd3-hierarchy';
+import { format } from 'd3-format';
 
 import styles from './treemap-styles.module.scss';
 
@@ -18,7 +19,7 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
     const tree = treemap()
       .size([width, height])
       .padding(padding)
-    
+    tree.tile(treemapBinary)
     tree(root)
     const leaves = root.leaves();
     setLeaves(leaves);
@@ -43,7 +44,7 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
               onClick={() => handleOnClick(d)}
               className={cx(
                 styles.square,
-                {[styles.pressureFree] : d.data.name === 'Not under pressure'}
+                {[styles.pressureFree] : d.data.name === 'Pressure free'}
                 )}
             />
             <foreignObject
@@ -56,7 +57,7 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
               <span
                 className={cx({[styles.removeText] : (d.x1 - d.x0) < 30 || (d.y1 - d.y0) < 30})}
               >
-                {`${d.data.name} ${Math.floor(d.data.value)}%`}
+                {`${d.data.name} ${format(".2%")(d.data.value / 100)}`}
               </span>
             </foreignObject>
           </g>
