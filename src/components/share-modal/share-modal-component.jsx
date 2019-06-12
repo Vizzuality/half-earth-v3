@@ -41,9 +41,9 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
       </div>
       <div className={styles.copyContainer}>
         <input type="text" value={urlCopy} readOnly className={styles.inputButton} />
-        <CopyToClipboard text={urlCopy}>
-          <Button onClick={isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true })} theme={{ button: cx(styles.button, styles.copyButton) }}>
-            {copied[activeTab] ? 'copied!': 'copy'}
+        <CopyToClipboard onCopy={() => { isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true }) }} text={urlCopy}>
+          <Button theme={{ button: cx(styles.button, styles.copyButton, { [styles.copied]: copied[activeTab] } ) }}>
+            <span className={cx({[styles.copiedText]: copied[activeTab]})}>{copied[activeTab] ? 'copied!': 'copy'}</span>
           </Button>
         </CopyToClipboard>
       </div>
@@ -61,7 +61,7 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
             }}
             key={socialMedia.className}
           >
-          <img src={socialMedia.className === 'facebookIcon' ? facebookIcon : twitterIcon} />
+          <img src={socialMedia.className === 'facebookIcon' ? facebookIcon : twitterIcon} alt={socialMedia.alt} />
           </Button>
         ))}
       </div>

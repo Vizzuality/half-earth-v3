@@ -6,11 +6,13 @@ import Component from './share-modal-component';
 const shareSocialMedia = [
   {
     link: `https://www.facebook.com/sharer/sharer.php?u=`,
-    className: 'facebookIcon'
+    className: 'facebookIcon',
+    alt: 'Facebook'
   },
   {
     link: `https://twitter.com/intent/tweet?url=`,
-    className: 'twitterIcon'
+    className: 'twitterIcon',
+    alt: 'Twitter'
   }
 ];
 
