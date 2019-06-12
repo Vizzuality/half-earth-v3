@@ -12,15 +12,14 @@ import styles from './share-modal-styles.module';
 const LINK = 'link';
 const EMBED = 'embed';
 
-const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, view }) => {
+const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const setTab = () => {
     setActiveTab(activeTab === LINK ? EMBED : LINK);
   }
-
+  
   const currentLocation = window.location.href;
   
-  // const currentLocation = `${APP_URL}${route}${window.location.search}`;
   const embed = `<iframe id="map-iframe" src="${currentLocation}" />`;
 
   const urlCopy = activeTab === LINK ? currentLocation : embed;
@@ -45,7 +44,7 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, view }) => {
         </CopyToClipboard>
       </div>
       <div className={styles.coordinates}>
-        <p>coordinates: [{view.center.longitude.toFixed(3)}, {view.center.latitude.toFixed(3)}]</p>
+        <p>coordinates: [{coordinates[0].toFixed(3)}, {coordinates[1].toFixed(3)}]</p>
       </div>
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
@@ -66,11 +65,12 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, view }) => {
   );
 }
 
-const ShareModalComponent = ({ theme, route, shareSocialMedia, view }) => {
+const ShareModalComponent = (props) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   const handleOpenShareModal = () => setShareModalOpen(true);
   const handleCloseShareModal = () => setShareModalOpen(false);
+  const { theme } = props;
 
   return (
     <>
@@ -83,20 +83,20 @@ const ShareModalComponent = ({ theme, route, shareSocialMedia, view }) => {
       {isShareModalOpen && <ShareModal 
         isOpen={isShareModalOpen}
         handleClose={handleCloseShareModal}
-        route={route}
-        shareSocialMedia={shareSocialMedia}
-        view={view}
+        {...props}
       />}
     </>
   );
 }
 
 ShareModalComponent.propTypes = {
-
+  shareSocialMedia: PropTypes.array.isRequired,
+  route: PropTypes.string,
+  coordinates: PropTypes.array.isRequired
 };
 
 ShareModalComponent.defaultProps = {
- 
+  route: ''
 };
 
 export default ShareModalComponent;
