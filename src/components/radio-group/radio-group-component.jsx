@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
+import { ReactComponent as SwitchIcon } from 'icons/switch.svg';
 
 import styles from './radio-group-styles.module.scss';
 
@@ -25,6 +26,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
   const selected = optionsLayers.find(o => selectedLayersIds.includes(o.layerId));
   const selectedLayer = selected && selected.layerId;
   const variant = (selected && selected.variant) || RARITY;
+  const isRarityActive = variant === RARITY;
 
   const isSelected = (option) => !!(activeLayers.find(l => l.id === option.layers[variant]))
 
@@ -57,14 +59,15 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           {isSelected(option) && (
             <div className={styles.toggle}>
               <InfoIcon onClick={() => handleInfoClick(option, variant)} />
-              <button
-                type="button"
-                className={styles.button}
-                onClick={() => {
-                  const changeVariantType = variant === RARITY ? RICHNESS : RARITY;
-                  handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
-                }}>
-                {variant}
+              <button type="button" className={styles.button} onClick={() => {
+                const changeVariantType = isRarityActive ? RICHNESS : RARITY;
+                handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
+              }}>
+                <SwitchIcon className={cx(styles.reverseSwitchIcon, { [styles.hidden]: isRarityActive })} />
+                <span className={styles.variant}>
+                  {variant}
+                </span>
+                <SwitchIcon className={cx({ [styles.hidden]: !isRarityActive })} />
               </button>
             </div>
           )}

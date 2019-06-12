@@ -53,18 +53,33 @@ input[type="radio"] {
   background: linear-gradient(270deg, $vida-loca 0%, $cobalt 100%);
 }
 
+.reverseSwitchIcon {
+  transform: rotate(180deg);
+  margin-right: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
 .toggle {
   display: flex;
+  align-items: center;
   margin-left: 5px;
   margin-right: 18px;
 }
 
-.button {
+.variant {
   color: $white;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: bold;
   font-size: $font-size-xxs;
-  padding: 0 5px 0 5px;
+  padding: 0 5px 0 0;
   cursor: pointer;
+}
+
+.button {
+  display: flex;
+  align-items: center;
 }
