@@ -26,7 +26,6 @@ const HumanPressureWidgetContainer = props => {
     } else {
       newRasters = Object.assign({}, rasters);
       delete newRasters[option.data.rasterId];
-      console.log(newRasters)
       setRasters(newRasters);
     }
 
