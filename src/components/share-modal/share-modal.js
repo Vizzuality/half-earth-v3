@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import get from 'lodash/get';
 
 import Component from './share-modal-component';
 
@@ -15,7 +16,7 @@ const shareSocialMedia = [
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type].path,
-  coordinates: location.query.globe.center,
+  coordinates: get(location, 'query.globe.center') || [],
   shareSocialMedia
 });
 

@@ -14,8 +14,12 @@ const EMBED = 'embed';
 
 const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates }) => {
   const [activeTab, setActiveTab] = useState(LINK);
+  const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
+
+  const isActiveTabLink = activeTab === LINK;
+  
   const setTab = () => {
-    setActiveTab(activeTab === LINK ? EMBED : LINK);
+    setActiveTab(isActiveTabLink ? EMBED : LINK);
   }
   
   const currentLocation = window.location.href;
@@ -28,18 +32,18 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.title}>Share this page</div>
       <div className={styles.tabs}>
-        <div className={cx(styles.tab, {[styles.activeTab]: activeTab === LINK})} onClick={setTab}>
+        <div className={cx(styles.tab, {[styles.activeTab]: isActiveTabLink})} onClick={setTab}>
           {LINK}
         </div>
-        <div className={cx(styles.tab, {[styles.activeTab]: activeTab === EMBED})} onClick={setTab}>
+        <div className={cx(styles.tab, {[styles.activeTab]: !isActiveTabLink})} onClick={setTab}>
           {EMBED}
         </div>
       </div>
       <div className={styles.copyContainer}>
         <input type="text" value={urlCopy} readOnly className={styles.inputButton} />
         <CopyToClipboard text={urlCopy}>
-          <Button theme={{ button: cx(styles.button, styles.copyButton) }}>
-            copy
+          <Button onClick={isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true })} theme={{ button: cx(styles.button, styles.copyButton) }}>
+            {copied[activeTab] ? 'copied!': 'copy'}
           </Button>
         </CopyToClipboard>
       </div>
@@ -92,11 +96,15 @@ const ShareModalComponent = (props) => {
 ShareModalComponent.propTypes = {
   shareSocialMedia: PropTypes.array.isRequired,
   route: PropTypes.string,
-  coordinates: PropTypes.array.isRequired
+  coordinates: PropTypes.array.isRequired,
+  theme: PropTypes.shape({
+    shareButton: PropTypes.string
+  })
 };
 
 ShareModalComponent.defaultProps = {
-  route: ''
+  route: '',
+  theme: {}
 };
 
 export default ShareModalComponent;

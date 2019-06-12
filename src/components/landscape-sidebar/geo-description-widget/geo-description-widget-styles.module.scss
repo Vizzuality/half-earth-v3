@@ -6,6 +6,8 @@
   border-radius: 2px;
   box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .loading {
@@ -51,4 +53,9 @@
   font-size: 14px;
   font-weight: 300;
   line-height: 22px;
+}
+
+.shareButton {
+  margin-top: 6px;
+  align-self: flex-end;
 }
