@@ -26,6 +26,11 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
 
     const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
 
+    console.log('humanImpactLayer', humanImpactLayer)
+    console.log('humanImpactLayerActive', humanImpactLayerActive)
+    console.log('rasters', rasters)
+    console.log('alreadyChecked', alreadyChecked)
+
     loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
       humanImpactLayer.mosaicRule = new MosaicRule({
         method: 'attribute',

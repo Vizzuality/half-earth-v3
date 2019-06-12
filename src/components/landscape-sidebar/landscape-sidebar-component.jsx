@@ -9,7 +9,15 @@ import MOLUploader from './mol-uploader';
 import uiStyles from 'styles/ui.module';
 import styles from './landscape-sidebar-styles.module.scss';
 
-const LandscapeSidebarComponent = ({ isLandscapeMode, isFullscreenActive }) => {
+const LandscapeSidebarComponent = ({ 
+  map,
+  isLandscapeMode,
+  isFullscreenActive,
+  activeLayers,
+  rasters,
+  setLayerVisibility,
+  setRasters
+}) => {
   const animationProps = useSpring({
     from: { marginLeft: -400 },
     marginLeft: isLandscapeMode && !isFullscreenActive ? 0 : -400,
@@ -24,7 +32,13 @@ const LandscapeSidebarComponent = ({ isLandscapeMode, isFullscreenActive }) => {
       style={animationProps}>
       <div className={styles.wrapper}>
         <GeoDescriptionWidget />
-        <HumanPressureWidget />
+        <HumanPressureWidget
+          map={map}
+          activeLayers={activeLayers}
+          rasters={rasters}
+          setLayerVisibility={setLayerVisibility}
+          setRasters={setRasters}
+        />
         <MOLUploader />
       </div>
     </animated.aside>

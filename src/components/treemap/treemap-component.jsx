@@ -40,7 +40,7 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
               y={d.y0}
               width={d.x1 - d.x0}
               height={d.y1 - d.y0}
-              onClick={handleOnClick}
+              onClick={() => handleOnClick(d)}
               className={cx(
                 styles.square,
                 {[styles.pressureFree] : d.data.name === 'Not under pressure'}

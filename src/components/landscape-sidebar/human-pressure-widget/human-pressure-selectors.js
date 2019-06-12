@@ -1,29 +1,20 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { orderBy } from 'lodash';
+import { humanPressuresLandscapeWidget } from 'constants/human-pressures';
 import { getHumanPressures } from 'selectors/grid-cell-selectors';
 
 const getPressuresHierarchy = createSelector(getHumanPressures, humanPressures => {
   if (!humanPressures) return null;
   return {
     name: 'Human Pressures',
-    children: [
+    children: humanPressuresLandscapeWidget.map(pressure => (
       {
-        name: 'Irrigated agriculture',
-        value: humanPressures.irrigated
-      },
-      {
-        name: 'Rainfed agriculture',
-        value: humanPressures.rainfed
-      },
-      {
-        name: 'Urban pressures',
-        value: humanPressures.urban
-      },
-      {
-        name: 'Not under pressure',
-        value: humanPressures.pressureFree
+        name: pressure.name,
+        slug: pressure.slug,
+        value: humanPressures[pressure.value],
+        rasterId: pressure.value
       }
-    ]
+    ))
   }
 })
 
