@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 
-export const getCountedActiveLayers = createSelector(
+const getCountedActiveLayers = createSelector(
   [getActiveLayers, getRasters],
   (activeLayers, rasters) => {
  
@@ -16,3 +16,6 @@ export const getCountedActiveLayers = createSelector(
     };
   }
 );
+
+
+export default createStructuredSelector({ countedActiveLayers: getCountedActiveLayers });

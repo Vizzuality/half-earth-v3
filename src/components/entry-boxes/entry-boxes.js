@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './entry-boxes-component';
-import { getCountedActiveLayers } from './entry-boxes-selectors';
+import mapStateToProps from './entry-boxes-selectors';
 import * as actions from 'actions/url-actions';
 
 const EntryBoxesContainer = props => {
@@ -15,10 +15,5 @@ const EntryBoxesContainer = props => {
     />
   ) 
 }
-
-const mapStateToProps = (state) => ({
-  countedActiveLayers: getCountedActiveLayers(state),
-});
-
 
 export default connect(mapStateToProps, actions)(EntryBoxesContainer);
