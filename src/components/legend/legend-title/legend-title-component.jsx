@@ -22,10 +22,9 @@ const LegendTitleComponent = ({ name, layer }) => {
 
 LegendTitleComponent.propTypes = {
   activeLayer: PropTypes.shape(),
-  name: PropTypes.string.isRequired,
-  layers: PropTypes.arrayOf(PropTypes.shape()).isRequired
+  name: PropTypes.string
 };
 
-LegendTitleComponent.defaultProps = { activeLayer: null };
+LegendTitleComponent.defaultProps = { activeLayer: null, name: '' };
 
 export default LegendTitleComponent;

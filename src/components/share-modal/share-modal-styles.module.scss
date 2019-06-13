@@ -1,0 +1,128 @@
+@import 'styles/settings';
+
+$tabsMarginBottom: 8px;
+
+.modal {
+  padding: 50px 60px;
+  width: 600px;
+
+  @media #{$tablet-landscape} {
+    max-width: 620px;
+    width: 80%;
+    height: auto;
+  }
+}
+
+.modalContent {
+  padding: 50px 60px;
+}
+
+.copyContainer {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.coordinates {
+  margin-bottom: 54px;
+  font-size: $font-size-xs;
+  color: $java;
+}
+
+.inputButton {
+  border: 1px solid $alto;
+  background-color: transparent;
+  color: $white;
+  padding: 10px;
+  width: stretch;
+  height: 40px;
+  border-radius: 2px;
+  border-right-style: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.button {
+  border: 1px solid $alto;
+  height: 40px;
+  color: $white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.copyButton {
+  margin-left: -10px;
+  width: 100px;
+  letter-spacing: 2px;
+  font-size: $font-size-xs;
+  padding: 0;
+}
+
+.copied {
+  background-color: $java;
+  color: $black;
+  font-family: $font-family-1-bold;
+}
+
+.copiedText {
+  transform: translateY(2px); // font has some internal padding
+}
+
+.title {
+  text-align: center;
+  font-size: $font-size-xl;
+  text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
+  margin-bottom: 50px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: $tabsMarginBottom;
+}
+
+.tab {
+  position: relative;
+  color: $white;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+
+  &:first-child {
+    margin-left: 10px;
+  }
+}
+
+.activeTab {
+  color: $java;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px; // ($tabsMarginBottom + 2) * -1
+    width: 100%;
+    height: 4px;
+    background-color: $java;
+  }
+}
+
+.facebookIcon {
+  margin-right: 60px;
+}
+
+.iconBackground {
+  height: 60px;
+  width: 60px;
+}
+
+.socialMediaContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

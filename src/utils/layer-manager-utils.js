@@ -1,19 +1,20 @@
-export const layerManagerToggle = (layerId, activeLayers, callback) => {
+export const layerManagerToggle = (layerId, activeLayers, callback, category) => {
   const id = layerId;
   const isActive = activeLayers && activeLayers.some(l => l.id === id);
+
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.id !== id);
     callback({activeLayers: updatedLayers });
   } else {
     activeLayers
-      ? callback({ activeLayers: [ ...activeLayers, { id }] })
-      : callback({ activeLayers: [ { id }] });
+      ? callback({ activeLayers: [ ...activeLayers, { id, category }] })
+      : callback({ activeLayers: [ { id, category }] });
   }
 };
 
-export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback) => {
+export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
   const layerAfterRemove = layerToRemove ? activeLayers.filter(l => l.id !== layerToRemove) : activeLayers;
-  callback({activeLayers: [...layerAfterRemove, {id: layerToActivate}]});
+  callback({activeLayers: [...layerAfterRemove, {id: layerToActivate, category}]});
 };
 
 export const layerManagerVisibility = (layerId, visible, activeLayers, callback) => {

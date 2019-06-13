@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import PartnersComponent from './partners/partners-component';
+import PartnersComponent from './partners/partners';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
 
 import styles from './about-styles.module.scss';
 
-const AboutPage = ({ handleCloseAboutPage }) => {
+const AboutPage = ({ handleCloseAboutPage, textData }) => {
   const [isPartnersActive, setPartnersActive] = useState(true);
 
   const keyEscapeEventListener = (evt) => {
@@ -26,7 +26,7 @@ const AboutPage = ({ handleCloseAboutPage }) => {
         </div>
       </div>
       <div className={styles.content}>
-        { isPartnersActive ? <PartnersComponent /> : <MapInstructionsComponent />}
+        { isPartnersActive ? <PartnersComponent textData={textData}/> : <MapInstructionsComponent />}
       </div>
       <button 
         className={styles.closeButton}
@@ -38,10 +38,13 @@ const AboutPage = ({ handleCloseAboutPage }) => {
   );
 }
 
-const AboutComponent = () => {
+const AboutComponent = ({ setPageTexts, textData, VIEW  }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
-  const handleOpenAboutPage = () => setAboutPageOpened(true);
+  const handleOpenAboutPage = () => {
+    setPageTexts(VIEW);
+    setAboutPageOpened(true);
+  }
   const handleCloseAboutPage = () => setAboutPageOpened(false);
 
   return (
@@ -52,7 +55,7 @@ const AboutComponent = () => {
       >
         About the Half-Earth map
       </button>
-      {isAboutPageOpened && <AboutPage handleCloseAboutPage={handleCloseAboutPage} />}
+      {isAboutPageOpened && <AboutPage handleCloseAboutPage={handleCloseAboutPage} textData={textData} />}
     </>
   );
 }
