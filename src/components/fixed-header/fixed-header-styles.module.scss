@@ -6,11 +6,13 @@
   padding-left: $sidebar-paddings;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .shareButton {
-  align-self: flex-end;
-  margin-right: 10px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
 }
 
 .button {
@@ -41,8 +43,14 @@
   text-overflow: ellipsis;
   padding-right: 10px;
   letter-spacing: 1px;
+  font-weight: normal;
 }
 
 .spacer {
   @extend %spacer;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  position: absolute;
+  width: 100%;
 }

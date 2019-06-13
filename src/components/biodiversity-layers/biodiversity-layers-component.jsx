@@ -39,7 +39,7 @@ const BiodiversityLayers = ({
           {
             subcategories.map(subct => (
               <div key={subct.name}>
-                <h2 className={styles.widgetTitle}>{subct.name}</h2>
+                <h2 className={styles.widgetSubTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
                   <RadioGroup
                     activeLayers={activeLayers}

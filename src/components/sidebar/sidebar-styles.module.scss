@@ -15,7 +15,7 @@
   bottom: 0;
   width: $sidebar-width;
   overflow: hidden;
-  height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
+  // height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
 }
 
 .button {
@@ -40,5 +40,7 @@
 
 .content {
   @extend %verticalScrollBar;
-  height: calc(100% - 120px);
+  max-height: calc(100% - 240px);
+  position: fixed;
+  width: 280px;
 }
