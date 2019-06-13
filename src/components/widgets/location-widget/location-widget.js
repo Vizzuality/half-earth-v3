@@ -4,6 +4,7 @@ import { loadModules } from '@esri/react-arcgis';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { useWatchUtils } from 'utils/hooks';
 
 import LocationWidgetComponent from './location-widget-component';
 import * as actions from 'actions/url-actions';
@@ -11,7 +12,7 @@ import * as actions from 'actions/url-actions';
 const LocationWidget = props => {
   const { view, changeGlobe } = props;
   const [locationWidget, setLocationWidget] = useState(null);
-  const [watchUtils, setWatchUtils] = useState(null);
+  const watchUtils = useWatchUtils();
   const handleLocationChange = (center) => changeGlobe({ center });
 
   useEffect(() => {
@@ -29,13 +30,6 @@ const LocationWidget = props => {
       view.ui.remove(locationWidget);
     };
   }, [view])
-
-  // Load watchUtils module to follow location change
-  useEffect(() => {
-    loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-      setWatchUtils(watchUtils);
-    })
-  }, []);
 
   // Update location in URL
   useEffect(() => {

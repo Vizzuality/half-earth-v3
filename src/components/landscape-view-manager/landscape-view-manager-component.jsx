@@ -2,6 +2,7 @@ import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 import { esriGeometryToGeojson } from 'utils/geojson-parser';
+import { useWatchUtils } from 'utils/hooks';
 import {
   setGridCellStyles,
   setGridCellGraphic,
@@ -12,18 +13,11 @@ import {
 } from 'utils/landscape-view-manager-utils';
 
 const LandscapeViewManager = ({ view, map, zoomLevelTrigger, onZoomChange, query, isLandscapeMode, setGridCellData, fetchGeoDescription }) => {
-  const [watchUtils, setWatchUtils] = useState(null);
+  const watchUtils = useWatchUtils();
   const [viewExtent, setViewExtent] = useState();
   // References for cleaning up graphics
   const gridCellRef = useRef();
   const landscapeModeRef = useRef();
-
-  // Load watchUtils module from ArcGis
-  useEffect(() => {
-    loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-      setWatchUtils(watchUtils);
-    })
-  }, []);
 
   // Update url param
   useEffect(() => {
