@@ -1,1 +1,1 @@
-export const RARITY_RICHNESS_GRID_LAYER_ID = '16b4716167d-layer-0';
+export const BIODIVERSITY_FACETS_LAYER = '16b4c4232aa-layer-0';

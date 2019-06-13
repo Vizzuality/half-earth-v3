@@ -1,15 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
-import { RARITY_RICHNESS_GRID_LAYER_ID } from 'constants/biodiversity';
+import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
 import { FIREFLY_LAYER } from 'constants/base-layers';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 
+
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;
 
-  return activeLayers.filter(layer => layer.id !== RARITY_RICHNESS_GRID_LAYER_ID && layer.id !== FIREFLY_LAYER);
+  return activeLayers.filter(layer => layer.id !== FIREFLY_LAYER && layer.id !== BIODIVERSITY_FACETS_LAYER);
 })
 
 const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
