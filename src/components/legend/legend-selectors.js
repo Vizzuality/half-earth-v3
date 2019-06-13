@@ -10,7 +10,7 @@ import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;
 
-  return activeLayers.filter(layer => layer.id !== FIREFLY_LAYER && layer.id !== BIODIVERSITY_FACETS_LAYER);
+  return activeLayers.filter(layer => layer.id !== FIREFLY_LAYER && layer.id !== BIODIVERSITY_FACETS_LAYER && layer.id !== 'Grid layer');
 })
 
 const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {

@@ -5,6 +5,7 @@ export default {
   globe: {
     activeLayers: [
       { id: BIODIVERSITY_FACETS_LAYER }, // Biodiversity Facets (new grid)
+      { id: 'Grid layer' }, // Biodiversity Facets (new grid)
       { id: FIREFLY_LAYER } // half-earth firefly
     ],
     rasters: {},

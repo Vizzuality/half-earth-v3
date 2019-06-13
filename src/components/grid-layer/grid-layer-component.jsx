@@ -13,27 +13,62 @@ import {
 
 const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
 
+  
+
+
+
+  let watchHandle;
+  let queryHandle;
+  let layerViewHandle;
+
   const [viewExtent, setViewExtent] = useState();
   const [containedGridCells, setContainedGridCells] = useState(null);
-  // const [geometryEngineModule, setGeometryEngineModule] = useState(null);
   const [multipleGridCell, setMultipleGridCell] = useState(null);
+  const [gridCellGeometry, setGridCellGeometry] = useState(null);
+  const [graphicLayer, setGraphicLayer] = useState(null);
   // References for cleaning up graphics
   const gridCellRef = useRef();
-  const gridCellGeometryRef = useRef();
   const gridCellGraphicRef = useRef();
 
-  // //
-  // useEffect(()=> {
-  //   loadModules(["esri/geometry/geometryEngine"]).then(([geometryEngine]) => {
-  //     setGeometryEngineModule(geometryEngine)
-  //   })
-  // }, [])
+  //Load once the needed modules
+  useState(() => {
+    loadModules(
+      [
+        "esri/Graphic",
+        "esri/layers/GraphicsLayer"
+      ]).then(([Graphic, GraphicsLayer]) => {
+  
+        let selectionGraphic = new Graphic({
+          symbol: {
+            type: "polygon-3d",
+            symbolLayers: [
+              {
+                type: "fill",
+                material: { color: [0, 255, 255, 0.2] },
+                outline: {
+                  color: [0, 255, 255, 0.9],
+                  size: "3px"
+                }
+              }
+            ]
+          }
+        });
+
+        const selectionLayer = new GraphicsLayer({
+          id: "Grid layer",
+          graphics: [selectionGraphic]
+        });
+        setGraphicLayer(selectionGraphic)
+        view.map.add(selectionLayer);
+      })
+  }, [])
+  
+  
 
   // set the view extent when view stationary
   useEffect(() => {
-    let watchHandle;
     loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-      watchUtils.whenTrue(view, "stationary", function() {
+      watchHandle = watchUtils.whenTrue(view, "stationary", function() {
         setViewExtent(view.extent)
       })
     })
@@ -44,8 +79,6 @@ const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
 
    // set contained gridcells
    useEffect(() => {
-    let queryHandle;
-    let layerViewHandle;
     const { layers } = map;
       const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
       view.whenLayerView(gridLayer).then(function(layerView) {
@@ -53,7 +86,6 @@ const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
           if (!value) {
             const { extent } = view;
             const scaledDownExtent = extent.clone().expand(0.9);
-            queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
             queryHandle = layerView.queryFeatures({
               geometry: extent,
               spatialRelationship: 'intersects'
@@ -63,7 +95,8 @@ const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
               // If there are not a group of cells pick the one in the center
               const singleGridCell = !hasContainedGridCells && results.features.filter(gridCell => gridCell.geometry.contains(view.center));
               const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
-              if (!gridCellRef.current || !isEqual(gridCellRef.current[0], gridCells)) {
+              const cellEquality = hasContainedGridCells ? isEqual(gridCellRef.current, gridCells) : isEqual(gridCellRef.current[0].geometry.rings, gridCells[0].geometry.rings)
+              if (!gridCellRef.current || !cellEquality) {
                 setMultipleGridCell(hasContainedGridCells)
                 setContainedGridCells(gridCells);
               }
@@ -81,12 +114,12 @@ const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
   useEffect(() => {
     loadModules(
       [
-        "esri/Graphic",
         "esri/geometry/geometryEngine",
-        "esri/layers/GraphicsLayer",
         "esri/geometry/support/webMercatorUtils"
-      ]).then(([Graphic, geometryEngine, GraphicsLayer, webMercatorUtils]) => {
-        const gridCellGeometry = multipleGridCell ? geometryEngine.union(containedGridCells.map(gc => gc.geometry)) : containedGridCells[0].geometry;
+      ]).then(([geometryEngine, webMercatorUtils]) => {
+
+        const gridCellGeometry = multipleGridCell ? geometryEngine.simplify(geometryEngine.union(containedGridCells.map(gc => gc.geometry.extent))) : containedGridCells[0].geometry.extent;
+        setGridCellGeometry(gridCellGeometry)
           //// AQUI ESTAMOS CREANDO EL GEOJSON Y PILLANDO LA GEODESCRIPTION (solamente deberiamos hacerlo si la geometria ha cambiado)
           const geoGeometry = webMercatorUtils.webMercatorToGeographic(gridCellGeometry);
           const geoJSON = esriGeometryToGeojson(geoGeometry);
@@ -99,33 +132,40 @@ const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
           // Add data to the store
           setGridCellData(containedGridCells);
           /////////////////////////////////////
-          
-          
-          //////////////// AQUI BORRAMOS, PINTAMOS Y GUARDAMOS REFERENCIA (solamente deberiamos hacerlo si la geometria ha cambiado)
-          // Remove current grid cell before painting a new one
-          console.log('REMOVING', gridCellGraphicRef.current)
-          gridCellGraphicRef.current && removeGridCell(view, gridCellGraphicRef.current);
-          // Create a symbol for rendering the graphic
-          const { fillOpacity, outlineOpacity, outlineWidth, colorRGB } = gridCellDefaultStyles;
-          const gridCellSymbol = setGridCellStyles(fillOpacity, outlineOpacity, outlineWidth, colorRGB);
-          // Create the graphic
-          const gridCellGraphic = setGridCellGraphic(Graphic, gridCellGeometry, gridCellSymbol);
-          // Store a reference to the gridCell polygon created
-          gridCellGraphicRef.current = gridCellGraphic;
-          // Add it to the view
-          console.log('PAINTING', gridCellGraphic)
-                paintGridCell(view, gridCellGraphic);
     }).catch((err) => console.error(err));
-    // return function cleanUp() {
-    //   console.log('CLEANING UP', gridCellGraphicRef.current)
-    //   removeGridCell(view, gridCellGraphicRef.current);
-    // }
   }, [containedGridCells])
 
   useEffect(() => {
+    console.log(graphicLayer)
+    if (graphicLayer) {
+      graphicLayer.geometry = gridCellGeometry;
+      // loadModules(
+      //   [
+      //     "esri/Graphic",
+      //     "esri/layers/GraphicsLayer"
+      //   ]).then(([Graphic, GraphicsLayer]) => {
+      //     // Remove current grid cell before painting a new one
+      //     // gridCellGraphicRef.current && removeGridCell(view, gridCellGraphicRef.current);
+      //     // Create a symbol for rendering the graphic
+      //     const { fillOpacity, outlineOpacity, outlineWidth, colorRGB } = gridCellDefaultStyles;
+      //     const gridCellSymbol = setGridCellStyles(fillOpacity, outlineOpacity, outlineWidth, colorRGB);
+      //     // Create the graphic
+      //     const gridCellGraphic = setGridCellGraphic(Graphic, gridCellGeometry, gridCellSymbol);
+      //     graphicLayer.graphics.add(gridCellGraphic);
+      //     // // Store a reference to the gridCell polygon created
+      //     // gridCellGraphicRef.current = gridCellGraphic;
+      //     // // Add it to the views
+      //     // paintGridCell(view, gridCellGraphic);
+      //   })
+     }
+
+  }, [gridCellGeometry])
+
+  useEffect(() => {
     return function cleanUp() {
-      // remove geometry before unmounting
       removeGridCell(view, gridCellGraphicRef.current);
+      queryHandle && queryHandle.cancel();
+      layerViewHandle && layerViewHandle.remove();
     }
   },[])
 
