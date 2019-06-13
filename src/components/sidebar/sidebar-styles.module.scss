@@ -14,19 +14,8 @@
   top: 0;
   bottom: 0;
   width: $sidebar-width;
-  overflow: auto;
+  overflow: hidden;
   height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
-}
-
-.content {
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 }
 
 .button {
@@ -47,4 +36,9 @@
 .icon {
   transform: rotate(180deg);
   height: 25px;
+}
+
+.content {
+  @extend %verticalScrollBar;
+  height: calc(100% - 120px);
 }
