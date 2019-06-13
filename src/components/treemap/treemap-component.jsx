@@ -52,17 +52,20 @@ const TreeMapComponent = ({ data, handleOnClick, activeRect }) => {
                 )}
             />
             <foreignObject
-              className={styles.text}
-              x={d.x0+5}
-              y={d.y0+5}
-              width={d.x1 - d.x0 - (2 * padding)}
-              height={d.y1 - d.y0 }
+              className={cx(styles.foreignObject)}
+              x={d.x0}
+              y={d.y0}
+              width={d.x1 - d.x0}
+              height={d.y1 - d.y0}
             >
-              <span
-                className={cx({[styles.removeText] : (d.x1 - d.x0) < 30 || (d.y1 - d.y0) < 30})}
+              <p
+                className={cx(styles.text,{
+                  [styles.removeText] : (d.x1 - d.x0) < 15 || (d.y1 - d.y0) < 15,
+                  [styles.ellipsis] : (d.x1 - d.x0) < 60 || (d.y1 - d.y0) < 25
+                })}
               >
                 {`${d.data.name} ${format(".2%")(d.data.value / 100)}`}
-              </span>
+              </p>
             </foreignObject>
           </g>
         ))}
