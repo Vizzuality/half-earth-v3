@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'he-components';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
-import facebookIcon from 'icons/facebook.png';
-import twitterIcon from 'icons/twitter.png';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -26,7 +24,18 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
   
   const embed = `<iframe id="map-iframe" src="${currentLocation}" />`;
 
+  const resetFlags = () => setCopied({ [LINK]: false, [EMBED]: false });
+
   const urlCopy = activeTab === LINK ? currentLocation : embed;
+  const setCopiedFlags = () => {
+    isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true });
+  }
+
+  // responsible for transitioning from COPIED text to COPY after some time
+  useEffect(() => {
+    const timer = setTimeout(resetFlags, 1000);
+    return () => clearTimeout(timer);
+  }, [copied]);
 
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
@@ -41,7 +50,7 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
       </div>
       <div className={styles.copyContainer}>
         <input type="text" value={urlCopy} readOnly className={styles.inputButton} />
-        <CopyToClipboard onCopy={() => { isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true }) }} text={urlCopy}>
+        <CopyToClipboard onCopy={setCopiedFlags} text={urlCopy}>
           <Button theme={{ button: cx(styles.button, styles.copyButton, { [styles.copied]: copied[activeTab] } ) }}>
             <span className={cx({[styles.copiedText]: copied[activeTab]})}>{copied[activeTab] ? 'copied!': 'copy'}</span>
           </Button>
@@ -55,13 +64,11 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
           <Button
             onClick={() => window.open(`${socialMedia.link}${currentLocation}`)}
             theme={{
-              button: cx(styles.iconBackground, {
-                [styles.facebookIcon]: socialMedia.className === 'facebookIcon'
-              })
+              button: cx(styles.iconBackground, socialMedia.className)
             }}
-            key={socialMedia.className}
+            key={socialMedia.alt}
           >
-          <img src={socialMedia.className === 'facebookIcon' ? facebookIcon : twitterIcon} alt={socialMedia.alt} />
+          <img src={socialMedia.icon} alt={socialMedia.alt} />
           </Button>
         ))}
       </div>
