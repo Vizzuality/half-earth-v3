@@ -1,9 +1,10 @@
 import React from 'react';
 import { Loading } from 'he-components';
+import ShareModal from 'components/share-modal';
 
 import styles from './geo-description-widget-styles.module.scss';
 
-const GeoDescriptionWidget = ({ data, loading, error }) => {
+const GeoDescriptionWidget = ({ data, loading, error, view }) => {
   if (loading) {
     return (
       <div className={styles.container}>
@@ -29,6 +30,7 @@ const GeoDescriptionWidget = ({ data, loading, error }) => {
 
   return (
     <div className={styles.container}>
+      <ShareModal theme={{ shareButton: styles.shareButton }} view={view} />
       <h2 className={styles.title}>{data.title}</h2>
       <div className={styles.line}></div>
       <p className={styles.description}>
