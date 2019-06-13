@@ -139,24 +139,6 @@ const GridLayer = ({map, view, setGridCellData, fetchGeoDescription}) => {
     console.log(graphicLayer)
     if (graphicLayer) {
       graphicLayer.geometry = gridCellGeometry;
-      // loadModules(
-      //   [
-      //     "esri/Graphic",
-      //     "esri/layers/GraphicsLayer"
-      //   ]).then(([Graphic, GraphicsLayer]) => {
-      //     // Remove current grid cell before painting a new one
-      //     // gridCellGraphicRef.current && removeGridCell(view, gridCellGraphicRef.current);
-      //     // Create a symbol for rendering the graphic
-      //     const { fillOpacity, outlineOpacity, outlineWidth, colorRGB } = gridCellDefaultStyles;
-      //     const gridCellSymbol = setGridCellStyles(fillOpacity, outlineOpacity, outlineWidth, colorRGB);
-      //     // Create the graphic
-      //     const gridCellGraphic = setGridCellGraphic(Graphic, gridCellGeometry, gridCellSymbol);
-      //     graphicLayer.graphics.add(gridCellGraphic);
-      //     // // Store a reference to the gridCell polygon created
-      //     // gridCellGraphicRef.current = gridCellGraphic;
-      //     // // Add it to the views
-      //     // paintGridCell(view, gridCellGraphic);
-      //   })
      }
 
   }, [gridCellGeometry])
