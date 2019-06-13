@@ -5,10 +5,9 @@ import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
-import biodiversityActions from 'redux_modules/biodiversity-data/biodiversity-data';
 
 import ownActions from './data-globe-actions.js';
-const actions = { ...ownActions, ...biodiversityActions };
+const actions = { ...ownActions };
 
 const handleMapLoad = (map, view) => {
   const { layers } = map;
