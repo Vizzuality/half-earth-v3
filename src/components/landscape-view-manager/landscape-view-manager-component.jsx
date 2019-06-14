@@ -2,7 +2,7 @@ import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 import { esriGeometryToGeojson } from 'utils/geojson-parser';
-import { useWatchUtils } from 'utils/hooks';
+import { useWatchUtils } from 'hooks/esri';
 import {
   setGridCellStyles,
   setGridCellGraphic,

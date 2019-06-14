@@ -4,7 +4,7 @@ import { loadModules } from '@esri/react-arcgis';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { useWatchUtils } from 'utils/hooks';
+import { useWatchUtils } from 'hooks/esri';
 
 import LocationWidgetComponent from './location-widget-component';
 import * as actions from 'actions/url-actions';
