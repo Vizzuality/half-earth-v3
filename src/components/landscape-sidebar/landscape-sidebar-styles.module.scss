@@ -8,7 +8,7 @@ $margin: 20px;
   box-sizing: border-box;
   border-radius: 2px;
   overflow: auto;
-  height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
+  height: calc(100vh - 60px);
 }
 
 .wrapper {
