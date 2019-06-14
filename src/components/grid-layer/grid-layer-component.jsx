@@ -60,8 +60,11 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
               const singleGridCell = results.features.filter(gridCell => gridCell.geometry.contains(view.center));
               // If there are not a group of cells pick the one in the center
               const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
+              const gridCellsEquallity = hasContainedGridCells ? isEqual(gridCellRef.current, gridCells) : isEqual(gridCellRef.current[0].geometry.rings, gridCells[0].geometry.rings)
               // Change data on the store and paint only when grid cell chaged
-              if (!gridCellRef.current || !isEqual(gridCellRef.current, gridCells)) {
+              console.log(gridCellRef)
+              console.log(gridCellsEquallity)
+              if (!gridCellRef.current || !gridCellsEquallity) {
                 // dispatch action
                 setGridCellData(gridCells.map(c => c.attributes));
                 loadModules(["esri/geometry/geometryEngine"])
@@ -79,6 +82,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
             })
           }
         })
+        if (gridCellGraphic) { gridCellGraphic.geometry = null }
       })
       return function cleanUp() {
         queryHandle && queryHandle.cancel();

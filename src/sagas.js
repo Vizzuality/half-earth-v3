@@ -49,11 +49,13 @@ function* watchGridCellGeometrySet() {
 function* fetchGeodescriberData() {
   const state = yield select();
   const { gridCellData: { geometry} } = state;
-  loadModules(["esri/geometry/support/webMercatorUtils"])
+  console.log(geometry)
+  yield loadModules(["esri/geometry/support/webMercatorUtils"])
     .then(([webMercatorUtils]) => {
           
         // create geoJson (needed for geodescriber request)
         const geoGeometry = webMercatorUtils.webMercatorToGeographic(geometry);
+        console.log(geoGeometry)
         const geoJSON = esriGeometryToGeojson(geoGeometry);
 
           console.log(geoJSON)

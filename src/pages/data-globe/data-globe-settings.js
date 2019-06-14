@@ -3,7 +3,7 @@ export default {
     atmosphereEnabled: false,
     background: {
       type: "color",
-      color: [13,31,49, 0.5]
+      color: [0,10,16]
     },
     alphaCompositingEnabled: true
   },
