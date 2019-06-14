@@ -39,7 +39,7 @@
 
 .content {
   @extend %verticalScrollBar;
-  max-height: calc(100% - 200px);
+  max-height: calc(100% - 160px);
   position: fixed;
   width: 280px;
 }
