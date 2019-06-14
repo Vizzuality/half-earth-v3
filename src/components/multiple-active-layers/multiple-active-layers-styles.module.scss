@@ -8,7 +8,7 @@
 
 .titleSection {
   display: flex;
-  padding-left: $sidebar-paddings;
+  padding: 0 $sidebar-paddings;
 }
 
 .widgetTitle {
@@ -26,5 +26,5 @@
   line-height: 16px;
   margin-top: 0;
   margin-bottom: 14px;
-  padding-left: $sidebar-paddings;
+  padding: 0 $sidebar-paddings;
 }

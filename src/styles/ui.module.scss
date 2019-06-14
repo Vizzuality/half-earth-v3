@@ -5,7 +5,7 @@ $spacer-middle-opacity: 0.6;
 
 .uiTopLeft {
   position: absolute;
-  top: 60px;
+  top: $sidebar-top-margin;
   left: $site-gutter;
 }
 

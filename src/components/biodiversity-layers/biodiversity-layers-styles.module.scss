@@ -11,7 +11,7 @@
 
 .titleSection {
   display: flex;
-  padding-left: $sidebar-paddings;
+  padding: 0 $sidebar-paddings;
 }
 
 .widgetTitle {
@@ -34,7 +34,7 @@
   font-size: $font-size-xs;
   margin-top: 0;
   margin-bottom: 14px;
-  padding-left: $sidebar-paddings;
+  padding: 0 $sidebar-paddings;
 }
 
 .fineScaleWrapper {

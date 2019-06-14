@@ -6,7 +6,7 @@
   padding-left: $sidebar-paddings;
   display: flex;
   flex-direction: column;
-  height: 100px;
+  height: $sidebar-header-height;
   position: relative;
 }
 
