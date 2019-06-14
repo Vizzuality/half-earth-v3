@@ -9,6 +9,7 @@
 }
 
 .wrapper {
+  @include backdropBlur();
   position: relative;
   top: 0;
   bottom: 0;

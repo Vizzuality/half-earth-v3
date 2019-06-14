@@ -45,7 +45,7 @@ const parseLegend = (config) => {
     molLogo: config && config.molLogo,
     layers: [{
       active: true,
-      opacity: config.opacity || 1,
+      opacity: config.opacity !== undefined ? config.opacity : 1,
       id: config.layerId,
       type: 'layer',
       legendConfig: {

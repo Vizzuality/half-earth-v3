@@ -15,14 +15,11 @@ import ubcLogo from 'logos/ubc.png';
 import universityOfFloridaLogo from 'logos/universityOfFlorida.png';
 import googleEarthEngineLogo from 'logos/googleEarthEngine.png';
 import googleCloudLogo from 'logos/googleCloud.png';
-import cartoLogo from 'logos/carto.png';
 import esriLogo from 'logos/esri.png';
 import mooreFoundationLogo from 'logos/mooreFoundation.png';
 import burtsLogo from 'logos/burts.png';
 
-import styles from './partners-styles.module.scss';
-
-const partners = [
+export const partners = [
   { href: 'https://mol.org/', image: { src: molLogo, alt: 'Map of Life' } },
   {
     href: 'https://eowilsonfoundation.org/',
@@ -37,7 +34,7 @@ const partners = [
   }
 ];
 
-const dataPartners = [
+export const dataPartners = [
   {
     href: molLogo,
     image: { src: molLogo, alt: 'Map of Life' }
@@ -83,14 +80,10 @@ const dataPartners = [
   {
     href: 'http://eol.org/',
     image: { src: eolLogo, alt: 'Encyclopedia of Life' }
-  },
-  {
-    href: 'https://carto.com/',
-    image: { src: cartoLogo, alt: 'Carto' }
-  },
+  }
 ];
 
-const researchPartners = [
+export const researchPartners = [
   {
     href: 'https://www.yale.edu/',
     image: { src: yaleLogo, alt: 'Yale University' }
@@ -113,7 +106,7 @@ const researchPartners = [
   }
 ];
 
-const sponsors =  [{
+export const sponsors =  [{
     href: 'https://www.esri.com/en-us/home',
     image: { src: esriLogo, alt: 'Esri' }
   },
@@ -129,19 +122,3 @@ const sponsors =  [{
     label: 'Jeff and Laurie Ubben'
   }
 ];
-
-const sections = [
-  {
-    title: 'Half-earth mapping core',
-    description: 'The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life.',
-    content: partners,
-    theme: styles.partners
-  },
-  { title: 'Sponsors',
-    content: sponsors
-  },
-  { title: 'Data Partners', content: dataPartners },
-  { title: 'Research Partners', content: researchPartners }
-];
-
-export default sections;

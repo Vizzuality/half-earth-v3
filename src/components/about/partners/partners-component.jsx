@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-import sections from './partners-data';
 
 import styles from './partners-styles.module.scss';
 
@@ -18,9 +17,9 @@ const Logo = ({ href, image, label }) => (
   )
 );
 
-const PartnersComponent = () => (
+const PartnersComponent = ({ sections }) => (
   <div className={styles.wrapper}>
-    {sections.map(({ title, description, content, theme }) => (
+    {sections && sections.map(({ title, description, content, theme }) => (
       <div className={cx(styles.section, theme)} key={`${title}-section`}>
         <h1 className={styles.title} key={title}>{title}</h1>
         <div className={styles.logosWrapper} key={`${title}-content`}>
