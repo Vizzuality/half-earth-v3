@@ -1,10 +1,9 @@
 import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
-import { isEqual } from 'lodash';
 import { useWatchUtils } from 'hooks/esri';
 import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
 
-import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry } from 'utils/grid-layer-utils';
+import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry, cellsEquality } from 'utils/grid-layer-utils';
 
 const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
 
@@ -68,14 +67,15 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
           geometry: extent,
           spatialRelationship: 'intersects'
         }).then(function(results) {
+          console.log(results.features.length)
           const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
           const hasContainedGridCells = containedGridCells.length > 0;
           const singleGridCell = results.features.filter(gridCell => gridCell.geometry.contains(view.center));
           // If there are not a group of cells pick the one in the center
           const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
-          const gridCellsEquallity = gridCellRef.current && (hasContainedGridCells ? isEqual(gridCellRef.current, gridCells) : isEqual(gridCellRef.current[0].uid, gridCells[0].uid))
           // Change data on the store and paint only when grid cell chaged
-          if (!gridCellRef.current || !gridCellsEquallity) {
+          if (!cellsEquality(gridCellRef.current, gridCells, hasContainedGridCells)) {
+            gridCellRef.current = gridCells;
             // dispatch action
             setGridCellData(gridCells.map(c => c.attributes));
             loadModules(["esri/geometry/geometryEngine"])
@@ -89,7 +89,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
                 setGridCellGeometry(gridCellGeometry)
               })
           }
-          gridCellRef.current = gridCells
+          gridCellRef.current = gridCells;
         })
         return function cleanUp() {
           queryHandle && queryHandle.cancel();
