@@ -24,3 +24,9 @@ export const createGraphicLayer = (GraphicsLayer, graphic) => {
     graphics: [graphic]
   });
 }
+
+export const calculateAgregatedGridCellGeometry = (hasContainedGridCells, gridCells, geometryEngineModule) => {
+  return hasContainedGridCells
+  ? geometryEngineModule.simplify(geometryEngineModule.union(gridCells.map(gc => gc.geometry.extent))) 
+  : gridCells[0].geometry.extent;
+}
