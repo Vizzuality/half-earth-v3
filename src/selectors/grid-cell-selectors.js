@@ -19,19 +19,19 @@ export const getHumanPressures = createSelector(
         [current.CELL_ID]: {
           rainfed: current.RAINFED,
           urban: current.URBAN,
-          irrigated: current.AGRICULTUR
+          agriculture: current.AGRICULTUR
         }
         }
     }, {});
     const pressuresValues = Object.values(pressures)
     const gridCellsLength = Object.keys(pressures).length;
     const rainfed = sumBy(pressuresValues, 'rainfed') / gridCellsLength;
-    const irrigated = sumBy(pressuresValues, 'irrigated') / gridCellsLength;
+    const agriculture = sumBy(pressuresValues, 'agriculture') / gridCellsLength;
     const urban = sumBy(pressuresValues, 'urban') / gridCellsLength;
-    const pressureFree = 100 - (rainfed + irrigated + urban)
+    const pressureFree = 100 - (rainfed + agriculture + urban)
     return {
       rainfed,
-      irrigated,
+      agriculture,
       urban,
       pressureFree
     }

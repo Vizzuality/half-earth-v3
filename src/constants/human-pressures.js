@@ -1,7 +1,14 @@
 export const humanPressuresLandUse = [
-  { name: 'Rainfed agriculture', value: 'rainfed', slug: 'human-pressures-agriculture' },
-  { name: 'Irrigated agriculture', value: 'agriculture', slug: 'human-pressures-rainfed' },
+  { name: 'Rainfed agriculture', value: 'rainfed', slug: 'human-pressures-rainfed' },
+  { name: 'Irrigated agriculture', value: 'agriculture', slug: 'human-pressures-agriculture' },
   { name: 'Urban pressures', value: 'urban', slug: 'human-pressures-urban' }
+];
+
+export const humanPressuresLandscapeWidget = [
+  { name: 'Rainfed agriculture', value: 'rainfed', slug: 'human-pressures-rainfed' },
+  { name: 'Irrigated agriculture', value: 'agriculture', slug: 'human-pressures-agriculture' },
+  { name: 'Urban pressures', value: 'urban', slug: 'human-pressures-urban' },
+  { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' }
 ];
 
 export const HUMAN_PRESSURE_LAYER_ID = '16aff2bc763-layer-0'
