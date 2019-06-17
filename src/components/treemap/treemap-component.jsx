@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
-import { hierarchy, treemap } from 'd3-hierarchy';
+import { hierarchy, treemap, treemapBinary } from 'd3-hierarchy';
+import { format } from 'd3-format';
 
 import styles from './treemap-styles.module.scss';
 
-const TreeMapComponent = ({ data, handleOnClick }) => {
+const TreeMapComponent = ({ data, handleOnClick, activeRect }) => {
   const padding = 3;
   const width = 250;
   const height = 250;
@@ -18,12 +19,15 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
     const tree = treemap()
       .size([width, height])
       .padding(padding)
-    
+    tree.tile(treemapBinary)
     tree(root)
     const leaves = root.leaves();
     setLeaves(leaves);
   }, [data])
 
+  const isSelected = (array, element) => {
+    return array.some(current => current === element)
+  }
 
   return (
     <div>
@@ -40,24 +44,28 @@ const TreeMapComponent = ({ data, handleOnClick }) => {
               y={d.y0}
               width={d.x1 - d.x0}
               height={d.y1 - d.y0}
-              onClick={handleOnClick}
+              onClick={() => handleOnClick(d)}
               className={cx(
                 styles.square,
-                {[styles.pressureFree] : d.data.name === 'Not under pressure'}
+                {[styles.pressureFree] : d.data.name === 'Pressure free',
+                 [styles.selected] : isSelected(activeRect, d.data.rasterId)}
                 )}
             />
             <foreignObject
-              className={styles.text}
-              x={d.x0+5}
-              y={d.y0+5}
-              width={d.x1 - d.x0 - (2 * padding)}
-              height={d.y1 - d.y0 }
+              className={cx(styles.foreignObject)}
+              x={d.x0}
+              y={d.y0}
+              width={d.x1 - d.x0}
+              height={d.y1 - d.y0}
             >
-              <span
-                className={cx({[styles.removeText] : (d.x1 - d.x0) < 30 || (d.y1 - d.y0) < 30})}
+              <p
+                className={cx(styles.text,{
+                  [styles.removeText] : (d.x1 - d.x0) < 15 || (d.y1 - d.y0) < 15,
+                  [styles.ellipsis] : (d.x1 - d.x0) < 60 || (d.y1 - d.y0) < 25
+                })}
               >
-                {`${d.data.name} ${Math.floor(d.data.value)}%`}
-              </span>
+                {`${d.data.name} ${format(".2%")(d.data.value / 100)}`}
+              </p>
             </foreignObject>
           </g>
         ))}

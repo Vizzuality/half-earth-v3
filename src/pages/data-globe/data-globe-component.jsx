@@ -81,9 +81,16 @@ const DataGlobeComponent = ({
           />
         )}
       </Sidebar>
-      <LandscapeSidebar isLandscapeMode={isLandscapeMode} isFullscreenActive={isFullscreenActive} />
+      <LandscapeSidebar
+        isLandscapeMode={isLandscapeMode}
+        isFullscreenActive={isFullscreenActive}
+        activeLayers={activeLayers}
+        rasters={rasters}
+        setLayerVisibility={setLayerVisibility}
+        setRasters={setRasters}
+      />
       <About />
-      <Legend 
+      <Legend
         isFullscreenActive={isFullscreenActive}
         setLayerOpacity={setLayerOpacity}
         setLayerVisibility={setLayerVisibility}
