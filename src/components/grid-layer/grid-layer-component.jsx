@@ -73,13 +73,14 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
           const singleGridCell = results.features.filter(gridCell => gridCell.geometry.contains(view.center));
           // If there are not a group of cells pick the one in the center
           const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
-          const gridCellsEquallity = hasContainedGridCells ? isEqual(gridCellRef.current, gridCells) : isEqual(gridCellRef.current[0].geometry.rings, gridCells[0].geometry.rings)
+          const gridCellsEquallity = gridCellRef.current && (hasContainedGridCells ? isEqual(gridCellRef.current, gridCells) : isEqual(gridCellRef.current[0].uid, gridCells[0].uid))
           // Change data on the store and paint only when grid cell chaged
           if (!gridCellRef.current || !gridCellsEquallity) {
             // dispatch action
             setGridCellData(gridCells.map(c => c.attributes));
             loadModules(["esri/geometry/geometryEngine"])
               .then(([geometryEngine]) => {
+                if (gridCellGraphic) { gridCellGraphic.geometry = null }
                 // create aggregated grid cell geometry
                 const gridCellGeometry = calculateAgregatedGridCellGeometry(hasContainedGridCells, gridCells, geometryEngine)
                 // paint it
@@ -91,7 +92,6 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
           gridCellRef.current = gridCells
         })
         return function cleanUp() {
-          if (gridCellGraphic) { gridCellGraphic.geometry = null }
           queryHandle && queryHandle.cancel();
           layerViewHandle && layerViewHandle.remove();
       }
@@ -99,11 +99,11 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
 
   useEffect(() => {
     return function cleanUp() {
-      if (gridCellGraphic) { gridCellGraphic.geometry = null }
+      if (gridCellGraphic) { gridCellGraphic.geometry = null };
       queryHandle && queryHandle.cancel();
       layerViewHandle && layerViewHandle.remove();
     }
-  },[])
+  },[gridCellGraphic])
 
   return null;
 }
