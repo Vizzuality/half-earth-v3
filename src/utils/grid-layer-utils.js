@@ -31,7 +31,7 @@ export const calculateAgregatedGridCellGeometry = (hasContainedGridCells, gridCe
   if (!gridCells.length) return null;
   return hasContainedGridCells
   ? geometryEngineModule.simplify(geometryEngineModule.union(gridCells.map(gc => gc.geometry.extent))) 
-  : gridCells[0].geometry.extent;
+  : gridCells[0].geometry;
 }
 
 export const cellsEquality = (ref, cells, hasContainedGridCells) => {
