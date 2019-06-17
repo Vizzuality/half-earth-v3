@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
-import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity } from 'utils/layer-manager-utils';
+import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
 
@@ -22,6 +22,7 @@ const dataGlobeContainer = props => {
   const exclusiveLayerToggle = (layerToActivate, layerToRemove) => exclusiveLayersToggle(layerToActivate, layerToRemove, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
   const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setDataGlobeSettings);
+  const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setDataGlobeSettings);
   const setRasters = (rasters) => props.setDataGlobeSettings({ rasters: rasters })
   const handleZoomChange = props.setDataGlobeSettings;
   
@@ -30,6 +31,7 @@ const dataGlobeContainer = props => {
     exclusiveLayerToggle={exclusiveLayerToggle}
     setLayerVisibility={setLayerVisibility}
     setLayerOpacity={setLayerOpacity}
+    setLayerOrder={setLayerOrder}
     setRasters={setRasters}
     onLoad={(map, view) => handleMapLoad(map, view)}
     handleZoomChange={handleZoomChange}

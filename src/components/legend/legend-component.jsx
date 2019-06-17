@@ -8,17 +8,19 @@ import Legend, {
   LegendListItem,
   LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
+import { difference } from 'lodash';
 
 import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity }) => {
+const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity, setLayerOrder }) => {
   const { 
-    handleChangeOrder,
+    // handleChangeOrder,
     handleLayerChange,
     handleChangeVisibility
   } = handlers;
+  const { layers } = map;
 
   const handleStyle = {
     border: '1px solid #0E2B3B',
@@ -59,6 +61,15 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
     fill: 'white'
   }
 
+  const handleChangeOrder = (layerGroupsIds) => {
+    const updatedDatasets = [];
+    layerGroupsIds.forEach((id) => {
+      updatedDatasets.push(datasets.find(({ dataset }) => dataset === id).dataset);
+    });
+    // console.log('updatedDatasets: ',updatedDatasets)
+    setLayerOrder(updatedDatasets);
+  };
+
   const toolbar = (
     <LegendItemToolbar
       onChangeInfo={handleInfoClick}
@@ -83,9 +94,10 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
     </LegendItemToolbar>
   );
 
+
   return (
     <div className={styles.legend}>
-      {!isFullscreenActive && <Legend sortable={false} onChangeOrder={handleChangeOrder}>
+      {!isFullscreenActive && <Legend sortable={true} onChangeOrder={handleChangeOrder}>
         {datasets && datasets.map((dataset, i) => (
           <LegendListItem index={i} key={dataset.name} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
             <LegendItemTypes />

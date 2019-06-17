@@ -81,6 +81,10 @@ $map-attribution-height: 30px;
     .wri_api__toggle-legend {
       display: none;
     }
+
+    .wri_api__c-legend-handler svg {
+      fill: $oslo-gray;
+    }
   }
 }
 

@@ -1,4 +1,8 @@
+import { FIREFLY_LAYER } from 'constants/base-layers';
+import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+
 const DEFAULT_OPACITY = 0.6;
+
 export const layerManagerToggle = (layerId, activeLayers, callback, category) => {
   const id = layerId;
   const isActive = activeLayers && activeLayers.some(l => l.id === id);
@@ -34,4 +38,10 @@ export const layerManagerVisibility = (layerId, visible, activeLayers, callback)
 export const layerManagerOpacity = (layerId, opacity, activeLayers, callback) => {
   const setOpacity = (layer) => layer.id === layerId ? { ...layer, opacity } : layer;
   callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
+};
+
+export const layerManagerOrder = (datasets, activeLayers, callback) => {
+  const updatedLayers = activeLayers.filter(({ id }) => id === FIREFLY_LAYER || id === BIODIVERSITY_FACETS_LAYER);
+  datasets.forEach((d) => { updatedLayers.push(activeLayers.find(({ id }) => d === id )) });
+  callback({ activeLayers: updatedLayers });
 };
