@@ -1,12 +1,12 @@
-import { union, sumBy } from 'lodash';
+import { sumBy } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
 export const selectCellData = ({ gridCellData }) => gridCellData.data || null;
 
 export const getCellSpecies = createSelector(selectCellData, cellData => {
   if (!cellData) return null;
-  const species = cellData.map(cell => cell.FOCAL_SPP);
-  return union(species);
+  const species = cellData.map(cell => JSON.parse(cell.FOCAL_SPP));
+  return species;
 })
 
 export const getHumanPressures = createSelector(
@@ -19,7 +19,7 @@ export const getHumanPressures = createSelector(
         [current.CELL_ID]: {
           rainfed: current.RAINFED,
           urban: current.URBAN,
-          agriculture: current.AGRICULTUR
+          agriculture: current.AGRICULTURE
         }
         }
     }, {});
