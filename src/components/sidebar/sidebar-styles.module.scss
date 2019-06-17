@@ -10,23 +10,13 @@
 
 .wrapper {
   @include backdropBlur();
+  display: flex;
+  flex-direction: column;
   position: relative;
   top: 0;
   bottom: 0;
   width: $sidebar-width;
-  overflow: auto;
-  height: calc(100vh - 92px); // 92px => 2 * $sidebar-margin + search widget height and margin
-}
-
-.content {
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
+  overflow: hidden;
 }
 
 .button {
@@ -47,4 +37,10 @@
 .icon {
   transform: rotate(180deg);
   height: 25px;
+}
+
+.content {
+  @extend %verticalScrollBar;
+  max-height: calc(100vh - (#{$sidebar-top-margin} + #{$sidebar-header-height}));
+  width: $sidebar-width;
 }

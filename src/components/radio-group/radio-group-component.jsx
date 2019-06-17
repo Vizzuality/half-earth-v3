@@ -28,7 +28,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
   const variant = (selected && selected.variant) || RARITY;
   const isRarityActive = variant === RARITY;
 
-  const isSelected = (option) => !!(activeLayers.find(l => l.id === option.layers[variant]))
+  const isSelected = (option) => !!(activeLayers.find(l => l.id === option.layers[variant]));
 
   return (
     <>
@@ -44,7 +44,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
               id={option.value}
               value={option.value}
               checked={isSelected(option)}
-              onChange={() => {
+              onClick={() => {
                 if (isSelected(option)) {
                   handleSimpleLayerToggle(option.layers[variant]);
                 } else {

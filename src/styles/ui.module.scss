@@ -5,7 +5,7 @@ $spacer-middle-opacity: 0.6;
 
 .uiTopLeft {
   position: absolute;
-  top: 60px;
+  top: $sidebar-top-margin;
   left: $site-gutter;
 }
 
@@ -52,4 +52,15 @@ $spacer-middle-opacity: 0.6;
     stroke: $white;
   }
   
+}
+
+%verticalScrollBar {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
