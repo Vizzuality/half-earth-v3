@@ -67,7 +67,6 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
           geometry: extent,
           spatialRelationship: 'intersects'
         }).then(function(results) {
-          console.log(results.features.length)
           const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
           const hasContainedGridCells = containedGridCells.length > 0;
           const singleGridCell = results.features.filter(gridCell => gridCell.geometry.contains(view.center));
