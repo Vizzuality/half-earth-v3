@@ -1,10 +1,11 @@
-import { RARITY_RICHNESS_GRID_LAYER_ID } from 'constants/biodiversity';
+import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
 import { FIREFLY_LAYER } from 'constants/base-layers';
 
 export default {
   globe: {
     activeLayers: [
-      { id: RARITY_RICHNESS_GRID_LAYER_ID }, // rarity-richness-GRID
+      { id: BIODIVERSITY_FACETS_LAYER }, // Biodiversity Facets (new grid)
+      { id: 'Grid layer' }, // Biodiversity Facets (new grid)
       { id: FIREFLY_LAYER } // half-earth firefly
     ],
     rasters: {},

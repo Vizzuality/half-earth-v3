@@ -1,8 +1,10 @@
 import React from 'react';
+import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
+import GridLayer from 'components/grid-layer';
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import BiodiversityLayers from 'components/biodiversity-layers';
@@ -44,7 +46,7 @@ const DataGlobeComponent = ({
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
-      <LandscapeViewManager zoomLevelTrigger={8} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
+      <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
       <LocationWidget />
       <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
       <ZoomWidget />
@@ -95,6 +97,7 @@ const DataGlobeComponent = ({
         setLayerOpacity={setLayerOpacity}
         setLayerVisibility={setLayerVisibility}
       />
+      {isLandscapeMode && <GridLayer />}
       <InfoModal />
     </Globe>
   )

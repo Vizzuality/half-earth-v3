@@ -9,8 +9,8 @@ import styles from './treemap-styles.module.scss';
 
 const TreeMapComponent = ({ data, handleOnClick, activeRect }) => {
   const padding = 3;
-  const width = 250;
-  const height = 250;
+  const width = 240;
+  const height = 150;
 
   const [leaves, setLeaves] = useState([])
 

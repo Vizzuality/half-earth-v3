@@ -5,4 +5,6 @@ import reducers, { initialState } from './grid-cell-data-reducers';
 
 const reduxConfig = { actions, reducers, initialState };
 
-export default reducerRegistry.registerModule('gridCellData', reduxConfig);
+reducerRegistry.registerModule('gridCellData', reduxConfig);
+
+export default actions;

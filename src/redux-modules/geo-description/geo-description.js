@@ -5,4 +5,6 @@ import reducers, { initialState } from './geo-description-reducers';
 
 const reduxConfig = { actions, reducers, initialState };
 
-export default reducerRegistry.registerModule('geoDescription', reduxConfig);
+reducerRegistry.registerModule('geoDescription', reduxConfig);
+
+export default actions;

@@ -1,22 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
-import biodiversityActions from 'redux_modules/biodiversity-data/biodiversity-data';
 
 import ownActions from './data-globe-actions.js';
-const actions = { ...ownActions, ...biodiversityActions };
-
-const RICHNESS_RARITY_GRID = 'rarity-richness-GRID';
-// const TAXA_FIELD = 'TAXA';
+const actions = { ...ownActions };
 
 const handleMapLoad = (map, view) => {
   const { layers } = map;
-  const gridLayer = layers.items.find(l => l.title === RICHNESS_RARITY_GRID);
-
-  // set the outFields for the rarity-richness-GRID layer
+  const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
+  // set the outFields for the BIODIVERSITY_FACETS_LAYER
   // to get all the attributes available
   gridLayer.outFields = ["*"];
 }
