@@ -7,8 +7,9 @@ import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGe
 
 const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
 
-  let watchHandle;
   let queryHandle;
+  let watchHandle;
+  let watchUpdateHandle;
 
   const watchUtils = useWatchUtils();
   const [viewExtent, setViewExtent] = useState();
@@ -16,6 +17,12 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
   const [gridCellGraphic, setGridCellGraphic] = useState(null);
   // References for cleaning up graphics
   const gridCellRef = useRef();
+
+  const cleanUpHandles = () => {
+    watchUpdateHandle && watchUpdateHandle.remove();
+    watchHandle && watchHandle.remove();
+    queryHandle && queryHandle.cancel();
+  }
 
   //Create the graphics layer on mount
   useEffect(() => {
@@ -26,7 +33,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
       ]).then(([Graphic, GraphicsLayer]) => {
         const _gridCellGraphic = createGridCellGraphic(Graphic)
         const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic)
-        setGridCellGraphic(_gridCellGraphic)
+        setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
       })
   }, [])
@@ -43,7 +50,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
   // set the view extent when view stationary
   useEffect(() => {
       watchHandle = watchUtils && watchUtils.whenTrue(view, "stationary", function() {
-        setViewExtent(view.extent)
+        setViewExtent(view.extent);
       })
     return function cleanUp() {
       watchHandle && watchHandle.remove();
@@ -54,7 +61,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
    useEffect(() => {
         const { extent } = view;
         const scaledDownExtent = extent.clone().expand(0.9);
-        watchHandle = gridViewLayer && gridViewLayer.watch('updating', function(value) {
+        watchUpdateHandle = gridViewLayer && gridViewLayer.watch('updating', function(value) {
           if (!value) {
             queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
             queryHandle = gridViewLayer.queryFeatures({
@@ -71,12 +78,12 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
                 // dispatch action
                 setGridCellData(gridCells.map(c => c.attributes));
                 loadModules(["esri/geometry/geometryEngine"])
-                  .then(([geometryEngine]) => {
-                    // create aggregated grid cell geometry
-                    const gridCellGeometry = calculateAgregatedGridCellGeometry(hasContainedGridCells, gridCells, geometryEngine);
-                    // paint it
-                    if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
-                    // Add it to the store
+                .then(([geometryEngine]) => {
+                  // create aggregated grid cell geometry
+                  const gridCellGeometry = calculateAgregatedGridCellGeometry(hasContainedGridCells, gridCells, geometryEngine);
+                  // paint it
+                  if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
+                  // Add it to the store
                     setGridCellGeometry(gridCellGeometry)
                   })
               }
@@ -85,18 +92,16 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
           }
         })
         return function cleanUp() {
-          watchHandle && watchHandle.remove();
-          queryHandle && queryHandle.cancel();
+          cleanUpHandles();
       }
   }, [gridViewLayer, viewExtent]);
 
   useEffect(() => {
     return function cleanUp() {
       if (gridCellGraphic) { gridCellGraphic.geometry = null };
-      watchHandle && watchHandle.remove();
-      queryHandle && queryHandle.cancel();
+      cleanUpHandles();
     }
-  },[gridCellGraphic])
+  },[])
 
   return null;
 }
