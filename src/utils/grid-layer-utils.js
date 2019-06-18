@@ -37,7 +37,7 @@ export const calculateAgregatedGridCellGeometry = (hasContainedGridCells, gridCe
 export const cellsEquality = (ref, cells, hasContainedGridCells) => {
   if (!ref) return false;
   if (hasContainedGridCells) return isEqual(ref, cells);
-  const refRings = flattenDeep(ref[0].geometry.rings)
-  const cellRings = flattenDeep(cells[0].geometry.rings)
-  return isEqual(refRings, cellRings);
+  const refId = flattenDeep(ref[0].attributes.CELL_ID)
+  const cellId = flattenDeep(cells[0].attributes.CELL_ID)
+  return isEqual(refId, cellId);
 }
