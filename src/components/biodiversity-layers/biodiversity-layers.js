@@ -13,7 +13,7 @@ const BiodiversityLayerContainer = props => {
         urlTemplate: url,
         title: title,
         id: slug,
-        opacity: 1,
+        opacity: 0.6,
         maxScale: bbox ? 1000 : 2800000
       })
       map.add(tileLayer);
