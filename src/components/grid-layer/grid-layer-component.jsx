@@ -101,7 +101,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
       if (gridCellGraphic) { gridCellGraphic.geometry = null };
       cleanUpHandles();
     }
-  },[])
+  },[gridCellGraphic])
 
   return null;
 }
