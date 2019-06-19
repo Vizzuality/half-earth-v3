@@ -1,0 +1,52 @@
+@import 'styles/settings';
+
+// Big titles, HE-Meter page
+%displa1 {
+  font-family: $font-family-1;
+  font-size: $font-size-xxl;
+  letter-spacing: 1px;
+  line-height: 50px;
+}
+
+// Categories, Areas names, Search
+%headline {
+  font-family: $font-family-1;
+  font-size: $font-size-xl;
+  letter-spacing: 1px;
+  line-height: 30px;
+}
+
+// Datasets, Geodescriber
+%bodyText {
+  font-family: $font-family-1-light;
+  font-size: $font-size-sm;
+  letter-spacing: 0px;
+  line-height: 22px;
+}
+
+// Sections title
+%titles {
+  font-family: $font-family-1-bold;
+  font-size: $font-size-xs;
+  letter-spacing: 2px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+// Legend title, Actions, Small titles
+%subtitles {
+  font-family: $font-family-1-bold;
+  font-size: $font-size-xxs;
+  letter-spacing: 1.5px;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+// Tooltips, descriptions
+%annotations {
+  font-family: $font-family-1-light;
+  font-size: $font-size-xs;
+  letter-spacing: 0px;
+  line-height: 16px;
+  text-transform: uppercase;
+}

@@ -22,7 +22,7 @@
 }
 
 .aboutPage {
-  background-color: $firefly;
+  background-color: $dark-text;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -31,7 +31,7 @@
 }
 
 .navbar {
-  color: $white;
+  color: $light-text;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -61,7 +61,7 @@
 
   button {
     border-bottom: 4px solid transparent;
-    color: $white;
+    color: $light-text;
     font-family: $font-family-1;
     font-size: $font-size-xs;
     font-weight: bold;
@@ -74,8 +74,8 @@
   }
 
   .active {
-    color: $robins-egg-blue;
-    border-color: $robins-egg-blue;
+    color: $brand-color-main;
+    border-color: $brand-color-main;
     padding-bottom: 14px;
   }
 
