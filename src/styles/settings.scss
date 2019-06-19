@@ -5,7 +5,7 @@ $elephant: #0F2B3B;
 $robins-egg-blue: #00BDB5;
 $oslo-gray: #838C93;
 $alto: #DBDBDB;
-$firefly: #09141A;
+$firefly: #0A212E;
 $vida-loca: #4B9217;
 $cobalt: #0041B1;
 $green: #03C700;
@@ -24,6 +24,16 @@ $marzipan: #F7DEA1;
 $color-facebook: #39579a;
 $color-twitter: #69ace0;
 
+// Project colours
+$space-background: #09141A;
+$brand-color-main: #18BAB4;
+$brand-color-secondary: #0F2B3B;
+$dark-text: #0A212E;
+$grey-text: #D8D8D8;
+$light-text: #FFFFFF;
+$half-earth-meter-green: #93FF5F;
+$half-earth-meter-blue: #0272BA;
+
 // Animations
 $animation-time: 0.3s;
 $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
@@ -31,23 +41,18 @@ $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 // Font sizes
 $font-size-xxs: 10px;
 $font-size-xs: 12px;
-$font-size-s: 13px;
 $font-size-sm: 14px;
-$font-size: 16px;
-$font-size-m: 19px;
-$font-size-l: 24px;
 $font-size-xl: 28px;
 $font-size-xxl: 44px;
-$font-size-xxxl: 54px;
 
 //font-weights
-$font-weight-light: 300;
-$font-weight: 400;
-$font-weight-semi-bold: 500;
-$font-weight-bold: 600;
+$font-weight-light: lighter;
+$font-weight: normal;
+$font-weight-bold: bold;
 
 $font-family-1: 'PierSans';
 $font-family-1-bold: 'PierSans-Bold';
+$font-family-1-light: 'PierSans-Light';
 
 // Layout 
 $site-gutter: 20px;
