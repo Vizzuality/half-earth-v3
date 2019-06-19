@@ -1,5 +1,6 @@
 
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .wrapper {
   align-items: center;
@@ -31,12 +32,14 @@
 
 .logosWrapper {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
 
   & > * {
+    @extend %titles;
+    color: $logos-text;
     align-items: center;
-    color: $white;	
     font-size: $font-size-sm;
     justify-content: center;
     display: flex;
@@ -46,7 +49,7 @@
 }
 
 .description {
-  color: $white;	
+  color: $white;
   font-family: $font-family-1;
   font-size: $font-size-sm;
   font-weight: $font-weight-light;
@@ -67,4 +70,8 @@
 
 .sponsors .title {
   margin-bottom: 34px;
+}
+
+.narrow {
+  height: 70px;
 }
