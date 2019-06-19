@@ -8,7 +8,6 @@ import Legend, {
   LegendListItem,
   LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
-import { difference } from 'lodash';
 
 import LegendTitle from './legend-title';
 
@@ -61,12 +60,32 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
     fill: 'white'
   }
 
+  const findNestedLayer = (layerID) => {
+    return layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === layerID));
+  }
+
   const handleChangeOrder = (layerGroupsIds) => {
+    const oldIds = datasets.map(({ dataset }) => dataset);
+    const movedLayerID = layerGroupsIds.find(id => layerGroupsIds.indexOf(id) !== oldIds.indexOf(id));
+
+    console.log('BEFORE REORDER map: ',layers.items.map(({ title, id }) => ({ title, id })));
+    // const nestedLayer = layers.items.map((parentLayer) => parentLayer.layers && parentLayer.layers.items.find(({ id }) => id === movedLayer)).find(layer => layer )
+    // const nestedLayer = layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === movedLayerID));
+    // console.log('nestedLayer: ',nestedLayer);
+    // console.log('nestedLayer: ',layers.items.find(({ id }) => id === movedLayer) || nestedLayer);
+    
+    const layerToReorder = layers.items.find(({ id }) => id === movedLayerID) || findNestedLayer(movedLayerID);
+    console.log('LAYER: id:', movedLayerID, ', layer: ',layerToReorder);
+    map.reorder(
+      layerToReorder,
+      layers.items.length - layerGroupsIds.length - 1 + layerGroupsIds.indexOf(movedLayerID)
+    );
+    console.log('AFTER REORDER map: ', layers.items.map(({ title }) => title));
+
     const updatedDatasets = [];
     layerGroupsIds.forEach((id) => {
       updatedDatasets.push(datasets.find(({ dataset }) => dataset === id).dataset);
     });
-    // console.log('updatedDatasets: ',updatedDatasets)
     setLayerOrder(updatedDatasets);
   };
 
