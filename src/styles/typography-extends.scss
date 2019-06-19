@@ -25,7 +25,7 @@
 }
 
 // Sections title
-%titles {
+%title {
   font-family: $font-family-1-bold;
   font-size: $font-size-xs;
   letter-spacing: 2px;
@@ -34,7 +34,7 @@
 }
 
 // Legend title, Actions, Small titles
-%subtitles {
+%subtitle {
   font-family: $font-family-1-bold;
   font-size: $font-size-xxs;
   letter-spacing: 1.5px;
@@ -43,7 +43,7 @@
 }
 
 // Tooltips, descriptions
-%annotations {
+%annotation {
   font-family: $font-family-1-light;
   font-size: $font-size-xs;
   letter-spacing: 0px;

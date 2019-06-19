@@ -19,12 +19,8 @@
 }
 
 .title {
+  @extend %headline;
   color: $white;
-  font-family: $font-family-1;
-  font-size: $font-size-xl;
-  font-weight: unset;
-  letter-spacing: 1px;
-  line-height: 30px;
   margin: 0;
   margin-bottom: 50px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
@@ -37,7 +33,7 @@
   width: 100%;
 
   & > * {
-    @extend %titles;
+    @extend %title;
     color: $logos-text;
     align-items: center;
     font-size: $font-size-sm;
@@ -49,11 +45,8 @@
 }
 
 .description {
+  @extend %bodyText;
   color: $white;
-  font-family: $font-family-1;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-light;
-  line-height: 22px;
   margin: 0;
   text-align: center;
 }
