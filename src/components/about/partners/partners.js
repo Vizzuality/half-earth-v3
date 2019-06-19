@@ -1,6 +1,6 @@
 import React from 'react';
 import PartnersComponent from './partners-component';
-import { partners, dataPartners, researchPartners, sponsors } from './partners-data';
+import { partners, platformPartners, dataPartners, researchPartners, sponsors } from './partners-data';
 import styles from './partners-styles.module.scss';
 
 const PartnersContainer = ({ textData }) => {
@@ -10,6 +10,10 @@ const PartnersContainer = ({ textData }) => {
       description: textData.content,
       content: partners,
       theme: styles.partners
+    },
+    {
+      title: textData.platformPartners,
+      content: platformPartners
     },
     { title: textData.title2,
       content: sponsors

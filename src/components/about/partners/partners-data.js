@@ -34,6 +34,13 @@ export const partners = [
   }
 ];
 
+export const platformPartners = [
+  {
+    href: 'https://www.esri.com/en-us/home',
+    image: { src: esriLogo, alt: 'Esri' }
+  }
+]
+
 export const dataPartners = [
   {
     href: molLogo,
