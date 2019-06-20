@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Legend, {
   LegendItemToolbar,
   LegendItemButtonOpacity,
+  LegendItemButtonInfo,
   LegendItemTypes,
   LegendListItem,
   LegendItemButtonRemove
@@ -12,15 +13,12 @@ import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, setLayerOpacity, setLayerVisibility }) => {
+const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity }) => {
   const { 
     handleChangeOrder,
     handleLayerChange,
-    handleInfoClick,
     handleChangeVisibility
   } = handlers;
-
-  const { layers } = map;
 
   const handleStyle = {
     border: '1px solid #0E2B3B',
@@ -53,13 +51,6 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
     100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
   };
 
-  const handleChangeOpacity = (layer, opacity) => {
-    setLayerOpacity(layer.id, opacity);
-  }
-
-  const handleRemoveLayer = (layer) => {
-    setLayerVisibility(layer.id, false)
-  }
 
   const toolbar = (
     <LegendItemToolbar
@@ -76,6 +67,7 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
         railStyle={railStyle}
         marks={marks}
       />
+      <LegendItemButtonInfo />
       <LegendItemButtonRemove />
     </LegendItemToolbar>
   );
