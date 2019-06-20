@@ -59,6 +59,20 @@ $map-attribution-height: 30px;
       background: rgba(#09141a, 0.4);
     }
 
+    .wri_api__c-icon {
+      fill: $white !important;
+    }
+
+    .wri_api__name {
+      font-family: 'PierSans-Light' !important;
+      color: #DBDBDB;
+    }
+
+    .wri_api__c-legend-type-gradient .wri_api__icon-gradient {
+      height: 6px;
+      border-radius: 5px;
+    }
+
     .wri_api__c-legend-item {
       background: rgba(#09141a, 0.4);
       margin-bottom: 8px;
@@ -111,3 +125,4 @@ body {
     }
   }
 }
+
