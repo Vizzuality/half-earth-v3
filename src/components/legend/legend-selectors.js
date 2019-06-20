@@ -21,7 +21,7 @@ const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
   const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
   const titles = activeRasters.map(activeRaster => legendSingleRasterTitles[activeRaster]);
 
-  return titles.join(', ');
+  return titles.length === 3 ? 'All pressures' : titles.join(', ');
 })
 
 const getLegendConfigs = createSelector(
