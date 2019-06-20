@@ -1,16 +1,18 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
-import { FIREFLY_LAYER } from 'constants/base-layers';
+import { FIREFLY_LAYER, FEATURES_LABELS_LAYER, GRID_LAYER } from 'constants/base-layers';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 
+const legendFreeLayers = [FIREFLY_LAYER, BIODIVERSITY_FACETS_LAYER, FEATURES_LABELS_LAYER, GRID_LAYER];
+const isLegendFreeLayer = layerId => legendFreeLayers.some( l => l === layerId);
 
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;
 
-  return activeLayers.filter(layer => layer.id !== FIREFLY_LAYER && layer.id !== BIODIVERSITY_FACETS_LAYER && layer.id !== 'Grid layer');
+  return activeLayers.filter(layer => !isLegendFreeLayer(layer.id));
 })
 
 const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
