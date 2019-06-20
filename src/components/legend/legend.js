@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './legend-component';
+import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 import actions from 'redux_modules/metadata';
 import mapStateToProps from './legend-selectors';
 
@@ -18,8 +19,9 @@ const LegendContainer = props => {
 
   const handleInfoClick = layer => {
     const { setModalMetadata } = props;
+    const slug = layer.id === HUMAN_PRESSURE_LAYER_ID ? 'human-pressures-all' : layer.id;
     setModalMetadata({
-      slug: `${layer.id}`,
+      slug,
       title: `${layer.legendConfig.title} metadata`,
       isOpen: true
     });
