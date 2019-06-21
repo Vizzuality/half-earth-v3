@@ -1,17 +1,14 @@
 import React from 'react';
+import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
-import GridLayer from 'components/grid-layer';
+
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
-import BiodiversityLayers from 'components/biodiversity-layers';
-import LandscapeSidebar from 'components/landscape-sidebar';
 import About from 'components/about';
-import HumanImpactLayers from 'components/human-impact-layers';
-import ProtectedAreasLayers from 'components/protected-areas-layers';
 import Legend from 'components/legend';
 
 // WIDGETS
@@ -21,6 +18,13 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 import InfoModal from 'components/modal-metadata';
+
+// Lazy load components
+const GridLayer = loadable(() => import('components/grid-layer'));
+const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
+const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
+const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
+const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const DataGlobeComponent = ({
@@ -83,14 +87,16 @@ const DataGlobeComponent = ({
           />
         )}
       </Sidebar>
-      <LandscapeSidebar
-        isLandscapeMode={isLandscapeMode}
-        isFullscreenActive={isFullscreenActive}
-        activeLayers={activeLayers}
-        rasters={rasters}
-        setLayerVisibility={setLayerVisibility}
-        setRasters={setRasters}
-      />
+      {isLandscapeMode && (
+        <LandscapeSidebar
+          isLandscapeMode={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          activeLayers={activeLayers}
+          rasters={rasters}
+          setLayerVisibility={setLayerVisibility}
+          setRasters={setRasters}
+        />
+      )}
       <About />
       <Legend
         isFullscreenActive={isFullscreenActive}
