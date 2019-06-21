@@ -3,12 +3,11 @@ $white: #fff;
 $black: #000000;
 $elephant: #0F2B3B;
 $robins-egg-blue: #00BDB5;
-$oslo-gray: #838C93;
-$alto: #DBDBDB;
+$oslo-gray: #7B878D;
+$alto: #D8D8D8;
 $firefly: #0A212E;
 $vida-loca: #4B9217;
 $cobalt: #0041B1;
-$green: #03C700;
 $lochmara: #0272BA;
 $biloba-flower: #BCACE8;
 $port-gore: #282052;
@@ -17,23 +16,23 @@ $totem-pole: #932109;
 $blue: #0E2B3B;
 $inactive-purple: #5E5C7A;
 $active-purple: #3F3576;
-$firefly: #001B2C;
-$java: #1bcec7;
+$java: #18BAB4;
 $mandalay: #A47916;
 $marzipan: #F7DEA1;
 $color-facebook: #39579a;
 $color-twitter: #69ace0;
+$screamin-green: #93FF5F;
 
 // Project colours
 $space-background: #09141A;
-$brand-color-main: #18BAB4;
-$brand-color-secondary: #0F2B3B;
-$dark-text: #0A212E;
-$grey-text: #D8D8D8;
-$light-text: #FFFFFF;
-$logos-text: #7B878D;
-$half-earth-meter-green: #93FF5F;
-$half-earth-meter-blue: #0272BA;
+$brand-color-main: $java;
+$brand-color-secondary: $elephant;
+$dark-text: $firefly;
+$grey-text: $alto;
+$light-text: $white;
+$logos-text: $oslo-gray;
+$half-earth-meter-green: $screamin-green;
+$half-earth-meter-blue: $lochmara;
 
 // Animations
 $animation-time: 0.3s;
