@@ -32,7 +32,8 @@ export const legendConfigs = {
         color: "#B9870D"
       }
     ],
-    title: "Community-based protected areas"
+    title: "Community-based protected areas",
+    slug: "community-conservation"
   },
   [WDPA_VECTORTILE_LAYER_ID]: {
     type: "basic",
@@ -42,6 +43,7 @@ export const legendConfigs = {
         color: "#AA260A"
       }
     ],
-    title: "All protected areas"
+    title: "All protected areas",
+    slug: "biosphere-reserves"
   }
 }

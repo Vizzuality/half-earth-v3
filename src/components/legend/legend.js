@@ -17,11 +17,15 @@ const LegendContainer = props => {
     setLayerVisibility(layer.id, false)
   }
 
+  const getSlug = (layer) => {
+    if(layer.id === HUMAN_PRESSURE_LAYER_ID) return 'human-pressures-all';
+    return layer.legendConfig.slug || layer.id;
+  }
+
   const handleInfoClick = layer => {
     const { setModalMetadata } = props;
-    const slug = layer.id === HUMAN_PRESSURE_LAYER_ID ? 'human-pressures-all' : layer.id;
     setModalMetadata({
-      slug,
+      slug: getSlug(layer),
       title: `${layer.legendConfig.title} metadata`,
       isOpen: true
     });
