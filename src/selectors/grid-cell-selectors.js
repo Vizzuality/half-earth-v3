@@ -1,7 +1,7 @@
 import { sumBy } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-export const selectCellData = ({ gridCellData }) => gridCellData.data || null;
+export const selectCellData = ({ gridCellData }) => (gridCellData && gridCellData.data) || null;
 
 export const getCellSpecies = createSelector(selectCellData, cellData => {
   if (!cellData) return null;
