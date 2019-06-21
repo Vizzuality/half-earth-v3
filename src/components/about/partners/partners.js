@@ -13,7 +13,9 @@ const PartnersContainer = ({ textData }) => {
     },
     {
       title: textData.platformPartners,
-      content: platformPartners
+      content: platformPartners,
+      theme: styles.platformPartners
+
     },
     { title: textData.title2,
       content: sponsors

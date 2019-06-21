@@ -28,7 +28,6 @@
 
 .logosWrapper {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
 
@@ -59,6 +58,10 @@
     justify-content: space-between;
     width: 75%;
   }
+}
+
+.platformPartners .logosWrapper {
+  justify-content: center;
 }
 
 .sponsors .title {
