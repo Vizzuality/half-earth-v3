@@ -1,5 +1,6 @@
 
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .wrapper {
   align-items: center;
@@ -18,12 +19,8 @@
 }
 
 .title {
+  @extend %headline;
   color: $white;
-  font-family: $font-family-1;
-  font-size: $font-size-xl;
-  font-weight: unset;
-  letter-spacing: 1px;
-  line-height: 30px;
   margin: 0;
   margin-bottom: 50px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
@@ -35,8 +32,9 @@
   width: 100%;
 
   & > * {
+    @extend %title;
+    color: $logos-text;
     align-items: center;
-    color: $white;	
     font-size: $font-size-sm;
     justify-content: center;
     display: flex;
@@ -46,11 +44,8 @@
 }
 
 .description {
-  color: $white;	
-  font-family: $font-family-1;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-light;
-  line-height: 22px;
+  @extend %bodyText;
+  color: $white;
   margin: 0;
   text-align: center;
 }
@@ -65,6 +60,14 @@
   }
 }
 
+.platformPartners .logosWrapper {
+  justify-content: center;
+}
+
 .sponsors .title {
   margin-bottom: 34px;
+}
+
+.narrow {
+  height: 70px;
 }
