@@ -17,8 +17,8 @@
 
 .shareButton {
   position: absolute;
-  right: 8px;
-  top: 8px;
+  right: $share-button-margin;
+  top: $share-button-margin;
 }
 
 .button {

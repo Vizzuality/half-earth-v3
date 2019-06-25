@@ -1,19 +1,17 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 $checkbox-size: 15px;
 
 .checkboxWrapper {
+  @extend %bodyText;
   color: $white;
-  font-size: $font-size-sm;
-  font-family: 'PierSans-Light';
   display: flex;
   align-items: center;
   margin-bottom: 4px;
   cursor: pointer;
   padding-right: $sidebar-paddings;
-
-
   &:hover {
     @extend .checkboxWrapperSelected;
   }
@@ -59,5 +57,5 @@ input[type="checkbox"] {
 }
 
 .icon {
-  @extend %infoIcon;
+  @extend %icon;
 }

@@ -55,6 +55,7 @@
 }
 
 .shareButton {
-  margin-top: 6px;
+  margin-top: $share-button-margin;
+  margin-right: $share-button-margin;
   align-self: flex-end;
 }

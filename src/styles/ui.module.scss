@@ -3,6 +3,7 @@
 $spacer-edge-opacity: 0;
 $spacer-middle-opacity: 0.6;
 $icon-size: 14px;
+$share-button-margin: 12px;
 
 .uiTopLeft {
   position: absolute;
@@ -66,7 +67,7 @@ $icon-size: 14px;
   }
 }
 
-%infoIcon {
+%icon {
   height: $icon-size;
   width: $icon-size;
 }
