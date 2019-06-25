@@ -1,5 +1,6 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .wrapper {
   @include backdropBlur();
@@ -15,12 +16,11 @@
 }
 
 .widgetTitle {
+  @extend %title;
   color: $white;
-  font-size: $font-size-xs;
-  font-weight: bold;
-  letter-spacing: 2px;
   line-height: 20px;
   margin-top: 0;
+  margin-bottom: 8px;
   text-transform: uppercase;
 }
 
@@ -31,9 +31,9 @@
 
 .description {
   color: $alto;
-  font-size: $font-size-xs;
+  @extend %annotation;
   margin-top: 0;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
   padding: 0 $sidebar-paddings;
 }
 

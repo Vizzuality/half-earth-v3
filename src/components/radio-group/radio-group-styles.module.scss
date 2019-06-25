@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 $circle-size: 15px;
 
@@ -31,6 +32,7 @@ input[type="radio"] {
 }
 
 .radioInput {
+  @extend %bodyText;
   display: flex;
   align-items: center;
   text-transform: capitalize;
@@ -62,21 +64,24 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   margin-left: 5px;
-  margin-right: 18px;
+  margin-right: 20px;
 }
 
 .variant {
+  @extend %subtitle;
   color: $white;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: bold;
-  font-size: $font-size-xxs;
   padding: 0 5px 0 0;
+  // margin-top: 4px;
   cursor: pointer;
 }
 
 .button {
   display: flex;
-  align-items: center;
   height: 12px;
+}
+
+.icon {
+  height: 14px;
+  width: 14px;
 }

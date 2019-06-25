@@ -1,5 +1,6 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .container {
   @include backdropBlur();
@@ -47,12 +48,10 @@
 }
 
 .description {
+  @extend %bodyText;
   padding: 20px;
   margin: 0;
   color: white;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 22px;
 }
 
 .shareButton {

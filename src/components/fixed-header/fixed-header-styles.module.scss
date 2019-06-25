@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 .header {
   padding-top: $sidebar-margin;
@@ -37,14 +38,18 @@
   height: 25px;
 }
 
+.backButton {
+  @extend %subtitle;
+}
+
 .title {
+  @extend %headline;
   color: $white;
   margin-top: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 10px;
-  letter-spacing: 1px;
-  font-weight: normal;
+  margin-bottom: 0;
 }
 
 .spacer {

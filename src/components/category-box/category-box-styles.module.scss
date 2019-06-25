@@ -1,10 +1,11 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .box {
   @include backdropBlur();
   box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
-  padding: 0 30px 0 20px;
+  padding: 0 20px 0 20px;
   width: $sidebar-width;
   height: 115px;
   display: flex;
@@ -32,12 +33,9 @@
 }
 
 .title {
+  @extend %subtitle;
   color: $white;
-  font-size: $font-size-xxs;
-  font-family: $font-family-1;
   text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 2px;
   margin: 0;
   margin-bottom: 8px;
   user-select: none;
@@ -55,11 +53,9 @@
 }
 
 .category {
+  @extend %headline;
   margin: 0;
   color: $white;
-  font-size: $font-size-xl;
-  letter-spacing: 1px;
-  line-height: 30px;
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;

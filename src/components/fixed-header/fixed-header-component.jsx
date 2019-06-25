@@ -15,7 +15,7 @@ const FixedHeader = ({ closeSidebar, activeCategory, view }) => (
       onClick={closeSidebar}
     >
       <ArrowExpandIcon className={styles.icon} />
-      <span>{BACK}</span>
+      <span className={styles.backButton}>{BACK}</span>
     </button>
     <h1 className={styles.title}>{activeCategory}</h1>
     <div className={styles.spacer} />
