@@ -18,8 +18,8 @@ export const legendConfigs = {
     type: "gradient",
     items: [
       {
-        color: "#f3e0f7",
-        value: "0"
+        color: "#282052",
+        value: "low"
       },
       {
         color: "#d1afe8",
@@ -50,8 +50,8 @@ export const legendConfigs = {
         value: ""
       },
       {
-        color: "#282052",
-        value: "100 % use"
+        color: "#f3e0f7",
+        value: "high"
       }
     ]
   }
