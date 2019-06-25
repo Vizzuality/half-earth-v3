@@ -51,6 +51,13 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
     100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
   };
 
+  const enabledStyle = {
+    fill: 'rgb(24, 186, 180)',
+  };
+
+  const defaultStyle = {
+    fill: 'white'
+  }
 
   const toolbar = (
     <LegendItemToolbar
@@ -59,6 +66,9 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
+      focusStyle={defaultStyle}
+      defaultStyle={defaultStyle}
+      enabledStyle={enabledStyle}
     >
       <LegendItemButtonOpacity
         className={styles.legendItemButtonOpacity}
@@ -66,6 +76,7 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
         trackStyle={trackStyle}
         railStyle={railStyle}
         marks={marks}
+
       />
       <LegendItemButtonInfo />
       <LegendItemButtonRemove />
