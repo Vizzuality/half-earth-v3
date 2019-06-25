@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.higherHeader {
+  height: 130px;
+}
+
 .shareButton {
   position: absolute;
   right: 8px;
@@ -40,6 +44,7 @@
 
 .backButton {
   @extend %subtitle;
+  margin-top: 4px;
 }
 
 .title {

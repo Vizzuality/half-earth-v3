@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
+@import 'styles/ui.module';
 
 $circle-size: 15px;
 
@@ -82,6 +83,5 @@ input[type="radio"] {
 }
 
 .icon {
-  height: 14px;
-  width: 14px;
+  @extend %infoIcon;
 }

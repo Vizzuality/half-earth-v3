@@ -2,6 +2,7 @@
 
 $spacer-edge-opacity: 0;
 $spacer-middle-opacity: 0.6;
+$icon-size: 14px;
 
 .uiTopLeft {
   position: absolute;
@@ -63,4 +64,9 @@ $spacer-middle-opacity: 0.6;
     width: 0;
     height: 0;
   }
+}
+
+%infoIcon {
+  height: $icon-size;
+  width: $icon-size;
 }
