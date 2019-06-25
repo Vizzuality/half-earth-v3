@@ -29,7 +29,7 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
     boxShadow: '0 2px 4px 0 #0E2B3B',
     borderRadius: '50%',
     position: 'absolute',
-    transform: 'translate(-5px,-9px)',
+    transform: 'translate(-5px,-10px)',
     cursor: 'pointer',
     outline: 'none'
   };
@@ -67,13 +67,13 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
   const handleChangeOrder = (layerGroupsIds) => {
     const oldIds = datasets.map(({ dataset }) => dataset);
     const movedLayerID = layerGroupsIds.find(id => layerGroupsIds.indexOf(id) !== oldIds.indexOf(id));
-
+    console.log('map: ',map);
     console.log('BEFORE REORDER map: ',layers.items.map(({ title, id }) => ({ title, id })));
     // const nestedLayer = layers.items.map((parentLayer) => parentLayer.layers && parentLayer.layers.items.find(({ id }) => id === movedLayer)).find(layer => layer )
     // const nestedLayer = layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === movedLayerID));
     // console.log('nestedLayer: ',nestedLayer);
     // console.log('nestedLayer: ',layers.items.find(({ id }) => id === movedLayer) || nestedLayer);
-    
+    console.log('ALL LAYERS: ',layers.items);
     const layerToReorder = layers.items.find(({ id }) => id === movedLayerID) || findNestedLayer(movedLayerID);
     console.log('LAYER: id:', movedLayerID, ', layer: ',layerToReorder);
     map.reorder(
