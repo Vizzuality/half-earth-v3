@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Legend, {
   LegendItemToolbar,
   LegendItemButtonOpacity,
+  LegendItemButtonInfo,
   LegendItemTypes,
   LegendListItem,
   LegendItemButtonRemove
@@ -12,15 +13,12 @@ import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, setLayerOpacity, setLayerVisibility }) => {
+const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity }) => {
   const { 
     handleChangeOrder,
     handleLayerChange,
-    handleInfoClick,
     handleChangeVisibility
   } = handlers;
-
-  const { layers } = map;
 
   const handleStyle = {
     border: '1px solid #0E2B3B',
@@ -53,12 +51,12 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
     100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
   };
 
-  const handleChangeOpacity = (layer, opacity) => {
-    setLayerOpacity(layer.id, opacity);
-  }
+  const enabledStyle = {
+    fill: 'rgb(24, 186, 180)',
+  };
 
-  const handleRemoveLayer = (layer) => {
-    setLayerVisibility(layer.id, false)
+  const defaultStyle = {
+    fill: 'white'
   }
 
   const toolbar = (
@@ -68,6 +66,9 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
+      focusStyle={defaultStyle}
+      defaultStyle={defaultStyle}
+      enabledStyle={enabledStyle}
     >
       <LegendItemButtonOpacity
         className={styles.legendItemButtonOpacity}
@@ -75,7 +76,9 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, visibleLayers, 
         trackStyle={trackStyle}
         railStyle={railStyle}
         marks={marks}
+
       />
+      <LegendItemButtonInfo />
       <LegendItemButtonRemove />
     </LegendItemToolbar>
   );

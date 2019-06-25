@@ -15,7 +15,7 @@ const LegendTitleComponent = ({ name, layer }) => {
       >
         <img src={molLogo} alt="logo" />
       </a>}
-      <div>{name}</div>
+      <p className={styles.title}>{name}</p>
     </div>
   );
 };
