@@ -13,13 +13,11 @@ import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity, setLayerOrder }) => {
+const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity /*, setLayerOrder*/ }) => {
   const { 
-    // handleChangeOrder,
     handleLayerChange,
     handleChangeVisibility
   } = handlers;
-  const { layers } = map;
 
   const handleStyle = {
     border: '1px solid #0E2B3B',
@@ -60,34 +58,74 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
     fill: 'white'
   }
 
-  const findNestedLayer = (layerID) => {
-    return layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === layerID));
-  }
 
-  const handleChangeOrder = (layerGroupsIds) => {
-    const oldIds = datasets.map(({ dataset }) => dataset);
-    const movedLayerID = layerGroupsIds.find(id => layerGroupsIds.indexOf(id) !== oldIds.indexOf(id));
-    console.log('map: ',map);
-    console.log('BEFORE REORDER map: ',layers.items.map(({ title, id }) => ({ title, id })));
-    // const nestedLayer = layers.items.map((parentLayer) => parentLayer.layers && parentLayer.layers.items.find(({ id }) => id === movedLayer)).find(layer => layer )
-    // const nestedLayer = layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === movedLayerID));
-    // console.log('nestedLayer: ',nestedLayer);
-    // console.log('nestedLayer: ',layers.items.find(({ id }) => id === movedLayer) || nestedLayer);
-    console.log('ALL LAYERS: ',layers.items);
-    const layerToReorder = layers.items.find(({ id }) => id === movedLayerID) || findNestedLayer(movedLayerID);
-    console.log('LAYER: id:', movedLayerID, ', layer: ',layerToReorder);
-    map.reorder(
-      layerToReorder,
-      layers.items.length - layerGroupsIds.length - 1 + layerGroupsIds.indexOf(movedLayerID)
-    );
-    console.log('AFTER REORDER map: ', layers.items.map(({ title }) => title));
+  // const findNestedLayer = (layerID) => {
+  //   return layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === layerID));
+  // }
+  // const compareOrders = (oldOrder, newOrder) => {
+  //   const indexChanges =  oldOrder.map(item => {
+  //     const orderDifference = oldOrder.indexOf(item) - newOrder.indexOf(item); 
+  //     return { title: item, indexOffset: orderDifference >= 0 ? orderDifference : orderDifference * -1 }
+  //   });
+  //   const movedLayerId = indexChanges.find(({ indexOffset }) => {
+  //     return indexOffset > 1;
+  //   });
 
-    const updatedDatasets = [];
-    layerGroupsIds.forEach((id) => {
-      updatedDatasets.push(datasets.find(({ dataset }) => dataset === id).dataset);
-    });
-    setLayerOrder(updatedDatasets);
-  };
+  //   if(movedLayerId) return movedLayerId.title;
+
+  //   const movedLayerId2 = indexChanges.find(({ indexOffset }) => {
+  //     return indexOffset === 1;
+  //   });
+
+  //   return movedLayerId2.title;
+  // }
+
+  // const handleChangeOrder = (layerGroupsIds) => {
+  //   const oldIds = datasets.map(({ dataset }) => dataset);
+  //   console.log('datasets: ',datasets)
+  //   // const movedLayerID = layerGroupsIds.find(id => layerGroupsIds.indexOf(id) !== oldIds.indexOf(id));
+  //   const movedLayerID = compareOrders(oldIds, layerGroupsIds);
+  //   console.log('LEGEND: START');
+  //   console.log('LEGEND: WHAT I FOUND: ',movedLayerID);
+  //   console.log('LEGEND: new order',layerGroupsIds)
+
+  //   const switchedPositionIndex = layerGroupsIds.indexOf(movedLayerID);
+  //   console.log('- LEGEND: switchedPositionIndex: ',switchedPositionIndex);
+
+  //   const getOldElement = oldIds[switchedPositionIndex];
+  //   console.log('- LEGEND: getOldElement: ',getOldElement);
+  //   console.log('layers.items: ',layers.items)
+  //   const mapLayersIndex = layers.items.find(({ id }) => id === getOldElement);
+
+  //   console.log('- LEGEND: mapLayersIndex: ',mapLayersIndex);
+
+  //   console.log('LEGEND: new order',layerGroupsIds)
+  //   console.log('MAP: BEFORE REORDER: ',layers.items.map(({ title, id }) => ({ title, id })));
+  //   // const nestedLayer = layers.items.map((parentLayer) => parentLayer.layers && parentLayer.layers.items.find(({ id }) => id === movedLayer)).find(layer => layer )
+  //   // const nestedLayer = layers.items.find((parentLayer) => parentLayer.layers && parentLayer.layers.items.some(({ id }) => id === movedLayerID));
+  //   // console.log('nestedLayer: ',nestedLayer);
+  //   // console.log('nestedLayer: ',layers.items.find(({ id }) => id === movedLayer) || nestedLayer);
+  //   // console.log('ALL LAYERS: ',layers.items);
+  //   const layerToReorder = layers.items.find(({ id }) => id === movedLayerID) || findNestedLayer(movedLayerID);
+  //   // console.log('LAYER: id:', movedLayerID, ', layer: ',layerToReorder);
+  //   console.log('NEW INDEX: ',layers.items.length - layerGroupsIds.length - 1 + layerGroupsIds.indexOf(movedLayerID))
+  //   map.reorder(
+  //     layerToReorder,
+  //     layers.items.length - layerGroupsIds.length - 1 + layerGroupsIds.indexOf(movedLayerID)
+  //   );
+  //   console.log('MAP: AFTER REORDER: ', layers.items.map(({ title }) => title));
+  //   console.log('MAP: map: ',map);
+
+  //   // const updatedDatasets = [];
+  //   // layerGroupsIds.forEach((id) => {
+  //   //   updatedDatasets.push(datasets.find(({ dataset }) => dataset === id).dataset);
+  //   // });
+  //   const updatedDatasets = map.layers.items.map(({ id }) => id);
+  //   console.log('LEGEND: updatedDatasets: ',updatedDatasets);
+  //   console.log('LEGEND: END');
+
+  //   setLayerOrder(layerGroupsIds);
+  // };
 
   const toolbar = (
     <LegendItemToolbar
@@ -116,7 +154,7 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
 
   return (
     <div className={styles.legend}>
-      {!isFullscreenActive && <Legend sortable={true} onChangeOrder={handleChangeOrder}>
+      {!isFullscreenActive && <Legend sortable={false} /*onChangeOrder={handleChangeOrder}*/>
         {datasets && datasets.map((dataset, i) => (
           <LegendListItem index={i} key={dataset.name} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
             <LegendItemTypes />
