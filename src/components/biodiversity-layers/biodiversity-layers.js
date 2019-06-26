@@ -8,13 +8,12 @@ const BiodiversityLayerContainer = props => {
   const createLayer = layer => {
     loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
       const { map } = props;
-      const { url, title, slug, bbox } = layer;
+      const { url, title, slug } = layer;
       const tileLayer = new WebTileLayer({
         urlTemplate: url,
         title: title,
         id: slug,
-        opacity: 0.6,
-        maxScale: bbox ? 1000 : 2800000
+        opacity: 0.6
       })
       map.add(tileLayer);
     });
