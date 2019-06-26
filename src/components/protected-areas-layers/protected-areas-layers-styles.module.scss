@@ -2,14 +2,14 @@
 
 .overrideCheckbox-protected-areas {
   input[type="checkbox"]:checked + label::before {
-    background: linear-gradient(270deg, $vivid-tangerine 0%, $persimmon 100%);
+    background: $persimmon;
     border: 2px solid $white; 
   }
 }
 
 .overrideCheckbox-community-areas {
   input[type="checkbox"]:checked + label::before {
-    background: linear-gradient(270deg, $peach-yellow 0%, $saffron-mango 100%);
+    background: $saffron-mango;
     border: 2px solid $white; 
   }
 }
