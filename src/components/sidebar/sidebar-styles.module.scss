@@ -9,7 +9,7 @@
 }
 
 .wrapper {
-
+  @include backdropBlur();
   display: flex;
   flex-direction: column;
   position: relative;

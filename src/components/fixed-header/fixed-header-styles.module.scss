@@ -3,7 +3,6 @@
 @import 'styles/typography-extends';
 
 .header {
-  @include backdropBlur();
   padding-top: $sidebar-margin;
   padding-left: $sidebar-paddings;
   display: flex;
