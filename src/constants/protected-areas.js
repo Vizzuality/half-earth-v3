@@ -6,6 +6,8 @@ const WDPA_VECTORTILE_LAYER_ID = '16b1eefb97a-layer-0'; // for global view use
 // const COMMUNITY_FEATURE_LAYER_ID = '16b1ef114e7-layer-3'; // for global view
 const COMMUNITY_VECTORTILE_LAYER_ID = '16b1ef30af1-layer-6'; // for landscape mode
 
+export const PROTECTED_AREAS_COLOR = '#FF6C47';
+export const COMMUNITY_AREAS_COLOR = '#FCC44A';
 export const WDPALayers = [
   { 
     name: 'Protected areas',
@@ -29,7 +31,7 @@ export const legendConfigs = {
     items: [
       {
         name: "Community-based",
-        color: "#B9870D"
+        color: COMMUNITY_AREAS_COLOR
       }
     ],
     title: "Community-based protected areas",
@@ -40,7 +42,7 @@ export const legendConfigs = {
     items: [
       {
         name: "Protected Areas",
-        color: "#AA260A"
+        color: PROTECTED_AREAS_COLOR
       }
     ],
     title: "All protected areas",
