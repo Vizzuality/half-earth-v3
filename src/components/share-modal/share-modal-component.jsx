@@ -89,7 +89,7 @@ const ShareModalComponent = (props) => {
         className={cx(theme.shareButton)}
         onClick={handleOpenShareModal}
       >
-        <ShareIcon />
+        <ShareIcon className={styles.icon} />
       </button>
       {isShareModalOpen && <ShareModal 
         isOpen={isShareModalOpen}

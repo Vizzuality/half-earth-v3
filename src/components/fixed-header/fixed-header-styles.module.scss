@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 .header {
   padding-top: $sidebar-margin;
@@ -10,10 +11,14 @@
   position: relative;
 }
 
+.higherHeader {
+  height: 130px;
+}
+
 .shareButton {
   position: absolute;
-  right: 8px;
-  top: 8px;
+  right: $share-button-margin;
+  top: $share-button-margin;
 }
 
 .button {
@@ -37,14 +42,19 @@
   height: 25px;
 }
 
+.backButton {
+  @extend %subtitle;
+  margin-top: 4px;
+}
+
 .title {
+  @extend %headline;
   color: $white;
   margin-top: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 10px;
-  letter-spacing: 1px;
-  font-weight: normal;
+  margin-bottom: 0;
 }
 
 .spacer {

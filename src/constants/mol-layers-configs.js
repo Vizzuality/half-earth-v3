@@ -9,19 +9,9 @@ export const biodiversityCategories = [
     subcategories: false,
     taxa: [
       {
-        value: 'mammals',
-        name: 'mammals',
-        layers: { rarity: 'mammals-rare', richness: 'mammals-rich' }
-      },
-      {
-        value: 'conifers',
-        name: 'conifers',
-        layers: { rarity: 'conifers-rarity', richness: 'conifers-rich' }
-      },
-      {
-        value: 'cacti',
-        name: 'cacti',
-        layers: { rarity: 'cacti-rarity', richness: 'cacti-richness' }
+        value: 'all groups',
+        name: 'all groups',
+        layers: { rarity: 'all-taxa-rarity', richness: 'all-taxa-richness' }
       },
       {
         value: 'amphibians',
@@ -29,20 +19,30 @@ export const biodiversityCategories = [
         layers: { rarity: 'amphib-rarity', richness: 'amphib-rich' }
       },
       {
-        value: 'turtles',
-        name: 'turtles',
-        layers: { rarity: 'turtles-rare', richness: 'turtles-rich' }
-      },
-      {
         value: 'birds',
         name: 'birds',
         layers: { rarity: 'birds-rarity', richness: 'birds-rich' }
       },
       {
-        value: 'all groups',
-        name: 'all groups',
-        layers: { rarity: 'all-taxa-rarity', richness: 'all-taxa-richness' }
+        value: 'cacti',
+        name: 'cacti',
+        layers: { rarity: 'cacti-rarity', richness: 'cacti-richness' }
       },
+      {
+        value: 'conifers',
+        name: 'conifers',
+        layers: { rarity: 'conifers-rarity', richness: 'conifers-rich' }
+      },
+      {
+        value: 'mammals',
+        name: 'mammals',
+        layers: { rarity: 'mammals-rare', richness: 'mammals-rich' }
+      },
+      {
+        value: 'turtles',
+        name: 'turtles',
+        layers: { rarity: 'turtles-rare', richness: 'turtles-rich' }
+      }
     ] 
   },
   {
@@ -61,6 +61,16 @@ export const biodiversityCategories = [
     name: 'FINE SCALE DATA',
     description: 'Maps with 1km cell size for select species.',
     subcategories: [
+      {
+        name: 'hummingbirds',
+        taxa: [
+          {
+            value: 'hummingbirds',
+            name: 'hummingbirds',
+            layers: { rarity: 'hummingbirds-rare', richness: 'hummingbirds-rich' }
+          }
+        ]
+      },
       {
         name: 'south africa',
         taxa: [
@@ -100,16 +110,6 @@ export const biodiversityCategories = [
             layers: { rarity: 'reptiles-rare-sa', richness: 'reptiles-rich-sa' }
           },
           
-        ]
-      },
-      {
-        name: 'hummingbirds',
-        taxa: [
-          {
-            value: 'hummingbirds',
-            name: 'hummingbirds',
-            layers: { rarity: 'hummingbirds-rare', richness: 'hummingbirds-rich' }
-          }
         ]
       }
     ]

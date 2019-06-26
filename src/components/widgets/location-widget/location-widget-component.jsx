@@ -21,7 +21,7 @@ const LocationWidgetComponent = ({ locationWidget }) => {
 
   return (
     <button className={styles.locationButton} onClick={locate}>
-      {isAnimated ? <SpinnerIcon className={styles.spinnerAnimation} /> : <LocationIcon />}
+      {isAnimated ? <SpinnerIcon className={styles.spinnerAnimation} /> : <LocationIcon className={styles.icon} />}
     </button>
   );
 };

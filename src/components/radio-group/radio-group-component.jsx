@@ -58,7 +58,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
-              <InfoIcon onClick={() => handleInfoClick(option, variant)} />
+              <InfoIcon className={styles.icon} onClick={() => handleInfoClick(option, variant)} />
               <button type="button" className={styles.button} onClick={() => {
                 const changeVariantType = isRarityActive ? RICHNESS : RARITY;
                 handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);

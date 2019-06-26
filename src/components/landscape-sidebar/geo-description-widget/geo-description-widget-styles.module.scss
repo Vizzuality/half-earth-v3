@@ -1,13 +1,13 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .container {
   @include backdropBlur();
   border-radius: 2px;
   box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
   margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
+  position: relative;
 }
 
 .loading {
@@ -47,15 +47,14 @@
 }
 
 .description {
+  @extend %bodyText;
   padding: 20px;
   margin: 0;
   color: white;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 22px;
 }
 
 .shareButton {
-  margin-top: 6px;
-  align-self: flex-end;
+  top: $share-button-margin;
+  right: $share-button-margin;
+  position: absolute;
 }

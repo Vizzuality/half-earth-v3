@@ -1,9 +1,10 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 .wrapper {
-  @include backdropBlur();
-  padding-bottom: $sidebar-paddings;
+  padding: $sidebar-paddings 0;
+  padding-bottom: 24px;
 }
 
 .titleSection {
@@ -13,18 +14,16 @@
 
 .widgetTitle {
   color: $white;
-  font-size: $font-size-xs;
-  font-weight: bold;
+  @extend %title;
   text-transform: uppercase;
-  line-height: 20px;
-  letter-spacing: 2px;
+  margin: 0;
+  margin-bottom: 8px;
 }
 
 .description {
   color: $alto;
-  font-size: $font-size-xs;
-  line-height: 16px;
+  @extend %annotation;
   margin-top: 0;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
   padding: 0 $sidebar-paddings;
 }

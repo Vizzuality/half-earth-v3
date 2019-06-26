@@ -7,7 +7,7 @@ import styles from './toggle-ui-widget.module.scss';
 
 const ToggleUiWidgetComponent = ({ toggleFullscreen, isFullscreenActive }) => {
   return (
-    <button className={styles.locationButton} onClick={toggleFullscreen}>
+    <button className={styles.toggleButton} onClick={toggleFullscreen}>
       {isFullscreenActive ? <ShowUiIcon /> : <HideUiIcon />}
     </button>
   );
