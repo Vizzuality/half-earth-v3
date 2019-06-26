@@ -16,7 +16,7 @@ $share-button-margin: 12px;
   right: 0;
 }
 
-@mixin backdropBlur($colour: rgba(9, 20, 26, 0.3), $fallback: $firefly, $fallbackOpacity: 0.8) {
+@mixin backdropBlur($colour: rgba(9, 20, 26, 0.4), $fallback: $firefly, $fallbackOpacity: 0.8) {
   background-color: rgba($fallback, $fallbackOpacity);
   
   @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {

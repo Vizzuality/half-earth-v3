@@ -3,7 +3,6 @@
 @import 'styles/typography-extends';
 
 .wrapper {
-  @include backdropBlur();
   padding-bottom: 24px;
   &:first-child {
     padding-top: $sidebar-paddings;
