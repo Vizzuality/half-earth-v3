@@ -19,7 +19,7 @@ export const legendConfigs = {
     items: [
       {
         color: "#f3e0f7",
-        value: "low"
+        value: "0"
       },
       {
         color: "#d1afe8",
@@ -51,7 +51,7 @@ export const legendConfigs = {
       },
       {
         color: "#282052",
-        value: "high"
+        value: "100% use"
       }
     ]
   }
