@@ -8,12 +8,12 @@ import styles from './fixed-header-styles.module.scss';
 
 const BACK = 'BACK';
 
-const differentFixedHeadersHeight = ['Existing protection', 'Human pressures'];
+const differentFixedHeaderHeights = ['Existing protection', 'Human pressures'];
 
 const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
-  const isHigherHeader = differentFixedHeadersHeight.includes(activeCategory);
+  const isHigherHeader = differentFixedHeaderHeights.includes(activeCategory);
   return (
-    <div className={cx(styles.header, { [styles.higherHeader]: isHigherHeader })}>
+    <div className={cx(styles.header, { [styles.higherHeader]: isHigherHeader})}>
       <ShareModal theme={{ shareButton: styles.shareButton}} view={view} />
       <button
         className={styles.button}
@@ -22,7 +22,7 @@ const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
         <ArrowExpandIcon className={styles.icon} />
         <span className={styles.backButton}>{BACK}</span>
       </button>
-      <h1 className={styles.title}>{activeCategory}</h1>
+      <h1 className={styles.title}>{activeCategory && activeCategory.split(' ').map(word => <>{word}<br/></>)}</h1>
       <div className={styles.spacer} />
     </div>
   )
