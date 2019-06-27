@@ -16,7 +16,14 @@ const BiodiversityLayerContainer = props => {
         opacity: 0.6
       })
       map.add(tileLayer);
-      map.reorder(tileLayer, 1);
+      const hummingBirdsLayersSlugs = ['hummingbirds-rare', 'hummingbirds-rich'];
+      const isHummingBirdLayer = hummingBirdsLayersSlugs.includes(title);
+      const isSALayer = title.startsWith('sa');
+      if (isHummingBirdLayer || isSALayer) {
+        map.reorder(tileLayer, 1);
+      } else {
+        map.reorder(tileLayer, 2);
+      }
     });
   }
 
