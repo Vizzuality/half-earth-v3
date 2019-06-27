@@ -16,6 +16,7 @@ const BiodiversityLayerContainer = props => {
         opacity: 0.6
       })
       map.add(tileLayer);
+      map.reorder(tileLayer, 1);
     });
   }
 
