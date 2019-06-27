@@ -18,19 +18,19 @@ export const legendConfigs = {
     type: "gradient",
     items: [
       {
-        color: "#282052",
+        color: "#f3e0f7",
         value: "low"
       },
       {
-        color: "#3f3576",
+        color: "#d1afe8",
         value: ""
       },
       {
-        color: "#52478d",
+        color: "#b998dd",
         value: ""
       },
       {
-        color: "#63589f",
+        color: "#9f82ce",
         value: ""
       },
       {
@@ -38,19 +38,19 @@ export const legendConfigs = {
         value: ""
       },
       {
-        color: "#9f82ce",
-        value: ""
-      },
-       {
-        color: "#b998dd",
-        value: ""
-      },
-       {
-        color: "#d1afe8",
+        color: "#63589f",
         value: ""
       },
       {
-        color: "#f3e0f7",
+        color: "#52478d",
+        value: ""
+      },
+      {
+        color: "#3f3576",
+        value: ""
+      },
+      {
+        color: "#282052",
         value: "high"
       }
     ]

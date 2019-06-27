@@ -4,10 +4,10 @@
 $margin: 20px;
 
 .sidebar {
+  @extend %verticalScrollBar;
   display: inline-block;
   box-sizing: border-box;
   border-radius: 2px;
-  overflow: auto;
   height: calc(100vh - 60px);
 }
 
