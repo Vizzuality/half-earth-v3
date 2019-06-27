@@ -55,6 +55,8 @@
   text-overflow: ellipsis;
   padding-right: 10px;
   margin-bottom: 0;
+  display: flex; 
+  flex-direction: column;
 }
 
 .spacer {

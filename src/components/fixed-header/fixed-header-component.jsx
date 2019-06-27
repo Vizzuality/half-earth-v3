@@ -22,7 +22,7 @@ const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
         <ArrowExpandIcon className={styles.icon} />
         <span className={styles.backButton}>{BACK}</span>
       </button>
-      <h1 className={styles.title}>{activeCategory && activeCategory.split(' ').map(word => <>{word}<br/></>)}</h1>
+      <h1 className={styles.title}>{activeCategory && activeCategory.split(' ').map(word => <span>{word}</span>)}</h1>
       <div className={styles.spacer} />
     </div>
   )
