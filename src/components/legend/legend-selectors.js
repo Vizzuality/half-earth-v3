@@ -41,12 +41,12 @@ const getLegendConfigs = createSelector(
   })
 
   const parsed = configs.map(config => parseLegend(config));
-
   return parsed;
 })
 
 const parseLegend = (config) => {
   return {
+    dataset: config.layerId,
     visibility: true,
     name: config && config.title,
     molLogo: config && config.molLogo,

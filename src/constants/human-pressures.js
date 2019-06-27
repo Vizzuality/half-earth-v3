@@ -22,23 +22,7 @@ export const legendConfigs = {
         value: "low"
       },
       {
-        color: "#d1afe8",
-        value: ""
-      },
-      {
-        color: "#b998dd",
-        value: ""
-      },
-      {
-        color: "#9f82ce",
-        value: ""
-      },
-      {
-        color: "#826dba",
-        value: ""
-      },
-      {
-        color: "#63589f",
+        color: "#3f3576",
         value: ""
       },
       {
@@ -46,7 +30,23 @@ export const legendConfigs = {
         value: ""
       },
       {
-        color: "#3f3576",
+        color: "#63589f",
+        value: ""
+      },
+      {
+        color: "#826dba",
+        value: ""
+      },
+      {
+        color: "#9f82ce",
+        value: ""
+      },
+       {
+        color: "#b998dd",
+        value: ""
+      },
+       {
+        color: "#d1afe8",
         value: ""
       },
       {

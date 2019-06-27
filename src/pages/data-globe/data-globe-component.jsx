@@ -37,7 +37,8 @@ const DataGlobeComponent = ({
   sceneSettings,
   exclusiveLayerToggle,
   onLoad,
-  setLayerOpacity
+  setLayerOpacity,
+  setLayerOrder
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -96,6 +97,7 @@ const DataGlobeComponent = ({
         isFullscreenActive={isFullscreenActive}
         setLayerOpacity={setLayerOpacity}
         setLayerVisibility={setLayerVisibility}
+        setLayerOrder={setLayerOrder}
       />
       {isLandscapeMode && <GridLayer />}
       <InfoModal />
