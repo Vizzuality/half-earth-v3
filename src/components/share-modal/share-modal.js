@@ -23,7 +23,8 @@ const shareSocialMedia = [
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type].path,
-  coordinates: get(location, 'query.globe.center') || [],
+  center: get(location, 'query.globe.center') || [],
+  zoom: get(location, 'query.globe.zoom') || 3,
   shareSocialMedia
 });
 

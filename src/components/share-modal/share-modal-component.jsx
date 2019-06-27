@@ -10,7 +10,7 @@ import styles from './share-modal-styles.module';
 const LINK = 'link';
 const EMBED = 'embed';
 
-const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates }) => {
+const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, center, zoom }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
 
@@ -57,7 +57,7 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, coordinates 
         </CopyToClipboard>
       </div>
       <div className={styles.coordinates}>
-        <p>coordinates: [{coordinates[0].toFixed(3)}, {coordinates[1].toFixed(3)}]</p>
+        <p>center: [{center[0]}, {center[1]}], zoom: {zoom}</p>
       </div>
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
@@ -103,7 +103,8 @@ const ShareModalComponent = (props) => {
 ShareModalComponent.propTypes = {
   shareSocialMedia: PropTypes.array.isRequired,
   route: PropTypes.string,
-  coordinates: PropTypes.array.isRequired,
+  center: PropTypes.array.isRequired,
+  zoom: PropTypes.number.isRequired,
   theme: PropTypes.shape({
     shareButton: PropTypes.string
   })
