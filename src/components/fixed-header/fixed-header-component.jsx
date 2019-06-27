@@ -8,10 +8,12 @@ import styles from './fixed-header-styles.module.scss';
 
 const BACK = 'BACK';
 
+const differentFixedHeadersHeight = ['Existing protection', 'Human pressures'];
+
 const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
-  const isProtectedAreasActive = activeCategory === 'Existing protection';
+  const isHigherHeader = differentFixedHeadersHeight.includes(activeCategory);
   return (
-    <div className={cx(styles.header, { [styles.higherHeader]: isProtectedAreasActive })}>
+    <div className={cx(styles.header, { [styles.higherHeader]: isHigherHeader })}>
       <ShareModal theme={{ shareButton: styles.shareButton}} view={view} />
       <button
         className={styles.button}
