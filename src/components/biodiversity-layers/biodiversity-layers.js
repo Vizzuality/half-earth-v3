@@ -20,9 +20,9 @@ const BiodiversityLayerContainer = props => {
       const isHummingBirdLayer = hummingBirdsLayersSlugs.includes(title);
       const isSALayer = title.startsWith('sa');
       if (isHummingBirdLayer || isSALayer) {
-        map.reorder(tileLayer, 1);
-      } else {
         map.reorder(tileLayer, 2);
+      } else {
+        map.reorder(tileLayer, 1);
       }
     });
   }
