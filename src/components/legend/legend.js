@@ -9,12 +9,12 @@ const LegendContainer = props => {
 
   const handleChangeOpacity = (layer, opacity) => {
     const { setLayerOpacity } = props;
-    setLayerOpacity(layer.id, opacity);
+    setLayerOpacity && setLayerOpacity(layer.id, opacity);
   }
 
   const handleRemoveLayer = (layer) => {
     const { setLayerVisibility } = props;
-    setLayerVisibility(layer.id, false)
+    setLayerVisibility && setLayerVisibility(layer.id, false)
   }
 
   const getSlug = (layer) => {
