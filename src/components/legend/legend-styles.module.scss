@@ -106,6 +106,7 @@ $map-attribution-height: 30px;
 
   li > .wri_api__c-legend-item { //disable white background for item legend label
     @extend %legend-label-text;
+    align-items: center;
   }
 
   .wri_api__toggle-legend {
