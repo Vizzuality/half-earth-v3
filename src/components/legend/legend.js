@@ -4,6 +4,7 @@ import Component from './legend-component';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 import actions from 'redux_modules/metadata';
 import * as googleAnalyticsActions from 'actions/google-analytics-actions';
+import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 import mapStateToProps from './legend-selectors';
 
@@ -17,7 +18,7 @@ const LegendContainer = props => {
   const handleRemoveLayer = (layer) => {
     const { setLayerVisibility, removeLayerAnalyticsEvent } = props;
     setLayerVisibility && setLayerVisibility(layer.id, false)
-    removeLayerAnalyticsEvent({ slug: getSlug(layer), query: null });
+    removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
   }
 
   const getSlug = (layer) => {

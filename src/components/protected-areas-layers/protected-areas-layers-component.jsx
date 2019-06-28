@@ -39,8 +39,8 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
     handleLayerToggle(option.id);
 
     const isLayerActive = alreadyChecked[option.value];
-    if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug, query: null })
-    else removeLayerAnalyticsEvent({ slug: option.slug, query: null });
+    if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
+    else removeLayerAnalyticsEvent({ slug: option.slug });
   }
 
   const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 

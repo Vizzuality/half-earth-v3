@@ -27,12 +27,12 @@ const HumanPressureWidgetContainer = props => {
     if (!rasters[option.data.rasterId]) {
       newRasters = {...rasters, [option.data.rasterId]: true}
       setRasters(newRasters);
-      addLayerAnalyticsEvent({ slug: option.data.slug, query: null })
+      addLayerAnalyticsEvent({ slug: option.data.slug })
     } else {
       newRasters = Object.assign({}, rasters);
       delete newRasters[option.data.rasterId];
       setRasters(newRasters);
-      removeLayerAnalyticsEvent({ slug: option.data.slug, query: null })
+      removeLayerAnalyticsEvent({ slug: option.data.slug })
     }
 
     const hasRastersWithData = Object.values(newRasters).some(raster => raster);

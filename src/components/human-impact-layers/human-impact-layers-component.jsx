@@ -6,6 +6,7 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
   const humanImpactLayerActive = activeLayers.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
@@ -27,10 +28,10 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
 
     const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
 
+    const analyticsParmas = { slug: option.slug, query: { viewMode: VIEW_MODE.LANDSCAPE }};
     const isRasterActive = activeRasters.some(value => value === option.value);
-    
-    if (isRasterActive) addLayerAnalyticsEvent({ slug: option.slug, query: null }) 
-    else removeLayerAnalyticsEvent({ slug: option.slug, query: null });
+    if (isRasterActive) addLayerAnalyticsEvent(analyticsParmas) 
+    else removeLayerAnalyticsEvent(analyticsParmas);
 
     loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
       humanImpactLayer.mosaicRule = new MosaicRule({

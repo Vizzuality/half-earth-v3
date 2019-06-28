@@ -25,7 +25,7 @@ const BiodiversityLayerContainer = props => {
     const layer = layersConfig.find(l => l.slug === layerName);
     handleLayerToggle(layer.slug);
     
-    removeLayerAnalyticsEvent({ slug: layer.slug, query: null });
+    removeLayerAnalyticsEvent({ slug: layer.slug });
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
@@ -40,8 +40,8 @@ const BiodiversityLayerContainer = props => {
     exclusiveLayerToggle(addLayer.slug, removeSlug);
     addLayer.bbox && flyToLayerExtent(addLayer.bbox);
 
-    removeLayer && removeLayerAnalyticsEvent({ slug: removeLayer.slug, query: null });
-    addLayer && addLayerAnalyticsEvent({ slug: addLayer.slug, query: null });
+    removeLayer && removeLayerAnalyticsEvent({ slug: removeLayer.slug });
+    addLayer && addLayerAnalyticsEvent({ slug: addLayer.slug });
   }
   return (
     <Component
