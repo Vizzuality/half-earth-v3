@@ -1,0 +1,87 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+$circle-size: 15px;
+
+.radioOption {
+  color: $white;
+  font-size: $font-size-sm;
+  font-family: 'PierSans-Light';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  cursor: pointer;
+  height: 30px;
+
+  &:hover {
+    @extend .radioOptionSelected;
+  }
+}
+
+.radioOptionSelected {
+  background-color: rgba(255,255,255,0.05);
+}
+
+input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+  // prevent the default radio button from taking up the space
+  // display: none would screw up the keyboard navigation, so let's go for opacity
+}
+
+.radioInput {
+  @extend %bodyText;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  width: 100%;
+  height: 30px;
+  cursor: pointer;
+  padding-left: $sidebar-paddings;
+
+  &:before {
+    content: "";
+    margin-right: 10px;
+    height: $circle-size;
+    width: $circle-size;
+    border: 1px solid $white; 
+    border-radius: 50%;
+  }
+}
+
+.radioOption input[type="radio"]:checked + .radioInput::before {
+  background: linear-gradient(270deg, $vida-loca 0%, $cobalt 100%);
+  border-width: 2px;
+}
+
+.reverseSwitchIcon {
+  transform: rotate(180deg);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 20px;
+}
+
+.variant {
+  @extend %subtitle;
+  color: $white;
+  text-transform: uppercase;
+  padding: 0 5px 0 0;
+  // margin-top: 4px;
+  cursor: pointer;
+}
+
+.button {
+  display: flex;
+  height: 12px;
+}
+
+.icon {
+  @extend %icon;
+}

@@ -1,0 +1,24 @@
+
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.toggleButton {
+  @extend .uiRight;
+  top: 10px;
+  align-items: center;
+  background-color: $elephant;
+  border-radius: 2px;
+  display: flex;
+  height: $widget-button-size;
+  justify-content: center;
+  padding: 0;
+  width: $widget-button-size;
+
+  &:hover svg {
+    stroke: $robins-egg-blue;
+  }
+  
+  svg {
+    stroke: $white;
+  }
+}

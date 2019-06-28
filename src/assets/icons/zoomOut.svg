@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="2px" viewBox="0 0 14 2" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>icon/zoomout</title>
+    <desc>Created with Sketch.</desc>
+    <g id="UI-KIT" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-587.000000, -2845.000000)" fill="#FFFFFF" id="icon/zoomout">
+            <g transform="translate(587.000000, 2839.000000)">
+                <g id="iconzoomout" transform="translate(0.000000, 5.687500)">
+                    <path d="M0.96159495,2.26343232 C0.430486547,2.26343232 0,1.83294578 0,1.30183737 C0,0.770728972 0.430486547,0.340242424 0.96159495,0.340242424 L13.038405,0.340242424 C13.5695135,0.340242424 14,0.770728972 14,1.30183737 C14,1.83294578 13.5695135,2.26343232 13.038405,2.26343232 L0.96159495,2.26343232 Z" id="Path" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

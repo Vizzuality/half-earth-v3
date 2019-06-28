@@ -1,0 +1,68 @@
+@import 'styles/settings';
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: $white;
+  font-family: $font-family-1;
+  font-size: $font-size-xl;
+  letter-spacing: 1px;
+  line-height: 30px;
+  margin-bottom: 80px;
+  text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+}
+
+.mouseNavigationSection {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 80px;
+  width: 400px;
+
+  .mouseClickIcon {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    span {
+      color: $white;
+      font-family: $font-family-1;
+      font-size: $font-size-xxs;
+      font-weight: bold;
+      letter-spacing: $letter-spacing;
+      line-height: $line-height;
+      margin-top: 20px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.storySection {
+  display: flex;
+  justify-content: space-between;
+  width: 670px;
+}
+
+.storyElement {
+  display: inline-flex;
+  
+  span {
+    height: 88px;	
+    width: 179px;
+    color: $white;	
+    font-family: $font-family-1;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
+    line-height: 22px;
+    margin-left: 20px;
+  }
+}
+
+
+.horizontalFlip {
+  transform: scale(-1, 1);
+}
