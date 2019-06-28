@@ -7,7 +7,7 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 
-const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers }) => {
+const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent }) => {
   const humanImpactLayerActive = activeLayers.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
   const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
     ...acc, [option.value]: rasters[option.value]
@@ -26,6 +26,9 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
     const rasterNames = activeRasters.map(value => `human_impact_${value}`)
 
     const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
+
+    const isRasterActive = activeRasters.some(value => value === option.value);
+    isRasterActive && addLayerAnalyticsEvent({ slug: option.slug, query: null });
 
     loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
       humanImpactLayer.mosaicRule = new MosaicRule({

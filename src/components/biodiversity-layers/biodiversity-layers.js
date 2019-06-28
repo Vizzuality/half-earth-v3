@@ -21,9 +21,11 @@ const BiodiversityLayerContainer = props => {
   }
 
   const handleSimpleLayerToggle = layerName => {
-    const { handleLayerToggle } = props;
+    const { handleLayerToggle, addLayerAnalyticsEvent } = props;
     const layer = layersConfig.find(l => l.slug === layerName);
     handleLayerToggle(layer.slug);
+
+    addLayerAnalyticsEvent({ slug: layer.slug, query: null });
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
