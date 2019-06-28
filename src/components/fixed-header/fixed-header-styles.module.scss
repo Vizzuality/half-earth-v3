@@ -1,0 +1,69 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.header {
+  padding-top: $sidebar-margin;
+  padding-left: $sidebar-paddings;
+  display: flex;
+  flex-direction: column;
+  height: $sidebar-header-height;
+  position: relative;
+}
+
+.higherHeader {
+  height: 130px; 
+}
+
+.shareButton {
+  position: absolute;
+  right: $share-button-margin;
+  top: $share-button-margin;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xxs;
+  font-weight: $font-weight-bold;
+  font-family: $font-family-1;
+  letter-spacing: 2px;
+  color: $robins-egg-blue;
+  padding: 0;
+  margin-left: -8px; // svg icon has some padding
+}
+
+.buttonText {
+  margin-right: 10px;
+}
+
+.icon {
+  transform: rotate(180deg);
+  height: 25px;
+}
+
+.backButton {
+  @extend %subtitle;
+  margin-top: 4px;
+}
+
+.title {
+  @extend %headline;
+  color: $white;
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  margin-bottom: 0;
+  display: flex; 
+  flex-direction: column;
+}
+
+.spacer {
+  @extend %spacer;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  position: absolute;
+  width: 100%;
+}

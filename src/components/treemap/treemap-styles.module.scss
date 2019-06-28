@@ -1,0 +1,46 @@
+@import 'styles/settings';
+
+.treemap {
+  cursor: pointer;
+  .square {
+    fill: $inactive-purple;
+  }
+  .foreignObject {
+    pointer-events: none;
+  }
+  .text {
+    color: $alto;
+    opacity: 0.5;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0 3px;
+  }
+  .ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .removeText {
+    display: none;
+  }
+
+  & .pressureFree {
+    fill:$blue;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  & .selected {
+    fill:$active-purple;
+    stroke: $white;
+
+    > .text {
+      color: $alto;
+      opacity: 1;
+    }
+  }
+}
+
+.tooltip {
+  background-color: $white;
+}

@@ -1,0 +1,61 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+$checkbox-size: 15px;
+
+.checkboxWrapper {
+  @extend %bodyText;
+  color: $white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  cursor: pointer;
+  padding-right: $sidebar-paddings;
+  &:hover {
+    @extend .checkboxWrapperSelected;
+  }
+}
+
+.checkboxWrapperSelected {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 30px;
+  width: 100%;
+  padding-left: 20px;
+
+  &:before {
+    content: "";
+    margin-right: 16px;
+    height: $checkbox-size;
+    width: $checkbox-size;
+    border: 1px solid $white; 
+    border-radius: 2px;
+  }
+}
+
+.label {
+  margin-right: 8px;
+}
+
+.checkboxSelected {
+  &:before {
+    background: linear-gradient(270deg, $biloba-flower 0%, $port-gore 100%);
+    border: 2px solid $white; 
+  }
+}
+
+.icon {
+  @extend %icon;
+}

@@ -1,0 +1,2 @@
+export const isLandscapeViewOnEvent = (zoomValue, zoomLevelTrigger, landscapeView) => zoomValue >= zoomLevelTrigger && !landscapeView;
+export const isLandscapeViewOffEvent = (zoomValue, zoomLevelTrigger, landscapeView) => zoomValue < zoomLevelTrigger && landscapeView;

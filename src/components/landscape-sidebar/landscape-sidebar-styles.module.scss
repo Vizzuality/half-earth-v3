@@ -1,0 +1,18 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+
+$margin: 20px;
+
+.sidebar {
+  @extend %verticalScrollBar;
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 2px;
+  height: calc(100vh - 60px);
+}
+
+.wrapper {
+  width: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+}

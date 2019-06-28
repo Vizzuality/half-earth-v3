@@ -1,0 +1,73 @@
+
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 80px;
+  width: 960px;
+}
+
+.title {
+  @extend %headline;
+  color: $white;
+  margin: 0;
+  margin-bottom: 50px;
+  text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+}
+
+.logosWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  & > * {
+    @extend %title;
+    color: $logos-text;
+    align-items: center;
+    font-size: $font-size-sm;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 50px;
+    width: 25%;
+  }
+}
+
+.description {
+  @extend %bodyText;
+  color: $white;
+  margin: 0;
+  text-align: center;
+}
+
+.partners {
+  .description {
+    width: 500px;
+  }
+  .logosWrapper {
+    justify-content: space-between;
+    width: 75%;
+  }
+}
+
+.platformPartners .logosWrapper {
+  justify-content: center;
+}
+
+.sponsors .title {
+  margin-bottom: 34px;
+}
+
+.narrow {
+  height: 70px;
+}

@@ -1,0 +1,70 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/override/esri-component.scss';
+@import 'styles/override/esri-search-widget.scss';
+
+// load the fonts
+@font-face {
+  font-family: 'PierSans';
+  src: url('../assets/fonts/pier-regular.otf');
+}
+
+@font-face {
+  font-family: 'PierSans-Light';
+  src: url('../assets/fonts/PierSans-Light.otf');
+}
+
+@font-face {
+  font-family: 'PierSans-Bold';
+  src: url('../assets/fonts/pier-bold.otf');
+}
+
+// @font-face {
+//   font-family: 'PierSans-Italic';
+//   src: url('../assets/fonts/pier-italic.otf');
+// }
+
+// @font-face {
+//   font-family: 'PierSans-Bold-Italic';
+//   src: url('../assets/fonts/pier-bold-italic.otf');
+// }
+
+$site-gutter: 20px;
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body * {
+  font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1.6rem;
+  font-family: 'PierSans';
+}
+
+#root :global {
+  width: 100vw;
+  height: 100vh;
+  // z-index: $zforeground;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}

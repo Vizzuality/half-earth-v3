@@ -1,0 +1,90 @@
+// Colors
+$white: #fff;
+$black: #000000;
+$elephant: #0F2B3B;
+$robins-egg-blue: #00BDB5;
+$oslo-gray: #7B878D;
+$alto: #D8D8D8;
+$firefly: #0A212E;
+$vida-loca: #4B9217;
+$cobalt: #0041B1;
+$lochmara: #0272BA;
+$biloba-flower: #BCACE8;
+$port-gore: #282052;
+$blue: #0E2B3B;
+$inactive-purple: #5E5C7A;
+$active-purple: #3F3576;
+$java: #18BAB4;
+$mandalay: #A47916;
+$marzipan: #F7DEA1;
+$color-facebook: #39579a;
+$color-twitter: #69ace0;
+$screamin-green: #93FF5F;
+$persimmon: #FF6C47;
+$vivid-tangerine: #FF9D85;
+$saffron-mango: #FCC44A;
+$peach-yellow: #FAE3B3;
+
+// Project colours
+$space-background: #09141A;
+$brand-color-main: $java;
+$brand-color-secondary: $elephant;
+$dark-text: $firefly;
+$grey-text: $alto;
+$light-text: $white;
+$logos-text: $oslo-gray;
+$half-earth-meter-green: $screamin-green;
+$half-earth-meter-blue: $lochmara;
+
+// Animations
+$animation-time: 0.3s;
+$transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+// Font sizes
+$font-size-xxs: 10px;
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-xl: 28px;
+$font-size-xxl: 44px;
+
+//font-weights
+$font-weight-light: lighter;
+$font-weight: normal;
+$font-weight-bold: bold;
+
+$font-family-1: 'PierSans';
+$font-family-1-bold: 'PierSans-Bold';
+$font-family-1-light: 'PierSans-Light';
+
+// Layout 
+$site-gutter: 20px;
+$widget-button-size: 30px;
+
+// Blur
+$blur-level: 16px;
+
+// Global
+$sidebar-margin: 24px;
+$sidebar-paddings: 20px;
+
+// Letter styles
+$letter-spacing: 1.5px;
+$line-height: 14px;
+
+// Breakpoints
+$breakpoint-mobile-only: 37.4375rem; // 599px / 16px
+$breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
+$breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
+$breakpoint-desktop: 75rem; // 1200px / 16px
+
+// Sidebar
+$sidebar-top-margin: 60px;
+$sidebar-header-height: 100px;
+$sidebar-width: 280px;  // use this for entry boxes and sidebar width
+
+
+// Media queries
+$mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
+$tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
+$tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
+$desktop: 'screen and (min-width: #{$breakpoint-desktop})'; 

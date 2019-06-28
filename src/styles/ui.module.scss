@@ -1,0 +1,73 @@
+@import 'styles/settings';
+
+$spacer-edge-opacity: 0;
+$spacer-middle-opacity: 0.6;
+$icon-size: 14px;
+$share-button-margin: 12px;
+
+.uiTopLeft {
+  position: absolute;
+  top: $sidebar-top-margin;
+  left: $site-gutter;
+}
+
+.uiRight {
+  position: absolute;
+  right: 0;
+}
+
+@mixin backdropBlur($colour: rgba(9, 20, 26, 0.4), $fallback: $firefly, $fallbackOpacity: 0.8) {
+  background-color: rgba($fallback, $fallbackOpacity);
+  
+  @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
+      background-color: $colour;
+      -webkit-backdrop-filter: blur($blur-level);
+      backdrop-filter: blur($blur-level);
+  }
+}
+
+// .sidebar {
+//   @include rtl(float, left, right);
+// }
+
+%spacer {
+  height: 1px;
+  background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
+}
+
+.closeButton {
+  color: $white;
+  position: fixed;
+  right: calc(2 * #{$site-gutter});
+  top: calc(2 * #{$site-gutter});
+  z-index: 100001;
+
+  svg {
+    fill: $oslo-gray;
+    height: 22px;
+    stroke: $oslo-gray;
+    width: 22px;
+  }
+
+  &:hover svg {
+    fill: $white;
+    stroke: $white;
+  }
+  
+}
+
+%verticalScrollBar {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+%icon {
+  height: $icon-size;
+  width: $icon-size;
+}
