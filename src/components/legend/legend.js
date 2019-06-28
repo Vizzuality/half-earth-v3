@@ -11,8 +11,9 @@ import mapStateToProps from './legend-selectors';
 const LegendContainer = props => {
 
   const handleChangeOpacity = (layer, opacity) => {
-    const { setLayerOpacity } = props;
+    const { setLayerOpacity, changeLayerOpacityAnalyticsEvent } = props;
     setLayerOpacity && setLayerOpacity(layer.id, opacity);
+    changeLayerOpacityAnalyticsEvent({ slug: getSlug(layer), query: { opacity }});
   }
 
   const handleRemoveLayer = (layer) => {
