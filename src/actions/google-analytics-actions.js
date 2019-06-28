@@ -22,10 +22,14 @@ export const openLayerInfoModalAnalyticsEvent = createAction('openLayerInfoModal
   return { analytics: [ viewMode, 'Open layer info modal', `${slug}`] };
 });
 
+export const openHalfEarthMeterAnalyticsEvent = createAction('openHalfEarthMeter', null, () => {
+  return { analytics: ['Open half earth meter'] };
+});
 
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
   changeLayerOpacityAnalyticsEvent,
-  openLayerInfoModalAnalyticsEvent
+  openLayerInfoModalAnalyticsEvent,
+  openHalfEarthMeterAnalyticsEvent
 }

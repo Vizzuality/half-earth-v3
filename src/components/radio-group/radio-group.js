@@ -16,7 +16,7 @@ const RadioGroupContainer = props => {
       title: `${capitalize(layer.name)} ${option} metadata`,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug: `${layer.layers[option]}` })
+    openLayerInfoModalAnalyticsEvent({ slug: `${layer.layers[option]}` });
   };
  return (
   <Component
