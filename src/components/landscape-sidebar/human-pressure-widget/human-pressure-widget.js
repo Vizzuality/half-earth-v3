@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import * as actions from 'actions/google-analytics-actions';
+
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 
 import mapStateToProps from './human-pressure-selectors';
@@ -11,7 +13,9 @@ const HumanPressureWidgetContainer = props => {
     rasters,
     setLayerVisibility,
     setRasters,
-    map
+    map,
+    addLayerAnalyticsEvent,
+    removeLayerAnalyticsEvent
   } = props;
 
   const activeRect = Object.keys(rasters).filter(r => rasters[r]);
@@ -23,10 +27,12 @@ const HumanPressureWidgetContainer = props => {
     if (!rasters[option.data.rasterId]) {
       newRasters = {...rasters, [option.data.rasterId]: true}
       setRasters(newRasters);
+      addLayerAnalyticsEvent({ slug: option.data.slug, query: null })
     } else {
       newRasters = Object.assign({}, rasters);
       delete newRasters[option.data.rasterId];
       setRasters(newRasters);
+      removeLayerAnalyticsEvent({ slug: option.data.slug, query: null })
     }
 
     const hasRastersWithData = Object.values(newRasters).some(raster => raster);
@@ -47,4 +53,4 @@ const HumanPressureWidgetContainer = props => {
   return <HumanPressureWidgetComponent {...props} activeRect={activeRect} handleOnClick={handleTreemapClick}/>
 }
 
-export default connect(mapStateToProps, null)(HumanPressureWidgetContainer);
+export default connect(mapStateToProps, actions)(HumanPressureWidgetContainer);
