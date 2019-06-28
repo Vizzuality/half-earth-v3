@@ -17,9 +17,15 @@ export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', nu
   return { analytics: [ VIEW_MODE.LEGEND, 'Change layer opacity', `${slug}`, opacity ] };
 });
 
+export const openLayerInfoModalAnalyticsEvent = createAction('openLayerInfoModal', null, ({ slug, query }) => {
+  const viewMode = query && query.viewMode || VIEW_MODE.GLOBE;
+  return { analytics: [ viewMode, 'Open layer info modal', `${slug}`] };
+});
+
 
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
-  changeLayerOpacityAnalyticsEvent
+  changeLayerOpacityAnalyticsEvent,
+  openLayerInfoModalAnalyticsEvent
 }
