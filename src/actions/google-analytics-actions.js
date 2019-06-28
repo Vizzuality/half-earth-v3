@@ -26,10 +26,15 @@ export const openHalfEarthMeterAnalyticsEvent = createAction('openHalfEarthMeter
   return { analytics: ['Open half earth meter'] };
 });
 
+export const openAboutPageAnalyticsEvent = createAction('openAboutPage', null, () => {
+  return { analytics: ['Open about page'] };
+});
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
   changeLayerOpacityAnalyticsEvent,
   openLayerInfoModalAnalyticsEvent,
-  openHalfEarthMeterAnalyticsEvent
+  openHalfEarthMeterAnalyticsEvent,
+  openAboutPageAnalyticsEvent
 }
