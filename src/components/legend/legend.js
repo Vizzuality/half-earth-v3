@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Component from './legend-component';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 import actions from 'redux_modules/metadata';
+import * as googleAnalyticsActions from 'actions/google-analytics-actions';
+
 import mapStateToProps from './legend-selectors';
 
 const LegendContainer = props => {
@@ -13,8 +15,9 @@ const LegendContainer = props => {
   }
 
   const handleRemoveLayer = (layer) => {
-    const { setLayerVisibility } = props;
+    const { setLayerVisibility, removeLayerAnalyticsEvent } = props;
     setLayerVisibility && setLayerVisibility(layer.id, false)
+    removeLayerAnalyticsEvent({ slug: getSlug(layer), query: null });
   }
 
   const getSlug = (layer) => {
@@ -41,4 +44,4 @@ const LegendContainer = props => {
   )
 }
 
-export default connect(mapStateToProps, actions)(LegendContainer);
+export default connect(mapStateToProps, {...actions, ...googleAnalyticsActions})(LegendContainer);
