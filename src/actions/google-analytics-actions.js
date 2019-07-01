@@ -23,11 +23,11 @@ export const openLayerInfoModalAnalyticsEvent = createAction('openLayerInfoModal
 });
 
 export const openHalfEarthMeterAnalyticsEvent = createAction('openHalfEarthMeter', null, () => {
-  return { analytics: ['Open half earth meter'] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Open half earth meter'] };
 });
 
 export const openAboutPageAnalyticsEvent = createAction('openAboutPage', null, () => {
-  return { analytics: ['Open about page'] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Open about page'] };
 });
 
 export default {
