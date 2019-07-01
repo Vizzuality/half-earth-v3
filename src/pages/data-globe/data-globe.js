@@ -5,16 +5,30 @@ import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
+import { layersConfig } from 'constants/mol-layers-configs';
 
 import ownActions from './data-globe-actions.js';
+import { createLayer } from 'utils/layer-manager-utils';
+
 const actions = { ...ownActions };
 
-const handleMapLoad = (map, view) => {
+const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
+
   const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
   // set the outFields for the BIODIVERSITY_FACETS_LAYER
   // to get all the attributes available
   gridLayer.outFields = ["*"];
+
+  //list of active biodiversity layers
+  const biodiversityLayerIDs = activeLayers
+    .filter(({ category }) => category === "Biodiversity")
+    .map(({ id }) => id);
+
+  const biodiversityLayers = layersConfig
+    .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
+
+  biodiversityLayers.forEach(layer => createLayer(layer, map));
 }
 
 const dataGlobeContainer = props => {
@@ -33,7 +47,7 @@ const dataGlobeContainer = props => {
     setLayerOpacity={setLayerOpacity}
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, view)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
     handleZoomChange={handleZoomChange}
     {...props}/>
 }
