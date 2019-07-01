@@ -1,16 +1,18 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
-import { FIREFLY_LAYER } from 'constants/base-layers';
+import { FIREFLY_LAYER, FEATURES_LABELS_LAYER, GRID_LAYER } from 'constants/base-layers';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 
+const legendFreeLayers = [FIREFLY_LAYER, BIODIVERSITY_FACETS_LAYER, FEATURES_LABELS_LAYER, GRID_LAYER];
+const isLegendFreeLayer = layerId => legendFreeLayers.some( l => l === layerId);
 
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;
 
-  return activeLayers.filter(layer => layer.id !== FIREFLY_LAYER && layer.id !== BIODIVERSITY_FACETS_LAYER && layer.id !== 'Grid layer');
+  return activeLayers.filter(layer => !isLegendFreeLayer(layer.id));
 })
 
 const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
@@ -19,7 +21,12 @@ const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
   const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
   const titles = activeRasters.map(activeRaster => legendSingleRasterTitles[activeRaster]);
 
-  return titles.join(', ');
+  if (titles.length === 3) return 'All pressures';
+
+  const isOnlyAgricultureRasters = titles.every(title => title.toLowerCase().endsWith('agriculture'));
+  if (isOnlyAgricultureRasters) return joinAgricultureTitles(titles);
+
+  return titles.join(' AND ');
 })
 
 const getLegendConfigs = createSelector(
@@ -34,12 +41,12 @@ const getLegendConfigs = createSelector(
   })
 
   const parsed = configs.map(config => parseLegend(config));
-
   return parsed;
 })
 
 const parseLegend = (config) => {
   return {
+    dataset: config.layerId,
     visibility: true,
     name: config && config.title,
     molLogo: config && config.molLogo,
@@ -53,6 +60,11 @@ const parseLegend = (config) => {
       }
     }]
   };
+}
+
+const joinAgricultureTitles = (titles) => {
+  const trimmedTitles = titles.map(title => title.split(" ")[0]);
+  return `${trimmedTitles.join(' AND ')} agriculture`;
 }
 
 export default createStructuredSelector({

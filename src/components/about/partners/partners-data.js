@@ -17,7 +17,7 @@ import googleEarthEngineLogo from 'logos/googleEarthEngine.png';
 import googleCloudLogo from 'logos/googleCloud.png';
 import esriLogo from 'logos/esri.png';
 import mooreFoundationLogo from 'logos/mooreFoundation.png';
-import burtsLogo from 'logos/burts.png';
+import burtsLogo from 'logos/BB_Foundation_logo_stacked.png';
 
 export const partners = [
   { href: 'https://mol.org/', image: { src: molLogo, alt: 'Map of Life' } },
@@ -34,9 +34,16 @@ export const partners = [
   }
 ];
 
+export const platformPartners = [
+  {
+    href: 'https://www.esri.com/en-us/home',
+    image: { src: esriLogo, alt: 'Esri' }
+  }
+]
+
 export const dataPartners = [
   {
-    href: molLogo,
+    href: 'https://mol.org/',
     image: { src: molLogo, alt: 'Map of Life' }
   },
   {
@@ -116,7 +123,7 @@ export const sponsors =  [{
   },
   {
     href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-    image: { src: burtsLogo, alt: 'Burt’s Bees Greater Good Foundationc' }
+    image: { src: burtsLogo, alt: 'Burt’s Bees Greater Good Foundationc', className: 'bbees' }
   },
   {
     label: 'Jeff and Laurie Ubben'

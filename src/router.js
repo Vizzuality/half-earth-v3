@@ -6,8 +6,14 @@ const lazyLoadFeaturedGlobe = (dispatch, getState) => import('redux_modules/feat
 
 export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
+export const MAP_IFRAME = 'location/MAP_IFRAME';
 
 export const routes = {
+  [DATA]: {
+    path: '/v2',
+    page: 'data-globe',
+    thunk: lazyLoadDataGlobe
+  },
   [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe',
@@ -17,6 +23,11 @@ export const routes = {
     path: '/featuredGlobe',
     page: 'featured-globe',
     thunk: lazyLoadFeaturedGlobe
+  },
+  [MAP_IFRAME]: {
+    path: '/map',
+    page: 'map-iframe',
+    thunk: lazyLoadDataGlobe
   },
   [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
 };

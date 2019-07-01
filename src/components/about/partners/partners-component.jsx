@@ -12,7 +12,7 @@ const Logo = ({ href, image, label }) => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img src={image.src} alt={image.alt} className={image.className} />
+      <img src={image.src} alt={image.alt} className={cx({[styles.narrow]: image.className })} />
     </a>
   )
 );

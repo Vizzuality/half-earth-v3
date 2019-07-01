@@ -1,18 +1,17 @@
 @import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 $checkbox-size: 15px;
 
 .checkboxWrapper {
+  @extend %bodyText;
   color: $white;
-  font-size: $font-size-sm;
-  font-family: 'PierSans-Light';
   display: flex;
   align-items: center;
   margin-bottom: 4px;
   cursor: pointer;
   padding-right: $sidebar-paddings;
-
-
   &:hover {
     @extend .checkboxWrapperSelected;
   }
@@ -57,7 +56,6 @@ input[type="checkbox"] {
   }
 }
 
-// input[type="checkbox"]:checked + .checkbox::before {
-//   background: linear-gradient(270deg, $biloba-flower 0%, $port-gore 100%);
-//   border: 2px solid $white; 
-// }
+.icon {
+  @extend %icon;
+}
