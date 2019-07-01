@@ -10,6 +10,11 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 
 export const routes = {
   [DATA]: {
+    path: '/v2',
+    page: 'data-globe',
+    thunk: lazyLoadDataGlobe
+  },
+  [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe',
     thunk: lazyLoadDataGlobe
