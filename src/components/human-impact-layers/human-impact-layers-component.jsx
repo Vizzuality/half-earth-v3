@@ -14,8 +14,6 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
   // eslint-disable-next-line no-mixed-operators
   }), {})) || {};
 
-  console.log('human impact layers', alreadyChecked);
-
   const handleHumanPressureRasters = (rasters, option) => {
     const { layers } = map;
     const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);

@@ -1,5 +1,6 @@
 import { FIREFLY_LAYER } from 'constants/base-layers';
 import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { loadModules } from '@esri/react-arcgis';
 
 const DEFAULT_OPACITY = 0.6;
 
@@ -45,3 +46,24 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
   datasets.forEach((d) => { updatedLayers.push(activeLayers.find(({ id }) => d === id )) });
   callback({ activeLayers: updatedLayers });
 };
+
+export const createLayer = (layer, map) => {
+  loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
+    const { url, title, slug } = layer;
+    const tileLayer = new WebTileLayer({
+      urlTemplate: url,
+      title: title,
+      id: slug,
+      opacity: 0.6
+    })
+    map.add(tileLayer);
+    const hummingBirdsLayersSlugs = ['hummingbirds-rare', 'hummingbirds-rich'];
+    const isHummingBirdLayer = hummingBirdsLayersSlugs.includes(title);
+    const isSALayer = title.startsWith('sa');
+    if (isHummingBirdLayer || isSALayer) {
+      map.reorder(tileLayer, 2);
+    } else {
+      map.reorder(tileLayer, 1);
+    }
+  });
+}
