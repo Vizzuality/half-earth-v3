@@ -17,7 +17,6 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
-import InfoModal from 'components/modal-metadata';
 
 // Lazy load components
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -25,6 +24,7 @@ const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
 const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
+const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const DataGlobeComponent = ({
@@ -35,6 +35,7 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   isSidebarOpen,
+  hasMetadata,
   handleZoomChange,
   handleLayerToggle,
   setLayerVisibility,
@@ -47,7 +48,7 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-
+console.log(hasMetadata, activeLayers)
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
@@ -106,7 +107,7 @@ const DataGlobeComponent = ({
         setLayerOrder={setLayerOrder}
       />
       {isLandscapeMode && <GridLayer />}
-      <InfoModal />
+      {hasMetadata && <InfoModal />}
     </Globe>
   )
 };
