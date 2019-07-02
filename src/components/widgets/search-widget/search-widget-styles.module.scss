@@ -14,7 +14,6 @@
   padding: 0;
   position: absolute;
   top: $site-gutter;
-  width: $sidebar-width;
 
   .iconWrapper{
     align-items: center;
@@ -30,6 +29,7 @@
 
   .searchButtonText {
     margin-top: 2px;
+    padding-right: 20px;
   }
 
   svg {
