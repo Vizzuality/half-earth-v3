@@ -19,6 +19,7 @@ const initialReducers = combineReducers(reducerRegistry.getReducers());
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
+  let task;
   const store = createStore(
     initialReducers,
     composeEnhancers(router.enhancer, applyMiddleware(...middlewares))
@@ -36,12 +37,14 @@ export default () => {
     sagaMiddleware.run(allSagas);
   });
   
-    function* allSagas(getState) {
-      yield all(sagaRegistry.getSagas());
-    }
+  function* allSagas(getState) {
+    yield all(sagaRegistry.getSagas());
+  }
 
-
-  sagaMiddleware.run(allSagas);
+  if (task) {
+    task.cancel();
+  }
+  task = sagaMiddleware.run(allSagas);
 
   return store;
 };
