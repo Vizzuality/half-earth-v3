@@ -69,9 +69,9 @@ $map-attribution-height: 30px;
   }
 
   .wri_api__c-legend-map { //legend container
+    background: none;
     border: none;
     border-radius: 2px;
-    background: rgba($space-background, 0.4);
   }
   
   .wri_api__name {
@@ -87,7 +87,8 @@ $map-attribution-height: 30px;
   }
 
   li.wri_api__c-legend-item { //use this only for legend item container
-    background: rgba($space-background, 0.4);
+    @include backdropBlur();
+    
     margin-bottom: 0;
     border-bottom: none;
     border-radius: 2px;
