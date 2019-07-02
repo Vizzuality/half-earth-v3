@@ -1,31 +1,11 @@
 import React from 'react';
 import { loadModules } from '@esri/react-arcgis';
 import { layersConfig } from 'constants/mol-layers-configs';
+import { createLayer } from 'utils/layer-manager-utils';
+
 import Component from './biodiversity-layers-component';
 
 const BiodiversityLayerContainer = props => {
-
-  const createLayer = layer => {
-    loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
-      const { map } = props;
-      const { url, title, slug } = layer;
-      const tileLayer = new WebTileLayer({
-        urlTemplate: url,
-        title: title,
-        id: slug,
-        opacity: 0.6
-      })
-      map.add(tileLayer);
-      const hummingBirdsLayersSlugs = ['hummingbirds-rare', 'hummingbirds-rich'];
-      const isHummingBirdLayer = hummingBirdsLayersSlugs.includes(title);
-      const isSALayer = title.startsWith('sa');
-      if (isHummingBirdLayer || isSALayer) {
-        map.reorder(tileLayer, 2);
-      } else {
-        map.reorder(tileLayer, 1);
-      }
-    });
-  }
 
   const flyToLayerExtent = bbox => {
     const { view } = props;
@@ -54,7 +34,7 @@ const BiodiversityLayerContainer = props => {
       exclusiveLayerToggle(addLayer.slug, removeSlug);
       addLayer.bbox && flyToLayerExtent(addLayer.bbox);
     } else {
-      createLayer(addLayer);
+      createLayer(addLayer, map);
       exclusiveLayerToggle(addLayer.slug, removeSlug);
       addLayer.bbox && flyToLayerExtent(addLayer.bbox);
     }
