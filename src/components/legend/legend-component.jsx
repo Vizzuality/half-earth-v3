@@ -127,6 +127,19 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
   //   setLayerOrder(layerGroupsIds);
   // };
 
+  const handleChangeOrder = activeLayers => {
+    const { layers } = map;
+    const visibleLayers = layers.items.filter(layer => activeLayers.includes(layer.id));
+    const reversedLayers = [...activeLayers].reverse();
+    console.log(visibleLayers)
+    console.log('activeLayers', activeLayers)
+
+    reversedLayers.forEach((layer, i) => {
+      console.log('reordering layer', layer, 'to', i + 1)
+      map.reorder(visibleLayers.find(l => l.id === layer), i + 1 );
+    })
+  };
+
   const toolbar = (
     <LegendItemToolbar
       onChangeInfo={handleInfoClick}
@@ -154,7 +167,7 @@ const HELegend = ({ map, datasets, handlers, isFullscreenActive, handleInfoClick
 
   return (
     <div className={styles.legend}>
-      {!isFullscreenActive && <Legend sortable={false} /*onChangeOrder={handleChangeOrder}*/>
+      {!isFullscreenActive && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
         {datasets && datasets.map((dataset, i) => (
           <LegendListItem index={i} key={dataset.name} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
             <LegendItemTypes />
