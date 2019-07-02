@@ -14,7 +14,7 @@ const SearchWidgetComponent = props => {
         <span className={styles.iconWrapper}>
           <PinIcon />
         </span>
-        FIND PLACES
+        <span  className={styles.searchButtonText}>FIND PLACES</span>
       </button>
       { showCloseButton && 
         <button
