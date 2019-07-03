@@ -2,19 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Component from './legend-component';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
-import actions from 'redux_modules/metadata';
+import metadataActions from 'redux_modules/metadata';
+import * as googleAnalyticsActions from 'actions/google-analytics-actions';
+import { VIEW_MODE } from  'constants/google-analytics-constants';
+
 import mapStateToProps from './legend-selectors';
+
+const actions = {...metadataActions, ...googleAnalyticsActions};
 
 const LegendContainer = props => {
 
   const handleChangeOpacity = (layer, opacity) => {
-    const { setLayerOpacity } = props;
+    const { setLayerOpacity, changeLayerOpacityAnalyticsEvent } = props;
     setLayerOpacity && setLayerOpacity(layer.id, opacity);
+    changeLayerOpacityAnalyticsEvent({ slug: getSlug(layer), query: { opacity }});
   }
 
   const handleRemoveLayer = (layer) => {
-    const { setLayerVisibility } = props;
+    const { setLayerVisibility, removeLayerAnalyticsEvent } = props;
     setLayerVisibility && setLayerVisibility(layer.id, false)
+    removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
   }
 
   const getSlug = (layer) => {
@@ -23,12 +30,13 @@ const LegendContainer = props => {
   }
 
   const handleInfoClick = layer => {
-    const { setModalMetadata } = props;
+    const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
     setModalMetadata({
       slug: getSlug(layer),
       title: `${layer.legendConfig.title} metadata`,
       isOpen: true
     });
+    openLayerInfoModalAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND }});
   };
 
   const handleChangeOrder = activeLayers => {

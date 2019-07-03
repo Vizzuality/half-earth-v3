@@ -105,15 +105,16 @@ export const synchronizeWebScenes = (globeView, minimapView) => {
        newValue => {
         if (!newValue) return;
         if (viewpointWatchHandle || scheduleId) return;
-
         // start updating the other views at the next frame
         scheduleId = setTimeout(() => {
           scheduleId = null;
           viewpointWatchHandle = view.watch("viewpoint",
             newValue => {
               others.forEach((otherView) => {
+                const newAltitude = { max: 12500000, min: 12500000 }
                 newValue.camera.tilt = 0;
                 otherView.viewpoint = newValue;
+                otherView.constraints.altitude = newAltitude;
                 otherView.zoom = 0;
               });
           });
