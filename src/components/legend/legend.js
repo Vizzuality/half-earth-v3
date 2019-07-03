@@ -32,13 +32,7 @@ const LegendContainer = props => {
   };
 
   const handleChangeOrder = activeLayers => {
-    const { map, setLayerOrder } = props;
-    const { layers } = map;
-    const visibleLayers = layers.items.filter(layer => activeLayers.includes(layer.id));
-    const reversedLayers = [...activeLayers].reverse();
-    reversedLayers.forEach((layer, i) => {
-      map.reorder(visibleLayers.find(l => l.id === layer), i + 2 );
-    })
+    const { setLayerOrder } = props;
     setLayerOrder(activeLayers);
   };
 
