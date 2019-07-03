@@ -31,11 +31,23 @@ const LegendContainer = props => {
     });
   };
 
+  const handleChangeOrder = activeLayers => {
+    const { map, setLayerOrder } = props;
+    const { layers } = map;
+    const visibleLayers = layers.items.filter(layer => activeLayers.includes(layer.id));
+    const reversedLayers = [...activeLayers].reverse();
+    reversedLayers.forEach((layer, i) => {
+      map.reorder(visibleLayers.find(l => l.id === layer), i + 2 );
+    })
+    setLayerOrder(activeLayers);
+  };
+
   return (
     <Component
       handleRemoveLayer={handleRemoveLayer}
       handleChangeOpacity={handleChangeOpacity}
       handleInfoClick={handleInfoClick}
+      handleChangeOrder={handleChangeOrder}
       {...props}
     />
   )
