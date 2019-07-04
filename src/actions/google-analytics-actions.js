@@ -63,6 +63,9 @@ export const helpCompleteDatabaseAnalyticsEvent = createAction('helpCompleteData
   return { analytics: [ VIEW_MODE.LANDSCAPE, 'Help to complete database' ] };
 });
 
+export const openShareModalAnalyticsEvent = createAction('openShareModal', null, (viewMode) => {
+  return { analytics: [ viewMode || VIEW_MODE.GLOBE, 'Open share modal',  ] };
+});
 
 export default {
   addLayerAnalyticsEvent,
@@ -78,5 +81,6 @@ export default {
   enterLandscapeModeAnalyticsEvent,
   searchLocationAnalyticsEvent,
   changeLayersOrderAnalyticsEvent,
-  helpCompleteDatabaseAnalyticsEvent
+  helpCompleteDatabaseAnalyticsEvent,
+  openShareModalAnalyticsEvent
 }

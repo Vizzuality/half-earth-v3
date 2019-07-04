@@ -4,6 +4,7 @@ import { Modal, Button } from 'he-components';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 import styles from './share-modal-styles.module';
 
@@ -79,7 +80,11 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, center, zoom
 const ShareModalComponent = (props) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
-  const handleOpenShareModal = () => setShareModalOpen(true);
+  const handleOpenShareModal = () => {
+    const { openShareModalAnalyticsEvent, viewMode } = props;
+    setShareModalOpen(true);
+    openShareModalAnalyticsEvent(viewMode);
+  }
   const handleCloseShareModal = () => setShareModalOpen(false);
   const { theme } = props;
 
