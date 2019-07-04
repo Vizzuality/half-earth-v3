@@ -3,12 +3,12 @@
 import { loadModules } from '@esri/react-arcgis';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { openPlacesSearchAnalyticsEvent } from 'actions/google-analytics-actions';
+import { openPlacesSearchAnalyticsEvent, searchForLocationAnalyticsEvent } from 'actions/google-analytics-actions';
 import SearchWidgetComponent from './search-widget-component';
 
-const actions = { openPlacesSearchAnalyticsEvent };
+const actions = { openPlacesSearchAnalyticsEvent, searchForLocationAnalyticsEvent };
 
-const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent }) => {
+const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent, searchForLocationAnalyticsEvent }) => {
   const [searchWidget, setSearchWidget ] = useState();
 
   const keyEscapeEventListener = (evt) => { 
@@ -37,11 +37,16 @@ const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent }) => {
     setSearchWidget(null);
   }
   
+  const handleSearchStart = () => {
+    searchLocationAnalyticsEvent();
+    handleCloseSearch();
+  }
+
   useEffect(() => {
     if( searchWidget ) {
       view.ui.add(searchWidget, "top-left");
       document.addEventListener('keydown', keyEscapeEventListener);
-      searchWidget.viewModel.on("search-start", handleCloseSearch);
+      searchWidget.viewModel.on("search-start", handleSearchStart);
       searchWidget.watch('activeSource', function(evt) {
         evt.placeholder = "Search for a location";
       });

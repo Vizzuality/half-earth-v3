@@ -51,6 +51,10 @@ export const enterLandscapeModeAnalyticsEvent = createAction('enterLandscapeMode
   return { analytics: [ VIEW_MODE.GLOBE, 'Enter landscape mode' ] };
 });
 
+export const searchLocationAnalyticsEvent = createAction('searchLocation', null, () => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Search for a location' ] };
+});
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -62,5 +66,6 @@ export default {
   toggleFullScreenAnalyticsEvent,
   switchAboutPageTabAnalyticsEvent,
   openPlacesSearchAnalyticsEvent,
-  enterLandscapeModeAnalyticsEvent
+  enterLandscapeModeAnalyticsEvent,
+  searchLocationAnalyticsEvent
 }
