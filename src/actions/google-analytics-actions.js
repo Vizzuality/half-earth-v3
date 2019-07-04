@@ -36,7 +36,11 @@ export const clickFindMyPositionAnalyticsEvent = createAction('findMyPosition', 
 
 export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', null, ({ isFullscreenActive }) => {
   const fullscreenState = isFullscreenActive ? 'enabled' : 'disabled';
-  return {analytics: [ VIEW_MODE.GLOBE, 'Toggle fullscreen mode', fullscreenState] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Toggle fullscreen mode', fullscreenState] };
+});
+
+export const switchAboutPageTabAnalyticsEvent = createAction('switchAboutPageTab', null, ({ activeTab }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Change an active tab in About page', activeTab] };
 });
 
 
@@ -48,5 +52,6 @@ export default {
   openHalfEarthMeterAnalyticsEvent,
   openAboutPageAnalyticsEvent,
   clickFindMyPositionAnalyticsEvent,
-  toggleFullScreenAnalyticsEvent
+  toggleFullScreenAnalyticsEvent,
+  switchAboutPageTabAnalyticsEvent
 }
