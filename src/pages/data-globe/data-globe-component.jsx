@@ -48,7 +48,7 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-console.log(hasMetadata, activeLayers)
+  
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
