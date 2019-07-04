@@ -31,7 +31,7 @@ export const openAboutPageAnalyticsEvent = createAction('openAboutPage', null, (
 });
 
 export const clickFindMyPositionAnalyticsEvent = createAction('findMyPosition', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Click find my position'] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Click on find my position'] };
 });
 
 export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', null, ({ isFullscreenActive }) => {
@@ -41,6 +41,10 @@ export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', n
 
 export const switchAboutPageTabAnalyticsEvent = createAction('switchAboutPageTab', null, ({ activeTab }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Change an active tab in About page', activeTab] };
+});
+
+export const openPlacesSearchAnalyticsEvent = createAction('openPlacesSearch', null, () => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Click on find places' ] };
 });
 
 
@@ -53,5 +57,6 @@ export default {
   openAboutPageAnalyticsEvent,
   clickFindMyPositionAnalyticsEvent,
   toggleFullScreenAnalyticsEvent,
-  switchAboutPageTabAnalyticsEvent
+  switchAboutPageTabAnalyticsEvent,
+  openPlacesSearchAnalyticsEvent
 }

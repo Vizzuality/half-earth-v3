@@ -2,9 +2,13 @@
 //https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Search.html
 import { loadModules } from '@esri/react-arcgis';
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { openPlacesSearchAnalyticsEvent } from 'actions/google-analytics-actions';
 import SearchWidgetComponent from './search-widget-component';
 
-const SearchWidget = ({ view }) => {
+const actions = { openPlacesSearchAnalyticsEvent };
+
+const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent }) => {
   const [searchWidget, setSearchWidget ] = useState();
 
   const keyEscapeEventListener = (evt) => { 
@@ -23,7 +27,7 @@ const SearchWidget = ({ view }) => {
         resultGraphicEnabled: false // hide location pin
       });
       setSearchWidget(sWidget);
-
+      openPlacesSearchAnalyticsEvent();
     }).catch((err) => console.error(err));
   };
 
@@ -51,4 +55,4 @@ const SearchWidget = ({ view }) => {
   return <SearchWidgetComponent handleOpenSearch={handleOpenSearch} handleCloseSearch={handleCloseSearch} showCloseButton={!!searchWidget}/>;
 }
 
-export default SearchWidget;
+export default connect(null, actions)(SearchWidget);
