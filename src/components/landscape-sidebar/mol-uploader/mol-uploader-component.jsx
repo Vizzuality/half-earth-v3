@@ -1,10 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import { helpCompleteDatabaseAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import styles from './mol-uploader-styles.module.scss';
 
-const MOLUploader = () => {
-  const handleClick = () => window.open('https://mol.org/upload', '_blank');
+const actions = { helpCompleteDatabaseAnalyticsEvent };
+
+const MOLUploader = ({ helpCompleteDatabaseAnalyticsEvent }) => {
+  const handleClick = () => {
+    window.open('https://mol.org/upload', '_blank');
+    helpCompleteDatabaseAnalyticsEvent();
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -21,4 +28,4 @@ const MOLUploader = () => {
   );
 };
 
-export default MOLUploader;
+export default connect(null, actions)(MOLUploader);

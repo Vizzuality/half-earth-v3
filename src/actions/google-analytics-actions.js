@@ -59,6 +59,11 @@ export const changeLayersOrderAnalyticsEvent = createAction('changeLayersOrder',
   return { analytics: [ VIEW_MODE.LEGEND, 'Change layers order' ] };
 });
 
+export const helpCompleteDatabaseAnalyticsEvent = createAction('helpCompleteDatabase', null, () => {
+  return { analytics: [ VIEW_MODE.LANDSCAPE, 'Help to complete database' ] };
+});
+
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -72,5 +77,6 @@ export default {
   openPlacesSearchAnalyticsEvent,
   enterLandscapeModeAnalyticsEvent,
   searchLocationAnalyticsEvent,
-  changeLayersOrderAnalyticsEvent
+  changeLayersOrderAnalyticsEvent,
+  helpCompleteDatabaseAnalyticsEvent
 }
