@@ -1,31 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { layersConfig } from 'constants/mol-layers-configs';
+import { createLayer } from 'utils/layer-manager-utils';
+
 import Component from './biodiversity-layers-component';
+import * as actions from 'actions/google-analytics-actions';
 
 const BiodiversityLayerContainer = props => {
-
-  const createLayer = layer => {
-    loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
-      const { map } = props;
-      const { url, title, slug } = layer;
-      const tileLayer = new WebTileLayer({
-        urlTemplate: url,
-        title: title,
-        id: slug,
-        opacity: 0.6
-      })
-      map.add(tileLayer);
-      const hummingBirdsLayersSlugs = ['hummingbirds-rare', 'hummingbirds-rich'];
-      const isHummingBirdLayer = hummingBirdsLayersSlugs.includes(title);
-      const isSALayer = title.startsWith('sa');
-      if (isHummingBirdLayer || isSALayer) {
-        map.reorder(tileLayer, 2);
-      } else {
-        map.reorder(tileLayer, 1);
-      }
-    });
-  }
 
   const flyToLayerExtent = bbox => {
     const { view } = props;
@@ -39,25 +21,27 @@ const BiodiversityLayerContainer = props => {
   }
 
   const handleSimpleLayerToggle = layerName => {
-    const { handleLayerToggle } = props;
+    const { handleLayerToggle, removeLayerAnalyticsEvent } = props;
     const layer = layersConfig.find(l => l.slug === layerName);
     handleLayerToggle(layer.slug);
+    
+    removeLayerAnalyticsEvent({ slug: layer.slug });
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
-    const { map, exclusiveLayerToggle } = props;
+    const { map, exclusiveLayerToggle, addLayerAnalyticsEvent, removeLayerAnalyticsEvent } = props;
+
     const addLayer = layersConfig.find(l => l.slug === layerToAdd);
     const removeLayer = layersConfig.find(l => l.slug === layerToRemove);
     const layerExists = map.layers.items.some(l => l.id === addLayer.slug);
     const removeSlug = removeLayer && removeLayer.slug;
-    if (layerExists) {
-      exclusiveLayerToggle(addLayer.slug, removeSlug);
-      addLayer.bbox && flyToLayerExtent(addLayer.bbox);
-    } else {
-      createLayer(addLayer);
-      exclusiveLayerToggle(addLayer.slug, removeSlug);
-      addLayer.bbox && flyToLayerExtent(addLayer.bbox);
-    }
+
+    !layerExists && createLayer(addLayer, map);
+    exclusiveLayerToggle(addLayer.slug, removeSlug);
+    addLayer.bbox && flyToLayerExtent(addLayer.bbox);
+
+    removeLayer && removeLayerAnalyticsEvent({ slug: removeLayer.slug });
+    addLayer && addLayerAnalyticsEvent({ slug: addLayer.slug });
   }
   return (
     <Component
@@ -68,4 +52,4 @@ const BiodiversityLayerContainer = props => {
   ) 
 }
 
-export default BiodiversityLayerContainer;
+export default  connect(null, actions)(BiodiversityLayerContainer);

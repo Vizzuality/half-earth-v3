@@ -6,7 +6,7 @@ import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'consta
 
 import styles from './protected-areas-layers-styles.module';
 
-const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map }) => {
+const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
   const { layers } = map;
 
   // Paint Protected Areas on a different that default color
@@ -37,6 +37,10 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map }) => {
 
   const toggleLayer = (layers, option) => {
     handleLayerToggle(option.id);
+
+    const isLayerActive = alreadyChecked[option.value];
+    if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
+    else removeLayerAnalyticsEvent({ slug: option.slug });
   }
 
   const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 

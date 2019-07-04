@@ -6,15 +6,14 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import { VIEW_MODE } from  'constants/google-analytics-constants';
 
-const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers }) => {
+const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
   const humanImpactLayerActive = activeLayers.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
   const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
     ...acc, [option.value]: rasters[option.value]
   // eslint-disable-next-line no-mixed-operators
   }), {})) || {};
-
-  console.log('human impact layers', alreadyChecked);
 
   const handleHumanPressureRasters = (rasters, option) => {
     const { layers } = map;
@@ -28,6 +27,11 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
     const rasterNames = activeRasters.map(value => `human_impact_${value}`)
 
     const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
+
+    const analyticsParmas = { slug: option.slug, query: { viewMode: VIEW_MODE.LANDSCAPE }};
+    const isRasterActive = activeRasters.some(value => value === option.value);
+    if (isRasterActive) addLayerAnalyticsEvent(analyticsParmas) 
+    else removeLayerAnalyticsEvent(analyticsParmas);
 
     loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
       humanImpactLayer.mosaicRule = new MosaicRule({

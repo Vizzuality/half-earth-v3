@@ -5,10 +5,11 @@ import { all } from 'redux-saga/effects';
 import router from './router';
 import reducerRegistry from './reducerRegistry';
 import sagaRegistry from './sagaRegistry';
+import { middleware as analyticsMiddleware } from 'providers/analytics';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const middlewares = [thunk, router.middleware, sagaMiddleware];
+const middlewares = [thunk, router.middleware, sagaMiddleware, analyticsMiddleware.trackEvents];
 
 reducerRegistry.register('location', router.reducer);
 
