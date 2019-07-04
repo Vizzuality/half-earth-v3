@@ -6,11 +6,12 @@ import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, laye
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
 import { layersConfig } from 'constants/mol-layers-configs';
+import { enterLandscapeModeAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import ownActions from './data-globe-actions.js';
 import { createLayer } from 'utils/layer-manager-utils';
 
-const actions = { ...ownActions };
+const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
 const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
@@ -38,8 +39,12 @@ const dataGlobeContainer = props => {
   const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setDataGlobeSettings);
   const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setDataGlobeSettings);
   const setRasters = (rasters) => props.setDataGlobeSettings({ rasters: rasters })
-  const handleZoomChange = props.setDataGlobeSettings;
-  
+  const handleZoomChange = (params) => {
+    const { landscapeView } = params;
+    landscapeView && props.enterLandscapeModeAnalyticsEvent();
+    return props.setDataGlobeSettings(params);
+  };
+
   return <Component
     handleLayerToggle={toggleLayer}
     exclusiveLayerToggle={exclusiveLayerToggle}
