@@ -55,6 +55,10 @@ export const searchLocationAnalyticsEvent = createAction('searchLocation', null,
   return { analytics: [ VIEW_MODE.GLOBE, 'Search for a location' ] };
 });
 
+export const changeLayersOrderAnalyticsEvent = createAction('changeLayersOrder', null, () => {
+  return { analytics: [ VIEW_MODE.LEGEND, 'Change layers order' ] };
+});
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -67,5 +71,6 @@ export default {
   switchAboutPageTabAnalyticsEvent,
   openPlacesSearchAnalyticsEvent,
   enterLandscapeModeAnalyticsEvent,
-  searchLocationAnalyticsEvent
+  searchLocationAnalyticsEvent,
+  changeLayersOrderAnalyticsEvent
 }

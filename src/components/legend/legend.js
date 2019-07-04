@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import Component from './legend-component';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 import metadataActions from 'redux_modules/metadata';
-import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 import mapStateToProps from './legend-selectors';
 
-const actions = {...metadataActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent };
+const actions = {...metadataActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
 
 const LegendContainer = props => {
 
@@ -40,8 +40,9 @@ const LegendContainer = props => {
   };
 
   const handleChangeOrder = activeLayers => {
-    const { setLayerOrder } = props;
+    const { setLayerOrder, changeLayersOrderAnalyticsEvent } = props;
     setLayerOrder(activeLayers);
+    changeLayersOrderAnalyticsEvent();
   };
 
   return (
