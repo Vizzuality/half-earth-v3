@@ -1,1 +1,1 @@
-export const BIODIVERSITY_FACETS_LAYER = '16b4c4232aa-layer-0';
+export const BIODIVERSITY_FACETS_LAYER = '16bbc859a31-layer-0';
