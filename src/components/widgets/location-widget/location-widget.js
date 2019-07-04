@@ -17,10 +17,15 @@ const LocationWidget = props => {
 
   useEffect(() => {
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {
+      view.on("key-down", function(event){
+        // event is the event handle returned after the event fires.
+        console.log('CLICK');
+      });
       const locationWidget = new LocateView({
         view: view
       });
       setLocationWidget(locationWidget);
+      console.log('locationWidget: ',locationWidget);
       const node = document.createElement("div");
       view.ui.add(node, "top-right");
       ReactDOM.render(<LocationWidgetComponent locationWidget={locationWidget} />, node);

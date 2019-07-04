@@ -30,11 +30,23 @@ export const openAboutPageAnalyticsEvent = createAction('openAboutPage', null, (
   return { analytics: [ VIEW_MODE.GLOBE, 'Open about page'] };
 });
 
+export const clickFindMyPositionAnalyticsEvent = createAction('findMyPosition', null, () => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Click find my position'] };
+});
+
+export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', null, ({ isFullscreenActive }) => {
+  const fullscreenState = isFullscreenActive ? 'enabled' : 'disabled';
+  return {analytics: [ VIEW_MODE.GLOBE, 'Toggle fullscreen mode', fullscreenState] };
+});
+
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
   changeLayerOpacityAnalyticsEvent,
   openLayerInfoModalAnalyticsEvent,
   openHalfEarthMeterAnalyticsEvent,
-  openAboutPageAnalyticsEvent
+  openAboutPageAnalyticsEvent,
+  clickFindMyPositionAnalyticsEvent,
+  toggleFullScreenAnalyticsEvent
 }

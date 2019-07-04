@@ -4,7 +4,7 @@ import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import PartnersComponent from './partners/partners';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
-import * as actions from 'actions/google-analytics-actions';
+import { openAboutPageAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import styles from './about-styles.module.scss';
 
@@ -63,4 +63,4 @@ const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsE
   );
 }
 
-export default connect(null,actions)(AboutComponent);
+export default connect(null, {openAboutPageAnalyticsEvent})(AboutComponent);
