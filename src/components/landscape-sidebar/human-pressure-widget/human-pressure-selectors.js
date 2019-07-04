@@ -25,7 +25,7 @@ const getPressureStatement = createSelector(getPressuresHierarchy, humanPressure
   const pressuresValues = pressures.map(p => p.value)
   const biggestPressure = orderBy(pressures, 'value', 'desc')[0].name;
   const totalPressure = pressuresValues.reduce((acc, current) => acc + current);
-  if (totalPressure === 0) return 'There is no human pressure on the selected area';
+  if (totalPressure === 0) return 'There is no land human pressure on the selected area';
   return `Of the current landscape, ${format(".2%")(totalPressure / 100)} is under human pressure, the majority of which is pressure from ${biggestPressure}.`
 })
 
