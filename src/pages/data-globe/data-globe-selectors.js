@@ -4,7 +4,8 @@ import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-select
 import initialState from './data-globe-initial-state';
 import sceneSettings from './data-globe-settings';
 
-const getBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
+const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
+const selectMetadataData = ({ metadata }) => metadata && (metadata.data && null);
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -43,6 +44,7 @@ export default createStructuredSelector({
   isFullscreenActive: getFullscreenActive,
   sceneSettings: getSceneSettings,
   activeCategory: getActiveCategory,
-  speciesCategories: getBiodiversityData,
-  rasters: getRasters
+  speciesCategories: selectBiodiversityData,
+  rasters: getRasters,
+  hasMetadata: selectMetadataData
 })

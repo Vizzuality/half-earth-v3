@@ -1,49 +1,14 @@
 import { loadModules } from '@esri/react-arcgis';
 import { esriGeometryToGeojson } from 'utils/geojson-parser';
-import { all, takeLatest, call, select, put, cancelled } from 'redux-saga/effects'
-import { reduxConfig as speciesModule } from 'redux_modules/species';
-import geoDescriberActions from 'redux_modules/geo-description';
+import { all, takeLatest, call, select, put, cancelled } from 'redux-saga/effects';
+import geoDescriberActions from './geo-description-actions';
 import axios from 'axios';
 
 const { REACT_APP_GEO_DESCRIBER_API } = process.env;
-// const SPECIES_FETCH_DATA_READY = speciesModule.actions.SPECIES_FETCH_DATA_READY
-// const SPECIES_FETCH_DATA_LOADING = speciesModule.actions.SPECIES_FETCH_DATA_LOADING
-// const SPECIES_FETCH_DATA_ERROR = speciesModule.actions.SPECIES_FETCH_DATA_ERROR
 
 const SET_GEO_DESCRIPTION_LOADING = geoDescriberActions.setGeoDescriptionLoading
 const SET_GEO_DESCRIPTION_READY = geoDescriberActions.setGeoDescriptionReady
 const SET_GEO_DESCRIPTION_ERROR = geoDescriberActions.setGeoDescriptionError
-
-// const molAPI = 'https://api.mol.org/1.x/species/info?scientificname='
-
-// function* watchGridCellDataSet() {
-//   yield takeLatest('SET_GRID_CELL_DATA', fetchSpeciesData)
-// }
-
-// function* fetchSpeciesData() {
-//   const state = yield select();
-//   const { gridCellData: { data: { SPECIES }} } = state;
-//   const speciesArray = SPECIES.split(',');
-//   const notDuplicatedSpeciesArray = [...new Set(speciesArray)];
-//   const cancelSource = axios.CancelToken.source()
-  
-//   const promises = notDuplicatedSpeciesArray.map(
-//     species => call(axios.get, `${molAPI}${species}`, { cancelToken: cancelSource.token })
-//   );
-//   try {
-//     yield put(SPECIES_FETCH_DATA_LOADING());
-//     const data = yield all(promises);
-//     // Trigger species ready action
-//     yield put(SPECIES_FETCH_DATA_READY(data))
-//   } catch (error) {
-//     yield put(SPECIES_FETCH_DATA_ERROR(error));
-//   } finally {
-//     if (yield cancelled()) {
-//       // Cancel the fetch whenever the takeLatest send a new action
-//       yield call(cancelSource.cancel)
-//     }
-//   }
-// }
 
 
 function* watchGridCellGeometrySet() {
@@ -88,7 +53,6 @@ function* fetchGeodescriberData() {
 
 export default function* rootSaga() {
   yield all([
-    // watchGridCellDataSet(),
     watchGridCellGeometrySet()
   ])
 }

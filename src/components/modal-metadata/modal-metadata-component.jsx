@@ -5,7 +5,7 @@ import { Modal, Loading } from 'he-components';
 import MolLogo from 'logos/mol.png';
 import styles from './modal-metadata-styles.module.scss';
 
-const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata = {} }) => {
+const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
   return (
     <Modal
       onRequestClose={handleClose}
