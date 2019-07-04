@@ -9,11 +9,13 @@ export const getCellSpecies = createSelector(selectCellData, cellData => {
   return species;
 })
 
-export const getHumanPressures = createSelector(
+export const getTerrestrialHumanPressures = createSelector(
   [selectCellData],
   cellData=> {
     if (!cellData) return null;
-    const pressures = cellData.reduce((acc, current) => {
+    const terrestrialGridCells = cellData.filter(c => c.ISMARINE === 0);
+    if (terrestrialGridCells.length === 0) return { rainfed: 0, agriculture: 0, urban: 0, pressureFree: 100 };
+    const pressures = terrestrialGridCells.reduce((acc, current) => {
       return {
         ...acc,
         [current.CELL_ID]: {
@@ -40,5 +42,5 @@ export const getHumanPressures = createSelector(
 
 export default createStructuredSelector({
   cellSpecies: getCellSpecies,
-  humanPressures: getHumanPressures
+  humanPressures: getTerrestrialHumanPressures
 })

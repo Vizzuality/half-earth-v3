@@ -2,9 +2,9 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { orderBy } from 'lodash';
 import { format } from 'd3-format';
 import { humanPressuresLandscapeWidget } from 'constants/human-pressures';
-import { getHumanPressures } from 'selectors/grid-cell-selectors';
+import { getTerrestrialHumanPressures } from 'selectors/grid-cell-selectors';
 
-const getPressuresHierarchy = createSelector(getHumanPressures, humanPressures => {
+const getPressuresHierarchy = createSelector(getTerrestrialHumanPressures, humanPressures => {
   if (!humanPressures) return null;
   return {
     name: 'Human Pressures',
@@ -30,7 +30,7 @@ const getPressureStatement = createSelector(getPressuresHierarchy, humanPressure
 })
 
 export default createStructuredSelector({
-  humanPressures: getHumanPressures,
+  humanPressures: getTerrestrialHumanPressures,
   data: getPressuresHierarchy,
   pressureStatement: getPressureStatement
 });
