@@ -7,25 +7,24 @@ import { connect } from 'react-redux';
 import { useWatchUtils } from 'hooks/esri';
 
 import LocationWidgetComponent from './location-widget-component';
-import * as actions from 'actions/url-actions';
+import * as urlActions from 'actions/url-actions';
+import { clickFindMyPositionAnalyticsEvent } from 'actions/google-analytics-actions';
+
+const actions = { ...urlActions, clickFindMyPositionAnalyticsEvent };
 
 const LocationWidget = props => {
-  const { view, changeGlobe } = props;
+  const { view, changeGlobe, clickFindMyPositionAnalyticsEvent } = props;
   const [locationWidget, setLocationWidget] = useState(null);
   const watchUtils = useWatchUtils();
   const handleLocationChange = (center) => changeGlobe({ center });
 
   useEffect(() => {
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {
-      view.on("key-down", function(event){
-        // event is the event handle returned after the event fires.
-        console.log('CLICK');
-      });
       const locationWidget = new LocateView({
         view: view
       });
+      locationWidget.on("locate", () => clickFindMyPositionAnalyticsEvent());
       setLocationWidget(locationWidget);
-      console.log('locationWidget: ',locationWidget);
       const node = document.createElement("div");
       view.ui.add(node, "top-right");
       ReactDOM.render(<LocationWidgetComponent locationWidget={locationWidget} />, node);

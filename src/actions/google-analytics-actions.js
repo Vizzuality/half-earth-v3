@@ -31,7 +31,7 @@ export const openAboutPageAnalyticsEvent = createAction('openAboutPage', null, (
 });
 
 export const clickFindMyPositionAnalyticsEvent = createAction('findMyPosition', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Click on find my position'] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Find my position'] };
 });
 
 export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', null, ({ isFullscreenActive }) => {
