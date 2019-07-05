@@ -9,3 +9,9 @@ export const setGeoDescriptionReady = createAction(
 export const setGeoDescriptionError = createAction(
   'SET_GEO_DESCRIPTION_ERROR'
 );
+
+export default {
+  setGeoDescriptionLoading,
+  setGeoDescriptionReady,
+  setGeoDescriptionError
+}

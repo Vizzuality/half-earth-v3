@@ -7,18 +7,30 @@ import {
   layerManagerToggle,
   layerManagerOpacity
 } from 'utils/layer-manager-utils';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { createLayer } from 'utils/layer-manager-utils';
+
 import Component from './map-iframe-component.jsx';
 import mapStateToProps from './map-iframe-selectors';
 
 import ownActions from './map-iframe-actions.js';
 const actions = { ...ownActions };
 
-const handleMapLoad = (map, view) => {
+const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
   const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
   // set the outFields for the BIODIVERSITY_FACETS_LAYER
   // to get all the attributes available
   gridLayer.outFields = ["*"];
+
+  const biodiversityLayerIDs = activeLayers
+    .filter(({ category }) => category === "Biodiversity")
+    .map(({ id }) => id);
+
+  const biodiversityLayers = layersConfig
+    .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
+
+  biodiversityLayers.forEach(layer => createLayer(layer, map));
 }
 
 const dataGlobeContainer = props => {
@@ -55,7 +67,7 @@ const dataGlobeContainer = props => {
   return <Component
     handleLayerToggle={toggleLayer}
     handleZoomChange={handleZoomChange}
-    onLoad={(map, view) => handleMapLoad(map, view)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
     {...props}/>
 }
 

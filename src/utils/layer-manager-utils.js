@@ -12,14 +12,14 @@ export const layerManagerToggle = (layerId, activeLayers, callback, category) =>
     callback({activeLayers: updatedLayers });
   } else {
     activeLayers
-      ? callback({ activeLayers: [ ...activeLayers, { id, category, opacity: DEFAULT_OPACITY }] })
+      ? callback({ activeLayers: [{ id, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { id, category, opacity: DEFAULT_OPACITY }] });
   }
 };
 
 export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
-  const layerAfterRemove = layerToRemove ? activeLayers.filter(l => l.id !== layerToRemove) : activeLayers;
-  callback({activeLayers: [...layerAfterRemove, {id: layerToActivate, category, opacity: DEFAULT_OPACITY }]});
+  const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.id !== layerToRemove) : activeLayers;
+  callback({ activeLayers: [{ id: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
 };
 
 export const layerManagerVisibility = (layerId, visible, activeLayers, callback) => {
@@ -31,7 +31,7 @@ export const layerManagerVisibility = (layerId, visible, activeLayers, callback)
     callback({activeLayers: updatedLayers });
   } else {
     activeLayers
-      ? callback({ activeLayers: [ ...activeLayers, { id, opacity: DEFAULT_OPACITY }] })
+      ? callback({ activeLayers: [{ id, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { id, opacity: DEFAULT_OPACITY }] });
   }
 };
@@ -48,22 +48,14 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
 };
 
 export const createLayer = (layer, map) => {
-  loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
+  return loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
     const { url, title, slug } = layer;
     const tileLayer = new WebTileLayer({
       urlTemplate: url,
       title: title,
       id: slug,
-      opacity: 0.6
+      opacity: DEFAULT_OPACITY
     })
     map.add(tileLayer);
-    const hummingBirdsLayersSlugs = ['hummingbirds-rare', 'hummingbirds-rich'];
-    const isHummingBirdLayer = hummingBirdsLayersSlugs.includes(title);
-    const isSALayer = title.startsWith('sa');
-    if (isHummingBirdLayer || isSALayer) {
-      map.reorder(tileLayer, 2);
-    } else {
-      map.reorder(tileLayer, 1);
-    }
   });
 }
