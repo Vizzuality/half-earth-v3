@@ -39,17 +39,11 @@ const LegendContainer = props => {
     openLayerInfoModalAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND }});
   };
 
-  const handleChangeOrder = activeLayers => {
-    const { setLayerOrder } = props;
-    setLayerOrder(activeLayers);
-  };
-
   return (
     <Component
       handleRemoveLayer={handleRemoveLayer}
       handleChangeOpacity={handleChangeOpacity}
       handleInfoClick={handleInfoClick}
-      handleChangeOrder={handleChangeOrder}
       {...props}
     />
   )
