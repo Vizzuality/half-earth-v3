@@ -42,9 +42,13 @@ const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent, searchLocationAnal
     handleCloseSearch();
   }
 
+  async function addSearchWidgetToView() {
+    await view.ui.add(searchWidget, "top-left");
+  }
+  
   useEffect(() => {
     if( searchWidget ) {
-      view.ui.add(searchWidget, "top-left");
+      addSearchWidgetToView().then(() => document.querySelector(".esri-search__input").focus());
       document.addEventListener('keydown', keyEscapeEventListener);
       searchWidget.viewModel.on("search-start", handleSearchStart);
       searchWidget.watch('activeSource', function(evt) {
