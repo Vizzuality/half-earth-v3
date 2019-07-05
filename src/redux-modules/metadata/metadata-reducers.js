@@ -4,7 +4,7 @@ export const initialState = {
   isOpen: false,
   title: '',
   slug: '',
-  data: null,
+  data: {},
   loading: false,
   loaded: true,
   error: false

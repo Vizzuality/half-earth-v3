@@ -1,11 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
 import initialState from './data-globe-initial-state';
 import sceneSettings from './data-globe-settings';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
-const selectMetadataData = ({ metadata }) => metadata && (metadata.data && null);
+const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
