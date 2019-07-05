@@ -18,6 +18,9 @@ import googleCloudLogo from 'logos/googleCloud.png';
 import esriLogo from 'logos/esri.png';
 import mooreFoundationLogo from 'logos/mooreFoundation.png';
 import burtsLogo from 'logos/BB_Foundation_logo_stacked.png';
+import fieldMuseumLogo from 'logos/field-museum-logo_2018.png';
+import gorongosaLogo from 'logos/gorongosa_np_logo.png';
+import inaturalistLogo from 'logos/inaturalist.png';
 
 export const partners = [
   { href: 'https://mol.org/', image: { src: molLogo, alt: 'Map of Life' } },
@@ -87,6 +90,18 @@ export const dataPartners = [
   {
     href: 'http://eol.org/',
     image: { src: eolLogo, alt: 'Encyclopedia of Life' }
+  },
+  {
+    href: 'https://www.inaturalist.org/',
+    image: { src: inaturalistLogo, alt: 'iNaturalist' }
+  },
+  {
+    href: 'https://www.gorongosa.org/',
+    image: { src: gorongosaLogo, alt: 'Gorongosa National Park' }
+  },
+  {
+    href: 'https://www.fieldmuseum.org/',
+    image: { src: fieldMuseumLogo, alt: 'Field Museum' }
   }
 ];
 
