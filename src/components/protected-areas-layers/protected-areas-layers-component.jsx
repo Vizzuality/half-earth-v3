@@ -11,8 +11,8 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
 
   // Paint Protected Areas on a different that default color
   useEffect(() => {
-    const groupLayer = layers.items.find(l => l.title === 'Protected areas');
-    const VTLLayer = groupLayer.layers.items.find(l => l.title === 'WDPA pro vectortile');
+    const groupLayer = layers.items.find(l => l.title === 'protected_areas');
+    const VTLLayer = groupLayer.layers.items.find(l => l.title === 'protected_areas_vector_tile_layer');
 
     const paintProperties = VTLLayer.getPaintProperties('WDPA_poly_Latest');
 
@@ -24,8 +24,8 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
 
   // Paint Community Areas on a different that default color
   useEffect(() => {
-    const groupLayer = layers.items.find(l => l.title === 'Community areas');
-    const VTLLayer = groupLayer.layers.items.find(l => l.title === 'Community areas vector');
+    const groupLayer = layers.items.find(l => l.title === 'community_areas');
+    const VTLLayer = groupLayer.layers.items.find(l => l.title === 'community_areas_vector_tile_layer');
 
     const paintProperties = VTLLayer.getPaintProperties('WDPA_poly_Latest/1');
 
