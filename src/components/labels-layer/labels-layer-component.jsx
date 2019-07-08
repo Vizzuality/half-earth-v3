@@ -1,22 +1,26 @@
 import { loadModules } from '@esri/react-arcgis';
 import { FEATURES_LABELS_LAYER } from 'constants/base-layers';
+import { stylesConfig } from './labels-layer-styles-config';
 
-const labelClassFactory = (LabelClassConstructor, feature, color, minScale, maxScale) => {
+const labelClassFactory = (LabelClassConstructor, styleGroup) => {
+  const config = stylesConfig[styleGroup];
   return new LabelClassConstructor({
-    labelExpressionInfo: {
-      expression: "$feature.name" // Text for labels comes from COUNTY field
-    },
-    // where: `featurecla = ${feature} AND featurecla = `,
     labelPlacement: 'center-center',
-    // minScale: "$feature.max_scale",
-    // maxScale: "$feature.min_scale",
+    labelExpressionInfo: {
+      expression: "$feature.name"
+    },
+    where: `style = ${styleGroup}`,
     symbol: {
       type: "label-3d",
       symbolLayers: [{
         type: "text",
-        material: { color: 'black' },
-        size: 8, // points
-        halo: { color: [...color, 0.4], size: '1px' }
+        font: {
+          family: config.fontFamily,
+          style: config.fontStyle,
+          size: config.fontSize
+        },
+        material: { color: config.color }
+        //halo: { color: [...color, 0.4], size: '1px' }
       }]
     }
   });
@@ -27,17 +31,19 @@ const LabelsLayerComponent = ({ map }) => {
   loadModules(["esri/layers/support/LabelClass"])
     .then(([LabelClass]) => {
 
-      var mountains = labelClassFactory(LabelClass, 'Range/mtn', [49,163,84], 4500000, 1000);
-      // var basins = labelClassFactory(LabelClass, 'Basin', [239, 189, 136], 3500000, 1000);
-      // var deserts = labelClassFactory(LabelClass, 'Desert', [239, 189, 136], 3500000, 1000);
-      // var geoArea = labelClassFactory(LabelClass, 'Geoarea', [239, 189, 136], 2500000, 1000);
-      // var islands = labelClassFactory(LabelClass, 'Island', [239, 189, 136], 10000000, 1000);
-      // var archipielago = labelClassFactory(LabelClass, 'Continent', [239, 189, 136], 130000000, 10000000);
+      var style_1_ter = labelClassFactory(LabelClass, 'style_1_ter');
+      var style_2_ter = labelClassFactory(LabelClass, 'style_2_ter');
+      var style_3_ter = labelClassFactory(LabelClass, 'style_3_ter');
+      var style_4_ter = labelClassFactory(LabelClass, 'style_4_ter');
+      var style_1_aq = labelClassFactory(LabelClass, 'style_1_aq');
+      var style_2_aq = labelClassFactory(LabelClass, 'style_2_aq');
+      var style_3_aq = labelClassFactory(LabelClass, 'style_3_aq');
+      var style_4_aq = labelClassFactory(LabelClass, 'style_4_aq');
 
       // Add labels to the feature layer
       labelsLayer.opacity = 0;
       labelsLayer.labelsVisible = true;
-      labelsLayer.labelingInfo = [mountains];
+      labelsLayer.labelingInfo = [style_1_ter, style_2_ter, style_3_ter, style_4_ter, style_1_aq, style_2_aq, style_3_aq, style_4_aq];
     })
   
   return null
