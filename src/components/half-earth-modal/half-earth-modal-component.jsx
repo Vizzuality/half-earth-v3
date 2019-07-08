@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
 import useEventListener from 'hooks/use-event-listener';
-import { ReactComponent as HalfEarthGlobe } from 'images/halfEarthGlobe.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import Globe from 'images/globe.png';
+
 import data from './half-earth-modal-data';
 
 import styles from './half-earth-modal-styles.module.scss';
@@ -41,7 +42,10 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
           </div>
         </div>
         <div className={styles.globeWrapper}>
-          <HalfEarthGlobe/>
+          <div className={styles.progresBars}>
+            <img src={Globe} className={styles.globe} />
+          </div>
+          
         </div>
       </div>
       <button

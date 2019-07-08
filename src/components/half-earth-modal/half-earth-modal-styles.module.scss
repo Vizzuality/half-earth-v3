@@ -1,9 +1,10 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 .halfEarthModal {
-  background-color: $firefly;
-  background-image: url('../../assets/images/stars.png');
+  background-color: #020A14;;
+  background-image: url('../../assets/images/stars.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -18,22 +19,54 @@
   height: 100%;
   padding: 70px 10% 100px;
   overflow: hidden;
+  align-items: center;
 
   > :first-child {
     width: 40%;
+    height: 100%;
   }
 
   > :last-child {
-    width: 60%;
   }
 }
 
 .globeWrapper {
   align-items: center;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: hidden;
-  transform: scale(1.6)
+  width: 100%;
+  height: 100%;
+  
+  .progresBars {
+    background-image: url('../../assets/images/lines.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    height: 60vh;
+    width: 60vh;
+    
+    .globe {
+      top: 25%;
+      width: 100%;
+      user-select: none;
+    }
+
+    &::before {
+      @extend %title;
+      content: 'HALF-EARTH';
+      color: $light-text;
+      display: block;
+      left: 40%;
+      position: absolute;
+      text-align: center;
+      top: -40px;
+      width: 20%;
+
+    }
+  }
+
+
 }
 
 .content {
@@ -147,14 +180,21 @@ $icon-size: 40px;
 }
 
 
-.globeS {
-  background-image: url('../../assets/images/halfEarthGlobe.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
+// .globeS {
+//   background-image: url('../../assets/images/halfEarthGlobe.svg');
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+
+.globeWrapper {
+  // height: 50vh;
+  // width: 50vh;
+
+
 }
 
-@media only screen and (max-width: 1366px) {
-  .globeWrapper {
-    transform: scale(1.2)
-  }
-}
+// @media only screen and (max-width: 1366px) {
+//   .globeWrapper {
+//     transform: scale(1.2)
+//   }
+// }
