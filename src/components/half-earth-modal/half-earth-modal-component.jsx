@@ -24,13 +24,11 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <h1 className={styles.title}>{textData && textData.title}</h1>
-          <div className={styles.descriptionWrapper}>
             <ReactMarkdown
               className={styles.description}
               source={textData && textData.content}
               escapeHtml={false}
             />
-          </div>
           <div className={styles.legendWrapper}>
             {legend.map(({ value, label, imageSrc}) => (
               <div key={label} className={styles.legendItem}>
@@ -43,7 +41,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
         </div>
         <div className={styles.globeWrapper}>
           <div className={styles.progresBars}>
-            <img src={Globe} className={styles.globe} />
+            <img src={Globe} className={styles.globe} alt="" />
           </div>
           
         </div>
