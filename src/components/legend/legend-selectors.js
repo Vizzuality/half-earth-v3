@@ -9,7 +9,7 @@ const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId
 
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;
-  return activeLayers.filter(layer => !isLegendFreeLayer(layer.id));
+  return activeLayers.filter(layer => !isLegendFreeLayer(layer.title));
 })
 
 const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
@@ -32,10 +32,9 @@ const getLegendConfigs = createSelector(
   if (!visibleLayers.length) return null;
 
   const configs = visibleLayers.map(layer => {
-    console.log(layer)
-    if(legendConfigs[layer.id]) return { ...legendConfigs[layer.id], molLogo: true, layerId: layer.id, opacity: layer.opacity }
-    if(humanPressureLegendConfigs[layer.id]) return { ...humanPressureLegendConfigs[layer.id], title: humanPressuresDynamicTitle, layerId: layer.id, opacity: layer.opacity }
-    if(WDPALegendConfigs[layer.id]) return { ...WDPALegendConfigs[layer.id], layerId: layer.id, opacity: layer.opacity }
+    if(legendConfigs[layer.title]) return { ...legendConfigs[layer.title], molLogo: true, layerId: layer.title, opacity: layer.opacity }
+    if(humanPressureLegendConfigs[layer.title]) return { ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle, layerId: layer.title, opacity: layer.opacity }
+    if(WDPALegendConfigs[layer.title]) return { ...WDPALegendConfigs[layer.title], layerId: layer.title, opacity: layer.opacity }
   })
 
   const parsed = configs.map(config => parseLegend(config));
