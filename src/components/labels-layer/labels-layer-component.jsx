@@ -1,5 +1,5 @@
 import { loadModules } from '@esri/react-arcgis';
-import { FEATURES_LABELS_LAYER } from 'constants/base-layers';
+import { LABELS_LAYER_GROUP } from 'constants/layers-slugs';
 import { stylesConfig } from './labels-layer-styles-config';
 
 const labelClassFactory = (LabelClassConstructor, styleGroup) => {
@@ -25,9 +25,10 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
     }
   });
 }
+
 const LabelsLayerComponent = ({ map }) => {
   const { layers: { items } } = map;
-  const labelsLayer = items.find(l => l.id === FEATURES_LABELS_LAYER);
+  const labelsLayerGroup = items.find(l => l.title === LABELS_LAYER_GROUP);
   loadModules(["esri/layers/support/LabelClass"])
     .then(([LabelClass]) => {
 
@@ -40,10 +41,22 @@ const LabelsLayerComponent = ({ map }) => {
       var style_3_aq = labelClassFactory(LabelClass, 'style_3_aq');
       var style_4_aq = labelClassFactory(LabelClass, 'style_4_aq');
 
-      // Add labels to the feature layer
-      labelsLayer.opacity = 0;
-      labelsLayer.labelsVisible = true;
-      labelsLayer.labelingInfo = [style_1_ter, style_2_ter, style_3_ter, style_4_ter, style_1_aq, style_2_aq, style_3_aq, style_4_aq];
+      labelsLayerGroup.layers.items.forEach(layer => {
+        // Add labels to the feature layer
+        layer.opacity = 0;
+        layer.visible = true;
+        layer.labelsVisible = true;
+        layer.labelingInfo = [
+          style_1_ter,
+          style_2_ter,
+          style_3_ter,
+          style_4_ter,
+          style_1_aq,
+          style_2_aq,
+          style_3_aq,
+          style_4_aq
+        ];
+      })
     })
   
   return null
