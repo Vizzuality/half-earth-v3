@@ -1,3 +1,7 @@
+import {
+  LAND_HUMAN_PRESSURES_IMAGE_LAYER
+} from 'constants/layers-slugs';
+
 export const humanPressuresLandUse = [
   { name: 'Rainfed agriculture', value: 'rainfed', slug: 'human-pressures-rainfed' },
   { name: 'Irrigated agriculture', value: 'agriculture', slug: 'human-pressures-agriculture' },
@@ -11,13 +15,8 @@ export const humanPressuresLandscapeWidget = [
   { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' }
 ];
 
-//develop layer
-export const HUMAN_PRESSURE_LAYER_ID = '16bd0def51b-layer-9'
-//production layer
-// export const HUMAN_PRESSURE_LAYER_ID = '16aff2bc763-layer-0'
-
 export const legendConfigs = {
-  [HUMAN_PRESSURE_LAYER_ID]: {
+  [LAND_HUMAN_PRESSURES_IMAGE_LAYER]: {
     type: "gradient",
     items: [
       {

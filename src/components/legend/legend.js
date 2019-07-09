@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './legend-component';
-import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import metadataActions from 'redux_modules/metadata';
 import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
@@ -25,7 +25,7 @@ const LegendContainer = props => {
   }
 
   const getSlug = (layer) => {
-    if(layer.id === HUMAN_PRESSURE_LAYER_ID) return 'human-pressures-all';
+    if(layer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) return 'human-pressures-all';
     return layer.legendConfig.slug || layer.id;
   }
 
