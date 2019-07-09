@@ -1,7 +1,7 @@
 import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { BIODIVERSITY_FACETS_LAYER } from 'constants/layers-slugs';
 
 import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry, cellsEquality } from 'utils/grid-layer-utils';
 
@@ -35,15 +35,13 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
         const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic)
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
-        console.log(graphicsLayer)
-        console.log(gridCellGraphic)
       })
   }, [])
 
   // store grid view layer
   useEffect(() => {
     const { layers } = map;
-      const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
+      const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
       view.whenLayerView(gridLayer).then(function(layerView) {
         setGridViewLayer(layerView);
       })
@@ -85,8 +83,6 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
                   // create aggregated grid cell geometry
                   const gridCellGeometry = calculateAgregatedGridCellGeometry(hasContainedGridCells, gridCells, geometryEngine);
                   // paint it
-                  console.log('painting')
-                  console.log(gridCellGraphic)
                   if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
                   // Add it to the store
                     setGridCellGeometry(gridCellGeometry)
@@ -103,7 +99,6 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
 
   useEffect(() => {
     return function cleanUp() {
-      console.log('deleting')
       if (gridCellGraphic) { gridCellGraphic.geometry = null };
       cleanUpHandles();
     }
