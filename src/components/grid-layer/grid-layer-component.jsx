@@ -35,6 +35,8 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
         const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic)
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
+        console.log(graphicsLayer)
+        console.log(gridCellGraphic)
       })
   }, [])
 
@@ -83,6 +85,8 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
                   // create aggregated grid cell geometry
                   const gridCellGeometry = calculateAgregatedGridCellGeometry(hasContainedGridCells, gridCells, geometryEngine);
                   // paint it
+                  console.log('painting')
+                  console.log(gridCellGraphic)
                   if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
                   // Add it to the store
                     setGridCellGeometry(gridCellGeometry)
@@ -99,6 +103,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
 
   useEffect(() => {
     return function cleanUp() {
+      console.log('deleting')
       if (gridCellGraphic) { gridCellGraphic.geometry = null };
       cleanUpHandles();
     }

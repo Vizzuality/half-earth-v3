@@ -11,7 +11,10 @@ export const humanPressuresLandscapeWidget = [
   { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' }
 ];
 
-export const HUMAN_PRESSURE_LAYER_ID = '16aff2bc763-layer-0'
+//develop layer
+export const HUMAN_PRESSURE_LAYER_ID = '16bd0def51b-layer-9'
+//production layer
+// export const HUMAN_PRESSURE_LAYER_ID = '16aff2bc763-layer-0'
 
 export const legendConfigs = {
   [HUMAN_PRESSURE_LAYER_ID]: {

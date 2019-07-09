@@ -32,6 +32,7 @@ const getLegendConfigs = createSelector(
   if (!visibleLayers.length) return null;
 
   const configs = visibleLayers.map(layer => {
+    console.log(layer)
     if(legendConfigs[layer.id]) return { ...legendConfigs[layer.id], molLogo: true, layerId: layer.id, opacity: layer.opacity }
     if(humanPressureLegendConfigs[layer.id]) return { ...humanPressureLegendConfigs[layer.id], title: humanPressuresDynamicTitle, layerId: layer.id, opacity: layer.opacity }
     if(WDPALegendConfigs[layer.id]) return { ...WDPALegendConfigs[layer.id], layerId: layer.id, opacity: layer.opacity }

@@ -6,6 +6,7 @@ const ArcgisLayerManager = ({ map, activeLayers }) => {
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
   const { layers } = map;
 
+  console.log(layers)
   const setLayerOrder = activeLayers => {
     const activeLayersIds = activeLayers.filter(l => !includes(LEGEND_FREE_LAYERS, l.id)).map(l => l.id);
     const visibleLayers = layers.items.reduce((acc, layer) => {

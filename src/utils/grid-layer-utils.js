@@ -22,7 +22,8 @@ export const createGridCellGraphic = (Graphic) => {
 
 export const createGraphicLayer = (GraphicsLayer, graphic) => {
   return new GraphicsLayer({
-    id: "Grid layer",
+    id: "grid_layer",
+    title: "grid_layer",
     graphics: [graphic]
   });
 }
