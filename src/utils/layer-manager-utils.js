@@ -1,5 +1,4 @@
-import { FIREFLY_LAYER } from 'constants/base-layers';
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { loadModules } from '@esri/react-arcgis';
 
 const DEFAULT_OPACITY = 0.6;
@@ -42,7 +41,7 @@ export const layerManagerOpacity = (layerId, opacity, activeLayers, callback) =>
 };
 
 export const layerManagerOrder = (datasets, activeLayers, callback) => {
-  const updatedLayers = activeLayers.filter(({ id }) => id === FIREFLY_LAYER || id === BIODIVERSITY_FACETS_LAYER);
+  const updatedLayers = activeLayers.filter(({ id }) => LEGEND_FREE_LAYERS.some(layer =>layer === id));
   datasets.forEach((d) => { updatedLayers.push(activeLayers.find(({ id }) => d === id )) });
   callback({ activeLayers: updatedLayers });
 };
