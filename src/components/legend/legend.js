@@ -20,7 +20,7 @@ const LegendContainer = props => {
 
   const handleRemoveLayer = (layer) => {
     const { setLayerVisibility, removeLayerAnalyticsEvent } = props;
-    setLayerVisibility && setLayerVisibility(layer.id, false)
+    setLayerVisibility && setLayerVisibility(layer.title, false)
     removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
   }
 

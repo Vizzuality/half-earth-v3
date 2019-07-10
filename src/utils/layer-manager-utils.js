@@ -21,22 +21,22 @@ export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLaye
   callback({ activeLayers: [{ title: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
 };
 
-export const layerManagerVisibility = (layerId, visible, activeLayers, callback) => {
-  const id = layerId;
-  const isActive = activeLayers && activeLayers.some(l => l.id === id);
+export const layerManagerVisibility = (layerTitle, visible, activeLayers, callback) => {
+  const title = layerTitle;
+  const isActive = activeLayers && activeLayers.some(l => l.title === title);
   if (isActive && visible) return;
   if (isActive && !visible) {
-    const updatedLayers = activeLayers.filter(l => l.id !== id);
+    const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });
   } else {
     activeLayers
-      ? callback({ activeLayers: [{ id, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
-      : callback({ activeLayers: [ { id, opacity: DEFAULT_OPACITY }] });
+      ? callback({ activeLayers: [{ title, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
+      : callback({ activeLayers: [ { title, opacity: DEFAULT_OPACITY }] });
   }
 };
 
-export const layerManagerOpacity = (layerId, opacity, activeLayers, callback) => {
-  const setOpacity = (layer) => layer.id === layerId ? { ...layer, opacity } : layer;
+export const layerManagerOpacity = (layerTitle, opacity, activeLayers, callback) => {
+  const setOpacity = (layer) => layer.title === layerTitle ? { ...layer, opacity } : layer;
   callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
 };
 
@@ -48,7 +48,7 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
 
 export const createLayer = (layer, map) => {
   return loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
-    const { url, title, slug } = layer;
+    const { url, slug } = layer;
     const tileLayer = new WebTileLayer({
       urlTemplate: url,
       title: slug,
