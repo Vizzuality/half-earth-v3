@@ -14,7 +14,7 @@ const LegendContainer = props => {
 
   const handleChangeOpacity = (layer, opacity) => {
     const { setLayerOpacity, changeLayerOpacityAnalyticsEvent } = props;
-    setLayerOpacity && setLayerOpacity(layer.id, opacity);
+    setLayerOpacity && setLayerOpacity(layer.title, opacity);
     changeLayerOpacityAnalyticsEvent({ slug: getSlug(layer), query: { opacity }});
   }
 
