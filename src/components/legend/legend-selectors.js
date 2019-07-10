@@ -23,7 +23,7 @@ const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
   const isOnlyAgricultureRasters = titles.every(title => title.toLowerCase().endsWith('agriculture'));
   if (isOnlyAgricultureRasters) return joinAgricultureTitles(titles);
 
-  return titles.join(' AND ');
+  return titles.join(' and ');
 })
 
 const getLegendConfigs = createSelector(
@@ -50,7 +50,7 @@ const parseLegend = (config) => {
     layers: [{
       active: true,
       opacity: config.opacity !== undefined ? config.opacity : 1,
-      id: config.layerId,
+      title: config.layerId,
       type: 'layer',
       legendConfig: {
         ...config
@@ -61,7 +61,7 @@ const parseLegend = (config) => {
 
 const joinAgricultureTitles = (titles) => {
   const trimmedTitles = titles.map(title => title.split(" ")[0]);
-  return `${trimmedTitles.join(' AND ')} agriculture`;
+  return `${trimmedTitles.join(' and ')} agriculture`;
 }
 
 export default createStructuredSelector({
