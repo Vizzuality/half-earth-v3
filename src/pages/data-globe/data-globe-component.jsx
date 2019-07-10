@@ -57,8 +57,6 @@ const DataGlobeComponent = ({
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
 
-  console.log(activeLayers)
-  
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <TerrainExaggerationLayer exaggeration={3}/>

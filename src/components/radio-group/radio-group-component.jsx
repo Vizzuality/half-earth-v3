@@ -22,13 +22,13 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
       });
     });
   });
-  const selectedLayersIds = activeLayers.map(l => l.id);
+  const selectedLayersIds = activeLayers.map(l => l.title);
   const selected = optionsLayers.find(o => selectedLayersIds.includes(o.layerId));
   const selectedLayer = selected && selected.layerId;
   const variant = (selected && selected.variant) || RARITY;
   const isRarityActive = variant === RARITY;
 
-  const isSelected = (option) => !!(activeLayers.find(l => l.id === option.layers[variant]));
+  const isSelected = (option) => !!(activeLayers.find(l => l.title === option.layers[variant]));
 
   return (
     <>
