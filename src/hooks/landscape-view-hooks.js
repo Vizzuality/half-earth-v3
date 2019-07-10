@@ -24,7 +24,7 @@ import {
 
   export function useLandscapeViewCameraChange(view, isLandscapeMode) {
     useEffect(() => {
-      const tilt = isLandscapeMode ? 45 : 0;
+      const tilt = isLandscapeMode ? 55 : 0;
       const heading = 0;
       const target = { tilt, heading };
       const options = {
