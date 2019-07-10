@@ -41,8 +41,8 @@ export const layerManagerOpacity = (layerTitle, opacity, activeLayers, callback)
 };
 
 export const layerManagerOrder = (datasets, activeLayers, callback) => {
-  const updatedLayers = activeLayers.filter(({ id }) => LEGEND_FREE_LAYERS.some(layer =>layer === id));
-  datasets.forEach((d) => { updatedLayers.push(activeLayers.find(({ id }) => d === id )) });
+  const updatedLayers = activeLayers.filter(({ title }) => LEGEND_FREE_LAYERS.some(layer => layer === title));
+  datasets.forEach((d) => { updatedLayers.push(activeLayers.find(({ title }) => d === title )) });
   callback({ activeLayers: updatedLayers });
 };
 
