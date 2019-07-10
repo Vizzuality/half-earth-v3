@@ -3,22 +3,22 @@ import { loadModules } from '@esri/react-arcgis';
 
 const DEFAULT_OPACITY = 0.6;
 
-export const layerManagerToggle = (layerId, activeLayers, callback, category) => {
-  const id = layerId;
-  const isActive = activeLayers && activeLayers.some(l => l.id === id);
+export const layerManagerToggle = (layerTitle, activeLayers, callback, category) => {
+  const title = layerTitle;
+  const isActive = activeLayers && activeLayers.some(l => l.title === title);
   if (isActive) {
-    const updatedLayers = activeLayers.filter(l => l.id !== id);
+    const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });
   } else {
     activeLayers
-      ? callback({ activeLayers: [{ id, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
-      : callback({ activeLayers: [ { id, category, opacity: DEFAULT_OPACITY }] });
+      ? callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
+      : callback({ activeLayers: [ { title, category, opacity: DEFAULT_OPACITY }] });
   }
 };
 
 export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
-  const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.id !== layerToRemove) : activeLayers;
-  callback({ activeLayers: [{ id: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
+  const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.title !== layerToRemove) : activeLayers;
+  callback({ activeLayers: [{ title: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
 };
 
 export const layerManagerVisibility = (layerId, visible, activeLayers, callback) => {
@@ -51,7 +51,7 @@ export const createLayer = (layer, map) => {
     const { url, title, slug } = layer;
     const tileLayer = new WebTileLayer({
       urlTemplate: url,
-      title: title,
+      title: slug,
       id: slug,
       opacity: DEFAULT_OPACITY
     })
