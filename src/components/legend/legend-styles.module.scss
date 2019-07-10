@@ -117,7 +117,6 @@ $icon-size: 14px;
     width: $icon-size;
 
     svg {
-      display: none;
       background-repeat: no-repeat;
       background-size: contain;
       use {
@@ -126,9 +125,11 @@ $icon-size: 14px;
     }
 
     &:nth-child(1) {
-      background-image: url('../../assets/icons/opacityEnabled.svg');
+      width: 12px;
       svg {
+        background-size: cover;
         background-image: url('../../assets/icons/opacity.svg');
+        width: 12px;
       }
     }
 

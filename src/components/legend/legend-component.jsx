@@ -50,7 +50,8 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
   };
 
   const enabledStyle = {
-    display: 'block'
+    display: 'block',
+    backgroundPosition: 'right'
   };
 
   const defaultStyle = {
