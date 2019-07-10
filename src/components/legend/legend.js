@@ -26,7 +26,7 @@ const LegendContainer = props => {
 
   const getSlug = (layer) => {
     if(layer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) return 'human-pressures-all';
-    return layer.legendConfig.slug || layer.id;
+    return layer.legendConfig.slug || layer.title;
   }
 
   const handleInfoClick = layer => {
