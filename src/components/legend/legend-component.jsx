@@ -69,6 +69,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       defaultStyle={defaultStyle}
       enabledStyle={enabledStyle}
     >
+      <LegendItemButtonInfo />
       <LegendItemButtonOpacity
         className={styles.legendItemButtonOpacity}
         handleStyle={handleStyle}
@@ -76,7 +77,6 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
         railStyle={railStyle}
         marks={marks}
       />
-      <LegendItemButtonInfo />
       <LegendItemButtonRemove />
     </LegendItemToolbar>
   );
