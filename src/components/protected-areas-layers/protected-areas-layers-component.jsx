@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import MultipleActiveLayers from 'components/multiple-active-layers';
 import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
+import { PROTECTED_AREAS_VECTOR_TILE_LAYER, PROTECTED_AREAS_LAYER_GROUP, COMMUNITY_AREAS_LAYER_GROUP, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 
 import styles from './protected-areas-layers-styles.module';
 
@@ -11,8 +12,8 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
 
   // Paint Protected Areas on a different that default color
   useEffect(() => {
-    const groupLayer = layers.items.find(l => l.title === 'protected_areas');
-    const VTLLayer = groupLayer.layers.items.find(l => l.title === 'protected_areas_vector_tile_layer');
+    const groupLayer = layers.items.find(l => l.title === PROTECTED_AREAS_LAYER_GROUP);
+    const VTLLayer = groupLayer.layers.items.find(l => l.title === PROTECTED_AREAS_VECTOR_TILE_LAYER);
 
     const paintProperties = VTLLayer.getPaintProperties('WDPA_poly_Latest');
 
@@ -24,8 +25,8 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
 
   // Paint Community Areas on a different that default color
   useEffect(() => {
-    const groupLayer = layers.items.find(l => l.title === 'community_areas');
-    const VTLLayer = groupLayer.layers.items.find(l => l.title === 'community_areas_vector_tile_layer');
+    const groupLayer = layers.items.find(l => l.title === COMMUNITY_AREAS_LAYER_GROUP);
+    const VTLLayer = groupLayer.layers.items.find(l => l.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER);
 
     const paintProperties = VTLLayer.getPaintProperties('WDPA_poly_Latest/1');
 
@@ -44,7 +45,7 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
   }
 
   const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 
-    ...acc, [option.value]: activeLayers.some(layer => layer.id === option.id) 
+    ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title) 
   }), {});
 
   return (
