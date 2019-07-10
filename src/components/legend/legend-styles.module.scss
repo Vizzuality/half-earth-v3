@@ -3,7 +3,7 @@
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
-
+$icon-size: 14px;
 
 %legend-ramp-text {
   font-family: $font-family-1-light !important;
@@ -108,6 +108,37 @@ $map-attribution-height: 30px;
   li > .wri_api__c-legend-item { //disable white background for item legend label
     @extend %legend-label-text;
     align-items: center;
+  }
+
+  .wri_api__c-legend-button {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: $icon-size;
+    width: $icon-size;
+
+    svg {
+      display: none;
+      background-repeat: no-repeat;
+      background-size: contain;
+      use {
+        display: none;
+      }
+    }
+
+    &:nth-child(1) {
+      background-image: url('../../assets/icons/opacityEnabled.svg');
+      svg {
+        background-image: url('../../assets/icons/opacity.svg');
+      }
+    }
+
+    &:nth-child(2) {
+      background-image: url('../../assets/icons/infoLegend.svg');
+    }
+
+    &:nth-child(3) {
+      background-image: url('../../assets/icons/closeWhite.svg');
+    }
   }
 
   .wri_api__toggle-legend {
