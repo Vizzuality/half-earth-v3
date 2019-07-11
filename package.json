@@ -72,6 +72,7 @@
       "components/Provider": "react-redux",
       "components/connectAdvanced": "react-redux",
       "components/Context": "react-redux",
+      "components/widgets/(.*)": "<rootDir>/src/components/widgets/$1/$1.js",
       "components/(.*)/(.*)$": "<rootDir>/src/components/$1/$2.jsx",
       "components/(.*)$": "<rootDir>/src/components/$1/$1.js",
       "\\.svg": "<rootDir>/test/mocks/svg-mock.js",
