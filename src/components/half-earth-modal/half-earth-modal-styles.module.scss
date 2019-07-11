@@ -1,9 +1,10 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 .halfEarthModal {
-  background-color: $firefly;
-  background-image: url('../../assets/images/stars.png');
+  background-color: #020A14;;
+  background-image: url('../../assets/images/stars.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -18,22 +19,45 @@
   height: 100%;
   padding: 70px 10% 100px;
   overflow: hidden;
+  align-items: center;
 
   > :first-child {
     width: 40%;
-  }
-
-  > :last-child {
-    width: 60%;
+    height: 100%;
   }
 }
 
 .globeWrapper {
   align-items: center;
   display: flex;
-  justify-content: flex-start;
-  overflow: hidden;
-  transform: scale(1.6)
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  .progresBars {
+    background-image: url('../../assets/images/lines.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    height: 60vh;
+    width: 60vh;
+
+    .globe {
+      user-select: none;
+      width: 100%;
+    }
+
+    &::before {
+      @extend %title;
+      content: 'HALF-EARTH';
+      color: $light-text;
+      display: block;
+      position: absolute;
+      text-align: center;
+      top: -40px;
+      width: 100%;
+    }
+  }
 }
 
 .content {
@@ -54,51 +78,27 @@
   width: 430px;
 }
 
-.descriptionWrapper {
-  height: 50%;
-  margin-bottom: 100px;
-  position: relative;
-  max-width: 300px;
-
-  &::after,  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 40px;
-  }
-
-  &::after {
-    background: linear-gradient(transparent, #06101C);
-    bottom: 0;
-  }
-
-  &::before {
-    background: linear-gradient(#020D16, transparent);
-    box-shadow: -3px -10px 31px -9px rgba(2,13,22,0.81);
-  }
-}
-
 .description {
-  color:  $white;
-  -ms-overflow-style: none;  /* IE 10+ */
-  font-family: $font-family-1;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-light;
-  line-height: 22px;
-  text-align: center;
-  height: 100%;
-  scrollbar-width: none; /* Firefox */
-  overflow-y: scroll;
-  overflow-y: scroll;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  text-align: left;
-  width: 100%;
+  @extend %verticalScrollBar;
+  @extend %bodyText;
 
-  &::-webkit-scrollbar { /* WebKit */
-    height: 0;
-    width: 0;
+  color:  $white;
+  margin: 20px 0 60px;
+  padding: 25px 0;
+  text-align: left;
+  max-width: 300px;
+  mask-image: linear-gradient(to bottom,
+  rgba(0,0,0,0) 0%,
+  rgba(0,0,0,1) 10%,
+  rgba(0,0,0,1) 90%,
+  rgba(0,0,0,0) 100%
+  );
+
+  p:first-child {
+    margin-top: 0px;
+  }
+  p:last-child {
+    margin-bottom: 0px;
   }
 }
 
@@ -130,7 +130,6 @@ $icon-size: 40px;
   }
 }
 
-
 .icon {
   height: $icon-size;
   left: calc(#{$icon-size} / -2);
@@ -144,17 +143,4 @@ $icon-size: 40px;
   justify-content: space-between;
   margin-left: calc(#{$icon-size} / 2);
   width: 500px;
-}
-
-
-.globeS {
-  background-image: url('../../assets/images/halfEarthGlobe.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-@media only screen and (max-width: 1366px) {
-  .globeWrapper {
-    transform: scale(1.2)
-  }
 }
