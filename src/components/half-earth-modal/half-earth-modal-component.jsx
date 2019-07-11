@@ -34,16 +34,15 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
               <div key={label} className={styles.legendItem}>
                 <span className={styles.value}>{value}</span>
                 <span className={styles.label}>{label}</span>
-                <img src={imageSrc} className={styles.icon} alt={''}/>
+                <img src={imageSrc} className={styles.icon} alt={label}/>
               </div>
             ))}
           </div>
         </div>
         <div className={styles.globeWrapper}>
           <div className={styles.progresBars}>
-            <img src={GlobeImage} className={styles.globe} alt="" />
+            <img src={GlobeImage} className={styles.globe} alt="Half-Earth globe" />
           </div>
-          
         </div>
       </div>
       <button
