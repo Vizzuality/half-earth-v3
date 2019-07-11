@@ -3,7 +3,7 @@
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
-$icon-size: 12px;
+$icon-size: 14px;
 
 %legend-ramp-text {
   font-family: $font-family-1-light !important;
@@ -108,6 +108,7 @@ $icon-size: 12px;
   li > .wri_api__c-legend-item { //disable white background for item legend label
     @extend %legend-label-text;
     align-items: center;
+    z-index: 0;
   }
 
   .wri_api__c-legend-button {
@@ -115,7 +116,7 @@ $icon-size: 12px;
     background-size: contain;
     height: $icon-size;
     width: $icon-size;
-    z-index: 1;
+    z-index: 2;
 
     svg {
       background-repeat: no-repeat;
@@ -130,12 +131,11 @@ $icon-size: 12px;
     }
 
     &:nth-child(2) {
-      margin-left: 2px;
-      width: 10px;
       svg {
         background-size: cover;
         background-image: url('../../assets/icons/opacity.svg');
-        width: 10px;
+        margin: auto;
+        width: 12px;
       }
     }
 
@@ -158,6 +158,8 @@ $icon-size: 12px;
     left: 0;
     top: 0;
     width: 100%;
+    z-index: 1;
+
     svg {
       display: none;
     }
