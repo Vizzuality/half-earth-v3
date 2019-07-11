@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Component from './checkbox-component';
 import metadataActions from 'redux_modules/metadata';
-import * as googleAnalyticsActions from 'actions/google-analytics-actions';
+import { openLayerInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = { ...metadataActions, ...googleAnalyticsActions };
+const actions = { ...metadataActions, openLayerInfoModalAnalyticsEvent };
 
 const CheckboxContainer = props => {
 
