@@ -3,7 +3,7 @@
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
-
+$icon-size: 14px;
 
 %legend-ramp-text {
   font-family: $font-family-1-light !important;
@@ -82,8 +82,8 @@ $map-attribution-height: 30px;
     @extend %legend-ramp-bar;
   }
 
-  .wri_api__legend-item-container {
-    padding: 10px 12px;
+  .wri_api__c-legend-item .wri_api__legend-item-container.wri_api__-sortable { //whole legend item padding
+    padding: 10px 12px 12px;
   }
 
   li.wri_api__c-legend-item { //use this only for legend item container
@@ -108,14 +108,61 @@ $map-attribution-height: 30px;
   li > .wri_api__c-legend-item { //disable white background for item legend label
     @extend %legend-label-text;
     align-items: center;
+    z-index: 0;
+  }
+
+  .wri_api__c-legend-button {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: $icon-size;
+    width: $icon-size;
+    z-index: 2;
+
+    svg {
+      background-repeat: no-repeat;
+      background-size: contain;
+      use {
+        display: none;
+      }
+    }
+
+    &:nth-child(1) {
+      background-image: url('../../assets/icons/info.svg');
+    }
+
+    &:nth-child(2) {
+      svg {
+        background-size: cover;
+        background-image: url('../../assets/icons/opacity.svg');
+        margin: auto;
+        width: 12px;
+      }
+    }
+
+    &:nth-child(3) {
+      background-image: url('../../assets/icons/closeWhite.svg');
+    }
+  }
+
+  .wri_api__c-icon.wri_api__-small {
+    height: $icon-size;
+    width: $icon-size;
   }
 
   .wri_api__toggle-legend {
     display: none;
   }
 
-  .wri_api__c-legend-handler svg {
-    fill: $oslo-gray;
+  .wri_api__c-legend-handler {
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+    svg {
+      display: none;
+    }
   }
 
   .wri_api__slider-tooltip-container {
@@ -136,13 +183,10 @@ body {
     .-sortable {  //when dragging the legend item
       background: $firefly;
       box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
+      padding-left: 0px;
 
       li > .wri_api__c-legend-item {  //disable white background for item legend label
         @extend %legend-label-text;
-      }
-
-      .wri_api__c-legend-handler svg {
-        fill: $java;
       }
 
       .wri_api__name {

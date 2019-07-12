@@ -28,10 +28,10 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
 
     const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
 
-    const analyticsParmas = { slug: option.slug, query: { viewMode: VIEW_MODE.LANDSCAPE }};
+    const analyticsParams = { slug: option.slug, query: { viewMode: VIEW_MODE.LANDSCAPE }};
     const isRasterActive = activeRasters.some(value => value === option.value);
-    if (isRasterActive) addLayerAnalyticsEvent(analyticsParmas) 
-    else removeLayerAnalyticsEvent(analyticsParmas);
+    if (isRasterActive) addLayerAnalyticsEvent(analyticsParams) 
+    else removeLayerAnalyticsEvent(analyticsParams);
 
     loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
       humanImpactLayer.mosaicRule = new MosaicRule({

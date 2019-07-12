@@ -8,7 +8,6 @@ import Legend, {
   LegendListItem,
   LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
-
 import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
@@ -51,7 +50,8 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
   };
 
   const enabledStyle = {
-    fill: 'rgb(24, 186, 180)',
+    display: 'block',
+    backgroundPosition: 'right'
   };
 
   const defaultStyle = {
@@ -69,15 +69,14 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       defaultStyle={defaultStyle}
       enabledStyle={enabledStyle}
     >
+      <LegendItemButtonInfo />
       <LegendItemButtonOpacity
         className={styles.legendItemButtonOpacity}
         handleStyle={handleStyle}
         trackStyle={trackStyle}
         railStyle={railStyle}
         marks={marks}
-
       />
-      <LegendItemButtonInfo />
       <LegendItemButtonRemove />
     </LegendItemToolbar>
   );

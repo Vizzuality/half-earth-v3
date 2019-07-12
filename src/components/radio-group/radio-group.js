@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { capitalize } from 'lodash';
 import Component from './radio-group-component';
 import metadataActions from 'redux_modules/metadata';
-import * as googleAnalyticsActions from 'actions/google-analytics-actions';
+import { openLayerInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = { ...metadataActions, ...googleAnalyticsActions };
+const actions = { ...metadataActions, openLayerInfoModalAnalyticsEvent };
 
 const RadioGroupContainer = props => {
 

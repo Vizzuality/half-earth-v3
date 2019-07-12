@@ -5,7 +5,9 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import { createLayer } from 'utils/layer-manager-utils';
 
 import Component from './biodiversity-layers-component';
-import * as actions from 'actions/google-analytics-actions';
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+
+const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent }
 
 const BiodiversityLayerContainer = props => {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loading } from 'he-components';
 import ShareModal from 'components/share-modal';
-
+import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
 
 const GeoDescriptionWidget = ({ data, loading, error, view }) => {
@@ -30,7 +30,7 @@ const GeoDescriptionWidget = ({ data, loading, error, view }) => {
 
   return (
     <div className={styles.container}>
-      <ShareModal theme={{ shareButton: styles.shareButton }} view={view} />
+      <ShareModal theme={{ shareButton: styles.shareButton }} view={view} viewMode={VIEW_MODE.LANDSCAPE} />
       <h2 className={styles.title}>{data.title}</h2>
       <div className={styles.line}></div>
       <p className={styles.description}>
