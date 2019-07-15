@@ -94,7 +94,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
         return function cleanUp() {
           cleanUpHandles();
       }
-  }, [gridViewLayer, viewExtent]);
+  }, [gridViewLayer, viewExtent, gridCellGraphic]);
 
   useEffect(() => {
     return function cleanUp() {

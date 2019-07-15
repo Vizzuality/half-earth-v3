@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
-import * as actions from 'actions/google-analytics-actions';
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
-
 import mapStateToProps from './human-pressure-selectors';
+
+const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
 
 const HumanPressureWidgetContainer = props => {
   const {

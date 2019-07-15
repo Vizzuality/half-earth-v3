@@ -2,9 +2,12 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 import facebookIcon from 'icons/facebook.png';
 import twitterIcon from 'icons/twitter.png';
-import styles from './share-modal-styles.module';
+import { openShareModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
+import styles from './share-modal-styles.module';
 import Component from './share-modal-component';
+
+const actions = { openShareModalAnalyticsEvent };
 
 const shareSocialMedia = [
   {
@@ -30,5 +33,5 @@ const mapStateToProps = ({ location }) => ({
 
 export default connect(
   mapStateToProps,
-  null
+  actions
 )(Component);
