@@ -4,6 +4,7 @@ import { capitalize } from 'lodash';
 import Component from './radio-group-component';
 import metadataActions from 'redux_modules/metadata';
 import { openLayerInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
+import ReactTooltip from 'react-tooltip';
 
 const actions = { ...metadataActions, openLayerInfoModalAnalyticsEvent };
 
@@ -17,6 +18,7 @@ const RadioGroupContainer = props => {
       isOpen: true
     });
     openLayerInfoModalAnalyticsEvent({ slug: `${layer.layers[option]}` });
+    ReactTooltip.rebuild()
   };
  return (
   <Component

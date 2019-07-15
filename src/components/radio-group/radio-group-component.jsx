@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import ReactTooltip from 'react-tooltip';
 
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as SwitchIcon } from 'icons/switch.svg';
@@ -58,7 +59,13 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           </>
           {isSelected(option) && (
             <div className={styles.toggle}>
-              <InfoIcon className={styles.icon} onClick={() => handleInfoClick(option, variant)} />
+              <InfoIcon
+                className={styles.icon}
+                onClick={() => handleInfoClick(option, variant)}
+                data-tip
+                data-for='infoLayerButtonId'
+                data-effect='solid'
+              />
               <button type="button" className={styles.button} onClick={() => {
                 const changeVariantType = isRarityActive ? RICHNESS : RARITY;
                 handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
@@ -68,6 +75,9 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
                 </span>
                 <SwitchIcon className={cx({ [styles.reverseSwitchIcon]: !isRarityActive })} />
               </button>
+              <ReactTooltip id='infoLayerButtonId' className='infoTooltipStyle'>
+                Click to read the info of this layer
+              </ReactTooltip>
             </div>
           )}
         </div>

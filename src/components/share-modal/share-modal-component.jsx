@@ -4,7 +4,7 @@ import { Modal, Button } from 'he-components';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
+import ReactTooltip from 'react-tooltip';
 
 import styles from './share-modal-styles.module';
 
@@ -93,9 +93,19 @@ const ShareModalComponent = (props) => {
       <button
         className={cx(theme.shareButton)}
         onClick={handleOpenShareModal}
+        data-tip
+        data-for='shareButtonId'
+        data-place='right'
+        data-effect='solid'
       >
         <ShareIcon className={styles.icon} />
       </button>
+      <ReactTooltip
+        id='shareButtonId'
+        className='infoSmallTooltipStyle'
+      >
+        Click to share
+      </ReactTooltip>
       {isShareModalOpen && <ShareModal 
         isOpen={isShareModalOpen}
         handleClose={handleCloseShareModal}
