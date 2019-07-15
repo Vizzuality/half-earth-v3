@@ -45,7 +45,6 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
   };
 
   const marks = { 
-    0: { style: { marginLeft: '0px', }, label: '0%'},
     100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
   };
 
@@ -53,11 +52,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
     display: 'block',
     backgroundPosition: 'right'
   };
-
-  const defaultStyle = {
-    fill: 'white'
-  }
-
+  
   const toolbar = (
     <LegendItemToolbar
       onChangeInfo={handleInfoClick}
@@ -65,19 +60,24 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
-      focusStyle={defaultStyle}
-      defaultStyle={defaultStyle}
+      // focusStyle={focusStyle}
+      // defaultStyle={defaultStyle}
       enabledStyle={enabledStyle}
     >
-      <LegendItemButtonInfo />
+      <LegendItemButtonInfo
+        tooltipText='Click to read the info of this layer'
+      />
       <LegendItemButtonOpacity
         className={styles.legendItemButtonOpacity}
         handleStyle={handleStyle}
         trackStyle={trackStyle}
         railStyle={railStyle}
         marks={marks}
+        tooltipText='Change the opacity'
       />
-      <LegendItemButtonRemove />
+      <LegendItemButtonRemove 
+        tooltipText='Close this layer'
+      />
     </LegendItemToolbar>
   );
 
