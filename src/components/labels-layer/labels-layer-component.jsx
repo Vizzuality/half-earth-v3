@@ -40,6 +40,8 @@ const LabelsLayerComponent = ({ map }) => {
       var style_2_aq = labelClassFactory(LabelClass, 'style_2_aq');
       var style_3_aq = labelClassFactory(LabelClass, 'style_3_aq');
       var style_4_aq = labelClassFactory(LabelClass, 'style_4_aq');
+      var style_city_capital = labelClassFactory(LabelClass, 'Capital_style');
+      var style_city_other = labelClassFactory(LabelClass, 'Other_style');
 
       labelsLayerGroup.layers.items.forEach(layer => {
         // Add labels to the feature layer
@@ -54,7 +56,9 @@ const LabelsLayerComponent = ({ map }) => {
           style_1_aq,
           style_2_aq,
           style_3_aq,
-          style_4_aq
+          style_4_aq,
+          style_city_capital,
+          style_city_other
         ];
       })
     })
