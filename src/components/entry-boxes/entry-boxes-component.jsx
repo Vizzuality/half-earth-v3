@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTrail, animated } from 'react-spring';
-import styles from 'styles/ui.module';
+import styles from 'styles/ui.module.scss';
 
 import CategoryBox from 'components/category-box';
 

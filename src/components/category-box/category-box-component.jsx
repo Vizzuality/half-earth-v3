@@ -26,13 +26,15 @@ const CategoryBox = ({ title, category, isSidebarOpen, counter }) => (
 CategoryBox.propTypes = {
   category: PropTypes.string,
   title: PropTypes.string,
-  isSidebarOpen: PropTypes.bool
+  isSidebarOpen: PropTypes.bool,
+  counter: PropTypes.number
 };
 
 CategoryBox.defaultProps = {
   category: {},
   title: PropTypes.string,
-  isSidebarOpen: true
+  isSidebarOpen: true,
+  counter: 0
 };
 
 export default CategoryBox;
