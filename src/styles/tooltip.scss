@@ -13,16 +13,13 @@
 	.infoTooltipStyle {
 		@extend %tooltip-apperance;
 	
-		&::after {
-			border-top-width: 8px;
-		}
-	
 		&.place-left:after {
 			border-left-color: $white !important;
 		}
 	
 		&.place-top:after {
 			border-top-color: $white !important;
+			border-top-width: 8px !important;
 		}
 	
 		&.place-right:after {

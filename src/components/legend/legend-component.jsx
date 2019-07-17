@@ -45,7 +45,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
   };
 
   const marks = { 
-    0: { style: { marginLeft: '0px', width: 'auto' }, label: '0%'},
+    0: { style: { marginLeft: '0px' }, label: '0%'},
     100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
   };
 

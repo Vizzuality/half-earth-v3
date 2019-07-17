@@ -39,12 +39,7 @@ $icon-size: 14px;
   .wri_api__close {
     margin-right: 0;
   }
-
-  .rc-tooltip-placement-top {
-    left: unset !important;
-    right: 20px;
-  }
-
+  
   .rc-tooltip-content {
     background-color: transparent;
     border-radius: 2px;
@@ -63,17 +58,17 @@ $icon-size: 14px;
 
     .tooltip-opacity-text::after {
       @extend %tooltip-arrow;
-      right: 40px;
+      right: 58px;
     }
 
     .tooltip-remove-text::after {
       @extend %tooltip-arrow;
-      right: 14px;
+      right: 37px;
     }
 
     .tooltip-info-text::after {
       @extend %tooltip-arrow;
-      right: 66px;
+      right: 89px;
     }
   }
 
@@ -258,8 +253,8 @@ body {
       }
   
       .rc-tooltip-inner {
-        background-color: $blue;
-        color: $grey-text;
+        background-color: $blue !important;
+        color: $grey-text !important;
         position: relative;
       }
     }

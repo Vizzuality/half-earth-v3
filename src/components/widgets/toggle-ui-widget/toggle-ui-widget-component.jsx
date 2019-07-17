@@ -9,7 +9,8 @@ const ToggleUiWidgetComponent = ({ toggleFullscreen, isFullscreenActive }) => {
   return (
     <>
       <button
-        data-tip data-for='happyFace'
+        data-tip
+        data-for='toggleUi'
         className={styles.toggleButton}
         onClick={toggleFullscreen}
         data-effect='solid'
@@ -17,7 +18,7 @@ const ToggleUiWidgetComponent = ({ toggleFullscreen, isFullscreenActive }) => {
       >
         {isFullscreenActive ? <ShowUiIcon /> : <HideUiIcon />}
       </button>
-      <ReactTooltip id='happyFace' className='infoTooltipStyle'>
+      <ReactTooltip id='toggleUi' className='infoTooltipStyle'>
         Full screen
       </ReactTooltip>
     </>
