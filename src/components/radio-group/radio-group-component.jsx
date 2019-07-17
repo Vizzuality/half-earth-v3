@@ -65,6 +65,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
                 data-tip
                 data-for='infoLayerButtonId'
                 data-effect='solid'
+                data-delay-show={0}
               />
               <button type="button" className={styles.button} onClick={() => {
                 const changeVariantType = isRarityActive ? RICHNESS : RARITY;

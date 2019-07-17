@@ -13,6 +13,7 @@ const ToggleUiWidgetComponent = ({ toggleFullscreen, isFullscreenActive }) => {
         className={styles.toggleButton}
         onClick={toggleFullscreen}
         data-effect='solid'
+        data-delay-show={0}
       >
         {isFullscreenActive ? <ShowUiIcon /> : <HideUiIcon />}
       </button>

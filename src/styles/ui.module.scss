@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 $spacer-edge-opacity: 0;
 $spacer-middle-opacity: 0.6;
@@ -72,32 +73,3 @@ $share-button-margin: 12px;
   width: $icon-size;
 }
 
-.infoTooltipStyle {
-  color: $dark-text !important;
-  background-color: $white !important;
-  opacity: 1 !important;
-
-  &.place-left {
-    &:after {
-      border-left-color: $white !important;
-    }
-  }
-
-  &.place-top {
-    &:after {
-      border-top-color: $white !important;
-    }
-  }
-
-  &.place-right {
-    &:after {
-      border-right-color: $white !important;
-    }
-  }
-}
-
-
-.infoSmallTooltipStyle {
-  padding: 4px 12px 0 12px !important;
-  @extend .infoTooltipStyle;
-}

@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
@@ -21,26 +22,35 @@ $icon-size: 14px;
   background: transparent;
 }
 
+%tooltip-arrow {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  position: absolute;
+  transform: rotate(45deg);
+  bottom: -3px;
+}
+
 //legend tooltip styles
 :global {
-  .rc-tooltip-content {
-    background-color: $blue;
-    border-radius: 2px;
+  .wri_api__close {
+    margin-right: 0;
+  }
 
-    .rc-tooltip-inner {
-      padding: 8px 10px;
-      max-width: unset;
-    }
+  .rc-tooltip-placement-top {
+    left: unset !important;
+    right: 20px;
+  }
+  .rc-tooltip-content {
+    // background-color: $blue;
+    background-color: transparent;
+    transform: translateY(-6px);
+    border-radius: 2px;
   }
 
   .rc-tooltip-arrow {
-    display: none !important;
-    // height: 32px;
-    // width: 32px;
-    // background:  $blue;
-    // z-index: -1;
-    // bottom: -23px;
-    // right: 0;
   }
 
   .rc-slider-mark {
@@ -48,9 +58,12 @@ $icon-size: 14px;
   }
 
   .c-rc-tooltip.-default .rc-tooltip-inner {
+    @extend %tooltip;
     background-color: $white;
     color: $dark-text;
-    font-family: $font-family-1;
+    max-width: unset;
+    padding: 8px 10px;
+    position: unset;
   }
 
   .wri_api__c-legend-item-button-opacity-tooltip { // tooltip styles
@@ -178,20 +191,40 @@ $icon-size: 14px;
   .wri_api__c-legend-type-gradient .wri_api__icon-gradient {
     @extend %legend-ramp-bar;
   }
+
+  .rc-tooltip-content {
+    position: relative;
+
+    .rc-tooltip-arrow {
+      display: none !important;
+    }
+   
+    .rc-tooltip-inner {
+      position: unset;
+
+      .tooltip-opacity-text::after {
+        @extend %tooltip-arrow;
+        right: 40px;
+      }
+
+      .tooltip-remove-text::after {
+        @extend %tooltip-arrow;
+        right: 14px;
+      }
+
+      .tooltip-info-text::after {
+        @extend %tooltip-arrow;
+        right: 66px;
+      }
+    }
+  }
 }
 
 body {
   :global {
     .wri_api__slider-ranges {
-      position: relative;
-   
+      position: relative; 
     }
-
-    // .wri_api__slider-range {
-    //   &:after {
-    //     content: '100%';
-    //   }
-    // }
 
     .-sortable {  //when dragging the legend item
       background: $firefly;
@@ -228,28 +261,29 @@ body {
   left: unset !important;
   right: $site-gutter;
   width: 208px;
-  // width: 234px;
-  // margin-right: 26px;
-  & > :first-child {
 
-    & > :nth-child(2) {
-      background-color: $blue;
-      color: $grey-text;
-      padding-right: 44px;
-      padding-bottom: 12px;
-
-      :global {
-        .rc-slider-mark {
-          position: absolute;
-          right: -40px;
-          top: 62%;      
-        }
-
-        .wri_api__slider-tooltip-container {
-          min-width: unset;
-        }
+  :global {
+    .rc-tooltip-content {
+      .wri_api__slider-tooltip-container {
+        min-width: unset;
+      }
+  
+      .rc-tooltip-arrow {
+        display: none !important;
+      }
+  
+      .rc-tooltip-inner {
+        background-color: $blue;
+        color: $grey-text;
+        padding-right: 44px;
+        padding-bottom: 12px;
+      }
+  
+      .rc-slider-mark {
+        position: absolute;
+        right: -40px;
+        top: 62%;      
       }
     }
   }
 }
-

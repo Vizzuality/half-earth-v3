@@ -9,6 +9,7 @@ import Legend, {
   LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
 import LegendTitle from './legend-title';
+import ReactTooltip from 'react-tooltip';
 
 import styles from './legend-styles.module.scss';
 
@@ -60,12 +61,10 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
-      // focusStyle={focusStyle}
-      // defaultStyle={defaultStyle}
       enabledStyle={enabledStyle}
     >
       <LegendItemButtonInfo
-        tooltipText='Click to read the info of this layer'
+        tooltipText={<span className='tooltip-info-text'>Click to read the info of this layer</span>}
       />
       <LegendItemButtonOpacity
         className={styles.legendItemButtonOpacity}
@@ -73,10 +72,10 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
         trackStyle={trackStyle}
         railStyle={railStyle}
         marks={marks}
-        tooltipText='Change the opacity'
+        tooltipText={<span className='tooltip-opacity-text'>Change the opacity</span>}
       />
       <LegendItemButtonRemove 
-        tooltipText='Close this layer'
+        tooltipText={<span className='tooltip-remove-text'>Close this layer</span>}
       />
     </LegendItemToolbar>
   );

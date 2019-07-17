@@ -32,6 +32,7 @@ const Checkbox = ({ option, onChange, checked, theme, handleInfoClick }) => {
           data-tip
           data-for='infoLayerCheckboxButtonId'
           data-effect='solid'
+          data-delay-show={0}
         />
         <ReactTooltip id='infoLayerCheckboxButtonId' className='infoTooltipStyle'>
           Click to read the info of this layer

@@ -1,0 +1,22 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.infoTooltipStyle {
+	@extend %tooltip;
+	color: $dark-text !important;
+	background-color: $white !important;
+	opacity: 1 !important;
+	padding: 8px 8px !important;
+
+	&.place-left:after {
+		border-left-color: $white !important;
+	}
+
+	&.place-top:after {
+		border-top-color: $white !important;
+	}
+
+	&.place-right:after {
+		border-right-color: $white !important;
+	}
+}

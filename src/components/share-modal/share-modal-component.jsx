@@ -97,12 +97,13 @@ const ShareModalComponent = (props) => {
         data-for='shareButtonId'
         data-place='right'
         data-effect='solid'
+        data-delay-show={0}
       >
         <ShareIcon className={styles.icon} />
       </button>
       <ReactTooltip
         id='shareButtonId'
-        className='infoSmallTooltipStyle'
+        className='infoTooltipStyle'
       >
         Click to share
       </ReactTooltip>
