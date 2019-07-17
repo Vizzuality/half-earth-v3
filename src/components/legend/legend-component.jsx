@@ -9,7 +9,6 @@ import Legend, {
   LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
 import LegendTitle from './legend-title';
-import ReactTooltip from 'react-tooltip';
 
 import styles from './legend-styles.module.scss';
 
@@ -46,6 +45,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
   };
 
   const marks = { 
+    0: { style: { marginLeft: '0px', width: 'auto' }, label: '0%'},
     100: { style: { marginLeft: '0px', width: 'auto' }, label: '100%'}
   };
 
