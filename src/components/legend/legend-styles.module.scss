@@ -63,12 +63,12 @@ $icon-size: 14px;
 
     .tooltip-remove-text::after {
       @extend %tooltip-arrow;
-      right: 37px;
+      right: 34px;
     }
 
     .tooltip-info-text::after {
       @extend %tooltip-arrow;
-      right: 89px;
+      right: 86px;
     }
   }
 
