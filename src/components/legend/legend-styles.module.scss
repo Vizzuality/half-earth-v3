@@ -142,37 +142,37 @@ $icon-size: 14px;
     z-index: 0;
   }
 
-  .wri_api__c-legend-button {  //replaces legend button icons with custom ones
-    background-repeat: no-repeat;
-    background-size: contain;
+  .wri_api__c-legend-button {
+    // background-repeat: no-repeat;
+    // background-size: contain;
     height: $icon-size;
     width: $icon-size;
     z-index: 2;
 
-    svg {
-      background-repeat: no-repeat;
-      background-size: contain;
-      use {
-        display: none;
-      }
-    }
+    // svg {
+    //   background-repeat: no-repeat;
+    //   background-size: contain;
+    //   use {
+    //     display: none;
+    //   }
+    // }
 
-    &:nth-child(1) {
-      background-image: url('../../assets/icons/info.svg');
-    }
+    // &:nth-child(1) {
+    //   background-image: url('../../assets/icons/info.svg');
+    // }
 
-    &:nth-child(2) {
-      svg {
-        background-size: cover;
-        background-image: url('../../assets/icons/opacity.svg');
-        margin: auto;
-        width: 12px;
-      }
-    }
+    // &:nth-child(2) {
+    //   svg {
+    //     background-size: cover;
+    //     background-image: url('../../assets/icons/opacity.svg');
+    //     margin: auto;
+    //     width: 12px;
+    //   }
+    // }
 
-    &:nth-child(3) {
-      background-image: url('../../assets/icons/closeWhite.svg');
-    }
+    // &:nth-child(3) {
+    //   background-image: url('../../assets/icons/closeWhite.svg');
+    // }
   }
 
   .wri_api__c-icon.wri_api__-small {
@@ -185,11 +185,11 @@ $icon-size: 14px;
   }
 
   .wri_api__c-legend-handler {
-    height: 100%;
-    left: 0;
-    top: 0;
-    width: 100%;
-    z-index: 1;
+    // height: 100%;
+    // left: 0;
+    // top: 0;
+    // width: 100%;
+    // z-index: 1;
 
     svg {
       display: none;

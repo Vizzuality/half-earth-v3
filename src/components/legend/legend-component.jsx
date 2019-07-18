@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Legend, {
-  LegendItemToolbar,
-  LegendItemButtonOpacity,
-  LegendItemButtonInfo,
+  // LegendItemToolbar,
+  // LegendItemButtonOpacity,
+  // LegendItemButtonInfo,
   LegendItemTypes,
   LegendListItem,
-  LegendItemButtonRemove
+  // LegendItemButtonRemove
 } from 'vizzuality-components/dist/legend';
+
+// import  LegendItemButtonInfo from './legend-item-toolbar/legend-item-button-info/index';
+
+import LegendItemToolbar, {
+  LegendItemButtonOpacity,
+  LegendItemButtonInfo,
+  LegendItemButtonRemove
+} from './legend-item-toolbar/index';
+
 import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
