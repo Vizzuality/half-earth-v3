@@ -5,13 +5,9 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
-<<<<<<< HEAD
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-
-=======
-import GridLayer from 'components/grid-layer';
 import LabelsLayer from 'components/labels-layer';
->>>>>>> Add labels layer
+
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import About from 'components/about';

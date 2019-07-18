@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 
-import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/layers-slugs';
+import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
@@ -26,7 +25,7 @@ const handleMapLoad = (map, view, activeLayers) => {
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work
   // It will be probably fixed on v4.13
-  const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
+  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   loadModules(["esri/config"]).then(([esriConfig]) => {
     esriConfig.request.interceptors.push({
       urls: `${humanImpactLayer.url}/exportImage`,
