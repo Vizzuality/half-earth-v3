@@ -17,7 +17,8 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
         font: {
           family: config.fontFamily,
           style: config.fontStyle,
-          size: config.fontSize
+          size: config.fontSize,
+          weight: config.fontWeight || "normal"
         },
         material: { color: config.color }
       }]
