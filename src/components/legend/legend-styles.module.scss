@@ -55,6 +55,7 @@ $icon-size: 14px;
     @extend %tooltip-apperance;
     max-width: unset;
     position: unset;
+    margin: 0 20px;
 
     .tooltip-opacity-text::after {
       @extend %tooltip-arrow;
@@ -256,6 +257,7 @@ body {
         background-color: $blue !important;
         color: $grey-text !important;
         position: relative;
+        margin: 0;
       }
     }
   }
