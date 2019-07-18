@@ -5,11 +5,11 @@ import { stylesConfig } from './labels-layer-styles-config';
 const labelClassFactory = (LabelClassConstructor, styleGroup) => {
   const config = stylesConfig[styleGroup];
   return new LabelClassConstructor({
-    labelPlacement: 'center-center',
+    labelPlacement: 'above-center',
     labelExpressionInfo: {
       expression: "$feature.name"
     },
-    where: `style = ${styleGroup}`,
+    where: `style = '${styleGroup}'`,
     symbol: {
       type: "label-3d",
       symbolLayers: [{
@@ -20,7 +20,6 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
           size: config.fontSize
         },
         material: { color: config.color }
-        //halo: { color: [...color, 0.4], size: '1px' }
       }]
     }
   });
@@ -42,10 +41,9 @@ const LabelsLayerComponent = ({ map }) => {
       var style_4_aq = labelClassFactory(LabelClass, 'style_4_aq');
       var style_city_capital = labelClassFactory(LabelClass, 'Capital_style');
       var style_city_other = labelClassFactory(LabelClass, 'Other_style');
-
       labelsLayerGroup.layers.items.forEach(layer => {
         // Add labels to the feature layer
-        layer.opacity = 0;
+        layer.opacity = 1;
         layer.visible = true;
         layer.labelsVisible = true;
         layer.labelingInfo = [
