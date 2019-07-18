@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { loadModules } from '@esri/react-arcgis';
 
 import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
@@ -16,12 +18,29 @@ const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
 
-  const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
   // set the outFields for the BIODIVERSITY_FACETS_LAYER
   // to get all the attributes available
+  const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
   gridLayer.outFields = ["*"];
 
-  //list of active biodiversity layers
+  // This fix has been added as a workaround to a bug introduced on v4.12
+  // The bug was causing the where clause of the mosaic rule to not work
+  // It will be probably fixed on v4.13
+  const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
+  loadModules(["esri/config"]).then(([esriConfig]) => {
+    esriConfig.request.interceptors.push({
+      urls: `${humanImpactLayer.url}/exportImage`,
+      before: function (params) {
+        if(params.requestOptions.query.mosaicRule) {
+          params.requestOptions.query.mosaicRule = JSON.stringify(humanImpactLayer.mosaicRule.toJSON());
+        }
+      }
+    });
+  })
+
+  // Here we are creating the biodiversity layers active in the URL
+  // this is needed to have the layers displayed on the map when sharing the URL
+  // we would be able to get rid of it when this layers are added to the scene via arcgis online
   const biodiversityLayerIDs = activeLayers
     .filter(({ category }) => category === "Biodiversity")
     .map(({ id }) => id);

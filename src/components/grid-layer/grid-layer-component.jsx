@@ -66,7 +66,8 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
             queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
             queryHandle = gridViewLayer.queryFeatures({
               geometry: extent,
-              spatialRelationship: 'intersects'
+              spatialRelationship: 'intersects',
+              returnGeometry: true
             }).then(function(results) {
               const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
               const hasContainedGridCells = containedGridCells.length > 0;

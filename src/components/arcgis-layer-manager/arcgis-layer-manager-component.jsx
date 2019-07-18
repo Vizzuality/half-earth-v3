@@ -36,8 +36,13 @@ const ArcgisLayerManager = ({ map, activeLayers }) => {
       layer.visible = !!setActive;
       mapLayer.visible = !!setActive;
     })
-    setOpacity(mapLayer);    
-    mapLayer.visible = !!setActive;
+    setOpacity(mapLayer);
+    // Set group layers as visible to allow sublayers to be visible
+    if (mapLayer.type === "group") {
+      mapLayer.visible = true
+    } else {
+      mapLayer.visible = !!setActive;
+    }
   })
   return null
 }
