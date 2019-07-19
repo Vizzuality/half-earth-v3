@@ -114,7 +114,7 @@ $icon-size: 14px;
   }
 
   .wri_api__c-legend-item .wri_api__legend-item-container.wri_api__-sortable { //whole legend item padding
-    padding: 10px 12px 12px;
+    padding: 0 12px 12px;
   }
 
   li.wri_api__c-legend-item { //use this only for legend item container
@@ -205,31 +205,7 @@ $icon-size: 14px;
   }
 }
 
-body {
-  :global {
-    .wri_api__slider-ranges {
-      position: relative; 
-    }
 
-    .-sortable {  //when dragging the legend item
-      background: $firefly;
-      box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
-      padding-left: 0px;
-
-      li > .wri_api__c-legend-item {  //disable white background for item legend label
-        @extend %legend-label-text;
-      }
-
-      .wri_api__name {
-        @extend %legend-ramp-text;
-      }
-
-      .wri_api__c-legend-type-gradient .wri_api__icon-gradient {
-        @extend %legend-ramp-bar;
-      }
-    }
-  }
-}
 
 .legend {
   position: absolute;
@@ -242,10 +218,11 @@ body {
   position: relative;
 }
 
-.legendItemButtonOpacity {
-  left: unset !important;
-  right: $site-gutter;
-  width: 208px;
+// .legendItemButtonOpacity {
+//   left: unset !important;
+//   right: $site-gutter;
+//   width: 208px;
+// }
 
   :global {
     .rc-tooltip-content {
@@ -261,4 +238,3 @@ body {
       }
     }
   }
-}

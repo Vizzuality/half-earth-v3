@@ -106,16 +106,18 @@ class LegendItemButtonOpacity extends PureComponent {
         )}
         visible={visibility && visibilityClick}
         overlayClassName={`c-rc-tooltip ${classnames({ '-default': visibility })} ${className || ''}`}
-        placement="top"
+        placement="topLeft"
         trigger={['click']}
         onVisibleChange={this.onTooltipVisibilityChange}
         destroyTooltipOnHide
+        className={styles.opacityTooltip}
+        overlayStyle={{ color: '#fff' }}
       >
         <Tooltip
           visible={visibilityHover && !visibilityClick && visibility}
           overlay={tooltipText || (`Opacity ${opacity ? `(${Math.round(opacity * 100)}%)` : ''}`)}
           overlayClassName="c-rc-tooltip -default"
-          placement="top"
+          placement="topLeft"
           trigger={tooltipOpened ? '' : 'hover'}
           onVisibleChange={v => this.setState({ visibilityHover: v })}
           destroyTooltipOnHide
@@ -123,7 +125,10 @@ class LegendItemButtonOpacity extends PureComponent {
         >
           <button
             type="button"
-            className={cx(styles.toolbarButton, { [styles.toolbarButtonActive]: visibility })}
+            className={cx(styles.toolbarButton,
+              { [styles.toolbarButtonVisibilityChanged]: visibility },
+              { [styles.toolbarButtonActive]: visibilityClick },
+            )}
             aria-label="Change opacity"
           >
             <OpacityIcon />

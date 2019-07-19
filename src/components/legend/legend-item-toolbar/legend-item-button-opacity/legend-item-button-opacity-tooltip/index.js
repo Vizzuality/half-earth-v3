@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Range } from 'vizzuality-components';
 import './styles.scss';
+import styles from './styles.scss';
 
 class LegendOpacityTooltip extends PureComponent {
   static propTypes = {
@@ -22,8 +23,6 @@ class LegendOpacityTooltip extends PureComponent {
   }
 
   onChange = (v) => {
-    console.log('sdfghjkl');
-
     const { activeLayer, onChangeOpacity } = this.props;
     onChangeOpacity(activeLayer, v);
   }
@@ -33,7 +32,7 @@ class LegendOpacityTooltip extends PureComponent {
     const value = typeof opacity !== 'undefined' ? opacity : 1;
 
     return (
-      <div styleName="c-legend-item-button-opacity-tooltip" ref={(node) => { this.el = node; }}>
+      <div className={styles.opacityTooltipContent} ref={(node) => { this.el = node; }}>
         Opacity
 
         <div styleName="slider-tooltip-container">

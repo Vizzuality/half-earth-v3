@@ -1,14 +1,29 @@
+@import 'styles/settings';
+
 .toolbarButton {
-  background: red;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   svg {
     fill: white;
     stroke: white;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.toolbarButtonVisibilityChanged {
+  svg {
+    fill: $brand-color-main;
+    stroke: $brand-color-main;
   }
 }
 
 .toolbarButtonActive {
-  svg {
-    fill: green;
-    stroke: green;
-  }
+  background-color: $blue;
+  border-radius: 0 0 2px 2px;
+}
+
+.opacityTooltip {
+  width: 208px;
 }

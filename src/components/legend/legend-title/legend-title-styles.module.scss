@@ -1,12 +1,20 @@
+
 .titleContainer {
-  height: 25px;
+  height: 14px;
   display: flex;
   align-items: center;
+  margin-top: 12px;
 }
 
 .imageLink {
   margin-right: 5px;
+ 
   z-index: 2;
+}
+
+.molLogo {
+  height: 14px;
+  width: 14px;
 }
 
 .title {
