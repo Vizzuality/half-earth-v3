@@ -21,7 +21,8 @@ const LocationWidget = props => {
   useEffect(() => {
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {
       const locationWidget = new LocateView({
-        view: view
+        view: view,
+        graphic: ''
       });
       locationWidget.on("locate", () => clickFindMyPositionAnalyticsEvent());
       setLocationWidget(locationWidget);

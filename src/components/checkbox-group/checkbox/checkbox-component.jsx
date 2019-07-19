@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
 
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
@@ -23,7 +24,21 @@ const Checkbox = ({ option, onChange, checked, theme, handleInfoClick }) => {
       <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: checked })}>
         <span className={styles.label}>{option.name}</span>
       </label>
-      {checked && <InfoIcon className={styles.icon} onClick={() => handleInfoClick(option)} />}
+      {checked && (
+      <>
+        <InfoIcon
+          className={styles.icon}
+          onClick={() => handleInfoClick(option)}
+          data-tip
+          data-for='infoLayerCheckboxButtonId'
+          data-effect='solid'
+          data-delay-show={0}
+        />
+        <ReactTooltip id='infoLayerCheckboxButtonId' className='infoTooltipStyle'>
+          Click to read the info of this layer
+        </ReactTooltip>
+      </>
+      )}
     </div>
   )}
 
