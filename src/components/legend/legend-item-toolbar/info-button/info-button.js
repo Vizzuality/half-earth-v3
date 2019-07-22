@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InfoButton from './info-button-component';
+import InfoButtonComponent from './info-button-component';
 
-const LegendItemButtonInfo = props => {
+const InfoButton = props => {
   const { activeLayer, tooltipOpened, tooltipText, onChangeInfo } = props;
 
   return (
-    <InfoButton
+    <InfoButtonComponent
       activeLayer={activeLayer}
       tooltipOpened={tooltipOpened}
       tooltipText={tooltipText}
@@ -15,16 +15,18 @@ const LegendItemButtonInfo = props => {
   );
 }
 
-LegendItemButtonInfo.propTypes = {
+InfoButton.propTypes = {
   activeLayer: PropTypes.object,
   tooltipOpened: PropTypes.bool,
-  tooltipText: PropTypes.string
+  tooltipText: PropTypes.string,
+  onChangeInfo: PropTypes.func
 }
 
-LegendItemButtonInfo.defaultProps = {
+InfoButton.defaultProps = {
     activeLayer: {},
     tooltipOpened: false,
-    tooltipText: ''
+    tooltipText: '',
+    onChangeInfo: () => {}
 }
 
-export default LegendItemButtonInfo;
+export default InfoButton;

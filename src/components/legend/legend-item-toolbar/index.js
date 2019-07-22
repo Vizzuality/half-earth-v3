@@ -1,11 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import LegendItemButtonBBox from './legend-item-button-bbox';
-import LegendItemButtonLayers from './legend-item-button-layers';
 import LegendItemButtonOpacity from './legend-item-button-opacity';
-import LegendItemButtonVisibility from './legend-item-button-visibility';
 import LegendItemButtonInfo from './info-button//info-button';
-import LegendItemButtonRemove from './legend-item-button-remove';
+import LegendItemButtonRemove from './remove-button/remove-button';
 import './styles.scss';
 
 class LegendItemToolbar extends PureComponent {
@@ -78,10 +75,7 @@ class LegendItemToolbar extends PureComponent {
         ))}
 
         {/* If there is no children defined, let's use the components we had */}
-        {!React.Children.count(children) && <LegendItemButtonBBox {...props} />}
-        {!React.Children.count(children) && <LegendItemButtonLayers {...props} />}
         {!React.Children.count(children) && <LegendItemButtonOpacity {...props} />}
-        {!React.Children.count(children) && <LegendItemButtonVisibility {...props} />}
         {!React.Children.count(children) && <LegendItemButtonInfo {...props} />}
         {!React.Children.count(children) && <LegendItemButtonRemove {...props} /> }
 
@@ -92,10 +86,7 @@ class LegendItemToolbar extends PureComponent {
 export default LegendItemToolbar;
 
 export {
-  LegendItemButtonBBox,
-  LegendItemButtonLayers,
   LegendItemButtonOpacity,
-  LegendItemButtonVisibility,
   LegendItemButtonInfo,
   LegendItemButtonRemove
 };
