@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Tooltip from 'vizzuality-components/dist/tooltip';
-import LegendOpacityTooltip from './legend-item-button-opacity-tooltip';
+import LegendOpacityTooltip from './opacity-tooltip';
 import { ReactComponent as OpacityIcon } from 'icons/opacity.svg';
 import cx from 'classnames';
 import styles from './legend-item-button-opacity-styles.module.scss';

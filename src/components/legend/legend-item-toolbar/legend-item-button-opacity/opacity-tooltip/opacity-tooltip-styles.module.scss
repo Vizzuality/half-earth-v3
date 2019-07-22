@@ -1,0 +1,24 @@
+@import 'styles/settings';
+
+%legend-ramp-text {
+  font-family: $font-family-1-light !important;
+  color: $grey-text;
+  line-height: 10px;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.sliderContent {
+  flex: 1;
+  position: relative;
+}
+
+.sliderValue {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 12px;
+  width: 40px;
+}
