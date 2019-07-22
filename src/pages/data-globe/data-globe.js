@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
-import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
@@ -18,15 +17,15 @@ const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
 
+  const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
   // set the outFields for the BIODIVERSITY_FACETS_LAYER
   // to get all the attributes available
-  const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
   gridLayer.outFields = ["*"];
 
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work
   // It will be probably fixed on v4.13
-  const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
+  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   loadModules(["esri/config"]).then(([esriConfig]) => {
     esriConfig.request.interceptors.push({
       urls: `${humanImpactLayer.url}/exportImage`,
@@ -43,7 +42,7 @@ const handleMapLoad = (map, view, activeLayers) => {
   // we would be able to get rid of it when this layers are added to the scene via arcgis online
   const biodiversityLayerIDs = activeLayers
     .filter(({ category }) => category === "Biodiversity")
-    .map(({ id }) => id);
+    .map(({ title }) => title);
 
   const biodiversityLayers = layersConfig
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));

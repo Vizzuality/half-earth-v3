@@ -1,7 +1,7 @@
 import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { BIODIVERSITY_FACETS_LAYER } from 'constants/layers-slugs';
 
 import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry, cellsEquality } from 'utils/grid-layer-utils';
 
@@ -41,7 +41,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
   // store grid view layer
   useEffect(() => {
     const { layers } = map;
-      const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
+      const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
       view.whenLayerView(gridLayer).then(function(layerView) {
         setGridViewLayer(layerView);
       })

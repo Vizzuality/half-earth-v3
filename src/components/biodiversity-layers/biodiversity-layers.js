@@ -35,7 +35,7 @@ const BiodiversityLayerContainer = props => {
 
     const addLayer = layersConfig.find(l => l.slug === layerToAdd);
     const removeLayer = layersConfig.find(l => l.slug === layerToRemove);
-    const layerExists = map.layers.items.some(l => l.id === addLayer.slug);
+    const layerExists = map.layers.items.some(l => l.title === addLayer.slug);
     const removeSlug = removeLayer && removeLayer.slug;
 
     !layerExists && createLayer(addLayer, map);

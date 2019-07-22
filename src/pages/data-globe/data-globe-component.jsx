@@ -6,6 +6,7 @@ import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
+import LabelsLayer from 'components/labels-layer';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
@@ -27,7 +28,9 @@ const HumanImpactLayers = loadable(() => import('components/human-impact-layers'
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
+// const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
+const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
+
 const DataGlobeComponent = ({
   activeLayers,
   rasters,
@@ -49,7 +52,7 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-  
+
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
       <TerrainExaggerationLayer exaggeration={3}/>
@@ -110,6 +113,7 @@ const DataGlobeComponent = ({
       />
       {isLandscapeMode && <GridLayer />}
       {hasMetadata && <InfoModal />}
+      <LabelsLayer />
     </Globe>
   )
 };
