@@ -39,59 +39,15 @@ $icon-size: 14px;
   .wri_api__close {
     margin-right: 0;
   }
-  
-  .rc-tooltip-content {
-    background-color: transparent;
-    border-radius: 2px;
-    position: relative;
-    transform: translateY(-6px);
-  }
-
-  .rc-tooltip-arrow {
-    display: none !important;
-  }
-
-  .c-rc-tooltip.-default .rc-tooltip-inner {
-    @extend %tooltip-apperance;
-    max-width: unset;
-    position: unset;
-    margin: 0 20px;
-
-    .tooltip-opacity-text::after {
-      @extend %tooltip-arrow;
-      right: 58px;
-    }
-
-    .tooltip-remove-text::after {
-      @extend %tooltip-arrow;
-      right: 34px;
-    }
-
-    .tooltip-info-text::after {
-      @extend %tooltip-arrow;
-      right: 86px;
-    }
-  }
-
-  .rc-slider-mark {
-    display: flex;
-    justify-content: space-between;      
-  }
-
-  .wri_api__c-legend-item-button-opacity-tooltip { // tooltip styles
-    font-size: $font-size-xs;
-    position: relative;
-    
-    .wri_api__slider-tooltip-container {
-      padding: 0;
-    }
-  }
 
   .wri_api__legend-item-header { // legend item title
     h3 {
       color: $white !important;
       font-family: $font-family-1;
       font-size: $font-size-xs;
+    }
+    & > div {
+      display: inline-flex;
     }
   }
 
@@ -143,36 +99,9 @@ $icon-size: 14px;
   }
 
   .wri_api__c-legend-button {
-    // background-repeat: no-repeat;
-    // background-size: contain;
     height: $icon-size;
     width: $icon-size;
     z-index: 2;
-
-    // svg {
-    //   background-repeat: no-repeat;
-    //   background-size: contain;
-    //   use {
-    //     display: none;
-    //   }
-    // }
-
-    // &:nth-child(1) {
-    //   background-image: url('../../assets/icons/info.svg');
-    // }
-
-    // &:nth-child(2) {
-    //   svg {
-    //     background-size: cover;
-    //     background-image: url('../../assets/icons/opacity.svg');
-    //     margin: auto;
-    //     width: 12px;
-    //   }
-    // }
-
-    // &:nth-child(3) {
-    //   background-image: url('../../assets/icons/closeWhite.svg');
-    // }
   }
 
   .wri_api__c-icon.wri_api__-small {
@@ -185,27 +114,15 @@ $icon-size: 14px;
   }
 
   .wri_api__c-legend-handler {
-    // height: 100%;
-    // left: 0;
-    // top: 0;
-    // width: 100%;
-    // z-index: 1;
-
     svg {
       display: none;
     }
-  }
-
-  .wri_api__slider-tooltip-container {
-    margin-top: 10px;
   }
   
   .wri_api__c-legend-type-gradient .wri_api__icon-gradient {
     @extend %legend-ramp-bar;
   }
 }
-
-
 
 .legend {
   position: absolute;
@@ -218,23 +135,4 @@ $icon-size: 14px;
   position: relative;
 }
 
-// .legendItemButtonOpacity {
-//   left: unset !important;
-//   right: $site-gutter;
-//   width: 208px;
-// }
-
-  :global {
-    .rc-tooltip-content {
-      .wri_api__slider-tooltip-container {
-        min-width: unset;
-      }
-  
-      .rc-tooltip-inner {
-        background-color: $blue !important;
-        color: $grey-text !important;
-        position: relative;
-        margin: 0;
-      }
-    }
-  }
+ 

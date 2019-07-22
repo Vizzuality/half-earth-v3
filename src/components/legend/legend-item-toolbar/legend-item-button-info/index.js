@@ -53,7 +53,7 @@ class LegendItemButtonInfo extends PureComponent {
     return (
       <Tooltip
         overlay={tooltipText || 'Layer info'}
-        overlayClassName="c-rc-tooltip -default"
+        overlayClassName="c-rc-tooltip -default infoTooltipStyle3"
         placement="topRight"
         trigger={tooltipOpened ? '' : 'hover'}
         mouseLeaveDelay={0}
@@ -63,7 +63,7 @@ class LegendItemButtonInfo extends PureComponent {
       >
         <button
           type="button"
-          styleName={cx(styles.toolbarButton, { [styles.toolbarButtonActive]: visible })}
+          className={cx(styles.toolbarButton, { [styles.toolbarButtonActive]: visible })}
           aria-label="More information"
           onClick={() => this.props.onChangeInfo(activeLayer)}
         >

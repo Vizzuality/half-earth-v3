@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'vizzuality-components';
+import { ReactComponent as CloseIcon } from 'icons/closeWhite.svg';
 import { Tooltip } from 'vizzuality-components';
-import '../styles-button.scss';
+import styles from './legend-item-button-remove.module.scss';
+import cx from 'classnames';
 
 class LegendItemButtonRemove extends PureComponent {
   static propTypes = {
@@ -50,8 +51,8 @@ class LegendItemButtonRemove extends PureComponent {
     return (
       <Tooltip
         overlay={tooltipText || 'Remove layer'}
-        overlayClassName="c-rc-tooltip -default"
-        placement="top"
+        overlayClassName="c-rc-tooltip -default legendCloseButtonTooltip"
+        placement="topRight"
         trigger={tooltipOpened ? '' : 'hover'}
         mouseLeaveDelay={0}
         destroyTooltipOnHide
@@ -60,11 +61,11 @@ class LegendItemButtonRemove extends PureComponent {
       >
         <button
           type="button"
-          styleName="c-legend-button close"
+          className={cx(styles.toolbarButton, { [styles.toolbarButtonActive]: visible })}
           onClick={() => this.props.onRemoveLayer(activeLayer)}
           aria-label="Remove"
         >
-          <Icon name={icon || 'icon-cross'} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <CloseIcon />
         </button>
       </Tooltip>
     );

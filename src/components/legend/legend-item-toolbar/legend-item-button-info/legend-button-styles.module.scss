@@ -1,7 +1,12 @@
+@import 'styles/settings';
+@import 'styles/tooltip';
+
 .toolbarButton {
+  width: 26px;
+  height: 26px;
   svg {
-    fill: white;
-    stroke: white;
+    fill: $white;
+    stroke: $white;
   }
 }
 
@@ -9,5 +14,18 @@
   svg {
     fill: green;
     stroke: green;
+  }
+}
+
+:global {
+  .infoTooltipStyle3 {
+    // @extend %tooltip-apperance;
+    // transform: translate(13px, -6px);
+    .rc-tooltip-content {
+      .rc-tooltip-inner {
+        @extend %tooltip-apperance;
+        max-width: unset;
+      }
+    }
   }
 }

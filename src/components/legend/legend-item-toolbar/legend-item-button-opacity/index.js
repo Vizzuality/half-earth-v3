@@ -6,6 +6,7 @@ import LegendOpacityTooltip from './legend-item-button-opacity-tooltip';
 import { ReactComponent as OpacityIcon } from 'icons/opacity.svg';
 import cx from 'classnames';
 import styles from './legend-item-button-opacity-styles.module.scss';
+import domAlign from 'dom-align';
 
 class LegendItemButtonOpacity extends PureComponent {
   static propTypes = {
@@ -105,23 +106,24 @@ class LegendItemButtonOpacity extends PureComponent {
           />
         )}
         visible={visibility && visibilityClick}
-        overlayClassName={`c-rc-tooltip ${classnames({ '-default': visibility })} ${className || ''}`}
+        overlayClassName={`c-rc-tooltip ${classnames({ '-default': visibility })} ${className || ''} opacityChangeTooltip`}
         placement="topLeft"
         trigger={['click']}
         onVisibleChange={this.onTooltipVisibilityChange}
         destroyTooltipOnHide
         className={styles.opacityTooltip}
-        overlayStyle={{ color: '#fff' }}
+        // overlayClassName='opacityTooltip'
+        // overlayStyle={{ color: 'pink' }}
       >
         <Tooltip
           visible={visibilityHover && !visibilityClick && visibility}
           overlay={tooltipText || (`Opacity ${opacity ? `(${Math.round(opacity * 100)}%)` : ''}`)}
-          overlayClassName="c-rc-tooltip -default"
+          overlayClassName="c-rc-tooltip -default opacityTooltip"
           placement="topLeft"
           trigger={tooltipOpened ? '' : 'hover'}
           onVisibleChange={v => this.setState({ visibilityHover: v })}
           destroyTooltipOnHide
-          style={styles.tooltip}
+
         >
           <button
             type="button"

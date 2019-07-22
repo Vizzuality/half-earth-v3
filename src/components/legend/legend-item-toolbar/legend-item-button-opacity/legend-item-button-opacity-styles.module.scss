@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/tooltip';
 
 .toolbarButton {
   width: 26px;
@@ -24,6 +25,37 @@
   border-radius: 0 0 2px 2px;
 }
 
-.opacityTooltip {
-  width: 208px;
+:global {
+  .opacityChangeTooltip {
+    // margin-top: 14px;
+
+    .rc-tooltip-content {
+      .rc-tooltip-arrow {
+        // display: none !important;
+        margin-left: 0; 
+        right: 0;
+        width: 100%;
+        background: $blue;
+        border: 0;
+        height: 5px;
+    
+
+      }
+      .rc-tooltip-inner {
+        width: 222px;
+        background: $blue;
+        color: $grey-text;
+        border-radius: 4px 4px 0 0 ;
+        max-width: unset;
+      }
+    }
+  }
+
+  .opacityTooltip {
+    .rc-tooltip-inner {
+      @extend %tooltip-apperance;
+      max-width: unset;
+      position: unset;
+    }
+  }
 }

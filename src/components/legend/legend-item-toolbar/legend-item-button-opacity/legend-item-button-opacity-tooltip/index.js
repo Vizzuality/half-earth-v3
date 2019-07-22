@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Range } from 'vizzuality-components';
-import './styles.scss';
-import styles from './styles.scss';
+import styles from './opacity-tooltip-styles.module.scss';
 
 class LegendOpacityTooltip extends PureComponent {
   static propTypes = {
@@ -23,6 +22,7 @@ class LegendOpacityTooltip extends PureComponent {
   }
 
   onChange = (v) => {
+    console.log('value:',v);
     const { activeLayer, onChangeOpacity } = this.props;
     onChangeOpacity(activeLayer, v);
   }
@@ -32,23 +32,22 @@ class LegendOpacityTooltip extends PureComponent {
     const value = typeof opacity !== 'undefined' ? opacity : 1;
 
     return (
-      <div className={styles.opacityTooltipContent} ref={(node) => { this.el = node; }}>
-        Opacity
+      <div className={styles.opacityTooltipContainer}>
+        <div className={styles.opacityTooltipContent} ref={(node) => { this.el = node; }}>
+          Opacity
 
-        <div styleName="slider-tooltip-container">
-          <Range
-            marks={{
-              [min]: '0%',
-              [max]: '100%'
-            }}
-            min={min}
-            max={max}
-            step={step}
-            value={value}
-            onAfterChange={this.onChange}
-            {...rest}
-          />
+          <div className={styles.sliderContainer}>
+            <Range
+              min={min}
+              max={max}
+              step={step}
+              value={value}
+              onAfterChange={this.onChange}
+              {...rest}
+            />
+          </div>
         </div>
+        <span className={styles.sliderValue}>{`${Math.round(value * 100)}%`}</span>
       </div>
     );
   }
