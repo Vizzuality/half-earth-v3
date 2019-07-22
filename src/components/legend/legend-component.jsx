@@ -17,6 +17,7 @@ import LegendItemToolbar, {
   LegendItemButtonRemove
 } from './legend-item-toolbar/index';
 
+
 import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';

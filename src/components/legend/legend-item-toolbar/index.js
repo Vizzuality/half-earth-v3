@@ -4,7 +4,7 @@ import LegendItemButtonBBox from './legend-item-button-bbox';
 import LegendItemButtonLayers from './legend-item-button-layers';
 import LegendItemButtonOpacity from './legend-item-button-opacity';
 import LegendItemButtonVisibility from './legend-item-button-visibility';
-import LegendItemButtonInfo from './legend-item-button-info';
+import LegendItemButtonInfo from './info-button//info-button';
 import LegendItemButtonRemove from './legend-item-button-remove';
 import './styles.scss';
 
