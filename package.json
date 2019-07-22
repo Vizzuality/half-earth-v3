@@ -83,13 +83,17 @@
       "components/widgets/(.*)": "<rootDir>/src/components/widgets/$1/$1.js",
       "components/(.*)/(.*)$": "<rootDir>/src/components/$1/$2.jsx",
       "components/(.*)$": "<rootDir>/src/components/$1/$1.js",
-      "\\.svg": "<rootDir>/test/mocks/svg-mock.js",
+      "\\.svg": "<rootDir>/src/__tests__/integration/mocks/svg-mock.js",
       "\\.module\\.scss$": "identity-obj-proxy",
-      "\\.scss$": "<rootDir>/test/mocks/style-mock.js"
+      "\\.scss$": "<rootDir>/src/__tests__/integration/mocks/style-mock.js"
     },
     "modulePaths": [
       "<rootDir>/src",
       "<rootDir>/test"
+    ],
+    "testMatch": [
+      "**/__tests__/integration/tests/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
     ],
     "testEnvironmentOptions": {
       "testUrl": "https://half-earth.test.com"
