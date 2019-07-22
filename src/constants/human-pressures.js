@@ -2,18 +2,26 @@ import {
   LAND_HUMAN_PRESSURES_IMAGE_LAYER
 } from 'constants/layers-slugs';
 
+const RAINFED = 'Rainfed agriculture';
+const IRRIGATED = 'Irrigated agriculture';
+const URBAN = 'Urban pressures';
+
 export const humanPressuresLandUse = [
-  { name: 'Rainfed agriculture', value: 'rainfed', slug: 'human-pressures-rainfed' },
-  { name: 'Irrigated agriculture', value: 'agriculture', slug: 'human-pressures-agriculture' },
-  { name: 'Urban pressures', value: 'urban', slug: 'human-pressures-urban' }
+  { name: RAINFED, value: 'rainfed', slug: 'human-pressures-rainfed' },
+  { name: IRRIGATED, value: 'agriculture', slug: 'human-pressures-agriculture' },
+  { name: URBAN, value: 'urban', slug: 'human-pressures-urban' }
 ];
 
 export const humanPressuresLandscapeWidget = [
-  { name: 'Rainfed agriculture', value: 'rainfed', slug: 'human-pressures-rainfed' },
-  { name: 'Irrigated agriculture', value: 'agriculture', slug: 'human-pressures-agriculture' },
-  { name: 'Urban pressures', value: 'urban', slug: 'human-pressures-urban' },
+  ...humanPressuresLandUse,
   { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' }
 ];
+
+export const legendSingleRasterTitles = {
+  rainfed: RAINFED,
+  agriculture: IRRIGATED,
+  urban: URBAN
+}
 
 export const legendConfigs = {
   [LAND_HUMAN_PRESSURES_IMAGE_LAYER]: {
@@ -57,10 +65,4 @@ export const legendConfigs = {
       }
     ]
   }
-}
-
-export const legendSingleRasterTitles = {
-  rainfed: 'Rainfed agriculture',
-  agriculture: 'Irrigated agriculture',
-  urban: 'Urban pressures'
 }
