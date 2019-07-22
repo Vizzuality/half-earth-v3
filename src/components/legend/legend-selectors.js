@@ -32,9 +32,10 @@ const getLegendConfigs = createSelector(
   if (!visibleLayers.length) return null;
 
   const configs = visibleLayers.map(layer => {
-    if(legendConfigs[layer.title]) return { ...legendConfigs[layer.title], molLogo: true, layerId: layer.title, opacity: layer.opacity }
-    if(humanPressureLegendConfigs[layer.title]) return { ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle, layerId: layer.title, opacity: layer.opacity }
-    if(WDPALegendConfigs[layer.title]) return { ...WDPALegendConfigs[layer.title], layerId: layer.title, opacity: layer.opacity }
+    const sharedConfig = { layerId: layer.title, opacity: layer.opacity };
+    if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
+    if(humanPressureLegendConfigs[layer.title]) return { ...sharedConfig, ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle }
+    if(WDPALegendConfigs[layer.title]) return { ...sharedConfig, ...WDPALegendConfigs[layer.title] }
   })
 
   const parsed = configs.map(config => parseLegend(config));
