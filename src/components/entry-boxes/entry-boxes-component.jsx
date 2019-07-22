@@ -29,7 +29,7 @@ const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCatego
   }
 
   return (
-    <div className={styles.uiTopLeft}>
+    <div data-cy="entry-boxes" className={styles.uiTopLeft}>
       {interfaceLoaded && trail.map((styles, index) => (
         <animated.div
           key={categories[index].id}
