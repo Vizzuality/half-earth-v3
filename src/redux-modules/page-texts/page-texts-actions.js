@@ -1,6 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import CONTENTFUL from 'services/contentful';
-import { isEmpty } from 'lodash';
 
 // Requires payload params:
 // slug: slug to fetch

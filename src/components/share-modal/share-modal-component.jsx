@@ -4,7 +4,6 @@ import { Modal, Button } from 'he-components';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 import styles from './share-modal-styles.module';
 

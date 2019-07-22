@@ -3,12 +3,12 @@ import { createAction } from 'redux-tools';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug, query }) => {
-  const viewMode = query && query.viewMode || VIEW_MODE.GLOBE;
+  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
   return { analytics: [ viewMode, 'Add layer', `${slug}` ] };
 });
 
 export const removeLayerAnalyticsEvent = createAction('removeLayer', null, ({ slug, query }) => {
-  const viewMode = query && query.viewMode || VIEW_MODE.GLOBE;
+  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
   return { analytics: [ viewMode, 'Remove layer', `${slug}` ] };
 });
 
@@ -18,7 +18,7 @@ export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', nu
 });
 
 export const openLayerInfoModalAnalyticsEvent = createAction('openLayerInfoModal', null, ({ slug, query }) => {
-  const viewMode = query && query.viewMode || VIEW_MODE.GLOBE;
+  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
   return { analytics: [ viewMode, 'Open layer info modal', `${slug}`] };
 });
 

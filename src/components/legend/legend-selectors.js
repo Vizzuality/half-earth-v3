@@ -36,6 +36,7 @@ const getLegendConfigs = createSelector(
     if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
     if(humanPressureLegendConfigs[layer.title]) return { ...sharedConfig, ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle }
     if(WDPALegendConfigs[layer.title]) return { ...sharedConfig, ...WDPALegendConfigs[layer.title] }
+    return sharedConfig;
   })
 
   const parsed = configs.map(config => parseLegend(config));
