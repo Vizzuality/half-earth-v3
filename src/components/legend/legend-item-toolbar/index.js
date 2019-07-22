@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import LegendItemButtonOpacity from './legend-item-button-opacity';
+import LegendItemButtonOpacity from './opacity-button/opacity-button';
 import LegendItemButtonInfo from './info-button//info-button';
 import LegendItemButtonRemove from './remove-button/remove-button';
 import './styles.scss';

@@ -1,52 +1,47 @@
 @import 'styles/settings';
 @import 'styles/tooltip';
 
-.toolbarButton {
+.opacityButton {
   width: 26px;
   height: 26px;
   padding: 0;
   svg {
-    fill: white;
-    stroke: white;
+    fill: $white;
+    stroke: $white;
     width: 14px;
     height: 14px;
   }
 }
 
-.toolbarButtonVisibilityChanged {
+.opacityEnabled {
   svg {
     fill: $brand-color-main;
     stroke: $brand-color-main;
   }
 }
 
-.toolbarButtonActive {
+.opacityButtonActive {
   background-color: $blue;
   border-radius: 0 0 2px 2px;
 }
 
 :global {
   .opacityChangeTooltip {
-    // margin-top: 14px;
-
     .rc-tooltip-content {
       .rc-tooltip-arrow {
-        // display: none !important;
-        margin-left: 0; 
-        right: 0;
-        width: 100%;
         background: $blue;
         border: 0;
         height: 5px;
-    
-
+        right: 0;
+        width: 100%;
       }
+
       .rc-tooltip-inner {
-        width: 222px;
         background: $blue;
+        border-radius: 4px 4px 0 0;
         color: $grey-text;
-        border-radius: 4px 4px 0 0 ;
         max-width: unset;
+        width: 222px;
       }
     }
   }
@@ -54,8 +49,8 @@
   .opacityTooltip {
     .rc-tooltip-inner {
       @extend %tooltip-apperance;
-      max-width: unset;
-      position: unset;
+      // max-width: unset;
+      // position: unset;
     }
   }
 }
