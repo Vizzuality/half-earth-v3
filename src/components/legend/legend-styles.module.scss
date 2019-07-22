@@ -1,5 +1,7 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
+@import 'styles/tooltip';
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
@@ -21,30 +23,59 @@ $icon-size: 14px;
   background: transparent;
 }
 
+%tooltip-arrow {
+  content: '';
+  background-color: $white;
+  bottom: -3px;
+  display: block;
+  position: absolute;
+  transform: rotate(45deg);
+  height: 10px;
+  width: 10px;
+}
+
 //legend tooltip styles
 :global {
+  .wri_api__close {
+    margin-right: 0;
+  }
+  
   .rc-tooltip-content {
-    background-color: $blue;
+    background-color: transparent;
     border-radius: 2px;
-
-    .rc-tooltip-inner {
-      padding: 8px 10px;
-      max-width: unset;
-    }
+    position: relative;
+    transform: translateY(-6px);
   }
 
   .rc-tooltip-arrow {
     display: none !important;
   }
 
-  .rc-slider-mark {
-    display: flex;
+  .c-rc-tooltip.-default .rc-tooltip-inner {
+    @extend %tooltip-apperance;
+    max-width: unset;
+    position: unset;
+    margin: 0 20px;
+
+    .tooltip-opacity-text::after {
+      @extend %tooltip-arrow;
+      right: 58px;
+    }
+
+    .tooltip-remove-text::after {
+      @extend %tooltip-arrow;
+      right: 34px;
+    }
+
+    .tooltip-info-text::after {
+      @extend %tooltip-arrow;
+      right: 86px;
+    }
   }
 
-  .c-rc-tooltip.-default .rc-tooltip-inner {
-    background-color: $blue;
-    color: $grey-text;
-    font-family: $font-family-1;
+  .rc-slider-mark {
+    display: flex;
+    justify-content: space-between;      
   }
 
   .wri_api__c-legend-item-button-opacity-tooltip { // tooltip styles
@@ -111,7 +142,7 @@ $icon-size: 14px;
     z-index: 0;
   }
 
-  .wri_api__c-legend-button {
+  .wri_api__c-legend-button {  //replaces legend button icons with custom ones
     background-repeat: no-repeat;
     background-size: contain;
     height: $icon-size;
@@ -177,7 +208,7 @@ $icon-size: 14px;
 body {
   :global {
     .wri_api__slider-ranges {
-      position: relative;
+      position: relative; 
     }
 
     .-sortable {  //when dragging the legend item
@@ -215,5 +246,19 @@ body {
   left: unset !important;
   right: $site-gutter;
   width: 208px;
-}
 
+  :global {
+    .rc-tooltip-content {
+      .wri_api__slider-tooltip-container {
+        min-width: unset;
+      }
+  
+      .rc-tooltip-inner {
+        background-color: $blue !important;
+        color: $grey-text !important;
+        position: relative;
+        margin: 0;
+      }
+    }
+  }
+}
