@@ -10,9 +10,10 @@ import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
   const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-  const alreadyChecked = humanImpactLayerActive && ((humanPressuresLandUse.reduce((acc, option) => ({
+  // eslint-disable-next-line no-mixed-operators
+  const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
     ...acc, [option.value]: rasters[option.value]
-  }), {})) || {});
+  }), {})) || {};
 
   const handleHumanPressureRasters = (rasters, option) => {
     const { layers } = map;
