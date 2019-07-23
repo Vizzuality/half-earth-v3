@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
+import { usePostRobot } from 'hooks/attach-post-robot';
 
 import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
-import postRobot from 'post-robot';
 
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
@@ -53,31 +53,7 @@ const handleMapLoad = (map, view, activeLayers) => {
 }
 
 const dataGlobeContainer = props => {
-  const attachPostRobotListeners = () => {
-    postRobot.on('mapFlyToCoordinates', event => {
-      const { center = [], zoom = 1 } = event.data;
-      if (center.length || zoom) {
-        flyToLocation(center, zoom);
-        return { done: true };
-      }
-      return { done: false };
-    });
-    postRobot.on('setMapLayers', event => {
-      const { layers = [] } = event.data;
-      layers.forEach(layerId => toggleLayer(layerId));
-      return { done: true };
-    });
-    postRobot.on('setLayersOpacity', event => {
-      const { layers = [] } = event.data;
-      layers.forEach(layer => setLayerOpacity(layer.id, layer.opacity));
-      return { done: true };
-    });
-  }
-
-  useEffect(() => {
-    if(props.listeners) attachPostRobotListeners();
-  }, []);
-
+  const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const exclusiveLayerToggle = (layerToActivate, layerToRemove) => exclusiveLayersToggle(layerToActivate, layerToRemove, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
@@ -89,7 +65,8 @@ const dataGlobeContainer = props => {
     landscapeView && props.enterLandscapeModeAnalyticsEvent();
     return props.setDataGlobeSettings(params);
   };
-  const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
+
+  usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
 
   return <Component
     handleLayerToggle={toggleLayer}
