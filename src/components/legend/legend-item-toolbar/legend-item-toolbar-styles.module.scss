@@ -1,12 +1,13 @@
 @import 'styles/settings';
 
 .legendItemToolbar {
-  margin: 4px 0 0 20px; // Margin with the title
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   > * {
+    padding-top: 7px;
+    margin-top: 5px;
     &:last-child {
       margin-right: 0;
     }

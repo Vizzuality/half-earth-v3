@@ -47,10 +47,11 @@ const OpacityButtonComponent = props => {
         trigger={'hover'}
         onVisibleChange={v => setHovered(v)}
         destroyTooltipOnHide
+        mouseLeaveDelay={0}
       >
         <button
           type="button"
-          className={cx(styles.legendButton,
+          className={cx(styles.opacityButton,
             { [styles.opacityEnabled]: opacity < 1 },
             { [styles.opacityButtonActive]: isClicked },
           )}

@@ -46,6 +46,11 @@ $map-attribution-height: 30px;
     padding: 0 12px 12px;
   }
 
+  .wri_api__c-legend-item .wri_api__legend-item-container {
+    padding: 0 12px 12px;
+
+  }
+
   li.wri_api__c-legend-item { //use this only for legend item container
     @include backdropBlur();
     
@@ -84,6 +89,11 @@ $map-attribution-height: 30px;
     svg {
       display: none;
     }
+  }
+
+  .wri_api__legend-item-header > h3 {
+    margin-bottom: 0;
+    margin-top: 12px;
   }
 }
 

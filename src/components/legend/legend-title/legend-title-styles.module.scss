@@ -1,21 +1,16 @@
 @import 'styles/settings';
-@import 'styles/ui.module';
-@import 'styles/typography-extends';
 @import 'styles/tooltip';
 
 .titleContainer {
-  align-items: center;
   color: $white;
   display: flex;
   font-family: $font-family-1;
   font-size: $font-size-xs;
-  height: 14px;
-  margin-top: 12px;
+  height: 24px;
 }
 
 .imageLink {
   margin-right: 5px;
- 
   z-index: 2;
 }
 
@@ -30,4 +25,5 @@
   font-size: 9px;
   letter-spacing: 1.5px;
   line-height: 14px;
+  margin: 0;
 }

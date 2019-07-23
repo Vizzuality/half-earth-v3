@@ -1,24 +1,29 @@
 @import 'styles/settings';
-
-%legend-ramp-text {
-  font-family: $font-family-1-light !important;
-  color: $grey-text;
-  line-height: 10px;
-}
+@import 'styles/typography-extends';
 
 .wrapper {
   display: flex;
+  padding-bottom: 10px;
+}
+
+.sliderTitle {
+  margin-bottom: 10px;
 }
 
 .sliderContent {
+  @extend %annotation;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   position: relative;
 }
 
 .sliderValue {
+  @extend %annotation;
   align-items: flex-end;
   display: flex;
   justify-content: flex-end;
   line-height: 12px;
-  width: 40px;
+  user-select: none;
+  width: 38px;
 }

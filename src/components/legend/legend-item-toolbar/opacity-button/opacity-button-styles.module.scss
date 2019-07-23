@@ -2,6 +2,12 @@
 @import 'styles/tooltip';
 @import 'styles/legend-button';
 
+.opacityButton {
+  @extend .legendButton;
+  height: 28px;
+  padding-bottom: 6px;
+}
+
 .opacityEnabled {
   svg {
     fill: $brand-color-main;
@@ -20,16 +26,18 @@
       .rc-tooltip-arrow {
         background: $blue;
         border: 0;
-        height: 5px;
+        height: 10px;
         right: 0;
-        width: 100%;
+        width: 26px;
       }
 
       .rc-tooltip-inner {
         background: $blue;
+        border: 0;
         border-radius: 4px 4px 0 0;
         color: $grey-text;
         max-width: unset;
+        padding: 3px 9px;
         width: 222px;
       }
     }
