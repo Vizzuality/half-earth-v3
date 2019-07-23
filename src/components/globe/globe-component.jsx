@@ -18,6 +18,7 @@ const GlobeComponent = ({ sceneId, sceneSettings, onLoad, children, loadElement 
 
   return (
     <WebScene
+      style={{ backgroundColor: '#0A212E' }}
       className={cx(styles.sceneContainer)}
       id={sceneId}
       onLoad={handleOnLoad}

@@ -7,6 +7,7 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import LabelsLayer from 'components/labels-layer';
+import Spinner from 'components/spinner';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
@@ -57,14 +58,13 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
+      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner />}>
         <TerrainExaggerationLayer exaggeration={3}/>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
         <ZoomWidget />
-        {IS_FEATURE_MAPS_ENABLED && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
         <SearchWidget />
         <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
@@ -78,18 +78,10 @@ const DataGlobeComponent = ({
                 subcategories={cat.subcategories}
                 options={cat.taxa}
                 activeLayers={activeLayers}
-                exclusiveLayerToggle={exclusiveLayerToggle}
-                handleLayerToggle={handleLayerToggle}
+                rasters={rasters}
+                setRasters={setRasters}
               />
             ))
-          )}
-          {isHumanPressuresActive && (
-            <HumanImpactLayers
-              setLayerVisibility={setLayerVisibility}
-              activeLayers={activeLayers}
-              rasters={rasters}
-              setRasters={setRasters}
-            />
           )}
           {isProtectedAreasActive && (
             <ProtectedAreasLayers
@@ -118,9 +110,9 @@ const DataGlobeComponent = ({
         {hasMetadata && <InfoModal />}
         <LabelsLayer />
       </Globe>
-      <About />
-    </>
-  )
+    <About />
+  </>
+)
 };
 
 export default DataGlobeComponent;
