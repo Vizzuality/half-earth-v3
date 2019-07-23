@@ -20,7 +20,8 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
           size: config.fontSize,
           weight: config.fontWeight || "normal"
         },
-        material: { color: config.color }
+        material: { color: config.color },
+        halo: { size: 1 }
       }]
     }
   });
