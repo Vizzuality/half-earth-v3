@@ -10,7 +10,7 @@ const InfoButtonComponent = props =>  {
   return (
     <Tooltip
       overlay={tooltipText || 'Layer info'}
-      overlayClassName="c-rc-tooltip -default infoTooltipStyle3"
+      overlayClassName="c-rc-tooltip -default legendButtonTooltip"
       placement="topRight"
       trigger={tooltipOpened ? '' : 'hover'}
       mouseLeaveDelay={0}
@@ -18,7 +18,7 @@ const InfoButtonComponent = props =>  {
     >
       <button
         type="button"
-        className={styles.toolbarButton}
+        className={styles.legendButton}
         aria-label="More information"
         onClick={() => onChangeInfo(activeLayer)}
       >

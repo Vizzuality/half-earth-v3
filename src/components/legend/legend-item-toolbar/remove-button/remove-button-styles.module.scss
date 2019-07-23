@@ -1,18 +1,1 @@
-@import 'styles/settings';
-@import 'styles/tooltip';
-
-:global {
-  .legendCloseButtonTooltip {
-    .rc-tooltip-content {
-      .rc-tooltip-inner {
-        @extend %tooltip-apperance;
-        max-width: unset;
-      }
-    }
-  }
-}
-
-.toolbarButton {
-  width: 26px;
-  height: 26px;
-}
+@import 'styles/legend-button';

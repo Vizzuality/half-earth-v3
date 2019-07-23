@@ -1,8 +1,15 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+@import 'styles/tooltip';
 
 .titleContainer {
-  height: 14px;
-  display: flex;
   align-items: center;
+  color: $white;
+  display: flex;
+  font-family: $font-family-1;
+  font-size: $font-size-xs;
+  height: 14px;
   margin-top: 12px;
 }
 

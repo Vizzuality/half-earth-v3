@@ -42,7 +42,7 @@ const OpacityButtonComponent = props => {
       <Tooltip
         visible={isHovered && !isClicked}
         overlay={tooltipText || (`Opacity ${opacity ? `(${Math.round(opacity * 100)}%)` : ''}`)}
-        overlayClassName="c-rc-tooltip -default opacityTooltip"
+        overlayClassName="c-rc-tooltip -default legendButtonTooltip"
         placement="topLeft"
         trigger={'hover'}
         onVisibleChange={v => setHovered(v)}
@@ -50,7 +50,7 @@ const OpacityButtonComponent = props => {
       >
         <button
           type="button"
-          className={cx(styles.opacityButton,
+          className={cx(styles.legendButton,
             { [styles.opacityEnabled]: opacity < 1 },
             { [styles.opacityButtonActive]: isClicked },
           )}

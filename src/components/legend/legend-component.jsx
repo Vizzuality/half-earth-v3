@@ -10,6 +10,7 @@ import Legend, {
 } from 'vizzuality-components/dist/legend';
 
 // import  LegendItemButtonInfo from './legend-item-toolbar/legend-item-button-info/index';
+import { SortableHandle } from 'react-sortable-hoc';
 
 import LegendItemToolbar, {
   LegendItemButtonOpacity,
@@ -78,7 +79,6 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       />
     </LegendItemToolbar>
   );
-
 
   return (
     <div className={styles.legend}>

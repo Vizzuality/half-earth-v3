@@ -5,7 +5,6 @@
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
-$icon-size: 14px;
 
 %legend-ramp-text {
   font-family: $font-family-1-light !important;
@@ -23,34 +22,8 @@ $icon-size: 14px;
   background: transparent;
 }
 
-%tooltip-arrow {
-  content: '';
-  background-color: $white;
-  bottom: -3px;
-  display: block;
-  position: absolute;
-  transform: rotate(45deg);
-  height: 10px;
-  width: 10px;
-}
-
 //legend tooltip styles
 :global {
-  .wri_api__close {
-    margin-right: 0;
-  }
-
-  .wri_api__legend-item-header { // legend item title
-    h3 {
-      color: $white !important;
-      font-family: $font-family-1;
-      font-size: $font-size-xs;
-    }
-    & > div {
-      display: inline-flex;
-    }
-  }
-
   .wri_api__c-legend-item-types {
     background: none;
   }
@@ -98,29 +71,19 @@ $icon-size: 14px;
     z-index: 0;
   }
 
-  .wri_api__c-legend-button {
-    height: $icon-size;
-    width: $icon-size;
-    z-index: 2;
-  }
-
-  .wri_api__c-icon.wri_api__-small {
-    height: $icon-size;
-    width: $icon-size;
-  }
-
   .wri_api__toggle-legend {
     display: none;
   }
 
   .wri_api__c-legend-handler {
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
     svg {
       display: none;
     }
-  }
-  
-  .wri_api__c-legend-type-gradient .wri_api__icon-gradient {
-    @extend %legend-ramp-bar;
   }
 }
 
@@ -135,4 +98,11 @@ $icon-size: 14px;
   position: relative;
 }
 
- 
+body {
+  :global {
+    .-sortable {  //when dragging the legend item
+      background: $firefly;
+      box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
+    }
+  }
+}

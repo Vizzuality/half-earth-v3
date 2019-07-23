@@ -9,7 +9,7 @@ const RemoveButtonComponent = props => {
   return (
     <Tooltip
       overlay={tooltipText || 'Remove layer'}
-      overlayClassName="c-rc-tooltip -default legendCloseButtonTooltip"
+      overlayClassName="c-rc-tooltip -default legendButtonTooltip"
       placement="topRight"
       trigger={tooltipOpened ? '' : 'hover'}
       mouseLeaveDelay={0}
@@ -17,7 +17,7 @@ const RemoveButtonComponent = props => {
     >
       <button
         type="button"
-        className={styles.toolbarButton}
+        className={styles.legendButton}
         onClick={() => onRemoveLayer(activeLayer)}
         aria-label="Remove"
       >

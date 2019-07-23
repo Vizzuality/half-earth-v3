@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LegendItemButtonOpacity from './opacity-button/opacity-button';
 import LegendItemButtonInfo from './info-button//info-button';
 import LegendItemButtonRemove from './remove-button/remove-button';
-import './styles.scss';
+import styles from './legend-item-toolbar-styles.module.scss';
 
 class LegendItemToolbar extends PureComponent {
   static propTypes = {
@@ -66,7 +66,7 @@ class LegendItemToolbar extends PureComponent {
     };
 
     return (
-      <div styleName="c-legend-item-toolbar">
+      <div className={styles.legendItemToolbar}>
         {!!React.Children.count(children) &&
           React.Children.map(children, child => (React.isValidElement(child) && typeof child.type !== 'string' ?
             React.cloneElement(child, { ...props })

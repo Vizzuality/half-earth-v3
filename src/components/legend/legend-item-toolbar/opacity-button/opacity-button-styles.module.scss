@@ -1,17 +1,6 @@
 @import 'styles/settings';
 @import 'styles/tooltip';
-
-.opacityButton {
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  svg {
-    fill: $white;
-    stroke: $white;
-    width: 14px;
-    height: 14px;
-  }
-}
+@import 'styles/legend-button';
 
 .opacityEnabled {
   svg {
@@ -43,14 +32,6 @@
         max-width: unset;
         width: 222px;
       }
-    }
-  }
-
-  .opacityTooltip {
-    .rc-tooltip-inner {
-      @extend %tooltip-apperance;
-      // max-width: unset;
-      // position: unset;
     }
   }
 }

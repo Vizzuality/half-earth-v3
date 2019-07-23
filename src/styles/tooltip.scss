@@ -26,4 +26,11 @@
 			border-right-color: $white !important;
 		}
 	}
+
+	.legendButtonTooltip {
+		.rc-tooltip-content > .rc-tooltip-inner {
+			@extend %tooltip-apperance;
+			max-width: unset;
+		}
+  }
 }
