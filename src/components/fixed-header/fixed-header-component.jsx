@@ -10,10 +10,13 @@ const BACK = 'BACK';
 
 const differentFixedHeaderHeights = ['Existing protection', 'Human pressures'];
 
-const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
-  const isHigherHeader = differentFixedHeaderHeights.includes(activeCategory);
+const FixedHeader = ({ closeSidebar, title, view, autoHeight }) => {
+  const isHigherHeader = differentFixedHeaderHeights.includes(title);
   return (
-    <div className={cx(styles.header, { [styles.higherHeader]: isHigherHeader})}>
+    <div className={cx(styles.header,
+      { [styles.higherHeader]: isHigherHeader},
+      { [styles.autoHeightHeader]: autoHeight})
+    }>
       <ShareModal theme={{ shareButton: styles.shareButton}} view={view} />
       <button
         className={styles.button}
@@ -22,7 +25,9 @@ const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
         <ArrowExpandIcon className={styles.icon} />
         <span className={styles.backButton}>{BACK}</span>
       </button>
-      <h1 className={styles.title}>{activeCategory && activeCategory.split(' ').map(word => <span>{word}</span>)}</h1>
+      <h1 className={styles.title}>
+        { title && !autoHeight ? title.split(' ').map(word => <span>{word}</span>) : title }
+      </h1>
       <div className={styles.spacer} />
     </div>
   )
@@ -31,12 +36,14 @@ const FixedHeader = ({ closeSidebar, activeCategory, view }) => {
 
 FixedHeader.propTypes = {
   closeSidebar: PropTypes.func,
-  activeCategory: PropTypes.string
+  title: PropTypes.string,
+  autoHeight: PropTypes.bool
 };
 
 FixedHeader.defaultProps = {
   closeSidebar: () => {},
-  activeCategory: ''
+  title: '',
+  autoHeight: false
 };
 
 export default FixedHeader;

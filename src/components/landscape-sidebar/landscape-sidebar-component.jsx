@@ -16,7 +16,8 @@ const LandscapeSidebarComponent = ({
   activeLayers,
   rasters,
   setLayerVisibility,
-  setRasters
+  setRasters,
+  view
 }) => {
   const animationProps = useSpring({
     from: { marginLeft: -400 },
@@ -31,7 +32,7 @@ const LandscapeSidebarComponent = ({
       )}
       style={animationProps}>
       <div className={styles.wrapper}>
-        <GeoDescriptionWidget />
+        <GeoDescriptionWidget view={view} />
         <HumanPressureWidget
           map={map}
           activeLayers={activeLayers}

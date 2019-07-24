@@ -31,15 +31,6 @@
   font-weight: 300;
 }
 
-.title {
-  padding: 20px;
-  margin: 0;
-  color: white;
-  font-size: 28px;
-  letter-spacing: 1px;
-  line-height: 32px;
-}
-
 .line {
   height: 1px;
   background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
@@ -51,10 +42,4 @@
   padding: 20px;
   margin: 0;
   color: white;
-}
-
-.shareButton {
-  top: $share-button-margin;
-  right: $share-button-margin;
-  position: absolute;
 }

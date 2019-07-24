@@ -1,10 +1,19 @@
 import React from 'react';
 import { Loading } from 'he-components';
-import ShareModal from 'components/share-modal';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
+import * as actions from 'actions/url-actions';
+import { connect } from 'react-redux';
+import FixedHeader from 'components/fixed-header'
 
-const GeoDescriptionWidget = ({ data, loading, error, view }) => {
+const GeoDescriptionWidget = (props) => {
+  const { data, loading, error, view, changeGlobe } = props;
+
+  const handleBackClick = () => {
+    const params = { zoom: 4 }
+    view.goTo(params).then(() => changeGlobe(params));
+  };
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -30,8 +39,7 @@ const GeoDescriptionWidget = ({ data, loading, error, view }) => {
 
   return (
     <div className={styles.container}>
-      <ShareModal theme={{ shareButton: styles.shareButton }} view={view} viewMode={VIEW_MODE.LANDSCAPE} />
-      <h2 className={styles.title}>{data.title}</h2>
+      <FixedHeader closeSidebar={handleBackClick} title={data.title} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight={true} />
       <div className={styles.line}></div>
       <p className={styles.description}>
         {data.description}
@@ -40,4 +48,4 @@ const GeoDescriptionWidget = ({ data, loading, error, view }) => {
   );
 };
 
-export default GeoDescriptionWidget;
+export default connect(null, actions)(GeoDescriptionWidget);
