@@ -10,7 +10,7 @@ const GeoDescriptionWidget = (props) => {
   const { data, loading, error, view, changeGlobe } = props;
 
   const handleBackClick = () => {
-    const params = { zoom: 4 }
+    const params = { zoom: 7 }
     view.goTo(params).then(() => changeGlobe(params));
   };
 
