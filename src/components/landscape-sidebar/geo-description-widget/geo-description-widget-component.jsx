@@ -5,12 +5,7 @@ import styles from './geo-description-widget-styles.module.scss';
 import FixedHeader from 'components/fixed-header'
 
 const GeoDescriptionWidget = (props) => {
-  const { data, loading, error, view, changeGlobe } = props;
-
-  const handleBackClick = () => {
-    const params = { zoom: 7 }
-    view.goTo(params).then(() => changeGlobe(params));
-  };
+  const { data, loading, error, view, handleBackClick } = props;
 
   if (loading) {
     return (
