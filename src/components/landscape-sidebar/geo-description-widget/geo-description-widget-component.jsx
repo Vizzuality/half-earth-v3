@@ -3,6 +3,7 @@ import { Loading } from 'he-components';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
 import FixedHeader from 'components/fixed-header'
+import errorGif from 'icons/error.gif'
 
 const GeoDescriptionWidget = (props) => {
   const { data, loading, error, view, handleBackClick } = props;
@@ -22,9 +23,12 @@ const GeoDescriptionWidget = (props) => {
     return (
       <div className={styles.container}>
         <FixedHeader closeSidebar={handleBackClick} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight/>
-        <p className={styles.errorText}>
-          Cannot load area information.
-        </p>
+        <div className={styles.errorWrapper}>
+          <p className={styles.errorText}>
+            Cannot load area information…
+          </p>
+          <img className={styles.errorGif} src={errorGif} alt="error" />
+        </div>
       </div>
     );
   }
