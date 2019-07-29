@@ -2,8 +2,6 @@ import React from 'react';
 import { Loading } from 'he-components';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
-import * as actions from 'actions/url-actions';
-import { connect } from 'react-redux';
 import FixedHeader from 'components/fixed-header'
 
 const GeoDescriptionWidget = (props) => {
@@ -48,4 +46,4 @@ const GeoDescriptionWidget = (props) => {
   );
 };
 
-export default connect(null, actions)(GeoDescriptionWidget);
+export default GeoDescriptionWidget;
