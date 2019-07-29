@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MultipleActiveLayers from 'components/multiple-active-layers';
+
+import { handleLayerRendered } from 'utils/layer-manager-utils';
 import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
 import { PROTECTED_AREAS_VECTOR_TILE_LAYER, PROTECTED_AREAS_LAYER_GROUP, COMMUNITY_AREAS_LAYER_GROUP, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 
 import styles from './protected-areas-layers-styles.module';
 
-const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
+const ProtectedAreasLayers = ({ handleGlobeUpdating, handleLayerToggle, activeLayers, map, view, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
   const { layers } = map;
 
   // Paint Protected Areas on a different that default color
@@ -36,8 +38,21 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers, map, addLayerAn
     VTLLayer.setPaintProperties('WDPA_poly_Latest/1', paintProperties);
   }, [])
 
-  const toggleLayer = (layers, option) => {
+  const toggleLayer = (layersPassed, option) => {
+    const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
+
+    const layerToggled = layers.items.reduce((wantedLayer, currentLayer) => {
+      if(currentLayer.title === option.id) return currentLayer;
+      if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
+      return wantedLayer;
+    }, null)
+    
+    if (layerNotRendered) {
+      handleGlobeUpdating(true);
+    }
+
     handleLayerToggle(option.id);
+    handleLayerRendered(view, layerToggled, handleGlobeUpdating);
 
     const isLayerActive = alreadyChecked[option.value];
     if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })

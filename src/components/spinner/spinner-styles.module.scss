@@ -47,3 +47,9 @@ $size: 100px;
   40% { opacity: 1; }
   60% { opacity: .1; }
 }
+
+.spinnerAbsolute {
+  position: absolute;
+  top: 42%;
+  left: 47%;
+}

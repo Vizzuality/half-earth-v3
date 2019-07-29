@@ -12,11 +12,11 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import { enterLandscapeModeAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import ownActions from './data-globe-actions.js';
-import { createLayer } from 'utils/layer-manager-utils';
+import { createLayer, addLayer } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
-const handleMapLoad = (map, view, activeLayers, mountFeaturedGlobe) => {
+const handleMapLoad = (map, view, activeLayers, mountFeaturedGlobe, handleGlobeUpdating) => {
   const { layers } = map;
 
   const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
@@ -72,6 +72,7 @@ const dataGlobeContainer = props => {
   const mountFeaturedGlobe = () => props.setDataGlobeSettings({ mountFeaturedGlobe: true });
 
   usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
+  const handleGlobeUpdating = (updating) => props.setDataGlobeSettings({ isGlobeUpdating: updating })
 
   return <Component
     handleLayerToggle={toggleLayer}
@@ -80,7 +81,8 @@ const dataGlobeContainer = props => {
     setLayerOpacity={setLayerOpacity}
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, mountFeaturedGlobe)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, mountFeaturedGlobe, handleGlobeUpdating)}
+    handleGlobeUpdating={handleGlobeUpdating}
     handleZoomChange={handleZoomChange}
     {...props}/>
 }

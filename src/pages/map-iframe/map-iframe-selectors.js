@@ -25,11 +25,13 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
+const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
   sceneSettings: getSceneSettings,
+  isGlobeUpdating: getGlobeUpdating,
   listeners: getListenersSetting
 })
