@@ -28,7 +28,7 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight }) => {
       <h1 className={styles.title}>
         { title && !autoHeight ? title.split(' ').map(word => <span>{word}</span>) : title }
       </h1>
-      <div className={styles.spacer} />
+      {title && <div className={styles.spacer} />}
     </div>
   )
 };

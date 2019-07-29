@@ -21,6 +21,7 @@ const GeoDescriptionWidget = (props) => {
   if (error) {
     return (
       <div className={styles.container}>
+        <FixedHeader closeSidebar={handleBackClick} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight/>
         <p className={styles.errorText}>
           Cannot load area information.
         </p>
@@ -32,8 +33,7 @@ const GeoDescriptionWidget = (props) => {
 
   return (
     <div className={styles.container}>
-      <FixedHeader closeSidebar={handleBackClick} title={data.title} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight={true} />
-      <div className={styles.line}></div>
+      <FixedHeader closeSidebar={handleBackClick} title={data.title} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight />
       <p className={styles.description}>
         {data.description}
       </p>
