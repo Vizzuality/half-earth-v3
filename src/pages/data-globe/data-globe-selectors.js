@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
-import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
+import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import initialState from './data-globe-initial-state';
 import sceneSettings from './data-globe-settings';
 
@@ -20,6 +20,10 @@ const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
     ...initialState.ui,
     ...uiUrlState
   }
+})
+
+const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
+  return listenersUrlState ? listenersUrlState : initialState.listeners;
 })
 
 const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
@@ -47,5 +51,6 @@ export default createStructuredSelector({
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   rasters: getRasters,
-  hasMetadata: selectMetadataData
+  hasMetadata: selectMetadataData,
+  listeners: getListenersSetting
 })

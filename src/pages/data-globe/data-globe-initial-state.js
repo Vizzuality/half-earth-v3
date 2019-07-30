@@ -21,5 +21,6 @@ export default {
     isSidebarOpen: false,
     isFullscreenActive: false, 
     activeCategory: ''
-  }
+  },
+  listeners: false
 }

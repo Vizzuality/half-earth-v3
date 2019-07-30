@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
+import { usePostRobot } from 'hooks/attach-post-robot';
 
 import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
@@ -51,6 +53,7 @@ const handleMapLoad = (map, view, activeLayers) => {
 }
 
 const dataGlobeContainer = props => {
+  const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const exclusiveLayerToggle = (layerToActivate, layerToRemove) => exclusiveLayersToggle(layerToActivate, layerToRemove, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
@@ -62,6 +65,8 @@ const dataGlobeContainer = props => {
     landscapeView && props.enterLandscapeModeAnalyticsEvent();
     return props.setDataGlobeSettings(params);
   };
+
+  usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
 
   return <Component
     handleLayerToggle={toggleLayer}
