@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Range } from 'vizzuality-components';
 import styles from './opacity-tooltip-styles.module.scss';
 
@@ -56,6 +57,22 @@ const OpacityTooltipComponent = props => {
       <span className={styles.sliderValue}>{formatValue(value)}</span>
     </div>
   );
+}
+
+OpacityTooltipComponent.propTypes = {
+  activeLayer: PropTypes.object.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired
+}
+
+OpacityTooltipComponent.defaultProps = {
+    min: 0,
+    max: 1,
+    step: 0.01,
+    value: 1
 }
 
 export default OpacityTooltipComponent;

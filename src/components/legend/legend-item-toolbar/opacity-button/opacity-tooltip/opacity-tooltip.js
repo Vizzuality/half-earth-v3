@@ -23,18 +23,4 @@ const OpacityTooltip = props => {
   );
 }
 
-OpacityTooltip.propTypes = {
-  activeLayer: PropTypes.object.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  onChangeOpacity: PropTypes.func.isRequired
-}
-
-OpacityTooltip.defaultProps = {
-    min: 0,
-    max: 1,
-    step: 0.01
-}
-
 export default OpacityTooltip;

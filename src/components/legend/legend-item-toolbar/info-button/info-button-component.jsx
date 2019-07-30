@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Tooltip from 'vizzuality-components/dist/tooltip';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
@@ -26,6 +27,20 @@ const InfoButtonComponent = props =>  {
       </button>
     </Tooltip>
   );
+}
+
+InfoButtonComponent.propTypes = {
+  activeLayer: PropTypes.object,
+  isTooltipOpened: PropTypes.bool,
+  tooltipText: PropTypes.string,
+  onChangeInfo: PropTypes.func
+}
+
+InfoButtonComponent.defaultProps = {
+    activeLayer: {},
+    isTooltipOpened: false,
+    tooltipText: '',
+    onChangeInfo: () => {}
 }
 
 export default InfoButtonComponent;

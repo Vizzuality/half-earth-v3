@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import InfoButtonComponent from './info-button-component';
 
 const InfoButton = props => {
@@ -13,20 +12,6 @@ const InfoButton = props => {
       onChangeInfo={onChangeInfo}
     />
   );
-}
-
-InfoButton.propTypes = {
-  activeLayer: PropTypes.object,
-  isTooltipOpened: PropTypes.bool,
-  tooltipText: PropTypes.string,
-  onChangeInfo: PropTypes.func
-}
-
-InfoButton.defaultProps = {
-    activeLayer: {},
-    isTooltipOpened: false,
-    tooltipText: '',
-    onChangeInfo: () => {}
 }
 
 export default InfoButton;
