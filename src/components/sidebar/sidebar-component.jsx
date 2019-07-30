@@ -25,7 +25,7 @@ const Sidebar = ({ map, view, theme, children, activeCategory, handleSidebarTogg
       style={slide}
     >
       <div className={styles.wrapper}>
-        <FixedHeader closeSidebar={handleSidebarToggle} activeCategory={activeCategory} view={view} />
+        <FixedHeader closeSidebar={handleSidebarToggle} title={activeCategory} view={view}/>
         <div className={styles.content}>
           {React.Children.map(children || null, (child, i) => {
             return child && <child.type {...child.props} key={i} map={map} view={view}/>;

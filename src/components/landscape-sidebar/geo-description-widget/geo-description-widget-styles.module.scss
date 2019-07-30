@@ -2,6 +2,8 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+$error-gif-size: 120px;
+
 .container {
   @include backdropBlur();
   border-radius: 2px;
@@ -24,20 +26,26 @@
   margin-top: 10px;
 }
 
+.errorWrapper {
+  height: 110px;
+  position: relative;
+  width: 100%;
+}
+
 .errorText {
-  padding: 20px;
+  padding: 0 20px;
   color: white;
   font-size: 14px;
   font-weight: 300;
+  margin: 0;
 }
 
-.title {
-  padding: 20px;
-  margin: 0;
-  color: white;
-  font-size: 28px;
-  letter-spacing: 1px;
-  line-height: 32px;
+.errorGif{
+  height: $error-gif-size;
+  width: $error-gif-size;
+  margin-left: calc(50% - #{$error-gif-size} / 2);
+  position: absolute;
+  top: 0;
 }
 
 .line {
@@ -51,10 +59,4 @@
   padding: 20px;
   margin: 0;
   color: white;
-}
-
-.shareButton {
-  top: $share-button-margin;
-  right: $share-button-margin;
-  position: absolute;
 }
