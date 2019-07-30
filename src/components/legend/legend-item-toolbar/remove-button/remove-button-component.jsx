@@ -4,14 +4,14 @@ import { Tooltip } from 'vizzuality-components';
 import styles from './remove-button-styles.module.scss';
 
 const RemoveButtonComponent = props => {
-  const { activeLayer, tooltipOpened, tooltipText, onRemoveLayer } = props;
+  const { activeLayer, isTooltipOpened, tooltipText, onRemoveLayer } = props;
 
   return (
     <Tooltip
       overlay={tooltipText || 'Remove layer'}
       overlayClassName="c-rc-tooltip -default legendButtonTooltip"
       placement="topRight"
-      trigger={tooltipOpened ? '' : 'hover'}
+      trigger={isTooltipOpened ? '' : 'hover'}
       mouseLeaveDelay={0}
       destroyTooltipOnHide
     >

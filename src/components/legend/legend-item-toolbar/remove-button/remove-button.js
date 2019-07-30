@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import RemoveButtonComponent from './remove-button-component.jsx';
 
 const RemoveButton = props => {
-  const { activeLayer, tooltipOpened, tooltipText, onRemoveLayer } = props;
+  const { activeLayer, isTooltipOpened, tooltipText, onRemoveLayer } = props;
 
   return (
     <RemoveButtonComponent
       activeLayer={activeLayer}
-      tooltipOpened={tooltipOpened}
+      isTooltipOpened={isTooltipOpened}
       tooltipText={tooltipText}
       onRemoveLayer={onRemoveLayer}
     />
@@ -17,14 +17,14 @@ const RemoveButton = props => {
 
 RemoveButton.propTypes = {
   activeLayer: PropTypes.object,
-  tooltipOpened: PropTypes.bool,
+  isTooltipOpened: PropTypes.bool,
   tooltipText: PropTypes.string,
   onRemoveLayer: PropTypes.func
 }
 
 RemoveButton.defaultProps = {
     activeLayer: {},
-    tooltipOpened: false,
+    isTooltipOpened: false,
     tooltipText: '',
     onRemoveLayer: () => {}
 }

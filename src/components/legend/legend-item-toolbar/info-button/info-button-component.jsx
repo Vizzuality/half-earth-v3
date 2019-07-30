@@ -5,14 +5,14 @@ import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import styles from './info-button-styles.module.scss';
 
 const InfoButtonComponent = props =>  {
-  const { activeLayer, tooltipOpened, tooltipText, onChangeInfo } = props;
+  const { activeLayer, isTooltipOpened, tooltipText, onChangeInfo } = props;
 
   return (
     <Tooltip
       overlay={tooltipText || 'Layer info'}
       overlayClassName="c-rc-tooltip -default legendButtonTooltip"
       placement="topRight"
-      trigger={tooltipOpened ? '' : 'hover'}
+      trigger={isTooltipOpened ? '' : 'hover'}
       mouseLeaveDelay={0}
       destroyTooltipOnHide
     >

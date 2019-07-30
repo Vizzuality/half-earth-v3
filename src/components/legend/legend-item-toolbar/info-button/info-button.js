@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import InfoButtonComponent from './info-button-component';
 
 const InfoButton = props => {
-  const { activeLayer, tooltipOpened, tooltipText, onChangeInfo } = props;
+  const { activeLayer, isTooltipOpened, tooltipText, onChangeInfo } = props;
 
   return (
     <InfoButtonComponent
       activeLayer={activeLayer}
-      tooltipOpened={tooltipOpened}
+      isTooltipOpened={isTooltipOpened}
       tooltipText={tooltipText}
       onChangeInfo={onChangeInfo}
     />
@@ -17,14 +17,14 @@ const InfoButton = props => {
 
 InfoButton.propTypes = {
   activeLayer: PropTypes.object,
-  tooltipOpened: PropTypes.bool,
+  isTooltipOpened: PropTypes.bool,
   tooltipText: PropTypes.string,
   onChangeInfo: PropTypes.func
 }
 
 InfoButton.defaultProps = {
     activeLayer: {},
-    tooltipOpened: false,
+    isTooltipOpened: false,
     tooltipText: '',
     onChangeInfo: () => {}
 }

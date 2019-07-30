@@ -4,11 +4,7 @@ import Legend, {
   LegendItemTypes,
   LegendListItem,
 } from 'vizzuality-components/dist/legend';
-import LegendItemToolbar, {
-  LegendItemButtonOpacity,
-  LegendItemButtonInfo,
-  LegendItemButtonRemove
-} from './legend-item-toolbar/index';
+import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 
 import styles from './legend-styles.module.scss';
@@ -26,12 +22,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
-      className='c-legend-item-toolbar'
-    >
-      <LegendItemButtonInfo tooltipText='Click to read the info of this layer' />
-      <LegendItemButtonOpacity tooltipText={'Change the opacity'} />
-      <LegendItemButtonRemove tooltipText={'Close this layer'} />
-    </LegendItemToolbar>
+    />
   );
 
   return (
