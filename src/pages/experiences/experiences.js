@@ -10,7 +10,8 @@ export const switchToExpert = createAction(DATA);
 const actions = { switchToFeature, switchToExpert };
 
 const mapStateToProps = ({ location }) => ({
-  route: location.routesMap[location.type]
+  route: location.routesMap[location.type],
+  queryParams: location.query
 });
 
 

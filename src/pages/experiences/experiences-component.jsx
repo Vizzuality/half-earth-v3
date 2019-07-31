@@ -7,16 +7,20 @@ import ExpertMode from './data-globe';
 // const ExpertMode = loadable(() => import('./data-globe'));
 const FeaturedMode = loadable(() => import('./featured-globe'));
 
-const Experiences = ({ route, switchToExpert, switchToFeature }) => {
+const Experiences = ({ route, queryParams, switchToExpert, switchToFeature }) => {
   const isExpertMode = route.path === '/dataGlobe';
+
+  const preserveParams = (handler) => {
+    return handler({ query: { ...queryParams } });
+  }
 
   return (
     <>
       <div className={cx({ [styles.hidden]: !isExpertMode })}>
-        <ExpertMode handleSwitch={switchToFeature} />
+        <ExpertMode handleSwitch={() => { preserveParams(switchToFeature) }} />
       </div>
       <div className={cx({ [styles.hidden]: isExpertMode })}>
-        <FeaturedMode handleSwitch={switchToExpert} />
+        <FeaturedMode handleSwitch={() => { preserveParams(switchToExpert) }} />
       </div>
     </>
   )
