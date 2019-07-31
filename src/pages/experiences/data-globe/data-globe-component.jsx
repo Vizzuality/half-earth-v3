@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import cx from 'classnames';
+import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
@@ -21,8 +20,6 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
-
-import styles from './data-globe-styles.module';
 
 // Lazy load components
 const GridLayer = loadable(() => import('components/grid-layer'));

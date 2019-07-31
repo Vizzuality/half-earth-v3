@@ -30,7 +30,7 @@ $half-width: 170px;
   top: 0%;
   left: calc(50% - #{$half-width});
   clip-path: polygon(0 0, 100% 0, 88% 98%, 14% 98%);
-  background-color: #354D5B;
+  background-color: $pickled-bluewood;
 }
 
 .link {
