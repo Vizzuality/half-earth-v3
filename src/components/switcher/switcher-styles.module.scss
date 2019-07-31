@@ -1,0 +1,40 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+$width: 340px;
+$height: 38px;
+$half-width: 170px;
+
+.switcher {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0%;
+  left: calc(50% - #{$half-width});
+  width: 340px;
+  height: 38px;
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 14% 100%);
+  box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
+  background-color: $elephant;
+  color: $white;
+  letter-spacing: 1.5px;
+  font-size: $font-size-xxs;
+  text-transform: uppercase;
+}
+
+.switcherContainer {
+  width: 342px;
+  height: 40px;
+  position: absolute;
+  top: 0%;
+  left: calc(50% - #{$half-width});
+  clip-path: polygon(0 0, 100% 0, 88% 98%, 14% 98%);
+  background-color: #354D5B;
+}
+
+.link {
+  text-decoration: none;
+  color: $white;
+  cursor: pointer;
+}

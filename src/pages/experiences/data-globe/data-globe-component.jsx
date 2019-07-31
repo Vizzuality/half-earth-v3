@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import cx from 'classnames';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
@@ -12,6 +13,7 @@ import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import About from 'components/about';
 import Legend from 'components/legend';
+import Switcher from 'components/switcher';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -19,6 +21,8 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
+
+import styles from './data-globe-styles.module';
 
 // Lazy load components
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -47,74 +51,78 @@ const DataGlobeComponent = ({
   exclusiveLayerToggle,
   onLoad,
   setLayerOpacity,
-  setLayerOrder
+  setLayerOrder,
+  handleSwitch
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
 
   return (
-    <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
-      <TerrainExaggerationLayer exaggeration={3}/>
-      <ArcgisLayerManager activeLayers={activeLayers}/>
-      <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-      <LocationWidget />
-      <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
-      <ZoomWidget />
-      <MinimapWidget />
-      <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
-      <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
-        {isBiodiversityActive && (
-          biodiversityCategories.map(cat => (
-            <BiodiversityLayers
-              key={cat.name}
-              title={cat.name}
-              description={cat.description}
-              subcategories={cat.subcategories}
-              options={cat.taxa}
+    <div>
+      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
+        <TerrainExaggerationLayer exaggeration={3}/>
+        <ArcgisLayerManager activeLayers={activeLayers}/>
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
+        <LocationWidget />
+        <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
+        <ZoomWidget />
+        <Switcher handleClick={handleSwitch} />
+        <MinimapWidget />
+        <SearchWidget />
+        <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
+        <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
+          {isBiodiversityActive && (
+            biodiversityCategories.map(cat => (
+              <BiodiversityLayers
+                key={cat.name}
+                title={cat.name}
+                description={cat.description}
+                subcategories={cat.subcategories}
+                options={cat.taxa}
+                activeLayers={activeLayers}
+                exclusiveLayerToggle={exclusiveLayerToggle}
+                handleLayerToggle={handleLayerToggle}
+              />
+            ))
+          )}
+          {isHumanPressuresActive && (
+            <HumanImpactLayers
+              setLayerVisibility={setLayerVisibility}
               activeLayers={activeLayers}
-              exclusiveLayerToggle={exclusiveLayerToggle}
-              handleLayerToggle={handleLayerToggle}
+              rasters={rasters}
+              setRasters={setRasters}
             />
-          ))
-        )}
-        {isHumanPressuresActive && (
-          <HumanImpactLayers
-            setLayerVisibility={setLayerVisibility}
+          )}
+          {isProtectedAreasActive && (
+            <ProtectedAreasLayers
+              handleLayerToggle={handleLayerToggle}
+              activeLayers={activeLayers}
+            />
+          )}
+        </Sidebar>
+        {isLandscapeMode && (
+          <LandscapeSidebar
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
             activeLayers={activeLayers}
             rasters={rasters}
+            setLayerVisibility={setLayerVisibility}
             setRasters={setRasters}
           />
         )}
-        {isProtectedAreasActive && (
-          <ProtectedAreasLayers
-            handleLayerToggle={handleLayerToggle}
-            activeLayers={activeLayers}
-          />
-        )}
-      </Sidebar>
-      {isLandscapeMode && (
-        <LandscapeSidebar
-          isLandscapeMode={isLandscapeMode}
+        <Legend
           isFullscreenActive={isFullscreenActive}
-          activeLayers={activeLayers}
-          rasters={rasters}
+          setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
-          setRasters={setRasters}
+          setLayerOrder={setLayerOrder}
         />
-      )}
+        {isLandscapeMode && <GridLayer />}
+        {hasMetadata && <InfoModal />}
+        <LabelsLayer />
+      </Globe>
       <About />
-      <Legend
-        isFullscreenActive={isFullscreenActive}
-        setLayerOpacity={setLayerOpacity}
-        setLayerVisibility={setLayerVisibility}
-        setLayerOrder={setLayerOrder}
-      />
-      {isLandscapeMode && <GridLayer />}
-      {hasMetadata && <InfoModal />}
-      <LabelsLayer />
-    </Globe>
+    </div>
   )
 };
 

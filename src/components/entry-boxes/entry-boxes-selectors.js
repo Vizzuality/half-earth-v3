@@ -19,5 +19,6 @@ const getCountedActiveLayers = createSelector(
   }
 );
 
+const getRoute = ({ location }) => location.routesMap[location.type];
 
-export default createStructuredSelector({ countedActiveLayers: getCountedActiveLayers });
+export default createStructuredSelector({ countedActiveLayers: getCountedActiveLayers, route: getRoute });
