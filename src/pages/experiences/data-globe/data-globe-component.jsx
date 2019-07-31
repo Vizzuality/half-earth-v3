@@ -56,7 +56,7 @@ const DataGlobeComponent = ({
   const isProtectedAreasActive = activeCategory === 'Existing protection';
 
   return (
-    <div>
+    <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
         <TerrainExaggerationLayer exaggeration={3}/>
         <ArcgisLayerManager activeLayers={activeLayers}/>
@@ -119,7 +119,7 @@ const DataGlobeComponent = ({
         <LabelsLayer />
       </Globe>
       <About />
-    </div>
+    </>
   )
 };
 
