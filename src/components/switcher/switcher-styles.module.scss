@@ -21,6 +21,7 @@ $half-width: 170px;
   letter-spacing: 1.5px;
   font-size: $font-size-xxs;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .switcherContainer {
@@ -31,10 +32,4 @@ $half-width: 170px;
   left: calc(50% - #{$half-width});
   clip-path: polygon(0 0, 100% 0, 88% 98%, 14% 98%);
   background-color: $pickled-bluewood;
-}
-
-.link {
-  text-decoration: none;
-  color: $white;
-  cursor: pointer;
 }
