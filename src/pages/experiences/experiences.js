@@ -4,8 +4,8 @@ import { FEATURED, DATA } from 'router';
 
 import Component from './experiences-component';
 
-export const switchToFeature = createAction(FEATURED);
-export const switchToExpert = createAction(DATA);
+const switchToFeature = createAction(FEATURED);
+const switchToExpert = createAction(DATA);
 
 const actions = { switchToFeature, switchToExpert };
 
