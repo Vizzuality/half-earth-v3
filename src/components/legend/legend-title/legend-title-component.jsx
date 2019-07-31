@@ -13,7 +13,7 @@ const LegendTitleComponent = ({ name, layer }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src={molLogo} className={styles.molLogo} alt="logo" />
+        <img src={molLogo} alt="mol" />
       </a>}
       <p className={styles.title}>{name}</p>
     </div>
