@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
+import { getActiveLayers, getRasters } from 'pages/experiences/data-globe/data-globe-selectors';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
 const getCountedActiveLayers = createSelector(
