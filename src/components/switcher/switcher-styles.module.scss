@@ -1,11 +1,13 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 $width: 340px;
 $height: 38px;
 $half-width: 170px;
 
 .switcher {
+  @extend %subtitle;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,10 +20,6 @@ $half-width: 170px;
   box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
   background-color: $elephant;
   color: $white;
-  letter-spacing: 1.5px;
-  font-size: $font-size-xxs;
-  font-family: $font-family-1-bold;
-  text-transform: uppercase;
   cursor: pointer;
 }
 
