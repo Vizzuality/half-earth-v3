@@ -6,7 +6,7 @@ import styles from './experiences-styles.module';
 const ExpertMode = loadable(() => import('./data-globe'));
 const FeaturedMode = loadable(() => import('./featured-globe'));
 
-const Experiences = ({ route, queryParams, switchToExpert, switchToFeature }) => {
+const Experiences = ({ route, queryParams, switchToExpert, switchToFeature, mountExpertGlobe, mountFeaturedGlobe }) => {
   const isExpertMode = route.path === '/dataGlobe';
 
   const preserveParams = (handler) => {
@@ -16,10 +16,10 @@ const Experiences = ({ route, queryParams, switchToExpert, switchToFeature }) =>
   return (
     <>
       <div className={cx({ [styles.hidden]: !isExpertMode })}>
-        <ExpertMode handleSwitch={() => { preserveParams(switchToFeature) }} />
+        {mountExpertGlobe && <ExpertMode handleSwitch={() => { preserveParams(switchToFeature) }} />}
       </div>
       <div className={cx({ [styles.hidden]: isExpertMode })}>
-        <FeaturedMode handleSwitch={() => { preserveParams(switchToExpert) }} />
+        {mountFeaturedGlobe && <FeaturedMode handleSwitch={() => { preserveParams(switchToExpert) }} />}
       </div>
     </>
   )
