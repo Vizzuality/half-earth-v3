@@ -90,6 +90,7 @@ const DataGlobeComponent = ({
           <HumanImpactLayers
             setLayerVisibility={setLayerVisibility}
             handleGlobeUpdating={handleGlobeUpdating}
+            isGlobeUpdating={isGlobeUpdating}
             activeLayers={activeLayers}
             rasters={rasters}
             setLayerVisibility={setLayerVisibility}
@@ -100,6 +101,7 @@ const DataGlobeComponent = ({
           <ProtectedAreasLayers
             handleLayerToggle={handleLayerToggle}
             handleGlobeUpdating={handleGlobeUpdating}
+            isGlobeUpdating={isGlobeUpdating}
             activeLayers={activeLayers}
           />
         )}

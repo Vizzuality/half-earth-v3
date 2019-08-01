@@ -10,7 +10,7 @@ import {
   layerManagerOpacity
 } from 'utils/layer-manager-utils';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { createLayer, addLayer } from 'utils/layer-manager-utils';
+import { createLayer } from 'utils/layer-manager-utils';
 
 import Component from './map-iframe-component.jsx';
 import mapStateToProps from './map-iframe-selectors';
@@ -18,7 +18,7 @@ import mapStateToProps from './map-iframe-selectors';
 import ownActions from './map-iframe-actions.js';
 const actions = { ...ownActions };
 
-const handleMapLoad = (map, view, activeLayers, handleGlobeUpdating) => {
+const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
   const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
   // set the outFields for the BIODIVERSITY_FACETS_LAYER
@@ -47,7 +47,7 @@ const handleMapLoad = (map, view, activeLayers, handleGlobeUpdating) => {
   const biodiversityLayers = layersConfig
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
 
-  biodiversityLayers.forEach(layer => { createLayer(layer).then(arcgisLayer => addLayer(arcgisLayer, map, view, handleGlobeUpdating)) });
+  biodiversityLayers.forEach(layer => { createLayer(layer, map) });
 }
 
 const dataGlobeContainer = props => {
@@ -80,12 +80,11 @@ const dataGlobeContainer = props => {
   const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setDataGlobeSettings);
   const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
   const handleZoomChange = props.setDataGlobeSettings;
-  const handleGlobeUpdating = (updating) => props.setDataGlobeSettings({ isGlobeUpdating: updating })
   
   return <Component
     handleLayerToggle={toggleLayer}
     handleZoomChange={handleZoomChange}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, handleGlobeUpdating)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
     {...props}/>
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { createLayer, addLayer } from 'utils/layer-manager-utils';
+import { createLayer } from 'utils/layer-manager-utils';
 
 import Component from './biodiversity-layers-component';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -31,7 +31,7 @@ const BiodiversityLayerContainer = props => {
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
-    const { map, view, handleGlobeUpdating, exclusiveLayerToggle, addLayerAnalyticsEvent, removeLayerAnalyticsEvent } = props;
+    const { map, exclusiveLayerToggle, addLayerAnalyticsEvent, removeLayerAnalyticsEvent } = props;
 
     const layer = layersConfig.find(l => l.slug === layerToAdd);
     const removeLayer = layersConfig.find(l => l.slug === layerToRemove);
@@ -39,8 +39,7 @@ const BiodiversityLayerContainer = props => {
     const removeSlug = removeLayer && removeLayer.slug;
 
     
-    !layerExists && createLayer(layer).then(arcgisLayer => addLayer(arcgisLayer, map, view, handleGlobeUpdating));
-
+    !layerExists && createLayer(layer, map);
     exclusiveLayerToggle(layer.slug, removeSlug);
     layer.bbox && flyToLayerExtent(layer.bbox);
 

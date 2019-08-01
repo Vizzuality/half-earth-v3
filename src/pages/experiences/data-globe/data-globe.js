@@ -12,7 +12,7 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import { enterLandscapeModeAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import ownActions from './data-globe-actions.js';
-import { createLayer, addLayer } from 'utils/layer-manager-utils';
+import { createLayer } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 

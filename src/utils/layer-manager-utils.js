@@ -46,7 +46,7 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
   callback({ activeLayers: updatedLayers });
 };
 
-export const createLayer = (layer) => {
+export const createLayer = (layer, map) => {
   return loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
     const { url, slug } = layer;
     const tileLayer = new WebTileLayer({
@@ -55,14 +55,8 @@ export const createLayer = (layer) => {
       id: slug,
       opacity: DEFAULT_OPACITY
     })
-    return tileLayer;
+    map.add(tileLayer);
   });
-}
-
-export const addLayer = (layer, map, view, handleGlobeUpdating) => {
-  handleGlobeUpdating(true);
-  map.add(layer)
-  handleLayerRendered(view, layer, handleGlobeUpdating);
 }
 
 export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
