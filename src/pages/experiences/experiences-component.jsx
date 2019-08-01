@@ -6,6 +6,8 @@ import styles from './experiences-styles.module';
 const ExpertMode = loadable(() => import('./data-globe'));
 const FeaturedMode = loadable(() => import('./featured-globe'));
 
+const { REACT_APP_IS_FEATURE_MAPS_ENABLED: IS_FEATURE_MAPS_ENABLED } = process.env;
+
 const Experiences = ({ route, queryParams, switchToExpert, switchToFeature, mountExpertGlobe, mountFeaturedGlobe }) => {
   const isExpertMode = route.path === '/dataGlobe';
 
@@ -19,7 +21,7 @@ const Experiences = ({ route, queryParams, switchToExpert, switchToFeature, moun
         {mountExpertGlobe && <ExpertMode handleSwitch={() => { preserveParams(switchToFeature) }} />}
       </div>
       <div className={cx({ [styles.hidden]: isExpertMode })}>
-        {mountFeaturedGlobe && <FeaturedMode handleSwitch={() => { preserveParams(switchToExpert) }} />}
+        {mountFeaturedGlobe && IS_FEATURE_MAPS_ENABLED &&  <FeaturedMode handleSwitch={() => { preserveParams(switchToExpert) }} />}
       </div>
     </>
   )
