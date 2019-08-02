@@ -5,7 +5,7 @@ import { BIODIVERSITY_FACETS_LAYER } from 'constants/layers-slugs';
 
 import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry, cellsEquality } from 'utils/grid-layer-utils';
 
-const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
+const GridLayer = ({map, view, setGridCellData, setGridCellGeometry, handleGlobeUpdating}) => {
 
   let queryHandle;
   let watchHandle;
@@ -61,8 +61,10 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
    useEffect(() => {
         const { extent } = view;
         const scaledDownExtent = extent.clone().expand(0.9);
+        handleGlobeUpdating(true);
         watchUpdateHandle = gridViewLayer && gridViewLayer.watch('updating', function(value) {
           if (!value) {
+            handleGlobeUpdating(false);
             queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
             queryHandle = gridViewLayer.queryFeatures({
               geometry: extent,

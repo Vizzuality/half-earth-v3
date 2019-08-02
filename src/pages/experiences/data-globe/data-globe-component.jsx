@@ -90,7 +90,6 @@ const DataGlobeComponent = ({
           <HumanImpactLayers
             setLayerVisibility={setLayerVisibility}
             handleGlobeUpdating={handleGlobeUpdating}
-            isGlobeUpdating={isGlobeUpdating}
             activeLayers={activeLayers}
             rasters={rasters}
             setLayerVisibility={setLayerVisibility}
@@ -101,7 +100,6 @@ const DataGlobeComponent = ({
           <ProtectedAreasLayers
             handleLayerToggle={handleLayerToggle}
             handleGlobeUpdating={handleGlobeUpdating}
-            isGlobeUpdating={isGlobeUpdating}
             activeLayers={activeLayers}
           />
         )}
@@ -110,7 +108,9 @@ const DataGlobeComponent = ({
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
-          setLayerOpacity={setLayerOpacity}
+          handleGlobeUpdating={handleGlobeUpdating}
+          activeLayers={activeLayers}
+          rasters={rasters}
           setLayerVisibility={setLayerVisibility}
           setLayerOrder={setLayerOrder}
         />
@@ -123,7 +123,7 @@ const DataGlobeComponent = ({
         setLayerVisibility={setLayerVisibility}
         setLayerOrder={setLayerOrder}
       />
-      {isLandscapeMode && <GridLayer />}
+      {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating} />}
       {hasMetadata && <InfoModal />}
       <LabelsLayer />
       {isGlobeUpdating && <Spinner floating />}
