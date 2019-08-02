@@ -10,10 +10,10 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ view, isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers }) => {
+const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route }) => {
   const config = { mass: 5, tension: 2000, friction: 200 }
 
-  const interfaceLoaded = view.ready;
+  const interfaceLoaded = route.path === '/dataGlobe';
 
   const trail = useTrail(categories.length, {
     config,
