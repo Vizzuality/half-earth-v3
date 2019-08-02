@@ -60,6 +60,7 @@ const DataGlobeComponent = ({
 
   return (
     <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
+      {IS_FEATURE_MAPS_ENABLED && <Switcher handleClick={handleSwitch} />}
       <TerrainExaggerationLayer exaggeration={3}/>
       <ArcgisLayerManager activeLayers={activeLayers} handleGlobeUpdating={handleGlobeUpdating} />
       <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
@@ -82,7 +83,6 @@ const DataGlobeComponent = ({
               handleGlobeUpdating={handleGlobeUpdating}
               exclusiveLayerToggle={exclusiveLayerToggle}
               handleLayerToggle={handleLayerToggle}
-              activeLayers={activeLayers}
             />
           ))
         )}
@@ -92,7 +92,6 @@ const DataGlobeComponent = ({
             handleGlobeUpdating={handleGlobeUpdating}
             activeLayers={activeLayers}
             rasters={rasters}
-            setLayerVisibility={setLayerVisibility}
             setRasters={setRasters}
           />
         )}

@@ -16,7 +16,7 @@ import { createLayer } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
-const handleMapLoad = (map, view, activeLayers, mountFeaturedGlobe, handleGlobeUpdating) => {
+const handleMapLoad = (map, view, activeLayers, mountFeaturedGlobe) => {
   const { layers } = map;
 
   const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
@@ -81,7 +81,7 @@ const dataGlobeContainer = props => {
     setLayerOpacity={setLayerOpacity}
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, mountFeaturedGlobe, handleGlobeUpdating)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, mountFeaturedGlobe)}
     handleGlobeUpdating={handleGlobeUpdating}
     handleZoomChange={handleZoomChange}
     {...props}/>
