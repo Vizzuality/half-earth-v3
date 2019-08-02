@@ -110,8 +110,8 @@ const DataGlobeComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}
           rasters={rasters}
+          setRasters={setRasters}
           setLayerVisibility={setLayerVisibility}
-          setLayerOrder={setLayerOrder}
         />
 
       )}
