@@ -12,7 +12,6 @@ import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import About from 'components/about';
 import Legend from 'components/legend';
-import Switcher from 'components/switcher';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -28,6 +27,7 @@ const BiodiversityLayers = loadable(() => import('components/biodiversity-layers
 const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
+const Switcher = loadable(() => import('components/switcher'));
 
 // const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID, REACT_APP_IS_FEATURE_MAPS_ENABLED: IS_FEATURE_MAPS_ENABLED } = process.env;
@@ -64,7 +64,7 @@ const DataGlobeComponent = ({
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
         <ZoomWidget />
-        {IS_FEATURE_MAPS_ENABLED && <Switcher handleClick={handleSwitch} />}
+        {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
         <SearchWidget />
         <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
