@@ -53,3 +53,11 @@ $size: 100px;
   top: 42%;
   left: 47%;
 }
+
+.spinnerWithOverlay {
+  background-color: $firefly;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}

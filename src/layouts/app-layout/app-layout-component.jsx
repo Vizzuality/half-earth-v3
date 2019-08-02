@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 import universal from 'react-universal-component';
+import Spinner from 'components/spinner';
+
+const loaderSpinner = (<Spinner spinnerWithOverlay />);
 
 const universalConfig = {
-  loading: <div>Loading</div>
+  loading: loaderSpinner
 };
 
 const PageComponent = universal(

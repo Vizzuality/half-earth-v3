@@ -59,7 +59,7 @@ const DataGlobeComponent = ({
   const isProtectedAreasActive = activeCategory === 'Existing protection';
 
   return (
-    <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner />}>
+    <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
       <TerrainExaggerationLayer exaggeration={3}/>
       <ArcgisLayerManager activeLayers={activeLayers} handleGlobeUpdating={handleGlobeUpdating} />
       <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
