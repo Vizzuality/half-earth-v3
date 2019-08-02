@@ -96,6 +96,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry, handleGlobe
         })
         return function cleanUp() {
           cleanUpHandles();
+          handleGlobeUpdating(false);
       }
   }, [gridViewLayer, viewExtent, gridCellGraphic]);
 
