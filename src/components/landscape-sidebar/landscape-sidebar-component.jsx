@@ -11,13 +11,14 @@ import styles from './landscape-sidebar-styles.module.scss';
 
 const LandscapeSidebarComponent = ({ 
   map,
+  view,
   isLandscapeMode,
   isFullscreenActive,
   activeLayers,
   rasters,
   setLayerVisibility,
   setRasters,
-  view
+  handleGlobeUpdating
 }) => {
   const animationProps = useSpring({
     from: { marginLeft: -400 },
@@ -35,10 +36,12 @@ const LandscapeSidebarComponent = ({
         <GeoDescriptionWidget view={view} />
         <HumanPressureWidget
           map={map}
+          view={view}
           activeLayers={activeLayers}
           rasters={rasters}
           setLayerVisibility={setLayerVisibility}
           setRasters={setRasters}
+          handleGlobeUpdating={handleGlobeUpdating}
         />
         <MOLUploader />
       </div>

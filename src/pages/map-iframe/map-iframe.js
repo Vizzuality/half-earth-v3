@@ -47,7 +47,7 @@ const handleMapLoad = (map, view, activeLayers) => {
   const biodiversityLayers = layersConfig
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
 
-  biodiversityLayers.forEach(layer => createLayer(layer, map));
+  biodiversityLayers.forEach(layer => { createLayer(layer, map) });
 }
 
 const dataGlobeContainer = props => {

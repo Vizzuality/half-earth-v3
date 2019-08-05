@@ -72,6 +72,7 @@ const dataGlobeContainer = props => {
   const mountFeaturedGlobe = () => props.setDataGlobeSettings({ mountFeaturedGlobe: true });
 
   usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
+  const handleGlobeUpdating = (updating) => props.setDataGlobeSettings({ isGlobeUpdating: updating })
 
   return <Component
     handleLayerToggle={toggleLayer}
@@ -81,6 +82,7 @@ const dataGlobeContainer = props => {
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
     onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, mountFeaturedGlobe)}
+    handleGlobeUpdating={handleGlobeUpdating}
     handleZoomChange={handleZoomChange}
     {...props}/>
 }

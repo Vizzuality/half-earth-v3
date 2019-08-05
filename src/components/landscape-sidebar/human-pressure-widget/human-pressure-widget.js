@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { handleLayerRendered } from 'utils/layer-manager-utils';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 import mapStateToProps from './human-pressure-selectors';
@@ -14,8 +15,10 @@ const HumanPressureWidgetContainer = props => {
     setLayerVisibility,
     setRasters,
     map,
+    view,
     addLayerAnalyticsEvent,
-    removeLayerAnalyticsEvent
+    removeLayerAnalyticsEvent,
+    handleGlobeUpdating
   } = props;
 
   const activeRect = Object.keys(rasters).filter(r => rasters[r]);
@@ -24,6 +27,7 @@ const HumanPressureWidgetContainer = props => {
     let newRasters;
     const { layers } = map;
     const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+
     if (!rasters[option.data.rasterId]) {
       newRasters = {...rasters, [option.data.rasterId]: true}
       setRasters(newRasters);
@@ -36,6 +40,11 @@ const HumanPressureWidgetContainer = props => {
     }
 
     const hasRastersWithData = Object.values(newRasters).some(raster => raster);
+    if (hasRastersWithData) {
+      handleGlobeUpdating(true);
+    }
+
+    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
     setLayerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData);
 
     const rasterNames = Object.keys(newRasters).map(key => `human_impact_${key}`)

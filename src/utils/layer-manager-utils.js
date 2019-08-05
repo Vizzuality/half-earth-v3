@@ -58,3 +58,11 @@ export const createLayer = (layer, map) => {
     map.add(tileLayer);
   });
 }
+
+export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
+  view.whenLayerView(layer).then(mapLayerView => {
+    mapLayerView.watch("updating", updating => {
+      if(!updating) { handleGlobeUpdating(false) }
+    })
+  })
+}
