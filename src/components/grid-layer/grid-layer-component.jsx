@@ -64,7 +64,6 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry, handleGlobe
         handleGlobeUpdating(true);
         watchUpdateHandle = gridViewLayer && gridViewLayer.watch('updating', function(value) {
           if (!value) {
-            handleGlobeUpdating(false);
             queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
             queryHandle = gridViewLayer.queryFeatures({
               geometry: extent,
@@ -77,6 +76,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry, handleGlobe
               // If there are not a group of cells pick the one in the center
               const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
               // Change data on the store and paint only when grid cell chaged
+              handleGlobeUpdating(false);
               if (!cellsEquality(gridCellRef.current, gridCells, hasContainedGridCells)) {
                 // dispatch action
                 setGridCellData(gridCells.map(c => c.attributes));
