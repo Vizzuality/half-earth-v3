@@ -16,6 +16,8 @@ export const fetchPageTextsDataReady = createAction('fetchPageTextsDataReady');
 export const fetchPageTextsData = createThunkAction('fetchPageTextsData', slug => async dispatch => {
   try {
     const data = await CONTENTFUL.getTexts(slug);
+    const featured = await CONTENTFUL.getFeaturedMapData('bestPlaces');
+    console.log(featured)
     dispatch(fetchPageTextsDataReady({ data }));
   } catch (e) {
     console.warn(e);
