@@ -5,7 +5,7 @@ import { BIODIVERSITY_FACETS_LAYER } from 'constants/layers-slugs';
 
 import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry, cellsEquality } from 'utils/grid-layer-utils';
 
-const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
+const GridLayer = ({map, view, setGridCellData, setGridCellGeometry, handleGlobeUpdating}) => {
 
   let queryHandle;
   let watchHandle;
@@ -61,6 +61,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
    useEffect(() => {
         const { extent } = view;
         const scaledDownExtent = extent.clone().expand(0.9);
+        handleGlobeUpdating(true);
         watchUpdateHandle = gridViewLayer && gridViewLayer.watch('updating', function(value) {
           if (!value) {
             queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
@@ -75,6 +76,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
               // If there are not a group of cells pick the one in the center
               const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
               // Change data on the store and paint only when grid cell chaged
+              handleGlobeUpdating(false);
               if (!cellsEquality(gridCellRef.current, gridCells, hasContainedGridCells)) {
                 // dispatch action
                 setGridCellData(gridCells.map(c => c.attributes));
@@ -94,6 +96,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
         })
         return function cleanUp() {
           cleanUpHandles();
+          handleGlobeUpdating(false);
       }
   }, [gridViewLayer, viewExtent, gridCellGraphic]);
 

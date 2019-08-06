@@ -7,6 +7,7 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import LabelsLayer from 'components/labels-layer';
+import Spinner from 'components/spinner';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
@@ -40,11 +41,13 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   isSidebarOpen,
+  isGlobeUpdating,
   hasMetadata,
   handleZoomChange,
   handleLayerToggle,
   setLayerVisibility,
   sceneSettings,
+  handleGlobeUpdating,
   exclusiveLayerToggle,
   onLoad,
   setLayerOpacity,
@@ -57,7 +60,8 @@ const DataGlobeComponent = ({
   
   return (
     <>
-      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
+      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
+        {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
@@ -77,6 +81,7 @@ const DataGlobeComponent = ({
                 subcategories={cat.subcategories}
                 options={cat.taxa}
                 activeLayers={activeLayers}
+                handleGlobeUpdating={handleGlobeUpdating}
                 exclusiveLayerToggle={exclusiveLayerToggle}
                 handleLayerToggle={handleLayerToggle}
               />
@@ -85,6 +90,7 @@ const DataGlobeComponent = ({
           {isHumanPressuresActive && (
             <HumanImpactLayers
               setLayerVisibility={setLayerVisibility}
+              handleGlobeUpdating={handleGlobeUpdating}
               activeLayers={activeLayers}
               rasters={rasters}
               setRasters={setRasters}
@@ -93,6 +99,7 @@ const DataGlobeComponent = ({
           {isProtectedAreasActive && (
             <ProtectedAreasLayers
               handleLayerToggle={handleLayerToggle}
+              handleGlobeUpdating={handleGlobeUpdating}
               activeLayers={activeLayers}
             />
           )}
@@ -110,10 +117,11 @@ const DataGlobeComponent = ({
           <LandscapeSidebar
             isLandscapeMode={isLandscapeMode}
             isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
             activeLayers={activeLayers}
             rasters={rasters}
-            setLayerVisibility={setLayerVisibility}
             setRasters={setRasters}
+            setLayerVisibility={setLayerVisibility}
           />
         )}
       </Globe>
@@ -124,3 +132,4 @@ const DataGlobeComponent = ({
 };
 
 export default DataGlobeComponent;
+

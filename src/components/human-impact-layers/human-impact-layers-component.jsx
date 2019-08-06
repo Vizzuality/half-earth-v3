@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { loadModules } from '@esri/react-arcgis';
 
+import { handleLayerRendered } from 'utils/layer-manager-utils';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 
-const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
+const HumanImpactLayers = ({ handleGlobeUpdating, view, map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
   const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   // eslint-disable-next-line no-mixed-operators
   const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
@@ -18,9 +19,14 @@ const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activ
   const handleHumanPressureRasters = (rasters, option) => {
     const { layers } = map;
     const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    setRasters(rasters);
-
+    
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
+    if (hasRastersWithData) {
+      handleGlobeUpdating(true);
+    }
+    setRasters(rasters);
+    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
+
     setLayerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData);
 
     const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
