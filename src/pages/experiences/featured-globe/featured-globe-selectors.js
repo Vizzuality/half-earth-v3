@@ -1,8 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { isEmpty } from 'lodash';
 import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
 import initialState from './featured-globe-initial-state';
 import sceneSettings from './featured-globe-settings.js';
+
+const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -26,16 +29,18 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
   }
 })
 
-const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
+// GLOBE
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
-const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
-const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
+const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
+
+// UI
+const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive);
 
 export default createStructuredSelector({
   sceneLayers: getFeaturedGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
-  isSidebarOpen: getSidebarVisibility,
   sceneSettings: getSceneSettings,
-  activeCategory: getActiveCategory
+  hasMetadata: selectMetadataData,
+  isFullscreenActive: getFullscreenActive
 })
