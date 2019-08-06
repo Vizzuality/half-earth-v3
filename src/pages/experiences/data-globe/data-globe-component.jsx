@@ -54,11 +54,10 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-
+  
   return (
     <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
-        <TerrainExaggerationLayer exaggeration={3}/>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
@@ -98,6 +97,15 @@ const DataGlobeComponent = ({
             />
           )}
         </Sidebar>
+        <Legend
+          isFullscreenActive={isFullscreenActive}
+          setLayerOpacity={setLayerOpacity}
+          setLayerVisibility={setLayerVisibility}
+          setLayerOrder={setLayerOrder}
+        />
+        {isLandscapeMode && <GridLayer />}
+        {isLandscapeMode && <LabelsLayer />}
+        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && (
           <LandscapeSidebar
             isLandscapeMode={isLandscapeMode}
@@ -108,17 +116,9 @@ const DataGlobeComponent = ({
             setRasters={setRasters}
           />
         )}
-        <Legend
-          isFullscreenActive={isFullscreenActive}
-          setLayerOpacity={setLayerOpacity}
-          setLayerVisibility={setLayerVisibility}
-          setLayerOrder={setLayerOrder}
-        />
-        {isLandscapeMode && <GridLayer />}
-        {hasMetadata && <InfoModal />}
-        <LabelsLayer />
       </Globe>
       <About />
+      {hasMetadata && <InfoModal />}
     </>
   )
 };
