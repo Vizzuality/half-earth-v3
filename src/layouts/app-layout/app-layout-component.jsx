@@ -1,24 +1,14 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
-import universal from 'react-universal-component';
-import Spinner from 'components/spinner';
+import FeaturedGlobe from 'pages/featured-globe';
+import DataGlobe from 'pages/data-globe';
 
-const loaderSpinner = (<Spinner spinnerWithOverlay />);
-
-const universalConfig = {
-  loading: loaderSpinner
-};
-
-const PageComponent = universal(
-  ({ page } /* webpackChunkName: "[request]" */) => import(`../../pages/${page}/${page}.js`),
-  universalConfig
-);
 
 class App extends PureComponent {
   render() {
     const { route } = this.props;
     const { page } = route;
-    return page ? <PageComponent page={page} /> : null;
+    return page === 'featured-globe' ? <FeaturedGlobe /> : <DataGlobe />;
   }
 }
 

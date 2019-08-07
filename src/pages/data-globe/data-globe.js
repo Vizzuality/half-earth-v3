@@ -50,10 +50,6 @@ const handleMapLoad = (map, view, activeLayers, mountFeaturedGlobe) => {
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
 
   biodiversityLayers.forEach(layer => createLayer(layer, map));
-
-  loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-    watchUtils.whenNotOnce(view, 'updating', () => { mountFeaturedGlobe() ;})
-  })
 }
 
 const dataGlobeContainer = props => {
@@ -69,7 +65,6 @@ const dataGlobeContainer = props => {
     landscapeView && props.enterLandscapeModeAnalyticsEvent();
     return props.setDataGlobeSettings(params);
   };
-  const mountFeaturedGlobe = () => props.setDataGlobeSettings({ mountFeaturedGlobe: true });
 
   usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
   const handleGlobeUpdating = (updating) => props.setDataGlobeSettings({ isGlobeUpdating: updating })
@@ -81,7 +76,7 @@ const dataGlobeContainer = props => {
     setLayerOpacity={setLayerOpacity}
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, mountFeaturedGlobe)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
     handleGlobeUpdating={handleGlobeUpdating}
     handleZoomChange={handleZoomChange}
     {...props}/>

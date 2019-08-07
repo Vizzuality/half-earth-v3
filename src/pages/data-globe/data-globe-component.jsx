@@ -13,7 +13,6 @@ import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import About from 'components/about';
 import Legend from 'components/legend';
-import Switcher from 'components/switcher';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -29,6 +28,7 @@ const BiodiversityLayers = loadable(() => import('components/biodiversity-layers
 const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
+const Switcher = loadable(() => import('components/switcher'));
 
 // const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID, REACT_APP_IS_FEATURE_MAPS_ENABLED: IS_FEATURE_MAPS_ENABLED } = process.env;
@@ -57,77 +57,79 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-
+  
   return (
-    <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
-      {IS_FEATURE_MAPS_ENABLED && <Switcher handleClick={handleSwitch} />}
-      <TerrainExaggerationLayer exaggeration={3}/>
-      <ArcgisLayerManager activeLayers={activeLayers} handleGlobeUpdating={handleGlobeUpdating} />
-      <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-      <LocationWidget />
-      <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
-      <ZoomWidget />
-      <MinimapWidget />
-      <SearchWidget />
-      <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
-      <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
-        {isBiodiversityActive && (
-          biodiversityCategories.map(cat => (
-            <BiodiversityLayers
-              key={cat.name}
-              title={cat.name}
-              description={cat.description}
-              subcategories={cat.subcategories}
-              options={cat.taxa}
-              activeLayers={activeLayers}
+    <>
+      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
+        {isGlobeUpdating && <Spinner floating />}
+        <ArcgisLayerManager activeLayers={activeLayers}/>
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
+        <LocationWidget />
+        <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
+        <ZoomWidget />
+        {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
+        <MinimapWidget />
+        <SearchWidget />
+        <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
+        <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
+          {isBiodiversityActive && (
+            biodiversityCategories.map(cat => (
+              <BiodiversityLayers
+                key={cat.name}
+                title={cat.name}
+                description={cat.description}
+                subcategories={cat.subcategories}
+                options={cat.taxa}
+                activeLayers={activeLayers}
+                handleGlobeUpdating={handleGlobeUpdating}
+                exclusiveLayerToggle={exclusiveLayerToggle}
+                handleLayerToggle={handleLayerToggle}
+              />
+            ))
+          )}
+          {isHumanPressuresActive && (
+            <HumanImpactLayers
+              setLayerVisibility={setLayerVisibility}
               handleGlobeUpdating={handleGlobeUpdating}
-              exclusiveLayerToggle={exclusiveLayerToggle}
-              handleLayerToggle={handleLayerToggle}
+              activeLayers={activeLayers}
+              rasters={rasters}
+              setRasters={setRasters}
             />
-          ))
-        )}
-        {isHumanPressuresActive && (
-          <HumanImpactLayers
-            setLayerVisibility={setLayerVisibility}
+          )}
+          {isProtectedAreasActive && (
+            <ProtectedAreasLayers
+              handleLayerToggle={handleLayerToggle}
+              handleGlobeUpdating={handleGlobeUpdating}
+              activeLayers={activeLayers}
+            />
+          )}
+        </Sidebar>
+        <Legend
+          isFullscreenActive={isFullscreenActive}
+          setLayerOpacity={setLayerOpacity}
+          setLayerVisibility={setLayerVisibility}
+          setLayerOrder={setLayerOrder}
+        />
+        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
+        {isLandscapeMode && <LabelsLayer />}
+        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
+        {isLandscapeMode && (
+          <LandscapeSidebar
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
             handleGlobeUpdating={handleGlobeUpdating}
             activeLayers={activeLayers}
             rasters={rasters}
             setRasters={setRasters}
+            setLayerVisibility={setLayerVisibility}
           />
         )}
-        {isProtectedAreasActive && (
-          <ProtectedAreasLayers
-            handleLayerToggle={handleLayerToggle}
-            handleGlobeUpdating={handleGlobeUpdating}
-            activeLayers={activeLayers}
-          />
-        )}
-      </Sidebar>
-      {isLandscapeMode && (
-        <LandscapeSidebar
-          isLandscapeMode={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          activeLayers={activeLayers}
-          rasters={rasters}
-          setRasters={setRasters}
-          setLayerVisibility={setLayerVisibility}
-        />
-
-      )}
+      </Globe>
       <About />
-      <Legend
-        isFullscreenActive={isFullscreenActive}
-        setLayerOpacity={setLayerOpacity}
-        setLayerVisibility={setLayerVisibility}
-        setLayerOrder={setLayerOrder}
-      />
-      {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating} />}
       {hasMetadata && <InfoModal />}
-      <LabelsLayer />
-      {isGlobeUpdating && <Spinner floating />}
-    </Globe>
+    </>
   )
 };
 
 export default DataGlobeComponent;
+

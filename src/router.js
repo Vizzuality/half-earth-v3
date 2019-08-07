@@ -5,19 +5,18 @@ export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
 
-// *page* key indicates which container is the entry-point for that route
 export const routes = {
   [DATA]: {
     path: '/v2',
-    page: 'experiences'
+    page: 'data-globe'
   },
   [DATA]: {
     path: '/dataGlobe',
-    page: 'experiences'
+    page: 'data-globe'
   },
   [FEATURED]: {
     path: '/featuredGlobe',
-    page: 'experiences'
+    page: 'featured-globe'
   },
   [MAP_IFRAME]: {
     path: '/map',

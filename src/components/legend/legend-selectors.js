@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getActiveLayers, getRasters } from 'pages/experiences/data-globe/data-globe-selectors';
+import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';

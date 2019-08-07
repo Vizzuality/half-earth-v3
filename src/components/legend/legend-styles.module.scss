@@ -25,13 +25,13 @@ $map-attribution-height: 30px;
 //legend tooltip styles
 :global {
   .wri_api__c-legend-item-types {
-    background: none;
+    background: none !important;
   }
 
   .wri_api__c-legend-map { //legend container
-    background: none;
-    border: none;
-    border-radius: 2px;
+    background: none !important;
+    border: none !important;
+    border-radius: 2px !important;
   }
   
   .wri_api__name {
@@ -43,11 +43,11 @@ $map-attribution-height: 30px;
   }
 
   .wri_api__c-legend-item .wri_api__legend-item-container.wri_api__-sortable { //whole legend item padding
-    padding: 0 12px 12px;
+    padding: 0 12px 12px !important;
   }
 
   .wri_api__c-legend-item .wri_api__legend-item-container {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px !important;
 
   }
 
@@ -82,8 +82,8 @@ $map-attribution-height: 30px;
 
   .wri_api__c-legend-handler {
     height: 100%;
-    left: 0;
-    top: 0;
+    left: 0 !important;
+    top: 0 !important;
     width: 100%;
     z-index: 1;
     svg {
@@ -93,7 +93,7 @@ $map-attribution-height: 30px;
 
   .wri_api__legend-item-header > h3 {
     margin-bottom: 0;
-    margin-top: 12px;
+    margin-top: 12px !important;
   }
 }
 

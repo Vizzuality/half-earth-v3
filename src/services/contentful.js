@@ -97,4 +97,21 @@ async function getTexts(slug) {
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts };
+async function getFeaturedMapData(slug) {
+  const data = await fetchContentfulEntry({ contentType: 'featuredMaps', filterField:'slug', filterValue: slug });
+  if (data && data.items && data.items.length > 0) {
+    const { items } = data
+    const fields = items[0].fields;
+    const  featuredMap = {
+      title: fields.title,
+      description: fields.description,
+    }
+    await getContentfulImage(fields.picture.sys.id).then(mapImageUrl => {
+      featuredMap.image = mapImageUrl;
+    });
+    return featuredMap;
+  }
+  return null;
+}
+
+export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData };
