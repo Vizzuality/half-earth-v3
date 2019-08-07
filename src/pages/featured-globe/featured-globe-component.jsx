@@ -13,7 +13,7 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
-import FeaturedMapCard from 'components/featured-map-card';
+import Spinner from 'components/spinner';
 import {Helmet} from "react-helmet";
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
@@ -21,13 +21,12 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
 const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, handleSwitch, onLoad, isFullscreenActive, handleZoomChange, isLandscapeMode }) => {
-  console.log('render featured')
   return (
     <>
       <Helmet>
-        { DATA_GLOBE_URLS.map(url => <link rel="preload" crossorigin href={url} as="script" />)}
+        { DATA_GLOBE_URLS.map(url => <link key="url" rel="preload" crossorigin href={url} as="script" />)}
       </Helmet>
-      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
+      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
@@ -35,7 +34,6 @@ const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, handleSwitch, onLo
         <MinimapWidget />
         <SearchWidget />
         <Switcher />
-        <FeaturedMapCard />
       </Globe>
       {hasMetadata && <InfoModal />}
       <About />
