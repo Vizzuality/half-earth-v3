@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from "react-helmet";
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { DATA_GLOBE_URLS } from 'constants/preload-urls';
@@ -13,8 +14,9 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
+import SelectedFeaturedMapCard from 'components/featured-map-card';
 import Spinner from 'components/spinner';
-import {Helmet} from "react-helmet";
+import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
@@ -34,6 +36,7 @@ const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, handleSwitch, onLo
         <MinimapWidget />
         <SearchWidget />
         <Switcher />
+        <SelectedFeaturedMapCard className={uiStyles.uiTopLeft} isSidebarOpen={true} isFullscreenActive={isFullscreenActive} isLandscapeMode={isLandscapeMode}/>
       </Globe>
       {hasMetadata && <InfoModal />}
       <About />

@@ -1,0 +1,67 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+$section-padding: 0 24px;
+
+.cardContainer {
+  @include backdropBlur();
+  width: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: auto;
+  min-height: 360px;
+  border-radius: 2px;
+  background-color: $brand-color-secondary;
+}
+
+.titleSection {
+  padding: $section-padding;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 170px;
+}
+
+.descriptionSection {
+  padding: $section-padding;
+}
+
+.title {
+  @extend %headline;
+  color: $white;
+  margin-top: 54px;
+  margin-bottom: 0;
+}
+
+.shareButton {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+}
+
+.description {
+  @extend %bodyText;
+  color: white;
+}
+
+.allMapsButton {
+  position: absolute;
+  right: 20px;
+  bottom: 24px;
+  
+  .buttonText {
+    @extend %subtitle;
+    color: $white;
+  }
+  
+  .arrowIcon {
+    fill: $white;
+    position: relative;
+    top: 3px;
+    left: 10px;
+  }
+}
