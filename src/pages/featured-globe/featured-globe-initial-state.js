@@ -6,6 +6,6 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
-    activeCategory: ''
+    selectedFeaturedMap: 'bestPlaces'
   }
 }
