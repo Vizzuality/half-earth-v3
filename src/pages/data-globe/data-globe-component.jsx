@@ -110,7 +110,7 @@ const DataGlobeComponent = ({
           setLayerVisibility={setLayerVisibility}
           setLayerOrder={setLayerOrder}
         />
-        {isLandscapeMode && <GridLayer />}
+        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && (
