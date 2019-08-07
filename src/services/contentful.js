@@ -109,7 +109,7 @@ async function getFeaturedMapData(slug) {
     await getContentfulImage(fields.picture.sys.id).then(mapImageUrl => {
       featuredMap.image = mapImageUrl;
     });
-    console.log(featuredMap);
+    return featuredMap;
   }
   return null;
 }
