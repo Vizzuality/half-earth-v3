@@ -7,6 +7,12 @@ export default {
     },
     alphaCompositingEnabled: true
   },
+  constraints: {
+    altitude: {
+      max: 35512548,
+      min: 10000
+    }
+  },
   ui: {
     components: []
   }

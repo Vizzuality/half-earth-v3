@@ -15,10 +15,12 @@ const handleSwitch = createAction(DATA);
 const actions = { ...ownActions, ...featuredMapsActions, handleSwitch}
 
 const feturedGlobeContainer = props => {
+
   useEffect(() => {
     const { setFeaturedMaps } = props;
     setFeaturedMaps()
   },[])
+
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setFeaturedGlobeSettings);
   const handleZoomChange = props.setFeaturedGlobeSettings;
 
