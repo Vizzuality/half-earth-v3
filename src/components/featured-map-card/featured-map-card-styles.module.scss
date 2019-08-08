@@ -14,7 +14,6 @@ $section-padding: 0 24px;
   flex-direction: column;
   width: 300px;
   height: auto;
-  min-height: 360px;
   border-radius: 2px;
   background-color: $brand-color-secondary;
 }
@@ -27,6 +26,8 @@ $section-padding: 0 24px;
 }
 
 .descriptionSection {
+  display: flex;
+  flex-direction: column;
   padding: $section-padding;
 }
 
@@ -49,10 +50,11 @@ $section-padding: 0 24px;
 }
 
 .allMapsButton {
-  position: absolute;
-  right: 20px;
+  position: relative;
   bottom: 24px;
-  
+  margin-top: 20px;
+  align-self: flex-end;
+
   .buttonText {
     @extend %subtitle;
     color: $white;
