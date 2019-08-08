@@ -30,10 +30,11 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 })
 
 // GLOBE
-const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
-const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
+const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView);
+const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
 
 // UI
+const getSelectedFeaturedMap = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedMap);
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive);
 
 export default createStructuredSelector({
@@ -42,5 +43,6 @@ export default createStructuredSelector({
   isLandscapeMode: getLandscapeMode,
   sceneSettings: getSceneSettings,
   hasMetadata: selectMetadataData,
-  isFullscreenActive: getFullscreenActive
+  isFullscreenActive: getFullscreenActive,
+  selectedFeaturedMap: getSelectedFeaturedMap
 })
