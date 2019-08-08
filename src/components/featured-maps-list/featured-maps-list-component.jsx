@@ -8,7 +8,8 @@ const FeaturedMapsListComponent = ({
   featuredMapsList,
   selectedSidebar,
   isLandscapeMode,
-  isFullscreenActive
+  isFullscreenActive,
+  handleFeaturedMapClick
 }) => {
   const isOpen = selectedSidebar === 'featuredMapsList';
   const slide = useSpring({
@@ -18,7 +19,7 @@ const FeaturedMapsListComponent = ({
   })
   return (
     <animated.div className={cx(className)} style={slide}>
-      {featuredMapsList.map(map => <p style={{ color: 'white'}}>{map.title}</p>)}
+      {featuredMapsList.map(map => <p key={map.title} onClick={() => handleFeaturedMapClick(map.slug)}style={{ color: 'white'}}>{map.title}</p>)}
     </animated.div>
   )
 }
