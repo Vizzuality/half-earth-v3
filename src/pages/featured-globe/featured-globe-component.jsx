@@ -14,6 +14,7 @@ import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
+import FeaturedMapsList from 'components/featured-maps-list';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
 import Spinner from 'components/spinner';
@@ -23,7 +24,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, handleSwitch, onLoad, isFullscreenActive, handleZoomChange, isLandscapeMode, selectedFeaturedMap }) => {
+const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, selectedSidebar, onLoad, isFullscreenActive, handleZoomChange, isLandscapeMode, selectedFeaturedMap }) => {
 
   return (
     <>
@@ -38,8 +39,20 @@ const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, handleSwitch, onLo
         <MinimapWidget />
         <SearchWidget />
         <Switcher />
+        <FeaturedMapsList
+          className={uiStyles.uiTopLeft}
+          selectedSidebar={selectedSidebar}
+          isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+        />
+        <SelectedFeaturedMapCard
+          className={uiStyles.uiTopLeft}
+          selectedFeaturedMap={selectedFeaturedMap}
+          selectedSidebar={selectedSidebar}
+          isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+        />
         <SelectedFeaturedMapLayer selectedFeaturedMap={selectedFeaturedMap}/>
-        <SelectedFeaturedMapCard className={uiStyles.uiTopLeft} selectedFeaturedMap={selectedFeaturedMap} isSidebarOpen={true} isFullscreenActive={isFullscreenActive} isLandscapeMode={isLandscapeMode}/>
       </Globe>
       {hasMetadata && <InfoModal />}
       <About />

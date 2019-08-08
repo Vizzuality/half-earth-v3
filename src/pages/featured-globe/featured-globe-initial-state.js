@@ -5,7 +5,7 @@ export default {
     center: [16.9515536, 51.116959]
   },
   ui: {
-    isSidebarOpen: false,
+    selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'bestPlaces'
   }
 }
