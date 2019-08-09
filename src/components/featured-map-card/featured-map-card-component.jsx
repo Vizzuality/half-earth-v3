@@ -25,7 +25,7 @@ const FeaturesMapCardComponent = ({
     <animated.div className={cx(className, styles.cardContainer)} style={slide}>
       <section
         className={styles.titleSection}
-        style={ {backgroundImage: `url(${featuredMap.image})`}}
+        style={ {backgroundImage: `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(${featuredMap.image})`}}
       >
         <ShareModalButton theme={{ shareButton: styles.shareButton}} view={view} />
         <h2 className={styles.title}>{featuredMap.title}</h2>
