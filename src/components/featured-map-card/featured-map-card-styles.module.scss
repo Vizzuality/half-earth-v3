@@ -6,16 +6,13 @@ $section-padding: 0 24px;
 
 .cardContainer {
   @include backdropBlur();
+  display: flex;
+  flex-direction: column;
   width: $sidebar-width;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.2s ease-out;
-  display: flex;
-  flex-direction: column;
-  width: 300px;
   height: auto;
   border-radius: 2px;
   background-color: $brand-color-secondary;
+  transition: all 0.2s ease-out;
 }
 
 .titleSection {

@@ -15,10 +15,11 @@ const FeaturesMapCardComponent = ({
   handleAllMapsClick
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
+  const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive;
   const slide = useSpring({
     from: { marginLeft: -400 },
-    marginLeft: isOpen && !isLandscapeMode && !isFullscreenActive ? 0 : -400,
-    delay: isOpen && !isLandscapeMode && !isFullscreenActive ? 400 : 0
+    marginLeft: isOnScreen ? 0 : -400,
+    delay: isOnScreen ? 400 : 0
   })
   return (
     <animated.div className={cx(className, styles.cardContainer)} style={slide}>
