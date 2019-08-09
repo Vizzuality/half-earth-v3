@@ -16,7 +16,9 @@ const FeaturesMapCardComponent = ({
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
   const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive;
+  const animationConfig = { mass: 5, tension: 2000, friction: 200 }
   const slide = useSpring({
+    config: animationConfig,
     from: { marginLeft: -400 },
     marginLeft: isOnScreen ? 0 : -400,
     delay: isOnScreen ? 400 : 0

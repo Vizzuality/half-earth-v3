@@ -6,7 +6,6 @@ export const setFeaturedMaps = createThunkAction('setFeaturedMaps', () => async 
   if (!data) {
     try {
       const data = await CONTENTFUL.getFeaturedMapData();
-      console.log(data)
       dispatch(fetchFeaturedMapsDataReady({ data }));
     } catch (e) {
       console.warn(e);
