@@ -1,11 +1,11 @@
 export default {
   globe: {
     activeLayers: [],
-    zoom: 3,
-    center: [16.9515536, 51.116959]
+    zoom: 1,
+    center: [16.9515536, 0.116959]
   },
   ui: {
-    isSidebarOpen: false,
-    activeCategory: ''
+    selectedSidebar: 'featuredMapCard',
+    selectedFeaturedMap: 'bestPlaces'
   }
 }

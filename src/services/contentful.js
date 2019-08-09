@@ -40,6 +40,24 @@ function parseStories(stories) {
   );
 }
 
+function parseFeaturedMaps(featuredMaps) {
+  return featuredMaps.reduce(
+    async (acc, map) => {
+      const featuredMap = {
+        slug: map.fields.slug,
+        title: map.fields.title,
+        description: map.fields.description,
+      };
+      await getContentfulImage(map.fields.picture.sys.id).then(mapImageUrl => {
+        featuredMap.image = mapImageUrl;
+      });
+      const acummPromise = await acc;
+      return [ ...acummPromise, featuredMap ];
+    },
+    []
+  )
+}
+
 const parseTexts = items => {
   return items.map(({ fields }) => fields).reduce((acc, item) => {
     acc[item.view] = item;
@@ -97,19 +115,10 @@ async function getTexts(slug) {
   return null;
 }
 
-async function getFeaturedMapData(slug) {
-  const data = await fetchContentfulEntry({ contentType: 'featuredMaps', filterField:'slug', filterValue: slug });
+async function getFeaturedMapData() {
+  const data = await fetchContentfulEntry({ contentType: 'featuredMaps'});
   if (data && data.items && data.items.length > 0) {
-    const { items } = data
-    const fields = items[0].fields;
-    const  featuredMap = {
-      title: fields.title,
-      description: fields.description,
-    }
-    await getContentfulImage(fields.picture.sys.id).then(mapImageUrl => {
-      featuredMap.image = mapImageUrl;
-    });
-    return featuredMap;
+    return parseFeaturedMaps(data.items);
   }
   return null;
 }
