@@ -17,6 +17,7 @@ import MinimapWidget from 'components/widgets/minimap-widget';
 import FeaturedMapsList from 'components/featured-maps-list';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
+import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import Spinner from 'components/spinner';
 import uiStyles from 'styles/ui.module.scss';
 
@@ -24,7 +25,17 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, selectedSidebar, onLoad, isFullscreenActive, handleZoomChange, isLandscapeMode, selectedFeaturedMap }) => {
+const FeaturedGlobeComponent = ({
+  hasMetadata,
+  sceneSettings,
+  selectedSidebar,
+  onLoad,
+  isFullscreenActive,
+  handleZoomChange,
+  isLandscapeMode,
+  selectedFeaturedMap,
+  selectedFeaturedPlace
+ }) => {
 
   return (
     <>
@@ -53,6 +64,7 @@ const FeaturedGlobeComponent = ({ hasMetadata, sceneSettings, selectedSidebar, o
           isLandscapeMode={isLandscapeMode}
         />
         <SelectedFeaturedMapLayer selectedFeaturedMap={selectedFeaturedMap}/>
+        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
       </Globe>
       {hasMetadata && <InfoModal />}
       <About />
