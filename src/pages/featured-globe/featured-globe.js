@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { setSelectedFeaturedPlace } from 'utils/featured-globe-utils';
 import { DATA } from 'router';
+import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
@@ -27,7 +28,7 @@ const feturedGlobeContainer = props => {
 
   const handleMapLoad = (map, view) => {
     const { layers } = map;
-    const featuredPlacesLayer = layers.items.find(l => l.title === "featured_places");
+    const featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
 
     view.on("pointer-down", function(event) {
       setSelectedFeaturedPlace(event, featuredPlacesLayer, view, changeUI);
