@@ -1,8 +1,8 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import CONTENTFUL from 'services/contentful';
 
-export const setFeaturedMaps = createThunkAction('setFeaturedMaps', () => async (dispatch, state) => {
-  const { selectedFeaturedMap: { data }} = state();
+export const setFeaturedMaps = createThunkAction('setFeaturedMapsList', () => async (dispatch, state) => {
+  const { featuredMapsList: { data }} = state();
   if (!data) {
     try {
       const data = await CONTENTFUL.getFeaturedMapData();

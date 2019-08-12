@@ -8,7 +8,7 @@ import Component from './featured-globe-component.jsx';
 
 import mapStateToProps from './featured-globe-selectors';
 import * as ownActions from './featured-globe-actions.js';
-import featuredMapsActions from 'redux_modules/selected-featured-map';
+import featuredMapsActions from 'redux_modules/featured-maps-list';
 
 const handleSwitch = createAction(DATA);
 
