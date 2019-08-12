@@ -22,6 +22,7 @@ import Spinner from 'components/spinner';
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
+const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -62,9 +63,15 @@ const FeaturedGlobeComponent = ({
           selectedSidebar={selectedSidebar}
           isFullscreenActive={isFullscreenActive}
           isLandscapeMode={isLandscapeMode}
+          selectedFeaturedPlace={selectedFeaturedPlace}
         />
         <SelectedFeaturedMapLayer selectedFeaturedMap={selectedFeaturedMap}/>
         <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
+        <FeaturedPlaceCard
+          isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+          selectedFeaturedPlace={selectedFeaturedPlace}
+        />
       </Globe>
       {hasMetadata && <InfoModal />}
       <About />

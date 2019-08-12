@@ -12,10 +12,11 @@ const FeaturesMapCardComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   featuredMap,
-  handleAllMapsClick
+  handleAllMapsClick,
+  selectedFeaturedPlace
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
-  const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive;
+  const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
   const animationConfig = { mass: 5, tension: 2000, friction: 200 }
   const slide = useSpring({
     config: animationConfig,

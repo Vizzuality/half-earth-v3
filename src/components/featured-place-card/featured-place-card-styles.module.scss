@@ -1,0 +1,41 @@
+.container {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  min-height: 380px;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card {
+  pointer-events: all;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1000px;
+  background-color: white;
+  padding: 60px 40px 0px;
+}
+
+.pictureContainer {
+  width: 300px;
+}
+
+.picture {
+  float: left;
+  width: 100%;
+}
+
+.text {
+  float: left;
+}
