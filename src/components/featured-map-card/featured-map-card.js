@@ -7,7 +7,6 @@ import * as actions from 'actions/url-actions';
 
 const FeaturedMapCardContainer = props => {
   const { featuredMapsList, selectedFeaturedMap } = props;
-  console.log(featuredMapsList, selectedFeaturedMap)
   const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
   const handleAllMapsClick = () => props.changeUI({ selectedSidebar: 'featuredMapsList' });
   return (

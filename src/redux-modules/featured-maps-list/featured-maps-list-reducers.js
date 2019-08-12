@@ -21,7 +21,7 @@ const fetchFeaturedMapsListDataReady = (state, { payload }) => {
 };
 
 export default {
-  [actions.setFeaturedMaps]: fetchFeaturedMapsListData,
+  [actions.setFeaturedMapsList]: fetchFeaturedMapsListData,
   [actions.fetchFeaturedMapsDataFail]: fetchFeaturedMapsListDataFail,
   [actions.fetchFeaturedMapsDataReady]: fetchFeaturedMapsListDataReady
 }
