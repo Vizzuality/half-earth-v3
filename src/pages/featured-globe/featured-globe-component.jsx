@@ -71,6 +71,7 @@ const FeaturedGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
+          selectedFeaturedMap={selectedFeaturedMap}
         />
       </Globe>
       {hasMetadata && <InfoModal />}
