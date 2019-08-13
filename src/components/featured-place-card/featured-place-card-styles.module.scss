@@ -90,17 +90,24 @@
   max-width: 1000px;
   background-color: white;
   padding: 60px 40px 0px;
-}
 
-.pictureContainer {
-  width: 300px;
-}
-
-.picture {
-  float: left;
-  width: 100%;
-}
-
-.text {
-  float: left;
+  .pictureContainer {
+    width: 300px;
+  }
+  
+  .picture {
+    float: left;
+    width: 100%;
+    margin-right: 40px;
+  }
+  
+  .title {
+    @extend %display1;
+    color: $dark-text;
+    margin: 0;
+  }
+  .text {
+    @extend %bodyText;
+    color: $dark-text;
+  }
 }

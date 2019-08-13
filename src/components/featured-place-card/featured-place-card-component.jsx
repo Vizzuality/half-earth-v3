@@ -28,9 +28,10 @@ const FeaturedPlaceCardComponent = ({
   const animationConfig = { mass: 5, tension: 2000, friction: 200 }
   const slide = useSpring({
     config: animationConfig,
-    from: { bottom: -400 },
+    from: { bottom: -400, opacity: 0 },
     bottom: isOnScreen ? 0 : -400,
-    delay: 400
+    opacity: isOnScreen ? 1 : 0,
+    delay: isOnScreen ? 400 : 0,
   })
   return (
     <div className={styles.container}>
@@ -52,7 +53,7 @@ const FeaturedPlaceCardComponent = ({
               <div className={styles.pictureContainer}>
                 <img src={featuredPlace.image} className={styles.picture} alt={featuredPlace.title}/>
               </div>
-              <h2>{featuredPlace.title}</h2>
+              <h2 className={styles.title}>{featuredPlace.title}</h2>
               <p className={styles.text}>{featuredPlace.description}</p>
             </>
           }
