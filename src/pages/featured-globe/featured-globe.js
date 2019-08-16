@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
-import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
+import { layerManagerToggle, layerManagerVisibility} from 'utils/layer-manager-utils';
 import { DATA } from 'router';
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
@@ -16,6 +16,7 @@ import mapStateToProps from './featured-globe-selectors';
 import * as ownActions from './featured-globe-actions.js';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
+// import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 
 const handleSwitch = createAction(DATA);
 
@@ -66,15 +67,19 @@ const handleMapLoad = (map) => {
   const mouseMoveCallbacksArray = [
     handleMarkerHover
   ]
+  const setRasters = (rasters) => props.setFeaturedGlobeSettings({ rasters: rasters })
+  const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
 
   return (
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       featuredPlacesLayer={featuredPlacesLayer}
-      onLoad={(map, view) => handleMapLoad(map)}
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
+      onLoad={(map, view) => handleMapLoad(map, view)}
+      setRasters={setRasters}
+      setLayerVisibility={setLayerVisibility}
       {...props}
     />
   )

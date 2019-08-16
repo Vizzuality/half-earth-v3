@@ -7,8 +7,6 @@ import Globe from 'components/globe';
 // Managers
 import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
-import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
-
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
@@ -18,12 +16,14 @@ import Switcher from 'components/switcher';
 import FeaturedMapsList from 'components/featured-maps-list';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
-import FeaturedPlaceCard from 'components/featured-place-card';
+import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
+const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
+const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -39,8 +39,16 @@ const FeaturedGlobeComponent = ({
   selectedFeaturedPlace,
   featuredPlacesLayer,
   clickCallbacksArray,
-  mouseMoveCallbacksArray
+  mouseMoveCallbacksArray,
+  activeLayers,
+  rasters,
+  setRasters,
+  setLayerVisibility
  }) => {
+  // console.log('--FeaturedGlobeComponent--');
+  // console.log('activeLayers: ',activeLayers);
+  // console.log('rasters: ',rasters)
+  // console.log('isLandscapeMode :',isLandscapeMode);
 
   return (
     <>
@@ -85,6 +93,17 @@ const FeaturedGlobeComponent = ({
           selectedFeaturedMap={selectedFeaturedMap}
           featuredPlacesLayer={featuredPlacesLayer}
         />
+        {isLandscapeMode && (
+          <LandscapeSidebar
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={() => {}}
+            activeLayers={activeLayers}
+            rasters={rasters}
+            setRasters={setRasters}
+            setLayerVisibility={setLayerVisibility}
+          />
+        )}
       </Globe>
       {hasMetadata && <InfoModal />}
       {!selectedFeaturedPlace && <About />}

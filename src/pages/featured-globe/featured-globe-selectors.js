@@ -39,6 +39,7 @@ const getSelectedSidebar = createSelector(getUiSettings, uiSettings => uiSetting
 const getSelectedFeaturedMap = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedMap);
 const getSelectedFeaturedPlace = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedPlace);
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive);
+export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 
 export default createStructuredSelector({
   sceneLayers: getFeaturedGlobeLayers,
@@ -50,5 +51,6 @@ export default createStructuredSelector({
   selectedFeaturedMap: getSelectedFeaturedMap,
   selectedSidebar: getSelectedSidebar,
   selectedFeaturedPlace: getSelectedFeaturedPlace,
-  featuredMapPlaces: selectFeaturedMapPlaces
+  featuredMapPlaces: selectFeaturedMapPlaces,
+  rasters: getRasters
 })
