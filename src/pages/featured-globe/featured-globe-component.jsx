@@ -35,7 +35,8 @@ const FeaturedGlobeComponent = ({
   handleZoomChange,
   isLandscapeMode,
   selectedFeaturedMap,
-  selectedFeaturedPlace
+  selectedFeaturedPlace,
+  featuredPlacesLayer
  }) => {
 
   return (
@@ -65,13 +66,17 @@ const FeaturedGlobeComponent = ({
           isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
-        <SelectedFeaturedMapLayer selectedFeaturedMap={selectedFeaturedMap}/>
+        <SelectedFeaturedMapLayer
+          selectedFeaturedMap={selectedFeaturedMap}
+          featuredPlacesLayer={featuredPlacesLayer}
+        />
         <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
           isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
           selectedFeaturedMap={selectedFeaturedMap}
+          featuredPlacesLayer={featuredPlacesLayer}
         />
       </Globe>
       {hasMetadata && <InfoModal />}

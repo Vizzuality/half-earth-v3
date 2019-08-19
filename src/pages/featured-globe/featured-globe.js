@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { setSelectedFeaturedPlace } from 'utils/featured-globe-utils';
@@ -20,18 +20,20 @@ const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSw
 const feturedGlobeContainer = props => {
 
   const { changeUI, changeGlobe } = props;
+  const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
   useEffect(() => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList();
   },[])
-
+  
   const handleMapLoad = (map, view) => {
     const { layers } = map;
-    const featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
+    const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
+    setFeaturedPlacesLayer(_featuredPlacesLayer);
 
     view.on("pointer-down", function(event) {
-      setSelectedFeaturedPlace(event, featuredPlacesLayer, view, changeUI);
+      setSelectedFeaturedPlace(event, _featuredPlacesLayer, view, changeUI);
     });
   }
 
@@ -41,6 +43,7 @@ const feturedGlobeContainer = props => {
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
+      featuredPlacesLayer={featuredPlacesLayer}
       onLoad={(map, view) => handleMapLoad(map, view)}
       {...props}
     />
