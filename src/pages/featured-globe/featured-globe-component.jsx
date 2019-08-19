@@ -70,7 +70,10 @@ const FeaturedGlobeComponent = ({
           selectedFeaturedMap={selectedFeaturedMap}
           featuredPlacesLayer={featuredPlacesLayer}
         />
-        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
+        <FeaturedPlaceViewManager
+          selectedFeaturedPlace={selectedFeaturedPlace}
+          featuredPlacesLayer={featuredPlacesLayer}
+        />
         {selectedFeaturedPlace && (
           <FeaturedPlaceCard
             isFullscreenActive={isFullscreenActive}

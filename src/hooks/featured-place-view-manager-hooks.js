@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
-export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlace) {
+export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer) {
 const [coords, setCoords] = useState(null);
-const { layers } = map;
-const featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
-const query = featuredPlacesLayer.createQuery();
 useEffect(() => {
   if (selectedFeaturedPlace) {
+    const query = featuredPlacesLayer.createQuery();
     query.where = `nam_slg = '${selectedFeaturedPlace}'`
     featuredPlacesLayer.queryFeatures(query).then(result => {
       const { lon, lat } = result.features[0].attributes;
