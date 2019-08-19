@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSpring, animated } from 'react-spring';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import styles from './featured-place-card-styles.module';
-import CONTENTFUL from 'services/contentful';
+
 const FeaturedPlaceCardComponent = ({
   selectedFeaturedPlace,
   isLandscapeMode,
   isFullscreenActive,
-  featuredMap
+  featuredMap,
+  featuredPlace
 }) => {
-  const [featuredPlace, setFeaturedPlace] = useState({
-    image: '',
-    title: '',
-    description: ''
-  });
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
-      const { title, image, description } = result;
-      const parsedDescription = description.content[0].content[0].value;
-      setFeaturedPlace({title, image, description: parsedDescription});
-    };
-
-    selectedFeaturedPlace && fetchData();
-  },[selectedFeaturedPlace])
+  
   const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
   const animationConfig = { mass: 5, tension: 2000, friction: 200 }
   const slide = useSpring({
@@ -33,6 +20,7 @@ const FeaturedPlaceCardComponent = ({
     opacity: isOnScreen ? 1 : 0,
     delay: isOnScreen ? 400 : 0,
   })
+
   return (
     <div className={styles.container}>
       <animated.div className={styles.content} style={slide}>
