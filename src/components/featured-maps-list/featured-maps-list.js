@@ -9,9 +9,16 @@ const FeaturedMapsListContainer = props => {
     const { changeUI } = props;
     changeUI({ selectedFeaturedMap: slug, selectedSidebar: 'featuredMapCard' })
   };
+
+  const handleFeatureMapHover = slug => {
+    const { changeUI } = props;
+    changeUI({ selectedFeaturedMap: slug })
+  }
+
   return (
     <Component
       handleFeaturedMapClick={handleFeaturedMapClick}
+      handleFeatureMapHover={handleFeatureMapHover}
       {...props }
     />
   )

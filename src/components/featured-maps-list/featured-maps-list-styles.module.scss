@@ -1,0 +1,50 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+$section-padding: 0 24px;
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width;
+  border-radius: 2px;
+  transition: all 0.2s ease-out;
+}
+
+.scrollable {
+  height: 600px;
+  overflow-y: scroll;
+}
+
+.card {
+  @include backdropBlur();
+  background-color: $brand-color-secondary;
+  border: 1px solid $white;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.titleSection {
+  padding: $section-padding;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 170px;
+}
+
+.descriptionSection {
+  padding: $section-padding;
+}
+
+.title {
+  @extend %headline;
+  color: $white;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 20px;
+}
+
+.description {
+  @extend %bodyText;
+  color: white;
+}

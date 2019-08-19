@@ -24,6 +24,7 @@ const FeaturesMapCardComponent = ({
     marginLeft: isOnScreen ? 0 : -400,
     delay: isOnScreen ? 400 : 0
   })
+
   return (
     <animated.div className={cx(className, styles.cardContainer)} style={slide}>
       <section
