@@ -8,7 +8,7 @@ import * as actions from 'actions/url-actions';
 
 
 const FeaturedPlaceCardContainer = props => {
-  const { featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, changeUI } = props;
+  const { view, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, changeUI } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlace, setFeaturedPlace] = useState({
@@ -35,7 +35,6 @@ const FeaturedPlaceCardContainer = props => {
     }
   },[featuredMapsList, selectedFeaturedMap])
 
-
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
     const queryParams = featuredPlacesLayer.createQuery();
@@ -46,8 +45,6 @@ const FeaturedPlaceCardContainer = props => {
       setFeaturedPlacesList(list);
     });
   }, [featuredPlacesLayer, selectedFeaturedMap])
-
-  // const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
 
   const handleAllMapsClick = () => changeUI({ selectedFeaturedPlace: null });
   const handleNextPlaceClick = place => {
@@ -60,6 +57,9 @@ const FeaturedPlaceCardContainer = props => {
     const prevPlaceIndex = (index - 1) < 0 ? featuredPlacesList.length - 1 : index - 1;
     changeUI({ selectedFeaturedPlace: featuredPlacesList[prevPlaceIndex] })
   }
+
+  const handleLandscapeTrigger = () => view.goTo({ zoom: 8.1 })
+
   return (
     <Component
       featuredMap={featuredMap}
@@ -68,6 +68,7 @@ const FeaturedPlaceCardContainer = props => {
       handleAllMapsClick={handleAllMapsClick}
       handleNextPlaceClick={handleNextPlaceClick}
       handlePrevPlaceClick={handlePrevPlaceClick}
+      handleLandscapeTrigger={handleLandscapeTrigger}
       {...props }
     />
   )

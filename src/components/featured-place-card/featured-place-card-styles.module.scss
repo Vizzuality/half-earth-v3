@@ -2,6 +2,8 @@
 @import 'styles/typography-extends';
 @import 'styles/ui.module';
 
+$card-content-max-height: 220px;
+
 .container {
   pointer-events: none;
   position: absolute;
@@ -90,6 +92,8 @@
 
 
 .card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   pointer-events: all;
   position: relative;
   flex-grow: 1;
@@ -98,14 +102,52 @@
   background-color: white;
   padding: 60px 40px 0px;
 
-  .pictureContainer {
+  .landscapeTriggerContainer {
+    display: grid;
+    max-height: $card-content-max-height;
+    grid-template-rows: 185px 1fr;
     width: 300px;
+
+    .icon {
+      width: 20px;
+      fill: $dark-text;
+      stroke: $dark-text;
+      position: relative;
+      top: -2px;
+    }
+
   }
   
   .picture {
     float: left;
     width: 100%;
     margin-right: 40px;
+    cursor: pointer;
+  }
+
+  .landscapeTriggerButton {
+    display: flex;
+    align-items: center;
+    align-self: end;
+  }
+
+  .landscapeTriggerText {
+    @extend %subtitle;
+    color: $dark-text;
+  }
+
+  .contentContainer {
+    max-height: $card-content-max-height;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom,
+    rgba(0,0,0,1) 85%,
+    rgba(0,0,0,0) 100%
+    );
+  }
+
+  .contentWrapper {
+    @extend %verticalScrollBar;
+    max-height: $card-content-max-height;
   }
   
   .title {

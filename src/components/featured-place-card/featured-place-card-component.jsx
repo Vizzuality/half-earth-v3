@@ -11,7 +11,8 @@ const FeaturedPlaceCardComponent = ({
   featuredPlace,
   handleAllMapsClick,
   handleNextPlaceClick,
-  handlePrevPlaceClick
+  handlePrevPlaceClick,
+  handleLandscapeTrigger
 }) => {
 
   const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
@@ -54,11 +55,27 @@ const FeaturedPlaceCardComponent = ({
         <section className={styles.card}>
           {featuredPlace &&
             <>
-              <div className={styles.pictureContainer}>
-                <img src={featuredPlace.image} className={styles.picture} alt={featuredPlace.title}/>
+              <div className={styles.landscapeTriggerContainer} >
+                <img
+                  src={featuredPlace.image}
+                  className={styles.picture}
+                  alt={featuredPlace.title}
+                  onClick={handleLandscapeTrigger}
+                />
+                <button
+                  className={styles.landscapeTriggerButton}
+                  onClick={handleLandscapeTrigger}
+                >
+                  <ChevronIcon className={styles.icon} />
+                  <span className={styles.landscapeTriggerText}>explore this area</span>
+                </button>
               </div>
-              <h2 className={styles.title}>{featuredPlace.title}</h2>
-              <p className={styles.text}>{featuredPlace.description}</p>
+              <div className={styles.contentContainer}>
+                <div className={styles.contentWrapper}>
+                  <h2 className={styles.title}>{featuredPlace.title}</h2>
+                  <p className={styles.text}>{featuredPlace.description}</p>
+                </div>
+              </div>
             </>
           }
         </section>

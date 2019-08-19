@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer) {
 const [coords, setCoords] = useState(null);
 useEffect(() => {
-  if (selectedFeaturedPlace) {
+  if (selectedFeaturedPlace && featuredPlacesLayer) {
     const query = featuredPlacesLayer.createQuery();
     query.where = `nam_slg = '${selectedFeaturedPlace}'`
     featuredPlacesLayer.queryFeatures(query).then(result => {
@@ -13,7 +13,7 @@ useEffect(() => {
   } else {
     view.goTo({ tilt: 0, zoom: 1 });
   }
-}, [selectedFeaturedPlace])
+}, [selectedFeaturedPlace, featuredPlacesLayer])
 
   useEffect(() => {
     if (coords) {
