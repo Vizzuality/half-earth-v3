@@ -10,7 +10,6 @@ useEffect(() => {
   if (selectedFeaturedPlace) {
     query.where = `nam_slg = '${selectedFeaturedPlace}'`
     featuredPlacesLayer.queryFeatures(query).then(result => {
-      console.log(result)
       const { lon, lat } = result.features[0].attributes;
       setCoords([lon, lat]);
     });
@@ -32,11 +31,5 @@ useEffect(() => {
       }
       view.goTo(featuredPlace, options);
     }
-
-    // const camera = view.camera.clone();
-    // camera.heading = 0;
-    // camera.tilt = 35;
-    // camera.fov = 70;
-    // camera.position = { ...coords, z: 2500000}
   }, [coords])
 }
