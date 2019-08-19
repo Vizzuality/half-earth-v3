@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
+import { orderBy } from 'lodash';
 import CONTENTFUL from 'services/contentful';
 import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
@@ -7,8 +8,9 @@ import * as actions from 'actions/url-actions';
 
 
 const FeaturedPlaceCardContainer = props => {
-  const { featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace } = props;
-
+  const { featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, changeUI } = props;
+  const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
+  const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlace, setFeaturedPlace] = useState({
     image: '',
     title: '',
@@ -26,13 +28,44 @@ const FeaturedPlaceCardContainer = props => {
     selectedFeaturedPlace && fetchData();
   },[selectedFeaturedPlace])
 
-  const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
-  // const handleAllMapsClick = () => props.changeUI({ selectedSidebar: 'featuredMapsList' });
+  useEffect(() => {
+    if (featuredMapsList) {
+      const _featuredMap = featuredMapsList.find(map => map.slug === selectedFeaturedMap);
+      setFeaturedMap(_featuredMap)
+    }
+  },[featuredMapsList, selectedFeaturedMap])
+
+
+  // get all the slugs of the places belonging to the selected featured map
+  useEffect(() => {
+    const queryParams = featuredPlacesLayer.createQuery();
+    queryParams.where = `ftr_slg = '${selectedFeaturedMap}'`;
+    featuredPlacesLayer.queryFeatures(queryParams).then(function(results){
+      const { features } = results;
+      const list = orderBy(features, place => place.attributes.lon).map(place => place.attributes.nam_slg);
+      setFeaturedPlacesList(list);
+    });
+  }, [featuredPlacesLayer, selectedFeaturedMap])
+
+  // const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
+
+  const handleAllMapsClick = () => changeUI({ selectedFeaturedPlace: null });
+  const handleNextPlaceClick = place => {
+    const index = featuredPlacesList.indexOf(place);
+    changeUI({ selectedFeaturedPlace: featuredPlacesList[index + 1] })
+  }
+  const handlePrevPlaceClick = place => {
+    const index = featuredPlacesList.indexOf(place);
+    changeUI({ selectedFeaturedPlace: featuredPlacesList[index - 1] })
+  }
   return (
     <Component
       featuredMap={featuredMap}
       featuredPlace={featuredPlace}
-      // handleAllMapsClick={handleAllMapsClick}
+      featuredPlacesList={featuredPlacesList}
+      handleAllMapsClick={handleAllMapsClick}
+      handleNextPlaceClick={handleNextPlaceClick}
+      handlePrevPlaceClick={handlePrevPlaceClick}
       {...props }
     />
   )

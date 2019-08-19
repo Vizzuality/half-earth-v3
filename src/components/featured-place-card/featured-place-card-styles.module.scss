@@ -59,11 +59,19 @@
     justify-content: space-around;
     align-items: center;
 
+    .arrowWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40%;
+      height: 100%;
+      cursor: pointer;
+    }
+
     .leftArrow {
       transform: rotate(180deg);
       fill: $dark-text;
       stroke: $dark-text;
-      cursor: pointer;
     }
 
     .separator {
@@ -75,7 +83,6 @@
     .rightArrow {
       fill: $dark-text;
       stroke: $dark-text;
-      cursor: pointer;
     }
   }
 }

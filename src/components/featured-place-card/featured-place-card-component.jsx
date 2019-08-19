@@ -8,9 +8,12 @@ const FeaturedPlaceCardComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   featuredMap,
-  featuredPlace
+  featuredPlace,
+  handleAllMapsClick,
+  handleNextPlaceClick,
+  handlePrevPlaceClick
 }) => {
-  
+
   const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
   const animationConfig = { mass: 5, tension: 2000, friction: 200 }
   const slide = useSpring({
@@ -25,14 +28,27 @@ const FeaturedPlaceCardComponent = ({
     <div className={styles.container}>
       <animated.div className={styles.content} style={slide}>
         <nav className={styles.navigation}>
-          <div className={styles.backToMap}>
+          <div
+            className={styles.backToMap}
+            onClick={handleAllMapsClick}
+          >
             <ChevronIcon className={styles.arrowIcon}/>
-            <h3 className={styles.text}>{featuredMap.title}</h3>
+            {featuredMap && <h3 className={styles.text}>{featuredMap.title}</h3>}
           </div>
           <div className={styles.placesNavigator}>
-            <ChevronIcon className={styles.leftArrow}/>
+            <div
+              className={styles.arrowWrapper}
+              onClick={e => handlePrevPlaceClick(selectedFeaturedPlace)}
+            >
+              <ChevronIcon className={styles.leftArrow}/>
+            </div>
             <div className={styles.separator} />
-            <ChevronIcon className={styles.rightArrow}/>
+            <div
+              className={styles.arrowWrapper}
+              onClick={e => handleNextPlaceClick(selectedFeaturedPlace)}
+            >
+              <ChevronIcon className={styles.rightArrow} />
+            </div>
           </div>
         </nav>
         <section className={styles.card}>
