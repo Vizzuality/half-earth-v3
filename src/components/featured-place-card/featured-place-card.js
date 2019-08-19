@@ -52,11 +52,13 @@ const FeaturedPlaceCardContainer = props => {
   const handleAllMapsClick = () => changeUI({ selectedFeaturedPlace: null });
   const handleNextPlaceClick = place => {
     const index = featuredPlacesList.indexOf(place);
-    changeUI({ selectedFeaturedPlace: featuredPlacesList[index + 1] })
+    const nextPlaceIndex = (index + 1) < featuredPlacesList.length ? index + 1 : 0;
+    changeUI({ selectedFeaturedPlace: featuredPlacesList[nextPlaceIndex] })
   }
   const handlePrevPlaceClick = place => {
     const index = featuredPlacesList.indexOf(place);
-    changeUI({ selectedFeaturedPlace: featuredPlacesList[index - 1] })
+    const prevPlaceIndex = (index - 1) < 0 ? featuredPlacesList.length - 1 : index - 1;
+    changeUI({ selectedFeaturedPlace: featuredPlacesList[prevPlaceIndex] })
   }
   return (
     <Component
