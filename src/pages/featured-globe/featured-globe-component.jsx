@@ -71,13 +71,15 @@ const FeaturedGlobeComponent = ({
           featuredPlacesLayer={featuredPlacesLayer}
         />
         <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
-        <FeaturedPlaceCard
-          isFullscreenActive={isFullscreenActive}
-          isLandscapeMode={isLandscapeMode}
-          selectedFeaturedPlace={selectedFeaturedPlace}
-          selectedFeaturedMap={selectedFeaturedMap}
-          featuredPlacesLayer={featuredPlacesLayer}
-        />
+        {selectedFeaturedPlace && (
+          <FeaturedPlaceCard
+            isFullscreenActive={isFullscreenActive}
+            isLandscapeMode={isLandscapeMode}
+            selectedFeaturedPlace={selectedFeaturedPlace}
+            selectedFeaturedMap={selectedFeaturedMap}
+            featuredPlacesLayer={featuredPlacesLayer}
+          />
+        )}
       </Globe>
       {hasMetadata && <InfoModal />}
       <About />
