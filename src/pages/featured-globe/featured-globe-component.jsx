@@ -4,9 +4,13 @@ import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { DATA_GLOBE_URLS } from 'constants/preload-urls';
 import Globe from 'components/globe';
+
 // Managers
 import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
+import Legend from 'components/legend';
+
+// WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
@@ -20,10 +24,12 @@ import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
+import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
+const GridLayer = loadable(() => import('components/grid-layer'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -43,7 +49,10 @@ const FeaturedGlobeComponent = ({
   activeLayers,
   rasters,
   setRasters,
-  setLayerVisibility
+  setLayerVisibility,
+  handleGlobeUpdating,
+  setLayerOpacity,
+  setLayerOrder
  }) => {
   // console.log('--FeaturedGlobeComponent--');
   // console.log('activeLayers: ',activeLayers);
@@ -93,11 +102,20 @@ const FeaturedGlobeComponent = ({
           selectedFeaturedMap={selectedFeaturedMap}
           featuredPlacesLayer={featuredPlacesLayer}
         />
+        {/* <Legend
+          isFullscreenActive={isFullscreenActive}
+          setLayerOpacity={setLayerOpacity}
+          setLayerVisibility={setLayerVisibility}
+          setLayerOrder={setLayerOrder}
+        /> */}
+        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
+        {/* {isLandscapeMode && <LabelsLayer />} */}
+        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && (
           <LandscapeSidebar
             isLandscapeMode={isLandscapeMode}
             isFullscreenActive={isFullscreenActive}
-            handleGlobeUpdating={() => {}}
+            handleGlobeUpdating={handleGlobeUpdating}
             activeLayers={activeLayers}
             rasters={rasters}
             setRasters={setRasters}

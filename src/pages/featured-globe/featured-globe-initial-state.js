@@ -15,7 +15,8 @@ export default {
     ],
     rasters: {},
     zoom: 1,
-    center: [16.9515536, 0.116959]
+    center: [16.9515536, 0.116959],
+    isGlobeUpdating: false
   },
   ui: {
     selectedSidebar: 'featuredMapCard',

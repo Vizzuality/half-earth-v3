@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
-import { layerManagerToggle, layerManagerVisibility} from 'utils/layer-manager-utils';
 import { DATA } from 'router';
-import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
+import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
+import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
 import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
@@ -16,7 +15,6 @@ import mapStateToProps from './featured-globe-selectors';
 import * as ownActions from './featured-globe-actions.js';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
-// import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 
 const handleSwitch = createAction(DATA);
 
@@ -58,6 +56,20 @@ const handleMapLoad = (map) => {
   })
 }
 
+//   const handleMapLoad = (map, view) => {
+//     const { layers } = map;
+//     const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
+//     // set the attributes available on the layer
+//     _featuredPlacesLayer.outFields = ['nam_slg'];
+//     setFeaturedPlacesLayer(_featuredPlacesLayer);
+
+
+
+//     view.on("pointer-down", function(event) {
+//       setSelectedFeaturedPlace(event, view, changeUI);
+//     });
+//   }
+// >>>>>>> Fix fetching the data in geodescriber and human pressures widget
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
   const clickCallbacksArray = [
@@ -68,7 +80,10 @@ const handleMapLoad = (map) => {
     handleMarkerHover
   ]
   const setRasters = (rasters) => props.setFeaturedGlobeSettings({ rasters: rasters })
-  const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
+  const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setFeaturedGlobeSettings);
+  const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setFeaturedGlobeSettings);
+  const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setFeaturedGlobeSettings);
+  const handleGlobeUpdating = (updating) => props.setFeaturedGlobeSettings({ isGlobeUpdating: updating })
 
   return (
     <Component
@@ -80,6 +95,9 @@ const handleMapLoad = (map) => {
       onLoad={(map, view) => handleMapLoad(map, view)}
       setRasters={setRasters}
       setLayerVisibility={setLayerVisibility}
+      setLayerOpacity={setLayerOpacity}
+      setLayerOrder={setLayerOrder}
+      handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
   )
