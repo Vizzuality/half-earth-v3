@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { orderBy } from 'lodash';
+import { orderBy, get } from 'lodash';
 import CONTENTFUL from 'services/contentful';
 import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
@@ -21,7 +21,7 @@ const FeaturedPlaceCardContainer = props => {
     const fetchData = async () => {
       const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
       const { title, image, description } = result;
-      const parsedDescription = description.content[0].content[0].value;
+      const parsedDescription = get(description, 'content[0].content[0].value');
       setFeaturedPlace({title, image, description: parsedDescription});
     };
 
