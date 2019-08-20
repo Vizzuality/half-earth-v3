@@ -40,7 +40,7 @@ const FeaturedMapsListComponent = ({
     <animated.div className={cx(className, styles.cardsContainer)} style={slide}>
       <div className={styles.scrollable}>
         {featuredMapsList.map(featuredMap => (
-          <div className={styles.card}
+          <div className={cx(styles.card, { [styles.border]: cardOpen.slug === featuredMap.slug })}
             onClick={() =>  handleClick(featuredMap)}
             onMouseOver={() => mouseOver(featuredMap)}
             onMouseOut={mouseOut}

@@ -20,9 +20,12 @@ $section-padding: 0 24px;
 .card {
   @include backdropBlur();
   background-color: $brand-color-secondary;
-  border: 1px solid $white;
   margin-bottom: 5px;
   cursor: pointer;
+}
+
+.border {
+  border: 1px solid $white;
 }
 
 .titleSection {
