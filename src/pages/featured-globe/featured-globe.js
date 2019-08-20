@@ -30,10 +30,12 @@ const feturedGlobeContainer = props => {
   const handleMapLoad = (map, view) => {
     const { layers } = map;
     const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
+    // set the attributes available on the layer
+    _featuredPlacesLayer.outFields = ['nam_slg'];
     setFeaturedPlacesLayer(_featuredPlacesLayer);
 
     view.on("pointer-down", function(event) {
-      setSelectedFeaturedPlace(event, _featuredPlacesLayer, view, changeUI);
+      setSelectedFeaturedPlace(event, view, changeUI);
     });
   }
 
