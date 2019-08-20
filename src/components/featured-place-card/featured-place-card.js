@@ -37,13 +37,15 @@ const FeaturedPlaceCardContainer = props => {
 
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
-    const queryParams = featuredPlacesLayer.createQuery();
-    queryParams.where = `ftr_slg = '${selectedFeaturedMap}'`;
-    featuredPlacesLayer.queryFeatures(queryParams).then(function(results){
-      const { features } = results;
-      const list = orderBy(features, place => place.attributes.lon).map(place => place.attributes.nam_slg);
-      setFeaturedPlacesList(list);
-    });
+    if (featuredPlacesLayer) {
+      const queryParams = featuredPlacesLayer.createQuery();
+      queryParams.where = `ftr_slg = '${selectedFeaturedMap}'`;
+      featuredPlacesLayer.queryFeatures(queryParams).then(function(results){
+        const { features } = results;
+        const list = orderBy(features, place => place.attributes.lon).map(place => place.attributes.nam_slg);
+        setFeaturedPlacesList(list);
+      });
+    }
   }, [featuredPlacesLayer, selectedFeaturedMap])
 
   const handleAllMapsClick = () => changeUI({ selectedFeaturedPlace: null });
