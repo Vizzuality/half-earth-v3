@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { get } from 'lodash';
 
 export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer) {
 const [coords, setCoords] = useState(null);
@@ -7,7 +8,8 @@ useEffect(() => {
     const query = featuredPlacesLayer.createQuery();
     query.where = `nam_slg = '${selectedFeaturedPlace}'`
     featuredPlacesLayer.queryFeatures(query).then(result => {
-      const { lon, lat } = result.features[0].attributes;
+      const lon = get(result, 'features[0].attributes.lon');
+      const lat = get(result, 'features[0].attributes.lat');
       setCoords([lon, lat]);
     });
   } else {
