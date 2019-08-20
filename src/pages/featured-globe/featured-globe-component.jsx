@@ -25,6 +25,7 @@ import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
+import ArcgisLayerManager from './featured-arcgis-layer-manager.js';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
@@ -54,10 +55,6 @@ const FeaturedGlobeComponent = ({
   setLayerOpacity,
   setLayerOrder
  }) => {
-  // console.log('--FeaturedGlobeComponent--');
-  // console.log('activeLayers: ',activeLayers);
-  // console.log('rasters: ',rasters)
-  // console.log('isLandscapeMode :',isLandscapeMode);
 
   return (
     <>
@@ -66,6 +63,7 @@ const FeaturedGlobeComponent = ({
       </Helmet>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
+        <ArcgisLayerManager activeLayers={activeLayers} isLandscapeMode={isLandscapeMode}/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
@@ -102,12 +100,13 @@ const FeaturedGlobeComponent = ({
           selectedFeaturedMap={selectedFeaturedMap}
           featuredPlacesLayer={featuredPlacesLayer}
         />
-        {/* <Legend
-          isFullscreenActive={isFullscreenActive}
-          setLayerOpacity={setLayerOpacity}
-          setLayerVisibility={setLayerVisibility}
-          setLayerOrder={setLayerOrder}
-        /> */}
+        {isLandscapeMode &&
+          <Legend
+            isFullscreenActive={isFullscreenActive}
+            setLayerOpacity={setLayerOpacity}
+            setLayerVisibility={setLayerVisibility}
+            setLayerOrder={setLayerOrder}
+          />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {/* {isLandscapeMode && <LabelsLayer />} */}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}

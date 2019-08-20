@@ -20,3 +20,6 @@ export const FIREFLY_BASEMAP_LAYER = 'firefly_basemap';
 
 // Featured places layer
 export const FEATURED_PLACES_LAYER = 'featured_places';
+
+// Basemap (featured mode)
+export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
