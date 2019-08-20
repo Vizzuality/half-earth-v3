@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import styles from './featured-place-card-styles.module';
@@ -24,6 +24,11 @@ const FeaturedPlaceCardComponent = ({
     opacity: isOnScreen ? 1 : 0,
     delay: isOnScreen ? 400 : 0,
   })
+  
+  const contentWrapper = useRef();
+  useEffect(() => {
+    contentWrapper.current.scrollTop = 0;
+  }, [featuredPlace])
 
   return (
     <div className={styles.container}>
@@ -55,7 +60,7 @@ const FeaturedPlaceCardComponent = ({
         <section className={styles.card}>
           {featuredPlace &&
             <>
-              <div className={styles.landscapeTriggerContainer} >
+              <div className={styles.landscapeTriggerContainer}>
                 <img
                   src={featuredPlace.image}
                   className={styles.picture}
@@ -71,7 +76,7 @@ const FeaturedPlaceCardComponent = ({
                 </button>
               </div>
               <div className={styles.contentContainer}>
-                <div className={styles.contentWrapper}>
+                <div className={styles.contentWrapper} ref={contentWrapper}>
                   <h2 className={styles.title}>{featuredPlace.title}</h2>
                   <p className={styles.text}>{featuredPlace.description}</p>
                 </div>
