@@ -57,7 +57,6 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-  console.log('sceneSettings: ',sceneSettings)
 
   return (
     <>

@@ -22,5 +22,3 @@ export const setOpacity = (layer, activeLayers) => {
   const l = activeLayers.find(o => o.title === layer.title);
   if (l) { layer.opacity = l.opacity !== undefined ? l.opacity : 1 };
 }
-
-// export default ArcgisLayerManager;
