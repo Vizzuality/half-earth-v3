@@ -16,7 +16,7 @@ import { createLayer } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
-const handleMapLoad = (map, view, activeLayers, mountFeaturedGlobe) => {
+const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
 
   const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);

@@ -58,6 +58,17 @@ function parseFeaturedMaps(featuredMaps) {
   )
 }
 
+async function parseFeaturedPlace(data) {
+  const featuredPlace = {
+    title: data.fields.title,
+    description: data.fields.description,
+  };
+  await getContentfulImage(data.fields.image.sys.id).then(mapImageUrl => {
+    featuredPlace.image = mapImageUrl;
+  });
+  return featuredPlace;
+}
+
 const parseTexts = items => {
   return items.map(({ fields }) => fields).reduce((acc, item) => {
     acc[item.view] = item;
@@ -123,4 +134,12 @@ async function getFeaturedMapData() {
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData };
+async function getFeaturedPlaceData(slug) {
+  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'nameSlug', filterValue: slug });
+  if (data && data.items && data.items.length > 0) {
+    return parseFeaturedPlace(data.items[0]);
+  }
+  return null;
+}
+
+export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlaceData };

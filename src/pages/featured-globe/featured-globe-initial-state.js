@@ -6,6 +6,7 @@ export default {
   },
   ui: {
     selectedSidebar: 'featuredMapCard',
-    selectedFeaturedMap: 'bestPlaces'
+    selectedFeaturedMap: 'bestPlaces',
+    selectedFeaturedPlace: null
   }
 }
