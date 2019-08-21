@@ -12,11 +12,14 @@ const FeaturesMapCardComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   featuredMap,
-  handleAllMapsClick
+  handleAllMapsClick,
+  selectedFeaturedPlace
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
-  const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive;
+  const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
+  const animationConfig = { mass: 5, tension: 2000, friction: 200 }
   const slide = useSpring({
+    config: animationConfig,
     from: { marginLeft: -400 },
     marginLeft: isOnScreen ? 0 : -400,
     delay: isOnScreen ? 400 : 0
@@ -25,7 +28,7 @@ const FeaturesMapCardComponent = ({
     <animated.div className={cx(className, styles.cardContainer)} style={slide}>
       <section
         className={styles.titleSection}
-        style={ {backgroundImage: `url(${featuredMap.image})`}}
+        style={ {backgroundImage: `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(${featuredMap.image})`}}
       >
         <ShareModalButton theme={{ shareButton: styles.shareButton}} view={view} />
         <h2 className={styles.title}>{featuredMap.title}</h2>

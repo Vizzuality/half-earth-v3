@@ -17,3 +17,6 @@ export const LABELS_LAYER_GROUP = 'labels_layer_group';
 export const LANDSCAPE_LABELS_LAYER = 'landscape_labels_layer';
 // Basemap (added as a layer to display satellite imagery on higher zoom levels)
 export const FIREFLY_BASEMAP_LAYER = 'firefly_basemap';
+
+// Featured places layer
+export const FEATURED_PLACES_LAYER = 'featured_places';

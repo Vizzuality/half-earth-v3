@@ -3,16 +3,11 @@ import { loadModules } from '@esri/react-arcgis';
 
 
 
-const FeaturedMapLayer = ({ map, view, selectedFeaturedMap }) => {
+const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, featuredPlacesLayer }) => {
 
-  const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
 
-  useEffect(() => {
-    const featuredPlaces = map.layers.items.find(l => l.title === 'featured_places');
-    setFeaturedPlacesLayer(featuredPlaces);
-  }, [])
-
+  // store featured places layer view to query against it
   useEffect(() => {
     if (featuredPlacesLayer) {
       view.whenLayerView(featuredPlacesLayer).then(function(layerView){
@@ -21,6 +16,7 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap }) => {
     }
   }, [featuredPlacesLayer])
 
+  // display only the places belonging to the selected featured map
   useEffect(() => {
     if (featuredPlacesLayerView) {
       loadModules(["esri/views/layers/support/FeatureFilter"]).then(([FeatureFilter]) => {
@@ -30,6 +26,7 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap }) => {
       })
     }
   }, [featuredPlacesLayerView, selectedFeaturedMap])
+
   return null;
 }
 
