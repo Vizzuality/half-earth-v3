@@ -30,7 +30,7 @@ const ArcgisLayerManager = ({ map, activeLayers, isLandscapeMode }) => {
 
   setLayerOrder(activeLayers);
   layers.items.forEach(mapLayer => {
-    // const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === mapLayer.title);
+    const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === mapLayer.title);
     mapLayer.layers && mapLayer.layers.items && mapLayer.layers.items.forEach(layer => {
       const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === layer.title);
       setOpacity(layer);
@@ -48,7 +48,7 @@ const ArcgisLayerManager = ({ map, activeLayers, isLandscapeMode }) => {
 
     // Hide human_pressures_layer where they are not in landscape mode
     if(mapLayer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
-      mapLayer.visible = isLandscapeMode;
+      mapLayer.visible = isLandscapeMode && setActive;
     }
   })
   return null

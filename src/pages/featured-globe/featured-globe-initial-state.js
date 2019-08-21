@@ -7,7 +7,7 @@ import {
 export default {
   globe: {
     activeLayers: [
-      // { title: BIODIVERSITY_FACETS_LAYER }, // Biodiversity Facets (new grid)
+      { title: BIODIVERSITY_FACETS_LAYER }, // Biodiversity Facets (new grid)
       { title: GRID_LAYER }, // This is the layer used to paint aggregated grid cells
       { title: LABELS_LAYER_GROUP }, // This is the layer used to paint aggregated grid cells
     ],
