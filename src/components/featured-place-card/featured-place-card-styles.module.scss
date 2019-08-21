@@ -109,11 +109,10 @@ $card-content-max-height: 220px;
     width: 300px;
 
     .icon {
-      width: 20px;
       fill: $dark-text;
-      stroke: $dark-text;
       position: relative;
       top: -2px;
+      margin-right: 12px;
     }
 
   }
@@ -126,9 +125,11 @@ $card-content-max-height: 220px;
   }
 
   .landscapeTriggerButton {
-    display: flex;
-    align-items: center;
     align-self: end;
+    display: flex;
+    justify-self: start;
+    align-items: center;
+    margin-top: 20px;
   }
 
   .landscapeTriggerText {

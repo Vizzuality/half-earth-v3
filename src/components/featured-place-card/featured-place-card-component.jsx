@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
+import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
 import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
@@ -71,7 +72,7 @@ const FeaturedPlaceCardComponent = ({
                   className={styles.landscapeTriggerButton}
                   onClick={handleLandscapeTrigger}
                 >
-                  <ChevronIcon className={styles.icon} />
+                  <GoToIcon className={styles.icon} />
                   <span className={styles.landscapeTriggerText}>explore this area</span>
                 </button>
               </div>
