@@ -83,7 +83,7 @@ const FeaturedGlobeComponent = ({
         />
       </Globe>
       {hasMetadata && <InfoModal />}
-      <About />
+      {!selectedFeaturedPlace && <About />}
     </>
   )
 };
