@@ -53,7 +53,8 @@ const FeaturedGlobeComponent = ({
   setLayerVisibility,
   handleGlobeUpdating,
   setLayerOpacity,
-  setLayerOrder
+  setLayerOrder,
+  isGlobeUpdating
  }) => {
 
   return (
@@ -63,6 +64,7 @@ const FeaturedGlobeComponent = ({
       </Helmet>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
+        {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers} isLandscapeMode={isLandscapeMode}/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />

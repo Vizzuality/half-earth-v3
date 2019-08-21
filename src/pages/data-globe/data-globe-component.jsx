@@ -57,10 +57,7 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-  console.log('--DataGlobeComponent--');
-  console.log('activeLayers: ',activeLayers);
-  console.log('rasters: ',rasters)
-  console.log('isLandscapeMode :',isLandscapeMode);
+
   return (
     <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>

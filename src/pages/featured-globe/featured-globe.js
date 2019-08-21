@@ -54,22 +54,12 @@ const handleMapLoad = (map) => {
     humanImpactLayer.noData = 0;
     humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
   })
+  
+  view.on("pointer-down", function(event) {
+    setSelectedFeaturedPlace(event, view, changeUI);
+  });
 }
 
-//   const handleMapLoad = (map, view) => {
-//     const { layers } = map;
-//     const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
-//     // set the attributes available on the layer
-//     _featuredPlacesLayer.outFields = ['nam_slg'];
-//     setFeaturedPlacesLayer(_featuredPlacesLayer);
-
-
-
-//     view.on("pointer-down", function(event) {
-//       setSelectedFeaturedPlace(event, view, changeUI);
-//     });
-//   }
-// >>>>>>> Fix fetching the data in geodescriber and human pressures widget
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
   const clickCallbacksArray = [
