@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
 import initialState from './featured-globe-initial-state';
-import sceneSettings from './featured-globe-settings.js';
+import sceneSettings from './featured-globe-settings';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;

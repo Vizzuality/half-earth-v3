@@ -19,6 +19,7 @@ export default {
   ui: {
     selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'bestPlaces',
-    selectedFeaturedPlace: null
+    selectedFeaturedPlace: null,
+    isFullscreenActive: false, 
   }
 }

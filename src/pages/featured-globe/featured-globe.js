@@ -33,6 +33,7 @@ const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, F
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList();
   },[])
+<<<<<<< HEAD
   
 const handleMapLoad = (map) => {
   const { layers } = map;
@@ -59,6 +60,46 @@ const handleMapLoad = (map) => {
     setSelectedFeaturedPlace(event, view, changeUI);
   });
 }
+=======
+
+  const handleMapLoad = (map, view, isLandscapeMode) => {
+    const { layers } = map;
+    const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
+    // set the attributes available on the layer
+    _featuredPlacesLayer.outFields = ['nam_slg'];
+    setFeaturedPlacesLayer(_featuredPlacesLayer);
+
+    const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
+    // set the outFields for the BIODIVERSITY_FACETS_LAYER
+    // to get all the attributes available
+    gridLayer.outFields = ["*"];
+
+    view.on("pointer-down", function(event) {
+      setSelectedFeaturedPlace(event, view, changeUI);
+    });
+
+    // This fix has been added as a workaround to a bug introduced on v4.12
+    // The bug was causing the where clause of the mosaic rule to not work
+    // It will be probably fixed on v4.13
+    const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+    loadModules(["esri/config"]).then(([esriConfig]) => {
+      mosaicRuleFix(esriConfig, humanImpactLayer)
+    })
+
+    // Update default human impact layer color ramp
+    loadModules(["esri/layers/support/RasterFunction", "esri/Color"]).then(([RasterFunction, Color]) => {
+      humanImpactLayer.noData = 0;
+      humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
+    })
+
+    // hide human pressure layers after first load, if the globe is not it the landscape mode
+    if (humanImpactLayer) humanImpactLayer.visible = !!isLandscapeMode;
+    
+    view.on("pointer-down", function(event) {
+      setSelectedFeaturedPlace(event, view, changeUI);
+    });
+  }
+>>>>>>> Split arcgis-layer-manager between globes
 
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
@@ -80,9 +121,13 @@ const handleMapLoad = (map) => {
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       featuredPlacesLayer={featuredPlacesLayer}
+<<<<<<< HEAD
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
       onLoad={(map, view) => handleMapLoad(map, view)}
+=======
+      onLoad={(map, view) => handleMapLoad(map, view, props.isLandscapeMode)}
+>>>>>>> Split arcgis-layer-manager between globes
       setRasters={setRasters}
       setLayerVisibility={setLayerVisibility}
       setLayerOpacity={setLayerOpacity}

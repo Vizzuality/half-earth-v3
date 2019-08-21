@@ -8,6 +8,7 @@ import Globe from 'components/globe';
 // Managers
 import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
+import LabelsLayer from 'components/labels-layer';
 import Legend from 'components/legend';
 
 // WIDGETS
@@ -25,7 +26,7 @@ import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-import ArcgisLayerManager from './featured-arcgis-layer-manager.js';
+import ArcgisLayerManager from 'components/featured-arcgis-layer-manager';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
@@ -65,7 +66,7 @@ const FeaturedGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         {isGlobeUpdating && <Spinner floating />}
-        <ArcgisLayerManager activeLayers={activeLayers} isLandscapeMode={isLandscapeMode}/>
+        <ArcgisLayerManager activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} isFeatureMode/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
@@ -110,7 +111,7 @@ const FeaturedGlobeComponent = ({
             setLayerOrder={setLayerOrder}
           />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {/* {isLandscapeMode && <LabelsLayer />} */}
+        {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && (
           <LandscapeSidebar

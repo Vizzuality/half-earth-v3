@@ -3,7 +3,7 @@ import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import Globe from 'components/globe';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import ArcgisLayerManager from 'components/data-arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import LabelsLayer from 'components/labels-layer';
@@ -57,6 +57,7 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
+  console.log('sceneSettings: ',sceneSettings)
 
   return (
     <>
