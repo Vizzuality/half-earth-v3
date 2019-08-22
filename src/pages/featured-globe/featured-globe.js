@@ -19,12 +19,12 @@ const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSw
 
 const feturedGlobeContainer = props => {
 
-  const { changeUI, changeGlobe } = props;
+  const { changeUI, changeGlobe, featuredMapPlaces } = props;
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
 
 const handleMarkerClick = (viewPoint, view) => setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
-const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER);
+const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
 
   useEffect(() => {
     const { setFeaturedMapsList } = props;

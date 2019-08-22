@@ -6,6 +6,7 @@ import initialState from './featured-globe-initial-state';
 import sceneSettings from './featured-globe-settings.js';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
+const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -48,5 +49,6 @@ export default createStructuredSelector({
   isFullscreenActive: getFullscreenActive,
   selectedFeaturedMap: getSelectedFeaturedMap,
   selectedSidebar: getSelectedSidebar,
-  selectedFeaturedPlace: getSelectedFeaturedPlace
+  selectedFeaturedPlace: getSelectedFeaturedPlace,
+  featuredMapPlaces: selectFeaturedMapPlaces
 })
