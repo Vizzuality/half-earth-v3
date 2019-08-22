@@ -47,7 +47,7 @@ const HumanImpactLayers = ({ handleGlobeUpdating, view, map, rasters, setRasters
       });
     });
   }
-
+  console.log('alreadyChecked: ',alreadyChecked);
   return (
     <MultipleActiveLayers
       options={humanPressuresLandUse}
