@@ -4,22 +4,23 @@ import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { DATA_GLOBE_URLS } from 'constants/preload-urls';
 import Globe from 'components/globe';
+// Managers
 import LandscapeViewManager from 'components/landscape-view-manager';
-import Switcher from 'components/switcher';
-import About from 'components/about';
+import GlobeEventsManager from 'components/globe-events-manager';
+import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 
-// WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
+import Switcher from 'components/switcher';
 import FeaturedMapsList from 'components/featured-maps-list';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
 import FeaturedPlaceCard from 'components/featured-place-card';
-import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import Spinner from 'components/spinner';
+import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
@@ -36,7 +37,9 @@ const FeaturedGlobeComponent = ({
   isLandscapeMode,
   selectedFeaturedMap,
   selectedFeaturedPlace,
-  featuredPlacesLayer
+  featuredPlacesLayer,
+  clickCallbacksArray,
+  mouseMoveCallbacksArray
  }) => {
 
   return (
@@ -45,6 +48,7 @@ const FeaturedGlobeComponent = ({
         { DATA_GLOBE_URLS.map(url => <link key="url" rel="preload" crossorigin href={url} as="script" />)}
       </Helmet>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
+        <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />

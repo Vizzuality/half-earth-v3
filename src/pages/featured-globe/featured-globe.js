@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
-import { setSelectedFeaturedPlace } from 'utils/featured-globe-utils';
 import { DATA } from 'router';
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
+import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
 
 import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
@@ -22,31 +22,41 @@ const feturedGlobeContainer = props => {
   const { changeUI, changeGlobe } = props;
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
+
+const handleMarkerClick = (viewPoint, view) => setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER);
+
   useEffect(() => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList();
   },[])
   
-  const handleMapLoad = (map, view) => {
+  const handleMapLoad = map => {
     const { layers } = map;
     const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
     // set the attributes available on the layer
     _featuredPlacesLayer.outFields = ['nam_slg'];
     setFeaturedPlacesLayer(_featuredPlacesLayer);
-
-    view.on("pointer-down", function(event) {
-      setSelectedFeaturedPlace(event, view, changeUI);
-    });
   }
 
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
+  // Array of funtions to be triggered on scene click
+  const clickCallbacksArray = [
+    handleMarkerClick
+  ]
+
+  const mouseMoveCallbacksArray = [
+    handleMarkerHover
+  ]
 
   return (
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       featuredPlacesLayer={featuredPlacesLayer}
-      onLoad={(map, view) => handleMapLoad(map, view)}
+      onLoad={(map, view) => handleMapLoad(map)}
+      clickCallbacksArray={clickCallbacksArray}
+      mouseMoveCallbacksArray={mouseMoveCallbacksArray}
       {...props}
     />
   )
