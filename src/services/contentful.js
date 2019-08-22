@@ -69,6 +69,24 @@ async function parseFeaturedPlace(data) {
   return featuredPlace;
 }
 
+async function parseFeaturedPlaces(data) {
+  return data.reduce(
+    async (acc, place) => {
+      const featuredPlace = {
+        slug: place.fields.nameSlug,
+        title: place.fields.title,
+        description: place.fields.description,
+      };
+      await getContentfulImage(place.fields.image.sys.id).then(placeImageUrl => {
+        featuredPlace.image = placeImageUrl;
+      });
+      const acummPromise = await acc;
+      return [ ...acummPromise, featuredPlace ];
+    },
+    []
+  )
+}
+
 const parseTexts = items => {
   return items.map(({ fields }) => fields).reduce((acc, item) => {
     acc[item.view] = item;
@@ -142,4 +160,12 @@ async function getFeaturedPlaceData(slug) {
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlaceData };
+async function getFeaturedPlacesData(slug) {
+  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'featureSlug', filterValue: slug });
+  if (data && data.items && data.items.length > 0) {
+    return parseFeaturedPlaces(data.items);
+  }
+  return null;
+}
+
+export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlaceData, getFeaturedPlacesData };
