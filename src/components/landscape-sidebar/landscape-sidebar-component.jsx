@@ -3,7 +3,7 @@ import cx from 'classnames';
 import {useSpring, animated} from 'react-spring'
 
 import GeoDescriptionWidget from './geo-description-widget';
-import HumanPressureWidget from './human-pressure-widget';
+import HumanPressureWidget from './new-human-pressure-widget/human-pressure-widget';
 import MOLUploader from './mol-uploader';
 
 import uiStyles from 'styles/ui.module';
