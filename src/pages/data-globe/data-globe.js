@@ -4,6 +4,8 @@ import { loadModules } from '@esri/react-arcgis';
 import { usePostRobot } from 'hooks/attach-post-robot';
 
 import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
+import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
@@ -16,7 +18,7 @@ import { createLayer } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
-const handleMapLoad = (map, view, activeLayers) => {
+const handleMapLoad = (map, activeLayers) => {
   const { layers } = map;
 
   const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
@@ -29,15 +31,15 @@ const handleMapLoad = (map, view, activeLayers) => {
   // It will be probably fixed on v4.13
   const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   loadModules(["esri/config"]).then(([esriConfig]) => {
-    esriConfig.request.interceptors.push({
-      urls: `${humanImpactLayer.url}/exportImage`,
-      before: function (params) {
-        if(params.requestOptions.query.mosaicRule) {
-          params.requestOptions.query.mosaicRule = JSON.stringify(humanImpactLayer.mosaicRule.toJSON());
-        }
-      }
-    });
+    mosaicRuleFix(esriConfig, humanImpactLayer)
   })
+
+  // Update default human impact layer color ramp
+  loadModules(["esri/layers/support/RasterFunction", "esri/Color"]).then(([RasterFunction, Color]) => {
+    humanImpactLayer.noData = 0;
+    humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
+  })
+
 
   // Here we are creating the biodiversity layers active in the URL
   // this is needed to have the layers displayed on the map when sharing the URL
@@ -76,7 +78,7 @@ const dataGlobeContainer = props => {
     setLayerOpacity={setLayerOpacity}
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
+    onLoad={(map, view) => handleMapLoad(map, props.activeLayers)}
     handleGlobeUpdating={handleGlobeUpdating}
     handleZoomChange={handleZoomChange}
     {...props}/>

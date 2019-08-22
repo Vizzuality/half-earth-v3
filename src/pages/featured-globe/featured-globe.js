@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { loadModules } from '@esri/react-arcgis';
+import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 import { DATA } from 'router';
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
@@ -31,13 +35,27 @@ const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, F
     setFeaturedMapsList();
   },[])
   
-  const handleMapLoad = map => {
-    const { layers } = map;
-    const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
-    // set the attributes available on the layer
-    _featuredPlacesLayer.outFields = ['nam_slg'];
-    setFeaturedPlacesLayer(_featuredPlacesLayer);
-  }
+const handleMapLoad = (map) => {
+  const { layers } = map;
+  const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
+  // set the attributes available on the layer
+  _featuredPlacesLayer.outFields = ['nam_slg'];
+  setFeaturedPlacesLayer(_featuredPlacesLayer);
+
+  // This fix has been added as a workaround to a bug introduced on v4.12
+  // The bug was causing the where clause of the mosaic rule to not work
+  // It will be probably fixed on v4.13
+  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  loadModules(["esri/config"]).then(([esriConfig]) => {
+    mosaicRuleFix(esriConfig, humanImpactLayer)
+  })
+
+  // Update default human impact layer color ramp
+  loadModules(["esri/layers/support/RasterFunction", "esri/Color"]).then(([RasterFunction, Color]) => {
+    humanImpactLayer.noData = 0;
+    humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
+  })
+}
 
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
