@@ -5,9 +5,9 @@ import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
-import { setSelectedFeaturedPlace } from 'utils/featured-globe-utils';
 import { DATA } from 'router';
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
+import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
 
 import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
@@ -23,24 +23,25 @@ const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSw
 
 const feturedGlobeContainer = props => {
 
-  const { changeUI, changeGlobe } = props;
+  const { changeUI, changeGlobe, featuredMapPlaces } = props;
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
+
+
+const handleMarkerClick = (viewPoint, view) => setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
 
   useEffect(() => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList();
   },[])
   
-const handleMapLoad = (map, view) => {
+const handleMapLoad = (map) => {
   const { layers } = map;
   const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
   // set the attributes available on the layer
   _featuredPlacesLayer.outFields = ['nam_slg'];
   setFeaturedPlacesLayer(_featuredPlacesLayer);
 
-  view.on("pointer-down", function(event) {
-    setSelectedFeaturedPlace(event, view, changeUI);
-  });
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work
   // It will be probably fixed on v4.13
@@ -57,13 +58,23 @@ const handleMapLoad = (map, view) => {
 }
 
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
+  // Array of funtions to be triggered on scene click
+  const clickCallbacksArray = [
+    handleMarkerClick
+  ]
+
+  const mouseMoveCallbacksArray = [
+    handleMarkerHover
+  ]
 
   return (
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       featuredPlacesLayer={featuredPlacesLayer}
-      onLoad={(map, view) => handleMapLoad(map, view)}
+      onLoad={(map, view) => handleMapLoad(map)}
+      clickCallbacksArray={clickCallbacksArray}
+      mouseMoveCallbacksArray={mouseMoveCallbacksArray}
       {...props}
     />
   )
