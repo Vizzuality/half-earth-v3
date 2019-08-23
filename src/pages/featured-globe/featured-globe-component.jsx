@@ -11,8 +11,6 @@ import GlobeEventsManager from 'components/globe-events-manager';
 import LabelsLayer from 'components/labels-layer';
 import Legend from 'components/legend';
 
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
-
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
