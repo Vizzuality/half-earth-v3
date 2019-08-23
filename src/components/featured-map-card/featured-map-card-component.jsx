@@ -29,7 +29,7 @@ const FeaturesMapCardComponent = ({
 
   const handleClick = () => {
     handleAllMapsClick();
-    spinGlobe(view);
+    view.goTo({ zoom: 1 }).then(() => { spinGlobe(view) });
   }
 
   // if we first arrive to all maps screen
