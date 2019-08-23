@@ -11,6 +11,8 @@ import GlobeEventsManager from 'components/globe-events-manager';
 import LabelsLayer from 'components/labels-layer';
 import Legend from 'components/legend';
 
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
@@ -26,7 +28,7 @@ import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-import ArcgisLayerManager from 'components/featured-arcgis-layer-manager';
+import ArcgisLayerManager from 'components/arcgis-layer-manager';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
@@ -55,9 +57,10 @@ const FeaturedGlobeComponent = ({
   handleGlobeUpdating,
   setLayerOpacity,
   setLayerOrder,
-  isGlobeUpdating
+  isGlobeUpdating,
+  customFunctions
  }) => {
-
+ 
   return (
     <>
       <Helmet>
@@ -66,7 +69,7 @@ const FeaturedGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         {isGlobeUpdating && <Spinner floating />}
-        <ArcgisLayerManager activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} isFeatureMode/>
+        <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />

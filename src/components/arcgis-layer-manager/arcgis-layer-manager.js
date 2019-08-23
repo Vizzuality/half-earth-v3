@@ -1,7 +1,6 @@
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
 
-const ArcgisLayerManager = ({ map, activeLayers, isLandscapeMode }) => {
+const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
   // Map prop is inherited from Webscene component
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
   
@@ -17,11 +16,15 @@ const ArcgisLayerManager = ({ map, activeLayers, isLandscapeMode }) => {
       mapLayer.visible = !!setActive;
     })
     setOpacity(mapLayer, activeLayers);
-
-    // Hide human_pressures_layer where they are not in landscape mode
-    if(mapLayer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
-      mapLayer.visible = isLandscapeMode && setActive;
+    
+    // Set group layers as visible to allow sublayers to be visible
+    if (mapLayer.type === "group") {
+      mapLayer.visible = true
+    } else {
+      mapLayer.visible = !!setActive;
     }
+
+    customFunctions && customFunctions.forEach(fn => fn(mapLayer))
   })
   return null
 }
