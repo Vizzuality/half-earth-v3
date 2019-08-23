@@ -8,8 +8,8 @@ import Globe from 'components/globe';
 // Managers
 import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
-import LabelsLayer from 'components/labels-layer';
-import Legend from 'components/legend';
+import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -21,12 +21,12 @@ import Switcher from 'components/switcher';
 import FeaturedMapsList from 'components/featured-maps-list';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
-import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import LabelsLayer from 'components/labels-layer';
+import Legend from 'components/legend';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
