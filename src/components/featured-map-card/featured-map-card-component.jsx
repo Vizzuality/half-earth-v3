@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import cx from 'classnames';
 import ShareModalButton from 'components/share-modal';
@@ -13,7 +13,9 @@ const FeaturesMapCardComponent = ({
   isFullscreenActive,
   featuredMap,
   handleAllMapsClick,
-  selectedFeaturedPlace
+  selectedFeaturedPlace,
+  spinGlobe,
+  handle
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
   const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
@@ -24,6 +26,16 @@ const FeaturesMapCardComponent = ({
     marginLeft: isOnScreen ? 0 : -400,
     delay: isOnScreen ? 400 : 0
   })
+
+  const handleClick = () => {
+    handleAllMapsClick();
+    spinGlobe(view);
+  }
+
+  // if we first arrive to all maps screen
+  useEffect(() => {
+    if(!handle && !isOpen) { spinGlobe(view) }
+  }, []);
 
   return (
     <animated.div className={cx(className, styles.cardContainer)} style={slide}>
@@ -38,7 +50,7 @@ const FeaturesMapCardComponent = ({
         <p className={styles.description}>{featuredMap.description}</p>
         <button
           className={styles.allMapsButton}
-          onClick={handleAllMapsClick}
+          onClick={handleClick}
         >
           <span className={styles.buttonText}>All maps</span>
           <ChevronIcon className={styles.arrowIcon}/>
