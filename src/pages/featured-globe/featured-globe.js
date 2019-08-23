@@ -83,7 +83,7 @@ const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, F
   const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setFeaturedGlobeSettings);
   const handleGlobeUpdating = (updating) => props.setFeaturedGlobeSettings({ isGlobeUpdating: updating })
 
-  const showHumanPressuresOnLandscape = (layer, setActive) => {
+  const showHumanPressuresOnLandscape = ({ layer, setActive }) => {
     // Hide human_pressures_layer where they are not in landscape mode
     if(layer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
       layer.visible = props.isLandscapeMode && setActive;

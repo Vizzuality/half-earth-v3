@@ -16,7 +16,7 @@ const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
       mapLayer.visible = !!setActive;
     })
     setOpacity(mapLayer, activeLayers);
-    
+
     // Set group layers as visible to allow sublayers to be visible
     if (mapLayer.type === "group") {
       mapLayer.visible = true
@@ -24,7 +24,7 @@ const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
       mapLayer.visible = !!setActive;
     }
 
-    customFunctions && customFunctions.forEach(fn => fn(mapLayer))
+    customFunctions && customFunctions.forEach(fn => fn({ layer: mapLayer, setActive }))
   })
   return null
 }
