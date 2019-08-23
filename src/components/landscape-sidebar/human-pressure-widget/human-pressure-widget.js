@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -21,6 +21,13 @@ const HumanPressureWidgetContainer = props => {
     removeLayerAnalyticsEvent,
     handleGlobeUpdating
   } = props;
+
+  const { layers } = map;
+  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+
+  useEffect(() => {
+    if(!humanImpactLayer.visible) setRasters([]);
+  }, [humanImpactLayer.visible]);
 
   const handleHumanPressureRasters = (rasters, option) => {
       const { layers } = map;
