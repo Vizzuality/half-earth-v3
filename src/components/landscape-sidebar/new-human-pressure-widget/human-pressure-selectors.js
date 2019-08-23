@@ -20,40 +20,43 @@ const getPressureOptions = createSelector(getTerrestrialHumanPressures, humanPre
       }
     )
   );
-  console.log('data: ',data)
   return data;
 })
 
-const getTotalPressure = createSelector(getPressureOptions, humanPressures => {
+const getTotalPressureValue = createSelector(getPressureOptions, humanPressures => {
   if (!humanPressures) return null;
-  const pressures = humanPressures.filter(p => p.name !== 'Pressure free' );
-  const pressuresValues = pressures.map(p => p.pressureValue)
+  const pressuresValues = humanPressures.map(p => p.pressureValue)
   const totalPressure = pressuresValues.reduce((acc, current) => acc + current);
   return totalPressure
+})
+
+const getPressureFreeValue = createSelector(getTerrestrialHumanPressures, humanPressures => {
+  if (!humanPressures) return null;
+  const pressureFree = humanPressuresLandscapeWidget.find(p => p.slug === 'human-pressures-free');
+  return Math.round(humanPressures[pressureFree.value]);
 })
 
 const getBiggestPressureName = createSelector(
   [getPressureOptions],
   (humanPressures) => {
     if (!humanPressures) return null;
-    const pressures = humanPressures.filter(p => p.name !== 'Pressure free' );
-    return orderBy(pressures, 'pressureValue', 'desc')[0].name;
+    return orderBy(humanPressures, 'pressureValue', 'desc')[0].name;
 })
 
-const getPressureBarData = createSelector(
-  [getPressureOptions, getRastersFromProps, getTotalPressure],
-  (humanPressures, rasters, totalPressure) => {
-    if (!humanPressures || !rasters || !totalPressure) return null;
+const getSelectedPressuresValue = createSelector(
+  [getPressureOptions, getRastersFromProps],
+  (humanPressures, rasters) => {
+    if (!humanPressures || !rasters) return null;
     const selectedPressures = Math.round(humanPressures.filter(({ value }) => rasters[value]).reduce((acc, next) => acc + next.pressureValue, 0));
-    const nonSelectedPressures = Math.round(totalPressure) - selectedPressures;
-    return { selectedPressures, nonSelectedPressures };
+    return selectedPressures;
   }
 )
 
 export default createStructuredSelector({
   humanPressures: getTerrestrialHumanPressures,
   options: getPressureOptions,
-  barData: getPressureBarData,
-  totalPressure: getTotalPressure,
-  biggestPressureName: getBiggestPressureName
+  selectedPressures: getSelectedPressuresValue,
+  totalPressure: getTotalPressureValue,
+  biggestPressureName: getBiggestPressureName,
+  pressureFree: getPressureFreeValue
 });

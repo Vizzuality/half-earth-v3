@@ -9,7 +9,7 @@
 
 .title {
   margin: 0;
-  color: white;
+  color: $white;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 2px;
@@ -27,65 +27,77 @@
 }
 
 .hint {
-  color: white;
+  color: $white;
   line-height: 14px;
   font-size: 10px;
   letter-spacing: 1.5px;
-  padding: 0 20px 20px;
+  padding: 20px 20px 0;
+  user-select: none;
 }
 
 .barContainer {
   align-items: center;
   display: flex;
   height: 32px;
-  margin: 40px 0;
-  width: 100%;
-  padding: 0 20px ;
-}
-
-%pressureBar {
-  height: 100%;
-  background-color: #0C2C84;
+  margin: 40px 20px;
+  position: relative;
+  width: 240px;
 }
 
 .pressureFreeBar {
-  @extend %pressureBar;
+  background-color: $slate-gray;
   height: 22px; 
-  background-color: #6C828F;
   flex: 1;
 
+  &:before {
+    content: '';
+    background: $white;
+    display: block;
+    height: 32px;
+    transform: translate(-2px, -5px);
+    width: 2px;
+  }
 }
 
 .selectedPressureBar {
-  @extend %pressureBar;
-
-  border: 2px solid #FFFFFF;
+  background-color: $catalina-blue;
+  border: 2px solid $white;
   border-radius: 1px;
-  height: 32px;
-  position: relative;
+  height: 100%;
+  position: absolute;
+  transition: width 2s;
 }
 
 .selectedPressureLabel {
   @extend  %bodyText;
-  color: white;
+  color: $white;
   position: absolute;
   top: -22px;
-  left: calc(50% - 32px);
-
+  left: 50%;
 }
 
 .nonSelectedPressureBar {
-  @extend %pressureBar;
+  background-color: $catalina-blue;
   height: 22px;
+}
+
+.pressureFreeLabel {
+  @extend  %bodyText;
+  color: $white;
+  padding: 0 20px;
   position: relative;
+  margin: 8px 0 0;
+  width: max-content;
+
   &:after {
     content: '';
-    background: white;
+    background: $slate-gray;
+    border-radius: 50%;
     display: block;
-    height: 32px;
-    width: 2px;
-    right: -2px;
-    top: -4px;
+    height: 10px;
     position: absolute;
+    right: 0px;
+    top: 6px;
+    width: 10px;
   }
 }
