@@ -7,13 +7,13 @@ import { getTerrestrialHumanPressures } from 'selectors/grid-cell-selectors';
 const getRastersFromProps = (state, props) =>
   props.rasters
 
-const getPressureOptions = createSelector(getTerrestrialHumanPressures, humanPressures => {
+const getPressureData = createSelector(getTerrestrialHumanPressures, humanPressures => {
   if (!humanPressures) return null;
   const data = humanPressuresLandscapeWidget
     .filter(p => p.slug !== 'human-pressures-free')
     .map(pressure => (
       {
-        name: `${pressure.name} ${format(".0%")(humanPressures[pressure.value] / 100)}`,
+        name: pressure.name,
         slug: pressure.slug,
         value: pressure.value,
         pressureValue: humanPressures[pressure.value],
@@ -23,7 +23,7 @@ const getPressureOptions = createSelector(getTerrestrialHumanPressures, humanPre
   return data;
 })
 
-const getTotalPressureValue = createSelector(getPressureOptions, humanPressures => {
+const getTotalPressureValue = createSelector(getPressureData, humanPressures => {
   if (!humanPressures) return null;
   const pressuresValues = humanPressures.map(p => p.pressureValue)
   const totalPressure = pressuresValues.reduce((acc, current) => acc + current);
@@ -33,24 +33,39 @@ const getTotalPressureValue = createSelector(getPressureOptions, humanPressures 
 const getPressureFreeValue = createSelector(getTerrestrialHumanPressures, humanPressures => {
   if (!humanPressures) return null;
   const pressureFree = humanPressuresLandscapeWidget.find(p => p.slug === 'human-pressures-free');
-  return Math.round(humanPressures[pressureFree.value]);
+  return format(".2%")(humanPressures[pressureFree.value] / 100);
 })
 
 const getBiggestPressureName = createSelector(
-  [getPressureOptions],
+  [getPressureData],
   (humanPressures) => {
     if (!humanPressures) return null;
-    return orderBy(humanPressures, 'pressureValue', 'desc')[0].name;
-})
+    return orderBy(humanPressures, 'pressureValue', 'desc')[0].name.toLowerCase();
+  }
+)
 
 const getSelectedPressuresValue = createSelector(
-  [getPressureOptions, getRastersFromProps],
+  [getPressureData, getRastersFromProps],
   (humanPressures, rasters) => {
     if (!humanPressures || !rasters) return null;
-    const selectedPressures = Math.round(humanPressures.filter(({ value }) => rasters[value]).reduce((acc, next) => acc + next.pressureValue, 0));
+    const selectedPressures = humanPressures.filter(({ value }) => rasters[value]).reduce((acc, next) => acc + next.pressureValue, 0);
     return selectedPressures;
   }
 )
+
+const getPressureOptions = createSelector(getPressureData, humanPressureData => {
+  if (!humanPressureData) return null;
+  const data = humanPressureData
+    .map(({ name, slug, value, pressureValue }) => (
+      {
+        name: `${name} ${format(".2%")(pressureValue / 100)}`,
+        slug,
+        value
+      }
+    )
+  );
+  return data;
+})
 
 export default createStructuredSelector({
   humanPressures: getTerrestrialHumanPressures,

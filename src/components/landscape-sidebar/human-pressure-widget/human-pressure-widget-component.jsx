@@ -1,13 +1,15 @@
 import React from 'react';
+import { format } from 'd3-format';
 import CheckboxGroup from 'components/checkbox-group';
 
 import styles from './human-pressure-widget-styles.module.scss';
 
 const BarComponent = ({ selectedPressures, totalPressure }) => {
+  const f = selectedPressures % 10 === 0  ? ".0%" : ".2%";
   return (
     <div className={styles.barContainer}>
-      <div className={styles.selectedPressureBar} style={{ width: `${selectedPressures}%`}}>
-        <span className={styles.selectedPressureLabel}>{`${selectedPressures}%`}</span>
+      <div className={styles.selectedPressureBar} style={{ width: `${Math.round(selectedPressures)}%`}}>
+        <span className={styles.selectedPressureLabel}>{`${format(f)(selectedPressures / 100)}`}</span>
       </div>
       <div className={styles.nonSelectedPressureBar} style={{ width: `${totalPressure}%`}}></div>
       <div className={styles.pressureFreeBar}></div>
@@ -20,7 +22,7 @@ const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
     {totalPressure === 0 ? 
       (<p className={styles.text}>There is no land human pressure on the selected area</p>)
       :
-      (<p className={styles.text}>Of the current landscape, <b>{Math.round(totalPressure)}% is under human pressure</b>, the majority of which is pressure from {biggestPressureName}.</p>)
+      (<p className={styles.text}>Of the current landscape, <b>{format(".2%")(totalPressure / 100)} is under human pressure</b>, the majority of which is pressure from {biggestPressureName}.</p>)
     }
   </>
 );
@@ -36,7 +38,7 @@ const HumanPressureWidgetComponent = ({ handleOnClick, options, rasters, selecte
         handleClick={handleOnClick}
         checkedOptions={rasters}
       />}
-      {pressureFree && <p className={styles.pressureFreeLabel}>Not under pressure {pressureFree}%</p>}
+      {pressureFree && <p className={styles.pressureFreeLabel}>Not under pressure {pressureFree}</p>}
       <p className={styles.hint}>CLICK TO SHOW ON MAP</p>
     </div>
   )
