@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Component from './featured-map-card-component';
 import mapStateToProps from './featured-map-card-selectors';
@@ -9,7 +9,11 @@ const actions = { ...urlActions, ...featuredMapPlacesActions };
 
 const FeaturedMapCardContainer = props => {
   const { featuredMapsList, selectedFeaturedMap, setFeaturedMapPlaces } = props;
-  setFeaturedMapPlaces(selectedFeaturedMap)
+
+  useEffect(() => {
+    setFeaturedMapPlaces(selectedFeaturedMap)
+  }, [selectedFeaturedMap])
+  
   const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
   const handleAllMapsClick = () => props.changeUI({ selectedSidebar: 'featuredMapsList' });
   return (
