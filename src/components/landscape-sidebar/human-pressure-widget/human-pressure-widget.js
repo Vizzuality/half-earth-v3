@@ -7,6 +7,7 @@ import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 import mapStateToProps from './human-pressure-selectors';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { humanPressuresLandUse } from 'constants/human-pressures';
 
 const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
 
@@ -19,15 +20,22 @@ const HumanPressureWidgetContainer = props => {
     view,
     addLayerAnalyticsEvent,
     removeLayerAnalyticsEvent,
-    handleGlobeUpdating
+    handleGlobeUpdating,
+    activeLayers
   } = props;
 
   const { layers } = map;
   const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
 
   useEffect(() => {
-    if(!humanImpactLayer.visible) setRasters([]);
+    if(!humanImpactLayer.visible) setRasters({});
   }, [humanImpactLayer.visible]);
+
+  const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  // eslint-disable-next-line no-mixed-operators
+  const checkedRasters = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
+    ...acc, [option.value]: rasters[option.value]
+  }), {})) || {};
 
   const handleHumanPressureRasters = (rasters, option) => {
       const { layers } = map;
@@ -61,7 +69,7 @@ const HumanPressureWidgetContainer = props => {
       });
     }
 
-  return <HumanPressureWidgetComponent {...props} rasters={rasters} handleOnClick={handleHumanPressureRasters}/>
+  return <HumanPressureWidgetComponent {...props} handleOnClick={handleHumanPressureRasters} checkedRasters={checkedRasters}/>
 }
 
 export default connect(mapStateToProps, actions)(HumanPressureWidgetContainer);

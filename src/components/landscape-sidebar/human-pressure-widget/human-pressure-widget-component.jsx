@@ -27,19 +27,24 @@ const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
   </>
 );
 
-const HumanPressureWidgetComponent = ({ handleOnClick, options, rasters, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
+const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
+  
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Land human pressures in this area</h3>
-      <PressureStatementComponent totalPressure={totalPressure} biggestPressureName={biggestPressureName} />
-      <BarComponent selectedPressures={selectedPressures} totalPressure={totalPressure}/>
-      {options && <CheckboxGroup
-        options={options}
-        handleClick={handleOnClick}
-        checkedOptions={rasters}
-      />}
-      {pressureFree && <p className={styles.pressureFreeLabel}>Not under pressure {pressureFree}</p>}
-      <p className={styles.hint}>CLICK TO SHOW ON MAP</p>
+      {options && 
+        <>
+          <h3 className={styles.title}>Land human pressures in this area</h3>
+          <PressureStatementComponent totalPressure={totalPressure} biggestPressureName={biggestPressureName} />
+          <BarComponent selectedPressures={selectedPressures} totalPressure={totalPressure}/>
+          <CheckboxGroup
+            options={options}
+            handleClick={handleOnClick}
+            checkedOptions={checkedRasters}
+          />
+          {pressureFree && <p className={styles.pressureFreeLabel}>Not under pressure {pressureFree}</p>}
+          <p className={styles.hint}>CLICK TO SHOW ON MAP</p>
+        </>
+      }
     </div>
   )
 }
