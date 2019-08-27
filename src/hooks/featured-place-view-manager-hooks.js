@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 import { get } from 'lodash';
 
-export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer) {
-const [coords, setCoords] = useState(null);
-useEffect(() => {
-  if (selectedFeaturedPlace && featuredPlacesLayer) {
-    const query = featuredPlacesLayer.createQuery();
-    query.where = `nam_slg = '${selectedFeaturedPlace}'`
-    featuredPlacesLayer.queryFeatures(query).then(result => {
-      const lon = get(result, 'features[0].attributes.lon');
-      const lat = get(result, 'features[0].attributes.lat');
-      setCoords([lon, lat]);
-    });
-  } else {
-    view.goTo({ tilt: 0, zoom: 1 });
-  }
-}, [selectedFeaturedPlace, featuredPlacesLayer])
+export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode) {
+  const [coords, setCoords] = useState(null);
+  useEffect(() => {
+    if (selectedFeaturedPlace && featuredPlacesLayer && !isLandscapeMode) {
+      const query = featuredPlacesLayer.createQuery();
+      query.where = `nam_slg = '${selectedFeaturedPlace}'`
+      featuredPlacesLayer.queryFeatures(query).then(result => {
+        const lon = get(result, 'features[0].attributes.lon');
+        const lat = get(result, 'features[0].attributes.lat');
+        setCoords([lon, lat]);
+      });
+    } else if (!isLandscapeMode) {
+      view.goTo({ tilt: 0, zoom: 1 });
+    }
+  }, [selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode])
 
   useEffect(() => {
     if (coords) {
