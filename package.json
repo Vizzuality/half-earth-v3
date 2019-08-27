@@ -20,7 +20,6 @@
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.8.2",
     "react-markdown": "4.0.8",
     "react-redux": "^6.0.1",
@@ -38,11 +37,14 @@
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
     "vega-lib": "^4.4.0",
-    "vizzuality-components": "^1.1.1"
+    "vizzuality-components": "^1.1.1",
+    "workbox-build": "^4.3.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
+    "build-service-worker": "node ./src/service-worker-build.js",
+    "build": "react-app-rewired build && npm run build-service-worker && npm run clean-cra-sw",
     "test:e2e:dev": "npm-run-all --parallel start cy:open",
     "cy:open": "cypress open",
     "pre:test:e2e:ci": "yarn build && npm-run-all --parallel --race start cy:run",
