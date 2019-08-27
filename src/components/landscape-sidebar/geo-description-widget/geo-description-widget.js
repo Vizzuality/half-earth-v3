@@ -9,17 +9,7 @@ import 'redux_modules/geo-description';
 const GeoDescriptionWidget = props => {
   const handleBackClick = () => {
     const { view } = props;
-    const { center } = view;
-    const target = {
-      position: {
-        x: center.longitude,
-        y: center.latitude,
-        z: 1000000
-      },
-      heading: 0,
-      tilt: 0
-    }
-    view.goTo(target)
+    view.goTo({ zoom: 7 })
   };
 
   return <Component handleBackClick={handleBackClick} {...props}/>
