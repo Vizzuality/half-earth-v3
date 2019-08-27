@@ -36,7 +36,7 @@
     "reselect": "^4.0.0",
     "vega-lib": "^4.4.0",
     "vizzuality-components": "^1.1.1",
-    "lodash-es": "4.17.4",
+    "lodash-es": "4.17.14",
     "post-robot": "8.0.28"
   },
   "scripts": {
