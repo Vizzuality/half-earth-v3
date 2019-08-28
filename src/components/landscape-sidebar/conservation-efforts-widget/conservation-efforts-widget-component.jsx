@@ -50,8 +50,6 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
     }
   }, [terrestrialCellData])
 
-  console.log('calculatedChartData', calculatedChartData)
-
   return (
     <div className={styles.container}>
       <div className={styles.fixBlur} />

@@ -34,19 +34,15 @@ const getConservationEfforts = createSelector(
     const WDPA_prop = sumBy(values, 'WDPA_prop') / gridCellsLength;
     const RAISG_prop = sumBy(values, 'RAISG_prop') / gridCellsLength;
     const all_prop = sumBy(values, 'all_prop') / gridCellsLength;
-    const notUnderConservation = 1 - (all_prop);
-    const roundedWDPA_prop = WDPA_prop.toFixed(2);
-    const roundedRAISG_prop = RAISG_prop.toFixed(2);
-    const roundedAllProp = all_prop.toFixed(2);
-    const roundedNotUnderCons = notUnderConservation.toFixed(2);
     return {
-      roundedWDPA_prop,
-      roundedRAISG_prop,
-      roundedAllProp,
-      roundedNotUnderCons
+      WDPA_prop,
+      RAISG_prop,
+      all_prop
     }
   }
 )
+
+const getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value);
 
 const getLogic = createSelector(
   [getConservationEfforts],
@@ -54,17 +50,23 @@ const getLogic = createSelector(
     if (!conservationEfforts) return null;
 
     const areas = {};
-    if (conservationEfforts.roundedWDPA_prop + conservationEfforts.roundedRAISG_prop > conservationEfforts.roundedAllProp) {
-      areas[COMMUNITY_BASED] = conservationEfforts.roundedRAISG_prop * 100;
-      areas[PROTECTED] = (conservationEfforts.roundedAllProp - conservationEfforts.roundedRAISG_prop) * 100;
-      areas[NOT_UNDER_CONSERVATION] = conservationEfforts.roundedNotUnderCons * 100;
+    if (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop > conservationEfforts.all_prop) {
+      areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
+      areas[PROTECTED] = (conservationEfforts.all_prop - conservationEfforts.RAISG_prop) * 100;
     } else {
-      areas[COMMUNITY_BASED] = conservationEfforts.roundedRAISG_prop * 100;
-      areas[PROTECTED] = conservationEfforts.roundedWDPA_prop * 100;
-      areas[NOT_UNDER_CONSERVATION] = conservationEfforts.roundedNotUnderCons * 100;
+      areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
+      areas[PROTECTED] = conservationEfforts.WDPA_prop * 100;
     }
 
-    return areas;
+    areas[NOT_UNDER_CONSERVATION] = (100 - (areas[COMMUNITY_BASED] + areas[PROTECTED]));
+
+    const roundedAreas = Object.values(areas).reduce((obj, key) => {
+      const newKey = getKeyByValue(areas, key);
+      obj[newKey] = key.toFixed(2);
+      return obj;
+    }, {});
+
+    return roundedAreas;
   }
 )
 
