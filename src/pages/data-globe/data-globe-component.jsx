@@ -57,7 +57,7 @@ const DataGlobeComponent = ({
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
-  
+
   return (
     <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
