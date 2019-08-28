@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { zoomToScale } from 'constants/view-props';
 import Component from './geo-description-widget-component';
 import mapStateToProps from './geo-description-widget-selectors';
 
@@ -9,7 +10,12 @@ import 'redux_modules/geo-description';
 const GeoDescriptionWidget = props => {
   const handleBackClick = () => {
     const { view } = props;
-    view.goTo({ zoom: 7 })
+    const { center } = view;
+    const target = {
+      center: [ center.longitude, center.latitude],
+      scale: zoomToScale[7]
+    }
+    view.goTo(target)
   };
 
   return <Component handleBackClick={handleBackClick} {...props}/>
