@@ -11,6 +11,14 @@ export const getTerrestrialCellData = createSelector(
   }
 )
 
+export const getTerrestrialCellData = createSelector(
+  [selectCellData],
+  cellData => {
+    if (!cellData) return null;
+    return cellData.filter(c => c.ISMARINE === 0);
+  }
+)
+
 export const getTerrestrialHumanPressures = createSelector(
   [selectCellData],
   cellData=> {

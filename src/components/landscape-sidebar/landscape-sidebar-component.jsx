@@ -4,6 +4,7 @@ import cx from 'classnames';
 import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
 import SpeciesWidget from './species-widget';
+import ConservationEffortsWidget from './conservation-efforts-widget';
 import MOLUploader from './mol-uploader';
 import uiStyles from 'styles/ui.module';
 import animationStyles from 'styles/common-animations.module.scss';
@@ -20,6 +21,7 @@ const LandscapeSidebarComponent = ({
   setRasters,
   handleGlobeUpdating,
   selectedSpecies
+  handleLayerToggle
 }) => {
 
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
@@ -38,6 +40,13 @@ const LandscapeSidebarComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
         />
         <SpeciesWidget selectedSpecies={selectedSpecies}/>
+        <ConservationEffortsWidget
+          map={map}
+          view={view}
+          activeLayers={activeLayers}
+          handleGlobeUpdating={handleGlobeUpdating}
+          handleLayerToggle={handleLayerToggle}
+        />
         <MOLUploader />
       </div>
     </div>
