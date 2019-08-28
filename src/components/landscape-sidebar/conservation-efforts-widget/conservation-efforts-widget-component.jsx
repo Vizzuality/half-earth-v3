@@ -6,10 +6,10 @@ import CheckboxGroup from 'components/checkbox-group';
 import styles from './conservation-efforts-widget-styles.module.scss';
 
 const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdating, addLayerAnalyticsEvent, removeLayerAnalyticsEvent,  handleLayerToggle, setConservationEfforts, terrestrialCellData, calculatedChartData, colors }) => {
-  const protectedLayers = WDPALayers.map(layer => ({
+  const protectedLayers = calculatedChartData && WDPALayers.map(layer => ({
     ...layer,
     name: layer.name === 'Protected areas' ? `${layer.name} ${calculatedChartData.protected}%` : `${layer.name} ${calculatedChartData.community}%`
-  }));
+  })) || [];
   
   const conservationPropsLayer = map.layers.items.find(l => l.title === 'ConsProp');
 
