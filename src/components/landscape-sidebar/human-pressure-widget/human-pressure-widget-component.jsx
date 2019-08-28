@@ -31,6 +31,7 @@ const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, 
   
   return (
     <div className={styles.container}>
+      <div class={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
       {options && 
         <>
           <h3 className={styles.title}>Land human pressures in this area</h3>
