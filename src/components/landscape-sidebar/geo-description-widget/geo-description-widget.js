@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { zoomToScale } from 'constants/view-props';
 import Component from './geo-description-widget-component';
 import mapStateToProps from './geo-description-widget-selectors';
 
@@ -11,13 +12,8 @@ const GeoDescriptionWidget = props => {
     const { view } = props;
     const { center } = view;
     const target = {
-      position: {
-        x: center.longitude,
-        y: center.latitude,
-        z: 1000000
-      },
-      heading: 0,
-      tilt: 0
+      center: [ center.longitude, center.latitude],
+      scale: zoomToScale[7]
     }
     view.goTo(target)
   };

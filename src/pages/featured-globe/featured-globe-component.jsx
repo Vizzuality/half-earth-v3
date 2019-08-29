@@ -96,6 +96,7 @@ const FeaturedGlobeComponent = ({
         <FeaturedPlaceViewManager
           selectedFeaturedPlace={selectedFeaturedPlace}
           featuredPlacesLayer={featuredPlacesLayer}
+          isLandscapeMode={isLandscapeMode}
         />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
