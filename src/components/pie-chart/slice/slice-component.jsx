@@ -1,5 +1,5 @@
 import React from 'react';
-import * as d3 from 'd3';
+import * as  d3 from 'd3-shape';
 
 const Slice = ({ value, fill, innerRadius = 0, outerRadius = 50, stroke, strokeWidth }) => {
   const arc = d3.arc()
