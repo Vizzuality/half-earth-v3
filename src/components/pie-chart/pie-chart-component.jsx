@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as d3 from 'd3';
+import { getKeyByValue } from 'utils/generic-functions';
 import Slice from './slice';
 
-import { 
-  COMMUNITY_BASED,
-  PROTECTED
-} from 'components/landscape-sidebar/conservation-efforts-widget/conservation-efforts-widget-selectors';
-
 const translate = (x, y) => `translate(${x}, ${y})`;
+const EXPLODING_SLICE_RADIUS = 60;
+const REGULAR_RADIUS = 50;
+const EXPLODING_SLICE_STROKE = 'white';
+const EXPLODING_SLICE_STROKE_WIDTH = '2';
 
-const PieChart = ({ x, y, chartData, alreadyChecked, colors }) => {
+const PieChart = ({ x, y, chartData, alreadyChecked, activeSlices, colors }) => {
   const pie = d3.pie();
 
+  // remove the zero values
   const filteredChartData = chartData && Object.keys(chartData)
     .filter((key) => chartData[key])
     .reduce((obj, key) => {
@@ -19,46 +20,20 @@ const PieChart = ({ x, y, chartData, alreadyChecked, colors }) => {
       return obj;
     }, {});
 
-  const orangeActive = alreadyChecked['Protected areas'];
-  const yellowActive = alreadyChecked['Community areas'];
-
-  const findInDOM = (id) => document.getElementById(id);
-  const getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value);
-  
-  // mimic z-index in svg
-  useEffect(() => {
-    const svg = findInDOM('conservation-widget');
-    const orangeSlice = findInDOM(colors[PROTECTED]);
-    const yellowSlice = findInDOM(colors[COMMUNITY_BASED]);
-
-    if (svg && orangeSlice) {
-      if (orangeActive && yellowActive && orangeSlice && yellowSlice) {
-        // bring both to front
-        svg.appendChild(yellowSlice);
-        svg.appendChild(orangeSlice);
-      } else if (yellowActive && yellowSlice && !orangeActive) {
-        svg.appendChild(yellowSlice);
-      } else if (!yellowActive && orangeSlice && orangeActive) {
-        svg.appendChild(orangeSlice);
-      } else {
-        svg.appendChild(orangeSlice);
-      }
-    }
-  }, [orangeActive, yellowActive])
-
   return (
     <g id="conservation-widget" transform={translate(x, y)}>
       {filteredChartData && pie(Object.values(filteredChartData)).map((value, i) => {
         const area = getKeyByValue(filteredChartData, value.data);
-        const active = (area === PROTECTED && orangeActive) ||
-          (area === COMMUNITY_BASED && yellowActive);
-        const correctRadius = active ? 60 : 50;
-        const stroke = active ? 'white' : '';
-        const strokeWidth = active ? '2' : '';
+        const active = activeSlices[area];
+
+        const radius = active ? EXPLODING_SLICE_RADIUS : REGULAR_RADIUS;
+        const stroke = active ? EXPLODING_SLICE_STROKE : '';
+        const strokeWidth = active ? EXPLODING_SLICE_STROKE_WIDTH : '';
 
         return (
-          <Slice key={i}
-            outerRadius={correctRadius}
+          <Slice 
+            key={i}
+            outerRadius={radius}
             stroke={stroke}
             strokeWidth={strokeWidth}
             value={value}
@@ -69,11 +44,18 @@ const PieChart = ({ x, y, chartData, alreadyChecked, colors }) => {
   )
 }
 
-const Pie = ({ data, alreadyChecked, colors }) => {
+const Pie = ({ data, alreadyChecked, activeSlices, colors }) => {
   return (
     <>
       <svg width="120%" height="120%">
-        <PieChart x={120} y={80} chartData={data} alreadyChecked={alreadyChecked} colors={colors} />
+        <PieChart 
+          x={120}
+          y={80}
+          chartData={data}
+          alreadyChecked={alreadyChecked}
+          activeSlices={activeSlices}
+          colors={colors} 
+        />
       </svg>
     </>
   );

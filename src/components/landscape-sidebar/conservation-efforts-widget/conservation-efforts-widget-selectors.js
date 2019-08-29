@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
+import { getKeyByValue } from 'utils/generic-functions';
 
 import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
 
@@ -42,37 +43,44 @@ const getConservationEfforts = createSelector(
   }
 )
 
-const getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value);
-
-const getLogic = createSelector(
+const getConservationAreasLogic = createSelector(
   [getConservationEfforts],
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
 
     const areas = {};
     if (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop > conservationEfforts.all_prop) {
-      areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
       areas[PROTECTED] = (conservationEfforts.all_prop - conservationEfforts.RAISG_prop) * 100;
     } else {
-      areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
       areas[PROTECTED] = conservationEfforts.WDPA_prop * 100;
     }
 
+    areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
     areas[NOT_UNDER_CONSERVATION] = (100 - (areas[COMMUNITY_BASED] + areas[PROTECTED]));
 
-    const roundedAreas = Object.values(areas).reduce((obj, key) => {
-      const newKey = getKeyByValue(areas, key);
+    return areas;
+  }
+)
+
+const getConservationAreasFormatted = createSelector(
+  [getConservationAreasLogic],
+  (conservationAreasLogic) => {
+    if (!conservationAreasLogic) return null;
+
+    const formattedAreas = Object.values(conservationAreasLogic).reduce((obj, key) => {
+      const newKey = getKeyByValue(conservationAreasLogic, key);
       obj[newKey] = key.toFixed(2);
       return obj;
     }, {});
 
-    return roundedAreas;
+    return formattedAreas;
   }
 )
 
 export default createStructuredSelector({
   terrestrialCellData: getTerrestrialCellData,
   pieChartData: getConservationEfforts,
-  calculatedChartData: getLogic,
+  dataFormatted: getConservationAreasFormatted,
+  rawData: getConservationAreasLogic, 
   colors: COLORS
 });

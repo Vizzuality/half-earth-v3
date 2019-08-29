@@ -3,12 +3,29 @@ import PieChart from 'components/pie-chart';
 import { handleLayerRendered } from 'utils/layer-manager-utils';
 import { WDPALayers } from 'constants/protected-areas';
 import CheckboxGroup from 'components/checkbox-group';
+import { 
+  COMMUNITY_BASED,
+  PROTECTED,
+  NOT_UNDER_CONSERVATION
+} from 'components/landscape-sidebar/conservation-efforts-widget/conservation-efforts-widget-selectors';
 import styles from './conservation-efforts-widget-styles.module.scss';
 
-const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdating, addLayerAnalyticsEvent, removeLayerAnalyticsEvent,  handleLayerToggle, setConservationEfforts, terrestrialCellData, calculatedChartData, colors }) => {
-  const protectedLayers = calculatedChartData && WDPALayers.map(layer => ({
+const findInDOM = (id) => document.getElementById(id);
+
+const ConservationEffortsDescription = ({ rawData }) => {
+  return (
+    <p className={styles.description}>
+      Of the current landscape, <span className={styles.boldFont}>{rawData[PROTECTED].toFixed(2)}% is under protection.</span>
+      {rawData[COMMUNITY_BASED] > rawData[PROTECTED] ? 'The majority of the protected areas are community managed.' : ''}
+    </p>
+  )
+};
+
+const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdating, addLayerAnalyticsEvent, removeLayerAnalyticsEvent,  handleLayerToggle, setConservationEfforts, terrestrialCellData, dataFormatted, colors, rawData }) => {
+  const protectedLayers = dataFormatted && WDPALayers.map(layer => ({
     ...layer,
-    name: layer.name === 'Protected areas' ? `${layer.name} ${calculatedChartData.protected}%` : `${layer.name} ${calculatedChartData.community}%`
+    name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
+    rightDot: layer.name === 'Protected areas' ? colors[PROTECTED] : colors[COMMUNITY_BASED]
   })) || [];
   
   const conservationPropsLayer = map.layers.items.find(l => l.title === 'ConsProp');
@@ -18,6 +35,39 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
   const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 
     ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title) 
   }), {});
+
+  const orangeActive = alreadyChecked['Protected areas'];
+  const yellowActive = alreadyChecked['Community areas'];
+
+  useEffect(() => {
+    const svg = findInDOM('conservation-widget');
+    const orangeSlice = findInDOM(colors[PROTECTED]);
+    const yellowSlice = findInDOM(colors[COMMUNITY_BASED]);
+
+    if (svg && orangeSlice) {
+      if (orangeActive && yellowActive && orangeSlice && yellowSlice) {
+        // bring both to front
+        svg.appendChild(yellowSlice);
+        svg.appendChild(orangeSlice);
+      } else if (yellowActive && yellowSlice && !orangeActive) {
+        svg.appendChild(yellowSlice);
+      } else if (!yellowActive && orangeSlice && orangeActive) {
+        svg.appendChild(orangeSlice);
+      } else {
+        svg.appendChild(orangeSlice);
+      }
+    }
+  }, [orangeActive, yellowActive])
+
+  useEffect(() => {
+    if (terrestrialCellData) {
+      queryParams.where = `CELL_ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
+      conservationPropsLayer.queryFeatures(queryParams).then(function(results){
+        const { features } = results;
+        setConservationEfforts(features.map(c => c.attributes));
+      });
+    }
+  }, [terrestrialCellData])
 
   const toggleLayer = (layersPassed, option) => {
     const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
@@ -40,23 +90,25 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
     else removeLayerAnalyticsEvent({ slug: option.slug });
   }
 
-  useEffect(() => {
-    if (terrestrialCellData) {
-      queryParams.where = `CELL_ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
-      conservationPropsLayer.queryFeatures(queryParams).then(function(results){
-        const { features } = results;
-        setConservationEfforts(features.map(c => c.attributes));
-      });
-    }
-  }, [terrestrialCellData])
+  const activeSlices = rawData && Object.keys(rawData)
+    .reduce((obj, key) => {
+      if (key === NOT_UNDER_CONSERVATION) {
+        obj[key] = false;
+      } else {
+        obj[key] = key === PROTECTED ? orangeActive : yellowActive;
+      }
+      return obj;
+    }, {});
 
   return (
     <div className={styles.container}>
       <div className={styles.fixBlur} />
       <div className={styles.padding}>
         <h3 className={styles.title}>Conservation Efforts</h3>
+        {rawData && <ConservationEffortsDescription rawData={rawData} />}
         <PieChart
-          data={calculatedChartData}
+          data={rawData}
+          activeSlices={activeSlices}
           colors={colors}
           alreadyChecked={alreadyChecked}
         />
@@ -67,9 +119,9 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
         options={protectedLayers}
         theme={styles} 
       />
-      {calculatedChartData && (
+      {rawData && (
         <p className={styles.notUnderConservationLabel}>
-          Not under conservation {calculatedChartData.notUnderConservation}%
+          Not under conservation {dataFormatted.notUnderConservation}%
         </p>
       )}
     </div>
