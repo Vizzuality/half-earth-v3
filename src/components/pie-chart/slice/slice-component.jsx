@@ -7,7 +7,7 @@ const Slice = ({ value, fill, innerRadius = 0, outerRadius = 50, stroke, strokeW
     .outerRadius(outerRadius);
 
   return (
-    <path id={fill} d={arc(value)} fill={fill} stroke={stroke} stroke-width={strokeWidth} />
+    <path id={fill} d={arc(value)} fill={fill} stroke={stroke} strokeWidth={strokeWidth} />
   );
 }
 
