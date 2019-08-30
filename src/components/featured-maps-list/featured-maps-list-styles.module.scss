@@ -1,0 +1,78 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+$section-padding: 0 24px;
+$scrollbar-gutter: 15px;
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width + $scrollbar-gutter;
+  border-radius: 2px;
+  transition: all 0.2s ease-out;
+}
+
+.scrollable {
+  height: 600px;
+  @extend %verticalScrollbarStyled;
+}
+
+.card {
+  @include backdropBlur();
+  background-color: $brand-color-secondary;
+  margin-bottom: 5px;
+  margin-right: $scrollbar-gutter;
+  cursor: pointer;
+}
+
+.border {
+  border: 1px solid $white;
+}
+
+.titleSection {
+  padding: $section-padding;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 170px;
+}
+
+.descriptionSection {
+  padding: $section-padding;
+}
+
+.title {
+  @extend %headline;
+  color: $white;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 20px;
+}
+
+.description {
+  @extend %bodyText;
+  color: white;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xxs;
+  font-weight: $font-weight-bold;
+  font-family: $font-family-1;
+  letter-spacing: 2px;
+  color: $robins-egg-blue;
+  padding: 0;
+  margin-left: -8px; // svg icon has some padding
+  margin-bottom: 20px;
+}
+
+.icon {
+  transform: rotate(180deg);
+  height: 25px;
+}
+
+.backButton {
+  @extend %subtitle;
+  margin-top: 4px;
+}

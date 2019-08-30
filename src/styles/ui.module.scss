@@ -67,6 +67,20 @@ $share-button-margin: 12px;
   }
 }
 
+%verticalScrollbarStyled {
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: rgba($wild-sand, 0.2);
+  } 
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $alto;
+  }
+}
+
 %icon {
   height: $icon-size;
   width: $icon-size;
