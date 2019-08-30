@@ -68,9 +68,9 @@ const FeaturedGlobeComponent = ({
 
   const spinGlobe = (view) => {
     loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
+      const camera = view.camera.clone();
       const spinningGlobe = scheduling.addFrameTask({
         update: function() {
-          const camera = view.camera.clone();
           camera.position.longitude -= 0.2;
           view.camera = camera;
         }
