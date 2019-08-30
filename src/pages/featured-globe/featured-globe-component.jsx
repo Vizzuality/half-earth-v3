@@ -11,12 +11,9 @@ import GlobeEventsManager from 'components/globe-events-manager';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 
-<<<<<<< HEAD
-// WIDGETS
-=======
 import { loadModules } from '@esri/react-arcgis';
 
->>>>>>> Hide elements on All maps screen, disable interacting with globe, rotate globe on All maps screen
+// WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
@@ -90,7 +87,7 @@ const FeaturedGlobeComponent = ({
           {isGlobeUpdating && <Spinner floating />}
           <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions} />
           <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-          <LocationWidget />
+          <LocationWidget isNotMapsList={!isMapsList} />
           {!isMapsList && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
           <ZoomWidget isNotMapsList={!isMapsList} />
           {!isMapsList && <MinimapWidget />}
