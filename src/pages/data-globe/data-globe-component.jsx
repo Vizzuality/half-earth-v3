@@ -64,9 +64,9 @@ const DataGlobeComponent = ({
         {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-        <LocationWidget />
+        <LocationWidget isNotMapsList={true} />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
-        <ZoomWidget />
+        <ZoomWidget isNotMapsList={true} />
         {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
         <SearchWidget />

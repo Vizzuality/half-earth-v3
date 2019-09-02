@@ -21,12 +21,12 @@ const LocationWidget = props => {
   useEffect(() => {
     const node = document.createElement("div");
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {
-      const arcgisLocationWidget = new LocateView({
+      const locationWidget = new LocateView({
         view: view,
         graphic: ''
       });
-      arcgisLocationWidget.on("locate", () => clickFindMyPositionAnalyticsEvent());
-      setLocationWidget(arcgisLocationWidget);
+      locationWidget.on("locate", () => clickFindMyPositionAnalyticsEvent());
+      setLocationWidget(locationWidget);
       if (isNotMapsList) {
         view.ui.add(node, "top-right");
         ReactDOM.render(<LocationWidgetComponent locationWidget={locationWidget} />, node);
