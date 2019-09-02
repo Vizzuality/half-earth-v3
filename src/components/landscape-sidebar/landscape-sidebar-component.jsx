@@ -4,8 +4,8 @@ import {useSpring, animated} from 'react-spring'
 
 import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
+import SpeciesWidgetComponent from './species-widget';
 import MOLUploader from './mol-uploader';
-
 import uiStyles from 'styles/ui.module';
 import styles from './landscape-sidebar-styles.module.scss';
 
@@ -43,6 +43,7 @@ const LandscapeSidebarComponent = ({
           setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
+        <SpeciesWidgetComponent map={map}/>
         <MOLUploader />
       </div>
     </animated.aside>
