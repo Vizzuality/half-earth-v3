@@ -8,7 +8,7 @@ import { loadModules } from '@esri/react-arcgis';
 
 const actions = { ...setSpeciesActions };
 
-const SpeciesWidget = ({ setSpecies, terrestrialCellData }) => {
+const SpeciesWidget = ({ setSpecies, terrestrialCellData, data }) => {
   const [speciesLayer, setLayer] = useState(null)
 
   const querySpeciesData = () => {
@@ -41,7 +41,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData }) => {
     }
   }, [speciesLayer, terrestrialCellData])
 
-  return <SpeciesWidgetComponent/> 
+  return <SpeciesWidgetComponent data={data}/> 
 }
 
 export default connect(mapStateToProps, actions)(SpeciesWidget); 

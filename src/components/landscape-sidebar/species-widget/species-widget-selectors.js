@@ -23,7 +23,6 @@ const calculateChartPosition = (minAngle, maxAngle, propRange) => {
 
 const getReptilesChartData = createSelector(getSpeciesData, speciesData => {
   if (!speciesData) return [];
-  console.log(speciesData)
   
   const data = speciesData.filter(s => s.taxa === 'reptiles').map((s) => {
     return {
