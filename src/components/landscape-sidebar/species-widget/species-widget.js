@@ -14,6 +14,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData }) => {
   const querySpeciesData = () => {
     const query = speciesLayer.createQuery();
     query.where = `HBWID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
+    query.outFields = [ "HBWID", "scntfcn", "taxa", "RANGE_A", "PROP_RA", "url_sp"];
     speciesLayer.queryFeatures(query).then(function(results){
       const { features } = results;
       setSpecies(features.map(c => c.attributes));
