@@ -50,13 +50,13 @@ const getConservationAreasLogic = createSelector(
 
     const areas = {};
     if (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop > conservationEfforts.all_prop) {
-      areas[PROTECTED] = (conservationEfforts.all_prop - conservationEfforts.RAISG_prop) * 100;
+      areas[COMMUNITY_BASED] = (conservationEfforts.all_prop - conservationEfforts.WDPA_prop) * 100;
     } else {
-      areas[PROTECTED] = conservationEfforts.WDPA_prop * 100;
+      areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
     }
 
-    areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
-    areas[NOT_UNDER_CONSERVATION] = (100 - (areas[COMMUNITY_BASED] + areas[PROTECTED]));
+    areas[NOT_UNDER_CONSERVATION] = (1 - (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop)) * 100;
+    areas[PROTECTED] = conservationEfforts.WDPA_prop * 100;
 
     return areas;
   }
@@ -68,8 +68,14 @@ const getConservationAreasFormatted = createSelector(
     if (!conservationAreasLogic) return null;
 
     const formattedAreas = Object.values(conservationAreasLogic).reduce((obj, key) => {
-      const newKey = getKeyByValue(conservationAreasLogic, key);
-      obj[newKey] = key.toFixed(2);
+      const foundKeys = getKeyByValue(conservationAreasLogic, key);
+      if(Array.isArray(foundKeys) && foundKeys.length > 1) {
+        foundKeys.forEach(foundKey => {
+          obj[foundKey] = key.toFixed(2);
+        })
+      } else {
+        obj[foundKeys] = key.toFixed(2);
+      }
       return obj;
     }, {});
 
