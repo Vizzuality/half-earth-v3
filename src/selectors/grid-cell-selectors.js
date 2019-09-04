@@ -3,12 +3,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 export const selectCellData = ({ gridCellData }) => (gridCellData && gridCellData.data) || null;
 
-export const getCellSpecies = createSelector(selectCellData, cellData => {
-  if (!cellData) return null;
-  const species = cellData.map(cell => JSON.parse(cell.FOCAL_SPP));
-  return species;
-})
-
 export const getTerrestrialCellData = createSelector(
   [selectCellData],
   cellData => {
@@ -49,6 +43,5 @@ export const getTerrestrialHumanPressures = createSelector(
 )
 
 export default createStructuredSelector({
-  cellSpecies: getCellSpecies,
   humanPressures: getTerrestrialHumanPressures
 })
