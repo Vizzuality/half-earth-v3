@@ -1,0 +1,11 @@
+.transform {
+  transition: all 0.8s ease;
+}
+
+.hidden {
+  margin-left: -400px;
+}
+
+.visible {
+  margin-left: 0;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { useSpring, animated } from 'react-spring';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
+import animationStyles from 'styles/common-animations.module.scss';
 import styles from './featured-maps-list-styles.module';
 
 const FeaturedMapsListComponent = ({ 
@@ -16,11 +16,8 @@ const FeaturedMapsListComponent = ({
   view
 }) => {
   const isOpen = selectedSidebar === 'featuredMapsList';
-  const slide = useSpring({
-    from: { marginLeft: -400 },
-    marginLeft: isOpen && !isLandscapeMode && !isFullscreenActive ? 0 : -400,
-    delay: isOpen && !isLandscapeMode && !isFullscreenActive ? 400 : 0
-  })
+
+  const isMapsListVisible = isOpen && !isLandscapeMode && !isFullscreenActive;
 
   const [cardOpen, setCardOpen] = useState(null);
 
@@ -36,7 +33,7 @@ const FeaturedMapsListComponent = ({
   };
 
   return (
-    <animated.div className={cx(className, styles.cardsContainer)} style={slide}>
+    <div className={cx(className, styles.cardsContainer, animationStyles.transform, { [animationStyles.visible]: isMapsListVisible, [animationStyles.hidden]: !isMapsListVisible })}>
       {featuredMapsList && <button
         className={styles.button}
         onClick={() => handleClick(featuredMapsList[0])}
@@ -62,7 +59,7 @@ const FeaturedMapsListComponent = ({
           </div>
         ))}
       </div>
-    </animated.div>
+    </div>
   )
 }
 

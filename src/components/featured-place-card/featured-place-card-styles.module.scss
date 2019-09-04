@@ -161,3 +161,17 @@ $card-content-max-height: 220px;
     color: $dark-text;
   }
 }
+
+.transform {
+  transition: all 0.8s ease;
+}
+
+.cardHidden {
+  bottom: -400px;
+  opacity: 0;
+}
+
+.cardVisible {
+  bottom: 0;
+  opacity: 1;
+}

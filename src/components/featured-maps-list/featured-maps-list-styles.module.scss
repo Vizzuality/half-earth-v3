@@ -10,7 +10,6 @@ $scrollbar-gutter: 15px;
   flex-direction: column;
   width: $sidebar-width + $scrollbar-gutter;
   border-radius: 2px;
-  transition: all 0.2s ease-out;
 }
 
 .scrollable {

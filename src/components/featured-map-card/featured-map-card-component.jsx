@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
 import cx from 'classnames';
 import ShareModalButton from 'components/share-modal';
 import styles from './featured-map-card-styles.module.scss'
+import animationStyles from 'styles/common-animations.module.scss';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 
 const FeaturesMapCardComponent = ({ 
@@ -19,13 +19,6 @@ const FeaturesMapCardComponent = ({
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
   const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
-  const animationConfig = { mass: 5, tension: 2000, friction: 200 }
-  const slide = useSpring({
-    config: animationConfig,
-    from: { marginLeft: -400 },
-    marginLeft: isOnScreen ? 0 : -400,
-    delay: isOnScreen ? 400 : 0
-  })
 
   const handleClick = () => {
     handleAllMapsClick();
@@ -37,8 +30,10 @@ const FeaturesMapCardComponent = ({
     if(!handle && !isOpen) { spinGlobe(view) }
   }, []);
 
+  const isFeatureMapCardVisible = isOnScreen;
+
   return (
-    <animated.div className={cx(className, styles.cardContainer)} style={slide}>
+    <div className={cx(className, styles.cardContainer, animationStyles.transform, { [animationStyles.visible]: isFeatureMapCardVisible, [animationStyles.hidden]: !isFeatureMapCardVisible })}>
       <section
         className={styles.titleSection}
         style={ {backgroundImage: `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(${featuredMap.image})`}}
@@ -56,7 +51,7 @@ const FeaturesMapCardComponent = ({
           <ChevronIcon className={styles.arrowIcon}/>
         </button>
       </section>
-    </animated.div>
+    </div>
   )
 }
 
