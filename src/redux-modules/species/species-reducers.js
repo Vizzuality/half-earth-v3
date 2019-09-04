@@ -1,26 +1,12 @@
 import * as actions from './species-actions';
-import iucnList from 'constants/iucn-list';
+import { isEqual } from 'lodash';
 
-export const initialState = { loading: false, error: false, data: null };
+export const initialState = { data: null };
 
-function fetchSpeciesLoading(state) {
-  return { ...state, loading: true };
-}
-
-function fetchSpeciesReady(state, { payload }) {
-  const speciesData = payload
-  .filter(speciesObject => speciesObject.data.length )
-  .map(speciesObject => ({ ...speciesObject.data[0], iucn: iucnList[speciesObject.data[0].redlist] }));
-
-  return { ...state, data: speciesData };
-}
-
-function fetchSpeciesError(state, { payload }) {
-  return { ...state, loading: false, error: payload };
+function setSpecies(state, { payload }) {
+  return isEqual(state.data, payload) ? state : { ...state, data: payload };
 }
 
 export default {
-  [actions.SPECIES_FETCH_DATA_LOADING]: fetchSpeciesLoading,
-  [actions.SPECIES_FETCH_DATA_READY]: fetchSpeciesReady,
-  [actions.SPECIES_FETCH_DATA_ERROR]: fetchSpeciesError
+  [actions.setSpecies]: setSpecies
 };
