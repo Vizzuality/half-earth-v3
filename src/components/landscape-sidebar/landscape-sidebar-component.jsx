@@ -43,7 +43,7 @@ const LandscapeSidebarComponent = ({
           setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
-        <SpeciesWidget map={map}/>
+        <SpeciesWidget />
         <MOLUploader />
       </div>
     </animated.aside>

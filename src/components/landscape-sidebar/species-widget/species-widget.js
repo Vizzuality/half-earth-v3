@@ -31,14 +31,11 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData }) => {
   };
 
   useEffect(() => {
-    console.log('FETCHING')
     fetchSpeciesLayer()
   }, []);
  
   useEffect(() => {
     if (speciesLayer && terrestrialCellData) {
-      console.log('QUERING')
-
       querySpeciesData();
     }
   }, [speciesLayer, terrestrialCellData])
