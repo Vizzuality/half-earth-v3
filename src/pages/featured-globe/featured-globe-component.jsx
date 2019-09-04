@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Helmet } from "react-helmet";
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
-import { DATA_GLOBE_URLS } from 'constants/preload-urls';
 import Globe from 'components/globe';
 
 // Managers
@@ -78,9 +76,6 @@ const FeaturedGlobeComponent = ({
 
   return (
     <>
-      <Helmet>
-        { DATA_GLOBE_URLS.map(url => <link key="url" rel="preload" crossorigin href={url} as="script" />)}
-      </Helmet>
       <div style={{ pointerEvents: isMapsList ? 'none' : '' }}>
         <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
           <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
