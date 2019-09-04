@@ -6,6 +6,8 @@ import { handleLayerRendered } from 'utils/layer-manager-utils';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 import mapStateToProps from './human-pressure-selectors';
+import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { humanPressuresLandUse } from 'constants/human-pressures';
 
 const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
 
@@ -18,55 +20,56 @@ const HumanPressureWidgetContainer = props => {
     view,
     addLayerAnalyticsEvent,
     removeLayerAnalyticsEvent,
-    handleGlobeUpdating
+    handleGlobeUpdating,
+    activeLayers
   } = props;
 
   const { layers } = map;
   const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
 
   useEffect(() => {
-    if(!humanImpactLayer.visible) setRasters([]);
-  }, [humanImpactLayer.visible])
+    if(!humanImpactLayer.visible) setRasters({});
+  }, [humanImpactLayer.visible]);
 
-  const activeRect = Object.keys(rasters).filter(r => rasters[r]);
+  const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  // eslint-disable-next-line no-mixed-operators
+  const checkedRasters = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
+    ...acc, [option.value]: rasters[option.value]
+  }), {})) || {};
 
-  const handleTreemapClick = option => {
-    let newRasters;
-    const { layers } = map;
-    const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-
-    if (!rasters[option.data.rasterId]) {
-      newRasters = {...rasters, [option.data.rasterId]: true}
-      setRasters(newRasters);
-      addLayerAnalyticsEvent({ slug: option.data.slug })
-    } else {
-      newRasters = Object.assign({}, rasters);
-      delete newRasters[option.data.rasterId];
-      setRasters(newRasters);
-      removeLayerAnalyticsEvent({ slug: option.data.slug })
-    }
-
-    const hasRastersWithData = Object.values(newRasters).some(raster => raster);
-    if (hasRastersWithData) {
-      handleGlobeUpdating(true);
-    }
-
-    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
-    setLayerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData);
-
-    const rasterNames = Object.keys(newRasters).map(key => `human_impact_${key}`)
-    const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
-
-    loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
-      humanImpactLayer.mosaicRule = new MosaicRule({
-        method: 'attribute',
-        operation: 'sum',
-        where: mosaicWhereClause
+  const handleHumanPressureRasters = (rasters, option) => {
+      const { layers } = map;
+      const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+      
+      const hasRastersWithData = Object.values(rasters).some(raster => raster);
+      if (hasRastersWithData) {
+        handleGlobeUpdating(true);
+      }
+      setRasters(rasters);
+      handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
+  
+      setLayerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData);
+  
+      const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
+      const rasterNames = activeRasters.map(value => `human_impact_${value}`)
+  
+      const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
+  
+      const analyticsParams = { slug: option.slug, query: { viewMode: VIEW_MODE.LANDSCAPE }};
+      const isRasterActive = activeRasters.some(value => value === option.value);
+      if (isRasterActive) addLayerAnalyticsEvent(analyticsParams) 
+      else removeLayerAnalyticsEvent(analyticsParams);
+  
+      loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
+        humanImpactLayer.mosaicRule = new MosaicRule({
+          method: 'attribute',
+          operation: 'sum',
+          where: mosaicWhereClause
+        });
       });
-    });
-  }
+    }
 
-  return <HumanPressureWidgetComponent {...props} activeRect={activeRect} handleOnClick={handleTreemapClick}/>
+  return <HumanPressureWidgetComponent {...props} handleOnClick={handleHumanPressureRasters} checkedRasters={checkedRasters}/>
 }
 
 export default connect(mapStateToProps, actions)(HumanPressureWidgetContainer);

@@ -13,12 +13,13 @@ import { clickFindMyPositionAnalyticsEvent } from 'actions/google-analytics-acti
 const actions = { ...urlActions, clickFindMyPositionAnalyticsEvent };
 
 const LocationWidget = props => {
-  const { view, changeGlobe, clickFindMyPositionAnalyticsEvent } = props;
+  const { view, changeGlobe, clickFindMyPositionAnalyticsEvent, isNotMapsList } = props;
   const [locationWidget, setLocationWidget] = useState(null);
   const watchUtils = useWatchUtils();
   const handleLocationChange = (center) => changeGlobe({ center });
 
   useEffect(() => {
+    const node = document.createElement("div");
     loadModules(["esri/widgets/Locate/LocateViewModel"]).then(([LocateView]) => {
       const locationWidget = new LocateView({
         view: view,
@@ -26,15 +27,17 @@ const LocationWidget = props => {
       });
       locationWidget.on("locate", () => clickFindMyPositionAnalyticsEvent());
       setLocationWidget(locationWidget);
-      const node = document.createElement("div");
-      view.ui.add(node, "top-right");
-      ReactDOM.render(<LocationWidgetComponent locationWidget={locationWidget} />, node);
+      if (isNotMapsList) {
+        view.ui.add(node, "top-right");
+        ReactDOM.render(<LocationWidgetComponent locationWidget={locationWidget} />, node);
+      }
 
     }).catch((err) => console.error(err));
     return function cleanup() {
       view.ui.remove(locationWidget);
+      ReactDOM.render(null, node);
     };
-  }, [view])
+  }, [view, isNotMapsList])
 
   // Update location in URL
   useEffect(() => {

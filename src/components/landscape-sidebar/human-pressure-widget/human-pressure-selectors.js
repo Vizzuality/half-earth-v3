@@ -4,33 +4,74 @@ import { format } from 'd3-format';
 import { humanPressuresLandscapeWidget } from 'constants/human-pressures';
 import { getTerrestrialHumanPressures } from 'selectors/grid-cell-selectors';
 
-const getPressuresHierarchy = createSelector(getTerrestrialHumanPressures, humanPressures => {
+const getRastersFromProps = (state, props) =>
+  props.rasters
+
+const getPressureData = createSelector(getTerrestrialHumanPressures, humanPressures => {
   if (!humanPressures) return null;
-  return {
-    name: 'Human Pressures',
-    children: humanPressuresLandscapeWidget.map(pressure => (
+  const data = humanPressuresLandscapeWidget
+    .filter(p => p.slug !== 'human-pressures-free')
+    .map(pressure => (
       {
         name: pressure.name,
         slug: pressure.slug,
-        value: humanPressures[pressure.value],
-        rasterId: pressure.value
+        value: pressure.value,
+        pressureValue: humanPressures[pressure.value],
       }
-    ))
-  }
+    )
+  );
+  return data;
 })
 
-const getPressureStatement = createSelector(getPressuresHierarchy, humanPressures => {
+const getTotalPressureValue = createSelector(getPressureData, humanPressures => {
   if (!humanPressures) return null;
-  const pressures = humanPressures.children.filter(p => p.name !== 'Pressure free' );
-  const pressuresValues = pressures.map(p => p.value)
-  const biggestPressure = orderBy(pressures, 'value', 'desc')[0].name;
+  const pressuresValues = humanPressures.map(p => p.pressureValue)
   const totalPressure = pressuresValues.reduce((acc, current) => acc + current);
-  if (totalPressure === 0) return 'There is no land human pressure on the selected area';
-  return `Of the current landscape, ${format(".2%")(totalPressure / 100)} is under human pressure, the majority of which is pressure from ${biggestPressure}.`
+  return totalPressure
+})
+
+const getPressureFreeValue = createSelector(getTerrestrialHumanPressures, humanPressures => {
+  if (!humanPressures) return null;
+  const pressureFree = humanPressuresLandscapeWidget.find(p => p.slug === 'human-pressures-free');
+  return format(".2%")(humanPressures[pressureFree.value] / 100);
+})
+
+const getBiggestPressureName = createSelector(
+  [getPressureData],
+  (humanPressures) => {
+    if (!humanPressures) return null;
+    return orderBy(humanPressures, 'pressureValue', 'desc')[0].name.toLowerCase();
+  }
+)
+
+const getSelectedPressuresValue = createSelector(
+  [getPressureData, getRastersFromProps],
+  (humanPressures, rasters) => {
+    if (!humanPressures || !rasters) return null;
+    const selectedPressures = humanPressures.filter(({ value }) => rasters[value]).reduce((acc, next) => acc + next.pressureValue, 0);
+    return selectedPressures;
+  }
+)
+
+const getPressureOptions = createSelector(getPressureData, humanPressureData => {
+  if (!humanPressureData) return null;
+  const data = humanPressureData
+    .map(({ name, slug, value, pressureValue }) => (
+      {
+        name: `${name} ${format(".2%")(pressureValue / 100)}`,
+        slug,
+        value
+      }
+    )
+  );
+  return data;
 })
 
 export default createStructuredSelector({
   humanPressures: getTerrestrialHumanPressures,
-  data: getPressuresHierarchy,
-  pressureStatement: getPressureStatement
+  options: getPressureOptions,
+  selectedPressures: getSelectedPressuresValue,
+  totalPressure: getTotalPressureValue,
+  biggestPressureName: getBiggestPressureName,
+  pressureFree: getPressureFreeValue
 });
