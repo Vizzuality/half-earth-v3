@@ -35,6 +35,11 @@ const SpeciesWidgetComponent = ({ data }) => {
             <div className={styles.mammalsChart}></div>
             <div className={styles.amphibiansChart}></div>
           </div>
+          <div>
+            <div>Global range area: </div>
+            <div>Global range protected:</div>
+            <div>IUCN:</div>
+          </div>
         </div>
       }
     </>
