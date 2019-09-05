@@ -1,6 +1,9 @@
 
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
+import speciesPlaceholder from 'images/speciesPlaceholder.svg';
+
 import styles from './species-widget-styles.module.scss';
 
 const SpeciesWidgetComponent = ({ data }) => {
@@ -35,6 +38,12 @@ const SpeciesWidgetComponent = ({ data }) => {
             <div className={styles.mammalsChart}></div>
             <div className={styles.amphibiansChart}></div>
           </div>
+          <div className={styles.speciesCarrousel}>
+            <button className={styles.carrouselButton}><ArrowIcon /></button>
+            <img className={styles.speciesImage} src={speciesPlaceholder}/>
+            <button className={styles.carrouselButton}><ArrowIcon /></button>
+          </div>
+
           <div className={styles.selectedSpecies}>
             <div className={styles.speciesDot}></div>
             <div>

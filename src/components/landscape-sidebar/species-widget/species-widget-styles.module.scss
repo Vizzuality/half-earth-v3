@@ -161,11 +161,11 @@
 }
 
 .speciesName {
- @extend %annotation;
+  @extend %annotation;
 
- color: $white;
- margin-bottom: 2px;
- text-transform: uppercase;
+  color: $white;
+  margin-bottom: 2px;
+  text-transform: uppercase;
 }
 
 .speciesFamily {
@@ -173,4 +173,25 @@
 
   color: $white;
   font-style: italic;
+}
+
+.speciesCarrousel {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.carrouselButton {
+  &:first-child svg{
+    transform: rotate(180deg);
+  }
+}
+
+.speciesImage {
+  border: 1px solid #BFF78D;
+  border-radius: 50%;
+  height: 110px;
+  margin: 0 25px;
+  width: 110px;
 }
