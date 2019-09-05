@@ -2,10 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
 import { uniqBy } from "lodash";
 
-const getRndInteger = (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
 const toRadians = (angle) => {
   return angle * (Math.PI / 180);
 }
@@ -22,10 +18,13 @@ const calculateChartPosition = (angle, propRange) => {
   // const alphaAngle = getRndInteger(minAngle, maxAngle);
   const betaAngle = 180 - 90 - angle;
   const c = 100 - propRange * 100; //revert the axis on the chart
-  const x = c * Math.sin(toRadians(betaAngle));
-  const y = c * Math.cos(toRadians(betaAngle));
+  const x = Math.round(c * Math.sin(toRadians(betaAngle)));
+  const y = Math.round(c * Math.cos(toRadians(betaAngle)));
+  
+  const correctionX = x > 0 ? x - 3 : x + 3;
+  const correctionY = y > 0 ? y - 3 : y + 3;
 
-  return { x, y };
+  return { x: correctionX, y: correctionY };
 }
 
 const getChartData = (speciesData, taxa, startAngle)  => {
@@ -47,28 +46,8 @@ const getChartData = (speciesData, taxa, startAngle)  => {
   return data;
 };
 
-// const getReptilesChartData = createSelector(getUniqeSpeciesData, speciesData => {
-//   if (!speciesData) return [];
-//   return getChartData(speciesData, 'reptiles', 90)
-// })
-
-// const getBirdsChartData = createSelector(getUniqeSpeciesData, speciesData => {
-//   if (!speciesData) return [];
-//   return getChartData(speciesData, 'birds', 0)
-// })
-
-// const getMammalsChartData = createSelector(getUniqeSpeciesData, speciesData => {
-//   if (!speciesData) return [];
-//   return getChartData(speciesData, 'mammals', 180)
-// })
-
-// const getAmphibiansChartData = createSelector(getUniqeSpeciesData, speciesData => {
-//   if (!speciesData) return [];
-//   return getChartData(speciesData, 'amphibians', 270)
-// })
-
 const getData = createSelector(getUniqeSpeciesData, speciesData => {
-  if (!speciesData) return [];
+  if (!speciesData) return null;
   const birdsData =  getChartData(speciesData, 'birds', 0);
   const reptilesData = getChartData(speciesData, 'reptiles', 90);
   const mammalsData = getChartData(speciesData, 'mammals', 180)

@@ -108,3 +108,69 @@
   margin-bottom: 24px;
   padding: 0 20px ;
 }
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.detailsRow {
+  @extend %bodyText;
+
+  align-items: center;
+  color: $white;
+  display: flex;
+
+  &:before {
+    background-color: $white;
+    border-radius: 100%;
+    content: '';
+    display: block;
+    height: 4px;
+    margin-right: 14px; 
+    width: 4px;
+  }
+}
+
+.selectedSpecies {
+  display: flex;
+  margin: 20px;
+}
+
+.speciesDot {
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 100%;
+  height: 15px;
+  margin-right: 4px;
+  position: relative;
+  width: 15px;
+
+  &:before {
+    background-color: #BFF78D;
+    border-radius: 100%;
+    content: '';
+    display: block;
+    height: 7px;
+    left: 4px;
+    margin-right: 14px;
+    position: absolute;
+    top: 4px;
+    width: 7px;
+  }
+}
+
+.speciesName {
+ @extend %annotation;
+
+ color: $white;
+ margin-bottom: 2px;
+ text-transform: uppercase;
+}
+
+.speciesFamily {
+  @extend %annotation;
+
+  color: $white;
+  font-style: italic;
+}

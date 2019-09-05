@@ -35,10 +35,17 @@ const SpeciesWidgetComponent = ({ data }) => {
             <div className={styles.mammalsChart}></div>
             <div className={styles.amphibiansChart}></div>
           </div>
-          <div>
-            <div>Global range area: </div>
-            <div>Global range protected:</div>
-            <div>IUCN:</div>
+          <div className={styles.selectedSpecies}>
+            <div className={styles.speciesDot}></div>
+            <div>
+              <div className={styles.speciesName}>Chilean Woodstar</div>
+              <div className={styles.speciesFamily}>Eulidia yarrellii</div>
+            </div>
+          </div>
+          <div className={styles.details}>
+            <div className={styles.detailsRow}>Global range area: </div>
+            <div className={styles.detailsRow}>Global range protected:</div>
+            <div className={styles.detailsRow}>IUCN:</div>
           </div>
         </div>
       }
