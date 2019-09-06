@@ -24,7 +24,7 @@ const handleMapLoad = (map, activeLayers) => {
   const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
   // set the outFields for the BIODIVERSITY_FACETS_LAYER
   // to get all the attributes available
-  gridLayer.outFields = ["*"];
+  // gridLayer.outFields = ["*"];
 
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work
