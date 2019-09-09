@@ -1,6 +1,5 @@
 const path = require('path');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 // Hot reload without eject
 // docs on: https://github.com/cdharris/react-app-rewire-hot-loader
 const rewireReactHotLoader = require('react-app-rewire-hot-loader')
@@ -32,7 +31,6 @@ module.exports = function override(config, env) {
       providers: path.resolve(__dirname, 'src/providers')
     }
   }
-  config.plugins.push(new CopyPlugin([{ from: path.resolve(__dirname, 'src/workerScripts'), to: 'workerScripts'}]))
   config = rewireReactHotLoader(config, env);
   return config;
 }
