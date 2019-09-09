@@ -1,11 +1,20 @@
+@mixin animationFunction($ease: linear, $time: 400ms, $propertyToAnimate: transform) {
+  transition: $propertyToAnimate $time $ease;
+}
+
 .transform {
-  transition: all 0.8s ease;
+  @include animationFunction();
 }
 
-.hidden {
-  margin-left: -400px;
+.leftHidden {
+  transform: translateX(-150%);
 }
 
-.visible {
-  margin-left: 0;
+.transformOpacity {
+  transition: transform 400ms ease, opacity 400ms ease;
+}
+
+.bottomUp {
+  transform: translateY(150%);
+  opacity: 0;
 }

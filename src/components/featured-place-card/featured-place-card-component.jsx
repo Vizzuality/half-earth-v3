@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
 import cx from 'classnames';
+import animationStyles from 'styles/common-animations.module.scss';
 import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
@@ -25,7 +26,7 @@ const FeaturedPlaceCardComponent = ({
 
   return (
     <div className={styles.container}>
-      <div className={cx(styles.content, styles.transform, { [styles.cardVisible]: isOnScreen, [styles.cardHidden]: !isOnScreen })}>
+      <div className={cx(styles.content, animationStyles.transformOpacity, { [animationStyles.bottomUp]: !isOnScreen })}>
         <nav className={styles.navigation}>
           <div
             className={styles.backToMap}

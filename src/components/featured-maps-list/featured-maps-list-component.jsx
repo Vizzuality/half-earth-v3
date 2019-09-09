@@ -33,7 +33,7 @@ const FeaturedMapsListComponent = ({
   };
 
   return (
-    <div className={cx(className, styles.cardsContainer, animationStyles.transform, { [animationStyles.visible]: isMapsListVisible, [animationStyles.hidden]: !isMapsListVisible })}>
+    <div className={cx(className, styles.cardsContainer, animationStyles.transform, { [animationStyles.leftHidden]: !isMapsListVisible })}>
       {featuredMapsList && <button
         className={styles.button}
         onClick={() => handleClick(featuredMapsList[0])}
