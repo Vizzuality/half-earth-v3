@@ -63,7 +63,7 @@ const DataGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers}/>
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
+        <LandscapeViewManager activeLayers={activeLayers} zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget isNotMapsList={true} />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
         <ZoomWidget isNotMapsList={true} />
