@@ -26,7 +26,7 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight }) => {
         <span className={styles.backButton}>{BACK}</span>
       </button>
       <h1 className={styles.title}>
-        { title && !autoHeight ? title.split(' ').map(word => <span>{word}</span>) : title }
+        { title && !autoHeight ? title.split(' ').map(word => <span key={word}>{word}</span>) : title }
       </h1>
       {title && <div className={styles.spacer} />}
     </div>
