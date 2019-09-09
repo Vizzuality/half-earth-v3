@@ -2,7 +2,7 @@ import { loadModules } from '@esri/react-arcgis';
 import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-
+import { BIODIVERSITY_FACETS_SERVICE_URL } from 'constants/layers-urls';
 import {
   createGridCellGraphic,
   createGraphicLayer,
@@ -49,7 +49,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   useEffect(() => {
     loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
       const layer = new FeatureLayer({
-        url: "https://utility.arcgis.com/usrsvcs/servers/e6c05ee3ee7b45af9577904bf9238529/rest/services/Biodiversity_Facets_Dissolved/FeatureServer/0"
+        url: BIODIVERSITY_FACETS_SERVICE_URL
       });
       setBiodiversityFacetsLayer(layer);
     })
