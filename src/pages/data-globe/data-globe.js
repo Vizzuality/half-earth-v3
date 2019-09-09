@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { usePostRobot } from 'hooks/attach-post-robot';
 
-import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 
