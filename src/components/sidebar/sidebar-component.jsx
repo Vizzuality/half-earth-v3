@@ -13,7 +13,7 @@ const Sidebar = ({ map, view, theme, children, activeCategory, handleSidebarTogg
 
   return (
     <div className={cx(uiStyles.uiTopLeft, styles.sidebar, theme.sidebar)}>
-      <div className={cx(styles.wrapper, animationStyles.transform, { [animationStyles.leftHidden]: !isSidebarVisible })}>
+      <div className={cx(styles.wrapper, { [animationStyles.leftHidden]: !isSidebarVisible })}>
         <FixedHeader closeSidebar={handleSidebarToggle} title={activeCategory} view={view}/>
         <div className={styles.content}>
           {React.Children.map(children || null, (child, i) => {

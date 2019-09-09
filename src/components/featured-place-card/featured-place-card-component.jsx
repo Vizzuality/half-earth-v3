@@ -26,7 +26,7 @@ const FeaturedPlaceCardComponent = ({
 
   return (
     <div className={styles.container}>
-      <div className={cx(styles.content, animationStyles.transformOpacity, { [animationStyles.bottomUp]: !isOnScreen })}>
+      <div className={cx(styles.content, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
         <nav className={styles.navigation}>
           <div
             className={styles.backToMap}

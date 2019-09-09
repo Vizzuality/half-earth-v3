@@ -33,7 +33,7 @@ const FeaturesMapCardComponent = ({
   const isFeatureMapCardVisible = isOnScreen;
 
   return (
-    <div className={cx(className, styles.cardContainer, animationStyles.transform, { [animationStyles.leftHidden]: !isFeatureMapCardVisible })}>
+    <div className={cx(className, styles.cardContainer, { [animationStyles.leftHidden]: !isFeatureMapCardVisible, [styles.delayOnOut]: isFeatureMapCardVisible })}>
       <section
         className={styles.titleSection}
         style={ {backgroundImage: `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(${featuredMap.image})`}}

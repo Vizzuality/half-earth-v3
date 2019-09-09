@@ -1,6 +1,7 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 @import 'styles/ui.module';
+@import 'styles/common-animations.module';
 
 $section-padding: 0 24px;
 
@@ -12,6 +13,11 @@ $section-padding: 0 24px;
   height: auto;
   border-radius: 2px;
   background-color: $brand-color-secondary;
+  @include animationFunction();
+}
+
+.delayOnOut {
+  @include animationFunction($delay: 200ms);
 }
 
 .titleSection {

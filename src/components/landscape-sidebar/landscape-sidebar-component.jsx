@@ -24,7 +24,7 @@ const LandscapeSidebarComponent = ({
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
 
   return (
-    <div className={cx(uiStyles.uiTopLeft, styles.sidebar, animationStyles.transform, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible })}>
+    <div className={cx(uiStyles.uiTopLeft, styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible })}>
       <div className={styles.wrapper}>
         <GeoDescriptionWidget view={view} />
         <HumanPressureWidget

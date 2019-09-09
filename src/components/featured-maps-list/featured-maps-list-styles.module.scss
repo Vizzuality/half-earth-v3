@@ -1,6 +1,7 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 @import 'styles/ui.module';
+@import 'styles/common-animations.module';
 
 $section-padding: 0 24px;
 $scrollbar-gutter: 15px;
@@ -10,6 +11,11 @@ $scrollbar-gutter: 15px;
   flex-direction: column;
   width: $sidebar-width + $scrollbar-gutter;
   border-radius: 2px;
+  @include animationFunction();
+}
+
+.delayOnIn {
+  @include animationFunction($delay: 200ms);
 }
 
 .scrollable {

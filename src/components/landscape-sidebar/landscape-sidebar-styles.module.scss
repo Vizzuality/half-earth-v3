@@ -1,10 +1,12 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/common-animations.module';
 
 $margin: 20px;
 
 .sidebar {
   @extend %verticalScrollBar;
+  @include animationFunction();
   display: inline-block;
   box-sizing: border-box;
   border-radius: 2px;
