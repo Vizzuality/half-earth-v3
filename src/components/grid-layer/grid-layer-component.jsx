@@ -9,7 +9,8 @@ import {
   calculateAggregatedCells,
   createCellGeometry,
   containedQuery,
-  centerQuery
+  centerQuery,
+  getCellsIDs
 } from 'utils/grid-layer-utils';
 
 const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
@@ -65,36 +66,24 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   },[watchUtils])
 
   useEffect(() => {
-    if (biodiversityFacetsLayer) {
-      const containedQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
-
-      biodiversityFacetsLayer.queryFeatures(containedQueryObject)
-        .then(async function(results) {
+    if (biodiversityFacetsLayer && gridCellGraphic) {
+      const containedCellsQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
+      biodiversityFacetsLayer.queryFeatures(containedCellsQueryObject)
+        .then(function(results) {
           const { features } = results;
           if (features.length > 0) {
-            const cellsAttributes = results.features.map(gc => gc.attributes);
-            const cellsIDsArray = cellsAttributes.map(att => att.CELL_ID);
+            const cellsIDsArray = getCellsIDs(results);
             if (!isEqual(gridCellRef.current, cellsIDsArray)) {
-              const gridCell = await calculateAggregatedCells(features);
-              const gridCellGeometry = await createCellGeometry(gridCell);
-              setGridCellGeometry(gridCellGeometry);
-              setGridCellData(cellsAttributes);
-              if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
-              gridCellRef.current = cellsIDsArray;
+              manageCellCreation(features, cellsIDsArray, 'aggregatedCells');
             }
           } else {
-            const centerQueryObject = centerQuery(biodiversityFacetsLayer, view.center);
-            biodiversityFacetsLayer.queryFeatures(centerQueryObject)
-              .then(async function(results) {
-                const gridCell = results.features[0];
-                const cellsAttributes = results.features.map(gc => gc.attributes);
-                const cellsIDsArray = cellsAttributes.map(att => att.CELL_ID);
+            const centerCellQueryObject = centerQuery(biodiversityFacetsLayer, view.center);
+            biodiversityFacetsLayer.queryFeatures(centerCellQueryObject)
+              .then(function(results) {
+                const { features } = results;
+                const cellsIDsArray = getCellsIDs(results);
                 if (!isEqual(gridCellRef.current, cellsIDsArray)) {
-                  const gridCellGeometry = await createCellGeometry(gridCell.geometry);
-                  setGridCellGeometry(gridCellGeometry);
-                  setGridCellData(cellsAttributes);
-                  if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
-                  gridCellRef.current = cellsIDsArray;
+                  manageCellCreation(features, cellsIDsArray, 'singleCell');
                 }
               })
           }
@@ -108,6 +97,19 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
       cleanUpHandles();
     }
   },[gridCellGraphic])
+
+  const addCellDataToStore = features => {
+    const cellsAttributes = features.map(gc => gc.attributes);
+    setGridCellData(cellsAttributes);
+  }
+  const manageCellCreation = async (features, cellsIDsArray, type) => {
+    addCellDataToStore(features);
+    const gridCell = type === 'aggregatedCells' ? await calculateAggregatedCells(features) : features[0].geometry;
+    const gridCellGeometry = await createCellGeometry(gridCell);
+    setGridCellGeometry(gridCellGeometry);
+    if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
+    gridCellRef.current = cellsIDsArray;
+  }
 
   return null;
 }
