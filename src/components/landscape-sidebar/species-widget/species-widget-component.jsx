@@ -7,10 +7,9 @@ import cx from 'classnames';
 
 import styles from './species-widget-styles.module.scss';
 
-const SpeciesChartDot = ({ species, selectedSpecies }) => {
+const SpeciesChartDot = ({ species, selectedSpecies, handleSelectSpecies }) => {
   const isSelected = species.name === selectedSpecies.name;
-  const { name, pointCoordinates, proportion, color } = species;
-
+  const { name, pointCoordinates, color } = species;
   return (
     <>
       <div 
@@ -24,6 +23,7 @@ const SpeciesChartDot = ({ species, selectedSpecies }) => {
         data-for={name}
         data-effect='solid'
         data-delay-show={0}
+        onClick={() => handleSelectSpecies(species)}
       >
         <div 
           className={styles.selectedInnerChartDot}
@@ -31,14 +31,14 @@ const SpeciesChartDot = ({ species, selectedSpecies }) => {
         />
       </div>
       <ReactTooltip id={name} className='infoTooltipStyle'>
-        {proportion}
+        {name}
       </ReactTooltip>
     </>
   )
 };
 
 const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSelectNextSpecies }) => {
-  const { imageURL, name, proportion, rangeArea } = selectedSpecies;
+  const { imageURL, name, proportion, rangeArea, color } = selectedSpecies;
 
   return (
     <>
@@ -49,14 +49,16 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
       </div>
 
       <div className={styles.speciesNameContainer}>
-        <div className={styles.speciesDot}></div>
+        <div className={cx(styles.selectedChartDot)}>
+          <div className={styles.selectedInnerChartDot} style={{ backgroundColor: color }}></div>
+        </div>
         <div>
           <div className={styles.speciesEngName}>NAME</div>
           <div className={styles.speciesLatName}>{name}</div>
         </div>
       </div>
       <div className={styles.speciesDetails}>
-        <div className={styles.speciesDetailsRow}>Global range area: {rangeArea}</div>
+        <div className={styles.speciesDetailsRow}>Global range area: {rangeArea} km<sup>2</sup></div>
         <div className={styles.speciesDetailsRow}>Global range protected: {proportion}</div>
         <div className={styles.speciesDetailsRow}>IUCN: -</div>
       </div>
@@ -64,7 +66,7 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
   )
 };
 
-const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectNextSpecies, handleSelectPrevSpecies }) => {
+const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectSpecies, handleSelectNextSpecies, handleSelectPrevSpecies }) => {
 
   return (
     <>
@@ -76,7 +78,12 @@ const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectNextSpecies
             <div className={styles.chartSlice}></div>
             <div className={styles.chartSlice}>
               {data.map((species, index) => (
-                <SpeciesChartDot key={`dot-${index}`} species={species} selectedSpecies={selectedSpecies} />
+                <SpeciesChartDot
+                  key={`dot-${index}`}
+                  species={species}
+                  selectedSpecies={selectedSpecies}
+                  handleSelectSpecies={handleSelectSpecies}
+                />
               ))}
             </div>
             <div className={styles.chartSlice}></div>

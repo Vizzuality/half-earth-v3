@@ -27,13 +27,16 @@ const getUniqeSpeciesData= createSelector(getSpeciesData, speciesData => {
 const calculateChartPosition = (angle, propRange) => {
   const betaAngle = 180 - 90 - angle;
   const c = 100 - propRange * 100; //revert the axis on the chart
+
   const x = Math.round(c * Math.sin(toRadians(betaAngle)));
   const y = Math.round(c * Math.cos(toRadians(betaAngle)));
   
-  const correctionX = x > 0 ? x - 3 : x + 3;
-  const correctionY = y > 0 ? y - 3 : y + 3;
+  const correctionX = x > 0 ? x - 2 : x;
+  const correctionY = y > 0 ? y - 2 : y + 2;
 
   return { x: correctionX, y: correctionY };
+  // return { x, y };
+
 }
 
 const getChartData = (speciesData, taxa, startAngle)  => {
@@ -45,7 +48,7 @@ const getChartData = (speciesData, taxa, startAngle)  => {
     return {
       id: s.HBWID,
       name: s.scntfcn,
-      rangeArea: `${format("~s")(s.RANGE_A)} km2`,
+      rangeArea: `${format(".4s")(s.RANGE_A)}`,
       proportion: format(".2%")(s.PROP_RA),
       taxa: s.taxa,
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,

@@ -13,6 +13,12 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
   const [speciesLayer, setLayer] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0)
 
+  const updateSelectedSpecies = (index) => {
+    const { name } = data[index];
+    changeGlobe({ selectedSpecies: name });
+    setSelectedIndex(index);
+  }
+
   const handleSelectNextSpecies = () => {
     let newIndex;
     if(selectedIndex === data.length - 1) {
@@ -20,11 +26,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
     } else {
       newIndex = selectedIndex + 1;
     }
-
-    const { name } = data[newIndex];
-    changeGlobe({ selectedSpecies: name });
-    setSelectedIndex(newIndex);
-    return ;
+    updateSelectedSpecies(newIndex);
   }
 
   const handleSelectPrevSpecies = () => {
@@ -34,11 +36,12 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
     } else {
       newIndex = selectedIndex - 1;
     }
+    updateSelectedSpecies(newIndex);
+  }
 
-    const { name } = data[newIndex];
-    changeGlobe({ selectedSpecies: name });
-    setSelectedIndex(newIndex);
-    return ;
+  const handleSelectSpecies = (species) => {
+    const newIndex = data.findIndex(({ name }) => name === species.name)
+    updateSelectedSpecies(newIndex);
   }
 
   const querySpeciesData = () => {
@@ -82,6 +85,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
     <SpeciesWidgetComponent
       data={data}
       selectedSpecies={selectedSpeciesData}
+      handleSelectSpecies={handleSelectSpecies}
       handleSelectNextSpecies={handleSelectNextSpecies}
       handleSelectPrevSpecies={handleSelectPrevSpecies}
     />
