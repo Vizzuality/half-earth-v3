@@ -94,6 +94,13 @@ const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectSpecies, ha
             handleSelectPrevSpecies={handleSelectPrevSpecies}
             handleSelectNextSpecies={handleSelectNextSpecies}
           />
+          <a
+            href='https://mol.org/'
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.molLogo}
+          >
+          </a>
         </div>
       }
     </>
