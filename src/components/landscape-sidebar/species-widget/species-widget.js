@@ -5,11 +5,41 @@ import setSpeciesActions from 'redux_modules/species';
 import SpeciesWidgetComponent from './species-widget-component';
 import mapStateToProps from './species-widget-selectors';
 import { loadModules } from '@esri/react-arcgis';
+import * as urlActions from 'actions/url-actions';
 
-const actions = { ...setSpeciesActions };
+const actions = { ...setSpeciesActions, ...urlActions };
 
-const SpeciesWidget = ({ setSpecies, terrestrialCellData, data }) => {
-  const [speciesLayer, setLayer] = useState(null)
+const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, selectedSpeciesData }) => {
+  const [speciesLayer, setLayer] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const handleSelectNextSpecies = () => {
+    let newIndex;
+    if(selectedIndex === data.length - 1) {
+      newIndex = 0;
+    } else {
+      newIndex = selectedIndex + 1;
+    }
+
+    const { name } = data[newIndex];
+    changeGlobe({ selectedSpecies: name });
+    setSelectedIndex(newIndex);
+    return ;
+  }
+
+  const handleSelectPrevSpecies = () => {
+    let newIndex;
+    if(selectedIndex === 0) {
+      newIndex = data.length - 1;
+    } else {
+      newIndex = selectedIndex - 1;
+    }
+
+    const { name } = data[newIndex];
+    changeGlobe({ selectedSpecies: name });
+    setSelectedIndex(newIndex);
+    return ;
+  }
 
   const querySpeciesData = () => {
     const query = speciesLayer.createQuery();
@@ -41,7 +71,21 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data }) => {
     }
   }, [speciesLayer, terrestrialCellData])
 
-  return <SpeciesWidgetComponent data={data}/> 
+  useEffect(() => {
+    if(data) {
+      changeGlobe({ selectedSpecies: data[0] });
+      setSelectedIndex(0);
+    }
+  }, [data]);
+
+  return (
+    <SpeciesWidgetComponent
+      data={data}
+      selectedSpecies={selectedSpeciesData}
+      handleSelectNextSpecies={handleSelectNextSpecies}
+      handleSelectPrevSpecies={handleSelectPrevSpecies}
+    />
+  );
 }
 
 export default connect(mapStateToProps, actions)(SpeciesWidget); 

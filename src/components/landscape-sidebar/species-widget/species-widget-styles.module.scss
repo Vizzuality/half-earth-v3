@@ -6,118 +6,132 @@
 
 .container {
   @include backdropBlur();
+  padding: 20px;
   width: 280px;
 }
 
-.chart {
-  width: 200px;
-  height: 200px;
-  display: flex;
-  flex-flow: wrap;
-  margin: 40px auto;
-}
-
-%chart {
-  width: 100px;
-  height: 100px;
-  position: relative;
-}
-
-%chartTitle {
-  @extend %annotation;
-  color: $white;
-  position: absolute;
-}
-
-.reptilesChart {
-  @extend %chart;
-  border: 1px solid $white;
-  border-radius: 100% 0 0 0;
-
-  &:after {
-    @extend %chartTitle;
-    content: 'Reptiles';
-    transform: rotate(-45deg) translate(-10px, 5px);
-  }
-}
-.birdsChart {
-  @extend %chart;
-  border: 1px solid $white;
-  border-radius: 0 100% 0 0;
-
-  &:after {
-    @extend %chartTitle;
-    content: 'Birds';
-    transform: rotate(45deg) translate(8px, 10px);
-    right: 0;
-  }
-}
-
-.point {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  // border: 1px solid black;
-  background-color: #FFF000;
-  z-index: 2;
-  cursor: pointer;
-}
-
-.mammalsChart {
-  @extend %chart;
-  border: 1px solid $white;
-  border-radius: 0 0 0 100%;
-
-  &:after {
-    @extend %chartTitle;
-    content: 'Mammals';
-    transform: rotate(45deg) translate(-10px, -2px);
-    bottom: 0;
-  }
-}
-
-.amphibiansChart {
-  @extend %chart;
-  border: 1px solid $white;
-  border-radius: 0 0 100% 0;
-
-  &:after {
-    @extend %chartTitle;
-    content: 'Amphibians';
-    transform: rotate(-45deg) translate(15px, 0);
-    bottom: 0;
-    right: 0;
-  }
-}
-
 .title {
+  @extend %title;
   margin: 0;
   color: $white;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 2px;
-  line-height: 20px;
-  padding: 20px 20px 0;
 }
 
 .text {
+  @extend %annotation;
   color: $alto;
-  line-height: 16px;
-  font-size: 12px;
   margin-bottom: 24px;
-  padding: 0 20px ;
 }
 
-.details {
+// RADAR CHART
+.chart {
+  align-content: flex-end;
+  background-image: url('../../../assets/images/speciesChartGrid.svg');
+  background-position: center 5px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  flex-flow: wrap;
+  height: 210px;
+  margin: 40px auto;
+  position: relative;
+  width: 200px;
+}
+
+.chartSlice {
+  width: 100px;
+  height: 100px;
+  position: relative;
+
+  &:after {
+    @extend %annotation;
+    color: $white;
+    position: absolute;
+  }
+
+  &:nth-child(1) { // REPTILES SLICE
+    &:after {   
+      content: 'Reptiles';
+      transform: rotate(-45deg) translate(-10px, 5px);
+    }
+  }
+
+  &:nth-child(2) {  // BIRDS SLICE
+    &:after {   
+      content: 'Birds';
+      transform: rotate(45deg) translate(8px, 10px);
+      right: 0;
+    }
+  }
+
+  &:nth-child(3) { // MAMMALS SLICE
+    &:after {   
+      content: 'Mammals';
+      transform: rotate(45deg) translate(-10px, -2px);
+      bottom: 0;
+    }
+  }
+
+  &:nth-child(4) { // AMPHIBIANS SLICE
+    &:after {   
+      content: 'Amphibians';
+      transform: rotate(-45deg) translate(15px, 0);
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+}
+
+// CHART DOT
+%_selectedDot {
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 100%;
+  height: 15px;
+  margin-right: 4px;
+  width: 15px;
+}
+
+%_selectedInnerDot {
+  border-radius: 100%;
+  display: block;
+  height: 7px;
+  margin-right: 14px;
+  position: absolute;
+  width: 7px;
+}
+
+
+.chartDot {
+  border-radius: 100%;
+  cursor: pointer;
+  height: 4px;
+  position: absolute;
+  width: 4px;
+  z-index: 2;
+}
+
+.selectedChartDot {
+  @extend %_selectedDot;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 15px;
+  width: 15px
+}
+
+.selectedInnerChartDot {
+  @extend %_selectedInnerDot;
+}
+
+// SPECIES CARROUSEL
+.speciesDetails {
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin: 20px 0;
 }
 
-.detailsRow {
+.speciesDetailsRow {
   @extend %bodyText;
-
   align-items: center;
   color: $white;
   display: flex;
@@ -133,65 +147,53 @@
   }
 }
 
-.selectedSpecies {
+.speciesNameContainer {
   display: flex;
-  margin: 20px;
-}
+  margin: 20px 0;
 
-.speciesDot {
-  background-color: rgba(255,255,255,0.1);
-  border-radius: 100%;
-  height: 15px;
-  margin-right: 4px;
-  position: relative;
-  width: 15px;
-
-  &:before {
-    background-color: #BFF78D;
-    border-radius: 100%;
-    content: '';
-    display: block;
-    height: 7px;
-    left: 4px;
-    margin-right: 14px;
-    position: absolute;
-    top: 4px;
-    width: 7px;
+  .speciesDot {
+    @extend %_selectedDot;
+    position: relative;
+  
+    &:before {
+      @extend %_selectedInnerDot;
+      background-color: $sulu;
+      content: '';
+      left: 4px;
+      top: 4px;
+    }
+  }
+  
+  .speciesEngName {
+    @extend %annotation;
+    color: $white;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  
+  .speciesLatName {
+    @extend %annotation;
+    color: $white;
+    font-style: italic;
   }
 }
 
-.speciesName {
-  @extend %annotation;
-
-  color: $white;
-  margin-bottom: 2px;
-  text-transform: uppercase;
-}
-
-.speciesFamily {
-  @extend %annotation;
-
-  color: $white;
-  font-style: italic;
-}
-
-.speciesCarrousel {
+.carrousel {
   align-items: center;
   display: flex;
   justify-content: center;
   width: 100%;
-}
 
-.carrouselButton {
-  &:first-child svg{
+  .carrouselButton:first-child svg{
     transform: rotate(180deg);
   }
-}
-
-.speciesImage {
-  border: 1px solid #BFF78D;
-  border-radius: 50%;
-  height: 110px;
-  margin: 0 25px;
-  width: 110px;
+  
+  .speciesImage {
+    border: 1px solid $sulu;
+    border-radius: 50%;
+    height: 110px;
+    margin: 0 25px;
+    user-select: none;
+    width: 110px;
+  }
 }

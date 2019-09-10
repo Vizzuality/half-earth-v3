@@ -5,6 +5,7 @@
 .container {
   @include backdropBlur();
   border-radius: 2px;
+  margin-bottom: 10px;
 }
 
 .title {
