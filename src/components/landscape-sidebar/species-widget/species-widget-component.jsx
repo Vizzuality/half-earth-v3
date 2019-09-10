@@ -38,7 +38,7 @@ const SpeciesChartDot = ({ species, selectedSpecies, handleSelectSpecies }) => {
 };
 
 const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSelectNextSpecies }) => {
-  const { imageURL, name, proportion, rangeArea, color } = selectedSpecies;
+  const { imageURL, name, scientificName, proportion, rangeArea, color, iucnCategory } = selectedSpecies;
 
   return (
     <>
@@ -53,14 +53,14 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
           <div className={styles.selectedInnerChartDot} style={{ backgroundColor: color }}></div>
         </div>
         <div>
-          <div className={styles.speciesEngName}>NAME</div>
-          <div className={styles.speciesLatName}>{name}</div>
+          <div className={styles.speciesEngName}>{name}</div>
+          <div className={styles.speciesLatName}>{scientificName}</div>
         </div>
       </div>
       <div className={styles.speciesDetails}>
         <div className={styles.speciesDetailsRow}>Global range area: {rangeArea} km<sup>2</sup></div>
         <div className={styles.speciesDetailsRow}>Global range protected: {proportion}</div>
-        <div className={styles.speciesDetailsRow}>IUCN: -</div>
+        <div className={styles.speciesDetailsRow}>IUCN: {iucnCategory}</div>
       </div>
     </>
   )

@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
 import { format } from 'd3-format';
 import { uniqBy } from "lodash";
+import IUCNList from 'constants/iucn-list';
 
 const toRadians = (angle) => {
   return angle * (Math.PI / 180);
@@ -35,8 +36,6 @@ const calculateChartPosition = (angle, propRange) => {
   const correctionY = y > 0 ? y - 2 : y + 2;
 
   return { x: correctionX, y: correctionY };
-  // return { x, y };
-
 }
 
 const getChartData = (speciesData, taxa, startAngle)  => {
@@ -47,13 +46,15 @@ const getChartData = (speciesData, taxa, startAngle)  => {
     const angle = startAngle + angleOffset + angleOffset * i;
     return {
       id: s.HBWID,
-      name: s.scntfcn,
+      name: s.cmmn_nm,
+      scientificName: s.scntfcn,
       rangeArea: `${format(".4s")(s.RANGE_A)}`,
       proportion: format(".2%")(s.PROP_RA),
       taxa: s.taxa,
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,
       pointCoordinates: calculateChartPosition(angle, s.PROP_RA),
-      color: getDotColor(s.PROP_RA)
+      color: getDotColor(s.PROP_RA),
+      iucnCategory: IUCNList[s.iucn_ct] || '-'
     }
   });
   return chartData;
@@ -61,6 +62,7 @@ const getChartData = (speciesData, taxa, startAngle)  => {
 
 const getData = createSelector(getUniqeSpeciesData, speciesData => {
   if (!speciesData) return null;
+  console.log('speciesData: ',speciesData);
   const birdsData =  getChartData(speciesData, 'birds', 0);
   const reptilesData = getChartData(speciesData, 'reptiles', 90);
   const mammalsData = getChartData(speciesData, 'mammals', 180)
