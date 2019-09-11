@@ -1,8 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
-import { format } from 'd3-format';
+import { format, precisionPrefix, formatPrefix } from 'd3-format';
 import { uniqBy } from "lodash";
 import IUCNList from 'constants/iucn-list';
+
+const p = precisionPrefix(1e4, 1.3e6); //more about precision prefix: https://github.com/d3/d3-format#precisionPrefix
+const customFormat = formatPrefix("." + p, 1.3e6); // format millions with two decimals
 
 const toRadians = (angle) => {
   return angle * (Math.PI / 180);
@@ -46,9 +49,9 @@ const getChartData = (speciesData, taxa, startAngle)  => {
     const angle = startAngle + angleOffset + angleOffset * i;
     return {
       id: s.HBWID,
-      name: s.cmmn_nm,
+      name: s.cmmn_nm !== " " ? s.cmmn_nm : s.scntfcn,
       scientificName: s.scntfcn,
-      rangeArea: `${format(".4s")(s.RANGE_A)}`,
+      rangeArea: customFormat(s.RANGE_A),
       proportion: format(".2%")(s.PROP_RA),
       taxa: s.taxa,
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,

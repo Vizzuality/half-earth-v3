@@ -9,7 +9,7 @@ import styles from './species-widget-styles.module.scss';
 
 const SpeciesChartDot = ({ species, selectedSpecies, handleSelectSpecies }) => {
   const isSelected = species.name === selectedSpecies.name;
-  const { name, pointCoordinates, color } = species;
+  const { name, scientificName, pointCoordinates, color } = species;
   return (
     <>
       <div 
