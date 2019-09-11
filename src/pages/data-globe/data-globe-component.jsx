@@ -113,17 +113,15 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
-        {isLandscapeMode && (
-          <LandscapeSidebar
-            isLandscapeMode={isLandscapeMode}
-            isFullscreenActive={isFullscreenActive}
-            handleGlobeUpdating={handleGlobeUpdating}
-            activeLayers={activeLayers}
-            rasters={rasters}
-            setRasters={setRasters}
-            setLayerVisibility={setLayerVisibility}
-          />
-        )}
+        <LandscapeSidebar
+          isLandscapeMode={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          handleGlobeUpdating={handleGlobeUpdating}
+          activeLayers={activeLayers}
+          rasters={rasters}
+          setRasters={setRasters}
+          setLayerVisibility={setLayerVisibility}
+        />
       </Globe>
       <About />
       {hasMetadata && <InfoModal />}

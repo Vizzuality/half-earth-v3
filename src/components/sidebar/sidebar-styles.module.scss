@@ -1,5 +1,6 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/common-animations.module';
 
 .sidebar {
   display: inline-block;
@@ -10,6 +11,7 @@
 
 .wrapper {
   @include backdropBlur();
+  @include animationFunction();
   display: flex;
   flex-direction: column;
   position: relative;
