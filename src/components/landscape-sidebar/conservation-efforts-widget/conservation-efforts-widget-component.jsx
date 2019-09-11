@@ -13,16 +13,16 @@ import styles from './conservation-efforts-widget-styles.module.scss';
 
 const findInDOM = (id) => document.getElementById(id);
 
-const ConservationEffortsDescription = ({ rawData }) => {
+const ConservationEffortsDescription = ({ allProp, rawData }) => {
   return (
     <p className={styles.description}>
-      Of the current landscape, <span className={styles.boldFont}>{rawData[PROTECTED].toFixed(2)}% is under protection.</span>
+      Of the current landscape, <span className={styles.boldFont}>{allProp.toFixed(2)}% is under protection.</span>
       {rawData[COMMUNITY_BASED] > rawData[PROTECTED] ? 'The majority of the protected areas are community managed.' : ''}
     </p>
   )
 };
 
-const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdating, addLayerAnalyticsEvent, removeLayerAnalyticsEvent,  handleLayerToggle, setConservationEfforts, terrestrialCellData, dataFormatted, colors, rawData }) => {
+const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdating, addLayerAnalyticsEvent, removeLayerAnalyticsEvent,  handleLayerToggle, setConservationEfforts, terrestrialCellData, dataFormatted, colors, rawData, allProp }) => {
   const protectedLayers = dataFormatted && WDPALayers.map(layer => ({
     ...layer,
     name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
@@ -117,7 +117,7 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
       <div className={styles.fixBlur} />
       <div className={styles.padding}>
         <h3 className={styles.title}>Conservation Efforts</h3>
-        {rawData && <ConservationEffortsDescription rawData={rawData} />}
+        {allProp && rawData && <ConservationEffortsDescription allProp={allProp} rawData={rawData} />}
         <PieChart
           data={rawData}
           activeSlices={activeSlices}
