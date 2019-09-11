@@ -8,8 +8,8 @@ export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, fe
       const query = featuredPlacesLayer.createQuery();
       query.where = `nam_slg = '${selectedFeaturedPlace}'`
       featuredPlacesLayer.queryFeatures(query).then(result => {
-        const lon = get(result, 'features[0].attributes.lon');
-        const lat = get(result, 'features[0].attributes.lat');
+        const lon = get(result, 'features[0].geometry.longitude');
+        const lat = get(result, 'features[0].geometry.latitude');
         setCoords([lon, lat]);
       });
     } else if (!isLandscapeMode) {
