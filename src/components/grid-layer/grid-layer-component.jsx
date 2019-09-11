@@ -72,19 +72,12 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
         .then(function(results) {
           const { features } = results;
           if (features.length > 0) {
-            const cellsIDsArray = getCellsIDs(results);
-            if (!isEqual(gridCellRef.current, cellsIDsArray)) {
-              manageCellCreation(features, cellsIDsArray, 'aggregatedCells');
-            }
+            createCell(results, 'aggregatedCells');
           } else {
             const centerCellQueryObject = centerQuery(biodiversityFacetsLayer, view.center);
             biodiversityFacetsLayer.queryFeatures(centerCellQueryObject)
               .then(function(results) {
-                const { features } = results;
-                const cellsIDsArray = getCellsIDs(results);
-                if (!isEqual(gridCellRef.current, cellsIDsArray)) {
-                  manageCellCreation(features, cellsIDsArray, 'singleCell');
-                }
+                createCell(results, 'singleCell');
               })
           }
         })
@@ -102,13 +95,22 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
     const cellsAttributes = features.map(gc => gc.attributes);
     setGridCellData(cellsAttributes);
   }
-  const manageCellCreation = async (features, cellsIDsArray, type) => {
+  
+  const manageCellStoreAndGeomCreation = async (features, cellsIDsArray, type) => {
     addCellDataToStore(features);
     const gridCell = type === 'aggregatedCells' ? await calculateAggregatedCells(features) : features[0].geometry;
     const gridCellGeometry = await createCellGeometry(gridCell);
     setGridCellGeometry(gridCellGeometry);
     if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
     gridCellRef.current = cellsIDsArray;
+  }
+
+  const createCell = (results, type) => {
+    const { features } = results;
+    const cellsIDsArray = getCellsIDs(results);
+    if (!isEqual(gridCellRef.current, cellsIDsArray)) {
+      manageCellStoreAndGeomCreation(features, cellsIDsArray, type);
+    }
   }
 
   return null;
