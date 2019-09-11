@@ -20,7 +20,7 @@ const LandscapeSidebarComponent = ({
   setLayerVisibility,
   setRasters,
   handleGlobeUpdating,
-  selectedSpecies
+  selectedSpecies,
   handleLayerToggle
 }) => {
 

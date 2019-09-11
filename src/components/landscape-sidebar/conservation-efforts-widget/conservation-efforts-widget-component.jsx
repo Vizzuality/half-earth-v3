@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { loadModules } from '@esri/react-arcgis';
 import PieChart from 'components/pie-chart';
 import { handleLayerRendered } from 'utils/layer-manager-utils';
 import { WDPALayers } from 'constants/protected-areas';
@@ -27,10 +28,21 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
     name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
     rightDot: layer.name === 'Protected areas' ? colors[PROTECTED] : colors[COMMUNITY_BASED]
   })) || [];
-  
-  const conservationPropsLayer = map.layers.items.find(l => l.title === 'ConsProp');
 
-  const queryParams = conservationPropsLayer.createQuery();
+  const [conservationPropsLayer, setConservationPropsLayer] = useState(null);
+
+  useEffect(() => {
+    if (!conservationPropsLayer) {
+      loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+        const consPropLayer = new FeatureLayer({
+          url: "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ConsProp/FeatureServer"
+        });
+        setConservationPropsLayer(consPropLayer)
+      });
+    }
+  }, []);
+
+  const queryParams = conservationPropsLayer && conservationPropsLayer.createQuery();
 
   const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 
     ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title) 
@@ -60,7 +72,7 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
   }, [orangeActive, yellowActive])
 
   useEffect(() => {
-    if (terrestrialCellData) {
+    if (terrestrialCellData && queryParams) {
       queryParams.where = `CELL_ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
