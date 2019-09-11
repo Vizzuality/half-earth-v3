@@ -48,7 +48,6 @@ const getConservationAreasLogic = createSelector(
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
 
-    console.log('conservation efforts', conservationEfforts)
     const areas = {};
     if (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop > conservationEfforts.all_prop) {
       areas[COMMUNITY_BASED] = (conservationEfforts.all_prop - conservationEfforts.WDPA_prop) * 100;
