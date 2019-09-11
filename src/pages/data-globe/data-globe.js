@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { usePostRobot } from 'hooks/attach-post-robot';
 
-import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 
@@ -20,11 +20,6 @@ const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
 const handleMapLoad = (map, activeLayers) => {
   const { layers } = map;
-
-  const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
-  // set the outFields for the BIODIVERSITY_FACETS_LAYER
-  // to get all the attributes available
-  gridLayer.outFields = ["*"];
 
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work

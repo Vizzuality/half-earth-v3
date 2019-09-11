@@ -43,7 +43,6 @@ const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, 
             checkedOptions={checkedRasters}
           />
           {pressureFree && <p className={styles.pressureFreeLabel}>Not under pressure {pressureFree}</p>}
-          <p className={styles.hint}>CLICK TO SHOW ON MAP</p>
         </>
       }
     </div>
