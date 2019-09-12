@@ -909,6 +909,7 @@
     "@babel/parser" "^7.6.0"
     "@babel/types" "^7.6.0"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
   dependencies:
@@ -947,6 +948,8 @@
     "@babel/types" "^7.5.5"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
     debug "^4.1.0"
     globals "^11.1.0"
     lodash "^4.17.13"
@@ -994,12 +997,15 @@
     react-dom "^16.5.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> Fixes after rebase
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 "@hapi/address@2.x.x":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.1.tgz#61395b5ed94c4cb19c2dc4c85969cff3d40d583f"
@@ -1032,7 +1038,6 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-<<<<<<< HEAD
 "@jest/types@^24.9.0":
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/@jest/types/-/types-24.9.0.tgz#63cb26cb7500d069e5a389441a7c6ab5e909fc59"
@@ -1041,6 +1046,7 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -1055,6 +1061,8 @@
     "@types/yargs" "^12.0.9"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 
 "@loadable/component@^5.10.1":
   version "5.10.2"
@@ -2989,6 +2997,7 @@ common-tags@1.8.0, common-tags@^1.4.0, common-tags@^1.8.0:
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
   integrity sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 
@@ -2997,6 +3006,8 @@ common-tags@1.8.0, common-tags@^1.4.0, common-tags@^1.8.0:
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -3587,6 +3598,7 @@ d3-array@^2.0.2, d3-array@^2.0.3:
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 d3-axis@1:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/d3-axis/-/d3-axis-1.0.12.tgz#cdf20ba210cfbb43795af33756886fb3638daac9"
@@ -3612,6 +3624,8 @@ d3-chord@1:
     d3-path "1"
 >>>>>>> Add conservation efforts widget to landscape sidebar
 
+=======
+>>>>>>> Fix after removing biodiversity facets
 d3-collection@1, d3-collection@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/d3-collection/-/d3-collection-1.0.7.tgz#349bd2aa9977db071091c13144d5e4f16b5b310e"
@@ -3622,7 +3636,11 @@ d3-color@1, d3-color@^1.2.3:
   resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.3.0.tgz#675818359074215b020dc1d41d518136dcb18fa9"
   integrity sha512-NHODMBlj59xPAwl2BDiO2Mog6V+PrGRtBfWKqKRrs9MCqlSkIEb0Z/SfY7jW29ReHTDC/j+vwXhnZcXI3+3fbg==
 
+<<<<<<< HEAD
 d3-contour@1, d3-contour@^1.3.2:
+=======
+d3-contour@^1.3.2:
+>>>>>>> Fix after removing biodiversity facets
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/d3-contour/-/d3-contour-1.3.2.tgz#652aacd500d2264cb3423cee10db69f6f59bead3"
   integrity sha512-hoPp4K/rJCu0ladiH6zmJUEz6+u3lgR+GSm/QdM2BBvDraU39Vr7YdDCicJcxP1z8i9B/2dJLgDC1NcvlF8WCg==
@@ -3634,6 +3652,7 @@ d3-dispatch@1:
   resolved "https://registry.yarnpkg.com/d3-dispatch/-/d3-dispatch-1.0.5.tgz#e25c10a186517cd6c82dd19ea018f07e01e39015"
   integrity sha512-vwKx+lAqB1UuCeklr6Jh1bvC4SZgbSqbkGBLClItFBIYH4vqDJCA7qfoy14lXmJdnBOdxndAMxjCbImJYW7e6g==
 
+<<<<<<< HEAD
 d3-drag@1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/d3-drag/-/d3-drag-1.2.4.tgz#ba9331d68158ad14cf0b4b28a8afa9e78c7d99ad"
@@ -3643,6 +3662,9 @@ d3-drag@1:
     d3-selection "1"
 
 d3-dsv@1, d3-dsv@^1.0.10:
+=======
+d3-dsv@^1.0.10:
+>>>>>>> Fix after removing biodiversity facets
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/d3-dsv/-/d3-dsv-1.1.1.tgz#aaa830ecb76c4b5015572c647cc6441e3c7bb701"
   integrity sha512-1EH1oRGSkeDUlDRbhsFytAXU6cAmXFzc52YUe6MRlPClmWb85MP1J5x+YJRzya4ynZWnbELdSAvATFW/MbxaXw==
@@ -3651,6 +3673,7 @@ d3-dsv@1, d3-dsv@^1.0.10:
     iconv-lite "0.4"
     rw "1"
 
+<<<<<<< HEAD
 d3-ease@1:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/d3-ease/-/d3-ease-1.0.5.tgz#8ce59276d81241b1b72042d6af2d40e76d936ffb"
@@ -3664,6 +3687,9 @@ d3-fetch@1:
     d3-dsv "1"
 
 d3-force@1, d3-force@^1.1.0:
+=======
+d3-force@^1.1.0:
+>>>>>>> Fix after removing biodiversity facets
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/d3-force/-/d3-force-1.2.1.tgz#fd29a5d1ff181c9e7f0669e4bd72bdb0e914ec0b"
   integrity sha512-HHvehyaiUlVo5CxBJ0yF/xny4xoaxFxDnBXNvNcfW9adORGZfyNF1dj6DGLKyk4Yh3brP/1h3rnDzdIAwL08zg==
@@ -3678,14 +3704,18 @@ d3-format@1, d3-format@^1.3.2:
   resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.4.1.tgz#c45f74b17c5a290c072a4ba7039dd19662cd5ce6"
   integrity sha512-TUswGe6hfguUX1CtKxyG2nymO+1lyThbkS1ifLX0Sr+dOQtAD5gkrffpHnx+yHNKUZ0Bmg5T4AjUQwugPDrm0g==
 
-d3-geo@1, d3-geo@^1.11.3, d3-geo@^1.11.6:
+d3-geo@^1.11.3, d3-geo@^1.11.6:
   version "1.11.6"
   resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.6.tgz#134f2ef035ff75a448075fafdea92702a2e0e0cf"
   integrity sha512-z0J8InXR9e9wcgNtmVnPTj0TU8nhYT6lD/ak9may2PdKqXIeHUr8UbFLoCtrPYNsjv6YaLvSDQVl578k6nm7GA==
   dependencies:
     d3-array "1"
 
+<<<<<<< HEAD
 d3-hierarchy@1, d3-hierarchy@^1.1.8:
+=======
+d3-hierarchy@^1.1.8:
+>>>>>>> Fix after removing biodiversity facets
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-1.1.8.tgz#7a6317bd3ed24e324641b6f1e76e978836b008cc"
   integrity sha512-L+GHMSZNwTpiq4rt9GEsNcpLa4M96lXMR8M/nMG9p5hBE0jy6C+3hWtyZMenPQdwla249iJy7Nx0uKt3n+u9+w==
@@ -3704,23 +3734,21 @@ d3-path@1, d3-path@^1.0.7:
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 d3-polygon@1:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/d3-polygon/-/d3-polygon-1.0.5.tgz#9a645a0a64ff6cbf9efda96ee0b4a6909184c363"
   integrity sha512-RHhh1ZUJZfhgoqzWWuRhzQJvO7LavchhitSTHGu9oj6uuLFzYZVeBzaWTQ2qSO6bz2w55RMoOCf0MsLCDB6e0w==
 >>>>>>> Add conservation efforts widget to landscape sidebar
 
+=======
+>>>>>>> Fix after removing biodiversity facets
 d3-quadtree@1:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/d3-quadtree/-/d3-quadtree-1.0.6.tgz#d1ab2a95a7f27bbde88582c94166f6ae35f32056"
   integrity sha512-NUgeo9G+ENQCQ1LsRr2qJg3MQ4DJvxcDNCiohdJGHt5gRhBW6orIB5m5FJ9kK3HNL8g9F4ERVoBzcEwQBfXWVA==
 
-d3-random@1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.2.tgz#2833be7c124360bf9e2d3fd4f33847cfe6cab291"
-  integrity sha512-6AK5BNpIFqP+cx/sreKzNjWbwZQCSUatxq+pPRmFIQaWuoD+NrbVWw7YWpHiXpCQ/NanKdtGDuB+VQcZDaEmYQ==
-
-d3-scale-chromatic@1, d3-scale-chromatic@^1.3.3:
+d3-scale-chromatic@^1.3.3:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/d3-scale-chromatic/-/d3-scale-chromatic-1.5.0.tgz#54e333fc78212f439b14641fb55801dd81135a98"
   integrity sha512-ACcL46DYImpRFMBcpk9HhtIyC7bTBR4fNOPxwVSl0LfulDAwyiHyPOTqcDG1+t5d4P9W7t/2NAuWu59aKko/cg==
@@ -3728,7 +3756,11 @@ d3-scale-chromatic@1, d3-scale-chromatic@^1.3.3:
     d3-color "1"
     d3-interpolate "1"
 
+<<<<<<< HEAD
 d3-scale@2, d3-scale@^2.1.2:
+=======
+d3-scale@^2.1.2:
+>>>>>>> Fix after removing biodiversity facets
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-2.2.2.tgz#4e880e0b2745acaaddd3ede26a9e908a9e17b81f"
   integrity sha512-LbeEvGgIb8UMcAa0EATLNX0lelKWGYDQiPdHj+gLblGVhGLyNbaCn3EvrJf0A3Y/uOOU5aD6MTh5ZFCdEwGiCw==
@@ -3740,12 +3772,16 @@ d3-scale@2, d3-scale@^2.1.2:
     d3-time "1"
     d3-time-format "2"
 
+<<<<<<< HEAD
 d3-selection@1, d3-selection@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.4.0.tgz#ab9ac1e664cf967ebf1b479cc07e28ce9908c474"
   integrity sha512-EYVwBxQGEjLCKF2pJ4+yrErskDnz5v403qvAid96cNdCMr8rmCYfY5RGzWz24mdIbxmDf6/4EAH+K9xperD5jg==
 
 d3-shape@1, d3-shape@^1.2.2:
+=======
+d3-shape@^1.2.2, d3-shape@^1.3.5:
+>>>>>>> Fix after removing biodiversity facets
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.3.5.tgz#e81aea5940f59f0a79cfccac012232a8987c6033"
   integrity sha512-VKazVR3phgD+MUCldapHD7P9kcrvPcexeX/PkMJmkUov4JM8IxsSg1DvbYoYich9AtdTsa5nNk2++ImPiDiSxg==
@@ -3771,6 +3807,7 @@ d3-timer@1, d3-timer@^1.0.9:
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 d3-transition@1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/d3-transition/-/d3-transition-1.2.0.tgz#f538c0e21b2aa1f05f3e965f8567e81284b3b2b8"
@@ -3839,6 +3876,12 @@ d3@^5.11.0:
     d3-voronoi "1"
     d3-zoom "1"
 >>>>>>> Add conservation efforts widget to landscape sidebar
+=======
+d3-voronoi@^1.1.2:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/d3-voronoi/-/d3-voronoi-1.1.4.tgz#dd3c78d7653d2bb359284ae478645d95944c8297"
+  integrity sha512-dArJ32hchFsrQ8uMiTBLq256MpnZjeuBtdHpaDlYuQyjU0CVzCJl/BVW+SkszaAeH95D/8gxqAhgx0ouAWAfRg==
+>>>>>>> Fix after removing biodiversity facets
 
 damerau-levenshtein@^1.0.4:
   version "1.0.5"
@@ -4686,6 +4729,7 @@ exenv@^1.2.0:
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
   integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
   dependencies:
@@ -4696,6 +4740,8 @@ exenv@^1.2.0:
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 
 exit-hook@^1.0.0:
   version "1.1.1"
@@ -9394,11 +9440,14 @@ pretty-bytes@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.3.0.tgz#f2849e27db79fb4d6cfe24764fc4134f165989f2"
   integrity sha512-hjGrh+P926p4R4WbaB6OckyRtO0F0/lQBiT+0gnxjV+5kjPBrfVBFCsCLbMqVQeydvIoouYTCmmEURiH3R1Bdg==
+<<<<<<< HEAD
 
 pretty-bytes@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.3.0.tgz#f2849e27db79fb4d6cfe24764fc4134f165989f2"
   integrity sha512-hjGrh+P926p4R4WbaB6OckyRtO0F0/lQBiT+0gnxjV+5kjPBrfVBFCsCLbMqVQeydvIoouYTCmmEURiH3R1Bdg==
+=======
+>>>>>>> Fix after removing biodiversity facets
 
 pretty-error@^2.0.2:
   version "2.1.1"
@@ -9810,6 +9859,7 @@ react-error-overlay@^5.1.4:
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
 
 react-hot-loader@^4.3.6, react-hot-loader@^4.8.2:
+<<<<<<< HEAD
   version "4.12.12"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.12.12.tgz#8b33f59efef8a34f64e01f0d9393230d4b4bc6d4"
   integrity sha512-Tkd412j5yPKHoTRsJzZb+5UJNFKkPszm7QGKGYvt+jnzTkDS+qK0u3AYPlB0MmBlwzUKVHICqq5KH9Srzda7XA==
@@ -9822,6 +9872,11 @@ react-hot-loader@^4.3.6, react-hot-loader@^4.8.2:
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.12.10.tgz#b3457c0f733423c4827c6d2672e50c9f8bedaf6b"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+  version "4.12.13"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.12.13.tgz#78dcb55f49f88ce3d4316c7c86a8c01fdd196cd2"
+  integrity sha512-4Byk3aVQhcmTnVCBvDHOEOUnMFMj81r2yRKZQSfLOG2yd/4hm/A3oK15AnCZilQExqSFSsHcK64lIIU+dU2zQQ==
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
@@ -9932,14 +9987,18 @@ react-scripts@2.1.8:
     fsevents "1.2.4"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 react-sortable-hoc@^0.6.8:
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/react-sortable-hoc/-/react-sortable-hoc-0.6.8.tgz#b08562f570d7c41f6e393fca52879d2ebb9118e9"
   integrity sha512-sUUAtNdV84AKZ2o+F5lVOOFWcyWG6aGDkNFgHoieB1zFLeWLWENkix06asPS4/GhigfuRh06aZix1j3Qx8+NSQ==
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -9957,6 +10016,8 @@ react-sortable-hoc@^0.6.8:
   resolved "https://registry.yarnpkg.com/react-sortable-hoc/-/react-sortable-hoc-0.6.8.tgz#b08562f570d7c41f6e393fca52879d2ebb9118e9"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     babel-runtime "^6.11.6"
     invariant "^2.2.1"
@@ -9964,14 +10025,18 @@ react-sortable-hoc@^0.6.8:
     prop-types "^15.5.7"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 react-tooltip@^3.10.0:
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.11.1.tgz#7b4ce48ed26a46e996662b19a2afebbfd483513b"
   integrity sha512-YCMVlEC2KuHIzOQhPplTK5jmBBwoL+PYJJdJKXj7M/h7oevupd/QSVq6z5U7/ehIGXyHsAqvwpdxexDfyQ0o3A==
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -9989,6 +10054,8 @@ react-tooltip@^3.10.0:
   resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.10.0.tgz#268b5ef519fd8a1369288d1f086f42c90d5da7ef"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
@@ -11268,6 +11335,7 @@ stringify-object@^3.2.2, stringify-object@^3.3.0:
   resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-3.3.0.tgz#703065aefca19300d3ce88af4f5b3956d7556629"
   integrity sha512-rHqiFh1elqCQ9WPLIC8I0Q/g/wj5J1eMkyoiD6eoQApWHP0FtlK7rqnhmabL5VUY9JQCcqwwvlOaSuutekgyrw==
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
   dependencies:
@@ -11278,6 +11346,8 @@ stringify-object@^3.2.2, stringify-object@^3.3.0:
   resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-3.3.0.tgz#703065aefca19300d3ce88af4f5b3956d7556629"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     get-own-enumerable-property-symbols "^3.0.0"
     is-obj "^1.0.1"
@@ -12664,6 +12734,7 @@ workbox-build@^3.6.3:
   resolved "https://registry.yarnpkg.com/workbox-build/-/workbox-build-3.6.3.tgz#77110f9f52dc5d82fa6c1c384c6f5e2225adcbd8"
   integrity sha512-w0clZ/pVjL8VXy6GfthefxpEXs0T8uiRuopZSFVQ8ovfbH6c6kUpEh6DcYwm/Y6dyWPiCucdyAZotgjz+nRz8g==
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
   dependencies:
@@ -12694,6 +12765,8 @@ workbox-build@^3.6.3:
   resolved "https://registry.yarnpkg.com/workbox-build/-/workbox-build-3.6.3.tgz#77110f9f52dc5d82fa6c1c384c6f5e2225adcbd8"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     babel-runtime "^6.26.0"
     common-tags "^1.4.0"
@@ -12719,12 +12792,15 @@ workbox-build@^3.6.3:
     workbox-sw "^3.6.3"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> Fixes after rebase
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 workbox-build@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/workbox-build/-/workbox-build-4.3.1.tgz#414f70fb4d6de47f6538608b80ec52412d233e64"
@@ -12754,11 +12830,11 @@ workbox-build@^4.3.1:
     workbox-sw "^4.3.1"
     workbox-window "^4.3.1"
 
-<<<<<<< HEAD
 workbox-cache-expiration@^3.6.3:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/workbox-cache-expiration/-/workbox-cache-expiration-3.6.3.tgz#4819697254a72098a13f94b594325a28a1e90372"
   integrity sha512-+ECNph/6doYx89oopO/UolYdDmQtGUgo8KCgluwBF/RieyA1ZOFKfrSiNjztxOrGJoyBB7raTIOlEEwZ1LaHoA==
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -12769,6 +12845,8 @@ workbox-cache-expiration@^3.6.3:
   resolved "https://registry.yarnpkg.com/workbox-cache-expiration/-/workbox-cache-expiration-3.6.3.tgz#4819697254a72098a13f94b594325a28a1e90372"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     workbox-core "^3.6.3"
 
@@ -12802,6 +12880,7 @@ workbox-expiration@^4.3.1:
   integrity sha512-vsJLhgQsQouv9m0rpbXubT5jw0jMQdjpkum0uT+d9tTwhXcEZks7qLfQ9dGSaufTD2eimxbUOJfWLbNQpIDMPw==
   dependencies:
     workbox-core "^4.3.1"
+<<<<<<< HEAD
 
 workbox-core@^4.3.1:
   version "4.3.1"
@@ -12814,6 +12893,8 @@ workbox-expiration@^4.3.1:
   integrity sha512-vsJLhgQsQouv9m0rpbXubT5jw0jMQdjpkum0uT+d9tTwhXcEZks7qLfQ9dGSaufTD2eimxbUOJfWLbNQpIDMPw==
   dependencies:
     workbox-core "^4.3.1"
+=======
+>>>>>>> Fix after removing biodiversity facets
 
 workbox-google-analytics@^3.6.3:
   version "3.6.3"
@@ -12826,12 +12907,15 @@ workbox-google-analytics@^3.6.3:
     workbox-strategies "^3.6.3"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> Fixes after rebase
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 workbox-google-analytics@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/workbox-google-analytics/-/workbox-google-analytics-4.3.1.tgz#9eda0183b103890b5c256e6f4ea15a1f1548519a"
@@ -12842,7 +12926,6 @@ workbox-google-analytics@^4.3.1:
     workbox-routing "^4.3.1"
     workbox-strategies "^4.3.1"
 
-<<<<<<< HEAD
 workbox-navigation-preload@^3.6.3:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/workbox-navigation-preload/-/workbox-navigation-preload-3.6.3.tgz#a2c34eb7c17e7485b795125091215f757b3c4964"
@@ -12937,6 +13020,7 @@ workbox-sw@^4.3.1:
   resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-4.3.1.tgz#df69e395c479ef4d14499372bcd84c0f5e246164"
   integrity sha512-0jXdusCL2uC5gM3yYFT6QMBzKfBr2XTk0g5TPAV4y8IZDyVNDyj1a8uSXy3/XrvkVTmQvLN4O5k3JawGReXr9w==
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -13029,6 +13113,8 @@ workbox-sw@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-4.3.1.tgz#df69e395c479ef4d14499372bcd84c0f5e246164"
   integrity sha512-0jXdusCL2uC5gM3yYFT6QMBzKfBr2XTk0g5TPAV4y8IZDyVNDyj1a8uSXy3/XrvkVTmQvLN4O5k3JawGReXr9w==
+=======
+>>>>>>> Fix after removing biodiversity facets
 
 workbox-webpack-plugin@3.6.3:
   version "3.6.3"
@@ -13040,12 +13126,15 @@ workbox-webpack-plugin@3.6.3:
     workbox-build "^3.6.3"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> Fixes after rebase
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
 workbox-window@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/workbox-window/-/workbox-window-4.3.1.tgz#ee6051bf10f06afa5483c9b8dfa0531994ede0f3"
@@ -13053,11 +13142,11 @@ workbox-window@^4.3.1:
   dependencies:
     workbox-core "^4.3.1"
 
-<<<<<<< HEAD
 worker-farm@^1.5.2, worker-farm@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/worker-farm/-/worker-farm-1.7.0.tgz#26a94c5391bbca926152002f69b84a4bf772e5a8"
   integrity sha512-rvw3QTZc8lAxyVrqcSGVm5yP/IJ2UcB3U0graE3LCFoZ0Yn2x4EoVSqJKdB/T5M+FLcRPjz4TDacRf3OCfNUzw==
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -13068,6 +13157,8 @@ worker-farm@^1.5.2, worker-farm@^1.7.0:
   resolved "https://registry.yarnpkg.com/worker-farm/-/worker-farm-1.7.0.tgz#26a94c5391bbca926152002f69b84a4bf772e5a8"
 >>>>>>> Install d3-shape instead of whole d3
 >>>>>>> Fixes after rebase
+=======
+>>>>>>> Fix after removing biodiversity facets
   dependencies:
     errno "~0.1.7"
 
