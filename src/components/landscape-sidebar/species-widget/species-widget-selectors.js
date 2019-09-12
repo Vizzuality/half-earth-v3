@@ -65,7 +65,6 @@ const getChartData = (speciesData, taxa, startAngle)  => {
 
 const getData = createSelector(getUniqeSpeciesData, speciesData => {
   if (!speciesData) return null;
-  console.log('speciesData: ',speciesData);
   const birdsData =  getChartData(speciesData, 'birds', 0);
   const reptilesData = getChartData(speciesData, 'reptiles', 90);
   const mammalsData = getChartData(speciesData, 'mammals', 180)
