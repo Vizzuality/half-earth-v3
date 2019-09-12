@@ -26,6 +26,18 @@
   height: 6px;
 }
 
+.esri-popup--aligned-top-left .esri-popup__pointer {
+  bottom: 0;
+  right: 25px;
+  transform: rotate(2deg);
+}
+
+.esri-popup--aligned-bottom-left .esri-popup__pointer {
+  top: 6px;
+  right: 13px;
+  transform: rotate(2deg);
+}
+
 .esri-popup--shadow {
   box-shadow: none;
 }
