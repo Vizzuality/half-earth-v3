@@ -6,7 +6,7 @@ import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 import { DATA } from 'router';
 import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
 import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
-import { BIODIVERSITY_FACETS_LAYER, FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
 import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
@@ -40,11 +40,6 @@ const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, F
     // set the attributes available on the layer
     _featuredPlacesLayer.outFields = ['nam_slg'];
     setFeaturedPlacesLayer(_featuredPlacesLayer);
-
-    const gridLayer = layers.items.find(l => l.title === BIODIVERSITY_FACETS_LAYER);
-    // set the outFields for the BIODIVERSITY_FACETS_LAYER
-    // to get all the attributes available
-    gridLayer.outFields = ["*"];
 
     // This fix has been added as a workaround to a bug introduced on v4.12
     // The bug was causing the where clause of the mosaic rule to not work
