@@ -9,7 +9,7 @@ const REGULAR_RADIUS = 50;
 const EXPLODING_SLICE_STROKE = 'white';
 const EXPLODING_SLICE_STROKE_WIDTH = '2';
 
-const PieChart = ({ x, y, chartData, alreadyChecked, activeSlices, colors }) => {
+const PieChart = ({ x, y, chartData, activeSlices, colors }) => {
   const pie = d3.pie();
 
   // remove the zero values
@@ -37,9 +37,9 @@ const PieChart = ({ x, y, chartData, alreadyChecked, activeSlices, colors }) => 
             stroke={stroke}
             strokeWidth={strokeWidth}
             value={value}
-            fill={colors[getKeyByValue(filteredChartData, value.data)]}
+            fill={colors[area]}
           />
-        )})}}
+        )})}
     </g>
   )
 }
