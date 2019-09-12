@@ -4,7 +4,7 @@ const LandscapeViewManager = ({ view, zoomLevelTrigger, onZoomChange, isLandscap
   // Update url param hook
   useSetLandscapeViewParam(view, zoomLevelTrigger, onZoomChange);
   // update camera tilt hook
-  useLandscapeViewCameraChange(view, isLandscapeMode)
+  useLandscapeViewCameraChange(view, isLandscapeMode);
   return null
 }
 
