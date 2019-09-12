@@ -33,6 +33,7 @@
   flex-flow: wrap;
   height: 210px;
   margin: 40px auto;
+  margin-bottom: 25px;
   position: relative;
   width: 200px;
 }
@@ -113,6 +114,7 @@
   display: flex;
   flex-direction: column;
   margin: 20px 0;
+  margin-top: 0;
 }
 
 .speciesDetailsRow {
@@ -132,13 +134,14 @@
   }
 
   sup {
-    margin-bottom: 10px;
+    font-size: 8px;
   }
 }
 
 .speciesNameContainer {
   display: flex;
   margin: 20px 0;
+  margin-bottom: 8px;
   
   .speciesEngName {
     @extend %annotation;

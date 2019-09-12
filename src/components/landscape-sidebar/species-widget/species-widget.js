@@ -70,7 +70,11 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
  
   useEffect(() => {
     if (speciesLayer && terrestrialCellData) {
-      querySpeciesData();
+      if(terrestrialCellData.length) {
+        querySpeciesData();
+      } else {
+        setSpecies([])
+      }
     }
   }, [speciesLayer, terrestrialCellData])
 
