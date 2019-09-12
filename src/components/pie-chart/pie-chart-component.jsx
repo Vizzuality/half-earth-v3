@@ -4,8 +4,8 @@ import { getKeyByValue } from 'utils/generic-functions';
 import Slice from './slice';
 
 const translate = (x, y) => `translate(${x}, ${y})`;
-const EXPLODING_SLICE_RADIUS = 60;
-const REGULAR_RADIUS = 50;
+const EXPLODING_SLICE_RADIUS = 70;
+const REGULAR_RADIUS = 60;
 const EXPLODING_SLICE_STROKE = 'white';
 const EXPLODING_SLICE_STROKE_WIDTH = '2';
 
