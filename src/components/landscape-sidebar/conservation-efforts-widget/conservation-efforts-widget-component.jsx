@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { loadModules } from '@esri/react-arcgis';
 import PieChart from 'components/pie-chart';
-import { handleLayerRendered } from 'utils/layer-manager-utils';
-import { WDPALayers } from 'constants/protected-areas';
 import CheckboxGroup from 'components/checkbox-group';
 import { 
   COMMUNITY_BASED,
-  PROTECTED,
-  NOT_UNDER_CONSERVATION
+  PROTECTED
 } from 'components/landscape-sidebar/conservation-efforts-widget/conservation-efforts-widget-selectors';
 import styles from './conservation-efforts-widget-styles.module.scss';
 
@@ -22,13 +19,18 @@ const ConservationEffortsDescription = ({ allProp, rawData }) => {
   )
 };
 
-const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdating, addLayerAnalyticsEvent, removeLayerAnalyticsEvent,  handleLayerToggle, setConservationEfforts, terrestrialCellData, dataFormatted, colors, rawData, allProp }) => {
-  const protectedLayers = dataFormatted && WDPALayers.map(layer => ({
-    ...layer,
-    name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
-    rightDot: layer.name === 'Protected areas' ? colors[PROTECTED] : colors[COMMUNITY_BASED]
-  })) || [];
-
+const ConservationEffortsWidget = ({
+  setConservationEfforts,
+  terrestrialCellData,
+  dataFormatted,
+  colors,
+  rawData,
+  allProp,
+  alreadyChecked,
+  protectedLayers,
+  activeSlices,
+  toggleLayer
+}) => {
   const [conservationPropsLayer, setConservationPropsLayer] = useState(null);
 
   useEffect(() => {
@@ -43,10 +45,6 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
   }, []);
 
   const queryParams = conservationPropsLayer && conservationPropsLayer.createQuery();
-
-  const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 
-    ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title) 
-  }), {});
 
   const orangeActive = alreadyChecked['Protected areas'];
   const yellowActive = alreadyChecked['Community areas'];
@@ -81,37 +79,6 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
     }
   }, [terrestrialCellData])
 
-  const toggleLayer = (layersPassed, option) => {
-    const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
-
-    const layerToggled = map.layers.items.reduce((wantedLayer, currentLayer) => {
-      if(currentLayer.title === option.id) return currentLayer;
-      if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
-      return wantedLayer;
-    }, null)
-    
-    if (layerNotRendered) {
-      handleGlobeUpdating(true);
-    }
-
-    handleLayerToggle(option.id);
-    handleLayerRendered(view, layerToggled, handleGlobeUpdating);
-
-    const isLayerActive = alreadyChecked[option.value];
-    if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
-    else removeLayerAnalyticsEvent({ slug: option.slug });
-  }
-
-  const activeSlices = rawData && Object.keys(rawData)
-    .reduce((obj, key) => {
-      if (key === NOT_UNDER_CONSERVATION) {
-        obj[key] = false;
-      } else {
-        obj[key] = key === PROTECTED ? orangeActive : yellowActive;
-      }
-      return obj;
-    }, {});
-
   return (
     <div className={styles.container}>
       <div className={styles.fixBlur} />
@@ -129,7 +96,7 @@ const ConservationEffortsWidget = ({ map, view, activeLayers, handleGlobeUpdatin
         handleClick={toggleLayer}
         checkedOptions={alreadyChecked}
         options={protectedLayers}
-        theme={styles} 
+        theme={styles}
       />
       {rawData && (
         <p className={styles.notUnderConservationLabel}>

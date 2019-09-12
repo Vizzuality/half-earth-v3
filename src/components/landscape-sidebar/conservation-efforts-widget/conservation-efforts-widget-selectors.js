@@ -1,7 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
-import { getKeyByValue } from 'utils/generic-functions';
-
+import { WDPALayers } from 'constants/protected-areas';
 import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
 
 export const COMMUNITY_BASED = 'community';
@@ -15,6 +14,8 @@ const COLORS = () => ({
 })
 
 const conservationEffortsData = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.data;
+
+const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
 const getConservationEfforts = createSelector(
   [conservationEffortsData],
@@ -49,14 +50,15 @@ const getConservationAreasLogic = createSelector(
     if (!conservationEfforts) return null;
 
     const areas = {};
-    if (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop > conservationEfforts.all_prop) {
-      areas[COMMUNITY_BASED] = (conservationEfforts.all_prop - conservationEfforts.WDPA_prop) * 100;
+    const { WDPA_prop, RAISG_prop, all_prop } = conservationEfforts;
+    if (WDPA_prop + RAISG_prop > all_prop) {
+      areas[COMMUNITY_BASED] = (all_prop - WDPA_prop) * 100;
     } else {
-      areas[COMMUNITY_BASED] = conservationEfforts.RAISG_prop * 100;
+      areas[COMMUNITY_BASED] = RAISG_prop * 100;
     }
 
-    areas[NOT_UNDER_CONSERVATION] = (1 - (conservationEfforts.WDPA_prop + conservationEfforts.RAISG_prop)) * 100;
-    areas[PROTECTED] = conservationEfforts.WDPA_prop * 100;
+    areas[NOT_UNDER_CONSERVATION] = (1 - (WDPA_prop +RAISG_prop)) * 100;
+    areas[PROTECTED] = WDPA_prop * 100;
 
     return areas;
   }
@@ -76,21 +78,53 @@ const getConservationAreasFormatted = createSelector(
   (conservationAreasLogic) => {
     if (!conservationAreasLogic) return null;
 
-    const formattedAreas = Object.values(conservationAreasLogic).reduce((obj, key) => {
-      const foundKeys = getKeyByValue(conservationAreasLogic, key);
-      if(Array.isArray(foundKeys) && foundKeys.length > 1) {
-        foundKeys.forEach(foundKey => {
-          obj[foundKey] = key.toFixed(2);
-        })
-      } else {
-        obj[foundKeys] = key.toFixed(2);
-      }
-      return obj;
+    const formattedAreas = Object.keys(conservationAreasLogic).reduce((acc, key) => {
+      return { ...acc, [key]: conservationAreasLogic[key].toFixed(2) };
     }, {});
 
     return formattedAreas;
   }
 )
+
+const getAlreadyChecked  = createSelector(
+  [getActiveLayersFromProps],
+  (activeLayers) => {
+    if (!activeLayers) return {};
+    const alreadyChecked = WDPALayers.reduce((acc, option) => ({
+      ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title)
+    }), {});
+    return alreadyChecked;
+});
+
+const getProtectedLayers = createSelector(
+  [getConservationAreasFormatted],
+  (dataFormatted) => {
+    if (!dataFormatted) return [];
+    const protectedLayers = WDPALayers.map(layer => ({
+      ...layer,
+      name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
+      rightDot: layer.name === 'Protected areas' ? COLORS[PROTECTED] : COLORS[COMMUNITY_BASED]
+    })) || [];
+    return protectedLayers;
+});
+
+const getActiveSlices = createSelector(
+  [getConservationAreasLogic, getAlreadyChecked],
+  (rawData, alreadyChecked) => {
+    if (!rawData) return null;
+    const orangeActive = alreadyChecked['Protected areas'];
+    const yellowActive = alreadyChecked['Community areas'];
+
+    const activeSlices = rawData && Object.keys(rawData).reduce((obj, key) => {
+      if (key === NOT_UNDER_CONSERVATION) {
+        obj[key] = false;
+      } else {
+        obj[key] = key === PROTECTED ? orangeActive : yellowActive;
+      }
+      return obj;
+    }, {});
+    return activeSlices;
+});
 
 export default createStructuredSelector({
   terrestrialCellData: getTerrestrialCellData,
@@ -98,5 +132,8 @@ export default createStructuredSelector({
   dataFormatted: getConservationAreasFormatted,
   rawData: getConservationAreasLogic, 
   colors: COLORS,
-  allProp: getAllPropsForDynamicSentence
+  allProp: getAllPropsForDynamicSentence,
+  alreadyChecked: getAlreadyChecked,
+  protectedLayers: getProtectedLayers,
+  activeSlices: getActiveSlices
 });
