@@ -6,6 +6,7 @@ import Globe from 'components/globe';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
+import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 
@@ -63,7 +64,8 @@ const DataGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers}/>
-        <LandscapeViewManager activeLayers={activeLayers} zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
+        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <LocationWidget isNotMapsList={true} />
         <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
         <ZoomWidget isNotMapsList={true} />

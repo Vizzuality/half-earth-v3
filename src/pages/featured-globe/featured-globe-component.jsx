@@ -8,6 +8,7 @@ import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
+import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 
 import { loadModules } from '@esri/react-arcgis';
 
@@ -79,6 +80,7 @@ const FeaturedGlobeComponent = ({
       <div style={{ pointerEvents: isMapsList ? 'none' : '' }}>
         <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
           <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
+          <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
           {isGlobeUpdating && <Spinner floating />}
           <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions} />
           <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
