@@ -59,3 +59,10 @@ input[type="checkbox"] {
 .icon {
   @extend %icon;
 }
+
+.rightDot {
+  border-radius: 50%;
+  display: block;
+  height: 10px;
+  width: 10px;
+}

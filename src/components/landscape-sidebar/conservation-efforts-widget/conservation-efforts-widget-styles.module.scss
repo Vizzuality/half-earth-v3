@@ -1,0 +1,74 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+$margin: 8px;
+
+.container {
+  @include backdropBlur();
+  border-radius: 2px;
+  padding-bottom: 34px;
+  margin: {
+    top: $margin;
+    bottom: $margin;
+  }
+}
+
+.padding {
+  padding: 20px;
+}
+
+.title {
+  @extend %title;
+  margin: 0;
+  color: white;
+}
+
+.fixBlur {
+  position: fixed;
+}
+
+.overrideCheckbox-protected-areas {
+  input[type="checkbox"]:checked + label::before {
+    background: $persimmon;
+    border: 2px solid $white; 
+  }
+}
+
+.overrideCheckbox-community-areas {
+  input[type="checkbox"]:checked + label::before {
+    background: $saffron-mango;
+    border: 2px solid $white; 
+  }
+}
+
+.notUnderConservationLabel {
+  @extend  %bodyText;
+  color: $white;
+  padding: 0 20px;
+  position: relative;
+  margin: 8px 0 0;
+  width: max-content;
+
+  &:after {
+    content: '';
+    background: $slate-gray;
+    border-radius: 50%;
+    display: block;
+    height: 10px;
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    width: 10px;
+  }
+}
+
+.description {
+  @extend %annotation;
+  color: $alto;
+  margin-bottom: 24px;
+}
+
+.boldFont {
+  font-family: $font-family-1-bold;
+}

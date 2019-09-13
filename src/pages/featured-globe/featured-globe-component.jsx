@@ -58,7 +58,8 @@ const FeaturedGlobeComponent = ({
   setLayerOrder,
   isGlobeUpdating,
   customFunctions,
-  selectedSpecies
+  selectedSpecies,
+  handleLayerToggle
  }) => {
   const isMapsList = selectedSidebar === 'featuredMapsList';
   const [handle, setHandle] = useState(null);
@@ -126,18 +127,17 @@ const FeaturedGlobeComponent = ({
           {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
           {isLandscapeMode && <LabelsLayer />}
           {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
-          {isLandscapeMode && (
-            <LandscapeSidebar
-              isLandscapeMode={isLandscapeMode}
-              isFullscreenActive={isFullscreenActive}
-              handleGlobeUpdating={handleGlobeUpdating}
-              activeLayers={activeLayers}
-              rasters={rasters}
-              setRasters={setRasters}
-              setLayerVisibility={setLayerVisibility}
-              selectedSpecies={selectedSpecies}
-            />
-          )}
+          <LandscapeSidebar
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            activeLayers={activeLayers}
+            rasters={rasters}
+            setRasters={setRasters}
+            handleLayerToggle={handleLayerToggle}
+            setLayerVisibility={setLayerVisibility}
+            selectedSpecies={selectedSpecies}
+          />
         </Globe>
       </div>
       <FeaturedMapsList
