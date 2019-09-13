@@ -53,7 +53,8 @@ const DataGlobeComponent = ({
   onLoad,
   setLayerOpacity,
   setLayerOrder,
-  handleSwitch
+  handleSwitch,
+  selectedSpecies
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -123,6 +124,7 @@ const DataGlobeComponent = ({
           rasters={rasters}
           setRasters={setRasters}
           setLayerVisibility={setLayerVisibility}
+          selectedSpecies={selectedSpecies}
         />
       </Globe>
       <About />

@@ -18,7 +18,8 @@ const LandscapeSidebarComponent = ({
   rasters,
   setLayerVisibility,
   setRasters,
-  handleGlobeUpdating
+  handleGlobeUpdating,
+  selectedSpecies
 }) => {
 
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
@@ -36,7 +37,7 @@ const LandscapeSidebarComponent = ({
           setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
-        <SpeciesWidget />
+        <SpeciesWidget selectedSpecies={selectedSpecies}/>
         <MOLUploader />
       </div>
     </div>
