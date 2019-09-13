@@ -4,7 +4,7 @@ import CheckboxGroup from 'components/checkbox-group';
 import { 
   COMMUNITY_BASED,
   PROTECTED
-} from 'components/landscape-sidebar/conservation-efforts-widget/conservation-efforts-widget-selectors';
+} from './conservation-efforts-widget-selectors';
 import styles from './conservation-efforts-widget-styles.module.scss';
 
 const ConservationEffortsDescription = ({ allProp, rawData }) => {
@@ -48,11 +48,9 @@ const ConservationEffortsWidget = ({
             options={protectedLayers}
             theme={styles}
           />
-          {rawData && (
-            <p className={styles.notUnderConservationLabel}>
-              Not under conservation {dataFormatted.notUnderConservation}%
-            </p>
-          )}
+          <p className={styles.notUnderConservationLabel}>
+            Not under conservation {dataFormatted.notUnderConservation}%
+          </p>
         </div>
       )}
     </>

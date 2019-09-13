@@ -51,13 +51,12 @@ const getConservationAreasLogic = createSelector(
 
     const areas = {};
     const { WDPA_prop, RAISG_prop, all_prop } = conservationEfforts;
+    areas[NOT_UNDER_CONSERVATION] = (1 - (WDPA_prop +RAISG_prop)) * 100; // set NOT_UNDER_CONSERVATION first to render the slice below all others
     if (WDPA_prop + RAISG_prop > all_prop) {
       areas[COMMUNITY_BASED] = (all_prop - WDPA_prop) * 100;
     } else {
       areas[COMMUNITY_BASED] = RAISG_prop * 100;
     }
-
-    areas[NOT_UNDER_CONSERVATION] = (1 - (WDPA_prop +RAISG_prop)) * 100;
     areas[PROTECTED] = WDPA_prop * 100;
 
     return areas;
@@ -68,7 +67,6 @@ const getAllPropsForDynamicSentence = createSelector(
   [getConservationEfforts],
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
-
     return conservationEfforts.all_prop * 100;
   }
 )
@@ -114,7 +112,6 @@ const getActiveSlices = createSelector(
     if (!rawData) return null;
     const orangeActive = alreadyChecked['Protected areas'];
     const yellowActive = alreadyChecked['Community areas'];
-
     const activeSlices = rawData && Object.keys(rawData).reduce((obj, key) => {
       if (key === NOT_UNDER_CONSERVATION) {
         obj[key] = false;
