@@ -134,6 +134,7 @@ const FeaturedGlobeComponent = ({
             activeLayers={activeLayers}
             rasters={rasters}
             setRasters={setRasters}
+            handleLayerToggle={handleLayerToggle}
             setLayerVisibility={setLayerVisibility}
             selectedSpecies={selectedSpecies}
           />

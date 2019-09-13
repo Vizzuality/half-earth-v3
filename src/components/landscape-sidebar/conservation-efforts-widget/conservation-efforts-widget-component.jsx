@@ -26,7 +26,6 @@ const ConservationEffortsWidget = ({
   activeSlices,
   toggleLayer
 }) => {
-
   return (
     <>
       {rawData && (
@@ -34,7 +33,7 @@ const ConservationEffortsWidget = ({
           <div className={styles.fixBlur} />
           <div className={styles.padding}>
             <h3 className={styles.title}>Conservation Efforts</h3>
-            {allProp && rawData && <ConservationEffortsDescription allProp={allProp} rawData={rawData} />}
+            {rawData && <ConservationEffortsDescription allProp={allProp} rawData={rawData} />}
             <PieChart
               data={rawData}
               activeSlices={activeSlices}

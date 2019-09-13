@@ -39,7 +39,6 @@ const LandscapeSidebarComponent = ({
           setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
-        <SpeciesWidget selectedSpecies={selectedSpecies}/>
         <ConservationEffortsWidget
           map={map}
           view={view}
@@ -47,6 +46,7 @@ const LandscapeSidebarComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
           handleLayerToggle={handleLayerToggle}
         />
+        <SpeciesWidget selectedSpecies={selectedSpecies}/>
         <MOLUploader />
       </div>
     </div>
