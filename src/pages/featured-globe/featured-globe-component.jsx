@@ -20,6 +20,7 @@ import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 import Switcher from 'components/switcher';
 import FeaturedMapsList from 'components/featured-maps-list';
+import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
 import Spinner from 'components/spinner';
@@ -46,6 +47,7 @@ const FeaturedGlobeComponent = ({
   isLandscapeMode,
   selectedFeaturedMap,
   selectedFeaturedPlace,
+  selectedTaxa,
   featuredPlacesLayer,
   clickCallbacksArray,
   mouseMoveCallbacksArray,
@@ -63,7 +65,6 @@ const FeaturedGlobeComponent = ({
  }) => {
   const isMapsList = selectedSidebar === 'featuredMapsList';
   const [handle, setHandle] = useState(null);
-
   const spinGlobe = (view) => {
     loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
       const camera = view.camera.clone();
@@ -104,7 +105,12 @@ const FeaturedGlobeComponent = ({
           />
           <SelectedFeaturedMapLayer
             selectedFeaturedMap={selectedFeaturedMap}
+            selectedTaxa={selectedTaxa}
             featuredPlacesLayer={featuredPlacesLayer}
+            handleLayerToggle={handleLayerToggle}
+          />
+          <FeaturedTaxaSelector
+            selectedTaxa={selectedTaxa}
           />
           <FeaturedPlaceViewManager
             selectedFeaturedPlace={selectedFeaturedPlace}
