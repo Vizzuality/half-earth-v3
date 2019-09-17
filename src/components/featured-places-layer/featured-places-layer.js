@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from '@esri/react-arcgis';
-import { layerManagerVisibility, createLayer } from 'utils/layer-manager-utils'; 
+import { layerInMap } from 'utils/layer-manager-utils';
+import { PRIORITY_PLACES_POLYGONS, PRIORITY_POLYGONS_GRAPHIC_LAYER } from 'constants/layers-slugs';
+import layersConfig from 'constants/layers-config';
 
 
 
-const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, featuredPlacesLayer }) => {
+const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featuredPlacesLayer, handleLayerToggle }) => {
 
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
-  const [priorityPolygonsFeatureLayer, setPriorityPolygonsFeatureLayer] = useState(null);
+  const [ priorityPolygonsLayer, setPriorityPolygonsLayer ] = useState(null);
+  const [ graphicsLayer, setGraphicsLayer ] = useState(null);
 
   // store featured places layer view to query against it
   useEffect(() => {
@@ -21,36 +24,98 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, featuredPlacesLayer 
   // display only the places belonging to the selected featured map
   useEffect(() => {
     if (featuredPlacesLayerView) {
+      const whereClause = selectedFeaturedMap === 'priorPlaces' ? `txSlug = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`
       loadModules(["esri/views/layers/support/FeatureFilter"]).then(([FeatureFilter]) => {
         featuredPlacesLayerView.filter = new FeatureFilter({
-          where: `ftr_slg = '${selectedFeaturedMap}'`
+          where: whereClause
         });
       })
     }
-  }, [featuredPlacesLayerView, selectedFeaturedMap])
+  }, [featuredPlacesLayerView, selectedFeaturedMap, selectedTaxa])
 
   useEffect(() => {
-    if (selectedFeaturedMap === 'biodiversityPlaces') {
-      if (!priorityPolygonsFeatureLayer) {
-        loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
-         const priorityPolygonsLayer = new FeatureLayer({
-           // URL to the service
-           url: "https://utility.arcgis.com/usrsvcs/servers/9d466a49b2594519bd5dbf4a9d38195f/rest/services/disPriorFacet_v1/FeatureServer"
-         });
-         setPriorityPolygonsFeatureLayer(priorityPolygonsLayer);
-       })
-      }
-    }
+    loadModules(
+      [
+        "esri/layers/GraphicsLayer"
+      ]).then(([GraphicsLayer]) => {
+        const _graphicsLayer = new GraphicsLayer({
+          id: PRIORITY_POLYGONS_GRAPHIC_LAYER,
+          title: PRIORITY_POLYGONS_GRAPHIC_LAYER,
+          graphics: []
+        });
+        view.map.add(_graphicsLayer);
+        setGraphicsLayer(_graphicsLayer);
+      })
   }, [])
 
   useEffect(() => {
-    if (selectedFeaturedMap === 'biodiversityPlaces' && priorityPolygonsFeatureLayer) {
+    if (selectedFeaturedMap === 'priorPlaces') {
+      const layerExists = layerInMap(PRIORITY_PLACES_POLYGONS, map);
+      if (!layerExists) {
+        const layerConfig = layersConfig[PRIORITY_PLACES_POLYGONS];
+        loadModules([`esri/layers/${layerConfig.type}`])
+          .then(([LayerConstructor]) => {
+            const layer = new LayerConstructor({
+              url: `${layerConfig.url}`,
+              title: layerConfig.title
+            });
+            setPriorityPolygonsLayer(layer);
+          })
+      }
+      handleLayerToggle(PRIORITY_PLACES_POLYGONS);
+    }
+  }, [selectedFeaturedMap])
 
-      map.add(priorityPolygonsFeatureLayer);
-      const layer = map.layers.items.find(l => l.title === 'DisPriorFacet v1');
-      console.log(layer)
-    } 
-  }, [selectedFeaturedMap, priorityPolygonsFeatureLayer])
+  useEffect(() => {
+    if (selectedFeaturedMap === 'priorPlaces' && priorityPolygonsLayer) {
+      const taxaQueryObject = taxaQuery(priorityPolygonsLayer, selectedTaxa);
+      priorityPolygonsLayer.queryFeatures(taxaQueryObject)
+      .then(async function(results) {
+        const { features } = results;
+        const graphicsArray = await createGraphicsArray(features, selectedTaxa);
+        graphicsLayer.addMany(graphicsArray);
+      })
+    }
+    return function cleanUp() {
+      if (graphicsLayer) { graphicsLayer.graphics = [] };
+    }
+  }, [selectedFeaturedMap, graphicsLayer, priorityPolygonsLayer, selectedTaxa])
+
+  const taxaQuery = (layer, taxa) => {
+    const query = layer.createQuery();
+    query.where = `txSlug = '${taxa}'`
+    return query;
+  }
+  
+  const createGraphicsArray = (features, taxa) => {
+    return loadModules(["esri/Graphic"])
+      .then(([Graphic]) => {
+        const taxaStyles = layersConfig[PRIORITY_PLACES_POLYGONS].styles[taxa];
+        return features.map(feature => createGraphic(feature, Graphic, taxaStyles));
+      })
+  }
+
+  const createGraphic = (feature, Graphic, taxaStyles) => {
+    const { geometry } = feature;
+    const { fillRgb, fillOpacity, outlineRgb, outlineOpacity } = taxaStyles;
+    return new Graphic({
+    symbol: {
+      type: "polygon-3d",
+      symbolLayers: [
+        {
+          type: "fill",
+          material: { color: [...fillRgb, fillOpacity], },
+          outline: {
+            color: [...outlineRgb, outlineOpacity],
+            size: 1
+          }
+        }
+      ]
+    },
+    geometry
+  });
+  }
+
 
   return null;
 }
