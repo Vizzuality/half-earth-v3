@@ -1,6 +1,7 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
 @import 'styles/typography-extends';
+
 .container {
   @include backdropBlur();
   position: absolute;
@@ -9,11 +10,19 @@
   align-items: center;
   height: 80px;
   width: 500px;
-  color: $white;
   border-radius: 2px;
   bottom: 20px;
   left: calc(50% - 250px);
   padding: 10px 0;
+}
+
+.taxaButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .taxaIconContainer {
@@ -27,14 +36,11 @@
 
 .taxaName {
   @extend %bodyText;
+  color: $white;
   margin: 0;
 }
 
-.taxaButton {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  justify-content: space-between;
-  cursor: pointer;
+.selectedTaxa {
+  box-shadow: 0 0 8px 0 #FFFFFF;
+  border: 2px solid #FFFFFF;
 }
