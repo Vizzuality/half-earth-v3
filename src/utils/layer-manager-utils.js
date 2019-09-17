@@ -46,6 +46,8 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
   callback({ activeLayers: updatedLayers });
 };
 
+export const layerInMap = (layerTitle, map) => map.layers.items.some(l => l.title === layerTitle);
+
 export const createLayer = (layer, map) => {
   return loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
     const { url, slug } = layer;
