@@ -7,10 +7,18 @@ import layersConfig from 'constants/layers-config';
 
 
 const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featuredPlacesLayer, handleLayerToggle }) => {
+  const priorityPolygonsInitialState = {
+    'all': null,
+    'amphibians': null,
+    'birds': null,
+    'mammals': null,
+    'reptiles': null
+  }
 
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
   const [ priorityPolygonsLayer, setPriorityPolygonsLayer ] = useState(null);
   const [ graphicsLayer, setGraphicsLayer ] = useState(null);
+  const [ polygons, setPolygons ] = useState(priorityPolygonsInitialState);
 
   // store featured places layer view to query against it
   useEffect(() => {
@@ -68,13 +76,18 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featur
 
   useEffect(() => {
     if (selectedFeaturedMap === 'priorPlaces' && priorityPolygonsLayer) {
-      const taxaQueryObject = taxaQuery(priorityPolygonsLayer, selectedTaxa);
-      priorityPolygonsLayer.queryFeatures(taxaQueryObject)
-      .then(async function(results) {
-        const { features } = results;
-        const graphicsArray = await createGraphicsArray(features, selectedTaxa);
-        graphicsLayer.addMany(graphicsArray);
-      })
+      if (polygons[selectedTaxa]) {
+        graphicsLayer.addMany(polygons[selectedTaxa]);
+      } else {
+        const taxaQueryObject = taxaQuery(priorityPolygonsLayer, selectedTaxa);
+        priorityPolygonsLayer.queryFeatures(taxaQueryObject)
+        .then(async function(results) {
+          const { features } = results;
+          const graphicsArray = await createGraphicsArray(features, selectedTaxa);
+          setPolygons({ ...polygons, [selectedTaxa]: graphicsArray });
+          graphicsLayer.addMany(graphicsArray);
+        })
+      }
     }
     return function cleanUp() {
       if (graphicsLayer) { graphicsLayer.graphics = [] };
