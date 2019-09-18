@@ -22,7 +22,7 @@ const FeaturedTaxaSelectorComponent = ({
     <div className={styles.wrapper}>
       <div className={cx(styles.container, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
         {taxa.map(t => (
-          <div className={styles.taxaButton} onClick={() => handleTaxaButtonClick(t.slug)}>
+          <div key={t.slug} className={styles.taxaButton} onClick={() => handleTaxaButtonClick(t.slug)}>
             <div 
               className={cx(
                 styles.taxaIconContainer,
