@@ -58,8 +58,7 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featur
 
   useEffect(() => {
     if (selectedFeaturedMap === 'priorPlaces') {
-      const layerExists = layerInMap(PRIORITY_PLACES_POLYGONS, map);
-      if (!layerExists) {
+      if (!priorityPolygonsLayer) {
         const layerConfig = layersConfig[PRIORITY_PLACES_POLYGONS];
         loadModules([`esri/layers/${layerConfig.type}`])
           .then(([LayerConstructor]) => {
@@ -70,7 +69,6 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featur
             setPriorityPolygonsLayer(layer);
           })
       }
-      handleLayerToggle(PRIORITY_PLACES_POLYGONS);
     }
   }, [selectedFeaturedMap])
 
