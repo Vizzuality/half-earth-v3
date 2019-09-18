@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Tutorial from 'components/tutorial'
 import RadioGroup from 'components/radio-group';
 
 import styles from './biodiversity-layers-styles.module.scss';
@@ -41,13 +41,15 @@ const BiodiversityLayers = ({
               <div className={styles.widgetWrapper} key={subct.name}>
                 <h2 className={styles.widgetSubTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
-                  <RadioGroup
-                    activeLayers={activeLayers}
-                    options={subct.taxa}
-                    title={subct.name}
-                    handleExclusiveLayerToggle={handleExclusiveLayerToggle}
-                    handleSimpleLayerToggle={handleSimpleLayerToggle}
-                  />
+                  <Tutorial >
+                    <RadioGroup
+                      activeLayers={activeLayers}
+                      options={subct.taxa}
+                      title={subct.name}
+                      handleExclusiveLayerToggle={handleExclusiveLayerToggle}
+                      handleSimpleLayerToggle={handleSimpleLayerToggle}
+                    />
+                  </Tutorial>
                 </div>
               </div>
             ))

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
-
+import RadioButton from './radio-button/radio-button';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as SwitchIcon } from 'icons/switch.svg';
 
@@ -38,25 +38,19 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
           styles.radioOption,
           { [styles.radioOptionSelected]: isSelected(option) }
         )}>
-          <>
-            <input
-              type="radio"
-              name={title}
-              id={option.value}
-              value={option.value}
-              checked={isSelected(option)}
-              onClick={() => {
-                if (isSelected(option)) {
-                  handleSimpleLayerToggle(option.layers[variant]);
-                } else {
-                  handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
-                }
-              }}
-            />
-            <label htmlFor={option.value} className={styles.radioInput}>
-              {option.name}
-            </label>
-          </>
+          <RadioButton
+            name={title}
+            value={option.value}
+            checked={isSelected(option)}
+            onClick={() => {
+              if (isSelected(option)) {
+                handleSimpleLayerToggle(option.layers[variant]);
+              } else {
+                handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
+              }
+            }}
+            text={option.name}
+          />
           {isSelected(option) && (
             <div className={styles.toggle}>
               <InfoIcon

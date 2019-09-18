@@ -6,7 +6,7 @@
   display: inline-block;
   box-sizing: border-box;
   border-radius: 2px;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .wrapper {
@@ -18,7 +18,7 @@
   top: 0;
   bottom: 0;
   width: $sidebar-width;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .button {
@@ -44,6 +44,8 @@
 .content {
   @extend %verticalScrollBar;
   max-height: calc(100vh - (#{$sidebar-top-margin} + #{$sidebar-header-height}));
-  width: $sidebar-width;
+  // width: $sidebar-width;
+  width: 310px;
+  padding-right: 30px;
   position: relative;
 }
