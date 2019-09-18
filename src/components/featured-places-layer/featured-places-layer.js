@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from '@esri/react-arcgis';
-import { layerInMap } from 'utils/layer-manager-utils';
 import { PRIORITY_PLACES_POLYGONS, PRIORITY_POLYGONS_GRAPHIC_LAYER } from 'constants/layers-slugs';
 import layersConfig from 'constants/layers-config';
 
@@ -56,6 +55,7 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featur
       })
   }, [])
 
+  // Create layer from the service to query it later
   useEffect(() => {
     if (selectedFeaturedMap === 'priorPlaces') {
       if (!priorityPolygonsLayer) {
@@ -72,25 +72,30 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, selectedTaxa, featur
     }
   }, [selectedFeaturedMap])
 
+  // Query layer and create graphics if not done before
   useEffect(() => {
     if (selectedFeaturedMap === 'priorPlaces' && priorityPolygonsLayer) {
-      if (polygons[selectedTaxa]) {
-        graphicsLayer.addMany(polygons[selectedTaxa]);
-      } else {
+      if (!polygons[selectedTaxa]) {
         const taxaQueryObject = taxaQuery(priorityPolygonsLayer, selectedTaxa);
         priorityPolygonsLayer.queryFeatures(taxaQueryObject)
         .then(async function(results) {
           const { features } = results;
           const graphicsArray = await createGraphicsArray(features, selectedTaxa);
           setPolygons({ ...polygons, [selectedTaxa]: graphicsArray });
-          graphicsLayer.addMany(graphicsArray);
         })
-      }
+      } 
+    }
+  }, [selectedFeaturedMap, priorityPolygonsLayer, selectedTaxa])
+
+  // Add polygons to graphic layer
+  useEffect(() => {
+    if (selectedFeaturedMap === 'priorPlaces' && graphicsLayer) {
+      graphicsLayer.addMany(polygons[selectedTaxa])
     }
     return function cleanUp() {
       if (graphicsLayer) { graphicsLayer.graphics = [] };
     }
-  }, [selectedFeaturedMap, graphicsLayer, priorityPolygonsLayer, selectedTaxa])
+  }, [polygons, graphicsLayer, selectedTaxa, selectedFeaturedMap])
 
   const taxaQuery = (layer, taxa) => {
     const query = layer.createQuery();
