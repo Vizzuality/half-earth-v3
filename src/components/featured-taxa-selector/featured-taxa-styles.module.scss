@@ -2,17 +2,22 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.wrapper {
+  position: absolute;
+  bottom: 20px;
+  overflow: hidden;
+  left: calc(50% - 250px);
+}
+
 .container {
   @include backdropBlur();
-  position: absolute;
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
   height: 80px;
   width: 500px;
   border-radius: 2px;
-  bottom: 20px;
-  left: calc(50% - 250px);
   padding: 10px 0;
 }
 

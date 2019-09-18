@@ -111,6 +111,11 @@ const FeaturedGlobeComponent = ({
           />
           <FeaturedTaxaSelector
             selectedTaxa={selectedTaxa}
+            isMapsList={isMapsList}
+            selectedFeaturedMap={selectedFeaturedMap}
+            isFullscreenActive={isFullscreenActive}
+            isLandscapeMode={isLandscapeMode}
+            selectedFeaturedPlace={selectedFeaturedPlace}
           />
           <FeaturedPlaceViewManager
             selectedFeaturedPlace={selectedFeaturedPlace}
