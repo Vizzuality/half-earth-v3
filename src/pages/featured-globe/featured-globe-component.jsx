@@ -23,6 +23,7 @@ import FeaturedMapsList from 'components/featured-maps-list';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
+import PriorityPlacesPolygonsLayer from 'components/priority-places-polygons-layer';
 import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
@@ -38,30 +39,30 @@ const GridLayer = loadable(() => import('components/grid-layer'));
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
 const FeaturedGlobeComponent = ({
-  hasMetadata,
-  sceneSettings,
-  selectedSidebar,
   onLoad,
-  isFullscreenActive,
-  handleZoomChange,
-  isLandscapeMode,
+  sceneSettings,
+  rasters,
+  activeLayers,
+  selectedSpecies,
+  featuredPlacesLayer,
+  selectedTaxa,
+  selectedSidebar,
   selectedFeaturedMap,
   selectedFeaturedPlace,
-  selectedTaxa,
-  featuredPlacesLayer,
-  clickCallbacksArray,
-  mouseMoveCallbacksArray,
-  activeLayers,
-  rasters,
-  setRasters,
-  setLayerVisibility,
-  handleGlobeUpdating,
-  setLayerOpacity,
-  setLayerOrder,
+  hasMetadata,
+  isLandscapeMode,
   isGlobeUpdating,
+  isFullscreenActive,
+  setRasters,
+  setLayerOrder,
+  setLayerOpacity,
+  setLayerVisibility,
+  handleZoomChange,
+  handleLayerToggle,
+  handleGlobeUpdating,
   customFunctions,
-  selectedSpecies,
-  handleLayerToggle
+  clickCallbacksArray,
+  mouseMoveCallbacksArray
  }) => {
   const isMapsList = selectedSidebar === 'featuredMapsList';
   const [handle, setHandle] = useState(null);
@@ -108,6 +109,10 @@ const FeaturedGlobeComponent = ({
             selectedTaxa={selectedTaxa}
             featuredPlacesLayer={featuredPlacesLayer}
             handleLayerToggle={handleLayerToggle}
+          />
+          <PriorityPlacesPolygonsLayer
+            selectedFeaturedMap={selectedFeaturedMap}
+            selectedTaxa={selectedTaxa}
           />
           <FeaturedTaxaSelector
             selectedTaxa={selectedTaxa}
