@@ -54,10 +54,12 @@ const getConservationAreasLogic = createSelector(
     areas[NOT_UNDER_CONSERVATION] = (1 - (WDPA_prop +RAISG_prop)) * 100; // set NOT_UNDER_CONSERVATION first to render the slice below all others
     if (WDPA_prop + RAISG_prop > all_prop) {
       areas[COMMUNITY_BASED] = (all_prop - WDPA_prop) * 100;
+      areas[PROTECTED] = WDPA_prop * 100;
+      areas[NOT_UNDER_CONSERVATION] = 100 - (areas[PROTECTED] + areas[COMMUNITY_BASED]);
     } else {
       areas[COMMUNITY_BASED] = RAISG_prop * 100;
+      areas[PROTECTED] = WDPA_prop * 100;
     }
-    areas[PROTECTED] = WDPA_prop * 100;
 
     return areas;
   }
