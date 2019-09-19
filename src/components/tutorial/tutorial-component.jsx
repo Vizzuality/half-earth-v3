@@ -6,7 +6,7 @@ import RadioButton from 'components/radio-group/radio-button';
 import styles from './tutorial-styles.module.scss';
 
 const TutorialModal = ({ description, onClick, checked, setChecked }) => {
-  console.log( 'TutorialModal checked:',checked);
+  // console.log( 'TutorialModal checked:',checked);
   return (
     <div className={styles.modalContainer}>
       <div>
@@ -31,15 +31,24 @@ const TutorialModal = ({ description, onClick, checked, setChecked }) => {
 }
 
 
-const TutorialComponent = ({ children, position, description }) => {
+const TutorialComponent = ({ children, position, description, showHint = true, tutorialEnabled, setTutorialEnabled, tutorialID }) => {
   // const [ref, setRef] = useState(null);
   const [isOpened, setOpened] = useState(false);
   const [isChecked, setChecked] = useState(false);
-  const [hideTutorial, setHideTutorial] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(true);
 
   useEffect(() => {
-    const _hideTutorial = localStorage.getItem('HE-tutorial-hide');
-    setHideTutorial(!!_hideTutorial);
+    const HEtutorialEnabled = localStorage.getItem('HE-tutorial-enabled');
+    const HEtutorialEnabledBool = (HEtutorialEnabled == 'true');
+    const _enabledTutorial = HEtutorialEnabled === null ? true : HEtutorialEnabledBool;
+    setTutorialEnabled(_enabledTutorial);
+
+    const showThisTutorial = localStorage.getItem(`show-${tutorialID}`);
+    const showThisTutorialBool = (showThisTutorial == 'true');
+    const _showThisTutorial = showThisTutorial === null ? true : showThisTutorialBool;
+    setShowPrompt(_showThisTutorial);
+    console.log('show this tutorial:', showPrompt)
+
   }
   ,[]);
 
@@ -50,9 +59,12 @@ const TutorialComponent = ({ children, position, description }) => {
   const handleClosePrompt = () => {
     ReactTooltip.hide();
     setOpened(false);
+    localStorage.setItem(`show-${tutorialID}`, false);
+    setShowPrompt(false);
+
     if(isChecked) {
-      localStorage.setItem('HE-tutorial-hide', true);
-      setHideTutorial(true);
+      localStorage.setItem('HE-tutorial-enabled', false);
+      setTutorialEnabled(false);
     }
   }
   const toggleChecked = () => setChecked(!isChecked);
@@ -64,33 +76,35 @@ const TutorialComponent = ({ children, position, description }) => {
       })}
     </div>
   )
-
-  const z = `questionMarkButtonId`;
+  // console.log('showPrompt: ',showPrompt)
+  // const z = `questionMarkButtonId`;
   return (
     <>
-      {hideTutorial ? (
+      {!tutorialEnabled ? (
         renderChildren(children)
       ) : (
-        <div className={styles.container}>
-          <button
-            className={styles.questionMarkButton}
-            style={{...position.style, display: isOpened ? 'none' : 'block' }}
-            data-tip
-            data-place={position.dataPlace}
-            data-for={z}
-            // data-event-off='click'
-            data-effect='solid'
-            data-event='click'
-            data-delay-show={0}
-            data-delay-hide={0}
-            data-class="tutorial-modal-class"
-            // ref={ref => setRef(ref) }
-            onClick={handleOpenPrompt}
-          >
-            <QuestionIcon />
-          </button>
+          <div className={styles.container}>
+            {showPrompt && showHint &&
+              <button
+                className={styles.questionMarkButton}
+                style={{...position.style, display: isOpened ? 'block' : 'block' }}
+                data-tip
+                data-place={position.dataPlace}
+                data-for={tutorialID}
+                // data-event-off='click'
+                data-effect='solid'
+                data-event='click'
+                data-delay-show={0}
+                data-delay-hide={0}
+                data-class="tutorial-modal-class"
+                // ref={ref => setRef(ref) }
+                onClick={handleOpenPrompt}
+              >
+                <QuestionIcon />
+              </button>
+            }
           <ReactTooltip
-            id={z}
+            id={tutorialID}
             clickable={true}
             globalEventOff="click"
           >
@@ -100,7 +114,7 @@ const TutorialComponent = ({ children, position, description }) => {
               setChecked={toggleChecked}
               checked={isChecked}
             />
-          </ReactTooltip>}
+          </ReactTooltip>
           {renderChildren(children)}
         </div>
       )}

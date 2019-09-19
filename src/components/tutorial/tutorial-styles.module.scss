@@ -10,7 +10,7 @@
   position: absolute;
   width: 16px;
   border-radius: 100%;
-
+  z-index: 999;
   svg {
     fill: $brand-color-main;
     width: 16px;
@@ -33,7 +33,8 @@
   padding: 24px;
   min-height: 200px;
   width: 270px;
-  
+  transform: translateY(50%);
+
   .button {
     align-self: end;
     height: 32px;
@@ -45,6 +46,7 @@
   label {
     @extend %annotation;
     padding-left: 0 !important;
+    text-transform: unset;
   }
 }
 
@@ -54,7 +56,6 @@
   .tutorial-modal-class {
     background-color: transparent !important;
     padding: 0;
-    // transform: translateY(50%);
 
     &::before, &::after {
       display: none;

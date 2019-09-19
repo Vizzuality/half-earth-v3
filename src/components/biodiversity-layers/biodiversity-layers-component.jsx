@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tutorial from 'components/tutorial'
 import RadioGroup from 'components/radio-group';
+import { RARITY_RICHNESS_TUTORIAL } from 'constants/tutorial';
 
 import styles from './biodiversity-layers-styles.module.scss';
 
@@ -41,7 +42,11 @@ const BiodiversityLayers = ({
               <div className={styles.widgetWrapper} key={subct.name}>
                 <h2 className={styles.widgetSubTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
-                  <Tutorial >
+                  <Tutorial
+                    position='top-right'
+                    description='When activating a new biodiversity layer you can switch between rarity and richness.'
+                    tutorialID={RARITY_RICHNESS_TUTORIAL}
+                  >
                     <RadioGroup
                       activeLayers={activeLayers}
                       options={subct.taxa}
