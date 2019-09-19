@@ -31,26 +31,10 @@ const TutorialModal = ({ description, onClick, checked, setChecked }) => {
 }
 
 
-const TutorialComponent = ({ children, position, description, showHint = true, tutorialEnabled, setTutorialEnabled, tutorialID }) => {
+const TutorialComponent = ({ children, position, description, showHint = true, tutorialEnabled, setTutorialData, tutorialID }) => {
   // const [ref, setRef] = useState(null);
   const [isOpened, setOpened] = useState(false);
   const [isChecked, setChecked] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(true);
-
-  useEffect(() => {
-    const HEtutorialEnabled = localStorage.getItem('HE-tutorial-enabled');
-    const HEtutorialEnabledBool = (HEtutorialEnabled == 'true');
-    const _enabledTutorial = HEtutorialEnabled === null ? true : HEtutorialEnabledBool;
-    setTutorialEnabled(_enabledTutorial);
-
-    const showThisTutorial = localStorage.getItem(`show-${tutorialID}`);
-    const showThisTutorialBool = (showThisTutorial == 'true');
-    const _showThisTutorial = showThisTutorial === null ? true : showThisTutorialBool;
-    setShowPrompt(_showThisTutorial);
-    console.log('show this tutorial:', showPrompt)
-
-  }
-  ,[]);
 
   const handleOpenPrompt = () => {
     setOpened(true);
@@ -59,12 +43,10 @@ const TutorialComponent = ({ children, position, description, showHint = true, t
   const handleClosePrompt = () => {
     ReactTooltip.hide();
     setOpened(false);
-    localStorage.setItem(`show-${tutorialID}`, false);
-    setShowPrompt(false);
+    setTutorialData({ [tutorialID]: false }); // hide this specific tutorial prompt
 
     if(isChecked) {
-      localStorage.setItem('HE-tutorial-enabled', false);
-      setTutorialEnabled(false);
+      setTutorialData({ showAllTutorials: false });  // hide all tutorial prompts
     }
   }
   const toggleChecked = () => setChecked(!isChecked);
@@ -76,15 +58,13 @@ const TutorialComponent = ({ children, position, description, showHint = true, t
       })}
     </div>
   )
-  // console.log('showPrompt: ',showPrompt)
-  // const z = `questionMarkButtonId`;
+
   return (
     <>
       {!tutorialEnabled ? (
         renderChildren(children)
       ) : (
           <div className={styles.container}>
-            {showPrompt && showHint &&
               <button
                 className={styles.questionMarkButton}
                 style={{...position.style, display: isOpened ? 'block' : 'block' }}
@@ -102,7 +82,6 @@ const TutorialComponent = ({ children, position, description, showHint = true, t
               >
                 <QuestionIcon />
               </button>
-            }
           <ReactTooltip
             id={tutorialID}
             clickable={true}
@@ -117,9 +96,8 @@ const TutorialComponent = ({ children, position, description, showHint = true, t
           </ReactTooltip>
           {renderChildren(children)}
         </div>
-      )}
-    </>
-  )
+    )}
+  </>)    
 }
 
 export default TutorialComponent;

@@ -1,5 +1,5 @@
 import { createAction } from 'redux-tools';
 
-export const setTutorialEnabled = createAction(
-  'SET_TUTORIAL_ENABLED'
+export const setTutorialData = createAction(
+  'SET_TUTORIAL_DATA'
 ); 
