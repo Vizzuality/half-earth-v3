@@ -82,6 +82,7 @@ const ConservationEffortsWidget = (props) => {
     const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
   
     const layerToggled = map.layers.items.reduce((wantedLayer, currentLayer) => {
+      if(wantedLayer) return wantedLayer;
       if(currentLayer.title === option.id) return currentLayer;
       if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
       return wantedLayer;
