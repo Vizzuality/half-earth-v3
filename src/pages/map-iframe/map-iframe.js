@@ -4,7 +4,8 @@ import postRobot from 'post-robot';
 
 import { loadModules } from '@esri/react-arcgis';
 
-import { BIODIVERSITY_FACETS_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { PLEDGES_LAYER_URL } from 'constants/layers-urls';
 import { 
   layerManagerToggle,
   layerManagerOpacity
@@ -14,21 +15,51 @@ import { createLayer } from 'utils/layer-manager-utils';
 
 import Component from './map-iframe-component.jsx';
 import mapStateToProps from './map-iframe-selectors';
+import pledgeLightIcon from 'icons/pledge.svg'
 
 import ownActions from './map-iframe-actions.js';
 const actions = { ...ownActions };
 
+const pledgeLight = {
+  type: "point-3d", // autocasts as new PointSymbol3D()
+  symbolLayers: [
+    {
+      type: "icon", // autocasts as new IconSymbol3DLayer()
+      resource: {
+        href: pledgeLightIcon // move the pledge icon to contentful?
+      },
+      size: 15
+    }
+  ]
+};
+
 const handleMapLoad = (map, view, activeLayers) => {
   const { layers } = map;
-  const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
-  // set the outFields for the BIODIVERSITY_FACETS_LAYER
-  // to get all the attributes available
-  gridLayer.outFields = ["*"];
 
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work
   // It will be probably fixed on v4.13
   const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+
+  // pledges layer
+  loadModules([
+    'esri/layers/FeatureLayer'
+  ]).then(([
+    FeatureLayer
+  ]) => {
+    const layer = new FeatureLayer({
+      url: PLEDGES_LAYER_URL,
+      renderer: {
+        type: 'simple',
+        symbol: pledgeLight
+      },
+      featureReduction: { type: 'selection' }
+    });
+    
+    layer.visible = false; // not displayed by default
+    map.add(layer);
+  })
+  
   loadModules(["esri/config"]).then(([esriConfig]) => {
     esriConfig.request.interceptors.push({
       urls: `${humanImpactLayer.url}/exportImage`,
@@ -53,19 +84,19 @@ const handleMapLoad = (map, view, activeLayers) => {
 const dataGlobeContainer = props => {
   const attachPostRobotListeners = () => {
     postRobot.on('mapFlyToCoordinates', event => {
-      const { center = [], zoom = 1 } = event.data;
+      const { center = [], zoom = 1 } = event.data; // { center: [4, 5], zoom: 8 }
       if (center.length || zoom) {
         flyToLocation(center, zoom);
         return { done: true };
       }
       return { done: false };
     });
-    postRobot.on('setMapLayers', event => {
+    postRobot.on('setMapLayers', event => { // [ 'Pledges', 'Biodiversity-facets', ... ]
       const { layers = [] } = event.data;
       layers.forEach(layerId => toggleLayer(layerId));
       return { done: true };
     });
-    postRobot.on('setLayersOpacity', event => {
+    postRobot.on('setLayersOpacity', event => { // [ { id: 'Pledges', opacity: 1 }, { id: 'Biodiversity', opacity: 0.6 } ] 
       const { layers = [] } = event.data;
       layers.forEach(layer => setLayerOpacity(layer.id, layer.opacity));
       return { done: true };

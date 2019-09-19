@@ -3,6 +3,7 @@
 @import 'styles/common-animations.module';
 
 .sidebar {
+  @include animationFunction();
   display: inline-block;
   box-sizing: border-box;
   border-radius: 2px;
@@ -11,7 +12,6 @@
 
 .wrapper {
   @include backdropBlur();
-  @include animationFunction();
   display: flex;
   flex-direction: column;
   position: relative;

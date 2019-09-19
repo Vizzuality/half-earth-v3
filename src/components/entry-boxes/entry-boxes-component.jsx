@@ -25,7 +25,7 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
     <div data-cy="entry-boxes" className={styles.uiTopLeft}>
       {interfaceLoaded && categories.length &&
         categories.map(category => (
-          <div className={cx(animationStyles.transform, { [animationStyles.leftHidden]: categoryBoxHidden })} onClick={() => handleCategoryEnter(category)}>
+          <div key={category.name} className={cx(animationStyles.transform, { [animationStyles.leftHidden]: categoryBoxHidden })} onClick={() => handleCategoryEnter(category)}>
             <CategoryBox
               title='mapping'
               isSidebarOpen={isSidebarOpen}
