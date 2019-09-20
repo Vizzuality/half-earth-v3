@@ -1,5 +1,7 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { loadModules } from '@esri/react-arcgis';
+import { WDPALayers } from 'constants/protected-areas';
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 
 const DEFAULT_OPACITY = 0.6;
 
@@ -74,4 +76,25 @@ export const getToggledLayer = (layers, option) => {
     if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
     return wantedLayer;
   }, null)
+}
+
+export const toggleWDPALayer = (activeLayers, option, handleGlobeUpdating, view, map, handleLayerToggle) => {
+  const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
+
+  const alreadyChecked = WDPALayers.reduce((acc, option) => ({
+    ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title)
+  }), {});
+  
+  const layerToggled = getToggledLayer(map.layers.items, option);
+  
+  if (layerNotRendered) {
+    handleGlobeUpdating(true);
+  }
+
+  handleLayerToggle(option.id);
+  handleLayerRendered(view, layerToggled, handleGlobeUpdating);
+
+  const isLayerActive = alreadyChecked[option.value];
+  if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
+  else removeLayerAnalyticsEvent({ slug: option.slug });
 }
