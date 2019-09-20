@@ -55,13 +55,14 @@ export const setRasterFuntion = (RasterFunction, Color, colorRamp) => (
   })
 )
 
-export const mosaicRuleFix = (esriConfig, layer) => (
-  esriConfig.request.interceptors.push({
+export const mosaicRuleFix = (esriConfig, layer, globe) => {
+  esriConfig.request.interceptors = [{
+    globe,
     urls: `${layer.url}/exportImage`,
     before: function (params) {
       if(params.requestOptions.query.mosaicRule) {
         params.requestOptions.query.mosaicRule = JSON.stringify(layer.mosaicRule.toJSON());
       }
     }
-  })
-)
+  }]
+}
