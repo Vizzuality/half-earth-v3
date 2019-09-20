@@ -105,6 +105,7 @@ const FeaturedGlobeComponent = ({
           <SelectedFeaturedMapLayer
             selectedFeaturedMap={selectedFeaturedMap}
             featuredPlacesLayer={featuredPlacesLayer}
+            isLandscapeMode={isLandscapeMode}
           />
           <FeaturedPlaceViewManager
             selectedFeaturedPlace={selectedFeaturedPlace}
