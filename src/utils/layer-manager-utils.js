@@ -66,3 +66,12 @@ export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
     })
   })
 }
+
+export const getToggledLayer = (layers, option) => {
+  return layers.reduce((wantedLayer, currentLayer) => {
+    if(wantedLayer) return wantedLayer;
+    if(currentLayer.title === option.id) return currentLayer;
+    if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
+    return wantedLayer;
+  }, null)
+}

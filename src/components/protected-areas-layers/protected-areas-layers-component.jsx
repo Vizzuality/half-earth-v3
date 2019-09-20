@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 import { usePaintLayer } from 'hooks/esri';
-import { handleLayerRendered } from 'utils/layer-manager-utils';
+import { handleLayerRendered, getToggledLayer } from 'utils/layer-manager-utils';
 import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
 import { PROTECTED_AREAS_VECTOR_TILE_LAYER, PROTECTED_AREAS_LAYER_GROUP, COMMUNITY_AREAS_LAYER_GROUP, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 
@@ -25,12 +25,7 @@ const ProtectedAreasLayers = ({ handleGlobeUpdating, handleLayerToggle, activeLa
   const toggleLayer = (layersPassed, option) => {
     const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
 
-    const layerToggled = layers.items.reduce((wantedLayer, currentLayer) => {
-      if(wantedLayer) return wantedLayer;
-      if(currentLayer.title === option.id) return currentLayer;
-      if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
-      return wantedLayer;
-    }, null)
+    const layerToggled = getToggledLayer(layers.items, option);
     
     if (layerNotRendered) {
       handleGlobeUpdating(true);

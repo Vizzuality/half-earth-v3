@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import conservationEffortsActions from 'redux_modules/conservation-efforts';
-import { handleLayerRendered } from 'utils/layer-manager-utils';
+import { handleLayerRendered, getToggledLayer } from 'utils/layer-manager-utils';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { 
   COMMUNITY_BASED,
@@ -81,12 +81,7 @@ const ConservationEffortsWidget = (props) => {
   const toggleLayer = (layersPassed, option) => {
     const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
   
-    const layerToggled = map.layers.items.reduce((wantedLayer, currentLayer) => {
-      if(wantedLayer) return wantedLayer;
-      if(currentLayer.title === option.id) return currentLayer;
-      if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
-      return wantedLayer;
-    }, null)
+    const layerToggled = getToggledLayer(map.layers.items, option);
     
     if (layerNotRendered) {
       handleGlobeUpdating(true);
