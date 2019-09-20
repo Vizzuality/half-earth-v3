@@ -44,7 +44,6 @@ const BiodiversityLayers = ({
                 <div className={styles.subcategoryRadioContainer}>
                   <Tutorial
                     position='top-right'
-                    description='When activating a new biodiversity layer you can switch between rarity and richness.'
                     tutorialID={RARITY_RICHNESS_TUTORIAL}
                   >
                     <RadioGroup

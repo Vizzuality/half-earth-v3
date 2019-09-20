@@ -14,6 +14,7 @@ import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
 import About from 'components/about';
 import Legend from 'components/legend';
+import TutorialTooltip from 'components/tutorial/tutorial-tooltip';
 
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
@@ -130,6 +131,7 @@ const DataGlobeComponent = ({
       </Globe>
       <About />
       {hasMetadata && <InfoModal />}
+      <TutorialTooltip />
     </>
   )
 };

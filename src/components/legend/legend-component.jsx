@@ -30,9 +30,8 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
       <div className={styles.legend}>
         <Tutorial
           position={'top-left'}
-          description={'In the legend you can get the layer’s metadata info, change its opacity or remove it from the map.'}
-          showHint={datasets && datasets.length > 1}
           tutorialID={LEGEND_TUTORIAL}
+          showHint={datasets && datasets.length > 1}
         >
           {!isFullscreenActive && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
             {datasets && datasets.map((dataset, i) => (
