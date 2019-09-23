@@ -52,7 +52,7 @@ const DataGlobeComponent = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} />
+          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
