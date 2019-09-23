@@ -13,7 +13,7 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isEntryBoxesOpen } = props;
+  const { view, isEntryBoxesOpen, isLegendOpen } = props;
   const { handleOpenSearch } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
@@ -23,17 +23,28 @@ const MenuFooterContainer = props => {
   const handleEntryBoxesOpen = () => props.changeUI({ isEntryBoxesOpen: true });
   const handleEntryBoxesClose = () => props.changeUI({ isEntryBoxesOpen: false });
 
+  const handleLegendOpen = () => props.changeUI({ isLegendOpen: true });
+  const handleLegendClose = () => props.changeUI({ isLegendOpen: false });
+
   const handleSearchClick = () => {
     if (isEntryBoxesOpen) { handleEntryBoxesClose(); }
+    if (isLegendOpen) { handleLegendClose(); }
     handleOpenSearch();
+  }
+
+  const handleLayersOpen = () => {
+    if (isLegendOpen) { handleLegendClose(); }
+    handleEntryBoxesOpen();
   }
 
   const handleLegendClick = () => {
     if (isEntryBoxesOpen) { handleEntryBoxesClose(); }
+    handleLegendOpen();
   }
 
   const handleSettingsClick = () => {
     if (isEntryBoxesOpen) { handleEntryBoxesClose(); }
+    if (isLegendOpen) { handleLegendClose(); }
   }
 
   const options = [
@@ -45,7 +56,7 @@ const MenuFooterContainer = props => {
     {
       icon: AddLayerIcon,
       name: 'Add layer',
-      onClickHandler: handleEntryBoxesOpen
+      onClickHandler: handleLayersOpen
     },
     {
       icon: LegendIcon,

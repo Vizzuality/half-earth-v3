@@ -70,7 +70,7 @@ const DataGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} />
+          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
