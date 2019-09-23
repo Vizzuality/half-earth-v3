@@ -13,38 +13,43 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isEntryBoxesOpen, isLegendOpen } = props;
+  const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen } = props;
   const { handleOpenSearch } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
     searchLocationAnalyticsEvent
   );
 
-  const handleEntryBoxesOpen = () => props.changeUI({ isEntryBoxesOpen: true });
-  const handleEntryBoxesClose = () => props.changeUI({ isEntryBoxesOpen: false });
+  const handleEntryBoxesOpen = () => {if (!isEntryBoxesOpen) props.changeUI({ isEntryBoxesOpen: true }); }
+  const handleEntryBoxesClose = () => { if (isEntryBoxesOpen) props.changeUI({ isEntryBoxesOpen: false }); }
 
-  const handleLegendOpen = () => props.changeUI({ isLegendOpen: true });
-  const handleLegendClose = () => props.changeUI({ isLegendOpen: false });
+  const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
+
+  const handleLegendOpen = () => { if (!isLegendOpen) props.changeUI({ isLegendOpen: true }); }
+  const handleLegendClose = () => { if (isLegendOpen) props.changeUI({ isLegendOpen: false }); }
 
   const handleSearchClick = () => {
-    if (isEntryBoxesOpen) { handleEntryBoxesClose(); }
-    if (isLegendOpen) { handleLegendClose(); }
+    handleEntryBoxesClose();
+    handleSidebarClose();
+    handleLegendClose();
     handleOpenSearch();
   }
 
   const handleLayersOpen = () => {
-    if (isLegendOpen) { handleLegendClose(); }
+    handleLegendClose();
     handleEntryBoxesOpen();
   }
 
   const handleLegendClick = () => {
-    if (isEntryBoxesOpen) { handleEntryBoxesClose(); }
+    handleEntryBoxesClose();
+    handleSidebarClose();
     handleLegendOpen();
   }
 
   const handleSettingsClick = () => {
-    if (isEntryBoxesOpen) { handleEntryBoxesClose(); }
-    if (isLegendOpen) { handleLegendClose(); }
+    handleEntryBoxesClose();
+    handleSidebarClose();
+    handleLegendClose();
   }
 
   const options = [
