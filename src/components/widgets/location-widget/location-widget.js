@@ -41,14 +41,17 @@ const LocationWidget = props => {
 
   // Update location in URL
   useEffect(() => {
-    const watchHandle = watchUtils && locationWidget && watchUtils.whenTrue(view, "stationary", function() {
-      const { longitude, latitude } = view.center;
-      handleLocationChange([longitude, latitude]);
-    });
+    let watchHandle;
+    if (view) {
+      watchHandle = watchUtils && locationWidget && watchUtils.whenTrue(view, "stationary", function() {
+        const { longitude, latitude } = view.center;
+        handleLocationChange([longitude, latitude]);
+      });
+    }
     return function cleanUp() {
       watchHandle && watchHandle.remove()
     }
-  }, [watchUtils, locationWidget]);
+  }, [view, watchUtils, locationWidget]);
 
   return null;
 }
