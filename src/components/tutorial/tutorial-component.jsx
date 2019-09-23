@@ -11,14 +11,18 @@ const renderChildren = (children) => (
   </div>
 )
 
-const TutorialComponent = ({ children, position, showHint = true, tutorialEnabled, setTutorialData, tutorialID }) => {
-  // const [ref, setRef] = useState(null);
-  // const [isOpened, setOpened] = useState(false);
+const TutorialComponent = ({ children, position, tutorialEnabled, specialCondition = true, tutorialID }) => {
+  const [ref, setRef] = useState(null);
+
+  // useEffect(() => {
+  //   ReactTooltip.rebuild();
+  //   console.log('ReactTooltip.rebuild();')
+  // }, [])
 
   return (
     <>
       <div className={styles.container}>
-        {tutorialEnabled && 
+        {tutorialEnabled && specialCondition &&
           <button
             className={styles.questionMarkButton}
             style={{...position.style }}
@@ -26,13 +30,17 @@ const TutorialComponent = ({ children, position, showHint = true, tutorialEnable
             data-place={position.dataPlace}
             data-for='tutorialTooltip'
             // data-event-off='click
-            data-effect='solid'
+            // data-effect='float'
             data-event='click'
-            data-delay-show={0}
-            data-delay-hide={0}
             data-class="tutorial-modal-class"
-            // ref={ref => setRef(ref) }
-            onClick={() => ReactTooltip.rebuild()}
+            ref={ref => setRef(ref) }
+            onClick={() => {
+              ReactTooltip.show(ref);
+              setTimeout(() => {
+                  ReactTooltip.hide(ref);
+              }, 1);
+              // ReactTooltip.rebuild()
+            }}
           >
             <QuestionIcon />
           </button>

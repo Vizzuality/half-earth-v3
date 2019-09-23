@@ -8,7 +8,7 @@ import { tutorialData } from 'constants/tutorial';
 const TutorialModal = ({ description, onClick, checked, setChecked }) => {
   return (
     <div className={styles.modalContainer}>
-      <div>
+      <div className={styles.content}>
         <div className={styles.description}>{description}</div>
         <RadioButton
           text='Don’t show me more tips'
@@ -34,6 +34,9 @@ export const TutorialPrompt = ({ setTutorialData }) => {
 
   const handleClosePrompt = (tutorialID) => {
     ReactTooltip.hide();
+    setTimeout(() => {
+      ReactTooltip.hide();
+  }, 1);
     const updatedAllTutorials = isChecked ? { showAllTutorials: false } : {}; // hide all tutorial prompts if selected
     setTutorialData({ [tutorialID]: false, ...updatedAllTutorials }); // hide this specific tutorial prompt
   }
@@ -42,8 +45,10 @@ export const TutorialPrompt = ({ setTutorialData }) => {
   return (
     <ReactTooltip
       id='tutorialTooltip'
-      clickable={true}
-      globalEventOff="click"
+      clickable
+      // globalEventOff="click"
+      effect="solid"
+      // event="no-event"
       getContent={(id) => (
         <TutorialModal
           description={tutorialData[id]}

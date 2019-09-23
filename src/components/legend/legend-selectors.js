@@ -4,6 +4,8 @@ import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
+import { selectTutorialState } from 'selectors/tutorial-selectors';
+import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
 
@@ -66,7 +68,16 @@ const joinAgricultureTitles = (titles) => {
   return `${trimmedTitles.join(' and ')} agriculture`;
 }
 
+const getActiveTutorialID = createSelector(
+  [selectTutorialState],
+  (tutorial) => {
+    if (!tutorial) return null;
+    return tutorial[LEGEND_TUTORIAL] ? LEGEND_TUTORIAL : LEGEND_DRAG_TUTORIAL; // first, show the general legend tutorial, then show the drag tutorial
+  }
+);
+
 export default createStructuredSelector({
   visibleLayers: getVisibleLayers,
-  datasets: getLegendConfigs
+  datasets: getLegendConfigs,
+  tutorialID: getActiveTutorialID
 });

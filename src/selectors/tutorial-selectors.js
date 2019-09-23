@@ -1,1 +1,1 @@
-export const selectTutorialEnabled = ({ tutorial }) => tutorial.enabled || null;
+export const selectTutorialState = ({ tutorial }) => tutorial || null;

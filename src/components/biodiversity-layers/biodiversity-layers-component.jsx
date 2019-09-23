@@ -42,18 +42,13 @@ const BiodiversityLayers = ({
               <div className={styles.widgetWrapper} key={subct.name}>
                 <h2 className={styles.widgetSubTitle}>{subct.name}</h2>
                 <div className={styles.subcategoryRadioContainer}>
-                  <Tutorial
-                    position='top-right'
-                    tutorialID={RARITY_RICHNESS_TUTORIAL}
-                  >
-                    <RadioGroup
-                      activeLayers={activeLayers}
-                      options={subct.taxa}
-                      title={subct.name}
-                      handleExclusiveLayerToggle={handleExclusiveLayerToggle}
-                      handleSimpleLayerToggle={handleSimpleLayerToggle}
-                    />
-                  </Tutorial>
+                  <RadioGroup
+                    activeLayers={activeLayers}
+                    options={subct.taxa}
+                    title={subct.name}
+                    handleExclusiveLayerToggle={handleExclusiveLayerToggle}
+                    handleSimpleLayerToggle={handleSimpleLayerToggle}
+                  />
                 </div>
               </div>
             ))
