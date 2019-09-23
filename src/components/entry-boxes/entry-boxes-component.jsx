@@ -12,7 +12,6 @@ const categories = [
 ];
 
 const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route }) => {
-  const interfaceLoaded = route.path === '/dataGlobe';
 
   const handleCategoryEnter = (category) => {
     setActiveCategory(category.name);
@@ -23,9 +22,9 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
 
   return (
     <div data-cy="entry-boxes" className={styles.uiTopLeft}>
-      {interfaceLoaded && categories.length &&
+      {categories.length &&
         categories.map(category => (
-          <div className={cx(animationStyles.transform, { [animationStyles.leftHidden]: categoryBoxHidden })} onClick={() => handleCategoryEnter(category)}>
+          <div key={category.id} className={cx(animationStyles.transform, { [animationStyles.leftHidden]: categoryBoxHidden })} onClick={() => handleCategoryEnter(category)}>
             <CategoryBox
               title='mapping'
               isSidebarOpen={isSidebarOpen}
