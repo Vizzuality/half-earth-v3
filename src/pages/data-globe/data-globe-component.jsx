@@ -9,6 +9,8 @@ import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import { MobileOnly } from 'constants/responsive';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
@@ -43,6 +45,8 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   isSidebarOpen,
+  isEntryBoxesOpen,
+  isLegendOpen,
   isGlobeUpdating,
   hasMetadata,
   handleZoomChange,
@@ -65,6 +69,9 @@ const DataGlobeComponent = ({
     <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
+        <MobileOnly>
+          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} />
+        </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
@@ -74,7 +81,7 @@ const DataGlobeComponent = ({
         {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
         <SearchWidget />
-        <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
+        <EntryBoxes isSidebarOpen={isSidebarOpen} isEntryBoxesOpen={isEntryBoxesOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
         <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
           {isBiodiversityActive && (
             biodiversityCategories.map(cat => (
@@ -110,6 +117,7 @@ const DataGlobeComponent = ({
         </Sidebar>
         <Legend
           isFullscreenActive={isFullscreenActive}
+          isLegendOpen={isLegendOpen}
           setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
           setLayerOrder={setLayerOrder}

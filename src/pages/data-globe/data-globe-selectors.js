@@ -37,6 +37,8 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
+const getEntryBoxesOpen = createSelector(getUiSettings, uiSettings => uiSettings.isEntryBoxesOpen)
+const getLegendOpen = createSelector(getUiSettings, uiSettings => uiSettings.isLegendOpen)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
@@ -50,6 +52,8 @@ export default createStructuredSelector({
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
+  isEntryBoxesOpen: getEntryBoxesOpen,
+  isLegendOpen: getLegendOpen,
   sceneSettings: getSceneSettings,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,

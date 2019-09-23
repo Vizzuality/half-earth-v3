@@ -6,26 +6,38 @@
   @include backdropBlur();
   box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
   padding: 0 20px 0 20px;
-  width: $sidebar-width;
   height: 115px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 5px;
-  transition: all 0.2s ease-out;
+  margin-bottom: 0;
   border-radius: 2px;
+  width: 100%;
+  transition: none;
 
   &:hover {
-    transform: translate(20px, 0);
-
-    .category {
-      text-shadow: 0 0 10px rgba(255,255,255,0.5);
-    }
-
     .icon {
       opacity: 1;
     }
   }
+
+  @media #{$tablet-portrait} {
+    width: $sidebar-width;
+    margin-bottom: 5px;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      transform: translate(20px, 0);
+  
+      .category {
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+    }
+  }
+}
+
+.firstBoxOnMobile {
+  border-radius: 16px 16px 0 0;
 }
 
 .visible {

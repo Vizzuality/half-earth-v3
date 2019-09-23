@@ -4,11 +4,30 @@ $spacer-edge-opacity: 0;
 $spacer-middle-opacity: 0.6;
 $icon-size: 14px;
 $share-button-margin: 12px;
+$menuFooterHeight: 65px;
 
 .uiTopLeft {
   position: absolute;
   top: $sidebar-top-margin;
   left: $site-gutter;
+}
+
+.uiBottom {
+  position: absolute;
+  bottom: $menuFooterHeight;
+  width: 100%;
+}
+
+@mixin topLeft() {
+  position: absolute;
+  top: $sidebar-top-margin;
+  left: $site-gutter;
+}
+
+@mixin bottom() {
+  position: absolute;
+  bottom: $menuFooterHeight;
+  width: 100%;
 }
 
 .uiRight {
