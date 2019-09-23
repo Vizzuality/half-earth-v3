@@ -10,7 +10,7 @@
   position: absolute;
   width: 16px;
   border-radius: 100%;
-  z-index: 999;
+  z-index: 10;
   svg {
     fill: $brand-color-main;
     width: 16px;
@@ -47,18 +47,5 @@
     @extend %annotation;
     padding-left: 0 !important;
     text-transform: unset;
-  }
-}
-
-
-
-:global {
-  .tutorial-modal-class {
-    background-color: transparent !important;
-    padding: 0;
-
-    &::before, &::after {
-      display: none;
-    }
   }
 }

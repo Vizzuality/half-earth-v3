@@ -18,7 +18,6 @@
   padding: 24px;
   min-height: 170px;
   width: 270px;
-  transform: translateY(50%);
 
   .content {
     margin-bottom: 30px;
@@ -42,7 +41,9 @@
 :global {
   .tutorial-modal-class {
     background-color: transparent !important;
+    height: 1px;
     padding: 0;
+    // margin: 0 !important;
 
     &::before, &::after {
       display: none;

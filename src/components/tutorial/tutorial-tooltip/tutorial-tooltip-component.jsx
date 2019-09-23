@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import RadioButton from 'components/radio-group/radio-button';
@@ -29,14 +29,20 @@ const TutorialModal = ({ description, onClick, checked, setChecked }) => {
   );
 }
 
+const preventTooltipClipping = (({ top, left }) => {
+  const isTooltipClipped = window.innerHeight - top < 200;
+  return { top: isTooltipClipped ? window.innerHeight - 200 : top, left };
+})
+
 export const TutorialPrompt = ({ setTutorialData }) => {
   const [isChecked, setChecked] = useState(false);
+  const tooltip = useRef(null);
 
   const handleClosePrompt = (tutorialID) => {
+    const { current } = tooltip;
+    if(current) current.tooltipRef = null; // force hide the tooltip, more about this workaround here: https://github.com/wwayne/react-tooltip/issues/449#issuecomment-514768776
     ReactTooltip.hide();
-    setTimeout(() => {
-      ReactTooltip.hide();
-  }, 1);
+
     const updatedAllTutorials = isChecked ? { showAllTutorials: false } : {}; // hide all tutorial prompts if selected
     setTutorialData({ [tutorialID]: false, ...updatedAllTutorials }); // hide this specific tutorial prompt
   }
@@ -45,10 +51,12 @@ export const TutorialPrompt = ({ setTutorialData }) => {
   return (
     <ReactTooltip
       id='tutorialTooltip'
-      clickable
-      // globalEventOff="click"
+      ref={tooltip}
       effect="solid"
-      // event="no-event"
+      event="click"
+      globalEventOff="click"
+      clickable
+      overridePosition={preventTooltipClipping}
       getContent={(id) => (
         <TutorialModal
           description={tutorialData[id]}
