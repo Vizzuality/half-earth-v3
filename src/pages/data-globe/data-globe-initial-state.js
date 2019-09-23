@@ -37,6 +37,8 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
+    isEntryBoxesOpen: false,
+    isLegendOpen: false,
     isFullscreenActive: false, 
     activeCategory: ''
   },

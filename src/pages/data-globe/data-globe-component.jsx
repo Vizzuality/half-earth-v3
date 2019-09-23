@@ -2,7 +2,6 @@ import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import DataGlobalSidebar from 'components/data-global-sidebar';
@@ -14,7 +13,8 @@ import TutorialModal from 'components/tutorial/tutorial-modal';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import Switcher from 'components/switcher';
-
+import MenuFooter from 'components/mobile-only/menu-footer';
+import { MobileOnly } from 'constants/responsive';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -31,6 +31,8 @@ const DataGlobeComponent = ({
   activeCategory,
   isLandscapeMode,
   isBiodiversityActive,
+  isEntryBoxesOpen,
+  isLegendOpen,
   isGlobeUpdating,
   isLegendActive,
   hasMetadata,
@@ -49,6 +51,12 @@ const DataGlobeComponent = ({
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       >
         {isGlobeUpdating && <Spinner floating />}
+        <MobileOnly>
+          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} />
+        </MobileOnly>
+        <ArcgisLayerManager activeLayers={activeLayers}/>
+        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
         <Switcher />
         <ArcgisLayerManager activeLayers={activeLayers} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
@@ -63,6 +71,13 @@ const DataGlobeComponent = ({
           rasters={rasters}
           handleGlobeUpdating={handleGlobeUpdating}
           setRasters={setRasters}
+        />
+        <Legend
+          isFullscreenActive={isFullscreenActive}
+          isLegendOpen={isLegendOpen}
+          setLayerOpacity={setLayerOpacity}
+          setLayerVisibility={setLayerVisibility}
+          setLayerOrder={setLayerOrder}
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}

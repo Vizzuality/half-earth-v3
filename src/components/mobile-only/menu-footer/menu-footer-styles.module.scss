@@ -1,0 +1,36 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.menuContainer {
+  @include backdropBlur();
+  height: 65px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  z-index: 15;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+  text-align: center;
+}
+
+.activeOption {
+  margin-right: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.title {
+  @extend %subtitle;
+  color: $white;
+}
