@@ -79,7 +79,7 @@ const FeaturedGlobeComponent = ({
 
   return (
     <>
-      <div style={{ pointerEvents: isMapsList || selectedFeaturedPlace ? 'none' : '' }}>
+      <div style={{ pointerEvents: isMapsList || (selectedFeaturedPlace && !isLandscapeMode) ? 'none' : '' }}>
         <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
           <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
           <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
