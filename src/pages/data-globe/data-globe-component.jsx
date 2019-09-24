@@ -77,7 +77,7 @@ const DataGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} isSidebarOpen={isSidebarOpen} isSettingsOpen={isSettingsOpen} />
+          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} isSidebarOpen={isSidebarOpen} isSettingsOpen={isSettingsOpen} isLandscapeMode={isLandscapeMode} />
           <MenuSettings isSettingsOpen={isSettingsOpen} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
