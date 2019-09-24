@@ -14,7 +14,7 @@ import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
   const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen } = props;
-  const { handleOpenSearch } = useSearchWidgetLogic(
+  const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
     searchLocationAnalyticsEvent
@@ -24,6 +24,8 @@ const MenuFooterContainer = props => {
   const handleEntryBoxesClose = () => { if (isEntryBoxesOpen) props.changeUI({ isEntryBoxesOpen: false }); }
 
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
+
+  const handleSearchClose = () => { if (!!searchWidget) handleCloseSearch(); }
 
   const handleLegendOpen = () => { if (!isLegendOpen) props.changeUI({ isLegendOpen: true }); }
   const handleLegendClose = () => { if (isLegendOpen) props.changeUI({ isLegendOpen: false }); }
@@ -37,18 +39,21 @@ const MenuFooterContainer = props => {
 
   const handleLayersOpen = () => {
     handleLegendClose();
+    handleSearchClose();
     handleEntryBoxesOpen();
   }
 
   const handleLegendClick = () => {
     handleEntryBoxesClose();
     handleSidebarClose();
+    handleSearchClose();
     handleLegendOpen();
   }
 
   const handleSettingsClick = () => {
     handleEntryBoxesClose();
     handleSidebarClose();
+    handleSearchClose();
     handleLegendClose();
   }
 
