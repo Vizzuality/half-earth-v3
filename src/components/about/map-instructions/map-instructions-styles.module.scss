@@ -40,12 +40,15 @@
 }
 
 .storySection {
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  text-align: center;
   width: 100%;
 
   @media #{$tablet-portrait} {
     width: 670px;
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
   }
 }
 
