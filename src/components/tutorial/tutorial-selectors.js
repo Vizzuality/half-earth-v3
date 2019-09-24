@@ -7,10 +7,13 @@ const getTutorialID = (state, props) => props && props.tutorialID;
 
 const getTutorialEnabled = createSelector(
   [getTutorial, getTutorialID],
-  (tutorial, id) => {
-  if (!tutorial || !id) return null;
+  (tutorial, ids) => {
+  if (!tutorial || !ids) return null;
   if (!tutorial.showAllTutorials) return false;
-  if (!tutorial[id]) return false;
+
+  const idArray = ids.split(',');
+  if (!idArray.some(id => tutorial[id])) return false;
+  
   return true;
 })
 

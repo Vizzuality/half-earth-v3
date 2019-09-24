@@ -32,6 +32,10 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
   const isRarityActive = variant === RARITY;
 
   const isSelected = (option) => !!(activeLayers.find(l => l.title === option.layers[variant]));
+  const isLastSelected = (option) => {
+    const firstSelectedLayer = activeLayers.find(layer => layer.category === "Biodiversity");
+    return firstSelectedLayer && firstSelectedLayer.title === option.layers[variant];
+  }
 
   const renderRadioButton = option => (
     <div key={option.value} className={cx(
@@ -81,7 +85,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
   return (
     <>
       {options.map(option => (
-        isSelected(option) ? (
+        isLastSelected(option) ? (
           <Tutorial
             position='top-right'
             tutorialID={RARITY_RICHNESS_TUTORIAL}

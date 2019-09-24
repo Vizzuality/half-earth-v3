@@ -21,6 +21,10 @@
     margin-bottom: 30px;
   }
 
+  .description {
+    margin-top: 0;
+  }
+
   .button {
     align-self: end;
     height: 32px;
@@ -29,16 +33,23 @@
     background-color: $brand-color-main;
     text-transform: uppercase;
   }
+}
+
+.radioButton {
   label {
     @extend %annotation;
     padding-left: 0 !important;
     text-transform: unset;
   }
+
+  input[type="radio"]:checked + label::before {
+    background: $brand-color-main !important;
+  }
 }
 
 :global {
   .tutorial-modal-class {
-    background-color: transparent !important;
+    background: transparent !important;
     height: 1px;
     padding: 0;
 

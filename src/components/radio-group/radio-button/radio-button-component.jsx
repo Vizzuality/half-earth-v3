@@ -1,9 +1,11 @@
 import React from 'react';
+import cx from 'classnames';
+
 import styles from './radio-button-styles.module.scss';
 
-const RadioButton = ({ text, value, checked, onClick, name }) => {
+const RadioButton = ({ text, value, checked, onClick, name, theme }) => {
   return (
-    <div className={styles.radioButton}>
+    <div className={cx(styles.radioButton, theme)}>
       <input
         type="radio"
         name={name}

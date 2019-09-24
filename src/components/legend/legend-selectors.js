@@ -65,20 +65,33 @@ const parseLegend = (config) => {
 
 const joinAgricultureTitles = (titles) => {
   const trimmedTitles = titles.map(title => title.split(" ")[0]);
-  return `${trimmedTitles.join(' and ')} agriculture`;
+  return `${trimmedTitles.join(' and ')} agriculture`; 
 }
 
 const getActiveTutorialData = createSelector(
   [selectTutorialState, getLegendConfigs],
   (tutorial, datasets) => {
     if (!tutorial) return null;
-    return tutorial[LEGEND_TUTORIAL] ? // first, show the general legend tutorial, then show the drag tutorial
-      { id: LEGEND_TUTORIAL,
-        showTutorial: datasets && datasets.length > 0 
-      } : {
-        id: LEGEND_DRAG_TUTORIAL,
-        showTutorial: datasets && datasets.length > 1  
+
+    const enableLegendTutorial = tutorial[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
+    const enableLegendDragTutorial = tutorial[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
+
+    if (enableLegendTutorial && enableLegendDragTutorial) {
+      return {
+        id: [LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL].join(','),
+        showTutorial: enableLegendTutorial && enableLegendDragTutorial 
       }
+    } else if (enableLegendTutorial && !enableLegendDragTutorial) {
+      return {
+        id: LEGEND_TUTORIAL,
+        showTutorial: enableLegendTutorial 
+      }
+    } else {
+      return {
+        id: LEGEND_DRAG_TUTORIAL,
+        showTutorial: enableLegendDragTutorial  
+      }
+    }
   }
 );
 

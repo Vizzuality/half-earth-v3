@@ -8,7 +8,6 @@ import Legend, {
 } from 'vizzuality-components/dist/legend';
 import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
-import { LEGEND_TUTORIAL } from 'constants/tutorial';
 import styles from './legend-styles.module.scss';
 
 const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {

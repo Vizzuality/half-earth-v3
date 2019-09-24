@@ -15,12 +15,11 @@ const TutorialComponent = ({ children, position, tutorialEnabled, showTutorial =
   useEffect(() => {
     ReactTooltip.rebuild();
   }, []);
-  
   return (
     <>
       <div className={styles.container}>
         {tutorialEnabled && showTutorial &&
-          <button
+          <span
             className={styles.questionMarkButton}
             style={{...position.style }}
             data-for='tutorialTooltip'
@@ -29,7 +28,7 @@ const TutorialComponent = ({ children, position, tutorialEnabled, showTutorial =
             data-class="tutorial-modal-class"
           >
             <QuestionIcon />
-          </button>
+          </span>
         }
         {renderChildren(children)}
       </div>

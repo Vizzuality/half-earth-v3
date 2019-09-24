@@ -4,23 +4,25 @@ import RadioButton from 'components/radio-group/radio-button';
 import styles from './tutorial-modal-styles.module.scss';
 import { tutorialData } from 'constants/tutorial';
 
-const TutorialModalContent = ({ description, onClick, checked, setChecked }) => {
+const TutorialModalContent = ({ tutorialIds, handleCloseModal, checked, setChecked }) => {
+  const idArray = tutorialIds ? tutorialIds.split(',') : [];
+
   return (
     <div className={styles.modalContainer}>
       <div className={styles.content}>
-        <div className={styles.description}>{description}</div>
+        {idArray.map((id) => <p className={styles.description}>{tutorialData[id]}</p>)}   
         <RadioButton
           text='Don’t show me more tips'
           value={'tutorial-visibility-radio'}
           checked={checked}
           name={'tutorial-visibility'}
-          className={styles.radioButton}
+          theme={styles.radioButton}
           onClick={setChecked}
         />
       </div>
       <button
         className={styles.button}
-        onClick={onClick}
+        onClick={() => handleCloseModal(idArray)}
       >
         Got it!
       </button>
@@ -31,7 +33,7 @@ const TutorialModalContent = ({ description, onClick, checked, setChecked }) => 
 const TutorialModal = ({
   preventTooltipClipping,
   tooltipRef,
-  handleClosePrompt,
+  handleCloseModal,
   isChecked,
   toggleChecked
 }) => {
@@ -42,18 +44,18 @@ const TutorialModal = ({
       ref={tooltipRef}
       effect="float"
       event="click"
+      globalEventOff="click"
       clickable
       overridePosition={preventTooltipClipping}
-      getContent={(id) => (
+      getContent={(tutorialIds) => (
         <TutorialModalContent
-          description={tutorialData[id]}
-          onClick={() => handleClosePrompt(id)}
+          tutorialIds={tutorialIds}
+          handleCloseModal={handleCloseModal}
           setChecked={toggleChecked}
           checked={isChecked}
         />
       )}
-    >
-    </ReactTooltip>
+    />
   )
 }
 

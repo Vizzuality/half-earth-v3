@@ -15,8 +15,11 @@ const TutorialModal = props => {
   const toggleChecked = () => setChecked(!isChecked);
 
   const preventTooltipClipping = ({ top, left }) => {
-    const isTooltipClipped = window.innerHeight - top < 200;
-    return { top: isTooltipClipped ? window.innerHeight - 200 : top, left };
+    const { current } = tooltipRef;
+    const tooltipHeight = current ? current.tooltipRef.scrollHeight : 200;
+    const isTooltipClipped = window.innerHeight - top - 20 < tooltipHeight;
+    const _top = isTooltipClipped ? window.innerHeight - tooltipHeight - 20 : top; // if tooltip isn't going to fit the viewport, recalculate the 'top' position
+    return { top: _top, left };
   }
   
   const forceHideTooltip = ref => {
@@ -25,16 +28,17 @@ const TutorialModal = props => {
     ReactTooltip.hide();
   }
 
-  const handleClosePrompt = (tutorialID) => {
+  const handleCloseModal = (idArray) => {
     forceHideTooltip(tooltipRef);
+    const updateTutorials = idArray && idArray.reduce((acc, tutorialID) => { return { ...acc, [tutorialID]: false } }, {});
     const updatedAllTutorials = isChecked ? { showAllTutorials: false } : {}; // hide all tutorial prompts if selected
-    setTutorialData({ [tutorialID]: false, ...updatedAllTutorials }); // hide this specific tutorial prompt
+    setTutorialData({  ...updatedAllTutorials, ...updateTutorials }); // hide this specific tutorial prompt
   }
 
   return (
     <Component
       preventTooltipClipping={preventTooltipClipping}
-      handleClosePrompt={handleClosePrompt}
+      handleCloseModal={handleCloseModal}
       tooltipRef={tooltipRef}
       isChecked={isChecked}
       toggleChecked={toggleChecked}

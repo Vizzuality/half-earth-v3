@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tutorial from 'components/tutorial'
 import RadioGroup from 'components/radio-group';
-import { RARITY_RICHNESS_TUTORIAL } from 'constants/tutorial';
 
 import styles from './biodiversity-layers-styles.module.scss';
 
@@ -15,6 +13,7 @@ const BiodiversityLayers = ({
   handleSimpleLayerToggle,
   handleExclusiveLayerToggle
 }) => {
+
   return (
     <>
       {!subcategories ? (
