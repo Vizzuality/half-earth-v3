@@ -1,51 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadModules } from '@esri/react-arcgis';
-
-import { handleLayerRendered } from 'utils/layer-manager-utils';
+// Constants
+import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { humanPressuresLandUse } from 'constants/human-pressures';
+// Utils
+import { handleLayerRendered, layerManagerVisibility, findLayerInMap } from 'utils/layer-manager-utils';
+import { humanPressuresPreloadFixes, dispatchLandPressuresLayersAnalyticsEvents } from 'utils/raster-layers-utils';
+// Components
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
-import { humanPressuresLandUse } from 'constants/human-pressures';
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
 
-const HumanImpactLayers = ({ handleGlobeUpdating, view, map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
-  const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-  // eslint-disable-next-line no-mixed-operators
-  const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
-    ...acc, [option.value]: rasters[option.value]
-  }), {})) || {};
+const HumanImpactLayers = ({ alreadyChecked, handleGlobeUpdating, view, map, setRasters, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
 
   const handleHumanPressureRasters = (rasters, option) => {
-    const { layers } = map;
-    const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    
+    const humanImpactLayer = findLayerInMap(LAND_HUMAN_PRESSURES_IMAGE_LAYER, map);
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
-    if (hasRastersWithData) {
-      handleGlobeUpdating(true);
-    }
+    hasRastersWithData && handleGlobeUpdating(true);
     setRasters(rasters);
     handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
-
-    setLayerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData);
-
-    const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
-    const rasterNames = activeRasters.map(value => `human_impact_${value}`)
-
-    const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
-
-    const analyticsParams = { slug: option.slug, query: { viewMode: VIEW_MODE.LANDSCAPE }};
-    const isRasterActive = activeRasters.some(value => value === option.value);
-    if (isRasterActive) addLayerAnalyticsEvent(analyticsParams) 
-    else removeLayerAnalyticsEvent(analyticsParams);
-
-    loadModules(["esri/layers/support/MosaicRule"]).then(([MosaicRule]) => {
-      humanImpactLayer.mosaicRule = new MosaicRule({
-        method: 'attribute',
-        operation: 'sum',
-        where: mosaicWhereClause
-      });
-    });
+    layerManagerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData, activeLayers, changeGlobe);
+    humanPressuresPreloadFixes(humanImpactLayer, rasters);
+    dispatchLandPressuresLayersAnalyticsEvents(rasters, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
   }
 
   return (
