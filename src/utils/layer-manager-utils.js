@@ -46,17 +46,32 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
   callback({ activeLayers: updatedLayers });
 };
 
-export const createLayer = (layer, map) => {
-  return loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
-    const { url, slug } = layer;
-    const tileLayer = new WebTileLayer({
+export const createLayer = layerConfig => {
+  const { url, slug, type } = layerConfig;
+  const layerType = type || 'WebTileLayer';
+  return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
+    return new layer({
+      url: url,
       urlTemplate: url,
       title: slug,
       id: slug,
       opacity: DEFAULT_OPACITY
     })
-    map.add(tileLayer);
   });
+}
+export const addLayerToMap = (mapLayer, map) => map.add(mapLayer);
+export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
+export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
+
+
+export const handleLayerCreation = async (layerConfig, map) => {
+  if (!isLayerInMap(layerConfig, map)) {
+    const newLayer = await createLayer(layerConfig);
+    addLayerToMap(newLayer, map);
+    return newLayer;
+  } else {
+    return findLayerInMap(layerConfig.slug, map);
+  }
 }
 
 export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
