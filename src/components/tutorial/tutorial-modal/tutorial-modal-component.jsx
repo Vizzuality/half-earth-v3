@@ -5,12 +5,12 @@ import styles from './tutorial-modal-styles.module.scss';
 import { tutorialData } from 'constants/tutorial';
 
 const TutorialModalContent = ({ tutorialIds, handleCloseModal, checked, setChecked }) => {
-  const idArray = tutorialIds ? tutorialIds.split(',') : [];
+  const ids = tutorialIds ? tutorialIds.split(',') : [];
 
   return (
     <div className={styles.modalContainer}>
       <div className={styles.content}>
-        {idArray.map((id) => <p className={styles.description}>{tutorialData[id]}</p>)}   
+        {ids.map((id) => <p className={styles.description}>{tutorialData[id]}</p>)}   
         <RadioButton
           text='Don’t show me more tips'
           value={'tutorial-visibility-radio'}
@@ -22,7 +22,7 @@ const TutorialModalContent = ({ tutorialIds, handleCloseModal, checked, setCheck
       </div>
       <button
         className={styles.button}
-        onClick={() => handleCloseModal(idArray)}
+        onClick={() => handleCloseModal(ids)}
       >
         Got it!
       </button>

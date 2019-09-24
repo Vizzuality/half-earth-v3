@@ -28,9 +28,9 @@ const TutorialModal = props => {
     ReactTooltip.hide();
   }
 
-  const handleCloseModal = (idArray) => {
+  const handleCloseModal = (ids) => {
     forceHideTooltip(tooltipRef);
-    const updateTutorials = idArray && idArray.reduce((acc, tutorialID) => { return { ...acc, [tutorialID]: false } }, {});
+    const updateTutorials = ids && ids.reduce((acc, tutorialID) => { return { ...acc, [tutorialID]: false } }, {});
     const updatedAllTutorials = isChecked ? { showAllTutorials: false } : {}; // hide all tutorial prompts if selected
     setTutorialData({  ...updatedAllTutorials, ...updateTutorials }); // hide this specific tutorial prompt
   }

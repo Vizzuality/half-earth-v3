@@ -76,21 +76,14 @@ const getActiveTutorialData = createSelector(
     const enableLegendTutorial = tutorial[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
     const enableLegendDragTutorial = tutorial[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
 
-    if (enableLegendTutorial && enableLegendDragTutorial) {
-      return {
-        id: [LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL].join(','),
-        showTutorial: enableLegendTutorial && enableLegendDragTutorial 
-      }
-    } else if (enableLegendTutorial && !enableLegendDragTutorial) {
-      return {
-        id: LEGEND_TUTORIAL,
-        showTutorial: enableLegendTutorial 
-      }
-    } else {
-      return {
-        id: LEGEND_DRAG_TUTORIAL,
-        showTutorial: enableLegendDragTutorial  
-      }
+    const enabledTutorialIDs = [];
+
+    if (enableLegendTutorial) enabledTutorialIDs.push(LEGEND_TUTORIAL);
+    if (enableLegendDragTutorial) enabledTutorialIDs.push(LEGEND_DRAG_TUTORIAL);
+
+    return {
+      id: enabledTutorialIDs.join(','),
+      showTutorial: enabledTutorialIDs.length > 0
     }
   }
 );

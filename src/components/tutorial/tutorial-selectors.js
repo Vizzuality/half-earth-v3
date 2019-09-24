@@ -11,8 +11,8 @@ const getTutorialEnabled = createSelector(
   if (!tutorial || !ids) return null;
   if (!tutorial.showAllTutorials) return false;
 
-  const idArray = ids.split(',');
-  if (!idArray.some(id => tutorial[id])) return false;
+  const tutorialIds = ids.split(',');
+  if (!tutorialIds.some(id => tutorial[id])) return false;
   
   return true;
 })
