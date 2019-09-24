@@ -3,13 +3,29 @@
 
 .esri-search {
   @include backdropBlur();
-
-  height: 100vh;
-  left: 0;
+  width: 100%;
+  height: 345px;
+  bottom: 55px;
+  top: auto;
+  border-radius: 16px 16px 0 0;
   position: fixed;
-  top: 0;
-  width: 100vw;
-  z-index: 100000;
+  left: 0;
+  padding: 30px 20px;
+  display: block;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 100000;
+  }
 
   // hides loading bar after location start
   .esri-search--searching::before, .esri-search--searching::after {
@@ -48,16 +64,20 @@
     font-family: $font-family-1;	
     font-size: 28px;
     height: 50px;
-    letter-spacing: 1px;
     line-height: 30px;
     margin: auto;
     outline: none;
     padding-bottom: 20px;
-    width: 700px;
+    width: 100%;
 
     &::placeholder {
       color: $white;
       opacity: 0.5;
+    }
+
+    @media #{$tablet-portrait} {
+      width: 700px;
+      letter-spacing: 1px;
     }
   }
 
