@@ -14,7 +14,8 @@ import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import Switcher from 'components/switcher';
 import MenuFooter from 'components/mobile-only/menu-footer';
-import { MobileOnly } from 'constants/responsive';
+import MenuSettings from 'components/mobile-only/menu-settings';
+import { MobileOnly, isMobile } from 'constants/responsive';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -33,6 +34,10 @@ const DataGlobeComponent = ({
   isBiodiversityActive,
   isEntryBoxesOpen,
   isLegendOpen,
+  isSettingsOpen,
+  isHalfEarthMeterModalOpen,
+  isAboutOpen,
+  activeAboutSection,
   isGlobeUpdating,
   isLegendActive,
   hasMetadata,
@@ -42,6 +47,9 @@ const DataGlobeComponent = ({
   handleGlobeUpdating,
   setRasters
 }) => {
+
+  const isOnMobile = isMobile();
+
   return (
     <>
       <Scene
@@ -52,7 +60,8 @@ const DataGlobeComponent = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} isSidebarOpen={isSidebarOpen} />
+          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} isSidebarOpen={isSidebarOpen} isSettingsOpen={isSettingsOpen} />
+          <MenuSettings isSettingsOpen={isSettingsOpen} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />

@@ -15,7 +15,11 @@
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 80px;
-  width: 960px;
+  width: 100%;
+
+  @media #{$tablet-portrait} {
+    width: 960px;
+  }
 }
 
 .title {

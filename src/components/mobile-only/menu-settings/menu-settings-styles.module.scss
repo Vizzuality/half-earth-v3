@@ -1,0 +1,44 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.container {
+  @include backdropBlur();
+  @include bottom();
+  padding: 30px 20px;
+  border-radius: 16px 16px 0 0;
+  display: none;
+}
+
+.box {
+  @extend %subtitle;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $white;
+  padding: 40px;
+  position: relative;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    &::after {
+      @extend %spacer;
+  
+      bottom: 1px;
+      left: 0;
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      z-index: 5;
+    }
+  }
+}
+
+.title {
+  max-width: 320px;
+}
+
+.visible {
+  display: block;
+}
