@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from 'actions/url-actions';
 import { useSearchWidgetLogic } from 'hooks/esri';
@@ -13,7 +13,7 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen, isSettingsOpen } = props;
+  const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen, isSettingsOpen, isLandscapeMode } = props;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
@@ -25,6 +25,7 @@ const MenuFooterContainer = props => {
 
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
 
+  const handleSearchOpen = () => { if (!searchWidget) handleOpenSearch(); }
   const handleSearchClose = () => { if (!!searchWidget) handleCloseSearch(); }
 
   const handleLegendOpen = () => { if (!isLegendOpen) props.changeUI({ isLegendOpen: true }); }
@@ -33,12 +34,22 @@ const MenuFooterContainer = props => {
   const handleSettingsOpen = () => { if(!isSettingsOpen) props.changeUI({ isSettingsOpen: true }); }
   const handleSettingsClose = () => { if(isSettingsOpen) props.changeUI({ isSettingsOpen: false }); } 
 
+  useEffect(() => {
+    if (isLandscapeMode) { 
+      handleEntryBoxesClose();
+      handleSidebarClose();
+      handleLegendClose();
+      handleSettingsClose();
+      handleSearchClose();
+    }
+  }, [isLandscapeMode])
+
   const handleSearchClick = () => {
     handleEntryBoxesClose();
     handleSidebarClose();
     handleLegendClose();
     handleSettingsClose();
-    handleOpenSearch();
+    handleSearchOpen();
   }
 
   const handleLayersOpen = () => {

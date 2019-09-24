@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
 import styles from './menu-footer-styles.module';
 
-const MenuFooter = ({ options }) => {
+const MenuFooter = ({ options, isLandscapeMode }) => {
   const [activeOption, setActive] = useState(null);
   const isActive = (o) => activeOption && o.name === activeOption.name;
+
+  useEffect(() => {
+    if (isLandscapeMode) setActive(null);
+  }, [isLandscapeMode])
 
   const onClickHandler = (option) => {
     setActive(option);
