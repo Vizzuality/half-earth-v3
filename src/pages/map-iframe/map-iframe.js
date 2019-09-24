@@ -10,7 +10,7 @@ import {
   layerManagerOpacity
 } from 'utils/layer-manager-utils';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { createLayer } from 'utils/layer-manager-utils';
+import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 
 import Component from './map-iframe-component.jsx';
 import mapStateToProps from './map-iframe-selectors';
@@ -47,7 +47,10 @@ const handleMapLoad = (map, view, activeLayers) => {
   const biodiversityLayers = layersConfig
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
 
-  biodiversityLayers.forEach(layer => { createLayer(layer, map) });
+    biodiversityLayers.forEach(layer => {
+      const newLayer = createLayer(layer, map);
+      addLayerToMap(newLayer);
+    });
 }
 
 const dataGlobeContainer = props => {
