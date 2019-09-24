@@ -33,57 +33,65 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
 
   const isSelected = (option) => !!(activeLayers.find(l => l.title === option.layers[variant]));
 
+  const renderRadioButton = option => (
+    <div key={option.value} className={cx(
+      styles.radioOption,
+      { [styles.radioOptionSelected]: isSelected(option) }
+    )}>
+      <RadioButton
+        name={title}
+        value={option.value}
+        checked={isSelected(option)}
+        onClick={() => {
+          if (isSelected(option)) {
+            handleSimpleLayerToggle(option.layers[variant]);
+          } else {
+            handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
+          }
+        }}
+        text={option.name}
+      />
+      {isSelected(option) && (
+        <div className={styles.toggle}>
+          <InfoIcon
+            className={styles.icon}
+            onClick={() => handleInfoClick(option, variant)}
+            data-tip
+            data-for='infoLayerButtonId'
+            data-effect='solid'
+            data-delay-show={0}
+          />
+          <button type="button" className={styles.button} onClick={() => {
+            const changeVariantType = isRarityActive ? RICHNESS : RARITY;
+            handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
+          }}>
+            <span className={styles.variant}>
+              {variant}
+            </span>
+            <SwitchIcon className={cx({ [styles.reverseSwitchIcon]: !isRarityActive })} />
+          </button>
+          <ReactTooltip id='infoLayerButtonId' className='infoTooltipStyle'>
+            Click to read the info of this layer
+          </ReactTooltip>
+        </div>
+      )}
+    </div>
+  )
+
   return (
     <>
       {options.map(option => (
-        <Tutorial
-          position='top-right'
-          tutorialID={RARITY_RICHNESS_TUTORIAL}
-          specialCondition={isSelected(option)}
-        >
-          <div key={option.value} className={cx(
-            styles.radioOption,
-            { [styles.radioOptionSelected]: isSelected(option) }
-          )}>
-            <RadioButton
-              name={title}
-              value={option.value}
-              checked={isSelected(option)}
-              onClick={() => {
-                if (isSelected(option)) {
-                  handleSimpleLayerToggle(option.layers[variant]);
-                } else {
-                  handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
-                }
-              }}
-              text={option.name}
-            />
-            {isSelected(option) && (
-              <div className={styles.toggle}>
-                <InfoIcon
-                  className={styles.icon}
-                  onClick={() => handleInfoClick(option, variant)}
-                  data-tip
-                  data-for='infoLayerButtonId'
-                  data-effect='solid'
-                  data-delay-show={0}
-                />
-                <button type="button" className={styles.button} onClick={() => {
-                  const changeVariantType = isRarityActive ? RICHNESS : RARITY;
-                  handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
-                }}>
-                  <span className={styles.variant}>
-                    {variant}
-                  </span>
-                  <SwitchIcon className={cx({ [styles.reverseSwitchIcon]: !isRarityActive })} />
-                </button>
-                <ReactTooltip id='infoLayerButtonId' className='infoTooltipStyle'>
-                  Click to read the info of this layer
-                </ReactTooltip>
-              </div>
-            )}
-          </div>
-        </Tutorial>
+        isSelected(option) ? (
+          <Tutorial
+            position='top-right'
+            tutorialID={RARITY_RICHNESS_TUTORIAL}
+            showTutorial={isSelected(option)}
+          >
+            {renderRadioButton(option)}
+          </Tutorial>
+        ) : (
+          <>{renderRadioButton(option)}</>
+        )
       ))}
     </>
   )

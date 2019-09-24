@@ -68,16 +68,22 @@ const joinAgricultureTitles = (titles) => {
   return `${trimmedTitles.join(' and ')} agriculture`;
 }
 
-const getActiveTutorialID = createSelector(
-  [selectTutorialState],
-  (tutorial) => {
+const getActiveTutorialData = createSelector(
+  [selectTutorialState, getLegendConfigs],
+  (tutorial, datasets) => {
     if (!tutorial) return null;
-    return tutorial[LEGEND_TUTORIAL] ? LEGEND_TUTORIAL : LEGEND_DRAG_TUTORIAL; // first, show the general legend tutorial, then show the drag tutorial
+    return tutorial[LEGEND_TUTORIAL] ? // first, show the general legend tutorial, then show the drag tutorial
+      { id: LEGEND_TUTORIAL,
+        showTutorial: datasets && datasets.length > 0 
+      } : {
+        id: LEGEND_DRAG_TUTORIAL,
+        showTutorial: datasets && datasets.length > 1  
+      }
   }
 );
 
 export default createStructuredSelector({
   visibleLayers: getVisibleLayers,
   datasets: getLegendConfigs,
-  tutorialID: getActiveTutorialID
+  tutorialData: getActiveTutorialData
 });

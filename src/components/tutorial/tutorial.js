@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import mapStateToProps from './tutorial-selectors';
 
 const TutorialWidget = props => {
-  // position:
-  // - top-left, top-right, bottom-left, bottom-right
+  const { position, description, setTutorialEnabled } = props;
+
   const offset = '-8px';
   const offsetMap = {
     'top-left': { style: { top: offset, left: offset }, dataPlace: "left" },
@@ -14,7 +14,6 @@ const TutorialWidget = props => {
     'bottom-right': { style: { bottom: offset, right: offset}, dataPlace: "right" }
   }
 
-  const { position, description, setTutorialEnabled } = props;
   return (
     <Component
       {...props}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactComponent as QuestionIcon } from 'icons/question.svg';
 import ReactTooltip from 'react-tooltip';
 import styles from './tutorial-styles.module.scss';
@@ -11,11 +11,15 @@ const renderChildren = (children) => (
   </div>
 )
 
-const TutorialComponent = ({ children, position, tutorialEnabled, specialCondition = true, tutorialID }) => {
+const TutorialComponent = ({ children, position, tutorialEnabled, showTutorial = true, tutorialID }) => {
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, []);
+  
   return (
     <>
       <div className={styles.container}>
-        {tutorialEnabled && specialCondition &&
+        {tutorialEnabled && showTutorial &&
           <button
             className={styles.questionMarkButton}
             style={{...position.style }}
@@ -23,10 +27,6 @@ const TutorialComponent = ({ children, position, tutorialEnabled, specialConditi
             data-tip={tutorialID}
             data-place={position.dataPlace}
             data-class="tutorial-modal-class"
-            // data-offset="{'top': 50, 'left': 10}"
-            onClick={() => {
-              ReactTooltip.rebuild()
-            }}
           >
             <QuestionIcon />
           </button>

@@ -3,6 +3,10 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module.scss';
 
+.container {
+  position: relative;
+}
+
 .questionMarkButton {
   @extend .pulse;
   height: 16px;
@@ -15,37 +19,5 @@
     fill: $brand-color-main;
     width: 16px;
     height: 16px;
-  }
-}
-
-.container {
-  position: relative;
-}
-
-.modalContainer {
-  background-color: $firefly;
-  border: 2px solid $brand-color-main;
-  border-radius: 2px;
-  color: $white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 24px;
-  min-height: 200px;
-  width: 270px;
-  transform: translateY(50%);
-
-  .button {
-    align-self: end;
-    height: 32px;
-    width: 102px;
-    border-radius: 2px;
-    background-color: $brand-color-main;
-    text-transform: uppercase;
-  }
-  label {
-    @extend %annotation;
-    padding-left: 0 !important;
-    text-transform: unset;
   }
 }
