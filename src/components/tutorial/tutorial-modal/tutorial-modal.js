@@ -21,7 +21,7 @@ const TutorialModal = props => {
   
   const forceHideTooltip = ref => {
     const { current } = ref;
-    if(current) current.tooltipRef = null; // force hide the tooltip, more about this workaround here: https://github.com/wwayne/react-tooltip/issues/449#issuecomment-514768776
+    if(current) current.tooltipRef = null; // force hiding the tooltip, more about this workaround here: https://github.com/wwayne/react-tooltip/issues/449#issuecomment-514768776
     ReactTooltip.hide();
   }
 
