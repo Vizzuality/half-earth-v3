@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import PartnersComponent from './partners/partners';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
 import { openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent } from 'actions/google-analytics-actions';
+import * as urlActions from 'actions/url-actions';
 import { ABOUT_TABS } from 'constants/google-analytics-constants';
 
 import styles from './about-styles.module.scss';
 
-const actions = { openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent };
+const actions = { openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent, ...urlActions };
 
-const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalyticsEvent }) => {
-  const [activeTab, setActiveTab] = useState(ABOUT_TABS.PARTNERS);
+const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalyticsEvent, activeSection = ABOUT_TABS.PARTNERS }) => {
+  const [activeTab, setActiveTab] = useState(activeSection);
 
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
@@ -62,15 +63,19 @@ const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalytics
   );
 }
 
-const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent }) => {
-  const [isAboutPageOpened, setAboutPageOpened] = useState(false);
+const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent, activeSection, isAboutOpen = false, changeUI }) => {
+  const [isAboutPageOpened, setAboutPageOpened] = useState(isAboutOpen);
+
+  useEffect(() => {
+    if (isAboutOpen) { handleOpenAboutPage() }
+  }, [isAboutOpen, activeSection])
 
   const handleOpenAboutPage = () => {
     setPageTexts(VIEW);
     setAboutPageOpened(true);
     openAboutPageAnalyticsEvent();
   }
-  const handleCloseAboutPage = () => setAboutPageOpened(false);
+  const handleCloseAboutPage = () => { changeUI({ isAboutOpen: false }); setAboutPageOpened(false); }
 
   const tabsData = {
     [ABOUT_TABS.PARTNERS]: {
@@ -99,6 +104,7 @@ const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsE
           handleCloseAboutPage={handleCloseAboutPage}
           tabsData={tabsData} 
           switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
+          activeSection={activeSection}
           />
       )}
     </>
