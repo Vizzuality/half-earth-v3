@@ -32,6 +32,8 @@
 
 .logosWrapper {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
   width: 100%;
 
@@ -44,6 +46,10 @@
     display: flex;
     margin-bottom: 50px;
     width: 25%;
+  }
+
+  @media #{$tablet-portrait} {
+    flex-direction: row;
   }
 }
 
