@@ -37,8 +37,7 @@
     "reselect": "^4.0.0",
     "vega-lib": "^4.4.0",
     "vizzuality-components": "^1.1.1",
-    "workbox-build": "^4.3.1",
-    "yarn": "^1.17.3"
+    "workbox-build": "^4.3.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

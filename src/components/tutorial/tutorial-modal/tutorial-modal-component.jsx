@@ -44,7 +44,6 @@ const TutorialModal = ({
       event="click"
       clickable
       overridePosition={preventTooltipClipping}
-      afterShow={() => console.log('dsdsdsdsddd')}
       getContent={(id) => (
         <TutorialModalContent
           description={tutorialData[id]}
