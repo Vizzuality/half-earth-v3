@@ -13,7 +13,7 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen } = props;
+  const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen, isSettingsOpen } = props;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
@@ -30,16 +30,21 @@ const MenuFooterContainer = props => {
   const handleLegendOpen = () => { if (!isLegendOpen) props.changeUI({ isLegendOpen: true }); }
   const handleLegendClose = () => { if (isLegendOpen) props.changeUI({ isLegendOpen: false }); }
 
+  const handleSettingsOpen = () => { if(!isSettingsOpen) props.changeUI({ isSettingsOpen: true }); }
+  const handleSettingsClose = () => { if(isSettingsOpen) props.changeUI({ isSettingsOpen: false }); } 
+
   const handleSearchClick = () => {
     handleEntryBoxesClose();
     handleSidebarClose();
     handleLegendClose();
+    handleSettingsClose();
     handleOpenSearch();
   }
 
   const handleLayersOpen = () => {
     handleLegendClose();
     handleSearchClose();
+    handleSettingsClose();
     handleEntryBoxesOpen();
   }
 
@@ -47,6 +52,7 @@ const MenuFooterContainer = props => {
     handleEntryBoxesClose();
     handleSidebarClose();
     handleSearchClose();
+    handleSettingsClose();
     handleLegendOpen();
   }
 
@@ -55,6 +61,7 @@ const MenuFooterContainer = props => {
     handleSidebarClose();
     handleSearchClose();
     handleLegendClose();
+    handleSettingsOpen();
   }
 
   const options = [

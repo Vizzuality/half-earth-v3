@@ -44,7 +44,11 @@
 .storySection {
   display: flex;
   justify-content: space-between;
-  width: 670px;
+  width: 100%;
+
+  @media #{$tablet-portrait} {
+    width: 670px;
+  }
 }
 
 .storyElement {

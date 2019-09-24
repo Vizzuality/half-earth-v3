@@ -1,5 +1,5 @@
 import { loadModules } from '@esri/react-arcgis';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import MinimapWidgetComponent from './minimap-widget-component';
@@ -7,12 +7,20 @@ import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'u
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
 import metadataActions from 'redux_modules/page-texts';
 import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
+import { isMobile } from 'constants/responsive';
 
 const VIEW = 'half-earth-meter';
 const actions = {...metadataActions, openHalfEarthMeterAnalyticsEvent };
 
-const MinimapWidget = props => {
-  const [isModalOpen, setModalOpen] = useState(false);
+const MinimapWidget = (props) => {
+  const { isHalfEarthMeterModalOpen } = props;
+  const [isModalOpen, setModalOpen] = useState(isHalfEarthMeterModalOpen);
+
+  const isOnMobile = isMobile();
+
+  useEffect(() => {
+    if (isHalfEarthMeterModalOpen) { handleModalOpen(); }
+  }, [isHalfEarthMeterModalOpen])
 
   const handleMapLoad = (map, view, globeView ) => {
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
@@ -39,7 +47,7 @@ const MinimapWidget = props => {
 
   return (
     <>
-      <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>
+      {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
       {isModalOpen && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
     </>
   );
