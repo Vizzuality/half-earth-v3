@@ -46,9 +46,6 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   isSidebarOpen,
-  isEntryBoxesOpen,
-  isLegendOpen,
-  isSettingsOpen,
   isHalfEarthMeterModalOpen,
   isAboutOpen,
   activeAboutSection,
@@ -64,7 +61,8 @@ const DataGlobeComponent = ({
   setLayerOpacity,
   setLayerOrder,
   handleSwitch,
-  selectedSpecies
+  selectedSpecies,
+  activeOption
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -77,8 +75,8 @@ const DataGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} isSidebarOpen={isSidebarOpen} isSettingsOpen={isSettingsOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings isSettingsOpen={isSettingsOpen} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
+          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
+          <MenuSettings activeOption={activeOption} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -89,7 +87,7 @@ const DataGlobeComponent = ({
         {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} />
         {!isOnMobile && <SearchWidget />}
-        <EntryBoxes isSidebarOpen={isSidebarOpen} isEntryBoxesOpen={isEntryBoxesOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
+        <EntryBoxes activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
         <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
           {isBiodiversityActive && (
             biodiversityCategories.map(cat => (
@@ -125,7 +123,7 @@ const DataGlobeComponent = ({
         </Sidebar>
         <Legend
           isFullscreenActive={isFullscreenActive}
-          isLegendOpen={isLegendOpen}
+          activeOption={activeOption}
           setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
           setLayerOrder={setLayerOrder}

@@ -20,9 +20,7 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
-    isEntryBoxesOpen: false, // mobile
-    isLegendOpen: false, // mobile
-    isSettingsOpen: false, // mobile
+    activeOption: '', // mobile
     isHalfEarthMeterModalOpen: false, // mobile
     isAboutOpen: false, // mobile
     activeAboutSection: 'partners', // mobile
