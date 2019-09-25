@@ -4,11 +4,15 @@
 
 .header {
   padding-top: $sidebar-margin;
-  padding-left: $sidebar-paddings;
+  padding-left: $mobile-sidebar-side-paddings;
   display: flex;
   flex-direction: column;
   height: $sidebar-header-height;
   position: relative;
+
+  @media #{$tablet-portrait} {
+    padding-left: $sidebar-paddings;
+  }
 }
 
 .higherHeader {
@@ -54,6 +58,7 @@
 
 .title {
   @extend %headline;
+  font-size: 24px;
   color: $white;
   margin-top: 5px;
   overflow: hidden;
@@ -66,6 +71,7 @@
 
   @media #{$tablet-portrait} {
     padding-bottom: 0;
+    font-size: 32px;
   }
 }
 
