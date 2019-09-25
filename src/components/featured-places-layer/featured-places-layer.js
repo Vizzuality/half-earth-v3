@@ -19,7 +19,7 @@ const FeaturedMapLayer = ({ view, selectedFeaturedMap, selectedTaxa, featuredPla
   // display only the places belonging to the selected featured map
   useEffect(() => {
     if (featuredPlacesLayerView) {
-      const whereClause = selectedFeaturedMap === 'priorPlaces' ? `txSlug = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`
+      const whereClause = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`
       loadModules(["esri/views/layers/support/FeatureFilter"]).then(([FeatureFilter]) => {
         featuredPlacesLayerView.filter = new FeatureFilter({
           where: whereClause

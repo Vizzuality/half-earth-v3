@@ -74,30 +74,28 @@ const PriorityPlacesPolygonsLayer = ({ view, selectedFeaturedMap, selectedTaxa }
 
   const taxaQuery = (layer, taxa) => {
     const query = layer.createQuery();
-    query.where = `txSlug = '${taxa}'`
+    query.where = `taxa_slg = '${taxa}'`
     return query;
   }
   
   const createGraphicsArray = (features, taxa) => {
     return loadModules(["esri/Graphic"])
       .then(([Graphic]) => {
-        const taxaStyles = layersConfig[PRIORITY_PLACES_POLYGONS].styles[taxa];
-        return features.map(feature => createGraphic(feature, Graphic, taxaStyles));
+        return features.map(feature => createGraphic(feature, Graphic));
       })
   }
 
-  const createGraphic = (feature, Graphic, taxaStyles) => {
+  const createGraphic = (feature, Graphic) => {
     const { geometry } = feature;
-    const { fillRgb, fillOpacity, outlineRgb, outlineOpacity } = taxaStyles;
     return new Graphic({
     symbol: {
       type: "polygon-3d",
       symbolLayers: [
         {
           type: "fill",
-          material: { color: [...fillRgb, fillOpacity], },
+          material: { color: [6,100,246,0.6] },
           outline: {
-            color: [...outlineRgb, outlineOpacity],
+            color: [6,100,246,1],
             size: 1
           }
         }
