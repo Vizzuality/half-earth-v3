@@ -3,7 +3,7 @@ import { loadModules } from '@esri/react-arcgis';
 
 
 
-const FeaturedMapLayer = ({ view, selectedFeaturedMap, selectedTaxa, featuredPlacesLayer }) => {
+const FeaturedMapLayer = ({ view, selectedFeaturedMap, featuredPlacesLayer, isLandscapeMode, selectedTaxa }) => {
 
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
 
@@ -20,13 +20,20 @@ const FeaturedMapLayer = ({ view, selectedFeaturedMap, selectedTaxa, featuredPla
   useEffect(() => {
     if (featuredPlacesLayerView) {
       const whereClause = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`
+      featuredPlacesLayerView.visible = true;
       loadModules(["esri/views/layers/support/FeatureFilter"]).then(([FeatureFilter]) => {
         featuredPlacesLayerView.filter = new FeatureFilter({
           where: whereClause
         });
       })
+    } 
+  }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa])
+
+  useEffect(() => {
+    if (isLandscapeMode) {
+      featuredPlacesLayerView.visible = false;
     }
-  }, [featuredPlacesLayerView, selectedFeaturedMap, selectedTaxa])
+  }, [isLandscapeMode])
 
   return null;
 }

@@ -1,7 +1,7 @@
 import { loadModules } from '@esri/react-arcgis';
 import { get } from 'lodash'
 
-export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, featuredMapPlaces) => {
+export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, featuredMapPlaces, doNotDisplayFlag = false) => {
   const featuredPoint = viewPoint.results.filter((result) => result.graphic.layer.title === featuredPlacesLayerTitle);
   let marker = document.getElementById('avatar');
   const defaultStyles = 'overflow: hidden; border-radius: 20px; position: absolute; display: none; width: 40px; height: 40px; pointer-events: none; background-size: cover;';
@@ -11,7 +11,7 @@ export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, featur
     marker.setAttribute("id", "avatar");
     document.body.appendChild(marker);
   }
-  if (featuredPoint.length) {
+  if (featuredPoint.length && !doNotDisplayFlag) {
     const { latitude, longitude } = featuredPoint[0].graphic.geometry;
     const slug = get(featuredPoint, '[0].graphic.attributes.nam_slg');
     const imageUrl = featuredMapPlaces.data[slug].imageUrl ;

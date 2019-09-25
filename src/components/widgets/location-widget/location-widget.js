@@ -13,7 +13,7 @@ import { clickFindMyPositionAnalyticsEvent } from 'actions/google-analytics-acti
 const actions = { ...urlActions, clickFindMyPositionAnalyticsEvent };
 
 const LocationWidget = props => {
-  const { view, changeGlobe, clickFindMyPositionAnalyticsEvent, isNotMapsList } = props;
+  const { view, changeGlobe, clickFindMyPositionAnalyticsEvent, hidden } = props;
   const [locationWidget, setLocationWidget] = useState(null);
   const watchUtils = useWatchUtils();
   const handleLocationChange = (center) => changeGlobe({ center });
@@ -27,7 +27,7 @@ const LocationWidget = props => {
       });
       locationWidget.on("locate", () => clickFindMyPositionAnalyticsEvent());
       setLocationWidget(locationWidget);
-      if (isNotMapsList) {
+      if (!hidden) {
         view.ui.add(node, "top-right");
         ReactDOM.render(<LocationWidgetComponent locationWidget={locationWidget} />, node);
       }
@@ -37,7 +37,7 @@ const LocationWidget = props => {
       view.ui.remove(locationWidget);
       ReactDOM.render(null, node);
     };
-  }, [view, isNotMapsList])
+  }, [view, hidden])
 
   // Update location in URL
   useEffect(() => {

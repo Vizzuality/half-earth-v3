@@ -26,3 +26,5 @@ export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
 
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
+// Pledges layer
+export const PLEDGES_LAYER = 'PledgeLocationsURL';

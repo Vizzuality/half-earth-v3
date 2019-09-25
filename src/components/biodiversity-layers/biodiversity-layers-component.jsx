@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import RadioGroup from 'components/radio-group';
 
 import styles from './biodiversity-layers-styles.module.scss';
@@ -14,6 +13,7 @@ const BiodiversityLayers = ({
   handleSimpleLayerToggle,
   handleExclusiveLayerToggle
 }) => {
+
   return (
     <>
       {!subcategories ? (

@@ -1,9 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
+import { PLEDGES_LAYER } from 'constants/layers-slugs';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
+import { selectTutorialState } from 'selectors/tutorial-selectors';
+import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
 
@@ -36,6 +39,7 @@ const getLegendConfigs = createSelector(
     if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
     if(humanPressureLegendConfigs[layer.title]) return { ...sharedConfig, ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle }
     if(WDPALegendConfigs[layer.title]) return { ...sharedConfig, ...WDPALegendConfigs[layer.title] }
+    if(layer.title === PLEDGES_LAYER) return { ...sharedConfig, title: 'Signed Pledges' }
     return sharedConfig;
   })
 
@@ -63,10 +67,31 @@ const parseLegend = (config) => {
 
 const joinAgricultureTitles = (titles) => {
   const trimmedTitles = titles.map(title => title.split(" ")[0]);
-  return `${trimmedTitles.join(' and ')} agriculture`;
+  return `${trimmedTitles.join(' and ')} agriculture`; 
 }
+
+const getActiveTutorialData = createSelector(
+  [selectTutorialState, getLegendConfigs],
+  (tutorial, datasets) => {
+    if (!tutorial) return null;
+
+    const enableLegendTutorial = tutorial[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
+    const enableLegendDragTutorial = tutorial[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
+
+    const enabledTutorialIDs = [];
+
+    if (enableLegendTutorial) enabledTutorialIDs.push(LEGEND_TUTORIAL);
+    if (enableLegendDragTutorial) enabledTutorialIDs.push(LEGEND_DRAG_TUTORIAL);
+
+    return {
+      id: enabledTutorialIDs.join(','),
+      showTutorial: enabledTutorialIDs.length > 0
+    }
+  }
+);
 
 export default createStructuredSelector({
   visibleLayers: getVisibleLayers,
-  datasets: getLegendConfigs
+  datasets: getLegendConfigs,
+  tutorialData: getActiveTutorialData
 });

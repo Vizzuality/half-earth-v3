@@ -26,7 +26,11 @@ const feturedGlobeContainer = props => {
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
 
-const handleMarkerClick = (viewPoint, view) => setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+const handleMarkerClick = (viewPoint, view) => {
+  setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+  // remove the avatar image
+  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces, true)
+}
 const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
 
   useEffect(() => {
@@ -46,7 +50,7 @@ const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, F
     // It will be probably fixed on v4.13
     const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
     loadModules(["esri/config"]).then(([esriConfig]) => {
-      mosaicRuleFix(esriConfig, humanImpactLayer)
+      mosaicRuleFix(esriConfig, humanImpactLayer, 'FEATURED')
     })
 
     // Update default human impact layer color ramp

@@ -1,0 +1,60 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  position: relative;
+}
+
+.modalContainer {
+  background-color: $firefly;
+  border: 2px solid $brand-color-main;
+  border-radius: 2px;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  min-height: 170px;
+  width: 270px;
+
+  .content {
+    margin-bottom: 30px;
+  }
+
+  .description {
+    margin-top: 0;
+  }
+
+  .button {
+    align-self: end;
+    height: 32px;
+    width: 102px;
+    border-radius: 2px;
+    background-color: $brand-color-main;
+    text-transform: uppercase;
+  }
+}
+
+.radioButton {
+  label {
+    @extend %annotation;
+    padding-left: 0 !important;
+    text-transform: unset;
+  }
+
+  input[type="radio"]:checked + label::before {
+    background: $brand-color-main !important;
+  }
+}
+
+:global {
+  .tutorial-modal-class {
+    background: transparent !important;
+    height: 1px;
+    padding: 0;
+
+    &::before, &::after {
+      display: none;
+    }
+  }
+}

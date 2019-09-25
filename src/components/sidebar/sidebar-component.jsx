@@ -12,8 +12,8 @@ const Sidebar = ({ map, view, theme, children, activeCategory, handleSidebarTogg
   const isSidebarVisible = isSidebarOpen && !isLandscapeMode && !isFullscreenActive;
 
   return (
-    <div className={cx(uiStyles.uiTopLeft, styles.sidebar, theme.sidebar)}>
-      <div className={cx(styles.wrapper, { [animationStyles.leftHidden]: !isSidebarVisible })}>
+    <div className={cx(uiStyles.uiTopLeft, styles.sidebar, theme.sidebar, { [animationStyles.leftHidden]: !isSidebarVisible })}>
+      <div className={cx(styles.wrapper)}>
         <FixedHeader closeSidebar={handleSidebarToggle} title={activeCategory} view={view}/>
         <div className={styles.content}>
           {React.Children.map(children || null, (child, i) => {
