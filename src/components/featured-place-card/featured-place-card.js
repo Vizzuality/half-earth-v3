@@ -20,9 +20,11 @@ const FeaturedPlaceCardContainer = props => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
-      const { title, image, description } = result;
-      const parsedDescription = get(description, 'content[0].content[0].value');
-      setFeaturedPlace({title, image, description: parsedDescription});
+      if (result) {
+        const { title, image, description } = result;
+        const parsedDescription = get(description, 'content[0].content[0].value');
+        setFeaturedPlace({title, image, description: parsedDescription});
+      }
     };
 
     selectedFeaturedPlace && fetchData();
@@ -42,7 +44,7 @@ const FeaturedPlaceCardContainer = props => {
       queryParams.where = `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
-        const list = orderBy(features, place => place.attributes.lon).map(place => place.attributes.nam_slg);
+        const list = orderBy(features, place => place.geometry.longitude).map(place => place.attributes.nam_slg);
         setFeaturedPlacesList(list);
       });
     }
