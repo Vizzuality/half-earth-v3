@@ -28,7 +28,6 @@ const FeaturedTaxaSelectorComponent = ({
                 styles.taxaIconContainer,
                 {[styles.selectedTaxa] : selectedTaxa === t.slug}
               )}
-              style={{backgroundColor: `${t.color}`}}
             >
               <t.icon />
             </div>

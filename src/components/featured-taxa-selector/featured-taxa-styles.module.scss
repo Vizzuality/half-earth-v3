@@ -37,6 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: $grey-text;
 }
 
 .taxaName {
@@ -46,6 +47,7 @@
 }
 
 .selectedTaxa {
-  box-shadow: 0 0 8px 0 #FFFFFF;
-  border: 2px solid #FFFFFF;
+  background-color: $priority-blue;
+  box-shadow: 0 0 8px 0 $white;
+  border: 2px solid $white;
 }
