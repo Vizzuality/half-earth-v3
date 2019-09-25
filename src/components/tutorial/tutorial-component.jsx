@@ -12,9 +12,11 @@ const renderChildren = (children) => (
 )
 
 const TutorialComponent = ({ children, position, tutorialEnabled, showTutorial = true, tutorialID }) => {
+
   useEffect(() => {
     ReactTooltip.rebuild();
-  }, []);
+  }, [tutorialID]);
+
   return (
     <>
       <div className={styles.container}>
