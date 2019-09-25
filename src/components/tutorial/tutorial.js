@@ -7,7 +7,7 @@ const TutorialWidget = props => {
   const { position, description, setTutorialEnabled } = props;
 
   const offset = '-8px';
-  const offsetMap = {
+  const positionMap = {
     'top-left': { style: { top: offset, left: offset }, dataPlace: "left" },
     'top-right': { style: { top: offset, right: offset }, dataPlace: "right" },
     'bottom-left': { style: { bottom: offset, left: offset}, dataPlace: "left" },
@@ -17,7 +17,7 @@ const TutorialWidget = props => {
   return (
     <Component
       {...props}
-      position={offsetMap[position] || offsetMap['top-right']}
+      position={positionMap[position] || positionMap['top-right']}
       description={description}
       setTutorialEnabled={setTutorialEnabled}
     />
