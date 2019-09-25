@@ -22,6 +22,7 @@ const DataGlobeComponentSimple = ({
   handleGlobeUpdating,
   setRasters
 }) => {
+  console.log(rasters)
   return (
     <Scene
       sceneId='e96f61b2e79442b698ec2cec68af6db9'

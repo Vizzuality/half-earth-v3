@@ -23,8 +23,9 @@ const HumanImpactLayersContainer = props => {
     const { map, rasters } = props;
     const layerConfig = layersConfig.find(l => l.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
     if (!isLayerInMap(layerConfig, map)) {
+      const rastersObject = rasters || {};
       createLayer(layerConfig, map).then(async layer => {
-        await humanPressuresPreloadFixes(layer, rasters);
+        await humanPressuresPreloadFixes(layer, rastersObject);
         addLayerToMap(layer, map);
       })
     }

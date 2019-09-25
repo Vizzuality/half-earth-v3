@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Component from './legend-component';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { layerManagerOrder } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
+import * as urlActions from 'actions/url-actions';
 import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 
 import mapStateToProps from './legend-selectors';
 
-const actions = {...metadataActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
 
 const LegendContainer = props => {
 
@@ -39,9 +41,9 @@ const LegendContainer = props => {
     openLayerInfoModalAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND }});
   };
 
-  const handleChangeOrder = activeLayers => {
-    const { setLayerOrder, changeLayersOrderAnalyticsEvent } = props;
-    setLayerOrder(activeLayers);
+  const handleChangeOrder = layers => {
+    const { activeLayers, changeLayersOrderAnalyticsEvent, changeGlobe } = props;
+    layerManagerOrder(layers, activeLayers, changeGlobe);
     changeLayersOrderAnalyticsEvent();
   };
 

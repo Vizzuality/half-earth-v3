@@ -17,7 +17,9 @@ const DataGlobeSidebarComponent = ({
   activeLayers,
   rasters,
   map,
-  view
+  view,
+  handleGlobeUpdating,
+  setRasters
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
@@ -42,6 +44,14 @@ const DataGlobeSidebarComponent = ({
           <HumanImpactLayers
             activeLayers={activeLayers}
             rasters={rasters}
+            handleGlobeUpdating={handleGlobeUpdating}
+            setRasters={setRasters}
+          />
+        )}
+        {isProtectedAreasActive && (
+          <ProtectedAreasLayers
+            handleGlobeUpdating={handleGlobeUpdating}
+            activeLayers={activeLayers}
           />
         )}
       </Sidebar>

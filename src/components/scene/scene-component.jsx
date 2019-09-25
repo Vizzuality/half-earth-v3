@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
+import styles from 'styles/themes/scene-theme.module.scss';
 
 const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoad = null, loadElement }) => {
 
@@ -31,26 +32,28 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoa
 
   useEffect(() => {
     if (map && view) {
+      console.log(map)
+      console.log(view)
       setLoadState('loaded');
     }
   }, [map, view])
 
   useEffect(() => {
-    if (loadState === 'loaded') {
-      onLoad && onLoad(map, view);
+    if (loadState === 'loaded' && onLoad) {
+      onLoad(map, view);
     }
   }, [loadState])
 
   if (loadState === 'loading') {
     return (
     <>
-      <div id={`scene-container-${sceneId}`} style={{width:'0%', height:'0%'}} />
+      <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'0%', height:'0%'}} />
       <Spinner spinnerWithOverlay floating/>
     </>
     )
   } else if (loadState === 'loaded') {
     return (
-      <div id={`scene-container-${sceneId}`} style={{width:'100%', height:'100%', backgroundColor: '#0A212E'}}>
+      <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'100%', height:'100%', backgroundColor: '#0A212E'}}>
         {React.Children.map(children || null, (child, i) => {
           return child && <child.type key={i} map={map} view={view} {...child.props}/>;
         })}

@@ -117,6 +117,11 @@ export const biodiversityCategories = [
 ]
 
 export const layersConfig = [
+  //Protected Areas Layers
+  {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
+  {title: 'Protected Areas', slug: 'protected_areas_feature_layer', type: 'FeatureLayer', url: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer'},
+  {title: 'Community Areas', slug: 'community_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile2/VectorTileServer'},
+  {title: 'Community Areas', slug: 'community_areas_feature_layer', type: 'FeatureLayer', url: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view2/FeatureServer'},
   // Human impact layers
   {title: 'All pressures', slug: 'land_human_pressures', type: 'ImageryLayer', url: 'https://geoxc-imagery.bd.esri.com/arcgis/rest/services/MOL/Human_Impact/ImageServer'},
   // Fishing activities

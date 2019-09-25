@@ -14,7 +14,7 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import { enterLandscapeModeAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import ownActions from './data-globe-actions.js';
-import { createLayer } from 'utils/layer-manager-utils';
+import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
@@ -46,7 +46,10 @@ const handleMapLoad = (map, activeLayers) => {
   const biodiversityLayers = layersConfig
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
 
-  biodiversityLayers.forEach(layer => createLayer(layer, map));
+  biodiversityLayers.forEach(layer => {
+    const newLayer = createLayer(layer, map);
+    addLayerToMap(newLayer);
+  });
 }
 
 const dataGlobeContainer = props => {
