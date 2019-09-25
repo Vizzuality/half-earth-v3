@@ -26,10 +26,6 @@ $share-button-margin: 12px;
   }
 }
 
-// .sidebar {
-//   @include rtl(float, left, right);
-// }
-
 %spacer {
   height: 1px;
   background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
