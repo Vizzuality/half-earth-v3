@@ -28,6 +28,13 @@
   margin: 0;
   margin-bottom: 50px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+  padding: 20px;
+  text-align: center;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+    text-align: left;
+  }
 }
 
 .logosWrapper {
@@ -58,11 +65,20 @@
   color: $white;
   margin: 0;
   text-align: center;
+  padding: 20px;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+  }
 }
 
 .partners {
   .description {
-    width: 500px;
+    width: auto;
+
+    @media #{$tablet-portrait} {
+      width: 500px;
+    }
   }
   .logosWrapper {
     justify-content: space-between;
