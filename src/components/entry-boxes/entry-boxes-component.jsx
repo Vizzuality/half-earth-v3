@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './entry-boxes-styles.module.scss';
 import animationStyles from 'styles/common-animations.module.scss';
 import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import cx from 'classnames';
 
 import CategoryBox from 'components/category-box';
@@ -12,7 +13,7 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route, isEntryBoxesOpen }) => {
+const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route, activeOption }) => {
   const interfaceLoaded = route.path === '/dataGlobe';
 
   const handleCategoryEnter = (category) => {
@@ -21,8 +22,9 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
   }
 
   const isOnMobile = isMobile();
+  const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
-  const categoryBoxHidden = isSidebarOpen || isLandscapeMode || isFullscreenActive || (isOnMobile && !isEntryBoxesOpen);
+  const categoryBoxHidden = isSidebarOpen || isLandscapeMode || isFullscreenActive || (isOnMobile && !isActive);
 
   return (
     <div data-cy="entry-boxes" className={cx(styles.entryBoxesPosition, { [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })}>

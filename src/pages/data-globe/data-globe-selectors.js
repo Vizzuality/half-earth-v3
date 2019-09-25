@@ -37,9 +37,6 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
-const getEntryBoxesOpen = createSelector(getUiSettings, uiSettings => uiSettings.isEntryBoxesOpen)
-const getLegendOpen = createSelector(getUiSettings, uiSettings => uiSettings.isLegendOpen)
-const getSettingOpen = createSelector(getUiSettings, uiSettings => uiSettings.isSettingsOpen)
 const getHalfEarthMeterOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHalfEarthMeterModalOpen)
 const getAboutOpen = createSelector(getUiSettings, uiSettings => uiSettings.isAboutOpen)
 const getAboutActiveSection = createSelector(getUiSettings, uiSettings => uiSettings.activeAboutSection)
@@ -48,6 +45,7 @@ const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
+const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
@@ -56,17 +54,15 @@ export default createStructuredSelector({
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
-  isEntryBoxesOpen: getEntryBoxesOpen,
-  isLegendOpen: getLegendOpen,
-  isSettingsOpen: getSettingOpen,
-  isHalfEarthMeterModalOpen: getHalfEarthMeterOpen,
-  isAboutOpen: getAboutOpen,
-  activeAboutSection: getAboutActiveSection,
+  isHalfEarthMeterModalOpen: getHalfEarthMeterOpen, // mobile
+  isAboutOpen: getAboutOpen, // mobile
+  activeAboutSection: getAboutActiveSection, // mobile
   sceneSettings: getSceneSettings,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   rasters: getRasters,
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
-  selectedSpecies: getSelectedSpecies
+  selectedSpecies: getSelectedSpecies,
+  activeOption: getActiveOption // mobile
 })
