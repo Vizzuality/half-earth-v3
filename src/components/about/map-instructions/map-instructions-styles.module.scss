@@ -14,19 +14,33 @@
   line-height: 30px;
   margin-bottom: 80px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+  padding: 20px;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+  }
 }
 
 .mouseNavigationSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 80px;
-  width: 400px;
+  width: auto;
+
+  @media #{$tablet-portrait} {
+    width: 400px;
+  }
 
   .mouseClickIcon {
     align-items: center;
     display: flex;
     flex: 1;
     flex-direction: column;
+    padding: 0 15px;
+
+    @media #{$tablet-portrait} {
+      padding: 0;
+    }
 
     span {
       color: $white;
