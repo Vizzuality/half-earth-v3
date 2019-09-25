@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from 'actions/url-actions';
 import { useSearchWidgetLogic } from 'hooks/esri';
 import { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent } from 'actions/google-analytics-actions';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 // icons
 import { ReactComponent as SearchIcon } from 'icons/searchMobile.svg';
@@ -13,88 +14,63 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isEntryBoxesOpen, isLegendOpen, isSidebarOpen, isSettingsOpen, isLandscapeMode } = props;
+  const { view, isSidebarOpen, isLandscapeMode, activeOption } = props;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
     searchLocationAnalyticsEvent
   );
 
-  const handleEntryBoxesOpen = () => {if (!isEntryBoxesOpen) props.changeUI({ isEntryBoxesOpen: true }); }
-  const handleEntryBoxesClose = () => { if (isEntryBoxesOpen) props.changeUI({ isEntryBoxesOpen: false }); }
-
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
+  const resetActiveOption = () => props.changeUI({ activeOption: '' });
+  const setActiveOption = (option) => props.changeUI({ activeOption: option })
 
-  const handleSearchOpen = () => { if (!searchWidget) handleOpenSearch(); }
-  const handleSearchClose = () => { if (!!searchWidget) handleCloseSearch(); }
+  useEffect(() => {
+    if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
+  }, [activeOption])
 
-  const handleLegendOpen = () => { if (!isLegendOpen) props.changeUI({ isLegendOpen: true }); }
-  const handleLegendClose = () => { if (isLegendOpen) props.changeUI({ isLegendOpen: false }); }
-
-  const handleSettingsOpen = () => { if(!isSettingsOpen) props.changeUI({ isSettingsOpen: true }); }
-  const handleSettingsClose = () => { if(isSettingsOpen) props.changeUI({ isSettingsOpen: false }); } 
+  const handleSearchToggle = () => {
+    if (!searchWidget) { handleOpenSearch() }
+    else { handleCloseSearch() }
+  }
 
   useEffect(() => {
     if (isLandscapeMode) { 
-      handleEntryBoxesClose();
+      resetActiveOption();
       handleSidebarClose();
-      handleLegendClose();
-      handleSettingsClose();
-      handleSearchClose();
+      handleCloseSearch();
     }
   }, [isLandscapeMode])
 
-  const handleSearchClick = () => {
-    handleEntryBoxesClose();
-    handleSidebarClose();
-    handleLegendClose();
-    handleSettingsClose();
-    handleSearchOpen();
-  }
-
-  const handleLayersOpen = () => {
-    handleLegendClose();
-    handleSearchClose();
-    handleSettingsClose();
-    handleEntryBoxesOpen();
-  }
-
-  const handleLegendClick = () => {
-    handleEntryBoxesClose();
-    handleSidebarClose();
-    handleSearchClose();
-    handleSettingsClose();
-    handleLegendOpen();
-  }
-
-  const handleSettingsClick = () => {
-    handleEntryBoxesClose();
-    handleSidebarClose();
-    handleSearchClose();
-    handleLegendClose();
-    handleSettingsOpen();
+  const handler = (option) => {
+    if (activeOption === option) resetActiveOption();
+    else setActiveOption(option);
   }
 
   const options = [
     {
       icon: SearchIcon,
       name: 'Find places',
-      onClickHandler: handleSearchClick
+      key: FOOTER_OPTIONS.SEARCH,
+      onClickHandler: () => { handler(FOOTER_OPTIONS.SEARCH); handleSearchToggle(); }
     },
     {
       icon: AddLayerIcon,
       name: 'Add layer',
-      onClickHandler: handleLayersOpen
+      key: FOOTER_OPTIONS.ADD_LAYER,
+      onClickHandler: () => handler(FOOTER_OPTIONS.ADD_LAYER)
     },
     {
       icon: LegendIcon,
       name: 'Legend',
-      onClickHandler: handleLegendClick
+      key: FOOTER_OPTIONS.LEGEND,
+      onClickHandler: () => handler(FOOTER_OPTIONS.LEGEND)
     },
     {
       icon: SettingsIcon,
       name: 'More',
-      onClickHandler: handleSettingsClick
+      key: FOOTER_OPTIONS.SETTINGS,
+      onClickHandler: () => handler(FOOTER_OPTIONS.SETTINGS)
     }
   ]
 

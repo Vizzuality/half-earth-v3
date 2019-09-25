@@ -32,9 +32,6 @@ const DataGlobeComponent = ({
   activeCategory,
   isLandscapeMode,
   isBiodiversityActive,
-  isEntryBoxesOpen,
-  isLegendOpen,
-  isSettingsOpen,
   isHalfEarthMeterModalOpen,
   isAboutOpen,
   activeAboutSection,
@@ -45,7 +42,8 @@ const DataGlobeComponent = ({
   rasters,
   handleMapLoad,
   handleGlobeUpdating,
-  setRasters
+  setRasters,
+  activeOption,
 }) => {
 
   const isOnMobile = isMobile();
@@ -60,8 +58,8 @@ const DataGlobeComponent = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter isEntryBoxesOpen={isEntryBoxesOpen} isLegendOpen={isLegendOpen} isSidebarOpen={isSidebarOpen} isSettingsOpen={isSettingsOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings isSettingsOpen={isSettingsOpen} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
+          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
+          <MenuSettings activeOption={activeOption} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -72,6 +70,7 @@ const DataGlobeComponent = ({
         <Widgets isFullscreenActive={isFullscreenActive}/>
         <DataGlobalSidebar
           isSidebarOpen={isSidebarOpen}
+          activeOption={activeOption}
           isFullscreenActive={isFullscreenActive}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
@@ -83,7 +82,7 @@ const DataGlobeComponent = ({
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
-          isLegendOpen={isLegendOpen}
+          activeOption={activeOption}
           setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
           setLayerOrder={setLayerOrder}
