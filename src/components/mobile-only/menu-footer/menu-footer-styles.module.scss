@@ -34,3 +34,9 @@
   @extend %subtitle;
   color: $white;
 }
+
+.activeOptionContainer {
+  padding: 10px;
+  background-color: rgba($white, 0.05);
+  border-radius: 2px;
+}

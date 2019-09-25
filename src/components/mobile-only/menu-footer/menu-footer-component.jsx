@@ -18,8 +18,8 @@ const MenuFooter = ({ options, isLandscapeMode }) => {
   return (
     <div className={styles.menuContainer}>
       {options.length && options.map(option => (
-        <div onClick={() => onClickHandler(option)} className={styles.option}>
-          <span className={cx(styles.icon, { [styles.activeOption]: isActive(option) })}><option.icon /></span>
+        <div onClick={() => onClickHandler(option)} className={cx(styles.option, { [styles.activeOptionContainer]: isActive(option) })}>
+          <option.icon className={cx(styles.icon, { [styles.activeOption]: isActive(option) })}/>
           {isActive(option) && <span className={styles.title}>{option.name}</span>}
         </div>
       ))}
