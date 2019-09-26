@@ -138,6 +138,7 @@ const FeaturedGlobeComponent = ({
             selectedFeaturedPlace={selectedFeaturedPlace}
             selectedFeaturedMap={selectedFeaturedMap}
             featuredPlacesLayer={featuredPlacesLayer}
+            selectedTaxa={selectedTaxa}
           />
           {isLandscapeMode &&
             <Legend

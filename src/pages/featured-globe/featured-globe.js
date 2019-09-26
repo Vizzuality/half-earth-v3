@@ -4,7 +4,7 @@ import { loadModules } from '@esri/react-arcgis';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 import { DATA } from 'router';
-import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
+import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
 import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
@@ -31,6 +31,7 @@ const handleMarkerClick = (viewPoint, view) => {
   removeAvatarImage();
 }
 const handleMarkerHover = (viewPoint, view) => {
+  setCursor(viewPoint, FEATURED_PLACES_LAYER);
   setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
 };
 
