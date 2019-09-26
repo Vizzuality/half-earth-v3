@@ -23,7 +23,6 @@ import FeaturedMapsList from 'components/featured-maps-list';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import SelectedFeaturedMapLayer from 'components/featured-places-layer';
-import PriorityPlacesPolygonsLayer from 'components/priority-places-polygons-layer';
 import Spinner from 'components/spinner';
 import About from 'components/about';
 import uiStyles from 'styles/ui.module.scss';
@@ -35,6 +34,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const GridLayer = loadable(() => import('components/grid-layer'));
+const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
@@ -113,10 +113,13 @@ const FeaturedGlobeComponent = ({
             isLandscapeMode={isLandscapeMode}
             handleLayerToggle={handleLayerToggle}
           />
-          <PriorityPlacesPolygonsLayer
-            selectedFeaturedMap={selectedFeaturedMap}
-            selectedTaxa={selectedTaxa}
-          />
+          {!isLandscapeMode &&
+            <PriorityPlacesPolygonsLayer
+              selectedFeaturedMap={selectedFeaturedMap}
+              selectedTaxa={selectedTaxa}
+              isLandscapeMode={isLandscapeMode}
+            />
+          }
           <FeaturedTaxaSelector
             selectedTaxa={selectedTaxa}
             isMapsList={isMapsList}
