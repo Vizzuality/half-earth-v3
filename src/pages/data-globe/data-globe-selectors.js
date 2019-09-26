@@ -29,9 +29,6 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
-const getHalfEarthMeterOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHalfEarthMeterModalOpen)
-const getAboutOpen = createSelector(getUiSettings, uiSettings => uiSettings.isAboutOpen)
-const getAboutActiveSection = createSelector(getUiSettings, uiSettings => uiSettings.activeAboutSection)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
@@ -49,12 +46,6 @@ export default createStructuredSelector({
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
   isLegendActive: getIsLegendActive,
-  isEntryBoxesOpen: getEntryBoxesOpen,
-  isLegendOpen: getLegendOpen,
-  isSettingsOpen: getSettingOpen,
-  isHalfEarthMeterModalOpen: getHalfEarthMeterOpen, // mobile
-  isAboutOpen: getAboutOpen, // mobile
-  activeAboutSection: getAboutActiveSection, // mobile
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   rasters: getRasters,

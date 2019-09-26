@@ -5,17 +5,29 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: 500px;
+
+  @media #{$tablet-portrait} {
+    overflow-y: unset;
+    height: auto;
+  }
 }
 
 .title {
   @extend %headline;
   color: $white;
-  margin-bottom: 80px;
+  font-family: $font-family-1;
+  font-size: $font-size-xl;
+  letter-spacing: 1px;
+  line-height: 30px;
+  margin-bottom: 40px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
   padding: 20px;
 
   @media #{$tablet-portrait} {
     padding: 0;
+    margin-bottom: 80px;
   }
 }
 
@@ -80,7 +92,6 @@
     margin-left: 20px;
   }
 }
-
 
 .horizontalFlip {
   transform: scale(-1, 1);

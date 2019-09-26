@@ -27,6 +27,7 @@ const MenuFooterContainer = props => {
 
   useEffect(() => {
     if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
+    if (activeOption !== FOOTER_OPTIONS.SEARCH && searchWidget) handleCloseSearch();
   }, [activeOption])
 
   const handleSearchToggle = () => {

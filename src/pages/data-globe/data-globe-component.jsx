@@ -32,9 +32,6 @@ const DataGlobeComponent = ({
   activeCategory,
   isLandscapeMode,
   isBiodiversityActive,
-  isHalfEarthMeterModalOpen,
-  isAboutOpen,
-  activeAboutSection,
   isGlobeUpdating,
   isLegendActive,
   hasMetadata,
@@ -59,12 +56,12 @@ const DataGlobeComponent = ({
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
           <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
+          <MenuSettings activeOption={activeOption} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-        <Switcher />
+        {!isOnMobile && <SearchWidget />}
         <ArcgisLayerManager activeLayers={activeLayers} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
