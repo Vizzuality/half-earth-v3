@@ -42,3 +42,34 @@
 .visible {
   display: block;
 }
+
+.modalWrapper {
+  background-color: $dark-text;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 11;
+}
+
+.button {
+  margin-top: 38px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xxs;
+  font-weight: $font-weight-bold;
+  font-family: $font-family-1;
+  letter-spacing: 2px;
+  color: $robins-egg-blue;
+  padding: 0;
+}
+
+.icon {
+  transform: rotate(180deg);
+  height: 25px;
+}
+
+.backButton {
+  margin-top: 4px;
+}

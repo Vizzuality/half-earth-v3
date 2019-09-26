@@ -13,14 +13,9 @@ const VIEW = 'half-earth-meter';
 const actions = {...metadataActions, openHalfEarthMeterAnalyticsEvent };
 
 const MinimapWidget = (props) => {
-  const { isHalfEarthMeterModalOpen } = props;
-  const [isModalOpen, setModalOpen] = useState(isHalfEarthMeterModalOpen);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const isOnMobile = isMobile();
-
-  useEffect(() => {
-    if (isHalfEarthMeterModalOpen) { handleModalOpen(); }
-  }, [isHalfEarthMeterModalOpen])
 
   const handleMapLoad = (map, view, globeView ) => {
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
