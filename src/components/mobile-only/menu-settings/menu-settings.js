@@ -1,57 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { ABOUT_TABS } from 'constants/google-analytics-constants';
-import * as actions from 'actions/url-actions';
+import { SETTINGS_OPTIONS } from 'constants/mobile-only';
+
+import pageTextsActions from 'redux_modules/page-texts/page-texts';
+import * as urlActions from 'actions/url-actions';
+
+import Partners from 'components/about/partners';
+import MapInstructions from 'components/about/map-instructions/map-instructions-component';
 
 import Component from './menu-settings-component';
 
+const actions = { ...pageTextsActions, ...urlActions };
+const PARTNERS_TEXT_SLUG = 'partners';
+
+const mapStateToProps = ({ pageTexts }) => ({
+  textData: pageTexts.data[PARTNERS_TEXT_SLUG]
+});
 
 const MenuSettingsContainer = props => {
-  const { isHalfEarthMeterModalOpen, isAboutOpen } = props;
-  
-  const handleHalfEarthMeterModalOpen = () => { if (!isHalfEarthMeterModalOpen) props.changeUI({ isHalfEarthMeterModalOpen: true }); }
-  const handleHalfEarthMeterModalClose = () => { if (isHalfEarthMeterModalOpen) props.changeUI({ isHalfEarthMeterModalOpen: false }); }
+  const { setPageTexts, textData } = props;
+  const [activeModal, setActiveModal] = useState(null);
 
-  const handleAboutPartnertsModalOpen = () => {
-    props.changeUI({ activeAboutSection: ABOUT_TABS.PARTNERS })
-    props.changeUI({ isAboutOpen: true })
-  }
+  const closeModal = () => setActiveModal(null);
 
-  const handleNavigationModalOpen = () => {
-    props.changeUI({ activeAboutSection: ABOUT_TABS.INSTRUCTIONS })
-    props.changeUI({ isAboutOpen: true })
-  }
+  const { HALF_EARTH_MODAL, ABOUT_PARTNERS, ABOUT_INSTRUCTIONS } = SETTINGS_OPTIONS;
 
-  const handleAboutModalClose = () => {
-    if (isAboutOpen) { props.changeUI({ isAboutOpen: false }) }
-  }
-
-  const options = [
-    { 
+  const options = {
+    [HALF_EARTH_MODAL]: {
       name: 'Monitoring progress towards the goal of half-earth',
-      onClickHandler: () => {
-        handleAboutModalClose();
-        handleHalfEarthMeterModalOpen();
-      }
+      Component: null,
+      onClickHandler: () => {}
     },
-    {
+    [ABOUT_PARTNERS]: {
       name: 'Partners',
+      Component: Partners,
       onClickHandler: () => {
-        handleHalfEarthMeterModalClose();
-        handleAboutPartnertsModalOpen();
+        setPageTexts(PARTNERS_TEXT_SLUG)
+        setActiveModal(ABOUT_PARTNERS);
       }
     },
-    {
+    [ABOUT_INSTRUCTIONS]: {
       name: 'How to navigate the map',
-      onClickHandler: () => {
-        handleHalfEarthMeterModalClose();
-        handleNavigationModalOpen();
-      }
+      Component: MapInstructions,
+      onClickHandler: () => setActiveModal(ABOUT_INSTRUCTIONS)
     }
-  ]
+  }
 
-  return <Component options={options} {...props} />; 
+  return <Component 
+    options={options}
+    activeModal={activeModal}
+    textData={textData}
+    closeModal={closeModal} 
+    {...props} />; 
 }
 
-export default connect(null, actions)(MenuSettingsContainer);
+export default connect(mapStateToProps, actions)(MenuSettingsContainer);

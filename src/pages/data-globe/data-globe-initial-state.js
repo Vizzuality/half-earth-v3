@@ -21,9 +21,6 @@ export default {
   ui: {
     isSidebarOpen: false,
     activeOption: '', // mobile
-    isHalfEarthMeterModalOpen: false, // mobile
-    isAboutOpen: false, // mobile
-    activeAboutSection: 'partners', // mobile
     isFullscreenActive: false, 
     activeCategory: ''
   },

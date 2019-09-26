@@ -3,7 +3,6 @@
 @import 'styles/common-animations.module';
 
 .sidebar {
-  @include animationFunction();
   display: inline-block;
   box-sizing: border-box;
   border-radius: 16px 16px 0 0;
@@ -13,6 +12,8 @@
   @include bottom();
 
   @media #{$tablet-portrait} {
+    @include animationFunction();
+    overflow: unset;
     border-radius: 2px;
     width: auto;
     bottom: auto;

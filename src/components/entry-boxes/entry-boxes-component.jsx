@@ -30,7 +30,7 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
     <div data-cy="entry-boxes" className={cx(styles.entryBoxesPosition, { [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })}>
       {interfaceLoaded && categories.length &&
         categories.map((category, i) => (
-          <div className={cx(animationStyles.transform, { [animationStyles.leftHidden]: categoryBoxHidden && !isOnMobile, [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })} onClick={() => handleCategoryEnter(category)}>
+          <div className={cx({ [animationStyles.transform]: !isOnMobile, [animationStyles.leftHidden]: categoryBoxHidden && !isOnMobile, [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })} onClick={() => handleCategoryEnter(category)}>
             <CategoryBox
               title='mapping'
               isSidebarOpen={isSidebarOpen}

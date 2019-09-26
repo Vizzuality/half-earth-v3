@@ -46,9 +46,6 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   isSidebarOpen,
-  isHalfEarthMeterModalOpen,
-  isAboutOpen,
-  activeAboutSection,
   isGlobeUpdating,
   hasMetadata,
   handleZoomChange,
@@ -76,7 +73,7 @@ const DataGlobeComponent = ({
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
           <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} isAboutOpen={isAboutOpen} activeAboutSection={activeAboutSection} />
+          <MenuSettings activeOption={activeOption} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -85,7 +82,7 @@ const DataGlobeComponent = ({
         {!isOnMobile && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
         {!isOnMobile && <ZoomWidget isNotMapsList={true} />}
         {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
-        <MinimapWidget isHalfEarthMeterModalOpen={isHalfEarthMeterModalOpen} />
+        <MinimapWidget />
         {!isOnMobile && <SearchWidget />}
         <EntryBoxes activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
         <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
@@ -143,7 +140,7 @@ const DataGlobeComponent = ({
           selectedSpecies={selectedSpecies}
         />
       </Globe>
-      <About isAboutOpen={isAboutOpen} activeSection={activeAboutSection} />
+      <About />
       {hasMetadata && <InfoModal />}
       <TutorialModal />
     </>
