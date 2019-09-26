@@ -13,9 +13,9 @@ $margin: 20px;
   position: absolute;
   bottom: 15px;
   overflow-x: hidden;
-  @include animationFunction();
 
   @media #{$tablet-portrait} {
+    @include animationFunction();
     height: calc(100vh - 60px);
     border-radius: 2px;
   }
