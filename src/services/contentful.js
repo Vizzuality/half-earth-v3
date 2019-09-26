@@ -1,5 +1,6 @@
 import { createClient } from 'contentful';
 
+import placeHolder from 'images/speciesPlaceholder.svg'
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
 
@@ -63,9 +64,14 @@ async function parseFeaturedPlace(data) {
     title: data.fields.title,
     description: data.fields.description,
   };
-  await getContentfulImage(data.fields.image.sys.id).then(mapImageUrl => {
-    featuredPlace.image = mapImageUrl;
-  });
+  if (!data.fields.image) {
+    featuredPlace.image = placeHolder;
+    return featuredPlace;
+  }
+  await getContentfulImage(data.fields.image.sys.id)
+    .then(mapImageUrl => {
+      featuredPlace.image = mapImageUrl;
+    });
   return featuredPlace;
 }
 
