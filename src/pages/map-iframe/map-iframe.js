@@ -4,7 +4,7 @@ import postRobot from 'post-robot';
 
 import { loadModules } from '@esri/react-arcgis';
 
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER, PLEDGES_LAYER } from 'constants/layers-slugs';
 import { PLEDGES_LAYER_URL } from 'constants/layers-urls';
 import { 
   layerManagerToggle,
@@ -33,7 +33,7 @@ const pledgeLight = {
   ]
 };
 
-const handleMapLoad = (map, view, activeLayers) => {
+const handleMapLoad = (map, view, activeLayers, isPledgesActive) => {
   const { layers } = map;
 
   // This fix has been added as a workaround to a bug introduced on v4.12
@@ -56,7 +56,7 @@ const handleMapLoad = (map, view, activeLayers) => {
       featureReduction: { type: 'selection' }
     });
     
-    layer.visible = false; // not displayed by default
+    layer.visible = activeLayers.find(l => l.title === PLEDGES_LAYER) || isPledgesActive === 'true';
     map.add(layer);
   })
   
@@ -115,7 +115,7 @@ const dataGlobeContainer = props => {
   return <Component
     handleLayerToggle={toggleLayer}
     handleZoomChange={handleZoomChange}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, props.isPledgesActive)}
     {...props}/>
 }
 
