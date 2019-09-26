@@ -4,7 +4,7 @@ import { loadModules } from '@esri/react-arcgis';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 import { DATA } from 'router';
-import { setAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
+import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace } from 'utils/globe-events-utils';
 import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
 import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
@@ -28,10 +28,11 @@ const feturedGlobeContainer = props => {
 
 const handleMarkerClick = (viewPoint, view) => {
   setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
-  // remove the avatar image
-  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces, true)
+  removeAvatarImage();
 }
-const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
+const handleMarkerHover = (viewPoint, view) => {
+  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
+};
 
   useEffect(() => {
     const { setFeaturedMapsList } = props;
@@ -62,9 +63,6 @@ const handleMarkerHover = (viewPoint, view) => setAvatarImage(view, viewPoint, F
     // hide human pressure layers after first load, if the globe is not it the landscape mode
     if (humanImpactLayer) humanImpactLayer.visible = !!isLandscapeMode;
     
-    view.on("pointer-down", function(event) {
-      setSelectedFeaturedPlace(event, view, changeUI);
-    });
   }
 
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
