@@ -11,9 +11,10 @@ const GlobeComponent = ({ sceneId, sceneSettings, onLoad, children, loadElement 
 
   const handleOnLoad = (map, view) => {
     setMap(map);
+    map.ground.surfaceColor = '#0A212E';
     setView(view);
     setLoaded(true);
-    onLoad && onLoad(map, view);
+    onLoad && onLoad(map, view);  
   }
 
   return (

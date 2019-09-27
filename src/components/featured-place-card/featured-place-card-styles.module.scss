@@ -1,0 +1,164 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+@import 'styles/common-animations.module';
+
+$card-content-max-height: 220px;
+
+.container {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  min-height: 380px;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.navigation {
+  width: 100%;
+  height: 45px;
+  max-width: $card-max-width;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  pointer-events: all;
+
+  .backToMap {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+  
+    .text {
+      @extend %title;
+      color: $white;
+      margin: 0;
+    }
+  
+    .arrowIcon {
+      top: 2px;
+      position: relative;
+      transform: rotate(180deg);
+      margin-right: 30px;
+    }
+  }
+
+  .placesNavigator {
+    width: 100px;
+    padding: 0 10px;
+    height: 100%;
+    background-color: $white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    .arrowWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .leftArrow {
+      transform: rotate(180deg);
+      fill: $dark-text;
+      stroke: $dark-text;
+    }
+
+    .separator {
+      height: 20px;
+      width: 1px;
+      background-color: $grey-text;
+    }
+
+    .rightArrow {
+      fill: $dark-text;
+      stroke: $dark-text;
+    }
+  }
+}
+
+
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  pointer-events: all;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  max-width: $card-max-width;
+  background-color: white;
+  padding: 60px 40px 0px;
+
+  .landscapeTriggerContainer {
+    display: grid;
+    max-height: $card-content-max-height;
+    grid-template-rows: 185px 1fr;
+    width: 300px;
+
+    .icon {
+      fill: $dark-text;
+      position: relative;
+      top: -2px;
+      margin-right: 12px;
+    }
+
+  }
+  
+  .picture {
+    float: left;
+    width: 100%;
+    margin-right: 40px;
+    cursor: pointer;
+  }
+
+  .landscapeTriggerButton {
+    align-self: end;
+    display: flex;
+    justify-self: start;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .landscapeTriggerText {
+    @extend %subtitle;
+    color: $dark-text;
+  }
+
+  .contentContainer {
+    max-height: $card-content-max-height;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom,
+    rgba(0,0,0,1) 85%,
+    rgba(0,0,0,0) 100%
+    );
+  }
+
+  .contentWrapper {
+    @extend %verticalScrollBar;
+    max-height: $card-content-max-height;
+  }
+  
+  .title {
+    @extend %display1;
+    color: $dark-text;
+    margin: 0;
+  }
+  .text {
+    @extend %bodyText;
+    color: $dark-text;
+  }
+}

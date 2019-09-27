@@ -2,26 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { loadModules } from '@esri/react-arcgis';
 
+import { handleLayerRendered } from 'utils/layer-manager-utils';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
-import { HUMAN_PRESSURE_LAYER_ID } from 'constants/human-pressures';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 
-const HumanImpactLayers = ({ map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
-  const humanImpactLayerActive = activeLayers.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
+const HumanImpactLayers = ({ handleGlobeUpdating, view, map, rasters, setRasters, setLayerVisibility, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent }) => {
+  const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  // eslint-disable-next-line no-mixed-operators
   const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
     ...acc, [option.value]: rasters[option.value]
-  // eslint-disable-next-line no-mixed-operators
   }), {})) || {};
 
   const handleHumanPressureRasters = (rasters, option) => {
     const { layers } = map;
-    const humanImpactLayer = layers.items.find(l => l.id === HUMAN_PRESSURE_LAYER_ID);
-    setRasters(rasters);
-
+    const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+    
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
-    setLayerVisibility(HUMAN_PRESSURE_LAYER_ID, hasRastersWithData);
+    if (hasRastersWithData) {
+      handleGlobeUpdating(true);
+    }
+    setRasters(rasters);
+    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
+
+    setLayerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData);
 
     const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
     const rasterNames = activeRasters.map(value => `human_impact_${value}`)

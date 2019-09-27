@@ -51,11 +51,18 @@ input[type="checkbox"] {
 
 .checkboxSelected {
   &:before {
-    background: linear-gradient(270deg, $biloba-flower 0%, $port-gore 100%);
+    background: linear-gradient(270deg, #0c2c84 0%, #41b6c4 50%, #ffffcc 100%);
     border: 2px solid $white; 
   }
 }
 
 .icon {
   @extend %icon;
+}
+
+.rightDot {
+  border-radius: 50%;
+  display: block;
+  height: 10px;
+  width: 10px;
 }

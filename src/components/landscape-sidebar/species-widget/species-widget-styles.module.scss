@@ -1,0 +1,190 @@
+
+
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  @include backdropBlur();
+  padding: 20px;
+  width: 280px;
+}
+
+.title {
+  @extend %title;
+  margin: 0;
+  color: $white;
+}
+
+.text {
+  @extend %annotation;
+  color: $alto;
+  margin-bottom: 24px;
+}
+
+// RADAR CHART
+.chart {
+  align-content: flex-end;
+  background-image: url('../../../assets/images/speciesChartGrid.svg');
+  background-position: center 5px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  flex-flow: wrap;
+  height: 210px;
+  margin: 40px auto;
+  margin-bottom: 25px;
+  position: relative;
+  width: 200px;
+}
+
+.chartSlice {
+  width: 100px;
+  height: 100px;
+  position: relative;
+
+  &:after {
+    @extend %annotation;
+    color: $white;
+    position: absolute;
+  }
+
+  &:nth-child(1) { // REPTILES SLICE
+    &:after {   
+      content: 'Reptiles';
+      transform: rotate(-45deg) translate(-10px, 10px);
+    }
+  }
+
+  &:nth-child(2) {  // BIRDS SLICE
+    &:after {   
+      content: 'Birds';
+      transform: rotate(45deg) translate(58px, -37px);
+    }
+  }
+
+  &:nth-child(3) { // MAMMALS SLICE
+    &:after {   
+      content: 'Mammals';
+      transform: rotate(45deg) translate(43px, 51px);
+    }
+  }
+
+  &:nth-child(4) { // AMPHIBIANS SLICE
+    &:after {   
+      content: 'Amphibians';
+      transform: rotate(-45deg) translate(-16px, 81px);
+    }
+  }
+
+}
+
+// CHART DOT
+.chartDot {
+  border-radius: 100%;
+  cursor: pointer;
+  height: 4px;
+  position: absolute;
+  width: 4px;
+  z-index: 2;
+}
+
+.selectedChartDot {
+  align-items: center;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 100%;
+  display: flex;
+  height: 15px;
+  justify-content: center;
+  margin-right: 4px;
+  width: 15px;
+}
+
+.selectedInnerChartDot {
+  border-radius: 100%;
+  display: block;
+  height: 7px;
+  margin-right: 14px;
+  position: absolute;
+  width: 7px;
+}
+
+// SPECIES CARROUSEL
+.speciesDetails {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  margin-top: 0;
+}
+
+.speciesDetailsRow {
+  @extend %bodyText;
+  align-items: center;
+  color: $white;
+  display: flex;
+
+  &:before {
+    background-color: $white;
+    border-radius: 100%;
+    content: '';
+    display: block;
+    height: 4px;
+    margin-right: 14px; 
+    width: 4px;
+  }
+
+  sup {
+    font-size: 8px;
+  }
+}
+
+.speciesNameContainer {
+  display: flex;
+  margin: 20px 0;
+  margin-bottom: 8px;
+  
+  .speciesEngName {
+    @extend %annotation;
+    color: $white;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  
+  .speciesLatName {
+    @extend %annotation;
+    color: $white;
+    font-style: italic;
+  }
+}
+
+.carrousel {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .carrouselButton:first-child svg{
+    transform: rotate(180deg);
+  }
+  
+  .speciesImage {
+    border: 1px solid $sulu;
+    border-radius: 50%;
+    height: 110px;
+    margin: 0 25px;
+    user-select: none;
+    width: 110px;
+  }
+}
+
+
+.molLogo {
+  background-image: url('../../../assets/logos/mol.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  height: 16px;
+  margin: 40px auto 0;
+  width: 44px;
+}

@@ -1,19 +1,21 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .container {
   @include backdropBlur();
   border-radius: 2px;
-  padding: 20px;
+  margin-bottom: 10px;
 }
 
 .title {
   margin: 0;
-  color: white;
+  color: $white;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 2px;
   line-height: 20px;
+  padding: 20px 20px 0;
 }
 
 .text {
@@ -21,14 +23,85 @@
   line-height: 16px;
   font-size: 12px;
   margin-bottom: 24px;
+  padding: 0 20px ;
 }
 
 .hint {
-  color: white;
+  color: $white;
   line-height: 14px;
   font-size: 10px;
   letter-spacing: 1.5px;
+  padding: 20px 20px 0;
+  user-select: none;
 }
-.treemap {
-  width: 100%;
+
+.barContainer {
+  align-items: center;
+  display: flex;
+  height: 32px;
+  margin: 38px 20px 20px;
+  position: relative;
+  width: 240px;
+}
+
+.pressureFreeBar {
+  background-color: $slate-gray;
+  height: 22px; 
+  flex: 1;
+
+  &:before {
+    content: '';
+    background: $white;
+    display: block;
+    height: 32px;
+    transform: translate(-2px, -5px);
+    width: 2px;
+  }
+}
+
+.selectedPressureBar {
+  background-color: $catalina-blue;
+  border: 2px solid $white;
+  border-radius: 1px;
+  height: 100%;
+  position: absolute;
+  transition: width 2s;
+}
+
+.selectedPressureLabel {
+  @extend  %bodyText;
+  color: $white;
+  position: absolute;
+  top: -22px;
+  left: 50%;
+}
+
+.nonSelectedPressureBar {
+  background-color: $catalina-blue;
+  height: 22px;
+}
+
+.pressureFreeLabel {
+  @extend  %bodyText;
+  color: $white;
+  padding: 0 20px;
+  position: relative;
+  margin: 8px 0 15px;
+  width: max-content;
+
+  &:after {
+    content: '';
+    background: $slate-gray;
+    border-radius: 50%;
+    display: block;
+    height: 10px;
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    width: 10px;
+  }
+}
+
+.dummyBlurWorkaround {
+  position: fixed;
 }

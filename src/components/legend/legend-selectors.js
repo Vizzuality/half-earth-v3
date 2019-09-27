@@ -1,15 +1,18 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
+import { PLEDGES_LAYER } from 'constants/layers-slugs';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
+import { selectTutorialState } from 'selectors/tutorial-selectors';
+import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
 
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;
-  return activeLayers.filter(layer => !isLegendFreeLayer(layer.id));
+  return activeLayers.filter(layer => !isLegendFreeLayer(layer.title));
 })
 
 const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
@@ -23,7 +26,7 @@ const getHumanPressuresDynamicTitle = createSelector(getRasters, rasters => {
   const isOnlyAgricultureRasters = titles.every(title => title.toLowerCase().endsWith('agriculture'));
   if (isOnlyAgricultureRasters) return joinAgricultureTitles(titles);
 
-  return titles.join(' AND ');
+  return titles.join(' and ');
 })
 
 const getLegendConfigs = createSelector(
@@ -32,9 +35,12 @@ const getLegendConfigs = createSelector(
   if (!visibleLayers.length) return null;
 
   const configs = visibleLayers.map(layer => {
-    if(legendConfigs[layer.id]) return { ...legendConfigs[layer.id], molLogo: true, layerId: layer.id, opacity: layer.opacity }
-    if(humanPressureLegendConfigs[layer.id]) return { ...humanPressureLegendConfigs[layer.id], title: humanPressuresDynamicTitle, layerId: layer.id, opacity: layer.opacity }
-    if(WDPALegendConfigs[layer.id]) return { ...WDPALegendConfigs[layer.id], layerId: layer.id, opacity: layer.opacity }
+    const sharedConfig = { layerId: layer.title, opacity: layer.opacity };
+    if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
+    if(humanPressureLegendConfigs[layer.title]) return { ...sharedConfig, ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle }
+    if(WDPALegendConfigs[layer.title]) return { ...sharedConfig, ...WDPALegendConfigs[layer.title] }
+    if(layer.title === PLEDGES_LAYER) return { ...sharedConfig, title: 'Signed Pledges' }
+    return sharedConfig;
   })
 
   const parsed = configs.map(config => parseLegend(config));
@@ -50,7 +56,7 @@ const parseLegend = (config) => {
     layers: [{
       active: true,
       opacity: config.opacity !== undefined ? config.opacity : 1,
-      id: config.layerId,
+      title: config.layerId,
       type: 'layer',
       legendConfig: {
         ...config
@@ -61,10 +67,31 @@ const parseLegend = (config) => {
 
 const joinAgricultureTitles = (titles) => {
   const trimmedTitles = titles.map(title => title.split(" ")[0]);
-  return `${trimmedTitles.join(' AND ')} agriculture`;
+  return `${trimmedTitles.join(' and ')} agriculture`; 
 }
+
+const getActiveTutorialData = createSelector(
+  [selectTutorialState, getLegendConfigs],
+  (tutorial, datasets) => {
+    if (!tutorial) return null;
+
+    const enableLegendTutorial = tutorial[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
+    const enableLegendDragTutorial = tutorial[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
+
+    const enabledTutorialIDs = [];
+
+    if (enableLegendTutorial) enabledTutorialIDs.push(LEGEND_TUTORIAL);
+    if (enableLegendDragTutorial) enabledTutorialIDs.push(LEGEND_DRAG_TUTORIAL);
+
+    return {
+      id: enabledTutorialIDs.join(','),
+      showTutorial: enabledTutorialIDs.length > 0
+    }
+  }
+);
 
 export default createStructuredSelector({
   visibleLayers: getVisibleLayers,
-  datasets: getLegendConfigs
+  datasets: getLegendConfigs,
+  tutorialData: getActiveTutorialData
 });

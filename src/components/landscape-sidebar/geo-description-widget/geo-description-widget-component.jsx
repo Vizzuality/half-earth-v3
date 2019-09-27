@@ -1,10 +1,13 @@
 import React from 'react';
 import { Loading } from 'he-components';
-import ShareModal from 'components/share-modal';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
+import FixedHeader from 'components/fixed-header'
+import errorGif from 'icons/error.gif'
 
-const GeoDescriptionWidget = ({ data, loading, error, view }) => {
+const GeoDescriptionWidget = (props) => {
+  const { data, loading, error, view, handleBackClick } = props;
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -19,9 +22,13 @@ const GeoDescriptionWidget = ({ data, loading, error, view }) => {
   if (error) {
     return (
       <div className={styles.container}>
-        <p className={styles.errorText}>
-          Cannot load area information.
-        </p>
+        <FixedHeader closeSidebar={handleBackClick} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight/>
+        <div className={styles.errorWrapper}>
+          <p className={styles.errorText}>
+            Cannot load area information…
+          </p>
+          <img className={styles.errorGif} src={errorGif} alt="error" />
+        </div>
       </div>
     );
   }
@@ -30,9 +37,7 @@ const GeoDescriptionWidget = ({ data, loading, error, view }) => {
 
   return (
     <div className={styles.container}>
-      <ShareModal theme={{ shareButton: styles.shareButton }} view={view} viewMode={VIEW_MODE.LANDSCAPE} />
-      <h2 className={styles.title}>{data.title}</h2>
-      <div className={styles.line}></div>
+      <FixedHeader closeSidebar={handleBackClick} title={data.title} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight />
       <p className={styles.description}>
         {data.description}
       </p>

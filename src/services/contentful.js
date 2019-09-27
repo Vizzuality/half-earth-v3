@@ -40,6 +40,53 @@ function parseStories(stories) {
   );
 }
 
+function parseFeaturedMaps(featuredMaps) {
+  return featuredMaps.reduce(
+    async (acc, map) => {
+      const featuredMap = {
+        slug: map.fields.slug,
+        title: map.fields.title,
+        description: map.fields.description,
+      };
+      await getContentfulImage(map.fields.picture.sys.id).then(mapImageUrl => {
+        featuredMap.image = mapImageUrl;
+      });
+      const acummPromise = await acc;
+      return [ ...acummPromise, featuredMap ];
+    },
+    []
+  )
+}
+
+async function parseFeaturedPlace(data) {
+  const featuredPlace = {
+    title: data.fields.title,
+    description: data.fields.description,
+  };
+  await getContentfulImage(data.fields.image.sys.id).then(mapImageUrl => {
+    featuredPlace.image = mapImageUrl;
+  });
+  return featuredPlace;
+}
+
+async function parseFeaturedPlaces(data) {
+  return data.reduce(
+    async (acc, place) => {
+      const featuredPlace = {
+        slug: place.fields.nameSlug,
+        title: place.fields.title,
+        description: place.fields.description,
+      };
+      await getContentfulImage(place.fields.image.sys.id).then(placeImageUrl => {
+        featuredPlace.image = placeImageUrl;
+      });
+      const acummPromise = await acc;
+      return [ ...acummPromise, featuredPlace ];
+    },
+    []
+  )
+}
+
 const parseTexts = items => {
   return items.map(({ fields }) => fields).reduce((acc, item) => {
     acc[item.view] = item;
@@ -97,4 +144,28 @@ async function getTexts(slug) {
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts };
+async function getFeaturedMapData() {
+  const data = await fetchContentfulEntry({ contentType: 'featuredMaps'});
+  if (data && data.items && data.items.length > 0) {
+    return parseFeaturedMaps(data.items);
+  }
+  return null;
+}
+
+async function getFeaturedPlaceData(slug) {
+  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'nameSlug', filterValue: slug });
+  if (data && data.items && data.items.length > 0) {
+    return parseFeaturedPlace(data.items[0]);
+  }
+  return null;
+}
+
+async function getFeaturedPlacesData(slug) {
+  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'featureSlug', filterValue: slug });
+  if (data && data.items && data.items.length > 0) {
+    return parseFeaturedPlaces(data.items);
+  }
+  return null;
+}
+
+export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlaceData, getFeaturedPlacesData };

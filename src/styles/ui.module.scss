@@ -26,10 +26,6 @@ $share-button-margin: 12px;
   }
 }
 
-// .sidebar {
-//   @include rtl(float, left, right);
-// }
-
 %spacer {
   height: 1px;
   background-image: linear-gradient(to right, rgba($alto, $spacer-edge-opacity), rgba($white, $spacer-middle-opacity), rgba($alto, $spacer-edge-opacity))
@@ -64,6 +60,20 @@ $share-button-margin: 12px;
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
+  }
+}
+
+%verticalScrollbarStyled {
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: rgba($wild-sand, 0.2);
+  } 
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $alto;
   }
 }
 

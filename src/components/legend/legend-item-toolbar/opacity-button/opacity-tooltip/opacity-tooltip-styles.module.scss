@@ -1,0 +1,29 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.wrapper {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.sliderTitle {
+  margin-bottom: 10px;
+}
+
+.sliderContent {
+  @extend %annotation;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+
+.sliderValue {
+  @extend %annotation;
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 12px;
+  user-select: none;
+  width: 38px;
+}

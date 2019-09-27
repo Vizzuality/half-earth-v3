@@ -9,27 +9,29 @@ import ZoomWidgetComponent from './zoom-widget-component';
 import * as actions from 'actions/url-actions';
 
 const ZoomWidget = props => {
-  const { view, changeGlobe } = props;
+  const { view, changeGlobe, hidden } = props;
   const [zoomWidget, setZoomWidget] = useState(null);
   const watchUtils = useWatchUtils();
   const handleZoomChange = (zoom) => changeGlobe({ zoom });
 
   // Load custom zoom widget
   useEffect(() => {
+    const node = document.createElement("div");
     loadModules(["esri/widgets/Zoom/ZoomViewModel"]).then(([ZoomView]) => {
       const zoomWidget = new ZoomView({
         view: view
       });
       setZoomWidget(zoomWidget);
-      const node = document.createElement("div");
-      view.ui.add(node, "top-right");
-      ReactDOM.render(<ZoomWidgetComponent zoomWidget={zoomWidget} />, node);
-
+      if (!hidden) {
+        view.ui.add(node, "top-right");
+        ReactDOM.render(<ZoomWidgetComponent zoomWidget={zoomWidget} />, node);
+      }
     }).catch((err) => console.error(err));
     return function cleanup() {
       view.ui.remove(zoomWidget);
+      ReactDOM.render(null, node);
     };
-  }, [view])
+  }, [view, hidden])
 
   // Update zoom in URL
   useEffect(() => {

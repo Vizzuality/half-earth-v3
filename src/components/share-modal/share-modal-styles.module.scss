@@ -4,18 +4,18 @@
 $tabsMarginBottom: 8px;
 
 .modal {
-  padding: 50px 60px;
-  width: 600px;
+  padding: 50px 60px !important;
+  width: 600px !important;
 
   @media #{$tablet-landscape} {
-    max-width: 620px;
-    width: 80%;
-    height: auto;
+    max-width: 620px !important;
+    width: 80% !important;
+    height: auto !important;
   }
 }
 
 .modalContent {
-  padding: 50px 60px;
+  padding: 50px 60px !important;
 }
 
 .copyContainer {
@@ -47,19 +47,19 @@ $tabsMarginBottom: 8px;
 }
 
 .button {
-  border: 1px solid $alto;
-  height: 40px;
-  color: $white;
-  font-weight: bold;
-  text-transform: uppercase;
+  border: 1px solid $alto !important;
+  height: 40px !important;
+  color: $white !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
 }
 
 .copyButton {
-  margin-left: -10px;
-  width: 100px;
-  letter-spacing: 2px;
-  font-size: $font-size-xs;
-  padding: 0;
+  margin-left: -10px !important;
+  width: 100px !important;
+  letter-spacing: 2px !important;
+  font-size: $font-size-xs !important;
+  padding: 0 !important;
 }
 
 .copied {

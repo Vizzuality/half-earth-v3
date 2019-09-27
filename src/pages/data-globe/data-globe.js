@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { loadModules } from '@esri/react-arcgis';
+import { usePostRobot } from 'hooks/attach-post-robot';
 
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
+import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
+
 import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
 import Component from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
@@ -13,18 +18,30 @@ import { createLayer } from 'utils/layer-manager-utils';
 
 const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
 
-const handleMapLoad = (map, view, activeLayers) => {
+const handleMapLoad = (map, activeLayers) => {
   const { layers } = map;
 
-  const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
-  // set the outFields for the BIODIVERSITY_FACETS_LAYER
-  // to get all the attributes available
-  gridLayer.outFields = ["*"];
+  // This fix has been added as a workaround to a bug introduced on v4.12
+  // The bug was causing the where clause of the mosaic rule to not work
+  // It will be probably fixed on v4.13
+  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  loadModules(["esri/config"]).then(([esriConfig]) => {
+    mosaicRuleFix(esriConfig, humanImpactLayer, 'DATA')
+  })
 
-  //list of active biodiversity layers
+  // Update default human impact layer color ramp
+  loadModules(["esri/layers/support/RasterFunction", "esri/Color"]).then(([RasterFunction, Color]) => {
+    humanImpactLayer.noData = 0;
+    humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
+  })
+
+
+  // Here we are creating the biodiversity layers active in the URL
+  // this is needed to have the layers displayed on the map when sharing the URL
+  // we would be able to get rid of it when this layers are added to the scene via arcgis online
   const biodiversityLayerIDs = activeLayers
     .filter(({ category }) => category === "Biodiversity")
-    .map(({ id }) => id);
+    .map(({ title }) => title);
 
   const biodiversityLayers = layersConfig
     .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
@@ -33,6 +50,7 @@ const handleMapLoad = (map, view, activeLayers) => {
 }
 
 const dataGlobeContainer = props => {
+  const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const exclusiveLayerToggle = (layerToActivate, layerToRemove) => exclusiveLayersToggle(layerToActivate, layerToRemove, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
   const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
@@ -45,6 +63,9 @@ const dataGlobeContainer = props => {
     return props.setDataGlobeSettings(params);
   };
 
+  usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
+  const handleGlobeUpdating = (updating) => props.setDataGlobeSettings({ isGlobeUpdating: updating })
+
   return <Component
     handleLayerToggle={toggleLayer}
     exclusiveLayerToggle={exclusiveLayerToggle}
@@ -52,7 +73,8 @@ const dataGlobeContainer = props => {
     setLayerOpacity={setLayerOpacity}
     setLayerOrder={setLayerOrder}
     setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers)}
+    onLoad={(map, view) => handleMapLoad(map, props.activeLayers)}
+    handleGlobeUpdating={handleGlobeUpdating}
     handleZoomChange={handleZoomChange}
     {...props}/>
 }

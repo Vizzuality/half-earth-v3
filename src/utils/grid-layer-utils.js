@@ -1,3 +1,4 @@
+import { loadModules } from '@esri/react-arcgis';
 import { isEqual, flattenDeep } from 'lodash';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 
@@ -22,7 +23,8 @@ export const createGridCellGraphic = (Graphic) => {
 
 export const createGraphicLayer = (GraphicsLayer, graphic) => {
   return new GraphicsLayer({
-    id: "Grid layer",
+    id: "grid_layer",
+    title: "grid_layer",
     graphics: [graphic]
   });
 }
@@ -41,3 +43,39 @@ export const cellsEquality = (ref, cells, hasContainedGridCells) => {
   const cellId = flattenDeep(cells[0].attributes.CELL_ID)
   return isEqual(refId, cellId);
 }
+
+export const calculateAggregatedCells = (features) => {
+  return loadModules(["esri/geometry/geometryEngine"])
+    .then(([geometryEngine]) => {
+      return geometryEngine.union(features.map(gc => gc.geometry));
+    }).catch(error => {
+      console.error(error);
+    })
+}
+
+export const createCellGeometry = (gridCell) => {
+  return loadModules(["esri/geometry/Polygon"])
+    .then(([Polygon]) => {
+      return new Polygon(gridCell);
+    }).catch(error => {
+      console.error(error);
+    })
+}
+
+export const containedQuery = (layer, extent) => {
+  const scaledDownExtent = extent.clone().expand(0.9);
+  const query = layer.createQuery();
+  query.geometry = scaledDownExtent;
+  query.spatialRelationship = "contains";
+  return query;
+}
+
+export const centerQuery = (layer, center) => {
+  const query = layer.createQuery();
+  query.geometry = center;
+  query.spatialRelationship = "within";
+  return query;
+}
+
+export const getCellsAttributes = features => features.map(gc => gc.attributes);
+export const getCellsIDs = results => results.features.map(gc => gc.attributes.CELL_ID);

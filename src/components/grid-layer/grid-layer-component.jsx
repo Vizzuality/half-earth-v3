@@ -1,11 +1,19 @@
 import { loadModules } from '@esri/react-arcgis';
+import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-import { BIODIVERSITY_FACETS_LAYER } from 'constants/biodiversity';
+import { BIODIVERSITY_FACETS_SERVICE_URL } from 'constants/layers-urls';
+import {
+  createGridCellGraphic,
+  createGraphicLayer,
+  calculateAggregatedCells,
+  createCellGeometry,
+  containedQuery,
+  centerQuery,
+  getCellsIDs
+} from 'utils/grid-layer-utils';
 
-import { createGridCellGraphic, createGraphicLayer, calculateAgregatedGridCellGeometry, cellsEquality } from 'utils/grid-layer-utils';
-
-const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
+const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
   let queryHandle;
   let watchHandle;
@@ -13,7 +21,7 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
 
   const watchUtils = useWatchUtils();
   const [viewExtent, setViewExtent] = useState();
-  const [gridViewLayer, setGridViewLayer] = useState(null);
+  const [biodiversityFacetsLayer, setBiodiversityFacetsLayer] = useState(null);
   const [gridCellGraphic, setGridCellGraphic] = useState(null);
   // References for cleaning up graphics
   const gridCellRef = useRef();
@@ -31,70 +39,50 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
         "esri/Graphic",
         "esri/layers/GraphicsLayer"
       ]).then(([Graphic, GraphicsLayer]) => {
-        const _gridCellGraphic = createGridCellGraphic(Graphic)
-        const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic)
+        const _gridCellGraphic = createGridCellGraphic(Graphic);
+        const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic);
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
       })
   }, [])
 
-  // store grid view layer
   useEffect(() => {
-    const { layers } = map;
-      const gridLayer = layers.items.find(l => l.id === BIODIVERSITY_FACETS_LAYER);
-      view.whenLayerView(gridLayer).then(function(layerView) {
-        setGridViewLayer(layerView);
-      })
+    loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
+      const layer = new FeatureLayer({
+        url: BIODIVERSITY_FACETS_SERVICE_URL
+      });
+      setBiodiversityFacetsLayer(layer);
+    })
   }, [])
 
   // set the view extent when view stationary
   useEffect(() => {
-      watchHandle = watchUtils && watchUtils.whenTrue(view, "stationary", function() {
-        setViewExtent(view.extent);
-      })
+    watchHandle = watchUtils && watchUtils.whenTrue(view, "stationary", function() {
+      setViewExtent(view.extent);
+    })
     return function cleanUp() {
       watchHandle && watchHandle.remove();
     }
   },[watchUtils])
 
-   // update gridcells when view extent changes
-   useEffect(() => {
-        const { extent } = view;
-        const scaledDownExtent = extent.clone().expand(0.9);
-        watchUpdateHandle = gridViewLayer && gridViewLayer.watch('updating', function(value) {
-          if (!value) {
-            queryHandle && (!queryHandle.isFulfilled()) && queryHandle.cancel();
-            queryHandle = gridViewLayer.queryFeatures({
-              geometry: extent,
-              spatialRelationship: 'intersects'
-            }).then(function(results) {
-              const containedGridCells = results.features.filter(gridCell => scaledDownExtent.contains(gridCell.geometry.extent));
-              const hasContainedGridCells = containedGridCells.length > 0;
-              const singleGridCell = results.features.filter(gridCell => gridCell.geometry.contains(view.center));
-              // If there are not a group of cells pick the one in the center
-              const gridCells = hasContainedGridCells ? containedGridCells : singleGridCell;
-              // Change data on the store and paint only when grid cell chaged
-              if (!cellsEquality(gridCellRef.current, gridCells, hasContainedGridCells)) {
-                // dispatch action
-                setGridCellData(gridCells.map(c => c.attributes));
-                loadModules(["esri/geometry/geometryEngine"])
-                .then(([geometryEngine]) => {
-                  // create aggregated grid cell geometry
-                  const gridCellGeometry = calculateAgregatedGridCellGeometry(hasContainedGridCells, gridCells, geometryEngine);
-                  // paint it
-                  if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
-                  // Add it to the store
-                    setGridCellGeometry(gridCellGeometry)
-                  })
-              }
-              gridCellRef.current = gridCells;
-            })
+  useEffect(() => {
+    if (biodiversityFacetsLayer && gridCellGraphic) {
+      const containedCellsQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
+      biodiversityFacetsLayer.queryFeatures(containedCellsQueryObject)
+        .then(function(results) {
+          const { features } = results;
+          if (features.length > 0) {
+            createCell(results, 'aggregatedCells');
+          } else {
+            const centerCellQueryObject = centerQuery(biodiversityFacetsLayer, view.center);
+            biodiversityFacetsLayer.queryFeatures(centerCellQueryObject)
+              .then(function(results) {
+                createCell(results, 'singleCell');
+              })
           }
         })
-        return function cleanUp() {
-          cleanUpHandles();
-      }
-  }, [gridViewLayer, viewExtent, gridCellGraphic]);
+    }
+  }, [biodiversityFacetsLayer, viewExtent, gridCellGraphic])
 
   useEffect(() => {
     return function cleanUp() {
@@ -102,6 +90,28 @@ const GridLayer = ({map, view, setGridCellData, setGridCellGeometry}) => {
       cleanUpHandles();
     }
   },[gridCellGraphic])
+
+  const addCellDataToStore = features => {
+    const cellsAttributes = features.map(gc => gc.attributes);
+    setGridCellData(cellsAttributes);
+  }
+  
+  const manageCellStoreAndGeomCreation = async (features, cellsIDsArray, type) => {
+    addCellDataToStore(features);
+    const gridCell = type === 'aggregatedCells' ? await calculateAggregatedCells(features) : features[0].geometry;
+    const gridCellGeometry = await createCellGeometry(gridCell);
+    setGridCellGeometry(gridCellGeometry);
+    if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
+    gridCellRef.current = cellsIDsArray;
+  }
+
+  const createCell = (results, type) => {
+    const { features } = results;
+    const cellsIDsArray = getCellsIDs(results);
+    if (!isEqual(gridCellRef.current, cellsIDsArray)) {
+      manageCellStoreAndGeomCreation(features, cellsIDsArray, type);
+    }
+  }
 
   return null;
 }

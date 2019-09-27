@@ -1,0 +1,37 @@
+$animation-time: 400ms;
+
+@mixin animationFunction($propertyToAnimate: transform, $time: $animation-time, $ease: ease, $delay: 0ms) {
+  transition: $propertyToAnimate $time $ease $delay;
+}
+
+.transform {
+  @include animationFunction();
+}
+
+.transformOpacityWithDelay {
+  transition: transform 400ms ease 300ms, opacity 400ms ease 300ms;
+}
+
+.bottomUp {
+  transform: translateY(150%);
+  opacity: 0;
+}
+
+.leftHidden {
+  transform: translateX(-150%);
+}
+
+.pulse {
+  display: block;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(255,255,255,0.4);
+  animation: pulse 1.5s infinite;
+  // transform: translateZ(0);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255, 0); }
+}

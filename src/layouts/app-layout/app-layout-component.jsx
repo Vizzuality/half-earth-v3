@@ -1,21 +1,16 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
-import universal from 'react-universal-component';
-
-const universalConfig = {
-  loading: <div>Loading</div>
-};
-
-const PageComponent = universal(
-  ({ page } /* webpackChunkName: "[request]" */) => import(`../../pages/${page}/${page}.js`),
-  universalConfig
-);
+import FeaturedGlobe from 'pages/featured-globe';
+import DataGlobe from 'pages/data-globe';
+import MapIframe from 'pages/map-iframe';
 
 class App extends PureComponent {
   render() {
     const { route } = this.props;
     const { page } = route;
-    return page ? <PageComponent page={page} /> : null;
+    const embedded = page === 'map-iframe';
+    const whichGlobe = embedded ? <MapIframe /> : <DataGlobe />
+    return page === 'featured-globe' ? <FeaturedGlobe /> : whichGlobe;
   }
 }
 

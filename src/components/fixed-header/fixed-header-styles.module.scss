@@ -15,6 +15,11 @@
   height: 130px; 
 }
 
+.autoHeightHeader {
+  height: unset;
+  padding-bottom: 14px;
+}
+
 .shareButton {
   position: absolute;
   right: $share-button-margin;

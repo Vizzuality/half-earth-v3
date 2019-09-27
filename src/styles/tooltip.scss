@@ -1,0 +1,36 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+%tooltip-apperance {
+	@extend %annotation;
+	background-color: $white !important;
+	color: $dark-text !important;
+	padding: 8px 10px !important;
+	opacity: 1 !important;
+}
+
+:global {
+	.infoTooltipStyle {
+		@extend %tooltip-apperance;
+	
+		&.place-left:after {
+			border-left-color: $white !important;
+		}
+	
+		&.place-top:after {
+			border-top-color: $white !important;
+			border-top-width: 8px !important;
+		}
+	
+		&.place-right:after {
+			border-right-color: $white !important;
+		}
+	}
+
+	.legendButtonTooltip {
+		.rc-tooltip-content > .rc-tooltip-inner {
+			@extend %tooltip-apperance;
+			max-width: unset;
+		}
+  }
+}

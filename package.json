@@ -8,10 +8,12 @@
     "@loadable/component": "^5.10.1",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
-    "d3-hierarchy": "^1.1.8",
+    "d3-shape": "^1.3.5",
     "directory-named-webpack-plugin": "^4.0.1",
     "he-components": "github:vizzuality/half-earth-components#0.2.1",
+    "lodash-es": "4.17.4",
     "node-sass": "^4.11.0",
+    "post-robot": "8.0.28",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
     "react": "^16.8.6",
@@ -22,13 +24,12 @@
     "react-markdown": "4.0.8",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
-    "react-spring": "^8.0.20",
     "react-tooltip": "^3.10.0",
     "react-universal-component": "^4.0.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-first-router": "0.0.9-rudy",
-    "redux-first-router-link": "1.4.2",
+    "redux-first-router-link": "2.1.1",
     "redux-first-router-restore-scroll": "1.2.1",
     "redux-saga": "^1.0.2",
     "redux-thunk": "^2.3.0",
@@ -36,13 +37,20 @@
     "reselect": "^4.0.0",
     "vega-lib": "^4.4.0",
     "vizzuality-components": "^1.1.1",
-    "lodash-es": "4.17.14",
-    "post-robot": "8.0.28"
+    "workbox-build": "^4.3.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
+    "build-service-worker": "node ./src/service-worker-build.js",
+    "build": "react-app-rewired build && npm run build-service-worker && npm run clean-cra-sw",
+    "test:e2e:dev": "npm-run-all --parallel start cy:open",
+    "cy:open": "cypress open",
+    "pre:test:e2e:ci": "yarn build && npm-run-all --parallel --race start cy:run",
+    "test:e2e:ci": "npm-run-all --parallel --race start cy:run",
+    "cy:run": "cypress run",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -55,6 +63,45 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.5.3",
+    "@babel/preset-react": "^7.0.0",
+    "@testing-library/cypress": "^4.0.4",
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^8.0.4",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "cypress": "^3.4.0",
+    "identity-obj-proxy": "^3.0.0",
+    "npm-run-all": "^4.1.5",
     "react-app-rewired": "^2.1.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "layouts/(.*)$": "<rootDir>/src/layouts/$1/$1.js",
+      "components/Provider": "react-redux",
+      "components/connectAdvanced": "react-redux",
+      "components/Context": "react-redux",
+      "components/widgets/(.*)": "<rootDir>/src/components/widgets/$1/$1.js",
+      "components/(.*)/(.*)$": "<rootDir>/src/components/$1/$2.jsx",
+      "components/(.*)$": "<rootDir>/src/components/$1/$1.js",
+      "\\.svg": "<rootDir>/src/__tests__/integration/mocks/svg-mock.js",
+      "\\.module\\.scss$": "identity-obj-proxy",
+      "\\.scss$": "<rootDir>/src/__tests__/integration/mocks/style-mock.js"
+    },
+    "modulePaths": [
+      "<rootDir>/src",
+      "<rootDir>/test"
+    ],
+    "testMatch": [
+      "**/__tests__/integration/tests/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "testEnvironmentOptions": {
+      "testUrl": "https://half-earth.test.com"
+    },
+    "collectCoverageFrom": [
+      "**/src/**/*.{js,jsx}"
+    ]
   }
 }
