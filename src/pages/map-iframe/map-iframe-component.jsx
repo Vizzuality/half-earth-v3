@@ -6,7 +6,7 @@ import LandscapeViewManager from 'components/landscape-view-manager';
 import GridLayer from 'components/grid-layer';
 import Legend from 'components/legend';
 
-const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
+const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 const DataGlobeComponent = ({
   activeLayers,
   isLandscapeMode,
