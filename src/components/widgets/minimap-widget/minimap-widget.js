@@ -7,6 +7,7 @@ import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'u
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
 import metadataActions from 'redux_modules/page-texts';
 import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
+import { spinGlobe } from 'utils/globe-events-utils';
 
 const VIEW = 'half-earth-meter';
 const actions = {...metadataActions, openHalfEarthMeterAnalyticsEvent };
@@ -14,10 +15,13 @@ const actions = {...metadataActions, openHalfEarthMeterAnalyticsEvent };
 const MinimapWidget = props => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [map, setMap] = useState(null);
+  const [view,setView]= useState(null);
   const [isFireflyLoaded, setFireflyLoaded] = useState(false);
+  const [handle, setHandle] = useState(null);
 
   useEffect(() => {
     toggleBasemapLayers();
+    toggleSpinnigGlobeAnimation();
   }, [isModalOpen]);
 
   const handleMapLoad = (map, view, globeView ) => {
@@ -35,6 +39,7 @@ const MinimapWidget = props => {
       map.add(minimapLayer);
     });
     setMap(map);
+    setView(view);
     synchronizeWebScenes(globeView, view); // synchronize data-globe position, zoom etc. with minimap-globe
   };
 
@@ -42,6 +47,7 @@ const MinimapWidget = props => {
     if (!isFireflyLoaded) fetchFireflyLayer();
     setModalOpen(true);
     
+
     const { setPageTexts,openHalfEarthMeterAnalyticsEvent } = props;
     setPageTexts(VIEW);
     openHalfEarthMeterAnalyticsEvent();
@@ -50,6 +56,14 @@ const MinimapWidget = props => {
   const toggleBasemapLayers = () => {
     const fireflyLayer = map && map.layers.items.find(({ title }) => title === 'HalfEarthFirefly');
     fireflyLayer && map.reorder(fireflyLayer, isModalOpen ? 1 : 0)
+  }
+
+  const toggleSpinnigGlobeAnimation = () => {
+    if( isModalOpen ) {
+      !handle ? spinGlobe(view, setHandle) : handle.resume();
+    } else {
+      handle.pause();
+    }
   }
 
   const fetchFireflyLayer = () => {

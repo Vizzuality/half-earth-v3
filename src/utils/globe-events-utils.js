@@ -32,3 +32,16 @@ export const setSelectedFeaturedPlace = (viewPoint, featuredPlacesLayerTitle, ch
   const selectedFeaturedPlace = featuredPoint.length ? get(featuredPoint, '[0].graphic.attributes.nam_slg') : null;
   if (selectedFeaturedPlace) changeUI({ selectedFeaturedPlace });
 }
+
+export const spinGlobe = (view, setHandle) => {
+  loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
+    const camera = view.camera.clone();
+    const spinningGlobe = scheduling.addFrameTask({
+      update: function() {
+        camera.position.longitude -= 0.2;
+        view.camera = camera;
+      }
+    });
+    setHandle(spinningGlobe);
+  })
+}
