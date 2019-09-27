@@ -39,6 +39,7 @@ export const disableInteractions = view => {
 // Sample code about using VectorTileLayers on the globe
 // https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer-json/index.html
 export const minimapLayerStyles = {
+  title: 'MinimapLayer',
   style: {
     layers: [
       {

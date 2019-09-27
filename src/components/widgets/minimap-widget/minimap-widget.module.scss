@@ -91,9 +91,33 @@ $ease-in-out: opacity $animation-time ease-in-out;
   & > * {
     height: $globe-size;
     width: $globe-size;
+    transition: none;
   }
 
   .esri-ui-top-left {
     display: none;
   }
+}
+
+.wrapperModal {
+  left: 50%;
+  top: 44%;
+  z-index: 11;
+
+  &::before {
+    display: none;
+  }
+
+  .progressBars {
+    background-size: 0;
+    width: unset;
+
+    .globeComponentWrapper {
+      & > * {
+        height: 600px;
+        width: 600px;
+      }
+    }
+  }
+
 }
