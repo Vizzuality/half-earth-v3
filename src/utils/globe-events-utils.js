@@ -20,7 +20,7 @@ export const removeAvatarImage = (markerElement) => {
   marker.setAttribute("style", `${markerDefaultStyles}`);
 }
 
-export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, featuredMapPlaces) => {
+export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, selectedFeaturedMap, featuredMapPlaces) => {
   const featuredPoint = viewPoint.results.filter((result) => result.graphic.layer.title === featuredPlacesLayerTitle);
   let marker = document.getElementById('avatar');
   if (!marker) {
@@ -32,7 +32,7 @@ export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, featur
   if (featuredPoint.length) {
     const { latitude, longitude } = featuredPoint[0].graphic.geometry;
     const slug = get(featuredPoint, '[0].graphic.attributes.nam_slg');
-    const imageUrl = featuredMapPlaces.data[slug].imageUrl ;
+    const imageUrl = featuredMapPlaces.data[selectedFeaturedMap][slug].imageUrl ;
     loadModules(["esri/geometry/Point"]).then(([Point]) => {
       const point = new Point({latitude, longitude});
       const screenCoords = view.toScreen(point);
