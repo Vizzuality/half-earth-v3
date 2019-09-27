@@ -33,7 +33,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const Switcher = loadable(() => import('components/switcher'));
 
 // const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
-const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID, REACT_APP_IS_FEATURE_MAPS_ENABLED: IS_FEATURE_MAPS_ENABLED } = process.env;
+const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID, REACT_APP_IS_FEATURE_MAPS_ENABLED: IS_FEATURE_MAPS_ENABLED } = process.env;
 
 const DataGlobeComponent = ({
   activeLayers,
