@@ -83,7 +83,7 @@ const FeaturedGlobeComponent = ({
     <>
       <div style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}>
         <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
-          <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
+          <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} selectedFeaturedMap={selectedFeaturedMap} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
           <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
           {isGlobeUpdating && <Spinner floating />}
           <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions} />
