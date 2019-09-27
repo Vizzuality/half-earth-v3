@@ -21,9 +21,7 @@ const FeaturedPlaceCardContainer = props => {
     const fetchData = async () => {
       const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
       if (result) {
-        const { title, image, description } = result;
-        const parsedDescription = get(description, 'content[0].content[0].value');
-        setFeaturedPlace({title, image, description: parsedDescription});
+        setFeaturedPlace(result);
       }
     };
 

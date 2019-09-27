@@ -22,7 +22,7 @@ const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSw
 
 const feturedGlobeContainer = props => {
 
-  const { changeUI, changeGlobe, featuredMapPlaces } = props;
+  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap } = props;
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
 
@@ -32,7 +32,7 @@ const handleMarkerClick = (viewPoint, view) => {
 }
 const handleMarkerHover = (viewPoint, view) => {
   setCursor(viewPoint, FEATURED_PLACES_LAYER);
-  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, featuredMapPlaces);
+  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
 };
 
   useEffect(() => {
