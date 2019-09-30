@@ -9,7 +9,7 @@ import mapStateToProps from './geo-description-widget-selectors';
 import 'redux_modules/geo-description';
 
 const GeoDescriptionWidget = props => {
-  const { isLandscapeSidebarCollapsed, changeUI } = props;
+  const { isLandscapeSidebarCollapsed, activeOption, changeUI } = props;
 
   const handleBackClick = () => {
     const { view } = props;
@@ -22,10 +22,17 @@ const GeoDescriptionWidget = props => {
   };
 
   const toggleCollapsedLandscapeSidebar = () => {
+    if (isLandscapeSidebarCollapsed && activeOption) { changeUI({ activeOption: '' }); } // close the menu
     changeUI({ isLandscapeSidebarCollapsed: !isLandscapeSidebarCollapsed });
   }
 
-  return <Component handleBackClick={handleBackClick} toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar} {...props}/>
+  return (
+    <Component
+      handleBackClick={handleBackClick}
+      toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar}
+      {...props}
+    />
+  )
 }
 
 export default connect(mapStateToProps, actions)(GeoDescriptionWidget);

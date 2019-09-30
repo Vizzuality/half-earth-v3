@@ -21,6 +21,10 @@
   }
 }
 
+.dummyBlurWorkaround {
+  position: fixed;
+}
+
 .sidebarOnTop {
   @include landscapeSidebarCollapsedBottom();
 }

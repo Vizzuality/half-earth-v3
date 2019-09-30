@@ -15,6 +15,7 @@ import Spinner from 'components/spinner';
 import Switcher from 'components/switcher';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
+import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
@@ -58,6 +59,7 @@ const DataGlobeComponent = ({
         <MobileOnly>
           <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
           <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <Slider />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -93,6 +95,7 @@ const DataGlobeComponent = ({
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
+          activeOption={activeOption}
           activeLayers={activeLayers}
           rasters={rasters}
           setRasters={setRasters}

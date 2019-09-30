@@ -2,7 +2,6 @@ import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -16,7 +15,12 @@ import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
+import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
+
+import { MobileOnly, isMobile } from 'constants/responsive';
+
 import Switcher from 'components/switcher';
+import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
 import TutorialModal from 'components/tutorial/tutorial-modal';
 
@@ -60,9 +64,11 @@ const DataGlobeComponent = ({
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
+  const isOnMobile = isMobile();
+
   return (
     <>
-      <Switcher />
+      {!isMapsList && !isOnMobile && <Switcher />}
       <Scene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
@@ -71,6 +77,9 @@ const DataGlobeComponent = ({
         style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}
       >
         {isGlobeUpdating && <Spinner floating />}
+        <MobileOnly>
+          <Slider />
+        </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
@@ -148,7 +157,7 @@ const DataGlobeComponent = ({
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
-      {!selectedFeaturedPlace && <About />}
+      {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
   )
 }

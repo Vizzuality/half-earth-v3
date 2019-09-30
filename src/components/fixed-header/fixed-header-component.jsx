@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 import ShareModal from 'components/share-modal';
 import styles from './fixed-header-styles.module.scss';
 
@@ -28,7 +27,7 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight, toggleCollapsedLan
         className={styles.button}
         onClick={closeSidebar}
       >
-        <ArrowExpandIcon className={styles.icon} />
+        <div className={styles.icon} />
         <span className={styles.backButton}>{BACK}</span>
       </button>}
       <h1 onClick={flipToggleSwitch && toggleCollapsedLandscapeSidebar} className={styles.title}>
