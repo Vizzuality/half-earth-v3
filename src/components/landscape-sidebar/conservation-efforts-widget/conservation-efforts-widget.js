@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import conservationEffortsActions from 'redux_modules/conservation-efforts';
-import { toggleWDPALayer } from 'utils/layer-manager-utils';
+
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
+import { handleLayerCreation } from 'utils/layer-manager-utils';
+import { layersConfig } from 'constants/mol-layers-configs';
+import * as urlActions from 'actions/url-actions';
+
 import { 
   COMMUNITY_BASED,
   PROTECTED
@@ -10,17 +16,12 @@ import {
 import Component from './conservation-efforts-widget-component';
 import mapStateToProps from './conservation-efforts-widget-selectors';
 
-const actions = { ...conservationEffortsActions };
+const actions = { ...conservationEffortsActions, ...urlActions, addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
 
 const findInDOM = (id) => document.getElementById(id);
 
 const ConservationEffortsWidget = (props) => {
   const {
-    map,
-    activeLayers,
-    view,
-    handleGlobeUpdating,
-    handleLayerToggle,
     alreadyChecked,
     colors,
     terrestrialCellData,
@@ -76,7 +77,12 @@ const ConservationEffortsWidget = (props) => {
   }, [terrestrialCellData])
 
   const toggleLayer = (layersPassed, option) => {
-    toggleWDPALayer(activeLayers, option, handleGlobeUpdating, view, map, handleLayerToggle);
+    console.log(option)
+      const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
+      const layer = layersConfig.find(l => l.slug === option.title);
+      handleLayerCreation(layer, map);
+      layerManagerToggle(layer.slug, activeLayers, changeGlobe, 'Existing protection');
+      removeLayerAnalyticsEvent({ slug: layer.slug });
   }
 
   return <Component {...props} toggleLayer={toggleLayer} />;
