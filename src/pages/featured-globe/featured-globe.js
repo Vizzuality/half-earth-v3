@@ -15,16 +15,13 @@ import {
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
 } from 'constants/layers-groups';
 
-import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
 
 import mapStateToProps from './featured-globe-selectors';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-const handleSwitch = createAction(DATA);
-
-const actions = { ...featuredMapsActions, ...urlActions, handleSwitch}
+const actions = { ...ownActions, ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
