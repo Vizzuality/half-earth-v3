@@ -62,6 +62,8 @@ const FeaturedGlobeComponent = ({
   handleLayerToggle
  }) => {
   const isMapsList = selectedSidebar === 'featuredMapsList';
+  const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
   const [handle, setHandle] = useState(null);
 
   const spinGlobe = (view) => {
@@ -79,18 +81,18 @@ const FeaturedGlobeComponent = ({
 
   return (
     <>
-      <div style={{ pointerEvents: isMapsList ? 'none' : '' }}>
+      <div style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}>
         <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
           <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
           <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
           {isGlobeUpdating && <Spinner floating />}
           <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions} />
           <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-          <LocationWidget isNotMapsList={!isMapsList} />
-          {!isMapsList && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
-          <ZoomWidget isNotMapsList={!isMapsList} />
-          {!isMapsList && <MinimapWidget />}
-          {!isMapsList && <SearchWidget />}
+          <LocationWidget hidden={esriWidgetsHidden} />
+          {!esriWidgetsHidden && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
+          <ZoomWidget hidden={esriWidgetsHidden} />
+          {!esriWidgetsHidden && <MinimapWidget />}
+          {!esriWidgetsHidden && <SearchWidget />}
           {!isMapsList && <Switcher />}
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
@@ -105,6 +107,7 @@ const FeaturedGlobeComponent = ({
           <SelectedFeaturedMapLayer
             selectedFeaturedMap={selectedFeaturedMap}
             featuredPlacesLayer={featuredPlacesLayer}
+            isLandscapeMode={isLandscapeMode}
           />
           <FeaturedPlaceViewManager
             selectedFeaturedPlace={selectedFeaturedPlace}

@@ -9,7 +9,7 @@ import ZoomWidgetComponent from './zoom-widget-component';
 import * as actions from 'actions/url-actions';
 
 const ZoomWidget = props => {
-  const { view, changeGlobe, isNotMapsList } = props;
+  const { view, changeGlobe, hidden } = props;
   const [zoomWidget, setZoomWidget] = useState(null);
   const watchUtils = useWatchUtils();
   const handleZoomChange = (zoom) => changeGlobe({ zoom });
@@ -22,7 +22,7 @@ const ZoomWidget = props => {
         view: view
       });
       setZoomWidget(zoomWidget);
-      if (isNotMapsList) {
+      if (!hidden) {
         view.ui.add(node, "top-right");
         ReactDOM.render(<ZoomWidgetComponent zoomWidget={zoomWidget} />, node);
       }
@@ -31,7 +31,7 @@ const ZoomWidget = props => {
       view.ui.remove(zoomWidget);
       ReactDOM.render(null, node);
     };
-  }, [view, isNotMapsList])
+  }, [view, hidden])
 
   // Update zoom in URL
   useEffect(() => {

@@ -23,3 +23,6 @@ export const FEATURED_PLACES_LAYER = 'featured_places';
 
 // Basemap (featured mode)
 export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
+
+// Pledges layer
+export const PLEDGES_LAYER = 'PledgeLocationsURL';

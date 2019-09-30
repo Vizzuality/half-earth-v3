@@ -1,0 +1,22 @@
+@import 'styles/settings';
+@import 'styles/common-animations.module.scss';
+
+.container {
+  position: relative;
+}
+
+.questionMarkButton {
+  @extend .pulse;
+  height: 16px;
+  padding: 0;
+  position: absolute;
+  width: 16px;
+  border-radius: 100%;
+  z-index: 10;
+  
+  svg {
+    fill: $brand-color-main;
+    width: 16px;
+    height: 16px;
+  }
+}

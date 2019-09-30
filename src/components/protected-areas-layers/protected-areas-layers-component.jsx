@@ -5,7 +5,7 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 // Constants
 import { layersConfig } from 'constants/mol-layers-configs';
 import { usePaintLayer } from 'hooks/esri';
-import { handleLayerRendered } from 'utils/layer-manager-utils';
+import { toggleWDPALayer } from 'utils/layer-manager-utils';
 import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
 import { PROTECTED_AREAS_LAYERS } from 'constants/layers-groups';
 // Utils
@@ -54,6 +54,7 @@ const ProtectedAreasLayers = ({ handleGlobeUpdating, handleLayerToggle, activeLa
   //   const isLayerActive = alreadyChecked[option.value];
   //   if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
   //   else removeLayerAnalyticsEvent({ slug: option.slug });
+    toggleWDPALayer(activeLayers, option, handleGlobeUpdating, view, map, handleLayerToggle);
   }
 
   const alreadyChecked = WDPALayers.reduce((acc, option) => ({ 
