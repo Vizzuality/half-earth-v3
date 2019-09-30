@@ -50,7 +50,9 @@ $icon-size: 25px;
 
 .icon {
   transform: rotate(180deg);
+  background-image: url('../../assets/icons/arrow_expand.svg');
   height: $icon-size;
+  width: $icon-size;
 }
 
 .flipToggleSwitchIcon {

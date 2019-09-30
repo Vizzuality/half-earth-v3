@@ -23,7 +23,8 @@ const LandscapeSidebarComponent = ({
   handleGlobeUpdating,
   isLandscapeSidebarCollapsed,
   selectedSpecies,
-  handleLayerToggle
+  handleLayerToggle,
+  activeOption
 }) => {
 
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
@@ -33,7 +34,11 @@ const LandscapeSidebarComponent = ({
   return (
     <div className={cx(styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isLandscapeSidebarVisible && isOnMobile, [uiStyles.uiTopLeft]: !isOnMobile, [animationStyles.collapsed]: landscapeSidebarCollapsed, [styles.scrollDisabled]: landscapeSidebarCollapsed })}>
       <div className={styles.wrapper}>
-        <GeoDescriptionWidget view={view} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+        <GeoDescriptionWidget 
+          view={view}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          activeOption={activeOption}
+        />
         <HumanPressureWidget
           map={map}
           view={view}

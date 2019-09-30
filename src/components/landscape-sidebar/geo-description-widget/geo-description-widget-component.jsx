@@ -13,6 +13,7 @@ const GeoDescriptionWidget = (props) => {
   if (loading) {
     return (
       <div className={styles.container}>
+        <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
         <div className={styles.loading}>
           <Loading />
           <span className={styles.loadingText}>Loading area information...</span>
@@ -24,6 +25,7 @@ const GeoDescriptionWidget = (props) => {
   if (error) {
     return (
       <div className={styles.container}>
+        <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
         <FixedHeader
           noBackClick={isOnMobile}
           toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar}
@@ -47,6 +49,7 @@ const GeoDescriptionWidget = (props) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
       <FixedHeader 
         noBackClick={isOnMobile}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}

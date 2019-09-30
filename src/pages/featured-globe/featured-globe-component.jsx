@@ -12,6 +12,8 @@ import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 
 import { loadModules } from '@esri/react-arcgis';
 
+import { MobileOnly, isMobile } from 'constants/responsive';
+
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
@@ -19,6 +21,7 @@ import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
 import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 import Switcher from 'components/switcher';
+import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
@@ -69,6 +72,9 @@ const FeaturedGlobeComponent = ({
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
   const [handle, setHandle] = useState(null);
+
+  const isOnMobile = isMobile();
+
   const spinGlobe = (view) => {
     loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
       const camera = view.camera.clone();
@@ -96,7 +102,10 @@ const FeaturedGlobeComponent = ({
           <ZoomWidget hidden={esriWidgetsHidden} />
           {!esriWidgetsHidden && <MinimapWidget />}
           {!esriWidgetsHidden && <SearchWidget />}
-          {!isMapsList && <Switcher />}
+          {!isMapsList && !isOnMobile && <Switcher />}
+          <MobileOnly>
+            <Slider />
+          </MobileOnly>
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
             selectedFeaturedMap={selectedFeaturedMap}
@@ -174,7 +183,7 @@ const FeaturedGlobeComponent = ({
         handle={handle}
       />
       {hasMetadata && <InfoModal />}
-      {!selectedFeaturedPlace && <About />}
+      {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
   )
 };

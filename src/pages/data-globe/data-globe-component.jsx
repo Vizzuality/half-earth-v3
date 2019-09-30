@@ -11,6 +11,7 @@ import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
+import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
 
 import EntryBoxes from 'components/entry-boxes';
@@ -75,6 +76,7 @@ const DataGlobeComponent = ({
         <MobileOnly>
           <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
           <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <Slider />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -82,7 +84,7 @@ const DataGlobeComponent = ({
         {!isOnMobile && <LocationWidget isNotMapsList={true} />}
         {!isOnMobile && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
         {!isOnMobile && <ZoomWidget isNotMapsList={true} />}
-        {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
+        {IS_FEATURE_MAPS_ENABLED === 'true' && !isOnMobile && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
         {!isOnMobile && <SearchWidget />}
         <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
@@ -136,6 +138,7 @@ const DataGlobeComponent = ({
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
+          activeOption={activeOption}
           activeLayers={activeLayers}
           rasters={rasters}
           setRasters={setRasters}
@@ -144,7 +147,7 @@ const DataGlobeComponent = ({
           selectedSpecies={selectedSpecies}
         />
       </Globe>
-      <About />
+      {!isOnMobile && <About />}
       {hasMetadata && <InfoModal />}
       <TutorialModal />
     </>
