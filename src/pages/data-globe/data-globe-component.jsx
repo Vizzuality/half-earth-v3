@@ -46,6 +46,7 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   isSidebarOpen,
+  isLandscapeSidebarCollapsed,
   isGlobeUpdating,
   hasMetadata,
   handleZoomChange,
@@ -72,8 +73,8 @@ const DataGlobeComponent = ({
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} />
+          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -84,8 +85,8 @@ const DataGlobeComponent = ({
         {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
         {!isOnMobile && <SearchWidget />}
-        <EntryBoxes activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
-        <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
+        <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
+        <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeOption={activeOption} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}>
           {isBiodiversityActive && (
             biodiversityCategories.map(cat => (
               <BiodiversityLayers
@@ -120,6 +121,8 @@ const DataGlobeComponent = ({
         </Sidebar>
         <Legend
           isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           activeOption={activeOption}
           setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
@@ -130,6 +133,7 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}

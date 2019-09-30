@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { isMobile } from 'constants/responsive';
 
 import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
@@ -20,16 +21,19 @@ const LandscapeSidebarComponent = ({
   setLayerVisibility,
   setRasters,
   handleGlobeUpdating,
+  isLandscapeSidebarCollapsed,
   selectedSpecies,
   handleLayerToggle
 }) => {
 
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
+  const isOnMobile = isMobile();
+  const landscapeSidebarCollapsed = isLandscapeMode && isLandscapeSidebarCollapsed && isOnMobile;
 
   return (
-    <div className={cx(uiStyles.uiTopLeft, styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible })}>
+    <div className={cx(styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isLandscapeSidebarVisible && isOnMobile, [uiStyles.uiTopLeft]: !isOnMobile, [animationStyles.collapsed]: landscapeSidebarCollapsed })}>
       <div className={styles.wrapper}>
-        <GeoDescriptionWidget view={view} />
+        <GeoDescriptionWidget view={view} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
         <HumanPressureWidget
           map={map}
           view={view}
