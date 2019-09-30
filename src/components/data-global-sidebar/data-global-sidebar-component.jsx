@@ -52,6 +52,7 @@ const DataGlobeSidebarComponent = ({
           <ProtectedAreasLayers
             handleGlobeUpdating={handleGlobeUpdating}
             activeLayers={activeLayers}
+            activeCategory={activeCategory}
           />
         )}
       </Sidebar>

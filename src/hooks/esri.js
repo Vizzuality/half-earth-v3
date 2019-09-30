@@ -11,14 +11,3 @@ export const useWatchUtils = () => {
   }, []);
   return watchUtils;
 }
-
-export const usePaintLayer = (layer, slug, color) => {
-  useEffect(() => {
-    const paintProperties = layer.getPaintProperties(slug);
-
-    paintProperties['fill-color'] = color;
-    paintProperties['fill-outline-color'] = color;
-
-    layer.setPaintProperties(slug, paintProperties);
-  }, [])
-}

@@ -87,6 +87,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
       {options.map(option => (
         isLastSelected(option) ? (
           <Tutorial
+            key={option.value}
             position='top-right'
             tutorialID={RARITY_RICHNESS_TUTORIAL}
             showTutorial={isSelected(option)}
