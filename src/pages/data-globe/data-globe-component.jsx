@@ -32,6 +32,7 @@ const DataGlobeComponent = ({
   activeCategory,
   isLandscapeMode,
   isBiodiversityActive,
+  isLandscapeSidebarCollapsed,
   isGlobeUpdating,
   isLegendActive,
   hasMetadata,
@@ -55,8 +56,8 @@ const DataGlobeComponent = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} />
+          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
@@ -68,6 +69,7 @@ const DataGlobeComponent = ({
         <DataGlobalSidebar
           isSidebarOpen={isSidebarOpen}
           activeOption={activeOption}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
@@ -79,6 +81,8 @@ const DataGlobeComponent = ({
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           activeOption={activeOption}
           setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
@@ -86,6 +90,7 @@ const DataGlobeComponent = ({
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}

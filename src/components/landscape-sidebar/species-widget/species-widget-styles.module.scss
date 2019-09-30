@@ -5,8 +5,8 @@
 .container {
   @include backdropBlur();
   padding: 20px;
-  width: 280px;
   margin-top: $widgetsTopMargin;
+  width: 100%;
 }
 
 .title {

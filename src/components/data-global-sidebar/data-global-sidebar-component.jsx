@@ -20,15 +20,16 @@ const DataGlobeSidebarComponent = ({
   view,
   handleGlobeUpdating,
   setRasters,
-  activeOption
+  activeOption,
+  isLandscapeSidebarCollapsed
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
   return (
     <>
-      <EntryBoxes activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
-      <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
+      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
+      <Sidebar isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
         {isBiodiversityActive && (
           biodiversityCategories.map(cat => (
             <BiodiversityLayers

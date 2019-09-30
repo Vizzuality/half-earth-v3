@@ -36,6 +36,7 @@ export const getRasters = createSelector(getGlobeSettings, globeSettings => glob
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getIsLegendActive = createSelector(getActiveLayers, activeLayers => activeLayers.some(layer => LEGEND_FREE_LAYERS.some( l => l === layer.title)));
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
+const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -52,5 +53,6 @@ export default createStructuredSelector({
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,
-  activeOption: getActiveOption // mobile
+  activeOption: getActiveOption, // mobile
+  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
 })

@@ -27,6 +27,7 @@
     width: $sidebar-width + 40px;
     @include topLeft();
 
+
     & > *:first-child > div:first-child {
       border-radius: 2px;
     }
@@ -35,4 +36,8 @@
       display: none;
     }
   }
+}
+
+.entryBoxesOnTop {
+  @include landscapeSidebarCollapsedBottom();
 }

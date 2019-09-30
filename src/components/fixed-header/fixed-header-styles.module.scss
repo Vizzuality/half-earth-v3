@@ -2,6 +2,8 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+$icon-size: 25px;
+
 .header {
   padding-top: $sidebar-margin;
   padding-left: $mobile-sidebar-side-paddings;
@@ -48,7 +50,23 @@
 
 .icon {
   transform: rotate(180deg);
-  height: 25px;
+  height: $icon-size;
+}
+
+.flipToggleSwitchIcon {
+  cursor: pointer;
+  position: absolute;
+  height: $icon-size;
+  width: $icon-size;
+  right: 20px;
+  top: 32px;
+  transform: rotate(90deg);
+  background-image: url('../../assets/icons/arrow_expand.svg');
+}
+
+.collapsedFlipToggleSwitchIcon {
+  transform: rotate(-90deg);
+  top: 35px;
 }
 
 .backButton {
@@ -61,6 +79,7 @@
   font-size: 24px;
   color: $white;
   margin-top: 5px;
+  margin-right: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 10px;
@@ -71,6 +90,7 @@
 
   @media #{$tablet-portrait} {
     padding-bottom: 0;
+    margin-right: 0;
     font-size: 32px;
   }
 }
@@ -82,4 +102,8 @@
   height: 2px;
   position: absolute;
   width: 100%;
+}
+
+.smallerPaddingLeft {
+  padding-left: 20px;
 }
