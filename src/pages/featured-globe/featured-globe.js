@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { loadModules } from '@esri/react-arcgis';
 import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
 import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
-import { DATA } from 'router';
+
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
 import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
-import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
 
 import mapStateToProps from './featured-globe-selectors';
@@ -16,9 +15,7 @@ import * as ownActions from './featured-globe-actions.js';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-const handleSwitch = createAction(DATA);
-
-const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSwitch}
+const actions = { ...ownActions, ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
 

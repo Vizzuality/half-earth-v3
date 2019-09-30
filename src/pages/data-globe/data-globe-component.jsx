@@ -59,7 +59,6 @@ const DataGlobeComponent = ({
   onLoad,
   setLayerOpacity,
   setLayerOrder,
-  handleSwitch,
   selectedSpecies,
   activeOption
 }) => {
@@ -84,7 +83,7 @@ const DataGlobeComponent = ({
         {!isOnMobile && <LocationWidget isNotMapsList={true} />}
         {!isOnMobile && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
         {!isOnMobile && <ZoomWidget isNotMapsList={true} />}
-        {IS_FEATURE_MAPS_ENABLED === 'true' && !isOnMobile && <Switcher handleClick={handleSwitch} />}
+        {IS_FEATURE_MAPS_ENABLED === 'true' && !isOnMobile && <Switcher />}
         <MinimapWidget />
         {!isOnMobile && <SearchWidget />}
         <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
