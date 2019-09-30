@@ -17,12 +17,14 @@ import sceneSettings from './scene-settings.js';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
+const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const DataGlobeComponentSimple = ({
   isFullscreenActive,
   isSidebarOpen,
+  selectedSpecies,
   activeCategory,
   isLandscapeMode,
   isBiodiversityActive,
@@ -33,7 +35,6 @@ const DataGlobeComponentSimple = ({
   rasters,
   handleMapLoad,
   handleGlobeUpdating,
-  handleZoomChange,
   setRasters
 }) => {
   return (
@@ -59,6 +60,15 @@ const DataGlobeComponentSimple = ({
           handleGlobeUpdating={handleGlobeUpdating}
           setRasters={setRasters}
         />
+        <LandscapeSidebar
+          isLandscapeMode={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          handleGlobeUpdating={handleGlobeUpdating}
+          activeLayers={activeLayers}
+          rasters={rasters}
+          setRasters={setRasters}
+          selectedSpecies={selectedSpecies}
+        />
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
       </Scene>
@@ -66,6 +76,7 @@ const DataGlobeComponentSimple = ({
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
+          rasters={rasters}
         />
       }
       <TutorialModal />
