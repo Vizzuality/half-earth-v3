@@ -10,7 +10,7 @@ const TutorialModalContent = ({ tutorialIds, handleCloseModal, checked, setCheck
   return (
     <div className={styles.modalContainer}>
       <div className={styles.content}>
-        {ids.map((id) => <p className={styles.description}>{tutorialData[id]}</p>)}   
+        {ids.map((id) => <p key={id} className={styles.description}>{tutorialData[id]}</p>)}   
         <RadioButton
           text='Don’t show me more tips'
           value={'tutorial-visibility-radio'}
