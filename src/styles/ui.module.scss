@@ -5,6 +5,7 @@ $spacer-middle-opacity: 0.6;
 $icon-size: 14px;
 $share-button-margin: 12px;
 $menuFooterHeight: 65px;
+$landscapeSidebarCollapsedHeight: 175px;
 
 .uiTopLeft {
   position: absolute;
@@ -27,6 +28,12 @@ $menuFooterHeight: 65px;
 @mixin bottom() {
   position: absolute;
   bottom: $menuFooterHeight;
+  width: 100%;
+}
+
+@mixin landscapeSidebarCollapsedBottom () {
+  position: absolute;
+  bottom: $landscapeSidebarCollapsedHeight;
   width: 100%;
 }
 

@@ -13,7 +13,7 @@ const categories = [
   { name: 'Human pressures', id: 3 }
 ];
 
-const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route, activeOption }) => {
+const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route, activeOption, isLandscapeSidebarCollapsed }) => {
   const interfaceLoaded = route.path === '/dataGlobe';
 
   const handleCategoryEnter = (category) => {
@@ -24,10 +24,12 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
   const isOnMobile = isMobile();
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
-  const categoryBoxHidden = isSidebarOpen || isLandscapeMode || isFullscreenActive || (isOnMobile && !isActive);
+  const categoryBoxVisibleOnMobile = isOnMobile && isActive && !isSidebarOpen;
+  const renderOnTop = categoryBoxVisibleOnMobile && isLandscapeMode && isLandscapeSidebarCollapsed;
+  const categoryBoxHidden = (isSidebarOpen || isLandscapeMode || isFullscreenActive || (isOnMobile && !isActive)) && !categoryBoxVisibleOnMobile;
 
   return (
-    <div data-cy="entry-boxes" className={cx(styles.entryBoxesPosition, { [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })}>
+    <div data-cy="entry-boxes" className={cx(styles.entryBoxesPosition, { [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile, [styles.entryBoxesOnTop]: renderOnTop })}>
       {interfaceLoaded && categories.length &&
         categories.map((category, i) => (
           <div className={cx({ [animationStyles.transform]: !isOnMobile, [animationStyles.leftHidden]: categoryBoxHidden && !isOnMobile, [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })} onClick={() => handleCategoryEnter(category)}>

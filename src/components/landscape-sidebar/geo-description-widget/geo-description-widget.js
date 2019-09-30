@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { zoomToScale } from 'constants/view-props';
+import * as actions from 'actions/url-actions';
 import Component from './geo-description-widget-component';
 import mapStateToProps from './geo-description-widget-selectors';
 
@@ -8,6 +9,8 @@ import mapStateToProps from './geo-description-widget-selectors';
 import 'redux_modules/geo-description';
 
 const GeoDescriptionWidget = props => {
+  const { isLandscapeSidebarCollapsed, changeUI } = props;
+
   const handleBackClick = () => {
     const { view } = props;
     const { center } = view;
@@ -18,7 +21,11 @@ const GeoDescriptionWidget = props => {
     view.goTo(target)
   };
 
-  return <Component handleBackClick={handleBackClick} {...props}/>
+  const toggleCollapsedLandscapeSidebar = () => {
+    changeUI({ isLandscapeSidebarCollapsed: !isLandscapeSidebarCollapsed });
+  }
+
+  return <Component handleBackClick={handleBackClick} toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar} {...props}/>
 }
 
-export default connect(mapStateToProps)(GeoDescriptionWidget);
+export default connect(mapStateToProps, actions)(GeoDescriptionWidget);

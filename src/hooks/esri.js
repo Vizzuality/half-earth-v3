@@ -1,6 +1,8 @@
 import { loadModules } from '@esri/react-arcgis';
 import { useState, useEffect } from 'react';
 
+const landscapeSidebarCollapsedHeight = 175;
+
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
   const [watchUtils, setWatchUtils] = useState(null);
@@ -23,7 +25,7 @@ export const usePaintLayer = (layer, slug, color) => {
   }, [])
 }
 
-export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent) => {
+export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, renderSearchOnTop = false) => {
   const [searchWidget, setSearchWidget ] = useState();
 
   const keyEscapeEventListener = (evt) => { 
@@ -60,6 +62,9 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
   const addSearchWidgetToView = async () => {
     await view.ui.add(searchWidget, "top-left");
     document.querySelector(".esri-search__input").focus();
+    if (renderSearchOnTop) {
+      document.querySelector(".esri-search").style.bottom = `${landscapeSidebarCollapsedHeight}px`;
+    }
   }
 
   useEffect(() => {

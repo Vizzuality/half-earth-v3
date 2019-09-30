@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import Tutorial from 'components/tutorial'
 
 import Legend, {
@@ -12,7 +13,7 @@ import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive, isLandscapeSidebarCollapsed, isLandscapeMode, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility
@@ -22,6 +23,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handle
   const isLegendOpen = activeOption === FOOTER_OPTIONS.LEGEND;
   const showDisclaimer = isOnMobile && isLegendOpen;
   const canShowLegend = isOnMobile ? isLegendOpen : true;
+  const onTopOfCollapsed = isOnMobile && isLegendOpen && isLandscapeMode && isLandscapeSidebarCollapsed;
 
   const toolbar = (
     <LegendItemToolbar
@@ -34,7 +36,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handle
   );
 
   return (
-    <div className={styles.legend}>
+    <div className={cx(styles.legend, { [styles.legendOnTopOfCollapsedSidebar]: onTopOfCollapsed })}>
       <Tutorial
         position={'top-left'}
         tutorialID={tutorialData.id}

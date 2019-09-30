@@ -3,11 +3,13 @@ import { Loading } from 'he-components';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
 import FixedHeader from 'components/fixed-header'
+import { isMobile } from 'constants/responsive';
 import errorGif from 'icons/error.gif'
 
 const GeoDescriptionWidget = (props) => {
-  const { data, loading, error, view, handleBackClick } = props;
-
+  const { data, loading, error, view, handleBackClick, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed } = props;
+  const isOnMobile = isMobile();
+  
   if (loading) {
     return (
       <div className={styles.container}>
@@ -22,7 +24,15 @@ const GeoDescriptionWidget = (props) => {
   if (error) {
     return (
       <div className={styles.container}>
-        <FixedHeader closeSidebar={handleBackClick} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight/>
+        <FixedHeader
+          noBackClick={isOnMobile}
+          toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          closeSidebar={handleBackClick}
+          view={view}
+          viewMode={VIEW_MODE.LANDSCAPE}
+          autoHeight
+        />
         <div className={styles.errorWrapper}>
           <p className={styles.errorText}>
             Cannot load area information…
@@ -37,7 +47,16 @@ const GeoDescriptionWidget = (props) => {
 
   return (
     <div className={styles.container}>
-      <FixedHeader closeSidebar={handleBackClick} title={data.title} view={view} viewMode={VIEW_MODE.LANDSCAPE} autoHeight />
+      <FixedHeader 
+        noBackClick={isOnMobile}
+        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar}
+        closeSidebar={handleBackClick}
+        title={data.title}
+        view={view}
+        viewMode={VIEW_MODE.LANDSCAPE}
+        autoHeight 
+      />
       <p className={styles.description}>
         {data.description}
       </p>

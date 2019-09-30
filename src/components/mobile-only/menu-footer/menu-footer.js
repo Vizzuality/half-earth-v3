@@ -14,16 +14,19 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isSidebarOpen, isLandscapeMode, activeOption } = props;
+  const { view, isSidebarOpen, isLandscapeMode, activeOption, isLandscapeSidebarCollapsed } = props;
+  const renderSearchOnTop = isLandscapeMode && isLandscapeSidebarCollapsed;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
-    searchLocationAnalyticsEvent
+    searchLocationAnalyticsEvent,
+    renderSearchOnTop
   );
 
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
   const resetActiveOption = () => props.changeUI({ activeOption: '' });
   const setActiveOption = (option) => props.changeUI({ activeOption: option })
+  const collapseLandscapeSidebar = () => props.changeUI({ isLandscapeSidebarCollapsed: true })
 
   useEffect(() => {
     if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
@@ -45,7 +48,14 @@ const MenuFooterContainer = props => {
 
   const handler = (option) => {
     if (activeOption === option) resetActiveOption();
-    else setActiveOption(option);
+    else {
+      if (isLandscapeMode && !isLandscapeSidebarCollapsed) {
+        collapseLandscapeSidebar();
+        setActiveOption(option);
+      } else {
+        setActiveOption(option);
+      }
+    }
   }
 
   const options = [

@@ -7,7 +7,7 @@
 .container {
   @include backdropBlur();
   padding: 20px;
-  width: 280px;
+  width: 100%;
 }
 
 .title {
