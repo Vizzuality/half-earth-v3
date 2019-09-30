@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
+import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import initialState from './data-globe-initial-state';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
@@ -34,6 +35,7 @@ const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => glo
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
+const getIsLegendActive = createSelector(getActiveLayers, activeLayers => activeLayers.some(layer => LEGEND_FREE_LAYERS.some( l => l === layer.title)))
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
@@ -42,6 +44,7 @@ export default createStructuredSelector({
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
+  isLegendActive: getIsLegendActive,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   rasters: getRasters,

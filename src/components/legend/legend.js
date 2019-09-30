@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Component from './legend-component';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
-import { layerManagerOrder } from 'utils/layer-manager-utils';
+import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
 import * as urlActions from 'actions/url-actions';
 import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -15,14 +15,14 @@ const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsE
 const LegendContainer = props => {
 
   const handleChangeOpacity = (layer, opacity) => {
-    const { setLayerOpacity, changeLayerOpacityAnalyticsEvent } = props;
-    setLayerOpacity && setLayerOpacity(layer.title, opacity);
+    const { activeLayers, changeLayerOpacityAnalyticsEvent, changeGlobe } = props;
+    layerManagerOpacity(layer.title, opacity, activeLayers, changeGlobe);
     changeLayerOpacityAnalyticsEvent({ slug: getSlug(layer), query: { opacity }});
   }
 
   const handleRemoveLayer = (layer) => {
-    const { setLayerVisibility, removeLayerAnalyticsEvent } = props;
-    setLayerVisibility && setLayerVisibility(layer.title, false)
+    const { activeLayers, removeLayerAnalyticsEvent, changeGlobe } = props;
+    layerManagerVisibility(layer.title, false, activeLayers, changeGlobe);
     removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
   }
 

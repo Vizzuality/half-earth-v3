@@ -3,6 +3,7 @@ import loadable from '@loadable/component'
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import DataGlobalSidebar from 'components/data-global-sidebar';
+import Legend from 'components/legend';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import TutorialModal from 'components/tutorial/tutorial-modal';
 import Spinner from 'components/spinner';
@@ -20,6 +21,7 @@ const DataGlobeComponentSimple = ({
   isLandscapeMode,
   isBiodiversityActive,
   isGlobeUpdating,
+  isLegendActive,
   hasMetadata,
   activeLayers,
   rasters,
@@ -27,7 +29,6 @@ const DataGlobeComponentSimple = ({
   handleGlobeUpdating,
   setRasters
 }) => {
-  console.log(rasters)
   return (
     <>
       <Scene
@@ -51,6 +52,12 @@ const DataGlobeComponentSimple = ({
           setRasters={setRasters}
         />
       </Scene>
+      {isLegendActive && 
+        <Legend
+          isFullscreenActive={isFullscreenActive}
+          activeLayers={activeLayers}
+        />
+      }
       <TutorialModal />
       {hasMetadata && <InfoModal />}
     </>
