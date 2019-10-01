@@ -13,6 +13,8 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import TutorialModal from 'components/tutorial/tutorial-modal';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
+import Switcher from 'components/switcher';
+
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -40,6 +42,7 @@ const DataGlobeComponentSimple = ({
 }) => {
   return (
     <>
+      <Switcher />
       <Scene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
