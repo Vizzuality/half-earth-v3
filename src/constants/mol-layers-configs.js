@@ -179,19 +179,20 @@ export const layersConfig = [
   {title: "mammals richness", slug: 'mammals-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/11f7eef1d863487091afeade6ed6d918/rest/services/mammals_richness/MapServer`},
   {title: "fishes rarity", slug: 'fishes-rarity', url: `${bucketUrl}/rarity/fishes/${templatePattern}`},
   {title: "fishes richness", slug: 'fishes-rich', url: `${bucketUrl}/richness/fishes/${templatePattern}`},
-  {title: "conifers rarity", slug: 'conifers-rarity', url: `${bucketUrl}/rarity/conifers/${templatePattern}`},
-  {title: "conifers richness", slug: 'conifers-rich', url: `${bucketUrl}/richness/conifers/${templatePattern}`},
-  {title: "cacti rarity", slug: 'cacti-rarity', url: `${bucketUrl}/rarity/cacti/${templatePattern}`},
-  {title: "cacti richness", slug: 'cacti-richness', url: `${bucketUrl}/richness/cacti/${templatePattern}`},
+  {title: "conifers rarity", slug: 'conifers-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/853e83b25f77402981e5c83ad43a2bc3/rest/services/conifers_rarity/MapServer`},
+  {title: "conifers richness", slug: 'conifers-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/a7355a715e09458caabdcc904b02da36/rest/services/conifers_richness/MapServer`},
+  {title: "cacti rarity", slug: 'cacti-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/87ba75119feb4ddba8f2eff9f8cbf84c/rest/services/cacti_rarity/MapServer`},
+  {title: "cacti richness", slug: 'cacti-richness', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/ea83c6a422c64614b3b8e129bd454416/rest/services/cati_richness/MapServer`},
   {title: "amphibians rarity", slug: 'amphib-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/ad01787b2880446c8ed7acb75735fcba/rest/services/amphibians_rarity/MapServer`},
   {title: "amphibians richness", slug: 'amphib-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/58e9d41955c74788bac974a48540ed23/rest/services/amphibians_richness/MapServer`},
   {title: "turtles rarity", slug: 'turtles-rare', url: `${bucketUrl}/rarity/turtles/${templatePattern}`},
-  {title: "turtles richness", slug: 'turtles-rich', url: `${bucketUrl}/richness/turtles/${templatePattern}`},
+  {title: "turtles richness", slug: 'turtles-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/c201113280834a9ea7b0a15639e5aaa1/rest/services/turtles_richness/MapServer`},
   {title: "birds rarity", slug: 'birds-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/bf99f1090e2b4bf0853046740fda247a/rest/services/birds_rarity/MapServer`},
   {title: "birds richness", slug: 'birds-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/68ce2c44f8884a12b6908f2a740e87ae/rest/services/birds_richness/MapServer`},
   {title: "all groups rarity", slug: 'all-taxa-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/1ee94bc415424bde91750ce703b2d8d6/rest/services/all_rarity/MapServer`},
-  {title: "all groups richness", slug: 'all-taxa-richness', type:'TileLayer', url: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/all_richness/MapServer`}
+  {title: "all groups richness", slug: 'all-taxa-richness', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/55838e61c7854915bb62238f2f02710f/rest/services/all_richness/MapServer`}
 ]
+
 
 export const legendConfigs = {
   // Fishing activities
