@@ -27,3 +27,6 @@ export const PLEDGES_LAYER = 'PledgeLocationsURL';
 export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer';
 // human settlements labels
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
+
+export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
+export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';

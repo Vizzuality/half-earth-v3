@@ -1,5 +1,6 @@
 import { createClient } from 'contentful';
 
+import placeHolder from 'images/speciesPlaceholder.svg'
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
 
@@ -61,11 +62,26 @@ function parseFeaturedMaps(featuredMaps) {
 async function parseFeaturedPlace(data) {
   const featuredPlace = {
     title: data.fields.title,
-    description: data.fields.description,
   };
-  await getContentfulImage(data.fields.image.sys.id).then(mapImageUrl => {
-    featuredPlace.image = mapImageUrl;
-  });
+  if (data.fields.description) {
+    const description = [];
+    data.fields.description.content.forEach((paragraph) => {
+      const p = paragraph.content.reduce((acc, sentence) => {
+        if (sentence.nodeType === 'text') return acc + sentence.value;
+        return acc;
+      }, '');
+      description.push(p);
+    });
+    featuredPlace.description = description.join('\n');
+  };
+  if (!data.fields.image) {
+    featuredPlace.image = placeHolder;
+    return featuredPlace;
+  }
+  await getContentfulImage(data.fields.image.sys.id)
+    .then(mapImageUrl => {
+      featuredPlace.image = mapImageUrl;
+    });
   return featuredPlace;
 }
 
@@ -77,7 +93,7 @@ async function parseFeaturedPlaces(data) {
         title: place.fields.title,
         description: place.fields.description,
       };
-      await getContentfulImage(place.fields.image.sys.id).then(placeImageUrl => {
+      place.fields.image && await getContentfulImage(place.fields.image.sys.id).then(placeImageUrl => {
         featuredPlace.image = placeImageUrl;
       });
       const acummPromise = await acc;

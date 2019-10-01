@@ -1,0 +1,53 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.wrapper {
+  position: absolute;
+  bottom: 20px;
+  overflow: hidden;
+  left: calc(50% - 250px);
+}
+
+.container {
+  @include backdropBlur();
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  width: 500px;
+  border-radius: 2px;
+  padding: 10px 0;
+}
+
+.taxaButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.taxaIconContainer {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $grey-text;
+}
+
+.taxaName {
+  @extend %bodyText;
+  color: $white;
+  margin: 0;
+}
+
+.selectedTaxa {
+  background-color: $priority-blue;
+  box-shadow: 0 0 8px 0 $white;
+  border: 2px solid $white;
+}

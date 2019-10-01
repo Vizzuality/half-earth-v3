@@ -3,19 +3,27 @@ import { createAction, createThunkAction } from 'redux-tools';
 
 export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', (slug) => async (dispatch, state) => {
   const { featuredMapPlaces: { data }} = state();
-  if (!data) {
+  if (!data || !data[slug]) {
     try {
-      const data = await CONTENTFUL.getFeaturedPlacesData(slug);
-      const dataObject = data.reduce((acc, place) => {
+      const places = await CONTENTFUL.getFeaturedPlacesData(slug);
+      const dataObject = places.reduce((acc, place) => {
+        const description = [];
+        place.description && place.description.content.forEach((paragraph) => {
+          const p = paragraph.content.reduce((acc, sentence) => {
+            if (sentence.nodeType === 'text') return acc + sentence.value;
+            return acc;
+          }, '');
+          description.push(p);
+        })
         return { ...acc,
             [place.slug]: {
               title: place.title,
               imageUrl: place.image,
-              description: place.description.content[0].content[0].value
+              description: description.join('\n')
             }
           }
       }, {})
-      dispatch(fetchFeaturedMapPlacesReady({ data: dataObject }));
+      dispatch(fetchFeaturedMapPlacesReady({ data: { ...data, [slug]: dataObject} }));
     } catch (e) {
       console.warn(e);
       dispatch(fetchFeaturedMapPlacesFail(e));
