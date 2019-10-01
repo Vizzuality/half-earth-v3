@@ -66,7 +66,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   },[watchUtils])
 
   useEffect(() => {
-    if (biodiversityFacetsLayer && gridCellGraphic) {
+    if (viewExtent && biodiversityFacetsLayer && gridCellGraphic) {
       const containedCellsQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
       biodiversityFacetsLayer.queryFeatures(containedCellsQueryObject)
         .then(function(results) {
