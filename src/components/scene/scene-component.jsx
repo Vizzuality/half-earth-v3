@@ -32,8 +32,6 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoa
 
   useEffect(() => {
     if (map && view) {
-      console.log(map)
-      console.log(view)
       setLoadState('loaded');
     }
   }, [map, view])
