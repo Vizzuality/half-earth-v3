@@ -43,7 +43,7 @@ const FeaturedMapsListComponent = ({
       </button>}
       <div className={styles.scrollable}>
         {featuredMapsList && featuredMapsList.map(featuredMap => (
-          <div className={cx(styles.card, { [styles.border]: cardOpen && cardOpen.slug === featuredMap.slug })}
+          <div key={featuredMap.slug} className={cx(styles.card, { [styles.border]: cardOpen && cardOpen.slug === featuredMap.slug })}
             onClick={() =>  handleClick(featuredMap)}
             onMouseOver={() => mouseOver(featuredMap)}
           >
