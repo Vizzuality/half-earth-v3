@@ -14,8 +14,6 @@ import TutorialModal from 'components/tutorial/tutorial-modal';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 
-import sceneSettings from './scene-settings.js';
-
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
@@ -23,8 +21,7 @@ const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const DataGlobeComponentSimple = ({
-  viewZoom,
-  viewCenter,
+  sceneSettings,
   isFullscreenActive,
   isSidebarOpen,
   selectedSpecies,
@@ -48,8 +45,6 @@ const DataGlobeComponentSimple = ({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onLoad={(map, view) => handleMapLoad(map, activeLayers)}
-        zoom={viewZoom}
-        center={viewCenter}
       >
         {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers} layersAdded={layersAdded} />

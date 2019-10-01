@@ -31,16 +31,13 @@ const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globe
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
-const getViewZoom = createSelector(getGlobeSettings, globeSettings => globeSettings.zoom)
-const getViewCenter = createSelector(getGlobeSettings, globeSettings => globeSettings.center)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 const getIsLegendActive = createSelector(getActiveLayers, activeLayers => activeLayers.some(layer => LEGEND_FREE_LAYERS.some( l => l === layer.title)));
 
 export default createStructuredSelector({
-  viewZoom: getViewZoom,
-  viewCenter: getViewCenter,
+  sceneSettings: getGlobeSettings,
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,

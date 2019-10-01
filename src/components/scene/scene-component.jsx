@@ -34,25 +34,13 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoa
     if (map && view) {
       setLoadState('loaded');
     }
-  }, [map, view])
+  }, [map, view]);
 
   useEffect(() => {
     if (loadState === 'loaded' && onLoad) {
       onLoad(map, view);
     }
-  }, [loadState])
-
-  useEffect(() => {
-    if (view && zoom) {
-      view.zoom = zoom;
-    }
-  }, [view, zoom])
-
-  useEffect(() => {
-    if (view && center) {
-      view.center = center;
-    }
-  }, [view, center])
+  }, [loadState]);
 
   if (loadState === 'loading') {
     return (
