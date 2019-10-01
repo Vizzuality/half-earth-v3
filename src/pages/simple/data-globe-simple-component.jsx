@@ -42,7 +42,6 @@ const DataGlobeComponentSimple = ({
 }) => {
   return (
     <>
-      <Switcher />
       <Scene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
@@ -50,6 +49,7 @@ const DataGlobeComponentSimple = ({
         onLoad={(map, view) => handleMapLoad(map, activeLayers)}
       >
         {isGlobeUpdating && <Spinner floating />}
+        <Switcher />
         <ArcgisLayerManager activeLayers={activeLayers} layersAdded={layersAdded} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
@@ -76,14 +76,14 @@ const DataGlobeComponentSimple = ({
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
+        {isLegendActive && 
+          <Legend
+            isFullscreenActive={isFullscreenActive}
+            activeLayers={activeLayers}
+            rasters={rasters}
+          />
+        }
       </Scene>
-      {isLegendActive && 
-        <Legend
-          isFullscreenActive={isFullscreenActive}
-          activeLayers={activeLayers}
-          rasters={rasters}
-        />
-      }
       <TutorialModal />
       {hasMetadata && <InfoModal />}
     </>
