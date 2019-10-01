@@ -30,6 +30,14 @@ const LandscapeSidebarComponent = ({
     <div className={cx(uiStyles.uiTopLeft, styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible })}>
       <div className={styles.wrapper}>
         <GeoDescriptionWidget view={view} />
+        <SpeciesWidget selectedSpecies={selectedSpecies}/>
+        <ConservationEffortsWidget
+          map={map}
+          view={view}
+          activeLayers={activeLayers}
+          handleGlobeUpdating={handleGlobeUpdating}
+          handleLayerToggle={handleLayerToggle}
+        />
         <HumanPressureWidget
           map={map}
           view={view}
@@ -39,14 +47,6 @@ const LandscapeSidebarComponent = ({
           setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
-        <ConservationEffortsWidget
-          map={map}
-          view={view}
-          activeLayers={activeLayers}
-          handleGlobeUpdating={handleGlobeUpdating}
-          handleLayerToggle={handleLayerToggle}
-        />
-        <SpeciesWidget selectedSpecies={selectedSpecies}/>
         <MOLUploader />
       </div>
     </div>
