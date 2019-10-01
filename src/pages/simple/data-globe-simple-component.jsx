@@ -34,6 +34,7 @@ const DataGlobeComponentSimple = ({
   hasMetadata,
   activeLayers,
   rasters,
+  layersAdded,
   handleMapLoad,
   handleGlobeUpdating,
   setRasters
@@ -47,7 +48,7 @@ const DataGlobeComponentSimple = ({
         onLoad={(map, view) => handleMapLoad(map, activeLayers)}
       >
         {isGlobeUpdating && <Spinner floating />}
-        <ArcgisLayerManager activeLayers={activeLayers}/>
+        <ArcgisLayerManager activeLayers={activeLayers} layersAdded={layersAdded} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
         <DataGlobalSidebar

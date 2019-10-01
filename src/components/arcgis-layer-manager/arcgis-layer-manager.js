@@ -1,13 +1,20 @@
+import { useEffect } from 'react';
 import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
 
-const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
+const ArcgisLayerManager = ({ map, activeLayers, customFunctions, layersAdded }) => {
   // Map prop is inherited from Webscene component
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
   
   const { layers } = map;
-  setLayerOrder(activeLayers, map);
+  const { items } = layers;
+  console.log(items, activeLayers)
+  
+  useEffect(() => {
+    console.log(map)
+    setLayerOrder(activeLayers, map);
+  }, [layersAdded])
 
-  layers.items.forEach(mapLayer => {
+  items.forEach(mapLayer => {
     const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === mapLayer.title);
     mapLayer.layers && mapLayer.layers.items && mapLayer.layers.items.forEach(layer => {
       const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === layer.title);
