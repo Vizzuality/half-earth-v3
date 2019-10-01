@@ -139,9 +139,6 @@ export const config = {
 }
 
 export const layersConfig = [
-  // Labels layers
-  {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
-  {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
   //Protected Areas Layers
   {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
   {title: 'Protected Areas', slug: 'protected_areas_feature_layer', type: 'FeatureLayer', url: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer'},

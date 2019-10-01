@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs'
 import { layersConfig } from 'constants/mol-layers-configs';
 import mapStateToProps from './data-globe-selectors';
 import DataGlobeComponent from './data-globe-simple-component.jsx';
@@ -11,7 +12,6 @@ const actions = {...urlActions};
 
 const DataGlobeContainer = props => {
 
-  const [layersAdded, setAddedLayer] = useState(null);
 
 const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
 const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
@@ -27,12 +27,10 @@ const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
   
       layersToBeCreated.forEach(async layer => {
       const newLayer = await createLayer(layer, map);
-      if (layer.slug === 'land_human_pressures') {
+      if (layer.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
         humanPressuresPreloadFixes(newLayer, props.rasters);
       }
       addLayerToMap(newLayer, map);
-      setAddedLayer(newLayer);
-      console.log('layer added to globe', newLayer.title)
     });
   }
 
@@ -42,7 +40,6 @@ const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
       handleMapLoad={handleMapLoad}
       handleGlobeUpdating={handleGlobeUpdating}
       setRasters={setRasters}
-      layersAdded={layersAdded}
       {...props}
     />
   )

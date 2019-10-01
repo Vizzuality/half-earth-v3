@@ -10,25 +10,36 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoa
   const [loadState, setLoadState] = useState('loading');
 
   useEffect(() => {
-    loadModules(["esri/WebScene", "esri/views/SceneView"], loaderOptions)
-      .then(([WebScene, SceneView]) => {
+    loadModules(["esri/WebScene"], loaderOptions)
+      .then(([WebScene]) => {
         const _map = new WebScene({
           portalItem: {
             id: sceneId
           }
         });
-        setMap(_map)
-        const _view = new SceneView({
-          map: _map,
-          container: `scene-container-${sceneId}`,
-          ...sceneSettings
-        });
-        setView(_view)
+        _map.load().then(map => { setMap(map); })
       })
       .catch(err => {
         console.error(err);
       });
   }, [])
+
+  useEffect(() => {
+    if (map) {
+      loadModules(["esri/views/SceneView"], loaderOptions)
+        .then(([SceneView]) => {
+          const _view = new SceneView({
+            map: map,
+            container: `scene-container-${sceneId}`,
+            ...sceneSettings
+          });
+          setView(_view);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  },[map])
 
   useEffect(() => {
     if (map && view) {

@@ -35,7 +35,6 @@ const DataGlobeComponentSimple = ({
   hasMetadata,
   activeLayers,
   rasters,
-  layersAdded,
   handleMapLoad,
   handleGlobeUpdating,
   setRasters
@@ -50,7 +49,7 @@ const DataGlobeComponentSimple = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <Switcher />
-        <ArcgisLayerManager activeLayers={activeLayers} layersAdded={layersAdded} />
+        <ArcgisLayerManager activeLayers={activeLayers} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
         <DataGlobalSidebar
@@ -76,7 +75,7 @@ const DataGlobeComponentSimple = ({
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
-        {isLegendActive && 
+        {isLegendActive &&
           <Legend
             isFullscreenActive={isFullscreenActive}
             activeLayers={activeLayers}
