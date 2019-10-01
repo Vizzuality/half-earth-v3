@@ -8,7 +8,7 @@ import * as actions from 'actions/url-actions';
 
 
 const FeaturedPlaceCardContainer = props => {
-  const { view, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, changeUI } = props;
+  const { view, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, selectedTaxa, changeUI } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlace, setFeaturedPlace] = useState({
@@ -20,9 +20,9 @@ const FeaturedPlaceCardContainer = props => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
-      const { title, image, description } = result;
-      const parsedDescription = get(description, 'content[0].content[0].value');
-      setFeaturedPlace({title, image, description: parsedDescription});
+      if (result) {
+        setFeaturedPlace(result);
+      }
     };
 
     selectedFeaturedPlace && fetchData();
@@ -39,14 +39,14 @@ const FeaturedPlaceCardContainer = props => {
   useEffect(() => {
     if (featuredPlacesLayer) {
       const queryParams = featuredPlacesLayer.createQuery();
-      queryParams.where = `ftr_slg = '${selectedFeaturedMap}'`;
+      queryParams.where = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
-        const list = orderBy(features, place => place.attributes.lon).map(place => place.attributes.nam_slg);
+        const list = orderBy(features, place => place.geometry.longitude).map(place => place.attributes.nam_slg);
         setFeaturedPlacesList(list);
       });
     }
-  }, [featuredPlacesLayer, selectedFeaturedMap])
+  }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa])
 
   const handleAllMapsClick = () => changeUI({ selectedFeaturedPlace: null });
   const handleNextPlaceClick = place => {

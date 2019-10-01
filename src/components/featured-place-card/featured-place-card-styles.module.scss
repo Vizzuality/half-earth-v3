@@ -121,6 +121,7 @@ $card-content-max-height: 220px;
   .picture {
     float: left;
     width: 100%;
+    max-height: 100%;
     margin-right: 40px;
     cursor: pointer;
   }
