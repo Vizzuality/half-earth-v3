@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './menu-footer-styles.module';
 
-const MenuFooter = ({ options, activeOption }) => {
+const MenuFooter = ({ options, activeOption, featured = false }) => {
   const isActive = (o) => activeOption && o.key === activeOption; 
 
   return (

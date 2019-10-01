@@ -23,6 +23,8 @@ import Switcher from 'components/switcher';
 import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
 import TutorialModal from 'components/tutorial/tutorial-modal';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import MenuSettings from 'components/mobile-only/menu-settings';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -60,11 +62,14 @@ const DataGlobeComponent = ({
   spinGlobe,
   customFunctions,
   clickCallbacksArray,
-  mouseMoveCallbacksArray
+  mouseMoveCallbacksArray,
+  activeOption,
+  isLandscapeSidebarCollapsed,
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
   const isOnMobile = isMobile();
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
   return (
     <>
@@ -78,6 +83,8 @@ const DataGlobeComponent = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
+          <MenuFooter featured activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
           <Slider />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
@@ -88,6 +95,7 @@ const DataGlobeComponent = ({
         {selectedFeaturedMap &&
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
+            activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
@@ -145,6 +153,8 @@ const DataGlobeComponent = ({
             isFullscreenActive={isFullscreenActive}
             activeLayers={activeLayers}
             rasters={rasters}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+            activeOption={activeOption}
           />
         }
         <TutorialModal />
@@ -153,6 +163,7 @@ const DataGlobeComponent = ({
         className={uiStyles.uiTopLeft}
         selectedSidebar={selectedSidebar}
         isFullscreenActive={isFullscreenActive}
+        activeOption={activeOption}
         isLandscapeMode={isLandscapeMode}
         handle={spinGlobeHandle}
       />
