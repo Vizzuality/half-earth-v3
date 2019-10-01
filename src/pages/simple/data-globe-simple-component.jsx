@@ -23,6 +23,8 @@ const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const DataGlobeComponentSimple = ({
+  viewZoom,
+  viewCenter,
   isFullscreenActive,
   isSidebarOpen,
   selectedSpecies,
@@ -46,6 +48,8 @@ const DataGlobeComponentSimple = ({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onLoad={(map, view) => handleMapLoad(map, activeLayers)}
+        zoom={viewZoom}
+        center={viewCenter}
       >
         {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers} layersAdded={layersAdded} />
