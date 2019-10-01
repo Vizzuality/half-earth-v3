@@ -11,6 +11,7 @@ import Legend from 'components/legend';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import TutorialModal from 'components/tutorial/tutorial-modal';
+import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 
 import sceneSettings from './scene-settings.js';
@@ -71,6 +72,7 @@ const DataGlobeComponentSimple = ({
         />
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
+        {isLandscapeMode && <LabelsLayer />}
       </Scene>
       {isLegendActive && 
         <Legend
