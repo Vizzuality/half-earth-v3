@@ -28,5 +28,6 @@ export default {
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false, 
+    activeOption: '', // mobile
   }
 }

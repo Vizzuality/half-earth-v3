@@ -5,6 +5,9 @@ import styles from './featured-map-card-styles.module.scss'
 import animationStyles from 'styles/common-animations.module.scss';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 
+import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
+
 const FeaturesMapCardComponent = ({ 
   view,
   className,
@@ -15,10 +18,16 @@ const FeaturesMapCardComponent = ({
   handleAllMapsClick,
   selectedFeaturedPlace,
   spinGlobe,
-  handle
+  handle,
+  activeOption
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
-  const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
+
+  const isOnMobile = isMobile();
+  const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
+  const isVisibleOnMobile = isActive && isOpen && !selectedFeaturedPlace;
+
+  const isOnScreen = isOnMobile ? isVisibleOnMobile : (isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace);
 
   const handleClick = () => {
     handleAllMapsClick();

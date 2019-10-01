@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
+
+import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
+
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './featured-maps-list-styles.module';
 
@@ -13,11 +17,16 @@ const FeaturedMapsListComponent = ({
   handleFeaturedMapClick,
   handleFeatureMapHover,
   handle,
-  view
+  view,
+  activeOption
 }) => {
   const isOpen = selectedSidebar === 'featuredMapsList';
+  
+  const isOnMobile = isMobile();
+  const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
-  const isMapsListVisible = isOpen && !isLandscapeMode && !isFullscreenActive;
+  const visibleOnMobile = isOnMobile && isActive;
+  const isMapsListVisible = (isOpen && !isLandscapeMode && !isFullscreenActive) || visibleOnMobile;
 
   const [cardOpen, setCardOpen] = useState(null);
 

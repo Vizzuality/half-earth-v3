@@ -42,6 +42,8 @@ const getSelectedTaxa = createSelector(getUiSettings, uiSettings => uiSettings.s
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
+const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
+const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 
@@ -59,5 +61,7 @@ export default createStructuredSelector({
   featuredMapPlaces: selectFeaturedMapPlaces,
   rasters: getRasters,
   isGlobeUpdating: getGlobeUpdating,
-  selectedSpecies: getSelectedSpecies
+  selectedSpecies: getSelectedSpecies,
+  activeOption: getActiveOption, // mobile
+  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
 })

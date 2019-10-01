@@ -33,6 +33,8 @@ import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import LabelsLayer from 'components/labels-layer';
 import Legend from 'components/legend';
 import TutorialModal from 'components/tutorial/tutorial-modal';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import MenuSettings from 'components/mobile-only/menu-settings';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
@@ -66,14 +68,16 @@ const FeaturedGlobeComponent = ({
   handleGlobeUpdating,
   customFunctions,
   clickCallbacksArray,
-  mouseMoveCallbacksArray
+  mouseMoveCallbacksArray,
+  activeOption,
+  isLandscapeSidebarCollapsed,
  }) => {
   const isMapsList = selectedSidebar === 'featuredMapsList';
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
   const [handle, setHandle] = useState(null);
 
   const isOnMobile = isMobile();
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
   const spinGlobe = (view) => {
     loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
@@ -104,10 +108,13 @@ const FeaturedGlobeComponent = ({
           {!esriWidgetsHidden && <SearchWidget />}
           {!isMapsList && !isOnMobile && <Switcher />}
           <MobileOnly>
+            <MenuFooter featured activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+            <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
             <Slider />
           </MobileOnly>
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
+            activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
@@ -151,13 +158,15 @@ const FeaturedGlobeComponent = ({
             featuredPlacesLayer={featuredPlacesLayer}
             selectedTaxa={selectedTaxa}
           />
-          {isLandscapeMode &&
-            <Legend
-              isFullscreenActive={isFullscreenActive}
-              setLayerOpacity={setLayerOpacity}
-              setLayerVisibility={setLayerVisibility}
-              setLayerOrder={setLayerOrder}
-            />}
+          <Legend
+            isFullscreenActive={isFullscreenActive}
+            isLandscapeMode={isLandscapeMode}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+            activeOption={activeOption}
+            setLayerOpacity={setLayerOpacity}
+            setLayerVisibility={setLayerVisibility}
+            setLayerOrder={setLayerOrder}
+          />
           {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
           {isLandscapeMode && <LabelsLayer />}
           {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
@@ -179,6 +188,7 @@ const FeaturedGlobeComponent = ({
         className={uiStyles.uiTopLeft}
         selectedSidebar={selectedSidebar}
         isFullscreenActive={isFullscreenActive}
+        activeOption={activeOption}
         isLandscapeMode={isLandscapeMode}
         handle={handle}
       />
