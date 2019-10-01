@@ -17,12 +17,13 @@ export const LABELS_LAYER_GROUP = 'labels_layer_group';
 export const LANDSCAPE_LABELS_LAYER = 'landscape_labels_layer';
 // Basemap (added as a layer to display satellite imagery on higher zoom levels)
 export const FIREFLY_BASEMAP_LAYER = 'firefly_basemap';
-
 // Featured places layer
 export const FEATURED_PLACES_LAYER = 'featured_places';
-
 // Basemap (featured mode)
 export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
-
 // Pledges layer
 export const PLEDGES_LAYER = 'PledgeLocationsURL';
+// Labels for mountains and rivers
+export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer';
+// human settlements labels
+export const CITIES_LABELS_LAYER = 'cities_labels_layer';

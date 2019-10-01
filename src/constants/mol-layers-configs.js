@@ -1,3 +1,10 @@
+import {
+  LANDSCAPE_FEATURES_LABELS_LAYER,
+  CITIES_LABELS_LAYER
+} from 'constants/layers-slugs'
+
+import { LAYERS_URLS } from 'constants/layers-urls';
+
 const bucketUrl = "https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2";
 const templatePattern = "{level}/{col}/{row}";
 const fishingTiles = "fishing-hours/gfw_purple";
@@ -116,7 +123,25 @@ export const biodiversityCategories = [
   }
 ]
 
+export const config = {
+  [LANDSCAPE_FEATURES_LABELS_LAYER]: {
+    title: LANDSCAPE_FEATURES_LABELS_LAYER,
+    slug: LANDSCAPE_FEATURES_LABELS_LAYER,
+    type: 'FeatureLayer',
+    url: LAYERS_URLS[LANDSCAPE_FEATURES_LABELS_LAYER]
+  },
+  [CITIES_LABELS_LAYER]: {
+    title: CITIES_LABELS_LAYER,
+    slug: CITIES_LABELS_LAYER,
+    type: 'FeatureLayer',
+    url: LAYERS_URLS[CITIES_LABELS_LAYER]
+  }
+}
+
 export const layersConfig = [
+  // Labels layers
+  {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
+  {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
   //Protected Areas Layers
   {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
   {title: 'Protected Areas', slug: 'protected_areas_feature_layer', type: 'FeatureLayer', url: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer'},
