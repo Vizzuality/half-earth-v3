@@ -94,11 +94,16 @@ const FeaturedGlobeComponent = ({
 
   return (
     <>
-      <div style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}>
+      <div style={{ pointerEvents: (isMapsList || isFeaturedPlaceCard) && !isOnMobile ? 'none' : '' }}>
         <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
           <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
           <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
           {isGlobeUpdating && <Spinner floating />}
+          <MobileOnly>
+            <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+            <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+            <Slider />
+          </MobileOnly>
           <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions} />
           <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
           <LocationWidget hidden={esriWidgetsHidden} />
@@ -107,11 +112,6 @@ const FeaturedGlobeComponent = ({
           {!esriWidgetsHidden && <MinimapWidget />}
           {!esriWidgetsHidden && <SearchWidget />}
           {!isMapsList && !isOnMobile && <Switcher />}
-          <MobileOnly>
-            <MenuFooter featured activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
-            <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
-            <Slider />
-          </MobileOnly>
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
             activeOption={activeOption}
@@ -175,6 +175,8 @@ const FeaturedGlobeComponent = ({
             isFullscreenActive={isFullscreenActive}
             handleGlobeUpdating={handleGlobeUpdating}
             activeLayers={activeLayers}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+            activeOption={activeOption}
             rasters={rasters}
             setRasters={setRasters}
             handleLayerToggle={handleLayerToggle}
@@ -185,8 +187,8 @@ const FeaturedGlobeComponent = ({
         </Globe>
       </div>
       <FeaturedMapsList
-        className={uiStyles.uiTopLeft}
         selectedSidebar={selectedSidebar}
+        selectedFeaturedMap={selectedFeaturedMap}
         isFullscreenActive={isFullscreenActive}
         activeOption={activeOption}
         isLandscapeMode={isLandscapeMode}

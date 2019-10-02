@@ -20,6 +20,10 @@ $section-padding: 0 24px;
   @include animationFunction($delay: 200ms);
 }
 
+.hidden {
+  display: none;
+}
+
 .titleSection {
   padding: $section-padding;
   background-repeat: no-repeat;
