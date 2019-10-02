@@ -15,7 +15,7 @@ const MinimapWidgetComponent = ({ view: globeView, handleMapLoad, handleModalOpe
             <Scene
               sceneId={SCENE_ID}
               sceneSettings={sceneSettings}
-              onLoad={(map, view) => handleMapLoad(map, view, globeView)}
+              onViewLoad={(map, view) => handleMapLoad(map, view, globeView)}
             />
           </div>
         </div>
