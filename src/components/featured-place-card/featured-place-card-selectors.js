@@ -7,7 +7,7 @@ const getFeaturedMapsList = createSelector(
   featuredMaps => {
     if (!featuredMaps) return null;
     featuredMaps.forEach(map => {
-      map.sourceText = map.slug === "priorPlaces" ? "Half-Earth:Our Planet’s Fight for Life" : null;
+      map.sourceText = map.slug === "priorPlaces" ? "Half-Earth: Our Planet’s Fight for Life" : null;
     });
     return featuredMaps;
   }

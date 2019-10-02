@@ -30,7 +30,7 @@ const FeaturedMapLayer = ({ view, selectedFeaturedMap, featuredPlacesLayer, isLa
 
   useEffect(() => {
     if(featuredPlacesLayerView)
-      featuredPlacesLayerView.visible = !isLandscapeMode && !isFullscreenActive;
+      featuredPlacesLayerView.visible = !isLandscapeMode;
 
   }, [isLandscapeMode, isFullscreenActive])
 
