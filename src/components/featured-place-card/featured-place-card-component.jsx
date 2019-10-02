@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
+import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
+import { isMobile } from 'constants/responsive';
 import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
@@ -18,6 +20,8 @@ const FeaturedPlaceCardComponent = ({
 }) => {
 
   const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
+
+  const isOnMobile = isMobile();
   
   const contentWrapper = useRef();
   useEffect(() => {
@@ -25,7 +29,7 @@ const FeaturedPlaceCardComponent = ({
   }, [featuredPlace])
 
   return (
-    <div className={styles.container}>
+    <div className={cx(styles.container, { [animationStyles.bottomHidden]: isOnMobile && !isOnScreen })}>
       <div className={cx(styles.content, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
         <nav className={styles.navigation}>
           <div
@@ -33,7 +37,7 @@ const FeaturedPlaceCardComponent = ({
             onClick={handleAllMapsClick}
           >
             <ChevronIcon className={styles.arrowIcon}/>
-            {featuredMap && <h3 className={styles.text}>{featuredMap.title}</h3>}
+            {featuredMap && <h3 className={styles.text}>{isOnMobile ? 'Back' : featuredMap.title}</h3>}
           </div>
           <div className={styles.placesNavigator}>
             <div
@@ -51,10 +55,13 @@ const FeaturedPlaceCardComponent = ({
             </div>
           </div>
         </nav>
+        {isOnMobile && <div className={styles.spacerContainer}>
+          <div className={styles.spacer} />
+        </div>}
         <section className={styles.card}>
           {featuredPlace &&
             <>
-              <div className={styles.landscapeTriggerContainer}>
+              {!isOnMobile && <div className={styles.landscapeTriggerContainer}>
                 <img
                   src={featuredPlace.image}
                   className={styles.picture}
@@ -68,22 +75,39 @@ const FeaturedPlaceCardComponent = ({
                   <GoToIcon className={styles.icon} />
                   <span className={styles.landscapeTriggerText}>explore this area</span>
                 </button>
-              </div>
+              </div>}
               <div className={styles.contentContainer}>
+                {isOnMobile && (
+                  <>
+                    <h2 className={styles.title}>{featuredPlace.title}</h2>
+                    <img
+                      src={featuredPlace.image}
+                      className={styles.picture}
+                      alt={featuredPlace.title}
+                      onClick={handleLandscapeTrigger}
+                    />
+                  </>
+                )}
                 <div className={styles.contentWrapper} ref={contentWrapper}>
-                  <h2 className={styles.title}>{featuredPlace.title}</h2>
+                  {!isOnMobile && <h2 className={styles.title}>{featuredPlace.title}</h2>}
                   <div>
                     <p className={styles.text}>
                       {featuredPlace.description}
                     </p>
                     {featuredMap && featuredMap.sourceText && <span className={styles.sourceText}>(Source: <i>{featuredMap.sourceText}</i>)</span>}
                   </div>
+                  <p className={styles.text}>{featuredPlace.description}</p>
                 </div>
               </div>
             </>
           }
         </section>
-      </div>
+        {isOnMobile && (
+          <div className={styles.exploreAreaButtonContainer}>
+            <button onClick={handleLandscapeTrigger} className={styles.exploreAreaButton}>Explore this area</button>
+          </div>
+        )}
+        </div>
     </div>
   )
 }

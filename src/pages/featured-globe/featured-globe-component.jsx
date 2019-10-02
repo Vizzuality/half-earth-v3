@@ -79,11 +79,11 @@ const DataGlobeComponent = ({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
-        style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}
+        style={{ pointerEvents: (isMapsList || isFeaturedPlaceCard) && !isOnMobile ? 'none' : '' }}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter featured activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
           <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
           <Slider />
         </MobileOnly>
@@ -152,6 +152,8 @@ const DataGlobeComponent = ({
           <Legend
             isFullscreenActive={isFullscreenActive}
             activeLayers={activeLayers}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+            activeOption={activeOption}
             rasters={rasters}
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
             activeOption={activeOption}
@@ -160,8 +162,8 @@ const DataGlobeComponent = ({
         <TutorialModal />
       </Scene>
       <FeaturedMapsList
-        className={uiStyles.uiTopLeft}
         selectedSidebar={selectedSidebar}
+        selectedFeaturedMap={selectedFeaturedMap}
         isFullscreenActive={isFullscreenActive}
         activeOption={activeOption}
         isLandscapeMode={isLandscapeMode}

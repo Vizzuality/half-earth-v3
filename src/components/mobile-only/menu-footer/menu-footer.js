@@ -14,7 +14,7 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isSidebarOpen, isLandscapeMode, activeOption, isLandscapeSidebarCollapsed } = props;
+  const { view, isSidebarOpen, isLandscapeMode, activeOption, isLandscapeSidebarCollapsed, selectedSidebar, selectedFeaturedMap, featured = false } = props;
   const renderSearchOnTop = isLandscapeMode && isLandscapeSidebarCollapsed;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
@@ -23,15 +23,33 @@ const MenuFooterContainer = props => {
     renderSearchOnTop
   );
 
+  const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
+  const isMapsList = selectedSidebar === FEATURED_MAPS_LIST_SIDEBAR;
+
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
   const resetActiveOption = () => props.changeUI({ activeOption: '' });
+  const resetFeaturedMap = () => { if (selectedFeaturedMap) props.changeUI({ selectedFeaturedMap: '' }); }
   const setActiveOption = (option) => props.changeUI({ activeOption: option })
   const collapseLandscapeSidebar = () => props.changeUI({ isLandscapeSidebarCollapsed: true })
+  
+  const toggleFeaturedMapsList = () => {
+    const openedSidebar = activeOption === FOOTER_OPTIONS.ADD_LAYER;
+    if (selectedSidebar && openedSidebar) {
+      props.changeUI({ selectedSidebar: '' }); // close sidebar
+    } else {
+      props.changeUI({ selectedSidebar: FEATURED_MAPS_LIST_SIDEBAR })
+    }
+  }
 
   useEffect(() => {
     if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
     if (activeOption !== FOOTER_OPTIONS.SEARCH && searchWidget) handleCloseSearch();
   }, [activeOption])
+
+  useEffect(() => {
+    // reset selected featured map - on desktop default one is bestPlaces
+    if (featured) { resetFeaturedMap() }
+  }, [featured])
 
   const handleSearchToggle = () => {
     if (!searchWidget) { handleOpenSearch() }
@@ -69,7 +87,10 @@ const MenuFooterContainer = props => {
       icon: AddLayerIcon,
       name: 'Add layer',
       key: FOOTER_OPTIONS.ADD_LAYER,
-      onClickHandler: () => handler(FOOTER_OPTIONS.ADD_LAYER)
+      onClickHandler: () => {
+        if (featured) { resetFeaturedMap(); toggleFeaturedMapsList(); }
+        handler(FOOTER_OPTIONS.ADD_LAYER)
+      }
     },
     {
       icon: LegendIcon,
