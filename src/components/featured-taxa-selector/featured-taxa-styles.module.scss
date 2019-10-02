@@ -3,10 +3,14 @@
 @import 'styles/typography-extends';
 
 .wrapper {
-  position: absolute;
   bottom: 20px;
   overflow: hidden;
-  left: calc(50% - 250px);
+  @include bottom();
+
+  @media #{$tablet-portrait} {
+    width: unset;
+    left: calc(50% - 250px);
+  }
 }
 
 .container {
@@ -16,9 +20,13 @@
   justify-content: space-around;
   align-items: center;
   height: 80px;
-  width: 500px;
+  width: 100%;
   border-radius: 2px;
   padding: 10px 0;
+
+  @media #{$tablet-portrait} {
+    width: 500px;
+  }
 }
 
 .taxaButton {
