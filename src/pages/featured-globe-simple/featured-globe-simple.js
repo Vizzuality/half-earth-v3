@@ -1,5 +1,6 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { loadModules } from 'esri-loader';
 import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 import { config } from 'constants/mol-layers-configs';
 import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
@@ -20,7 +21,7 @@ const handleSwitch = createAction(DATA);
 const actions = { ...featuredMapsActions, ...urlActions, handleSwitch}
 
 const feturedGlobeContainer = props => {
-
+  const [handle, setHandle] = useState(null);
   const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap } = props;
 
 
@@ -53,6 +54,19 @@ const handleMarkerHover = (viewPoint, view) => {
         addLayerToMap(newLayer, map);
       }
     });
+  }
+
+  const spinGlobe = (view) => {
+    loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
+      const camera = view.camera.clone();
+      const spinningGlobe = scheduling.addFrameTask({
+        update: function() {
+          camera.position.longitude -= 0.2;
+          view.camera = camera;
+        }
+      });
+      setHandle(spinningGlobe);
+    })
   }
 
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
@@ -90,6 +104,8 @@ const handleMarkerHover = (viewPoint, view) => {
       setLayerOrder={setLayerOrder}
       handleGlobeUpdating={handleGlobeUpdating}
       customFunctions={[showHumanPressuresOnLandscape]}
+      spinGlobe={spinGlobe}
+      spinGlobeHandle={handle}
       {...props}
     />
   )

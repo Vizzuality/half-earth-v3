@@ -77,7 +77,6 @@ const ConservationEffortsWidget = (props) => {
   }, [terrestrialCellData])
 
   const toggleLayer = (layersPassed, option) => {
-    console.log(option)
       const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
       const layer = layersConfig.find(l => l.slug === option.title);
       handleLayerCreation(layer, map);

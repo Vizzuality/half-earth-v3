@@ -15,6 +15,7 @@ import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
 import Switcher from 'components/switcher';
+import FeaturedMapsList from 'components/featured-maps-list';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -45,7 +46,9 @@ const DataGlobeComponentSimple = ({
   onMapLoad,
   setRasters,
   handleLayerToggle,
-  handleGlobeUpdating
+  handleGlobeUpdating,
+  spinGlobeHandle,
+  spinGlobe
 }) => {
   return (
     <>
@@ -68,6 +71,8 @@ const DataGlobeComponentSimple = ({
             isFullscreenActive={isFullscreenActive}
             isLandscapeMode={isLandscapeMode}
             selectedFeaturedPlace={selectedFeaturedPlace}
+            spinGlobe={spinGlobe}
+            handle={spinGlobeHandle}
           />
         }
         <FeaturedPlacesLayer
@@ -111,6 +116,13 @@ const DataGlobeComponentSimple = ({
           />
         }
       </Scene>
+      <FeaturedMapsList
+        className={uiStyles.uiTopLeft}
+        selectedSidebar={selectedSidebar}
+        isFullscreenActive={isFullscreenActive}
+        isLandscapeMode={isLandscapeMode}
+        handle={spinGlobeHandle}
+      />
       {hasMetadata && <InfoModal />}
     </>
   )

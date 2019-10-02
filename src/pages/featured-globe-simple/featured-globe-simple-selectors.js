@@ -27,16 +27,17 @@ const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeS
 
 // UI
 const getSelectedSidebar = createSelector(getUiSettings, uiSettings => uiSettings.selectedSidebar);
+const getMapsListActive = createSelector(getUiSettings, uiSettings => uiSettings.selectedSidebar === 'featuredMapsList');
 const getSelectedFeaturedMap = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedMap);
 const getSelectedFeaturedPlace = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedPlace);
 const getSelectedTaxa = createSelector(getUiSettings, uiSettings => uiSettings.selectedTaxa);
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
-
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 
 export default createStructuredSelector({
+  isMapsList: getMapsListActive,
   sceneSettings: getGlobeSettings,
   sceneLayers: getFeaturedGlobeLayers,
   activeLayers: getActiveLayers,

@@ -57,7 +57,6 @@ const HumanPressureWidgetContainer = props => {
 
 
   const handleHumanPressureRasters = (rasters, option) => {
-    console.log(rasters)
     const { changeGlobe } = props;
     const humanImpactLayer = findLayerInMap(LAND_HUMAN_PRESSURES_IMAGE_LAYER, map);
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
