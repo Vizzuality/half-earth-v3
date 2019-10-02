@@ -1,21 +1,29 @@
 import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { orderBy, get } from 'lodash';
+import { orderBy } from 'lodash';
 import CONTENTFUL from 'services/contentful';
+import { findLayerInMap } from 'utils/layer-manager-utils';
+import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
 import * as actions from 'actions/url-actions';
 
 
 const FeaturedPlaceCardContainer = props => {
-  const { view, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, selectedTaxa, changeUI } = props;
+  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
+  const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   const [featuredPlace, setFeaturedPlace] = useState({
     image: '',
     title: '',
     description: ''
   });
+
+  useEffect(() => {
+    const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    setFeaturedPlacesLayer(layer);
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {

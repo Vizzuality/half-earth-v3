@@ -1,8 +1,8 @@
 import { useFeaturedPlaceViewCameraChange } from 'hooks/featured-place-view-manager-hooks';
 
-const FeaturedPlaceViewManager = ({ view, selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode }) => {
+const FeaturedPlaceViewManager = ({ map, view, selectedFeaturedPlace, isLandscapeMode }) => {
   // update camera tilt hook
-  useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode)
+  useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlace, isLandscapeMode)
   return null
 }
 
