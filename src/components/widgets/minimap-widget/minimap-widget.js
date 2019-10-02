@@ -16,8 +16,9 @@ const MinimapWidget = props => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [map, setMap] = useState(null);
   const [view,setView]= useState(null);
-  const [isFireflyLoaded, setFireflyLoaded] = useState(false);
+  const [isModalLayersLoaded, setModalLayersLoaded] = useState(false);
   const [handle, setHandle] = useState(null);
+  const [removeSyncHandler, setSyncHandler] = useState(null);
 
   useEffect(() => {
     toggleBasemapLayers();
@@ -27,24 +28,54 @@ const MinimapWidget = props => {
   const handleMapLoad = (map, view, globeView ) => {
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
     disableInteractions(view); // disable all interactions on the minimap globe
-    loadModules(["esri/layers/VectorTileLayer","esri/layers/FeatureLayer", "esri/layers/TileLayer"]).then(([VectorTileLayer, FeatureLayer, TileLayer]) => { // load two-colors vector-tile-layer into minimap globe
+    loadModules(["esri/layers/VectorTileLayer","esri/layers/FeatureLayer", "esri/layers/TileLayer", "APL/HalfEarthHalo"])
+      .then(([VectorTileLayer, FeatureLayer, TileLayer, HalfEarthHalo]) => { // load two-colors vector-tile-layer into minimap globe
+      view.when(function(){                          
+
+        // CUSTOM HALF EARTH HALO //
+        const halfEarthHalo = new HalfEarthHalo({
+          view: view,
+          glowEnabled: false,
+          // atmosphereEnabled: true,
+          starsEnabled: false,
+          background: {
+            type: "color",
+            color: [15, 43, 59, 1]
+          },
+          indicatorWidth: 16,
+          indicatorGap: 1
+        });
+        
+        halfEarthHalo.addIndicator({
+          index: 0,
+          progress: 14.9,
+          color: "rgba(94,192,19,1.0)"  
+        });
+        
+        halfEarthHalo.addIndicator({
+          index: 1,
+          progress: 7.47,
+          color: "rgba(0,93,251,1.0)"
+        }); 
+        if(view) {
+          view.environment.starsEnabled = false;
+          view.environment.background = {
+            type: "color",
+            color: [15, 43, 59, 0]
+          }
+        }
+      });
+
       const minimapLayer = new VectorTileLayer(minimapLayerStyles);
-      // const conservationLayer = new VectorTileLayer({
-      //   url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile2/VectorTileServer'
-      // });
-      // const flayer = new FeatureLayer({
-      //   // URL to the service
-      //   url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer"
-      // });
       map.add(minimapLayer);
     });
     setMap(map);
     setView(view);
-    synchronizeWebScenes(globeView, view); // synchronize data-globe position, zoom etc. with minimap-globe
+    synchronizeWebScenes(globeView, view, setSyncHandler); // synchronize data-globe position, zoom etc. with minimap-globe
   };
 
   const handleModalOpen = () => {
-    if (!isFireflyLoaded) fetchFireflyLayer();
+    if (!isModalLayersLoaded) fetchModalLayers();
     setModalOpen(true);
     
 
@@ -54,27 +85,41 @@ const MinimapWidget = props => {
   };
 
   const toggleBasemapLayers = () => {
-    const fireflyLayer = map && map.layers.items.find(({ title }) => title === 'HalfEarthFirefly');
-    fireflyLayer && map.reorder(fireflyLayer, isModalOpen ? 1 : 0)
+    const minimapLayer = map && map.layers.items.find(({ title }) => title === 'MinimapLayer');
+    minimapLayer && map.reorder(minimapLayer, isModalOpen ? 0 : 2)
   }
 
   const toggleSpinnigGlobeAnimation = () => {
     if( isModalOpen ) {
       !handle ? spinGlobe(view, setHandle) : handle.resume();
+      if(view) {
+        view.constraints.altitude = { max: 16500000, min: 16500000 };
+        removeSyncHandler && removeSyncHandler.remove();
+      }
     } else {
-      handle.pause();
+      handle && handle.pause();
+      if(view) {
+        view.constraints.altitude = { max: 12500000, min: 12500000 };
+        synchronizeWebScenes(props.view, view, setSyncHandler); // synchronize data-globe position, zoom etc. with minimap-globe
+      }
+
     }
   }
 
-  const fetchFireflyLayer = () => {
-    loadModules(["esri/layers/TileLayer"]).then(([TileLayer]) => {
-      console.log('FETCHING FIREFLY LAYER...');
-      var firefly = new TileLayer({
-        url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer"
+  const fetchModalLayers = () => {
+    loadModules(["esri/layers/TileLayer", "esri/layers/VectorTileLayer","esri/layers/FeatureLayer"])
+      .then(([TileLayer, VectorTileLayer, FeatureLayer]) => {
+        console.log('FETCHING FIREFLY LAYER...');
+        var firefly = new TileLayer({
+          url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer"
+        });
+        map.add(firefly);
+        // const conservationLayer = new FeatureLayer({
+        //   url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer/1"
+        // });
+        // map.add(conservationLayer);
+        setModalLayersLoaded(true);
       });
-      map.add(firefly);
-      setFireflyLoaded(true);
-    });
   }
 
   const handleModalClose = () => {

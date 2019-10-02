@@ -82,7 +82,7 @@ export const minimapLayerStyles = {
 
 // Sample code for views synchronization
 // https://developers.arcgis.com/javascript/latest/sample-code/views-synchronize/index.html
-export const synchronizeWebScenes = (globeView, minimapView) => {
+export const synchronizeWebScenes = (globeView, minimapView, setHandle) => {
   loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
     const synchronizeView = (view, others) => {
       others = Array.isArray(others) ? others : [others];
@@ -140,7 +140,7 @@ export const synchronizeWebScenes = (globeView, minimapView) => {
 
       return {
         remove: () => {
-          this.remove = () => {};
+          // this.remove = () => {};
           clear();
           interactWatcher.remove();
         }
@@ -159,7 +159,7 @@ export const synchronizeWebScenes = (globeView, minimapView) => {
 
       return {
         remove: () => {
-          this.remove = () => {};
+          // this.remove = () => {};
           handles.forEach((h) => {
             h.remove();
           });
@@ -169,6 +169,7 @@ export const synchronizeWebScenes = (globeView, minimapView) => {
     };
 
     // bind the views
-    synchronizeViews([globeView, minimapView]);
+    const handles = synchronizeViews([globeView, minimapView]);
+    setHandle(handles);
   });
 };

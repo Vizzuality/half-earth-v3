@@ -109,13 +109,14 @@ $ease-in-out: opacity $animation-time ease-in-out;
   }
 
   .progressBars {
-    background-size: 0;
+    background: none;
     width: unset;
 
     .globeComponentWrapper {
       & > * {
-        height: 600px;
-        width: 600px;
+        height: 500px;
+        width: 500px;
+        
       }
     }
   }
