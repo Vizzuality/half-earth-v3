@@ -3,7 +3,7 @@ import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoad = null }) => {
+const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null }) => {
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
@@ -17,7 +17,10 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoa
             id: sceneId
           }
         });
-        _map.load().then(map => { setMap(map); })
+        _map.load().then(map => { 
+          setMap(map);
+          onMapLoad && onMapLoad(map);
+        })
       })
       .catch(err => {
         console.error(err);
@@ -44,14 +47,10 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoa
   useEffect(() => {
     if (map && view) {
       setLoadState('loaded');
+      onViewLoad && onViewLoad(map, view)
     }
   }, [map, view]);
 
-  useEffect(() => {
-    if (loadState === 'loaded' && onLoad) {
-      onLoad(map, view);
-    }
-  }, [loadState]);
 
   if (loadState === 'loading') {
     return (
