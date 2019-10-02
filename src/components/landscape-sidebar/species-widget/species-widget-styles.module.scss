@@ -148,6 +148,7 @@
     color: $white;
     margin-bottom: 2px;
     text-transform: uppercase;
+    text-decoration: none;
   }
   
   .speciesLatName {
@@ -172,8 +173,14 @@
     border-radius: 50%;
     height: 110px;
     margin: 0 25px;
+    overflow: hidden;
     user-select: none;
     width: 110px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 
