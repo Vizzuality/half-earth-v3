@@ -13,6 +13,7 @@ import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
+import FeaturedPlacesLayer from 'components/featured-places-layer';
 import Switcher from 'components/switcher';
 
 import uiStyles from 'styles/ui.module.scss';
@@ -41,18 +42,18 @@ const DataGlobeComponentSimple = ({
   activeLayers,
   rasters,
   selectedTaxa,
-  onLoad,
-  handleGlobeUpdating,
-  setRasters
+  onMapLoad,
+  setRasters,
+  handleLayerToggle,
+  handleGlobeUpdating
 }) => {
-  console.log(selectedFeaturedMap)
   return (
     <>
       <Scene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
-        onLoad={onLoad}
+        onMapLoad={onMapLoad}
       >
         {isGlobeUpdating && <Spinner floating />}
         <Switcher />
@@ -69,6 +70,12 @@ const DataGlobeComponentSimple = ({
             selectedFeaturedPlace={selectedFeaturedPlace}
           />
         }
+        <FeaturedPlacesLayer
+          selectedFeaturedMap={selectedFeaturedMap}
+          selectedTaxa={selectedTaxa}
+          isLandscapeMode={isLandscapeMode}
+          handleLayerToggle={handleLayerToggle}
+        />
         {!isLandscapeMode &&
           <PriorityPlacesPolygonsLayer
             selectedFeaturedMap={selectedFeaturedMap}

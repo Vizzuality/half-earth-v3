@@ -3,7 +3,8 @@ import {
   GRID_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
-  PRIORITY_POLYGONS_GRAPHIC_LAYER
+  PRIORITY_POLYGONS_GRAPHIC_LAYER,
+  FEATURED_PLACES_LAYER
 } from 'constants/layers-slugs';
 
 export default {
@@ -13,7 +14,8 @@ export default {
       { title: GRID_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: CITIES_LABELS_LAYER },
-      { title: PRIORITY_POLYGONS_GRAPHIC_LAYER }
+      { title: PRIORITY_POLYGONS_GRAPHIC_LAYER },
+      { title: FEATURED_PLACES_LAYER }
     ],
     zoom: 1,
     center: [16.9515536, 0.116959],
