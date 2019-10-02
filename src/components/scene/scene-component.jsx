@@ -3,7 +3,7 @@ import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null, style }) => {
+const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null, style, spinner = true }) => {
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
@@ -56,7 +56,7 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMap
     return (
     <>
       <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'0%', height:'0%'}} />
-      <Spinner spinnerWithOverlay floating/>
+      <Spinner spinnerWithOverlay floating display={spinner}/>
     </>
     )
   } else if (loadState === 'loaded') {

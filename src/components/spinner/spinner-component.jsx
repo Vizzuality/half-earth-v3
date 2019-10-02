@@ -2,8 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './spinner-styles.module';
 
-const Spinner = ({ floating = false, spinnerWithOverlay = false }) => {
-  return (
+const Spinner = ({ floating = false, spinnerWithOverlay = false, display = true }) => {
+  return display ? (
     <>
       {spinnerWithOverlay ? (
         <div className={styles.spinnerWithOverlay}>
@@ -13,7 +13,7 @@ const Spinner = ({ floating = false, spinnerWithOverlay = false }) => {
         <div className={cx(styles.spinner, {[styles.spinnerAbsolute]: floating})} />
       )}
     </>
-  );
+  ) : null;
 }
 
 export default Spinner;

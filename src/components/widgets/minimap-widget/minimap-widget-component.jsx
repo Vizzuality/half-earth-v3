@@ -16,6 +16,7 @@ const MinimapWidgetComponent = ({ view: globeView, handleMapLoad, handleModalOpe
               sceneId={SCENE_ID}
               sceneSettings={sceneSettings}
               onViewLoad={(map, view) => handleMapLoad(map, view, globeView)}
+              spinner={false}
             />
           </div>
         </div>
