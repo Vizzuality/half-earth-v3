@@ -9,9 +9,9 @@ import styles from './map-instructions-styles.module.scss';
 const title = 'How to navigate the map';
 
 const mouseClickLabels = {
-  leftClick: 'PAN VIEW',
-  rigthClick: 'ZOOM VIEW',
-  middleClick: 'ROTATE VIEW'
+  leftClick: 'ROTATE VIEW',
+  rigthClick: 'PAN VIEW',
+  middleClick: 'ZOOM VIEW'
 };
 
 const storyDescriptions = {
