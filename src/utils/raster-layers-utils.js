@@ -73,15 +73,13 @@ export const humanPressuresPreloadFixes = (layer, rasters) => {
   const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
   const rasterNames = activeRasters.map(value => `human_impact_${value}`)
   const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
-  loadModules(["esri/config", "esri/layers/support/MosaicRule", "esri/layers/support/RasterFunction", "esri/Color"])
-    .then(([esriConfig, MosaicRule, RasterFunction, Color]) => {
+  loadModules(["esri/config", "esri/layers/support/MosaicRule"])
+    .then(([esriConfig, MosaicRule]) => {
     const mosaicRule = new MosaicRule({
       method: 'attribute',
       operation: 'sum',
       where: mosaicWhereClause
     });
-    layer.noData = 0;
-    layer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
     mosaicRuleFix(esriConfig, layer.url, mosaicRule, 'DATA');
   });
 }
