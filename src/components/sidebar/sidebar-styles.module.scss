@@ -31,6 +31,7 @@
   overflow-y: scroll;
 
   @media #{$tablet-portrait} {
+    overflow-y: unset;
     width: $sidebar-width;
     top: 0;
     bottom: 0;
