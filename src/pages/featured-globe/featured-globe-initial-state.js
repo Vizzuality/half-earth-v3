@@ -24,7 +24,7 @@ export default {
   },
   ui: {
     selectedSidebar: 'featuredMapCard',
-    selectedFeaturedMap: 'bestPlaces',
+    selectedFeaturedMap: 'priorPlaces',
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false, 
