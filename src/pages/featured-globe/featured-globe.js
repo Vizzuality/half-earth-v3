@@ -9,16 +9,15 @@ import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerM
 import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 
 import { createAction } from 'redux-tools';
-import Component from './featured-globe-component.jsx';
+import Component from './featured-globe-simple-component.jsx';
 
-import mapStateToProps from './featured-globe-selectors';
-import * as ownActions from './featured-globe-actions.js';
+import mapStateToProps from './featured-globe-simple-selectors';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
 const handleSwitch = createAction(DATA);
 
-const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSwitch}
+const actions = { ...featuredMapsActions, ...urlActions, handleSwitch}
 
 const feturedGlobeContainer = props => {
 

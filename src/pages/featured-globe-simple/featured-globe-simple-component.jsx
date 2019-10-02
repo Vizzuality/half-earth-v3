@@ -12,6 +12,7 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
+import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import Switcher from 'components/switcher';
 
 import uiStyles from 'styles/ui.module.scss';
@@ -19,6 +20,7 @@ import uiStyles from 'styles/ui.module.scss';
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
+const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
 
 
 
@@ -34,9 +36,11 @@ const DataGlobeComponentSimple = ({
   selectedFeaturedPlace,
   isGlobeUpdating,
   isLegendActive,
+  isMapsList,
   hasMetadata,
   activeLayers,
   rasters,
+  selectedTaxa,
   onLoad,
   handleGlobeUpdating,
   setRasters
@@ -65,6 +69,21 @@ const DataGlobeComponentSimple = ({
             selectedFeaturedPlace={selectedFeaturedPlace}
           />
         }
+        {!isLandscapeMode &&
+          <PriorityPlacesPolygonsLayer
+            selectedFeaturedMap={selectedFeaturedMap}
+            selectedTaxa={selectedTaxa}
+            isLandscapeMode={isLandscapeMode}
+          />
+        }
+        <FeaturedTaxaSelector
+          selectedTaxa={selectedTaxa}
+          isMapsList={isMapsList}
+          selectedFeaturedMap={selectedFeaturedMap}
+          isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+          selectedFeaturedPlace={selectedFeaturedPlace}
+        />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
