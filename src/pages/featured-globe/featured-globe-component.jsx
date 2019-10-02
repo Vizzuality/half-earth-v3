@@ -112,9 +112,10 @@ const FeaturedGlobeComponent = ({
             selectedTaxa={selectedTaxa}
             featuredPlacesLayer={featuredPlacesLayer}
             isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
             handleLayerToggle={handleLayerToggle}
           />
-          {!isLandscapeMode &&
+          {!isLandscapeMode && !isFullscreenActive &&
             <PriorityPlacesPolygonsLayer
               selectedFeaturedMap={selectedFeaturedMap}
               selectedTaxa={selectedTaxa}
