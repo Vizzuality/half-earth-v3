@@ -1,8 +1,6 @@
 // Protected areas layers. Based on WDPA and RAISIG data.
-export const PROTECTED_AREAS_LAYER_GROUP = 'protected_areas_layer_group';
 export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
-export const COMMUNITY_AREAS_LAYER_GROUP = 'community_areas_layer_group';
 export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
 // Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.

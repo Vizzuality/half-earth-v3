@@ -1,9 +1,22 @@
 import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
-  CITIES_LABELS_LAYER
+  CITIES_LABELS_LAYER,
+  VIBRANT_BASEMAP_LAYER,
+  PRIORITY_PLACES_POLYGONS,
+  PROTECTED_AREAS_FEATURE_LAYER,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  COMMUNITY_AREAS_FEATURE_LAYER,
+  COMMUNITY_AREAS_VECTOR_TILE_LAYER
 } from 'constants/layers-slugs'
 
+
 import { LAYERS_URLS } from 'constants/layers-urls';
+
+const LAYER_TYPES = {
+  FEATURE_LAYER: 'FeatureLayer',
+  TILE_LAYER: 'TileLayer',
+  VECTOR_TILE_LAYER: 'VectorTileLayer',
+}
 
 const bucketUrl = "https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2";
 const templatePattern = "{level}/{col}/{row}";
@@ -127,15 +140,51 @@ export const config = {
   [LANDSCAPE_FEATURES_LABELS_LAYER]: {
     title: LANDSCAPE_FEATURES_LABELS_LAYER,
     slug: LANDSCAPE_FEATURES_LABELS_LAYER,
-    type: 'FeatureLayer',
+    type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[LANDSCAPE_FEATURES_LABELS_LAYER]
   },
   [CITIES_LABELS_LAYER]: {
     title: CITIES_LABELS_LAYER,
     slug: CITIES_LABELS_LAYER,
-    type: 'FeatureLayer',
+    type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[CITIES_LABELS_LAYER]
-  }
+  },
+  [VIBRANT_BASEMAP_LAYER]: {
+    title: VIBRANT_BASEMAP_LAYER,
+    slug: VIBRANT_BASEMAP_LAYER,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[VIBRANT_BASEMAP_LAYER]
+  },
+  [PRIORITY_PLACES_POLYGONS]: {
+    title: PRIORITY_PLACES_POLYGONS,
+    slug: PRIORITY_PLACES_POLYGONS,
+    type: LAYER_TYPES.FEATURE_LAYER,
+    url: LAYERS_URLS[PRIORITY_PLACES_POLYGONS]
+  },
+  [PROTECTED_AREAS_FEATURE_LAYER]: {
+    title: PROTECTED_AREAS_FEATURE_LAYER,
+    slug: PROTECTED_AREAS_FEATURE_LAYER,
+    type: LAYER_TYPES.FEATURE_LAYER,
+    url: LAYERS_URLS[PROTECTED_AREAS_FEATURE_LAYER]
+  },
+  [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
+    title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+    type: LAYER_TYPES.VECTOR_TILE_LAYER,
+    url: LAYERS_URLS[PROTECTED_AREAS_VECTOR_TILE_LAYER]
+  },
+  [COMMUNITY_AREAS_FEATURE_LAYER]: {
+    title: COMMUNITY_AREAS_FEATURE_LAYER,
+    slug: COMMUNITY_AREAS_FEATURE_LAYER,
+    type: LAYER_TYPES.FEATURE_LAYER,
+    url: LAYERS_URLS[COMMUNITY_AREAS_FEATURE_LAYER]
+  },
+  [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: {
+    title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+    slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+    type: LAYER_TYPES.VECTOR_TILE_LAYER,
+    url: LAYERS_URLS[COMMUNITY_AREAS_VECTOR_TILE_LAYER]
+  },
 }
 
 export const layersConfig = [
@@ -178,7 +227,7 @@ export const layersConfig = [
   {title: "fishes richness", slug: 'fishes-rich', url: `${bucketUrl}/richness/fishes/${templatePattern}`},
   {title: "conifers rarity", slug: 'conifers-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/853e83b25f77402981e5c83ad43a2bc3/rest/services/conifers_rarity/MapServer`},
   {title: "conifers richness", slug: 'conifers-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/a7355a715e09458caabdcc904b02da36/rest/services/conifers_richness/MapServer`},
-  {title: "cacti rarity", slug: 'cacti-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/87ba75119feb4ddba8f2eff9f8cbf84c/rest/services/cacti_rarity/MapServer`},
+  {title: "cactisss rarity", slug: 'cacti-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/87ba75119feb4ddba8f2eff9f8cbf84c/rest/services/cacti_rarity/MapServer`},
   {title: "cacti richness", slug: 'cacti-richness', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/ea83c6a422c64614b3b8e129bd454416/rest/services/cati_richness/MapServer`},
   {title: "amphibians rarity", slug: 'amphib-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/ad01787b2880446c8ed7acb75735fcba/rest/services/amphibians_rarity/MapServer`},
   {title: "amphibians richness", slug: 'amphib-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/58e9d41955c74788bac974a48540ed23/rest/services/amphibians_richness/MapServer`},
