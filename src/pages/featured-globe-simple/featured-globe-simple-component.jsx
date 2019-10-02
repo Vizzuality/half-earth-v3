@@ -6,11 +6,14 @@ import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import LandscapeViewManager from 'components/landscape-view-manager';
+import GlobeEventsManager from 'components/globe-events-manager';
 import Legend from 'components/legend';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
+import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
+import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
@@ -23,7 +26,8 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
-
+const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
+const About = loadable(() => import('components/about'));
 
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
@@ -48,21 +52,29 @@ const DataGlobeComponentSimple = ({
   handleLayerToggle,
   handleGlobeUpdating,
   spinGlobeHandle,
-  spinGlobe
+  spinGlobe,
+  customFunctions,
+  clickCallbacksArray,
+  mouseMoveCallbacksArray
 }) => {
+  const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
   return (
     <>
+      <Switcher />
       <Scene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
+        style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}
       >
-        {isGlobeUpdating && <Spinner floating />}
-        <Switcher />
-        <ArcgisLayerManager activeLayers={activeLayers} />
+        {/* {isGlobeUpdating && <Spinner floating />} */}
+        <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
+        <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <Widgets isFullscreenActive={isFullscreenActive}/>
+        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
+        {!esriWidgetsHidden && <Widgets isFullscreenActive={isFullscreenActive}/>}
         {selectedFeaturedMap &&
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
@@ -96,6 +108,13 @@ const DataGlobeComponentSimple = ({
           isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
+        <FeaturedPlaceCard
+          isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
+          selectedFeaturedPlace={selectedFeaturedPlace}
+          selectedFeaturedMap={selectedFeaturedMap}
+          selectedTaxa={selectedTaxa}
+        />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
@@ -115,6 +134,7 @@ const DataGlobeComponentSimple = ({
             rasters={rasters}
           />
         }
+        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
       </Scene>
       <FeaturedMapsList
         className={uiStyles.uiTopLeft}
@@ -124,6 +144,7 @@ const DataGlobeComponentSimple = ({
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
+      {!selectedFeaturedPlace && <About />}
     </>
   )
 }

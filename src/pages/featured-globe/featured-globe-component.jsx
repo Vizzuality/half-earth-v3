@@ -95,7 +95,7 @@ const FeaturedGlobeComponent = ({
           <ZoomWidget hidden={esriWidgetsHidden} />
           {!esriWidgetsHidden && <MinimapWidget />}
           {!esriWidgetsHidden && <SearchWidget />}
-          {!isMapsList && <Switcher />}
+          {!isMapsList && !esriWidgetsHidden && <Switcher />}
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
             selectedFeaturedMap={selectedFeaturedMap}

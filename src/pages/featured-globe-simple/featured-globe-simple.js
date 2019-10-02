@@ -22,7 +22,7 @@ const actions = { ...featuredMapsActions, ...urlActions, handleSwitch}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
-  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap } = props;
+  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard } = props;
 
 
 const handleMarkerClick = (viewPoint, view) => {
@@ -106,6 +106,7 @@ const handleMarkerHover = (viewPoint, view) => {
       customFunctions={[showHumanPressuresOnLandscape]}
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}
+      isFeaturedPlaceCard={isFeaturedPlaceCard}
       {...props}
     />
   )

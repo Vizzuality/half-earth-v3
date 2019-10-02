@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
 import { get } from 'lodash';
+import { findLayerInMap } from 'utils/layer-manager-utils';
+import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
-export function useFeaturedPlaceViewCameraChange(view, selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode) {
+export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlace, isLandscapeMode) {
   const [coords, setCoords] = useState(null);
+  const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
+  useEffect(() => {
+    const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
+    setFeaturedPlacesLayer(layer);
+  }, [])
+
   useEffect(() => {
     if (selectedFeaturedPlace && featuredPlacesLayer && !isLandscapeMode) {
       const query = featuredPlacesLayer.createQuery();
