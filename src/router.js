@@ -17,7 +17,7 @@ export const routes = {
   },
   [FEATURED]: {
     path: '/featuredGlobe',
-    page: 'featured-globe'
+    page: 'featured-globe-simple'
   },
   [SIMPLE]: {
     path: '/simple',

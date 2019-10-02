@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
-import FeaturedGlobe from 'pages/featured-globe';
+import FeaturedGlobe from 'pages/featured-globe-simple';
 import DataGlobe from 'pages/data-globe';
 import DataGlobeSimple from 'pages/simple';
 import MapIframe from 'pages/map-iframe';
@@ -11,7 +11,7 @@ class App extends PureComponent {
     const { page } = route;
     const embedded = page === 'map-iframe';
     const whichGlobe = embedded ? <MapIframe /> : <DataGlobeSimple />;
-    return page === 'featured-globe' ? <FeaturedGlobe /> : whichGlobe;
+    return page === 'featured-globe-simple' ? <FeaturedGlobe /> : whichGlobe;
   }
 }
 

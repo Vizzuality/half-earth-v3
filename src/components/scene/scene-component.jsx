@@ -3,7 +3,7 @@ import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoad = null, zoom, center }) => {
+const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onLoad = null }) => {
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
