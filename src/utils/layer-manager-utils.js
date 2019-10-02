@@ -61,7 +61,10 @@ export const createLayer = layerConfig => {
     })
   });
 }
-export const addLayerToMap = (mapLayer, map) => map.add(mapLayer);
+export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) => {
+  map.add(mapLayer);
+  resolve(mapLayer);
+});
 export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
@@ -69,8 +72,7 @@ export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.t
 export const handleLayerCreation = async (layerConfig, map) => {
   if (!isLayerInMap(layerConfig, map)) {
     const newLayer = await createLayer(layerConfig);
-    addLayerToMap(newLayer, map);
-    return newLayer;
+    return addLayerToMap(newLayer, map).then(layer => layer);
   } else {
     return findLayerInMap(layerConfig.slug, map);
   }

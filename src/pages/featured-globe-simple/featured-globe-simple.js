@@ -39,16 +39,15 @@ const handleMarkerHover = (viewPoint, view) => {
   },[])
 
   const handleMapLoad = (map, activeLayers) => {
-    // Here we are creating the biodiversity layers active in the URL
-    // this is needed to have the layers displayed on the map when sharing the URL
     const activeLayerIDs = activeLayers
       .map(({ title }) => title);
   
     activeLayerIDs.forEach(async layerName => {
-      const layer = config[layerName];
-      if (layer) {
-        const newLayer = await createLayer(layer, map);
-        if (layer.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
+      const layerConfig = config[layerName];
+      if (layerConfig) {
+        const newLayer = await createLayer(layerConfig, map);
+        newLayer.outFields = ["*"];
+        if (layerConfig.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
           humanPressuresPreloadFixes(newLayer, props.rasters);
         }
         addLayerToMap(newLayer, map);
@@ -78,15 +77,13 @@ const handleMarkerHover = (viewPoint, view) => {
     }
   }
 
-  console.log('FEATURED')
-
   return (
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
-      onLoad={(map, view) => handleMapLoad(map, props.activeLayers)}
+      onMapLoad={(map) => handleMapLoad(map, props.activeLayers)}
       setRasters={setRasters}
       setLayerVisibility={setLayerVisibility}
       setLayerOpacity={setLayerOpacity}
