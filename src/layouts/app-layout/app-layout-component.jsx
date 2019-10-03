@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 import FeaturedGlobe from 'pages/featured-globe-simple';
-import DataGlobe from 'pages/data-globe';
 import DataGlobeSimple from 'pages/simple';
 import MapIframe from 'pages/map-iframe';
 
