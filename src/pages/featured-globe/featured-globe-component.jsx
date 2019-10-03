@@ -18,6 +18,7 @@ import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
 import Switcher from 'components/switcher';
 import FeaturedMapsList from 'components/featured-maps-list';
+import TutorialModal from 'components/tutorial/tutorial-modal';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -98,6 +99,8 @@ const DataGlobeComponent = ({
             selectedFeaturedMap={selectedFeaturedMap}
             selectedTaxa={selectedTaxa}
             isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleLayerToggle={handleLayerToggle}
           />
         }
         <FeaturedTaxaSelector
@@ -135,6 +138,7 @@ const DataGlobeComponent = ({
             rasters={rasters}
           />
         }
+        <TutorialModal />
       </Scene>
       <FeaturedMapsList
         className={uiStyles.uiTopLeft}

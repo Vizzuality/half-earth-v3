@@ -72,7 +72,12 @@ const FeaturedPlaceCardComponent = ({
               <div className={styles.contentContainer}>
                 <div className={styles.contentWrapper} ref={contentWrapper}>
                   <h2 className={styles.title}>{featuredPlace.title}</h2>
-                  <p className={styles.text}>{featuredPlace.description}</p>
+                  <div>
+                    <p className={styles.text}>
+                      {featuredPlace.description}
+                    </p>
+                    {featuredMap && featuredMap.sourceText && <span className={styles.sourceText}>(Source: <i>{featuredMap.sourceText}</i>)</span>}
+                  </div>
                 </div>
               </div>
             </>

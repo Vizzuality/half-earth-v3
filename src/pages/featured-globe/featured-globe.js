@@ -28,17 +28,18 @@ const actions = { ...featuredMapsActions, ...urlActions, handleSwitch}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
-  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard } = props;
+  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard, isFullscreenActive } = props;
 
-
-const handleMarkerClick = (viewPoint, view) => {
-  setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
-  removeAvatarImage();
-}
-const handleMarkerHover = (viewPoint, view) => {
-  setCursor(viewPoint, FEATURED_PLACES_LAYER);
-  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
-};
+  const handleMarkerClick = (viewPoint, view) => {
+    if(!isFullscreenActive) {
+      setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+      removeAvatarImage();
+    }
+  }
+  const handleMarkerHover = (viewPoint, view) => {
+    setCursor(viewPoint, FEATURED_PLACES_LAYER);
+    setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+  };
 
   useEffect(() => {
     const { setFeaturedMapsList } = props;

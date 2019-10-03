@@ -5,8 +5,7 @@ import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 
 
-const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, isLandscapeMode, selectedTaxa }) => {
-
+const FeaturedMapLayer = ({ map, view, selectedFeaturedMap,  isLandscapeMode, isFullscreenActive, selectedTaxa }) => {
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
@@ -39,10 +38,10 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, isLandscapeMode, sel
   }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa])
 
   useEffect(() => {
-    if (isLandscapeMode && featuredPlacesLayerView) {
-      featuredPlacesLayerView.visible = false;
+    if(featuredPlacesLayerView) {
+      featuredPlacesLayerView.visible = !isLandscapeMode;
     }
-  }, [isLandscapeMode, featuredPlacesLayerView])
+  }, [isLandscapeMode, isFullscreenActive])
 
   return null;
 }

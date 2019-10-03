@@ -39,12 +39,19 @@ const SpeciesChartDot = ({ species, selectedSpecies, handleSelectSpecies }) => {
 
 const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSelectNextSpecies }) => {
   const { imageURL, name, scientificName, proportion, rangeArea, color, iucnCategory } = selectedSpecies;
-
+  const speciesMOLUrl = `https://mol.org/species/${scientificName}`;
   return (
     <>
       <div className={styles.carrousel}>
         <button className={styles.carrouselButton} onClick={handleSelectPrevSpecies}><ArrowIcon /></button>
-        <img className={styles.speciesImage} src={imageURL || speciesPlaceholder} alt={name}/>
+        <a
+          className={styles.speciesImage}
+          href={speciesMOLUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={imageURL || speciesPlaceholder} alt={name}/>
+        </a>
         <button className={styles.carrouselButton}  onClick={handleSelectNextSpecies}><ArrowIcon /></button>
       </div>
 
@@ -53,7 +60,11 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
           <div className={styles.selectedInnerChartDot} style={{ backgroundColor: color }}></div>
         </div>
         <div>
-          <div className={styles.speciesEngName}>{name}</div>
+          <a href={speciesMOLUrl}
+            className={styles.speciesEngName}
+            target="_blank"
+            rel="noopener noreferrer"
+          >{name}</a>
           <div className={styles.speciesLatName}>{scientificName}</div>
         </div>
       </div>
