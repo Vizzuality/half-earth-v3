@@ -23,7 +23,6 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, isLandscapeSidebarCo
   const isLegendOpen = activeOption === FOOTER_OPTIONS.LEGEND;
   const showDisclaimer = isOnMobile && isLegendOpen;
   const canShowLegend = isOnMobile ? isLegendOpen : true;
-  const onTopOfCollapsed = isOnMobile && isLegendOpen && isLandscapeMode && isLandscapeSidebarCollapsed;
 
   const toolbar = (
     <LegendItemToolbar
@@ -36,7 +35,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, isLandscapeSidebarCo
   );
 
   return (
-    <div className={cx(styles.legend, { [styles.legendOnTopOfCollapsedSidebar]: onTopOfCollapsed })}>
+    <div className={cx(styles.legend)}>
       <Tutorial
         position={'top-left'}
         tutorialID={tutorialData.id}

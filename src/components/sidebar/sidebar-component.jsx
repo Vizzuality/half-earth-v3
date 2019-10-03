@@ -14,11 +14,10 @@ const Sidebar = ({ map, view, theme, children, activeCategory, handleSidebarTogg
   
   const isOnMobile = isMobile();
   const categoryBoxVisibleOnMobile = isOnMobile && isSidebarOpen && isActive;
-  const renderOnTop = isLandscapeMode && isLandscapeSidebarCollapsed && categoryBoxVisibleOnMobile;
   const isSidebarVisible = (isSidebarOpen && !isLandscapeMode && !isFullscreenActive) || categoryBoxVisibleOnMobile;
 
   return (
-    <div className={cx(styles.sidebar, theme.sidebar, { [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile, [styles.sidebarOnTop]: renderOnTop })}>
+    <div className={cx(styles.sidebar, theme.sidebar, { [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile })}>
       <div className={cx(styles.wrapper, { [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile })}>
         <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
         <FixedHeader closeSidebar={handleSidebarToggle} title={activeCategory} view={view}/>

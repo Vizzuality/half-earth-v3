@@ -10,10 +10,6 @@
   display: none;
 }
 
-.containerOnTop {
-  @include landscapeSidebarCollapsedBottom();
-}
-
 .box {
   @extend %subtitle;
   display: flex;

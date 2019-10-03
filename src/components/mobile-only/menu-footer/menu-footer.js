@@ -14,23 +14,19 @@ import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isSidebarOpen, isLandscapeMode, activeOption, isLandscapeSidebarCollapsed, selectedSidebar, selectedFeaturedMap, featured = false } = props;
-  const renderSearchOnTop = isLandscapeMode && isLandscapeSidebarCollapsed;
+  const { view, isSidebarOpen, isLandscapeMode, activeOption, selectedSidebar, selectedFeaturedMap, featured = false } = props;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
-    searchLocationAnalyticsEvent,
-    renderSearchOnTop
+    searchLocationAnalyticsEvent
   );
 
   const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
-  const isMapsList = selectedSidebar === FEATURED_MAPS_LIST_SIDEBAR;
 
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
   const resetActiveOption = () => props.changeUI({ activeOption: '' });
   const resetFeaturedMap = () => { if (selectedFeaturedMap) props.changeUI({ selectedFeaturedMap: '' }); }
   const setActiveOption = (option) => props.changeUI({ activeOption: option })
-  const collapseLandscapeSidebar = () => props.changeUI({ isLandscapeSidebarCollapsed: true })
   
   const toggleFeaturedMapsList = () => {
     const openedSidebar = activeOption === FOOTER_OPTIONS.ADD_LAYER;
@@ -66,14 +62,7 @@ const MenuFooterContainer = props => {
 
   const handler = (option) => {
     if (activeOption === option) resetActiveOption();
-    else {
-      if (isLandscapeMode && !isLandscapeSidebarCollapsed) {
-        collapseLandscapeSidebar();
-        setActiveOption(option);
-      } else {
-        setActiveOption(option);
-      }
-    }
+    else setActiveOption(option);
   }
 
   const options = [

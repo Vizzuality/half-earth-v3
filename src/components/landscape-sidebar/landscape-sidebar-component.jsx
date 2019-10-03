@@ -26,10 +26,10 @@ const LandscapeSidebarComponent = ({
   handleLayerToggle,
   activeOption
 }) => {
-
-  const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
+  
   const isOnMobile = isMobile();
-  const landscapeSidebarCollapsed = isLandscapeMode && isLandscapeSidebarCollapsed && isOnMobile;
+  const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive && !activeOption;
+  const landscapeSidebarCollapsed = isLandscapeMode && isLandscapeSidebarCollapsed && isOnMobile && !activeOption;
 
   return (
     <div className={cx(styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isLandscapeSidebarVisible && isOnMobile, [uiStyles.uiTopLeft]: !isOnMobile, [animationStyles.collapsed]: landscapeSidebarCollapsed, [styles.scrollDisabled]: landscapeSidebarCollapsed })}>

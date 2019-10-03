@@ -83,7 +83,7 @@ const DataGlobeComponent = ({
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} />
           <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
           <Slider />
         </MobileOnly>
@@ -134,6 +134,7 @@ const DataGlobeComponent = ({
           selectedFeaturedPlace={selectedFeaturedPlace}
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
+          activeOption={activeOption}
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
@@ -164,6 +165,7 @@ const DataGlobeComponent = ({
       <FeaturedMapsList
         selectedSidebar={selectedSidebar}
         selectedFeaturedMap={selectedFeaturedMap}
+        selectedFeaturedPlace={selectedFeaturedPlace}
         isFullscreenActive={isFullscreenActive}
         activeOption={activeOption}
         isLandscapeMode={isLandscapeMode}

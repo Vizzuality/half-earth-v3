@@ -13,6 +13,7 @@ $card-content-max-height: 220px;
   min-height: 380px;
   background-color: transparent;
   overflow: hidden;
+  pointer-events: all;
 
   @media #{$tablet-portrait} {
     pointer-events: none;
@@ -269,6 +270,7 @@ $card-content-max-height: 220px;
 .exploreAreaButton {
   @extend %title;
   font-family: $font-family-1;
+  font-size: 10px;
   width: 250px;
   border-radius: 2px;
   padding: 10px 40px;

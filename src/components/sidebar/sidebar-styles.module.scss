@@ -25,10 +25,6 @@
   position: fixed;
 }
 
-.sidebarOnTop {
-  @include landscapeSidebarCollapsedBottom();
-}
-
 .wrapper {
   @include backdropBlur();
   display: flex;
