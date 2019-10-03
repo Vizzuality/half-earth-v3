@@ -13,7 +13,7 @@ const Spinner = ({ floating = false, spinnerWithOverlay = false, display = true 
         <div className={cx(styles.spinner, {[styles.spinnerAbsolute]: floating})} />
       )}
     </>
-  ) : null;
+  ) : <div></div>;
 }
 
 export default Spinner;
