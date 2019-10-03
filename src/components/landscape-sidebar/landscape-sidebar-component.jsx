@@ -31,7 +31,7 @@ const LandscapeSidebarComponent = ({
   const landscapeSidebarCollapsed = isLandscapeMode && isLandscapeSidebarCollapsed && isOnMobile;
 
   return (
-    <div className={cx(styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isLandscapeSidebarVisible && isOnMobile, [uiStyles.uiTopLeft]: !isOnMobile, [animationStyles.collapsed]: landscapeSidebarCollapsed })}>
+    <div className={cx(styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isLandscapeSidebarVisible && isOnMobile, [uiStyles.uiTopLeft]: !isOnMobile, [animationStyles.collapsed]: landscapeSidebarCollapsed, [styles.scrollDisabled]: landscapeSidebarCollapsed })}>
       <div className={styles.wrapper}>
         <GeoDescriptionWidget view={view} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
         <SpeciesWidget selectedSpecies={selectedSpecies}/>
