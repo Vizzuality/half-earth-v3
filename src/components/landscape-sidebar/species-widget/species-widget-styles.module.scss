@@ -6,8 +6,12 @@
 
 .container {
   @include backdropBlur();
-  padding: 20px;
+  padding: $mobile-sidebar-side-paddings;
   width: 100%;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
 }
 
 .title {

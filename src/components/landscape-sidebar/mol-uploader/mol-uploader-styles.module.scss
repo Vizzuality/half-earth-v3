@@ -2,8 +2,12 @@
 
 .wrapper {
   background-color: #031D2E;
-  padding: 20px;
+  padding: $mobile-sidebar-side-paddings;
   margin-bottom: 50px;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
 }
 
 .buttonContainer {
