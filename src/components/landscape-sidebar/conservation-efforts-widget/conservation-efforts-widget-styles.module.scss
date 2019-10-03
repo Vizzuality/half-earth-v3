@@ -12,7 +12,11 @@ $margin: 8px;
 }
 
 .padding {
-  padding: 20px;
+  padding: $mobile-sidebar-side-paddings;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
 }
 
 .title {
@@ -42,10 +46,14 @@ $margin: 8px;
 .notUnderConservationLabel {
   @extend  %bodyText;
   color: $white;
-  padding: 0 20px;
+  padding: 0 $mobile-sidebar-side-paddings;
   position: relative;
   margin: 8px 0 0;
   width: max-content;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
 
   &:after {
     content: '';
