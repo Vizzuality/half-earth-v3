@@ -7,7 +7,8 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  FEATURED_PLACES_LAYER
+  FEATURED_PLACES_LAYER,
+  LAND_HUMAN_PRESSURES_IMAGE_LAYER
 } from 'constants/layers-slugs'
 
 export const BIODIVERSITY_FACETS_SERVICE_URL = "https://utility.arcgis.com/usrsvcs/servers/e6c05ee3ee7b45af9577904bf9238529/rest/services/Biodiversity_Facets_Dissolved/FeatureServer/0";
@@ -23,4 +24,5 @@ export const LAYERS_URLS = {
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer',
   [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view2/FeatureServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile2/VectorTileServer',
+  [LAND_HUMAN_PRESSURES_IMAGE_LAYER]: 'https://geoxc-imagery.bd.esri.com/arcgis/rest/services/MOL/Human_Impact/ImageServer',
 }

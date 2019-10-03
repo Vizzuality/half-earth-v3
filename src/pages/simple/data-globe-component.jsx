@@ -19,6 +19,7 @@ import Switcher from 'components/switcher';
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
+const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -75,6 +76,7 @@ const DataGlobeComponentSimple = ({
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
+        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
         {isLegendActive &&
           <Legend
             isFullscreenActive={isFullscreenActive}

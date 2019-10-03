@@ -26,6 +26,9 @@ export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLaye
 export const layerManagerVisibility = (layerTitle, visible, activeLayers, callback) => {
   const title = layerTitle;
   const isActive = activeLayers && activeLayers.some(l => l.title === title);
+  console.log(layerTitle)
+  console.log('isActive', isActive)
+  console.log('visible', visible)
   if (isActive && visible) return;
   if (isActive && !visible) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
@@ -68,6 +71,22 @@ export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) =>
 export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
+export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPressuresPreloadFixes, humanPressuresLayerTitle) => {
+  const activeLayerIDs = activeLayers
+      .map(({ title }) => title);
+  
+    activeLayerIDs.forEach(async layerName => {
+      const layerConfig = config[layerName];
+      if (layerConfig) {
+        const newLayer = await createLayer(layerConfig, map);
+        newLayer.outFields = ["*"];
+        if (layerConfig.slug === humanPressuresLayerTitle) {
+          humanPressuresPreloadFixes(newLayer, rasters);
+        }
+        addLayerToMap(newLayer, map);
+      }
+    });
+}
 
 export const handleLayerCreation = async (layerConfig, map) => {
   if (!isLayerInMap(layerConfig, map)) {
@@ -79,9 +98,10 @@ export const handleLayerCreation = async (layerConfig, map) => {
 }
 
 export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
+  console.log('updating', layer.title)
   view.whenLayerView(layer).then(mapLayerView => {
     mapLayerView.watch("updating", updating => {
-      if(!updating) { handleGlobeUpdating(false) }
+      if(!updating) { console.log('remove loader');handleGlobeUpdating(false) }
     })
   })
 }

@@ -4,7 +4,7 @@ import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs'
 import { layersConfig } from 'constants/mol-layers-configs';
 import mapStateToProps from './data-globe-selectors';
 import DataGlobeComponent from './data-globe-component.jsx';
-import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
 import * as urlActions from 'actions/url-actions';
 
@@ -17,21 +17,8 @@ const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: u
 const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
 
   const handleMapLoad = (map, activeLayers) => {
-    // Here we are creating the biodiversity layers active in the URL
-    // this is needed to have the layers displayed on the map when sharing the URL
-    const activeLayerIDs = activeLayers
-      .map(({ title }) => title);
-  
-    const layersToBeCreated = layersConfig
-      .filter(({ type, slug }) => type && activeLayerIDs.includes(slug));
-  
-      layersToBeCreated.forEach(async layer => {
-      const newLayer = await createLayer(layer, map);
-      if (layer.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
-        humanPressuresPreloadFixes(newLayer, props.rasters);
-      }
-      addLayerToMap(newLayer, map);
-    });
+    const { rasters } = props;
+    activateLayersOnLoad(map, activeLayers, layersConfig, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   }
 
 

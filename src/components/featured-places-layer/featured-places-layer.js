@@ -39,10 +39,10 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, isLandscapeMode, sel
   }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa])
 
   useEffect(() => {
-    if (isLandscapeMode) {
+    if (isLandscapeMode && featuredPlacesLayerView) {
       featuredPlacesLayerView.visible = false;
     }
-  }, [isLandscapeMode])
+  }, [isLandscapeMode, featuredPlacesLayerView])
 
   return null;
 }

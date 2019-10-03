@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 import { config } from 'constants/mol-layers-configs';
 import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
 import { DATA } from 'router';
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
-import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
-import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
+import { 
+  FEATURED_PLACES_LAYER,
+  LAND_HUMAN_PRESSURES_IMAGE_LAYER,
+} from 'constants/layers-slugs';
+import { 
+  FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
+} from 'constants/layers-groups';
 
 import { createAction } from 'redux-tools';
 import Component from './featured-globe-simple-component.jsx';
@@ -40,20 +45,8 @@ const handleMarkerHover = (viewPoint, view) => {
   },[])
 
   const handleMapLoad = (map, activeLayers) => {
-    const activeLayerIDs = activeLayers
-      .map(({ title }) => title);
-  
-    activeLayerIDs.forEach(async layerName => {
-      const layerConfig = config[layerName];
-      if (layerConfig) {
-        const newLayer = await createLayer(layerConfig, map);
-        newLayer.outFields = ["*"];
-        if (layerConfig.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
-          humanPressuresPreloadFixes(newLayer, props.rasters);
-        }
-        addLayerToMap(newLayer, map);
-      }
-    });
+    const { rasters } = props;
+    activateLayersOnLoad(map, activeLayers, config, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   }
 
   const spinGlobe = (view) => {
@@ -69,6 +62,8 @@ const handleMarkerHover = (viewPoint, view) => {
     })
   }
 
+  const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
+  const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
   const clickCallbacksArray = [
@@ -78,15 +73,11 @@ const handleMarkerHover = (viewPoint, view) => {
   const mouseMoveCallbacksArray = [
     handleMarkerHover
   ]
-  const setRasters = (rasters) => props.setFeaturedGlobeSettings({ rasters: rasters })
-  const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setFeaturedGlobeSettings);
-  const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setFeaturedGlobeSettings);
-  const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setFeaturedGlobeSettings);
-  const handleGlobeUpdating = (updating) => props.setFeaturedGlobeSettings({ isGlobeUpdating: updating })
 
-  const showHumanPressuresOnLandscape = ({ layer, setActive }) => {
+  const showLayersOnlyOnLandscape = ({ layer, setActive }) => {
+    const isLandscapeOnlyLayer = FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS.includes(layer.title);
     // Hide human_pressures_layer where they are not in landscape mode
-    if(layer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
+    if(isLandscapeOnlyLayer) {
       layer.visible = props.isLandscapeMode && setActive;
     }
   }
@@ -98,15 +89,12 @@ const handleMarkerHover = (viewPoint, view) => {
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
       onMapLoad={(map) => handleMapLoad(map, props.activeLayers)}
-      setRasters={setRasters}
-      setLayerVisibility={setLayerVisibility}
-      setLayerOpacity={setLayerOpacity}
-      setLayerOrder={setLayerOrder}
-      handleGlobeUpdating={handleGlobeUpdating}
-      customFunctions={[showHumanPressuresOnLandscape]}
+      customFunctions={[showLayersOnlyOnLandscape]}
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}
       isFeaturedPlaceCard={isFeaturedPlaceCard}
+      setRasters={setRasters}
+      handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
   )

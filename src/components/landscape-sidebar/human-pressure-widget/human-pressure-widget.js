@@ -9,10 +9,10 @@ import { humanPressuresLandUse } from 'constants/human-pressures';
 
 
 // Constants
-import { layersConfig } from 'constants/mol-layers-configs';
+import { config } from 'constants/mol-layers-configs';
 
 // Utils
-import { addLayerToMap, createLayer, isLayerInMap, layerManagerVisibility, findLayerInMap } from 'utils/layer-manager-utils';
+import { handleLayerCreation, layerManagerVisibility } from 'utils/layer-manager-utils';
 import { humanPressuresPreloadFixes, dispatchLandPressuresLayersAnalyticsEvents } from 'utils/raster-layers-utils';
 //Actions
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -32,19 +32,6 @@ const HumanPressureWidgetContainer = props => {
 
   const [checkedOptions, setCheckedOptions] = useState({});
 
-  // Create the layer and set properties on mount
-  useEffect(() => {
-    const { map, rasters } = props;
-    const layerConfig = layersConfig.find(l => l.slug === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    if (!isLayerInMap(layerConfig, map)) {
-      const rastersObject = rasters || {};
-      createLayer(layerConfig, map).then(async layer => {
-        await humanPressuresPreloadFixes(layer, rastersObject);
-        addLayerToMap(layer, map);
-      })
-    }
-  }, []);
-
   useEffect(() => {
     const { activeLayers, rasters } = props;
     const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
@@ -56,9 +43,10 @@ const HumanPressureWidgetContainer = props => {
   }, [])
 
 
-  const handleHumanPressureRasters = (rasters, option) => {
+  const handleHumanPressureRasters = async (rasters, option) => {
     const { changeGlobe } = props;
-    const humanImpactLayer = findLayerInMap(LAND_HUMAN_PRESSURES_IMAGE_LAYER, map);
+    const layerConfig = config[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
+    const humanImpactLayer = await handleLayerCreation(layerConfig, map);
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
     hasRastersWithData && handleGlobeUpdating(true);
     setRasters(rasters);

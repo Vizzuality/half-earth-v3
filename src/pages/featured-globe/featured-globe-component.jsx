@@ -8,7 +8,6 @@ import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
-import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 
 import { loadModules } from '@esri/react-arcgis';
 
@@ -35,6 +34,7 @@ const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
+const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 const { REACT_APP_FEATURED_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 

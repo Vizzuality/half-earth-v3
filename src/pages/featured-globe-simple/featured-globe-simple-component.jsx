@@ -13,7 +13,6 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
-import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
@@ -28,6 +27,7 @@ const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
 const About = loadable(() => import('components/about'));
+const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
@@ -69,7 +69,7 @@ const DataGlobeComponentSimple = ({
         onMapLoad={onMapLoad}
         style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}
       >
-        {/* {isGlobeUpdating && <Spinner floating />} */}
+        {isGlobeUpdating && <Spinner floating />}
         <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
@@ -127,6 +127,7 @@ const DataGlobeComponentSimple = ({
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
+        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
         {isLegendActive &&
           <Legend
             isFullscreenActive={isFullscreenActive}
@@ -134,7 +135,6 @@ const DataGlobeComponentSimple = ({
             rasters={rasters}
           />
         }
-        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
       </Scene>
       <FeaturedMapsList
         className={uiStyles.uiTopLeft}

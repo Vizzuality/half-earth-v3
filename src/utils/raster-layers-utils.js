@@ -74,12 +74,13 @@ export const humanPressuresPreloadFixes = (layer, rasters) => {
   const rasterNames = activeRasters.map(value => `human_impact_${value}`)
   const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
   loadModules(["esri/config", "esri/layers/support/MosaicRule"])
-    .then(([esriConfig, MosaicRule]) => {
+  .then(([esriConfig, MosaicRule]) => {
     const mosaicRule = new MosaicRule({
       method: 'attribute',
       operation: 'sum',
       where: mosaicWhereClause
     });
+    layer.mosaicRule = mosaicRule;
     mosaicRuleFix(esriConfig, layer.url, mosaicRule, 'DATA');
   });
 }
