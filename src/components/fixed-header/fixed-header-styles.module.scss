@@ -33,7 +33,7 @@ $icon-size: 25px;
 }
 
 .button {
-  display: none;
+  display: flex;
   align-items: center;
   font-size: $font-size-xxs;
   font-weight: $font-weight-bold;
@@ -42,10 +42,6 @@ $icon-size: 25px;
   color: $robins-egg-blue;
   padding: 0;
   margin-left: -8px; // svg icon has some padding
-
-  @media #{$tablet-portrait} {
-    display: flex;
-  }
 }
 
 .buttonText {
