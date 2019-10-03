@@ -32,9 +32,9 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight, toggleCollapsedLan
         <ArrowExpandIcon className={styles.icon} />
         <span className={styles.backButton}>{BACK}</span>
       </button>}
-      <h1 className={styles.title}>
+      <h1 onClick={flipToggleSwitch && toggleCollapsedLandscapeSidebar} className={styles.title}>
         { title && !autoHeight ? title.split(' ').map(word => <span key={word}>{word}</span>) : title }
-        {flipToggleSwitch && <div onClick={toggleCollapsedLandscapeSidebar} className={cx(styles.flipToggleSwitchIcon, {
+        {flipToggleSwitch && <div className={cx(styles.flipToggleSwitchIcon, {
           [styles.collapsedFlipToggleSwitchIcon]: isLandscapeSidebarCollapsed
         })} />}
       </h1>
