@@ -9,6 +9,7 @@ import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-ut
 import { 
   FEATURED_PLACES_LAYER,
   LAND_HUMAN_PRESSURES_IMAGE_LAYER,
+  VIBRANT_BASEMAP_LAYER
 } from 'constants/layers-slugs';
 import { 
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
@@ -82,6 +83,12 @@ const handleMarkerHover = (viewPoint, view) => {
     }
   }
 
+  const setVibrantLayerMaxScale = ({ layer }) => {
+    if (layer.title === VIBRANT_BASEMAP_LAYER) {
+      layer.maxScale = 250000.0
+    }
+  }
+
   return (
     <Component
       handleLayerToggle={toggleLayer}
@@ -89,7 +96,7 @@ const handleMarkerHover = (viewPoint, view) => {
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
       onMapLoad={(map) => handleMapLoad(map, props.activeLayers)}
-      customFunctions={[showLayersOnlyOnLandscape]}
+      customFunctions={[showLayersOnlyOnLandscape, setVibrantLayerMaxScale]}
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}
       isFeaturedPlaceCard={isFeaturedPlaceCard}
