@@ -27,20 +27,20 @@ const HumanPressureWidgetContainer = props => {
     addLayerAnalyticsEvent,
     removeLayerAnalyticsEvent,
     handleGlobeUpdating,
-    activeLayers
+    activeLayers,
+    rasters
   } = props;
 
   const [checkedOptions, setCheckedOptions] = useState({});
 
   useEffect(() => {
-    const { activeLayers, rasters } = props;
     const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
     // eslint-disable-next-line no-mixed-operators
     const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
       ...acc, [option.value]: rasters[option.value]
     }), {})) || {};
     setCheckedOptions(alreadyChecked);
-  }, [])
+  }, [rasters, activeLayers])
 
 
   const handleHumanPressureRasters = async (rasters, option) => {
@@ -56,7 +56,13 @@ const HumanPressureWidgetContainer = props => {
     dispatchLandPressuresLayersAnalyticsEvents(rasters, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
   }
 
-  return <HumanPressureWidgetComponent {...props} handleOnClick={handleHumanPressureRasters} checkedRasters={checkedOptions}/>
+  return (
+    <HumanPressureWidgetComponent
+      handleOnClick={handleHumanPressureRasters}
+      checkedRasters={checkedOptions}
+      {...props}
+    />
+  )
 }
 
 export default connect(mapStateToProps, actions)(HumanPressureWidgetContainer);
