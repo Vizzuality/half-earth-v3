@@ -98,7 +98,6 @@ const FeaturedPlaceCardComponent = ({
                     </p>
                     {featuredMap && featuredMap.sourceText && <span className={styles.sourceText}>(Source: <i>{featuredMap.sourceText}</i>)</span>}
                   </div>
-                  <p className={styles.text}>{featuredPlace.description}</p>
                 </div>
               </div>
             </>
