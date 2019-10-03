@@ -6,10 +6,18 @@
   top: auto;
   overflow-y: hidden;
 
+  & > *:first-child > div:first-child {
+    border-radius: 16px 16px 0 0;
+  }
+
   @media #{$tablet-portrait} {
     bottom: auto;
     width: $sidebar-width + 40px;
     @include topLeft();
+
+    & > *:first-child > div:first-child {
+      border-radius: 0;
+    }
   }
 }
 
