@@ -41,7 +41,8 @@ $logos-text: $oslo-gray;
 $half-earth-meter-green: $screamin-green;
 $half-earth-meter-blue: $lochmara;
 $priority-blue: #0664F6;
-
+$human-pressure-high: #282052;
+$human-pressures-gradient: linear-gradient(270deg, $human-pressure-high 0%, #9f82ce 50%, #f3e0f7 100%);
 // Animations
 $animation-time: 0.3s;
 $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);

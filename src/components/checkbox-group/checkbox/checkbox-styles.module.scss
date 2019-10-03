@@ -51,7 +51,7 @@ input[type="checkbox"] {
 
 .checkboxSelected {
   &:before {
-    background: linear-gradient(270deg, #0c2c84 0%, #41b6c4 50%, #ffffcc 100%);
+    background: $human-pressures-gradient;
     border: 2px solid $white; 
   }
 }
