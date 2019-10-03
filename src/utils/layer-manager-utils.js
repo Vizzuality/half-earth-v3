@@ -74,9 +74,12 @@ export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.t
 export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPressuresPreloadFixes, humanPressuresLayerTitle) => {
   const activeLayerIDs = activeLayers
       .map(({ title }) => title);
+      console.log(activeLayerIDs)
   
     activeLayerIDs.forEach(async layerName => {
       const layerConfig = config[layerName];
+      console.log(config)
+      console.log(layerConfig, layerName)
       if (layerConfig) {
         const newLayer = await createLayer(layerConfig, map);
         newLayer.outFields = ["*"];

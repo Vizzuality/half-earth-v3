@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // Constants
 import { VIEW_MODE } from  'constants/google-analytics-constants';
-import { config } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/mol-layers-configs';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
 import { humanPressuresLandUse } from 'constants/human-pressures';
 // Utils
@@ -15,7 +15,7 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 const HumanImpactLayers = ({ alreadyChecked, handleGlobeUpdating, view, map, setRasters, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
 
   const handleHumanPressureRasters = async (rasters, option) => {
-    const layerConfig = config[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
+    const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
     const humanImpactLayer = await handleLayerCreation(layerConfig, map);
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
     hasRastersWithData && handleGlobeUpdating(true);

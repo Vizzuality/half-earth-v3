@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { PRIORITY_PLACES_POLYGONS, PRIORITY_POLYGONS_GRAPHIC_LAYER } from 'constants/layers-slugs';
-import { config } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/mol-layers-configs';
 
 const PriorityPlacesPolygonsLayer = ({ view, selectedFeaturedMap, selectedTaxa }) => {
   const priorityPolygonsInitialState = {
@@ -34,7 +34,7 @@ const PriorityPlacesPolygonsLayer = ({ view, selectedFeaturedMap, selectedTaxa }
   useEffect(() => {
     if (selectedFeaturedMap === 'priorPlaces') {
       if (!priorityPolygonsLayer) {
-        const layerConfig = config[PRIORITY_PLACES_POLYGONS];
+        const layerConfig = layersConfig[PRIORITY_PLACES_POLYGONS];
         loadModules([`esri/layers/${layerConfig.type}`])
           .then(([LayerConstructor]) => {
             const layer = new LayerConstructor({

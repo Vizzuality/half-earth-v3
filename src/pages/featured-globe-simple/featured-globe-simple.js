@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import { config } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/mol-layers-configs';
 import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
 import { DATA } from 'router';
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
@@ -46,7 +46,7 @@ const handleMarkerHover = (viewPoint, view) => {
 
   const handleMapLoad = (map, activeLayers) => {
     const { rasters } = props;
-    activateLayersOnLoad(map, activeLayers, config, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+    activateLayersOnLoad(map, activeLayers, layersConfig, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   }
 
   const spinGlobe = (view) => {

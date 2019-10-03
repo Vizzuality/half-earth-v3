@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+
+const getActiveLayers = (state, props) => props.activeLayers;
+const getRasters = (state, props) => props.rasters || {};
 
 const getCountedActiveLayers = createSelector(
   [getActiveLayers, getRasters],

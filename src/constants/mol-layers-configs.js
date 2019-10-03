@@ -3,12 +3,44 @@ import {
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
-  FEATURED_PLACES_LAYER,
   PROTECTED_AREAS_FEATURE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  LAND_HUMAN_PRESSURES_IMAGE_LAYER
+  FEATURED_PLACES_LAYER,
+  LAND_HUMAN_PRESSURES_IMAGE_LAYER,
+  SA_AMPHIB_RARITY,
+  SA_AMPHIB_RICHNESS,
+  SA_DRAGONFLIES_RARITY,
+  SA_DRAGONFLIES_RICHNESS,
+  SA_MAMMALS_RARITY,
+  SA_MAMMALS_RICHNESS,
+  SA_BIRDS_RARITY,
+  SA_BIRDS_RICHNESS,
+  SA_RESTIO_RARITY,
+  SA_RESTIO_RICHNESS,
+  SA_PROTEA_RARITY,
+  SA_PROTEA_RICHNESS,
+  SA_REPTILES_RARITY,
+  SA_REPTILES_RICHNESS,
+  AMPHIB_RARITY,
+  AMPHIB_RICHNESS,
+  FISHES_RARITY,
+  FISHES_RICHNESS,
+  MAMMALS_RARITY,
+  MAMMALS_RICHNESS,
+  BIRDS_RARITY,
+  BIRDS_RICHNESS,
+  ALL_TAXA_RARITY,
+  ALL_TAXA_RICHNESS,
+  TURTLES_RARITY,
+  TURTLES_RICHNESS,
+  CACTI_RARITY,
+  CACTI_RICHNESS,
+  CONIFERS_RARITY,
+  CONIFERS_RICHNESS,
+  HUMMINGBIRDS_RARITY,
+  HUMMINGBIRDS_RICHNESS
 } from 'constants/layers-slugs'
 
 
@@ -21,9 +53,6 @@ const LAYER_TYPES = {
   IMAGERY_LAYER: 'ImageryLayer'
 }
 
-const bucketUrl = "https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2";
-const templatePattern = "{level}/{col}/{row}";
-const fishingTiles = "fishing-hours/gfw_purple";
 
 export const biodiversityCategories = [
   {
@@ -139,120 +168,302 @@ export const biodiversityCategories = [
   }
 ]
 
-export const config = {
+export const layersConfig = {
   [LANDSCAPE_FEATURES_LABELS_LAYER]: {
     title: LANDSCAPE_FEATURES_LABELS_LAYER,
     slug: LANDSCAPE_FEATURES_LABELS_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[LANDSCAPE_FEATURES_LABELS_LAYER]
+    url: LAYERS_URLS[LANDSCAPE_FEATURES_LABELS_LAYER],
+    bbox: null
   },
   [CITIES_LABELS_LAYER]: {
     title: CITIES_LABELS_LAYER,
     slug: CITIES_LABELS_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[CITIES_LABELS_LAYER]
+    url: LAYERS_URLS[CITIES_LABELS_LAYER],
+    bbox: null
   },
   [VIBRANT_BASEMAP_LAYER]: {
     title: VIBRANT_BASEMAP_LAYER,
     slug: VIBRANT_BASEMAP_LAYER,
     type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[VIBRANT_BASEMAP_LAYER]
+    url: LAYERS_URLS[VIBRANT_BASEMAP_LAYER],
+    bbox: null
   },
   [PRIORITY_PLACES_POLYGONS]: {
     title: PRIORITY_PLACES_POLYGONS,
     slug: PRIORITY_PLACES_POLYGONS,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[PRIORITY_PLACES_POLYGONS]
+    url: LAYERS_URLS[PRIORITY_PLACES_POLYGONS],
+    bbox: null
   },
   [FEATURED_PLACES_LAYER]: {
     title: FEATURED_PLACES_LAYER,
     slug: FEATURED_PLACES_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[FEATURED_PLACES_LAYER]
+    url: LAYERS_URLS[FEATURED_PLACES_LAYER],
+    bbox: null
   },
   [PROTECTED_AREAS_FEATURE_LAYER]: {
     title: PROTECTED_AREAS_FEATURE_LAYER,
     slug: PROTECTED_AREAS_FEATURE_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[PROTECTED_AREAS_FEATURE_LAYER]
+    url: LAYERS_URLS[PROTECTED_AREAS_FEATURE_LAYER],
+    bbox: null
   },
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
     title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     type: LAYER_TYPES.VECTOR_TILE_LAYER,
-    url: LAYERS_URLS[PROTECTED_AREAS_VECTOR_TILE_LAYER]
+    url: LAYERS_URLS[PROTECTED_AREAS_VECTOR_TILE_LAYER],
+    bbox: null
   },
   [COMMUNITY_AREAS_FEATURE_LAYER]: {
     title: COMMUNITY_AREAS_FEATURE_LAYER,
     slug: COMMUNITY_AREAS_FEATURE_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[COMMUNITY_AREAS_FEATURE_LAYER]
+    url: LAYERS_URLS[COMMUNITY_AREAS_FEATURE_LAYER],
+    bbox: null
   },
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: {
     title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     type: LAYER_TYPES.VECTOR_TILE_LAYER,
-    url: LAYERS_URLS[COMMUNITY_AREAS_VECTOR_TILE_LAYER]
+    url: LAYERS_URLS[COMMUNITY_AREAS_VECTOR_TILE_LAYER],
+    bbox: null
   },
   [LAND_HUMAN_PRESSURES_IMAGE_LAYER]: {
     title: LAND_HUMAN_PRESSURES_IMAGE_LAYER,
     slug: LAND_HUMAN_PRESSURES_IMAGE_LAYER,
     type: LAYER_TYPES.IMAGERY_LAYER,
-    url: LAYERS_URLS[LAND_HUMAN_PRESSURES_IMAGE_LAYER]
+    url: LAYERS_URLS[LAND_HUMAN_PRESSURES_IMAGE_LAYER],
+    bbox: null
+  },
+  [SA_AMPHIB_RARITY]: {
+    title: SA_AMPHIB_RARITY,
+    slug: SA_AMPHIB_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_AMPHIB_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_AMPHIB_RICHNESS]: {
+    title: SA_AMPHIB_RICHNESS,
+    slug: SA_AMPHIB_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_AMPHIB_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_DRAGONFLIES_RARITY]: {
+    title: SA_DRAGONFLIES_RARITY,
+    slug: SA_DRAGONFLIES_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_DRAGONFLIES_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_DRAGONFLIES_RICHNESS]: {
+    title: SA_DRAGONFLIES_RICHNESS,
+    slug: SA_DRAGONFLIES_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_DRAGONFLIES_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_MAMMALS_RARITY]: {
+    title: SA_MAMMALS_RARITY,
+    slug: SA_MAMMALS_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_MAMMALS_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_MAMMALS_RICHNESS]: {
+    title: SA_MAMMALS_RICHNESS,
+    slug: SA_MAMMALS_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_MAMMALS_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_BIRDS_RARITY]: {
+    title: SA_BIRDS_RARITY,
+    slug: SA_BIRDS_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_BIRDS_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_BIRDS_RICHNESS]: {
+    title: SA_BIRDS_RICHNESS,
+    slug: SA_BIRDS_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_BIRDS_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_RESTIO_RARITY]: {
+    title: SA_RESTIO_RARITY,
+    slug: SA_RESTIO_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_RESTIO_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_RESTIO_RICHNESS]: {
+    title: SA_RESTIO_RICHNESS,
+    slug: SA_RESTIO_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_RESTIO_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_PROTEA_RARITY]: {
+    title: SA_PROTEA_RARITY,
+    slug: SA_PROTEA_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_PROTEA_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_PROTEA_RICHNESS]: {
+    title: SA_PROTEA_RICHNESS,
+    slug: SA_PROTEA_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_PROTEA_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_REPTILES_RARITY]: {
+    title: SA_REPTILES_RARITY,
+    slug: SA_REPTILES_RARITY,
+    type: null,
+    url: LAYERS_URLS[SA_REPTILES_RARITY],
+    bbox: [13,-37,34,-27.7]
+  },
+  [SA_REPTILES_RICHNESS]: {
+    title: SA_REPTILES_RICHNESS,
+    slug: SA_REPTILES_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[SA_REPTILES_RICHNESS],
+    bbox: [13,-37,34,-27.7]
+  },
+  [HUMMINGBIRDS_RARITY]: {
+    title: HUMMINGBIRDS_RARITY,
+    slug: HUMMINGBIRDS_RARITY,
+    type: null,
+    url: LAYERS_URLS[HUMMINGBIRDS_RARITY],
+    bbox: [-164,-40,-35,56]
+  },
+  [HUMMINGBIRDS_RICHNESS]: {
+    title: HUMMINGBIRDS_RICHNESS,
+    slug: HUMMINGBIRDS_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[HUMMINGBIRDS_RICHNESS],
+    bbox: [-164,-40,-35,56]
+  },
+  [FISHES_RARITY]: {
+    title: FISHES_RARITY,
+    slug: FISHES_RARITY,
+    type: null,
+    url: LAYERS_URLS[FISHES_RARITY],
+    bbox: null
+  },
+  [FISHES_RICHNESS]: {
+    title: FISHES_RICHNESS,
+    slug: FISHES_RICHNESS,
+    type: null,
+    url: LAYERS_URLS[FISHES_RICHNESS],
+    bbox: null
+  },
+  [AMPHIB_RARITY]: {
+    title: AMPHIB_RARITY,
+    slug: AMPHIB_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[AMPHIB_RARITY],
+    bbox: null
+  },
+  [AMPHIB_RICHNESS]: {
+    title: AMPHIB_RICHNESS,
+    slug: AMPHIB_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[AMPHIB_RICHNESS],
+    bbox: null
+  },
+  [MAMMALS_RARITY]: {
+    title: MAMMALS_RARITY,
+    slug: MAMMALS_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MAMMALS_RARITY],
+    bbox: null
+  },
+  [MAMMALS_RICHNESS]: {
+    title: MAMMALS_RICHNESS,
+    slug: MAMMALS_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MAMMALS_RICHNESS],
+    bbox: null
+  },
+  [BIRDS_RARITY]: {
+    title: BIRDS_RARITY,
+    slug: BIRDS_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[BIRDS_RARITY],
+    bbox: null
+  },
+  [BIRDS_RICHNESS]: {
+    title: BIRDS_RICHNESS,
+    slug: BIRDS_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[BIRDS_RICHNESS],
+    bbox: null
+  },
+  [ALL_TAXA_RARITY]: {
+    title: ALL_TAXA_RARITY,
+    slug: ALL_TAXA_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_TAXA_RARITY],
+    bbox: null
+  },
+  [ALL_TAXA_RICHNESS]: {
+    title: ALL_TAXA_RICHNESS,
+    slug: ALL_TAXA_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_TAXA_RICHNESS],
+    bbox: null
+  },
+  [TURTLES_RARITY]: {
+    title: TURTLES_RARITY,
+    slug: TURTLES_RARITY,
+    type: null,
+    url: LAYERS_URLS[TURTLES_RARITY],
+    bbox: null
+  },
+  [TURTLES_RICHNESS]: {
+    title: TURTLES_RICHNESS,
+    slug: TURTLES_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[TURTLES_RICHNESS],
+    bbox: null
+  },
+  [CACTI_RARITY]: {
+    title: CACTI_RARITY,
+    slug: CACTI_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[CACTI_RARITY],
+    bbox: null
+  },
+  [CACTI_RICHNESS]: {
+    title: CACTI_RICHNESS,
+    slug: CACTI_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[CACTI_RICHNESS],
+    bbox: null
+  },
+  [CONIFERS_RARITY]: {
+    title: CONIFERS_RARITY,
+    slug: CONIFERS_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[CONIFERS_RARITY],
+    bbox: null
+  },
+  [CONIFERS_RICHNESS]: {
+    title: CONIFERS_RICHNESS,
+    slug: CONIFERS_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[CONIFERS_RICHNESS],
+    bbox: null
   },
 }
-
-export const layersConfig = [
-  //Protected Areas Layers
-  {title: 'Protected Areas', slug: 'protected_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile/VectorTileServer'},
-  {title: 'Protected Areas', slug: 'protected_areas_feature_layer', type: 'FeatureLayer', url: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer'},
-  {title: 'Community Areas', slug: 'community_areas_vector_tile_layer', type: 'VectorTileLayer', url: 'https://tiles.arcgis.com/tiles/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA_pro_vectortile2/VectorTileServer'},
-  {title: 'Community Areas', slug: 'community_areas_feature_layer', type: 'FeatureLayer', url: 'https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view2/FeatureServer'},
-  // Human impact layers
-  {title: 'All pressures', slug: 'land_human_pressures', type: 'ImageryLayer', url: 'https://geoxc-imagery.bd.esri.com/arcgis/rest/services/MOL/Human_Impact/ImageServer'},
-  // Fishing activities
-  {title: "All marine fishing types", slug: 'fishing_all', url: `${bucketUrl}/${fishingTiles}/all/${templatePattern}`},
-  {title: "Drifting longlines", slug: 'fishing_longlines', url: `${bucketUrl}/${fishingTiles}/drifting_longlines/${templatePattern}`},
-  {title: "Fixed gear", slug: 'fishing_fixed', url: `${bucketUrl}/${fishingTiles}/fixed_gear/${templatePattern}`},
-  {title: "Other", slug: 'fishing_other', url: `${bucketUrl}/${fishingTiles}/other/${templatePattern}`},
-  {title: "Purse seins", slug: 'fishing_purse', url: `${bucketUrl}/${fishingTiles}/purse_seines/${templatePattern}`},
-  {title: "Trawlers", slug: 'fishing_trawlers', url: `${bucketUrl}/${fishingTiles}/trawlers/${templatePattern}`},
-  // South Africa 
-  {title: "sa amphibians rarity", slug: 'amphib-rarity-sa', url: `${bucketUrl}/rarity_1km/amphibians/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa amphibians richness", slug: 'amphib-rich-sa', url: `${bucketUrl}/richness_1km/amphibians/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa dragonflies rarity", slug: 'dragonflies-rare-sa', url: `${bucketUrl}/rarity_1km/dragonflies/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa dragonflies richness", slug: 'dragonflies-rich-sa', url: `${bucketUrl}/richness_1km/dragonflies/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa mammals rarity", slug: 'mammals-rare-sa', url: `${bucketUrl}/rarity_1km/mammals/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa mammals richness", slug: 'mammals-rich-sa', url: `${bucketUrl}/richness_1km/mammals/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa birds rarity", slug: 'birds-rare-sa', url: `${bucketUrl}/rarity_1km/birds/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa birds richness", slug: 'birds-rich-sa', url: `${bucketUrl}/richness_1km/birds/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa restio rarity", slug: 'restio-rare-sa', url: `${bucketUrl}/rarity_1km/restio/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa restio richness", slug: 'restio-rich-sa', url: `${bucketUrl}/richness_1km/restio/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa protea rarity", slug: 'protea-rare-sa', url: `${bucketUrl}/rarity_1km/protea/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa protea richness", slug: 'protea-rich-sa', url: `${bucketUrl}/richness_1km/protea/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa reptiles rarity", slug: 'reptiles-rare-sa', url: `${bucketUrl}/rarity_1km/reptiles/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  {title: "sa reptiles richness", slug: 'reptiles-rich-sa', url: `${bucketUrl}/richness_1km/reptiles/${templatePattern}`, bbox: [13,-37,34,-27.7]},
-  // Hummigbirds
-  {title: "hummingbirds rarity", slug: 'hummingbirds-rich', url: `${bucketUrl}/richness_1km/hummingbirds/${templatePattern}`, bbox: [-164,-40,-35,56]},
-  {title: "hummingbirds richness", slug: 'hummingbirds-rare', url: `${bucketUrl}/rarity_1km/hummingbirds/${templatePattern}`, bbox: [-164,-40,-35,56]},
-  // Global data
-  {title: "mammals rarity", slug: 'mammals-rare', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/31951614b11c472f8e327971008d23b2/rest/services/mammals_rarity/MapServer`},
-  {title: "mammals richness", slug: 'mammals-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/11f7eef1d863487091afeade6ed6d918/rest/services/mammals_richness/MapServer`},
-  {title: "fishes rarity", slug: 'fishes-rarity', url: `${bucketUrl}/rarity/fishes/${templatePattern}`},
-  {title: "fishes richness", slug: 'fishes-rich', url: `${bucketUrl}/richness/fishes/${templatePattern}`},
-  {title: "conifers rarity", slug: 'conifers-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/853e83b25f77402981e5c83ad43a2bc3/rest/services/conifers_rarity/MapServer`},
-  {title: "conifers richness", slug: 'conifers-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/a7355a715e09458caabdcc904b02da36/rest/services/conifers_richness/MapServer`},
-  {title: "cactisss rarity", slug: 'cacti-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/87ba75119feb4ddba8f2eff9f8cbf84c/rest/services/cacti_rarity/MapServer`},
-  {title: "cacti richness", slug: 'cacti-richness', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/ea83c6a422c64614b3b8e129bd454416/rest/services/cati_richness/MapServer`},
-  {title: "amphibians rarity", slug: 'amphib-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/ad01787b2880446c8ed7acb75735fcba/rest/services/amphibians_rarity/MapServer`},
-  {title: "amphibians richness", slug: 'amphib-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/58e9d41955c74788bac974a48540ed23/rest/services/amphibians_richness/MapServer`},
-  {title: "turtles rarity", slug: 'turtles-rare', url: `${bucketUrl}/rarity/turtles/${templatePattern}`},
-  {title: "turtles richness", slug: 'turtles-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/c201113280834a9ea7b0a15639e5aaa1/rest/services/turtles_richness/MapServer`},
-  {title: "birds rarity", slug: 'birds-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/bf99f1090e2b4bf0853046740fda247a/rest/services/birds_rarity/MapServer`},
-  {title: "birds richness", slug: 'birds-rich', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/68ce2c44f8884a12b6908f2a740e87ae/rest/services/birds_richness/MapServer`},
-  {title: "all groups rarity", slug: 'all-taxa-rarity', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/1ee94bc415424bde91750ce703b2d8d6/rest/services/all_rarity/MapServer`},
-  {title: "all groups richness", slug: 'all-taxa-richness', type:'TileLayer', url: `https://utility.arcgis.com/usrsvcs/servers/55838e61c7854915bb62238f2f02710f/rest/services/all_richness/MapServer`}
-]
 
 
 export const legendConfigs = {

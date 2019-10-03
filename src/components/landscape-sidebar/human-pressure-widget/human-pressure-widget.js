@@ -9,7 +9,7 @@ import { humanPressuresLandUse } from 'constants/human-pressures';
 
 
 // Constants
-import { config } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/mol-layers-configs';
 
 // Utils
 import { handleLayerCreation, layerManagerVisibility } from 'utils/layer-manager-utils';
@@ -45,7 +45,7 @@ const HumanPressureWidgetContainer = props => {
 
   const handleHumanPressureRasters = async (rasters, option) => {
     const { changeGlobe } = props;
-    const layerConfig = config[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
+    const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
     const humanImpactLayer = await handleLayerCreation(layerConfig, map);
     const hasRastersWithData = Object.values(rasters).some(raster => raster);
     hasRastersWithData && handleGlobeUpdating(true);

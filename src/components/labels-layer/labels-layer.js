@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { loadModules } from 'esri-loader';
 import { handleLayerCreation } from 'utils/layer-manager-utils';
 import { LABELS_LAYERS } from 'constants/layers-groups';
-import { config } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/mol-layers-configs';
 import { stylesConfig } from './labels-layer-styles-config';
 
 const labelClassFactory = (LabelClassConstructor, styleGroup) => {
@@ -48,7 +48,7 @@ const LabelsLayer = props => {
       var style_city_other = labelClassFactory(labelClassConstructor, 'Other_style');
       // Add layers to map and style them
       LABELS_LAYERS.forEach( layerName => {
-        const layerConfig = config[layerName];
+        const layerConfig = layersConfig[layerName];
         handleLayerCreation(layerConfig, map)
           .then(layer => {
             layer.opacity = 1;

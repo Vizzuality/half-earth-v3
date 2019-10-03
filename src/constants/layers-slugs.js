@@ -28,3 +28,38 @@ export const CITIES_LABELS_LAYER = 'cities_labels_layer';
 
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
+// South Africa layers
+export const SA_AMPHIB_RARITY = 'amphib-rarity-sa';
+export const SA_AMPHIB_RICHNESS = 'amphib-rich-sa';
+export const SA_DRAGONFLIES_RARITY = 'dragonflies-rare-sa';
+export const SA_DRAGONFLIES_RICHNESS = 'dragonflies-rich-sa';
+export const SA_MAMMALS_RARITY = 'mammals-rare-sa';
+export const SA_MAMMALS_RICHNESS = 'mammals-rich-sa';
+export const SA_BIRDS_RARITY = 'birds-rare-sa';
+export const SA_BIRDS_RICHNESS = 'birds-rich-sa';
+export const SA_RESTIO_RARITY = 'restio-rare-sa';
+export const SA_RESTIO_RICHNESS = 'restio-rich-sa';
+export const SA_PROTEA_RARITY = 'protea-rare-sa';
+export const SA_PROTEA_RICHNESS = 'protea-rich-sa';
+export const SA_REPTILES_RARITY = 'reptiles-rare-sa';
+export const SA_REPTILES_RICHNESS = 'reptiles-rich-sa';
+// Global biodiversity
+export const AMPHIB_RARITY = 'amphib-rarity';
+export const AMPHIB_RICHNESS = 'amphib-rich';
+export const FISHES_RARITY = 'fishes-rarity';
+export const FISHES_RICHNESS = 'fishes-rich';
+export const MAMMALS_RARITY = 'mammals-rare';
+export const MAMMALS_RICHNESS = 'mammals-rich';
+export const BIRDS_RARITY = 'birds-rarity';
+export const BIRDS_RICHNESS = 'birds-rich';
+export const ALL_TAXA_RARITY = 'all-taxa-rarity';
+export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
+export const TURTLES_RARITY = 'turtles-rare';
+export const TURTLES_RICHNESS = 'turtles-rich';
+export const CACTI_RARITY = 'cacti-rarity';
+export const CACTI_RICHNESS = 'cacti-richness';
+export const CONIFERS_RARITY = 'conifers-rarity';
+export const CONIFERS_RICHNESS = 'conifers-richness';
+// Hummingbirds
+export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
+export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
