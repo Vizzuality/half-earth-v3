@@ -20,18 +20,16 @@
   position: relative;
   cursor: pointer;
 
-  &:not(:last-child) {
-    &::after {
-      @extend %spacer;
-  
-      bottom: 1px;
-      left: 0;
-      content: "";
-      display: block;
-      position: absolute;
-      width: 100%;
-      z-index: 5;
-    }
+  &:not(:last-child)::after {
+    @extend %spacer;
+
+    bottom: 1px;
+    left: 0;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 5;
   }
 }
 
