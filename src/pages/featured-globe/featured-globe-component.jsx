@@ -29,6 +29,7 @@ import uiStyles from 'styles/ui.module.scss';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import LabelsLayer from 'components/labels-layer';
 import Legend from 'components/legend';
+import TutorialModal from 'components/tutorial/tutorial-modal';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
@@ -111,6 +112,7 @@ const FeaturedGlobeComponent = ({
             selectedTaxa={selectedTaxa}
             featuredPlacesLayer={featuredPlacesLayer}
             isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
             handleLayerToggle={handleLayerToggle}
           />
           {!isLandscapeMode &&
@@ -161,6 +163,7 @@ const FeaturedGlobeComponent = ({
             setLayerVisibility={setLayerVisibility}
             selectedSpecies={selectedSpecies}
           />
+          <TutorialModal />
         </Globe>
       </div>
       <FeaturedMapsList

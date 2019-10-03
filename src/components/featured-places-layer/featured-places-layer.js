@@ -3,8 +3,7 @@ import { loadModules } from '@esri/react-arcgis';
 
 
 
-const FeaturedMapLayer = ({ view, selectedFeaturedMap, featuredPlacesLayer, isLandscapeMode, selectedTaxa }) => {
-
+const FeaturedMapLayer = ({ view, selectedFeaturedMap, featuredPlacesLayer, isLandscapeMode, isFullscreenActive,  selectedTaxa }) => {
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
 
   // store featured places layer view to query against it
@@ -30,10 +29,10 @@ const FeaturedMapLayer = ({ view, selectedFeaturedMap, featuredPlacesLayer, isLa
   }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa])
 
   useEffect(() => {
-    if (isLandscapeMode) {
-      featuredPlacesLayerView.visible = false;
-    }
-  }, [isLandscapeMode])
+    if(featuredPlacesLayerView)
+      featuredPlacesLayerView.visible = !isLandscapeMode;
+
+  }, [isLandscapeMode, isFullscreenActive])
 
   return null;
 }

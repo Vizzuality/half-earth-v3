@@ -148,6 +148,7 @@
     color: $white;
     margin-bottom: 2px;
     text-transform: uppercase;
+    text-decoration: none;
   }
   
   .speciesLatName {
@@ -172,8 +173,15 @@
     border-radius: 50%;
     height: 110px;
     margin: 0 25px;
+    overflow: hidden;
     user-select: none;
     width: 110px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 
@@ -187,4 +195,8 @@
   height: 16px;
   margin: 40px auto 0;
   width: 44px;
+
+  &:hover {
+    background-image: url('../../../assets/logos/molWhite.png');
+  }
 }

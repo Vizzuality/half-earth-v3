@@ -22,13 +22,15 @@ const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSw
 
 const feturedGlobeContainer = props => {
 
-  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap } = props;
+  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFullscreenActive } = props;
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
 
 const handleMarkerClick = (viewPoint, view) => {
-  setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
-  removeAvatarImage();
+  if(!isFullscreenActive) {
+    setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+    removeAvatarImage();
+  }
 }
 const handleMarkerHover = (viewPoint, view) => {
   setCursor(viewPoint, FEATURED_PLACES_LAYER);

@@ -153,14 +153,21 @@ $card-content-max-height: 220px;
     @extend %verticalScrollBar;
     max-height: $card-content-max-height;
   }
-  
+
   .title {
     @extend %display1;
     color: $dark-text;
     margin: 0;
   }
+
   .text {
     @extend %bodyText;
     color: $dark-text;
+  }
+
+  .sourceText {
+    @extend %bodyText;
+    color: $dark-text;
+    padding-bottom: 24px;
   }
 }
