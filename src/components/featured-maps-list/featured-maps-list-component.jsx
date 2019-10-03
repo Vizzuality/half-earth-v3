@@ -12,6 +12,7 @@ const FeaturedMapsListComponent = ({
   featuredMapsList,
   selectedSidebar,
   selectedFeaturedMap,
+  selectedFeaturedPlace,
   isLandscapeMode,
   isFullscreenActive,
   handleFeaturedMapClick,
@@ -25,7 +26,7 @@ const FeaturedMapsListComponent = ({
   const isOnMobile = isMobile();
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
-  const visibleOnMobile = isOnMobile && isActive && isOpen;
+  const visibleOnMobile = isOnMobile && isActive && isOpen && !selectedFeaturedPlace;
 
   const isMapsListVisible = (isOpen && !isLandscapeMode && !isFullscreenActive && !isOnMobile) || visibleOnMobile;
 
@@ -40,7 +41,10 @@ const FeaturedMapsListComponent = ({
   }
 
   const resetCardOpen = () => setCardOpen(null);
-  const mouseOver = (card) => { setCardOpen(card); handleFeatureMapHover(card.slug) };
+  const mouseOver = (card) => { 
+    setCardOpen(card); 
+    handleFeatureMapHover(card.slug) 
+  };
 
   const selectCard = (card) => {
     resetCardOpen();
@@ -81,7 +85,7 @@ const FeaturedMapsListComponent = ({
               {isOnMobile && (
                 <div className={styles.selectMapButtonContainer}>
                   <button className={styles.selectMapButton} onClick={() => selectCard(featuredMap)}>
-                    Select this featured map
+                    Show these places on the map
                   </button>
                 </div>
               )}

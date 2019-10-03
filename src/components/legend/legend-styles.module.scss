@@ -120,10 +120,6 @@ $map-attribution-height: 30px;
   }
 }
 
-.legendOnTopOfCollapsedSidebar {
-  @include landscapeSidebarCollapsedBottom();
-}
-
 .itemButton {
   position: relative;
 }

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
-import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
 import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
@@ -16,12 +16,13 @@ const FeaturedPlaceCardComponent = ({
   handleAllMapsClick,
   handleNextPlaceClick,
   handlePrevPlaceClick,
-  handleLandscapeTrigger
+  handleLandscapeTrigger,
+  activeOption
 }) => {
 
-  const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
-
   const isOnMobile = isMobile();
+  const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
+  const visibleOnMobile = isOnMobile && activeOption === FOOTER_OPTIONS.ADD_LAYER && selectedFeaturedPlace;
   
   const contentWrapper = useRef();
   useEffect(() => {
@@ -29,15 +30,16 @@ const FeaturedPlaceCardComponent = ({
   }, [featuredPlace])
 
   return (
-    <div className={cx(styles.container, { [animationStyles.bottomHidden]: isOnMobile && !isOnScreen })}>
-      <div className={cx(styles.content, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
+    <div className={cx(styles.container, { [animationStyles.bottomHidden]: !visibleOnMobile && isOnMobile })}>
+      <div className={cx(styles.content, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile })}>
         <nav className={styles.navigation}>
           <div
             className={styles.backToMap}
             onClick={handleAllMapsClick}
           >
             <ChevronIcon className={styles.arrowIcon}/>
-            {featuredMap && <h3 className={styles.text}>{isOnMobile ? 'Back' : featuredMap.title}</h3>}
+            {isOnMobile && <h3 className={styles.text}>Back</h3>}
+            {featuredMap && !isOnMobile && <h3 className={styles.text}>{featuredMap.title}</h3>}
           </div>
           <div className={styles.placesNavigator}>
             <div

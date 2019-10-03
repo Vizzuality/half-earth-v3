@@ -25,11 +25,10 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
   const categoryBoxVisibleOnMobile = isOnMobile && isActive && !isSidebarOpen;
-  const renderOnTop = categoryBoxVisibleOnMobile && isLandscapeMode && isLandscapeSidebarCollapsed;
   const categoryBoxHidden = (isSidebarOpen || isLandscapeMode || isFullscreenActive || (isOnMobile && !isActive)) && !categoryBoxVisibleOnMobile;
 
   return (
-    <div data-cy="entry-boxes" className={cx(styles.entryBoxesPosition, { [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile, [styles.entryBoxesOnTop]: renderOnTop })}>
+    <div data-cy="entry-boxes" className={cx(styles.entryBoxesPosition, { [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })}>
       {interfaceLoaded && categories.length &&
         categories.map((category, i) => (
           <div className={cx({ [animationStyles.transform]: !isOnMobile, [animationStyles.leftHidden]: categoryBoxHidden && !isOnMobile, [animationStyles.bottomHidden]: categoryBoxHidden && isOnMobile })} onClick={() => handleCategoryEnter(category)}>
