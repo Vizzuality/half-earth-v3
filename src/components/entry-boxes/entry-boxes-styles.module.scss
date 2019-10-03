@@ -16,7 +16,7 @@
     @include topLeft();
 
     & > *:first-child > div:first-child {
-      border-radius: 0;
+      border-radius: 2px;
     }
   }
 }
