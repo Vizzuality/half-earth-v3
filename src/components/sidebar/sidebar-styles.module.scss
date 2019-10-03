@@ -29,10 +29,12 @@
   width: 100%;
   height: 345px;
   overflow-y: scroll;
+  border-radius: 16px 16px 0 0;
 
   @media #{$tablet-portrait} {
     overflow-y: unset;
     width: $sidebar-width;
+    border-radius: 2px;
     top: 0;
     bottom: 0;
     height: 100%;
