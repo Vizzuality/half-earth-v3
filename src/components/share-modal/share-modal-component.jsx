@@ -11,7 +11,7 @@ import styles from './share-modal-styles.module';
 const LINK = 'link';
 const EMBED = 'embed';
 
-const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, center, zoom }) => {
+const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
 
@@ -56,9 +56,6 @@ const ShareModal = ({ handleClose, isOpen, route, shareSocialMedia, center, zoom
             <span className={cx({[styles.copiedText]: copied[activeTab]})}>{copied[activeTab] ? 'copied!': 'copy'}</span>
           </Button>
         </CopyToClipboard>
-      </div>
-      <div className={styles.coordinates}>
-        <p>center: [{center[0]}, {center[1]}], zoom: {zoom}</p>
       </div>
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
