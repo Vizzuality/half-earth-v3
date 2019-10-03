@@ -16,9 +16,9 @@ import {
 } from 'constants/layers-groups';
 
 import { createAction } from 'redux-tools';
-import Component from './featured-globe-simple-component.jsx';
+import Component from './featured-globe-component.jsx';
 
-import mapStateToProps from './featured-globe-simple-selectors';
+import mapStateToProps from './featured-globe-selectors';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 

@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
-import initialState from './featured-globe-simple-initial-state';
+import initialState from './featured-globe-initial-state';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;

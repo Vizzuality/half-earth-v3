@@ -116,8 +116,6 @@ const ShareModalComponent = (props) => {
 ShareModalComponent.propTypes = {
   shareSocialMedia: PropTypes.array.isRequired,
   route: PropTypes.string,
-  center: PropTypes.array.isRequired,
-  zoom: PropTypes.number.isRequired,
   theme: PropTypes.shape({
     shareButton: PropTypes.string
   })

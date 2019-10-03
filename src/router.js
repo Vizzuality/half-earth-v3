@@ -2,7 +2,6 @@ import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 export const DATA = 'location/DATA';
-export const SIMPLE = 'location/SIMPLE';
 export const FEATURED = 'location/FEATURED';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
 
@@ -17,11 +16,7 @@ export const routes = {
   },
   [FEATURED]: {
     path: '/featuredGlobe',
-    page: 'featured-globe-simple'
-  },
-  [SIMPLE]: {
-    path: '/simple',
-    page: 'simple'
+    page: 'featured-globe'
   },
   [MAP_IFRAME]: {
     path: '/map',
