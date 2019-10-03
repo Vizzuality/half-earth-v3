@@ -40,7 +40,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, isLandscapeSidebarCo
       <Tutorial
         position={'top-left'}
         tutorialID={tutorialData.id}
-        showTutorial={tutorialData.showTutorial}
+        showTutorial={!isOnMobile && tutorialData.showTutorial}
       >
         {!isFullscreenActive && canShowLegend && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
           {datasets && datasets.map((dataset, i) => (
