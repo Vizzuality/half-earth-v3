@@ -128,7 +128,7 @@ const DataGlobeComponentSimple = ({
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-        {isLegendActive &&
+        {isLandscapeMode &&
           <Legend
             isFullscreenActive={isFullscreenActive}
             activeLayers={activeLayers}
