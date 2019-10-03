@@ -59,7 +59,7 @@ export const TURTLES_RICHNESS = 'turtles-rich';
 export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
-export const CONIFERS_RICHNESS = 'conifers-richness';
+export const CONIFERS_RICHNESS = 'conifers-rich';
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';

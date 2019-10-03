@@ -25,18 +25,16 @@ const BiodiversityLayerContainer = props => {
 
   const handleSimpleLayerToggle = layerName => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, activeCategory } = props;
-    const layer = layersConfig.find(l => l.slug === layerName);
+    const layer = layersConfig[layerName];
     layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
     removeLayerAnalyticsEvent({ slug: layer.slug });
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
     const { map, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe } = props;
-    const layer = layersConfig.find(l => l.slug === layerToAdd);
-    const removeLayer = layersConfig.find(l => l.slug === layerToRemove);
+    const layer = layersConfig[layerToAdd];
+    const removeLayer = layersConfig[layerToRemove];
     const removeSlug = removeLayer && removeLayer.slug;
-
-    
     handleLayerCreation(layer, map);
     exclusiveLayersToggle(layer.slug, removeSlug, activeLayers, changeGlobe, 'Biodiversity');
     layer.bbox && flyToLayerExtent(layer.bbox);

@@ -13,7 +13,7 @@ const ProtectedAreasLayersContainer = props => {
 
   const handleLayerToggle = layerName => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, activeCategory, map } = props;
-    const layer = layersConfig.find(l => l.slug === layerName);
+    const layer = layersConfig[layerName];
     handleLayerCreation(layer, map);
     layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
     removeLayerAnalyticsEvent({ slug: layer.slug });

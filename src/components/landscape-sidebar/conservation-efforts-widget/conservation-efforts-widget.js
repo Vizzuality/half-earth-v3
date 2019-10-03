@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import conservationEffortsActions from 'redux_modules/conservation-efforts';
 
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -78,7 +78,7 @@ const ConservationEffortsWidget = (props) => {
 
   const toggleLayer = (layersPassed, option) => {
       const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
-      const layer = layersConfig.find(l => l.slug === option.title);
+      const layer = layersConfig[option.title];
       handleLayerCreation(layer, map);
       layerManagerToggle(layer.slug, activeLayers, changeGlobe, 'Existing protection');
       removeLayerAnalyticsEvent({ slug: layer.slug });
