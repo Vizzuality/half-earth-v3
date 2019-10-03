@@ -21,11 +21,6 @@
   opacity: 0.5;
 }
 
-.activeOption {
-  margin-right: 8px;
-  opacity: 1;
-}
-
 .option {
   display: flex;
   align-items: center;
@@ -36,10 +31,20 @@
   @extend %subtitle;
   color: $white;
   margin-top: 4px;
+  display: none;
 }
 
 .activeOptionContainer {
   padding: 10px;
   background-color: rgba($white, 0.05);
   border-radius: 2px;
+
+  .icon {
+    margin-right: 8px;
+    opacity: 1;
+  }
+
+  .title {
+    display: block;
+  }
 }
