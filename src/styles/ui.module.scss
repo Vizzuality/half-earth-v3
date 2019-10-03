@@ -31,12 +31,6 @@ $landscapeSidebarCollapsedHeight: 175px;
   width: 100%;
 }
 
-@mixin landscapeSidebarCollapsedBottom () {
-  position: absolute;
-  bottom: $landscapeSidebarCollapsedHeight;
-  width: 100%;
-}
-
 .uiRight {
   position: absolute;
   right: 0;
