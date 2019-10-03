@@ -37,7 +37,6 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
               category={category.name}
               counter={countedActiveLayers[category.name]}
             />
-            {isOnMobile && i !== categories.length-1 && <div className={styles.spacer} />}
           </div>
         )
       )}
