@@ -23,6 +23,7 @@
     "react-hot-loader": "^4.8.2",
     "react-markdown": "4.0.8",
     "react-redux": "^6.0.1",
+    "react-responsive": "^8.0.1",
     "react-scripts": "2.1.8",
     "react-tooltip": "^3.10.0",
     "react-universal-component": "^4.0.0",

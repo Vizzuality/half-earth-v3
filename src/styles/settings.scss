@@ -75,15 +75,11 @@ $blur-level: 16px;
 $sidebar-margin: 24px;
 $sidebar-paddings: 20px;
 
+$mobile-sidebar-side-paddings: 32px;
+
 // Letter styles
 $letter-spacing: 1.5px;
 $line-height: 14px;
-
-// Breakpoints
-$breakpoint-mobile-only: 37.4375rem; // 599px / 16px
-$breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
-$breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
-$breakpoint-desktop: 75rem; // 1200px / 16px
 
 // Sidebar
 $sidebar-top-margin: 60px;
@@ -93,6 +89,11 @@ $sidebar-width: 280px;  // use this for entry boxes and sidebar width
 // featured cards
 $card-max-width: 820px;
 
+// Breakpoints
+$breakpoint-mobile-only: 37.4375rem; // 599px / 16px
+$breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
+$breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
+$breakpoint-desktop: 75rem; // 1200px / 16px
 
 // Media queries
 $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';

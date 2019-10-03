@@ -42,6 +42,7 @@ const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
+const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
@@ -56,5 +57,6 @@ export default createStructuredSelector({
   rasters: getRasters,
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
-  selectedSpecies: getSelectedSpecies
+  selectedSpecies: getSelectedSpecies,
+  activeOption: getActiveOption // mobile
 })

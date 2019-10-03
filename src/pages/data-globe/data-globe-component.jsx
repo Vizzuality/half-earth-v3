@@ -9,6 +9,9 @@ import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import MenuSettings from 'components/mobile-only/menu-settings';
+import { MobileOnly, isMobile } from 'constants/responsive';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
@@ -55,26 +58,33 @@ const DataGlobeComponent = ({
   setLayerOpacity,
   setLayerOrder,
   handleSwitch,
-  selectedSpecies
+  selectedSpecies,
+  activeOption
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
   const isHumanPressuresActive = activeCategory === 'Human pressures';
   const isProtectedAreasActive = activeCategory === 'Existing protection';
 
+  const isOnMobile = isMobile();
+
   return (
     <>
       <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
         {isGlobeUpdating && <Spinner floating />}
+        <MobileOnly>
+          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
+          <MenuSettings activeOption={activeOption} />
+        </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-        <LocationWidget isNotMapsList={true} />
-        <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
-        <ZoomWidget isNotMapsList={true} />
+        {!isOnMobile && <LocationWidget isNotMapsList={true} />}
+        {!isOnMobile && <ToggleUiWidget isFullscreenActive={isFullscreenActive} />}
+        {!isOnMobile && <ZoomWidget isNotMapsList={true} />}
         {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
         <MinimapWidget />
-        <SearchWidget />
-        <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
+        {!isOnMobile && <SearchWidget />}
+        <EntryBoxes activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
         <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
           {isBiodiversityActive && (
             biodiversityCategories.map(cat => (
@@ -110,6 +120,7 @@ const DataGlobeComponent = ({
         </Sidebar>
         <Legend
           isFullscreenActive={isFullscreenActive}
+          activeOption={activeOption}
           setLayerOpacity={setLayerOpacity}
           setLayerVisibility={setLayerVisibility}
           setLayerOrder={setLayerOrder}

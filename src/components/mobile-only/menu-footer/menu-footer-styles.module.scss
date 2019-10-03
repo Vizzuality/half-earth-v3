@@ -1,0 +1,50 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.menuContainer {
+  @include backdropBlur();
+  height: 65px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  z-index: 15;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+  text-align: center;
+  opacity: 0.5;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.title {
+  @extend %subtitle;
+  color: $white;
+  margin-top: 4px;
+  display: none;
+}
+
+.activeOptionContainer {
+  padding: 10px;
+  background-color: rgba($white, 0.05);
+  border-radius: 2px;
+
+  .icon {
+    margin-right: 8px;
+    opacity: 1;
+  }
+
+  .title {
+    display: block;
+  }
+}

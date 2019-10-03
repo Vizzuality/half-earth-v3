@@ -3,10 +3,22 @@
 @import 'styles/common-animations.module';
 
 .sidebar {
-  @include animationFunction();
   display: inline-block;
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: 16px 16px 0 0;
+  left: 0;
+  top: auto;
+  overflow: hidden;
+  @include bottom();
+
+  @media #{$tablet-portrait} {
+    @include animationFunction();
+    overflow: unset;
+    border-radius: 2px;
+    width: auto;
+    bottom: auto;
+    @include topLeft();
+  }
 }
 
 .wrapper {
@@ -14,9 +26,19 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 0;
-  bottom: 0;
-  width: $sidebar-width;
+  width: 100%;
+  height: 345px;
+  overflow-y: scroll;
+  border-radius: 16px 16px 0 0;
+
+  @media #{$tablet-portrait} {
+    overflow-y: unset;
+    width: $sidebar-width;
+    border-radius: 2px;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+  }
 }
 
 .button {
@@ -42,7 +64,11 @@
 .content {
   @extend %verticalScrollBar;
   max-height: calc(100vh - (#{$sidebar-top-margin} + #{$sidebar-header-height}));
-  width: 310px;
-  padding-right: 30px;
+  width: auto;
   position: relative;
+
+  @media #{$tablet-portrait} {
+    width: 310px;
+    padding-right: 30px;
+  }
 }

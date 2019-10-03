@@ -20,6 +20,7 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
+    activeOption: '', // mobile
     isFullscreenActive: false, 
     activeCategory: ''
   },

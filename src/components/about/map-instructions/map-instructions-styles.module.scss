@@ -4,6 +4,13 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: 500px;
+
+  @media #{$tablet-portrait} {
+    overflow-y: unset;
+    height: auto;
+  }
 }
 
 .title {
@@ -12,21 +19,36 @@
   font-size: $font-size-xl;
   letter-spacing: 1px;
   line-height: 30px;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+  padding: 20px;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+    margin-bottom: 80px;
+  }
 }
 
 .mouseNavigationSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 80px;
-  width: 400px;
+  width: auto;
+
+  @media #{$tablet-portrait} {
+    width: 400px;
+  }
 
   .mouseClickIcon {
     align-items: center;
     display: flex;
     flex: 1;
     flex-direction: column;
+    padding: 0 15px;
+
+    @media #{$tablet-portrait} {
+      padding: 0;
+    }
 
     span {
       color: $white;
@@ -42,9 +64,16 @@
 }
 
 .storySection {
-  display: flex;
-  justify-content: space-between;
-  width: 670px;
+  display: block;
+  text-align: center;
+  width: 100%;
+
+  @media #{$tablet-portrait} {
+    width: 670px;
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+  }
 }
 
 .storyElement {
@@ -61,7 +90,6 @@
     margin-left: 20px;
   }
 }
-
 
 .horizontalFlip {
   transform: scale(-1, 1);
