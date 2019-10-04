@@ -3,27 +3,45 @@
 @import 'styles/typography-extends';
 
 .halfEarthModal {
-  background-color: #020A14;;
-  background-image: url('../../assets/images/stars.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  height: 100%;
   left: 0;
-  position: absolute;
+  overflow-y: scroll;
   top: 0;
   width: 100vw;
   z-index: 3;
+
+  @media #{$tablet-portrait} {
+    background-color: #020A14;;
+    background-image: url('../../assets/images/stars.jpg');
+    height: 100vh;
+    overflow-y: unset;
+    position: absolute;
+  }
 }
 
 .wrapper {
-  display: flex;
-  height: 100%;
-  padding: 70px 10% 100px;
-  overflow: hidden;
-  align-items: center;
+  display: grid;
+  grid-column-gap: 4%;
+  grid-template-columns: 48% 48%;
+  grid-template-rows: auto 400px auto;
+  grid-template-areas: 
+    "title title"
+    "globe globe"
+    "marine-legend land-legend"
+    "text text";
+  padding: 10% 32px 100px;
 
-  > :first-child {
-    width: 40%;
+  @media #{$tablet-portrait} {
+    grid-column-gap: 15px;
+    grid-template-columns: 25% 25% 50%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+      "title title globe"
+      "text text globe"
+      "marine-legend land-legend globe";
+    padding: 70px 10% 100px;
     height: 100%;
   }
 }
@@ -31,17 +49,17 @@
 .globeWrapper {
   align-items: center;
   display: flex;
-  justify-content: center;
-  width: 100%;
+  grid-area: globe;
   height: 100%;
+  justify-content: center;
+  justify-self: center;
+  width: 80%;
 
   .progresBars {
     background-image: url('../../assets/images/lines.svg');
     background-repeat: no-repeat;
     background-size: contain;
     position: relative;
-    height: 60vh;
-    width: 60vh;
 
     .globe {
       user-select: none;
@@ -61,22 +79,22 @@
   }
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
 .title {
   color: $white;
   font-family: $font-family-1;
-  font-size: $font-size-xxl;
+  font-size: 24px;
   font-weight: unset;
   letter-spacing: 1px;
-  line-height: 50px;
+  line-height: 28px;
   margin: 0;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
-  width: 430px;
+  grid-area: title;
+
+  @media #{$tablet-portrait} {
+    font-size: $font-size-xxl;
+    line-height: 50px;
+    width: 430px;
+  }
 }
 
 .description {
@@ -84,22 +102,26 @@
   @extend %bodyText;
 
   color:  $white;
+  grid-area: text;
   margin: 20px 0 60px;
   padding: 25px 0;
   text-align: left;
-  max-width: 300px;
-  mask-image: linear-gradient(to bottom,
-  rgba(0,0,0,0) 0%,
-  rgba(0,0,0,1) 10%,
-  rgba(0,0,0,1) 90%,
-  rgba(0,0,0,0) 100%
-  );
-
+  
   p:first-child {
     margin-top: 0px;
   }
   p:last-child {
     margin-bottom: 0px;
+  }
+
+  @media #{$tablet-portrait} {
+    mask-image: linear-gradient(to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 10%,
+    rgba(0,0,0,1) 90%,
+    rgba(0,0,0,0) 100%
+    );
+    max-width: 460px;
   }
 }
 
@@ -113,15 +135,36 @@ $icon-size: 40px;
   font-family: $font-family-1;
   font-weight: bold;
   justify-content: center;
-  height: 76px;
-  padding-left: 50px;
+  
+  padding: 32px 16px 20px;
   position: relative;
-  width: 200px;
+
+  @media #{$tablet-portrait} {
+    padding: 0 0 0 50px;
+
+    height: 76px;
+    width: 200px;
+  }
+
+  &:first-child {
+    grid-area: marine-legend;
+  }
+
+  &:last-child {
+    grid-area: land-legend;
+  }
 
   .value {
-    font-size: $font-size-xs;
+    
+    font-size: 20px;
     letter-spacing: 2px;
     line-height: 20px;
+
+    @media #{$tablet-portrait} {
+      font-size: $font-size-xs;
+
+    }
+
   }
 
   .label {
@@ -133,15 +176,20 @@ $icon-size: 40px;
 
 .icon {
   height: $icon-size;
-  left: calc(#{$icon-size} / -2);
+  left: -4px;
   position: absolute;
-  top: calc(50% -  #{$icon-size} / 2);
+  top: $icon-size / -2;
   width: $icon-size;
+  
+  @media #{$tablet-portrait} {
+    left: $icon-size / -2;
+    top: calc(50% -  #{$icon-size} / 2);
+  }
 }
 
-.legendWrapper {
-  display: flex;
-  justify-content: space-between;
-  margin-left: calc(#{$icon-size} / 2);
-  width: 500px;
+.closeButton {
+  display: none;
+  @media #{$tablet-portrait} {
+    display: block;
+  }
 }

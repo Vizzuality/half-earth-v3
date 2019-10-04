@@ -22,23 +22,19 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
   return (
     <div className={styles.halfEarthModal}>
       <div className={styles.wrapper}>
-        <div className={styles.content}>
-          <h1 className={styles.title}>{textData && textData.title}</h1>
-            <ReactMarkdown
-              className={styles.description}
-              source={textData && textData.content}
-              escapeHtml={false}
-            />
-          <div className={styles.legendWrapper}>
-            {legend.map(({ value, label, imageSrc}) => (
-              <div key={label} className={styles.legendItem}>
-                <span className={styles.value}>{value}</span>
-                <span className={styles.label}>{label}</span>
-                <img src={imageSrc} className={styles.icon} alt={label}/>
-              </div>
-            ))}
+        <h1 className={styles.title}>{textData && textData.title}</h1>
+        <ReactMarkdown
+          className={styles.description}
+          source={textData && textData.content}
+          escapeHtml={false}
+        />
+        {legend.map(({ value, label, imageSrc}) => (
+          <div key={label} className={styles.legendItem}>
+            <span className={styles.value}>{value}</span>
+            <span className={styles.label}>{label}</span>
+            <img src={imageSrc} className={styles.icon} alt={label}/>
           </div>
-        </div>
+        ))}
         <div className={styles.globeWrapper}>
           <div className={styles.progresBars}>
             <img src={GlobeImage} className={styles.globe} alt="Half-Earth globe" />
