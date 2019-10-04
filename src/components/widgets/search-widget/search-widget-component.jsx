@@ -4,9 +4,9 @@ import { ReactComponent as PinIcon } from 'icons/places.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 const SearchWidgetComponent = props => {
-  const { handleOpenSearch, handleCloseSearch, showCloseButton} = props;
+  const { handleOpenSearch, handleCloseSearch, showCloseButton, hidden } = props;
   return (
-    <>
+    <div style={{ display: hidden ? 'none' : 'block' }}>
       <button
         className={styles.searchButton}
         onClick={handleOpenSearch}
@@ -24,7 +24,7 @@ const SearchWidgetComponent = props => {
           <CloseIcon />
         </button>
       }
-    </>
+    </div>
   );
 };
 

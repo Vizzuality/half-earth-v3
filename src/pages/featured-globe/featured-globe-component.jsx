@@ -88,7 +88,7 @@ const DataGlobeComponent = ({
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
-        {!esriWidgetsHidden && <Widgets isFullscreenActive={isFullscreenActive}/>}
+        <Widgets isFullscreenActive={isFullscreenActive} hidden={esriWidgetsHidden}/>
         {selectedFeaturedMap &&
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}

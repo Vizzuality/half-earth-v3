@@ -125,7 +125,7 @@ async function fetchContentfulEntry(
 ) {
   let url = `${config.baseUrl}/spaces/${config.space}/environments/${config.env}/entries?content_type=${contentType}&access_token=${config.token}`;
   if (filterField && filterValue) {
-    url += `&fields.${filterField}=${filterValue}`;
+    url += `&fields.${filterField}=${filterValue}&limit=999`;
   }
   try {
     const data = await fetch(url).then(d => d.json());

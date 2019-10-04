@@ -13,7 +13,7 @@ export const useWatchUtils = () => {
 }
 
 export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent) => {
-  const [searchWidget, setSearchWidget ] = useState();
+  const [searchWidget, setSearchWidget ] = useState(null);
 
   const keyEscapeEventListener = (evt) => { 
     evt = evt || window.event;
@@ -23,16 +23,19 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
   };
 
   const handleOpenSearch = () => {
-    loadModules(["esri/widgets/Search"]).then(([Search]) => {
-      const sWidget = new Search({
-        view: view,
-        locationEnabled: false, // don't show the Use current location box when clicking in the input field
-        popupEnabled: false, // hide location popup
-        resultGraphicEnabled: false // hide location pin
-      });
-      setSearchWidget(sWidget);
-      openPlacesSearchAnalyticsEvent();
-    }).catch((err) => console.error(err));
+    if(searchWidget === null) {
+      setSearchWidget(undefined); // reset search widget in case of multiple quick clicks
+      loadModules(["esri/widgets/Search"]).then(([Search]) => {
+        const sWidget = new Search({
+          view: view,
+          locationEnabled: false, // don't show the Use current location box when clicking in the input field
+          popupEnabled: false, // hide location popup
+          resultGraphicEnabled: false // hide location pin
+        });
+        setSearchWidget(sWidget);
+        openPlacesSearchAnalyticsEvent();
+      }).catch((err) => console.error(err));
+    }
   };
 
   const handleCloseSearch = () => {
