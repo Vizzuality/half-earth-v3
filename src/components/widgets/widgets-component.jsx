@@ -10,13 +10,14 @@ import { isMobile } from 'constants/responsive';
 
 const WidgetsComponent = ({ map, view, isFullscreenActive, isNotMapsList = true, hidden = false}) => {
   const isOnMobile = isMobile();
-  return !isOnMobile && (
+  const hiddenWidget = hidden || isOnMobile;
+  return (
     <>
-      <ToggleUiWidget map={map} view={view} isFullscreenActive={isFullscreenActive} hidden={hidden}/>
-      <ZoomWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hidden} />
-      <MinimapWidget map={map} view={view} hidden={hidden} />
-      <SearchWidget map={map} view={view} hidden={hidden} />
-      <LocationWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hidden} />
+      <ToggleUiWidget map={map} view={view} isFullscreenActive={isFullscreenActive} hidden={hiddenWidget}/>
+      <ZoomWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
+      <MinimapWidget map={map} view={view} hidden={hiddenWidget} />
+      <SearchWidget map={map} view={view} hidden={hiddenWidget} />
+      <LocationWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
     </>
   )
 }
