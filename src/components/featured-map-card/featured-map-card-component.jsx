@@ -3,7 +3,6 @@ import cx from 'classnames';
 import ShareModalButton from 'components/share-modal';
 import styles from './featured-map-card-styles.module.scss'
 import animationStyles from 'styles/common-animations.module.scss';
-import { isMobile } from 'constants/responsive';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 
 const FeaturesMapCardComponent = ({ 
@@ -33,10 +32,9 @@ const FeaturesMapCardComponent = ({
   }, []);
 
   const isFeatureMapCardVisible = isOnScreen;
-  const isOnMobile = isMobile();
 
   return (featuredMap && (
-    <div className={cx(className, styles.cardContainer, { [animationStyles.leftHidden]: !isFeatureMapCardVisible, [styles.delayOnOut]: isFeatureMapCardVisible, [styles.hidden]: isOnMobile })}>
+    <div className={cx(className, styles.cardContainer, { [animationStyles.leftHidden]: !isFeatureMapCardVisible, [styles.delayOnOut]: isFeatureMapCardVisible })}>
       <section
         className={styles.titleSection}
         style={ {backgroundImage: `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(${featuredMap.image})`}}

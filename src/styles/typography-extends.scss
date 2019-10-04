@@ -51,3 +51,12 @@
   letter-spacing: 0px;
   line-height: 16px;
 }
+
+// Sections title - mobile
+%titleMobile {
+  font-family: $font-family-1;
+  font-size: $font-size-xxs;
+  letter-spacing: 2px;
+  line-height: 20px;
+  text-transform: uppercase;
+}

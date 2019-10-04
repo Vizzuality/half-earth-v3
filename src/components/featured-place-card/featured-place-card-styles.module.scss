@@ -264,14 +264,17 @@ $card-content-max-height: 220px;
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-bottom: 12px;
+  padding: {
+    bottom: 12px;
+    top: 12px;
+  }
 }
 
 .exploreAreaButton {
   @extend %title;
   font-family: $font-family-1;
   font-size: 10px;
-  width: 250px;
+  width: calc(100% - (2 * #{$mobile-sidebar-side-paddings}));
   border-radius: 2px;
   padding: 10px 40px;
   color: $firefly;

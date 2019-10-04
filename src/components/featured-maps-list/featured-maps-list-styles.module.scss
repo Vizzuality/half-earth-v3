@@ -105,9 +105,7 @@ $scrollbar-gutter: 15px;
 }
 
 .selectMapButton {
-  @extend %title;
-  font-family: $font-family-1;
-  font-size: 10px;
+  @extend %titleMobile;
   padding: 10px 40px;
   color: $firefly;
   background-color: $robins-egg-blue;
@@ -120,7 +118,6 @@ $scrollbar-gutter: 15px;
     display: flex;
     align-items: center;
     font-size: $font-size-xxs;
-    font-weight: $font-weight-bold;
     font-family: $font-family-1;
     letter-spacing: 2px;
     color: $robins-egg-blue;

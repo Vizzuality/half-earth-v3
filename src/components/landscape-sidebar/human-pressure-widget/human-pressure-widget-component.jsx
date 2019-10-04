@@ -1,6 +1,7 @@
 import React from 'react';
 import { format } from 'd3-format';
 import CheckboxGroup from 'components/checkbox-group';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import styles from './human-pressure-widget-styles.module.scss';
 
@@ -30,7 +31,7 @@ const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
 const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
+      <DummyBlurWorkaround />
       {options && 
         <>
           <h3 className={styles.title}>Land human pressures in this area</h3>

@@ -29,12 +29,8 @@ const MenuFooterContainer = props => {
   const setActiveOption = (option) => props.changeUI({ activeOption: option })
   
   const toggleFeaturedMapsList = () => {
-    const openedSidebar = activeOption === FOOTER_OPTIONS.ADD_LAYER;
-    if (selectedSidebar && openedSidebar) {
-      props.changeUI({ selectedSidebar: '' }); // close sidebar
-    } else {
-      props.changeUI({ selectedSidebar: FEATURED_MAPS_LIST_SIDEBAR })
-    }
+    const activeSidebar =  selectedSidebar && activeOption === FOOTER_OPTIONS.ADD_LAYER;
+    props.changeUI({ selectedSidebar: activeSidebar ? '' : FEATURED_MAPS_LIST_SIDEBAR});
   }
 
   useEffect(() => {

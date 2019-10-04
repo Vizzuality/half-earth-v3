@@ -6,22 +6,23 @@
 $section-padding: 0 24px;
 
 .cardContainer {
+  display: none;
   @include backdropBlur();
-  display: flex;
+  
   flex-direction: column;
   width: $sidebar-width;
   height: auto;
   border-radius: 2px;
   background-color: $brand-color-secondary;
   @include animationFunction();
+
+  @media #{$tablet-portrait} {
+    display: flex;
+  }
 }
 
 .delayOnOut {
   @include animationFunction($delay: 200ms);
-}
-
-.hidden {
-  display: none;
 }
 
 .titleSection {

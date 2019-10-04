@@ -42,42 +42,39 @@
   border: 2px solid $white;
   border-radius: 2px;
   transition: .4s;
-}
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 2px;
-  bottom: 2px;
-  background-color: $white;
-  transition: .4s;
-}
+  &:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: $white;
+    transition: .4s;
+  }
 
-.slider:after {
-	position: absolute;
-  content: "";
-  height: 2px;
-  width: 6px;
-  left: 34%;
-  bottom: 23%;
-  background-color: $firefly;
-  transition: .4s;
+  &:after {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 6px;
+    left: 34%;
+    bottom: 23%;
+    background-color: $firefly;
+    transition: .4s;
+  }
 }
 
 input:checked + .slider {
   background-color: $firefly;
-}
 
-input:checked + .slider:after {
-	left: 34%;
-  bottom: 68%;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateY(-117%);
-  -ms-transform: translateY(-117%);
-  transform: translateY(-117%);
-  background-color: $java;
+  &:after {
+    left: 34%;
+    bottom: 68%;
+  }
+  &:before {
+    transform: translateY(-117%);
+    background-color: $java;
+  }
 }

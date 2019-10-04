@@ -21,10 +21,6 @@
   }
 }
 
-.dummyBlurWorkaround {
-  position: fixed;
-}
-
 .wrapper {
   @include backdropBlur();
   display: flex;

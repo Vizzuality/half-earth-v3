@@ -3,6 +3,7 @@ import { Loading } from 'he-components';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
 import FixedHeader from 'components/fixed-header'
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import { isMobile } from 'constants/responsive';
 import errorGif from 'icons/error.gif'
 
@@ -13,7 +14,7 @@ const GeoDescriptionWidget = (props) => {
   if (loading) {
     return (
       <div className={styles.container}>
-        <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
+        <DummyBlurWorkaround />
         <div className={styles.loading}>
           <Loading />
           <span className={styles.loadingText}>Loading area information...</span>
@@ -25,7 +26,7 @@ const GeoDescriptionWidget = (props) => {
   if (error) {
     return (
       <div className={styles.container}>
-        <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
+        <DummyBlurWorkaround />
         <FixedHeader
           noBackClick={isOnMobile}
           toggleCollapsedLandscapeSidebar={toggleCollapsedLandscapeSidebar}
@@ -49,7 +50,7 @@ const GeoDescriptionWidget = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
+      <DummyBlurWorkaround />
       <FixedHeader 
         noBackClick={isOnMobile}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}

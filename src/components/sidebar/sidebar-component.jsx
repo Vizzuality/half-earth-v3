@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { isMobile } from 'constants/responsive';
 
 import FixedHeader from 'components/fixed-header';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -19,7 +20,7 @@ const Sidebar = ({ map, view, theme, children, activeCategory, handleSidebarTogg
   return (
     <div className={cx(styles.sidebar, theme.sidebar, { [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile })}>
       <div className={cx(styles.wrapper, { [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile })}>
-        <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>
+        <DummyBlurWorkaround />
         <FixedHeader closeSidebar={handleSidebarToggle} title={activeCategory} view={view}/>
         <div className={styles.content}>
           {React.Children.map(children || null, (child, i) => {
