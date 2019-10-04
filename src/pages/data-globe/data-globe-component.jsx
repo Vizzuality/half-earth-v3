@@ -112,7 +112,7 @@ const DataGlobeComponent = ({
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
-      <About />
+      {!isOnMobile && <About />}
     </>
   )
 }
