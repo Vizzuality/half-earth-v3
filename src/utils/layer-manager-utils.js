@@ -3,8 +3,7 @@ import { intersection } from 'lodash';
 import { loadModules } from 'esri-loader';
 import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
-
-const DEFAULT_OPACITY = 0.6;
+import { DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 
 export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
   const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];

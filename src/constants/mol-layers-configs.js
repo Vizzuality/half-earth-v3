@@ -55,6 +55,13 @@ const LAYER_TYPES = {
   IMAGERY_LAYER: 'ImageryLayer'
 }
 
+export const DEFAULT_OPACITY = 0.6;
+export const LAYERS_CATEGORIES = {
+  BIODIVERSITY: 'Biodiversity',
+  PROTECTION: 'Existing protection',
+  LAND_PRESSURES: 'Human pressures'
+}
+
 
 export const biodiversityCategories = [
   {

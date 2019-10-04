@@ -2,8 +2,11 @@ import {
   FIREFLY_BASEMAP_LAYER,
   GRID_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
-  CITIES_LABELS_LAYER
+  CITIES_LABELS_LAYER,
+  ALL_TAXA_RARITY
 } from 'constants/layers-slugs';
+
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
 
 export default {
   globe: {
@@ -12,7 +15,7 @@ export default {
       { title: GRID_LAYER }, 
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: CITIES_LABELS_LAYER },
-      { title: 'all-taxa-rarity' }
+      { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
     zoom: 1,
     center: [16.9515536, 0.116959],
