@@ -14,6 +14,7 @@ import TutorialModal from 'components/tutorial/tutorial-modal';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import Switcher from 'components/switcher';
+import About from 'components/about';
 
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
@@ -87,6 +88,7 @@ const DataGlobeComponent = ({
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
+      <About />
     </>
   )
 }
