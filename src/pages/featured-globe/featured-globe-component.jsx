@@ -150,6 +150,7 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
         <Legend
+          showLegend={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
           activeOption={activeOption}

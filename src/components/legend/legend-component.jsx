@@ -13,7 +13,7 @@ import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility
@@ -22,7 +22,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handle
   const isOnMobile = isMobile();
   const isLegendOpen = activeOption === FOOTER_OPTIONS.LEGEND;
   const showDisclaimer = isOnMobile && isLegendOpen;
-  const canShowLegend = isOnMobile ? isLegendOpen : true;
+  const canShowLegend = isOnMobile ? isLegendOpen : showLegend;
 
   const toolbar = (
     <LegendItemToolbar
