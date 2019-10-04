@@ -44,7 +44,7 @@ export default {
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false,
-    activeOption: '', // mobile
+    activeOption: 'add_layer', // mobile
   },
   listeners: false
 }

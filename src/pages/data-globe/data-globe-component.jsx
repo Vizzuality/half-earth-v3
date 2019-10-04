@@ -61,10 +61,10 @@ const DataGlobeComponent = ({
           <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
           <Slider />
         </MobileOnly>
+        {!isOnMobile && <Switcher />}
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-        {!isOnMobile && <SearchWidget />}
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <ArcgisLayerManager activeLayers={activeLayers} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
@@ -83,12 +83,8 @@ const DataGlobeComponent = ({
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
-          isLandscapeMode={isLandscapeMode}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          activeLayers={activeLayers}
           activeOption={activeOption}
-          setLayerOpacity={setLayerOpacity}
-          setLayerVisibility={setLayerVisibility}
-          setLayerOrder={setLayerOrder}
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}

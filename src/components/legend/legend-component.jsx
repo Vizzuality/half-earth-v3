@@ -13,7 +13,7 @@ import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, isLandscapeSidebarCollapsed, isLandscapeMode, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility

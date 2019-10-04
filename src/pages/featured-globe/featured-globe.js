@@ -21,7 +21,7 @@ import mapStateToProps from './featured-globe-selectors';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-const actions = { ...ownActions, ...featuredMapsActions, ...urlActions}
+const actions = { ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);

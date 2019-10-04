@@ -15,7 +15,6 @@ import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
-import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
 
 import { MobileOnly, isMobile } from 'constants/responsive';
 
@@ -67,7 +66,6 @@ const DataGlobeComponent = ({
   isLandscapeSidebarCollapsed,
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
   const isOnMobile = isMobile();
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
@@ -127,6 +125,7 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
+          activeOption={activeOption}
         />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
@@ -144,22 +143,19 @@ const DataGlobeComponent = ({
           rasters={rasters}
           setRasters={setRasters}
           selectedSpecies={selectedSpecies}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          activeOption={activeOption}
         />
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-        {isLandscapeMode &&
-          <Legend
-            isFullscreenActive={isFullscreenActive}
-            activeLayers={activeLayers}
-            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-            activeOption={activeOption}
-            rasters={rasters}
-            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-            activeOption={activeOption}
-          />
-        }
+        <Legend
+          isFullscreenActive={isFullscreenActive}
+          activeLayers={activeLayers}
+          activeOption={activeOption}
+          rasters={rasters}
+        />
         <TutorialModal />
       </Scene>
       <FeaturedMapsList

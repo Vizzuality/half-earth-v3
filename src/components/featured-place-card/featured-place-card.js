@@ -10,7 +10,7 @@ import * as actions from 'actions/url-actions';
 
 
 const FeaturedPlaceCardContainer = props => {
-  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, featuredPlacesLayer, selectedTaxa, changeUI, isLandscapeMode } = props;
+  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
