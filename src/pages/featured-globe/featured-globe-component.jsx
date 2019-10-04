@@ -2,7 +2,6 @@ import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -16,9 +15,15 @@ import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
+
+import { MobileOnly, isMobile } from 'constants/responsive';
+
 import Switcher from 'components/switcher';
+import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
 import TutorialModal from 'components/tutorial/tutorial-modal';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import MenuSettings from 'components/mobile-only/menu-settings';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -42,7 +47,6 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   selectedFeaturedPlace,
   isGlobeUpdating,
-  isLegendActive,
   isMapsList,
   hasMetadata,
   activeLayers,
@@ -56,21 +60,30 @@ const DataGlobeComponent = ({
   spinGlobe,
   customFunctions,
   clickCallbacksArray,
-  mouseMoveCallbacksArray
+  mouseMoveCallbacksArray,
+  activeOption,
+  isLandscapeSidebarCollapsed,
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
+  const isOnMobile = isMobile();
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
+
   return (
     <>
-      <Switcher />
+      {!isMapsList && !isOnMobile && <Switcher />}
       <Scene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
-        style={{ pointerEvents: isMapsList || isFeaturedPlaceCard ? 'none' : '' }}
+        style={{ pointerEvents: (isMapsList || isFeaturedPlaceCard) && !isOnMobile ? 'none' : '' }}
       >
         {isGlobeUpdating && <Spinner floating />}
+        <MobileOnly>
+          <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} />
+          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <Slider />
+        </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
@@ -79,6 +92,7 @@ const DataGlobeComponent = ({
         {selectedFeaturedMap &&
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
+            activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
@@ -110,6 +124,7 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
+          activeOption={activeOption}
         />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
@@ -117,6 +132,7 @@ const DataGlobeComponent = ({
           selectedFeaturedPlace={selectedFeaturedPlace}
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
+          activeOption={activeOption}
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
@@ -126,29 +142,33 @@ const DataGlobeComponent = ({
           rasters={rasters}
           setRasters={setRasters}
           selectedSpecies={selectedSpecies}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          activeOption={activeOption}
         />
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-        {isLandscapeMode &&
-          <Legend
-            isFullscreenActive={isFullscreenActive}
-            activeLayers={activeLayers}
-            rasters={rasters}
-          />
-        }
+        <Legend
+          showLegend={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          activeLayers={activeLayers}
+          activeOption={activeOption}
+          rasters={rasters}
+        />
         <TutorialModal />
       </Scene>
       <FeaturedMapsList
-        className={uiStyles.uiTopLeft}
         selectedSidebar={selectedSidebar}
+        selectedFeaturedMap={selectedFeaturedMap}
+        selectedFeaturedPlace={selectedFeaturedPlace}
         isFullscreenActive={isFullscreenActive}
+        activeOption={activeOption}
         isLandscapeMode={isLandscapeMode}
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
-      {!selectedFeaturedPlace && <About />}
+      {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
   )
 }

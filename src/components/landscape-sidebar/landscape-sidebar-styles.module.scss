@@ -6,15 +6,34 @@ $margin: 20px;
 
 .sidebar {
   @extend %verticalScrollBar;
-  @include animationFunction();
   display: inline-block;
   box-sizing: border-box;
-  border-radius: 2px;
-  height: calc(100vh - 60px);
+  border-radius: 16px 16px 0 0;
+  height: 450px;
+  position: absolute;
+  bottom: 15px;
+  overflow-x: hidden;
+
+  @media #{$tablet-portrait} {
+    @include animationFunction();
+    height: calc(100vh - 60px);
+    border-radius: 2px;
+  }
+}
+
+.scrollDisabled {
+  overflow-y: hidden;
 }
 
 .wrapper {
   width: $sidebar-width;
   display: flex;
   flex-direction: column;
+  width: 100%;
+
+  @media #{$tablet-portrait} {
+    overflow-y: unset;
+    width: $sidebar-width;
+    height: 100%;
+  }
 }

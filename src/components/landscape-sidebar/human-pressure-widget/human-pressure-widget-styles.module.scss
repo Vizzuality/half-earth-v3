@@ -15,7 +15,11 @@
   font-size: 12px;
   letter-spacing: 2px;
   line-height: 20px;
-  padding: 20px 20px 0;
+  padding: $mobile-sidebar-side-paddings $mobile-sidebar-side-paddings 0;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings $sidebar-paddings 0;
+  }
 }
 
 .text {
@@ -23,7 +27,11 @@
   line-height: 16px;
   font-size: 12px;
   margin-bottom: 24px;
-  padding: 0 20px ;
+  padding: 0 $mobile-sidebar-side-paddings;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
 }
 
 .hint {
@@ -31,17 +39,25 @@
   line-height: 14px;
   font-size: 10px;
   letter-spacing: 1.5px;
-  padding: 20px 20px 0;
+  padding: $mobile-sidebar-side-paddings $mobile-sidebar-side-paddings 0;
   user-select: none;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings $sidebar-paddings 0;
+  }
 }
 
 .barContainer {
   align-items: center;
   display: flex;
   height: 32px;
-  margin: 38px 20px 20px;
+  margin: 38px $mobile-sidebar-side-paddings $mobile-sidebar-side-paddings;
   position: relative;
   width: 240px;
+
+  @media #{$tablet-portrait} {
+    margin: 38px $sidebar-paddings $sidebar-paddings;
+  }
 }
 
 .pressureFreeBar {
@@ -84,10 +100,14 @@
 .pressureFreeLabel {
   @extend  %bodyText;
   color: $white;
-  padding: 0 20px;
+  padding: 0 $mobile-sidebar-side-paddings;
   position: relative;
   margin: 8px 0 15px;
   width: max-content;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
 
   &:after {
     content: '';
@@ -100,8 +120,4 @@
     top: 6px;
     width: 10px;
   }
-}
-
-.dummyBlurWorkaround {
-  position: fixed;
 }

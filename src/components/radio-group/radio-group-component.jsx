@@ -6,6 +6,7 @@ import RadioButton from './radio-button/radio-button';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as SwitchIcon } from 'icons/switch.svg';
 import Tutorial from 'components/tutorial'
+import { isMobile } from 'constants/responsive';
 import { RARITY_RICHNESS_TUTORIAL } from 'constants/tutorial';
 
 import styles from './radio-group-styles.module.scss';
@@ -13,7 +14,7 @@ import styles from './radio-group-styles.module.scss';
 const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
-const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick }) => {
+const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick, isFullscreenActive }) => {
 
   const optionsLayers = [];
   options.forEach(option => {
@@ -30,6 +31,8 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
   const selectedLayer = selected && selected.layerId;
   const variant = (selected && selected.variant) || RARITY;
   const isRarityActive = variant === RARITY;
+
+  const isOnMobile = isMobile();
 
   const isSelected = (option) => !!(activeLayers.find(l => l.title === option.layers[variant]));
   const isLastSelected = (option) => {
@@ -91,7 +94,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
             key={option.value}
             position='top-right'
             tutorialID={RARITY_RICHNESS_TUTORIAL}
-            showTutorial={isSelected(option)}
+            showTutorial={!isFullscreenActive && !isOnMobile && isSelected(option)}
           >
             {renderRadioButton(option)}
           </Tutorial>

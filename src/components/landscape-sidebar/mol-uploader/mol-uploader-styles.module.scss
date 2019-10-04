@@ -2,9 +2,13 @@
 
 .wrapper {
   background-color: #031D2E;
-  padding: 20px;
+  padding: $mobile-sidebar-side-paddings;
   margin-bottom: 50px;
-  margin-top: $widgetsTopMargin;
+
+  @media #{$tablet-portrait} {
+    margin-top: $widgetsTopMargin;
+    padding: $sidebar-paddings;
+  }
 }
 
 .buttonContainer {

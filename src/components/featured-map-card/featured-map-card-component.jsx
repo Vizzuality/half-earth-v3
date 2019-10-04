@@ -18,6 +18,7 @@ const FeaturesMapCardComponent = ({
   handle
 }) => {
   const isOpen = selectedSidebar === 'featuredMapCard';
+  
   const isOnScreen = isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
 
   const handleClick = () => {
@@ -32,7 +33,7 @@ const FeaturesMapCardComponent = ({
 
   const isFeatureMapCardVisible = isOnScreen;
 
-  return (
+  return (featuredMap && (
     <div className={cx(className, styles.cardContainer, { [animationStyles.leftHidden]: !isFeatureMapCardVisible, [styles.delayOnOut]: isFeatureMapCardVisible })}>
       <section
         className={styles.titleSection}
@@ -51,7 +52,7 @@ const FeaturesMapCardComponent = ({
           <ChevronIcon className={styles.arrowIcon}/>
         </button>
       </section>
-    </div>
+    </div>) || null
   )
 }
 

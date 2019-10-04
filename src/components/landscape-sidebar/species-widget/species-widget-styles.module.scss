@@ -4,9 +4,13 @@
 
 .container {
   @include backdropBlur();
-  padding: 20px;
-  width: 280px;
+  padding: $mobile-sidebar-side-paddings;
+  width: 100%;
   margin-top: $widgetsTopMargin;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
 }
 
 .title {

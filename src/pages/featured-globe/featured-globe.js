@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
-import { DATA } from 'router';
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { 
@@ -15,16 +14,13 @@ import {
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
 } from 'constants/layers-groups';
 
-import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
 
 import mapStateToProps from './featured-globe-selectors';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-const handleSwitch = createAction(DATA);
-
-const actions = { ...featuredMapsActions, ...urlActions, handleSwitch}
+const actions = { ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
@@ -38,7 +34,7 @@ const feturedGlobeContainer = props => {
   }
   const handleMarkerHover = (viewPoint, view) => {
     setCursor(viewPoint, FEATURED_PLACES_LAYER);
-    setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+    if (!isFeaturedPlaceCard) setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
   };
 
   useEffect(() => {

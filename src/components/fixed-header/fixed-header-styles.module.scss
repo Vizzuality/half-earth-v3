@@ -2,13 +2,19 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+$icon-size: 25px;
+
 .header {
   padding-top: $sidebar-margin;
-  padding-left: $sidebar-paddings;
+  padding-left: $mobile-sidebar-side-paddings;
   display: flex;
   flex-direction: column;
   height: $sidebar-header-height;
   position: relative;
+
+  @media #{$tablet-portrait} {
+    padding-left: $sidebar-paddings;
+  }
 }
 
 .higherHeader {
@@ -44,7 +50,25 @@
 
 .icon {
   transform: rotate(180deg);
-  height: 25px;
+  background-image: url('../../assets/icons/arrow_expand.svg');
+  height: $icon-size;
+  width: $icon-size;
+}
+
+.flipToggleSwitchIcon {
+  cursor: pointer;
+  position: absolute;
+  height: $icon-size;
+  width: $icon-size;
+  right: 20px;
+  top: 32px;
+  transform: rotate(90deg);
+  background-image: url('../../assets/icons/arrow_expand.svg');
+}
+
+.collapsedFlipToggleSwitchIcon {
+  transform: rotate(-90deg);
+  top: 35px;
 }
 
 .backButton {
@@ -54,14 +78,23 @@
 
 .title {
   @extend %headline;
+  font-size: 24px;
   color: $white;
   margin-top: 5px;
+  margin-right: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 10px;
   margin-bottom: 0;
+  padding-bottom: 10px;
   display: flex; 
   flex-direction: column;
+
+  @media #{$tablet-portrait} {
+    padding-bottom: 0;
+    margin-right: 0;
+    font-size: 32px;
+  }
 }
 
 .spacer {

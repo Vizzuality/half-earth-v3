@@ -28,13 +28,14 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
-const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
-const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
-const getIsLegendActive = createSelector(getActiveLayers, activeLayers => activeLayers.some(layer => LEGEND_FREE_LAYERS.some( l => l === layer.title)));
+const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
+export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
+const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
+const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
+const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -44,11 +45,12 @@ export default createStructuredSelector({
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
-  isLegendActive: getIsLegendActive,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   rasters: getRasters,
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
-  selectedSpecies: getSelectedSpecies
+  selectedSpecies: getSelectedSpecies,
+  activeOption: getActiveOption, // mobile
+  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
 })

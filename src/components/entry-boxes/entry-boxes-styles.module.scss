@@ -1,0 +1,39 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+
+.entryBoxesPosition {
+  @include bottom();
+  top: auto;
+  overflow-y: hidden;
+  
+  // entry box spacer
+  & > *:not(:last-child)::after {
+    @extend %spacer;
+    content: '';
+    left: 0;
+    height: 1px;
+    position: absolute;
+    width: 100%;
+    z-index: 15;
+  }
+
+  // entry box border-radius
+  & > *:first-child > div:first-child {
+    border-radius: 16px 16px 0 0;
+  }
+
+  @media #{$tablet-portrait} {
+    bottom: auto;
+    width: $sidebar-width + 40px;
+    @include topLeft();
+
+
+    & > *:first-child > div:first-child {
+      border-radius: 2px;
+    }
+
+    & > *::after {
+      display: none;
+    }
+  }
+}

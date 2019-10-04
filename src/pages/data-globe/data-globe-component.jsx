@@ -2,7 +2,6 @@ import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import DataGlobalSidebar from 'components/data-global-sidebar';
@@ -14,8 +13,11 @@ import TutorialModal from 'components/tutorial/tutorial-modal';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import Switcher from 'components/switcher';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import MenuSettings from 'components/mobile-only/menu-settings';
+import Slider from 'components/slider';
+import { MobileOnly, isMobile } from 'constants/responsive';
 import About from 'components/about';
-
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -32,15 +34,19 @@ const DataGlobeComponent = ({
   activeCategory,
   isLandscapeMode,
   isBiodiversityActive,
+  isLandscapeSidebarCollapsed,
   isGlobeUpdating,
-  isLegendActive,
   hasMetadata,
   activeLayers,
   rasters,
   handleMapLoad,
   handleGlobeUpdating,
-  setRasters
+  setRasters,
+  activeOption,
 }) => {
+
+  const isOnMobile = isMobile();
+
   return (
     <>
       <Scene
@@ -50,12 +56,22 @@ const DataGlobeComponent = ({
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       >
         {isGlobeUpdating && <Spinner floating />}
-        <Switcher />
+        <MobileOnly>
+          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
+          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <Slider />
+        </MobileOnly>
+        {!isOnMobile && <Switcher />}
+        <ArcgisLayerManager activeLayers={activeLayers}/>
+        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <ArcgisLayerManager activeLayers={activeLayers} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
         <DataGlobalSidebar
           isSidebarOpen={isSidebarOpen}
+          activeOption={activeOption}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
@@ -65,10 +81,18 @@ const DataGlobeComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
           setRasters={setRasters}
         />
+        <Legend
+          isFullscreenActive={isFullscreenActive}
+          activeLayers={activeLayers}
+          activeOption={activeOption}
+          rasters={rasters}
+        />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
+          activeOption={activeOption}
           activeLayers={activeLayers}
           rasters={rasters}
           setRasters={setRasters}
@@ -78,17 +102,10 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-        {isLegendActive &&
-          <Legend
-            isFullscreenActive={isFullscreenActive}
-            activeLayers={activeLayers}
-            rasters={rasters}
-          />
-        }
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
-      <About />
+      {!isOnMobile && <About />}
     </>
   )
 }

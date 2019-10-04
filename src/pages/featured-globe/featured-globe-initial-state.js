@@ -43,7 +43,8 @@ export default {
     selectedFeaturedMap: 'priorPlaces',
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
-    isFullscreenActive: false
+    isFullscreenActive: false,
+    activeOption: 'add_layer', // mobile
   },
   listeners: false
 }

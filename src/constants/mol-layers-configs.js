@@ -62,7 +62,6 @@ export const LAYERS_CATEGORIES = {
   LAND_PRESSURES: 'Human pressures'
 }
 
-
 export const biodiversityCategories = [
   {
     name: 'TERRESTRIAL SPECIES',

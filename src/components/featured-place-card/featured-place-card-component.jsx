@@ -3,6 +3,8 @@ import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
+import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
@@ -14,10 +16,13 @@ const FeaturedPlaceCardComponent = ({
   handleAllMapsClick,
   handleNextPlaceClick,
   handlePrevPlaceClick,
-  handleLandscapeTrigger
+  handleLandscapeTrigger,
+  activeOption
 }) => {
 
+  const isOnMobile = isMobile();
   const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
+  const visibleOnMobile = isOnMobile && activeOption === FOOTER_OPTIONS.ADD_LAYER && selectedFeaturedPlace;
   
   const contentWrapper = useRef();
   useEffect(() => {
@@ -25,15 +30,16 @@ const FeaturedPlaceCardComponent = ({
   }, [featuredPlace])
 
   return (
-    <div className={styles.container}>
-      <div className={cx(styles.content, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
+    <div className={cx(styles.container, { [animationStyles.bottomHidden]: !visibleOnMobile && isOnMobile })}>
+      <div className={cx(styles.content, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile })}>
         <nav className={styles.navigation}>
           <div
             className={styles.backToMap}
             onClick={handleAllMapsClick}
           >
             <ChevronIcon className={styles.arrowIcon}/>
-            {featuredMap && <h3 className={styles.text}>{featuredMap.title}</h3>}
+            {isOnMobile && <h3 className={styles.text}>Back</h3>}
+            {featuredMap && !isOnMobile && <h3 className={styles.text}>{featuredMap.title}</h3>}
           </div>
           <div className={styles.placesNavigator}>
             <div
@@ -51,10 +57,13 @@ const FeaturedPlaceCardComponent = ({
             </div>
           </div>
         </nav>
+        {isOnMobile && <div className={styles.spacerContainer}>
+          <div className={styles.spacer} />
+        </div>}
         <section className={styles.card}>
           {featuredPlace &&
             <>
-              <div className={styles.landscapeTriggerContainer}>
+              {!isOnMobile && <div className={styles.landscapeTriggerContainer}>
                 <img
                   src={featuredPlace.image}
                   className={styles.picture}
@@ -68,10 +77,21 @@ const FeaturedPlaceCardComponent = ({
                   <GoToIcon className={styles.icon} />
                   <span className={styles.landscapeTriggerText}>explore this area</span>
                 </button>
-              </div>
+              </div>}
               <div className={styles.contentContainer}>
+                {isOnMobile && (
+                  <>
+                    <h2 className={styles.title}>{featuredPlace.title}</h2>
+                    <img
+                      src={featuredPlace.image}
+                      className={styles.picture}
+                      alt={featuredPlace.title}
+                      onClick={handleLandscapeTrigger}
+                    />
+                  </>
+                )}
                 <div className={styles.contentWrapper} ref={contentWrapper}>
-                  <h2 className={styles.title}>{featuredPlace.title}</h2>
+                  {!isOnMobile && <h2 className={styles.title}>{featuredPlace.title}</h2>}
                   <div>
                     <p className={styles.text}>
                       {featuredPlace.description}
@@ -83,7 +103,12 @@ const FeaturedPlaceCardComponent = ({
             </>
           }
         </section>
-      </div>
+        {isOnMobile && (
+          <div className={styles.exploreAreaButtonContainer}>
+            <button onClick={handleLandscapeTrigger} className={styles.exploreAreaButton}>Explore this area</button>
+          </div>
+        )}
+        </div>
     </div>
   )
 }

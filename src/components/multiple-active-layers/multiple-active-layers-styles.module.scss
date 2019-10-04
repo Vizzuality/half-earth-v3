@@ -9,7 +9,11 @@
 
 .titleSection {
   display: flex;
-  padding: 0 $sidebar-paddings;
+  padding: 0 $mobile-sidebar-side-paddings;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
 }
 
 .widgetTitle {
@@ -25,5 +29,9 @@
   @extend %annotation;
   margin-top: 0;
   margin-bottom: 20px;
-  padding: 0 $sidebar-paddings;
+  padding: 0 $mobile-sidebar-side-paddings;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
 }

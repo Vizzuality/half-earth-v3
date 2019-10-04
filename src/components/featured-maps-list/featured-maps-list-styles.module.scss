@@ -9,30 +9,60 @@ $scrollbar-gutter: 15px;
 .cardsContainer {
   display: flex;
   flex-direction: column;
-  width: $sidebar-width + $scrollbar-gutter;
   border-radius: 2px;
-  @include animationFunction();
+  width: 100%;
+  @include bottom();
+
+  @media #{$tablet-portrait} {
+    @include topLeft();
+    @include animationFunction();
+    width: $sidebar-width + $scrollbar-gutter;
+  }
 }
 
 .delayOnIn {
-  @include animationFunction($delay: 200ms);
+  @media #{$tablet-portrait} {
+    @include animationFunction($delay: 200ms);
+  }
 }
 
 .scrollable {
-  height: 600px;
-  @extend %verticalScrollbarStyled;
+
+  @media #{$tablet-portrait} {
+    height: 600px; // %verticalScrollbarStyled styles, cannot use @extend inside @media
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: rgba($wild-sand, 0.2);
+    } 
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: $alto;
+    }
+  }
 }
 
 .card {
   @include backdropBlur();
   background-color: $brand-color-secondary;
-  margin-bottom: 5px;
-  margin-right: $scrollbar-gutter;
   cursor: pointer;
+  // height: 100%;
+
+  @media #{$tablet-portrait} {
+    margin-right: $scrollbar-gutter;
+    margin-bottom: 5px;
+    height: unset;
+  }
 }
 
 .border {
-  border: 1px solid $white;
+  border: unset;
+
+  @media #{$tablet-portrait} {
+    border: 1px solid $white;
+  }
 }
 
 .titleSection {
@@ -57,19 +87,44 @@ $scrollbar-gutter: 15px;
 .description {
   @extend %bodyText;
   color: white;
+  padding-bottom: 50px;
+  padding-top: 22px;
+  margin: 0;
+
+  @media #{$tablet-portrait} {
+    margin: 14px 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.selectMapButtonContainer {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 22px;
+}
+
+.selectMapButton {
+  @extend %titleMobile;
+  padding: 10px 40px;
+  color: $firefly;
+  background-color: $robins-egg-blue;
 }
 
 .button {
-  display: flex;
-  align-items: center;
-  font-size: $font-size-xxs;
-  font-weight: $font-weight-bold;
-  font-family: $font-family-1;
-  letter-spacing: 2px;
-  color: $robins-egg-blue;
-  padding: 0;
-  margin-left: -8px; // svg icon has some padding
-  margin-bottom: 20px;
+  display: none;
+
+  @media #{$tablet-portrait} {
+    display: flex;
+    align-items: center;
+    font-size: $font-size-xxs;
+    font-family: $font-family-1;
+    letter-spacing: 2px;
+    color: $robins-egg-blue;
+    padding: 0;
+    margin-left: -8px; // svg icon has some padding
+    margin-bottom: 20px;
+  }
 }
 
 .icon {
@@ -80,4 +135,8 @@ $scrollbar-gutter: 15px;
 .backButton {
   @extend %subtitle;
   margin-top: 4px;
+}
+
+.hidden {
+  display: none;
 }

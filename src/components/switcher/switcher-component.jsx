@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'redux-first-router-link';
 import styles from './switcher-styles.module';
 
-const Switcher = ({ route, handleClick }) => {
+const Switcher = ({ route }) => {
   const isDataGlobe = route.path === '/dataGlobe';
   const experienceText = isDataGlobe ? 'featured maps': 'explore data';
   return (
