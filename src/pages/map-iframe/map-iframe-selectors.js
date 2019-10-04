@@ -26,6 +26,7 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 const getPledgesActiveQuery = ({ location }) => location.query && (location.query.isPledgesActive || initialState.isPledgesActive);
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
+export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getPledgesActive = createSelector(getPledgesActiveQuery, pledgesActiveQuery => pledgesActiveQuery)
@@ -33,6 +34,7 @@ const getPledgesActive = createSelector(getPledgesActiveQuery, pledgesActiveQuer
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
+  rasters: getRasters,
   isLandscapeMode: getLandscapeMode,
   sceneSettings: getSceneSettings,
   isGlobeUpdating: getGlobeUpdating,

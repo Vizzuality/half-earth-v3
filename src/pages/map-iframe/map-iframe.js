@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import postRobot from 'post-robot';
 
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 
 import { LAND_HUMAN_PRESSURES_IMAGE_LAYER, PLEDGES_LAYER } from 'constants/layers-slugs';
 import { PLEDGES_LAYER_URL } from 'constants/layers-urls';
@@ -18,6 +18,7 @@ import mapStateToProps from './map-iframe-selectors';
 import pledgeLightIcon from 'icons/pledge.svg'
 
 import ownActions from './map-iframe-actions.js';
+import { handleLayerCreation } from '../../utils/layer-manager-utils.js';
 const actions = { ...ownActions };
 
 const pledgeLight = {
@@ -34,12 +35,22 @@ const pledgeLight = {
 };
 
 const handleMapLoad = (map, view, activeLayers, isPledgesActive) => {
-  const { layers } = map;
 
   // This fix has been added as a workaround to a bug introduced on v4.12
   // The bug was causing the where clause of the mosaic rule to not work
   // It will be probably fixed on v4.13
-  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
+  const humanImpactLayer = handleLayerCreation(layerConfig, map);
+  loadModules(["esri/config"]).then(([esriConfig]) => {
+    esriConfig.request.interceptors.push({
+      urls: `${humanImpactLayer.url}/exportImage`,
+      before: function (params) {
+        if(params.requestOptions.query.mosaicRule) {
+          params.requestOptions.query.mosaicRule = JSON.stringify(humanImpactLayer.mosaicRule.toJSON());
+        }
+      }
+    });
+  })
 
   // pledges layer
   loadModules([
@@ -59,28 +70,15 @@ const handleMapLoad = (map, view, activeLayers, isPledgesActive) => {
     layer.visible = activeLayers.find(l => l.title === PLEDGES_LAYER) || isPledgesActive === 'true';
     map.add(layer);
   })
-  
-  loadModules(["esri/config"]).then(([esriConfig]) => {
-    esriConfig.request.interceptors.push({
-      urls: `${humanImpactLayer.url}/exportImage`,
-      before: function (params) {
-        if(params.requestOptions.query.mosaicRule) {
-          params.requestOptions.query.mosaicRule = JSON.stringify(humanImpactLayer.mosaicRule.toJSON());
-        }
-      }
-    });
-  })
 
   const biodiversityLayerIDs = activeLayers
     .filter(({ category }) => category === "Biodiversity")
     .map(({ id }) => id);
 
-  const biodiversityLayers = layersConfig
-    .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
-
-    biodiversityLayers.forEach(layer => {
-      const newLayer = createLayer(layer, map);
-      addLayerToMap(newLayer);
+  biodiversityLayerIDs.forEach(layerName => {
+      const layerConfig = layersConfig[layerName];
+      const newLayer = createLayer(layerConfig);
+      addLayerToMap(newLayer, map);
     });
 }
 

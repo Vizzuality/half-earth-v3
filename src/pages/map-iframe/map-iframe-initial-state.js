@@ -11,7 +11,7 @@ export default {
     ],
     rasters: {},
     zoom: 3,
-    center: [16.9515536, 51.116959],
+    center: [-101.333725377852, 30.853578317760405],
     isGlobeUpdating: false
   },
   ui: {
