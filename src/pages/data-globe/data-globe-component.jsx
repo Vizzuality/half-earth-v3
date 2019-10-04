@@ -36,7 +36,6 @@ const DataGlobeComponent = ({
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
   isGlobeUpdating,
-  isLegendActive,
   hasMetadata,
   activeLayers,
   rasters,
@@ -86,6 +85,7 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
           activeOption={activeOption}
+          rasters={rasters}
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
@@ -102,13 +102,6 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-        {isLegendActive &&
-          <Legend
-            isFullscreenActive={isFullscreenActive}
-            activeLayers={activeLayers}
-            rasters={rasters}
-          />
-        }
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}

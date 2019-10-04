@@ -47,7 +47,6 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   selectedFeaturedPlace,
   isGlobeUpdating,
-  isLegendActive,
   isMapsList,
   hasMetadata,
   activeLayers,
