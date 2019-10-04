@@ -17,10 +17,6 @@
 .title {
   @extend %headline;
   color: $white;
-  font-family: $font-family-1;
-  font-size: $font-size-xl;
-  letter-spacing: 1px;
-  line-height: 30px;
   margin-bottom: 40px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
   padding: 20px;
