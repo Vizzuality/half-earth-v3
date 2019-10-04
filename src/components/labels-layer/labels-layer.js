@@ -5,6 +5,19 @@ import { LABELS_LAYERS } from 'constants/layers-groups';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { stylesConfig } from './labels-layer-styles-config';
 
+const labelsStylesSlugs = [
+  'style_1_ter',
+  'style_2_ter',
+  'style_3_ter',
+  'style_4_ter',
+  'style_1_aq',
+  'style_2_aq',
+  'style_3_aq',
+  'style_4_aq',
+  'Capital_style',
+  'Other_style'
+];
+
 const labelClassFactory = (LabelClassConstructor, styleGroup) => {
   const config = stylesConfig[styleGroup];
   return new LabelClassConstructor({
@@ -36,16 +49,7 @@ const LabelsLayer = props => {
   useEffect(() => {
     loadModules(["esri/layers/support/LabelClass"])
     .then(([labelClassConstructor]) => {
-      var style_1_ter = labelClassFactory(labelClassConstructor, 'style_1_ter');
-      var style_2_ter = labelClassFactory(labelClassConstructor, 'style_2_ter');
-      var style_3_ter = labelClassFactory(labelClassConstructor, 'style_3_ter');
-      var style_4_ter = labelClassFactory(labelClassConstructor, 'style_4_ter');
-      var style_1_aq = labelClassFactory(labelClassConstructor, 'style_1_aq');
-      var style_2_aq = labelClassFactory(labelClassConstructor, 'style_2_aq');
-      var style_3_aq = labelClassFactory(labelClassConstructor, 'style_3_aq');
-      var style_4_aq = labelClassFactory(labelClassConstructor, 'style_4_aq');
-      var style_city_capital = labelClassFactory(labelClassConstructor, 'Capital_style');
-      var style_city_other = labelClassFactory(labelClassConstructor, 'Other_style');
+      const labelingInfo = labelsStylesSlugs.map(slug => labelClassFactory(labelClassConstructor, slug))
       // Add layers to map and style them
       LABELS_LAYERS.forEach( layerName => {
         const layerConfig = layersConfig[layerName];
@@ -54,18 +58,7 @@ const LabelsLayer = props => {
             layer.opacity = 1;
             layer.visible = true;
             layer.labelsVisible = true;
-            layer.labelingInfo = [
-              style_1_ter,
-              style_2_ter,
-              style_3_ter,
-              style_4_ter,
-              style_1_aq,
-              style_2_aq,
-              style_3_aq,
-              style_4_aq,
-              style_city_capital,
-              style_city_other
-            ];
+            layer.labelingInfo = labelingInfo;
           });
       })
     })
