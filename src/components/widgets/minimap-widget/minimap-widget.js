@@ -42,7 +42,7 @@ const MinimapWidget = (props) => {
 
   return (
     <div style={{ display: hidden ? 'none' : 'block' }}>
-      {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
+      <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>
       {isModalOpen && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
     </div>
   );
