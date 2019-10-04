@@ -3,12 +3,12 @@
 @import 'styles/typography-extends';
 
 .wrapper {
-  bottom: 20px;
   overflow: hidden;
   @include bottom();
 
   @media #{$tablet-portrait} {
     width: unset;
+    bottom: 20px;
     left: calc(50% - 250px);
   }
 }
