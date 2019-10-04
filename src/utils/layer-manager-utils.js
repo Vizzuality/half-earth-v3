@@ -1,9 +1,25 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
+import { intersection } from 'lodash';
 import { loadModules } from 'esri-loader';
 import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
-
 import { DEFAULT_OPACITY } from 'constants/mol-layers-configs';
+
+export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
+  const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
+  const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
+  if (areActive) {
+    const updatedLayers = layerNamesArray.reduce((acc, title) => {
+      return [...acc.filter(l => l.title !== title)];
+    }, activeLayers);
+    callback({activeLayers: updatedLayers });
+  } else {
+    const layersToAdd = layerNamesArray.map(title => ({ title, category, opacity: DEFAULT_OPACITY }));
+    activeLayers
+      ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
+      : callback({ activeLayers: layersToAdd });
+  }
+}
 
 export const layerManagerToggle = (layerTitle, activeLayers, callback, category) => {
   const title = layerTitle;
@@ -35,6 +51,11 @@ export const layerManagerVisibility = (layerTitle, visible, activeLayers, callba
       ? callback({ activeLayers: [{ title, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { title, opacity: DEFAULT_OPACITY }] });
   }
+};
+
+export const batchLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
+  const setOpacity = (layer) => layerNamesArray.includes(layer.title) ? { ...layer, opacity } : layer;
+  callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
 };
 
 export const layerManagerOpacity = (layerTitle, opacity, activeLayers, callback) => {

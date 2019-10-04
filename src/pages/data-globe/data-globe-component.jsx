@@ -17,6 +17,7 @@ import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
+import About from 'components/about';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -111,6 +112,7 @@ const DataGlobeComponent = ({
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
+      <About />
     </>
   )
 }
