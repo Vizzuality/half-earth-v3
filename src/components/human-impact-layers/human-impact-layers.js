@@ -24,7 +24,7 @@ const HumanImpactLayersContainer = props => {
       ...acc, [option.value]: rasters[option.value]
     }), {})) || {};
     setCheckedOptions(alreadyChecked);
-  }, [])
+  }, [rasters, activeLayers])
 
   return (
     <Component
