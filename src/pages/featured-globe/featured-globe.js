@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
-import { DATA } from 'router';
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { 
@@ -35,7 +34,7 @@ const feturedGlobeContainer = props => {
   }
   const handleMarkerHover = (viewPoint, view) => {
     setCursor(viewPoint, FEATURED_PLACES_LAYER);
-    setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+    if (!isFeaturedPlaceCard) setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
   };
 
   useEffect(() => {

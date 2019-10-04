@@ -14,7 +14,7 @@ import styles from './radio-group-styles.module.scss';
 const RARITY = 'rarity';
 const RICHNESS = 'richness';
 
-const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick }) => {
+const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, handleExclusiveLayerToggle, handleInfoClick, isFullscreenActive }) => {
 
   const optionsLayers = [];
   options.forEach(option => {
@@ -94,7 +94,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
             key={option.value}
             position='top-right'
             tutorialID={RARITY_RICHNESS_TUTORIAL}
-            showTutorial={!isOnMobile && isSelected(option)}
+            showTutorial={!isFullscreenActive && !isOnMobile && isSelected(option)}
           >
             {renderRadioButton(option)}
           </Tutorial>

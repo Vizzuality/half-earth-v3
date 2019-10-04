@@ -34,6 +34,7 @@ const DataGlobeSidebarComponent = ({
           biodiversityCategories.map(cat => (
             <BiodiversityLayers
               key={cat.name}
+              isFullscreenActive={isFullscreenActive}
               title={cat.name}
               description={cat.description}
               subcategories={cat.subcategories}
