@@ -1,6 +1,6 @@
 // Docs for Locate ui widget
 // https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Locate.html
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';

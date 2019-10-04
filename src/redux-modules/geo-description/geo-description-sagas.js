@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { esriGeometryToGeojson } from 'utils/geojson-parser';
 import { all, takeLatest, call, select, put, cancelled } from 'redux-saga/effects';
 import geoDescriberActions from './geo-description-actions';

@@ -4,7 +4,6 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@esri/react-arcgis": "^4.0.0",
     "@loadable/component": "^5.10.1",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",

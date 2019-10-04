@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 
 const exaggeratedElevationLayerComponent = ({ map, exaggeration = 2}) => {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { handleLayerCreation } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';

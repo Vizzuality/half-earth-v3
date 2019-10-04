@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 
 const NavigationToggleWidgetComponent = ({ view }) => {

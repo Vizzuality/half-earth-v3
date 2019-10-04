@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { isEqual, flattenDeep } from 'lodash';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 

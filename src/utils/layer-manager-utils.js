@@ -1,5 +1,5 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 

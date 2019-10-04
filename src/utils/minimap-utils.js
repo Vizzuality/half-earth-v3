@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 
 // Sample code for disabling interactions with the globe
 // https://developers.arcgis.com/javascript/latest/sample-code/view-disable-zoom/index.html

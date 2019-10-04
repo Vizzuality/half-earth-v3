@@ -1,6 +1,6 @@
 // Docs for Search ui widget
 //https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Search.html
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent } from 'actions/google-analytics-actions';
