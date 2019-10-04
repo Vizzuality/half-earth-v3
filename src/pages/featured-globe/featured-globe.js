@@ -13,6 +13,7 @@ import {
 import { 
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
 } from 'constants/layers-groups';
+import { isMobile } from 'constants/responsive';
 
 import Component from './featured-globe-component.jsx';
 
@@ -24,6 +25,7 @@ const actions = { ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
+  const isOnMobile = isMobile();
   const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard, isFullscreenActive } = props;
 
   const handleMarkerClick = (viewPoint, view) => {
@@ -33,8 +35,10 @@ const feturedGlobeContainer = props => {
     }
   }
   const handleMarkerHover = (viewPoint, view) => {
-    setCursor(viewPoint, FEATURED_PLACES_LAYER);
-    if (!isFeaturedPlaceCard) setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+    if (!isOnMobile) {
+      setCursor(viewPoint, FEATURED_PLACES_LAYER);
+      if (!isFeaturedPlaceCard) setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+    }
   };
 
   useEffect(() => {
