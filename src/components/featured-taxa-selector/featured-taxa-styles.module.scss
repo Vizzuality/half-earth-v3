@@ -22,9 +22,10 @@
   height: 80px;
   width: 100%;
   border-radius: 2px;
-  padding: 10px 0;
+  padding: 10px 14px 10px 12px;
 
   @media #{$tablet-portrait} {
+    padding: 10px 0;
     width: 500px;
   }
 }
