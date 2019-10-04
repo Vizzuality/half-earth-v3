@@ -42,11 +42,6 @@ const MenuFooterContainer = props => {
     if (activeOption !== FOOTER_OPTIONS.SEARCH && searchWidget) handleCloseSearch();
   }, [activeOption])
 
-  useEffect(() => {
-    // reset selected featured map - on desktop default one is bestPlaces
-    if (featured) { resetFeaturedMap() }
-  }, [featured])
-
   const handleSearchToggle = () => {
     if (!searchWidget) { handleOpenSearch() }
     else { handleCloseSearch() }
