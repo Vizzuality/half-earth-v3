@@ -16,7 +16,7 @@ const WidgetsComponent = ({ map, view, isFullscreenActive, isNotMapsList = true,
       <ToggleUiWidget map={map} view={view} isFullscreenActive={isFullscreenActive} hidden={hiddenWidget}/>
       <ZoomWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
       <MinimapWidget map={map} view={view} hidden={hiddenWidget} />
-      <SearchWidget map={map} view={view} hidden={hiddenWidget} />
+      {!isOnMobile && <SearchWidget map={map} view={view} hidden={hiddenWidget} />}
       <LocationWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
     </>
   )
