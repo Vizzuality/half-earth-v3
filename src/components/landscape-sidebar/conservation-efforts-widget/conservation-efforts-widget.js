@@ -5,8 +5,10 @@ import conservationEffortsActions from 'redux_modules/conservation-efforts';
 
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
-import { handleLayerCreation } from 'utils/layer-manager-utils';
+import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manager-utils';
 import { layersConfig } from 'constants/mol-layers-configs';
+import { COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 import * as urlActions from 'actions/url-actions';
 
 import { 
@@ -76,15 +78,23 @@ const ConservationEffortsWidget = (props) => {
     }
   }, [terrestrialCellData])
 
-  const toggleLayer = (layersPassed, option) => {
-      const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
+  const handleLayerToggle = (layersPassed, option) => {
+    const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, activeCategory, map } = props;
+    if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
+      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(layerName => {
+        const layerConfig = layersConfig[layerName];
+        handleLayerCreation(layerConfig, map);
+      })
+      batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, activeCategory);
+    } else {
       const layer = layersConfig[option.title];
       handleLayerCreation(layer, map);
-      layerManagerToggle(layer.slug, activeLayers, changeGlobe, 'Existing protection');
+      layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
       removeLayerAnalyticsEvent({ slug: layer.slug });
+    }
   }
 
-  return <Component {...props} toggleLayer={toggleLayer} />;
+  return <Component {...props} toggleLayer={handleLayerToggle} />;
 }
 
 export default connect(mapStateToProps, actions)(ConservationEffortsWidget);
