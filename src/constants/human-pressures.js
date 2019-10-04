@@ -3,13 +3,13 @@ import {
 } from 'constants/layers-slugs';
 
 export const HUMAN_PRESSURES_COLOR_RAMP = [
-  "#ffffcc",
-  "#c7e9b4",
-  "#7fcdbb",
-  "#41b6c4",
-  "#1d91c0",
-  "#225ea8",
-  "#0c2c84"
+  "#f3e0f7",
+  "#d1afe8",
+  "#b998dd",
+  "#9f82ce",
+  "#826dba",
+  "#3f3576",
+  "#282052"
 ]
 
 const RAINFED = 'Rainfed agriculture';

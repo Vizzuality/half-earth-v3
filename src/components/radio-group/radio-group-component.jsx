@@ -43,6 +43,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
       { [styles.radioOptionSelected]: isSelected(option) }
     )}>
       <RadioButton
+        key={option.value}
         name={title}
         value={option.value}
         checked={isSelected(option)}
@@ -87,6 +88,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
       {options.map(option => (
         isLastSelected(option) ? (
           <Tutorial
+            key={option.value}
             position='top-right'
             tutorialID={RARITY_RICHNESS_TUTORIAL}
             showTutorial={isSelected(option)}

@@ -1,122 +1,70 @@
 import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
-import { biodiversityCategories } from 'constants/mol-layers-configs';
-import Globe from 'components/globe';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
+
+
+import Scene from 'components/scene';
+import Widgets from 'components/widgets';
+import DataGlobalSidebar from 'components/data-global-sidebar';
 import LandscapeViewManager from 'components/landscape-view-manager';
+import Legend from 'components/legend';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-import ProtectedAreasTooltips from 'components/protected-areas-tooltips';
+import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import TutorialModal from 'components/tutorial/tutorial-modal';
 import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
-
-import EntryBoxes from 'components/entry-boxes';
-import Sidebar from 'components/sidebar';
+import Switcher from 'components/switcher';
 import About from 'components/about';
-import Legend from 'components/legend';
-import TutorialModal from 'components/tutorial/tutorial-modal';
 
-// WIDGETS
-import LocationWidget from 'components/widgets/location-widget';
-import ZoomWidget from 'components/widgets/zoom-widget';
-import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
-import SearchWidget from 'components/widgets/search-widget';
-import MinimapWidget from 'components/widgets/minimap-widget';
 
-// Lazy load components
+const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
-const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
-const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
-const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
-const InfoModal = loadable(() => import('components/modal-metadata'));
-const Switcher = loadable(() => import('components/switcher'));
+const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
-// const { REACT_APP_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
-const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID, REACT_APP_IS_FEATURE_MAPS_ENABLED: IS_FEATURE_MAPS_ENABLED } = process.env;
+const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const DataGlobeComponent = ({
-  activeLayers,
-  rasters,
-  setRasters,
-  activeCategory,
-  isLandscapeMode,
+  sceneSettings,
   isFullscreenActive,
   isSidebarOpen,
+  selectedSpecies,
+  activeCategory,
+  isLandscapeMode,
+  isBiodiversityActive,
   isGlobeUpdating,
+  isLegendActive,
   hasMetadata,
-  handleZoomChange,
-  handleLayerToggle,
-  setLayerVisibility,
-  sceneSettings,
+  activeLayers,
+  rasters,
+  handleMapLoad,
   handleGlobeUpdating,
-  exclusiveLayerToggle,
-  onLoad,
-  setLayerOpacity,
-  setLayerOrder,
-  handleSwitch,
-  selectedSpecies
+  setRasters
 }) => {
-  const isBiodiversityActive = activeCategory === 'Biodiversity';
-  const isHumanPressuresActive = activeCategory === 'Human pressures';
-  const isProtectedAreasActive = activeCategory === 'Existing protection';
-
   return (
     <>
-      <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad} loadElement={<Spinner spinnerWithOverlay />}>
+      <Scene
+        sceneId='e96f61b2e79442b698ec2cec68af6db9'
+        sceneSettings={sceneSettings}
+        loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+      >
         {isGlobeUpdating && <Spinner floating />}
-        <ArcgisLayerManager activeLayers={activeLayers}/>
-        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-        <LocationWidget isNotMapsList={true} />
-        <ToggleUiWidget isFullscreenActive={isFullscreenActive} />
-        <ZoomWidget isNotMapsList={true} />
-        {IS_FEATURE_MAPS_ENABLED === 'true' && <Switcher handleClick={handleSwitch} />}
-        <MinimapWidget />
-        <SearchWidget />
-        <EntryBoxes isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}/>
-        <Sidebar isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode}>
-          {isBiodiversityActive && (
-            biodiversityCategories.map(cat => (
-              <BiodiversityLayers
-                key={cat.name}
-                title={cat.name}
-                description={cat.description}
-                subcategories={cat.subcategories}
-                options={cat.taxa}
-                activeLayers={activeLayers}
-                handleGlobeUpdating={handleGlobeUpdating}
-                exclusiveLayerToggle={exclusiveLayerToggle}
-                handleLayerToggle={handleLayerToggle}
-              />
-            ))
-          )}
-          {isHumanPressuresActive && (
-            <HumanImpactLayers
-              setLayerVisibility={setLayerVisibility}
-              handleGlobeUpdating={handleGlobeUpdating}
-              activeLayers={activeLayers}
-              rasters={rasters}
-              setRasters={setRasters}
-            />
-          )}
-          {isProtectedAreasActive && (
-            <ProtectedAreasLayers
-              handleLayerToggle={handleLayerToggle}
-              handleGlobeUpdating={handleGlobeUpdating}
-              activeLayers={activeLayers}
-            />
-          )}
-        </Sidebar>
-        <Legend
+        <Switcher />
+        <ArcgisLayerManager activeLayers={activeLayers} />
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
+        <Widgets isFullscreenActive={isFullscreenActive}/>
+        <DataGlobalSidebar
+          isSidebarOpen={isSidebarOpen}
           isFullscreenActive={isFullscreenActive}
-          setLayerOpacity={setLayerOpacity}
-          setLayerVisibility={setLayerVisibility}
-          setLayerOrder={setLayerOrder}
+          activeCategory={activeCategory}
+          isLandscapeMode={isLandscapeMode}
+          isBiodiversityActive={isBiodiversityActive}
+          activeLayers={activeLayers}
+          rasters={rasters}
+          handleGlobeUpdating={handleGlobeUpdating}
+          setRasters={setRasters}
         />
-        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {isLandscapeMode && <LabelsLayer />}
-        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
@@ -124,17 +72,25 @@ const DataGlobeComponent = ({
           activeLayers={activeLayers}
           rasters={rasters}
           setRasters={setRasters}
-          handleLayerToggle={handleLayerToggle}
-          setLayerVisibility={setLayerVisibility}
           selectedSpecies={selectedSpecies}
         />
-      </Globe>
-      <About />
-      {hasMetadata && <InfoModal />}
+        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
+        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
+        {isLandscapeMode && <LabelsLayer />}
+        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
+        {isLegendActive &&
+          <Legend
+            isFullscreenActive={isFullscreenActive}
+            activeLayers={activeLayers}
+            rasters={rasters}
+          />
+        }
+      </Scene>
       <TutorialModal />
+      {hasMetadata && <InfoModal />}
+      <About />
     </>
   )
-};
+}
 
 export default DataGlobeComponent;
-

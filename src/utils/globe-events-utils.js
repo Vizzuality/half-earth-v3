@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { get } from 'lodash'
 
 const markerDefaultStyles = 'overflow: hidden; border-radius: 20px; position: absolute; display: none; width: 40px; height: 40px; pointer-events: none; background-size: cover;';

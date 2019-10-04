@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 

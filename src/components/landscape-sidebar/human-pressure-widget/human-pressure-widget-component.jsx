@@ -28,7 +28,6 @@ const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
 );
 
 const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
-  
   return (
     <div className={styles.container}>
       <div className={styles.dummyBlurWorkaround}>{/*This supposes to fix blur background issue on mac OS */}</div>

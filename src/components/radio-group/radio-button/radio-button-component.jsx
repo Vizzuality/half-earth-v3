@@ -13,6 +13,7 @@ const RadioButton = ({ text, value, checked, onClick, name, theme }) => {
         value={value}
         checked={checked}
         onClick={onClick}
+        readOnly
       />
       <label htmlFor={value} className={styles.radioInput}>
         {text}

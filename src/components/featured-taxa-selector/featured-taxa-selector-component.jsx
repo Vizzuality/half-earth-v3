@@ -1,12 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
-import { PRIORITY_PLACES_POLYGONS } from 'constants/layers-slugs';
-import layersConfig from 'constants/layers-config';
+import taxaCategories from 'constants/taxa-selector-categories';
 import animationStyles from 'styles/common-animations.module.scss';
 
 import styles from './featured-taxa-styles.module.scss';
-
-const taxa = layersConfig[PRIORITY_PLACES_POLYGONS].categories;
 
 const FeaturedTaxaSelectorComponent = ({
   selectedTaxa,
@@ -21,7 +18,7 @@ const FeaturedTaxaSelectorComponent = ({
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.container, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
-        {taxa.map(t => (
+        {taxaCategories.map(t => (
           <div key={t.slug} className={styles.taxaButton} onClick={() => handleTaxaButtonClick(t.slug)}>
             <div 
               className={cx(

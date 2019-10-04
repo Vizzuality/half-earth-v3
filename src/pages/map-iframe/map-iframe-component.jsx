@@ -1,6 +1,6 @@
 import React from 'react';
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
-import Globe from 'components/globe';
+import Scene from 'components/scene';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import GridLayer from 'components/grid-layer';
@@ -12,15 +12,16 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   sceneSettings,
   onLoad,
-  handleZoomChange
+  handleZoomChange,
+  rasters
 }) => {
   return (
-    <Globe sceneId={SCENE_ID} sceneSettings={sceneSettings} onLoad={onLoad}>
+    <Scene sceneId={SCENE_ID} sceneSettings={sceneSettings} onViewLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-      <Legend />
+      <Legend activeLayers={activeLayers} rasters={rasters}/>
       {isLandscapeMode && <GridLayer />}
-    </Globe>
+    </Scene>
   )
 };
 

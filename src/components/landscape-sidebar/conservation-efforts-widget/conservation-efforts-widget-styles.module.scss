@@ -8,10 +8,7 @@ $margin: 8px;
   @include backdropBlur();
   border-radius: 2px;
   padding-bottom: 34px;
-  margin: {
-    top: $margin;
-    bottom: $margin;
-  }
+  margin-top: $widgetsTopMargin;
 }
 
 .padding {

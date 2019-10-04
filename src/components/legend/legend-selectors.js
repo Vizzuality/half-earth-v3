@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getActiveLayers, getRasters } from 'pages/data-globe/data-globe-selectors';
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { PLEDGES_LAYER } from 'constants/layers-slugs';
 import { legendConfigs } from 'constants/mol-layers-configs';
@@ -9,6 +8,9 @@ import { selectTutorialState } from 'selectors/tutorial-selectors';
 import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
+
+const getActiveLayers = (state, props) => props.activeLayers;
+const getRasters = (state, props) => props.rasters || {};
 
 const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
   if (!activeLayers.length) return null;

@@ -2,8 +2,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
+import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import initialState from './data-globe-initial-state';
-import sceneSettings from './data-globe-settings';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
@@ -26,31 +26,25 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
   return listenersUrlState ? listenersUrlState : initialState.listeners;
 })
 
-const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
-  return {
-    ...sceneSettings,
-    zoom: globeSettings.zoom,
-    center: globeSettings.center
-  }
-})
-
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
-const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
-const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
-const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
+const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
+const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
+const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
+const getIsLegendActive = createSelector(getActiveLayers, activeLayers => activeLayers.some(layer => LEGEND_FREE_LAYERS.some( l => l === layer.title)));
 
 export default createStructuredSelector({
+  sceneSettings: getGlobeSettings,
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
-  sceneSettings: getSceneSettings,
+  isLegendActive: getIsLegendActive,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   rasters: getRasters,

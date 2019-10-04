@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 
 // Load watchUtils module to follow esri map changes
@@ -10,15 +10,4 @@ export const useWatchUtils = () => {
     })
   }, []);
   return watchUtils;
-}
-
-export const usePaintLayer = (layer, slug, color) => {
-  useEffect(() => {
-    const paintProperties = layer.getPaintProperties(slug);
-
-    paintProperties['fill-color'] = color;
-    paintProperties['fill-outline-color'] = color;
-
-    layer.setPaintProperties(slug, paintProperties);
-  }, [])
 }

@@ -50,4 +50,7 @@
   background-color: $priority-blue;
   box-shadow: 0 0 8px 0 $white;
   border: 2px solid $white;
+  svg g{
+    fill: $white;
+  }
 }

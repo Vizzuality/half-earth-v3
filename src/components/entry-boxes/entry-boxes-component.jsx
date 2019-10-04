@@ -2,17 +2,17 @@ import React from 'react';
 import styles from 'styles/ui.module.scss';
 import animationStyles from 'styles/common-animations.module.scss';
 import cx from 'classnames';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import CategoryBox from 'components/category-box';
 
 const categories = [
-  { name: 'Biodiversity', id: 1 },
-  { name: 'Existing protection', id: 2 },
-  { name: 'Human pressures', id: 3 }
+  { name: LAYERS_CATEGORIES.BIODIVERSITY, id: 1 },
+  { name: LAYERS_CATEGORIES.PROTECTION, id: 2 },
+  { name: LAYERS_CATEGORIES.LAND_PRESSURES, id: 3 }
 ];
 
 const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, isLandscapeMode, isFullscreenActive, countedActiveLayers, route }) => {
-  const interfaceLoaded = route.path === '/dataGlobe';
 
   const handleCategoryEnter = (category) => {
     setActiveCategory(category.name);
@@ -23,7 +23,7 @@ const EntryBoxesComponent = ({ isSidebarOpen, openSidebar, setActiveCategory, is
 
   return (
     <div data-cy="entry-boxes" className={styles.uiTopLeft}>
-      {interfaceLoaded && categories.length &&
+      {categories.length &&
         categories.map(category => (
           <div key={category.name} className={cx(animationStyles.transform, { [animationStyles.leftHidden]: categoryBoxHidden })} onClick={() => handleCategoryEnter(category)}>
             <CategoryBox

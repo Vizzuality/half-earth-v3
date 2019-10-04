@@ -5,7 +5,7 @@
 .container {
   @include backdropBlur();
   border-radius: 2px;
-  margin-bottom: 10px;
+  margin-top: $widgetsTopMargin;
 }
 
 .title {
@@ -60,7 +60,7 @@
 }
 
 .selectedPressureBar {
-  background-color: $catalina-blue;
+  background-color: $human-pressure-high;
   border: 2px solid $white;
   border-radius: 1px;
   height: 100%;
@@ -77,7 +77,7 @@
 }
 
 .nonSelectedPressureBar {
-  background-color: $catalina-blue;
+  background-color: $human-pressure-high;
   height: 22px;
 }
 
