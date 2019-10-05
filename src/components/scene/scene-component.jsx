@@ -54,18 +54,20 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMap
 
   if (loadState === 'loading') {
     return (
-    <>
+    <div style={{ height: '100%', position: 'relative', width: '100%' }}>
       <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'0%', height:'0%'}} />
-      <Spinner spinnerWithOverlay floating display={spinner}/>
-    </>
+      <Spinner spinnerWithOverlay initialLoading display={spinner}/>
+    </div>
     )
   } else if (loadState === 'loaded') {
     return (
-      <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'100%', height:'100%', backgroundColor: '#0A212E', ...style}}>
-        {React.Children.map(children || null, (child, i) => {
-          return child && <child.type key={i} map={map} view={view} {...child.props}/>;
-        })}
-    </div>
+      <div style={{ height: '100%', position: 'relative', width: '100%' }}>
+        <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'100%', height:'100%', backgroundColor: '#0A212E', ...style}}>
+          {React.Children.map(children || null, (child, i) => {
+            return child && <child.type key={i} map={map} view={view} {...child.props}/>;
+          })}
+        </div>
+      </div>
     )
   }
 
