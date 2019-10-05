@@ -1,71 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from '@esri/react-arcgis';
-import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
-import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
-import { DATA } from 'router';
+import { loadModules } from 'esri-loader';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
-import { layerManagerToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder} from 'utils/layer-manager-utils';
-import { FEATURED_PLACES_LAYER, LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
+import { 
+  FEATURED_PLACES_LAYER,
+  LAND_HUMAN_PRESSURES_IMAGE_LAYER,
+  VIBRANT_BASEMAP_LAYER
+} from 'constants/layers-slugs';
+import { 
+  FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
+} from 'constants/layers-groups';
+import { isMobile } from 'constants/responsive';
 
-import { createAction } from 'redux-tools';
 import Component from './featured-globe-component.jsx';
 
 import mapStateToProps from './featured-globe-selectors';
-import * as ownActions from './featured-globe-actions.js';
 import * as urlActions from 'actions/url-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-const handleSwitch = createAction(DATA);
-
-const actions = { ...ownActions, ...featuredMapsActions, ...urlActions, handleSwitch}
+const actions = { ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
+  const [handle, setHandle] = useState(null);
+  const isOnMobile = isMobile();
+  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard, isFullscreenActive } = props;
 
-  const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap } = props;
-  const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
-
-
-const handleMarkerClick = (viewPoint, view) => {
-  setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
-  removeAvatarImage();
-}
-const handleMarkerHover = (viewPoint, view) => {
-  setCursor(viewPoint, FEATURED_PLACES_LAYER);
-  setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
-};
+  const handleMarkerClick = (viewPoint, view) => {
+    if(!isFullscreenActive) {
+      setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+      removeAvatarImage();
+    }
+  }
+  const handleMarkerHover = (viewPoint, view) => {
+    if (!isOnMobile) {
+      setCursor(viewPoint, FEATURED_PLACES_LAYER);
+      if (!isFeaturedPlaceCard) setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+    }
+  };
 
   useEffect(() => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList();
   },[])
 
-  const handleMapLoad = (map, view, isLandscapeMode) => {
-    const { layers } = map;
-    const _featuredPlacesLayer = layers.items.find(l => l.title === FEATURED_PLACES_LAYER);
-    // set the attributes available on the layer
-    _featuredPlacesLayer.outFields = ['nam_slg'];
-    setFeaturedPlacesLayer(_featuredPlacesLayer);
-
-    // This fix has been added as a workaround to a bug introduced on v4.12
-    // The bug was causing the where clause of the mosaic rule to not work
-    // It will be probably fixed on v4.13
-    const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    loadModules(["esri/config"]).then(([esriConfig]) => {
-      mosaicRuleFix(esriConfig, humanImpactLayer, 'FEATURED')
-    })
-
-    // Update default human impact layer color ramp
-    loadModules(["esri/layers/support/RasterFunction", "esri/Color"]).then(([RasterFunction, Color]) => {
-      humanImpactLayer.noData = 0;
-      humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
-    })
-
-    // hide human pressure layers after first load, if the globe is not it the landscape mode
-    if (humanImpactLayer) humanImpactLayer.visible = !!isLandscapeMode;
-    
+  const handleMapLoad = (map, activeLayers) => {
+    const { rasters } = props;
+    activateLayersOnLoad(map, activeLayers, layersConfig, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
   }
 
+  const spinGlobe = (view) => {
+    loadModules(["esri/core/scheduling"]).then(([scheduling]) => {
+      const camera = view.camera.clone();
+      const spinningGlobe = scheduling.addFrameTask({
+        update: function() {
+          camera.position.longitude -= 0.2;
+          view.camera = camera;
+        }
+      });
+      setHandle(spinningGlobe);
+    })
+  }
+
+  const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
+  const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
   const clickCallbacksArray = [
@@ -75,16 +75,18 @@ const handleMarkerHover = (viewPoint, view) => {
   const mouseMoveCallbacksArray = [
     handleMarkerHover
   ]
-  const setRasters = (rasters) => props.setFeaturedGlobeSettings({ rasters: rasters })
-  const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setFeaturedGlobeSettings);
-  const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setFeaturedGlobeSettings);
-  const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setFeaturedGlobeSettings);
-  const handleGlobeUpdating = (updating) => props.setFeaturedGlobeSettings({ isGlobeUpdating: updating })
 
-  const showHumanPressuresOnLandscape = ({ layer, setActive }) => {
+  const showLayersOnlyOnLandscape = ({ layer, setActive }) => {
+    const isLandscapeOnlyLayer = FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS.includes(layer.title);
     // Hide human_pressures_layer where they are not in landscape mode
-    if(layer.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER) {
+    if(isLandscapeOnlyLayer) {
       layer.visible = props.isLandscapeMode && setActive;
+    }
+  }
+
+  const setVibrantLayerMaxScale = ({ layer }) => {
+    if (layer.title === VIBRANT_BASEMAP_LAYER) {
+      layer.maxScale = 250000.0
     }
   }
 
@@ -92,16 +94,15 @@ const handleMarkerHover = (viewPoint, view) => {
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
-      featuredPlacesLayer={featuredPlacesLayer}
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
-      onLoad={(map, view) => handleMapLoad(map, view, props.isLandscapeMode)}
+      onMapLoad={(map) => handleMapLoad(map, props.activeLayers)}
+      customFunctions={[showLayersOnlyOnLandscape, setVibrantLayerMaxScale]}
+      spinGlobe={spinGlobe}
+      spinGlobeHandle={handle}
+      isFeaturedPlaceCard={isFeaturedPlaceCard}
       setRasters={setRasters}
-      setLayerVisibility={setLayerVisibility}
-      setLayerOpacity={setLayerOpacity}
-      setLayerOrder={setLayerOrder}
       handleGlobeUpdating={handleGlobeUpdating}
-      customFunctions={[showHumanPressuresOnLandscape]}
       {...props}
     />
   )

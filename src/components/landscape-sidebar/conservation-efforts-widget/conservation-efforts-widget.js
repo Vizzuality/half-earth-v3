@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import conservationEffortsActions from 'redux_modules/conservation-efforts';
-import { toggleWDPALayer } from 'utils/layer-manager-utils';
+
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
+import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manager-utils';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import * as urlActions from 'actions/url-actions';
+
 import { 
   COMMUNITY_BASED,
   PROTECTED
@@ -10,17 +18,12 @@ import {
 import Component from './conservation-efforts-widget-component';
 import mapStateToProps from './conservation-efforts-widget-selectors';
 
-const actions = { ...conservationEffortsActions };
+const actions = { ...conservationEffortsActions, ...urlActions, addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
 
 const findInDOM = (id) => document.getElementById(id);
 
 const ConservationEffortsWidget = (props) => {
   const {
-    map,
-    activeLayers,
-    view,
-    handleGlobeUpdating,
-    handleLayerToggle,
     alreadyChecked,
     colors,
     terrestrialCellData,
@@ -75,11 +78,23 @@ const ConservationEffortsWidget = (props) => {
     }
   }, [terrestrialCellData])
 
-  const toggleLayer = (layersPassed, option) => {
-    toggleWDPALayer(activeLayers, option, handleGlobeUpdating, view, map, handleLayerToggle);
+  const handleLayerToggle = (layersPassed, option) => {
+    const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, activeCategory, map } = props;
+    if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
+      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(layerName => {
+        const layerConfig = layersConfig[layerName];
+        handleLayerCreation(layerConfig, map);
+      })
+      batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, activeCategory);
+    } else {
+      const layer = layersConfig[option.title];
+      handleLayerCreation(layer, map);
+      layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
+      removeLayerAnalyticsEvent({ slug: layer.slug });
+    }
   }
 
-  return <Component {...props} toggleLayer={toggleLayer} />;
+  return <Component {...props} toggleLayer={handleLayerToggle} />;
 }
 
 export default connect(mapStateToProps, actions)(ConservationEffortsWidget);

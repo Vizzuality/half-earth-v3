@@ -9,7 +9,7 @@ import ToggleUiComponent from './toggle-ui-widget-component';
 
 const actions = {...urlActions, toggleFullScreenAnalyticsEvent};
 
-const ToggleUiWidget = ({ isFullscreenActive, changeUI, view, toggleFullScreenAnalyticsEvent }) => {
+const ToggleUiWidget = ({ isFullscreenActive, changeUI, view, toggleFullScreenAnalyticsEvent, hidden }) => {
   const toggleFullscreen  = () => {
     changeUI({ isFullscreenActive: !isFullscreenActive })
     toggleFullScreenAnalyticsEvent({ isFullscreenActive: !isFullscreenActive });
@@ -17,13 +17,14 @@ const ToggleUiWidget = ({ isFullscreenActive, changeUI, view, toggleFullScreenAn
 
   useEffect(() => {
     const node = document.createElement("div");
-    view.ui.add(node, "top-right");
-    ReactDOM.render(<ToggleUiComponent toggleFullscreen={toggleFullscreen} isFullscreenActive={isFullscreenActive} />, node);
-
+    if (!hidden) {
+      view.ui.add(node, "top-right");
+      ReactDOM.render(<ToggleUiComponent toggleFullscreen={toggleFullscreen} isFullscreenActive={isFullscreenActive} />, node);
+    }
     return function cleanup() {
       view.ui.remove(node);
     };
-  }, [view, isFullscreenActive])
+  }, [view, isFullscreenActive, hidden])
 
   return null;
 }

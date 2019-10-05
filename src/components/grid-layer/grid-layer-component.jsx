@@ -1,4 +1,4 @@
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
@@ -66,7 +66,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   },[watchUtils])
 
   useEffect(() => {
-    if (biodiversityFacetsLayer && gridCellGraphic) {
+    if (viewExtent && biodiversityFacetsLayer && gridCellGraphic) {
       const containedCellsQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
       biodiversityFacetsLayer.queryFeatures(containedCellsQueryObject)
         .then(function(results) {

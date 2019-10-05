@@ -1,25 +1,49 @@
 import {
-  BIODIVERSITY_FACETS_LAYER,
-  LABELS_LAYER_GROUP,
   FIREFLY_BASEMAP_LAYER,
-  GRID_LAYER
+  GRID_LAYER,
+  LANDSCAPE_FEATURES_LABELS_LAYER,
+  CITIES_LABELS_LAYER,
+  ALL_TAXA_RARITY
 } from 'constants/layers-slugs';
+
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
 
 export default {
   globe: {
     activeLayers: [
-      { title: BIODIVERSITY_FACETS_LAYER }, // Biodiversity Facets (new grid)
-      { title: GRID_LAYER }, // This is the layer used to paint aggregated grid cells
-      { title: LABELS_LAYER_GROUP }, // This is the layer used to paint aggregated grid cells
-      { title: FIREFLY_BASEMAP_LAYER } // half-earth firefly
+      { title: FIREFLY_BASEMAP_LAYER }, 
+      { title: GRID_LAYER }, 
+      { title: LANDSCAPE_FEATURES_LABELS_LAYER },
+      { title: CITIES_LABELS_LAYER },
+      { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
-    rasters: {},
     zoom: 1,
     center: [16.9515536, 0.116959],
-    isGlobeUpdating: false
+    padding: {
+      bottom: 60
+    },
+    isGlobeUpdating: false,
+    environment: {
+      atmosphereEnabled: false,
+      background: {
+        type: "color",
+        color: [0,10,16]
+      },
+      alphaCompositingEnabled: true
+    },
+    constraints: {
+      altitude: {
+        max: 35512548,
+        min: 10000
+      }
+    },
+    ui: {
+      components: []
+    }
   },
   ui: {
     isSidebarOpen: false,
+    activeOption: 'add_layer', // mobile
     isFullscreenActive: false, 
     activeCategory: ''
   },

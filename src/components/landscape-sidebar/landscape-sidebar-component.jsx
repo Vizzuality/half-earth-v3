@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { isMobile } from 'constants/responsive';
 
 import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
@@ -20,16 +21,29 @@ const LandscapeSidebarComponent = ({
   setLayerVisibility,
   setRasters,
   handleGlobeUpdating,
+  isLandscapeSidebarCollapsed,
   selectedSpecies,
-  handleLayerToggle
+  handleLayerToggle,
+  activeOption
 }) => {
-
+  
+  const isOnMobile = isMobile();
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
+  const isLandscapeSidebarVisibleMobile = isLandscapeMode && !activeOption;
+  const landscapeSidebarCollapsed = isLandscapeMode && isLandscapeSidebarCollapsed && isOnMobile && !activeOption;
 
   return (
-    <div className={cx(uiStyles.uiTopLeft, styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible })}>
+    <div className={cx(styles.sidebar, { [animationStyles.leftHidden]: !isLandscapeSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isLandscapeSidebarVisibleMobile && isOnMobile, [uiStyles.uiTopLeft]: !isOnMobile, [animationStyles.collapsed]: landscapeSidebarCollapsed, [styles.scrollDisabled]: landscapeSidebarCollapsed })}>
       <div className={styles.wrapper}>
-        <GeoDescriptionWidget view={view} />
+        <GeoDescriptionWidget view={view} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} />
+        <SpeciesWidget selectedSpecies={selectedSpecies}/>
+        <ConservationEffortsWidget
+          map={map}
+          view={view}
+          activeLayers={activeLayers}
+          handleGlobeUpdating={handleGlobeUpdating}
+          handleLayerToggle={handleLayerToggle}
+        />
         <HumanPressureWidget
           map={map}
           view={view}
@@ -39,14 +53,6 @@ const LandscapeSidebarComponent = ({
           setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
-        <ConservationEffortsWidget
-          map={map}
-          view={view}
-          activeLayers={activeLayers}
-          handleGlobeUpdating={handleGlobeUpdating}
-          handleLayerToggle={handleLayerToggle}
-        />
-        <SpeciesWidget selectedSpecies={selectedSpecies}/>
         <MOLUploader />
       </div>
     </div>

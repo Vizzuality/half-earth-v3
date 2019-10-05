@@ -1,12 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
-import { PRIORITY_PLACES_POLYGONS } from 'constants/layers-slugs';
-import layersConfig from 'constants/layers-config';
+import taxaCategories from 'constants/taxa-selector-categories';
 import animationStyles from 'styles/common-animations.module.scss';
+import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 import styles from './featured-taxa-styles.module.scss';
-
-const taxa = layersConfig[PRIORITY_PLACES_POLYGONS].categories;
 
 const FeaturedTaxaSelectorComponent = ({
   selectedTaxa,
@@ -15,13 +14,17 @@ const FeaturedTaxaSelectorComponent = ({
   isMapsList,
   selectedFeaturedMap,
   selectedFeaturedPlace,
-  handleTaxaButtonClick
+  handleTaxaButtonClick,
+  activeOption,
 }) => {
+  const isOnMobile = isMobile();
+  const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
   const isOnScreen = selectedFeaturedMap === 'priorPlaces' && !isMapsList && !selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
+  const isOnMobileScreen = isActive && isOnScreen;
   return (
     <div className={styles.wrapper}>
-      <div className={cx(styles.container, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: !isOnScreen })}>
-        {taxa.map(t => (
+      <div className={cx(styles.container, animationStyles.transformOpacityWithDelay, { [animationStyles.bottomUp]: isOnMobile ? !isOnMobileScreen : !isOnScreen })}>
+        {taxaCategories.map(t => (
           <div key={t.slug} className={styles.taxaButton} onClick={() => handleTaxaButtonClick(t.slug)}>
             <div 
               className={cx(

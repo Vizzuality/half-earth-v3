@@ -2,15 +2,24 @@
 
 .wrapper {
   background-color: #031D2E;
-  padding: 20px;
-  margin-bottom: 50px;
+  padding: $mobile-sidebar-side-paddings;
+  border-radius: $border-radius-desktop;
+
+  @media #{$tablet-portrait} {
+    margin-top: $widgetsTopMargin;
+    margin-bottom: 50px;
+    padding: $sidebar-paddings;
+  }
 }
 
 .buttonContainer {
   display: flex;
-  justify-content: center;
   margin-bottom: 12px;
   cursor: pointer;
+
+  @media #{$tablet-portrait} {
+    justify-content: center;
+  }
 }
 
 .uploadButton {

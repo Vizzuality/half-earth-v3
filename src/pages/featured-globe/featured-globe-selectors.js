@@ -3,7 +3,6 @@ import { isEmpty } from 'lodash';
 import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
 import initialState from './featured-globe-initial-state';
-import sceneSettings from './featured-globe-settings';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;
@@ -22,34 +21,30 @@ const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
   }
 })
 
-const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
-  return {
-    ...sceneSettings,
-    zoom: globeSettings.zoom,
-    center: globeSettings.center
-  }
-})
-
 // GLOBE
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView);
 const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
 
 // UI
 const getSelectedSidebar = createSelector(getUiSettings, uiSettings => uiSettings.selectedSidebar);
+const getMapsListActive = createSelector(getUiSettings, uiSettings => uiSettings.selectedSidebar === 'featuredMapsList');
 const getSelectedFeaturedMap = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedMap);
 const getSelectedFeaturedPlace = createSelector(getUiSettings, uiSettings => uiSettings.selectedFeaturedPlace);
 const getSelectedTaxa = createSelector(getUiSettings, uiSettings => uiSettings.selectedTaxa);
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
+const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
+const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 
 export default createStructuredSelector({
+  isMapsList: getMapsListActive,
+  sceneSettings: getGlobeSettings,
   sceneLayers: getFeaturedGlobeLayers,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
-  sceneSettings: getSceneSettings,
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
   selectedFeaturedMap: getSelectedFeaturedMap,
@@ -59,5 +54,7 @@ export default createStructuredSelector({
   featuredMapPlaces: selectFeaturedMapPlaces,
   rasters: getRasters,
   isGlobeUpdating: getGlobeUpdating,
-  selectedSpecies: getSelectedSpecies
+  selectedSpecies: getSelectedSpecies,
+  activeOption: getActiveOption, // mobile
+  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
 })

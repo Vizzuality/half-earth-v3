@@ -8,15 +8,18 @@ $error-gif-size: 120px;
   @include backdropBlur();
   border-radius: 2px;
   box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
-  margin-bottom: 10px;
   position: relative;
 }
 
 .loading {
-  padding: 20px;
+  padding: $mobile-sidebar-side-paddings;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
 }
 
 .loadingText {
@@ -33,11 +36,15 @@ $error-gif-size: 120px;
 }
 
 .errorText {
-  padding: 0 20px;
+  padding: 0 $mobile-sidebar-side-paddings;;
   color: white;
   font-size: 14px;
   font-weight: 300;
   margin: 0;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
 }
 
 .errorGif{
@@ -56,7 +63,11 @@ $error-gif-size: 120px;
 
 .description {
   @extend %bodyText;
-  padding: 20px;
+  padding: $mobile-sidebar-side-paddings;
   margin: 0;
   color: white;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
 }

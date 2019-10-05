@@ -39,12 +39,19 @@ const SpeciesChartDot = ({ species, selectedSpecies, handleSelectSpecies }) => {
 
 const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSelectNextSpecies }) => {
   const { imageURL, name, scientificName, proportion, rangeArea, color, iucnCategory } = selectedSpecies;
-
+  const speciesMOLUrl = `https://mol.org/species/${scientificName}`;
   return (
     <>
       <div className={styles.carrousel}>
         <button className={styles.carrouselButton} onClick={handleSelectPrevSpecies}><ArrowIcon /></button>
-        <img className={styles.speciesImage} src={imageURL || speciesPlaceholder} alt={name}/>
+        <a
+          className={styles.speciesImage}
+          href={speciesMOLUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={imageURL || speciesPlaceholder} alt={name}/>
+        </a>
         <button className={styles.carrouselButton}  onClick={handleSelectNextSpecies}><ArrowIcon /></button>
       </div>
 
@@ -53,7 +60,11 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
           <div className={styles.selectedInnerChartDot} style={{ backgroundColor: color }}></div>
         </div>
         <div>
-          <div className={styles.speciesEngName}>{name}</div>
+          <a href={speciesMOLUrl}
+            className={styles.speciesEngName}
+            target="_blank"
+            rel="noopener noreferrer"
+          >{name}</a>
           <div className={styles.speciesLatName}>{scientificName}</div>
         </div>
       </div>
@@ -69,41 +80,41 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
 const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectSpecies, handleSelectNextSpecies, handleSelectPrevSpecies }) => {
 
   return (
-    <>
-      {data && selectedSpecies &&
-        <div className={styles.container}>
-          <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
-          <p className={styles.text}>The radar plot below shows the proportion of species range protected from the available taxonomic groups.</p>
-          <div className={styles.chart}>
-            <div className={styles.chartSlice}></div>
-            <div className={styles.chartSlice}>
-              {data.map((species, index) => (
-                <SpeciesChartDot
-                  key={`dot-${index}`}
-                  species={species}
-                  selectedSpecies={selectedSpecies}
-                  handleSelectSpecies={handleSelectSpecies}
-                />
-              ))}
+      <div className={styles.container}>
+        <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
+        {data && selectedSpecies && (
+          <>
+            <p className={styles.text}>The radar plot below shows the proportion of species range protected from the available taxonomic groups.</p>
+            <div className={styles.chart}>
+              <div className={styles.chartSlice}></div>
+              <div className={styles.chartSlice}>
+                {data.map((species, index) => (
+                  <SpeciesChartDot
+                    key={`dot-${index}`}
+                    species={species}
+                    selectedSpecies={selectedSpecies}
+                    handleSelectSpecies={handleSelectSpecies}
+                  />
+                ))}
+              </div>
+              <div className={styles.chartSlice}></div>
+              <div className={styles.chartSlice}></div>
             </div>
-            <div className={styles.chartSlice}></div>
-            <div className={styles.chartSlice}></div>
-          </div>
-          <SpeciesCarrousel
-            selectedSpecies={selectedSpecies}
-            handleSelectPrevSpecies={handleSelectPrevSpecies}
-            handleSelectNextSpecies={handleSelectNextSpecies}
-          />
-          <a
-            href='https://mol.org/'
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.molLogo}
-          >
-          </a>
-        </div>
-      }
-    </>
+            <SpeciesCarrousel
+              selectedSpecies={selectedSpecies}
+              handleSelectPrevSpecies={handleSelectPrevSpecies}
+              handleSelectNextSpecies={handleSelectNextSpecies}
+            />
+            <a
+              href='https://mol.org/'
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.molLogo}
+            >
+            </a>
+          </>
+        )}
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
 
 const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
@@ -5,9 +6,13 @@ const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
   
   const { layers } = map;
-  setLayerOrder(activeLayers, map);
+  const { items } = layers;
+  
+  useEffect(() => {
+    setLayerOrder(activeLayers, map);
+  }, [activeLayers])
 
-  layers.items.forEach(mapLayer => {
+  items.forEach(mapLayer => {
     const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === mapLayer.title);
     mapLayer.layers && mapLayer.layers.items && mapLayer.layers.items.forEach(layer => {
       const setActive = activeLayers && activeLayers.some(activeLayer => activeLayer.title === layer.title);

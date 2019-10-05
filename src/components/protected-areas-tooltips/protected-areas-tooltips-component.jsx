@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 
 import { 
   PROTECTED_AREAS_VECTOR_TILE_LAYER,

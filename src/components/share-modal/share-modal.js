@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import get from 'lodash/get';
 import facebookIcon from 'icons/facebook.png';
 import twitterIcon from 'icons/twitter.png';
 import { openShareModalAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -26,8 +25,6 @@ const shareSocialMedia = [
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type].path,
-  center: get(location, 'query.globe.center') || [],
-  zoom: get(location, 'query.globe.zoom') || 3,
   shareSocialMedia
 });
 

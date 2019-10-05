@@ -1,82 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from '@esri/react-arcgis';
-import { usePostRobot } from 'hooks/attach-post-robot';
-
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
-import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
-import { setRasterFuntion, mosaicRuleFix } from 'utils/raster-layers-utils';
-
-import { layerManagerToggle, exclusiveLayersToggle, layerManagerVisibility, layerManagerOpacity, layerManagerOrder } from 'utils/layer-manager-utils';
-import Component from './data-globe-component.jsx';
-import mapStateToProps from './data-globe-selectors';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs'
 import { layersConfig } from 'constants/mol-layers-configs';
-import { enterLandscapeModeAnalyticsEvent } from 'actions/google-analytics-actions';
+import mapStateToProps from './data-globe-selectors';
+import DataGlobeComponent from './data-globe-component.jsx';
+import { activateLayersOnLoad } from 'utils/layer-manager-utils';
+import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
+import * as urlActions from 'actions/url-actions';
 
-import ownActions from './data-globe-actions.js';
-import { createLayer } from 'utils/layer-manager-utils';
+const actions = {...urlActions};
 
-const actions = { ...ownActions, enterLandscapeModeAnalyticsEvent };
-
-const handleMapLoad = (map, activeLayers) => {
-  const { layers } = map;
-
-  // This fix has been added as a workaround to a bug introduced on v4.12
-  // The bug was causing the where clause of the mosaic rule to not work
-  // It will be probably fixed on v4.13
-  const humanImpactLayer = layers.items.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-  loadModules(["esri/config"]).then(([esriConfig]) => {
-    mosaicRuleFix(esriConfig, humanImpactLayer, 'DATA')
-  })
-
-  // Update default human impact layer color ramp
-  loadModules(["esri/layers/support/RasterFunction", "esri/Color"]).then(([RasterFunction, Color]) => {
-    humanImpactLayer.noData = 0;
-    humanImpactLayer.renderingRule = setRasterFuntion(RasterFunction, Color, HUMAN_PRESSURES_COLOR_RAMP);
-  })
+const DataGlobeContainer = props => {
 
 
-  // Here we are creating the biodiversity layers active in the URL
-  // this is needed to have the layers displayed on the map when sharing the URL
-  // we would be able to get rid of it when this layers are added to the scene via arcgis online
-  const biodiversityLayerIDs = activeLayers
-    .filter(({ category }) => category === "Biodiversity")
-    .map(({ title }) => title);
+const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
+const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
 
-  const biodiversityLayers = layersConfig
-    .filter(({ slug }) => biodiversityLayerIDs.includes(slug));
+  const handleMapLoad = (map, activeLayers) => {
+    const { rasters } = props;
+    activateLayersOnLoad(map, activeLayers, layersConfig, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+  }
 
-  biodiversityLayers.forEach(layer => createLayer(layer, map));
+
+  return (
+    <DataGlobeComponent
+      handleMapLoad={handleMapLoad}
+      handleGlobeUpdating={handleGlobeUpdating}
+      setRasters={setRasters}
+      {...props}
+    />
+  )
 }
+ 
 
-const dataGlobeContainer = props => {
-  const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
-  const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
-  const exclusiveLayerToggle = (layerToActivate, layerToRemove) => exclusiveLayersToggle(layerToActivate, layerToRemove, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
-  const setLayerVisibility = (layerId, visibility) => layerManagerVisibility(layerId, visibility, props.activeLayers, props.setDataGlobeSettings);
-  const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setDataGlobeSettings);
-  const setLayerOrder = (datasets) => layerManagerOrder(datasets, props.activeLayers, props.setDataGlobeSettings);
-  const setRasters = (rasters) => props.setDataGlobeSettings({ rasters: rasters })
-  const handleZoomChange = (params) => {
-    const { landscapeView } = params;
-    landscapeView && props.enterLandscapeModeAnalyticsEvent();
-    return props.setDataGlobeSettings(params);
-  };
-
-  usePostRobot(props.listeners, { flyToLocation, toggleLayer, setLayerOpacity });
-  const handleGlobeUpdating = (updating) => props.setDataGlobeSettings({ isGlobeUpdating: updating })
-
-  return <Component
-    handleLayerToggle={toggleLayer}
-    exclusiveLayerToggle={exclusiveLayerToggle}
-    setLayerVisibility={setLayerVisibility}
-    setLayerOpacity={setLayerOpacity}
-    setLayerOrder={setLayerOrder}
-    setRasters={setRasters}
-    onLoad={(map, view) => handleMapLoad(map, props.activeLayers)}
-    handleGlobeUpdating={handleGlobeUpdating}
-    handleZoomChange={handleZoomChange}
-    {...props}/>
-}
-
-export default connect(mapStateToProps, actions)(dataGlobeContainer);
+export default connect(mapStateToProps, actions)(DataGlobeContainer);

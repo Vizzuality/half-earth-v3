@@ -1,20 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import Tutorial from 'components/tutorial'
 
 import Legend, {
   LegendItemTypes,
   LegendListItem,
 } from 'vizzuality-components/dist/legend';
+import { isMobile } from 'constants/responsive';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility
   } = handlers;
+
+  const isOnMobile = isMobile();
+  const isLegendOpen = activeOption === FOOTER_OPTIONS.LEGEND;
+  const showDisclaimer = isOnMobile && isLegendOpen;
+  const canShowLegend = isOnMobile ? isLegendOpen : showLegend;
 
   const toolbar = (
     <LegendItemToolbar
@@ -27,21 +35,24 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, handleInfoClick, han
   );
 
   return (
-      <div className={styles.legend}>
-        <Tutorial
-          position={'top-left'}
-          tutorialID={tutorialData.id}
-          showTutorial={tutorialData.showTutorial}
-        >
-          {!isFullscreenActive && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
-            {datasets && datasets.map((dataset, i) => (
-              <LegendListItem index={i} key={dataset.name} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
-                <LegendItemTypes />
-              </LegendListItem>
-            ))}
-          </Legend>}
-        </Tutorial>
-      </div>
+    <div className={cx(styles.legend)}>
+      <Tutorial
+        position={'top-left'}
+        tutorialID={tutorialData.id}
+        showTutorial={!isFullscreenActive && !isOnMobile && tutorialData.showTutorial}
+      >
+        {!isFullscreenActive && canShowLegend && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
+          {datasets && datasets.map((dataset, i) => (
+            <LegendListItem index={i} key={dataset.name} layerGroup={dataset} toolbar={toolbar} title={<LegendTitle name={dataset.title} layer={dataset} />}>
+              <LegendItemTypes />
+            </LegendListItem>
+          ))}
+        </Legend>}
+        {!datasets && showDisclaimer && <div className={styles.disclaimer}>
+          No active legends, please add a layer to the map.
+        </div>}
+      </Tutorial>
+    </div>
   );
 }
 

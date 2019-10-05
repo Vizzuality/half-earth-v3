@@ -9,7 +9,7 @@ class App extends PureComponent {
     const { route } = this.props;
     const { page } = route;
     const embedded = page === 'map-iframe';
-    const whichGlobe = embedded ? <MapIframe /> : <DataGlobe />
+    const whichGlobe = embedded ? <MapIframe /> : <DataGlobe />;
     return page === 'featured-globe' ? <FeaturedGlobe /> : whichGlobe;
   }
 }

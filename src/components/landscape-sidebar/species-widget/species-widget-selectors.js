@@ -4,8 +4,21 @@ import { format, precisionPrefix, formatPrefix } from 'd3-format';
 import { uniqBy } from "lodash";
 import IUCNList from 'constants/iucn-list';
 
-const p = precisionPrefix(1e4, 1.3e6); //more about precision prefix: https://github.com/d3/d3-format#precisionPrefix
-const customFormat = formatPrefix("." + p, 1.3e6); // format millions with two decimals
+//more about precision prefix: https://github.com/d3/d3-format#precisionPrefix
+const millionsFormat = formatPrefix("." + precisionPrefix(1e4, 1.3e6), 1.3e6); // format millions with two fixed decimals
+const thousandsFormat = formatPrefix("." + precisionPrefix(1e1, 1.3e3), 1.3e3); // format thousands with two fixed decimals
+
+const formatRangeArea = (value) => {
+  if (value > 1000000) { 
+    return millionsFormat(value);
+
+  } else if (value > 1000) { 
+    return thousandsFormat(value);
+
+  } else {
+    return value;
+  }
+}
 
 const toRadians = (angle) => {
   return angle * (Math.PI / 180);
@@ -51,7 +64,7 @@ const getChartData = (speciesData, taxa, startAngle)  => {
       id: s.HBWID,
       name: s.cmmn_nm !== " " ? s.cmmn_nm : s.scntfcn,
       scientificName: s.scntfcn,
-      rangeArea: customFormat(s.RANGE_A),
+      rangeArea: formatRangeArea(s.RANGE_A),
       proportion: format(".2%")(s.PROP_RA),
       taxa: s.taxa,
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,

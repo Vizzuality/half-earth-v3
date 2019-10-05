@@ -6,14 +6,20 @@
 $card-content-max-height: 220px;
 
 .container {
-  pointer-events: none;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: $menuFooterHeight;
   display: flex;
   width: 100%;
   min-height: 380px;
   background-color: transparent;
   overflow: hidden;
+  pointer-events: all;
+
+  @media #{$tablet-portrait} {
+    position: absolute;
+    bottom: 0;
+    pointer-events: none;
+  }
 }
 
 .content {
@@ -22,16 +28,31 @@ $card-content-max-height: 220px;
   align-items: center;
   flex-direction: column;
   width: 100%;
+  height: 400px;
+
+  @media #{$tablet-portrait} {
+    height: unset;
+    margin-bottom: 0;
+  }
 }
 
 .navigation {
   width: 100%;
-  height: 45px;
   max-width: $card-max-width;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   pointer-events: all;
+  background-color: $white;
+  padding: 22px $mobile-sidebar-side-paddings 10px $mobile-sidebar-side-paddings;
+  border-radius: $border-radius-mobile;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+    border-radius: 0;
+    height: 45px;
+    background-color: transparent;
+  }
 
   .backToMap {
     display: flex;
@@ -40,15 +61,25 @@ $card-content-max-height: 220px;
   
     .text {
       @extend %title;
-      color: $white;
+      color: $black;
       margin: 0;
+
+      @media #{$tablet-portrait} {
+        color: $white;
+      }
     }
   
     .arrowIcon {
       top: 2px;
       position: relative;
       transform: rotate(180deg);
-      margin-right: 30px;
+      margin-right: 10px;
+      fill: $black;
+
+      @media #{$tablet-portrait} {
+        fill: $white;
+        margin-right: 30px;
+      }
     }
   }
 
@@ -90,11 +121,7 @@ $card-content-max-height: 220px;
   }
 }
 
-
-
 .card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   pointer-events: all;
   position: relative;
   flex-grow: 1;
@@ -102,13 +129,25 @@ $card-content-max-height: 220px;
   height: 350px;
   max-width: $card-max-width;
   background-color: white;
-  padding: 60px 40px 0px;
+  padding: 12px $mobile-sidebar-side-paddings 0;
+  overflow-y: scroll;
+
+  @media #{$tablet-portrait} {
+    overflow-y: unset;
+    padding: 60px 40px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 
   .landscapeTriggerContainer {
     display: grid;
     max-height: $card-content-max-height;
-    grid-template-rows: 185px 1fr;
-    width: 300px;
+    width: 100%;    
+
+    @media #{$tablet-portrait} {
+      grid-template-rows: 185px 1fr;
+      width: 300px;
+    }
 
     .icon {
       fill: $dark-text;
@@ -122,9 +161,15 @@ $card-content-max-height: 220px;
   .picture {
     float: left;
     width: 100%;
-    max-height: 100%;
-    margin-right: 40px;
+    margin-right: 0;
+    margin-bottom: 22px;
     cursor: pointer;
+
+    @media #{$tablet-portrait} {
+      max-height: 100%;
+      margin-right: 40px;
+      margin-bottom: 0;
+    }
   }
 
   .landscapeTriggerButton {
@@ -141,26 +186,98 @@ $card-content-max-height: 220px;
   }
 
   .contentContainer {
-    max-height: $card-content-max-height;
-    overflow: hidden;
-    mask-image: linear-gradient(to bottom,
-    rgba(0,0,0,1) 85%,
-    rgba(0,0,0,0) 100%
-    );
+    @media #{$tablet-portrait} {
+      max-height: $card-content-max-height;
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom,
+      rgba(0,0,0,1) 85%,
+      rgba(0,0,0,0) 100%
+      );
+    }
   }
 
-  .contentWrapper {
-    @extend %verticalScrollBar;
-    max-height: $card-content-max-height;
+  .contentWrapper {    
+    @media #{$tablet-portrait} {
+      max-height: $card-content-max-height;
+
+      // %verticalScrollBar - cannot extend inside @media
+      overflow-y: scroll; 
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none;  /* IE 10+ */
+
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+    }
   }
-  
+
   .title {
     @extend %display1;
+    font-size: $font-size-xl;
+    line-height: 30px;
     color: $dark-text;
     margin: 0;
+    margin-bottom: 12px;
+
+    @media #{$tablet-portrait} {
+      margin-bottom: 0;
+      font-size: $font-size-xxl;
+      line-height: 50px;
+    }
   }
+
   .text {
     @extend %bodyText;
     color: $dark-text;
+    padding-bottom: 22px;
+
+    @media #{$tablet-portrait} {
+      padding-bottom: 0;
+    }
   }
+
+  .sourceText {
+    @extend %bodyText;
+    color: $dark-text;
+    padding-bottom: 24px;
+  }
+}
+
+// mobile only
+
+.spacer {
+  height: 1px;
+  width: calc(100% - (2 * #{$mobile-sidebar-side-paddings}));
+  background-color: $alto;
+}
+
+.spacerContainer {
+  height: 3px;
+  width: 100%;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+}
+
+.exploreAreaButtonContainer {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: {
+    bottom: 12px;
+    top: 12px;
+  }
+}
+
+.exploreAreaButton {
+  @extend %title;
+  font-family: $font-family-1;
+  font-size: 10px;
+  width: calc(100% - (2 * #{$mobile-sidebar-side-paddings}));
+  border-radius: 2px;
+  padding: 10px 40px;
+  color: $firefly;
+  background-color: $robins-egg-blue;
 }

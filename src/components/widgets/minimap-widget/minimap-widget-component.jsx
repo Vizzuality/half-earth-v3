@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './minimap-widget.module.scss';
-import GlobeComponent from 'components/globe';
+import Scene from 'components/scene';
 import sceneSettings from './minimap-settings';
 
 const { REACT_APP_MINIMAP_GLOBE_SCENE_ID: SCENE_ID } = process.env;
@@ -12,11 +12,11 @@ const MinimapWidgetComponent = ({ view: globeView, handleMapLoad, handleModalOpe
         <div className={styles.title}>Half</div>
         <div className={styles.progressBars}>
           <div className={styles.globeComponentWrapper}>
-            <GlobeComponent
+            <Scene
               sceneId={SCENE_ID}
               sceneSettings={sceneSettings}
-              onLoad={(map, view) => handleMapLoad(map, view, globeView)}
-              loadElement={(<></>)}
+              onViewLoad={(map, view) => handleMapLoad(map, view, globeView)}
+              spinner={false}
             />
           </div>
         </div>

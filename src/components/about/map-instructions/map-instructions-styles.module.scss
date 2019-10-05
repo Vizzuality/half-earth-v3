@@ -1,32 +1,54 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .wrapper {
   align-items: center;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: calc(100% - #{$mobile-sidebar-side-paddings});
+  padding: 32px;
+
+  @media #{$tablet-portrait} {
+    overflow-y: unset;
+    height: auto;
+  }
 }
 
 .title {
+  @extend %headline;
   color: $white;
-  font-family: $font-family-1;
-  font-size: $font-size-xl;
-  letter-spacing: 1px;
-  line-height: 30px;
-  margin-bottom: 80px;
+  font-size: 28px;
+  margin-bottom: 40px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;;
+    margin-bottom: 80px;
+    font-size: $font-size-xl;
+  }
 }
 
 .mouseNavigationSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 80px;
-  width: 400px;
+  width: auto;
+
+  @media #{$tablet-portrait} {
+    width: 400px;
+  }
 
   .mouseClickIcon {
     align-items: center;
     display: flex;
     flex: 1;
     flex-direction: column;
+    padding: 0 15px;
+
+    @media #{$tablet-portrait} {
+      padding: 0;
+    }
 
     span {
       color: $white;
@@ -42,16 +64,23 @@
 }
 
 .storySection {
-  display: flex;
-  justify-content: space-between;
-  width: 670px;
+  display: block;
+  text-align: center;
+  width: 100%;
+
+  @media #{$tablet-portrait} {
+    width: 670px;
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+  }
 }
 
 .storyElement {
   display: inline-flex;
-  
+  margin-bottom: 40px;
+
   span {
-    height: 88px;	
     width: 179px;
     color: $white;	
     font-family: $font-family-1;
@@ -61,7 +90,6 @@
     margin-left: 20px;
   }
 }
-
 
 .horizontalFlip {
   transform: scale(-1, 1);

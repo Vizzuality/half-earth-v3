@@ -1,11 +1,12 @@
 @import 'styles/settings';
 
 .modal {
-  padding: 50px 60px;
+  padding: 0;
   max-width: 100%;
   height: 100vh;
 
   @media #{$tablet-landscape} {
+    padding: 50px 60px;
     max-width: 620px;
     width: 80%;
     height: auto;
@@ -13,7 +14,12 @@
 }
 
 .modalContent {
-  padding: 50px 60px;
+  padding: 20px 30px;
+
+  @media #{$tablet-landscape} {
+    padding: 50px 60px;
+  }
+  
 }
 
 .metadataDescription {
@@ -21,7 +27,7 @@
 }
 
 .metadataList {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   font-style: normal;
   margin: $site-gutter 0;
@@ -39,16 +45,24 @@
   dd {
     margin-left: 10px;
   }
+
+  @media #{$tablet-landscape} {
+    font-size: 14px;
+  }
 }
 
 .metadataSource {
   opacity: 0.5;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 300;
   line-height: 1.5;
 
   a {
     color: $java;
+  }
+
+  @media #{$tablet-landscape} {
+    font-size: 12px;
   }
 }
 

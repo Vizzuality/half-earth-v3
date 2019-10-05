@@ -31,11 +31,15 @@
 }
 
 .navbar {
+  display: none;
   color: $light-text;
-  display: flex;
   justify-content: center;
   align-items: flex-end;
   height: 10%;
+
+  @media #{$tablet-portrait} {
+    display: flex;
+  }
 }
 
 .content {

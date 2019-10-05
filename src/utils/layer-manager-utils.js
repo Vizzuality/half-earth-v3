@@ -1,9 +1,25 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-import { loadModules } from '@esri/react-arcgis';
+import { intersection } from 'lodash';
+import { loadModules } from 'esri-loader';
 import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 
-const DEFAULT_OPACITY = 0.6;
+export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
+  const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
+  const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
+  if (areActive) {
+    const updatedLayers = layerNamesArray.reduce((acc, title) => {
+      return [...acc.filter(l => l.title !== title)];
+    }, activeLayers);
+    callback({activeLayers: updatedLayers });
+  } else {
+    const layersToAdd = layerNamesArray.map(title => ({ title, category, opacity: DEFAULT_OPACITY }));
+    activeLayers
+      ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
+      : callback({ activeLayers: layersToAdd });
+  }
+}
 
 export const layerManagerToggle = (layerTitle, activeLayers, callback, category) => {
   const title = layerTitle;
@@ -37,6 +53,11 @@ export const layerManagerVisibility = (layerTitle, visible, activeLayers, callba
   }
 };
 
+export const batchLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
+  const setOpacity = (layer) => layerNamesArray.includes(layer.title) ? { ...layer, opacity } : layer;
+  callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
+};
+
 export const layerManagerOpacity = (layerTitle, opacity, activeLayers, callback) => {
   const setOpacity = (layer) => layer.title === layerTitle ? { ...layer, opacity } : layer;
   callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
@@ -48,19 +69,50 @@ export const layerManagerOrder = (datasets, activeLayers, callback) => {
   callback({ activeLayers: updatedLayers });
 };
 
-export const layerInMap = (layerTitle, map) => map.layers.items.some(l => l.title === layerTitle);
-
-export const createLayer = (layer, map) => {
-  return loadModules(["esri/layers/WebTileLayer"]).then(([WebTileLayer]) => {
-    const { url, slug } = layer;
-    const tileLayer = new WebTileLayer({
+export const createLayer = layerConfig => {
+  const { url, slug, type } = layerConfig;
+  const layerType = type || 'WebTileLayer';
+  return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
+    return new layer({
+      url: url,
       urlTemplate: url,
       title: slug,
       id: slug,
       opacity: DEFAULT_OPACITY
     })
-    map.add(tileLayer);
   });
+}
+export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) => {
+  map.add(mapLayer);
+  resolve(mapLayer);
+});
+export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
+export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
+
+export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPressuresPreloadFixes, humanPressuresLayerTitle) => {
+  const activeLayerIDs = activeLayers
+      .map(({ title }) => title);
+  
+    activeLayerIDs.forEach(async layerName => {
+      const layerConfig = config[layerName];
+      if (layerConfig) {
+        const newLayer = await createLayer(layerConfig, map);
+        newLayer.outFields = ["*"];
+        if (layerConfig.slug === humanPressuresLayerTitle) {
+          humanPressuresPreloadFixes(newLayer, rasters);
+        }
+        addLayerToMap(newLayer, map);
+      }
+    });
+}
+
+export const handleLayerCreation = async (layerConfig, map) => {
+  if (!isLayerInMap(layerConfig, map)) {
+    const newLayer = await createLayer(layerConfig);
+    return addLayerToMap(newLayer, map).then(layer => layer);
+  } else {
+    return findLayerInMap(layerConfig.slug, map);
+  }
 }
 
 export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {

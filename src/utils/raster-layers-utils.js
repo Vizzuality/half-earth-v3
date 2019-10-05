@@ -1,3 +1,5 @@
+import { loadModules } from 'esri-loader';
+import { HUMAN_PRESSURES_COLOR_RAMP } from 'constants/human-pressures';
 export const setRasterFuntion = (RasterFunction, Color, colorRamp) => (
   new RasterFunction({
     functionName: "Colormap",
@@ -55,14 +57,38 @@ export const setRasterFuntion = (RasterFunction, Color, colorRamp) => (
   })
 )
 
-export const mosaicRuleFix = (esriConfig, layer, globe) => {
+export const mosaicRuleFix = (esriConfig, url, mosaicRule, globe) => {
   esriConfig.request.interceptors = [{
     globe,
-    urls: `${layer.url}/exportImage`,
+    urls: `${url}/exportImage`,
     before: function (params) {
       if(params.requestOptions.query.mosaicRule) {
-        params.requestOptions.query.mosaicRule = JSON.stringify(layer.mosaicRule.toJSON());
+        params.requestOptions.query.mosaicRule = JSON.stringify(mosaicRule.toJSON());
       }
     }
   }]
+}
+
+export const humanPressuresPreloadFixes = (layer, rasters) => {
+  const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName])
+  const rasterNames = activeRasters.map(value => `human_impact_${value}`)
+  const mosaicWhereClause = `Name IN('${rasterNames.join("','")}')`;
+  loadModules(["esri/config", "esri/layers/support/MosaicRule"])
+  .then(([esriConfig, MosaicRule]) => {
+    const mosaicRule = new MosaicRule({
+      method: 'attribute',
+      operation: 'sum',
+      where: mosaicWhereClause
+    });
+    layer.mosaicRule = mosaicRule;
+    mosaicRuleFix(esriConfig, layer.url, mosaicRule, 'DATA');
+  });
+}
+
+export const dispatchLandPressuresLayersAnalyticsEvents = (rasters, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, mode) => {
+  const activeRasters = Object.keys(rasters).filter(rasterName => rasters[rasterName]);
+  const analyticsParams = { slug: option.slug, query: { viewMode: mode.LANDSCAPE }};
+  const isRasterActive = activeRasters.some(value => value === option.value);
+  if (isRasterActive) addLayerAnalyticsEvent(analyticsParams) 
+  else removeLayerAnalyticsEvent(analyticsParams);
 }

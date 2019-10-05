@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import setSpeciesActions from 'redux_modules/species';
 import SpeciesWidgetComponent from './species-widget-component';
 import mapStateToProps from './species-widget-selectors';
-import { loadModules } from '@esri/react-arcgis';
+import { loadModules } from 'esri-loader';
 import * as urlActions from 'actions/url-actions';
 
 const actions = { ...setSpeciesActions, ...urlActions };

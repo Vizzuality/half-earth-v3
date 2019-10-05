@@ -87,11 +87,8 @@ $ease-in-out: opacity $animation-time ease-in-out;
 .globeComponentWrapper {
   border-radius: 50%;
   overflow: hidden;
-
-  & > * {
-    height: $globe-size;
-    width: $globe-size;
-  }
+  height: $globe-size;
+  width: $globe-size;
 
   .esri-ui-top-left {
     display: none;

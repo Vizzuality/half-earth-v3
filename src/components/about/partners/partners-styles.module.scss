@@ -6,7 +6,13 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
  
+  @media #{$tablet-portrait} {
+    height: unset;
+    overflow-y: unset;
+  }
 }
 
 .section {
@@ -15,19 +21,34 @@
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 80px;
-  width: 960px;
+  width: 100%;
+
+  @media #{$tablet-portrait} {
+    width: 960px;
+  }
 }
 
 .title {
   @extend %headline;
   color: $white;
+  font-size: 28px;
   margin: 0;
   margin-bottom: 50px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+  padding: 20px;
+  text-align: center;
+
+  @media #{$tablet-portrait} {
+    font-size: $font-size-xl;
+    padding: 0;
+    text-align: left;
+  }
 }
 
 .logosWrapper {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
   width: 100%;
 
@@ -41,6 +62,10 @@
     margin-bottom: 50px;
     width: 25%;
   }
+
+  @media #{$tablet-portrait} {
+    flex-direction: row;
+  }
 }
 
 .description {
@@ -48,11 +73,20 @@
   color: $white;
   margin: 0;
   text-align: center;
+  padding: 20px;
+
+  @media #{$tablet-portrait} {
+    padding: 0;
+  }
 }
 
 .partners {
   .description {
-    width: 500px;
+    width: auto;
+
+    @media #{$tablet-portrait} {
+      width: 500px;
+    }
   }
   .logosWrapper {
     justify-content: space-between;
