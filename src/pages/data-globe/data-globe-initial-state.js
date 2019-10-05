@@ -19,6 +19,9 @@ export default {
     ],
     zoom: 1,
     center: [16.9515536, 0.116959],
+    padding: {
+      bottom: 60
+    },
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,

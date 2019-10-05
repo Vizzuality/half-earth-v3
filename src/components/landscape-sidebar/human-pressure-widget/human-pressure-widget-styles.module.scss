@@ -4,8 +4,9 @@
 
 .container {
   @include backdropBlur();
-  border-radius: 2px;
+  border-radius: $border-radius-desktop;
   margin-top: $widgetsTopMargin;
+  height: 400px;
 }
 
 .title {

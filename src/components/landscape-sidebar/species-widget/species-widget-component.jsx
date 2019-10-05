@@ -80,41 +80,41 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
 const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectSpecies, handleSelectNextSpecies, handleSelectPrevSpecies }) => {
 
   return (
-    <>
-      {data && selectedSpecies &&
-        <div className={styles.container}>
-          <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
-          <p className={styles.text}>The radar plot below shows the proportion of species range protected from the available taxonomic groups.</p>
-          <div className={styles.chart}>
-            <div className={styles.chartSlice}></div>
-            <div className={styles.chartSlice}>
-              {data.map((species, index) => (
-                <SpeciesChartDot
-                  key={`dot-${index}`}
-                  species={species}
-                  selectedSpecies={selectedSpecies}
-                  handleSelectSpecies={handleSelectSpecies}
-                />
-              ))}
+      <div className={styles.container}>
+        <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
+        {data && selectedSpecies && (
+          <>
+            <p className={styles.text}>The radar plot below shows the proportion of species range protected from the available taxonomic groups.</p>
+            <div className={styles.chart}>
+              <div className={styles.chartSlice}></div>
+              <div className={styles.chartSlice}>
+                {data.map((species, index) => (
+                  <SpeciesChartDot
+                    key={`dot-${index}`}
+                    species={species}
+                    selectedSpecies={selectedSpecies}
+                    handleSelectSpecies={handleSelectSpecies}
+                  />
+                ))}
+              </div>
+              <div className={styles.chartSlice}></div>
+              <div className={styles.chartSlice}></div>
             </div>
-            <div className={styles.chartSlice}></div>
-            <div className={styles.chartSlice}></div>
-          </div>
-          <SpeciesCarrousel
-            selectedSpecies={selectedSpecies}
-            handleSelectPrevSpecies={handleSelectPrevSpecies}
-            handleSelectNextSpecies={handleSelectNextSpecies}
-          />
-          <a
-            href='https://mol.org/'
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.molLogo}
-          >
-          </a>
-        </div>
-      }
-    </>
+            <SpeciesCarrousel
+              selectedSpecies={selectedSpecies}
+              handleSelectPrevSpecies={handleSelectPrevSpecies}
+              handleSelectNextSpecies={handleSelectNextSpecies}
+            />
+            <a
+              href='https://mol.org/'
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.molLogo}
+            >
+            </a>
+          </>
+        )}
+    </div>
   );
 }
 

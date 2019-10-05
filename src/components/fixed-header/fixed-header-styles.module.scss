@@ -9,11 +9,12 @@ $icon-size: 25px;
   padding-left: $mobile-sidebar-side-paddings;
   display: flex;
   flex-direction: column;
-  height: $sidebar-header-height;
+  height: $sidebar-header-height-mobile;
   position: relative;
 
   @media #{$tablet-portrait} {
     padding-left: $sidebar-paddings;
+    height: $sidebar-header-height;
   }
 }
 

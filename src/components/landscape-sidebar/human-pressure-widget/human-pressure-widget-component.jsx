@@ -31,10 +31,10 @@ const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
 const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
   return (
     <div className={styles.container}>
+      <h3 className={styles.title}>Land human pressures in this area</h3>
       <DummyBlurWorkaround />
       {options && 
         <>
-          <h3 className={styles.title}>Land human pressures in this area</h3>
           <PressureStatementComponent totalPressure={totalPressure} biggestPressureName={biggestPressureName} />
           <BarComponent selectedPressures={selectedPressures} totalPressure={totalPressure}/>
           <CheckboxGroup
