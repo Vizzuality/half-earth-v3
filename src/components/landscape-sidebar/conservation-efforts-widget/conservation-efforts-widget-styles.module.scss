@@ -6,9 +6,10 @@ $margin: 8px;
 
 .container {
   @include backdropBlur();
-  border-radius: 2px;
+  border-radius: $border-radius-desktop;
   padding-bottom: 34px;
   margin-top: $widgetsTopMargin;
+  height: 430px;
 }
 
 .padding {

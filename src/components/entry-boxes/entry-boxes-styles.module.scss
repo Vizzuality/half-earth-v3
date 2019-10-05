@@ -19,7 +19,7 @@
 
   // entry box border-radius
   & > *:first-child > div:first-child {
-    border-radius: 16px 16px 0 0;
+    border-radius: $border-radius-mobile;
   }
 
   @media #{$tablet-portrait} {

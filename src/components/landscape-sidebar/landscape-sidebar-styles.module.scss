@@ -8,7 +8,7 @@ $margin: 20px;
   @extend %verticalScrollBar;
   display: inline-block;
   box-sizing: border-box;
-  border-radius: 16px 16px 0 0;
+  border-radius: $border-radius-mobile;
   height: 450px;
   position: absolute;
   bottom: 15px;

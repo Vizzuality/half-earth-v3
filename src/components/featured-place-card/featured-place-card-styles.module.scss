@@ -44,7 +44,7 @@ $card-content-max-height: 220px;
   pointer-events: all;
   background-color: $white;
   padding: 22px $mobile-sidebar-side-paddings 10px $mobile-sidebar-side-paddings;
-  border-radius: 16px 16px 0 0;
+  border-radius: $border-radius-mobile;
 
   @media #{$tablet-portrait} {
     padding: 0;
