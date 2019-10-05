@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import MinimapWidgetComponent from './minimap-widget-component';
 import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'utils/minimap-utils';
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
-import metadataActions from 'redux_modules/page-texts';
 import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
 import { isMobile } from 'constants/responsive';
 
 const VIEW = 'half-earth-meter';
-const actions = {...metadataActions, openHalfEarthMeterAnalyticsEvent };
+const actions = { openHalfEarthMeterAnalyticsEvent };
 
 const MinimapWidget = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,8 +28,7 @@ const MinimapWidget = (props) => {
 
   const handleModalOpen = () => {
     setModalOpen(true);
-    const { setPageTexts,openHalfEarthMeterAnalyticsEvent } = props;
-    setPageTexts(VIEW);
+    const { openHalfEarthMeterAnalyticsEvent } = props;
     openHalfEarthMeterAnalyticsEvent();
   };
 
@@ -42,7 +40,7 @@ const MinimapWidget = (props) => {
 
   return (
     <div style={{ display: hidden ? 'none' : 'block' }}>
-      <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>
+      {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
       {isModalOpen && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
     </div>
   );

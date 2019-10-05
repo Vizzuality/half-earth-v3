@@ -3,6 +3,8 @@ import ReactMarkdown from 'react-markdown/with-html';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import GlobeImage from 'images/globe.png';
+import GlobeSmallImage from 'images/globeSmall.png';
+import { isMobile } from 'constants/responsive';
 
 import data from './half-earth-modal-data';
 
@@ -19,29 +21,27 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
 
   useEventListener('keydown', keyEscapeEventListener);
 
+  const isOnMobile = isMobile();
+
   return (
     <div className={styles.halfEarthModal}>
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
-          <h1 className={styles.title}>{textData && textData.title}</h1>
-            <ReactMarkdown
-              className={styles.description}
-              source={textData && textData.content}
-              escapeHtml={false}
-            />
-          <div className={styles.legendWrapper}>
-            {legend.map(({ value, label, imageSrc}) => (
-              <div key={label} className={styles.legendItem}>
-                <span className={styles.value}>{value}</span>
-                <span className={styles.label}>{label}</span>
-                <img src={imageSrc} className={styles.icon} alt={label}/>
-              </div>
-            ))}
+      <div className={styles.grid}>
+        <h1 className={styles.title}>{textData && textData.title}</h1>
+        <ReactMarkdown
+          className={styles.description}
+          source={textData && textData.content}
+          escapeHtml={false}
+        />
+        {legend.map(({ value, label, imageSrc}) => (
+          <div key={label} className={styles.legendItem}>
+            <span className={styles.value}>{value}</span>
+            <span className={styles.label}>{label}</span>
+            <img src={imageSrc} className={styles.icon} alt={label}/>
           </div>
-        </div>
+        ))}
         <div className={styles.globeWrapper}>
           <div className={styles.progresBars}>
-            <img src={GlobeImage} className={styles.globe} alt="Half-Earth globe" />
+            <img src={isOnMobile ? GlobeSmallImage : GlobeImage} className={styles.globe} alt="Half-Earth globe" />
           </div>
         </div>
       </div>
