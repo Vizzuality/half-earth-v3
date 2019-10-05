@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  height: calc(100% - $mobile-sidebar-side-paddings);
+  height: calc(100% - #{$mobile-sidebar-side-paddings});
   padding: 32px;
 
   @media #{$tablet-portrait} {
