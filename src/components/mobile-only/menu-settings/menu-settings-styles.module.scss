@@ -5,6 +5,7 @@
 .container {
   @include backdropBlur();
   @include bottom();
+  position: fixed;
   padding: 30px 20px;
   border-radius: $border-radius-mobile;
   display: none;

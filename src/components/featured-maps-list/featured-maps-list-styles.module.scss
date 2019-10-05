@@ -12,6 +12,7 @@ $scrollbar-gutter: 15px;
   border-radius: 2px;
   width: 100%;
   @include bottom();
+  position: fixed;
 
   @media #{$tablet-portrait} {
     @include topLeft();

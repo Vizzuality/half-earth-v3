@@ -3,6 +3,7 @@
 
 .entryBoxesPosition {
   @include bottom();
+  position: fixed;
   top: auto;
   overflow-y: hidden;
   
@@ -26,7 +27,6 @@
     bottom: auto;
     width: $sidebar-width + 40px;
     @include topLeft();
-
 
     & > *:first-child > div:first-child {
       border-radius: 2px;

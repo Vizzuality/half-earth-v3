@@ -10,14 +10,16 @@ $margin: 20px;
   box-sizing: border-box;
   border-radius: $border-radius-mobile;
   height: 450px;
-  position: absolute;
-  bottom: 15px;
+  position: fixed;
+  bottom: $menuFooterHeight;
   overflow-x: hidden;
 
   @media #{$tablet-portrait} {
     @include animationFunction();
+    position: absolute;
     height: calc(100vh - 60px);
     border-radius: 2px;
+    bottom: auto;
   }
 }
 

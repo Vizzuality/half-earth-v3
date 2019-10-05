@@ -5,8 +5,10 @@
 .wrapper {
   overflow: hidden;
   @include bottom();
+  position: fixed;
 
   @media #{$tablet-portrait} {
+    position: absolute;
     width: unset;
     bottom: 20px;
     left: calc(50% - 250px);

@@ -3,11 +3,11 @@
 .wrapper {
   background-color: #031D2E;
   padding: $mobile-sidebar-side-paddings;
-  margin-bottom: 50px;
   border-radius: $border-radius-desktop;
 
   @media #{$tablet-portrait} {
     margin-top: $widgetsTopMargin;
+    margin-bottom: 50px;
     padding: $sidebar-paddings;
   }
 }

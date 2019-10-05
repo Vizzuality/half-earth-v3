@@ -110,10 +110,11 @@ $map-attribution-height: 30px;
 }
 
 .legend {
-  position: absolute;
   @include bottom();
+  position: fixed;
 
   @media #{$tablet-portrait} {
+    position: absolute;
     bottom: calc(#{$site-gutter} + #{$map-attribution-height});
     right: $site-gutter;
     width: 260px;

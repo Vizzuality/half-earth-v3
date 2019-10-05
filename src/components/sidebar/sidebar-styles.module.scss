@@ -10,6 +10,7 @@
   top: auto;
   overflow: hidden;
   @include bottom();
+  position: fixed;
 
   @media #{$tablet-portrait} {
     @include animationFunction();
