@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  height: calc(100% - 65px);
+  height: calc(100% - $mobile-sidebar-side-paddings);
   padding: 32px;
 
   @media #{$tablet-portrait} {
@@ -23,7 +23,7 @@
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
 
   @media #{$tablet-portrait} {
-    padding: 0 20px;
+    padding: 0 $sidebar-paddings;;
     margin-bottom: 80px;
     font-size: $font-size-xl;
   }
