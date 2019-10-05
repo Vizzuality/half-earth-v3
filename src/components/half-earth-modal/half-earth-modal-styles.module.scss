@@ -34,13 +34,13 @@
   padding: 10% 32px 100px;
 
   @media #{$tablet-portrait} {
-    grid-column-gap: 15px;
-    grid-template-columns: 25% 25% 50%;
+    grid-column-gap: 40px;
+    grid-template-columns: 1fr 1fr 1fr 3fr;
     grid-template-rows: auto;
     grid-template-areas: 
-      "title title globe"
-      "text text globe"
-      "marine-legend land-legend globe";
+      "title title title globe"
+      "text text text globe"
+      "marine-legend land-legend smth globe";
     padding: 70px 10% 100px;
     height: 100%;
   }
