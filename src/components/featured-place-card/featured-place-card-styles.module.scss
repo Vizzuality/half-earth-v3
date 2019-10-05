@@ -6,8 +6,8 @@
 $card-content-max-height: 220px;
 
 .container {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: $menuFooterHeight;
   display: flex;
   width: 100%;
   min-height: 380px;
@@ -16,6 +16,8 @@ $card-content-max-height: 220px;
   pointer-events: all;
 
   @media #{$tablet-portrait} {
+    position: absolute;
+    bottom: 0;
     pointer-events: none;
   }
 }
@@ -27,7 +29,6 @@ $card-content-max-height: 220px;
   flex-direction: column;
   width: 100%;
   height: 400px;
-  margin-bottom: $menuFooterHeight;
 
   @media #{$tablet-portrait} {
     height: unset;
