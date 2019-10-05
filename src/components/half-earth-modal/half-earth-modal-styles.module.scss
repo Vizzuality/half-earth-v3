@@ -3,8 +3,6 @@
 @import 'styles/typography-extends';
 
 .halfEarthModal {
-  background-repeat: no-repeat;
-  background-size: cover;
   height: 100%;
   left: 0;
   overflow-y: scroll;
@@ -15,16 +13,18 @@
   @media #{$tablet-portrait} {
     background-color: #020A14;;
     background-image: url('../../assets/images/stars.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
     overflow-y: unset;
     position: absolute;
   }
 }
 
-.wrapper {
+.grid {
   display: grid;
-  grid-column-gap: 4%;
-  grid-template-columns: 48% 48%;
+  grid-column-gap: 15px;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 400px auto;
   grid-template-areas: 
     "title title"
@@ -135,7 +135,6 @@ $icon-size: 40px;
   font-family: $font-family-1;
   font-weight: bold;
   justify-content: center;
-  
   padding: 32px 16px 20px;
   position: relative;
 
@@ -155,16 +154,13 @@ $icon-size: 40px;
   }
 
   .value {
-    
     font-size: 20px;
     letter-spacing: 2px;
     line-height: 20px;
 
     @media #{$tablet-portrait} {
       font-size: $font-size-xs;
-
     }
-
   }
 
   .label {

@@ -31,6 +31,7 @@
 .title {
   @extend %headline;
   color: $white;
+  font-size: 28px;
   margin: 0;
   margin-bottom: 50px;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
@@ -38,6 +39,7 @@
   text-align: center;
 
   @media #{$tablet-portrait} {
+    font-size: $font-size-xl;
     padding: 0;
     text-align: left;
   }
