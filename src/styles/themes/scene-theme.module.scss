@@ -2,8 +2,12 @@
 
 .sceneContainer {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 65px) !important;
   padding-left: 0;
+  
+  @media #{$tablet-portrait} {
+    height: 100vh  !important;
+  }
 }
 
 .expanded {
