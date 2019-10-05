@@ -54,10 +54,10 @@ const SceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMap
 
   if (loadState === 'loading') {
     return (
-    <div style={{ height: '100%', position: 'relative', width: '100%' }}>
+    <>
       <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'0%', height:'0%'}} />
       <Spinner spinnerWithOverlay initialLoading display={spinner}/>
-    </div>
+    </>
     )
   } else if (loadState === 'loaded') {
     return (
