@@ -14,13 +14,15 @@ const COLORS = () => ({
 })
 
 const conservationEffortsData = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.data;
+const conservationEffortsLoading = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.loading;
 
 const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
 const getConservationEfforts = createSelector(
   [conservationEffortsData],
   cellData => {
-    if (!cellData) return null;
+    if (!cellData || !cellData.length) return null;
+    console.log('cellData: ',cellData)
     const conservationEfforts = cellData.reduce((acc, current) => {
       return {
         ...acc,
@@ -48,7 +50,6 @@ const getConservationAreasLogic = createSelector(
   [getConservationEfforts],
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
-
     const areas = {};
     const { WDPA_prop, RAISG_prop, all_prop } = conservationEfforts;
     areas[NOT_UNDER_CONSERVATION] = (1 - (WDPA_prop +RAISG_prop)) * 100; // set NOT_UNDER_CONSERVATION first to render the slice below all others
@@ -134,5 +135,6 @@ export default createStructuredSelector({
   allProp: getAllPropsForDynamicSentence,
   alreadyChecked: getAlreadyChecked,
   protectedLayers: getProtectedLayers,
-  activeSlices: getActiveSlices
+  activeSlices: getActiveSlices,
+  loading: conservationEffortsLoading
 });

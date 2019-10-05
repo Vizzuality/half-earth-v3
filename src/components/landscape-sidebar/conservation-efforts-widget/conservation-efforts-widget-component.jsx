@@ -24,7 +24,8 @@ const ConservationEffortsWidget = ({
   alreadyChecked,
   protectedLayers,
   activeSlices,
-  toggleLayer
+  toggleLayer,
+  loading
 }) => {
   return (
     <>
@@ -32,7 +33,7 @@ const ConservationEffortsWidget = ({
         <div className={styles.fixBlur} />
         <div className={styles.padding}>
           <h3 className={styles.title}>Conservation Efforts</h3>
-          {rawData && (
+          {!loading && rawData && (
             <>
               <ConservationEffortsDescription allProp={allProp} rawData={rawData} />
               <PieChart
@@ -44,7 +45,7 @@ const ConservationEffortsWidget = ({
             </>
           )}
         </div>
-        {rawData && (
+        {!loading && rawData && (
           <>
             <CheckboxGroup 
               handleClick={toggleLayer}
