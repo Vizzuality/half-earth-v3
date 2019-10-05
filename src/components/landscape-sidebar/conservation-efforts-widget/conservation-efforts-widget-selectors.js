@@ -22,7 +22,6 @@ const getConservationEfforts = createSelector(
   [conservationEffortsData],
   cellData => {
     if (!cellData || !cellData.length) return null;
-    console.log('cellData: ',cellData)
     const conservationEfforts = cellData.reduce((acc, current) => {
       return {
         ...acc,

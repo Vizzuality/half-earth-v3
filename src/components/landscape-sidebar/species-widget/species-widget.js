@@ -74,7 +74,7 @@ const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe,
       if(terrestrialCellData.length) {
         querySpeciesData();
       } else {
-        setSpeciesData([])
+        setSpeciesData({ data: null })
       }
     }
   }, [speciesLayer, terrestrialCellData])
