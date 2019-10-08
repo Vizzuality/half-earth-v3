@@ -78,10 +78,11 @@ const SpeciesCarrousel = ({ selectedSpecies, handleSelectPrevSpecies, handleSele
 };
 
 const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectSpecies, handleSelectNextSpecies, handleSelectPrevSpecies, loading }) => {
+  const noData = !data && !loading;
   return (
-      <div className={styles.container}>
+      <div className={styles.container} style={{ minHeight: noData ? 'auto' : '700px' }}>
         <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
-        {!data && !loading && <p className={styles.text}>No species data for this area.</p>}
+        {noData && <p className={styles.text}>No species data for this area.</p>}
         {data && selectedSpecies && !loading && (
           <>
             <p className={styles.text}>The radar plot below shows the proportion of species range protected from the available taxonomic groups.</p>

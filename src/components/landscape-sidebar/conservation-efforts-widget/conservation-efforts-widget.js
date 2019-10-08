@@ -76,7 +76,7 @@ const ConservationEffortsWidget = (props) => {
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
-      });
+      }).catch(() => setConservationEfforts({ data: null, loading: false }));
     }
   }, [terrestrialCellData])
 

@@ -27,12 +27,14 @@ const ConservationEffortsWidget = ({
   toggleLayer,
   loading
 }) => {
+  const noData = !loading && !rawData;
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container} style={{ minHeight: noData ? 'auto' : '430px' }}>
         <div className={styles.fixBlur} />
         <div className={styles.padding}>
           <h3 className={styles.title}>Conservation Efforts</h3>
+          {noData &&  <p className={styles.description}>No conservation efforts data for this area.</p>}
           {!loading && rawData && (
             <>
               <ConservationEffortsDescription allProp={allProp} rawData={rawData} />

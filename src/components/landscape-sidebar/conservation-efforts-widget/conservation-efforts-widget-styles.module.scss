@@ -12,6 +12,7 @@ $margin: 8px;
 
   @media #{$tablet-portrait} {
     min-height: 430px;
+    padding-bottom: 0;
   }
 }
 
