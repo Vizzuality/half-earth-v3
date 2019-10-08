@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { findLayerInMap } from 'utils/layer-manager-utils';
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
-export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlace, isLandscapeMode) {
+export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlace, isLandscapeMode, zoom) {
   const [coords, setCoords] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   useEffect(() => {
@@ -21,7 +21,7 @@ export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlac
         setCoords([lon, lat]);
       });
     } else if (!isLandscapeMode) {
-      view.goTo({ tilt: 0, zoom: 1 });
+      view.goTo({ tilt: 0, zoom: zoom || 1 });
     }
   }, [selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode])
 
