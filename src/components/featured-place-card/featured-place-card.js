@@ -27,6 +27,7 @@ const FeaturedPlaceCardContainer = props => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setFeaturedPlace({ ...featuredPlace, image: null })
       const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
       if (result) {
         setFeaturedPlace(result);
