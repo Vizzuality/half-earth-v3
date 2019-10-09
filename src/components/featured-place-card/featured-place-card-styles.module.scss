@@ -151,31 +151,6 @@ $card-content-max-height: 220px;
     padding: 60px 40px 40px;
   }
 
-  .pictureContainer {
-    background-color: $alto;
-    height: 170px;
-    position: relative;
-    grid-area: picture;
-
-    .picture {
-      height: 100%;
-      object-fit: cover;
-      margin-right: 0;
-      margin-bottom: 22px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    @media #{$tablet-portrait} {
-      height: unset;
-
-      .picture {
-        margin-right: 40px;
-        margin-bottom: 0;
-      }
-    }
-  }
-
   .landscapeTriggerButton {
     align-self: end;
     display: flex;
@@ -243,6 +218,31 @@ $card-content-max-height: 220px;
     @extend %bodyText;
     color: $dark-text;
     padding-bottom: 24px;
+  }
+}
+
+.pictureContainer {
+  background-color: $alto;
+  height: 170px;
+  position: relative;
+  grid-area: picture;
+
+  .picture {
+    height: 100%;
+    object-fit: cover;
+    margin-right: 0;
+    margin-bottom: 22px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  @media #{$tablet-portrait} {
+    height: unset;
+
+    .picture {
+      margin-right: 40px;
+      margin-bottom: 0;
+    }
   }
 }
 
