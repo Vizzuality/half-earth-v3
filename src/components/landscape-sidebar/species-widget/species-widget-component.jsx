@@ -3,13 +3,15 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 import speciesPlaceholder from 'images/speciesPlaceholder.svg';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+
 import cx from 'classnames';
 
 import styles from './species-widget-styles.module.scss';
 
 const SpeciesChartDot = ({ species, selectedSpecies, handleSelectSpecies }) => {
   const isSelected = species.name === selectedSpecies.name;
-  const { name, scientificName, pointCoordinates, color } = species;
+  const { name, pointCoordinates, color } = species;
   return (
     <>
       <div 
@@ -81,6 +83,7 @@ const SpeciesWidgetComponent = ({ data, selectedSpecies, handleSelectSpecies, ha
   const noData = !data && !loading;
   return (
       <div className={styles.container} style={{ minHeight: noData ? 'auto' : '700px' }}>
+        <DummyBlurWorkaround />
         <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
         {noData && <p className={styles.text}>No species data for this area.</p>}
         {data && selectedSpecies && !loading && (

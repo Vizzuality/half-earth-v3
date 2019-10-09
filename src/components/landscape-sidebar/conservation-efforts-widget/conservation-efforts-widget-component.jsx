@@ -1,6 +1,8 @@
 import React from 'react';
 import PieChart from 'components/pie-chart';
 import CheckboxGroup from 'components/checkbox-group';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+
 import { 
   COMMUNITY_BASED,
   PROTECTED
@@ -31,7 +33,7 @@ const ConservationEffortsWidget = ({
   return (
     <>
       <div className={styles.container} style={{ minHeight: noData ? 'auto' : '430px' }}>
-        <div className={styles.fixBlur} />
+        <DummyBlurWorkaround />
         <div className={styles.padding}>
           <h3 className={styles.title}>Conservation Efforts</h3>
           {noData &&  <p className={styles.description}>No conservation efforts data for this area.</p>}

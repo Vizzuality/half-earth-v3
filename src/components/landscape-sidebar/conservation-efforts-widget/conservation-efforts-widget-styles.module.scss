@@ -30,10 +30,6 @@ $margin: 8px;
   color: white;
 }
 
-.fixBlur {
-  position: fixed;
-}
-
 .overrideCheckbox-protected-areas {
   input[type="checkbox"]:checked + label::before {
     background: $persimmon;
