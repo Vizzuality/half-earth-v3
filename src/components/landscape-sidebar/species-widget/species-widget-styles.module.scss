@@ -7,11 +7,11 @@
   padding: $mobile-sidebar-side-paddings;
   width: 100%;
   margin-top: $widgetsTopMargin;
-  height: 700px;
 
   @media #{$tablet-portrait} {
     padding: $sidebar-paddings;
     border-radius: $border-radius-desktop;
+    min-height: 700px;
   }
 }
 

@@ -9,7 +9,11 @@ $margin: 8px;
   border-radius: $border-radius-desktop;
   padding-bottom: 34px;
   margin-top: $widgetsTopMargin;
-  height: 430px;
+
+  @media #{$tablet-portrait} {
+    min-height: 430px;
+    padding-bottom: 0;
+  }
 }
 
 .padding {
@@ -24,10 +28,6 @@ $margin: 8px;
   @extend %title;
   margin: 0;
   color: white;
-}
-
-.fixBlur {
-  position: fixed;
 }
 
 .overrideCheckbox-protected-areas {
