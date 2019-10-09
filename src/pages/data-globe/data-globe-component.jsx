@@ -65,8 +65,6 @@ const DataGlobeComponent = ({
         <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <ArcgisLayerManager activeLayers={activeLayers} />
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive}/>
         <DataGlobalSidebar
           isSidebarOpen={isSidebarOpen}

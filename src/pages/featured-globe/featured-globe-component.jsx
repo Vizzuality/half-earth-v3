@@ -87,7 +87,7 @@ const DataGlobeComponent = ({
         <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
+        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} isLandscapeMode={isLandscapeMode} />
         <Widgets isFullscreenActive={isFullscreenActive} hidden={esriWidgetsHidden}/>
         {selectedFeaturedMap &&
           <SelectedFeaturedMapCard
