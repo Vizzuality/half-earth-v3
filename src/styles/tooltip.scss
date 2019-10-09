@@ -12,7 +12,8 @@
 :global {
 	.infoTooltipStyle {
 		@extend %tooltip-apperance;
-	
+		box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
+
 		&.place-left:after {
 			border-left-color: $white !important;
 		}
