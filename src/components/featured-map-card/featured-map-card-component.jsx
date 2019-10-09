@@ -41,7 +41,7 @@ const FeaturesMapCardComponent = ({
             className={styles.titleSection}
             style={ {backgroundImage: `linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(${featuredMap.image})`}}
           >
-            <ShareModalButton theme={{ shareButton: styles.shareButton}} view={view} />
+            <ShareModalButton theme={{ shareButton: styles.shareButton}} />
             <h2 className={styles.title}>{featuredMap.title}</h2>
           </section>
           <section className={styles.descriptionSection}>

@@ -2,6 +2,8 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+$buttonSideMargin: 24px;
+
 .container {
   @include backdropBlur();
   @include bottom();
@@ -52,8 +54,6 @@
 }
 
 .button {
-  margin-top: 38px;
-  margin-left: 24px;
   display: flex;
   align-items: center;
   font-size: $font-size-xxs;
@@ -64,6 +64,16 @@
   padding: 0;
 }
 
+.buttonsContainer {
+  margin-top: 38px;
+  margin: {
+    left: $buttonSideMargin;
+    right: $buttonSideMargin;
+  }
+  display: flex;
+  justify-content: space-between;
+}
+
 .icon {
   transform: rotate(180deg);
   height: 25px;
@@ -71,4 +81,14 @@
 
 .backButton {
   margin-top: 4px;
+}
+
+.shareText {
+  color: $white;
+  @extend %subtitle;
+}
+
+.share {
+  display: flex;
+  align-items: center;
 }
