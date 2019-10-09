@@ -36,6 +36,7 @@ const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globe
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
+const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
 
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 
@@ -55,6 +56,7 @@ export default createStructuredSelector({
   rasters: getRasters,
   isGlobeUpdating: getGlobeUpdating,
   selectedSpecies: getSelectedSpecies,
+  isHEModalOpen: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
 })

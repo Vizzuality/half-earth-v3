@@ -43,6 +43,7 @@ const DataGlobeComponent = ({
   handleGlobeUpdating,
   setRasters,
   activeOption,
+  isHEModalOpen,
 }) => {
 
   const isOnMobile = isMobile();
@@ -58,14 +59,14 @@ const DataGlobeComponent = ({
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
           <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuSettings activeOption={activeOption} isHEModalOpen={isHEModalOpen} />
           <Slider />
         </MobileOnly>
         {!isOnMobile && <Switcher />}
-        <ArcgisLayerManager activeLayers={activeLayers}/>
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <Widgets isFullscreenActive={isFullscreenActive}/>
+        <ArcgisLayerManager activeLayers={activeLayers} />
+        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
         <DataGlobalSidebar
           isSidebarOpen={isSidebarOpen}
           activeOption={activeOption}
