@@ -35,6 +35,7 @@ export const getRasters = createSelector(getGlobeSettings, globeSettings => glob
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
+const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -50,6 +51,7 @@ export default createStructuredSelector({
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,
+  isHEModalOpen: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
 })

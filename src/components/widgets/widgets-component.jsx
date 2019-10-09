@@ -8,14 +8,14 @@ import MinimapWidget from 'components/widgets/minimap-widget';
 
 import { isMobile } from 'constants/responsive';
 
-const WidgetsComponent = ({ map, view, isFullscreenActive, isNotMapsList = true, hidden = false}) => {
+const WidgetsComponent = ({ map, view, isFullscreenActive, isHEModalOpen = false, isNotMapsList = true, hidden = false}) => {
   const isOnMobile = isMobile();
   const hiddenWidget = hidden || isOnMobile;
   return (
     <>
       <ToggleUiWidget map={map} view={view} isFullscreenActive={isFullscreenActive} hidden={hiddenWidget}/>
       <ZoomWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
-      <MinimapWidget map={map} view={view} hidden={hiddenWidget} />
+      <MinimapWidget map={map} view={view} hidden={hiddenWidget} isHEModalOpen={isHEModalOpen} />
       {!isOnMobile && <SearchWidget map={map} view={view} hidden={hiddenWidget} />}
       <LocationWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
     </>

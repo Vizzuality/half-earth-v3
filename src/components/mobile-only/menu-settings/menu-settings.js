@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { SETTINGS_OPTIONS } from 'constants/mobile-only';
@@ -19,10 +19,20 @@ const mapStateToProps = ({ pageTexts }) => ({
 });
 
 const MenuSettingsContainer = props => {
-  const { setPageTexts, textData } = props;
+  const { setPageTexts, textData, isHEModalOpen, changeUI } = props;
   const [activeModal, setActiveModal] = useState(null);
 
-  const closeModal = () => setActiveModal(null);
+  // take opened half earth modal from the url state
+  useEffect(() => {
+    if (isHEModalOpen) setActiveModal(HALF_EARTH_MODAL);
+  }, []);
+
+  const closeHEModal = () => { changeUI({ isHEModalOpen: false }) }
+
+  const closeModal = () => { 
+    if(activeModal === HALF_EARTH_MODAL) { closeHEModal() }
+    setActiveModal(null) 
+  };
 
   const { HALF_EARTH_MODAL, ABOUT_PARTNERS, ABOUT_INSTRUCTIONS } = SETTINGS_OPTIONS;
 
@@ -32,6 +42,7 @@ const MenuSettingsContainer = props => {
       Component: HalfEarthModal,
       onClickHandler: () => {
         setActiveModal(HALF_EARTH_MODAL);
+        changeUI({ isHEModalOpen: true });
       }
     },
     [ABOUT_PARTNERS]: {
@@ -40,12 +51,16 @@ const MenuSettingsContainer = props => {
       onClickHandler: () => {
         setPageTexts(PARTNERS_TEXT_SLUG)
         setActiveModal(ABOUT_PARTNERS);
+        closeHEModal()
       }
     },
     [ABOUT_INSTRUCTIONS]: {
       name: 'How to navigate the map',
       Component: MapInstructions,
-      onClickHandler: () => setActiveModal(ABOUT_INSTRUCTIONS)
+      onClickHandler: () => { 
+        setActiveModal(ABOUT_INSTRUCTIONS);
+        closeHEModal()
+      }
     }
   }
 

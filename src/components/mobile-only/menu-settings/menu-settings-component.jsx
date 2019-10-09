@@ -5,7 +5,7 @@ import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 import styles from './menu-settings-styles.module.scss';
 
-const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal, isLandscapeMode, isLandscapeSidebarCollapsed }) => {
+const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal }) => {
   const isSettingsOpen = activeOption === FOOTER_OPTIONS.SETTINGS;
   const Component = activeModal && options[activeModal].Component;
   return (
