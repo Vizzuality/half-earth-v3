@@ -51,7 +51,6 @@ const MenuSettingsContainer = props => {
       onClickHandler: () => {
         setPageTexts(PARTNERS_TEXT_SLUG)
         setActiveModal(ABOUT_PARTNERS);
-        closeHEModal()
       }
     },
     [ABOUT_INSTRUCTIONS]: {
@@ -59,7 +58,6 @@ const MenuSettingsContainer = props => {
       Component: MapInstructions,
       onClickHandler: () => { 
         setActiveModal(ABOUT_INSTRUCTIONS);
-        closeHEModal()
       }
     }
   }
