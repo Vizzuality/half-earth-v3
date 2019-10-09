@@ -189,6 +189,8 @@ $card-content-max-height: 220px;
   .landscapeTriggerText {
     @extend %subtitle;
     color: $dark-text;
+    margin-left: 12px;
+    margin-top: 4px;
   }
 
   .contentContainer {
