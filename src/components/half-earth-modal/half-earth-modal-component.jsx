@@ -5,6 +5,7 @@ import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import GlobeImage from 'images/globe.png';
 import GlobeSmallImage from 'images/globeSmall.png';
 import { isMobile } from 'constants/responsive';
+import ShareModalButton from 'components/share-modal';
 
 import data from './half-earth-modal-data';
 
@@ -44,6 +45,9 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
             <img src={isOnMobile ? GlobeSmallImage : GlobeImage} className={styles.globe} alt="Half-Earth globe" />
           </div>
         </div>
+        <div className={styles.share}>
+          <ShareModalButton shareText />
+        </div>
       </div>
       <button
         className={styles.closeButton}
@@ -51,6 +55,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
       >
         <CloseIcon />
       </button>
+
     </div>
   );
 }

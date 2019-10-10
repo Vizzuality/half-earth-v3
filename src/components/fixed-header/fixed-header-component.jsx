@@ -22,7 +22,7 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight, toggleCollapsedLan
       { [styles.higherHeader]: isHigherHeader},
       { [styles.autoHeightHeader]: autoHeight}
     )}>
-      {!isOnMobile && <ShareModal theme={{ shareButton: styles.shareButton}} view={view} />}
+      {!isOnMobile && <ShareModal theme={{ shareButton: styles.shareButton}} />}
       {!noBackClick && <button
         className={styles.button}
         onClick={closeSidebar}

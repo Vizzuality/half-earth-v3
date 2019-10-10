@@ -172,3 +172,14 @@ $tabsMarginBottom: 8px;
 .icon {
   @extend %icon;
 }
+
+.shareText {
+  color: $white;
+  @extend %subtitle;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

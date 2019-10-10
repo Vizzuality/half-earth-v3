@@ -1,12 +1,14 @@
 import React from 'react';
 import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
-import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import { FOOTER_OPTIONS, SETTINGS_OPTIONS } from 'constants/mobile-only';
+import ShareModalButton from 'components/share-modal';
 
 import styles from './menu-settings-styles.module.scss';
 
 const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal }) => {
   const isSettingsOpen = activeOption === FOOTER_OPTIONS.SETTINGS;
+  const isHalfEarthModal = activeModal && activeModal === SETTINGS_OPTIONS.HALF_EARTH_MODAL;
   const Component = activeModal && options[activeModal].Component;
   return (
     <>
@@ -20,13 +22,16 @@ const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal
       </div>
       {isSettingsOpen && activeModal && 
         <div className={styles.modalWrapper}>
-          <button
-            className={styles.button}
-            onClick={closeModal}
-          >
-            <ArrowExpandIcon className={styles.icon} />
-            <span className={styles.backButton}>BACK</span>
-          </button>
+          <div className={styles.buttonsContainer}>
+            <button
+              className={styles.button}
+              onClick={closeModal}
+            >
+              <ArrowExpandIcon className={styles.icon} />
+              <span className={styles.backButton}>BACK</span>
+            </button>
+            {isHalfEarthModal && <ShareModalButton shareText />}          
+          </div>
           <Component textData={textData} />
         </div>}
     </>
