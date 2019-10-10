@@ -82,13 +82,3 @@ $buttonSideMargin: 24px;
 .backButton {
   margin-top: 4px;
 }
-
-.shareText {
-  color: $white;
-  @extend %subtitle;
-}
-
-.share {
-  display: flex;
-  align-items: center;
-}

@@ -189,3 +189,14 @@ $icon-size: 40px;
     display: block;
   }
 }
+
+.share {
+  display: none;
+  
+  @media #{$tablet-portrait} {
+    display: block;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+  }
+}

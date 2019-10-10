@@ -83,21 +83,42 @@ const ShareModalComponent = (props) => {
     openShareModalAnalyticsEvent(viewMode);
   }
   const handleCloseShareModal = () => setShareModalOpen(false);
-  const { theme } = props;
+  const { theme, shareText = false } = props;
 
-  return (
-    <>
+  const tooltipId = {
+    'data-tip': 'data-tip',
+    'data-for': 'shareButtonId',
+    'data-place': 'right',
+    'data-effect':'solid',
+    'data-delay-show': 0
+  };
+
+  const shareButton = (withClickAndTooltip) => {
+    const tooltip = withClickAndTooltip ? {...tooltipId} : {};
+    return (
       <button
         className={cx(theme.shareButton)}
-        onClick={handleOpenShareModal}
-        data-tip
-        data-for='shareButtonId'
-        data-place='right'
-        data-effect='solid'
-        data-delay-show={0}
+        onClick={withClickAndTooltip ? handleOpenShareModal : (() => {})}
+        {...tooltip}
       >
         <ShareIcon className={styles.icon} />
       </button>
+    )
+  }
+
+  return (
+    <>
+      {shareText && (
+        <div 
+          className={styles.share}
+          onClick={handleOpenShareModal}
+          {...tooltipId}
+        >
+          <span className={styles.shareText}>Share</span>
+          {shareButton(false)}
+        </div>
+      )}
+      {!shareText && shareButton(true)}
       <ReactTooltip
         id='shareButtonId'
         className='infoTooltipStyle'

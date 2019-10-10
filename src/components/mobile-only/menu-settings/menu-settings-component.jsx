@@ -30,12 +30,7 @@ const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal
               <ArrowExpandIcon className={styles.icon} />
               <span className={styles.backButton}>BACK</span>
             </button>
-            {isHalfEarthModal && 
-              <div className={styles.share}>
-                <span className={styles.shareText}>Share</span>
-                <ShareModalButton />
-              </div>
-            }          
+            {isHalfEarthModal && <ShareModalButton shareText />}          
           </div>
           <Component textData={textData} />
         </div>}
