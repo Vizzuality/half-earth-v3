@@ -45,6 +45,9 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
             <img src={isOnMobile ? GlobeSmallImage : GlobeImage} className={styles.globe} alt="Half-Earth globe" />
           </div>
         </div>
+        <div className={styles.share}>
+          <ShareModalButton shareText />
+        </div>
       </div>
       <button
         className={styles.closeButton}
@@ -52,9 +55,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
       >
         <CloseIcon />
       </button>
-      <div className={styles.share}>
-        <ShareModalButton shareText />
-      </div>
+
     </div>
   );
 }
