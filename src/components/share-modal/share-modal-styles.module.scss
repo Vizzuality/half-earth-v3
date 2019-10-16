@@ -3,6 +3,7 @@
 @import 'styles/typography-extends';
 
 $tabsMarginBottom: 8px;
+$socialMediaIcon: 45px;
 
 .modal {
   width: 90% !important;
@@ -152,15 +153,16 @@ $tabsMarginBottom: 8px;
   }
 }
 
-.facebookIcon {
-  // margin-right: 60px;
-}
-
 .iconBackground {
-  height: 45px !important;
-  width: 45px !important;
-  padding: 0 !important;
-  margin: 15px !important;
+  height: $socialMediaIcon;
+  width: $socialMediaIcon;
+  padding: 0;
+  margin: 15px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .socialMediaContainer {
