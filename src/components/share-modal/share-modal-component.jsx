@@ -60,7 +60,7 @@ const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
           <button
-            onClick={() => window.open(`${socialMedia.link}${currentLocation}`)}
+            onClick={() => window.open(`${socialMedia.link}${encodeURIComponent(currentLocation)}`)}
             className={styles.iconBackground}
             key={socialMedia.alt}
           >
