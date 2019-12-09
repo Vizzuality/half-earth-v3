@@ -11,12 +11,12 @@ const description = [
 
 const legend = [
   {
-    value: '7.47%',
+    value: '7.8%',
     label: 'CURRENT MARINE PROTECTED AREAS',
     imageSrc: MarineLegend
   },
   {
-    value: '14.9%',
+    value: '15%',
     label: 'CURRENT LAND PROTECTED AREAS',
     imageSrc: LandLegend
   }
