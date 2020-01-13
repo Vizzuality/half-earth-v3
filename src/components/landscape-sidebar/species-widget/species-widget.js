@@ -6,6 +6,8 @@ import SpeciesWidgetComponent from './species-widget-component';
 import mapStateToProps from './species-widget-selectors';
 import { loadModules } from 'esri-loader';
 import * as urlActions from 'actions/url-actions';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER } from 'constants/layers-slugs';
 
 const actions = { ...setSpeciesActions, ...urlActions };
 
@@ -59,7 +61,7 @@ const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe,
     loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
       const _speciesLayer = new FeatureLayer({
         // URL to the service
-        url: "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/TerrestrialVertebrateSpeciesSHP/FeatureServer",
+        url: layersConfig[GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER].url,
       });
       setLayer(_speciesLayer)
     })
