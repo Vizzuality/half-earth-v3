@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
 import { loadModules } from 'esri-loader';
 
-import { 
+import {
+  PROTECTED_AREAS_FEATURE_LAYER,
+  COMMUNITY_AREAS_FEATURE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER
 } from 'constants/layers-slugs';
+
+import {
+  layersConfig
+} from 'constants/mol-layers-configs';
 
 const PROTECTED_AREA_COLOR = '#FF6C47';
 const COMMUNITY_AREA_COLOR = '#FCC44A';
@@ -33,7 +39,7 @@ const ProtectedAreasTooltips = ({ view, isLandscapeMode, activeLayers }) => {
     if (isLandscapeMode && isProtectedAreasRendered && !protectedAreasFL) {
       loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
         const protectedAreasFL = new FeatureLayer({
-          url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/WDPA3_view/FeatureServer/1"
+          url: layersConfig[PROTECTED_AREAS_FEATURE_LAYER].url
         });
         setProtectedAreasFL(protectedAreasFL)
       });
@@ -45,7 +51,7 @@ const ProtectedAreasTooltips = ({ view, isLandscapeMode, activeLayers }) => {
     if (isLandscapeMode && isCommunityAreasRendered && !communityAreasFL) {
       loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
         const communityAreasFL = new FeatureLayer({
-          url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/ArcGIS/rest/services/WDPA3_view2/FeatureServer/1"
+          url: layersConfig[COMMUNITY_AREAS_FEATURE_LAYER].url
         });
         setCommunityAreasFL(communityAreasFL)
       });
