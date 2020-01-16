@@ -27,6 +27,7 @@ const FeaturedPlaceCardContainer = props => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setFeaturedPlace({ ...featuredPlace, image: null })
       const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
       if (result) {
         setFeaturedPlace(result);
@@ -56,7 +57,10 @@ const FeaturedPlaceCardContainer = props => {
     }
   }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa])
 
-  const handleAllMapsClick = () => changeUI({ selectedFeaturedPlace: null });
+  const handleAllMapsClick = () => { 
+    view.goTo({ tilt: 0, zoom: 1 });
+    changeUI({ selectedFeaturedPlace: null });
+  }
   const handleNextPlaceClick = place => {
     const index = featuredPlacesList.indexOf(place);
     const nextPlaceIndex = (index + 1) < featuredPlacesList.length ? index + 1 : 0;

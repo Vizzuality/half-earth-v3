@@ -20,9 +20,7 @@ export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlac
         const lat = get(result, 'features[0].geometry.latitude');
         setCoords([lon, lat]);
       });
-    } else if (!isLandscapeMode) {
-      view.goTo({ tilt: 0, zoom: 1 });
-    }
+    } 
   }, [selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode])
 
   useEffect(() => {

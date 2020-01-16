@@ -6,10 +6,12 @@ import SpeciesWidgetComponent from './species-widget-component';
 import mapStateToProps from './species-widget-selectors';
 import { loadModules } from 'esri-loader';
 import * as urlActions from 'actions/url-actions';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER } from 'constants/layers-slugs';
 
 const actions = { ...setSpeciesActions, ...urlActions };
 
-const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, selectedSpeciesData }) => {
+const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe, selectedSpeciesData, loading }) => {
   const [speciesLayer, setLayer] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -45,12 +47,13 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
   }
 
   const querySpeciesData = () => {
+    setSpeciesData({ data: null, loading: true });
     const query = speciesLayer.createQuery();
     query.where = `HBWID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
     query.outFields = [ "HBWID", "scntfcn", "taxa", "RANGE_A", "PROP_RA", "url_sp", "cmmn_nm", "iucn_ct"];
     speciesLayer.queryFeatures(query).then(function(results){
       const { features } = results;
-      setSpecies(features.map(c => c.attributes));
+      setSpeciesData({ data: features.map(c => c.attributes), loading: false });
     });
   };
 
@@ -58,7 +61,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
     loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
       const _speciesLayer = new FeatureLayer({
         // URL to the service
-        url: "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/TerrestrialVertebrateSpeciesSHP/FeatureServer",
+        url: layersConfig[GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER].url,
       });
       setLayer(_speciesLayer)
     })
@@ -73,7 +76,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
       if(terrestrialCellData.length) {
         querySpeciesData();
       } else {
-        setSpecies([])
+        setSpeciesData({ data: null })
       }
     }
   }, [speciesLayer, terrestrialCellData])
@@ -92,6 +95,7 @@ const SpeciesWidget = ({ setSpecies, terrestrialCellData, data, changeGlobe, sel
       handleSelectSpecies={handleSelectSpecies}
       handleSelectNextSpecies={handleSelectNextSpecies}
       handleSelectPrevSpecies={handleSelectPrevSpecies}
+      loading={loading}
     />
   );
 }

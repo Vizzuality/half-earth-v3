@@ -8,6 +8,7 @@ import { FOOTER_OPTIONS } from 'constants/mobile-only';
 // icons
 import { ReactComponent as SearchIcon } from 'icons/searchMobile.svg';
 import { ReactComponent as AddLayerIcon } from 'icons/addLayer.svg';
+import { ReactComponent as SelectMapIcon } from 'icons/selectMap.svg';
 import { ReactComponent as SettingsIcon } from 'icons/settings.svg';
 import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 
@@ -64,8 +65,8 @@ const MenuFooterContainer = props => {
       onClickHandler: () => { handler(FOOTER_OPTIONS.SEARCH); handleSearchToggle(); }
     },
     {
-      icon: AddLayerIcon,
-      name: 'Add layer',
+      icon: featured ? SelectMapIcon : AddLayerIcon,
+      name: featured ? 'SELECT MAP' : 'ADD LAYER',
       key: FOOTER_OPTIONS.ADD_LAYER,
       onClickHandler: () => {
         if (featured) { resetFeaturedMap(); toggleFeaturedMapsList(); }

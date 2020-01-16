@@ -22,7 +22,7 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight, toggleCollapsedLan
       { [styles.higherHeader]: isHigherHeader},
       { [styles.autoHeightHeader]: autoHeight}
     )}>
-      {!isOnMobile && <ShareModal theme={{ shareButton: styles.shareButton}} view={view} />}
+      {!isOnMobile && <ShareModal theme={{ shareButton: styles.shareButton}} />}
       {!noBackClick && <button
         className={styles.button}
         onClick={closeSidebar}
@@ -30,7 +30,7 @@ const FixedHeader = ({ closeSidebar, title, view, autoHeight, toggleCollapsedLan
         <div className={styles.icon} />
         <span className={styles.backButton}>{BACK}</span>
       </button>}
-      <h1 onClick={flipToggleSwitch && toggleCollapsedLandscapeSidebar} className={styles.title}>
+      <h1 onClick={flipToggleSwitch ? toggleCollapsedLandscapeSidebar : (() => {})} className={styles.title}>
         { title && !autoHeight ? title.split(' ').map(word => <span key={word}>{word}</span>) : title }
         {flipToggleSwitch && <div className={cx(styles.flipToggleSwitchIcon, {
           [styles.collapsedFlipToggleSwitchIcon]: isLandscapeSidebarCollapsed

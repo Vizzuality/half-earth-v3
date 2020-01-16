@@ -189,3 +189,13 @@ $icon-size: 40px;
     display: block;
   }
 }
+
+.share {
+  display: none;
+  @media #{$tablet-portrait} {
+    display: block;
+    grid-area: globe;
+    align-self: flex-end;
+    justify-self: flex-end;
+  }
+}

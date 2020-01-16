@@ -5,6 +5,7 @@ import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
 import { isMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import ShareModalButton from 'components/share-modal';
 import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
@@ -17,7 +18,8 @@ const FeaturedPlaceCardComponent = ({
   handleNextPlaceClick,
   handlePrevPlaceClick,
   handleLandscapeTrigger,
-  activeOption
+  activeOption,
+  view
 }) => {
 
   const isOnMobile = isMobile();
@@ -60,16 +62,22 @@ const FeaturedPlaceCardComponent = ({
         {isOnMobile && <div className={styles.spacerContainer}>
           <div className={styles.spacer} />
         </div>}
-        <section className={styles.card}>
+        <section className={styles.cardGrid}>
           {featuredPlace &&
             <>
-              {!isOnMobile && <div className={styles.landscapeTriggerContainer}>
-                <img
-                  src={featuredPlace.image}
-                  className={styles.picture}
-                  alt={featuredPlace.title}
-                  onClick={handleLandscapeTrigger}
-                />
+              {isOnMobile && <h2 className={styles.title}>{featuredPlace.title}</h2>}
+              <div className={styles.pictureContainer}>
+                <ShareModalButton theme={{ shareButton: styles.shareButton}} />
+                {featuredPlace.image && 
+                  <img
+                    src={featuredPlace.image}
+                    className={styles.picture}
+                    alt={featuredPlace.title}
+                    onClick={handleLandscapeTrigger}
+                  />
+                }
+              </div>
+              {!isOnMobile && 
                 <button
                   className={styles.landscapeTriggerButton}
                   onClick={handleLandscapeTrigger}
@@ -77,27 +85,14 @@ const FeaturedPlaceCardComponent = ({
                   <GoToIcon className={styles.icon} />
                   <span className={styles.landscapeTriggerText}>explore this area</span>
                 </button>
-              </div>}
-              <div className={styles.contentContainer}>
-                {isOnMobile && (
-                  <>
-                    <h2 className={styles.title}>{featuredPlace.title}</h2>
-                    <img
-                      src={featuredPlace.image}
-                      className={styles.picture}
-                      alt={featuredPlace.title}
-                      onClick={handleLandscapeTrigger}
-                    />
-                  </>
-                )}
-                <div className={styles.contentWrapper} ref={contentWrapper}>
-                  {!isOnMobile && <h2 className={styles.title}>{featuredPlace.title}</h2>}
-                  <div>
-                    <p className={styles.text}>
-                      {featuredPlace.description}
-                    </p>
-                    {featuredMap && featuredMap.sourceText && <span className={styles.sourceText}>(Source: <i>{featuredMap.sourceText}</i>)</span>}
-                  </div>
+              }
+              <div className={styles.contentContainer} ref={contentWrapper}>
+                {!isOnMobile && <h2 className={styles.title}>{featuredPlace.title}</h2>}
+                <div>
+                  <p className={styles.text}>
+                    {featuredPlace.description}
+                  </p>
+                  {featuredMap && featuredMap.sourceText && <span className={styles.sourceText}>(Source: <i>{featuredMap.sourceText}</i>)</span>}
                 </div>
               </div>
             </>
