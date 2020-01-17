@@ -7,7 +7,7 @@ import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/googl
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manager-utils';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { COMMUNITY_AREAS_VECTOR_TILE_LAYER, GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
 import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 
 import * as urlActions from 'actions/url-actions';
@@ -37,7 +37,7 @@ const ConservationEffortsWidget = (props) => {
     if (!conservationPropsLayer) {
       loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
         const consPropLayer = new FeatureLayer({
-          url: "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ConsProp/FeatureServer"
+          url: layersConfig[GRID_CELLS_PROTECTED_AREAS_PERCENTAGE].url
         });
         setConservationPropsLayer(consPropLayer)
       });
@@ -71,11 +71,12 @@ const ConservationEffortsWidget = (props) => {
 
   useEffect(() => {
     if (terrestrialCellData && queryParams) {
+      setConservationEfforts({ data: null, loading: true });
       queryParams.where = `CELL_ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
-        setConservationEfforts(features.map(c => c.attributes));
-      });
+        setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
+      }).catch(() => setConservationEfforts({ data: null, loading: false }));
     }
   }, [terrestrialCellData])
 

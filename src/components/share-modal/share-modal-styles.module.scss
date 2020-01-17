@@ -1,26 +1,52 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 $tabsMarginBottom: 8px;
+$socialMediaIcon: 45px;
 
 .modal {
-  padding: 50px 60px !important;
-  width: 600px !important;
+  width: 90% !important;
+  max-width: 90% !important;
+  padding: 60px 32px !important;
+  height: auto !important;
 
   @media #{$tablet-landscape} {
+    padding: 50px 60px !important;
     max-width: 620px !important;
-    width: 80% !important;
-    height: auto !important;
+    width: 600px !important;
+    
   }
 }
 
 .modalContent {
-  padding: 50px 60px !important;
+  padding: 0 !important;
+  @media #{$tablet-landscape} {
+    padding: 50px 60px !important;
+  }
+}
+
+.closeBtn {
+  background-color: transparent !important;
+  height: 33px;
+  right: 24px !important;
+  top: 24px !important;
+  border: none !important;
+
+  @media #{$tablet-landscape} {
+    right: 35px !important;
+    top: 35px !important;
+  }
 }
 
 .copyContainer {
   display: flex;
   margin-bottom: 20px;
+  flex-direction: column;
+
+  @media #{$tablet-landscape} {
+    flex-direction: row;
+  }
 }
 
 .coordinates {
@@ -37,12 +63,17 @@ $tabsMarginBottom: 8px;
   width: stretch;
   height: 40px;
   border-radius: 2px;
-  border-right-style: none;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  margin-bottom: 8px;
 
   &:focus {
     outline: none;
+  }
+
+  @media #{$tablet-landscape} {
+    border-right-style: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
   }
 }
 
@@ -55,11 +86,15 @@ $tabsMarginBottom: 8px;
 }
 
 .copyButton {
-  margin-left: -10px !important;
-  width: 100px !important;
   letter-spacing: 2px !important;
   font-size: $font-size-xs !important;
   padding: 0 !important;
+  width: 100% !important;
+
+  @media #{$tablet-landscape} {
+    margin-left: -10px !important;
+    width: 100px !important;
+  }
 }
 
 .copied {
@@ -73,10 +108,15 @@ $tabsMarginBottom: 8px;
 }
 
 .title {
+  @extend %headline;
   text-align: center;
   font-size: $font-size-xl;
   text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
-  margin-bottom: 50px;
+  margin-bottom: 32px;
+
+  @media #{$tablet-landscape} {
+    margin-bottom: 50px;
+  }
 }
 
 .tabs {
@@ -113,13 +153,16 @@ $tabsMarginBottom: 8px;
   }
 }
 
-.facebookIcon {
-  margin-right: 60px;
-}
-
 .iconBackground {
-  height: 60px;
-  width: 60px;
+  height: $socialMediaIcon;
+  width: $socialMediaIcon;
+  padding: 0;
+  margin: 15px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .socialMediaContainer {
@@ -130,4 +173,15 @@ $tabsMarginBottom: 8px;
 
 .icon {
   @extend %icon;
+}
+
+.shareText {
+  color: $white;
+  @extend %subtitle;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }

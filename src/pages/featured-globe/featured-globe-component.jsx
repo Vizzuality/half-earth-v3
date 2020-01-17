@@ -63,6 +63,7 @@ const DataGlobeComponent = ({
   mouseMoveCallbacksArray,
   activeOption,
   isLandscapeSidebarCollapsed,
+  isHEModalOpen,
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = isMobile();
@@ -81,14 +82,14 @@ const DataGlobeComponent = ({
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
           <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} isLandscapeMode={isLandscapeMode} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} />
+          <MenuSettings activeOption={activeOption} isHEModalOpen={isHEModalOpen} />
           <Slider />
         </MobileOnly>
         <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
         <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} />
-        <Widgets isFullscreenActive={isFullscreenActive} hidden={esriWidgetsHidden}/>
+        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} isLandscapeMode={isLandscapeMode} />
+        <Widgets isFullscreenActive={isFullscreenActive} hidden={esriWidgetsHidden} isHEModalOpen={isHEModalOpen} />
         {selectedFeaturedMap &&
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}

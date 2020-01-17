@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import facebookIcon from 'icons/facebook.png';
 import twitterIcon from 'icons/twitter.png';
+import mailIcon from 'icons/email.png';
 import { openShareModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import styles from './share-modal-styles.module';
@@ -11,15 +12,18 @@ const actions = { openShareModalAnalyticsEvent };
 const shareSocialMedia = [
   {
     link: `https://www.facebook.com/sharer/sharer.php?u=`,
-    className: styles.facebookIcon,
     icon: facebookIcon,
     alt: 'Facebook'
   },
   {
     link: `https://twitter.com/intent/tweet?url=`,
-    className: styles.twitterIcon,
     icon: twitterIcon,
     alt: 'Twitter'
+  },
+  {
+    link: 'mailto:?body=',
+    icon: mailIcon,
+    alt: 'Email'
   }
 ];
 

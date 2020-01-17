@@ -32,6 +32,7 @@ const getDotColor = (value) => {
 }
 
 const getSpeciesData = ({ speciesData }) => (speciesData && speciesData.data) || null;
+const getSpeciesDataLoading = ({ speciesData }) => speciesData && speciesData.loading;
 
 const getSelectedSpeciesName = (state, props) =>
   props.selectedSpecies
@@ -82,8 +83,8 @@ const getData = createSelector(getUniqeSpeciesData, speciesData => {
   const reptilesData = getChartData(speciesData, 'reptiles', 90);
   const mammalsData = getChartData(speciesData, 'mammals', 180)
   const amphibiansData = getChartData(speciesData, 'amphibians', 270);
-
-  return [...birdsData, ...reptilesData, ...mammalsData, ...amphibiansData];
+  const speciesChartData = [...birdsData, ...reptilesData, ...mammalsData, ...amphibiansData];
+  return speciesChartData.length ? speciesChartData : null;
 });
 
 const getSelectedSpeciesData = createSelector([getData, getSelectedSpeciesName],
@@ -97,5 +98,6 @@ const getSelectedSpeciesData = createSelector([getData, getSelectedSpeciesName],
 export default createStructuredSelector({
   data: getData,
   terrestrialCellData: getTerrestrialCellData,
-  selectedSpeciesData: getSelectedSpeciesData
+  selectedSpeciesData: getSelectedSpeciesData,
+  loading: getSpeciesDataLoading
 }); 
