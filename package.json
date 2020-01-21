@@ -11,7 +11,7 @@
     "directory-named-webpack-plugin": "^4.0.1",
     "esri-loader": "^2.10.0",
     "he-components": "github:vizzuality/half-earth-components#0.2.1",
-    "lodash-es": "4.17.4",
+    "lodash-es": "4.17.14",
     "node-sass": "^4.11.0",
     "post-robot": "8.0.28",
     "prop-types": "^15.7.2",
