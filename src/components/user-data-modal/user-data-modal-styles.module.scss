@@ -53,6 +53,11 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+.textInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .bodyText {
   margin: 0 0 16px 0;
 }
