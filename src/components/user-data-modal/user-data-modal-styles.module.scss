@@ -6,14 +6,21 @@
 }
 
 .modalContent {
+  padding: 45px 20px 0;
   @media #{$tablet-portrait} {
     padding: 65px 100px;
   }
 }
 
 .closeBtn {
+  right: 7px;
+  top: 7px;
   background-color: transparent;
   border: none;
+  @media #{$tablet-portrait} {
+    right: 33px;
+    top: 33px;
+  }
 }
 
 .radioGroupContainer {
@@ -84,7 +91,9 @@ $circle-size: 14px;
 }
 
 .radioButton {
-  width: 33%;
+  @media #{$tablet-portrait} {
+    width: 33%;
+  }
   
   input[type="radio"] {
     opacity: 0;

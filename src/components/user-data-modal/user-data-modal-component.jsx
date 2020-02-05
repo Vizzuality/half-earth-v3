@@ -24,7 +24,6 @@ const RadioButton = ({ text, value, checked, name, onChange }) => {
   )
 }
 
-
 const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
 
   const [activeStep, setActiveStep] = useState('step1');
@@ -98,12 +97,11 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
     )
   }
   
-
   return (
     <Modal
-    onRequestClose={(e) => handleModalClose(userData)}
-    isOpen={isModalOpen}
-    theme={styles}
+      onRequestClose={(e) => handleModalClose(userData)}
+      isOpen={isModalOpen}
+      theme={styles}
     >
       {activeStep === 'step1' ? step1(setActiveStep) : step2() }
     </Modal>
