@@ -15,7 +15,7 @@ const UserDataModalContainer = () => {
   }, [])
 
   const handleModalClose = userData => {
-    createUserEntry({...userData});
+    userData && createUserEntry({...userData});
     localStorage.setItem('user-data-modal', 'false')
     setModalOpen(false);
   }

@@ -28,15 +28,22 @@ const RadioButton = ({ text, value, checked, name, onChange }) => {
 const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
 
   const [activeStep, setActiveStep] = useState('step1');
-  const [userData, setUserData] = useState({
-    job_role: null,
-    job_role_other: null,
-    map_usage: null,
-    email: null
-  });
+  const [userData, setUserData] = useState(null);
 
   const userDataUpdate = (key, value) => {
-    setUserData({...userData, [key]:value})
+    if (userData) {
+      setUserData({...userData, [key]:value})
+    } else {
+      setUserData({[key]:value})
+    }
+  }
+
+  const jobRoleInputState = userData => {
+    if (!userData || userData.job_role !== 'Other' ) {
+      return true
+    } else {
+      return false
+    }
   }
 
   const step2 = () => {
@@ -47,7 +54,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
         <p className={styles.question}>Would you like to help us improve the map?</p>
         <p className={styles.bodyText}>If you share your email with us, we will contact you and invite you to share with us your experience with the map, so we can improve it.</p>
         <input type='text' className={styles.textInput} placeholder={'Writte your email here'} onChange={(event) => userDataUpdate('email', event.target.value)}/>
-        <button className={styles.button} onClick={() => handleModalClose(userData)}>done</button>
+        <button className={styles.button} onClick={(e) => handleModalClose(userData)}>done</button>
       </section>
     )
   }
@@ -75,7 +82,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
         className={styles.textInput}
         placeholder={'Writte your profession here'}
         onChange={(event) => userDataUpdate('job_role_other', event.target.value)}
-        disabled={userData.job_role !== 'Other'}
+        disabled={jobRoleInputState(userData)}
       />
       <p className={styles.question}>Please tell us what you use the map for:</p>
       <input type='text' className={styles.textInput} placeholder={'What do you use the map for?'} onChange={(event) => userDataUpdate('map_usage', event.target.value)}/>
@@ -86,7 +93,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
 
   return (
     <Modal
-    onRequestClose={userData => handleModalClose(userData)}
+    onRequestClose={(e) => handleModalClose(userData)}
     isOpen={isModalOpen}
     theme={styles}
     >
