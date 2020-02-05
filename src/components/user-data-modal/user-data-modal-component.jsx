@@ -28,37 +28,17 @@ const RadioButton = ({ text, value, checked, name, onChange }) => {
 const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
 
   const [activeStep, setActiveStep] = useState('step1');
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({
+    job_role: '',
+    job_role_other: '',
+    email: '',
+    map_usage: ''
+  });
 
   const userDataUpdate = (key, value) => {
-    if (userData) {
       setUserData({...userData, [key]:value})
-    } else {
-      setUserData({[key]:value})
-    }
   }
 
-  const jobRoleInputState = userData => {
-    if (!userData || userData.job_role !== 'Other' ) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  const step2 = () => {
-    return (
-      <section className={styles.stepContainer}>
-        <ScreenIcon className={styles.screenIcon}/>
-        <p className={styles.title}>THANK YOU! JUST ONE MORE THING…</p>
-        <p className={styles.question}>Would you like to help us improve the map?</p>
-        <p className={styles.bodyText}>If you share your email with us, we will contact you and invite you to share with us your experience with the map, so we can improve it.</p>
-        <input type='text' className={styles.textInput} placeholder={'Writte your email here'} onChange={(event) => userDataUpdate('email', event.target.value)}/>
-        <button className={styles.button} onClick={(e) => handleModalClose(userData)}>done</button>
-      </section>
-    )
-  }
-  
   const step1 = (setActiveStep) => {
     return (
     <section className={styles.stepContainer}>
@@ -70,6 +50,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
         {PROFESSIONS.map(profession => (
           <RadioButton
             name={'professions'}
+            key={profession}
             id={profession}
             value={profession}
             text={profession}
@@ -78,18 +59,45 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
         ))}
       </div>
       <input
+        value={userData.job_role_other}
         type='text'
         className={styles.textInput}
-        placeholder={'Writte your profession here'}
+        placeholder={'Write your profession here'}
         onChange={(event) => userDataUpdate('job_role_other', event.target.value)}
-        disabled={jobRoleInputState(userData)}
+        disabled={userData.job_role !== 'Other' }
       />
       <p className={styles.question}>Please tell us what you use the map for:</p>
-      <input type='text' className={styles.textInput} placeholder={'What do you use the map for?'} onChange={(event) => userDataUpdate('map_usage', event.target.value)}/>
+      <input
+        value={userData.map_usage}
+        type='text'
+        className={styles.textInput}
+        placeholder={'What do you use the map for?'}
+        onChange={(event) => userDataUpdate('map_usage', event.target.value)}
+      />
       <button className={styles.button} onClick={() => setActiveStep('step2')}>SEND</button>
       </section>
     )
   }
+
+  const step2 = () => {
+    return (
+      <section className={styles.stepContainer}>
+        <ScreenIcon className={styles.screenIcon}/>
+        <p className={styles.title}>THANK YOU! JUST ONE MORE THING…</p>
+        <p className={styles.question}>Would you like to help us improve the map?</p>
+        <p className={styles.bodyText}>If you share your email with us, we will contact you and invite you to share with us your experience with the map, so we can improve it.</p>
+        <input
+          type='text'
+          value={userData.email}
+          className={styles.textInput}
+          placeholder={'Write your email here'}
+          onChange={(event) => userDataUpdate('email', event.target.value)}
+        />
+        <button className={styles.button} onClick={(e) => handleModalClose(userData)}>done</button>
+      </section>
+    )
+  }
+  
 
   return (
     <Modal
