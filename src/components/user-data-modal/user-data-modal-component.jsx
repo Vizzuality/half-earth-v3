@@ -3,7 +3,7 @@ import { Modal } from 'he-components';
 import styles from './user-data-modal-styles.module.scss';
 import { ReactComponent as ScreenIcon } from 'icons/screen.svg';
 
-import { PROFESSIONS, STEP_1, STEP_2 } from 'constants/user-modal-constants';
+import { PROFESSIONS, STEP_1 } from 'constants/user-modal-constants';
 
 const RadioButton = ({ text, value, checked, name, onChange }) => {
   return (
@@ -24,7 +24,7 @@ const RadioButton = ({ text, value, checked, name, onChange }) => {
   )
 }
 
-const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepData, storeSecondStepData }) => {
+const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepData, storeSecondStepData, requiredFieldsWarning }) => {
 
   const [activeStep, setActiveStep] = useState(STEP_1);
   const [userId, setUserId] = useState(null);
@@ -34,9 +34,9 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepD
     email: '',
     map_usage: ''
   });
-
+  
   const userDataUpdate = (key, value) => {
-      setUserData({...userData, [key]:value})
+    setUserData({...userData, [key]:value})
   }
 
   const step1 = () => {
@@ -44,9 +44,10 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepD
     <section className={styles.stepContainer}>
       <p className={styles.title}>WELCOME TO THE NEW HALF-EARTH MAP:</p>
       <p className={styles.bodyText}>We are trying to improve your experience on the map. Can you tell us a bit about yourself?</p>
-      <p className={styles.question}>Which is your profession?</p>
+      <p className={styles.question}>Which is your profession? *
+      {!userData.job_role && requiredFieldsWarning && <span className={styles.requiredWarning}>Required fields are empty!</span>}
+      </p>
       <div className={styles.radioGroupContainer}>
-
         {PROFESSIONS.map(profession => (
           <RadioButton
             name={'professions'}
@@ -66,7 +67,9 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepD
         onChange={(event) => userDataUpdate('job_role_other', event.target.value)}
         disabled={userData.job_role !== 'Other' }
       />
-      <p className={styles.question}>Please tell us what you use the map for:</p>
+      <p className={styles.question}>Please tell us what you use the map for:*
+        {!userData.map_usage && requiredFieldsWarning && <span className={styles.requiredWarning}>Required fields are empty!</span>}
+      </p>
       <input
         value={userData.map_usage}
         type='text'

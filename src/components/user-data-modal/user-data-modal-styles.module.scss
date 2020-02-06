@@ -40,11 +40,35 @@
 .bodyText,
 .question {
   @extend %bodyText;
+  position: relative;
 }
 
 .title,
 .question {
   margin: 0 0 8px 0;
+}
+
+.requiredWarning {
+  @extend %annotation ;
+  position: absolute;
+  top: -35px;
+  left: 5px;
+  padding: 5px;
+  background-color: $white;
+  color: $dark-text;
+  border-radius: 2px;
+}
+
+.requiredWarning::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid $white;
+  top: 24px;
+  left: 65px;
 }
 
 .textInput {

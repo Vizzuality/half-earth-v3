@@ -5,6 +5,7 @@ import { STEP_2 } from 'constants/user-modal-constants';
 
 const UserDataModalContainer = () => {
   const [isModalOpen, setModalOpen] = useState(true);
+  const [requiredFieldsWarning, setRequiredFieldsWarning] = useState(false);
 
   useEffect(() => {
     const doesModalKeyExists = localStorage.getItem('user-data-modal');
@@ -21,9 +22,13 @@ const UserDataModalContainer = () => {
   }
 
   const storeFirstStepData = async (userData, storeUserId, nextStep) => {
-    const createdUser = await createUserEntry({...userData});
-    storeUserId(createdUser[0].id);
-    nextStep(STEP_2)
+    if (!userData.job_role || !userData.map_usage) {
+      setRequiredFieldsWarning(true)
+    } else {
+      const createdUser = await createUserEntry({...userData});
+      storeUserId(createdUser[0].id);
+      nextStep(STEP_2)
+    }
   }
 
   const storeSecondStepData = (userId, userData) => {
@@ -37,6 +42,7 @@ const UserDataModalContainer = () => {
     handleModalClose={handleModalClose}
     storeFirstStepData={storeFirstStepData}
     storeSecondStepData={storeSecondStepData}
+    requiredFieldsWarning={requiredFieldsWarning}
   />
  )
 }
