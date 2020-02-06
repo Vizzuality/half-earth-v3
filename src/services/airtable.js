@@ -7,9 +7,22 @@ const USERS_TABLE = 'Users'
 const userResearchBase = new Airtable({apiKey: AIRTABLE_API_KEY}).base(USER_RESEARCH_BASE);
 
 function createUserEntry(userData) {
-  userResearchBase(USERS_TABLE).create([{fields: { ...userData }}], (e, records) => console.log(e, records))
+  return new Promise((resolve, reject) => {
+    userResearchBase(USERS_TABLE).create([{fields: { ...userData }}], (error, records) => {
+      if (error) {
+        reject(error);
+        return
+      }
+      resolve(records);
+    })
+  })
+}
+
+function updateUserEntry(id, userData) {
+  userResearchBase(USERS_TABLE).update([{id, fields: { ...userData }}])
 }
 
 export {
-  createUserEntry
+  createUserEntry,
+  updateUserEntry
 };

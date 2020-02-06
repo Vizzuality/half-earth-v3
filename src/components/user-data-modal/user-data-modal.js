@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { createUserEntry } from 'services/airtable.js';
+import { createUserEntry, updateUserEntry } from 'services/airtable.js';
 import Component from './user-data-modal-component';
+import { STEP_2 } from 'constants/user-modal-constants';
 
 const UserDataModalContainer = () => {
   const [isModalOpen, setModalOpen] = useState(true);
@@ -14,9 +15,19 @@ const UserDataModalContainer = () => {
     }
   }, [])
 
-  const handleModalClose = userData => {
-    userData && createUserEntry({...userData});
+  const handleModalClose = () => {
     localStorage.setItem('user-data-modal', 'false')
+    setModalOpen(false);
+  }
+
+  const storeFirstStepData = async (userData, storeUserId, nextStep) => {
+    const createdUser = await createUserEntry({...userData});
+    storeUserId(createdUser[0].id);
+    nextStep(STEP_2)
+  }
+
+  const storeSecondStepData = (userId, userData) => {
+    updateUserEntry(userId, userData);
     setModalOpen(false);
   }
 
@@ -24,6 +35,8 @@ const UserDataModalContainer = () => {
   <Component
     isModalOpen={isModalOpen}
     handleModalClose={handleModalClose}
+    storeFirstStepData={storeFirstStepData}
+    storeSecondStepData={storeSecondStepData}
   />
  )
 }

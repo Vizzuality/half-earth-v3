@@ -3,7 +3,7 @@ import { Modal } from 'he-components';
 import styles from './user-data-modal-styles.module.scss';
 import { ReactComponent as ScreenIcon } from 'icons/screen.svg';
 
-const PROFESSIONS = ['Student', 'Researcher', 'Conservationist', 'Other']
+import { PROFESSIONS, STEP_1, STEP_2 } from 'constants/user-modal-constants';
 
 const RadioButton = ({ text, value, checked, name, onChange }) => {
   return (
@@ -24,9 +24,10 @@ const RadioButton = ({ text, value, checked, name, onChange }) => {
   )
 }
 
-const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
+const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepData, storeSecondStepData }) => {
 
-  const [activeStep, setActiveStep] = useState('step1');
+  const [activeStep, setActiveStep] = useState(STEP_1);
+  const [userId, setUserId] = useState(null);
   const [userData, setUserData] = useState({
     job_role: '',
     job_role_other: '',
@@ -38,7 +39,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
       setUserData({...userData, [key]:value})
   }
 
-  const step1 = (setActiveStep) => {
+  const step1 = () => {
     return (
     <section className={styles.stepContainer}>
       <p className={styles.title}>WELCOME TO THE NEW HALF-EARTH MAP:</p>
@@ -73,7 +74,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
         placeholder={'What do you use the map for?'}
         onChange={(event) => userDataUpdate('map_usage', event.target.value)}
       />
-      <button className={styles.button} onClick={() => setActiveStep('step2')}>SEND</button>
+      <button className={styles.button} onClick={() => storeFirstStepData(userData, setUserId, setActiveStep)}>SEND</button>
       </section>
     )
   }
@@ -92,18 +93,18 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose }) => {
           placeholder={'Write your email here'}
           onChange={(event) => userDataUpdate('email', event.target.value)}
         />
-        <button className={styles.button} onClick={(e) => handleModalClose(userData)}>done</button>
+        <button className={styles.button} onClick={() => storeSecondStepData(userId, userData)}>done</button>
       </section>
     )
   }
   
   return (
     <Modal
-      onRequestClose={(e) => handleModalClose(userData)}
+      onRequestClose={handleModalClose}
       isOpen={isModalOpen}
       theme={styles}
     >
-      {activeStep === 'step1' ? step1(setActiveStep) : step2() }
+      {activeStep === STEP_1 ? step1() : step2() }
     </Modal>
   )
 }
