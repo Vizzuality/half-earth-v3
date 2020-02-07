@@ -11,6 +11,6 @@ export const getCoordsFromZipAndCountry = async (LocatorConstructor, ZIP, countr
   if (response.length) {
     return response[0].location
   } else {
-    throw new Error('ZIP code or country code does not exist. Locator did not provide any coords')
+    throw new Error('ZIP code does not exist. Locator could not provide any coords')
   }
 }
