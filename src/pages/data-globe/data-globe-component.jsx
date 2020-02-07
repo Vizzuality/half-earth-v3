@@ -18,6 +18,7 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
 import About from 'components/about';
+import UserDataModal from 'components/user-data-modal';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -105,6 +106,7 @@ const DataGlobeComponent = ({
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
+      <UserDataModal />
     </>
   )
 }

@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/tooltip';
+@import 'styles/typography-extends';
 
 .titleContainer {
   align-items: center;
@@ -16,11 +17,7 @@
 }
 
 .title {
-  font-family: 'PierSans-Bold';
-  text-transform: uppercase;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  line-height: 14px;
+  @extend %subtitle;
   height: auto;
   margin: 0;
 }

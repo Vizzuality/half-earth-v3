@@ -1,0 +1,150 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.modal {
+  max-width: 600px;
+}
+
+.modalContent {
+  padding: 45px 20px 0;
+  @media #{$tablet-portrait} {
+    padding: 65px 100px;
+  }
+}
+
+.closeBtn {
+  right: 7px;
+  top: 7px;
+  background-color: transparent;
+  border: none;
+  @media #{$tablet-portrait} {
+    right: 33px;
+    top: 33px;
+  }
+}
+
+.radioGroupContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  @media #{$tablet-portrait} {
+    flex-direction: row;
+  }
+}
+
+
+.title {
+  @extend %title;
+}
+
+.bodyText,
+.question {
+  @extend %bodyText;
+  position: relative;
+}
+
+.title,
+.question {
+  margin: 0 0 8px 0;
+}
+
+.requiredWarning {
+  @extend %annotation ;
+  position: absolute;
+  top: -35px;
+  left: 5px;
+  padding: 5px;
+  background-color: $white;
+  color: $dark-text;
+  border-radius: 2px;
+}
+
+.requiredWarning::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid $white;
+  top: 24px;
+  left: 65px;
+}
+
+.textInput {
+  @extend %bodyText;
+  background-color: transparent;
+  border: 1px solid $white;
+  width: 100%;
+  padding: 10px 20px;
+  margin: 16px 0 40px 0;
+  color: $white;
+}
+.textInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.textInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bodyText {
+  margin: 0 0 16px 0;
+}
+
+$circle-size: 14px;
+
+.radioInput {
+  @extend %bodyText;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  width: 100%;
+  height: 30px;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    margin-right: 10px;
+    height: $circle-size;
+    width: $circle-size;
+    border: 2px solid $white; 
+    border-radius: 50%;
+  }
+}
+
+.radioButton {
+  @media #{$tablet-portrait} {
+    width: 33%;
+  }
+  
+  input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    // prevent the default radio button from taking up the space
+    // display: none would screw up the keyboard navigation, so let's go for opacity
+  }
+  
+  input[type="radio"]:checked + .radioInput::before {
+    background: $brand-color-main;
+    border-width: 2px;
+  }
+}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  @extend %title;
+  color: $dark-text;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  background-color: $brand-color-main;
+}
+
+.screenIcon {
+  display: block;
+  margin: 40px auto 50px;
+}
