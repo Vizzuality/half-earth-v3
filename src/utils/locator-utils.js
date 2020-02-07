@@ -8,5 +8,9 @@ export const getCoordsFromZipAndCountry = async (LocatorConstructor, ZIP, countr
       postal: ZIP
     }
   })
-  return response[0].location;
+  if (response.length) {
+    return response[0].location
+  } else {
+    throw new Error('ZIP code or country code does not exist. Locator did not provide any coords')
+  }
 }
