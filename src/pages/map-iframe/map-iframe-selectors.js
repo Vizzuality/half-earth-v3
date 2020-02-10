@@ -24,6 +24,8 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
 })
 
 const getPledgesActiveQuery = ({ location }) => location.query && (location.query.isPledgesActive || initialState.isPledgesActive);
+const getSignedPledgeZIP = ({ location }) => location.query && (location.query.signedPledgeZIP);
+const getSignedPledgeCountry = ({ location }) => location.query && (location.query.signedPledgeCountry);
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
@@ -39,5 +41,7 @@ export default createStructuredSelector({
   sceneSettings: getSceneSettings,
   isGlobeUpdating: getGlobeUpdating,
   isPledgesActive: getPledgesActive,
+  signedPledgeZIP: getSignedPledgeZIP,
+  signedPledgeCountry: getSignedPledgeCountry,
   listeners: getListenersSetting
 })
