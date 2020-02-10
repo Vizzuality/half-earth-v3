@@ -280,112 +280,112 @@ export const layersConfig = {
   [SA_AMPHIB_RARITY]: {
     title: SA_AMPHIB_RARITY,
     slug: SA_AMPHIB_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_AMPHIB_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_AMPHIB_RICHNESS]: {
     title: SA_AMPHIB_RICHNESS,
     slug: SA_AMPHIB_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_AMPHIB_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [SA_DRAGONFLIES_RARITY]: {
     title: SA_DRAGONFLIES_RARITY,
     slug: SA_DRAGONFLIES_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_DRAGONFLIES_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_DRAGONFLIES_RICHNESS]: {
     title: SA_DRAGONFLIES_RICHNESS,
     slug: SA_DRAGONFLIES_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_DRAGONFLIES_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [SA_MAMMALS_RARITY]: {
     title: SA_MAMMALS_RARITY,
     slug: SA_MAMMALS_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_MAMMALS_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_MAMMALS_RICHNESS]: {
     title: SA_MAMMALS_RICHNESS,
     slug: SA_MAMMALS_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_MAMMALS_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [SA_BIRDS_RARITY]: {
     title: SA_BIRDS_RARITY,
     slug: SA_BIRDS_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_BIRDS_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_BIRDS_RICHNESS]: {
     title: SA_BIRDS_RICHNESS,
     slug: SA_BIRDS_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_BIRDS_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [SA_RESTIO_RARITY]: {
     title: SA_RESTIO_RARITY,
     slug: SA_RESTIO_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_RESTIO_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_RESTIO_RICHNESS]: {
     title: SA_RESTIO_RICHNESS,
     slug: SA_RESTIO_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_RESTIO_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [SA_PROTEA_RARITY]: {
     title: SA_PROTEA_RARITY,
     slug: SA_PROTEA_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_PROTEA_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_PROTEA_RICHNESS]: {
     title: SA_PROTEA_RICHNESS,
     slug: SA_PROTEA_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_PROTEA_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [SA_REPTILES_RARITY]: {
     title: SA_REPTILES_RARITY,
     slug: SA_REPTILES_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_REPTILES_RARITY],
     bbox: [13,-37,34,-27.7]
   },
   [SA_REPTILES_RICHNESS]: {
     title: SA_REPTILES_RICHNESS,
     slug: SA_REPTILES_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SA_REPTILES_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
   [HUMMINGBIRDS_RARITY]: {
     title: HUMMINGBIRDS_RARITY,
     slug: HUMMINGBIRDS_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[HUMMINGBIRDS_RARITY],
     bbox: [-164,-40,-35,56]
   },
   [HUMMINGBIRDS_RICHNESS]: {
     title: HUMMINGBIRDS_RICHNESS,
     slug: HUMMINGBIRDS_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[HUMMINGBIRDS_RICHNESS],
     bbox: [-164,-40,-35,56]
   },
@@ -448,7 +448,7 @@ export const layersConfig = {
   [ALL_TAXA_RARITY]: {
     title: ALL_TAXA_RARITY,
     slug: ALL_TAXA_RARITY,
-    type: LAYER_TYPES.TILE_LAYER,
+    type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[ALL_TAXA_RARITY],
     bbox: null
   },
