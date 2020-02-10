@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .wrapper {
   background-color: #031D2E;
@@ -37,11 +38,8 @@
 }
 
 .title {
-  text-transform: uppercase;
+  @extend %subtitle;
   color: $white;
-  letter-spacing: 2px;
-  font-size: $font-size-xxs;
-  font-family: $font-family-1-bold;
   margin: 0;
   padding-left: 15px;
   align-self: flex-end;
