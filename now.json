@@ -1,0 +1,23 @@
+{
+  "name": "half-earth-v3",
+  "version": 2,
+  "build": {
+    "env": {
+      "REACT_APP_NODE_PATH": "@half-earth-NODE_PATH",
+      "REACT_APP_DATA_GLOBE_SCENE_ID": "@half-earth-data_globe_scene_id",
+      "REACT_APP_STAGING_DATA_GLOBE_SCENE_ID": "@half-earth-staging_data_globe_scene_id",
+      "REACT_APP_FEATURED_GLOBE_SCENE_ID": "@half-earth-featured_globe_scene_id",
+      "REACT_APP_MINIMAP_GLOBE_SCENE_ID": "@half-earth-minimap_globe_scene_id",
+      "REACT_APP_ARGISJS_API_VERSION": "@half-earth-argisjs_api_version",
+      "REACT_APP_CONTENTFUL_SPACE_ID": "@half-earth-contentful_space_id",
+      "REACT_APP_CONTENTFUL_TOKEN": "@half-earth-contentful_token",
+      "REACT_APP_GEO_DESCRIBER_API": "@half-earth-geo_describer_api",
+      "REACT_APP_URL": "@half-earth-url",
+      "REACT_APP_AIRTABLE_API_KEY": "@hhalf-earth-airtable_api_key",
+      "REACT_APP_AIRTABLE_USER_RESEARCH_BASE_ID": "@half-earth-AIRTABLE_USER_RESEARCH_BASE_ID",
+      "MAPBOX_TOKEN": "@half-earth-mapbox_token",
+      "MOL_API_KEY": "@half-earth-mol_api_key",
+      "GOOGLE_ANALYTICS": "@half-earth-google_analytics"
+    }
+  }
+}
