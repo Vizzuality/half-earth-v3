@@ -14,7 +14,7 @@
       "REACT_APP_GEO_DESCRIBER_API": "@half-earth-geo_describer_api",
       "REACT_APP_URL": "@half-earth-url",
       "REACT_APP_AIRTABLE_API_KEY": "@half-earth-airtable_api_key",
-      "REACT_APP_AIRTABLE_USER_RESEARCH_BASE_ID": "@half-earth-AIRTABLE_USER_RESEARCH_BASE_ID",
+      "REACT_APP_AIRTABLE_USER_RESEARCH_BASE_ID": "@half-earth-airtable_user_research_base_id",
       "MAPBOX_TOKEN": "@half-earth-mapbox_token",
       "MOL_API_KEY": "@half-earth-mol_api_key",
       "GOOGLE_ANALYTICS": "@half-earth-google_analytics"
