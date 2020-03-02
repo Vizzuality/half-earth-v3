@@ -1,21 +1,19 @@
 import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
-import CONTENTFUL from 'services/contentful';
 import { findLayerInMap } from 'utils/layer-manager-utils';
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
 import * as actions from 'actions/url-actions';
 
-
 const FeaturedPlaceCardContainer = props => {
-  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode } = props;
+  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode, featuredMapPlaces } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   const [featuredPlace, setFeaturedPlace] = useState({
-    image: '',
+    imageUrl: '',
     title: '',
     description: ''
   });
@@ -26,16 +24,8 @@ const FeaturedPlaceCardContainer = props => {
   }, [])
 
   useEffect(() => {
-    const fetchData = async () => {
-      setFeaturedPlace({ ...featuredPlace, image: null })
-      const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
-      if (result) {
-        setFeaturedPlace(result);
-      }
-    };
-
-    selectedFeaturedPlace && fetchData();
-  },[selectedFeaturedPlace])
+    featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace && setFeaturedPlace({...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace]});
+  },[selectedFeaturedPlace, selectedFeaturedMap])
 
   useEffect(() => {
     if (featuredMapsList) {
