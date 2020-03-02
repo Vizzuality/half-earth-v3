@@ -68,9 +68,9 @@ const FeaturedPlaceCardComponent = ({
               {isOnMobile && <h2 className={styles.title}>{featuredPlace.title}</h2>}
               <div className={styles.pictureContainer}>
                 <ShareModalButton theme={{ shareButton: styles.shareButton}} />
-                {featuredPlace.image && 
+                {featuredPlace.imageUrl && 
                   <img
-                    src={featuredPlace.image}
+                    src={featuredPlace.imageUrl}
                     className={styles.picture}
                     alt={featuredPlace.title}
                     onClick={handleLandscapeTrigger}
