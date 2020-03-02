@@ -8,6 +8,7 @@ import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
 import * as actions from 'actions/url-actions';
 
+const CONFIG = { imageWidth: 300, imageHeight: 190 };
 
 const FeaturedPlaceCardContainer = props => {
   const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode } = props;
@@ -27,8 +28,8 @@ const FeaturedPlaceCardContainer = props => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setFeaturedPlace({ ...featuredPlace, image: null })
-      const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace);
+      setFeaturedPlace({ ...featuredPlace, image: null });
+      const result = await CONTENTFUL.getFeaturedPlaceData(selectedFeaturedPlace, CONFIG);
       if (result) {
         setFeaturedPlace(result);
       }

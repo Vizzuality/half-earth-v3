@@ -59,7 +59,7 @@ function parseFeaturedMaps(featuredMaps) {
   )
 }
 
-async function parseFeaturedPlace(data) {
+async function parseFeaturedPlace(data, config) {
   const featuredPlace = {
     title: data.fields.title,
   };
@@ -78,7 +78,7 @@ async function parseFeaturedPlace(data) {
     featuredPlace.image = placeHolder;
     return featuredPlace;
   }
-  await getContentfulImage(data.fields.image.sys.id)
+  await getContentfulImage(data.fields.image.sys.id, config)
     .then(mapImageUrl => {
       featuredPlace.image = mapImageUrl;
     });
@@ -110,9 +110,12 @@ const parseTexts = items => {
   }, {});
 }
 
-async function getContentfulImage(assetId) {
+async function getContentfulImage(assetId, config) {
   try {
     const imageUrl = await contentfulClient.getAsset(assetId).then(asset => asset.fields.file.url);
+    if (config) {
+      return `${imageUrl}?w=${config.imageWidth || ''}&h=${config.imageHeight || ''}`;
+    }
     return imageUrl;
   } catch (e) {
     console.warn(e);
@@ -168,10 +171,10 @@ async function getFeaturedMapData() {
   return null;
 }
 
-async function getFeaturedPlaceData(slug) {
+async function getFeaturedPlaceData(slug, config) {
   const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'nameSlug', filterValue: slug });
   if (data && data.items && data.items.length > 0) {
-    return parseFeaturedPlace(data.items[0]);
+    return parseFeaturedPlace(data.items[0], config);
   }
   return null;
 }
