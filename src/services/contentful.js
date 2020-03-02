@@ -1,6 +1,5 @@
 import { createClient } from 'contentful';
 
-import placeHolder from 'images/speciesPlaceholder.svg'
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
 
@@ -59,33 +58,7 @@ function parseFeaturedMaps(featuredMaps) {
   )
 }
 
-async function parseFeaturedPlace(data, config) {
-  const featuredPlace = {
-    title: data.fields.title,
-  };
-  if (data.fields.description) {
-    const description = [];
-    data.fields.description.content.forEach((paragraph) => {
-      const p = paragraph.content.reduce((acc, sentence) => {
-        if (sentence.nodeType === 'text') return acc + sentence.value;
-        return acc;
-      }, '');
-      description.push(p);
-    });
-    featuredPlace.description = description.join('\n');
-  };
-  if (!data.fields.image) {
-    featuredPlace.image = placeHolder;
-    return featuredPlace;
-  }
-  await getContentfulImage(data.fields.image.sys.id, config)
-    .then(mapImageUrl => {
-      featuredPlace.image = mapImageUrl;
-    });
-  return featuredPlace;
-}
-
-async function parseFeaturedPlaces(data) {
+async function parseFeaturedPlaces(data, config) {
   return data.reduce(
     async (acc, place) => {
       const featuredPlace = {
@@ -93,7 +66,7 @@ async function parseFeaturedPlaces(data) {
         title: place.fields.title,
         description: place.fields.description,
       };
-      place.fields.image && await getContentfulImage(place.fields.image.sys.id).then(placeImageUrl => {
+      place.fields.image && await getContentfulImage(place.fields.image.sys.id, config).then(placeImageUrl => {
         featuredPlace.image = placeImageUrl;
       });
       const acummPromise = await acc;
@@ -171,20 +144,12 @@ async function getFeaturedMapData() {
   return null;
 }
 
-async function getFeaturedPlaceData(slug, config) {
-  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'nameSlug', filterValue: slug });
-  if (data && data.items && data.items.length > 0) {
-    return parseFeaturedPlace(data.items[0], config);
-  }
-  return null;
-}
-
-async function getFeaturedPlacesData(slug) {
+async function getFeaturedPlacesData(slug, config) {
   const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'featureSlug', filterValue: slug });
   if (data && data.items && data.items.length > 0) {
-    return parseFeaturedPlaces(data.items);
+    return parseFeaturedPlaces(data.items, config);
   }
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlaceData, getFeaturedPlacesData };
+export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlacesData };
