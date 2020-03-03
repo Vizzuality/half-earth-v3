@@ -23,7 +23,8 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   const [viewExtent, setViewExtent] = useState();
   const [terrestrialGridLayer, setTerrestrialGridLayer] = useState(null);
   const [marineGridLayer, setMarineGridLayer] = useState(null);
-  const [ aggregatedCells, setAggregatedCells ] = useState(null);
+  const [aggregatedCells, setAggregatedCells] = useState(null);
+  const [singleCell, setSingleCell] = useState(null)
   const [gridCellGraphic, setGridCellGraphic] = useState(null);
   // References for cleaning up graphics
   const gridCellRef = useRef();
@@ -101,19 +102,30 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   }, [aggregatedCells, gridCellGraphic]);
 
   useEffect(() => {
-    if (aggregatedCells && !aggregatedCells.length) {
+    if (aggregatedCells && !aggregatedCells.length > 0) {
       const centerTerrestrialCellQueryObject = centerQuery(terrestrialGridLayer, view.center);
+      const centerMarineCellQueryObject = centerQuery(marineGridLayer, view.center);
       terrestrialGridLayer.queryFeatures(centerTerrestrialCellQueryObject)
-        .then(function(results) {
-          const { features } = results;
-          if (features.length > 0) {
-            createCell(features, 'singleCell');
+      .then(function(results) {
+        const { features: terrestrialCell } = results;
+          if (terrestrialCell.length > 0) {
+            setSingleCell(terrestrialCell);
           } else {
-            console.log('paint marine')
+            marineGridLayer.queryFeatures(centerMarineCellQueryObject)
+            .then(function(results) {
+              const { features: marineCell } = results;
+                setSingleCell(marineCell);
+              })
           }
         })
     }
-  }, [aggregatedCells, gridCellGraphic]);
+  }, [aggregatedCells, viewExtent, gridCellGraphic]);
+
+  useEffect(() => {
+    if (singleCell) {
+      createCell(singleCell, 'singleCell')
+    }
+  }, [singleCell, gridCellGraphic]);
 
 
 
