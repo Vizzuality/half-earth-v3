@@ -28,7 +28,9 @@ const FeaturesMapCardComponent = ({
 
   // if we first arrive to all maps screen
   useEffect(() => {
-    if(!handle && !isOpen) { spinGlobe(view) }
+    view.when(() => {
+      if(!handle && !isOpen) { spinGlobe(view) }
+    });
   }, []);
 
   const isFeatureMapCardVisible = isOnScreen;
