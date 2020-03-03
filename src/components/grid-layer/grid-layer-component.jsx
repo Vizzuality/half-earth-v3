@@ -2,7 +2,7 @@ import { loadModules } from 'esri-loader';
 import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-import { BIODIVERSITY_FACETS_SERVICE_URL } from 'constants/layers-urls';
+import { TERRESTRIAL_GRID_URL, MARINE_GRID_URL } from 'constants/layers-urls';
 import {
   createGridCellGraphic,
   createGraphicLayer,
@@ -21,7 +21,9 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
   const watchUtils = useWatchUtils();
   const [viewExtent, setViewExtent] = useState();
-  const [biodiversityFacetsLayer, setBiodiversityFacetsLayer] = useState(null);
+  const [terrestrialGridLayer, setTerrestrialGridLayer] = useState(null);
+  const [marineGridLayer, setMarineGridLayer] = useState(null);
+  const [ aggregatedCells, setAggregatedCells ] = useState(null);
   const [gridCellGraphic, setGridCellGraphic] = useState(null);
   // References for cleaning up graphics
   const gridCellRef = useRef();
@@ -44,16 +46,25 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
       })
-  }, [])
+  }, []);
 
   useEffect(() => {
     loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
-      const layer = new FeatureLayer({
-        url: BIODIVERSITY_FACETS_SERVICE_URL
+      const terrestrial = new FeatureLayer({
+        url: TERRESTRIAL_GRID_URL
       });
-      setBiodiversityFacetsLayer(layer);
+      setTerrestrialGridLayer(terrestrial);
     })
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
+      const marine = new FeatureLayer({
+        url: MARINE_GRID_URL
+      });
+      setMarineGridLayer(marine);
+    })
+  }, []);
 
   // set the view extent when view stationary
   useEffect(() => {
@@ -63,26 +74,48 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
     return function cleanUp() {
       watchHandle && watchHandle.remove();
     }
-  },[watchUtils])
+  },[watchUtils]);
+
 
   useEffect(() => {
-    if (viewExtent && biodiversityFacetsLayer && gridCellGraphic) {
-      const containedCellsQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
-      biodiversityFacetsLayer.queryFeatures(containedCellsQueryObject)
+    if (viewExtent && terrestrialGridLayer && marineGridLayer && gridCellGraphic) {
+      const containedTerrestrialCellsQueryObject = containedQuery(terrestrialGridLayer, view.extent);
+      const containedMarineCellsQueryObject = containedQuery(marineGridLayer, view.extent);
+      terrestrialGridLayer.queryFeatures(containedTerrestrialCellsQueryObject)
+        .then(function(results) {
+          const { features: terrestrialCells} = results;
+          marineGridLayer.queryFeatures(containedMarineCellsQueryObject)
+          .then(function(results) {
+            const { features } = results;
+            const _marineCells = features.filter(f => f.attributes.ISMARINE !== 0);
+            setAggregatedCells([..._marineCells, ...terrestrialCells]);
+          })
+        });
+      }
+    }, [marineGridLayer, terrestrialGridLayer, viewExtent, gridCellGraphic]);
+
+  useEffect(() => {
+    if (aggregatedCells && aggregatedCells.length) {
+      createCell(aggregatedCells, 'aggregatedCells')
+    }
+  }, [aggregatedCells, gridCellGraphic]);
+
+  useEffect(() => {
+    if (aggregatedCells && !aggregatedCells.length) {
+      const centerTerrestrialCellQueryObject = centerQuery(terrestrialGridLayer, view.center);
+      terrestrialGridLayer.queryFeatures(centerTerrestrialCellQueryObject)
         .then(function(results) {
           const { features } = results;
           if (features.length > 0) {
-            createCell(results, 'aggregatedCells');
+            createCell(features, 'singleCell');
           } else {
-            const centerCellQueryObject = centerQuery(biodiversityFacetsLayer, view.center);
-            biodiversityFacetsLayer.queryFeatures(centerCellQueryObject)
-              .then(function(results) {
-                createCell(results, 'singleCell');
-              })
+            console.log('paint marine')
           }
         })
     }
-  }, [biodiversityFacetsLayer, viewExtent, gridCellGraphic])
+  }, [aggregatedCells, gridCellGraphic]);
+
+
 
   useEffect(() => {
     return function cleanUp() {
@@ -105,9 +138,8 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
     gridCellRef.current = cellsIDsArray;
   }
 
-  const createCell = (results, type) => {
-    const { features } = results;
-    const cellsIDsArray = getCellsIDs(results);
+  const createCell = (features, type) => {
+    const cellsIDsArray = getCellsIDs(features);
     if (!isEqual(gridCellRef.current, cellsIDsArray)) {
       manageCellStoreAndGeomCreation(features, cellsIDsArray, type);
     }
