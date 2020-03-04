@@ -6,6 +6,7 @@ $icon-size: 14px;
 $share-button-margin: 12px;
 $menuFooterHeight: 65px;
 $landscapeSidebarCollapsedHeight: 175px;
+$scrollbar-width: 4px;
 
 .uiTopLeft {
   position: absolute;
@@ -87,7 +88,7 @@ $landscapeSidebarCollapsedHeight: 175px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 4px;
+    width: $scrollbar-width;
     background-color: rgba($wild-sand, 0.2);
   } 
 

@@ -6,6 +6,7 @@
 $site-gutter: 20px;
 $map-attribution-height: 30px;
 $legend-item-height: 82px;
+$legend-width: 260px;
 
 %legend-ramp-text {
   font-family: $font-family-1-light !important;
@@ -59,7 +60,8 @@ $legend-item-height: 82px;
     margin-bottom: 0;
     border-bottom: none;
     border-radius: 0;
-
+    width: calc(#{$legend-width} - #{$scrollbar-width});
+    
     &:first-child {
       border-radius: $border-radius-mobile;
     }
@@ -113,7 +115,7 @@ $legend-item-height: 82px;
   .wri_api__c-legend-list {
     @extend %verticalScrollbarStyled;
 
-    height: calc(4 * #{$legend-item-height});
+    max-height: calc(4 * #{$legend-item-height});
   }
 }
 
@@ -125,7 +127,7 @@ $legend-item-height: 82px;
     position: absolute;
     bottom: calc(#{$site-gutter} + #{$map-attribution-height});
     right: $site-gutter;
-    width: 260px;
+    width: $legend-width;
   }
 }
 
