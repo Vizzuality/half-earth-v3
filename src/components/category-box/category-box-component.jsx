@@ -13,7 +13,11 @@ const CategoryBox = ({ title, category, isSidebarOpen, counter }) => (
     )}>
       <p className={styles.title}>
         {title}
-        <span className={styles.counter}>{counter > 0 && counter}</span>
+        {counter > 0 &&
+          <div className={styles.counter}>
+            <span className={styles.counterText}>{counter}</span>
+          </div>
+        }
       </p>
       <div className={styles.categoryContainer}>
         <p className={styles.category}>{category}</p>
