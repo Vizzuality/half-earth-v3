@@ -5,6 +5,7 @@
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
+$legend-item-height: 82px;
 
 %legend-ramp-text {
   font-family: $font-family-1-light !important;
@@ -53,7 +54,8 @@ $map-attribution-height: 30px;
 
   li.wri_api__c-legend-item { //use this only for legend item container
     @include backdropBlur();
-    
+
+    height: $legend-item-height;
     margin-bottom: 0;
     border-bottom: none;
     border-radius: 0;
@@ -106,6 +108,12 @@ $map-attribution-height: 30px;
   .wri_api__legend-item-header > h3 {
     margin-bottom: 0;
     margin-top: 12px !important;
+  }
+
+  .wri_api__c-legend-list {
+    @extend %verticalScrollbarStyled;
+
+    height: calc(4 * #{$legend-item-height});
   }
 }
 
