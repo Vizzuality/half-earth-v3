@@ -61,7 +61,7 @@ const feturedGlobeContainer = props => {
         }
       });
       setHandle(spinningGlobe);
-    })
+    });
   }
 
   const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
