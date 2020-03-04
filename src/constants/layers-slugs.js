@@ -12,7 +12,10 @@ export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';
 // Terrestrial human pressures imagery layer (it is the aggregation of rainfed, irrigated and urban pressures).
-export const LAND_HUMAN_PRESSURES_IMAGE_LAYER = 'land_human_pressures';
+export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
+export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
+export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
+export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
