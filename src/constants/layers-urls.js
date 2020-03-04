@@ -50,7 +50,8 @@ import {
 const bucketUrl = "https://storage.googleapis.com/cdn.mol.org/half-earth/tiles/phase2";
 const templatePattern = "{level}/{col}/{row}";
 
-export const BIODIVERSITY_FACETS_SERVICE_URL = "https://utility.arcgis.com/usrsvcs/servers/e6c05ee3ee7b45af9577904bf9238529/rest/services/Biodiversity_Facets_Dissolved/FeatureServer/0";
+export const TERRESTRIAL_GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Terrestrial_Species_Richness_and_Rarity_Patterns_for_Select_Taxa/FeatureServer";
+export const MARINE_GRID_URL = "https://utility.arcgis.com/usrsvcs/servers/e6c05ee3ee7b45af9577904bf9238529/rest/services/Biodiversity_Facets_Dissolved/FeatureServer/0";
 export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer";
 
 
