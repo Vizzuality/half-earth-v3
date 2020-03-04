@@ -56,18 +56,18 @@ $legend-width: 260px;
   li.wri_api__c-legend-item { //use this only for legend item container
     @include backdropBlur();
 
-    height: $legend-item-height;
     margin-bottom: 0;
     border-bottom: none;
     border-radius: 0;
-    width: calc(#{$legend-width} - #{$scrollbar-width});
-    
+    height: $legend-item-height;
+
     &:first-child {
       border-radius: $border-radius-mobile;
     }
 
     @media #{$tablet-portrait} {
       border-radius: 2px;
+      width: calc(#{$legend-width} - #{$scrollbar-width});
 
       &:first-child {
         border-radius: 2px;
@@ -115,7 +115,9 @@ $legend-width: 260px;
   .wri_api__c-legend-list {
     @extend %verticalScrollbarStyled;
 
-    max-height: calc(4 * #{$legend-item-height});
+    @media #{$tablet-portrait} {
+      max-height: calc(4 * #{$legend-item-height});
+    }
   }
 }
 
