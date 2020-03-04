@@ -30,7 +30,7 @@ function* fetchGeodescriberData() {
   try {
     yield put(SET_GEO_DESCRIPTION_LOADING());
 
-    const response = yield fetch(REACT_APP_GEO_DESCRIBER_API, {
+    const response = yield fetch(`${REACT_APP_GEO_DESCRIBER_API}&template=True`, {
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ function* fetchGeodescriberData() {
     });
     const data = yield response.json();
     // Trigger species ready action
-    yield put(SET_GEO_DESCRIPTION_READY(data))
+    yield put(SET_GEO_DESCRIPTION_READY(data));
   } catch (error) {
     yield put(SET_GEO_DESCRIPTION_ERROR(error));
   } finally {

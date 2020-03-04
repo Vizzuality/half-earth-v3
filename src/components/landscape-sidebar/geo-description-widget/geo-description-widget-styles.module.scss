@@ -61,13 +61,23 @@ $error-gif-size: 120px;
   width: 100%;
 }
 
-.description {
+.descriptionWrapper {
   @extend %bodyText;
+  color: $white;
   padding: $mobile-sidebar-side-paddings;
-  margin: 0;
-  color: white;
 
   @media #{$tablet-portrait} {
     padding: $sidebar-paddings;
   }
+
+  p {
+    margin: 0;
+  }
 }
+
+.areaText {
+  font-weight: $font-weight-bold;
+}
+
+
+
