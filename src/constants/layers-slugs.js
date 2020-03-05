@@ -12,7 +12,6 @@ export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';
 // Terrestrial human pressures tiled layers.
-export const LAND_HUMAN_PRESSURES_IMAGE_LAYER = 'pressures';
 export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
