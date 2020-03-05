@@ -32,7 +32,7 @@ const HumanPressureWidgetContainer = props => {
   }, [activeLayers])
 
 
-    const handleHumanPressureRasters = (rasters, option) => {
+    const toggleLayer = (rasters, option) => {
       const { changeGlobe } = props;
       const layerConfig = layersConfig[option.slug];
       handleLayerCreation(layerConfig, map);
@@ -42,7 +42,7 @@ const HumanPressureWidgetContainer = props => {
 
   return (
     <HumanPressureWidgetComponent
-      handleOnClick={handleHumanPressureRasters}
+      handleOnClick={toggleLayer}
       checkedRasters={checkedOptions}
       {...props}
     />

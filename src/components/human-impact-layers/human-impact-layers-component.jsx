@@ -14,7 +14,7 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 const HumanImpactLayers = ({ alreadyChecked, map, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
 
   
-  const handleHumanPressureRasters = (rasters, option) => {
+  const toggleLayer = (rasters, option) => {
     const layerConfig = layersConfig[option.slug];
     handleLayerCreation(layerConfig, map);
     layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
@@ -26,7 +26,7 @@ const HumanImpactLayers = ({ alreadyChecked, map, activeLayers, addLayerAnalytic
     <MultipleActiveLayers
       options={humanPressuresLandUse}
       alreadyChecked={alreadyChecked}
-      handleClick={handleHumanPressureRasters}
+      handleClick={toggleLayer}
       title='Land use pressures'
       description='Human pressures causing habitat loss and accelerating species extinction.'
     />

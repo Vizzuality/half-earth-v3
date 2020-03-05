@@ -4,8 +4,6 @@ import { format } from 'd3-format';
 import { humanPressuresLandscapeWidget } from 'constants/human-pressures';
 import { getTerrestrialHumanPressures } from 'selectors/grid-cell-selectors';
 
-const getRastersFromProps = (state, props) =>
-  props.rasters
 
 const getPressureData = createSelector(getTerrestrialHumanPressures, humanPressures => {
   if (!humanPressures) return null;
@@ -45,11 +43,10 @@ const getBiggestPressureName = createSelector(
 )
 
 const getSelectedPressuresValue = createSelector(
-  [getPressureData, getRastersFromProps],
-  (humanPressures, rasters) => {
-    if (!humanPressures || !rasters) return null;
-    const selectedPressures = humanPressures.filter(({ value }) => rasters[value]).reduce((acc, next) => acc + next.pressureValue, 0);
-    return selectedPressures;
+  [getPressureData],
+  (humanPressures) => {
+    if (!humanPressures) return null;
+    return humanPressures;
   }
 )
 

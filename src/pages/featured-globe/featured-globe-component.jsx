@@ -54,7 +54,6 @@ const DataGlobeComponent = ({
   rasters,
   selectedTaxa,
   onMapLoad,
-  setRasters,
   handleLayerToggle,
   handleGlobeUpdating,
   spinGlobeHandle,
@@ -141,8 +140,6 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}
-          rasters={rasters}
-          setRasters={setRasters}
           selectedSpecies={selectedSpecies}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           activeOption={activeOption}

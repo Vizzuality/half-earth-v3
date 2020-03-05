@@ -89,7 +89,7 @@ export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) =>
 export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
-export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPressuresPreloadFixes, humanPressuresLayerTitle) => {
+export const activateLayersOnLoad = (map, activeLayers, config) => {
   const activeLayerIDs = activeLayers
       .map(({ title }) => title);
   
@@ -98,9 +98,6 @@ export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPr
       if (layerConfig) {
         const newLayer = await createLayer(layerConfig, map);
         newLayer.outFields = ["*"];
-        if (layerConfig.slug === humanPressuresLayerTitle) {
-          humanPressuresPreloadFixes(newLayer, rasters);
-        }
         addLayerToMap(newLayer, map);
       }
     });

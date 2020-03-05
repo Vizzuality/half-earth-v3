@@ -39,10 +39,8 @@ const DataGlobeComponent = ({
   isGlobeUpdating,
   hasMetadata,
   activeLayers,
-  rasters,
   handleMapLoad,
   handleGlobeUpdating,
-  setRasters,
   activeOption,
   isHEModalOpen,
 }) => {
@@ -77,15 +75,12 @@ const DataGlobeComponent = ({
           isLandscapeMode={isLandscapeMode}
           isBiodiversityActive={isBiodiversityActive}
           activeLayers={activeLayers}
-          rasters={rasters}
           handleGlobeUpdating={handleGlobeUpdating}
-          setRasters={setRasters}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
           activeOption={activeOption}
-          rasters={rasters}
         />
         <LandscapeSidebar
           isLandscapeMode={isLandscapeMode}
@@ -94,8 +89,6 @@ const DataGlobeComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
           activeOption={activeOption}
           activeLayers={activeLayers}
-          rasters={rasters}
-          setRasters={setRasters}
           selectedSpecies={selectedSpecies}
         />
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
