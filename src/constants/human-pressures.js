@@ -1,5 +1,9 @@
 import {
-  LAND_HUMAN_PRESSURES_IMAGE_LAYER
+  LAND_HUMAN_PRESSURES_IMAGE_LAYER,
+  URBAN_HUMAN_PRESSURES_TILE_LAYER,
+  IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
+  RAINFED_HUMAN_PRESSURES_TILE_LAYER,
+  RANGELAND_HUMAN_PRESSURES_TILE_LAYER
 } from 'constants/layers-slugs';
 
 export const HUMAN_PRESSURES_COLOR_RAMP = [
@@ -15,11 +19,13 @@ export const HUMAN_PRESSURES_COLOR_RAMP = [
 const RAINFED = 'Rainfed agriculture';
 const IRRIGATED = 'Irrigated agriculture';
 const URBAN = 'Urban pressures';
+const RANGELAND = 'Rangeland';
 
 export const humanPressuresLandUse = [
-  { name: RAINFED, value: 'rainfed', slug: 'human-pressures-rainfed' },
-  { name: IRRIGATED, value: 'agriculture', slug: 'human-pressures-agriculture' },
-  { name: URBAN, value: 'urban', slug: 'human-pressures-urban' }
+  { name: URBAN, value: URBAN_HUMAN_PRESSURES_TILE_LAYER, slug: URBAN_HUMAN_PRESSURES_TILE_LAYER },
+  { name: RAINFED, value: RAINFED_HUMAN_PRESSURES_TILE_LAYER, slug: RAINFED_HUMAN_PRESSURES_TILE_LAYER },
+  { name: IRRIGATED, value: IRRIGATED_HUMAN_PRESSURES_TILE_LAYER, slug: IRRIGATED_HUMAN_PRESSURES_TILE_LAYER },
+  { name: RANGELAND, value: RANGELAND_HUMAN_PRESSURES_TILE_LAYER, slug: RANGELAND_HUMAN_PRESSURES_TILE_LAYER }
 ];
 
 export const humanPressuresLandscapeWidget = [
@@ -30,7 +36,8 @@ export const humanPressuresLandscapeWidget = [
 export const legendSingleRasterTitles = {
   rainfed: RAINFED,
   agriculture: IRRIGATED,
-  urban: URBAN
+  urban: URBAN,
+  rangeland: RANGELAND
 }
 
 export const legendConfigs = {

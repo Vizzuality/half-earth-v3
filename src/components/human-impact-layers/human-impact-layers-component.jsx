@@ -1,30 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Constants
-import { VIEW_MODE } from  'constants/google-analytics-constants';
-import { layersConfig } from 'constants/mol-layers-configs';
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+// import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { humanPressuresLandUse } from 'constants/human-pressures';
 // Utils
-import { handleLayerRendered, layerManagerVisibility, handleLayerCreation } from 'utils/layer-manager-utils';
-import { humanPressuresPreloadFixes, dispatchLandPressuresLayersAnalyticsEvents } from 'utils/raster-layers-utils';
+import { layerManagerToggle, handleLayerCreation } from 'utils/layer-manager-utils';
+// import { dispatchLandPressuresLayersAnalyticsEvents } from 'utils/raster-layers-utils';
 // Components
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 
-const HumanImpactLayers = ({ alreadyChecked, handleGlobeUpdating, view, map, setRasters, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
+const HumanImpactLayers = ({ alreadyChecked, map, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
 
-  const handleHumanPressureRasters = async (rasters, option) => {
-    const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
-    const humanImpactLayer = await handleLayerCreation(layerConfig, map);
-    const hasRastersWithData = Object.values(rasters).some(raster => raster);
-    hasRastersWithData && handleGlobeUpdating(true);
-    setRasters(rasters);
-    humanPressuresPreloadFixes(humanImpactLayer, rasters);
-    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
-    layerManagerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData, activeLayers, changeGlobe);
-    dispatchLandPressuresLayersAnalyticsEvents(rasters, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
+  
+  const handleHumanPressureRasters = (rasters, option) => {
+    const layerConfig = layersConfig[option.slug];
+    handleLayerCreation(layerConfig, map);
+    layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
+    // dispatchLandPressuresLayersAnalyticsEvents(activeLayers, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
   }
+
 
   return (
     <MultipleActiveLayers
@@ -33,7 +29,6 @@ const HumanImpactLayers = ({ alreadyChecked, handleGlobeUpdating, view, map, set
       handleClick={handleHumanPressureRasters}
       title='Land use pressures'
       description='Human pressures causing habitat loss and accelerating species extinction.'
-      activeLayers={activeLayers}
     />
   )}
 

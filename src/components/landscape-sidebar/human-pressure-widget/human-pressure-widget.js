@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { handleLayerRendered } from 'utils/layer-manager-utils';
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
+import { LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 import mapStateToProps from './human-pressure-selectors';
 import { VIEW_MODE } from  'constants/google-analytics-constants';
-import { humanPressuresLandUse } from 'constants/human-pressures';
-
-
 // Constants
-import { layersConfig } from 'constants/mol-layers-configs';
-
+import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 // Utils
-import { handleLayerCreation, layerManagerVisibility } from 'utils/layer-manager-utils';
-import { humanPressuresPreloadFixes, dispatchLandPressuresLayersAnalyticsEvents } from 'utils/raster-layers-utils';
+import { handleLayerCreation } from 'utils/layer-manager-utils';
 //Actions
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
@@ -21,39 +16,28 @@ const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActio
 
 const HumanPressureWidgetContainer = props => {
   const {
-    setRasters,
     map,
-    view,
     addLayerAnalyticsEvent,
     removeLayerAnalyticsEvent,
-    handleGlobeUpdating,
-    activeLayers,
-    rasters
+    activeLayers
   } = props;
 
   const [checkedOptions, setCheckedOptions] = useState({});
 
   useEffect(() => {
-    const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    // eslint-disable-next-line no-mixed-operators
-    const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
-      ...acc, [option.value]: rasters[option.value]
-    }), {})) || {};
+    const alreadyChecked = LAND_HUMAN_PRESURES_LAYERS.reduce((acc, option) => ({
+      ...acc, [option]: activeLayers.some(layer => layer.title === option)
+    }), {});
     setCheckedOptions(alreadyChecked);
-  }, [rasters, activeLayers])
+  }, [activeLayers])
 
 
-  const handleHumanPressureRasters = async (rasters, option) => {
-    const { changeGlobe } = props;
-    const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
-    const humanImpactLayer = await handleLayerCreation(layerConfig, map);
-    const hasRastersWithData = Object.values(rasters).some(raster => raster);
-    hasRastersWithData && handleGlobeUpdating(true);
-    setRasters(rasters);
-    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
-    layerManagerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData, activeLayers, changeGlobe);
-    humanPressuresPreloadFixes(humanImpactLayer, rasters);
-    dispatchLandPressuresLayersAnalyticsEvents(rasters, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
+    const handleHumanPressureRasters = (rasters, option) => {
+      const { changeGlobe } = props;
+      const layerConfig = layersConfig[option.slug];
+      handleLayerCreation(layerConfig, map);
+      layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
+      // dispatchLandPressuresLayersAnalyticsEvents(activeLayers, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
   }
 
   return (
