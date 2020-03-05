@@ -11,7 +11,9 @@ export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species'
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';
-// Terrestrial human pressures imagery layer (it is the aggregation of rainfed, irrigated and urban pressures).
+// Terrestrial human pressures tiled layers.
+export const LAND_HUMAN_PRESSURES_IMAGE_LAYER = 'pressures';
+export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
