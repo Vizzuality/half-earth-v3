@@ -72,11 +72,11 @@ const feturedGlobeContainer = props => {
     handleMarkerHover
   ]
 
-  const showLayersOnlyOnLandscape = ({ layer, setActive }) => {
+  const showLayersOnlyOnLandscape = ({ layer, isVisible }) => {
     const isLandscapeOnlyLayer = FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS.includes(layer.title);
     // Hide human_pressures_layer where they are not in landscape mode
     if(isLandscapeOnlyLayer) {
-      layer.visible = props.isLandscapeMode && setActive;
+      layer.visible = props.isLandscapeMode && isVisible;
     }
   }
 

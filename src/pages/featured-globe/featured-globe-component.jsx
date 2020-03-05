@@ -51,7 +51,6 @@ const DataGlobeComponent = ({
   isMapsList,
   hasMetadata,
   activeLayers,
-  rasters,
   selectedTaxa,
   onMapLoad,
   handleLayerToggle,
@@ -153,7 +152,6 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
           activeOption={activeOption}
-          rasters={rasters}
         />
         <TutorialModal />
       </Scene>

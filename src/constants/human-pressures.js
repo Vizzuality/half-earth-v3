@@ -42,6 +42,7 @@ export const legendSingleRasterTitles = {
 
 export const legendConfigs = {
   [MERGED_LAND_HUMAN_PRESSURES]: {
+    groupedLayer: true,
     type: "gradient",
     items: [
       {

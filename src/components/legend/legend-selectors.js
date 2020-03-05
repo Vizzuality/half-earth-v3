@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
-import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
+import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { legendConfigs } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
@@ -9,6 +9,7 @@ import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
 const isLandHumanPressureLayer = layerId => LAND_HUMAN_PRESURES_LAYERS.some( l => l === layerId);
+const isCommunityLayer = layerId => COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.some( l => l === layerId);
 
 const getActiveLayers = (state, props) => props.activeLayers;
 
@@ -32,7 +33,7 @@ const getLegendConfigs = createSelector(
   [getVisibleLayers, getHumanPressuresDynamicTitle],
   (visibleLayers, humanPressuresDynamicTitle) => {
   if (!visibleLayers.length) return null;
-    const layersAfterNormalization = mergeHumanPressuresIntoOne(visibleLayers);
+    const layersAfterNormalization = mergeCommunityIntoOne(mergeHumanPressuresIntoOne(visibleLayers));
     const configs = layersAfterNormalization.map(layer => {
     const sharedConfig = { layerId: layer.title, opacity: layer.opacity };
     if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
@@ -69,13 +70,23 @@ const joinAgricultureTitles = (titles) => {
   return `${trimmedTitles.join(' and ')} agriculture`; 
 }
 
-const mergeHumanPressuresIntoOne = visibleLayers => {
-  const hasHumanPressuresLayer = visibleLayers.find(layer => isLandHumanPressureLayer(layer.title));
+const mergeHumanPressuresIntoOne = layers => {
+  const hasHumanPressuresLayer = layers.find(layer => isLandHumanPressureLayer(layer.title));
   if (!hasHumanPressuresLayer) {
-    return visibleLayers
+    return layers
   } else {
-    const noHumanPresuresLayers = visibleLayers.filter(layer => !isLandHumanPressureLayer(layer.title));
+    const noHumanPresuresLayers = layers.filter(layer => !isLandHumanPressureLayer(layer.title));
     return [...noHumanPresuresLayers, { title: MERGED_LAND_HUMAN_PRESSURES, opacity: 0.6}];
+  }
+}
+
+const mergeCommunityIntoOne = layers => {
+  const hasCommunityLayer = layers.find(layer => isCommunityLayer(layer.title));
+  if (!hasCommunityLayer) {
+    return layers
+  } else {
+    const noCommunityLayers = layers.filter(layer => !isCommunityLayer(layer.title));
+    return [...noCommunityLayers, { title: COMMUNITY_AREAS_VECTOR_TILE_LAYER, opacity: 0.6}];
   }
 }
 

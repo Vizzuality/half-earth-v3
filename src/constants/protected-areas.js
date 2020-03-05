@@ -20,7 +20,8 @@ export const WDPALayers = [
     id: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     theme: 'overrideCheckbox-community-areas',
-    slug: 'community-conservation'
+    slug: 'community-conservation',
+    groupedLayer: true
   }
 ]
 
@@ -34,7 +35,8 @@ export const legendConfigs = {
       }
     ],
     title: "Community-based protected areas",
-    slug: "community-conservation"
+    slug: "community-conservation",
+    groupedLayer: true
   },
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
     type: "basic",
