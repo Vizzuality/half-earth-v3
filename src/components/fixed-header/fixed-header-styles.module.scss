@@ -24,7 +24,7 @@ $icon-size: 25px;
 
 .autoHeightHeader {
   height: unset;
-  padding-bottom: 14px;
+  padding-bottom: 20px;
 }
 
 .shareButton {
@@ -42,7 +42,6 @@ $icon-size: 25px;
   letter-spacing: 2px;
   color: $robins-egg-blue;
   padding: 0;
-  margin-left: -8px; // svg icon has some padding
 }
 
 .buttonText {

@@ -36,7 +36,7 @@ $error-gif-size: 120px;
 }
 
 .errorText {
-  padding: 0 $mobile-sidebar-side-paddings;;
+  padding: 0 $mobile-sidebar-side-paddings;
   color: white;
   font-size: 14px;
   font-weight: 300;
@@ -61,13 +61,24 @@ $error-gif-size: 120px;
   width: 100%;
 }
 
-.description {
+.descriptionWrapper {
   @extend %bodyText;
+  color: $white;
   padding: $mobile-sidebar-side-paddings;
-  margin: 0;
-  color: white;
 
   @media #{$tablet-portrait} {
     padding: $sidebar-paddings;
+    padding-bottom: 24px;
+  }
+
+  p {
+    margin: 0;
   }
 }
+
+.areaText {
+  font-weight: $font-weight-bold;
+}
+
+
+
