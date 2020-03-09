@@ -53,7 +53,7 @@ const getConservationAreasLogic = createSelector(
 
     const areas = {};
     areas[NOT_UNDER_CONSERVATION] = 100 - (not_community_prop + community_prop); // set NOT_UNDER_CONSERVATION first to render the slice below all others
-
+    console.log('conservationEfforts: ',conservationEfforts)
     if (not_community_prop + community_prop > all_prop) {
       areas[COMMUNITY_BASED] = all_prop - not_community_prop;
       areas[PROTECTED] = not_community_prop;
@@ -62,12 +62,7 @@ const getConservationAreasLogic = createSelector(
       areas[COMMUNITY_BASED] = community_prop;
       areas[PROTECTED] = not_community_prop;
     }
-    
-    // const areas = {
-    //   [NOT_UNDER_CONSERVATION]: 100 - (all_prop),
-    //   [COMMUNITY_BASED]: community_prop,
-    //   [PROTECTED]: not_community_prop
-    // };
+
     return areas;
   }
 )
