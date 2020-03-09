@@ -72,7 +72,7 @@ const ConservationEffortsWidget = (props) => {
   useEffect(() => {
     if (terrestrialCellData && queryParams) {
       setConservationEfforts({ data: null, loading: true });
-      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
+      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.ID).join(', ')})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
