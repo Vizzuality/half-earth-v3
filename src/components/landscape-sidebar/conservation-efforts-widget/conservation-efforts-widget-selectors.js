@@ -25,21 +25,21 @@ const getConservationEfforts = createSelector(
     const conservationEfforts = cellData.reduce((acc, current) => {
       return {
         ...acc,
-        [current.CELL_ID]: {
-          WDPA_prop: current.WDPA_prop,
-          RAISG_prop: current.RAISG_prop,
-          all_prop: current.all_prop
+        [current.ID]: {
+          community: current.comm_prot_prop,
+          not_community: current.not_comm_prot_prop,
+          all: current.all_prot_prop
         }
         }
     }, {});
     const values = Object.values(conservationEfforts)
     const gridCellsLength = Object.keys(conservationEfforts).length;
-    const WDPA_prop = sumBy(values, 'WDPA_prop') / gridCellsLength;
-    const RAISG_prop = sumBy(values, 'RAISG_prop') / gridCellsLength;
-    const all_prop = sumBy(values, 'all_prop') / gridCellsLength;
+    const community_prop = sumBy(values, 'community') / gridCellsLength;
+    const not_community_prop = sumBy(values, 'not_community') / gridCellsLength;
+    const all_prop = sumBy(values, 'all') / gridCellsLength;
     return {
-      WDPA_prop,
-      RAISG_prop,
+      community_prop,
+      not_community_prop,
       all_prop
     }
   }
@@ -49,18 +49,12 @@ const getConservationAreasLogic = createSelector(
   [getConservationEfforts],
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
-    const areas = {};
-    const { WDPA_prop, RAISG_prop, all_prop } = conservationEfforts;
-    areas[NOT_UNDER_CONSERVATION] = (1 - (WDPA_prop +RAISG_prop)) * 100; // set NOT_UNDER_CONSERVATION first to render the slice below all others
-    if (WDPA_prop + RAISG_prop > all_prop) {
-      areas[COMMUNITY_BASED] = (all_prop - WDPA_prop) * 100;
-      areas[PROTECTED] = WDPA_prop * 100;
-      areas[NOT_UNDER_CONSERVATION] = 100 - (areas[PROTECTED] + areas[COMMUNITY_BASED]);
-    } else {
-      areas[COMMUNITY_BASED] = RAISG_prop * 100;
-      areas[PROTECTED] = WDPA_prop * 100;
-    }
-
+    const { community_prop, not_community_prop, all_prop } = conservationEfforts;
+    const areas = {
+      [NOT_UNDER_CONSERVATION]: 100 - (all_prop),
+      [COMMUNITY_BASED]: community_prop,
+      [PROTECTED]: not_community_prop
+    };
     return areas;
   }
 )
@@ -69,7 +63,7 @@ const getAllPropsForDynamicSentence = createSelector(
   [getConservationEfforts],
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
-    return conservationEfforts.all_prop * 100;
+    return conservationEfforts.all_prop.toFixed(2);
   }
 )
 

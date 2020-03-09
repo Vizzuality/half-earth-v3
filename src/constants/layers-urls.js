@@ -67,7 +67,7 @@ export const LAYERS_URLS = {
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/community_based/VectorTileServer',
   [RAISIG_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/RAISG_Tls/FeatureServer',
   [RAISIG_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Territorios_Ind%C3%ADgenas_RAISG/VectorTileServer',
-  [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ConsProp/FeatureServer',
+  [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/grid_55km_prot_prop/FeatureServer',
   [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/TerrestrialVertebrateSpeciesSHP/FeatureServer',
   [LAND_HUMAN_PRESSURES_IMAGE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/f52a6e023d1242e7ad97b2b67495af7b/rest/services/HumanImpact/Human_Impact/ImageServer',
   [SA_AMPHIB_RARITY]: `${bucketUrl}/rarity_1km/amphibians/${templatePattern}` ,
