@@ -50,11 +50,24 @@ const getConservationAreasLogic = createSelector(
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
     const { community_prop, not_community_prop, all_prop } = conservationEfforts;
-    const areas = {
-      [NOT_UNDER_CONSERVATION]: 100 - (all_prop),
-      [COMMUNITY_BASED]: community_prop,
-      [PROTECTED]: not_community_prop
-    };
+
+    const areas = {};
+    areas[NOT_UNDER_CONSERVATION] = 100 - (not_community_prop + community_prop); // set NOT_UNDER_CONSERVATION first to render the slice below all others
+
+    if (not_community_prop + community_prop > all_prop) {
+      areas[COMMUNITY_BASED] = all_prop - not_community_prop;
+      areas[PROTECTED] = not_community_prop;
+      areas[NOT_UNDER_CONSERVATION] = 100 - (areas[PROTECTED] + areas[COMMUNITY_BASED]);
+    } else {
+      areas[COMMUNITY_BASED] = community_prop;
+      areas[PROTECTED] = not_community_prop;
+    }
+    
+    // const areas = {
+    //   [NOT_UNDER_CONSERVATION]: 100 - (all_prop),
+    //   [COMMUNITY_BASED]: community_prop,
+    //   [PROTECTED]: not_community_prop
+    // };
     return areas;
   }
 )
