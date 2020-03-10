@@ -1184,7 +1184,7 @@ export const legendConfigs = {
     items: [
     {
     color: "#0664f6",
-    value: "-10.9"
+    value: "low"
     },
     {
     color: "#0572d6",
@@ -1216,7 +1216,7 @@ export const legendConfigs = {
     },
     {
     color: "#fde300",
-    value: "-6.2"
+    value: "high"
     }
     ],
     title: "Protea regional rarity"
