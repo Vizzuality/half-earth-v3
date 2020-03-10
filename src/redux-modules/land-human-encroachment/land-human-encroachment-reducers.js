@@ -1,5 +1,4 @@
 import * as actions from './land-human-encroachment-actions';
-import { isEqual } from 'lodash';
 
 export const initialState = {
   data: null,
@@ -8,14 +7,19 @@ export const initialState = {
 };
 
 function setLandPressuresDataReady(state, { payload }) {
-  return isEqual(state.data, payload) ? state : { ...state, ...payload };
+  return { ...state, loading: false, data: payload, error: null };
 }
 
 function setLandPressuresDataError(state, { payload }) {
   return { ...state, loading: false, data: null, error: payload };
 }
 
+function setLandPressuresDataLoading(state) {
+  return { ...state, loading: true, data: null, error: null };
+}
+
 export default {
-  [actions.setLandPressuresDataReady]: setLandPressuresDataReady,
-  [actions.setLandPressuresDataError]: setLandPressuresDataError
+  [actions.SET_LAND_PRESSURES_DATA_READY]: setLandPressuresDataReady,
+  [actions.STORE_LAND_PRESSURES_DATA_ERROR]: setLandPressuresDataError,
+  [actions.STORE_LAND_PRESSURES_DATA_LOADING]: setLandPressuresDataLoading
 };
