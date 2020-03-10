@@ -6,7 +6,7 @@ export const getTerrestrialCellData = createSelector(
   [selectCellData],
   cellData => {
     if (!cellData) return null;
-    return cellData;
+    return cellData.filter(c => c.ID);
   }
 )
 
