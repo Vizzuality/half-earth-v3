@@ -21,11 +21,18 @@ const IRRIGATED = 'Irrigated agriculture';
 const URBAN = 'Urban pressures';
 const RANGELAND = 'Rangeland';
 
+export const PRESSURES_SLUGS = {
+  urban: URBAN_HUMAN_PRESSURES_TILE_LAYER,
+  rainfed: RAINFED_HUMAN_PRESSURES_TILE_LAYER,
+  irrigated: IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
+  rangeland: RANGELAND_HUMAN_PRESSURES_TILE_LAYER
+}
+
 export const humanPressuresLandUse = [
-  { name: URBAN, value: URBAN_HUMAN_PRESSURES_TILE_LAYER, slug: URBAN_HUMAN_PRESSURES_TILE_LAYER },
-  { name: RAINFED, value: RAINFED_HUMAN_PRESSURES_TILE_LAYER, slug: RAINFED_HUMAN_PRESSURES_TILE_LAYER },
-  { name: IRRIGATED, value: IRRIGATED_HUMAN_PRESSURES_TILE_LAYER, slug: IRRIGATED_HUMAN_PRESSURES_TILE_LAYER },
-  { name: RANGELAND, value: RANGELAND_HUMAN_PRESSURES_TILE_LAYER, slug: RANGELAND_HUMAN_PRESSURES_TILE_LAYER }
+  { name: URBAN, value: PRESSURES_SLUGS.urban, slug: PRESSURES_SLUGS.urban },
+  { name: RAINFED, value: PRESSURES_SLUGS.rainfed, slug: PRESSURES_SLUGS.rainfed },
+  { name: IRRIGATED, value: PRESSURES_SLUGS.irrigated, slug: PRESSURES_SLUGS.irrigated },
+  { name: RANGELAND, value: PRESSURES_SLUGS.rangeland, slug: PRESSURES_SLUGS.rangeland }
 ];
 
 export const humanPressuresLandscapeWidget = [

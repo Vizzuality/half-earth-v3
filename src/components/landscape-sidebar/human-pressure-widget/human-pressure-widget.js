@@ -26,7 +26,10 @@ const HumanPressureWidgetContainer = props => {
     terrestrialCellData,
     addLayerAnalyticsEvent,
     removeLayerAnalyticsEvent,
-    activeLayers
+    activeLayers,
+    SET_LAND_PRESSURES_DATA_READY,
+    STORE_LAND_PRESSURES_DATA_ERROR,
+    STORE_LAND_PRESSURES_DATA_LOADING
   } = props;
 
   const [landPressuresLayer, setLandPressuresLayer] = useState(null);
@@ -45,11 +48,6 @@ const HumanPressureWidgetContainer = props => {
   }, []);
 
   useEffect(() => {
-    const { 
-      SET_LAND_PRESSURES_DATA_READY,
-      STORE_LAND_PRESSURES_DATA_ERROR,
-      STORE_LAND_PRESSURES_DATA_LOADING
-    } = props;
     if (terrestrialCellData && landPressuresLayer) {
       STORE_LAND_PRESSURES_DATA_LOADING();
       const queryParams = landPressuresLayer.createQuery();
