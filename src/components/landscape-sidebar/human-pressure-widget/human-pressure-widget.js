@@ -33,7 +33,6 @@ const HumanPressureWidgetContainer = props => {
   } = props;
 
   const [landPressuresLayer, setLandPressuresLayer] = useState(null);
-  const [checkedOptions, setCheckedOptions] = useState({});
 
   // Create the layer to query against
   useEffect(() => {
@@ -47,6 +46,7 @@ const HumanPressureWidgetContainer = props => {
     }
   }, []);
 
+  // Query data from selected terrestrial gridcells and add it to the store
   useEffect(() => {
     if (terrestrialCellData && landPressuresLayer) {
       STORE_LAND_PRESSURES_DATA_LOADING();
@@ -60,13 +60,6 @@ const HumanPressureWidgetContainer = props => {
     }
   }, [terrestrialCellData])
 
-  useEffect(() => {
-    const alreadyChecked = LAND_HUMAN_PRESURES_LAYERS.reduce((acc, option) => ({
-      ...acc, [option]: activeLayers.some(layer => layer.title === option)
-    }), {});
-    setCheckedOptions(alreadyChecked);
-  }, [activeLayers])
-
 
     const toggleLayer = (rasters, option) => {
       const { changeGlobe } = props;
@@ -79,7 +72,6 @@ const HumanPressureWidgetContainer = props => {
   return (
     <HumanPressureWidgetComponent
       handleOnClick={toggleLayer}
-      checkedRasters={checkedOptions}
       {...props}
     />
   )

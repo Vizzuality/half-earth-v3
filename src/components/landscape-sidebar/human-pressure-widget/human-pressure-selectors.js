@@ -2,11 +2,13 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { orderBy, sumBy } from 'lodash';
 import { format } from 'd3-format';
 import { humanPressuresLandscapeWidget, PRESSURES_SLUGS } from 'constants/human-pressures';
-import { getTerrestrialHumanPressures, getTerrestrialCellData } from 'selectors/grid-cell-selectors';
+import { LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
+import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
 
-const getLandHumanPressuresData = ({ landHumanEncroachment }) => landHumanEncroachment && landHumanEncroachment.data;
+const selectLandHumanPressuresData = ({ landHumanEncroachment }) => landHumanEncroachment && landHumanEncroachment.data;
+const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
-const getAggregatedPressures = createSelector(getLandHumanPressuresData, humanPressuresData => {
+const getAggregatedPressures = createSelector(selectLandHumanPressuresData, humanPressuresData => {
   if (!humanPressuresData) return null;
   const pressures = humanPressuresData.reduce((acc, current) => {
     return {
@@ -51,6 +53,13 @@ const getPressureData = createSelector(getAggregatedPressures, (humanPressuresDa
   return data;
 })
 
+
+const getCheckedPressures = createSelector(getActiveLayersFromProps, activeLayers => {
+  return LAND_HUMAN_PRESURES_LAYERS.reduce((acc, option) => ({
+    ...acc, [option]: activeLayers.some(layer => layer.title === option)
+  }), {});
+})
+
 const getTotalPressureValue = createSelector(getPressureData, humanPressures => {
   if (!humanPressures) return null;
   const pressuresValues = humanPressures.map(p => p.pressureValue)
@@ -58,7 +67,7 @@ const getTotalPressureValue = createSelector(getPressureData, humanPressures => 
   return totalPressure
 })
 
-const getPressureFreeValue = createSelector(getTerrestrialHumanPressures, humanPressures => {
+const getPressureFreeValue = createSelector(getAggregatedPressures, humanPressures => {
   if (!humanPressures) return null;
   const pressureFree = humanPressuresLandscapeWidget.find(p => p.slug === 'human-pressures-free');
   return format(".2%")(humanPressures[pressureFree.value] / 100);
@@ -73,10 +82,12 @@ const getBiggestPressureName = createSelector(
 )
 
 const getSelectedPressuresValue = createSelector(
-  [getPressureData],
-  (humanPressures) => {
+  [getPressureData, getCheckedPressures],
+  (humanPressures, checkedPressures) => {
     if (!humanPressures) return null;
-    return humanPressures;
+    return humanPressures.reduce((acc, pressure) => {
+      return checkedPressures[pressure.slug] ? (acc + pressure.pressureValue) : acc;
+    }, 0);
   }
 )
 
@@ -95,11 +106,12 @@ const getPressureOptions = createSelector(getPressureData, humanPressureData => 
 })
 
 export default createStructuredSelector({
-  humanPressures: getTerrestrialHumanPressures,
+  humanPressures: getAggregatedPressures,
   terrestrialCellData: getTerrestrialCellData,
   options: getPressureOptions,
   selectedPressures: getSelectedPressuresValue,
   totalPressure: getTotalPressureValue,
   biggestPressureName: getBiggestPressureName,
-  pressureFree: getPressureFreeValue
+  pressureFree: getPressureFreeValue,
+  checkedOptions: getCheckedPressures
 });
