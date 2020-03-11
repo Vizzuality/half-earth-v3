@@ -1,11 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { uniqBy } from 'lodash';
+import { LEGEND_FREE_LAYERS, LEGEND_GROUPED_LAYERS_GROUPS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
-import { selectTutorialState } from 'selectors/tutorial-selectors';
 import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
+import { selectTutorialState } from 'selectors/tutorial-selectors';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
 const isLandHumanPressureLayer = layerId => LAND_HUMAN_PRESURES_LAYERS.some( l => l === layerId);
@@ -33,7 +34,7 @@ const getLegendConfigs = createSelector(
   [getVisibleLayers, getHumanPressuresDynamicTitle],
   (visibleLayers, humanPressuresDynamicTitle) => {
   if (!visibleLayers.length) return null;
-    const layersAfterNormalization = mergeCommunityIntoOne(mergeHumanPressuresIntoOne(visibleLayers));
+  const layersAfterNormalization = mergeCommunityIntoOne(mergeHumanPressuresIntoOne(visibleLayers));
     const configs = layersAfterNormalization.map(layer => {
     const sharedConfig = { layerId: layer.title, opacity: layer.opacity };
     if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
@@ -80,8 +81,9 @@ const mergeHumanPressuresIntoOne = layers => {
     return layers;
   } else {
     const opacity = setGroupedLayersOpacity(humanPressuresLayers, DEFAULT_OPACITY);
-    const noHumanPresuresLayers = layers.filter(layer => !isLandHumanPressureLayer(layer.title));
-    return [...noHumanPresuresLayers, { title: MERGED_LAND_HUMAN_PRESSURES, opacity}];
+    const normalizedLayers = layers.map(layer => isLandHumanPressureLayer(layer.title) ? { title: MERGED_LAND_HUMAN_PRESSURES, opacity }: layer);
+    const uniqNormalizedLayers = uniqBy(normalizedLayers, 'title');
+    return uniqNormalizedLayers;
   }
 }
 
@@ -91,8 +93,9 @@ const mergeCommunityIntoOne = layers => {
     return layers;
   } else {
     const opacity = setGroupedLayersOpacity(communityLayers, DEFAULT_OPACITY);
-    const noCommunityLayers = layers.filter(layer => !isCommunityLayer(layer.title));
-    return [...noCommunityLayers, { title: COMMUNITY_AREAS_VECTOR_TILE_LAYER, opacity}];
+    const normalizedLayers = layers.map(layer => isCommunityLayer(layer.title) ? { title: COMMUNITY_AREAS_VECTOR_TILE_LAYER, opacity }: layer);
+    const uniqNormalizedLayers = uniqBy(normalizedLayers, 'title');
+    return uniqNormalizedLayers;
   }
 }
 
