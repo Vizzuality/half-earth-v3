@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { uniqBy } from 'lodash';
-import { LEGEND_FREE_LAYERS, LEGEND_GROUPED_LAYERS_GROUPS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
@@ -24,8 +24,8 @@ const getHumanPressuresDynamicTitle = createSelector(getVisibleLayers, visibleLa
   const humanPresuresLayers = visibleLayers.filter(layer => isLandHumanPressureLayer(layer.title));
   const titles = humanPresuresLayers.map(layer => legendSingleRasterTitles[layer.title]);
   if (titles.length === 4) return 'All pressures';
-  const isOnlyAgricultureRasters = titles.every(title => title.toLowerCase().endsWith('agriculture'));
-  if (isOnlyAgricultureRasters) return joinAgricultureTitles(titles);
+  const hasAgricultureRasters = titles.some(title => title.toLowerCase().endsWith('agriculture'));
+  if (hasAgricultureRasters) return joinAgricultureTitles(titles);
 
   return titles.join(' and ');
 })
@@ -67,8 +67,12 @@ const parseLegend = (config) => {
 }
 
 const joinAgricultureTitles = (titles) => {
-  const trimmedTitles = titles.map(title => title.split(" ")[0]);
-  return `${trimmedTitles.join(' and ')} agriculture`; 
+  const nonAgricultureTitles = titles.filter(title => !title.toLowerCase().endsWith('agriculture'))
+  const agricultureTitles = titles.filter(title => title.toLowerCase().endsWith('agriculture'));
+  const trimmedTitles = agricultureTitles.map(title => title.split(" ")[0]);
+  const formattedAgricultureTitles = `${trimmedTitles.join(' and ')} agriculture`
+
+  return `${[...nonAgricultureTitles, formattedAgricultureTitles].join(' and ')}`;
 }
 
 const setGroupedLayersOpacity = (layers, defaultOpacity) => {
