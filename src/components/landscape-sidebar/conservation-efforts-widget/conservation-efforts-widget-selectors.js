@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
 import { WDPALayers } from 'constants/protected-areas';
-import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
+import { selectCellData } from 'selectors/grid-cell-selectors';
 
 export const COMMUNITY_BASED = 'community';
 export const PROTECTED = 'protected';
@@ -18,20 +18,44 @@ const conservationEffortsLoading = ({ conservationEffortsData }) => conservation
 
 const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
+export const getCellData = createSelector(
+  [selectCellData],
+  cellData => {
+    if (!cellData) return null;
+    return {
+      marine: cellData.filter(c => c.CELL_ID),
+      terrestrial: cellData.filter(c => c.ID)
+    };
+  }
+)
+
 const getConservationEfforts = createSelector(
   [conservationEffortsData],
   cellData => {
     if (!cellData || !cellData.length) return null;
     const conservationEfforts = cellData.reduce((acc, current) => {
-      return {
-        ...acc,
-        [current.ID]: {
-          community: current.comm_prot_prop,
-          not_community: current.not_comm_prot_prop,
-          all: current.all_prot_prop
+      let conservationData = {};
+      if(current.ID) {
+        conservationData = {
+          [current.ID]: {
+            community: current.comm_prot_prop,
+            not_community: current.not_comm_prot_prop,
+            all: current.all_prot_prop
+          }
         }
+      } else if (current.CELL_ID) {
+        conservationData = {
+          [current.CELL_ID]: {
+            community: current.RAISG_prop,
+            not_community: current.WDPA_prop,
+            all: current.all_prop
+          }
         }
+      }
+
+      return { ...acc, ...conservationData }
     }, {});
+
     const values = Object.values(conservationEfforts)
     const gridCellsLength = Object.keys(conservationEfforts).length;
     const community_prop = sumBy(values, 'community') / gridCellsLength;
@@ -127,7 +151,7 @@ const getActiveSlices = createSelector(
 });
 
 export default createStructuredSelector({
-  terrestrialCellData: getTerrestrialCellData,
+  cellData: getCellData,
   pieChartData: getConservationEfforts,
   dataFormatted: getConservationAreasFormatted,
   rawData: getConservationAreasLogic, 

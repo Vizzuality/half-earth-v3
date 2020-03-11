@@ -9,6 +9,7 @@ import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manage
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { COMMUNITY_AREAS_VECTOR_TILE_LAYER, GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
 import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { flatten, compact } from 'lodash';
 
 import * as urlActions from 'actions/url-actions';
 
@@ -27,11 +28,12 @@ const ConservationEffortsWidget = (props) => {
   const {
     alreadyChecked,
     colors,
-    terrestrialCellData,
+    cellData,
     setConservationEfforts
   } = props;
 
   const [conservationPropsLayer, setConservationPropsLayer] = useState(null);
+  const [conservationPropsLayerMarine, setConservationPropsLayerMarine] = useState(null);
 
   useEffect(() => {
     if (!conservationPropsLayer) {
@@ -44,7 +46,19 @@ const ConservationEffortsWidget = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!conservationPropsLayerMarine) {
+      loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+        const consPropLayerMarine = new FeatureLayer({
+          url: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ConsProp/FeatureServer'
+        });
+        setConservationPropsLayerMarine(consPropLayerMarine);
+      });
+    }
+  }, []);
+
   const queryParams = conservationPropsLayer && conservationPropsLayer.createQuery();
+  const queryParamsMarine = conservationPropsLayerMarine && conservationPropsLayerMarine.createQuery();
 
   const orangeActive = alreadyChecked['Protected areas'];
   const yellowActive = alreadyChecked['Community areas'];
@@ -70,15 +84,38 @@ const ConservationEffortsWidget = (props) => {
   }, [orangeActive, yellowActive])
 
   useEffect(() => {
-    if (terrestrialCellData && queryParams) {
+    const cellDataPromises = [];
+
+    if (cellData) {
       setConservationEfforts({ data: null, loading: true });
-      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.ID).join(', ')})`;
-      conservationPropsLayer.queryFeatures(queryParams).then(function(results){
-        const { features } = results;
-        setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
-      }).catch(() => setConservationEfforts({ data: null, loading: false }));
+    
+      if(cellData.terrestrial && queryParams) {
+        queryParams.where = `ID IN (${cellData.terrestrial.map(i => i.ID).join(', ')})`;
+        const terrestrialDataPromise = conservationPropsLayer.queryFeatures(queryParams).then(function(results){
+          const { features } = results;
+          return features.map(c => c.attributes);
+        }).catch(() => {});
+        cellDataPromises.push(terrestrialDataPromise);
+      }
+
+      if(cellData.marine && queryParamsMarine) {
+        queryParamsMarine.where = `CELL_ID IN (${cellData.marine.map(i => i.CELL_ID).join(', ')})`;
+        const marineDataPromise = conservationPropsLayerMarine.queryFeatures(queryParamsMarine).then(function(results){
+          const { features } = results;
+          return features.map(c => c.attributes);
+        }).catch(() => {});
+        cellDataPromises.push(marineDataPromise);
+      }
+
+      Promise.all(cellDataPromises).then(function(values) {
+        const data = compact(flatten(values));
+        setConservationEfforts({ data, loading: false });
+      })
+      .catch(() => {
+        setConservationEfforts({ data: null, loading: false });
+      });
     }
-  }, [terrestrialCellData])
+  }, [cellData])
 
   const handleLayerToggle = (layersPassed, option) => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
