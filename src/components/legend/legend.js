@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { intersection } from 'lodash';
 import Component from './legend-component';
 import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLayerManagerToggle, batchLayerManagerOpacity } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
@@ -48,17 +49,18 @@ const LegendContainer = props => {
     });
     openLayerInfoModalAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND }});
   };
-
-  const spreadGroupLayers = layers => {
+  
+  const spreadGroupLayers = (layers, activeLayers) => {
+    const activeLayersTitles = activeLayers.map(l => l.title);
     return layers.reduce((acc, layerName) => {
-      const layer = LEGEND_GROUPED_LAYERS_GROUPS[layerName] || [layerName];
-      return [...acc, ...layer]
+      const layer = LEGEND_GROUPED_LAYERS_GROUPS[layerName] ? intersection(LEGEND_GROUPED_LAYERS_GROUPS[layerName], activeLayersTitles): [layerName];
+      return layer ? [...acc, ...layer] : acc;
     }, []);
   }
-
+  
   const handleChangeOrder = layers => {
-    const flattenedGroupedLayers = spreadGroupLayers(layers);
     const { activeLayers, changeLayersOrderAnalyticsEvent, changeGlobe } = props;
+    const flattenedGroupedLayers = spreadGroupLayers(layers, activeLayers);
     layerManagerOrder(flattenedGroupedLayers, activeLayers, changeGlobe);
     changeLayersOrderAnalyticsEvent();
   };
