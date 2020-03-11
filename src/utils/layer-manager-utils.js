@@ -3,7 +3,7 @@ import { intersection } from 'lodash';
 import { loadModules } from 'esri-loader';
 import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
-import { DEFAULT_OPACITY } from 'constants/mol-layers-configs';
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
   const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
@@ -27,6 +27,12 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });
+  } else if (category === LAYERS_CATEGORIES.LAND_PRESSURES) {
+    const groupLayer = activeLayers.find(l => l.category === LAYERS_CATEGORIES.LAND_PRESSURES);
+    const groupOpacity = groupLayer && groupLayer.opacity;
+    activeLayers
+      ? callback({ activeLayers: [{ title, category, opacity: groupOpacity || DEFAULT_OPACITY }].concat(activeLayers) })
+      : callback({ activeLayers: [ { title, category, opacity: groupOpacity || DEFAULT_OPACITY }] });
   } else {
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
