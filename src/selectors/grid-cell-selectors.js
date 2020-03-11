@@ -11,14 +11,6 @@ export const getTerrestrialCellData = createSelector(
   }
 );
 
-export const getMarineCellData = createSelector(
-  [selectCellData],
-  cellData => {
-    if (!cellData) return null;
-    return cellData.filter(c => c.CELL_ID);
-  }
-)
-
 export const getTerrestrialHumanPressures = createSelector(
   [selectCellData],
   cellData=> {
