@@ -62,7 +62,6 @@ const DataGlobeComponent = ({
           <Slider />
         </MobileOnly>
         {!isOnMobile && <Switcher />}
-        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
         <ArcgisLayerManager activeLayers={activeLayers} />
         <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
