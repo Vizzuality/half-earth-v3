@@ -46,9 +46,9 @@ const getConservationEfforts = createSelector(
       } else if (current.CELL_ID) {
         conservationData = {
           [current.CELL_ID]: {
-            community: current.RAISG_prop,
-            not_community: current.WDPA_prop,
-            all: current.all_prop
+            community: current.RAISG_prop * 100,
+            not_community: current.WDPA_prop * 100,
+            all: current.all_prop * 100
           }
         }
       }
