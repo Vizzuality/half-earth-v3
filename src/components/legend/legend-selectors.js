@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
-import { legendConfigs } from 'constants/mol-layers-configs';
+import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 import { selectTutorialState } from 'selectors/tutorial-selectors';
@@ -70,23 +70,29 @@ const joinAgricultureTitles = (titles) => {
   return `${trimmedTitles.join(' and ')} agriculture`; 
 }
 
+const setGroupedLayersOpacity = (layers, defaultOpacity) => {
+  return layers.reduce((acc, l) => (l.opacity !== defaultOpacity ? l.opacity : acc), defaultOpacity);
+}
+
 const mergeHumanPressuresIntoOne = layers => {
-  const hasHumanPressuresLayer = layers.find(layer => isLandHumanPressureLayer(layer.title));
-  if (!hasHumanPressuresLayer) {
-    return layers
+  const humanPressuresLayers = layers.filter(layer => isLandHumanPressureLayer(layer.title));
+  if (!humanPressuresLayers.length) {
+    return layers;
   } else {
+    const opacity = setGroupedLayersOpacity(humanPressuresLayers, DEFAULT_OPACITY);
     const noHumanPresuresLayers = layers.filter(layer => !isLandHumanPressureLayer(layer.title));
-    return [...noHumanPresuresLayers, { title: MERGED_LAND_HUMAN_PRESSURES, opacity: 0.6}];
+    return [...noHumanPresuresLayers, { title: MERGED_LAND_HUMAN_PRESSURES, opacity}];
   }
 }
 
 const mergeCommunityIntoOne = layers => {
-  const hasCommunityLayer = layers.find(layer => isCommunityLayer(layer.title));
-  if (!hasCommunityLayer) {
-    return layers
+  const communityLayers = layers.filter(layer => isCommunityLayer(layer.title));
+  if (!communityLayers.length) {
+    return layers;
   } else {
+    const opacity = setGroupedLayersOpacity(communityLayers, DEFAULT_OPACITY);
     const noCommunityLayers = layers.filter(layer => !isCommunityLayer(layer.title));
-    return [...noCommunityLayers, { title: COMMUNITY_AREAS_VECTOR_TILE_LAYER, opacity: 0.6}];
+    return [...noCommunityLayers, { title: COMMUNITY_AREAS_VECTOR_TILE_LAYER, opacity}];
   }
 }
 

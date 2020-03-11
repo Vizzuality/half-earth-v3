@@ -5,7 +5,7 @@ import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLa
 import metadataActions from 'redux_modules/metadata';
 import * as urlActions from 'actions/url-actions';
 import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { VIEW_MODE } from 'constants/google-analytics-constants';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 
 import mapStateToProps from './legend-selectors';
