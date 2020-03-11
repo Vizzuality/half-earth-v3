@@ -10,11 +10,15 @@ export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback,
   const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
   if (areActive) {
     const updatedLayers = layerNamesArray.reduce((acc, title) => {
+      removeLayerAnalyticsEvent({ slug: title });
       return [...acc.filter(l => l.title !== title)];
     }, activeLayers);
     callback({activeLayers: updatedLayers });
   } else {
-    const layersToAdd = layerNamesArray.map(title => ({ title, category, opacity: DEFAULT_OPACITY }));
+    const layersToAdd = layerNamesArray.map(title => {
+      addLayerAnalyticsEvent({ slug: title });
+      return { title, category, opacity: DEFAULT_OPACITY }
+    });
     activeLayers
       ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
       : callback({ activeLayers: layersToAdd });
@@ -27,13 +31,16 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });
+    removeLayerAnalyticsEvent({ slug: title });
   } else if (category === LAYERS_CATEGORIES.LAND_PRESSURES) {
     const groupLayer = activeLayers.find(l => l.category === LAYERS_CATEGORIES.LAND_PRESSURES);
     const groupOpacity = groupLayer && groupLayer.opacity;
+    addLayerAnalyticsEvent({ slug: title })
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: groupOpacity || DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { title, category, opacity: groupOpacity || DEFAULT_OPACITY }] });
   } else {
+    addLayerAnalyticsEvent({ slug: title });
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { title, category, opacity: DEFAULT_OPACITY }] });
@@ -41,6 +48,8 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
 };
 
 export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
+  addLayerAnalyticsEvent({ slug: layerToActivate });
+  removeLayerAnalyticsEvent({ slug: layerToRemove });
   const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.title !== layerToRemove) : activeLayers;
   callback({ activeLayers: [{ title: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
 };
@@ -151,7 +160,7 @@ export const toggleWDPALayer = (activeLayers, option, handleGlobeUpdating, view,
   handleLayerToggle(option.id);
   handleLayerRendered(view, layerToggled, handleGlobeUpdating);
 
-  const isLayerActive = alreadyChecked[option.value];
-  if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
-  else removeLayerAnalyticsEvent({ slug: option.slug });
+  // const isLayerActive = alreadyChecked[option.value];
+  // if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
+  // else removeLayerAnalyticsEvent({ slug: option.slug });
 }

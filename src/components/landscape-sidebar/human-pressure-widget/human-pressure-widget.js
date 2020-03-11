@@ -6,10 +6,8 @@ import mapStateToProps from './human-pressure-selectors';
 // this forces the registration of redux module and sagas
 import 'redux_modules/land-human-encroachment';
 // Constants
-import { LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
 import { GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE } from 'constants/layers-slugs';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
 // Utils
 import { handleLayerCreation } from 'utils/layer-manager-utils';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
@@ -24,8 +22,6 @@ const HumanPressureWidgetContainer = props => {
   const {
     map,
     terrestrialCellData,
-    addLayerAnalyticsEvent,
-    removeLayerAnalyticsEvent,
     activeLayers,
     SET_LAND_PRESSURES_DATA_READY,
     STORE_LAND_PRESSURES_DATA_ERROR,
@@ -66,7 +62,6 @@ const HumanPressureWidgetContainer = props => {
       const layerConfig = layersConfig[option.slug];
       handleLayerCreation(layerConfig, map);
       layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
-      // dispatchLandPressuresLayersAnalyticsEvents(activeLayers, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
   }
 
   return (
