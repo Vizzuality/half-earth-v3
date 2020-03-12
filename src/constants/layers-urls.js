@@ -90,7 +90,6 @@ export const LAYERS_URLS = {
   [FISHES_RICHNESS]: `${bucketUrl}/richness/fishes/${templatePattern}` ,
   // 55 km biodiversity services
   [AMPHIB_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/dfae6e65b8054d469bb3d9a262a6a012/rest/services/Amphibians_Rarity_55km/MapServer` ,
-  // [AMPHIB_RICHNESS]: NOT AVAILABLE https://eowilson.maps.arcgis.com/home/item.html?id=8ec7ccd351974755b523a89e2e003d45,
   [MAMMALS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/c86a668ccf7c49e89dea321bbe5d6838/rest/services/Mammals_Rarity_55km/MapServer` ,
   [MAMMALS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/da62311c8b354dfe82975cbfc83ca10c/rest/services/Mammals_Richness_55km/MapServer` ,
   [BIRDS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/319076f4e6484084a6b61d2b5174fdde/rest/services/Birds_Rarity_55km/MapServer` ,
@@ -99,22 +98,11 @@ export const LAYERS_URLS = {
   [CACTI_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/1620d2b2e23e4722bd405f95cc49c0c2/rest/services/Cacti_Richness_55km/MapServer` ,
   [CONIFERS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/e931b9d4c3194dcdbc96bf51c530163e/rest/services/Conifers_Rarity_55km/MapServer` ,
   [CONIFERS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/ac39f4e35750448d93464d4807e3ac3f/rest/services/Conifers_Richness_55km/MapServer` ,
-  // [REPTILES_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/857da983a2a54a2fa6516059501547ac/rest/services/Reptiles_Rarity_55km/MapServer` ,
-  // [REPTILES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/fc2ad4d2955b446687afcf545cdef135/rest/services/Reptiles_Richness/MapServer` ,
 
   // 110 km biodiversity services (DEPRECATED)
-  // [AMPHIB_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/ad01787b2880446c8ed7acb75735fcba/rest/services/amphibians_rarity/MapServer` ,
   [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/58e9d41955c74788bac974a48540ed23/rest/services/amphibians_richness/MapServer` ,
-  // [MAMMALS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/31951614b11c472f8e327971008d23b2/rest/services/mammals_rarity/MapServer` ,
-  // [MAMMALS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/11f7eef1d863487091afeade6ed6d918/rest/services/mammals_richness/MapServer` ,
-  // [BIRDS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/bf99f1090e2b4bf0853046740fda247a/rest/services/birds_rarity/MapServer` ,
-  // [BIRDS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/68ce2c44f8884a12b6908f2a740e87ae/rest/services/birds_richness/MapServer` ,
-  [ALL_TAXA_RARITY]: `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Terrestrial_Species_Richness_and_Rarity_Patterns_for_Select_Taxa/FeatureServer` ,
-  [ALL_TAXA_RICHNESS]: `https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Terrestrial_Species_Richness_and_Rarity_Patterns_for_Select_Taxa/FeatureServer` ,
+  [ALL_TAXA_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/1ee94bc415424bde91750ce703b2d8d6/rest/services/all_rarity/MapServer` ,
+  [ALL_TAXA_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/55838e61c7854915bb62238f2f02710f/rest/services/all_richness/MapServer` ,
   [TURTLES_RARITY]: `${bucketUrl}/rarity/turtles/${templatePattern}` ,
   [TURTLES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/c201113280834a9ea7b0a15639e5aaa1/rest/services/turtles_richness/MapServer` ,
-  // [CACTI_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/87ba75119feb4ddba8f2eff9f8cbf84c/rest/services/cacti_rarity/MapServer` ,
-  // [CACTI_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/ea83c6a422c64614b3b8e129bd454416/rest/services/cati_richness/MapServer` ,
-  // [CONIFERS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/853e83b25f77402981e5c83ad43a2bc3/rest/services/conifers_rarity/MapServer` ,
-  // [CONIFERS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/a7355a715e09458caabdcc904b02da36/rest/services/conifers_richness/MapServer` ,
-}
+  }
