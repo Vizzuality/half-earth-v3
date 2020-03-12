@@ -448,7 +448,7 @@ export const layersConfig = {
   [ALL_TAXA_RARITY]: {
     title: ALL_TAXA_RARITY,
     slug: ALL_TAXA_RARITY,
-    type: LAYER_TYPES.FEATURE_LAYER,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[ALL_TAXA_RARITY],
     bbox: null
   },
@@ -503,6 +503,36 @@ export const layersConfig = {
   },
 }
 
+const getLegendGradient = (gradientSteps, lowValue, highValue) => {
+  const stepsLength = gradientSteps.length;
+  return gradientSteps.map((color, stepIndex) => ({
+    color,
+    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
+  }))
+}
+
+const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
+  if (stepIndex === 0) {
+    return lowValue;
+  } else if (stepIndex === stepsLength -1) {
+    return highValue;
+  } else {
+    return '';
+  }
+}
+
+export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
+  '#0664F6',
+  '#2172DB',
+  '#3D80BF',
+  '#588EA4',
+  '#749C89',
+  '#8FAB6D',
+  '#ABB952',
+  '#C6C737',
+  '#E2D51B',
+  "#FDE300"
+]
 
 export const legendConfigs = {
   // Fishing activities
@@ -761,422 +791,52 @@ export const legendConfigs = {
   // South Africa
   'amphib-rarity-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian regional rarity"
   },
   'amphib-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "25 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '25 species'),
     title: "Amphibian regional richness"
   },
   'dragonflies-rare-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    },
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Dragonflies rarity"
   },
   'dragonflies-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "3"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "68 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '3', '68 species'),
     title: "Dragonflies richness"
   },
   'mammals-rare-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Mammals regional rarity"
   },
   'mammals-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "49 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '49 species'),
     title: "Mammals regional richness"
   },
   'birds-rare-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Birds regional rarity"
   },
   'birds-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "375"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '375 species'),
     title: "Birds regional richness"
   },
   'restio-rare-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Restio regional rarity"
   },
   'restio-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "1"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "166 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '166 species'),
     title: "Restio regional richness"
   },
   'protea-rare-sa': {
@@ -1223,298 +883,39 @@ export const legendConfigs = {
   },
   'protea-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "68 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '68 species'),
     title: "Protea regional richness"
   },
   'reptiles-rare-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Reptiles regional rarity"
   },
   'reptiles-rich-sa': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "57 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '57 species'),
     title: "Reptiles regional richness"
   },
   // Hummingbirds
   'hummingbirds-rich': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "1"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "92 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '92 species'),
     title: "Hummingbirds richness"
   },
   'hummingbirds-rare': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Hummingbirds rarity"
   },
   // Global data
   'mammals-rare': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Mammals rarity"
   },
   'mammals-rich': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "225 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '225 species'),
     title: "Mammals richness"
   },
   'fishes-rarity': {
@@ -1603,506 +1004,62 @@ export const legendConfigs = {
   },
   'conifers-rarity': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Conifers rarity"
   },
   'conifers-rich': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "49 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '49 species'),
     title: "Conifers richness"
   },
   'cacti-rarity': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Cacti rarity"
   },
   'cacti-richness': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "93 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '93 species'),
     title: "Cacti richness"
   },
   'amphib-rarity': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian rarity"
   },
   'amphib-rich': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "180 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '180 species'),
     title: "Amphibian richness"
   },
   'turtles-rich': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "22 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '22 species'),
     title: "Turtle richness"
   },
   'turtles-rare': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Turtle rarity"
   },
   'birds-rarity': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Birds rarity"
   },
   'birds-rich': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "0"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "1,010 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '1,010 species'),
     title: "Birds richness"
   },
   'all-taxa-rarity': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "All groups rarity"
   },
   'all-taxa-richness': {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "1"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "3,469 species"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '3,469 species'),
     title: "All groups richness"
   }
 }
