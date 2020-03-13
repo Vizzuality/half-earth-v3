@@ -37,12 +37,12 @@ import {
   BIRDS_RICHNESS,
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
-  TURTLES_RARITY,
-  TURTLES_RICHNESS,
   CACTI_RARITY,
   CACTI_RICHNESS,
   CONIFERS_RARITY,
   CONIFERS_RICHNESS,
+  REPTILES_RARITY,
+  REPTILES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS
 } from 'constants/layers-slugs'
@@ -70,6 +70,7 @@ export const LAYERS_URLS = {
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ConsProp/FeatureServer',
   [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/TerrestrialVertebrateSpeciesSHP/FeatureServer',
   [LAND_HUMAN_PRESSURES_IMAGE_LAYER]: 'https://geoxc-imagery.bd.esri.com/arcgis/rest/services/MOL/Human_Impact/ImageServer',
+  // REGIONAL 1km BIODIVERSITY
   [SA_AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Amphibians_of_Southern_Africa/MapServer` ,
   [SA_AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Amphibians_of_Southern_Africa/MapServer` ,
   [SA_DRAGONFLIES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Dragonflies_of_Southern_Africa/MapServer` ,
@@ -82,12 +83,10 @@ export const LAYERS_URLS = {
   [SA_RESTIO_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Restio_of_Southern_Africa/MapServer` ,
   [SA_PROTEA_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Protea_of_Southern_Africa/MapServer` ,
   [SA_PROTEA_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Protea_of_Southern_Africa/MapServer` ,
-  [SA_REPTILES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Reptiles_of_Southern_Africa/MapServer` ,
+  [SA_REPTILES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Reptiles_of_Southern_Africa/MapServer` ,
   [SA_REPTILES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Reptiles_of_Southern_Africa/MapServer` ,
   [HUMMINGBIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Species_Rarity_Patterns_for_Hummingbirds/MapServer` ,
   [HUMMINGBIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Species_Richness_Patterns_for_Hummingbirds/MapServer`,
-  [FISHES_RARITY]: `${bucketUrl}/rarity/fishes/${templatePattern}` ,
-  [FISHES_RICHNESS]: `${bucketUrl}/richness/fishes/${templatePattern}` ,
   // 55 km biodiversity services
   [AMPHIB_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/dfae6e65b8054d469bb3d9a262a6a012/rest/services/Amphibians_Rarity_55km/MapServer` ,
   [MAMMALS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/c86a668ccf7c49e89dea321bbe5d6838/rest/services/Mammals_Rarity_55km/MapServer` ,
@@ -98,11 +97,13 @@ export const LAYERS_URLS = {
   [CACTI_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/1620d2b2e23e4722bd405f95cc49c0c2/rest/services/Cacti_Richness_55km/MapServer` ,
   [CONIFERS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/e931b9d4c3194dcdbc96bf51c530163e/rest/services/Conifers_Rarity_55km/MapServer` ,
   [CONIFERS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/ac39f4e35750448d93464d4807e3ac3f/rest/services/Conifers_Richness_55km/MapServer` ,
+  [REPTILES_RARITY]: 'https://utility.arcgis.com/usrsvcs/servers/857da983a2a54a2fa6516059501547ac/rest/services/Reptiles_Rarity_55km/MapServer' ,
+  [REPTILES_RICHNESS]: 'https://utility.arcgis.com/usrsvcs/servers/fc2ad4d2955b446687afcf545cdef135/rest/services/Reptiles_Richness/MapServer' ,
 
   // 110 km biodiversity services (DEPRECATED)
   [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/58e9d41955c74788bac974a48540ed23/rest/services/amphibians_richness/MapServer` ,
   [ALL_TAXA_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/1ee94bc415424bde91750ce703b2d8d6/rest/services/all_rarity/MapServer` ,
   [ALL_TAXA_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/55838e61c7854915bb62238f2f02710f/rest/services/all_richness/MapServer` ,
-  [TURTLES_RARITY]: `${bucketUrl}/rarity/turtles/${templatePattern}` ,
-  [TURTLES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/c201113280834a9ea7b0a15639e5aaa1/rest/services/turtles_richness/MapServer` ,
+  [FISHES_RARITY]: `${bucketUrl}/rarity/fishes/${templatePattern}` ,
+  [FISHES_RICHNESS]: `${bucketUrl}/richness/fishes/${templatePattern}` ,
   }

@@ -59,12 +59,12 @@ export const BIRDS_RARITY = 'birds-rarity';
 export const BIRDS_RICHNESS = 'birds-rich';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
-export const TURTLES_RARITY = 'turtles-rare';
-export const TURTLES_RICHNESS = 'turtles-rich';
 export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
 export const CONIFERS_RICHNESS = 'conifers-rich';
+export const REPTILES_RARITY = 'reptiles-rarity';
+export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
