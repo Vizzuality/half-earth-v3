@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
+import { getTerrestrialCellData, getMarineCellData } from 'selectors/grid-cell-selectors';
 import { format, precisionPrefix, formatPrefix } from 'd3-format';
 import { uniqBy } from "lodash";
 import IUCNList from 'constants/iucn-list';
@@ -98,6 +98,7 @@ const getSelectedSpeciesData = createSelector([getData, getSelectedSpeciesName],
 export default createStructuredSelector({
   data: getData,
   terrestrialCellData: getTerrestrialCellData,
+  marineCellData: getMarineCellData,
   selectedSpeciesData: getSelectedSpeciesData,
   loading: getSpeciesDataLoading
 }); 
