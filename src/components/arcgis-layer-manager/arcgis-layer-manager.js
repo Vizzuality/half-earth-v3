@@ -11,12 +11,8 @@ const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
   useEffect(() => {
     items.forEach(sceneLayer => {
       const isVisible = activeLayers.some(activeLayer => activeLayer.title === sceneLayer.title)
-      if (isVisible) {
-        sceneLayer.visible = true;
-        setOpacity(sceneLayer, activeLayers);
-      } else {
-        sceneLayer.visible = false;
-      }
+      sceneLayer.visible = isVisible;
+      if (isVisible) { setOpacity(sceneLayer, activeLayers); }
       customFunctions && customFunctions.forEach(fn => fn({ layer: sceneLayer, isVisible }))
     })
     setLayerOrder(activeLayers, map);
