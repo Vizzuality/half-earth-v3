@@ -70,9 +70,11 @@ const joinAgricultureTitles = (titles) => {
   const nonAgricultureTitles = titles.filter(title => !title.toLowerCase().endsWith('agriculture'))
   const agricultureTitles = titles.filter(title => title.toLowerCase().endsWith('agriculture'));
   const trimmedTitles = agricultureTitles.map(title => title.split(" ")[0]);
-  const formattedAgricultureTitles = `${trimmedTitles.join(' and ')} agriculture`
-
-  return `${[...nonAgricultureTitles, formattedAgricultureTitles].join(' and ')}`;
+  const formattedAgricultureTitles = `${trimmedTitles.join(' and ')} agriculture`;
+  const formattedNonAgricultureTitles = `${nonAgricultureTitles.join(', ')}`;
+  
+  if(!formattedNonAgricultureTitles) return formattedAgricultureTitles;
+  return `${[formattedNonAgricultureTitles, formattedAgricultureTitles].join(', ')}`;
 }
 
 const setGroupedLayersOpacity = (layers, defaultOpacity) => {
