@@ -1,24 +1,23 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER, RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 const getActiveLayers = (state, props) => props.activeLayers;
-const getRasters = (state, props) => props.rasters || {};
 
 const getCountedActiveLayers = createSelector(
-  [getActiveLayers, getRasters],
-  (activeLayers, rasters) => {
+  [getActiveLayers],
+  (activeLayers) => {
     const biodiversityLayers = activeLayers ? activeLayers.filter(({ category }) => category === 'Biodiversity').length : 0;
+    const humanPressureLayer = activeLayers ? activeLayers.filter(({ category }) => category === 'Human pressures').length : 0;
     const protectionLayers = activeLayers ? activeLayers.filter(({ category, title }) => {
       // we have to filter 'RAISIG' layer because activating 'Community-based' checbox selects two layers on the globe: "protected_areas_vector_tile_layer" and "RAISIG_areas_vector_tile_layer"
       return category === 'Existing protection' && title !== RAISIG_AREAS_VECTOR_TILE_LAYER
-    }).length : 0; 
-    const humanPressureLayer = activeLayers ? activeLayers.filter(({ title }) => title === LAND_HUMAN_PRESSURES_IMAGE_LAYER).length : 0;
-    const humanPressureRasters = humanPressureLayer && Object.keys(rasters).filter(key => rasters[key]).length;
+    }).length : 0;
 
     return {
-      'Biodiversity': biodiversityLayers,
-      'Existing protection': protectionLayers,
-      'Human pressures': humanPressureRasters
+      [LAYERS_CATEGORIES.BIODIVERSITY]: biodiversityLayers,
+      [LAYERS_CATEGORIES.PROTECTION]: protectionLayers,
+      [LAYERS_CATEGORIES.LAND_PRESSURES]: humanPressureLayer
     };
   }
 );

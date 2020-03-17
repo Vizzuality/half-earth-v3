@@ -38,7 +38,6 @@ const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.a
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
 
-export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 
 export default createStructuredSelector({
   isMapsList: getMapsListActive,
@@ -53,7 +52,6 @@ export default createStructuredSelector({
   selectedSidebar: getSelectedSidebar,
   selectedFeaturedPlace: getSelectedFeaturedPlace,
   featuredMapPlaces: selectFeaturedMapPlaces,
-  rasters: getRasters,
   isGlobeUpdating: getGlobeUpdating,
   selectedSpecies: getSelectedSpecies,
   isHEModalOpen: getHalfEarthModalOpen,
