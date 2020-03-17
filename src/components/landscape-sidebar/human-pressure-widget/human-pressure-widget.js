@@ -57,10 +57,10 @@ const HumanPressureWidgetContainer = props => {
   }, [terrestrialCellData])
 
 
-    const toggleLayer = (rasters, option) => {
+    const toggleLayer = async (rasters, option) => {
       const { changeGlobe } = props;
       const layerConfig = layersConfig[option.slug];
-      handleLayerCreation(layerConfig, map);
+      await handleLayerCreation(layerConfig, map);
       layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 

@@ -80,17 +80,17 @@ const ConservationEffortsWidget = (props) => {
     }
   }, [terrestrialCellData])
 
-  const handleLayerToggle = (layersPassed, option) => {
+  const handleLayerToggle = async (layersPassed, option) => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
     if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
-      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(layerName => {
+      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(async layerName => {
         const layerConfig = layersConfig[layerName];
-        handleLayerCreation(layerConfig, map);
+        await handleLayerCreation(layerConfig, map);
       })
       batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     } else {
       const layer = layersConfig[option.title];
-      handleLayerCreation(layer, map);
+      await handleLayerCreation(layer, map);
       layerManagerToggle(layer.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
       removeLayerAnalyticsEvent({ slug: layer.slug });
     }

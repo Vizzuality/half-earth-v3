@@ -12,9 +12,9 @@ import MultipleActiveLayers from 'components/multiple-active-layers';
 const HumanImpactLayers = ({ alreadyChecked, map, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
 
   
-  const toggleLayer = (rasters, option) => {
+  const toggleLayer = async (rasters, option) => {
     const layerConfig = layersConfig[option.slug];
-    handleLayerCreation(layerConfig, map);
+    await handleLayerCreation(layerConfig, map);
     layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 
