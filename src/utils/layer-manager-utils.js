@@ -1,7 +1,6 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { intersection } from 'lodash';
 import { loadModules } from 'esri-loader';
-import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -127,40 +126,3 @@ export const handleLayerCreation = async (layerConfig, map) => {
   }
 }
 
-export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
-  view.whenLayerView(layer).then(mapLayerView => {
-    mapLayerView.watch("updating", updating => {
-      if(!updating) { handleGlobeUpdating(false) }
-    })
-  })
-}
-
-export const getToggledLayer = (layers, option) => {
-  return layers.reduce((wantedLayer, currentLayer) => {
-    if(wantedLayer) return wantedLayer;
-    if(currentLayer.title === option.id) return currentLayer;
-    if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
-    return wantedLayer;
-  }, null)
-}
-
-export const toggleWDPALayer = (activeLayers, option, handleGlobeUpdating, view, map, handleLayerToggle) => {
-  const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
-
-  const alreadyChecked = WDPALayers.reduce((acc, option) => ({
-    ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title)
-  }), {});
-  
-  const layerToggled = getToggledLayer(map.layers.items, option);
-  
-  if (layerNotRendered) {
-    handleGlobeUpdating(true);
-  }
-
-  handleLayerToggle(option.id);
-  handleLayerRendered(view, layerToggled, handleGlobeUpdating);
-
-  // const isLayerActive = alreadyChecked[option.value];
-  // if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
-  // else removeLayerAnalyticsEvent({ slug: option.slug });
-}
