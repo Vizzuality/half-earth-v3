@@ -1,4 +1,5 @@
 import {
+  COUNTRIES_DATA_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
@@ -55,6 +56,7 @@ export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/
 
 
 export const LAYERS_URLS = {
+  [COUNTRIES_DATA_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_prop/FeatureServer',
   [LANDSCAPE_FEATURES_LABELS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers/FeatureServer',
   [CITIES_LABELS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/CityLabels/FeatureServer',
   [VIBRANT_BASEMAP_LAYER]: 'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Vibrant/MapServer',

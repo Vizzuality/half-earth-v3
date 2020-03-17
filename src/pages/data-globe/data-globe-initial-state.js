@@ -3,6 +3,7 @@ import {
   GRID_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
+  COUNTRIES_DATA_FEATURE_LAYER,
   ALL_TAXA_RARITY
 } from 'constants/layers-slugs';
 
@@ -15,6 +16,7 @@ export default {
       { title: GRID_LAYER }, 
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: CITIES_LABELS_LAYER },
+      { title: COUNTRIES_DATA_FEATURE_LAYER }, 
       { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
     zoom: 1,
