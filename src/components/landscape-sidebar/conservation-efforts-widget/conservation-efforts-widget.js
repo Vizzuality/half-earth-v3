@@ -39,7 +39,7 @@ const ConservationEffortsWidget = (props) => {
         const consPropLayer = new FeatureLayer({
           url: layersConfig[GRID_CELLS_PROTECTED_AREAS_PERCENTAGE].url
         });
-        setConservationPropsLayer(consPropLayer)
+        setConservationPropsLayer(consPropLayer);
       });
     }
   }, []);
@@ -72,7 +72,7 @@ const ConservationEffortsWidget = (props) => {
   useEffect(() => {
     if (terrestrialCellData && queryParams) {
       setConservationEfforts({ data: null, loading: true });
-      queryParams.where = `CELL_ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
+      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.ID).join(', ')})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
