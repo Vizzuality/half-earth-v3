@@ -30,7 +30,9 @@ export const SIGNED_PLEDGE_GRAPHIC_LAYER = 'signed_pledges_graphic_layer'
 export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer';
 // human settlements labels
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
-
+// layer with countries data and borders geometries
+export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer'
+export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer'
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
 // South Africa layers
