@@ -11,7 +11,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 
 const actions = { ...setSpeciesActions, ...urlActions };
 
-const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, marineCellData, data, changeGlobe, selectedSpeciesData, loading }) => {
+const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe, selectedSpeciesData, loading }) => {
   const [speciesLayer, setLayer] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -46,16 +46,15 @@ const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, marineCellData, da
     updateSelectedSpecies(newIndex);
   }
 
-  const querySpeciesData = (terrestrialCells, marineCells) => {
+  const querySpeciesData = (terrestrialCells) => {
     setSpeciesData({ data: null, loading: true });
-    const cellData = [...terrestrialCells, ...marineCells];
     const query = speciesLayer.createQuery();
     query.outFields = [ "HBWID", "species_name", "taxa", "status", "RANGE_AREA_KM2", "PROP_RANGE_PROT", "url_sp", "common_name", "iucn_cat", "raw_name"];
-    query.where = `HBWID IN (${cellData.map(i => i.ID || i.CELL_ID).join(', ')})`;
+    query.where = `HBWID IN (${terrestrialCells.map(i => i.ID).join(', ')})`;
     speciesLayer.queryFeatures(query).then(function(results){
       const { features } = results;
       setSpeciesData({ data: features.map(c => c.attributes), loading: false });
-    });
+    }).catch(err => console.error(err.message));
   };
 
   const fetchSpeciesLayer = () => {
@@ -73,14 +72,14 @@ const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, marineCellData, da
   }, []);
  
   useEffect(() => {
-    if (speciesLayer && (terrestrialCellData || marineCellData)) {
-      if(terrestrialCellData.length || marineCellData.length) {
-        querySpeciesData(terrestrialCellData, marineCellData);
+    if (speciesLayer && terrestrialCellData) {
+      if(terrestrialCellData.length) {
+        querySpeciesData(terrestrialCellData);
       } else {
         setSpeciesData({ data: null })
       }
     }
-  }, [speciesLayer, terrestrialCellData, marineCellData])
+  }, [speciesLayer, terrestrialCellData])
 
   useEffect(() => {
     if(data) {
