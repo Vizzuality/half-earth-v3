@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
+import { getTerrestrialCellData, getMarineCellData } from 'selectors/grid-cell-selectors';
 import { format, precisionPrefix, formatPrefix } from 'd3-format';
 import { uniqBy } from "lodash";
 import IUCNList from 'constants/iucn-list';
@@ -39,7 +39,7 @@ const getSelectedSpeciesName = (state, props) =>
 
 const getUniqeSpeciesData= createSelector(getSpeciesData, speciesData => {
   if (!speciesData) return [];
-  return uniqBy(speciesData, 'scntfcn');
+  return uniqBy(speciesData, 'species_name');
 })
 
 const calculateChartPosition = (angle, propRange) => {
@@ -63,15 +63,15 @@ const getChartData = (speciesData, taxa, startAngle)  => {
     const angle = startAngle + angleOffset + angleOffset * i;
     return {
       id: s.HBWID,
-      name: s.cmmn_nm !== " " ? s.cmmn_nm : s.scntfcn,
-      scientificName: s.scntfcn,
-      rangeArea: formatRangeArea(s.RANGE_A),
-      proportion: format(".2%")(s.PROP_RA),
+      name: s.common_name !== " " ? s.common_name : s.species_name,
+      scientificName: s.species_name,
+      rangeArea: formatRangeArea(s.RANGE_AREA_KM2),
+      proportion: format(".2%")(s.PROP_RANGE_PROT),
       taxa: s.taxa,
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,
-      pointCoordinates: calculateChartPosition(angle, s.PROP_RA),
-      color: getDotColor(s.PROP_RA),
-      iucnCategory: IUCNList[s.iucn_ct] || '-'
+      pointCoordinates: calculateChartPosition(angle, s.PROP_RANGE_PROT),
+      color: getDotColor(s.PROP_RANGE_PROT),
+      iucnCategory: IUCNList[s.iucn_cat] || '-'
     }
   });
   return chartData;
@@ -79,10 +79,10 @@ const getChartData = (speciesData, taxa, startAngle)  => {
 
 const getData = createSelector(getUniqeSpeciesData, speciesData => {
   if (!speciesData) return null;
-  const birdsData =  getChartData(speciesData, 'birds', 0);
-  const reptilesData = getChartData(speciesData, 'reptiles', 90);
-  const mammalsData = getChartData(speciesData, 'mammals', 180)
-  const amphibiansData = getChartData(speciesData, 'amphibians', 270);
+  const birdsData = getChartData(speciesData, 'bird', 0);
+  const reptilesData = getChartData(speciesData, 'reptile', 90);
+  const mammalsData = getChartData(speciesData, 'mammal', 180)
+  const amphibiansData = getChartData(speciesData, 'amphibian', 270);
   const speciesChartData = [...birdsData, ...reptilesData, ...mammalsData, ...amphibiansData];
   return speciesChartData.length ? speciesChartData : null;
 });
@@ -98,6 +98,7 @@ const getSelectedSpeciesData = createSelector([getData, getSelectedSpeciesName],
 export default createStructuredSelector({
   data: getData,
   terrestrialCellData: getTerrestrialCellData,
+  marineCellData: getMarineCellData,
   selectedSpeciesData: getSelectedSpeciesData,
   loading: getSpeciesDataLoading
 }); 

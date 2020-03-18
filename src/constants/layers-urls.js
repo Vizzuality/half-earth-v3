@@ -72,7 +72,7 @@ export const LAYERS_URLS = {
   [RAISIG_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/RAISG_Tls/FeatureServer',
   [RAISIG_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Territorios_Ind%C3%ADgenas_RAISG/VectorTileServer',
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/grid_55km_prot_prop/FeatureServer',
-  [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/TerrestrialVertebrateSpeciesSHP/FeatureServer',
+  [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_data_55km/FeatureServer',
   [GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/human_pressure_55km/FeatureServer',
   [URBAN_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Urban_levels_1_to_6/MapServer',
   [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Irrigated_levels_1_to_6/MapServer',
