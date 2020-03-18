@@ -1,4 +1,6 @@
 import {
+  COUNTRIES_LABELS_FEATURE_LAYER,
+  COUNTRIES_DATA_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
@@ -60,6 +62,8 @@ export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH
 export const LAYERS_URLS = {
   [PLEDGES_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Educator_Ambassadors/FeatureServer',
+  [COUNTRIES_LABELS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',
+  [COUNTRIES_DATA_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',
   [LANDSCAPE_FEATURES_LABELS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers/FeatureServer',
   [CITIES_LABELS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/CityLabels/FeatureServer',
   [VIBRANT_BASEMAP_LAYER]: 'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Vibrant/MapServer',
