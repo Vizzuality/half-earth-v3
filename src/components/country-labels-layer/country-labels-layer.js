@@ -6,18 +6,20 @@ import Component from './country-labels-layer-component';
 
 
 const CountryLabelsLayerContainer = props => {
-  const { view, changeGlobe } = props;
+  const { view, changeGlobe, countryISO } = props;
 
   const getLabelsLayer = (results) => {
     if (!results.length) return null;
     return results.find(result => result.graphic.layer.id === COUNTRIES_LABELS_FEATURE_LAYER)
   }
-
+  
   const onClickHandler = labelsLayer => {
     if (labelsLayer) {
       const { graphic } = labelsLayer;
       const { attributes } = graphic;
-      changeGlobe({countryISO: attributes.GID_0});
+      if (!countryISO || countryISO !== attributes.GID_0) {
+        changeGlobe({countryISO: attributes.GID_0});
+      }
     }
   }
 
@@ -48,11 +50,11 @@ const onLabelEvent = (event) => {
 
 
   useEffect(() => {
-    const eventHandler = view.on("click", onLabelEvent)
+    const eventHandler = view.on("click", onLabelEvent);
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
-  }, [])
+  }, [countryISO])
 
   useEffect(() => {
     const eventHandler = view.on("pointer-move", onLabelEvent);
