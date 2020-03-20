@@ -25,6 +25,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
+const CountryBorderLayer = loadable(() => import('components/country-border-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -67,7 +68,7 @@ const DataGlobeComponent = ({
         </MobileOnly>
         {!isOnMobile && <Switcher />}
         <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
+        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
         <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
         <DataGlobalSidebar
@@ -101,6 +102,7 @@ const DataGlobeComponent = ({
           selectedSpecies={selectedSpecies}
         />
         <CountryLabelsLayer countryISO={countryISO}/>
+        {countryISO && <CountryBorderLayer countryISO={countryISO}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
