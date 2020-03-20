@@ -3,7 +3,7 @@ import { isEqual, flattenDeep } from 'lodash';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 
 const { fillOpacity, outlineOpacity, outlineWidth, colorRGB } = gridCellDefaultStyles;
-export const createGridCellGraphic = (Graphic) => {
+export const createGraphic = (Graphic) => {
   return new Graphic({
     symbol: {
       type: "polygon-3d",
@@ -18,14 +18,6 @@ export const createGridCellGraphic = (Graphic) => {
         }
       ]
     }
-  });
-}
-
-export const createGraphicLayer = (GraphicsLayer, graphic) => {
-  return new GraphicsLayer({
-    id: "grid_layer",
-    title: "grid_layer",
-    graphics: [graphic]
   });
 }
 
@@ -53,7 +45,7 @@ export const calculateAggregatedCells = (features) => {
     })
 }
 
-export const createCellGeometry = (gridCell) => {
+export const createPolygonGeometry = (gridCell) => {
   return loadModules(["esri/geometry/Polygon"])
     .then(([Polygon]) => {
       return new Polygon(gridCell);
