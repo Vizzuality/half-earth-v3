@@ -43,8 +43,9 @@ const DataGlobeComponent = ({
   handleGlobeUpdating,
   activeOption,
   isHEModalOpen,
+  countryISO
 }) => {
-
+  
   const isOnMobile = isMobile();
 
   return (
@@ -90,7 +91,7 @@ const DataGlobeComponent = ({
           activeLayers={activeLayers}
           selectedSpecies={selectedSpecies}
         />
-        <CountryLabelsLayer />
+        <CountryLabelsLayer countryISO={countryISO}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
