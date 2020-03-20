@@ -1,55 +1,70 @@
-import { useEffect } from 'react';
-import { loadModules } from 'esri-loader';
-import { handleLayerCreation } from 'utils/layer-manager-utils';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import * as urlActions from 'actions/url-actions';
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
-import { layersConfig } from 'constants/mol-layers-configs';
+import Component from './country-labels-layer-component';
 
 
-const LabelsLayer = props => {
-  const { map } = props;
+const CountryLabelsLayerContainer = props => {
+  const { view, changeGlobe, countryISO } = props;
+
+  const getLabelsLayer = (results) => {
+    if (!results.length) return null;
+    return results.find(result => result.graphic.layer.id === COUNTRIES_LABELS_FEATURE_LAYER)
+  }
+  
+  const onClickHandler = labelsLayer => {
+    if (labelsLayer) {
+      const { graphic } = labelsLayer;
+      const { attributes } = graphic;
+      if (!countryISO || countryISO !== attributes.GID_0) {
+        changeGlobe({countryISO: attributes.GID_0});
+      }
+    }
+  }
+
+  const onHoverHandler = labelsLayer => {
+    if (labelsLayer) {
+      document.body.style.cursor = 'pointer';
+    } else {
+      document.body.style.cursor = 'default';
+    }
+  }
+
+const onLabelEvent = (event) => {
+  event.stopPropagation();
+  view.hitTest(event).then( response => {
+    const { results } = response;
+    const labelsLayer = getLabelsLayer(results);
+    switch (event.type) {
+      case 'pointer-move':
+        onHoverHandler(labelsLayer);
+        break;
+      case 'click':
+        onClickHandler(labelsLayer);
+        break;
+      default: return;
+    }
+  })
+}
+
 
   useEffect(() => {
-    loadModules(["esri/layers/support/LabelClass"])
-    .then(([LabelClass]) => {
-      const labelingInfo = new LabelClass({
-        labelPlacement: 'center-along',
-        labelExpressionInfo: {
-          expression: "$feature.NAME_0"
-        },
-        symbol: {
-          type: "text",
-          color: [213,207,202],
-          font: {
-            family: "EB Garamond",
-            size: 13,
-            weight: "bold"
-          },
-          haloColor: [0, 0, 0, 255],
-          haloSize: 1
-        }
-      });
-        const layerConfig = layersConfig[COUNTRIES_LABELS_FEATURE_LAYER];
-        handleLayerCreation(layerConfig, map)
-          .then(layer => {
-            layer.opacity = 0.7;
-            layer.visible = true;
-            layer.labelsVisible = true;
-            layer.minScale = 35000000;
-            layer.maxScale = 35000;
-            layer.labelingInfo = [labelingInfo];
-            layer.renderer = {
-              type: "simple",  // autocasts as new SimpleRenderer()
-              symbol: {
-                type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-                size: 0
-              }
-            };
-          });
-    })
+    const eventHandler = view.on("click", onLabelEvent);
+    return function cleanUp() {
+      eventHandler && eventHandler.remove();
+    }
+  }, [countryISO])
+
+  useEffect(() => {
+    const eventHandler = view.on("pointer-move", onLabelEvent);
+    return function cleanUp() {
+      eventHandler && eventHandler.remove();
+    }
   }, [])
 
 
-  return null
+  return <Component {...props}/>
 }
 
-export default LabelsLayer;
+export default connect(null, urlActions)(CountryLabelsLayerContainer);
