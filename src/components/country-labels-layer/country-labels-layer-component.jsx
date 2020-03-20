@@ -11,7 +11,6 @@ const CountryLabelsLayerComponent = props => {
     loadModules(["esri/layers/support/LabelClass"])
     .then(([LabelClass]) => {
       const labelingInfo = new LabelClass({
-        labelPlacement: 'center-along',
         labelExpressionInfo: {
           expression: "$feature.NAME_0"
         },
