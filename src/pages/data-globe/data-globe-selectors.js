@@ -37,6 +37,8 @@ const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
+const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
+
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -55,5 +57,6 @@ export default createStructuredSelector({
   selectedSpecies: getSelectedSpecies,
   isHEModalOpen: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
-  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
+  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
+  sceneMode: getSceneMode
 })
