@@ -63,18 +63,6 @@ const SceneDoubleComponent = ({ sceneId, children, loaderOptions, sceneSettings,
             viewingMode: 'local',
             clippingArea: localExtent,
             extent: localExtent,
-            // qualityProfile: "high",
-            // environment: {
-            //   atmosphereEnabled: false,
-            //   background: {
-            //     type: "color",
-            //     color: [0,10,16]
-            //   },
-            //   alphaCompositingEnabled: true,
-            //   lighting: {
-            //     ambientOcclusionEnabled: true
-            //   },
-            // },
           });
           setViewLocal(_viewLocal);
         })
@@ -91,35 +79,27 @@ const SceneDoubleComponent = ({ sceneId, children, loaderOptions, sceneSettings,
     }
   }, [map, view, viewLocal]);
 
-
-  if (loadState === 'loading') {
-    return (
+  return (
     <>
-      <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width:'0%', height:'0%'}} />
-      <Spinner spinnerWithOverlay initialLoading display={spinner}/>
-    </>
-    )
-  } else if (loadState === 'loaded') {
-    return (
-      <>
-        <div style={{ height: '100%', position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'global' ? 'initial' : 'none'}}>
-          <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width: '100%', height:'100%', ...style}}>
-            {
+      {loadState === 'loading' && <Spinner spinnerWithOverlay initialLoading display={spinner}/>}
+      <div style={{ height: '100%', position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'global' ? 'initial' : 'none'}}>
+        <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width: '100%', height:'100%', ...style}}>
+          {loadState === 'loaded' && 
             ReactDOM.createPortal(
               React.Children.map(children || null, (child, i) => {
                 return child && <child.type key={i} map={map} view={view} {...child.props}/>;
               })
               ,
-              document.getElementById("root"))
-            }
-          </div>
+              document.getElementById("root")
+            )
+          }
         </div>
-        <div style={{ height: '100%',  position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'local' ? 'initial' : 'none'}}>
-          <div id={`scene-local-container-${sceneId}`} className={styles.sceneContainer} style={{width:'100%', height:'100%', ...style}}></div>
-        </div>
-      </>
-    )
-  }
+      </div>
+      <div style={{ height: '90%',  position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'local' ? 'initial' : 'none'}}>
+        <div id={`scene-local-container-${sceneId}`} style={{width:'100%', height:'100%', ...style}}></div>
+      </div>
+    </>
+  );
 }
 
 export default SceneDoubleComponent;
