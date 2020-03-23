@@ -10,7 +10,7 @@ export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species'
 // Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
-export const GRID_LAYER = 'grid_layer';
+export const GRAPHIC_LAYER = 'graphic_layer';
 // Terrestrial human pressures imagery layer (it is the aggregation of rainfed, irrigated and urban pressures).
 export const LAND_HUMAN_PRESSURES_IMAGE_LAYER = 'land_human_pressures';
 // Label layer to display features labels (marine, terrestrial and urban).
@@ -31,8 +31,10 @@ export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer'
 // human settlements labels
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
 // layer with countries data and borders geometries
-export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer'
-export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer'
+export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer';
+export const COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER = 'countries_generalized_borders_layer';
+export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
+export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
 // South Africa layers
