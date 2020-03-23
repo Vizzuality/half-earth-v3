@@ -101,7 +101,7 @@ const DataGlobeComponent = ({
           setRasters={setRasters}
           selectedSpecies={selectedSpecies}
         />
-        <CountryLabelsLayer countryISO={countryISO}/>
+        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
         {countryISO && <CountryBorderLayer countryISO={countryISO}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
