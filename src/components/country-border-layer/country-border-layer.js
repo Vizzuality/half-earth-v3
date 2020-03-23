@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, GRAPHIC_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import {
-  createGraphic,
-  createPolygonGeometry,
-} from 'utils/grid-layer-utils';
+import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 
 import {
-  createGraphicLayer
+  createGraphic,
+  createGraphicLayer,
+  createPolygonGeometry
 } from 'utils/graphic-layer-utils';
 
 const CountryBorderLayer = props => {
@@ -24,7 +23,7 @@ const CountryBorderLayer = props => {
         "esri/Graphic",
         "esri/layers/GraphicsLayer"
       ]).then(([Graphic, GraphicsLayer]) => {
-        const _borderGraphic = createGraphic(Graphic);
+        const _borderGraphic = createGraphic(Graphic, gridCellDefaultStyles);
         const graphicsLayer = createGraphicLayer(GraphicsLayer, _borderGraphic, GRAPHIC_LAYER);
         setBorderGraphic(_borderGraphic);
         view.map.add(graphicsLayer);
