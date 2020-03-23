@@ -2,7 +2,7 @@ import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-import Scene from 'components/scene';
+import DoubleScene from 'components/double-scene';
 import Widgets from 'components/widgets';
 import DataGlobalSidebar from 'components/data-global-sidebar';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -20,6 +20,7 @@ import { MobileOnly, isMobile } from 'constants/responsive';
 import About from 'components/about';
 import UserDataModal from 'components/user-data-modal';
 import CountryLabelsLayer from 'components/country-labels-layer';
+import ToggleSceneModeComponent from 'components/widgets/toggle-scene-mode';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -46,18 +47,20 @@ const DataGlobeComponent = ({
   setRasters,
   activeOption,
   isHEModalOpen,
-  countryISO
+  countryISO,
+  sceneMode
 }) => {
   
   const isOnMobile = isMobile();
 
   return (
     <>
-      <Scene
+      <DoubleScene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+        sceneMode={sceneMode}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -105,11 +108,12 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-      </Scene>
+      </DoubleScene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
       <UserDataModal />
+      <ToggleSceneModeComponent sceneMode={sceneMode}/>
     </>
   )
 }

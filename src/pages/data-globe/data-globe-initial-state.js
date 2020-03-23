@@ -47,7 +47,8 @@ export default {
     isSidebarOpen: false,
     activeOption: 'add_layer', // mobile
     isFullscreenActive: false, 
-    activeCategory: ''
+    activeCategory: '',
+    sceneMode: 'global'
   },
   listeners: false
 }
