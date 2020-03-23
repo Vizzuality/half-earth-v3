@@ -5,8 +5,8 @@ import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map } = props;
-
+  const { map, isLandscapeMode } = props;
+  const landscapeScale = 2262910;
   useEffect(() => {
     loadModules(["esri/layers/support/LabelClass"])
     .then(([LabelClass]) => {
@@ -30,21 +30,21 @@ const CountryLabelsLayerComponent = props => {
         handleLayerCreation(layerConfig, map)
           .then(layer => {
             layer.opacity = 0.7;
-            layer.visible = true;
+            layer.visible = !isLandscapeMode;
             layer.labelsVisible = true;
             layer.minScale = 35000000;
-            layer.maxScale = 35000;
+            layer.maxScale = landscapeScale;
             layer.labelingInfo = [labelingInfo];
             layer.renderer = {
-              type: "simple",  // autocasts as new SimpleRenderer()
+              type: "simple",
               symbol: {
-                type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+                type: "simple-marker",
                 size: 0
               }
             };
           });
     })
-  }, [])
+  }, [isLandscapeMode])
 
   return null;
 }
