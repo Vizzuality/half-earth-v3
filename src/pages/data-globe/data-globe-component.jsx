@@ -20,7 +20,7 @@ import { MobileOnly, isMobile } from 'constants/responsive';
 import About from 'components/about';
 import UserDataModal from 'components/user-data-modal';
 import CountryLabelsLayer from 'components/country-labels-layer';
-import ToggleSceneComponent from 'components/widgets/toggle-scene';
+import ToggleSceneModeComponent from 'components/widgets/toggle-scene-mode';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -113,7 +113,7 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
       <UserDataModal />
-      <ToggleSceneComponent sceneMode={sceneMode}/>
+      <ToggleSceneModeComponent sceneMode={sceneMode}/>
     </>
   )
 }
