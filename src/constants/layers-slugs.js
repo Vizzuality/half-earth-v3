@@ -18,6 +18,7 @@ export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
+export const GRAPHIC_LAYER = 'graphic_layer';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
@@ -37,8 +38,10 @@ export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer'
 // human settlements labels
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
 // layer with countries data and borders geometries
-export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer'
-export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer'
+export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer';
+export const COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER = 'countries_generalized_borders_layer';
+export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
+export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
 // South Africa layers

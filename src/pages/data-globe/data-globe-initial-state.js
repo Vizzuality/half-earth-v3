@@ -1,6 +1,6 @@
 import {
   FIREFLY_BASEMAP_LAYER,
-  GRID_LAYER,
+  GRAPHIC_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   CITIES_LABELS_LAYER,
@@ -13,7 +13,7 @@ export default {
   globe: {
     activeLayers: [
       { title: FIREFLY_BASEMAP_LAYER }, 
-      { title: GRID_LAYER },
+      { title: GRAPHIC_LAYER },
       { title: CITIES_LABELS_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },

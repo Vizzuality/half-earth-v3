@@ -3,15 +3,21 @@ import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
 import { GRID_URL } from 'constants/layers-urls';
+import { GRAPHIC_LAYER } from 'constants/layers-slugs';
+import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
+
 import {
-  createGridCellGraphic,
-  createGraphicLayer,
   calculateAggregatedCells,
-  createCellGeometry,
   containedQuery,
   centerQuery,
   getCellsIDs
 } from 'utils/grid-layer-utils';
+
+import {
+  createGraphic,
+  createGraphicLayer,
+  createPolygonGeometry
+} from 'utils/graphic-layer-utils';
 
 const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
@@ -39,8 +45,8 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
         "esri/Graphic",
         "esri/layers/GraphicsLayer"
       ]).then(([Graphic, GraphicsLayer]) => {
-        const _gridCellGraphic = createGridCellGraphic(Graphic);
-        const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic);
+        const _gridCellGraphic = createGraphic(Graphic, gridCellDefaultStyles);
+        const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic, GRAPHIC_LAYER);
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
       })
@@ -117,7 +123,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   const manageCellStoreAndGeomCreation = async (features, cellsIDsArray, type) => {
     addCellDataToStore(features);
     const gridCell = type === 'aggregatedCells' ? await calculateAggregatedCells(features) : features[0].geometry;
-    const gridCellGeometry = await createCellGeometry(gridCell);
+    const gridCellGeometry = await createPolygonGeometry(gridCell);
     setGridCellGeometry(gridCellGeometry);
     if (gridCellGraphic) { gridCellGraphic.geometry = gridCellGeometry };
     gridCellRef.current = cellsIDsArray;
