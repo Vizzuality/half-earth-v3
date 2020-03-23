@@ -2,7 +2,7 @@ import React from 'react';
 import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-import SceneDouble from 'components/scene-double';
+import DoubleScene from 'components/double-scene';
 import Widgets from 'components/widgets';
 import DataGlobalSidebar from 'components/data-global-sidebar';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -55,7 +55,7 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      <SceneDouble
+      <DoubleScene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
@@ -108,7 +108,7 @@ const DataGlobeComponent = ({
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-      </SceneDouble>
+      </DoubleScene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}

@@ -5,23 +5,20 @@ import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
 
 const localExtent = { // sample extent
-  // autocasts as new Extent()
   xmax: -10834217,
   xmin: -10932882,
   ymax: 2493918,
   ymin: 2432667,
   spatialReference: {
-    // autocasts as new SpatialReference()
     wkid: 3857
   }
 };
 
-const SceneDoubleComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null, style, spinner = true, interactionsDisabled = false, sceneMode }) => {
+const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null, style, spinner = true, interactionsDisabled = false, sceneMode }) => {
 
   const [map, setMap] = useState(null);
-  const [view, setView] = useState(null);
+  const [viewGlobal, setViewGlobal] = useState(null);
   const [viewLocal, setViewLocal] = useState(null);
-
   const [loadState, setLoadState] = useState('loading');
   
   useEffect(() => {
@@ -48,13 +45,12 @@ const SceneDoubleComponent = ({ sceneId, children, loaderOptions, sceneSettings,
     if (map) {
       loadModules(["esri/views/SceneView"], loaderOptions)
         .then(([SceneView]) => {
-
-          const _view = new SceneView({
+          const _viewGlobal = new SceneView({
             map: map,
-            container: `scene-container-${sceneId}`,
+            container: `scene-global-container-${sceneId}`,
             ...sceneSettings
           });
-          setView(_view);
+          setViewGlobal(_viewGlobal);
 
           const _viewLocal = new SceneView({
             map: map,
@@ -73,21 +69,21 @@ const SceneDoubleComponent = ({ sceneId, children, loaderOptions, sceneSettings,
   },[map])
 
   useEffect(() => {
-    if (map && view && viewLocal) {
+    if (map && viewGlobal && viewLocal) {
       setLoadState('loaded');
-      onViewLoad && onViewLoad(map, view)
+      onViewLoad && onViewLoad(map, viewGlobal)
     }
-  }, [map, view, viewLocal]);
+  }, [map, viewGlobal, viewLocal]);
 
   return (
     <>
       {loadState === 'loading' && <Spinner spinnerWithOverlay initialLoading display={spinner}/>}
       <div style={{ height: '100%', position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'global' ? 'initial' : 'none'}}>
-        <div id={`scene-container-${sceneId}`} className={styles.sceneContainer} style={{width: '100%', height:'100%', ...style}}>
+        <div id={`scene-global-container-${sceneId}`} className={styles.sceneContainer} style={{width: '100%', height:'100%', ...style}}>
           {loadState === 'loaded' && 
             ReactDOM.createPortal(
               React.Children.map(children || null, (child, i) => {
-                return child && <child.type key={i} map={map} view={view} {...child.props}/>;
+                return child && <child.type key={i} map={map} view={viewGlobal} {...child.props}/>;
               })
               ,
               document.getElementById("root")
@@ -95,11 +91,11 @@ const SceneDoubleComponent = ({ sceneId, children, loaderOptions, sceneSettings,
           }
         </div>
       </div>
-      <div style={{ height: '90%',  position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'local' ? 'initial' : 'none'}}>
+      <div style={{ height: '100%',  position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: sceneMode === 'local' ? 'initial' : 'none'}}>
         <div id={`scene-local-container-${sceneId}`} style={{width:'100%', height:'100%', ...style}}></div>
       </div>
     </>
   );
 }
 
-export default SceneDoubleComponent;
+export default DoubleSceneComponent;
