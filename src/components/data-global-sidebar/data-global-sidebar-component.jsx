@@ -8,6 +8,7 @@ import Sidebar from 'components/sidebar';
 const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
 const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
+const CountryEntryCard = loadable(() => import('components/country-entry-card'));
 
 const DataGlobeSidebarComponent = ({
   isSidebarOpen,
@@ -28,6 +29,7 @@ const DataGlobeSidebarComponent = ({
   const isProtectedAreasActive = activeCategory === 'Existing protection';
   return (
     <>
+      <CountryEntryCard />
       <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
       <Sidebar activeOption={activeOption} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
         {isBiodiversityActive && (
