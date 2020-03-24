@@ -86,6 +86,8 @@ const DataGlobeComponent = ({
           rasters={rasters}
           handleGlobeUpdating={handleGlobeUpdating}
           setRasters={setRasters}
+          sceneMode={sceneMode}
+          countryISO={countryISO}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
@@ -105,7 +107,7 @@ const DataGlobeComponent = ({
           selectedSpecies={selectedSpecies}
         />
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
-        {countryISO && <CountryBorderLayer countryISO={countryISO}/>}
+        <CountryBorderLayer countryISO={countryISO}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}
@@ -115,7 +117,6 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
       <UserDataModal />
-      <ToggleSceneModeComponent sceneMode={sceneMode}/>
     </>
   )
 }

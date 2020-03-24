@@ -12,7 +12,6 @@ import {
 
 const CountryBorderLayer = props => {
   const { view, countryISO } = props;
-
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
 
@@ -30,15 +29,15 @@ const CountryBorderLayer = props => {
       })
   }, [])
 
-  const queryCountryData = () => {
-    const query = countryLayer.createQuery();
-    query.where = `GID_0 = '${countryISO}'`;
-    countryLayer.queryFeatures(query)
+  const queryCountryData = (layer, iso, border) => {
+    const query = layer.createQuery();
+    query.where = `GID_0 = '${iso}'`;
+    layer.queryFeatures(query)
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
         const borderPolygon = await createPolygonGeometry(geometry);
-        if (borderGraphic) { borderGraphic.geometry = borderPolygon };
+        if (border) { border.geometry = borderPolygon };
         view.goTo(geometry);
       })
       .catch((error) => {
@@ -57,10 +56,16 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer) {
-      queryCountryData();
+    if (countryLayer && countryISO && borderGraphic) {
+      queryCountryData(countryLayer, countryISO, borderGraphic);
     }
   }, [countryLayer, countryISO, borderGraphic]);
+
+  useEffect(() => {
+    if (borderGraphic && !countryISO) {
+      borderGraphic.geometry = null;
+    }
+  },[countryISO])
 
 
   return null
