@@ -7,16 +7,17 @@
   position: absolute;
   top: 20px;
   left: $site-gutter;
+  padding: 5px 12px 15px;
   display: flex;
   opacity: 0;
   flex-direction: column;
+  justify-content: space-around;
   width: $sidebar-width;
   height: 0px;
   background-color:$elephant;
   color: white;
   border-radius: 2px;
-  transition: opacity .2s;
-  transition: height .3s ease-in;
+  transition: all .3s ease-in;
   &.open {
     opacity: 1;
     height: 140px;
@@ -43,4 +44,30 @@
 
 .countryName {
   @extend %subtitle;
+  position: relative;
+  top: 2px;
+  flex-grow: 2;
+  padding: 0 10px;
+}
+
+.closeIcon {
+  cursor: pointer;
+  fill: $white;
+}
+
+.entryText {
+  @extend %title;
+  margin: 0;
+  padding-left: 12px;
+}
+
+.contentWrapper {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.image {
+  width: 115px;
 }

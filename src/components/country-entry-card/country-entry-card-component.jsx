@@ -3,21 +3,19 @@ import cx from 'classnames';
 import styles from './country-entry-card.module.scss';
 import { ReactComponent as PinIcon } from 'icons/places.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import GlobeSmallImage from 'images/dummyCountryImage.jpg';
 
 const CountryEntryCardComponent = ({ handleSceneModeChange, handleCountryDeselect, countryISO }) => {
   return (
     <div className={cx(styles.container, {[styles.open]: countryISO})}>
       <div className={styles.cardHeader}>
-        <span className={styles.iconWrapper}>
-            <PinIcon />
-        </span>
-        <span className={styles.countryName}>Country name</span>
-        <span className={styles.iconWrapper} onClick={handleCountryDeselect}>
-          <CloseIcon />
-        </span>
+        <PinIcon />
+        <span className={styles.countryName}>{countryISO}</span>
+        <CloseIcon className={styles.closeIcon} onClick={handleCountryDeselect}/>
       </div>
-      <div onClick={handleSceneModeChange}>
-        CLICK ME
+      <div className={styles.contentWrapper} onClick={handleSceneModeChange}>
+        <img className={styles.image} alt={`${countryISO}`} src={GlobeSmallImage} />
+        <p className={styles.entryText}>explore this country</p>
       </div>
     </div>
   )
