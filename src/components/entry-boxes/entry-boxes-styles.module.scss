@@ -1,11 +1,13 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/common-animations.module';
 
 .entryBoxesPosition {
   @include bottom();
   position: fixed;
   top: auto;
   overflow-y: hidden;
+  @include animationFunction();
   
   // entry box spacer
   & > *:not(:last-child)::after {
@@ -27,6 +29,10 @@
     bottom: auto;
     width: $sidebar-width + 40px;
     @include topLeft();
+
+    &.countrySelected {
+      top: $high-sidebar-top-margin;
+    }
 
     & > *:first-child > div:first-child {
       border-radius: 2px;
