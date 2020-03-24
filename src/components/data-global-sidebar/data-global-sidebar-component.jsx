@@ -22,6 +22,8 @@ const DataGlobeSidebarComponent = ({
   handleGlobeUpdating,
   setRasters,
   activeOption,
+  sceneMode,
+  countryISO,
   isLandscapeSidebarCollapsed
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
@@ -29,9 +31,9 @@ const DataGlobeSidebarComponent = ({
   const isProtectedAreasActive = activeCategory === 'Existing protection';
   return (
     <>
-      <CountryEntryCard />
-      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
-      <Sidebar activeOption={activeOption} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
+      <CountryEntryCard sceneMode={sceneMode} countryISO={countryISO}/>
+      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} countryISO={countryISO} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
+      <Sidebar activeOption={activeOption} countryISO={countryISO} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
         {isBiodiversityActive && (
           biodiversityCategories.map(cat => (
             <BiodiversityLayers

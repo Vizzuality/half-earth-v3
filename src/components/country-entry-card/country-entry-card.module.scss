@@ -1,0 +1,46 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  position: absolute;
+  top: 20px;
+  left: $site-gutter;
+  display: flex;
+  opacity: 0;
+  flex-direction: column;
+  width: $sidebar-width;
+  height: 0px;
+  background-color:$elephant;
+  color: white;
+  border-radius: 2px;
+  transition: opacity .2s;
+  transition: height .3s ease-in;
+  &.open {
+    opacity: 1;
+    height: 140px;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.iconWrapper{
+  align-items: center;
+  background-color: $elephant;
+  border-radius: 2px;
+  display: flex;
+  height: $widget-button-size;
+  width: $widget-button-size;
+  justify-content: center;
+  margin-right: 10px;
+  padding: 0;
+}
+
+.countryName {
+  @extend %subtitle;
+}
