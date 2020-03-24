@@ -7,27 +7,30 @@
   position: absolute;
   top: 20px;
   left: $site-gutter;
-  padding: 5px 12px 15px;
-  display: flex;
-  opacity: 0;
-  flex-direction: column;
-  justify-content: space-around;
-  width: $sidebar-width;
+  padding-left: 8px;
   height: 0px;
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  width: $sidebar-width;
+  overflow: hidden;
   background-color:$elephant;
   color: white;
   border-radius: 2px;
-  transition: all .3s ease-in;
+  pointer-events: none;
+  @include animationFunction($propertyToAnimate: all);
   &.open {
-    opacity: 1;
+    padding: 0px 8px 15px;
     height: 140px;
+    pointer-events: visible;
   }
 }
 
 .cardHeader {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  height: 20px;
+  margin-top: 7px;
 }
 
 .iconWrapper{
@@ -47,7 +50,7 @@
   position: relative;
   top: 2px;
   flex-grow: 2;
-  padding: 0 10px;
+  padding-left: 20px;
 }
 
 .closeIcon {
@@ -66,6 +69,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  overflow: hidden;
+  margin-top: 20px;
+  height: auto;
 }
 
 .image {

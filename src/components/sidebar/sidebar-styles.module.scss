@@ -18,7 +18,7 @@
     width: auto;
     bottom: auto;
     @include topLeft();
-    @include animationFunction();
+    @include animationFunction($propertyToAnimate: all);
     &.countrySelected {
       top: $high-sidebar-top-margin;
     }
