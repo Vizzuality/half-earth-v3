@@ -13,12 +13,15 @@
   position: fixed;
 
   @media #{$tablet-portrait} {
-    @include animationFunction();
     overflow: unset;
     border-radius: 2px;
     width: auto;
     bottom: auto;
     @include topLeft();
+    @include animationFunction();
+    &.countrySelected {
+      top: $high-sidebar-top-margin;
+    }
   }
 }
 
