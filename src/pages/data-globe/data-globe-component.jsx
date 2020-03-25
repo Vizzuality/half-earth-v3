@@ -48,6 +48,7 @@ const DataGlobeComponent = ({
   activeOption,
   isHEModalOpen,
   countryISO,
+  countryName,
   sceneMode
 }) => {
   
@@ -87,6 +88,7 @@ const DataGlobeComponent = ({
           setRasters={setRasters}
           sceneMode={sceneMode}
           countryISO={countryISO}
+          countryName={countryName}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
