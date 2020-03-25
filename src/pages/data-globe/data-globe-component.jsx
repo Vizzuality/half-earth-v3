@@ -109,7 +109,7 @@ const DataGlobeComponent = ({
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
         {countryISO && <CountryBorderLayer countryISO={countryISO}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {(isLandscapeMode || sceneMode === 'local') && <TerrainExaggerationLayer exaggeration={sceneMode === 'local' ? 10 : 3}/>}
+        {(isLandscapeMode || sceneMode === 'local') && <TerrainExaggerationLayer exaggeration={sceneMode === 'local' ? 20 : 3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
       </DoubleScene>

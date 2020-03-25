@@ -13,26 +13,17 @@ import {
 } from 'utils/graphic-layer-utils';
 
 const CountryBorderLayer = props => {
-  const { view, countryISO, setCountryExtentLoading, setCountryExtentReady, setCountryExtentError } = props;
+  const { view, spatialReference, countryISO, setCountryExtentLoading, setCountryExtentReady, setCountryExtentError } = props;
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
-  const [spatialReference, setSpatialReference] = useState(null);
 
   //Create the graphics layer on mount
   useEffect(() => {
-    loadModules(
-      [
-        "esri/Graphic",
-        "esri/layers/GraphicsLayer",
-        "esri/geometry/SpatialReference"
-      ]).then(([Graphic, GraphicsLayer, SpatialReference]) => {
+    loadModules(["esri/Graphic","esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
         const _borderGraphic = createGraphic(Graphic, gridCellDefaultStyles);
         const graphicsLayer = createGraphicLayer(GraphicsLayer, _borderGraphic, GRAPHIC_LAYER);
         setBorderGraphic(_borderGraphic);
-        const _spatialReference = new SpatialReference();
-        _spatialReference.wkid = 102100;
-        setSpatialReference(_spatialReference);
         view.map.add(graphicsLayer);
       })
   }, [])
@@ -68,10 +59,10 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer) {
+    if (countryLayer && spatialReference) {
       queryCountryData();
     }
-  }, [countryLayer, countryISO, borderGraphic]);
+  }, [countryLayer, countryISO, borderGraphic, spatialReference]);
 
 
   return null

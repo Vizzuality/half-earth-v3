@@ -66,6 +66,7 @@ const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings,
       const expandedCountryExtent = countryExtent.clone().expand(1.5); //add paddings around country borders
       viewLocal.clippingArea = expandedCountryExtent;
       viewLocal.extent = expandedCountryExtent;
+      viewLocal.goTo({ target: expandedCountryExtent, tilt: 40, }, { animate: false });
     };
   },[countryExtent]);
   
@@ -84,7 +85,7 @@ const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings,
           {loadState === 'loaded' && 
             ReactDOM.createPortal(
               React.Children.map(children || null, (child, i) => {
-                return child && <child.type key={i} map={map} view={viewGlobal} viewLocal={viewLocal} {...child.props}/>;
+                return child && <child.type key={i} map={map} view={viewGlobal} viewLocal={viewLocal} spatialReference={spatialReference} {...child.props}/>;
               })
               ,
               document.getElementById("root")
