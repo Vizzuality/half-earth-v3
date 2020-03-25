@@ -4,23 +4,13 @@ import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const localExtent = { // sample extent
-  xmax: -10834217,
-  xmin: -10932882,
-  ymax: 2493918,
-  ymin: 2432667,
-  spatialReference: {
-    wkid: 3857
-  }
-};
-
-const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null, style, spinner = true, interactionsDisabled = false, sceneMode }) => {
-
+const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings, onMapLoad = null, onViewLoad = null, style, spinner = true, interactionsDisabled = false, sceneMode, countryExtent }) => {
   const [map, setMap] = useState(null);
   const [viewGlobal, setViewGlobal] = useState(null);
   const [viewLocal, setViewLocal] = useState(null);
   const [loadState, setLoadState] = useState('loading');
-  
+  const [spatialReference, setSpatialReference] = useState(null);
+
   useEffect(() => {
     loadModules(["esri/WebScene"], loaderOptions)
       .then(([WebScene]) => {
@@ -33,22 +23,26 @@ const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings,
           setMap(map);
           onMapLoad && onMapLoad(map);
         })
-        
       })
       .catch(err => {
         console.error(err);
       });
   }, [])
 
-
   useEffect(() => {
     if (map) {
-      loadModules(["esri/views/SceneView"], loaderOptions)
-        .then(([SceneView]) => {
+      loadModules(["esri/views/SceneView", "esri/geometry/SpatialReference"], loaderOptions)
+        .then(([SceneView, SpatialReference]) => {
+
+          const _spatialReference = new SpatialReference();
+          _spatialReference.wkid = 102100;
+          setSpatialReference(_spatialReference);
+
           const _viewGlobal = new SceneView({
             map: map,
             container: `scene-global-container-${sceneId}`,
-            ...sceneSettings
+            ...sceneSettings,
+            spatialReference
           });
           setViewGlobal(_viewGlobal);
 
@@ -57,8 +51,7 @@ const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings,
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
             viewingMode: 'local',
-            clippingArea: localExtent,
-            extent: localExtent,
+            spatialReference,
           });
           setViewLocal(_viewLocal);
         })
@@ -66,8 +59,16 @@ const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings,
           console.error(err);
         });
     }
-  },[map])
+  },[map]);
 
+  useEffect(() => {
+    if(viewLocal && spatialReference && countryExtent) {
+      const expandedCountryExtent = countryExtent.clone().expand(1.5); //add paddings around country borders
+      viewLocal.clippingArea = expandedCountryExtent;
+      viewLocal.extent = expandedCountryExtent;
+    };
+  },[countryExtent]);
+  
   useEffect(() => {
     if (map && viewGlobal && viewLocal) {
       setLoadState('loaded');
@@ -83,7 +84,7 @@ const DoubleSceneComponent = ({ sceneId, children, loaderOptions, sceneSettings,
           {loadState === 'loaded' && 
             ReactDOM.createPortal(
               React.Children.map(children || null, (child, i) => {
-                return child && <child.type key={i} map={map} view={viewGlobal} {...child.props}/>;
+                return child && <child.type key={i} map={map} view={viewGlobal} viewLocal={viewLocal} {...child.props}/>;
               })
               ,
               document.getElementById("root")
