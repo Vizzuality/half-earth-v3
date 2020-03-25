@@ -18,7 +18,7 @@ const CountryDataCardContainer = (props) => {
     setCountryDataReady,
     setCountryDataError
   } = props;
-  
+
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
 
   useEffect(() => {
@@ -49,6 +49,7 @@ const CountryDataCardContainer = (props) => {
 
   const handleSceneModeChange = () => {
     changeUI({ sceneMode: sceneMode === 'global' ? 'local' : 'global', selectedCountry: false });
+    setCountryDataReady(null);
   }
   return (
     <Component handleSceneModeChange={handleSceneModeChange} {...props}/>

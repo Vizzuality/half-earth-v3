@@ -7,6 +7,7 @@ function setCountryDataLoading(state) {
 }
 
 function setCountryDataReady(state, { payload }) {
+  if (!payload) return {...state, data: null};
   const country = payload[0];
   const { attributes } = country;
   return { ...state, error: false, loading: false, data: attributes };
