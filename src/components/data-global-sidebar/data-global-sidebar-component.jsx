@@ -5,11 +5,10 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
+import CountryEntryCard from 'components/country-entry-card';
 const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
 const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
-const CountryEntryCard = loadable(() => import('components/country-entry-card'));
-
 const DataGlobeSidebarComponent = ({
   isSidebarOpen,
   isFullscreenActive,
