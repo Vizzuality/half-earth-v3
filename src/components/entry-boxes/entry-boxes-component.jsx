@@ -24,6 +24,7 @@ const EntryBoxesComponent = ({
   countedActiveLayers,
   route,
   activeOption,
+  isCountryMode,
   isLandscapeSidebarCollapsed
 }) => {
 
@@ -36,7 +37,7 @@ const EntryBoxesComponent = ({
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
   const categoryBoxVisibleOnMobile = isOnMobile && isActive && !isSidebarOpen;
-  const categoryBoxHidden = (isSidebarOpen || isLandscapeMode || isFullscreenActive || (isOnMobile && !isActive)) && !categoryBoxVisibleOnMobile;
+  const categoryBoxHidden = (isSidebarOpen || isCountryMode || isLandscapeMode || isFullscreenActive || (isOnMobile && !isActive)) && !categoryBoxVisibleOnMobile;
 
   return (
     <div

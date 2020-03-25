@@ -24,6 +24,7 @@ const DataGlobeSidebarComponent = ({
   sceneMode,
   countryISO,
   countryName,
+  isCountryMode,
   isLandscapeSidebarCollapsed
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
@@ -31,9 +32,36 @@ const DataGlobeSidebarComponent = ({
   const isProtectedAreasActive = activeCategory === 'Existing protection';
   return (
     <>
-      <CountryEntryCard sceneMode={sceneMode} countryName={countryName}/>
-      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} countryISO={countryISO} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
-      <Sidebar activeOption={activeOption} countryISO={countryISO} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
+      <CountryEntryCard
+        sceneMode={sceneMode}
+        countryName={countryName}
+        isCountryMode={isCountryMode}
+        isFullscreenActive={isFullscreenActive}
+      />
+      <EntryBoxes
+        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        countryISO={countryISO}
+        activeOption={activeOption}
+        isSidebarOpen={isSidebarOpen}
+        isFullscreenActive={isFullscreenActive}
+        activeCategory={activeCategory}
+        isLandscapeMode={isLandscapeMode}
+        isCountryMode={isCountryMode}
+        activeLayers={activeLayers}
+        rasters={rasters}
+      />
+      <Sidebar
+        activeOption={activeOption}
+        countryISO={countryISO}
+        isCountryMode={isCountryMode}
+        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        isSidebarOpen={isSidebarOpen} 
+        isFullscreenActive={isFullscreenActive}
+        activeCategory={activeCategory}
+        isLandscapeMode={isLandscapeMode}
+        map={map}
+        view={view}
+      >
         {isBiodiversityActive && (
           biodiversityCategories.map(cat => (
             <BiodiversityLayers
