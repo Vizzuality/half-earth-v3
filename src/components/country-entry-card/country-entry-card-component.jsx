@@ -1,13 +1,19 @@
 import React from 'react';
 import cx from 'classnames';
 import styles from './country-entry-card.module.scss';
+import animationStyles from 'styles/common-animations.module.scss';
 import { ReactComponent as PinIcon } from 'icons/places.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import GlobeSmallImage from 'images/dummyCountryImage.jpg';
 
-const CountryEntryCardComponent = ({ handleSceneModeChange, handleCountryDeselect, countryName }) => {
+const CountryEntryCardComponent = ({ handleSceneModeChange, handleCountryDeselect, countryName, isCountryMode, isFullscreenActive }) => {
+  const countryEntryCardHidden = isCountryMode || isFullscreenActive;
   return (
-    <div className={cx(styles.container, {[styles.open]: countryName})}>
+    <div 
+      className={cx(styles.container, {
+          [styles.open]: countryName,
+          [animationStyles.leftHidden]: countryEntryCardHidden,
+        })}>
       <div className={styles.cardHeader}>
         <PinIcon />
         <span className={styles.countryName}>{countryName}</span>
