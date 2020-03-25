@@ -1,0 +1,9 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  @include topLeft();
+  @include animationFunction($propertyToAnimate: all);
+}
