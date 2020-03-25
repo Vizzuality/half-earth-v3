@@ -37,6 +37,10 @@ const exaggeratedElevationLayerComponent = ({ map, exaggeration = 2}) => {
     
       map.ground.layers = [new ExaggeratedElevationLayer()];
     })
+
+    return () => {
+      map.ground.layers = [];
+    }
   }, [])
 
   return null

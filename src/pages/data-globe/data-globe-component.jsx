@@ -57,6 +57,7 @@ const DataGlobeComponent = ({
 
   return (
     <>
+      {console.log(`land exaggeration: ${isLandscapeMode || sceneMode === 'local'}`)}
       <DoubleScene
         sceneId='e96f61b2e79442b698ec2cec68af6db9'
         sceneSettings={sceneSettings}
