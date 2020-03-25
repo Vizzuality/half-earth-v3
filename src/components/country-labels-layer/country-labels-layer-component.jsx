@@ -6,7 +6,6 @@ import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
   const { map, isLandscapeMode } = props;
-  const landscapeScale = 2262910;
   useEffect(() => {
     loadModules(["esri/layers/support/LabelClass"])
     .then(([LabelClass]) => {
@@ -31,9 +30,8 @@ const CountryLabelsLayerComponent = props => {
           .then(layer => {
             layer.opacity = 0.7;
             layer.visible = !isLandscapeMode;
-            layer.labelsVisible = true;
+            layer.labelsVisible = !isLandscapeMode;
             layer.minScale = 35000000;
-            layer.maxScale = landscapeScale;
             layer.labelingInfo = [labelingInfo];
             layer.renderer = {
               type: "simple",
