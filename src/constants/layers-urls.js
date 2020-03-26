@@ -99,11 +99,10 @@ export const LAYERS_URLS = {
   [CONIFERS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/ac39f4e35750448d93464d4807e3ac3f/rest/services/Conifers_Richness_55km/MapServer` ,
   [REPTILES_RARITY]: 'https://utility.arcgis.com/usrsvcs/servers/857da983a2a54a2fa6516059501547ac/rest/services/Reptiles_Rarity_55km/MapServer' ,
   [REPTILES_RICHNESS]: 'https://utility.arcgis.com/usrsvcs/servers/fc2ad4d2955b446687afcf545cdef135/rest/services/Reptiles_Richness/MapServer' ,
-
+  [ALL_TAXA_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/30b635240689413082d9b4f3c8d25aa6/rest/services/All_Taxa_Rarity_55km/MapServer` ,
+  [ALL_TAXA_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/2d2acd2ff9f54d5c87ea317c9de3c1a1/rest/services/All_Taxa_Richness_55km/MapServer` ,
+  [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/373ad88574cc403cb4707a5491b8a661/rest/services/Amphibians_Richness_55km/MapServer` ,
   // 110 km biodiversity services (DEPRECATED)
-  [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/58e9d41955c74788bac974a48540ed23/rest/services/amphibians_richness/MapServer` ,
-  [ALL_TAXA_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/1ee94bc415424bde91750ce703b2d8d6/rest/services/all_rarity/MapServer` ,
-  [ALL_TAXA_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/55838e61c7854915bb62238f2f02710f/rest/services/all_richness/MapServer` ,
   [FISHES_RARITY]: `${bucketUrl}/rarity/fishes/${templatePattern}` ,
   [FISHES_RICHNESS]: `${bucketUrl}/richness/fishes/${templatePattern}` ,
   }
