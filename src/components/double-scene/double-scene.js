@@ -34,7 +34,7 @@ const DoubleScene = props => {
       .catch(err => {
         console.error(err);
       });
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (map) {
@@ -58,7 +58,7 @@ const DoubleScene = props => {
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
             viewingMode: 'local',
-            spatialReference,
+            spatialReference
           });
           setViewLocal(_viewLocal);
         })
@@ -73,7 +73,9 @@ const DoubleScene = props => {
       const expandedCountryExtent = countryExtent.clone().expand(1.5); //add paddings around country borders
       viewLocal.clippingArea = expandedCountryExtent;
       viewLocal.extent = expandedCountryExtent;
-      viewLocal.goTo({ target: expandedCountryExtent, tilt: 40, }, { animate: false });
+      viewLocal.when(() => {
+        viewLocal.goTo({ target: expandedCountryExtent, tilt: 40 }, { animate: false });
+      });
     };
   },[countryExtent]);
   
