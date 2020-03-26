@@ -4,6 +4,20 @@
 @import 'styles/common-animations.module';
 
 .container {
+  @include backdropBlur();
   @include topLeft();
   @include animationFunction($propertyToAnimate: all);
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  width: $sidebar-width;
+  overflow: hidden;
+  color: white;
+  border-radius: 2px;
+}
+
+.image {
+  top: -5px;
+position: relative;
+height: 185px;
 }

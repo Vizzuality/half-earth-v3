@@ -13,10 +13,8 @@ const LocalSceneSidebarComponent = ({
 }) => {
 
   return (
-    <div className={cx(styles.sidebar)}>
-      <div className={styles.wrapper}>
-        <CountryDataCard view={view} countryISO={countryISO}/>
-      </div>
+    <div className={styles.container}>
+      <CountryDataCard view={view} countryISO={countryISO}/>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { COUNTRIES_DATA_FEATURE_LAYER } from 'constants/layers-slugs';
+import mapStateToProps from './country-data-card-selectors';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
@@ -56,4 +57,4 @@ const CountryDataCardContainer = (props) => {
   )
 }
 
-export default connect(null, actions)(CountryDataCardContainer);
+export default connect(mapStateToProps, actions)(CountryDataCardContainer);
