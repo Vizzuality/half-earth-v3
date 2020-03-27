@@ -13,8 +13,8 @@ const CountryEntryCardComponent = ({ handleSceneModeChange, handleCountryDeselec
         <span className={styles.countryName}>{countryName}</span>
         <CloseIcon className={styles.closeIcon} onClick={handleCountryDeselect}/>
       </div>
-      <div className={cx(styles.contentWrapper, {[styles.openContent]: countryName})} onClick={handleSceneModeChange}>
-        <img className={styles.image} alt={`${countryName}`} src={GlobeSmallImage} />
+      <div className={styles.contentWrapper} onClick={handleSceneModeChange}>
+        <img className={styles.image} alt={countryName} src={GlobeSmallImage} />
         <p className={styles.entryText}>explore this country</p>
       </div>
     </div>

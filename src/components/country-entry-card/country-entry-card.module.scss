@@ -20,7 +20,7 @@
   pointer-events: none;
   @include animationFunction($propertyToAnimate: all);
   &.open {
-    padding: 0px 8px 15px;
+    padding: 0px 12px 20px;
     height: 140px;
     pointer-events: visible;
   }

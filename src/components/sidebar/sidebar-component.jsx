@@ -22,7 +22,7 @@ const Sidebar = ({ map, view, theme, children, activeCategory, countryISO, handl
       <div className={cx(styles.wrapper, { [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile })}>
         <DummyBlurWorkaround />
         <FixedHeader closeSidebar={handleSidebarToggle} title={activeCategory} view={view}/>
-        <div className={styles.content}>
+        <div className={cx(styles.content, { [styles.high]: countryISO})}>
           {React.Children.map(children || null, (child, i) => {
             return child && <child.type {...child.props} key={i} map={map} view={view}/>;
           })}
