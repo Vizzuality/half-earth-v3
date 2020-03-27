@@ -59,10 +59,16 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer && spatialReference) {
+    if (countryLayer && countryISO && borderGraphic && spatialReference) {
       queryCountryData();
     }
   }, [countryLayer, countryISO, borderGraphic, spatialReference]);
+
+  useEffect(() => {
+    if (borderGraphic && !countryISO) {
+      borderGraphic.geometry = null;
+    }
+  },[countryISO])
 
 
   return null

@@ -4,6 +4,7 @@ import * as urlActions from 'actions/url-actions';
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import Component from './country-labels-layer-component';
 
+const actions = {...urlActions}
 
 const CountryLabelsLayerContainer = props => {
   const { view, changeGlobe, countryISO } = props;
@@ -18,7 +19,7 @@ const CountryLabelsLayerContainer = props => {
       const { graphic } = labelsLayer;
       const { attributes } = graphic;
       if (!countryISO || countryISO !== attributes.GID_0) {
-        changeGlobe({countryISO: attributes.GID_0});
+        changeGlobe({countryISO: attributes.GID_0, countryName: attributes.NAME_0});
       }
     }
   }
@@ -67,4 +68,4 @@ const onLabelEvent = (event) => {
   return <Component {...props}/>
 }
 
-export default connect(null, urlActions)(CountryLabelsLayerContainer);
+export default connect(null, actions)(CountryLabelsLayerContainer);

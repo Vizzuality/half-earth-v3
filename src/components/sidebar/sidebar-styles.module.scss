@@ -13,12 +13,15 @@
   position: fixed;
 
   @media #{$tablet-portrait} {
-    @include animationFunction();
     overflow: unset;
     border-radius: 2px;
     width: auto;
     bottom: auto;
     @include topLeft();
+    @include animationFunction($propertyToAnimate: all);
+    &.countrySelected {
+      top: $high-sidebar-top-margin;
+    }
   }
 }
 
@@ -67,6 +70,9 @@
   max-height: calc(100vh - (#{$sidebar-top-margin} + #{$sidebar-header-height}));
   width: auto;
   position: relative;
+  &.high {
+    max-height: calc(100vh - (#{$high-sidebar-top-margin} + #{$sidebar-header-height}));
+  }
 
   @media #{$tablet-portrait} {
     width: 310px;

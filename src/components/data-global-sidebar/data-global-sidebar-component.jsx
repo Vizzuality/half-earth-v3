@@ -5,10 +5,10 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 
 import EntryBoxes from 'components/entry-boxes';
 import Sidebar from 'components/sidebar';
+import CountryEntryCard from 'components/country-entry-card';
 const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
 const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
 const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
-
 const DataGlobeSidebarComponent = ({
   isSidebarOpen,
   isFullscreenActive,
@@ -21,6 +21,9 @@ const DataGlobeSidebarComponent = ({
   handleGlobeUpdating,
   setRasters,
   activeOption,
+  sceneMode,
+  countryISO,
+  countryName,
   isLandscapeSidebarCollapsed
 }) => {
   const isBiodiversityActive = activeCategory === 'Biodiversity';
@@ -28,8 +31,9 @@ const DataGlobeSidebarComponent = ({
   const isProtectedAreasActive = activeCategory === 'Existing protection';
   return (
     <>
-      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
-      <Sidebar activeOption={activeOption} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
+      <CountryEntryCard sceneMode={sceneMode} countryName={countryName}/>
+      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} countryISO={countryISO} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} rasters={rasters}ß/>
+      <Sidebar activeOption={activeOption} countryISO={countryISO} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
         {isBiodiversityActive && (
           biodiversityCategories.map(cat => (
             <BiodiversityLayers
