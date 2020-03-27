@@ -3,6 +3,8 @@ import { loadModules } from 'esri-loader';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, GRAPHIC_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
+import { connect } from 'react-redux';
+import actions from 'redux_modules/country-extent';
 
 import {
   createGraphic,
@@ -11,18 +13,14 @@ import {
 } from 'utils/graphic-layer-utils';
 
 const CountryBorderLayer = props => {
-  const { view, countryISO } = props;
+  const { view, spatialReference, countryISO, setCountryExtentLoading, setCountryExtentReady, setCountryExtentError } = props;
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
 
   //Create the graphics layer on mount
   useEffect(() => {
-    loadModules(
-      [
-        "esri/Graphic",
-        "esri/layers/GraphicsLayer"
-      ]).then(([Graphic, GraphicsLayer]) => {
+    loadModules(["esri/Graphic","esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
         const _borderGraphic = createGraphic(Graphic, gridCellDefaultStyles);
         const graphicsLayer = createGraphicLayer(GraphicsLayer, _borderGraphic, GRAPHIC_LAYER);
         setBorderGraphic(_borderGraphic);
@@ -33,15 +31,19 @@ const CountryBorderLayer = props => {
   const queryCountryData = () => {
     const query = countryLayer.createQuery();
     query.where = `GID_0 = '${countryISO}'`;
+    query.outSpatialReference = spatialReference;
+    setCountryExtentLoading();
     countryLayer.queryFeatures(query)
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
+        view.goTo(geometry);
         const borderPolygon = await createPolygonGeometry(geometry);
         if (borderGraphic) { borderGraphic.geometry = borderPolygon };
-        view.goTo(geometry);
+        setCountryExtentReady(geometry.extent);
       })
       .catch((error) => {
+        setCountryExtentError()
         console.warn(error);
       });
   };
@@ -57,13 +59,13 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer) {
+    if (countryLayer && spatialReference) {
       queryCountryData();
     }
-  }, [countryLayer, countryISO, borderGraphic]);
+  }, [countryLayer, countryISO, borderGraphic, spatialReference]);
 
 
   return null
 }
 
-export default CountryBorderLayer;
+export default connect(null, actions)(CountryBorderLayer);

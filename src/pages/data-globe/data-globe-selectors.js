@@ -6,6 +6,7 @@ import initialState from './data-globe-initial-state';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
+const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -56,5 +57,6 @@ export default createStructuredSelector({
   isHEModalOpen: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
-  sceneMode: getSceneMode
+  sceneMode: getSceneMode,
+  countryExtent: selectCountryExtent
 })

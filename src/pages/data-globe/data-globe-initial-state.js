@@ -9,6 +9,7 @@ import {
 
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
 
+
 export default {
   globe: {
     activeLayers: [
@@ -41,7 +42,7 @@ export default {
     },
     ui: {
       components: []
-    }
+    },
   },
   ui: {
     isSidebarOpen: false,
