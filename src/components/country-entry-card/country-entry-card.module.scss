@@ -1,0 +1,67 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  position: absolute;
+  top: 20px;
+  left: $site-gutter;
+  padding-left: 8px;
+  height: 0px;
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  width: $sidebar-width;
+  overflow: hidden;
+  background-color:$elephant;
+  color: white;
+  border-radius: 2px;
+  pointer-events: none;
+  @include animationFunction($propertyToAnimate: all);
+  &.open {
+    padding: 0px 12px 20px;
+    height: 140px;
+    pointer-events: visible;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  margin-top: 7px;
+}
+
+.countryName {
+  @extend %subtitle;
+  position: relative;
+  top: 2px;
+  flex-grow: 2;
+  padding-left: 20px;
+}
+
+.closeIcon {
+  cursor: pointer;
+  fill: $white;
+}
+
+.entryText {
+  @extend %title;
+  margin: 0;
+  padding-left: 12px;
+}
+
+.contentWrapper {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 20px;
+  height: auto;
+}
+
+.image {
+  width: 115px;
+}

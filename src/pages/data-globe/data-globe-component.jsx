@@ -19,7 +19,6 @@ import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
 import About from 'components/about';
 import CountryLabelsLayer from 'components/country-labels-layer';
-import ToggleSceneModeComponent from 'components/widgets/toggle-scene-mode';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -46,6 +45,7 @@ const DataGlobeComponent = ({
   activeOption,
   isHEModalOpen,
   countryISO,
+  countryName,
   sceneMode,
   countryExtent
 }) => {
@@ -83,6 +83,9 @@ const DataGlobeComponent = ({
           isBiodiversityActive={isBiodiversityActive}
           activeLayers={activeLayers}
           handleGlobeUpdating={handleGlobeUpdating}
+          sceneMode={sceneMode}
+          countryISO={countryISO}
+          countryName={countryName}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
@@ -99,7 +102,7 @@ const DataGlobeComponent = ({
           selectedSpecies={selectedSpecies}
         />
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
-        {countryISO && <CountryBorderLayer countryISO={countryISO}/>}
+        <CountryBorderLayer countryISO={countryISO}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || sceneMode === 'local') && <TerrainExaggerationLayer exaggeration={sceneMode === 'local' ? 20 : 3}/>}
         {isLandscapeMode && <LabelsLayer />}
@@ -108,7 +111,6 @@ const DataGlobeComponent = ({
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
-      <ToggleSceneModeComponent sceneMode={sceneMode}/>
     </>
   )
 }
