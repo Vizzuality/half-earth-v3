@@ -20,12 +20,13 @@ import { MobileOnly, isMobile } from 'constants/responsive';
 import About from 'components/about';
 import UserDataModal from 'components/user-data-modal';
 import CountryLabelsLayer from 'components/country-labels-layer';
+import CountryBorderLayer from 'components/country-border-layer';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
-const CountryBorderLayer = loadable(() => import('components/country-border-layer'));
+const LocalSceneSidebar = loadable(() => import('components/local-scene-sidebar'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -50,7 +51,8 @@ const DataGlobeComponent = ({
   countryISO,
   countryName,
   sceneMode,
-  countryExtent
+  countryExtent,
+  isCountryMode
 }) => {
   
   const isOnMobile = isMobile();
@@ -83,6 +85,7 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
+          isCountryMode={isCountryMode}
           isBiodiversityActive={isBiodiversityActive}
           activeLayers={activeLayers}
           rasters={rasters}
@@ -111,6 +114,7 @@ const DataGlobeComponent = ({
         />
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
         <CountryBorderLayer countryISO={countryISO}/>
+        {isCountryMode && <LocalSceneSidebar countryISO={countryISO} />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || sceneMode === 'local') && <TerrainExaggerationLayer exaggeration={sceneMode === 'local' ? 20 : 3}/>}
         {isLandscapeMode && <LabelsLayer />}

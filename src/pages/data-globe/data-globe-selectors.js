@@ -33,6 +33,7 @@ export const getRasters = createSelector(getGlobeSettings, globeSettings => glob
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
+const getCountryMode = createSelector(getUiSettings, uiSettings => uiSettings.selectedCountry)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
@@ -48,6 +49,7 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,
+  isCountryMode: getCountryMode,
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
