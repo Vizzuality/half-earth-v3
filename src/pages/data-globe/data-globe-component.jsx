@@ -17,6 +17,7 @@ import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
+import { LOCAL_SCENE } from 'constants/view-props';
 import About from 'components/about';
 import UserDataModal from 'components/user-data-modal';
 import CountryLabelsLayer from 'components/country-labels-layer';
@@ -51,11 +52,11 @@ const DataGlobeComponent = ({
   countryISO,
   countryName,
   sceneMode,
-  countryExtent,
-  isCountryMode
+  countryExtent
 }) => {
   
   const isOnMobile = isMobile();
+  const isCountryMode = sceneMode === LOCAL_SCENE;
 
   return (
     <>

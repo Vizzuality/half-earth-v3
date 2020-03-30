@@ -4,6 +4,7 @@ import { loadModules } from 'esri-loader';
 import { COUNTRIES_DATA_FEATURE_LAYER } from 'constants/layers-slugs';
 import mapStateToProps from './country-data-card-selectors';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SCENE, GLOBAL_SCENE } from 'constants/view-props';
 import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
 import Component from './country-data-card-component';
@@ -49,7 +50,7 @@ const CountryDataCardContainer = (props) => {
   }, [countriesDataLayer, countryISO])
 
   const handleSceneModeChange = () => {
-    changeUI({ sceneMode: sceneMode === 'global' ? 'local' : 'global', selectedCountry: false });
+    changeUI({ sceneMode: sceneMode === GLOBAL_SCENE ? LOCAL_SCENE : GLOBAL_SCENE });
     setCountryDataReady(null);
   }
   return (
