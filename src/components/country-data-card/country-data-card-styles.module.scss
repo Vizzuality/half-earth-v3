@@ -5,8 +5,6 @@
 
 .container {
   @include backdropBlur();
-  @include topLeft();
-  @include animationFunction($propertyToAnimate: all);
   display: flex;
   opacity: 1;
   flex-direction: column;

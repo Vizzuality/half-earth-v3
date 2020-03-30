@@ -3,6 +3,8 @@
 @import 'styles/common-animations.module';
 
 .container {
+  @include topLeft();
+  @include animationFunction($propertyToAnimate: all);
   width: $sidebar-width;
   display: flex;
   flex-direction: column;

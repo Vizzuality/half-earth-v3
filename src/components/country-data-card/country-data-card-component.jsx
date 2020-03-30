@@ -5,6 +5,7 @@ import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import dummyCountryImage from 'images/dummyCountryImage.jpg';
 
 const CountryDataCardComponent = ({ view, handleSceneModeChange, countryData}) => {
+  
   return countryData && (
     <div className={styles.container}>
       <DummyBlurWorkaround />

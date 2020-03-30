@@ -1,19 +1,20 @@
 import React from 'react';
 import cx from 'classnames';
-import { isMobile } from 'constants/responsive';
 
 import CountryDataCard from 'components/country-data-card';
-import uiStyles from 'styles/ui.module';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
   view,
-  countryISO
+  countryISO,
+  isFullscreenActive
 }) => {
-
+  const sidebarHidden = isFullscreenActive;
   return (
-    <div className={styles.container}>
+    <div className={cx(styles.container, {
+      [animationStyles.leftHidden]: sidebarHidden,
+    })}>
       <CountryDataCard view={view} countryISO={countryISO}/>
     </div>
   )
