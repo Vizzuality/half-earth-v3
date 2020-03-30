@@ -4,23 +4,23 @@ import FixedHeader from 'components/fixed-header'
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import dummyCountryImage from 'images/dummyCountryImage.jpg';
 
-const CountryDataCardComponent = ({ view, handleSceneModeChange, countryData}) => {
+const CountryDataCardComponent = ({ view, handleSceneModeChange, countryData, countryArea, countryPopulation, grossNationalIncome, countryName, countryDescription}) => {
   
   return countryData && (
     <div className={styles.container}>
       <DummyBlurWorkaround />
       <FixedHeader 
         closeSidebar={handleSceneModeChange}
-        title={countryData.NAME_0}
+        title={countryName}
         view={view}
         autoHeight
       />
-      <img className={styles.image} alt={`${countryData.NAME_0}`} src={dummyCountryImage} />
+      <img className={styles.image} alt={`${countryName}`} src={dummyCountryImage} />
       <section className={styles.descriptionWrapper}>
-        <p>Total Area: {`${countryData.Area}`}</p>
-        <p>Population: {`${countryData.Population2016}`}</p>
-        <p>GNI: {`${countryData.GNI_PPP}`}</p>
-        <p>{`${countryData.sentence}`}</p>
+        <p>Total Area: {`${countryArea}`}</p>
+        <p>Population: {`${countryPopulation}`}</p>
+        <p>GNI: {`${grossNationalIncome}`}</p>
+        <p>{`${countryDescription}`}</p>
       </section>
     </div>
   );
