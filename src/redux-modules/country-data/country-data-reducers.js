@@ -10,7 +10,8 @@ function setCountryDataReady(state, { payload }) {
   if (!payload) return {...state, data: null};
   const country = payload[0];
   const { attributes } = country;
-  return { ...state, error: false, loading: false, data: attributes };
+  const { GID_0 } = attributes;
+  return { ...state, error: false, loading: false, data: {...state.data, [GID_0]: attributes} };
 }
 
 function setCountryDataError(state, { payload }) {

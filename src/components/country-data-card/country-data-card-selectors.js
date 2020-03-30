@@ -1,12 +1,8 @@
-import { createStructuredSelector, createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 import { format } from 'd3-format';
 
-const selectCountryData = ({ countryData }) => (countryData && countryData.data) || null;
-
-const getName = createSelector(selectCountryData, countryData => {
-  if (!countryData) return null;
-  return countryData.NAME_0
-})
+const selectCountryData = ({ countryData }, { countryISO }) => (countryData && countryData.data && countryData.data[countryISO]) || null;
+const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 
 const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
@@ -37,12 +33,13 @@ const getDescription = createSelector(selectCountryData, countryData => {
   return countryData.sentence;
 })
 
-
-export default createStructuredSelector({
-  countryData: selectCountryData,
-  countryName: getName,
-  countryArea: getArea,
-  countryPopulation: getPopulation,
-  grossNationalIncome: getGrossNationalIncome,
-  countryDescription: getDescription
-})
+const mapStateToProps = (state, props) => ({
+    countryData: selectCountryData(state, props),
+    countryDataLoading: selectCountryDataLoading(state, props),
+    countryArea: getArea(state, props),
+    countryPopulation: getPopulation(state, props),
+    grossNationalIncome: getGrossNationalIncome(state, props),
+    countryDescription: getDescription(state, props)
+  }
+)
+export default mapStateToProps;

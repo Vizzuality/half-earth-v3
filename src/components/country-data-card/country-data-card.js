@@ -18,7 +18,8 @@ const CountryDataCardContainer = (props) => {
     countryISO,
     setCountryDataLoading,
     setCountryDataReady,
-    setCountryDataError
+    setCountryDataError,
+    countryData
   } = props;
 
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
@@ -34,7 +35,7 @@ const CountryDataCardContainer = (props) => {
   }, [])
 
   useEffect(() => {
-    if (countriesDataLayer && countryISO) {
+    if (countriesDataLayer && countryISO && !countryData) {
       setCountryDataLoading();
       const query = countriesDataLayer.createQuery();
       query.where = `GID_0 = '${countryISO}'`;
@@ -51,7 +52,6 @@ const CountryDataCardContainer = (props) => {
 
   const handleSceneModeChange = () => {
     changeUI({ sceneMode: sceneMode === GLOBAL_SCENE ? LOCAL_SCENE : GLOBAL_SCENE });
-    setCountryDataReady(null);
   }
   return (
     <Component handleSceneModeChange={handleSceneModeChange} {...props}/>

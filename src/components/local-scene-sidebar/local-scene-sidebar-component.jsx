@@ -8,6 +8,7 @@ import styles from './local-scene-sidebar-styles.module.scss';
 const LocalSceneSidebarComponent = ({
   view,
   countryISO,
+  countryName,
   isFullscreenActive
 }) => {
   const sidebarHidden = isFullscreenActive;
@@ -15,7 +16,7 @@ const LocalSceneSidebarComponent = ({
     <div className={cx(styles.container, {
       [animationStyles.leftHidden]: sidebarHidden,
     })}>
-      <CountryDataCard view={view} countryISO={countryISO}/>
+      <CountryDataCard view={view} countryISO={countryISO} countryName={countryName}/>
     </div>
   )
 }

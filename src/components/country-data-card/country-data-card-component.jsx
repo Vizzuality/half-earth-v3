@@ -1,11 +1,24 @@
 import React from 'react';
+import { Loading } from 'he-components';
 import styles from './country-data-card-styles.module.scss'
 import FixedHeader from 'components/fixed-header'
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import dummyCountryImage from 'images/dummyCountryImage.jpg';
 
-const CountryDataCardComponent = ({ view, handleSceneModeChange, countryData, countryArea, countryPopulation, grossNationalIncome, countryName, countryDescription}) => {
-  
+const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, countryDataLoading, countryArea, countryPopulation, grossNationalIncome, countryName, countryDescription}) => {
+
+  if (countryDataLoading) {
+    return (
+      <div className={styles.container}>
+        <DummyBlurWorkaround />
+        <div className={styles.loading}>
+          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+
   return countryData && (
     <div className={styles.container}>
       <DummyBlurWorkaround />
