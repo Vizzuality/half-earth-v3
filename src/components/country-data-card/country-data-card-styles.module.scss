@@ -18,6 +18,14 @@
 
 .image {
   top: -5px;
-position: relative;
-height: 185px;
+  position: relative;
+  height: 185px;
+}
+
+.descriptionWrapper {
+  padding: 20px 20px 30px;
+  p {
+    @extend %bodyText;
+    margin: 0 0 10px;
+  }
 }
