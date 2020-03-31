@@ -30,7 +30,7 @@ const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, co
       />
       <img className={styles.image} alt={`${countryName}`} src={dummyCountryImage} />
       <section className={styles.descriptionWrapper}>
-        <p>Total Area: {`${countryArea}`}</p>
+        <p>Total Area: {`${countryArea}`} km<sup>2</sup></p>
         <p>Population: {`${countryPopulation}`}</p>
         <p>GNI: {`${grossNationalIncome}`}</p>
         <p>{`${countryDescription}`}</p>

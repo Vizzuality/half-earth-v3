@@ -8,21 +8,33 @@ const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { Area } = countryData;
   const areaFormat = format(",.0f");
-  const formatedArea = `${areaFormat(Area)} km2`;
+  const formatedArea = `${areaFormat(Area)}`;
   return formatedArea;
 })
 
 const getPopulation = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { Population2016 } = countryData;
-  const populationFormat = (population) => format(".2f")(population / 1e6);
-  const formatedPopulation = `${populationFormat(Population2016)} million`;
+  const valueFormat = population => {
+    if (population < 1000000) {
+      return population.toLocaleString('en');
+    }
+    return format(".2f")(population / 1e6);
+  };
+  const unitFormat = population => {
+    if (population > 1000000) {
+      return 'million';
+    }
+    return '';
+  }
+  const formatedPopulation = `${valueFormat(Population2016)} ${unitFormat(Population2016)} people`;
   return formatedPopulation;
 })
 
 const getGrossNationalIncome = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { GNI_PPP } = countryData;
+  if (!GNI_PPP) return 'data not available'
   const GNIFormat = format("$,.2f");
   const formatedGNI = `${GNIFormat(GNI_PPP)} billion`;
   return formatedGNI;
