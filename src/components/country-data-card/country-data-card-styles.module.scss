@@ -1,0 +1,45 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  @include backdropBlur();
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  width: $sidebar-width;
+  overflow: hidden;
+  color: $white;
+  border-radius: 2px;
+}
+
+.loading {
+  padding: $mobile-sidebar-side-paddings;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
+}
+
+.loadingText {
+  @extend %bodyText;
+  margin-bottom: 20px;
+}
+
+.image {
+  top: -5px;
+  position: relative;
+  height: 185px;
+}
+
+.descriptionWrapper {
+  padding: 20px 20px 30px;
+  p {
+    @extend %bodyText;
+    margin: 0 0 10px;
+  }
+}

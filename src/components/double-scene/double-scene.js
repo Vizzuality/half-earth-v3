@@ -70,7 +70,7 @@ const DoubleScene = props => {
 
   useEffect(() => {
     if(viewLocal && spatialReference && countryExtent) {
-      const expandedCountryExtent = countryExtent.clone().expand(1.5); //add paddings around country borders
+      const expandedCountryExtent = countryExtent.clone().expand(1.2); //add paddings around country borders
       viewLocal.clippingArea = expandedCountryExtent;
       viewLocal.extent = expandedCountryExtent;
       viewLocal.when(() => {
