@@ -8,7 +8,7 @@ import mapPinIcon from 'icons/map_pin.svg'
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, isLandscapeMode, countryISO } = props;
+  const { map, isLandscapeMode, countryISO, isCountryMode } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [layerReady, setLayerReady] = useState(false)
@@ -65,6 +65,18 @@ const CountryLabelsLayerComponent = props => {
       layerReady.labelsVisible = !isLandscapeMode;
     }
   }, [layerReady, isLandscapeMode])
+
+  useEffect(() => {
+    if (layerReady && labelingInfo) {
+      if (isCountryMode) {
+        labelingInfo.where = "NAME_0 <> 'Spain'";
+        layerReady.labelingInfo = [labelingInfo];
+      } else {
+        labelingInfo.where = null;
+        layerReady.labelingInfo = [labelingInfo];
+      }
+    }
+  }, [layerReady, labelingInfo, isCountryMode])
 
   useEffect(() => {
     let graphicLayer;

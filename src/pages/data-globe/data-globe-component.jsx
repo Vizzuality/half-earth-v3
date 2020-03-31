@@ -113,7 +113,7 @@ const DataGlobeComponent = ({
           setRasters={setRasters}
           selectedSpecies={selectedSpecies}
         />
-        {!isCountryMode && <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>}
+        <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode}/>
         <CountryBorderLayer countryISO={countryISO}/>
         {isCountryMode && <LocalSceneSidebar countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
