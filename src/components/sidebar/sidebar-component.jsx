@@ -10,12 +10,12 @@ import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './sidebar-styles.module.scss';
 
-const Sidebar = ({ map, view, theme, children, activeCategory, countryISO, handleSidebarToggle, isSidebarOpen, isLandscapeMode, isFullscreenActive, activeOption, isLandscapeSidebarCollapsed }) => {
+const Sidebar = ({ map, view, theme, children, isCountryMode, activeCategory, countryISO, handleSidebarToggle, isSidebarOpen, isLandscapeMode, isFullscreenActive, activeOption, isLandscapeSidebarCollapsed }) => {
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
   
   const isOnMobile = isMobile();
   const categoryBoxVisibleOnMobile = isOnMobile && isSidebarOpen && isActive;
-  const isSidebarVisible = (isSidebarOpen && !isLandscapeMode && !isFullscreenActive) || categoryBoxVisibleOnMobile;
+  const isSidebarVisible = (isSidebarOpen && !isLandscapeMode && !isFullscreenActive && !isCountryMode) || categoryBoxVisibleOnMobile;
 
   return (
     <div className={cx(styles.sidebar, theme.sidebar, { [styles.countrySelected]: countryISO, [animationStyles.leftHidden]: !isSidebarVisible && !isOnMobile, [animationStyles.bottomHidden]: !isSidebarVisible && isOnMobile })}>

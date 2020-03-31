@@ -17,14 +17,16 @@ import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 import { MobileOnly, isMobile } from 'constants/responsive';
+import { LOCAL_SCENE } from 'constants/view-props';
 import About from 'components/about';
 import CountryLabelsLayer from 'components/country-labels-layer';
+import CountryBorderLayer from 'components/country-border-layer';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
-const CountryBorderLayer = loadable(() => import('components/country-border-layer'));
+const LocalSceneSidebar = loadable(() => import('components/local-scene-sidebar'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -51,6 +53,7 @@ const DataGlobeComponent = ({
 }) => {
   
   const isOnMobile = isMobile();
+  const isCountryMode = sceneMode === LOCAL_SCENE;
 
   return (
     <>
@@ -80,6 +83,7 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
+          isCountryMode={isCountryMode}
           isBiodiversityActive={isBiodiversityActive}
           activeLayers={activeLayers}
           handleGlobeUpdating={handleGlobeUpdating}
@@ -101,10 +105,11 @@ const DataGlobeComponent = ({
           activeLayers={activeLayers}
           selectedSpecies={selectedSpecies}
         />
-        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
+        {!isCountryMode && <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>}
         <CountryBorderLayer countryISO={countryISO}/>
+        {isCountryMode && <LocalSceneSidebar countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {(isLandscapeMode || sceneMode === 'local') && <TerrainExaggerationLayer exaggeration={sceneMode === 'local' ? 20 : 3}/>}
+        {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
       </DoubleScene>
