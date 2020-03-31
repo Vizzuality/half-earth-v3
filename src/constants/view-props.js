@@ -3,5 +3,5 @@ export const zoomToScale = {
   8: 2161539.959495197
 };
 
-export  const LOCAL_SCENE = 'local';
+export const LOCAL_SCENE = 'local';
 export const GLOBAL_SCENE = 'global';
