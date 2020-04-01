@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 // Component
 import Component from './human-impact-layers-component';
 // Constants
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
-import { humanPressuresLandUse } from 'constants/human-pressures';
+import { LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
 //Actions
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
@@ -13,18 +12,16 @@ const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActio
 
 const HumanImpactLayersContainer = props => {
 
-  const { activeLayers, rasters } = props;
+  const { activeLayers } = props;
 
   const [checkedOptions, setCheckedOptions] = useState({});
 
   useEffect(() => {
-    const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    // eslint-disable-next-line no-mixed-operators
-    const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
-      ...acc, [option.value]: rasters[option.value]
-    }), {})) || {};
+    const alreadyChecked = LAND_HUMAN_PRESURES_LAYERS.reduce((acc, option) => ({
+      ...acc, [option]: activeLayers.some(layer => layer.title === option)
+    }), {});
     setCheckedOptions(alreadyChecked);
-  }, [rasters, activeLayers])
+  }, [activeLayers])
 
   return (
     <Component
@@ -33,4 +30,4 @@ const HumanImpactLayersContainer = props => {
     />
   )
 } 
-export default  connect(null, actions)(HumanImpactLayersContainer);
+export default connect(null, actions)(HumanImpactLayersContainer);

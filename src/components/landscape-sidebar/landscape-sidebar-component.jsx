@@ -17,9 +17,7 @@ const LandscapeSidebarComponent = ({
   isLandscapeMode,
   isFullscreenActive,
   activeLayers,
-  rasters,
   setLayerVisibility,
-  setRasters,
   handleGlobeUpdating,
   isLandscapeSidebarCollapsed,
   selectedSpecies,
@@ -48,9 +46,7 @@ const LandscapeSidebarComponent = ({
           map={map}
           view={view}
           activeLayers={activeLayers}
-          rasters={rasters}
           setLayerVisibility={setLayerVisibility}
-          setRasters={setRasters}
           handleGlobeUpdating={handleGlobeUpdating}
         />
         <MOLUploader />

@@ -4,7 +4,7 @@ import postRobot from 'post-robot';
 
 import { loadModules } from 'esri-loader';
 
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER, PLEDGES_LAYER, SIGNED_PLEDGE_GRAPHIC_LAYER } from 'constants/layers-slugs';
+import { PLEDGES_LAYER, SIGNED_PLEDGE_GRAPHIC_LAYER } from 'constants/layers-slugs';
 import { PLEDGES_LAYER_URL } from 'constants/layers-urls';
 import { 
   layerManagerToggle,
@@ -21,7 +21,6 @@ import pledgeLightIcon from 'icons/pledge.svg'
 import signedPledgeLightIcon from 'images/my_pledge.png'
 
 import ownActions from './map-iframe-actions.js';
-import { handleLayerCreation } from '../../utils/layer-manager-utils.js';
 const actions = { ...ownActions };
 
 const addSignedPledgeToMap = (map, view, signedPledgeZIP, signedPledgeCountry) => {
@@ -43,21 +42,6 @@ const addSignedPledgeToMap = (map, view, signedPledgeZIP, signedPledgeCountry) =
 
 const handleMapLoad = (map, view, activeLayers, isPledgesActive, signedPledgeZIP, signedPledgeCountry) => {
 
-  // This fix has been added as a workaround to a bug introduced on v4.12
-  // The bug was causing the where clause of the mosaic rule to not work
-  // It will be probably fixed on v4.13
-  const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
-  const humanImpactLayer = handleLayerCreation(layerConfig, map);
-  loadModules(["esri/config"]).then(([esriConfig]) => {
-    esriConfig.request.interceptors.push({
-      urls: `${humanImpactLayer.url}/exportImage`,
-      before: function (params) {
-        if(params.requestOptions.query.mosaicRule) {
-          params.requestOptions.query.mosaicRule = JSON.stringify(humanImpactLayer.mosaicRule.toJSON());
-        }
-      }
-    });
-  })
 
   // pledges layer
   loadModules([

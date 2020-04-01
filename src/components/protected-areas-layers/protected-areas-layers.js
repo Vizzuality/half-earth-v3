@@ -12,17 +12,17 @@ const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActio
 
 const ProtectedAreasLayersContainer = props => {
 
-  const handleLayerToggle = layerName => {
+  const handleLayerToggle = async layerName => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, activeCategory, map } = props;
     if (layerName === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
-      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(layerName => {
+      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(async layerName => {
         const layerConfig = layersConfig[layerName];
-        handleLayerCreation(layerConfig, map);
+        await handleLayerCreation(layerConfig, map);
       })
       batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, activeCategory);
     } else {
       const layer = layersConfig[layerName];
-      handleLayerCreation(layer, map);
+      await handleLayerCreation(layer, map);
       layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
       removeLayerAnalyticsEvent({ slug: layer.slug });
     }
