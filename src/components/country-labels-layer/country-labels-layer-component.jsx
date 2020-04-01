@@ -21,7 +21,7 @@ const CountryLabelsLayerComponent = props => {
         labelExpressionInfo: {
           expression: "$feature.NAME_0"
         },
-        where: countryName ? `NAME_0 <> '${countryName}'` : null,
+        where: countryName && isCountryMode ? `NAME_0 <> '${countryName}'` : null,
         symbol: {
           type: "text",
           color: [213,207,202],
@@ -36,7 +36,7 @@ const CountryLabelsLayerComponent = props => {
       });
       setLabelingInfo(_labelingInfo);
     })
-  }, [countryName]);
+  }, [countryName, isCountryMode]);
 
   useEffect(() => {
       if (labelingInfo) {
