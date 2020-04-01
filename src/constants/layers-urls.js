@@ -102,7 +102,6 @@ export const LAYERS_URLS = {
   [ALL_TAXA_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/30b635240689413082d9b4f3c8d25aa6/rest/services/All_Taxa_Rarity_55km/MapServer` ,
   [ALL_TAXA_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/2d2acd2ff9f54d5c87ea317c9de3c1a1/rest/services/All_Taxa_Richness_55km/MapServer` ,
   [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/373ad88574cc403cb4707a5491b8a661/rest/services/Amphibians_Richness_55km/MapServer` ,
-  // 110 km biodiversity services (DEPRECATED)
-  [FISHES_RARITY]: `${bucketUrl}/rarity/fishes/${templatePattern}` ,
-  [FISHES_RICHNESS]: `${bucketUrl}/richness/fishes/${templatePattern}` ,
+  [FISHES_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/672fd2c2e15d43dba3c452ca600884a8/rest/services/Marine_Fish_Rarity_55km/MapServer` ,
+  [FISHES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/5212259d151744438c610d5104b91591/rest/services/Marine_Fish_Richness_55km/MapServer` ,
   }

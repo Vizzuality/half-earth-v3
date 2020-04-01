@@ -392,14 +392,14 @@ export const layersConfig = {
   [FISHES_RARITY]: {
     title: FISHES_RARITY,
     slug: FISHES_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[FISHES_RARITY],
     bbox: null
   },
   [FISHES_RICHNESS]: {
     title: FISHES_RICHNESS,
     slug: FISHES_RICHNESS,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[FISHES_RICHNESS],
     bbox: null
   },
