@@ -462,7 +462,7 @@ export const layersConfig = {
   [REPTILES_RARITY]: {
     title: REPTILES_RARITY,
     slug: REPTILES_RARITY,
-    type: null,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[REPTILES_RARITY],
     bbox: null
   },
