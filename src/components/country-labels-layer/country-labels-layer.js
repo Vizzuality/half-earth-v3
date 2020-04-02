@@ -8,7 +8,7 @@ const actions = {...urlActions}
 
 const CountryLabelsLayerContainer = props => {
   const { view, changeGlobe, countryISO } = props;
-
+  
   const getLabelsLayer = (results) => {
     if (!results.length) return null;
     return results.find(result => result.graphic.layer.id === COUNTRIES_LABELS_FEATURE_LAYER)

@@ -8,7 +8,7 @@ import mapPinIcon from 'icons/map_pin.svg'
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, isLandscapeMode, countryISO } = props;
+  const { map, isLandscapeMode, countryISO, isCountryMode, countryName } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [layerReady, setLayerReady] = useState(false)
@@ -21,6 +21,7 @@ const CountryLabelsLayerComponent = props => {
         labelExpressionInfo: {
           expression: "$feature.NAME_0"
         },
+        where: countryName && isCountryMode ? `NAME_0 <> '${countryName}'` : null,
         symbol: {
           type: "text",
           color: [213,207,202],
@@ -35,7 +36,7 @@ const CountryLabelsLayerComponent = props => {
       });
       setLabelingInfo(_labelingInfo);
     })
-  }, []);
+  }, [countryName, isCountryMode]);
 
   useEffect(() => {
       if (labelingInfo) {
