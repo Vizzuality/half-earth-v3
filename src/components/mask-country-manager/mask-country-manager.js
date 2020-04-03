@@ -83,7 +83,7 @@ const MaskCountryManager = props => {
       graphicsLayer.graphics = [];
       queryCountryData(countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer);
     }
-  }, [countryExtent, isCountryMode]);
+  }, [countryExtent]);
 
   useEffect(() => {
     if (graphicsLayer && !countryISO) {
