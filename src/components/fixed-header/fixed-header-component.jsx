@@ -36,7 +36,7 @@ const FixedHeader = ({ closeSidebar, title, view, titleOptions, selectableTitle,
         {flipToggleSwitch && <div className={cx(styles.flipToggleSwitchIcon, {
           [styles.collapsedFlipToggleSwitchIcon]: isLandscapeSidebarCollapsed
         })} />}
-      {titleOptions && <ChevronIcon onClick={() => setTitleDropdownOpen(!titleDropdownOpen)} className={styles.optionsToggle}/>}
+      {titleOptions && <ChevronIcon onClick={() => setTitleDropdownOpen(!titleDropdownOpen)} className={cx(styles.optionsToggle, {[styles.openList]: titleDropdownOpen})}/>}
       {titleOptions &&
         <ul className={cx(styles.titleOptionsList, { [styles.open]: titleDropdownOpen})}>
         {titleOptions.map( option => {
