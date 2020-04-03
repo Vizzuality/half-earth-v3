@@ -6,7 +6,6 @@ const selectCountryDataLoading = ({ countryData }) => (countryData && countryDat
 
 const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
-  console.log(countryData)
   const { Area } = countryData;
   const areaFormat = format(",.0f");
   const formatedArea = `${areaFormat(Area)}`;
@@ -46,13 +45,19 @@ const getDescription = createSelector(selectCountryData, countryData => {
   return countryData.sentence;
 })
 
+const getNumberOfVertebrates = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.N_SPECIES.toLocaleString('en');
+})
+
 const mapStateToProps = (state, props) => ({
     countryData: selectCountryData(state, props),
     countryDataLoading: selectCountryDataLoading(state, props),
     countryArea: getArea(state, props),
     countryPopulation: getPopulation(state, props),
     grossNationalIncome: getGrossNationalIncome(state, props),
-    countryDescription: getDescription(state, props)
+    countryDescription: getDescription(state, props),
+    vertebratesCount: getNumberOfVertebrates(state, props)
   }
 )
 export default mapStateToProps;
