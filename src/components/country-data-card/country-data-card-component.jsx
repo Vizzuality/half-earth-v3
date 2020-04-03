@@ -6,7 +6,20 @@ import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import dummyCountryImage from 'images/dummyCountryImage.jpg';
 
 const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, countryDataLoading, countryArea, countryPopulation, grossNationalIncome, countryName, countryDescription}) => {
-
+const countries = [
+  'spain',
+  'bahamas',
+  'portugal',
+  'spain',
+  'bahamas',
+  'portugal',
+  'spain',
+  'bahamas',
+  'portugal',
+  'spain',
+  'bahamas',
+  'portugal',
+]
   if (countryDataLoading) {
     return (
       <div className={styles.container}>
@@ -27,6 +40,8 @@ const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, co
         title={countryName}
         view={view}
         autoHeight
+        selectableTitle
+        titleOptions={countries}
       />
       <img className={styles.image} alt={`${countryName}`} src={dummyCountryImage} />
       <section className={styles.descriptionWrapper}>

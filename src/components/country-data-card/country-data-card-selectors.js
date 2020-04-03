@@ -6,6 +6,7 @@ const selectCountryDataLoading = ({ countryData }) => (countryData && countryDat
 
 const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
+  console.log(countryData)
   const { Area } = countryData;
   const areaFormat = format(",.0f");
   const formatedArea = `${areaFormat(Area)}`;
