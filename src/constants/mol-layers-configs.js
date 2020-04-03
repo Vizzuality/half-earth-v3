@@ -575,7 +575,7 @@ export const legendConfigs = {
   },
   [SA_AMPHIB_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '25 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian regional richness"
   },
   [SA_DRAGONFLIES_RARITY]: {
@@ -585,7 +585,7 @@ export const legendConfigs = {
   },
   [SA_DRAGONFLIES_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '3', '68 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Dragonflies richness"
   },
   [SA_MAMMALS_RARITY]: {
@@ -595,7 +595,7 @@ export const legendConfigs = {
   },
   [SA_MAMMALS_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '49 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Mammals regional richness"
   },
   [SA_BIRDS_RARITY]: {
@@ -605,7 +605,7 @@ export const legendConfigs = {
   },
   [SA_BIRDS_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '375 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Birds regional richness"
   },
   [SA_RESTIO_RARITY]: {
@@ -615,7 +615,7 @@ export const legendConfigs = {
   },
   [SA_RESTIO_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '166 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Restio regional richness"
   },
   [SA_PROTEA_RARITY]: {
@@ -623,7 +623,7 @@ export const legendConfigs = {
     items: [
     {
     color: "#0664f6",
-    value: "-10.9"
+    value: "low"
     },
     {
     color: "#0572d6",
@@ -655,14 +655,14 @@ export const legendConfigs = {
     },
     {
     color: "#fde300",
-    value: "-6.2"
+    value: "high"
     }
     ],
     title: "Protea regional rarity"
   },
   [SA_PROTEA_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '68 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Protea regional richness"
   },
   [SA_REPTILES_RARITY]: {
@@ -672,13 +672,13 @@ export const legendConfigs = {
   },
   [SA_REPTILES_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '57 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Reptiles regional richness"
   },
   // Hummingbirds
   [HUMMINGBIRDS_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '92 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Hummingbirds richness"
   },
   [HUMMINGBIRDS_RARITY]: {
@@ -694,7 +694,7 @@ export const legendConfigs = {
   },
   [MAMMALS_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '225 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Mammals richness"
   },
   [FISHES_RARITY]: {
@@ -704,7 +704,7 @@ export const legendConfigs = {
   },
   [FISHES_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '3,469 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Fishes richness"
   },
   [CONIFERS_RARITY]: {
@@ -714,7 +714,7 @@ export const legendConfigs = {
   },
   [CONIFERS_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '49 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Conifers richness"
   },
   [CACTI_RARITY]: {
@@ -724,7 +724,7 @@ export const legendConfigs = {
   },
   [CACTI_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '93 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Cacti richness"
   },
   [AMPHIB_RARITY]: {
@@ -734,12 +734,12 @@ export const legendConfigs = {
   },
   [AMPHIB_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '180 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian richness"
   },
   [REPTILES_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', 'xxxx species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Reptile richness"
   },
   [REPTILES_RARITY]: {
@@ -754,7 +754,7 @@ export const legendConfigs = {
   },
   [BIRDS_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '0', '1,010 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Birds richness"
   },
   [ALL_TAXA_RARITY]: {
@@ -764,7 +764,7 @@ export const legendConfigs = {
   },
   [ALL_TAXA_RICHNESS]: {
     type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, '1', '3,469 species'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "All groups richness"
   }
 }
