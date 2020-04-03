@@ -4,7 +4,16 @@ import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-sl
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { createGraphicLayer } from 'utils/graphic-layer-utils';
 
-const createGraphic = (Graphic, geometry) => {
+const maskStyles = {
+  material: {
+    color: [0, 0, 0, 0.7]
+  },
+  outline: {
+    color: [216, 216, 216, 0]
+  }
+}
+
+const createGraphic = (Graphic, geometry, styles) => {
   return new Graphic({
     geometry,
     symbol: {
@@ -13,12 +22,13 @@ const createGraphic = (Graphic, geometry) => {
         {
           type: "fill",
           material: {
-            color: [15, 43, 59, 1]
+            color: [15, 43, 59, 0]
           },
           outline: {
             color: [216, 216, 216, 1],
             size: 0.5
-          }
+          },
+          ...styles
         }
       ]
     }
@@ -31,21 +41,24 @@ const MaskCountryManager = props => {
   const [graphicsLayer, setGraphicsLayer] = useState(null);
 
   const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer) => {
-    loadModules(['esri/geometry/Polygon',"esri/Graphic"]).then(([Polygon, Graphic]) => {
-      
+    loadModules(['esri/geometry/Polygon',"esri/Graphic", "esri/geometry/geometryEngine"]).then(([Polygon, Graphic, geometryEngine]) => {
       const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.2));
       const query = countryLayer.createQuery();
-      query.where = `GID_0 <> '${countryISO}'`;
       query.outSpatialReference = spatialReference;
       query.geometry = extentGeometry;
   
       countryLayer.queryFeatures(query)
         .then(async function(results){
           const { features } = results;
-          const geometries = features.map(gc => gc.geometry);
-          const graphics = geometries.map(geo => createGraphic(Graphic, geo));
-          graphicsLayer.graphics = graphics;
-          graphicsLayer.visible = isCountryMode;
+          const countryGeometry = features.find(({ attributes }) => attributes.GID_0 === countryISO).geometry;
+          const neighbourCountriesGeometry = features.filter(({ attributes }) => attributes.GID_0 !== countryISO);
+          const maskGeometry = await geometryEngine.difference(extentGeometry, countryGeometry);
+          const borderGeometries = neighbourCountriesGeometry.map(gc => gc.geometry);
+
+          const graphics = borderGeometries.map(geo => createGraphic(Graphic, geo));
+          const maskGraphic = createGraphic(Graphic, maskGeometry, maskStyles);
+
+          graphicsLayer.graphics = [maskGraphic, ...graphics];
         })
         .catch((error) => {
           console.warn(error);
