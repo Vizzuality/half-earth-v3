@@ -47,7 +47,8 @@ export const createPolygonGeometry = (gridCell) => {
     })
 }
 
-export const simplePictureMarker = asset => ({
+export const simplePictureMarker = (asset, symbol = {}) => ({
   type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-  url: asset
+  url: asset,
+  ...symbol
 })

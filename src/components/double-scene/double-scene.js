@@ -58,8 +58,20 @@ const DoubleScene = props => {
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
             viewingMode: 'local',
-            spatialReference
+            spatialReference,
+            constraints: {
+              // altitude: {
+              //   min: 35000000,
+              //   max: 36000000
+              // },
+              tilt: {
+                max: 60
+              }
+            },
           });
+          _viewLocal.padding.left = 300;
+          _viewLocal.padding.bottom = 60;
+          
           setViewLocal(_viewLocal);
         })
         .catch(err => {

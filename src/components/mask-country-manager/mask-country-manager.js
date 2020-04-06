@@ -57,7 +57,7 @@ const MaskCountryManager = props => {
 
           const graphics = borderGeometries.map(geo => createGraphic(Graphic, geo));
           const maskGraphic = createGraphic(Graphic, maskGeometry, maskStyles);
-
+          graphicsLayer.visible = isCountryMode;
           graphicsLayer.graphics = [maskGraphic, ...graphics];
         })
         .catch((error) => {
@@ -79,7 +79,6 @@ const MaskCountryManager = props => {
   useEffect(() => {
     loadModules(["esri/layers/GraphicsLayer"]).then(([GraphicsLayer]) => {
         const _graphicsLayer = createGraphicLayer(GraphicsLayer, [], 'mask-layer');
-        _graphicsLayer.visible = isCountryMode;
         setGraphicsLayer(_graphicsLayer);  
         viewLocal.map.layers.add(_graphicsLayer);
       })

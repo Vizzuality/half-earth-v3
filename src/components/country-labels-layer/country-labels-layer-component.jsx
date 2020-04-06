@@ -80,7 +80,7 @@ const CountryLabelsLayerComponent = props => {
           const { features } = results;
           countryPinMarker = new Graphic({
             geometry: features[0].geometry,
-            symbol: simplePictureMarker(mapPinIcon)
+            symbol: simplePictureMarker(mapPinIcon, { height: 24, width: 24 })
           });
           countryPinMarker.symbol.yoffset = -10;
           graphicLayer.add(countryPinMarker)
