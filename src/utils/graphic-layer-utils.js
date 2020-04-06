@@ -1,10 +1,10 @@
 import { loadModules } from 'esri-loader';
 
-export const createGraphicLayer = (GraphicsLayer, graphic, id = "graphicLayer") => {
+export const createGraphicLayer = (GraphicsLayer, graphics, id = "graphicLayer") => {
   return new GraphicsLayer({
     id: id,
     title: id,
-    graphics: [graphic]
+    graphics
   });
 }
 
