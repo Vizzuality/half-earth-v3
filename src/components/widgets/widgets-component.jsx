@@ -21,7 +21,7 @@ const WidgetsComponent = ({ map, view, viewLocal, isFullscreenActive, isHEModalO
       {viewLocal && (
         <>
           <ToggleUiWidget map={map} view={viewLocal} isFullscreenActive={isFullscreenActive} hidden={hiddenWidget}/>
-          <ZoomWidget map={map} view={viewLocal} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
+          <ZoomWidget map={map} view={viewLocal} isNotMapsList={isNotMapsList} hidden={hiddenWidget} disableStateUpdate={!!viewLocal}/>
         </>
       )}
     </>
