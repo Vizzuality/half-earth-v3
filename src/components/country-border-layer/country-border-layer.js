@@ -68,6 +68,7 @@ const CountryBorderLayer = props => {
   useEffect(() => {
     if (borderGraphic && !countryISO) {
       borderGraphic.geometry = null;
+      setCountryExtentReady(null);
     }
   },[countryISO])
 
