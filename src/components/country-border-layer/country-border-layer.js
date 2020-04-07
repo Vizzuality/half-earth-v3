@@ -5,8 +5,6 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
 import { connect } from 'react-redux';
 import actions from 'redux_modules/country-extent';
-import { simplePictureMarker } from 'utils/graphic-layer-utils';
-import mapPinIcon from 'icons/map_pin.svg'
 
 import {
   createGraphic,
@@ -15,23 +13,17 @@ import {
 } from 'utils/graphic-layer-utils';
 
 const CountryBorderLayer = props => {
-  const { view, spatialReference, countryISO, setCountryExtentLoading, setCountryExtentReady, setCountryExtentError, isCountryMode } = props;
+  const { view, spatialReference, countryISO, setCountryExtentLoading, setCountryExtentReady, setCountryExtentError } = props;
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
-  const [countryPinMarker, setCountryPinMarker] = useState(null);
 
   //Create the graphics layer on mount
   useEffect(() => {
     loadModules(["esri/Graphic","esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
         const _borderGraphic = createGraphic(Graphic, gridCellDefaultStyles);
-        const _countryPinMarker = new Graphic({
-          symbol: simplePictureMarker(mapPinIcon, { height: 24, width: 24, yoffset: -10 }),
-          visible: !isCountryMode
-        });
-        const graphicsLayer = createGraphicLayer(GraphicsLayer, [_borderGraphic, _countryPinMarker], GRAPHIC_LAYER);
+        const graphicsLayer = createGraphicLayer(GraphicsLayer, [_borderGraphic], GRAPHIC_LAYER);
         setBorderGraphic(_borderGraphic);
-        setCountryPinMarker(_countryPinMarker);
         view.map.add(graphicsLayer);
       })
   }, [])
@@ -45,13 +37,11 @@ const CountryBorderLayer = props => {
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        view.goTo(geometry);
-        const borderPolygon = await createPolygonGeometry(geometry);
-        if (borderGraphic) { 
-          borderGraphic.geometry = borderPolygon;
-          countryPinMarker.geometry = geometry;
-        };
         setCountryExtentReady(geometry.extent);
+        view.goTo(geometry);
+        if (borderGraphic) { 
+          borderGraphic.geometry = await createPolygonGeometry(geometry);
+        };
       })
       .catch((error) => {
         setCountryExtentError()
@@ -70,24 +60,16 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer && countryISO && borderGraphic && spatialReference && countryPinMarker) {
+    if (countryLayer && countryISO && borderGraphic && spatialReference) {
       queryCountryData();
     }
-  }, [countryLayer, countryISO, borderGraphic, spatialReference, countryPinMarker]);
+  }, [countryLayer, countryISO, borderGraphic, spatialReference]);
 
   useEffect(() => {
     if (borderGraphic && !countryISO) {
       borderGraphic.geometry = null;
-      countryPinMarker.geometry = null;
-
     }
   },[countryISO])
-
-  useEffect(() => {
-    if(countryPinMarker) {
-      countryPinMarker.visible = !isCountryMode;
-    }
-  }, [isCountryMode]);
 
   return null
 }
