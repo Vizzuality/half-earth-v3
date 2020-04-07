@@ -37,11 +37,11 @@ const CountryBorderLayer = props => {
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        setCountryExtentReady(geometry.extent);
         view.goTo(geometry);
         if (borderGraphic) { 
           borderGraphic.geometry = await createPolygonGeometry(geometry);
         };
+        setCountryExtentReady(geometry.extent);
       })
       .catch((error) => {
         setCountryExtentError()
