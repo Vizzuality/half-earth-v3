@@ -53,8 +53,7 @@ const DataGlobeComponent = ({
   countryISO,
   countryName,
   sceneMode,
-  countryExtent,
-  countryExtentLoading
+  countryExtent
 }) => {
   
   const isOnMobile = isMobile();
