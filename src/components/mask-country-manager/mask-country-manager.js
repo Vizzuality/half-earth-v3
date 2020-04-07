@@ -35,36 +35,36 @@ const createGraphic = (Graphic, geometry, styles) => {
   });
 }
 
+const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode) => {
+  loadModules(['esri/geometry/Polygon',"esri/Graphic", "esri/geometry/geometryEngine"]).then(([Polygon, Graphic, geometryEngine]) => {
+    const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.2));
+    const query = countryLayer.createQuery();
+    query.outSpatialReference = spatialReference;
+    query.geometry = extentGeometry;
+
+    countryLayer.queryFeatures(query)
+      .then(async function(results){
+        const { features } = results;
+        const countryGeometry = features.find(({ attributes }) => attributes.GID_0 === countryISO).geometry;
+        const neighbourCountriesGeometry = features.filter(({ attributes }) => attributes.GID_0 !== countryISO);
+        const maskGeometry = await geometryEngine.difference(extentGeometry, countryGeometry);
+        const borderGeometries = neighbourCountriesGeometry.map(gc => gc.geometry);
+
+        const graphics = borderGeometries.map(geo => createGraphic(Graphic, geo));
+        const maskGraphic = createGraphic(Graphic, maskGeometry, maskStyles);
+        graphicsLayer.graphics = [maskGraphic, ...graphics];
+        graphicsLayer.visible = isCountryMode;
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+    });
+};
+
 const MaskCountryManager = props => {
   const { viewLocal, spatialReference, countryISO, countryExtent, isCountryMode } = props;
   const [countryLayer, setCountryLayer] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
-
-  const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer) => {
-    loadModules(['esri/geometry/Polygon',"esri/Graphic", "esri/geometry/geometryEngine"]).then(([Polygon, Graphic, geometryEngine]) => {
-      const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.2));
-      const query = countryLayer.createQuery();
-      query.outSpatialReference = spatialReference;
-      query.geometry = extentGeometry;
-  
-      countryLayer.queryFeatures(query)
-        .then(async function(results){
-          const { features } = results;
-          const countryGeometry = features.find(({ attributes }) => attributes.GID_0 === countryISO).geometry;
-          const neighbourCountriesGeometry = features.filter(({ attributes }) => attributes.GID_0 !== countryISO);
-          const maskGeometry = await geometryEngine.difference(extentGeometry, countryGeometry);
-          const borderGeometries = neighbourCountriesGeometry.map(gc => gc.geometry);
-
-          const graphics = borderGeometries.map(geo => createGraphic(Graphic, geo));
-          const maskGraphic = createGraphic(Graphic, maskGeometry, maskStyles);
-          graphicsLayer.visible = isCountryMode;
-          graphicsLayer.graphics = [maskGraphic, ...graphics];
-        })
-        .catch((error) => {
-          console.warn(error);
-        });
-      });
-  };
 
   useEffect(() => {
     loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
@@ -93,7 +93,7 @@ const MaskCountryManager = props => {
   useEffect(() => {
     if (countryLayer && countryISO  && spatialReference && countryExtent && graphicsLayer) {
       graphicsLayer.graphics = [];
-      queryCountryData(countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer);
+      queryCountryData(countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode);
     }
   }, [countryExtent]);
 
