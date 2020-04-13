@@ -71,7 +71,7 @@ export const LAYERS_CATEGORIES = {
 export const biodiversityCategories = [
   {
     name: 'TERRESTRIAL SPECIES',
-    description: 'Global, ~110 km cell size mapping of terrestrial species. ',
+    description: 'Global, ~55 km cell size mapping of terrestrial species. ',
     subcategories: false,
     taxa: [
       {
@@ -113,7 +113,7 @@ export const biodiversityCategories = [
   },
   {
     name: 'MARINE SPECIES',
-    description: 'Global, ~50 km cell size mapping of marine species. ',
+    description: 'Global, ~55 km cell size mapping of marine species. ',
     subcategories: false,
     taxa: [
       {
