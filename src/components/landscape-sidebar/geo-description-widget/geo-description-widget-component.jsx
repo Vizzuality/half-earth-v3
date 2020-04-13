@@ -61,9 +61,10 @@ const GeoDescriptionWidget = (props) => {
         viewMode={VIEW_MODE.LANDSCAPE}
         autoHeight 
       />
-      <p className={styles.description}>
-        {data.description}
-      </p>
+      <div className={styles.descriptionWrapper}>
+        <span className={styles.areaText}>{data.area}</span>
+        <p>{data.description}</p>
+      </div>
     </div>
   );
 };

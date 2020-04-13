@@ -48,11 +48,25 @@
   margin: 0;
   margin-bottom: 8px;
   user-select: none;
+  display: flex;
+  align-items: baseline;
+}
 
-  .counter {
-    color: $robins-egg-blue;
-    margin-left: 6px;
-  };
+.counter {
+  align-items: center;
+  background-color: $brand-color-main;
+  border-radius: 8px;
+  color: $dark-text;
+  display: flex;
+  font-weight: $font-weight-bold;
+  height: 16px;
+  justify-content: center;
+  margin-left: 6px;
+  width: 16px;
+}
+
+.counterText {
+  height: 10px;
 }
 
 .categoryContainer {

@@ -76,7 +76,7 @@ const DataGlobeComponent = ({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
-        style={{ pointerEvents: (isMapsList || isFeaturedPlaceCard) && !isOnMobile ? 'none' : '' }}
+        interactionsDisabled={(isMapsList || isFeaturedPlaceCard) && !isOnMobile}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
