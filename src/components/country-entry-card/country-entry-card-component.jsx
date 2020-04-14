@@ -5,6 +5,7 @@ import animationStyles from 'styles/common-animations.module.scss';
 import { ReactComponent as PinIcon } from 'icons/places.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import GlobeSmallImage from 'images/dummyCountryImage.jpg';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 const CountryEntryCardComponent = ({ handleSceneModeChange, handleCountryDeselect, countryName, isCountryMode, isFullscreenActive }) => {
   const countryEntryCardHidden = isCountryMode || isFullscreenActive;
@@ -14,6 +15,7 @@ const CountryEntryCardComponent = ({ handleSceneModeChange, handleCountryDeselec
           [styles.open]: countryName,
           [animationStyles.leftHidden]: countryEntryCardHidden,
         })}>
+      <DummyBlurWorkaround />
       <div className={styles.cardHeader}>
         <PinIcon />
         <span className={styles.countryName}>{countryName}</span>
