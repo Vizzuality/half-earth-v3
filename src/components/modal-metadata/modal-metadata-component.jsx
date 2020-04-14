@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Modal, Loading } from 'he-components';
 import MolLogo from 'logos/mol.png';
+import ReactMarkdown from 'react-markdown';
 import styles from './modal-metadata-styles.module.scss';
 
 const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
@@ -53,8 +54,7 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
             {
               metadata && metadata.source && (
               <p className={styles.metadataSource}>
-                    Source:{' '}
-                {metadata.source}
+                <ReactMarkdown source={`Source: ${metadata.source}`} escapeHtml={false}/>
                 {' '}
                 {
                       metadata.sourceUrl && (
