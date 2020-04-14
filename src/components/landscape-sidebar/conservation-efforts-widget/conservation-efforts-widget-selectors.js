@@ -103,7 +103,8 @@ const getProtectedLayers = createSelector(
     if (!dataFormatted) return [];
     const protectedLayers = WDPALayers.map(layer => ({
       ...layer,
-      name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
+      name: layer.name,
+      label: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
       rightDot: layer.name === 'Protected areas' ? COLORS[PROTECTED] : COLORS[COMMUNITY_BASED]
     })) || [];
     return protectedLayers;

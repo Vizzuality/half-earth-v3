@@ -22,7 +22,7 @@ const Checkbox = ({ option, onChange, checked, theme, handleInfoClick }) => {
         onChange={(e) => onChange(e, option)}
       />
       <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: checked })}>
-        <span className={styles.label}>{option.name}</span>
+        <span className={styles.label}>{option.label || option.name}</span>
         {option.rightDot && !checked && <span className={styles.rightDot} style={{ background: option.rightDot }} />}
       </label>
       {checked && (

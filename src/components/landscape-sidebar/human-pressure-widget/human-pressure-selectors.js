@@ -96,7 +96,8 @@ const getPressureOptions = createSelector(getPressureData, humanPressureData => 
   const data = humanPressureData
     .map(({ name, slug, value, pressureValue }) => (
       {
-        name: `${name} ${format(".2%")(pressureValue / 100)}`,
+        name: `${name}`,
+        label: `${name} ${format(".2%")(pressureValue / 100)}`,
         slug,
         value
       }
