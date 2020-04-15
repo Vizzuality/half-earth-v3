@@ -7,7 +7,7 @@ const selectCountryDataLoading = ({ countryData }) => (countryData && countryDat
 
 const getCountriesList = createSelector(selectCountriesListData, countriesListData => {
   if (!countriesListData) return null;
-  return countriesListData.countriesList.sort();
+  return countriesListData.countriesList;
 })
 
 const getArea = createSelector(selectCountryData, countryData => {

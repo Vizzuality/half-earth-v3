@@ -17,7 +17,7 @@ function setCountriesListReady(state, { payload }) {
       }
     }
   }, {});
-  const countriesList = Object.keys(countriesData).map(key => countriesData[key].name)
+  const countriesList = Object.keys(countriesData).map(key => ({name: countriesData[key].name, value: countriesData[key].iso_code}))
   return { ...state, error: false, loading: false, data: { countriesList, countriesData } };
 }
 

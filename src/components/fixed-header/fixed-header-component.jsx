@@ -12,7 +12,7 @@ const BACK = 'BACK';
 
 const differentFixedHeaderHeights = ['Existing protection', 'Human pressures'];
 
-const FixedHeader = ({ closeSidebar, title, view, titleOptions, selectableTitle, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
+const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions, selectableTitle, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
   const [titleDropdownOpen, setTitleDropdownOpen] = useState(false)
@@ -40,7 +40,7 @@ const FixedHeader = ({ closeSidebar, title, view, titleOptions, selectableTitle,
       {titleOptions &&
         <ul className={cx(styles.titleOptionsList, { [styles.open]: titleDropdownOpen})}>
         {titleOptions.map( option => {
-          return <li key={option} className={styles.titleOptionItem} onClick={() => console.log(option)}>{option}</li>
+          return <li key={option.name} className={styles.titleOptionItem} onClick={() => handleTitleOptionClick(option)}>{option.name}</li>
         })}
         </ul>
       }

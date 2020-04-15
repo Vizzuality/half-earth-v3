@@ -15,8 +15,9 @@ const actions = { ...urlActions, ...countryDataActions, ...countriesListActions 
 const CountryDataCardContainer = (props) => {
   const {
     sceneMode,
-    changeUI,
     countryISO,
+    changeGlobe,
+    changeUI,
     setCountryDataLoading,
     setCountryDataReady,
     setCountryDataError,
@@ -83,8 +84,13 @@ const CountryDataCardContainer = (props) => {
   const handleSceneModeChange = () => {
     changeUI({ sceneMode: sceneMode === GLOBAL_SCENE ? LOCAL_SCENE : GLOBAL_SCENE });
   }
+  
+  const handleCountryDropdownClick = option => {
+    changeGlobe({ countryISO: option.value, countryName: option.name });
+  }
+
   return (
-    <Component handleSceneModeChange={handleSceneModeChange} {...props}/>
+    <Component handleSceneModeChange={handleSceneModeChange} handleCountryDropdownClick={handleCountryDropdownClick} {...props}/>
   )
 }
 

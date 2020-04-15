@@ -5,7 +5,20 @@ import FixedHeader from 'components/fixed-header'
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import dummyCountryImage from 'images/dummyCountryImage.jpg';
 
-const CountryDataCardComponent = ({ view, countryData, countriesList, handleSceneModeChange, countryDataLoading, countryArea, vertebratesCount, countryPopulation, grossNationalIncome, countryName, countryDescription}) => {
+const CountryDataCardComponent = ({ 
+  view,
+  countryName,
+  countryArea,
+  countryData,
+  countriesList,
+  vertebratesCount,
+  countryPopulation,
+  countryDescription,
+  countryDataLoading,
+  grossNationalIncome,
+  handleSceneModeChange,
+  handleCountryDropdownClick
+}) => {
 
   if (countryDataLoading) {
     return (
@@ -29,6 +42,7 @@ const CountryDataCardComponent = ({ view, countryData, countriesList, handleScen
         autoHeight
         selectableTitle
         titleOptions={countriesList}
+        handleTitleOptionClick={handleCountryDropdownClick}
       />
       <img className={styles.image} alt={`${countryName}`} src={dummyCountryImage} />
       <section className={styles.descriptionWrapper}>
