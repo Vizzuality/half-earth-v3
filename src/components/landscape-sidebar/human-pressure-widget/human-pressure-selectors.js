@@ -98,7 +98,8 @@ const getPressureOptions = createSelector(getPressureData, humanPressureData => 
       {
         name: `${name} ${format(".2%")(pressureValue / 100)}`,
         slug,
-        value
+        value,
+        metadataTitle: name
       }
     )
   );

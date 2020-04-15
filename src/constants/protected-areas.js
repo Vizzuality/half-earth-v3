@@ -12,7 +12,8 @@ export const WDPALayers = [
     id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     theme: 'overrideCheckbox-protected-areas',
-    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER
+    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+    metadataTitle: 'Protected areas'
   },
   {
     name: 'Community-based',
@@ -21,7 +22,9 @@ export const WDPALayers = [
     title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     theme: 'overrideCheckbox-community-areas',
     slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-    groupedLayer: true
+    groupedLayer: true,
+    metadataTitle: 'Community-based protected areas'
+
   }
 ]
 
@@ -46,7 +49,7 @@ export const legendConfigs = {
         color: PROTECTED_AREAS_COLOR
       }
     ],
-    title: "All protected areas",
+    title: "Protected areas",
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER
   }
 }
