@@ -2,37 +2,22 @@ import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { createGraphicLayer } from 'utils/graphic-layer-utils';
+import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 
-const maskStyles = {
-  material: {
-    color: [0, 0, 0, 0.7]
-  },
-  outline: {
-    color: [216, 216, 216, 0]
-  }
+const MASK_STYLES = {
+  fillColor: [0, 0, 0],
+  fillOpacity: 0.7,
+  outlineColor: [216, 216, 216],
+  outlineOpacity: 0,
+  outlineWidth: 2
 }
 
-const createGraphic = (Graphic, geometry, styles) => {
-  return new Graphic({
-    geometry,
-    symbol: {
-      type: "polygon-3d",
-      symbolLayers: [
-        {
-          type: "fill",
-          material: {
-            color: [15, 43, 59, 0]
-          },
-          outline: {
-            color: [216, 216, 216, 1],
-            size: 0.5
-          },
-          ...styles
-        }
-      ]
-    }
-  });
+const COUNTRY_BORDER_STYLES = {
+  fillColor: [15, 43, 59],
+  fillOpacity: 0,
+  outlineColor: [216, 216, 216],
+  outlineOpacity: 1,
+  outlineWidth: 0.5
 }
 
 const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode) => {
@@ -50,8 +35,8 @@ const queryCountryData = (countryLayer, countryISO, spatialReference, countryExt
         const maskGeometry = await geometryEngine.difference(extentGeometry, countryGeometry);
         const borderGeometries = neighbourCountriesGeometry.map(gc => gc.geometry);
 
-        const graphics = borderGeometries.map(geo => createGraphic(Graphic, geo));
-        const maskGraphic = createGraphic(Graphic, maskGeometry, maskStyles);
+        const graphics = borderGeometries.map(geo => createGraphic(Graphic, COUNTRY_BORDER_STYLES, geo));
+        const maskGraphic = createGraphic(Graphic, MASK_STYLES, maskGeometry);
         graphicsLayer.graphics = [maskGraphic, ...graphics];
         graphicsLayer.visible = isCountryMode;
       })

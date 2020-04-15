@@ -20,22 +20,28 @@ export const createPointGraphic = (GraphicConstructor, symbol, lon, lat) => {
   });
 }
 
-export const createGraphic = (Graphic, graphicStyles) => {
-  return new Graphic({
+export const createGraphic = (Graphic, graphicStyles, geometry) => {
+  const graphic = new Graphic({
     symbol: {
       type: "polygon-3d",
       symbolLayers: [
         {
           type: "fill",
-          material: { color: [...graphicStyles.colorRGB, graphicStyles.fillOpacity], },
+          material: { color: [...graphicStyles.fillColor, graphicStyles.fillOpacity], },
           outline: {
-            color: [...graphicStyles.colorRGB, graphicStyles.outlineOpacity],
+            color: [...graphicStyles.outlineColor, graphicStyles.outlineOpacity],
             size: graphicStyles.outlineWidth
           }
         }
       ]
     }
   });
+
+  if (geometry) {
+    graphic.geometry = geometry;
+  }
+
+  return graphic;
 }
 
 export const createPolygonGeometry = (gridCell) => {
