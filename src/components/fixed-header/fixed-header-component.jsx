@@ -40,7 +40,7 @@ const FixedHeader = ({ closeSidebar, title, view, titleOptions, selectableTitle,
       {titleOptions &&
         <ul className={cx(styles.titleOptionsList, { [styles.open]: titleDropdownOpen})}>
         {titleOptions.map( option => {
-          return <li className={styles.titleOptionItem} onClick={() => console.log(option)}>{option}</li>
+          return <li key={option} className={styles.titleOptionItem} onClick={() => console.log(option)}>{option}</li>
         })}
         </ul>
       }
