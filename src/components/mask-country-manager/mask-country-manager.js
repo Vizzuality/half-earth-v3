@@ -61,11 +61,11 @@ const MaskCountryManager = props => {
   }, [isCountryMode]);
 
   useEffect(() => {
-    if (countryLayer && countryISO  && spatialReference && countryExtent && graphicsLayer) {
+    if (countryLayer && countryISO  && spatialReference && countryExtent && graphicsLayer && isCountryMode) {
       graphicsLayer.graphics = [];
       queryCountryData(countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode);
     }
-  }, [countryExtent]);
+  }, [countryExtent, isCountryMode]);
 
   useEffect(() => {
     if (graphicsLayer && !countryISO) {
