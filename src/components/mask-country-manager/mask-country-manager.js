@@ -23,7 +23,6 @@ const queryCountryData = (countryLayer, countryISO, spatialReference, countryExt
         const graphics = borderGeometries.map(geo => createGraphic(Graphic, COUNTRY_BORDER_STYLES, geo));
         const maskGraphic = createGraphic(Graphic, MASK_STYLES, maskGeometry);
         graphicsLayer.graphics = [maskGraphic, ...graphics];
-        graphicsLayer.visible = isCountryMode;
       })
       .catch((error) => {
         console.warn(error);
