@@ -109,22 +109,27 @@ $icon-size: 25px;
     transform: rotate(270deg);
   }
 }
+.dropdownWrapper {
+  position: relative;
+}
 
 .titleOptionsList {
-  position: relative;
+  position: absolute;
   overflow-y: scroll;
-  width: 280px;
+  border-radius: 2px;
+  background-color: $white;
+  color: $firefly;
+  width: 230px;
   z-index: 2;
   list-style: none;
   overflow-x: hidden;
-  left: -20px;
+  top: 10px;
   height: 0;
   margin: 0;
   padding: 0;
   @include animationFunction($propertyToAnimate: all);
   &.open {
-    height: 130px;
-    margin-top: 10px;
+    height: 340px;
   }
 }
 
@@ -133,7 +138,7 @@ $icon-size: 25px;
   cursor: pointer;
   padding: 5px 0px 5px 20px;
   &:hover {
-    background-color: $firefly;
+    background-color: darken($white, 10);
   }
 }
 

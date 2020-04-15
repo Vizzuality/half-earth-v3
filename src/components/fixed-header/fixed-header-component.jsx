@@ -38,11 +38,13 @@ const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions
         })} />}
       {titleOptions && <ChevronIcon onClick={() => setTitleDropdownOpen(!titleDropdownOpen)} className={cx(styles.optionsToggle, {[styles.openList]: titleDropdownOpen})}/>}
       {titleOptions &&
-        <ul className={cx(styles.titleOptionsList, { [styles.open]: titleDropdownOpen})}>
-        {titleOptions.map( option => {
-          return <li key={option.name} className={styles.titleOptionItem} onClick={() => handleTitleOptionClick(option)}>{option.name}</li>
-        })}
-        </ul>
+        <div className={styles.dropdownWrapper}>
+          <ul className={cx(styles.titleOptionsList, { [styles.open]: titleDropdownOpen})}>
+          {titleOptions.map( option => {
+            return <li key={option.name} className={styles.titleOptionItem} onClick={() => handleTitleOptionClick(option)}>{option.name}</li>
+          })}
+          </ul>
+        </div>
       }
       </div>
       {title && <div className={styles.spacer} />}
