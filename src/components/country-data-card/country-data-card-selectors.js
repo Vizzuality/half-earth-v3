@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { orderBy } from 'lodash';
 import { format } from 'd3-format';
 
 const selectCountriesListData = ({ countriesList }) => (countriesList && countriesList.data) || null;
@@ -7,7 +8,7 @@ const selectCountryDataLoading = ({ countryData }) => (countryData && countryDat
 
 const getCountriesList = createSelector(selectCountriesListData, countriesListData => {
   if (!countriesListData) return null;
-  return countriesListData.countriesList;
+  return orderBy(countriesListData.countriesList, 'name');
 })
 
 const getArea = createSelector(selectCountryData, countryData => {
