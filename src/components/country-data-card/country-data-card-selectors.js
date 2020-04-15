@@ -1,8 +1,14 @@
 import { createSelector } from 'reselect';
 import { format } from 'd3-format';
 
+const selectCountriesListData = ({ countriesList }) => (countriesList && countriesList.data) || null;
 const selectCountryData = ({ countryData }, { countryISO }) => (countryData && countryData.data && countryData.data[countryISO]) || null;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
+
+const getCountriesList = createSelector(selectCountriesListData, countriesListData => {
+  if (!countriesListData) return null;
+  return countriesListData.countriesList.sort();
+})
 
 const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
@@ -51,6 +57,7 @@ const getNumberOfVertebrates = createSelector(selectCountryData, countryData => 
 })
 
 const mapStateToProps = (state, props) => ({
+    countriesList: getCountriesList(state, props),
     countryData: selectCountryData(state, props),
     countryDataLoading: selectCountryDataLoading(state, props),
     countryArea: getArea(state, props),
