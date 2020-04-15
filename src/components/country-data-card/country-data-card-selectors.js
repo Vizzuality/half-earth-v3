@@ -13,6 +13,7 @@ const getCountriesList = createSelector(selectCountriesListData, countriesListDa
 const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { Area } = countryData;
+  if (!Area) return 'data not available'
   const areaFormat = format(",.0f");
   const formatedArea = `${areaFormat(Area)}`;
   return formatedArea;
@@ -21,6 +22,7 @@ const getArea = createSelector(selectCountryData, countryData => {
 const getPopulation = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { Population2016 } = countryData;
+  if (!Population2016) return 'data not available'
   const valueFormat = population => {
     if (population < 1000000) {
       return population.toLocaleString('en');
