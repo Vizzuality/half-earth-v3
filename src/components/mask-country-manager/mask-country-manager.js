@@ -2,23 +2,8 @@ import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { MASK_STYLES, COUNTRY_BORDER_STYLES } from 'constants/graphic-styles';
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
-
-const MASK_STYLES = {
-  fillColor: [0, 0, 0],
-  fillOpacity: 0.7,
-  outlineColor: [216, 216, 216],
-  outlineOpacity: 0,
-  outlineWidth: 2
-}
-
-const COUNTRY_BORDER_STYLES = {
-  fillColor: [15, 43, 59],
-  fillOpacity: 0,
-  outlineColor: [216, 216, 216],
-  outlineOpacity: 1,
-  outlineWidth: 0.5
-}
 
 const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode) => {
   loadModules(['esri/geometry/Polygon',"esri/Graphic", "esri/geometry/geometryEngine"]).then(([Polygon, Graphic, geometryEngine]) => {
