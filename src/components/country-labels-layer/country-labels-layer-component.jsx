@@ -8,7 +8,7 @@ import mapPinIcon from 'icons/map_pin.svg'
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, isLandscapeMode, countryISO } = props;
+  const { map, isLandscapeMode, isCountryMode, countryName, countryISO, countryExtent } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [layerReady, setLayerReady] = useState(false)
@@ -21,6 +21,7 @@ const CountryLabelsLayerComponent = props => {
         labelExpressionInfo: {
           expression: "$feature.NAME_0"
         },
+        where: countryName && isCountryMode ? `NAME_0 <> '${countryName}'` : null,
         symbol: {
           type: "text",
           color: [213,207,202],
@@ -35,7 +36,7 @@ const CountryLabelsLayerComponent = props => {
       });
       setLabelingInfo(_labelingInfo);
     })
-  }, []);
+  }, [countryName, isCountryMode]);
 
   useEffect(() => {
       if (labelingInfo) {
@@ -60,16 +61,9 @@ const CountryLabelsLayerComponent = props => {
   }, [labelingInfo])
 
   useEffect(() => {
-    if (layerReady) {
-      layerReady.visible = !isLandscapeMode;
-      layerReady.labelsVisible = !isLandscapeMode;
-    }
-  }, [layerReady, isLandscapeMode])
-
-  useEffect(() => {
     let graphicLayer;
     let countryPinMarker;
-    if (layerReady) {
+    if (layerReady && !isCountryMode) {
       loadModules(["esri/Graphic"])
       .then(([Graphic]) => {
         graphicLayer = findLayerInMap(GRAPHIC_LAYER, map);
@@ -79,9 +73,8 @@ const CountryLabelsLayerComponent = props => {
           const { features } = results;
           countryPinMarker = new Graphic({
             geometry: features[0].geometry,
-            symbol: simplePictureMarker(mapPinIcon)
+            symbol: simplePictureMarker(mapPinIcon, { height: 24, width: 24, yoffset: -10 })
           });
-          countryPinMarker.symbol.yoffset = -10;
           graphicLayer.add(countryPinMarker)
         })
       })
@@ -89,7 +82,14 @@ const CountryLabelsLayerComponent = props => {
     return function cleanUp() {
       if (graphicLayer) { graphicLayer.remove(countryPinMarker)}
     }
-  }, [layerReady, countryISO])
+  }, [layerReady, countryExtent, isCountryMode])
+
+  useEffect(() => {
+    if (layerReady) {
+      layerReady.visible = !isLandscapeMode;
+      layerReady.labelsVisible = !isLandscapeMode;
+    }
+  }, [layerReady, isLandscapeMode])
 
   return null;
 }
