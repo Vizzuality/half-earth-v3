@@ -1,97 +1,58 @@
 import React from 'react';
-import loadable from '@loadable/component'
-
-import { biodiversityCategories } from 'constants/mol-layers-configs';
-
-import EntryBoxes from 'components/entry-boxes';
-import Sidebar from 'components/sidebar';
+import cx from 'classnames';
 import CountryEntryCard from 'components/country-entry-card';
-const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
-const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
-const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
+import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
+import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
+import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
+import animationStyles from 'styles/common-animations.module.scss';
+import styles from './data-global-sidebar-styles.module.scss'
+
 const DataGlobeSidebarComponent = ({
-  isSidebarOpen,
-  isFullscreenActive,
-  activeCategory,
-  isLandscapeMode,
-  activeLayers,
-  rasters,
   map,
   view,
-  handleGlobeUpdating,
-  setRasters,
-  activeOption,
+  rasters,
   sceneMode,
-  countryISO,
+  setRasters,
   countryName,
+  activeLayers,
   isCountryMode,
-  isLandscapeSidebarCollapsed
+  activeCategory,
+  isLandscapeMode,
+  isFullscreenActive,
+  handleGlobeUpdating
 }) => {
-  const isBiodiversityActive = activeCategory === 'Biodiversity';
-  const isHumanPressuresActive = activeCategory === 'Human pressures';
-  const isProtectedAreasActive = activeCategory === 'Existing protection';
+
+  const sidebarHidden = isCountryMode || isLandscapeMode || isFullscreenActive;
   return (
-    <>
+    <div className={cx(styles.sidebarContainer, {[animationStyles.leftHidden]: sidebarHidden})}>
       <CountryEntryCard
         sceneMode={sceneMode}
         countryName={countryName}
         isCountryMode={isCountryMode}
         isFullscreenActive={isFullscreenActive}
       />
-      <EntryBoxes
-        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        countryISO={countryISO}
-        activeOption={activeOption}
-        isSidebarOpen={isSidebarOpen}
-        isFullscreenActive={isFullscreenActive}
-        activeCategory={activeCategory}
-        isLandscapeMode={isLandscapeMode}
-        isCountryMode={isCountryMode}
+      <BiodiversitySidebarCard
+        map={map}
         activeLayers={activeLayers}
-        rasters={rasters}
-      />
-      <Sidebar
-        activeOption={activeOption}
-        countryISO={countryISO}
-        isCountryMode={isCountryMode}
-        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        isSidebarOpen={isSidebarOpen} 
-        isFullscreenActive={isFullscreenActive}
         activeCategory={activeCategory}
-        isLandscapeMode={isLandscapeMode}
+        className={styles.biodiversitySidebarCard}
+      />
+      <ProtectedAreasSidebarCard
+        map={map}
+        activeLayers={activeLayers}
+        activeCategory={activeCategory}
+        handleGlobeUpdating={handleGlobeUpdating}
+      />
+      <HumanImpactSidebarCard
         map={map}
         view={view}
-      >
-        {isBiodiversityActive && (
-          biodiversityCategories.map(cat => (
-            <BiodiversityLayers
-              key={cat.name}
-              isFullscreenActive={isFullscreenActive}
-              title={cat.name}
-              description={cat.description}
-              subcategories={cat.subcategories}
-              options={cat.taxa}
-              activeLayers={activeLayers}
-            />
-          ))
-        )}
-        {isHumanPressuresActive && (
-          <HumanImpactLayers
-            activeLayers={activeLayers}
-            rasters={rasters}
-            handleGlobeUpdating={handleGlobeUpdating}
-            setRasters={setRasters}
-          />
-        )}
-        {isProtectedAreasActive && (
-          <ProtectedAreasLayers
-            handleGlobeUpdating={handleGlobeUpdating}
-            activeLayers={activeLayers}
-            activeCategory={activeCategory}
-          />
-        )}
-      </Sidebar>
-    </>
+        rasters={rasters}
+        setRasters={setRasters}
+        activeLayers={activeLayers}
+        activeCategory={activeCategory}
+        handleGlobeUpdating={handleGlobeUpdating}
+      />
+    </div>
   )
 }
 

@@ -1,0 +1,13 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+
+.sidebarContainer {
+  @extend %verticalScrollBar;
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  height: 100vh;
+  width: calc(#{$sidebar-width} + 15px);
+  top: $sidebar-top-margin;
+  left: $site-gutter;
+}
