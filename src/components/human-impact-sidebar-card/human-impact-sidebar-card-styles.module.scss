@@ -3,15 +3,18 @@
 @import 'styles/common-animations.module';
 
 .sidebarCardContainer {
-  @include backdropBlur();
-  margin-bottom: 10px;
+  width: calc(#{$sidebar-width} + 15px);
+  margin-bottom: $cards-bottom-margin;
   overflow: hidden;
 }
 
 .layersTogglesContainer{
+  @include backdropBlur();
+  width: $sidebar-width;
   height: 0;
   @include animationFunction($propertyToAnimate: height);
   &.open {
-    height: auto;
+    overflow: visible;
+    height: 226px;
   }
 }

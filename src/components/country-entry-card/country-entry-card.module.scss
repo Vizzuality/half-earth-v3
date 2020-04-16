@@ -6,9 +6,7 @@
 .container {
   @include backdropBlur();
 
-  position: absolute;
-  top: 20px;
-  left: $site-gutter;
+  position: relative;
   height: 0px;
   display: flex;
   opacity: 1;
@@ -23,6 +21,7 @@
   &.open {
     height: 240px;
     pointer-events: visible;
+    margin-bottom: $cards-bottom-margin;
   }
 }
 
