@@ -34,7 +34,7 @@ const addSignedPledgeToMap = (map, view, signedPledgeZIP, signedPledgeCountry) =
         const { x, y } = data;
         const signedPledgeLight = simplePictureMarker(signedPledgeLightIcon);
         const pointGraphic = createPointGraphic(Graphic, signedPledgeLight, x, y);
-        const signedPledgeGraphicLayer = createGraphicLayer(GraphicsLayer, pointGraphic, SIGNED_PLEDGE_GRAPHIC_LAYER);
+        const signedPledgeGraphicLayer = createGraphicLayer(GraphicsLayer, [pointGraphic], SIGNED_PLEDGE_GRAPHIC_LAYER);
         map.add(signedPledgeGraphicLayer);
         view.goTo({ center: [x, y] });
     }, (error) => {console.warn(error)})

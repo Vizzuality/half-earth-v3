@@ -49,7 +49,7 @@ const DoubleScene = props => {
             map: map,
             container: `scene-global-container-${sceneId}`,
             ...sceneSettings,
-            spatialReference
+            spatialReference,
           });
           setViewGlobal(_viewGlobal);
 
@@ -58,8 +58,18 @@ const DoubleScene = props => {
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
             viewingMode: 'local',
-            spatialReference
+            spatialReference,
+            constraints: {
+              tilt: {
+                max: 60
+              }
+            },
+            padding: {
+              left: 300,
+              bottom: 60
+            }
           });
+          
           setViewLocal(_viewLocal);
         })
         .catch(err => {

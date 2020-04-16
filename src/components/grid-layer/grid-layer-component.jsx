@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
 import { BIODIVERSITY_FACETS_SERVICE_URL } from 'constants/layers-urls';
 import { GRAPHIC_LAYER } from 'constants/layers-slugs';
-import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
+import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 
 import {
   calculateAggregatedCells,
@@ -45,8 +45,8 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
         "esri/Graphic",
         "esri/layers/GraphicsLayer"
       ]).then(([Graphic, GraphicsLayer]) => {
-        const _gridCellGraphic = createGraphic(Graphic, gridCellDefaultStyles);
-        const graphicsLayer = createGraphicLayer(GraphicsLayer, _gridCellGraphic, GRAPHIC_LAYER);
+        const _gridCellGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
+        const graphicsLayer = createGraphicLayer(GraphicsLayer, [_gridCellGraphic], GRAPHIC_LAYER);
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
       })
