@@ -1,0 +1,17 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+
+.sidebarCardContainer {
+  @include backdropBlur();
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.layersTogglesContainer{
+  height: 0;
+  @include animationFunction($propertyToAnimate: height);
+  &.open {
+    height: auto;
+  }
+}
