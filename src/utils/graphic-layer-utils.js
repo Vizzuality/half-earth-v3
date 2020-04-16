@@ -1,10 +1,10 @@
 import { loadModules } from 'esri-loader';
 
-export const createGraphicLayer = (GraphicsLayer, graphic, id = "graphicLayer") => {
+export const createGraphicLayer = (GraphicsLayer, graphicsArray, id = "graphicLayer") => {
   return new GraphicsLayer({
     id: id,
     title: id,
-    graphics: [graphic]
+    graphics: graphicsArray
   });
 }
 
@@ -20,22 +20,28 @@ export const createPointGraphic = (GraphicConstructor, symbol, lon, lat) => {
   });
 }
 
-export const createGraphic = (Graphic, graphicStyles) => {
-  return new Graphic({
+export const createGraphic = (Graphic, graphicStyles, geometry) => {
+  const graphic = new Graphic({
     symbol: {
       type: "polygon-3d",
       symbolLayers: [
         {
           type: "fill",
-          material: { color: [...graphicStyles.colorRGB, graphicStyles.fillOpacity], },
+          material: { color: [...graphicStyles.fillColor, graphicStyles.fillOpacity], },
           outline: {
-            color: [...graphicStyles.colorRGB, graphicStyles.outlineOpacity],
+            color: [...graphicStyles.outlineColor, graphicStyles.outlineOpacity],
             size: graphicStyles.outlineWidth
           }
         }
       ]
     }
   });
+
+  if (geometry) {
+    graphic.geometry = geometry;
+  }
+
+  return graphic;
 }
 
 export const createPolygonGeometry = (gridCell) => {
@@ -47,7 +53,8 @@ export const createPolygonGeometry = (gridCell) => {
     })
 }
 
-export const simplePictureMarker = asset => ({
+export const simplePictureMarker = (asset, symbol = {}) => ({
   type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-  url: asset
+  url: asset,
+  ...symbol
 })

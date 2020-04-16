@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, GRAPHIC_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { gridCellDefaultStyles } from 'constants/landscape-view-constants';
+import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { connect } from 'react-redux';
 import actions from 'redux_modules/country-extent';
 
@@ -21,8 +21,8 @@ const CountryBorderLayer = props => {
   //Create the graphics layer on mount
   useEffect(() => {
     loadModules(["esri/Graphic","esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
-        const _borderGraphic = createGraphic(Graphic, gridCellDefaultStyles);
-        const graphicsLayer = createGraphicLayer(GraphicsLayer, _borderGraphic, GRAPHIC_LAYER);
+        const _borderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
+        const graphicsLayer = createGraphicLayer(GraphicsLayer, [_borderGraphic], GRAPHIC_LAYER);
         setBorderGraphic(_borderGraphic);
         view.map.add(graphicsLayer);
       })
@@ -38,8 +38,9 @@ const CountryBorderLayer = props => {
         const { features } = results;
         const { geometry } = features[0];
         view.goTo(geometry);
-        const borderPolygon = await createPolygonGeometry(geometry);
-        if (borderGraphic) { borderGraphic.geometry = borderPolygon };
+        if (borderGraphic) { 
+          borderGraphic.geometry = await createPolygonGeometry(geometry);
+        };
         setCountryExtentReady(geometry.extent);
       })
       .catch((error) => {
@@ -67,9 +68,9 @@ const CountryBorderLayer = props => {
   useEffect(() => {
     if (borderGraphic && !countryISO) {
       borderGraphic.geometry = null;
+      setCountryExtentReady(null);
     }
   },[countryISO])
-
 
   return null
 }

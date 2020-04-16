@@ -21,6 +21,7 @@ import { LOCAL_SCENE } from 'constants/view-props';
 import About from 'components/about';
 import CountryLabelsLayer from 'components/country-labels-layer';
 import CountryBorderLayer from 'components/country-border-layer';
+import MaskCountryManager from 'components/mask-country-manager';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -105,12 +106,13 @@ const DataGlobeComponent = ({
           activeLayers={activeLayers}
           selectedSpecies={selectedSpecies}
         />
-        <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName}/>
-        <CountryBorderLayer countryISO={countryISO}/>
+        <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
+        <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
         {isCountryMode && <LocalSceneSidebar countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}
         <LabelsLayer isLandscapeMode={isLandscapeMode} isCountryMode={isCountryMode} countryName={countryName}/>
+        <MaskCountryManager countryISO={countryISO} countryExtent={countryExtent} isCountryMode={isCountryMode} />
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
       </DoubleScene>
       <TutorialModal />
