@@ -1,0 +1,20 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+
+.sidebarCardContainer {
+  width: calc(#{$sidebar-width} + 15px);
+  margin-bottom: $cards-bottom-margin;
+  overflow: hidden;
+}
+
+.layersTogglesContainer{
+  @include backdropBlur();
+  width: $sidebar-width;
+  height: 0;
+  @include animationFunction($propertyToAnimate: height);
+  &.open {
+    overflow: visible;
+    height: 192px;
+  }
+}
