@@ -12,7 +12,7 @@ import styles from './conservation-efforts-widget-styles.module.scss';
 const ConservationEffortsDescription = ({ allProp, rawData }) => {
   return (
     <p className={styles.description}>
-      Of the current landscape, <span className={styles.boldFont}>{allProp.toFixed(2)}% is under protection.</span>
+      Of the current landscape, <span className={styles.boldFont}>{allProp}% is under protection.</span>
       {rawData[COMMUNITY_BASED] > rawData[PROTECTED] ? 'The majority of the protected areas are community managed.' : ''}
     </p>
   )

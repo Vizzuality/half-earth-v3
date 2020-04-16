@@ -12,14 +12,13 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   sceneSettings,
   onLoad,
-  handleZoomChange,
-  rasters
+  handleZoomChange
 }) => {
   return (
     <Scene sceneId={SCENE_ID} sceneSettings={sceneSettings} onViewLoad={onLoad}>
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
-      <Legend activeLayers={activeLayers} rasters={rasters}/>
+      <Legend activeLayers={activeLayers} />
       {isLandscapeMode && <GridLayer />}
     </Scene>
   )

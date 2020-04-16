@@ -12,7 +12,7 @@ const CheckboxContainer = props => {
     const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
     setModalMetadata({
       slug: `${option.slug}`,
-      title: `${option.name} metadata`,
+      title: `${option.metadataTitle || option.name} metadata`,
       isOpen: true
     });
     openLayerInfoModalAnalyticsEvent({ slug: `${option.slug}` });

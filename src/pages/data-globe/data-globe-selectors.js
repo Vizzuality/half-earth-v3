@@ -31,7 +31,6 @@ const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSetti
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
@@ -47,7 +46,6 @@ export default createStructuredSelector({
   isFullscreenActive: getFullscreenActive,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
-  rasters: getRasters,
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,
