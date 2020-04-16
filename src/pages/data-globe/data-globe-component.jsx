@@ -81,21 +81,16 @@ const DataGlobeComponent = ({
         <ArcgisLayerManager activeLayers={activeLayers} />
         <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
         <DataGlobalSidebar
-          isSidebarOpen={isSidebarOpen}
-          activeOption={activeOption}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          isFullscreenActive={isFullscreenActive}
+          rasters={rasters}
+          sceneMode={sceneMode}
+          setRasters={setRasters}
+          countryName={countryName}
+          activeLayers={activeLayers}
+          isCountryMode={isCountryMode}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
-          isCountryMode={isCountryMode}
-          isBiodiversityActive={isBiodiversityActive}
-          activeLayers={activeLayers}
-          rasters={rasters}
+          isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
-          setRasters={setRasters}
-          sceneMode={sceneMode}
-          countryISO={countryISO}
-          countryName={countryName}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
@@ -116,7 +111,7 @@ const DataGlobeComponent = ({
         />
         <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
-        {isCountryMode && <LocalSceneSidebar countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
+        {isCountryMode && <LocalSceneSidebar activeCategory={activeCategory} activeLayers={activeLayers} countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}
         <LabelsLayer isLandscapeMode={isLandscapeMode} isCountryMode={isCountryMode} countryName={countryName}/>
