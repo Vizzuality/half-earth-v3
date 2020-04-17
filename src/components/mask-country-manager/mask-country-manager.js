@@ -13,7 +13,7 @@ const queryCountryData = (countryLayer, countryISO, spatialReference, countryExt
     query.geometry = extentGeometry;
 
     countryLayer.queryFeatures(query)
-      .then(async function(results){
+    .then(async function(results){
         const { features } = results;
         const countryGeometry = features.find(({ attributes }) => attributes.GID_0 === countryISO).geometry;
         const neighbourCountriesGeometry = features.filter(({ attributes }) => attributes.GID_0 !== countryISO);
@@ -57,7 +57,7 @@ const MaskCountryManager = props => {
     if(graphicsLayer) {
       graphicsLayer.visible = isCountryMode;
     }
-  }, [isCountryMode]);
+  }, [countryExtent, isCountryMode]);
 
   useEffect(() => {
     if (countryLayer && countryISO  && spatialReference && countryExtent && graphicsLayer && isCountryMode) {
