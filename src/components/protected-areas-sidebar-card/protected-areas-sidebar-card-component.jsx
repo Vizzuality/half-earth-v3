@@ -7,7 +7,7 @@ import styles from './protected-areas-sidebar-card-styles.module.scss'
 
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
-const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleGlobeUpdating, countedActiveLayers,map}) => {
+const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers,map}) => {
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
@@ -24,11 +24,11 @@ const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleG
           map={map}
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}
-          activeCategory={activeCategory}
+          activeCategory={LAYERS_CATEGORIES.PROTECTION}
         />
       </div>
     </div>
   )
 }
 
-export default BiodiversitySidebarCardComponent;
+export default ProtectedAreasSidebarCardComponent;
