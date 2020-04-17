@@ -114,6 +114,7 @@ $icon-size: 25px;
 }
 
 .titleOptionsList {
+  @extend %verticalScrollbarStyled;
   position: absolute;
   overflow-y: scroll;
   border-radius: 2px;
