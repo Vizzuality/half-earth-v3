@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
+import { GLOBAL_SCENE } from 'constants/view-props';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, COUNTRY_MASK_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { MASK_STYLES, COUNTRY_BORDER_STYLES } from 'constants/graphic-styles';
@@ -31,7 +32,7 @@ const queryCountryData = (countryLayer, countryISO, spatialReference, countryExt
 };
 
 const MaskCountryManager = props => {
-  const { viewLocal, spatialReference, countryISO, countryExtent, isCountryMode } = props;
+  const { viewLocal, spatialReference, countryISO, countryExtent, isCountryMode, sceneMode } = props;
   const [countryLayer, setCountryLayer] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
 
@@ -67,10 +68,10 @@ const MaskCountryManager = props => {
   }, [countryExtent, isCountryMode]);
 
   useEffect(() => {
-    if (graphicsLayer && !countryISO) {
+    if (graphicsLayer && (!countryISO || sceneMode === GLOBAL_SCENE)) {
       graphicsLayer.graphics = [];
     }
-  },[countryISO]);
+  },[countryISO, sceneMode]);
 
   return null
 }
