@@ -4,7 +4,8 @@ import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
-  ALL_TAXA_RARITY
+  ALL_TAXA_RARITY,
+  COUNTRY_MASK_LAYER
 } from 'constants/layers-slugs';
 
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
@@ -13,8 +14,9 @@ import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs
 export default {
   globe: {
     activeLayers: [
-      { title: FIREFLY_BASEMAP_LAYER },
       { title: GRAPHIC_LAYER },
+      { title: COUNTRY_MASK_LAYER },
+      { title: FIREFLY_BASEMAP_LAYER },
       { title: CITIES_LABELS_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },

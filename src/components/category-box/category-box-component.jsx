@@ -5,23 +5,20 @@ import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 
 import styles from './category-box-styles.module.scss';
 
-const CategoryBox = ({ title, category, isSidebarOpen, counter }) => (
+const CategoryBox = ({ title, category, handleBoxClick, counter, isOpen }) => (
   <>
-    <div className={cx(
-      styles.box,
-      { [styles.visible]: !isSidebarOpen }
-    )}>
-      <p className={styles.title}>
+    <div className={styles.box} onClick={handleBoxClick}>
+      <div className={styles.title}>
         {title}
         {counter > 0 &&
           <div className={styles.counter}>
             <span className={styles.counterText}>{counter}</span>
           </div>
         }
-      </p>
+      </div>
       <div className={styles.categoryContainer}>
         <p className={styles.category}>{category}</p>
-        <div className={styles.icon}>
+        <div className={cx(styles.icon, { [styles.openBox]: isOpen})}>
           <ArrowExpandIcon />
         </div>
       </div>

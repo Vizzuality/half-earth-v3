@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { setCSSvariable } from 'utils/generic-functions';
 import Component from './country-labels-layer-component';
 
 const actions = {...urlActions}
@@ -20,6 +21,7 @@ const CountryLabelsLayerContainer = props => {
       const { attributes } = graphic;
       if (!countryISO || countryISO !== attributes.GID_0) {
         changeGlobe({countryISO: attributes.GID_0, countryName: attributes.NAME_0});
+        setCSSvariable('--sidebar-top-margin', '20px');
       }
     }
   }

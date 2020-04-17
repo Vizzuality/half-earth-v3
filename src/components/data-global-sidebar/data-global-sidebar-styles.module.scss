@@ -2,7 +2,7 @@
 @import 'styles/settings';
 @import 'styles/common-animations.module';
 
-.container {
+.sidebarContainer {
   @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
