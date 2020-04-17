@@ -11,6 +11,7 @@ export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species'
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRAPHIC_LAYER = 'graphic_layer';
+export const COUNTRY_MASK_LAYER = 'mask-layer';
 // Terrestrial human pressures imagery layer (it is the aggregation of rainfed, irrigated and urban pressures).
 export const LAND_HUMAN_PRESSURES_IMAGE_LAYER = 'land_human_pressures';
 // Label layer to display features labels (marine, terrestrial and urban).

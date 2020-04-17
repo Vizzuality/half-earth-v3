@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
-import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, COUNTRY_MASK_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { MASK_STYLES, COUNTRY_BORDER_STYLES } from 'constants/graphic-styles';
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
@@ -47,8 +47,8 @@ const MaskCountryManager = props => {
 
   useEffect(() => {
     loadModules(["esri/layers/GraphicsLayer"]).then(([GraphicsLayer]) => {
-        const _graphicsLayer = createGraphicLayer(GraphicsLayer, [], 'mask-layer');
-        setGraphicsLayer(_graphicsLayer);  
+        const _graphicsLayer = createGraphicLayer(GraphicsLayer, [], COUNTRY_MASK_LAYER);
+        setGraphicsLayer(_graphicsLayer);
         viewLocal.map.layers.add(_graphicsLayer);
       })
   }, []);
