@@ -10,6 +10,7 @@
 
 .layersTogglesContainer{
   @include backdropBlur();
+  overflow: hidden;
   width: $sidebar-width;
   height: 0;
   @include animationFunction($propertyToAnimate: height);
