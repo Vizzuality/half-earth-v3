@@ -41,4 +41,4 @@ export const centerQuery = (layer, center) => {
 }
 
 export const getCellsAttributes = features => features.map(gc => gc.attributes);
-export const getCellsIDs = results => results.features.map(gc => gc.attributes.CELL_ID);
+export const getCellsIDs = features => features.map(gc => gc.attributes.CELL_ID || gc.attributes.ID);

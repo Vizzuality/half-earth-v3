@@ -30,7 +30,6 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
@@ -73,7 +72,6 @@ export default createStructuredSelector({
   isFullscreenActive: getFullscreenActive,
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
-  rasters: getRasters,
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,

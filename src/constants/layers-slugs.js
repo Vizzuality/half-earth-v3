@@ -5,15 +5,20 @@ export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
 export const RAISIG_AREAS_FEATURE_LAYER = 'RAISIG_areas_feature_layer';
 export const RAISIG_AREAS_VECTOR_TILE_LAYER = 'RAISIG_areas_vector_tile_layer';
-export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage'
-export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species'
+export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
+export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species';
+export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human_pressures_percentage';
 // Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const COUNTRY_MASK_LAYER = 'mask-layer';
-// Terrestrial human pressures imagery layer (it is the aggregation of rainfed, irrigated and urban pressures).
-export const LAND_HUMAN_PRESSURES_IMAGE_LAYER = 'land_human_pressures';
+// Terrestrial human pressures tiled layers.
+export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
+export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
+export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
+export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
+export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
@@ -64,12 +69,12 @@ export const BIRDS_RARITY = 'birds-rarity';
 export const BIRDS_RICHNESS = 'birds-rich';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
-export const TURTLES_RARITY = 'turtles-rare';
-export const TURTLES_RICHNESS = 'turtles-rich';
 export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
 export const CONIFERS_RICHNESS = 'conifers-rich';
+export const REPTILES_RARITY = 'reptiles-rarity';
+export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';

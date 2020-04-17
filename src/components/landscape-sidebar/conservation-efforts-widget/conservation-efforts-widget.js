@@ -39,7 +39,7 @@ const ConservationEffortsWidget = (props) => {
         const consPropLayer = new FeatureLayer({
           url: layersConfig[GRID_CELLS_PROTECTED_AREAS_PERCENTAGE].url
         });
-        setConservationPropsLayer(consPropLayer)
+        setConservationPropsLayer(consPropLayer);
       });
     }
   }, []);
@@ -72,7 +72,7 @@ const ConservationEffortsWidget = (props) => {
   useEffect(() => {
     if (terrestrialCellData && queryParams) {
       setConservationEfforts({ data: null, loading: true });
-      queryParams.where = `CELL_ID IN (${terrestrialCellData.map(i => i.CELL_ID).join(', ')})`;
+      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.ID).join(', ')})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
@@ -80,17 +80,17 @@ const ConservationEffortsWidget = (props) => {
     }
   }, [terrestrialCellData])
 
-  const handleLayerToggle = (layersPassed, option) => {
+  const handleLayerToggle = async (layersPassed, option) => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
     if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
-      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(layerName => {
+      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(async layerName => {
         const layerConfig = layersConfig[layerName];
-        handleLayerCreation(layerConfig, map);
+        await handleLayerCreation(layerConfig, map);
       })
       batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     } else {
       const layer = layersConfig[option.title];
-      handleLayerCreation(layer, map);
+      await handleLayerCreation(layer, map);
       layerManagerToggle(layer.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
       removeLayerAnalyticsEvent({ slug: layer.slug });
     }

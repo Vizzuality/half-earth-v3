@@ -10,9 +10,7 @@ import styles from './data-global-sidebar-styles.module.scss'
 const DataGlobeSidebarComponent = ({
   map,
   view,
-  rasters,
   sceneMode,
-  setRasters,
   countryName,
   activeLayers,
   isCountryMode,
@@ -50,8 +48,6 @@ const DataGlobeSidebarComponent = ({
       <HumanImpactSidebarCard
         map={map}
         view={view}
-        rasters={rasters}
-        setRasters={setRasters}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}

@@ -1,20 +1,23 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { intersection } from 'lodash';
 import { loadModules } from 'esri-loader';
-import { WDPALayers } from 'constants/protected-areas';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
-import { DEFAULT_OPACITY } from 'constants/mol-layers-configs';
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
   const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
   const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
   if (areActive) {
     const updatedLayers = layerNamesArray.reduce((acc, title) => {
+      removeLayerAnalyticsEvent({ slug: title });
       return [...acc.filter(l => l.title !== title)];
     }, activeLayers);
     callback({activeLayers: updatedLayers });
   } else {
-    const layersToAdd = layerNamesArray.map(title => ({ title, category, opacity: DEFAULT_OPACITY }));
+    const layersToAdd = layerNamesArray.map(title => {
+      addLayerAnalyticsEvent({ slug: title });
+      return { title, category, opacity: DEFAULT_OPACITY }
+    });
     activeLayers
       ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
       : callback({ activeLayers: layersToAdd });
@@ -27,7 +30,16 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });
+    removeLayerAnalyticsEvent({ slug: title });
+  } else if (category === LAYERS_CATEGORIES.LAND_PRESSURES) {
+    const groupLayer = activeLayers.find(l => l.category === LAYERS_CATEGORIES.LAND_PRESSURES);
+    const groupOpacity = groupLayer && groupLayer.opacity;
+    addLayerAnalyticsEvent({ slug: title })
+    activeLayers
+      ? callback({ activeLayers: [{ title, category, opacity: groupOpacity || DEFAULT_OPACITY }].concat(activeLayers) })
+      : callback({ activeLayers: [ { title, category, opacity: groupOpacity || DEFAULT_OPACITY }] });
   } else {
+    addLayerAnalyticsEvent({ slug: title });
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { title, category, opacity: DEFAULT_OPACITY }] });
@@ -35,6 +47,8 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
 };
 
 export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
+  addLayerAnalyticsEvent({ slug: layerToActivate });
+  removeLayerAnalyticsEvent({ slug: layerToRemove });
   const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.title !== layerToRemove) : activeLayers;
   callback({ activeLayers: [{ title: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
 };
@@ -63,9 +77,9 @@ export const layerManagerOpacity = (layerTitle, opacity, activeLayers, callback)
   callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
 };
 
-export const layerManagerOrder = (datasets, activeLayers, callback) => {
+export const layerManagerOrder = (legendLayers, activeLayers, callback) => {
   const updatedLayers = activeLayers.filter(({ title }) => LEGEND_FREE_LAYERS.some(layer => layer === title));
-  datasets.forEach((d) => { updatedLayers.push(activeLayers.find(({ title }) => d === title )) });
+  legendLayers.forEach((d) => { updatedLayers.push(activeLayers.find(({ title }) => d === title )) });
   callback({ activeLayers: updatedLayers });
 };
 
@@ -89,7 +103,7 @@ export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) =>
 export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
-export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPressuresPreloadFixes, humanPressuresLayerTitle) => {
+export const activateLayersOnLoad = (map, activeLayers, config) => {
   const activeLayerIDs = activeLayers
       .map(({ title }) => title);
   
@@ -98,9 +112,6 @@ export const activateLayersOnLoad = (map, activeLayers, config, rasters, humanPr
       if (layerConfig) {
         const newLayer = await createLayer(layerConfig, map);
         newLayer.outFields = ["*"];
-        if (layerConfig.slug === humanPressuresLayerTitle) {
-          humanPressuresPreloadFixes(newLayer, rasters);
-        }
         addLayerToMap(newLayer, map);
       }
     });
@@ -115,40 +126,3 @@ export const handleLayerCreation = async (layerConfig, map) => {
   }
 }
 
-export const handleLayerRendered = (view, layer, handleGlobeUpdating) => {
-  view.whenLayerView(layer).then(mapLayerView => {
-    mapLayerView.watch("updating", updating => {
-      if(!updating) { handleGlobeUpdating(false) }
-    })
-  })
-}
-
-export const getToggledLayer = (layers, option) => {
-  return layers.reduce((wantedLayer, currentLayer) => {
-    if(wantedLayer) return wantedLayer;
-    if(currentLayer.title === option.id) return currentLayer;
-    if(currentLayer.layers) return currentLayer.layers.items.find(layer => layer.title === option.id);
-    return wantedLayer;
-  }, null)
-}
-
-export const toggleWDPALayer = (activeLayers, option, handleGlobeUpdating, view, map, handleLayerToggle) => {
-  const layerNotRendered = !activeLayers.some(layer => layer.title === option.id);
-
-  const alreadyChecked = WDPALayers.reduce((acc, option) => ({
-    ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title)
-  }), {});
-  
-  const layerToggled = getToggledLayer(map.layers.items, option);
-  
-  if (layerNotRendered) {
-    handleGlobeUpdating(true);
-  }
-
-  handleLayerToggle(option.id);
-  handleLayerRendered(view, layerToggled, handleGlobeUpdating);
-
-  const isLayerActive = alreadyChecked[option.value];
-  if (isLayerActive) addLayerAnalyticsEvent({ slug: option.slug })
-  else removeLayerAnalyticsEvent({ slug: option.slug });
-}

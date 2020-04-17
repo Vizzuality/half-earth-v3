@@ -28,7 +28,7 @@ const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
   </>
 );
 
-const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
+const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedOptions, selectedPressures, totalPressure, biggestPressureName, pressureFree }) => {
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Land human pressures in this area</h3>
@@ -40,7 +40,7 @@ const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedRasters, 
           <CheckboxGroup
             options={options}
             handleClick={handleOnClick}
-            checkedOptions={checkedRasters}
+            checkedOptions={checkedOptions}
           />
           {pressureFree && <p className={styles.pressureFreeLabel}>Not under pressure {pressureFree}</p>}
         </>

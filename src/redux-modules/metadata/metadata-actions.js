@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import CONTENTFUL from 'services/contentful';
+import MetadataService from 'services/metadata-service';
 
 export const setModalMetadataParams = createAction('setModalMetadataParams');
 
@@ -17,7 +17,7 @@ export const fetchModalMetaDataFail = createAction('fetchModalMetaDataFail');
 export const fetchModalMetaDataReady = createAction('fetchModalMetaDataReady');
 export const fetchModalMetaData = createThunkAction('fetchModalMetaData', slug => async dispatch => {
   try {
-    const data = await CONTENTFUL.getMetadata(slug);
+    const data = await MetadataService.getMetadata(slug);
     dispatch(fetchModalMetaDataReady({ slug, data }));
   } catch (e) {
     console.warn(e);

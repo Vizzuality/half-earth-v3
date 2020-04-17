@@ -45,10 +45,8 @@ const DataGlobeComponent = ({
   isGlobeUpdating,
   hasMetadata,
   activeLayers,
-  rasters,
   handleMapLoad,
   handleGlobeUpdating,
-  setRasters,
   activeOption,
   isHEModalOpen,
   countryISO,
@@ -77,14 +75,11 @@ const DataGlobeComponent = ({
           <Slider />
         </MobileOnly>
         {!isOnMobile && <Switcher />}
-        <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
         <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
         <DataGlobalSidebar
-          rasters={rasters}
           sceneMode={sceneMode}
-          setRasters={setRasters}
           countryName={countryName}
           activeLayers={activeLayers}
           isCountryMode={isCountryMode}
@@ -93,11 +88,10 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
           countedActiveLayers={countedActiveLayers}
+          isBiodiversityActive={isBiodiversityActive}
           />
         {isCountryMode &&
           <LocalSceneSidebar
-            rasters={rasters}
-            setRasters={setRasters}
             countryISO={countryISO}
             countryName={countryName}
             activeLayers={activeLayers}
@@ -108,22 +102,20 @@ const DataGlobeComponent = ({
           />
         }
         <LandscapeSidebar
-          rasters={rasters}
-          setRasters={setRasters}
-          activeLayers={activeLayers}
-          activeOption={activeOption}
-          selectedSpecies={selectedSpecies}
-          isLandscapeMode={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        activeOption={activeOption}
+        activeLayers={activeLayers}
+        isLandscapeMode={isLandscapeMode}
+        selectedSpecies={selectedSpecies}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
           activeOption={activeOption}
-          rasters={rasters}
         />
+       
         <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
