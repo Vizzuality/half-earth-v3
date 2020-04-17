@@ -34,6 +34,7 @@ const DataGlobeSidebarComponent = ({
       />
       <BiodiversitySidebarCard
         map={map}
+        view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         className={styles.biodiversitySidebarCard}

@@ -8,7 +8,7 @@ import styles from './biodiversity-sidebar-card-styles.module.scss'
 
 const biodiversity = LAYERS_CATEGORIES.BIODIVERSITY;
 
-const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, map}) => {
+const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, map, view}) => {
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
@@ -30,6 +30,7 @@ const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, ma
             options={cat.taxa}
             activeLayers={activeLayers}
             map={map}
+            view={view}
           />
         ))}
       </div>

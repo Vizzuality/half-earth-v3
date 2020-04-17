@@ -33,6 +33,7 @@ const LocalSceneSidebarComponent = ({
       />
       <BiodiversitySidebarCard
         map={map}
+        view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         countedActiveLayers={countedActiveLayers}
