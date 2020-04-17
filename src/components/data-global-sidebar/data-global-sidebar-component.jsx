@@ -19,6 +19,7 @@ const DataGlobeSidebarComponent = ({
   activeCategory,
   isLandscapeMode,
   isFullscreenActive,
+  countedActiveLayers,
   handleGlobeUpdating
 }) => {
 
@@ -36,12 +37,14 @@ const DataGlobeSidebarComponent = ({
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         className={styles.biodiversitySidebarCard}
+        countedActiveLayers={countedActiveLayers}
       />
       <ProtectedAreasSidebarCard
         map={map}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
+        countedActiveLayers={countedActiveLayers}
       />
       <HumanImpactSidebarCard
         map={map}
@@ -51,6 +54,7 @@ const DataGlobeSidebarComponent = ({
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
+        countedActiveLayers={countedActiveLayers}
       />
     </div>
   )

@@ -5,14 +5,16 @@ import CategoryBox from 'components/category-box';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
 import styles from './protected-areas-sidebar-card-styles.module.scss'
 
-const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleGlobeUpdating, map}) => {
-  const isCategorySelected = LAYERS_CATEGORIES.PROTECTION === activeCategory;
+const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
+
+const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleGlobeUpdating, countedActiveLayers,map}) => {
+  const isCategorySelected = activeCategory === protectedAreas;
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
         title='mapping'
-        category={LAYERS_CATEGORIES.PROTECTION}
-        counter={0}
+        category={protectedAreas}
+        counter={countedActiveLayers[protectedAreas]}
         activeCategory={activeCategory}
       />
       <div className={cx(styles.layersTogglesContainer, { [styles.open]: isCategorySelected})}>

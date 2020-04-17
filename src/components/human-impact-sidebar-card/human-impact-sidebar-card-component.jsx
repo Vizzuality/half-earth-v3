@@ -5,14 +5,16 @@ import CategoryBox from 'components/category-box';
 import HumanImpactLayers from 'components/human-impact-layers';
 import styles from './human-impact-sidebar-card-styles.module.scss'
 
-const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleGlobeUpdating, setRasters, rasters, map, view}) => {
-  const isCategorySelected = LAYERS_CATEGORIES.LAND_PRESSURES === activeCategory;
+const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
+
+const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleGlobeUpdating, countedActiveLayers, setRasters, rasters, map, view}) => {
+  const isCategorySelected = activeCategory === humanImpact;
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
         title='mapping'
-        category={LAYERS_CATEGORIES.LAND_PRESSURES}
-        counter={0}
+        category={humanImpact}
+        counter={countedActiveLayers[humanImpact]}
         activeCategory={activeCategory}
       />
       <div className={cx(styles.layersTogglesContainer, { [styles.open]: isCategorySelected})}>

@@ -41,6 +41,7 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
+  countedActiveLayers,
   isGlobeUpdating,
   hasMetadata,
   activeLayers,
@@ -91,6 +92,31 @@ const DataGlobeComponent = ({
           isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
+          countedActiveLayers={countedActiveLayers}
+          />
+        {isCountryMode &&
+          <LocalSceneSidebar
+            rasters={rasters}
+            setRasters={setRasters}
+            countryISO={countryISO}
+            countryName={countryName}
+            activeLayers={activeLayers}
+            activeCategory={activeCategory}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            countedActiveLayers={countedActiveLayers}
+          />
+        }
+        <LandscapeSidebar
+          rasters={rasters}
+          setRasters={setRasters}
+          activeLayers={activeLayers}
+          activeOption={activeOption}
+          selectedSpecies={selectedSpecies}
+          isLandscapeMode={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          handleGlobeUpdating={handleGlobeUpdating}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
@@ -98,20 +124,8 @@ const DataGlobeComponent = ({
           activeOption={activeOption}
           rasters={rasters}
         />
-        <LandscapeSidebar
-          isLandscapeMode={isLandscapeMode}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          activeOption={activeOption}
-          activeLayers={activeLayers}
-          rasters={rasters}
-          setRasters={setRasters}
-          selectedSpecies={selectedSpecies}
-        />
         <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
-        {isCountryMode && <LocalSceneSidebar activeCategory={activeCategory} activeLayers={activeLayers} countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}
         <LabelsLayer isLandscapeMode={isLandscapeMode} isCountryMode={isCountryMode} countryName={countryName}/>
