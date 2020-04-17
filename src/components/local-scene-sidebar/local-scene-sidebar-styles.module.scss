@@ -3,16 +3,12 @@
 @import 'styles/common-animations.module';
 
 .container {
-  @include topLeft();
+  @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
-  width: $sidebar-width;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  @media #{$tablet-portrait} {
-    overflow-y: unset;
-    width: $sidebar-width;
-    height: 100%;
-  }
+  position: absolute;
+  height: 100vh;
+  width: calc(#{$sidebar-width} + 15px);
+  top: $sidebar-top-margin;
+  left: $site-gutter;
+  padding-bottom: $site-gutter;
 }
