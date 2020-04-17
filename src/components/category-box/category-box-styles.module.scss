@@ -4,32 +4,25 @@
 
 .box {
   @include backdropBlur();
-  box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
   padding: 0 40px;
   height: 115px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 0;
   border-radius: 2px;
   width: 100%;
   transition: none;
-
-  &:hover {
-    .icon {
-      opacity: 1;
-    }
-  }
+  cursor: pointer;
 
   @media #{$tablet-portrait} {
     width: $sidebar-width;
-    margin-bottom: 5px;
     padding: 0 20px 0 20px;
     transition: all 0.2s ease-out;
 
     &:hover {
-      transform: translate(20px, 0);
-  
+      .icon {
+        opacity: 1;
+      }
       .category {
         text-shadow: 0 0 10px rgba(255,255,255,0.5);
       }
@@ -91,6 +84,11 @@
 }
 
 .icon {
-  margin-left: auto;
   opacity: 0;
+  margin-left: auto;
+  transform: rotate(90deg);
+  &.openBox {
+    opacity: 1;
+    transform:rotate(270deg);
+  }
 }

@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
+import { LAND_HUMAN_PRESSURES_IMAGE_LAYER, RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import initialState from './data-globe-initial-state';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
@@ -39,6 +40,24 @@ const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.a
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
+const getCountedActiveLayers = createSelector(
+  [getActiveLayers, getRasters],
+  (activeLayers, rasters) => {
+    const biodiversityLayers = activeLayers ? activeLayers.filter(({ category }) => category === 'Biodiversity').length : 0;
+    const protectionLayers = activeLayers ? activeLayers.filter(({ category, title }) => {
+      // we have to filter 'RAISIG' layer because activating 'Community-based' checbox selects two layers on the globe: "protected_areas_vector_tile_layer" and "RAISIG_areas_vector_tile_layer"
+      return category === 'Existing protection' && title !== RAISIG_AREAS_VECTOR_TILE_LAYER
+    }).length : 0; 
+    const humanPressureLayer = activeLayers ? activeLayers.filter(({ title }) => title === LAND_HUMAN_PRESSURES_IMAGE_LAYER).length : 0;
+    const humanPressureRasters = humanPressureLayer && Object.keys(rasters).filter(key => rasters[key]).length;
+
+    return {
+      'Biodiversity': biodiversityLayers,
+      'Existing protection': protectionLayers,
+      'Human pressures': humanPressureRasters
+    };
+  }
+);
 
 
 export default createStructuredSelector({
@@ -60,5 +79,6 @@ export default createStructuredSelector({
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
-  countryExtent: selectCountryExtent
+  countryExtent: selectCountryExtent,
+  countedActiveLayers: getCountedActiveLayers,
 })

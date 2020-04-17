@@ -40,6 +40,7 @@ const DataGlobeComponent = ({
   isLandscapeMode,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
+  countedActiveLayers,
   isGlobeUpdating,
   hasMetadata,
   activeLayers,
@@ -81,38 +82,47 @@ const DataGlobeComponent = ({
           isSidebarOpen={isSidebarOpen}
           activeOption={activeOption}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          isFullscreenActive={isFullscreenActive}
+          isBiodiversityActive={isBiodiversityActive}
+          sceneMode={sceneMode}
+          countryName={countryName}
+          activeLayers={activeLayers}
+          isCountryMode={isCountryMode}
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
-          isCountryMode={isCountryMode}
-          isBiodiversityActive={isBiodiversityActive}
-          activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
-          sceneMode={sceneMode}
-          countryISO={countryISO}
-          countryName={countryName}
+          countedActiveLayers={countedActiveLayers}
+          />
+        {isCountryMode &&
+          <LocalSceneSidebar
+            countryISO={countryISO}
+            countryName={countryName}
+            activeLayers={activeLayers}
+            activeCategory={activeCategory}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            countedActiveLayers={countedActiveLayers}
+          />
+        }
+        <LandscapeSidebar
+          activeLayers={activeLayers}
+          activeOption={activeOption}
+          selectedSpecies={selectedSpecies}
+          isLandscapeMode={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          handleGlobeUpdating={handleGlobeUpdating}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         />
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
-          activeOption={activeOption}
-        />
-        <LandscapeSidebar
-          isLandscapeMode={isLandscapeMode}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          activeOption={activeOption}
-          activeLayers={activeLayers}
-          selectedSpecies={selectedSpecies}
         />
         <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
-        {isCountryMode && <LocalSceneSidebar countryISO={countryISO} countryName={countryName} isFullscreenActive={isFullscreenActive}/>}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}
         <LabelsLayer isLandscapeMode={isLandscapeMode} isCountryMode={isCountryMode} countryName={countryName}/>
-        <MaskCountryManager countryISO={countryISO} countryExtent={countryExtent} isCountryMode={isCountryMode} />
+        <MaskCountryManager countryISO={countryISO} countryExtent={countryExtent} isCountryMode={isCountryMode} sceneMode={sceneMode}/>
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
       </DoubleScene>
       <TutorialModal />
