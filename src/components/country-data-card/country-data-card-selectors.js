@@ -1,12 +1,23 @@
 import { createSelector } from 'reselect';
+import { orderBy } from 'lodash';
 import { format } from 'd3-format';
 
+const selectCountriesListData = ({ countriesList }) => (countriesList && countriesList.data) || null;
+const selectCountryIso = (state, { countryISO }) => countryISO;
 const selectCountryData = ({ countryData }, { countryISO }) => (countryData && countryData.data && countryData.data[countryISO]) || null;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
+
+const getCountriesList = createSelector(
+  [selectCountriesListData, selectCountryIso], (countriesListData, countryIso) => {
+  if (!countriesListData) return null;
+  const filteredList = countriesListData.countriesList.filter( country => country.value !== countryIso)
+  return orderBy(filteredList, 'name');
+})
 
 const getArea = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { Area } = countryData;
+  if (!Area) return 'data not available'
   const areaFormat = format(",.0f");
   const formatedArea = `${areaFormat(Area)}`;
   return formatedArea;
@@ -15,6 +26,7 @@ const getArea = createSelector(selectCountryData, countryData => {
 const getPopulation = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   const { Population2016 } = countryData;
+  if (!Population2016) return 'data not available'
   const valueFormat = population => {
     if (population < 1000000) {
       return population.toLocaleString('en');
@@ -45,13 +57,20 @@ const getDescription = createSelector(selectCountryData, countryData => {
   return countryData.sentence;
 })
 
+const getNumberOfVertebrates = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.N_SPECIES.toLocaleString('en');
+})
+
 const mapStateToProps = (state, props) => ({
+    countriesList: getCountriesList(state, props),
     countryData: selectCountryData(state, props),
     countryDataLoading: selectCountryDataLoading(state, props),
     countryArea: getArea(state, props),
     countryPopulation: getPopulation(state, props),
     grossNationalIncome: getGrossNationalIncome(state, props),
-    countryDescription: getDescription(state, props)
+    countryDescription: getDescription(state, props),
+    vertebratesCount: getNumberOfVertebrates(state, props)
   }
 )
 export default mapStateToProps;

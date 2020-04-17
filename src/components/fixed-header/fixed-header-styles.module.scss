@@ -1,6 +1,7 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
+@import 'styles/common-animations.module';
 
 $icon-size: 25px;
 
@@ -76,7 +77,7 @@ $icon-size: 25px;
   margin-top: 4px;
 }
 
-.title {
+.titleContainer {
   @extend %headline;
   font-size: 24px;
   color: $white;
@@ -95,6 +96,50 @@ $icon-size: 25px;
     margin-right: 0;
     font-size: 32px;
     overflow: visible;
+  }
+}
+.optionsToggle {
+  position: absolute;
+  right: 25px;
+  transform: rotate(90deg);
+  top: 70px;
+  cursor: pointer;
+  @include animationFunction($propertyToAnimate: all);
+  &.openList{
+    transform: rotate(270deg);
+  }
+}
+.dropdownWrapper {
+  position: relative;
+}
+
+.titleOptionsList {
+  @extend %verticalScrollbarStyled;
+  position: absolute;
+  overflow-y: scroll;
+  border-radius: 2px;
+  background-color: $white;
+  color: $firefly;
+  width: 230px;
+  z-index: 2;
+  list-style: none;
+  overflow-x: hidden;
+  top: 10px;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  @include animationFunction($propertyToAnimate: all);
+  &.open {
+    height: 340px;
+  }
+}
+
+.titleOptionItem {
+  @extend %bodyText;
+  cursor: pointer;
+  padding: 5px 0px 5px 20px;
+  &:hover {
+    background-color: darken($white, 10);
   }
 }
 
