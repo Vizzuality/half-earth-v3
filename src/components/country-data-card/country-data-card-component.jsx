@@ -5,7 +5,20 @@ import FixedHeader from 'components/fixed-header'
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import dummyCountryImage from 'images/dummyCountryImage.jpg';
 
-const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, countryDataLoading, countryArea, countryPopulation, grossNationalIncome, countryName, countryDescription}) => {
+const CountryDataCardComponent = ({ 
+  view,
+  countryName,
+  countryArea,
+  countryData,
+  countriesList,
+  vertebratesCount,
+  countryPopulation,
+  countryDescription,
+  countryDataLoading,
+  grossNationalIncome,
+  handleSceneModeChange,
+  handleCountryDropdownClick
+}) => {
 
   if (countryDataLoading) {
     return (
@@ -19,7 +32,7 @@ const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, co
     );
   }
 
-  return countryData && (
+  return countryData && countriesList && (
     <div className={styles.container}>
       <DummyBlurWorkaround />
       <FixedHeader 
@@ -27,10 +40,14 @@ const CountryDataCardComponent = ({ view, countryData, handleSceneModeChange, co
         title={countryName}
         view={view}
         autoHeight
+        selectableTitle
+        titleOptions={countriesList}
+        handleTitleOptionClick={handleCountryDropdownClick}
       />
       <img className={styles.image} alt={`${countryName}`} src={dummyCountryImage} />
       <section className={styles.descriptionWrapper}>
         <p>Total Area: {`${countryArea}`} km<sup>2</sup></p>
+        <p>Endemic vertebrates: {`${vertebratesCount}`} species</p>
         <p>Population: {`${countryPopulation}`}</p>
         <p>GNI: {`${grossNationalIncome}`}</p>
         <p>{`${countryDescription}`}</p>
