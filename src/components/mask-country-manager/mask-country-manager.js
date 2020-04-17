@@ -68,7 +68,7 @@ const MaskCountryManager = props => {
   }, [countryExtent, isCountryMode]);
 
   useEffect(() => {
-    if (graphicsLayer && (!countryISO || sceneMode === GLOBAL_SCENE)) {
+    if (graphicsLayer && (!countryISO || !isCountryMode)) {
       graphicsLayer.graphics = [];
     }
   },[countryISO, sceneMode]);

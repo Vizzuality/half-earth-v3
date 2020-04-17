@@ -7,7 +7,7 @@ import styles from './human-impact-sidebar-card-styles.module.scss'
 
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
-const BiodiversitySidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers, setRasters, rasters, map, view}) => {
+const HumanImpactSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers, setRasters, rasters, map, view}) => {
   
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
@@ -34,4 +34,4 @@ const BiodiversitySidebarCardComponent = ({activeLayers, handleGlobeUpdating, co
   )
 }
 
-export default BiodiversitySidebarCardComponent;
+export default HumanImpactSidebarCardComponent;
