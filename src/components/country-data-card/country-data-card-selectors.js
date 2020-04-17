@@ -3,12 +3,15 @@ import { orderBy } from 'lodash';
 import { format } from 'd3-format';
 
 const selectCountriesListData = ({ countriesList }) => (countriesList && countriesList.data) || null;
+const selectCountryIso = (state, { countryISO }) => countryISO;
 const selectCountryData = ({ countryData }, { countryISO }) => (countryData && countryData.data && countryData.data[countryISO]) || null;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 
-const getCountriesList = createSelector(selectCountriesListData, countriesListData => {
+const getCountriesList = createSelector(
+  [selectCountriesListData, selectCountryIso], (countriesListData, countryIso) => {
   if (!countriesListData) return null;
-  return orderBy(countriesListData.countriesList, 'name');
+  const filteredList = countriesListData.countriesList.filter( country => country.value !== countryIso)
+  return orderBy(filteredList, 'name');
 })
 
 const getArea = createSelector(selectCountryData, countryData => {
