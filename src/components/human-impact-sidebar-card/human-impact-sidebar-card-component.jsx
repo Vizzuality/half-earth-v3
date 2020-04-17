@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
@@ -7,17 +7,20 @@ import styles from './human-impact-sidebar-card-styles.module.scss'
 
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
-const BiodiversitySidebarCardComponent = ({activeLayers, activeCategory, handleGlobeUpdating, countedActiveLayers, setRasters, rasters, map, view}) => {
-  const isCategorySelected = activeCategory === humanImpact;
+const BiodiversitySidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers, setRasters, rasters, map, view}) => {
+  
+  const [isOpen, setOpen] = useState(false)
+  const handleBoxClick = () => setOpen(!isOpen);
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
         title='mapping'
         category={humanImpact}
         counter={countedActiveLayers[humanImpact]}
-        activeCategory={activeCategory}
+        handleBoxClick={handleBoxClick}
+        isOpen={isOpen}
       />
-      <div className={cx(styles.layersTogglesContainer, { [styles.open]: isCategorySelected})}>
+      <div className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen})}>
           <HumanImpactLayers
             activeLayers={activeLayers}
             rasters={rasters}

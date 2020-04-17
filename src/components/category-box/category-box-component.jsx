@@ -5,9 +5,9 @@ import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 
 import styles from './category-box-styles.module.scss';
 
-const CategoryBox = ({ title, category, setActiveCategory, activeCategory, counter }) => (
+const CategoryBox = ({ title, category, handleBoxClick, counter, isOpen }) => (
   <>
-    <div className={styles.box} onClick={() => setActiveCategory(category, activeCategory)}>
+    <div className={styles.box} onClick={handleBoxClick}>
       <div className={styles.title}>
         {title}
         {counter > 0 &&
@@ -18,7 +18,7 @@ const CategoryBox = ({ title, category, setActiveCategory, activeCategory, count
       </div>
       <div className={styles.categoryContainer}>
         <p className={styles.category}>{category}</p>
-        <div className={styles.icon}>
+        <div className={cx(styles.icon, { [styles.openBox]: isOpen})}>
           <ArrowExpandIcon />
         </div>
       </div>

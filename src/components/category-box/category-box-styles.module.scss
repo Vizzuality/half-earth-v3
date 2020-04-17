@@ -87,4 +87,8 @@
   opacity: 0;
   margin-left: auto;
   transform: rotate(90deg);
+  &.openBox {
+    opacity: 1;
+    transform:rotate(270deg);
+  }
 }
