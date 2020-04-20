@@ -90,8 +90,7 @@ const getData = createSelector(getUniqeSpeciesData, speciesData => {
 const getSelectedSpeciesData = createSelector([getData, getSelectedSpeciesName],
   (data, selectedSpeciesName) => {
   if (!data) return null;
-  
-  const selectedSpecies = data.find(({ name }) => name === selectedSpeciesName) || data[0];
+  const selectedSpecies = data.find(({ scientificName }) => scientificName === selectedSpeciesName) || data[0];
   return selectedSpecies;
 });
 
