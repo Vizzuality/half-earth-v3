@@ -63,7 +63,7 @@ const getChartData = (speciesData, taxa, startAngle)  => {
     const angle = startAngle + angleOffset + angleOffset * i;
     return {
       id: s.HBWID,
-      name: s.common_name !== " " ? s.common_name : s.species_name,
+      name: s.common_name !== "NA" ? s.common_name : s.species_name,
       scientificName: s.species_name,
       rangeArea: formatRangeArea(s.RANGE_AREA_KM2),
       proportion: format(".2%")(s.PROP_RANGE_PROT),
