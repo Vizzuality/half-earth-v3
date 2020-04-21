@@ -15,7 +15,7 @@ import {
 
 const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
-  let queryHandle;
+  //let queryHandle;
   let watchHandle;
   let watchUpdateHandle;
 
@@ -29,7 +29,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
   const cleanUpHandles = () => {
     watchUpdateHandle && watchUpdateHandle.remove();
     watchHandle && watchHandle.remove();
-    queryHandle && queryHandle.cancel();
+    //queryHandle && queryHandle.cancel();
   }
 
   //Create the graphics layer on mount
@@ -80,7 +80,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
                 createCell(results, 'singleCell');
               })
           }
-        })
+        }).catch( error => console.log("ERROR", error))
     }
   }, [biodiversityFacetsLayer, viewExtent, gridCellGraphic])
 
