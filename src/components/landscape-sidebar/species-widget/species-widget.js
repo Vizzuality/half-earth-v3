@@ -16,8 +16,8 @@ const SpeciesWidget = ({ setSpeciesData, cellData, data, changeGlobe, selectedSp
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const updateSelectedSpecies = (index) => {
-    const { name } = data[index];
-    changeGlobe({ selectedSpecies: name });
+    const { scientificName } = data[index];
+    changeGlobe({ selectedSpecies: scientificName });
     setSelectedIndex(index);
   }
 
@@ -42,7 +42,7 @@ const SpeciesWidget = ({ setSpeciesData, cellData, data, changeGlobe, selectedSp
   }
 
   const handleSelectSpecies = (species) => {
-    const newIndex = data.findIndex(({ name }) => name === species.name)
+    const newIndex = data.findIndex(({ scientificName }) => scientificName === species.scientificName)
     updateSelectedSpecies(newIndex);
   }
 
