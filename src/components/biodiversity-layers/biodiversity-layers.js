@@ -19,7 +19,13 @@ const BiodiversityLayerContainer = props => {
       const target = new Extent({
         xmin, xmax, ymin, ymax
       })
-      view.goTo({target});
+      view.goTo({target})
+        .catch(function(error) {
+          // Avoid displaying console errors when transition is aborted by user interacions
+          if (error.name !== "AbortError") {
+            console.error(error);
+          }
+        });
     })
   }
 
