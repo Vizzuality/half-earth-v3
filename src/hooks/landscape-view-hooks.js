@@ -32,5 +32,11 @@ import {
         duration: 1000
       }
       view.goTo(target, options)
+        .catch(function(error) {
+          // Avoid displaying console errors when transition is aborted by user interacions
+          if (error.name !== "AbortError") {
+            console.error(error);
+          }
+        });
     }, [isLandscapeMode])
   }

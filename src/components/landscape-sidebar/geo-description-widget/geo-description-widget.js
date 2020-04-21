@@ -19,6 +19,12 @@ const GeoDescriptionWidget = props => {
       scale: zoomToScale[7]
     }
     view.goTo(target)
+      .catch(function(error) {
+        // Avoid displaying console errors when transition is aborted by user interacions
+        if (error.name !== "AbortError") {
+          console.error(error);
+        }
+      });
   };
 
   const toggleCollapsedLandscapeSidebar = () => {
