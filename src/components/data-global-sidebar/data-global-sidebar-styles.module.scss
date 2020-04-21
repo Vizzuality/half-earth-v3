@@ -6,7 +6,7 @@
   @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
-  height: 100vh;
+  height: calc(100vh - #{$sidebar-top-margin});
   width: calc(#{$sidebar-width} + 15px);
   top: $sidebar-top-margin;
   left: $site-gutter;

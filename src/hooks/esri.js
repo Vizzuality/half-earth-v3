@@ -51,6 +51,9 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
 
   const addSearchWidgetToView = async () => {
     await view.ui.add(searchWidget, "top-left");
+    const esriSearch = document.querySelector('.esri-search');
+    const rootNode = document.getElementById("root");
+    if(esriSearch) { rootNode.appendChild(esriSearch); }
     document.querySelector(".esri-search__input").focus();
   }
 
