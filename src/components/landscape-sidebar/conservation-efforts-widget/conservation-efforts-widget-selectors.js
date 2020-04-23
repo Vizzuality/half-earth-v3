@@ -127,8 +127,19 @@ const getActiveSlices = createSelector(
     return activeSlices;
 });
 
+const getSelectedCellsIds = createSelector(
+  [gridCellData],
+  (cellData) => {
+  if(!cellData) return null;
+  const selectedCellsIDs = cellData.map(i => {
+    const id = i.ID || i.CELL_ID;
+    return `'${id}'`;
+  });
+  return selectedCellsIDs;
+});
+
 export default createStructuredSelector({
-  cellData: gridCellData,
+  selectedCellsIDs: getSelectedCellsIds,
   pieChartData: getConservationEfforts,
   dataFormatted: getConservationAreasFormatted,
   rawData: getConservationAreasLogic, 
