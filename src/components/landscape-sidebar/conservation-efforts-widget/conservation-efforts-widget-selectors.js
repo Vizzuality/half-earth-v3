@@ -1,7 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
 import { WDPALayers } from 'constants/protected-areas';
-import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
 
 export const COMMUNITY_BASED = 'community';
 export const PROTECTED = 'protected';
@@ -15,6 +14,7 @@ const COLORS = () => ({
 
 const conservationEffortsData = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.data;
 const conservationEffortsLoading = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.loading;
+const gridCellData = ({ gridCellData }) => (gridCellData && gridCellData.data) || null;
 
 const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
@@ -128,7 +128,7 @@ const getActiveSlices = createSelector(
 });
 
 export default createStructuredSelector({
-  terrestrialCellData: getTerrestrialCellData,
+  cellData: gridCellData,
   pieChartData: getConservationEfforts,
   dataFormatted: getConservationAreasFormatted,
   rawData: getConservationAreasLogic, 

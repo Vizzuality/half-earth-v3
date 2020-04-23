@@ -27,7 +27,7 @@ const ConservationEffortsWidget = (props) => {
   const {
     alreadyChecked,
     colors,
-    terrestrialCellData,
+    cellData,
     setConservationEfforts
   } = props;
 
@@ -70,15 +70,19 @@ const ConservationEffortsWidget = (props) => {
   }, [orangeActive, yellowActive])
 
   useEffect(() => {
-    if (terrestrialCellData && queryParams) {
+    if (cellData && queryParams) {
       setConservationEfforts({ data: null, loading: true });
-      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.ID).join(', ')})`;
+      const queriedCellsIDs = cellData.map(i => {
+        const id = i.ID || i.CELL_ID;
+        return `'${id}'`;
+      }).join(', ');
+      queryParams.where = `ID IN (${queriedCellsIDs})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
       }).catch(() => setConservationEfforts({ data: null, loading: false }));
     }
-  }, [terrestrialCellData])
+  }, [cellData])
 
   const handleLayerToggle = async (layersPassed, option) => {
     const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
