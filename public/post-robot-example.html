@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Map embed test</title>
+  <script src="https://cdn.jsdelivr.net/npm/post-robot@8.0.28/dist/post-robot.min.js"></script>
+</head>
+<style>
+  iframe {
+    width: 800px;
+    height: 500px;
+  }
+</style>
+<body>
+  <iframe id="map-iframe" src="http://localhost:3000/map?listeners=true" frameborder="0"></iframe>
+  <input type="text" id="selected-layer" />
+  <button onclick="toggleLayer()">Toggle layer</button>
+  <button onclick="fly()">Fly</button>
+</body>
+<script>
+  var iframe = document.getElementById('map-iframe');
+  function fly() {
+    var location = { center: [4, 5], zoom: 8 }
+    postRobot.send(iframe, 'mapFlyToCoordinates', location)
+      .then(function(event) {
+        console.log('Done zoom: ', event.data.done);
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+  function toggleLayer() {
+    var selectedLayer = document.getElementById('selected-layer').value;
+    console.log(selectedLayer)
+    postRobot.send(iframe, 'setMapLayers', {
+      layers: [selectedLayer]
+    })
+      .then(function(event) {
+        console.log('Done layers: ', event.data.done);
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+</script>
+</html>
