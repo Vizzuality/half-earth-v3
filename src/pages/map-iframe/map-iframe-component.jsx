@@ -7,6 +7,8 @@ import GridLayer from 'components/grid-layer';
 import Legend from 'components/legend';
 
 const { REACT_APP_STAGING_DATA_GLOBE_SCENE_ID: SCENE_ID } = process.env;
+const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env;
+
 const DataGlobeComponent = ({
   activeLayers,
   isLandscapeMode,
@@ -15,7 +17,12 @@ const DataGlobeComponent = ({
   handleZoomChange
 }) => {
   return (
-    <Scene sceneId={SCENE_ID} sceneSettings={sceneSettings} onViewLoad={onLoad}>
+    <Scene
+      sceneId={SCENE_ID}
+      onViewLoad={onLoad}
+      sceneSettings={sceneSettings}
+      loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+    >
       <ArcgisLayerManager activeLayers={activeLayers}/>
       <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
       <Legend activeLayers={activeLayers} />
