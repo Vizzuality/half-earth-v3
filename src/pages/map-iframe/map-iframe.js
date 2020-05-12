@@ -11,7 +11,7 @@ import {
   layerManagerOpacity
 } from 'utils/layer-manager-utils';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
+import { createLayer, addLayerToMap, handleLayerCreation } from 'utils/layer-manager-utils';
 import { getCoordsFromZipAndCountry } from 'utils/locator-utils';
 import { createPointGraphic, createGraphicLayer, simplePictureMarker } from 'utils/graphic-layer-utils';
 
@@ -40,78 +40,61 @@ const addSignedPledgeToMap = (map, view, signedPledgeZIP, signedPledgeCountry) =
 })
 }
 
-const handleMapLoad = (map, view, activeLayers, isPledgesActive, signedPledgeZIP, signedPledgeCountry) => {
-
-
-  // pledges layer
-  loadModules([
-    'esri/layers/FeatureLayer'
-  ]).then(([
-    FeatureLayer
-  ]) => {
-    const layer = new FeatureLayer({
-      title: PLEDGES_LAYER,
-      url: PLEDGES_LAYER_URL,
-      renderer: {
-        type: 'simple',
-        symbol: simplePictureMarker(pledgeLightIcon)
-      },
-      featureReduction: { type: 'selection' }
-    });
-    
-    layer.visible = activeLayers.find(l => l.title === PLEDGES_LAYER) || isPledgesActive === 'true';
-    map.add(layer);
-  })
-
-  if (signedPledgeZIP && signedPledgeCountry) {
-    addSignedPledgeToMap(map, view, signedPledgeZIP, signedPledgeCountry);
-  }
+const handleMapLoad = (map, view, activeLayers, setDataGlobeSettings, listeners) => {
 
   const biodiversityLayerIDs = activeLayers
-    .filter(({ category }) => category === "Biodiversity")
-    .map(({ id }) => id);
+    //.filter(({ category }) => category === "Biodiversity")
+    .map(({ title }) => title);
 
   biodiversityLayerIDs.forEach(layerName => {
       const layerConfig = layersConfig[layerName];
       const newLayer = createLayer(layerConfig);
       addLayerToMap(newLayer, map);
     });
-  }
-const dataGlobeContainer = props => {
-  const attachPostRobotListeners = () => {
-    postRobot.on('mapFlyToCoordinates', event => {
-      const { center = [], zoom = 1 } = event.data; // { center: [4, 5], zoom: 8 }
-      if (center.length || zoom) {
-        flyToLocation(center, zoom);
-        return { done: true };
+
+    const toggleLayer = async layerTitle => {
+        const layerConfig = layersConfig[layerTitle];
+        await handleLayerCreation(layerConfig, map);
+        layerManagerToggle(layerTitle, activeLayers, setDataGlobeSettings);
       }
-      return { done: false };
-    });
-    postRobot.on('setMapLayers', event => { // [ 'Pledges', 'Biodiversity-facets', ... ]
-      const { layers = [] } = event.data;
-      layers.forEach(layerId => toggleLayer(layerId));
-      return { done: true };
-    });
-    postRobot.on('setLayersOpacity', event => { // [ { id: 'Pledges', opacity: 1 }, { id: 'Biodiversity', opacity: 0.6 } ] 
-      const { layers = [] } = event.data;
-      layers.forEach(layer => setLayerOpacity(layer.id, layer.opacity));
-      return { done: true };
-    });
-  }
 
-  useEffect(() => {
-    if(props.listeners) attachPostRobotListeners();
-  }, []);
+    const attachPostRobotListeners = () => {
+      // postRobot.on('mapFlyToCoordinates', event => {
+      //   console.log('Changing location')
+      //   const { center = [], zoom = 1 } = event.data; // { center: [4, 5], zoom: 8 }
+      //   if (center.length || zoom) {
+      //     flyToLocation(center, zoom);
+      //     return { done: true };
+      //   }
+      //   return { done: false };
+      // });
+      postRobot.on('setMapLayers', event => { // [ 'Pledges', 'Biodiversity-facets', ... ]
+        const { layers = [] } = event.data;
+        layers.forEach(layerId => toggleLayer(layerId));
+        return { done: true };
+      });
+      // postRobot.on('setLayersOpacity', event => { // [ { id: 'Pledges', opacity: 1 }, { id: 'Biodiversity', opacity: 0.6 } ] 
+      //   const { layers = [] } = event.data;
+      //   layers.forEach(layer => setLayerOpacity(layer.id, layer.opacity));
+      //   return { done: true };
+      // });
+    }
 
-  const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
-  const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setDataGlobeSettings);
-  const flyToLocation = (center, zoom) => props.setDataGlobeSettings({ center, zoom });
-  const handleZoomChange = props.setDataGlobeSettings;
+    if(listeners) attachPostRobotListeners();
+}
+
+
+const dataGlobeContainer = props => {
+  
+  // const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, props.setDataGlobeSettings, props.activeCategory);
+  // const setLayerOpacity = (layerId, opacity) => layerManagerOpacity(layerId, opacity, props.activeLayers, props.setDataGlobeSettings);
+  // const flyToLocation = (center, zoom) => console.log('updating location to', center, zoom) || props.setDataGlobeSettings({ center, zoom });
+  // const handleZoomChange = props.setDataGlobeSettings;
   
   return <Component
-    handleLayerToggle={toggleLayer}
-    handleZoomChange={handleZoomChange}
-    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, props.isPledgesActive, props.signedPledgeZIP, props.signedPledgeCountry)}
+    // handleLayerToggle={toggleLayer}
+    // handleZoomChange={handleZoomChange}
+    onLoad={(map, view) => handleMapLoad(map, view, props.activeLayers, props.setDataGlobeSettings, props.listeners)}
     {...props}/>
 }
 

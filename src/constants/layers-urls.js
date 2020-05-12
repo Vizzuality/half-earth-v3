@@ -60,7 +60,7 @@ export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH
 
 export const LAYERS_URLS = {
   [PLEDGES_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
-  [EDUCATOR_AMBASSADORS_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/69575fd15dc44add9323a739f895bed5/rest/services/Educator_Ambassadors/FeatureServer',
+  [EDUCATOR_AMBASSADORS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Educator_Ambassadors/FeatureServer',
   [LANDSCAPE_FEATURES_LABELS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers/FeatureServer',
   [CITIES_LABELS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/CityLabels/FeatureServer',
   [VIBRANT_BASEMAP_LAYER]: 'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Vibrant/MapServer',
