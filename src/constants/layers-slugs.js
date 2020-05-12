@@ -30,7 +30,8 @@ export const FEATURED_PLACES_LAYER = 'featured_places';
 export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
 // Pledges layer
 export const PLEDGES_LAYER = 'signed_pledges';
-export const SIGNED_PLEDGE_GRAPHIC_LAYER = 'signed_pledges_graphic_layer'
+export const EDUCATOR_AMBASSADORS_LAYER = 'educator_ambassadors';
+export const SIGNED_PLEDGE_GRAPHIC_LAYER = 'signed_pledges_graphic_layer';
 // Labels for mountains and rivers
 export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer';
 // human settlements labels
@@ -71,5 +72,5 @@ export const CONIFERS_RICHNESS = 'conifers-rich';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds
-export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
+export const HUMMINGBIRDS_RARITY = '  ';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
