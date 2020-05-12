@@ -24,7 +24,6 @@ import FeaturedMapsList from 'components/featured-maps-list';
 import TutorialModal from 'components/tutorial/tutorial-modal';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
-import UserDataModal from 'components/user-data-modal';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -171,7 +170,6 @@ const DataGlobeComponent = ({
       />
       {hasMetadata && <InfoModal />}
       {!selectedFeaturedPlace && !isOnMobile && <About />}
-      <UserDataModal />
     </>
   )
 }
