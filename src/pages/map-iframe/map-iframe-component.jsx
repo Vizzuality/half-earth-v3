@@ -18,7 +18,7 @@ const DataGlobeComponent = ({
 }) => {
   return (
     <Scene
-      sceneId={SCENE_ID}
+      sceneId='e96f61b2e79442b698ec2cec68af6db9'
       onViewLoad={onLoad}
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
