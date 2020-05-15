@@ -1,15 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-
-import { PLEDGES_LAYER, SIGNED_PLEDGE_GRAPHIC_LAYER } from 'constants/layers-slugs';
-import { PLEDGES_LAYER_URL } from 'constants/layers-urls';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { createLayer, addLayerToMap, handleLayerCreation } from 'utils/layer-manager-utils';
+import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 
 import Component from './map-iframe-component.jsx';
 import mapStateToProps from './map-iframe-selectors';
-import pledgeLightIcon from 'icons/pledge.svg'
 
 import ownActions from './map-iframe-actions.js';
 const actions = { ...ownActions };
@@ -17,12 +12,9 @@ const actions = { ...ownActions };
 
 
 const handleMapLoad = (map, activeLayers) => {
-
-  const biodiversityLayerIDs = activeLayers
-    //.filter(({ category }) => category === "Biodiversity")
-    .map(({ title }) => title);
-
-  biodiversityLayerIDs.forEach(layerName => {
+  activeLayers
+    .map(({ title }) => title)
+    .forEach(layerName => {
       const layerConfig = layersConfig[layerName];
       const newLayer = createLayer(layerConfig);
       addLayerToMap(newLayer, map);
