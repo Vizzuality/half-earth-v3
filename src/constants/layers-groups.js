@@ -22,7 +22,7 @@ import {
 } from 'constants/layers-slugs';
 
 
-const CONSTANT_CONTACT_LAYERS = [
+export const CONSTANT_CONTACT_LAYERS = [
   PLEDGES_LAYER,
   EDUCATOR_AMBASSADORS_LAYER
 ]
