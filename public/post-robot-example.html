@@ -17,9 +17,28 @@
   <input type="text" id="selected-layer" />
   <button onclick="toggleLayer()">Toggle layer</button>
   <button onclick="fly()">Fly</button>
+  <label>
+    layer
+    <input type="text" id="layer" />
+  </label>
+  <label>
+    opacity
+    <input type="text" id="opacity" />
+  </label>
+  <button onclick="opacity()">opacity</button>
+  <label>
+    zip
+    <input type="text" id="zip" />
+  </label>
+  <label>
+    country
+    <input type="text" id="country" />
+  </label>
+  <button onclick="signedPledge()">signedPledge</button>
 </body>
 <script>
   var iframe = document.getElementById('map-iframe');
+
   function fly() {
     var location = { center: [4, 5], zoom: 8 }
     postRobot.send(iframe, 'mapFlyToCoordinates', location)
@@ -30,6 +49,7 @@
         console.error(err);
       });
   }
+
   function toggleLayer() {
     var selectedLayer = document.getElementById('selected-layer').value;
     console.log(selectedLayer)
@@ -38,6 +58,34 @@
     })
       .then(function(event) {
         console.log('Done layers: ', event.data.done);
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+
+  function opacity() {
+    var id = document.getElementById('layer').value;
+    var opacity = document.getElementById('opacity').value;
+    postRobot.send(iframe, 'setLayersOpacity', {
+      layers: [{id, opacity}]
+    })
+      .then(function(event) {
+        console.log('update layer opacity: ', {id, opacity});
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+
+  function signedPledge() {
+    var zip = document.getElementById('zip').value;
+    var country = document.getElementById('country').value;
+    postRobot.send(iframe, 'setFeaturedPledge', {
+      layer: {zip, country}
+    })
+      .then(function(event) {
+        console.log('Send location params', {zip, country});
       })
       .catch(function(err) {
         console.error(err);
