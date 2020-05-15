@@ -42,9 +42,9 @@ const PostRobotManagerContainer = ({ map, view, activeLayers, listeners, handleP
       return { done: false };
     });
 
-    const layerToggleListener = postRobot.on('setMapLayers', event => { // [ 'Pledges', 'Biodiversity-facets', ... ]
-      const { layers = [] } = event.data;
-      layers.forEach(layerId => toggleLayer(layerId, activeLayers));
+    const layerToggleListener = postRobot.on('setMapLayer', event => { // [ 'Pledges', 'Biodiversity-facets', ... ]
+      const { layer = '' } = event.data;
+      toggleLayer(layer, activeLayers);
       return { done: true };
     });
 

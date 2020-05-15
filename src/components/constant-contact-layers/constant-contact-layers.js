@@ -17,6 +17,7 @@ const ConstantContactLayersContainer = ({
         symbol: simplePictureMarker(pledgeLightIcon)
       }
       cc.featureReduction = { type: 'selection' }
+      cc.opacity = 1;
     })
   },[activeLayers]);
 

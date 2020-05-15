@@ -5,36 +5,74 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Map embed test</title>
   <script src="https://cdn.jsdelivr.net/npm/post-robot@8.0.28/dist/post-robot.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet"> 
 </head>
 <style>
-  iframe {
-    width: 800px;
-    height: 500px;
+  body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+  }
+  iframe,
+  section {
+    width: 49vw;
+    height: 100vh;
+  }
+  section {
+    float: right;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin-bottom: 50px;
+  }
+  input {
+    margin-bottom: 30px;
+  }
+  label {
+    position: relative;
+  }
+  label > span{
+    position: absolute;
+    top: -20px;
   }
 </style>
 <body>
   <iframe id="map-iframe" src="http://localhost:3000/map?listeners=true" frameborder="0"></iframe>
-  <input type="text" id="selected-layer" />
-  <button onclick="toggleLayer()">Toggle layer</button>
-  <button onclick="fly()">Fly</button>
-  <label>
-    layer
-    <input type="text" id="layer" />
-  </label>
-  <label>
-    opacity
-    <input type="text" id="opacity" />
-  </label>
-  <button onclick="opacity()">opacity</button>
-  <label>
-    zip
-    <input type="text" id="zip" />
-  </label>
-  <label>
-    country
-    <input type="text" id="country" />
-  </label>
-  <button onclick="signedPledge()">signedPledge</button>
+  <section>
+    <p>To handle interactions with the map iframe we are using <a href="https://github.com/krakenjs/post-robot">postRobot</a> library</p>
+    <p>This functions are triggering the postRobot.send() method.</p>
+    <p>Check the code of <a href="https://github.com/Vizzuality/half-earth-v3/blob/feature/map-iframe-constatnt-contact-layers/public/post-robot-example.html">this</a> page in this file</p>
+    <div>
+      <p>Check available layers names in this <a href="https://github.com/Vizzuality/half-earth-v3/blob/master/src/constants/layers-slugs.js">file</a></p>
+      <span>layer</span>
+      <input type="text" id="selected-layer" placeholder="signed_pledges"/>
+      <button onclick="toggleLayer()">Toggle layer</button>
+    </div>
+    <div>
+      <label>
+        <span>layer</span>
+        <input type="text" id="layer" placeholder="signed_pledges"/>
+      </label>
+      <label>
+        <span>opacity</span>
+        <input type="text" id="opacity" placeholder="0.3"/>
+      </label>
+      <button onclick="opacity()">opacity</button>
+    </div>
+    <div>
+      <label>
+        <span>ZIP code</span>
+        <input type="text" id="zip" placeholder="36203"/>
+      </label>
+      <label>
+        <span>Country code</span>
+        <input type="text" id="country" placeholder="ES"/>
+      </label>
+      <button onclick="signedPledge()">signedPledge</button>
+    </div>
+    <button onclick="fly()">Fly</button>
+  </section>
 </body>
 <script>
   var iframe = document.getElementById('map-iframe');
@@ -42,26 +80,13 @@
   function fly() {
     var location = { center: [4, 5], zoom: 8 }
     postRobot.send(iframe, 'mapFlyToCoordinates', location)
-      .then(function(event) {
-        console.log('Done zoom: ', event.data.done);
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
   }
 
   function toggleLayer() {
     var selectedLayer = document.getElementById('selected-layer').value;
-    console.log(selectedLayer)
-    postRobot.send(iframe, 'setMapLayers', {
-      layers: [selectedLayer]
+    postRobot.send(iframe, 'setMapLayer', {
+      layer: selectedLayer
     })
-      .then(function(event) {
-        console.log('Done layers: ', event.data.done);
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
   }
 
   function opacity() {
@@ -70,12 +95,6 @@
     postRobot.send(iframe, 'setLayersOpacity', {
       layers: [{id, opacity}]
     })
-      .then(function(event) {
-        console.log('update layer opacity: ', {id, opacity});
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
   }
 
   function signedPledge() {
@@ -84,12 +103,6 @@
     postRobot.send(iframe, 'setFeaturedPledge', {
       layer: {zip, country}
     })
-      .then(function(event) {
-        console.log('Send location params', {zip, country});
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
   }
 </script>
 </html>
