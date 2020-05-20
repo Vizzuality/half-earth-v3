@@ -6,7 +6,8 @@ export const getTerrestrialCellData = createSelector(
   [selectCellData],
   cellData => {
     if (!cellData) return null;
-    return cellData.filter(c => c.ID);
+    // Marine grid cells DO NOT have Fishes rarity attribute
+    return cellData.filter(c => !c.Rar_fish);
   }
 )
 
@@ -14,7 +15,8 @@ export const getMarineCellData = createSelector(
   [selectCellData],
   cellData => {
     if (!cellData) return null;
-    return cellData.filter(c => c.CELL_ID);
+    // Marine grid cells have Fishes rarity attribute
+    return cellData.filter(c => c.Rar_fish);
   }
 )
 
