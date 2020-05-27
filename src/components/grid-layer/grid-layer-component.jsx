@@ -2,7 +2,7 @@ import { loadModules } from 'esri-loader';
 import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-import { TERRESTRIAL_GRID_URL, MARINE_GRID_URL } from 'constants/layers-urls';
+import { GRID_URL } from 'constants/layers-urls';
 import {
   createGridCellGraphic,
   createGraphicLayer,
@@ -21,8 +21,7 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
   const watchUtils = useWatchUtils();
   const [viewExtent, setViewExtent] = useState();
-  const [terrestrialGridLayer, setTerrestrialGridLayer] = useState(null);
-  const [marineGridLayer, setMarineGridLayer] = useState(null);
+  const [gridLayer, setGridLayer] = useState(null);
   const [aggregatedCells, setAggregatedCells] = useState(null);
   const [singleCell, setSingleCell] = useState(null)
   const [gridCellGraphic, setGridCellGraphic] = useState(null);
@@ -51,19 +50,10 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
   useEffect(() => {
     loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
-      const terrestrial = new FeatureLayer({
-        url: TERRESTRIAL_GRID_URL
+      const grid = new FeatureLayer({
+        url: GRID_URL
       });
-      setTerrestrialGridLayer(terrestrial);
-    })
-  }, []);
-
-  useEffect(() => {
-    loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
-      const marine = new FeatureLayer({
-        url: MARINE_GRID_URL
-      });
-      setMarineGridLayer(marine);
+      setGridLayer(grid);
     })
   }, []);
 
@@ -79,21 +69,15 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
 
   useEffect(() => {
-    if (viewExtent && terrestrialGridLayer && marineGridLayer && gridCellGraphic) {
-      const containedTerrestrialCellsQueryObject = containedQuery(terrestrialGridLayer, view.extent);
-      const containedMarineCellsQueryObject = containedQuery(marineGridLayer, view.extent);
-      terrestrialGridLayer.queryFeatures(containedTerrestrialCellsQueryObject)
+    if (viewExtent && gridLayer && gridCellGraphic) {
+      const containedQueryObject = containedQuery(gridLayer, view.extent);
+      gridLayer.queryFeatures(containedQueryObject)
         .then(function(results) {
-          const { features: terrestrialCells} = results;
-          marineGridLayer.queryFeatures(containedMarineCellsQueryObject)
-          .then(function(results) {
-            const { features } = results;
-            const _marineCells = features.filter(f => f.attributes.ISMARINE !== 0);
-            setAggregatedCells([..._marineCells, ...terrestrialCells]);
-          })
+          const { features } = results;
+          setAggregatedCells(features);
         });
       }
-    }, [marineGridLayer, terrestrialGridLayer, viewExtent, gridCellGraphic]);
+    }, [gridLayer, viewExtent, gridCellGraphic]);
 
   useEffect(() => {
     if (aggregatedCells && aggregatedCells.length) {
@@ -103,20 +87,11 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
   useEffect(() => {
     if (aggregatedCells && !aggregatedCells.length > 0) {
-      const centerTerrestrialCellQueryObject = centerQuery(terrestrialGridLayer, view.center);
-      const centerMarineCellQueryObject = centerQuery(marineGridLayer, view.center);
-      terrestrialGridLayer.queryFeatures(centerTerrestrialCellQueryObject)
+      const centerCellQueryObject = centerQuery(gridLayer, view.center);
+      gridLayer.queryFeatures(centerCellQueryObject)
       .then(function(results) {
-        const { features: terrestrialCell } = results;
-          if (terrestrialCell.length > 0) {
-            setSingleCell(terrestrialCell);
-          } else {
-            marineGridLayer.queryFeatures(centerMarineCellQueryObject)
-            .then(function(results) {
-              const { features: marineCell } = results;
-                setSingleCell(marineCell);
-              })
-          }
+        const { features } = results;
+            setSingleCell(features);
         })
     }
   }, [aggregatedCells, viewExtent, gridCellGraphic]);
