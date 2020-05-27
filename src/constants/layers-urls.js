@@ -51,8 +51,7 @@ import {
   HUMMINGBIRDS_RICHNESS
 } from 'constants/layers-slugs'
 
-export const TERRESTRIAL_GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Terrestrial_Species_Richness_and_Rarity_Patterns_for_Select_Taxa/FeatureServer";
-export const MARINE_GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Marine_Species_Richness_and_Rarity_Patterns_for_Select_Taxa/FeatureServer";
+export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
 export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer";
 export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Metadata2/FeatureServer/0';
 
