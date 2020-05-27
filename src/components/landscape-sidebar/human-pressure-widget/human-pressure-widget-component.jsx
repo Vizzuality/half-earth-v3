@@ -20,7 +20,7 @@ const BarComponent = ({ selectedPressures, totalPressure }) => {
 
 const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
   <>
-    {totalPressure === 0 ? 
+    {!totalPressure || totalPressure === 0 ?
       (<p className={styles.text}>There is no land human pressure on the selected area</p>)
       :
       (<p className={styles.text}>Of the current landscape, <b>{format(".2%")(totalPressure / 100)} is under human pressure</b>, the majority of which is pressure from {biggestPressureName}.</p>)
@@ -33,9 +33,9 @@ const HumanPressureWidgetComponent = ({ handleOnClick, options, checkedOptions, 
     <div className={styles.container}>
       <h3 className={styles.title}>Land human pressures in this area</h3>
       <DummyBlurWorkaround />
-      {options && 
+      <PressureStatementComponent totalPressure={totalPressure} biggestPressureName={biggestPressureName} />
+      {options &&
         <>
-          <PressureStatementComponent totalPressure={totalPressure} biggestPressureName={biggestPressureName} />
           <BarComponent selectedPressures={selectedPressures} totalPressure={totalPressure}/>
           <CheckboxGroup
             options={options}
