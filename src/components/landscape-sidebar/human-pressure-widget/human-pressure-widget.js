@@ -21,7 +21,7 @@ const actions = { ...landHumanPressuresActions, addLayerAnalyticsEvent, removeLa
 const HumanPressureWidgetContainer = props => {
   const {
     map,
-    terrestrialCellData,
+    cellData,
     activeLayers,
     SET_LAND_PRESSURES_DATA_READY,
     STORE_LAND_PRESSURES_DATA_ERROR,
@@ -44,17 +44,17 @@ const HumanPressureWidgetContainer = props => {
 
   // Query data from selected terrestrial gridcells and add it to the store
   useEffect(() => {
-    if (terrestrialCellData && landPressuresLayer) {
+    if (cellData && landPressuresLayer) {
       STORE_LAND_PRESSURES_DATA_LOADING();
       const queryParams = landPressuresLayer.createQuery();
-      const cellIds = terrestrialCellData.map(cell => cell.ID);
+      const cellIds = cellData.map(cell => cell.ID);
       queryParams.where = `ID IN (${cellIds.join(', ')})`;
       landPressuresLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         SET_LAND_PRESSURES_DATA_READY(features.map(c => c.attributes));
       }).catch((error) => STORE_LAND_PRESSURES_DATA_ERROR(error));
     }
-  }, [terrestrialCellData])
+  }, [cellData])
 
 
     const toggleLayer = async (rasters, option) => {

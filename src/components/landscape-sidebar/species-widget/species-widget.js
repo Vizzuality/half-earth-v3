@@ -11,7 +11,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 
 const actions = { ...setSpeciesActions, ...urlActions };
 
-const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe, selectedSpeciesData, loading }) => {
+const SpeciesWidget = ({ setSpeciesData, cellData, data, changeGlobe, selectedSpeciesData, loading }) => {
   const [speciesLayer, setLayer] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -46,11 +46,11 @@ const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe,
     updateSelectedSpecies(newIndex);
   }
 
-  const querySpeciesData = (terrestrialCells) => {
+  const querySpeciesData = (cells) => {
     setSpeciesData({ data: null, loading: true });
     const query = speciesLayer.createQuery();
     query.outFields = [ "HBWID", "species_name", "taxa", "status", "RANGE_AREA_KM2", "PROP_RANGE_PROT", "url_sp", "common_name", "iucn_cat", "raw_name"];
-    query.where = `HBWID IN (${terrestrialCells.map(i => i.ID).join(', ')})`;
+    query.where = `HBWID IN (${cells.map(i => i.ID).join(', ')})`;
     speciesLayer.queryFeatures(query).then(function(results){
       const { features } = results;
       setSpeciesData({ data: features.map(c => c.attributes), loading: false });
@@ -72,14 +72,14 @@ const SpeciesWidget = ({ setSpeciesData, terrestrialCellData, data, changeGlobe,
   }, []);
  
   useEffect(() => {
-    if (speciesLayer && terrestrialCellData) {
-      if(terrestrialCellData.length) {
-        querySpeciesData(terrestrialCellData);
+    if (speciesLayer && cellData) {
+      if(cellData.length) {
+        querySpeciesData(cellData);
       } else {
         setSpeciesData({ data: null })
       }
     }
-  }, [speciesLayer, terrestrialCellData])
+  }, [speciesLayer, cellData])
 
   useEffect(() => {
     if(data) {

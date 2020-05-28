@@ -2,23 +2,14 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 export const selectCellData = ({ gridCellData }) => (gridCellData && gridCellData.data) || null;
 
-export const getTerrestrialCellData = createSelector(
+export const getCellData = createSelector(
   [selectCellData],
   cellData => {
     if (!cellData) return null;
-    return cellData.filter(c => c.ID);
-  }
-)
-
-export const getMarineCellData = createSelector(
-  [selectCellData],
-  cellData => {
-    if (!cellData) return null;
-    return cellData.filter(c => c.CELL_ID);
+    return cellData;
   }
 )
 
 export default createStructuredSelector({
-  terrestrialCells: getTerrestrialCellData,
-  marineCells: getMarineCellData
+  cellData: getCellData
 })

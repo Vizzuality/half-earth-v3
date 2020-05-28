@@ -3,13 +3,13 @@ import { orderBy, sumBy } from 'lodash';
 import { format } from 'd3-format';
 import { humanPressuresLandscapeWidget, PRESSURES_SLUGS } from 'constants/human-pressures';
 import { LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
-import { getTerrestrialCellData } from 'selectors/grid-cell-selectors';
+import { getCellData } from 'selectors/grid-cell-selectors';
 
 const selectLandHumanPressuresData = ({ landHumanEncroachment }) => landHumanEncroachment && landHumanEncroachment.data;
 const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
 const getAggregatedPressures = createSelector(selectLandHumanPressuresData, humanPressuresData => {
-  if (!humanPressuresData) return null;
+  if (!humanPressuresData || !humanPressuresData.length ) return null;
   const pressures = humanPressuresData.reduce((acc, current) => {
     return {
       ...acc,
@@ -108,7 +108,7 @@ const getPressureOptions = createSelector(getPressureData, humanPressureData => 
 
 export default createStructuredSelector({
   humanPressures: getAggregatedPressures,
-  terrestrialCellData: getTerrestrialCellData,
+  cellData: getCellData,
   options: getPressureOptions,
   selectedPressures: getSelectedPressuresValue,
   totalPressure: getTotalPressureValue,

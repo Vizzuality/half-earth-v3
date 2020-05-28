@@ -53,8 +53,7 @@ import {
   EDUCATOR_AMBASSADORS_LAYER
 } from 'constants/layers-slugs'
 
-export const TERRESTRIAL_GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Terrestrial_Species_Richness_and_Rarity_Patterns_for_Select_Taxa/FeatureServer";
-export const MARINE_GRID_URL = "https://utility.arcgis.com/usrsvcs/servers/e6c05ee3ee7b45af9577904bf9238529/rest/services/Biodiversity_Facets_Dissolved/FeatureServer/0";
+export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
 export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer";
 export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Metadata2/FeatureServer/0';
 
