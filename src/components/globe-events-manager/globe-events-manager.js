@@ -1,10 +1,10 @@
 
-const GlobeEventsManager = ({view, clickCallbacksArray, mouseMoveCallbacksArray }) => {
+const GlobeEventsManager = ({view, clickCallbacksArray, selectedFeaturedMap, mouseMoveCallbacksArray }) => {
 
   view.on("pointer-down", function(event) {
     event.stopPropagation();
     view.hitTest(event).then(function(response) {
-      clickCallbacksArray.forEach(cb => cb(response, view))
+      clickCallbacksArray.forEach(cb => cb(response, view, selectedFeaturedMap))
     });
   });
 
