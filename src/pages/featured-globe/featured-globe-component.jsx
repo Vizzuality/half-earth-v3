@@ -50,10 +50,8 @@ const DataGlobeComponent = ({
   isMapsList,
   hasMetadata,
   activeLayers,
-  rasters,
   selectedTaxa,
   onMapLoad,
-  setRasters,
   handleLayerToggle,
   handleGlobeUpdating,
   spinGlobeHandle,
@@ -77,7 +75,7 @@ const DataGlobeComponent = ({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
-        style={{ pointerEvents: (isMapsList || isFeaturedPlaceCard) && !isOnMobile ? 'none' : '' }}
+        interactionsDisabled={(isMapsList || isFeaturedPlaceCard) && !isOnMobile}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -140,8 +138,6 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}
-          rasters={rasters}
-          setRasters={setRasters}
           selectedSpecies={selectedSpecies}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           activeOption={activeOption}
@@ -155,7 +151,6 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
           activeOption={activeOption}
-          rasters={rasters}
         />
         <TutorialModal />
       </Scene>

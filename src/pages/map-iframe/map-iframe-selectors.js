@@ -23,25 +23,15 @@ const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
   }
 })
 
-const getPledgesActiveQuery = ({ location }) => location.query && (location.query.isPledgesActive || initialState.isPledgesActive);
-const getSignedPledgeZIP = ({ location }) => location.query && (location.query.signedPledgeZIP);
-const getSignedPledgeCountry = ({ location }) => location.query && (location.query.signedPledgeCountry);
-
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
-export const getRasters = createSelector(getGlobeSettings, globeSettings => globeSettings.rasters)
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-const getPledgesActive = createSelector(getPledgesActiveQuery, pledgesActiveQuery => pledgesActiveQuery)
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
-  rasters: getRasters,
   isLandscapeMode: getLandscapeMode,
   sceneSettings: getSceneSettings,
   isGlobeUpdating: getGlobeUpdating,
-  isPledgesActive: getPledgesActive,
-  signedPledgeZIP: getSignedPledgeZIP,
-  signedPledgeCountry: getSignedPledgeCountry,
   listeners: getListenersSetting
 })

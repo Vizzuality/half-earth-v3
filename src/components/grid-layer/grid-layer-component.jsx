@@ -2,7 +2,7 @@ import { loadModules } from 'esri-loader';
 import { isEqual } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { useWatchUtils } from 'hooks/esri';
-import { BIODIVERSITY_FACETS_SERVICE_URL } from 'constants/layers-urls';
+import { GRID_URL } from 'constants/layers-urls';
 import {
   createGridCellGraphic,
   createGraphicLayer,
@@ -20,7 +20,9 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
 
   const watchUtils = useWatchUtils();
   const [viewExtent, setViewExtent] = useState();
-  const [biodiversityFacetsLayer, setBiodiversityFacetsLayer] = useState(null);
+  const [gridLayer, setGridLayer] = useState(null);
+  const [aggregatedCells, setAggregatedCells] = useState(null);
+  const [singleCell, setSingleCell] = useState(null)
   const [gridCellGraphic, setGridCellGraphic] = useState(null);
   // References for cleaning up graphics
   const gridCellRef = useRef();
@@ -42,16 +44,16 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
       })
-  }, [])
+  }, []);
 
   useEffect(() => {
     loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
-      const layer = new FeatureLayer({
-        url: BIODIVERSITY_FACETS_SERVICE_URL
+      const grid = new FeatureLayer({
+        url: GRID_URL
       });
-      setBiodiversityFacetsLayer(layer);
+      setGridLayer(grid);
     })
-  }, [])
+  }, []);
 
   // set the view extent when view stationary
   useEffect(() => {
@@ -61,26 +63,44 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
     return function cleanUp() {
       watchHandle && watchHandle.remove();
     }
-  },[watchUtils])
+  },[watchUtils]);
+
 
   useEffect(() => {
-    if (viewExtent && biodiversityFacetsLayer && gridCellGraphic) {
-      const containedCellsQueryObject = containedQuery(biodiversityFacetsLayer, view.extent);
-      biodiversityFacetsLayer.queryFeatures(containedCellsQueryObject)
+    if (viewExtent && gridLayer && gridCellGraphic) {
+      const containedQueryObject = containedQuery(gridLayer, view.extent);
+      gridLayer.queryFeatures(containedQueryObject)
         .then(function(results) {
           const { features } = results;
-          if (features.length > 0) {
-            createCell(results, 'aggregatedCells');
-          } else {
-            const centerCellQueryObject = centerQuery(biodiversityFacetsLayer, view.center);
-            biodiversityFacetsLayer.queryFeatures(centerCellQueryObject)
-              .then(function(results) {
-                createCell(results, 'singleCell');
-              })
-          }
+          setAggregatedCells(features);
+        });
+      }
+    }, [gridLayer, viewExtent, gridCellGraphic]);
+
+  useEffect(() => {
+    if (aggregatedCells && aggregatedCells.length) {
+      createCell(aggregatedCells, 'aggregatedCells')
+    }
+  }, [aggregatedCells, gridCellGraphic]);
+
+  useEffect(() => {
+    if (aggregatedCells && !aggregatedCells.length > 0) {
+      const centerCellQueryObject = centerQuery(gridLayer, view.center);
+      gridLayer.queryFeatures(centerCellQueryObject)
+      .then(function(results) {
+        const { features } = results;
+            setSingleCell(features);
         })
     }
-  }, [biodiversityFacetsLayer, viewExtent, gridCellGraphic])
+  }, [aggregatedCells, viewExtent, gridCellGraphic]);
+
+  useEffect(() => {
+    if (singleCell) {
+      createCell(singleCell, 'singleCell')
+    }
+  }, [singleCell, gridCellGraphic]);
+
+
 
   useEffect(() => {
     return function cleanUp() {
@@ -103,9 +123,8 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
     gridCellRef.current = cellsIDsArray;
   }
 
-  const createCell = (results, type) => {
-    const { features } = results;
-    const cellsIDsArray = getCellsIDs(results);
+  const createCell = (features, type) => {
+    const cellsIDsArray = getCellsIDs(features);
     if (!isEqual(gridCellRef.current, cellsIDsArray)) {
       manageCellStoreAndGeomCreation(features, cellsIDsArray, type);
     }

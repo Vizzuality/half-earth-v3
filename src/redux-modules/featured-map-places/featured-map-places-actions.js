@@ -1,11 +1,11 @@
 import { createAction, createThunkAction } from 'redux-tools';
   import CONTENTFUL from 'services/contentful';
-
+  const CONFIG = { imageWidth: 300, imageHeight: 190 };
 export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', (slug) => async (dispatch, state) => {
   const { featuredMapPlaces: { data }} = state();
   if (!data || !data[slug]) {
     try {
-      const places = await CONTENTFUL.getFeaturedPlacesData(slug);
+      const places = await CONTENTFUL.getFeaturedPlacesData(slug, CONFIG);
       const dataObject = places.reduce((acc, place) => {
         const description = [];
         place.description && place.description.content.forEach((paragraph) => {

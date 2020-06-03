@@ -12,7 +12,8 @@ export const WDPALayers = [
     id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     theme: 'overrideCheckbox-protected-areas',
-    slug: 'biosphere-reserves'
+    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+    metadataTitle: 'Protected areas'
   },
   {
     name: 'Community-based',
@@ -20,7 +21,10 @@ export const WDPALayers = [
     id: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     theme: 'overrideCheckbox-community-areas',
-    slug: 'community-conservation'
+    slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+    groupedLayer: true,
+    metadataTitle: 'Community-based protected areas'
+
   }
 ]
 
@@ -34,7 +38,8 @@ export const legendConfigs = {
       }
     ],
     title: "Community-based protected areas",
-    slug: "community-conservation"
+    slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+    groupedLayer: true
   },
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
     type: "basic",
@@ -44,7 +49,7 @@ export const legendConfigs = {
         color: PROTECTED_AREAS_COLOR
       }
     ],
-    title: "All protected areas",
-    slug: "biosphere-reserves"
+    title: "Protected areas",
+    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER
   }
 }

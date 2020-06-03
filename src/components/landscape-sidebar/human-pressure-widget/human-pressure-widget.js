@@ -1,65 +1,72 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { handleLayerRendered } from 'utils/layer-manager-utils';
-import { LAND_HUMAN_PRESSURES_IMAGE_LAYER } from 'constants/layers-slugs';
+import { loadModules } from 'esri-loader';
 import HumanPressureWidgetComponent from './human-pressure-widget-component';
 import mapStateToProps from './human-pressure-selectors';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
-import { humanPressuresLandUse } from 'constants/human-pressures';
-
-
+// this forces the registration of redux module and sagas
+import 'redux_modules/land-human-encroachment';
 // Constants
-import { layersConfig } from 'constants/mol-layers-configs';
-
+import { GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE } from 'constants/layers-slugs';
+import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 // Utils
-import { handleLayerCreation, layerManagerVisibility } from 'utils/layer-manager-utils';
-import { humanPressuresPreloadFixes, dispatchLandPressuresLayersAnalyticsEvents } from 'utils/raster-layers-utils';
+import { handleLayerCreation } from 'utils/layer-manager-utils';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
 //Actions
+import landHumanPressuresActions from 'redux_modules/land-human-encroachment';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
-const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActions };
+const actions = { ...landHumanPressuresActions, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActions };
+
 
 const HumanPressureWidgetContainer = props => {
   const {
-    setRasters,
     map,
-    view,
-    addLayerAnalyticsEvent,
-    removeLayerAnalyticsEvent,
-    handleGlobeUpdating,
+    cellData,
     activeLayers,
-    rasters
+    SET_LAND_PRESSURES_DATA_READY,
+    STORE_LAND_PRESSURES_DATA_ERROR,
+    STORE_LAND_PRESSURES_DATA_LOADING
   } = props;
 
-  const [checkedOptions, setCheckedOptions] = useState({});
+  const [landPressuresLayer, setLandPressuresLayer] = useState(null);
 
+  // Create the layer to query against
   useEffect(() => {
-    const humanImpactLayerActive = activeLayers.find(l => l.title === LAND_HUMAN_PRESSURES_IMAGE_LAYER);
-    // eslint-disable-next-line no-mixed-operators
-    const alreadyChecked = humanImpactLayerActive && (humanPressuresLandUse.reduce((acc, option) => ({
-      ...acc, [option.value]: rasters[option.value]
-    }), {})) || {};
-    setCheckedOptions(alreadyChecked);
-  }, [rasters, activeLayers])
+    if (!landPressuresLayer) {
+      loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+        const landPressuresLayer = new FeatureLayer({
+          url: layersConfig[GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE].url
+        });
+        setLandPressuresLayer(landPressuresLayer)
+      });
+    }
+  }, []);
+
+  // Query data from selected terrestrial gridcells and add it to the store
+  useEffect(() => {
+    if (cellData && landPressuresLayer) {
+      STORE_LAND_PRESSURES_DATA_LOADING();
+      const queryParams = landPressuresLayer.createQuery();
+      const cellIds = cellData.map(cell => cell.ID);
+      queryParams.where = `ID IN (${cellIds.join(', ')})`;
+      landPressuresLayer.queryFeatures(queryParams).then(function(results){
+        const { features } = results;
+        SET_LAND_PRESSURES_DATA_READY(features.map(c => c.attributes));
+      }).catch((error) => STORE_LAND_PRESSURES_DATA_ERROR(error));
+    }
+  }, [cellData])
 
 
-  const handleHumanPressureRasters = async (rasters, option) => {
-    const { changeGlobe } = props;
-    const layerConfig = layersConfig[LAND_HUMAN_PRESSURES_IMAGE_LAYER];
-    const humanImpactLayer = await handleLayerCreation(layerConfig, map);
-    const hasRastersWithData = Object.values(rasters).some(raster => raster);
-    hasRastersWithData && handleGlobeUpdating(true);
-    setRasters(rasters);
-    handleLayerRendered(view, humanImpactLayer, handleGlobeUpdating);
-    layerManagerVisibility(LAND_HUMAN_PRESSURES_IMAGE_LAYER, hasRastersWithData, activeLayers, changeGlobe);
-    humanPressuresPreloadFixes(humanImpactLayer, rasters);
-    dispatchLandPressuresLayersAnalyticsEvents(rasters, option, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, VIEW_MODE);
+    const toggleLayer = async (rasters, option) => {
+      const { changeGlobe } = props;
+      const layerConfig = layersConfig[option.slug];
+      await handleLayerCreation(layerConfig, map);
+      layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 
   return (
     <HumanPressureWidgetComponent
-      handleOnClick={handleHumanPressureRasters}
-      checkedRasters={checkedOptions}
+      handleOnClick={toggleLayer}
       {...props}
     />
   )

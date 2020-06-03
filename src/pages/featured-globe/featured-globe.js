@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { humanPressuresPreloadFixes } from 'utils/raster-layers-utils';
 import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { 
   FEATURED_PLACES_LAYER,
-  LAND_HUMAN_PRESSURES_IMAGE_LAYER,
   VIBRANT_BASEMAP_LAYER
 } from 'constants/layers-slugs';
 import { 
@@ -47,8 +45,7 @@ const feturedGlobeContainer = props => {
   },[])
 
   const handleMapLoad = (map, activeLayers) => {
-    const { rasters } = props;
-    activateLayersOnLoad(map, activeLayers, layersConfig, rasters, humanPressuresPreloadFixes, LAND_HUMAN_PRESSURES_IMAGE_LAYER);
+    activateLayersOnLoad(map, activeLayers, layersConfig);
   }
 
   const spinGlobe = (view) => {
@@ -61,11 +58,10 @@ const feturedGlobeContainer = props => {
         }
       });
       setHandle(spinningGlobe);
-    })
+    });
   }
 
   const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
-  const setRasters = (rasters) => props.changeGlobe({ rasters: rasters });
   const toggleLayer = layerId => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
   const clickCallbacksArray = [
@@ -76,11 +72,11 @@ const feturedGlobeContainer = props => {
     handleMarkerHover
   ]
 
-  const showLayersOnlyOnLandscape = ({ layer, setActive }) => {
+  const showLayersOnlyOnLandscape = ({ layer, isVisible }) => {
     const isLandscapeOnlyLayer = FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS.includes(layer.title);
     // Hide human_pressures_layer where they are not in landscape mode
     if(isLandscapeOnlyLayer) {
-      layer.visible = props.isLandscapeMode && setActive;
+      layer.visible = props.isLandscapeMode && isVisible;
     }
   }
 
@@ -101,7 +97,6 @@ const feturedGlobeContainer = props => {
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}
       isFeaturedPlaceCard={isFeaturedPlaceCard}
-      setRasters={setRasters}
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
