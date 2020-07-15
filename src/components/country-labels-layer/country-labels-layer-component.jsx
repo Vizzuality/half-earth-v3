@@ -63,7 +63,7 @@ const CountryLabelsLayerComponent = props => {
   useEffect(() => {
     let graphicLayer;
     let countryPinMarker;
-    if (layerReady && !isCountryMode) {
+    if (layerReady && countryISO && !isCountryMode) {
       loadModules(["esri/Graphic"])
       .then(([Graphic]) => {
         graphicLayer = findLayerInMap(GRAPHIC_LAYER, map);
@@ -82,7 +82,7 @@ const CountryLabelsLayerComponent = props => {
     return function cleanUp() {
       if (graphicLayer) { graphicLayer.remove(countryPinMarker)}
     }
-  }, [layerReady, countryExtent, isCountryMode])
+  }, [layerReady, countryExtent, isCountryMode, countryISO])
 
   useEffect(() => {
     if (layerReady) {
