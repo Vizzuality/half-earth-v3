@@ -60,3 +60,8 @@
   line-height: 20px;
   text-transform: uppercase;
 }
+
+%_temporaryTitle {
+  @extend %title;
+  font-weight: bold;
+}
