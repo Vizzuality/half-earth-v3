@@ -31,31 +31,6 @@ const LocalSceneSidebarComponent = ({
         countryISO={countryISO}
         countryName={countryName}
       />
-      <BiodiversitySidebarCard
-        map={map}
-        view={view}
-        activeLayers={activeLayers}
-        activeCategory={activeCategory}
-        countedActiveLayers={countedActiveLayers}
-        className={styles.biodiversitySidebarCard}
-      />
-      <ProtectedAreasSidebarCard
-        map={map}
-        activeLayers={activeLayers}
-        activeCategory={activeCategory}
-        handleGlobeUpdating={handleGlobeUpdating}
-        countedActiveLayers={countedActiveLayers}
-      />
-      <HumanImpactSidebarCard
-        map={map}
-        view={view}
-        rasters={rasters}
-        setRasters={setRasters}
-        activeLayers={activeLayers}
-        activeCategory={activeCategory}
-        handleGlobeUpdating={handleGlobeUpdating}
-        countedActiveLayers={countedActiveLayers}
-      />
     </div>
   )
 }
