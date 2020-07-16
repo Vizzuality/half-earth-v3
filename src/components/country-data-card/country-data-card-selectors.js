@@ -57,14 +57,43 @@ const getDescription = createSelector(selectCountryData, countryData => {
   return countryData.sentence;
 })
 
+
 const getSpeciesProtectionIndex = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData.SPI;
 })
 
+const getCurrentProtection = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.prop_protected));
+})
+
+const getProtectionNeeded = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.protection_needed));
+})
+
+const getSPIMean = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.spi_mean));
+})
+
 const getNumberOfVertebrates = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData.N_SPECIES.toLocaleString('en');
+})
+
+const getNumberOfEndemicVertebrates = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.total_endemic.toLocaleString('en');
+})
+
+const getIndexStatement = createSelector(
+  [getSpeciesProtectionIndex,getSPIMean],
+  (SPI, SPIMean) => {
+  if (!SPI || !SPIMean) return null;
+  const comparation = SPI >=SPIMean ? 'higher' : 'lower';
+  return `The index of this country is ${comparation} than the average`;
 })
 
 const mapStateToProps = (state, props) => ({
@@ -75,8 +104,13 @@ const mapStateToProps = (state, props) => ({
     countryPopulation: getPopulation(state, props),
     grossNationalIncome: getGrossNationalIncome(state, props),
     countryDescription: getDescription(state, props),
+    SPI: getSpeciesProtectionIndex(state, props),
+    mean: getSPIMean(state, props),
+    indexStatement: getIndexStatement(state, props),
+    currentProtection: getCurrentProtection(state, props),
+    protectionNeeded: getProtectionNeeded(state, props),
     vertebratesCount: getNumberOfVertebrates(state, props),
-    countrySpeciesProtectionIndex: getSpeciesProtectionIndex(state, props)
+    endemicVertebratesCount: getNumberOfEndemicVertebrates(state, props),
   }
 )
 export default mapStateToProps;
