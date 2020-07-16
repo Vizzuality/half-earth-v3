@@ -57,6 +57,11 @@ const getDescription = createSelector(selectCountryData, countryData => {
   return countryData.sentence;
 })
 
+const getSpeciesProtectionIndex = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.SPI;
+})
+
 const getNumberOfVertebrates = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData.N_SPECIES.toLocaleString('en');
@@ -70,7 +75,8 @@ const mapStateToProps = (state, props) => ({
     countryPopulation: getPopulation(state, props),
     grossNationalIncome: getGrossNationalIncome(state, props),
     countryDescription: getDescription(state, props),
-    vertebratesCount: getNumberOfVertebrates(state, props)
+    vertebratesCount: getNumberOfVertebrates(state, props),
+    countrySpeciesProtectionIndex: getSpeciesProtectionIndex(state, props)
   }
 )
 export default mapStateToProps;

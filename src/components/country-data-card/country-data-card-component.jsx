@@ -17,7 +17,7 @@ const CountryDataCardComponent = ({
   countryDataLoading,
   grossNationalIncome,
   handleSceneModeChange,
-  handleCountryDropdownClick
+  countrySpeciesProtectionIndex,
 }) => {
 
   if (countryDataLoading) {
@@ -40,16 +40,22 @@ const CountryDataCardComponent = ({
         title={countryName}
         view={view}
         autoHeight
-        selectableTitle
-        titleOptions={countriesList}
-        handleTitleOptionClick={handleCountryDropdownClick}
       />
-      <img className={styles.image} alt={`${countryName}`} src={dummyCountryImage} />
+      <section className={styles.indexOverview}>
+        <p>The species protection index is:</p>
+        <div>
+          <div></div>
+          <div>{`${countrySpeciesProtectionIndex}`}</div>
+        </div>
+      </section>
+      <section className={styles.indexBaseNumbers}>
+        <p>The index is based on:</p>
+        <div>
+          <div></div>
+          <div>{`${countrySpeciesProtectionIndex}`}</div>
+        </div>
+      </section>
       <section className={styles.descriptionWrapper}>
-        <p>Total Area: {`${countryArea}`} km<sup>2</sup></p>
-        <p>Endemic vertebrates: {`${vertebratesCount}`} species</p>
-        <p>Population: {`${countryPopulation}`}</p>
-        <p>GNI: {`${grossNationalIncome}`}</p>
         <p>{`${countryDescription}`}</p>
       </section>
     </div>
