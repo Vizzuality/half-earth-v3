@@ -3,12 +3,14 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
+$_temporary-dark-text: #222;
+
 .container {
   @include backdropBlur();
   display: flex;
   opacity: 1;
   flex-direction: column;
-  width: $sidebar-width;
+  width: $local-sidebar-width;
   overflow: hidden;
   color: $white;
   border-radius: 2px;
@@ -31,10 +33,154 @@
   margin-bottom: 20px;
 }
 
-.image {
-  top: -5px;
+.indexOverview,
+.indexWidget {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 $sidebar-paddings;
+}
+
+.countryName {
+  @extend %headline;
+}
+
+.indexStatement{
+  @extend %title;
+}
+
+.overviewText {
+  @extend %title;
+  font-size: 11px;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  .icon {
+    transform: rotate(180deg);
+  }
+  .text {
+    @extend %subtitle;
+    color: $brand-color-main;
+    text-transform: uppercase;
+  }
+}
+
+
+.overviewTextWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.indexWrapper {
   position: relative;
-  height: 185px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: $sidebar-paddings;
+}
+
+.indexBar {
+  position: relative;
+  height: 22px;
+  width: 70%;
+  background-color: $brand-color-main;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  .progressMark {
+    position: relative;
+    border: 1px solid $white;
+    height: 30px;
+  }
+
+  .meanMark {
+    position: absolute;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid white;
+    bottom: -6px;
+  }
+
+  .improvementArea {
+    position: relative;
+    height: 22px;
+    background-color: #A0AFB8;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+}
+
+.index {
+  @extend %headline;
+}
+
+.indexExplanation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: $white;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: $site-gutter;
+}
+
+
+.indexExplanationText {
+  @extend %_temporaryTitle;
+  margin: 0;
+  color: $_temporary-dark-text;
+}
+
+.indexBaseNumbersWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.indexBaseDataElement {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $sidebar-paddings;
+}
+
+.baseNumber{
+  @extend %headline;
+  color: $_temporary-dark-text;
+  margin: 0 0 5px 0;
+}
+
+.numberText {
+  @extend %subtitle;
+  color: $_temporary-dark-text;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $sidebar-paddings;
+  background-color: #A0AFB8;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.hintTitle {
+  @extend %_temporaryTitle;
+  color: $_temporary-dark-text;
+}
+
+.hintText {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
 }
 
 .descriptionWrapper {

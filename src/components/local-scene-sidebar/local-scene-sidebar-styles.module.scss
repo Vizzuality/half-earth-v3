@@ -7,7 +7,7 @@
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
   height: 100vh;
-  width: calc(#{$sidebar-width} + 15px);
+  width: calc(#{$local-sidebar-width} + 15px);
   top: $sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
