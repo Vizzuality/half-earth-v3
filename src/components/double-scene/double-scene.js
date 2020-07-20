@@ -2,6 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import Component from './double-scene-component';
 
+const LOCAL_SCENE_VIEW_SETTINGS = {
+  viewingMode: 'local',
+  constraints: {
+    tilt: {
+      max: 60
+    }
+  },
+  padding: {
+    left: 300,
+    bottom: 60
+  },
+  environment: {
+    background: {
+      type: "color",
+      color: [0, 0, 0, 1]
+    },
+    starsEnabled: false,
+    atmosphereEnabled: false
+  }
+}
+
 const DoubleScene = props => {
   const {
     sceneId,
@@ -57,19 +78,9 @@ const DoubleScene = props => {
             map: map,
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
-            viewingMode: 'local',
             spatialReference,
-            constraints: {
-              tilt: {
-                max: 60
-              }
-            },
-            padding: {
-              left: 300,
-              bottom: 60
-            }
+            ...LOCAL_SCENE_VIEW_SETTINGS
           });
-          
           setViewLocal(_viewLocal);
         })
         .catch(err => {
