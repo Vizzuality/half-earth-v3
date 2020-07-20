@@ -3,7 +3,7 @@ import styles from './local-scene-card-styles.module.scss';
 
 const LocalSceneCardComponent = ({ children }) => {
   return (
-    <div classname={styles.container}>
+    <div className={styles.container}>
       {children && children.map(
         child => (
           <section className={styles.section}>
