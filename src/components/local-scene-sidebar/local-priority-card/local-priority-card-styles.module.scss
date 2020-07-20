@@ -1,0 +1,34 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+$_temporary-dark-text: #333;
+$_temporary-light-text: #747474;
+
+.datasetWrapper {
+  display: flex;
+}
+
+.wdpaIcon,
+.priorityIcon {
+  min-width: 25px;
+  margin-right: 10px;
+}
+
+.wdpaIcon {
+  fill: #FF6C47;
+}
+
+.priorityIcon {
+  fill: #FFD413;
+}
+
+.datasetExplanation {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+  margin: 0;
+}
+
+.datasetSource {
+  @extend %annotation;
+  color: $_temporary-light-text;
+}
