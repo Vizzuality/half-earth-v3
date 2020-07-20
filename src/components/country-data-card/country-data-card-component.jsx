@@ -4,7 +4,6 @@ import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
-import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 const CountryDataCardComponent = ({ 
   view,
@@ -26,7 +25,6 @@ const CountryDataCardComponent = ({
   if (countryDataLoading) {
     return (
       <div className={styles.container}>
-        <DummyBlurWorkaround />
         <div className={styles.loading}>
           <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
           <Loading />
@@ -37,7 +35,6 @@ const CountryDataCardComponent = ({
 
   return countryData && countriesList && (
     <div className={styles.container}>
-      <DummyBlurWorkaround />
       <button
         className={styles.backButton}
         onClick={handleSceneModeChange}

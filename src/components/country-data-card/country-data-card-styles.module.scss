@@ -6,7 +6,6 @@
 $_temporary-dark-text: #222;
 
 .container {
-  @include backdropBlur();
   display: flex;
   opacity: 1;
   flex-direction: column;
