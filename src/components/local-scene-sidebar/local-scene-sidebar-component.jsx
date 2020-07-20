@@ -2,35 +2,31 @@ import React from 'react';
 import cx from 'classnames';
 
 import CountryDataCard from 'components/country-data-card';
-import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
-import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
-import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
+import LocalPriorityCard from './local-priority-card';
+import LocalSpeciesCard from './local-species-card';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
-  map,
   view,
-  rasters,
-  setRasters,
   countryISO,
   countryName,
-  activeLayers,
-  activeCategory,
   isFullscreenActive,
-  handleGlobeUpdating,
-  countedActiveLayers
 }) => {
   const sidebarHidden = isFullscreenActive;
   return (
     <div className={cx(styles.container, {
       [animationStyles.leftHidden]: sidebarHidden,
     })}>
+      <DummyBlurWorkaround />
       <CountryDataCard
         view={view}
         countryISO={countryISO}
         countryName={countryName}
       />
+      <LocalPriorityCard />
+      <LocalSpeciesCard />
     </div>
   )
 }

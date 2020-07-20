@@ -3,6 +3,7 @@
 @import 'styles/common-animations.module';
 
 .container {
+  @include backdropBlur();
   @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
