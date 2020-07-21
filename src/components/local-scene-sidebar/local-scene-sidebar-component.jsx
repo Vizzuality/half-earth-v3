@@ -9,11 +9,29 @@ import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
-  view,
-  countryISO,
+  SPI,
+  mean,
+  birds,
+  mammals,
+  reptiles,
+  amphibians,
   countryName,
+  countryData,
+  birdsEndemic,
+  mammalsEndemic,
+  indexStatement,
+  reptilesEndemic,
+  vertebratesCount,
+  protectionNeeded,
+  currentProtection,
+  amphibiansEndemic,
   isFullscreenActive,
+  countryDescription,
+  countryDataLoading,
+  handleSceneModeChange,
+  endemicVertebratesCount,
 }) => {
+
   const sidebarHidden = isFullscreenActive;
   return (
     <div className={cx(styles.container, {
@@ -21,12 +39,29 @@ const LocalSceneSidebarComponent = ({
     })}>
       <DummyBlurWorkaround />
       <CountryDataCard
-        view={view}
-        countryISO={countryISO}
+        SPI={SPI}
+        mean={mean}
         countryName={countryName}
+        countryData={countryData}
+        indexStatement={indexStatement}
+        vertebratesCount={vertebratesCount}
+        protectionNeeded={protectionNeeded}
+        currentProtection={currentProtection}
+        countryDescription={countryDescription}
+        countryDataLoading={countryDataLoading}
+        endemicVertebratesCount={endemicVertebratesCount}
       />
       <LocalPriorityCard />
-      <LocalSpeciesCard />
+      <LocalSpeciesCard
+        birds={birds}
+        mammals={mammals}
+        reptiles={reptiles}
+        amphibians={amphibians}
+        birdsEndemic={birdsEndemic}
+        mammalsEndemic={mammalsEndemic}
+        reptilesEndemic={reptilesEndemic}
+        amphibiansEndemic={amphibiansEndemic}
+      />
     </div>
   )
 }

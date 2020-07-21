@@ -5,12 +5,11 @@ import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 
-const CountryDataCardComponent = ({ 
-  view,
+const CountryDataCardComponent = ({
+  SPI,
   mean,
   countryName,
   countryData,
-  countriesList,
   indexStatement,
   vertebratesCount,
   protectionNeeded,
@@ -18,9 +17,9 @@ const CountryDataCardComponent = ({
   countryDescription,
   countryDataLoading,
   handleSceneModeChange,
-  endemicVertebratesCount,
-  SPI
+  endemicVertebratesCount
 }) => {
+  console.log(countryData, countryDataLoading)
 
   if (countryDataLoading) {
     return (
@@ -33,7 +32,7 @@ const CountryDataCardComponent = ({
     );
   }
 
-  return countryData && countriesList && (
+  return countryData ? (
     <div className={styles.container}>
       <button
         className={styles.backButton}
@@ -101,7 +100,7 @@ const CountryDataCardComponent = ({
         <p>{`${countryDescription}`}</p>
       </section>
     </div>
-  );
+  ) : null;
 }
 
 export default CountryDataCardComponent;
