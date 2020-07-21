@@ -51,7 +51,7 @@ const DoubleScene = props => {
         _map.load().then(map => { 
           setMap(map);
           onMapLoad && onMapLoad(map);
-        })
+        });
       })
       .catch(err => {
         console.error(err);
@@ -92,7 +92,7 @@ const DoubleScene = props => {
 
   useEffect(() => {
     if(viewLocal && spatialReference && countryExtent) {
-      const expandedCountryExtent = countryExtent.clone();
+      const expandedCountryExtent = countryExtent.clone().expand(1.01);
       viewLocal.clippingArea = expandedCountryExtent;
       viewLocal.extent = expandedCountryExtent;
       viewLocal.when(() => {

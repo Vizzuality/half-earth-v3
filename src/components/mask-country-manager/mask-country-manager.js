@@ -7,7 +7,7 @@ import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 
 const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode) => {
   loadModules(['esri/geometry/Polygon',"esri/Graphic", "esri/geometry/geometryEngine"]).then(([Polygon, Graphic, geometryEngine]) => {
-    const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.01));
+    const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.02));
     const query = countryLayer.createQuery();
     query.outSpatialReference = spatialReference;
     query.geometry = extentGeometry;
