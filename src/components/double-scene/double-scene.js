@@ -20,7 +20,8 @@ const LOCAL_SCENE_VIEW_SETTINGS = {
     },
     starsEnabled: false,
     atmosphereEnabled: false
-  }
+  },
+
 }
 
 const DoubleScene = props => {
@@ -91,7 +92,7 @@ const DoubleScene = props => {
 
   useEffect(() => {
     if(viewLocal && spatialReference && countryExtent) {
-      const expandedCountryExtent = countryExtent.clone().expand(1.2); //add paddings around country borders
+      const expandedCountryExtent = countryExtent.clone();
       viewLocal.clippingArea = expandedCountryExtent;
       viewLocal.extent = expandedCountryExtent;
       viewLocal.when(() => {
