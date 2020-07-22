@@ -20,7 +20,7 @@ const LocalSpeciesCardComponent = ({
   return (
     <LocalSceneCard>
       <section>
-        <h3>Species composition</h3>
+        <h3 className={styles.title}>Species composition</h3>
         <div>
           <p><span className={styles.amphibiansIcon}><AmphibiansIcon /></span> {`${amphibians} amphibians (${amphibiansEndemic} endemic)`}</p>
           <p><span className={styles.birdsIcon}><BirdsIcon /></span> {`${birds} birds (${birdsEndemic} endemic)`}</p>

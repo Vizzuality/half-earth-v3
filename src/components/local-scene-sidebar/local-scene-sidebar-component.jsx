@@ -5,6 +5,7 @@ import CountryDataCard from 'components/country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+import PartnersCard from 'components/partners-card';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
@@ -57,11 +58,13 @@ const LocalSceneSidebarComponent = ({
         mammals={mammals}
         reptiles={reptiles}
         amphibians={amphibians}
+        countryName={countryName}
         birdsEndemic={birdsEndemic}
         mammalsEndemic={mammalsEndemic}
         reptilesEndemic={reptilesEndemic}
         amphibiansEndemic={amphibiansEndemic}
       />
+      <PartnersCard />
     </div>
   )
 }

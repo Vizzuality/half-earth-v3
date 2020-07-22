@@ -1,8 +1,12 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-$_temporary-dark-text: #333;
-$_temporary-light-text: #747474;
+.title {
+  @extend %_temporaryTitle;
+  margin: 0;
+  color: $_temporary-dark-text;
+  text-align: center;
+}
 
 .datasetWrapper {
   display: flex;

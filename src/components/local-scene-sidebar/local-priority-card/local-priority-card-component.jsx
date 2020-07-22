@@ -9,7 +9,7 @@ const LocalPriorityCardComponent = ({
   return (
     <LocalSceneCard>
       <section>
-        <h3>The current protection</h3>
+        <h3 className={styles.title}>The current protection</h3>
       </section>
       <section>
         <div className={styles.datasetWrapper}>
