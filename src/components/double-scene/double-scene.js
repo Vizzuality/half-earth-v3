@@ -2,6 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import Component from './double-scene-component';
 
+const LOCAL_SCENE_VIEW_SETTINGS = {
+  viewingMode: 'local',
+  constraints: {
+    tilt: {
+      max: 60
+    }
+  },
+  padding: {
+    left: 300,
+    bottom: 60
+  },
+  environment: {
+    background: {
+      type: "color",
+      color: [0, 0, 0, 1]
+    },
+    starsEnabled: false,
+    atmosphereEnabled: false
+  },
+
+}
+
 const DoubleScene = props => {
   const {
     sceneId,
@@ -29,7 +51,7 @@ const DoubleScene = props => {
         _map.load().then(map => { 
           setMap(map);
           onMapLoad && onMapLoad(map);
-        })
+        });
       })
       .catch(err => {
         console.error(err);
@@ -57,19 +79,9 @@ const DoubleScene = props => {
             map: map,
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
-            viewingMode: 'local',
             spatialReference,
-            constraints: {
-              tilt: {
-                max: 60
-              }
-            },
-            padding: {
-              left: 300,
-              bottom: 60
-            }
+            ...LOCAL_SCENE_VIEW_SETTINGS
           });
-          
           setViewLocal(_viewLocal);
         })
         .catch(err => {
@@ -80,7 +92,7 @@ const DoubleScene = props => {
 
   useEffect(() => {
     if(viewLocal && spatialReference && countryExtent) {
-      const expandedCountryExtent = countryExtent.clone().expand(1.2); //add paddings around country borders
+      const expandedCountryExtent = countryExtent.clone().expand(1.01);
       viewLocal.clippingArea = expandedCountryExtent;
       viewLocal.extent = expandedCountryExtent;
       viewLocal.when(() => {

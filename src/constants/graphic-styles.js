@@ -1,7 +1,7 @@
 export const MASK_STYLES = {
   fillColor: [0, 0, 0],
-  fillOpacity: 0.7,
-  outlineColor: [216, 216, 216],
+  fillOpacity: 1,
+  outlineColor: [0, 0, 0],
   outlineOpacity: 0,
   outlineWidth: 2
 }
