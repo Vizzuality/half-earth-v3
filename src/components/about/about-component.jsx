@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -95,11 +96,14 @@ const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsE
         About the Half-Earth map
       </button>
       {isAboutPageOpened && (
-        <AboutPage
-          handleCloseAboutPage={handleCloseAboutPage}
-          tabsData={tabsData} 
-          switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
-          />
+        ReactDOM.createPortal(
+          <AboutPage
+            handleCloseAboutPage={handleCloseAboutPage}
+            tabsData={tabsData} 
+            switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
+          />,
+          document.getElementById('root')
+        )
       )}
     </>
   );
