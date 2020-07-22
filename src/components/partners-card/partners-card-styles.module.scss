@@ -1,0 +1,25 @@
+
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  position: relative;
+  padding: $sidebar-paddings;
+}
+
+.partner {
+  padding-bottom: $sidebar-paddings;
+}
+
+.partnerField {
+  @extend %subtitle;
+  color: $light-text;
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+.partnerName {
+  @extend %annotation;
+  color: $light-text;
+  margin: 0;
+}
