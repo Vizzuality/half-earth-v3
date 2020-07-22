@@ -1,9 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
+import { Loading } from 'he-components';
 
-import CountryDataCard from 'components/country-data-card';
+import CountryDataCard from './country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
+import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import PartnersCard from 'components/partners-card';
 import animationStyles from 'styles/common-animations.module.scss';
@@ -34,10 +36,36 @@ const LocalSceneSidebarComponent = ({
 }) => {
 
   const sidebarHidden = isFullscreenActive;
-  return (
+
+  if (countryDataLoading) {
+    return (
+      <div className={styles.container}>
+        <button
+        className={styles.backButton}
+        onClick={handleSceneModeChange}
+      >
+        <BackIcon className={styles.icon}/>
+        <span className={styles.text}>back to global</span>
+      </button>
+        <div className={styles.loading}>
+          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+
+  return countryData ? (
     <div className={cx(styles.container, {
       [animationStyles.leftHidden]: sidebarHidden,
     })}>
+      <button
+        className={styles.backButton}
+        onClick={handleSceneModeChange}
+      >
+        <BackIcon className={styles.icon}/>
+        <span className={styles.text}>back to global</span>
+      </button>
       <DummyBlurWorkaround />
       <CountryDataCard
         SPI={SPI}
@@ -66,7 +94,7 @@ const LocalSceneSidebarComponent = ({
       />
       <PartnersCard />
     </div>
-  )
+  ) : null
 }
 
 

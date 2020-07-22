@@ -14,22 +14,6 @@
   margin-bottom: $cards-bottom-margin;
 }
 
-.loading {
-  padding: $mobile-sidebar-side-paddings;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media #{$tablet-portrait} {
-    padding: $sidebar-paddings;
-  }
-}
-
-.loadingText {
-  @extend %bodyText;
-  margin-bottom: 20px;
-}
-
 .indexOverview,
 .indexWidget {
   display: flex;
@@ -49,20 +33,6 @@
 .overviewText {
   @extend %title;
   font-size: 11px;
-}
-
-.backButton {
-  display: flex;
-  align-items: center;
-  padding: 0;
-  .icon {
-    transform: rotate(180deg);
-  }
-  .text {
-    @extend %subtitle;
-    color: $brand-color-main;
-    text-transform: uppercase;
-  }
 }
 
 

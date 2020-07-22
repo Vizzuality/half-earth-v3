@@ -1,46 +1,22 @@
 import React from 'react';
-import { Loading } from 'he-components';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
-import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 
 const CountryDataCardComponent = ({
   SPI,
   mean,
   countryName,
-  countryData,
   indexStatement,
   vertebratesCount,
   protectionNeeded,
   currentProtection,
   countryDescription,
-  countryDataLoading,
-  handleSceneModeChange,
   endemicVertebratesCount
 }) => {
-  console.log(countryData, countryDataLoading)
 
-  if (countryDataLoading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loading}>
-          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
-          <Loading />
-        </div>
-      </div>
-    );
-  }
-
-  return countryData ? (
+  return (
     <div className={styles.container}>
-      <button
-        className={styles.backButton}
-        onClick={handleSceneModeChange}
-      >
-        <BackIcon className={styles.icon}/>
-        <span className={styles.text}>back to global</span>
-      </button>
 
       <section className={styles.indexOverview}>
         <p className={styles.countryName}>{countryName}</p>
@@ -100,7 +76,7 @@ const CountryDataCardComponent = ({
         <p>{`${countryDescription}`}</p>
       </section>
     </div>
-  ) : null;
+  );
 }
 
 export default CountryDataCardComponent;

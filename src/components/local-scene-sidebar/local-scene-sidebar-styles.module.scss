@@ -1,5 +1,6 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
 .container {
@@ -12,4 +13,37 @@
   top: $sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  .icon {
+    transform: rotate(180deg);
+  }
+  .text {
+    @extend %subtitle;
+    color: $brand-color-main;
+    text-transform: uppercase;
+    position: relative;
+    top: 4px;
+  }
+}
+
+.loading {
+  padding: $mobile-sidebar-side-paddings;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
+}
+
+.loadingText {
+  @extend %bodyText;
+  margin-bottom: 20px;
+  color: $white;
 }
