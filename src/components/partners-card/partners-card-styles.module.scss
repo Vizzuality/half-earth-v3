@@ -22,3 +22,14 @@
   color: $light-text;
   margin: 0;
 }
+
+.partnersButton {
+  position: relative;
+  padding: 0;
+  right: 0;
+  bottom: 0;
+  color: $brand-color-main;
+  &:hover {
+    color: $brand-color-main;
+  }
+}

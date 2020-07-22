@@ -21,7 +21,7 @@ const PartnersCardComponent = () => {
         <p className={styles.partnerField}>MAP TECHNOLOGY BY:</p>
         <p className={styles.partnerName}>Esri</p>
       </section>
-      <PartnersTrigger className={styles.partnersButton}/>
+      <PartnersTrigger className={styles.partnersButton} buttonTitle='See all partners'/>
     </div>
   )
 }

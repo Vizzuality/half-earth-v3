@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -63,7 +64,7 @@ const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalytics
   );
 }
 
-const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent }) => {
+const AboutComponent = ({ className, buttonTitle, setPageTexts, textData, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
@@ -90,10 +91,10 @@ const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsE
   return (
     <>
       <button
-        className={styles.aboutButton}
+        className={cx(className, styles.aboutButton)}
         onClick={handleOpenAboutPage}
       >
-        About the Half-Earth map
+        {buttonTitle || 'About the Half-Earth map'}
       </button>
       {isAboutPageOpened && (
         ReactDOM.createPortal(
