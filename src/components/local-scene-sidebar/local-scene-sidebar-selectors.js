@@ -1,5 +1,12 @@
 import { createSelector } from 'reselect';
 
+const SPECIES_COLOR = {
+  birds: '#34BD92',
+  mammals: '#92EB58',
+  amphibians: '#9873EF',
+  reptiles: '#3AA8EE'
+}
+
 const selectCountryData = ({ countryData }, { countryISO }) => (countryData && countryData.data && countryData.data[countryISO]) || null;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 
@@ -52,9 +59,38 @@ const getTaxa = (taxa) => createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData[taxa];
 })
+
 const getEndemicSpecies = (taxa) => createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData[`endemic_${taxa}`];
+})
+const getSpeciesChartData = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+
+const {
+  birds,
+  mammals,
+  reptiles,
+  amphibians,
+  endemic_birds,
+  endemic_reptiles,
+  endemic_mammals,
+  endemic_amphibians
+} = countryData;
+
+
+const chartData = [
+  {name: 'endemic amphibians', value: endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: true},
+  {name: 'amphibians', value: amphibians - endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: false},
+  {name: 'endemic birds', value: endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: true},
+  {name: 'endemic birds', value: birds - endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: false},
+  {name: 'endemic mammals', value: endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: true},
+  {name: 'endemic mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false},
+  {name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true},
+  {name: 'endemic reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false},
+]
+
+  return chartData
 })
 
 const mapStateToProps = (state, props) => ({
@@ -71,6 +107,7 @@ const mapStateToProps = (state, props) => ({
     reptilesEndemic: getEndemicSpecies('reptiles')(state, props),
     vertebratesCount: getNumberOfVertebrates(state, props),
     protectionNeeded: getProtectionNeeded(state, props),
+    speciesChartData: getSpeciesChartData(state, props),
     amphibiansEndemic: getEndemicSpecies('amphibians')(state, props),
     currentProtection: getCurrentProtection(state, props),
     countryDescription: getDescription(state, props),

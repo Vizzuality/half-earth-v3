@@ -23,8 +23,16 @@
   border-radius: 77px;
   align-items: center;
   position: absolute;
-  top: 87px;
-  left: 63px;
+  top: 85px;
+  left: 65px;
+}
+
+.legendItem {
+  @extend %subtitle;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: $sidebar-paddings;
 }
 
 .birdsIcon,
