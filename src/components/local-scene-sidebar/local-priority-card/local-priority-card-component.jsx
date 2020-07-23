@@ -9,12 +9,12 @@ const LocalPriorityCardComponent = ({
   return (
     <LocalSceneCard>
       <section>
-        <h3 className={styles.title}>The current protection</h3>
+        <h3 className={styles.title}>The current protection:</h3>
       </section>
       <section>
         <div className={styles.datasetWrapper}>
           <AreaIcon className={styles.wdpaIcon}/>
-          <div>
+          <div className={styles.datasetMetadata}>
             <p className={styles.datasetExplanation}>
               The orange areas on the map represent
               the current protected areas.
@@ -26,7 +26,7 @@ const LocalPriorityCardComponent = ({
         </div>
         <div className={styles.datasetWrapper}>
           <AreaIcon className={styles.priorityIcon}/>
-          <div>
+          <div className={styles.datasetMetadata}>
             <p className={styles.datasetExplanation}>
               The yellow areas on the map represent
               the higest rarity spots for biodiversity

@@ -59,7 +59,6 @@ const getTaxa = (taxa) => createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData[taxa];
 })
-
 const getEndemicSpecies = (taxa) => createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData[`endemic_${taxa}`];

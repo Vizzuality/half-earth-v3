@@ -91,7 +91,7 @@ const AboutComponent = ({ className, buttonTitle, setPageTexts, textData, VIEW ,
   return (
     <>
       <button
-        className={cx(className, styles.aboutButton)}
+        className={cx(styles.aboutButton, className)}
         onClick={handleOpenAboutPage}
       >
         {buttonTitle || 'About the Half-Earth map'}
