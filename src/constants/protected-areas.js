@@ -5,6 +5,7 @@ import {
 
 export const PROTECTED_AREAS_COLOR = '#FF6C47';
 export const COMMUNITY_AREAS_COLOR = '#FCC44A';
+export const NOT_UNDER_CONSERVATION_COLOR = '#6C828F';
 export const WDPALayers = [
   { 
     name: 'Protected areas',
