@@ -1,38 +1,100 @@
 import React from 'react';
 import cx from 'classnames';
+import { Loading } from 'he-components';
 
-import CountryDataCard from 'components/country-data-card';
-import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
-import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
-import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
+import CountryDataCard from './country-data-card';
+import LocalPriorityCard from './local-priority-card';
+import LocalSpeciesCard from './local-species-card';
+import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+import PartnersCard from 'components/partners-card';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
-  map,
-  view,
-  rasters,
-  setRasters,
-  countryISO,
+  SPI,
+  mean,
+  birds,
+  mammals,
+  reptiles,
+  amphibians,
   countryName,
-  activeLayers,
-  activeCategory,
+  countryData,
+  birdsEndemic,
+  mammalsEndemic,
+  indexStatement,
+  reptilesEndemic,
+  vertebratesCount,
+  protectionNeeded,
+  currentProtection,
+  amphibiansEndemic,
   isFullscreenActive,
-  handleGlobeUpdating,
-  countedActiveLayers
+  countryDescription,
+  countryDataLoading,
+  handleSceneModeChange,
+  endemicVertebratesCount,
 }) => {
+
   const sidebarHidden = isFullscreenActive;
-  return (
+
+  if (countryDataLoading) {
+    return (
+      <div className={styles.container}>
+        <button
+        className={styles.backButton}
+        onClick={handleSceneModeChange}
+      >
+        <BackIcon className={styles.icon}/>
+        <span className={styles.text}>back to global</span>
+      </button>
+        <div className={styles.loading}>
+          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+
+  return countryData ? (
     <div className={cx(styles.container, {
       [animationStyles.leftHidden]: sidebarHidden,
     })}>
+      <button
+        className={styles.backButton}
+        onClick={handleSceneModeChange}
+      >
+        <BackIcon className={styles.icon}/>
+        <span className={styles.text}>back to global</span>
+      </button>
+      <DummyBlurWorkaround />
       <CountryDataCard
-        view={view}
-        countryISO={countryISO}
+        SPI={SPI}
+        mean={mean}
         countryName={countryName}
+        countryData={countryData}
+        indexStatement={indexStatement}
+        vertebratesCount={vertebratesCount}
+        protectionNeeded={protectionNeeded}
+        currentProtection={currentProtection}
+        countryDescription={countryDescription}
+        countryDataLoading={countryDataLoading}
+        endemicVertebratesCount={endemicVertebratesCount}
       />
+      <LocalPriorityCard />
+      <LocalSpeciesCard
+        birds={birds}
+        mammals={mammals}
+        reptiles={reptiles}
+        amphibians={amphibians}
+        countryName={countryName}
+        birdsEndemic={birdsEndemic}
+        mammalsEndemic={mammalsEndemic}
+        reptilesEndemic={reptilesEndemic}
+        amphibiansEndemic={amphibiansEndemic}
+      />
+      <PartnersCard />
     </div>
-  )
+  ) : null
 }
 
 

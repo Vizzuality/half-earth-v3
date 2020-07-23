@@ -1,0 +1,44 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.title {
+  @extend %_temporaryTitle;
+  margin: 0;
+  color: $_temporary-dark-text;
+  text-align: center;
+}
+
+.datasetWrapper {
+  display: flex;
+}
+
+.wdpaIcon,
+.priorityIcon {
+  min-width: 25px;
+  margin-right: 10px;
+}
+
+.wdpaIcon {
+  fill: #FF6C47;
+}
+
+.priorityIcon {
+  fill: #FFD413;
+}
+
+.datasetMetadata {
+  padding-bottom: 25px;
+}
+
+.datasetExplanation {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+.datasetSource {
+  @extend %annotation;
+  color: $_temporary-light-text;
+  margin: 0;
+}
