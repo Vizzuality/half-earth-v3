@@ -26,13 +26,19 @@
   fill: #FFD413;
 }
 
+.datasetMetadata {
+  padding-bottom: 25px;
+}
+
 .datasetExplanation {
   @extend %bodyText;
   color: $_temporary-dark-text;
   margin: 0;
+  padding-bottom: 5px;
 }
 
 .datasetSource {
   @extend %annotation;
   color: $_temporary-light-text;
+  margin: 0;
 }

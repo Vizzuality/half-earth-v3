@@ -8,6 +8,17 @@
   text-align: center;
 }
 
+.speciesCount,
+.speciesSentence {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+}
+
+.speciesCount {
+  display: flex;
+  align-items: center;
+}
+
 .birdsIcon,
 .mammalsIcon,
 .reptilesIcon,
