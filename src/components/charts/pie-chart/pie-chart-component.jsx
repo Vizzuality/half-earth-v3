@@ -1,64 +1,47 @@
 import React from 'react';
-import * as  d3 from 'd3-shape';
+import * as d3 from 'd3-shape';
 import { getKeyByValue } from 'utils/generic-functions';
 import Slice from '../shapes/slice';
 
 const translate = (x, y) => `translate(${x}, ${y})`;
-const EXPLODING_SLICE_RADIUS = 70;
-const REGULAR_RADIUS = 60;
-const EXPLODING_SLICE_STROKE = 'white';
-const EXPLODING_SLICE_STROKE_WIDTH = '2';
 
-const PieChart = ({ x, y, chartData, activeSlices, colors }) => {
+const PieChart = ({
+  width,
+  height,
+  id,
+  data,
+  explodedSlices,
+  colors,
+  regularSliceR = 60,
+  explodingSliceR = 70,
+  explodingSliceStroke = 'white'
+}) => {
   const pie = d3.pie();
 
-  // remove the zero values
-  const filteredChartData = chartData && Object.keys(chartData)
-    .filter((key) => chartData[key])
-    .reduce((obj, key) => {
-      obj[key] = chartData[key];
-      return obj;
-    }, {});
-
   return (
-    <g id="conservation-widget" transform={translate(x, y)}>
-      {filteredChartData && pie(Object.values(filteredChartData)).map((value, i) => {
-        const area = getKeyByValue(filteredChartData, value.data);
-        const active = activeSlices[area];
+    <svg width={width} height={height}>
+      <g id={id} transform={translate(width/2, height/2)}>
+        {data && pie(Object.values(data)).map((value, i) => {
+          const area = getKeyByValue(data, value.data);
+          const active = explodedSlices[area];
 
-        const radius = active ? EXPLODING_SLICE_RADIUS : REGULAR_RADIUS;
-        const stroke = active ? EXPLODING_SLICE_STROKE : '';
-        const strokeWidth = active ? EXPLODING_SLICE_STROKE_WIDTH : '';
+          const radius = active ? explodingSliceR : regularSliceR;
+          const stroke = active ? explodingSliceStroke : '';
+          const strokeWidth = active ? '2' : '';
 
-        return (
-          <Slice 
-            key={i}
-            outerRadius={radius}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-            value={value}
-            fill={colors[area]}
-          />
-        )})}
-    </g>
+          return (
+            <Slice
+              key={i}
+              outerRadius={radius}
+              stroke={stroke}
+              strokeWidth={strokeWidth}
+              value={value}
+              fill={colors[area]}
+            />
+          )})}
+      </g>
+    </svg>
   )
 }
 
-const Pie = ({ data, alreadyChecked, activeSlices, colors }) => {
-  return (
-    <>
-      <svg width="120%" height="120%">
-        <PieChart
-          x={120}
-          y={80}
-          chartData={data}
-          alreadyChecked={alreadyChecked}
-          activeSlices={activeSlices}
-          colors={colors} 
-        />
-      </svg>
-    </>
-  );
-}
-
-export default Pie;
+export default PieChart;
