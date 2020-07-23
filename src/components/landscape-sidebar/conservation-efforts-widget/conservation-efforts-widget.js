@@ -9,13 +9,10 @@ import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manage
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { COMMUNITY_AREAS_VECTOR_TILE_LAYER, GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
 import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
 
 import * as urlActions from 'actions/url-actions';
 
-import { 
-  COMMUNITY_BASED,
-  PROTECTED
-} from './conservation-efforts-widget-selectors';
 import Component from './conservation-efforts-widget-component';
 import mapStateToProps from './conservation-efforts-widget-selectors';
 
@@ -26,7 +23,6 @@ const findInDOM = (id) => document.getElementById(id);
 const ConservationEffortsWidget = (props) => {
   const {
     alreadyChecked,
-    colors,
     selectedCellsIDs,
     setConservationEfforts
   } = props;
@@ -51,8 +47,8 @@ const ConservationEffortsWidget = (props) => {
 
   useEffect(() => {
     const svg = findInDOM('conservation-widget');
-    const orangeSlice = findInDOM(colors[PROTECTED]);
-    const yellowSlice = findInDOM(colors[COMMUNITY_BASED]);
+    const orangeSlice = findInDOM(PROTECTED_AREAS_COLOR);
+    const yellowSlice = findInDOM(COMMUNITY_AREAS_COLOR);
 
     if (svg && orangeSlice) {
       if (orangeActive && yellowActive && orangeSlice && yellowSlice) {
