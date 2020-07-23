@@ -104,15 +104,17 @@ const DataGlobeComponent = ({
             countedActiveLayers={countedActiveLayers}
           />
         }
-        <LandscapeSidebar
-          activeLayers={activeLayers}
-          activeOption={activeOption}
-          selectedSpecies={selectedSpecies}
-          isLandscapeMode={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        />
+        {isLandscapeMode &&
+          <LandscapeSidebar
+            activeLayers={activeLayers}
+            activeOption={activeOption}
+            selectedSpecies={selectedSpecies}
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          />
+        }
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
