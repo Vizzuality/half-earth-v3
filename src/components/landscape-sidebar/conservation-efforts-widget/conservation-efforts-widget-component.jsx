@@ -1,5 +1,5 @@
 import React from 'react';
-import PieChart from 'components/pie-chart';
+import PieChart from 'components/charts/pie-chart';
 import CheckboxGroup from 'components/checkbox-group';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 

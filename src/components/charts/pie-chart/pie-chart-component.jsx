@@ -1,7 +1,7 @@
 import React from 'react';
 import * as  d3 from 'd3-shape';
 import { getKeyByValue } from 'utils/generic-functions';
-import Slice from './slice';
+import Slice from '../shapes/slice';
 
 const translate = (x, y) => `translate(${x}, ${y})`;
 const EXPLODING_SLICE_RADIUS = 70;
@@ -48,7 +48,7 @@ const Pie = ({ data, alreadyChecked, activeSlices, colors }) => {
   return (
     <>
       <svg width="120%" height="120%">
-        <PieChart 
+        <PieChart
           x={120}
           y={80}
           chartData={data}
