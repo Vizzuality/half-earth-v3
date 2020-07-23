@@ -1,33 +1,29 @@
 import React from 'react';
 import * as d3 from 'd3-shape';
-import { getKeyByValue } from 'utils/generic-functions';
 import Slice from '../shapes/slice';
 
 const translate = (x, y) => `translate(${x}, ${y})`;
 
 const PieChart = ({
+  className,
   width,
   height,
   id,
   data,
-  explodedSlices,
-  colors,
   regularSliceR = 60,
   explodingSliceR = 70,
   explodingSliceStroke = 'white'
 }) => {
-  const pie = d3.pie();
-
+  const pie = d3.pie().value(d => d.value).sort((a, b) => b.index - a.index);
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} className={className}>
       <g id={id} transform={translate(width/2, height/2)}>
-        {data && pie(Object.values(data)).map((value, i) => {
-          const area = getKeyByValue(data, value.data);
-          const active = explodedSlices[area];
+        {data && pie(data).map((value, i) => {
+          const exploded = data[i]['explodedSlice'];
 
-          const radius = active ? explodingSliceR : regularSliceR;
-          const stroke = active ? explodingSliceStroke : '';
-          const strokeWidth = active ? '2' : '';
+          const radius = exploded ? explodingSliceR : regularSliceR;
+          const stroke = exploded ? explodingSliceStroke : data[i].color;
+          const strokeWidth = exploded ? '2' : 'none';
 
           return (
             <Slice
@@ -36,7 +32,7 @@ const PieChart = ({
               stroke={stroke}
               strokeWidth={strokeWidth}
               value={value}
-              fill={colors[area]}
+              fill={data[i].color}
             />
           )})}
       </g>
