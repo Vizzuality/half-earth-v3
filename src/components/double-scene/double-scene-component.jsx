@@ -27,7 +27,7 @@ const DoubleSceneComponent = props => {
           {loadState === 'loaded' && 
             ReactDOM.createPortal(
               React.Children.map(children || null, (child, i) => {
-                return child && <child.type key={i} map={globalMap} maps={[localMap, globalMap]} view={viewGlobal} viewLocal={viewLocal} spatialReference={spatialReference} {...child.props}/>;
+                return child && <child.type key={i} map={globalMap} localMap={localMap} view={viewGlobal} viewLocal={viewLocal} spatialReference={spatialReference} {...child.props}/>;
               })
               ,
               document.getElementById("root")
