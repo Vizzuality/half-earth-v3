@@ -35,7 +35,7 @@ const DoubleSceneComponent = props => {
           }
         </div>
       </div>
-      <div style={{ height: '100%',  position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', opacity: isCountryMode ? 'initial' : 'none'}}>
+      <div style={{ height: '100%',  position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset', display: isCountryMode ? 'initial' : 'none'}}>
         <div id={`scene-local-container-${sceneId}`} style={{width:'100%', height:'100%', ...style}}></div>
       </div>
     </>
