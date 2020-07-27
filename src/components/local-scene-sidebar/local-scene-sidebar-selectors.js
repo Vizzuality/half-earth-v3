@@ -55,6 +55,11 @@ const getIndexStatement = createSelector(
   return `The index of this country is ${comparation} than the average`;
 })
 
+const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
+  if (!endemicVertebrates) return null;
+  return endemicVertebrates === '1' ? `${endemicVertebrates} is` : `${endemicVertebrates} are`
+})
+
 const getTaxa = (taxa) => createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData[taxa];
@@ -111,7 +116,8 @@ const mapStateToProps = (state, props) => ({
     currentProtection: getCurrentProtection(state, props),
     countryDescription: getDescription(state, props),
     countryDataLoading: selectCountryDataLoading(state, props),
-    endemicVertebratesCount: getNumberOfEndemicVertebrates(state, props)
+    endemicVertebratesCount: getNumberOfEndemicVertebrates(state, props),
+    endemicVertebratesSentence: getEndemicSpeciesSentence(state, props)
   }
 )
 export default mapStateToProps;

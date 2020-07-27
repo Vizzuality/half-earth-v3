@@ -21,7 +21,7 @@ const LocalSpeciesCardComponent = ({
   reptilesEndemic,
   amphibiansEndemic,
   vertebratesCount,
-  endemicVertebratesCount,
+  endemicVertebratesSentence
 }) => {
   return (
     <LocalSceneCard>
@@ -45,7 +45,7 @@ const LocalSpeciesCardComponent = ({
           </div>
           <div className={styles.legendItem}>
             <EndemicOval />
-            <span>{`${endemicVertebratesCount} are`}</span>
+            <span>{endemicVertebratesSentence}</span>
             <span>endemic</span>
           </div>
         </div>

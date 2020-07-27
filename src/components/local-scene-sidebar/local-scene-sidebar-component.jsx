@@ -34,6 +34,7 @@ const LocalSceneSidebarComponent = ({
   countryDataLoading,
   handleSceneModeChange,
   endemicVertebratesCount,
+  endemicVertebratesSentence
 }) => {
 
   const sidebarHidden = isFullscreenActive;
@@ -95,6 +96,7 @@ const LocalSceneSidebarComponent = ({
         vertebratesCount={vertebratesCount}
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
+        endemicVertebratesSentence={endemicVertebratesSentence}
       />
       <PartnersCard />
     </div>
