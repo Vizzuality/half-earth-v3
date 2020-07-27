@@ -1,6 +1,5 @@
 import React from 'react';
 import LocalSceneCard from 'components/local-scene-card';
-import { ReactComponent as AreaIcon } from 'icons/area.svg';
 import styles from './local-priority-card-styles.module.scss';
 
 const LocalPriorityCardComponent = ({

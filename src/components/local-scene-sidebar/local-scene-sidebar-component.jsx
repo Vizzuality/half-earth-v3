@@ -18,6 +18,7 @@ const LocalSceneSidebarComponent = ({
   mammals,
   reptiles,
   amphibians,
+  countryISO,
   countryName,
   countryData,
   birdsEndemic,
@@ -72,6 +73,7 @@ const LocalSceneSidebarComponent = ({
       <CountryDataCard
         SPI={SPI}
         mean={mean}
+        countryISO={countryISO}
         countryName={countryName}
         countryData={countryData}
         indexStatement={indexStatement}
