@@ -82,7 +82,10 @@ const LocalSceneSidebarComponent = ({
         countryDataLoading={countryDataLoading}
         endemicVertebratesCount={endemicVertebratesCount}
       />
-      <LocalPriorityCard />
+      <LocalPriorityCard
+        protectionNeeded={protectionNeeded}
+        currentProtection={currentProtection}
+      />
       <LocalSpeciesCard
         birds={birds}
         mammals={mammals}
