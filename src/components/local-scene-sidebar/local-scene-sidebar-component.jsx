@@ -26,6 +26,7 @@ const LocalSceneSidebarComponent = ({
   reptilesEndemic,
   vertebratesCount,
   protectionNeeded,
+  speciesChartData,
   currentProtection,
   amphibiansEndemic,
   isFullscreenActive,
@@ -33,6 +34,7 @@ const LocalSceneSidebarComponent = ({
   countryDataLoading,
   handleSceneModeChange,
   endemicVertebratesCount,
+  endemicVertebratesSentence
 }) => {
 
   const sidebarHidden = isFullscreenActive;
@@ -85,12 +87,16 @@ const LocalSceneSidebarComponent = ({
         birds={birds}
         mammals={mammals}
         reptiles={reptiles}
+        chartData={speciesChartData}
         amphibians={amphibians}
         countryName={countryName}
         birdsEndemic={birdsEndemic}
         mammalsEndemic={mammalsEndemic}
         reptilesEndemic={reptilesEndemic}
+        vertebratesCount={vertebratesCount}
         amphibiansEndemic={amphibiansEndemic}
+        endemicVertebratesCount={endemicVertebratesCount}
+        endemicVertebratesSentence={endemicVertebratesSentence}
       />
       <PartnersCard />
     </div>

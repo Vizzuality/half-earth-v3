@@ -133,15 +133,17 @@ const DataGlobeComponent = ({
           selectedTaxa={selectedTaxa}
           activeOption={activeOption}
         />
-        <LandscapeSidebar
-          isLandscapeMode={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          activeLayers={activeLayers}
-          selectedSpecies={selectedSpecies}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          activeOption={activeOption}
-        />
+        {isLandscapeMode &&
+          <LandscapeSidebar
+            activeLayers={activeLayers}
+            activeOption={activeOption}
+            selectedSpecies={selectedSpecies}
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          />
+        }
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
         {isLandscapeMode && <LabelsLayer />}

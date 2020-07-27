@@ -30,6 +30,11 @@ $margin: 8px;
   color: white;
 }
 
+.pieChart {
+  display: block;
+  margin: 0 auto;
+}
+
 .overrideCheckbox-protected-areas {
   input[type="checkbox"]:checked + label::before {
     background: $persimmon;
