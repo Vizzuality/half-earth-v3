@@ -31,7 +31,8 @@ const DoubleScene = props => {
     sceneSettings,
     onMapLoad = null,
     onViewLoad = null,
-    countryExtent
+    countryExtent,
+    isCountryMode
   } = props;
 
   const [globalMap, setGlobalMap] = useState(null);
@@ -111,17 +112,6 @@ const DoubleScene = props => {
         });
     }
   },[localMap]);
-
-  useEffect(() => {
-    if(viewLocal && spatialReference && countryExtent) {
-      const expandedCountryExtent = countryExtent.clone().expand(1.01);
-      viewLocal.clippingArea = expandedCountryExtent;
-      viewLocal.extent = expandedCountryExtent;
-      viewLocal.when(() => {
-        viewLocal.goTo({ target: expandedCountryExtent, tilt: 40 }, { animate: false });
-      });
-    };
-  },[countryExtent]);
   
   useEffect(() => {
     if (globalMap && localMap && viewGlobal && viewLocal) {
@@ -129,6 +119,18 @@ const DoubleScene = props => {
       onViewLoad && onViewLoad(globalMap, viewGlobal)
     }
   }, [globalMap, viewGlobal, viewLocal, localMap]);
+
+
+  useEffect(() => {
+    if(viewLocal && spatialReference && countryExtent && isCountryMode) {
+      const expandedCountryExtent = countryExtent.clone().expand(1.01);
+      viewLocal.clippingArea = expandedCountryExtent;
+      viewLocal.extent = expandedCountryExtent;
+      viewLocal.when(() => {
+        viewLocal.goTo({ target: expandedCountryExtent, tilt: 40 }, { animate: false });
+      });
+    };
+  },[isCountryMode, countryExtent]);
 
   return (
     <Component
