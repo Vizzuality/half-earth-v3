@@ -6,7 +6,8 @@ import styles from 'styles/themes/scene-theme.module.scss';
 
 const DoubleSceneComponent = props => {
   const {
-    map,
+    localMap,
+    globalMap,
     viewGlobal,
     viewLocal,
     spatialReference,
@@ -27,7 +28,7 @@ const DoubleSceneComponent = props => {
           {loadState === 'loaded' && 
             ReactDOM.createPortal(
               React.Children.map(children || null, (child, i) => {
-                return child && <child.type key={i} map={map} view={viewGlobal} viewLocal={viewLocal} spatialReference={spatialReference} {...child.props}/>;
+                return child && <child.type key={i} map={globalMap} maps={[localMap, globalMap]} view={viewGlobal} viewLocal={viewLocal} spatialReference={spatialReference} {...child.props}/>;
               })
               ,
               document.getElementById("root")

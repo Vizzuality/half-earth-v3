@@ -5,9 +5,12 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { MASK_STYLES } from 'constants/graphic-styles';
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 
-const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode) => {
+const queryCountryData = (countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer) => {
   loadModules(['esri/geometry/Polygon',"esri/Graphic", "esri/geometry/geometryEngine"]).then(([Polygon, Graphic, geometryEngine]) => {
-    const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.02));
+    const extentGeometry = Polygon.fromExtent(countryExtent.clone().expand(1.1));
+    const maskGraphic = createGraphic(Graphic, MASK_STYLES, extentGeometry);
+    graphicsLayer.graphics = [maskGraphic];
+
     const query = countryLayer.createQuery();
     query.outSpatialReference = spatialReference;
     query.geometry = extentGeometry;
@@ -27,7 +30,7 @@ const queryCountryData = (countryLayer, countryISO, spatialReference, countryExt
 };
 
 const MaskCountryManager = props => {
-  const { viewLocal, spatialReference, countryISO, countryExtent, isCountryMode, sceneMode } = props;
+  const { viewLocal, spatialReference, countryISO, countryExtent, isCountryMode } = props;
   const [countryLayer, setCountryLayer] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
 
@@ -50,23 +53,10 @@ const MaskCountryManager = props => {
   }, []);
 
   useEffect(() => {
-    if(graphicsLayer) {
-      graphicsLayer.visible = isCountryMode;
-    }
-  }, [countryExtent, isCountryMode]);
-
-  useEffect(() => {
     if (countryLayer && countryISO  && spatialReference && countryExtent && graphicsLayer && isCountryMode) {
-      graphicsLayer.graphics = [];
       queryCountryData(countryLayer, countryISO, spatialReference, countryExtent, graphicsLayer, isCountryMode);
     }
   }, [countryExtent, isCountryMode]);
-
-  useEffect(() => {
-    if (graphicsLayer && (!countryISO || !isCountryMode)) {
-      graphicsLayer.graphics = [];
-    }
-  },[countryISO, sceneMode]);
 
   return null
 }

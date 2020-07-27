@@ -115,11 +115,11 @@ const DataGlobeComponent = ({
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           />
         }
-        <Legend
+        {!isCountryMode && <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
-        />
-        <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
+        />}
+        <CountryBorderLayer countryISO={countryISO}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}

@@ -16,7 +16,7 @@ const LOCAL_SCENE_VIEW_SETTINGS = {
   environment: {
     background: {
       type: "color",
-      color: [0, 0, 0, 1]
+      color: [0, 0, 0, 0]
     },
     starsEnabled: false,
     atmosphereEnabled: false
@@ -34,24 +34,41 @@ const DoubleScene = props => {
     countryExtent
   } = props;
 
-  const [map, setMap] = useState(null);
+  const [globalMap, setGlobalMap] = useState(null);
+  const [localMap, setLocalMap] = useState(null);
   const [viewGlobal, setViewGlobal] = useState(null);
   const [viewLocal, setViewLocal] = useState(null);
   const [loadState, setLoadState] = useState('loading');
   const [spatialReference, setSpatialReference] = useState(null);
 
   useEffect(() => {
-    loadModules(["esri/WebScene"], loaderOptions)
-      .then(([WebScene]) => {
-        const _map = new WebScene({
+    loadModules(["esri/WebScene", "esri/geometry/SpatialReference"], loaderOptions)
+      .then(([WebScene, SpatialReference]) => {
+        const _spatialReference = new SpatialReference();
+        _spatialReference.wkid = 102100;
+        setSpatialReference(_spatialReference);
+
+        const _globalMap = new WebScene({
           portalItem: {
             id: sceneId
           }
         });
-        _map.load().then(map => { 
-          setMap(map);
+        _globalMap.load().then(map => { 
+          setGlobalMap(map);
           onMapLoad && onMapLoad(map);
         });
+
+        const _localMap = new WebScene({
+          portalItem: {
+            id: sceneId
+          }
+        });
+
+        _localMap.load().then(map => { 
+          setLocalMap(map);
+          map.ground.surfaceColor = '#000';
+        });
+
       })
       .catch(err => {
         console.error(err);
@@ -59,24 +76,29 @@ const DoubleScene = props => {
   }, []);
 
   useEffect(() => {
-    if (map) {
-      loadModules(["esri/views/SceneView", "esri/geometry/SpatialReference"], loaderOptions)
-        .then(([SceneView, SpatialReference]) => {
-
-          const _spatialReference = new SpatialReference();
-          _spatialReference.wkid = 102100;
-          setSpatialReference(_spatialReference);
-
+    if (globalMap) {
+      loadModules(["esri/views/SceneView"], loaderOptions)
+        .then(([SceneView]) => {
           const _viewGlobal = new SceneView({
-            map: map,
+            map: globalMap,
             container: `scene-global-container-${sceneId}`,
             ...sceneSettings,
             spatialReference,
           });
           setViewGlobal(_viewGlobal);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  },[globalMap]);
 
+  useEffect(() => {
+    if (localMap) {
+      loadModules(["esri/views/SceneView"], loaderOptions)
+        .then(([SceneView]) => {
           const _viewLocal = new SceneView({
-            map: map,
+            map: localMap,
             container: `scene-local-container-${sceneId}`,
             ...sceneSettings,
             spatialReference,
@@ -88,7 +110,7 @@ const DoubleScene = props => {
           console.error(err);
         });
     }
-  },[map]);
+  },[localMap]);
 
   useEffect(() => {
     if(viewLocal && spatialReference && countryExtent) {
@@ -102,16 +124,17 @@ const DoubleScene = props => {
   },[countryExtent]);
   
   useEffect(() => {
-    if (map && viewGlobal && viewLocal) {
+    if (globalMap && localMap && viewGlobal && viewLocal) {
       setLoadState('loaded');
-      onViewLoad && onViewLoad(map, viewGlobal)
+      onViewLoad && onViewLoad(globalMap, viewGlobal)
     }
-  }, [map, viewGlobal, viewLocal]);
+  }, [globalMap, viewGlobal, viewLocal, localMap]);
 
   return (
     <Component
       {...props}
-      map={map}
+      globalMap={globalMap}
+      localMap={localMap}
       viewGlobal={viewGlobal}
       viewLocal={viewLocal}
       loadState={loadState}
