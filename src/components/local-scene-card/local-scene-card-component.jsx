@@ -5,8 +5,8 @@ const LocalSceneCardComponent = ({ children }) => {
   return (
     <div className={styles.container}>
       {children && children.map(
-        child => (
-          <section className={styles.section}>
+        (child, i) => (
+          <section key={i} className={styles.section}>
             {child}
           </section>
         )
