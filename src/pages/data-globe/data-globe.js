@@ -10,13 +10,10 @@ const actions = {...urlActions};
 
 const DataGlobeContainer = props => {
 
-
-const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
-
+  const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
     activateLayersOnLoad(map, activeLayers, layersConfig);
   }
-
 
   return (
     <DataGlobeComponent

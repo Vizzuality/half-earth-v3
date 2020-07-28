@@ -66,6 +66,7 @@ const DataGlobeComponent = ({
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         sceneMode={sceneMode}
         countryExtent={countryExtent}
+        isCountryMode={isCountryMode}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -115,16 +116,16 @@ const DataGlobeComponent = ({
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           />
         }
-        <Legend
+        {!isCountryMode && <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
-        />
-        <CountryBorderLayer countryISO={countryISO} isCountryMode={isCountryMode}/>
+        />}
+        <CountryBorderLayer countryISO={countryISO}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {(isLandscapeMode || isCountryMode) && <TerrainExaggerationLayer exaggeration={isCountryMode ? 20 : 3}/>}
         <LabelsLayer isLandscapeMode={isLandscapeMode} isCountryMode={isCountryMode} countryName={countryName}/>
-        <MaskCountryManager countryISO={countryISO} countryExtent={countryExtent} isCountryMode={isCountryMode} sceneMode={sceneMode}/>
+        <MaskCountryManager countryISO={countryISO} countryExtent={countryExtent} isCountryMode={isCountryMode}/>
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
       </DoubleScene>
       <TutorialModal />

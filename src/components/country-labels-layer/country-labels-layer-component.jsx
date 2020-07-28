@@ -8,7 +8,7 @@ import mapPinIcon from 'icons/map_pin.svg'
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, isLandscapeMode, isCountryMode, countryName, countryISO, countryExtent } = props;
+  const { map, isLandscapeMode, countryName, countryISO, countryExtent } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [layerReady, setLayerReady] = useState(false)
@@ -21,7 +21,6 @@ const CountryLabelsLayerComponent = props => {
         labelExpressionInfo: {
           expression: "$feature.NAME_0"
         },
-        where: countryName && isCountryMode ? `NAME_0 <> '${countryName}'` : null,
         symbol: {
           type: "text",
           color: [213,207,202],
@@ -36,7 +35,7 @@ const CountryLabelsLayerComponent = props => {
       });
       setLabelingInfo(_labelingInfo);
     })
-  }, [countryName, isCountryMode]);
+  }, [countryName]);
 
   useEffect(() => {
       if (labelingInfo) {
@@ -63,7 +62,7 @@ const CountryLabelsLayerComponent = props => {
   useEffect(() => {
     let graphicLayer;
     let countryPinMarker;
-    if (layerReady && countryISO && !isCountryMode) {
+    if (layerReady && countryISO) {
       loadModules(["esri/Graphic"])
       .then(([Graphic]) => {
         graphicLayer = findLayerInMap(GRAPHIC_LAYER, map);
@@ -75,14 +74,14 @@ const CountryLabelsLayerComponent = props => {
             geometry: features[0].geometry,
             symbol: simplePictureMarker(mapPinIcon, { height: 24, width: 24, yoffset: -10 })
           });
-          graphicLayer.add(countryPinMarker)
+          if(graphicLayer) graphicLayer.add(countryPinMarker);
         })
       })
     }
     return function cleanUp() {
       if (graphicLayer) { graphicLayer.remove(countryPinMarker)}
     }
-  }, [layerReady, countryExtent, isCountryMode, countryISO])
+  }, [layerReady, countryExtent])
 
   useEffect(() => {
     if (layerReady) {
