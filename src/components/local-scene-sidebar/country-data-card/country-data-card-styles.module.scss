@@ -22,6 +22,16 @@
   padding: 0 $sidebar-paddings;
 }
 
+.nameWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.flag {
+  width: 33px;
+  margin-right: $sidebar-paddings;
+}
+
 .countryName {
   @extend %headline;
 }
@@ -33,12 +43,12 @@
 .overviewText {
   @extend %title;
   font-size: 11px;
+  margin-left: $sidebar-paddings;
 }
 
 
 .overviewTextWrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -151,7 +161,7 @@
 }
 
 .descriptionWrapper {
-  padding: 20px 20px 30px;
+  padding:  $sidebar-paddings  $sidebar-paddings 0px;
   p {
     @extend %bodyText;
     margin: 0 0 10px;

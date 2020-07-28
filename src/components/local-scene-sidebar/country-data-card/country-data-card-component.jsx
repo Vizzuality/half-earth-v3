@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
@@ -6,6 +6,7 @@ import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 const CountryDataCardComponent = ({
   SPI,
   mean,
+  countryISO,
   countryName,
   indexStatement,
   vertebratesCount,
@@ -19,7 +20,10 @@ const CountryDataCardComponent = ({
     <div className={styles.container}>
 
       <section className={styles.indexOverview}>
-        <p className={styles.countryName}>{countryName}</p>
+        <div className={styles.nameWrapper}>
+          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt={`${countryName} flag`}/>
+          <p className={styles.countryName}>{countryName}</p>
+        </div>
         <div className={styles.overviewTextWrapper}>
           <QuestionIcon />
           <p className={styles.overviewText}>The species protection index is:</p>

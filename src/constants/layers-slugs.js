@@ -1,4 +1,5 @@
 // Protected areas layers. Based on WDPA and RAISIG data.
+export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged_WDPA_vector_tile_layer';
 export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
 export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';

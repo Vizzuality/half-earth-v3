@@ -5,6 +5,7 @@ import {
   CITIES_LABELS_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   ALL_TAXA_RARITY,
+  MERGED_WDPA_VECTOR_TILE_LAYER,
   COUNTRY_MASK_LAYER
 } from 'constants/layers-slugs';
 
@@ -20,6 +21,7 @@ export default {
       { title: CITIES_LABELS_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
+      { title: MERGED_WDPA_VECTOR_TILE_LAYER },
       { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
     zoom: 1,

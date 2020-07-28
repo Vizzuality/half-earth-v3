@@ -6,6 +6,7 @@
   margin: 0;
   color: $_temporary-dark-text;
   text-align: center;
+  padding-bottom: $sidebar-paddings;
 }
 
 .datasetWrapper {
@@ -14,20 +15,36 @@
 
 .wdpaIcon,
 .priorityIcon {
-  min-width: 25px;
-  margin-right: 10px;
+  min-width: 13px;
+  margin-right: 15px;
 }
 
 .wdpaIcon {
-  fill: #FF6C47;
+  width: 13px;
+  height: 13px;
+  position: relative;
+  top: 5px;
+  border-radius: 2px;
+  background-color: #008604;
 }
 
 .priorityIcon {
-  fill: #FFD413;
+  height: 241px;
+  width: 12px;
+  border-radius: 2px;
+  background: linear-gradient(0deg, #47039F 0%, #9C179E 12.51%, #BD3786 30.56%, #D8576B 46.02%, #ED7953 59.45%, #FA9E3B 74.07%, #FDC926 86.18%, #F0F921 100%);
 }
 
-.datasetMetadata {
-  padding-bottom: 25px;
+.priorityLegend {
+  .datasetWrapper {
+    padding: 15px 0;
+    align-items: center;
+  }
+}
+
+.legendTag {
+  @extend %subtitle;
+  margin: 0;
 }
 
 .datasetExplanation {

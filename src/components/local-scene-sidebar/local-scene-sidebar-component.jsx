@@ -18,6 +18,7 @@ const LocalSceneSidebarComponent = ({
   mammals,
   reptiles,
   amphibians,
+  countryISO,
   countryName,
   countryData,
   birdsEndemic,
@@ -72,6 +73,7 @@ const LocalSceneSidebarComponent = ({
       <CountryDataCard
         SPI={SPI}
         mean={mean}
+        countryISO={countryISO}
         countryName={countryName}
         countryData={countryData}
         indexStatement={indexStatement}
@@ -82,7 +84,10 @@ const LocalSceneSidebarComponent = ({
         countryDataLoading={countryDataLoading}
         endemicVertebratesCount={endemicVertebratesCount}
       />
-      <LocalPriorityCard />
+      <LocalPriorityCard
+        protectionNeeded={protectionNeeded}
+        currentProtection={currentProtection}
+      />
       <LocalSpeciesCard
         birds={birds}
         mammals={mammals}
