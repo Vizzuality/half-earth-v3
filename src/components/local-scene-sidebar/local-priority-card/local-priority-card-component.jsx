@@ -38,7 +38,7 @@ const LocalPriorityCardComponent = ({
             conservation of species habitat.
             </p>
             <p className={styles.datasetSource}>
-              Source: Source: Rinnan DS and Jetz W, (2020).
+              Source: Rinnan DS and Jetz W, (2020).
             </p>
           </div>
         </div>
