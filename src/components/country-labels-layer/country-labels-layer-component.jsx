@@ -81,7 +81,7 @@ const CountryLabelsLayerComponent = props => {
     return function cleanUp() {
       if (graphicLayer) { graphicLayer.remove(countryPinMarker)}
     }
-  }, [layerReady, countryExtent, countryISO])
+  }, [layerReady, countryExtent])
 
   useEffect(() => {
     if (layerReady) {
