@@ -4,28 +4,42 @@ import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import initialState from './data-globe-initial-state';
+import {
+  DATA_SCENE_INITIAL_STATE,
+  COUNTRY_SCENE_INITIAL_STATE
+} from 'constants/scenes-constants';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 
-const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
+const getInitialSceneMode = createSelector(selectUiUrlState, uiUrlState => {
+  if (!uiUrlState || !uiUrlState.sceneMode) return 'data';
+  return uiUrlState.sceneMode;
+})
+
+const getSceneInitialState = createSelector(getInitialSceneMode, sceneMode => {
+  return sceneMode === 'data' ? DATA_SCENE_INITIAL_STATE : COUNTRY_SCENE_INITIAL_STATE;
+})
+
+const getGlobeSettings = createSelector([selectGlobeUrlState, getSceneInitialState],
+  (globeUrlState, sceneInitialState) => {
   return {
-    ...initialState.globe,
+    ...sceneInitialState.globe,
     ...globeUrlState
   }
 })
 
-const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
+const getUiSettings = createSelector([selectUiUrlState, getSceneInitialState],
+  (uiUrlState, sceneInitialState) => {
   return {
-    ...initialState.ui,
+    ...sceneInitialState.ui,
     ...uiUrlState
   }
 })
 
 const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
-  return listenersUrlState ? listenersUrlState : initialState.listeners;
+  return listenersUrlState ? listenersUrlState : DATA_SCENE_INITIAL_STATE.listeners;
 })
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
