@@ -10,34 +10,26 @@ import CountryBorderLayer from 'components/country-border-layer';
 import Widgets from 'components/widgets';
 import CountryMaskLayer from 'components/mask-country-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-
+import About from 'components/about';
+// Utils
+import {  useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import sceneSettings from './country-scene-config';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 const CountrySceneComponent = ({
-  sceneSettings,
-  isFullscreenActive,
-  isSidebarOpen,
-  selectedSpecies,
-  activeCategory,
-  isLandscapeMode,
-  isBiodiversityActive,
-  isLandscapeSidebarCollapsed,
-  countedActiveLayers,
-  isGlobeUpdating,
-  hasMetadata,
-  activeLayers,
-  handleMapLoad,
-  handleGlobeUpdating,
-  activeOption,
-  isHEModalOpen,
+  onMapLoad,
   countryISO,
   countryName,
-  sceneMode,
+  hasMetadata,
+  activeLayers,
   countryExtent,
-  onMapLoad
+  isHEModalOpen,
+  isFullscreenActive,
+  handleGlobeUpdating,
 }) => {
+  const isOnMobile = useMobile();
   return (
     <>
       <Scene
@@ -58,7 +50,6 @@ const CountrySceneComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
         />
         <CountryBorderLayer
-          extent={countryExtent}
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
@@ -70,8 +61,8 @@ const CountrySceneComponent = ({
         <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
         <TerrainExaggerationLayer exaggeration={20}/>
       </Scene>
-      {/* {hasMetadata && <InfoModal />} */}
-      {/* {!isOnMobile && <About />} */}
+      {hasMetadata && <InfoModal />}
+      {!isOnMobile && <About />}
     </>
   )
 }
