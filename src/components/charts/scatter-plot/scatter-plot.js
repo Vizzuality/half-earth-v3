@@ -1,7 +1,7 @@
 import React from 'react';
 import Component from './scatter-plot-component';
 
-const ScatterPlot  = () => {
+const ScatterPlot = props => {
   const dataset = [];  // Initialize empty array
   const numDataPoints = 300;  // Number of dummy data points
   const maxRange = Math.random() * 1000;  // Max range of new values
@@ -11,7 +11,7 @@ const ScatterPlot  = () => {
     dataset.push([newNumber1, newNumber2]);  // Add new number to array
   };
 
-  return <Component data={dataset} />
+  return <Component data={dataset} {...props} />
 }
 
 export default ScatterPlot;

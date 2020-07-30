@@ -1,8 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import cx from 'classnames';
+
+import styles from './scatter-plot-styles.module.scss';
 
 const ScatterPlot = ({
-  data
+  data,
+  className
 }) => {
 
   const ref = useRef()
@@ -177,8 +181,8 @@ const yScale = d3.scaleLinear()  // yScale is height of graphic
   
 
   return (
-    <div>
-      <button onClick={onClick}>ANIMATE!</button>
+    <div className={cx(styles.container, className)}>
+      <button className={styles.animateButton} onClick={onClick}>ANIMATE!</button>
       <svg ref={ref} width={canvasWidth} height={canvasHeight}>
       </svg>
     </div>

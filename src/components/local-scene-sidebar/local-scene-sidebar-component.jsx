@@ -8,7 +8,6 @@ import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import PartnersCard from 'components/partners-card';
-import ScatterPlot from 'components/charts/scatter-plot';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -106,7 +105,6 @@ const LocalSceneSidebarComponent = ({
         endemicVertebratesSentence={endemicVertebratesSentence}
       />
       <PartnersCard />
-      <ScatterPlot />
     </div>
   ) : null
 }
