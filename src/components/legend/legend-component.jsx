@@ -7,7 +7,7 @@ import Legend, {
   LegendItemTypes,
   LegendListItem,
 } from 'vizzuality-components/dist/legend';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
@@ -19,7 +19,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handle
     handleChangeVisibility
   } = handlers;
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const isLegendOpen = activeOption === FOOTER_OPTIONS.LEGEND;
   const showDisclaimer = isOnMobile && isLegendOpen;
   const canShowLegend = isOnMobile ? isLegendOpen : showLegend;

@@ -5,7 +5,6 @@ const LocalSceneViewManager = ({
   extent
 }) => {
   useEffect(() => {
-    console.log(view)
     if (view && extent) {
       view.extent = extent;
       view.clippingArea = extent;

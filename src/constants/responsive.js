@@ -15,7 +15,7 @@ export const remBreakpoints = {
   landscape: getRems(pixelBreakpoints.landscape),
   desktop: getRems(pixelBreakpoints.desktop)
 };
-export const isMobile = () => useMediaQuery({ maxWidth: remBreakpoints.mobile });
+export const useMobile = () => useMediaQuery({ maxWidth: remBreakpoints.mobile });
 
 export const Desktop = props => (
   <Responsive {...props} minWidth={remBreakpoints.desktop} />

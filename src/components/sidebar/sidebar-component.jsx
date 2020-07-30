@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
 import FixedHeader from 'components/fixed-header';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -13,7 +13,7 @@ import styles from './sidebar-styles.module.scss';
 const Sidebar = ({ map, view, theme, children, isCountryMode, activeCategory, countryISO, handleSidebarToggle, isSidebarOpen, isLandscapeMode, isFullscreenActive, activeOption, isLandscapeSidebarCollapsed }) => {
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
   
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const categoryBoxVisibleOnMobile = isOnMobile && isSidebarOpen && isActive;
   const isSidebarVisible = (isSidebarOpen && !isLandscapeMode && !isFullscreenActive && !isCountryMode) || categoryBoxVisibleOnMobile;
 

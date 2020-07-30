@@ -11,7 +11,7 @@ import {
 import { 
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
 } from 'constants/layers-groups';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
 import Component from './featured-globe-component.jsx';
 
@@ -23,7 +23,7 @@ const actions = { ...featuredMapsActions, ...urlActions}
 
 const feturedGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard, isFullscreenActive } = props;
 
   const handleMarkerClick = (viewPoint, view) => {
