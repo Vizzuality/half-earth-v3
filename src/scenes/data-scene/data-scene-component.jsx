@@ -74,6 +74,7 @@ const CountrySceneComponent = ({
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
         <CountryBorderLayer
+          sceneMode={sceneMode}
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />

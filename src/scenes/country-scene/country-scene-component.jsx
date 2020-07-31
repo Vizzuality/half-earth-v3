@@ -19,6 +19,7 @@ import sceneSettings from './country-scene-config';
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 const CountrySceneComponent = ({
+  sceneMode,
   onMapLoad,
   countryISO,
   countryName,
@@ -51,6 +52,7 @@ const CountrySceneComponent = ({
         />
         <CountryBorderLayer
           countryISO={countryISO}
+          sceneMode={sceneMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <CountryMaskLayer
@@ -59,10 +61,10 @@ const CountrySceneComponent = ({
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <Widgets
-          isFullscreenActive={isFullscreenActive}
-          isHEModalOpen={isHEModalOpen}
           hideSearch
           hideLocator
+          isHEModalOpen={isHEModalOpen}
+          isFullscreenActive={isFullscreenActive}
         />
         <TerrainExaggerationLayer exaggeration={20}/>
       </Scene>

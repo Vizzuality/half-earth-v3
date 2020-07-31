@@ -13,7 +13,7 @@ import {
 } from 'utils/graphic-layer-utils';
 
 const CountryBorderLayer = props => {
-  const { view, spatialReference, countryISO } = props;
+  const { view, spatialReference, countryISO, sceneMode } = props;
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
@@ -37,6 +37,7 @@ const CountryBorderLayer = props => {
         const { features } = results;
         const { geometry } = features[0];
         if (borderGraphic) { 
+          sceneMode === 'data' && view.goTo({target: geometry});
           borderGraphic.geometry = await createPolygonGeometry(geometry);
         };
       })
