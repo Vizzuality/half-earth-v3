@@ -11,6 +11,7 @@ import Widgets from 'components/widgets';
 import CountryMaskLayer from 'components/mask-country-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import About from 'components/about';
+import LabelsLayer from 'components/labels-layer';
 // Utils
 import {  useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
@@ -67,6 +68,7 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
         />
         <TerrainExaggerationLayer exaggeration={20}/>
+        <LabelsLayer />
       </Scene>
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}

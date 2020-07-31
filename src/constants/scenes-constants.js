@@ -10,19 +10,16 @@ import {
   COUNTRY_PRIORITY_LAYER,
 } from 'constants/layers-slugs';
 
-import {
-  
-} from 'constants/layers-slugs';
-
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
-
 
 export const COUNTRY_SCENE_INITIAL_STATE = {
   globe: {
     activeLayers: [
       { title: GRAPHIC_LAYER },
       { title: COUNTRY_MASK_LAYER },
+      { title: CITIES_LABELS_LAYER },
       { title: FIREFLY_BASEMAP_LAYER },
+      { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: COUNTRY_PRIORITY_LAYER, opacity: 0.4 },
       { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: 0.4 }
     ],
@@ -33,20 +30,12 @@ export const COUNTRY_SCENE_INITIAL_STATE = {
   listeners: false
 }
 
-export const LOCAL_SPATIAL_REFERENCE = 102100;
-
-
-
-export const LOCAL_SCENE = 'local';
-export const DATA_SCENE = 'data';
-
 export const DATA_SCENE_INITIAL_STATE = {
   globe: {
     activeLayers: [
       { title: GRAPHIC_LAYER },
-      { title: COUNTRY_MASK_LAYER },
-      { title: FIREFLY_BASEMAP_LAYER },
       { title: CITIES_LABELS_LAYER },
+      { title: FIREFLY_BASEMAP_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
@@ -61,3 +50,7 @@ export const DATA_SCENE_INITIAL_STATE = {
   },
   listeners: false
 }
+
+export const LOCAL_SPATIAL_REFERENCE = 102100;
+export const LOCAL_SCENE = 'local';
+export const DATA_SCENE = 'data';
