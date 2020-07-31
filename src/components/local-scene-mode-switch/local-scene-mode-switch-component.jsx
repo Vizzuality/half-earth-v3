@@ -1,6 +1,7 @@
 import React, { useState }  from 'react';
-import ScatterPlot from 'components/charts/scatter-plot';
 import cx from 'classnames';
+import ScatterPlot from 'components/charts/scatter-plot';
+import { INDICATOR_LABELS } from 'constants/country-mode-constants';
 
 import styles from './local-scene-mode-switch-styles.module.scss';
 
@@ -9,7 +10,7 @@ const COUNTRY_MODE_TABS = {
   MAP: 'map'
 }
 
-const LocalSceneModeSwitchComponent  = () => {
+const LocalSceneModeSwitchComponent  = ({ scatterPlotData }) => {
   const [activeTab, setActiveTab] = useState(COUNTRY_MODE_TABS.MAP);
 
   const changeActiveTab = (ACTIVE_TAB) => {
@@ -25,7 +26,11 @@ const LocalSceneModeSwitchComponent  = () => {
       )
     }>
       {activeTab === COUNTRY_MODE_TABS.CHALLENGES &&
-        <ScatterPlot className={styles.scatterPlot}/>
+        <ScatterPlot
+          className={styles.scatterPlot}
+          data={scatterPlotData}
+          xAxisLabels={INDICATOR_LABELS}
+        />
       }
       <div className={styles.switchContainer}>
         <button className={styles.button} onClick={() => changeActiveTab(COUNTRY_MODE_TABS.CHALLENGES)}>CHART</button>

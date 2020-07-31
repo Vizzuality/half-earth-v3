@@ -1,20 +1,42 @@
-.axis path,
-.axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
+@import 'styles/settings';
+@import 'styles/typography-extends';
 
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}
-
-.animateButton {
-  color: white;
-}
-
-.container {
+.scatterPlotContainer {
+  border: 3px solid $elephant;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 14px;
+  position: relative;
+
+  &::before {
+    @extend %bodyText;
+
+    content: 'Species Protection Index (SPI)';
+    bottom: -14px;
+    color: white;
+    left: -34px;
+    position: absolute;
+    text-align: center;
+    transform: rotate(-90deg);
+    transform-origin: 0 0;
+    width: 400px;
+  }
+}
+
+.xAxisContainer {
+  align-items: center;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.xAxisLabel {
+  @extend %bodyText;
+  text-align: center;
+  width: 280px;
+}
+
+.chartContainer {
+  display: flex;
 }

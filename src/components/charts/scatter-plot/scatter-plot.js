@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Component from './scatter-plot-component';
 
 const ScatterPlot = props => {
-  const dataset = [];  // Initialize empty array
-  const numDataPoints = 300;  // Number of dummy data points
-  const maxRange = Math.random() * 1000;  // Max range of new values
-  for(var i=0; i<numDataPoints; i++) {
-    var newNumber1 = Math.floor(Math.random() * maxRange);  // New random integer
-    var newNumber2 = Math.floor(Math.random() * maxRange);  // New random integer
-    dataset.push([newNumber1, newNumber2]);  // Add new number to array
-  };
+  const xAxisKeys = Object.keys(props.xAxisLabels);
+  const [xAxisSelectedKey, setXAxisSelectedKey] = useState(xAxisKeys[0]);
 
-  return <Component data={dataset} {...props} />
+  const handleSelectNextIndicator = () => {
+    const currentIndex = xAxisKeys.indexOf(xAxisSelectedKey);
+    if (currentIndex !== xAxisKeys.length - 1) { 
+      setXAxisSelectedKey(xAxisKeys[currentIndex + 1]);
+    } else {
+      setXAxisSelectedKey(xAxisKeys[0]) 
+    }
+  }
+
+  const handleSelectPreviousIndicator = () => {
+    const currentIndex = xAxisKeys.indexOf(xAxisSelectedKey);
+    if (currentIndex > 0) { 
+      setXAxisSelectedKey(xAxisKeys[currentIndex - 1]);
+    } else {
+      setXAxisSelectedKey(xAxisKeys[xAxisKeys.length - 1]) 
+    }
+  }
+
+  return (
+    <Component 
+      xAxisSelectedKey={xAxisSelectedKey}
+      handleSelectNextIndicator={handleSelectNextIndicator}
+      handleSelectPreviousIndicator={handleSelectPreviousIndicator}
+      {...props}
+    />
+  );
 }
 
 export default ScatterPlot;
