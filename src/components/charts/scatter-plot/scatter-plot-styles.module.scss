@@ -1,21 +1,25 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+$icon-size: 20px;
+$chart-margin: 14px;
+
 .scatterPlotContainer {
   border: 3px solid $elephant;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 14px;
+  margin-bottom: $chart-margin;
+  margin-left: $chart-margin;
   position: relative;
 
   &::before {
     @extend %bodyText;
 
     content: 'Species Protection Index (SPI)';
-    bottom: -14px;
+    bottom: -$chart-margin;
     color: white;
-    left: -34px;
+    left: -#{$icon-size + $chart-margin};
     position: absolute;
     text-align: center;
     transform: rotate(-90deg);
@@ -24,11 +28,16 @@
   }
 }
 
-.xAxisContainer {
+.xAxisLabelContainer {
   align-items: center;
   color: white;
   display: flex;
   justify-content: center;
+}
+
+.xAxisContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
 .xAxisLabel {
@@ -37,6 +46,23 @@
   width: 280px;
 }
 
+.zeroLabel {
+  color: white;
+  font-size: $icon-size;
+}
+
 .chartContainer {
   display: flex;
+  margin-top: $chart-margin;
+}
+
+.plusIcon {
+  height: $icon-size;
+  width: $icon-size;
+}
+
+.chartTitle {
+  @extend %headline;
+  color: white;
+  margin-left: #{$icon-size + $chart-margin};
 }

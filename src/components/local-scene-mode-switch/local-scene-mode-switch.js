@@ -31,7 +31,6 @@ const LocalSceneModeSwitch = (props) => {
 
   useEffect(() => {
     if (countriesDataLayer) {
-      // setCountryDataLoading();
       const query = countriesDataLayer.createQuery();
       countriesDataLayer.queryFeatures(query)
       .then((results) => {
@@ -39,11 +38,11 @@ const LocalSceneModeSwitch = (props) => {
         const biggestCountryArea = d3.max(features, ({ attributes }) => {
           return attributes.Area;
         });
-
         const _scatterPlotData = features.map(({ attributes }) => {
           return {
             size: getCircleSize(attributes.Area, biggestCountryArea),
             color: CONTINENT_COLORS[attributes.continent] || '#fff',
+            iso: attributes.GID_0,
             xAxisValues: {
               SUM: attributes.SUM,
               GNI_PPP: attributes.GNI_PPP,
@@ -55,10 +54,8 @@ const LocalSceneModeSwitch = (props) => {
           };
         })
         setScatterPlotData(_scatterPlotData);
-        // setCountryDataReady(features);
       })
       .catch((error) => {
-        // setCountryDataError(error);
       });
     }
   }, [countriesDataLayer])

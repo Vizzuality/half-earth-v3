@@ -3,6 +3,7 @@ import { animated, useSprings } from 'react-spring';
 import * as d3 from 'd3';
 import cx from 'classnames';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
+import { ReactComponent as PlusIcon } from 'icons/zoomIn.svg';
 
 import styles from './scatter-plot-styles.module.scss';
 
@@ -29,7 +30,6 @@ const ScatterPlot = ({
         return d.yAxisValue;
     })])
     .range([canvasHeight - padding, padding]);
-    
   const springs = useSprings(data.length, data.map(d => (
     {
       cx: xScale(d.xAxisValues[xAxisSelectedKey]) || padding,
@@ -39,7 +39,9 @@ const ScatterPlot = ({
   
   return (
     <div className={className}>
+      <span className={styles.chartTitle}>Challenges</span>
       <div className={cx(styles.chartContainer)}>
+        <PlusIcon className={styles.plusIcon}/>
         <div className={styles.scatterPlotContainer}>
           <svg width={canvasWidth} height={canvasHeight}>
             {springs && springs.map((animatedProps, i) => (
@@ -56,13 +58,17 @@ const ScatterPlot = ({
         </div>
       </div>
       <div className={styles.xAxisContainer}>
-        <button onClick={handleSelectPreviousIndicator} style={{ transform: "scaleX(-1)" }}>
-          <ArrowButton />
-        </button>
-        <span className={styles.xAxisLabel}>{xAxisLabels[xAxisSelectedKey]}</span>
-        <button onClick={handleSelectNextIndicator}>
-          <ArrowButton />
-        </button>
+        <span className={styles.zeroLabel}>0</span>
+        <div className={styles.xAxisLabelContainer}>
+          <button onClick={handleSelectPreviousIndicator} style={{ transform: "scaleX(-1)" }}>
+            <ArrowButton />
+          </button>
+          <span className={styles.xAxisLabel}>{xAxisLabels[xAxisSelectedKey]}</span>
+          <button onClick={handleSelectNextIndicator}>
+            <ArrowButton />
+          </button>
+        </div>
+        <PlusIcon className={styles.plusIcon}/>
       </div>
     </div>
   )
