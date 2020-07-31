@@ -44,7 +44,7 @@ const LocalSceneModeSwitch = (props) => {
             color: CONTINENT_COLORS[attributes.continent] || '#fff',
             iso: attributes.GID_0,
             xAxisValues: {
-              SUM: attributes.SUM,
+              Population2016: attributes.Population2016,
               GNI_PPP: attributes.GNI_PPP,
               prop_hm_very_high: attributes.prop_hm_very_high,
               total_endemic: attributes.total_endemic,
