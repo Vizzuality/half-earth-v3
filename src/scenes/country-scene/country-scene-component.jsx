@@ -58,7 +58,12 @@ const CountrySceneComponent = ({
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
+        <Widgets
+          isFullscreenActive={isFullscreenActive}
+          isHEModalOpen={isHEModalOpen}
+          hideSearch
+          hideLocator
+        />
         <TerrainExaggerationLayer exaggeration={20}/>
       </Scene>
       {hasMetadata && <InfoModal />}
