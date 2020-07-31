@@ -4,10 +4,9 @@ import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import {
-  DATA_SCENE_INITIAL_STATE,
-  COUNTRY_SCENE_INITIAL_STATE
-} from 'constants/scenes-constants';
+
+import dataSceneConfig from 'scenes/data-scene/data-scene-config';
+import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
@@ -18,28 +17,28 @@ const getInitialSceneMode = createSelector(selectUiUrlState, uiUrlState => {
   return uiUrlState.sceneMode;
 })
 
-const getSceneInitialState = createSelector(getInitialSceneMode, sceneMode => {
-  return sceneMode === 'data' ? DATA_SCENE_INITIAL_STATE : COUNTRY_SCENE_INITIAL_STATE;
+const getSceneConfig = createSelector(getInitialSceneMode, sceneMode => {
+  return sceneMode === 'data' ? dataSceneConfig : countrySceneConfig;
 })
 
-const getGlobeSettings = createSelector([selectGlobeUrlState, getSceneInitialState],
-  (globeUrlState, sceneInitialState) => {
+const getGlobeSettings = createSelector([selectGlobeUrlState, getSceneConfig],
+  (globeUrlState, sceneConfig) => {
   return {
-    ...sceneInitialState.globe,
+    ...sceneConfig.globe,
     ...globeUrlState
   }
 })
 
-const getUiSettings = createSelector([selectUiUrlState, getSceneInitialState],
-  (uiUrlState, sceneInitialState) => {
+const getUiSettings = createSelector([selectUiUrlState, getSceneConfig],
+  (uiUrlState, sceneConfig) => {
   return {
-    ...sceneInitialState.ui,
+    ...sceneConfig.ui,
     ...uiUrlState
   }
 })
 
 const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
-  return listenersUrlState ? listenersUrlState : DATA_SCENE_INITIAL_STATE.listeners;
+  return listenersUrlState ? listenersUrlState : false;
 })
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)

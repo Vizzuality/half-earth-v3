@@ -19,7 +19,6 @@ import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-import sceneSettings from './data-scene-config';
 // Utils
 import { MobileOnly, useMobile } from 'constants/responsive';
 // Dynamic imports
@@ -41,6 +40,7 @@ const CountrySceneComponent = ({
   hasMetadata,
   activeLayers,
   activeOption,
+  sceneSettings,
   isSidebarOpen,
   isHEModalOpen,
   activeCategory,

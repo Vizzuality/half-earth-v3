@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import * as actions from 'actions/url-actions';
 import { setCSSvariable } from 'utils/generic-functions'
 import Component from './country-entry-card-component';
-import { LOCAL_SCENE, DATA_SCENE, COUNTRY_SCENE_INITIAL_STATE } from 'constants/scenes-constants';
+import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
+import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 
 const CountryEntryCard = props => {
   const { changeUI, changeGlobe, sceneMode } = props;
@@ -13,7 +14,7 @@ const CountryEntryCard = props => {
   }, [])
   
   const handleSceneModeChange = () => {
-    changeGlobe({ activeLayers: COUNTRY_SCENE_INITIAL_STATE.globe.activeLayers })
+    changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
   };
   const handleCountryDeselect = () => {

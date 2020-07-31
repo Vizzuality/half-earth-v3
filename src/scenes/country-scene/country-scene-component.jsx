@@ -15,7 +15,6 @@ import LabelsLayer from 'components/labels-layer';
 // Utils
 import {  useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-import sceneSettings from './country-scene-config';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
@@ -27,10 +26,12 @@ const CountrySceneComponent = ({
   hasMetadata,
   activeLayers,
   countryExtent,
+  sceneSettings,
   isHEModalOpen,
   isFullscreenActive,
   handleGlobeUpdating,
 }) => {
+  console.log(sceneSettings)
   const isOnMobile = useMobile();
   return (
     <>
@@ -42,7 +43,7 @@ const CountrySceneComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
       >
-        <LocalSceneViewManager extent={countryExtent} />
+        <LocalSceneViewManager extent={countryExtent} sceneSettings={sceneSettings}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
         <LocalSceneSidebar
           countryISO={countryISO}

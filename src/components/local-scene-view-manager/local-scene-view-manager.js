@@ -2,15 +2,22 @@ import { useEffect } from 'react';
 
 const LocalSceneViewManager = ({
   view,
-  extent
+  extent,
+  sceneSettings
 }) => {
+  const { zoom, center } = sceneSettings;
+
   useEffect(() => {
     if (view && extent) {
       view.extent = extent;
       view.clippingArea = extent;
-      view.goTo({ target: extent, tilt: 40 });
+      if (!zoom && !center) {
+        view.goTo({ target: extent, tilt: 40 });
+      } else {
+        view.goTo({ target: extent, zoom, center, tilt: 40 })
+      }
     }
-  }, [view, extent]);
+  }, [extent]);
 
   return null;
 }
