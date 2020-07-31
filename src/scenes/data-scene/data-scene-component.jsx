@@ -107,7 +107,7 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
-        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
+        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} hideSearch={!!countryISO}/>
         <TerrainExaggerationLayer exaggeration={3}/>
         <LabelsLayer isLandscapeMode={isLandscapeMode}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}

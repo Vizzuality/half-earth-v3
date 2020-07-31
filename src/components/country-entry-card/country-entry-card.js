@@ -6,12 +6,10 @@ import Component from './country-entry-card-component';
 import { LOCAL_SCENE, DATA_SCENE, COUNTRY_SCENE_INITIAL_STATE } from 'constants/scenes-constants';
 
 const CountryEntryCard = props => {
-  const { changeUI, changeGlobe, sceneMode, countryName } = props;
+  const { changeUI, changeGlobe, sceneMode } = props;
 
   useEffect(() => {
-    if (countryName) {
-      setCSSvariable('--sidebar-top-margin', '20px');
-    }
+      setCSSvariable('--sidebar-top-margin', '60px');
   }, [])
   
   const handleSceneModeChange = () => {

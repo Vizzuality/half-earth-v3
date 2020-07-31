@@ -21,7 +21,7 @@ const CountryDataCardComponent = ({
 
       <section className={styles.indexOverview}>
         <div className={styles.nameWrapper}>
-          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt={`${countryName} flag`}/>
+          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
           <p className={styles.countryName}>{countryName}</p>
         </div>
         <div className={styles.overviewTextWrapper}>
