@@ -57,7 +57,7 @@ const onLabelEvent = (event) => {
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
-  }, [countryISO])
+  }, [])
 
   useEffect(() => {
     const eventHandler = view.on("pointer-move", onLabelEvent);
