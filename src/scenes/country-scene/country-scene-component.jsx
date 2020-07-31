@@ -31,7 +31,6 @@ const CountrySceneComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
 }) => {
-  console.log(sceneSettings)
   const isOnMobile = useMobile();
   return (
     <>
@@ -64,7 +63,6 @@ const CountrySceneComponent = ({
         />
         <Widgets
           hideSearch
-          hideLocator
           isHEModalOpen={isHEModalOpen}
           isFullscreenActive={isFullscreenActive}
         />

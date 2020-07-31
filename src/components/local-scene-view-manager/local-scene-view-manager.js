@@ -14,7 +14,7 @@ const LocalSceneViewManager = ({
       if (!zoom && !center) {
         view.goTo({ target: extent, tilt: 40 });
       } else {
-        view.goTo({ target: extent, zoom, center, tilt: 40 })
+        view.goTo({ target: center, zoom, tilt: 40 })
       }
     }
   }, [extent]);

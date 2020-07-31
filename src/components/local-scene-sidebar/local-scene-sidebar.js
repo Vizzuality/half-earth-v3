@@ -32,7 +32,7 @@ const LocalSceneSidebarContainer = (props) => {
 
   const handleSceneModeChange = () => {
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE });
-    changeGlobe({countryISO: null, countryName: null, activeLayers: dataSceneConfig.globe.activeLayers});
+    changeGlobe({countryISO: null, countryName: null, activeLayers: dataSceneConfig.globe.activeLayers, zoom: 7});
   }
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
   const [countriesListLayer, setCountriesListLayer] = useState(null);
