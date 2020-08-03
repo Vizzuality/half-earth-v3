@@ -28,6 +28,7 @@ const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 const LocalSceneSidebar = loadable(() => import('components/local-scene-sidebar'));
+const LocalSceneModeSwitch = loadable(() => import('components/local-scene-mode-switch'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -120,6 +121,9 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />}
+        {isCountryMode && 
+          <LocalSceneModeSwitch />
+        }
         <CountryBorderLayer countryISO={countryISO}/>
         <CountryLabelsLayer countryISO={countryISO} isCountryMode={isCountryMode} isLandscapeMode={isLandscapeMode} countryName={countryName} countryExtent={countryExtent}/>
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
