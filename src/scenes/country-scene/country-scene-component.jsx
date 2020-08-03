@@ -8,6 +8,7 @@ import LocalSceneViewManager from 'components/local-scene-view-manager';
 import LocalSceneSidebar from 'components/local-scene-sidebar';
 import CountryBorderLayer from 'components/country-border-layer';
 import Widgets from 'components/widgets';
+import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import CountryMaskLayer from 'components/mask-country-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import About from 'components/about';
@@ -66,6 +67,7 @@ const CountrySceneComponent = ({
           isHEModalOpen={isHEModalOpen}
           isFullscreenActive={isFullscreenActive}
         />
+        <LocalSceneModeSwitch />
         <TerrainExaggerationLayer exaggeration={20}/>
         <LabelsLayer />
       </Scene>
