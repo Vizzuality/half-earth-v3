@@ -43,7 +43,7 @@ const ScatterPlot = ({
       <div className={cx(styles.chartContainer)}>
         <PlusIcon className={styles.plusIcon}/>
         <div className={styles.scatterPlotContainer}>
-          <svg width={canvasWidth} height={canvasHeight}>
+          <svg viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}>
             {springs && springs.map((animatedProps, i) => (
               <animated.circle
                 style={{

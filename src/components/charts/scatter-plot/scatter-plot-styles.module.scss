@@ -6,6 +6,8 @@ $chart-margin: 14px;
 
 .scatterPlotContainer {
   border: 3px solid $elephant;
+  width: 60vw;
+  height: 60vh;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
