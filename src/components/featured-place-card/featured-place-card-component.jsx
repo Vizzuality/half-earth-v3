@@ -3,7 +3,7 @@ import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import ShareModalButton from 'components/share-modal';
 import styles from './featured-place-card-styles.module';
@@ -22,7 +22,7 @@ const FeaturedPlaceCardComponent = ({
   view
 }) => {
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
   const visibleOnMobile = isOnMobile && activeOption === FOOTER_OPTIONS.ADD_LAYER && selectedFeaturedPlace;
   

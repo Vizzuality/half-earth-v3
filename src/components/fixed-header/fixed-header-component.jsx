@@ -6,7 +6,7 @@ import ShareModal from 'components/share-modal';
 import styles from './fixed-header-styles.module.scss';
 
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
 const BACK = 'BACK';
 
@@ -16,7 +16,7 @@ const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
   const [titleDropdownOpen, setTitleDropdownOpen] = useState(false)
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
 
   return (
     <div className={cx(styles.header,

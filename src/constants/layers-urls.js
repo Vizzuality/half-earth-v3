@@ -1,4 +1,5 @@
 import {
+  COUNTRY_PRIORITY_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   COUNTRIES_DATA_FEATURE_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
@@ -62,6 +63,7 @@ export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/
 export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Metadata2/FeatureServer/0';
 
 export const LAYERS_URLS = {
+  [COUNTRY_PRIORITY_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Prioritisation_per_country_plasma_27072020/MapServer',
   [PLEDGES_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Educator_Ambassadors/FeatureServer',
   [COUNTRIES_LABELS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',

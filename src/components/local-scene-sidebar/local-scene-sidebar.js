@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import { LOCAL_SCENE, GLOBAL_SCENE } from 'constants/view-props';
 import { COUNTRIES_DATA_FEATURE_LAYER, COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
+import dataSceneConfig from 'scenes/data-scene/data-scene-config';
 import mapStateToProps from './local-scene-sidebar-selectors';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import Component from './local-scene-sidebar-component';
@@ -30,7 +31,8 @@ const LocalSceneSidebarContainer = (props) => {
 
 
   const handleSceneModeChange = () => {
-    changeUI({ sceneMode: sceneMode === GLOBAL_SCENE ? LOCAL_SCENE : GLOBAL_SCENE });
+    changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE });
+    changeGlobe({countryISO: null, countryName: null, activeLayers: dataSceneConfig.globe.activeLayers, zoom: 7});
   }
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
   const [countriesListLayer, setCountriesListLayer] = useState(null);

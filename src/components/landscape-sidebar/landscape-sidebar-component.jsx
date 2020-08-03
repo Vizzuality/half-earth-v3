@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
 import GeoDescriptionWidget from './geo-description-widget';
 import HumanPressureWidget from './human-pressure-widget';
@@ -25,7 +25,7 @@ const LandscapeSidebarComponent = ({
   activeOption
 }) => {
   
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const isLandscapeSidebarVisible = isLandscapeMode && !isFullscreenActive;
   const isLandscapeSidebarVisibleMobile = isLandscapeMode && !activeOption;
   const landscapeSidebarCollapsed = isLandscapeMode && isLandscapeSidebarCollapsed && isOnMobile && !activeOption;

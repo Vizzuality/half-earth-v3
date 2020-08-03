@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import taxaCategories from 'constants/taxa-selector-categories';
 import animationStyles from 'styles/common-animations.module.scss';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 import styles from './featured-taxa-styles.module.scss';
@@ -17,7 +17,7 @@ const FeaturedTaxaSelectorComponent = ({
   handleTaxaButtonClick,
   activeOption,
 }) => {
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
   const isOnScreen = selectedFeaturedMap === 'priorPlaces' && !isMapsList && !selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
   const isOnMobileScreen = isActive && isOnScreen;

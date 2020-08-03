@@ -7,20 +7,19 @@ import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'u
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
 import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
 const VIEW = 'half-earth-meter';
 const actions = { openHalfEarthMeterAnalyticsEvent, ...urlActions };
 
 const MinimapWidget = (props) => {
   const { isHEModalOpen } = props;
-
   const setModal = (opened) => {
     const { changeUI } = props;
     changeUI({ isHEModalOpen: opened });
   }
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
 
   const handleMapLoad = (map, view, globeView ) => {
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded

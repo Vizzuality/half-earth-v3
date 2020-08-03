@@ -4,7 +4,7 @@ import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import GlobeImage from 'images/globe.png';
 import GlobeSmallImage from 'images/globeSmall.png';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import ShareModalButton from 'components/share-modal';
 
 import data from './half-earth-modal-data';
@@ -22,7 +22,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
 
   useEventListener('keydown', keyEscapeEventListener);
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
 
   return (
     <div className={styles.halfEarthModal}>

@@ -13,7 +13,7 @@ import {
 } from 'utils/graphic-layer-utils';
 
 const CountryBorderLayer = props => {
-  const { view, spatialReference, countryISO, setCountryExtentLoading, setCountryExtentReady, setCountryExtentError } = props;
+  const { view, spatialReference, countryISO, sceneMode } = props;
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
@@ -32,21 +32,15 @@ const CountryBorderLayer = props => {
     const query = countryLayer.createQuery();
     query.where = `GID_0 = '${countryISO}'`;
     query.outSpatialReference = spatialReference;
-    setCountryExtentLoading();
     countryLayer.queryFeatures(query)
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        view.goTo(geometry);
         if (borderGraphic) { 
+          sceneMode === 'data' && view.goTo({target: geometry});
           borderGraphic.geometry = await createPolygonGeometry(geometry);
         };
-        setCountryExtentReady(geometry.extent);
       })
-      .catch((error) => {
-        setCountryExtentError()
-        console.warn(error);
-      });
   };
 
   useEffect(() => {
@@ -54,21 +48,19 @@ const CountryBorderLayer = props => {
       const _countryLayer = new FeatureLayer({
         url: LAYERS_URLS[COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]
       });
-      _countryLayer.outFields = ['*'];
       setCountryLayer(_countryLayer)
     });
   }, []);
 
   useEffect(() => {
-    if (countryLayer && countryISO && borderGraphic && spatialReference) {
+    if (countryLayer && countryISO && borderGraphic) {
       queryCountryData();
     }
-  }, [countryLayer, countryISO, borderGraphic, spatialReference]);
+  }, [countryLayer, countryISO, borderGraphic]);
 
   useEffect(() => {
     if (borderGraphic && !countryISO) {
       borderGraphic.geometry = null;
-      setCountryExtentReady(null);
     }
   },[countryISO])
 

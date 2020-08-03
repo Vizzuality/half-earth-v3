@@ -13,6 +13,7 @@ export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';
+export const COUNTRY_PRIORITY_LAYER = 'country_priority_layer';
 // Terrestrial human pressures tiled layers.
 export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';

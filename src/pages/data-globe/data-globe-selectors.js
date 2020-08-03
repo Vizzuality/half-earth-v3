@@ -4,28 +4,41 @@ import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import initialState from './data-globe-initial-state';
+
+import dataSceneConfig from 'scenes/data-scene/data-scene-config';
+import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 
-const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
+const getInitialSceneMode = createSelector(selectUiUrlState, uiUrlState => {
+  if (!uiUrlState || !uiUrlState.sceneMode) return 'data';
+  return uiUrlState.sceneMode;
+})
+
+const getSceneConfig = createSelector(getInitialSceneMode, sceneMode => {
+  return sceneMode === 'data' ? dataSceneConfig : countrySceneConfig;
+})
+
+const getGlobeSettings = createSelector([selectGlobeUrlState, getSceneConfig],
+  (globeUrlState, sceneConfig) => {
   return {
-    ...initialState.globe,
+    ...sceneConfig.globe,
     ...globeUrlState
   }
 })
 
-const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
+const getUiSettings = createSelector([selectUiUrlState, getSceneConfig],
+  (uiUrlState, sceneConfig) => {
   return {
-    ...initialState.ui,
+    ...sceneConfig.ui,
     ...uiUrlState
   }
 })
 
 const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
-  return listenersUrlState ? listenersUrlState : initialState.listeners;
+  return listenersUrlState ? listenersUrlState : false;
 })
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)

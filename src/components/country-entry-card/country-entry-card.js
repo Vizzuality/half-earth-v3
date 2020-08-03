@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import * as actions from 'actions/url-actions';
 import { setCSSvariable } from 'utils/generic-functions'
 import Component from './country-entry-card-component';
-import { LOCAL_SCENE, GLOBAL_SCENE } from 'constants/view-props';
+import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
+import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 
 const CountryEntryCard = props => {
-  const { changeUI, changeGlobe, sceneMode, countryName } = props;
+  const { changeUI, changeGlobe, sceneMode } = props;
 
   useEffect(() => {
-    if (countryName) {
-      setCSSvariable('--sidebar-top-margin', '20px');
-    }
+      setCSSvariable('--sidebar-top-margin', '60px');
   }, [])
   
-  const handleSceneModeChange = () => changeUI({ sceneMode: sceneMode === GLOBAL_SCENE ? LOCAL_SCENE : GLOBAL_SCENE });
+  const handleSceneModeChange = () => {
+    changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
+    changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
+  };
   const handleCountryDeselect = () => {
     changeGlobe({ countryISO: null, countryName: null })
     setCSSvariable('--sidebar-top-margin', '60px');

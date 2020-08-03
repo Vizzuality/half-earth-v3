@@ -16,7 +16,7 @@ import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
 
-import { MobileOnly, isMobile } from 'constants/responsive';
+import { MobileOnly, useMobile } from 'constants/responsive';
 
 import Switcher from 'components/switcher';
 import Slider from 'components/slider';
@@ -64,7 +64,7 @@ const DataGlobeComponent = ({
   isHEModalOpen,
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
   return (
