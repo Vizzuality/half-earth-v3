@@ -2,8 +2,8 @@ export const MASK_STYLES = {
   fillColor: [0, 0, 0],
   fillOpacity: 1,
   outlineColor: [147, 255, 95],
-  outlineOpacity: 0.9,
-  outlineWidth: 2
+  outlineOpacity: 0,
+  outlineWidth: 0
 }
 
 export const COUNTRY_BORDER_STYLES = {
