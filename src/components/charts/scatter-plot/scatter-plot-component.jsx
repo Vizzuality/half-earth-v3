@@ -17,7 +17,7 @@ const ScatterPlot = ({
 }) => {
   const canvasWidth = 700;
   const canvasHeight = 400;
-  const padding = 40;  // for chart edges
+  const padding = 40; // for chart edges
 
   const xScale = d3.scaleLinear()
     .domain([0, d3.max(data, function(d) {
@@ -33,6 +33,7 @@ const ScatterPlot = ({
   const springs = useSprings(data.length, data.map(d => (
     {
       cx: xScale(d.xAxisValues[xAxisSelectedKey]) || padding,
+      x: xScale(d.xAxisValues[xAxisSelectedKey]) - 11|| padding,
       opacity: !!d.xAxisValues[xAxisSelectedKey] ? 0.6 : 0
     }
   )));
@@ -44,15 +45,31 @@ const ScatterPlot = ({
         <PlusIcon className={styles.plusIcon}/>
         <div className={styles.scatterPlotContainer}>
           <svg viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}>
-            {springs && springs.map((animatedProps, i) => (
-              <animated.circle
-                style={{
-                  cy: yScale(data[i].yAxisValue),
-                  r: data[i].size,
-                  fill: data[i].color,
-                  ...animatedProps
-                }}
-              />
+            {springs && springs.map((animatedProps, i) => console.log(animatedProps) || (
+              <>
+                <animated.circle
+                  style={{
+                    cy: yScale(data[i].yAxisValue),
+                    r: data[i].size,
+                    fill: data[i].color,
+                    ...animatedProps
+                  }}
+                  onHover={() => console.log(data[i].iso)}
+                  onClick={() => console.log(data[i].iso)}
+                />
+                  <animated.foreignObject
+                    width="25px"
+                    height="15px"
+                    style={{
+                      y:yScale(data[i].yAxisValue) - 11,
+                      ...animatedProps,
+                      opacity: 1
+                    }}
+                    requiredExtensions="http://www.w3.org/1999/xhtml"
+                  >
+                    <span className={styles.countryLabel} >{data[i].iso}</span>
+                  </animated.foreignObject>
+              </>
             ))}
           </svg>
         </div>
