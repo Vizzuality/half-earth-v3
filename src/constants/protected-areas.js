@@ -1,10 +1,12 @@
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  COMMUNITY_AREAS_VECTOR_TILE_LAYER
+  COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+  MERGED_WDPA_VECTOR_TILE_LAYER
 } from 'constants/layers-slugs';
 
 export const PROTECTED_AREAS_COLOR = '#FF6C47';
 export const COMMUNITY_AREAS_COLOR = '#FCC44A';
+export const MERGED_WDPA_COLOR = "#008604";
 export const NOT_UNDER_CONSERVATION_COLOR = '#6C828F';
 export const WDPALayers = [
   { 
@@ -52,5 +54,16 @@ export const legendConfigs = {
     ],
     title: "Protected areas",
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER
+  },
+  [MERGED_WDPA_VECTOR_TILE_LAYER]: {
+    type: "basic",
+    items: [
+      {
+        name: "WDPA",
+        color: MERGED_WDPA_COLOR
+      }
+    ],
+    title: "World Database of Protected Areas",
+    slug: MERGED_WDPA_VECTOR_TILE_LAYER
   }
 }

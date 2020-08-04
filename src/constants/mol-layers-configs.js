@@ -629,6 +629,16 @@ export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
   '#E2D51B',
   "#FDE300"
 ]
+export const PRIORITY_PLACES_COLOUR_RAMP = [
+  '#47039F',
+  '#9C179E',
+  '#BD3786',
+  '#D8576B',
+  '#ED7953',
+  '#FA9E3B',
+  '#FDC926',
+  '#F0F921'
+]
 
 export const legendConfigs = {
   // South Africa
@@ -830,5 +840,10 @@ export const legendConfigs = {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "All groups richness"
+  },
+  [COUNTRY_PRIORITY_LAYER]: {
+    type: "gradient",
+    items: getLegendGradient(PRIORITY_PLACES_COLOUR_RAMP, 'low', 'high'),
+    title: "Priority places"
   }
 }
