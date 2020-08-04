@@ -59,7 +59,7 @@ export const legendConfigs = {
     type: "basic",
     items: [
       {
-        name: "WDPA, OECM & RAISIG",
+        name: "WDPA, OECM & RAISG",
         color: MERGED_WDPA_COLOR
       }
     ],
