@@ -6,7 +6,6 @@ import Scene from 'components/scene';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
 import LocalSceneSidebar from 'components/local-scene-sidebar';
-import CountryBorderLayer from 'components/country-border-layer';
 import Widgets from 'components/widgets';
 import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import CountryMaskLayer from 'components/mask-country-manager';
@@ -51,11 +50,6 @@ const CountrySceneComponent = ({
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
-        />
-        <CountryBorderLayer
-          countryISO={countryISO}
-          sceneMode={sceneMode}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <CountryMaskLayer
           extent={countryExtent}
