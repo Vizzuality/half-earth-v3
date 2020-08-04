@@ -13,7 +13,7 @@ import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive, hideTutorial, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility
@@ -39,7 +39,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handle
       <Tutorial
         position={'top-left'}
         tutorialID={tutorialData.id}
-        showTutorial={!isFullscreenActive && !isOnMobile && tutorialData.showTutorial}
+        showTutorial={!hideTutorial && !isFullscreenActive && !isOnMobile && tutorialData.showTutorial}
       >
         {!isFullscreenActive && canShowLegend && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
           {datasets && datasets.map((dataset, i) => (
