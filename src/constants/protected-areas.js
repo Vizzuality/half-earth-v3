@@ -59,11 +59,11 @@ export const legendConfigs = {
     type: "basic",
     items: [
       {
-        name: "WDPA",
+        name: "WDPA, OECM & RAISIG",
         color: MERGED_WDPA_COLOR
       }
     ],
-    title: "World Database of Protected Areas",
+    title: "Protected Areas",
     slug: MERGED_WDPA_VECTOR_TILE_LAYER
   }
 }

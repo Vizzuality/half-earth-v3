@@ -66,6 +66,7 @@ const CountrySceneComponent = ({
         <LabelsLayer />
         <Legend
           hideTutorial
+          hideCloseButton
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
         />

@@ -13,7 +13,7 @@ import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, hideTutorial, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
+const HELegend = ({ datasets, handlers, isFullscreenActive, hideTutorial, hideCloseButton, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility
@@ -31,6 +31,7 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, hideTutorial, active
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
+      hideCloseButton={hideCloseButton}
     />
   );
 
