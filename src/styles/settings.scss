@@ -109,6 +109,12 @@ $border-radius-mobile: 16px 16px 0 0;
 $card-max-width: 820px;
 $card-border-radius: 6px;
 
+
+//z indexes
+$bring-to-front: 5;
+$default-z-index: 1;
+$send-to-back: 0;
+
 // Breakpoints
 $breakpoint-mobile-only: 37.4375rem; // 599px / 16px
 $breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
