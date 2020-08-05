@@ -21,13 +21,13 @@ const LocalSceneModeSwitch = (props) => {
     });
   }, []);
 
-  const getCircleSize = (areaSize, maxArea) => {
-    const MIN_R_SIZE = 2;
-    const MAX_R_SIZE = 42;
-    return Math.round(MAX_R_SIZE * areaSize / maxArea + MIN_R_SIZE);
-    // return Math.round(MAX_R_SIZE * Math.log(areaSize) / Math.log(maxArea) + MIN_R_SIZE);
-    // return 12;
-  }
+  // const getCircleSize = (areaSize, maxArea) => {
+  //   const MIN_R_SIZE = 12;
+  //   const MAX_R_SIZE = 42;
+  //   return Math.round(MAX_R_SIZE * areaSize / maxArea + MIN_R_SIZE);
+  //   // return Math.round(MAX_R_SIZE * Math.log(areaSize) / Math.log(maxArea) + MIN_R_SIZE);
+  //   // return 12;
+  // }
 
   useEffect(() => {
     if (countriesDataLayer) {
@@ -35,12 +35,12 @@ const LocalSceneModeSwitch = (props) => {
       countriesDataLayer.queryFeatures(query)
       .then((results) => {
         const { features } = results;
-        const biggestCountryArea = d3.max(features, ({ attributes }) => {
-          return attributes.Area;
-        });
+        // const biggestCountryArea = d3.max(features, ({ attributes }) => {
+        //   return attributes.Area;
+        // });
         const _scatterPlotData = features.map(({ attributes }) => {
           return {
-            size: getCircleSize(attributes.Area, biggestCountryArea),
+            size: 16,
             color: CONTINENT_COLORS[attributes.continent] || '#fff',
             iso: attributes.GID_0,
             xAxisValues: {

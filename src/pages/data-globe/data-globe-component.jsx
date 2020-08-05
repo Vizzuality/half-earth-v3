@@ -31,7 +31,6 @@ const DataGlobeComponent = ({
   <>
     {sceneMode === LOCAL_SCENE &&
       <CountryScene
-        sceneMode={sceneMode}
         countryISO={countryISO}
         countryName={countryName}
         hasMetadata={hasMetadata}

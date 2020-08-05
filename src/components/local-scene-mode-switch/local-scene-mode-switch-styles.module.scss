@@ -1,3 +1,6 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
 .container {
   top: 0;
   width: 100%;
@@ -7,17 +10,55 @@
 .containerChallenges {
   background-color: #040E14;
   position: absolute;
+  z-index: 4;
 }
 
 .button {
-  color: white;
+  color: $white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+}
+
+.modeIcon {
+  opacity: 0.6;
+}
+
+.buttonLabel {
+  @extend %subtitle;
+  color: $white;
+  opacity: 0.6;
+}
+
+.selectedView{
+  &::before {
+    content: '';
+    height: 4px;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(24,186,180,1);
+    bottom: 0px;
+    box-shadow: 0 -4px 10px 0 rgba(24,186,180,0.7);
+  }
+  .modeIcon,
+  .buttonLabel {
+    opacity: 1;
+  }
 }
 
 .switchContainer {
   display: inline-flex;
   position: absolute;
   left: 50%;
-  bottom: 200px;
+  bottom: 30px;
+  width: 300px;
+  padding: 0 10px;
+  background: linear-gradient(71.67deg, rgba(8,22,30,0.3) 0%, #0F2B3B 100%);
+  border-radius: 10px;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .scatterPlot {

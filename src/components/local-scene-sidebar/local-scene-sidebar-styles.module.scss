@@ -13,7 +13,7 @@
   top: $sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
-  z-index: 2;
+  z-index: $bring-to-front;
 }
 
 .backButton {

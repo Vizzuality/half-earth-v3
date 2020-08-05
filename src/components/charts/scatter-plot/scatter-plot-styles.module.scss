@@ -68,3 +68,8 @@ $chart-margin: 14px;
   color: white;
   margin-left: #{$icon-size + $chart-margin};
 }
+
+.countryLabel {
+  @extend %subtitle;
+  color: $white;
+}
