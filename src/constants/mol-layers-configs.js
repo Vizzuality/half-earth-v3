@@ -843,7 +843,7 @@ export const legendConfigs = {
   },
   [COUNTRY_PRIORITY_LAYER]: {
     type: "gradient",
-    items: getLegendGradient(PRIORITY_PLACES_COLOUR_RAMP, 'low', 'high'),
-    title: "Priority places"
+    items: getLegendGradient(PRIORITY_PLACES_COLOUR_RAMP, 'low priority', 'high priority'),
+    title: "Protection needed"
   }
 }
