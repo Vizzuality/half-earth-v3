@@ -1,11 +1,16 @@
 import React from 'react';
 import LocalSceneCard from 'components/local-scene-card';
+import {
+  MERGED_PROTECTION,
+  COUNTRY_PRIORITY
+} from 'constants/metadata';
 import styles from './local-priority-card-styles.module.scss';
 
 const LocalPriorityCardComponent = ({
   sourceDate,
+  handleInfoClick,
   protectionNeeded,
-  currentProtection
+  currentProtection,
 }) => {
   return (
     <LocalSceneCard>
@@ -18,7 +23,7 @@ const LocalPriorityCardComponent = ({
               The green areas on the map represent
               the current protected areas.
             </p>
-            <p className={styles.datasetSource}>
+            <p className={styles.datasetSource} onClick={() => handleInfoClick(MERGED_PROTECTION)}>
               {`Source: The World Database on Protected Areas (WDPA) (${sourceDate}).`}
             </p>
           </div>
@@ -37,7 +42,7 @@ const LocalPriorityCardComponent = ({
             locations within the country that contribute more to the 
             conservation of species habitat.
             </p>
-            <p className={styles.datasetSource}>
+            <p className={styles.datasetSource} onClick={() => handleInfoClick(COUNTRY_PRIORITY)}>
               Source: Rinnan DS and Jetz W, (2020).
             </p>
           </div>
