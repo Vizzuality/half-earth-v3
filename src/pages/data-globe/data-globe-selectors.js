@@ -45,7 +45,7 @@ export const getActiveLayers = createSelector(getGlobeSettings, globeSettings =>
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
-const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
+export const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
 const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
@@ -54,6 +54,8 @@ const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.a
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
+const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
+export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 const getCountedActiveLayers = createSelector(
   [getActiveLayers],
   (activeLayers) => {
@@ -92,6 +94,8 @@ export default createStructuredSelector({
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
+  localSceneActiveTab: getLocalSceneActiveTab,
   countryExtent: selectCountryExtent,
+  localSceneFilters: getLocalSceneFilters,
   countedActiveLayers: getCountedActiveLayers,
 })

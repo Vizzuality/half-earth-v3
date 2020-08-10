@@ -25,6 +25,7 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   countedActiveLayers,
+  localSceneActiveTab,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
 }) => (
@@ -42,6 +43,7 @@ const DataGlobeComponent = ({
         selectedSpecies={selectedSpecies}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
+        localSceneActiveTab={localSceneActiveTab}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         />
       }
