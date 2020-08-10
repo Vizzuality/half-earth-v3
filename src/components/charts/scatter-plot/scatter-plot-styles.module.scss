@@ -73,3 +73,36 @@ $chart-margin: 14px;
   @extend %subtitle;
   color: $white;
 }
+
+
+.tooltip {
+  background-color: $elephant;
+  border-radius: 2px;
+  max-width: 190px;
+  overflow: hidden;
+  .countryLabel{
+    padding: 5px;
+    .name {
+      @extend %_temporaryTitle;
+      letter-spacing: 0;
+      color: #222222;
+    }
+    .continent {
+      @extend %_temporaryTitle;
+      color: #222222;
+      letter-spacing: 0;
+      text-transform: initial;
+    }
+  }
+  .countryData {
+    padding: 5px;
+    .data {
+      @extend %_temporaryTitle;
+      margin: 0;
+      color: $white;
+      font-weight: normal;
+      text-transform: initial;
+      letter-spacing: 0;
+    }
+  }
+}

@@ -21,7 +21,9 @@ const ScatterPlot = ({
   const chartSurfaceRef = useRef(null);
   const [countriesArray, setCountriesArray] = useState([]);
   const [chartScale, setChartScale] = useState(null);
+  const [tooltipState, setTooltipState] = useState(null);
   const padding = 40; // for chart edges
+  const tooltipOffset = 50;
   const [appConfig, setAppConfig ] = useState({
     ready: false,
     App: null,
@@ -137,7 +139,17 @@ const ScatterPlot = ({
             ease.removeEase(country);
           }
           country.on('pointerover', e => {
-            console.log(data[index].name)
+            setTooltipState({
+              x: e.data.global.x,
+              y: e.data.global.y,
+              name: data[index].name,
+              continent: data[index].continent,
+              color: data[index].color,
+              yValue: Number.parseFloat(data[index].yAxisValue).toFixed(2),
+              yLabel: 'Species Protection Index',
+              xValue: Number.parseFloat(data[index].xAxisValues[countryChallengesSelectedKey]).toFixed(2),
+              xLabel: xAxisLabels[countryChallengesSelectedKey]
+            })
             if (!isSelectedCountry) {
               ease.add(country, {
                 width: 70,
@@ -148,6 +160,7 @@ const ScatterPlot = ({
           
           // mouse leave
           country.on('pointerout', e => {
+            setTooltipState(null)
             if (!isSelectedCountry) {
               ease.add(country, {
                 width: 30,
@@ -185,6 +198,18 @@ const ScatterPlot = ({
           </button>
         </div>
         <PlusIcon className={styles.plusIcon}/>
+        {tooltipState &&
+          <div className={styles.tooltip} style={{ position: 'absolute', left: `${tooltipState.x + tooltipOffset}px`, top:`${tooltipState.y + tooltipOffset}px`}}>
+            <section className={styles.countryLabel} style={{ backgroundColor: tooltipState.color}}>
+              <span className={styles.name}>{tooltipState.name} </span>
+              <span className={styles.continent}>({tooltipState.continent})</span>
+            </section>
+            <section className={styles.countryData}>
+              <p className={styles.data}>{tooltipState.xLabel}: {tooltipState.xValue}</p>
+              <p className={styles.data}>{tooltipState.yLabel}: {tooltipState.yValue}</p>
+            </section>
+          </div>
+        }
       </div>
     </>
   )
