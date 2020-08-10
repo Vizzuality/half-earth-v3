@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
+import { setCSSvariable } from 'utils/generic-functions'
 import mapStateToProps from './local-scene-sidebar-selectors';
 import Component from './local-scene-sidebar-component';
 import * as urlActions from 'actions/url-actions';
@@ -16,6 +17,10 @@ const LocalSceneSidebarContainer = (props) => {
     sceneMode,
     changeGlobe
   } = props;
+
+  useEffect(() => {
+    setCSSvariable('--sidebar-top-margin', '20px');
+  }, [])
 
   const handleSceneModeChange = () => {
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE });
