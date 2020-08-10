@@ -117,7 +117,7 @@ const mapStateToProps = (state, props) => ({
     countryDescription: getDescription(state, props),
     countryDataLoading: selectCountryDataLoading(state, props),
     endemicVertebratesCount: getNumberOfEndemicVertebrates(state, props),
-    endemicVertebratesSentence: getEndemicSpeciesSentence(state, props)
+    endemicVertebratesSentence: getEndemicSpeciesSentence(state, props),
   }
 )
 export default mapStateToProps;
