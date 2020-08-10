@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react';
 import loadable from '@loadable/component'
+import cx from 'classnames';
 // Components
 import Scene from 'components/scene';
 import About from 'components/about';
@@ -17,6 +18,10 @@ import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 // Utils
 import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+
+import { LOCAL_SCENE_TABS } from 'constants/ui-params';
+
+import styles from './country-scene-styles.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
@@ -57,12 +62,14 @@ const CountrySceneComponent = ({
         />
         <TerrainExaggerationLayer exaggeration={20}/>
         <LabelsLayer />
-        <Legend
-          hideTutorial
-          hideCloseButton
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-        />
+        {localSceneActiveTab === LOCAL_SCENE_TABS.MAP &&
+          <Legend
+            hideTutorial
+            hideCloseButton
+            activeLayers={activeLayers}
+            isFullscreenActive={isFullscreenActive}
+          />
+        }
         <Widgets
           hideSearch
           isHEModalOpen={isHEModalOpen}
@@ -77,14 +84,21 @@ const CountrySceneComponent = ({
         handleGlobeUpdating={handleGlobeUpdating}
       />
       <LocalSceneModeSwitch
+        className={styles.modeSwitch}
         handleModeChange={handleModeChange}
         localSceneActiveTab={localSceneActiveTab}
       />
-      <CountryChallengesChart
-        countryISO={countryISO}
-        localSceneActiveTab={localSceneActiveTab}
-        countryChallengesSelectedKey={countryChallengesSelectedKey}
-      />
+      <div className={cx(
+        styles.challengesViewContainer,
+        {[styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
+      )}>
+        <CountryChallengesChart
+          countryISO={countryISO}
+          className={styles.challengesChart}
+          localSceneActiveTab={localSceneActiveTab}
+          countryChallengesSelectedKey={countryChallengesSelectedKey}
+        />
+      </div>
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>

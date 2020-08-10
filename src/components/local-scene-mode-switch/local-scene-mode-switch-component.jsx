@@ -8,8 +8,8 @@ import { LOCAL_SCENE_TABS } from 'constants/ui-params';
 
 import styles from './local-scene-mode-switch-styles.module.scss';
 
-const LocalSceneModeSwitchComponent = ({ localSceneActiveTab, handleTabSelection }) => (
-  <div className={styles.switchContainer}>
+const LocalSceneModeSwitchComponent = ({ localSceneActiveTab, handleTabSelection, className }) => (
+  <div className={cx(styles.switchContainer, className)}>
     <button
       className={cx(
         styles.button,

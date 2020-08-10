@@ -6,7 +6,6 @@ const selectCountriesData = ({ countryData }) => (countryData && countryData.dat
 const getScatterplotData = createSelector(
   [selectCountriesData],
   countriesData => {
-    console.log(countriesData)
     if (!countriesData) return null;
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
