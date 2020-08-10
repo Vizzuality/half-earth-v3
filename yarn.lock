@@ -9319,13 +9319,6 @@ pixi-ease@^3.0.4:
     eventemitter3 "^4.0.0"
     penner "^0.1.3"
 
-pixi-viewport@^4.13.2:
-  version "4.13.2"
-  resolved "https://registry.yarnpkg.com/pixi-viewport/-/pixi-viewport-4.13.2.tgz#3f470c0e531a3c81c8a7636288dad0f021b4146e"
-  integrity sha512-1yMSSEJrIQLH9QYxsKdyJpqnKCJHtqt36+BFfPRxcNMuraRGlAWm3pqZVYObMYnMSLpGHytErMrr3HieasTIAA==
-  dependencies:
-    penner "^0.1.3"
-
 pixi.js@^5.3.3:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/pixi.js/-/pixi.js-5.3.3.tgz#6e326a52542f4acd97ea3f8593cb0aeae502df9a"
