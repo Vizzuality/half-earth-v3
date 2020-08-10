@@ -1,5 +1,7 @@
-import React from 'react';
-import { animated, useSprings } from 'react-spring';
+import React, { useState, useEffect, useRef } from 'react';
+import * as PIXI from 'pixi.js';
+import { ease } from 'pixi-ease';
+import circleImg from 'images/country-bubble.png'
 import * as d3 from 'd3';
 import cx from 'classnames';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
@@ -9,70 +11,167 @@ import styles from './scatter-plot-styles.module.scss';
 
 const ScatterPlot = ({
   data,
-  className,
-  xAxisSelectedKey,
+  countryISO,
+  changeGlobe,
+  xAxisLabels,
+  countryChallengesSelectedKey,
   handleSelectNextIndicator,
   handleSelectPreviousIndicator,
-  xAxisLabels
 }) => {
-  const canvasWidth = 700;
-  const canvasHeight = 400;
+  const chartSurfaceRef = useRef(null);
+  const [countriesArray, setCountriesArray] = useState([]);
+  const [chartScale, setChartScale] = useState(null);
   const padding = 40; // for chart edges
+  const [appConfig, setAppConfig ] = useState({
+    ready: false,
+    App: null,
+    DomContainer: null,
+    AppContainer: null,
+    CircleTexture: null
+  })
 
-  const xScale = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) {
-        return d.xAxisValues[xAxisSelectedKey];
-    })])
-    .range([padding, canvasWidth - padding * 2]);
 
-  const yScale = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) {
-        return d.yAxisValue;
-    })])
-    .range([canvasHeight - padding, padding]);
-  const springs = useSprings(data.length, data.map(d => (
-    {
-      cx: xScale(d.xAxisValues[xAxisSelectedKey]) || padding,
-      x: xScale(d.xAxisValues[xAxisSelectedKey]) - 11|| padding,
-      opacity: !!d.xAxisValues[xAxisSelectedKey] ? 0.6 : 0
+  // init PIXI app and pixi viewport
+  useEffect(() => {
+    if (chartSurfaceRef.current && data) {
+      setAppConfig({
+        ...appConfig,
+        App: new PIXI.Application({
+            width: chartSurfaceRef.current.offsetWidth,
+            height: chartSurfaceRef.current.offsetHeight,
+            transparent: true,
+            resolution: window.devicePixelRatio || 1,
+        }),
+        DomContainer: chartSurfaceRef.current,
+        AppContainer: new PIXI.Container(),
+        CircleTexture: PIXI.Texture.from(circleImg),
+        ready: true
+      })
+
+      const xScale = d3.scaleLinear()
+      .domain([0, d3.max(data, function(d) {
+          return d.xAxisValues[countryChallengesSelectedKey];
+      })])
+      .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2]);
+
+      const yScale = d3.scaleLinear()
+      .domain([0, d3.max(data, function(d) {
+          return d.yAxisValue;
+      })])
+      .range([chartSurfaceRef.current.offsetHeight - padding, padding])
+
+      setChartScale({ xScale, yScale })
     }
-  )));
+    // return function cleanUp() {
+    //   chartSurfaceRef.current && chartSurfaceRef.current.remove();
+    // }
+    }, [chartSurfaceRef.current, data]);
+
+    useEffect(() => {
+      if (appConfig.ready && data) {
+        const { App, AppContainer, DomContainer, CircleTexture } = appConfig
+        DomContainer.appendChild(App.view);
+        App.stage.addChild(AppContainer);
+        
+        const countries = data.map(d => {
+          const country = new PIXI.Sprite(CircleTexture);
+          country.attributes = d;
+          country.anchor.set(0.5);
+          country.x = chartScale.xScale(d.xAxisValues[countryChallengesSelectedKey]);
+          country.y = chartScale.yScale(d.yAxisValue);
+          country.tint = PIXI.utils.string2hex(d.color);
+          country.interactive = true;
+          country.buttonMode = true;
+
+          AppContainer.addChild(country);
+          return country;
+        })
+        setCountriesArray(countries)
+      }
+    }, [appConfig.ready, data])
+
+    useEffect(() => {
+      if (countriesArray.length) {
+        const newXScale = d3.scaleLinear()
+        .domain([0, d3.max(data, function(d) {
+            return d.xAxisValues[countryChallengesSelectedKey];
+        })])
+        .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2])
+        countriesArray.forEach((country, index) => {
+          ease.add(country, {x: newXScale(data[index].xAxisValues[countryChallengesSelectedKey])}, {duration: 1500, ease: 'easeInOutExpo', wait: index * 2 });
+        })
+      }
+    }, [countryChallengesSelectedKey])
+
+    // useEffect(() => {
+    //   const { App } = appConfig;
+    //   const animatedCountries = [];
+      
+    //   if (App && countriesArray.length) {
+    //     console.log()
+    //     countriesArray.forEach((country, index) => {
+    //       const animation = ease.add(country, {x: chartScale.xScale(data[index].xAxisValues[countryChallengesSelectedKey])}, {duration: 1500, ease: 'easeInOutExpo', wait: index * 2 });
+    //       animatedCountries.push(animation);
+    //     })
+    //   }
+    //   return function cleanUp() {
+    //     if (animatedCountries.length) {
+    //       console.log(animatedCountries)
+    //       animatedCountries.forEach(ease => ease.remove())
+    //     }
+    //   }
+    // }, [countryChallengesSelectedKey])
+
+    useEffect(() => {
+      if (countriesArray.length && countryISO) {
+        countriesArray.forEach((country, index) => {
+          country.removeAllListeners()
+          const isSelectedCountry = countryISO === data[index].iso;
+          country.width = isSelectedCountry ? 70 : 30;
+          country.height = isSelectedCountry ? 70 : 30;
+          country.alpha = 0.6;
+          country.blendMode = isSelectedCountry ? PIXI.BLEND_MODES.NORMAL : PIXI.BLEND_MODES.ADD;
+          if (isSelectedCountry) {
+            ease.add(country, {alpha: 1}, {reverse: true, repeat: true, duration: 700, ease: 'easeInOutExpo'});
+          } else {
+            ease.removeEase(country);
+          }
+          country.on('pointerover', e => {
+            console.log(data[index].name)
+            if (!isSelectedCountry) {
+              ease.add(country, {
+                width: 70,
+                height: 70,
+              }, {duration: 150, ease: 'easeInOutExpo' });
+            }
+          });
+          
+          // mouse leave
+          country.on('pointerout', e => {
+            if (!isSelectedCountry) {
+              ease.add(country, {
+                width: 30,
+                height: 30,
+              }, {duration: 150, ease: 'easeInOutExpo' });
+            }
+          });
+    
+          country.on('click', e => {
+            if (!isSelectedCountry) {
+              changeGlobe({countryISO: data[index].iso, countryName: data[index].name, zoom: null, center: null})
+            }
+          })
+        })
+      }
+    },[countryISO, countriesArray])
+
   
   return (
-    <div className={className}>
-      <span className={styles.chartTitle}>Challenges</span>
+    <>
+      <span className={styles.chartTitle}>Countries Challenges</span>
       <div className={cx(styles.chartContainer)}>
         <PlusIcon className={styles.plusIcon}/>
-        <div className={styles.scatterPlotContainer}>
-          <svg viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}>
-            {springs && springs.map((animatedProps, i) => console.log(animatedProps) || (
-              <>
-                <animated.circle
-                  style={{
-                    cy: yScale(data[i].yAxisValue),
-                    r: data[i].size,
-                    fill: data[i].color,
-                    ...animatedProps
-                  }}
-                  onHover={() => console.log(data[i].iso)}
-                  onClick={() => console.log(data[i].iso)}
-                />
-                  <animated.foreignObject
-                    width="25px"
-                    height="15px"
-                    style={{
-                      y:yScale(data[i].yAxisValue) - 11,
-                      ...animatedProps,
-                      opacity: 1
-                    }}
-                    requiredExtensions="http://www.w3.org/1999/xhtml"
-                  >
-                    <span className={styles.countryLabel} >{data[i].iso}</span>
-                  </animated.foreignObject>
-              </>
-            ))}
-          </svg>
-        </div>
+        <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}/>
       </div>
       <div className={styles.xAxisContainer}>
         <span className={styles.zeroLabel}>0</span>
@@ -80,14 +179,14 @@ const ScatterPlot = ({
           <button onClick={handleSelectPreviousIndicator} style={{ transform: "scaleX(-1)" }}>
             <ArrowButton />
           </button>
-          <span className={styles.xAxisLabel}>{xAxisLabels[xAxisSelectedKey]}</span>
+          <span className={styles.xAxisLabel}>{xAxisLabels[countryChallengesSelectedKey]}</span>
           <button onClick={handleSelectNextIndicator}>
             <ArrowButton />
           </button>
         </div>
         <PlusIcon className={styles.plusIcon}/>
       </div>
-    </div>
+    </>
   )
 }
 
