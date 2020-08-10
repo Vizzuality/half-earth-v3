@@ -10,7 +10,6 @@ import {
   COUNTRIES_DATA_FEATURE_LAYER
  } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import mapStateToProps from './country-scene-selectors';
 
 const actions = {...countryExtentActions, ...countryDataActions }
 const CountrySceneContainer = (props) => {
@@ -87,4 +86,4 @@ const CountrySceneContainer = (props) => {
   )
 }
 
-export default connect(mapStateToProps, actions)(CountrySceneContainer);
+export default connect(null, actions)(CountrySceneContainer);

@@ -9,46 +9,37 @@ import { LOCAL_SCENE_TABS } from 'constants/ui-params';
 import styles from './local-scene-mode-switch-styles.module.scss';
 
 const LocalSceneModeSwitchComponent = ({ localSceneActiveTab, handleTabSelection }) => (
-  <div className={cx(
-    styles.container,
-    { [styles.containerChallenges]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
-    )
-  }>
-    
-    <div className={styles.switchContainer}>
-      <button
-        className={cx(
-          styles.button,
-          { [styles.selectedView]: localSceneActiveTab === LOCAL_SCENE_TABS.MAP }
-        )}
-        onClick={() => handleTabSelection(LOCAL_SCENE_TABS.MAP)}
-      >
-        <LocalViewIcon className={styles.modeIcon}/>
-        <span className={styles.buttonLabel}>map view</span>
-      </button>
-      <button
-        className={cx(
-          styles.button,
-          { [styles.selectedView]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
-        )}
-        onClick={() => handleTabSelection(LOCAL_SCENE_TABS.CHALLENGES)}
-      >
-        <ChallengesIcon className={styles.modeIcon}/>
-        <span className={styles.buttonLabel}>challenges</span>
-      </button>
-      <button
-        className={cx(
-          styles.button,
-          { [styles.selectedView]: localSceneActiveTab === LOCAL_SCENE_TABS.RANKING }
-        )}
-        onClick={() => handleTabSelection(LOCAL_SCENE_TABS.RANKING)}
-      >
-        <RankingIcon className={styles.modeIcon}/>
-        <span className={styles.buttonLabel}>ranking</span>
-      </button>
-    </div>
-    
-
+  <div className={styles.switchContainer}>
+    <button
+      className={cx(
+        styles.button,
+        { [styles.selectedView]: localSceneActiveTab === LOCAL_SCENE_TABS.MAP }
+      )}
+      onClick={() => handleTabSelection(LOCAL_SCENE_TABS.MAP)}
+    >
+      <LocalViewIcon className={styles.modeIcon}/>
+      <span className={styles.buttonLabel}>map view</span>
+    </button>
+    <button
+      className={cx(
+        styles.button,
+        { [styles.selectedView]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
+      )}
+      onClick={() => handleTabSelection(LOCAL_SCENE_TABS.CHALLENGES)}
+    >
+      <ChallengesIcon className={styles.modeIcon}/>
+      <span className={styles.buttonLabel}>challenges</span>
+    </button>
+    <button
+      className={cx(
+        styles.button,
+        { [styles.selectedView]: localSceneActiveTab === LOCAL_SCENE_TABS.RANKING }
+      )}
+      onClick={() => handleTabSelection(LOCAL_SCENE_TABS.RANKING)}
+    >
+      <RankingIcon className={styles.modeIcon}/>
+      <span className={styles.buttonLabel}>ranking</span>
+    </button>
   </div>
 )
 

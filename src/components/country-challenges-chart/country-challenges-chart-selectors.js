@@ -1,13 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
-import { getLocalSceneFilters, getCountryISO } from 'pages/data-globe/data-globe-selectors';
-const selectCountriesList = ({ countriesList }) => countriesList.data || null;
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 
 const getScatterplotData = createSelector(
   [selectCountriesData],
   countriesData => {
+    console.log(countriesData)
     if (!countriesData) return null;
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
@@ -31,8 +30,7 @@ const getScatterplotData = createSelector(
 
 
 const mapStateToProps = createStructuredSelector({
-  countriesData: selectCountriesData,
-  scatterplotData: getScatterplotData
+  data: getScatterplotData
 })
 
 export default mapStateToProps;

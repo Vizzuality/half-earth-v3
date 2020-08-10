@@ -55,6 +55,7 @@ const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings =>
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
 const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
+const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 const getCountedActiveLayers = createSelector(
   [getActiveLayers],
@@ -95,6 +96,7 @@ export default createStructuredSelector({
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
   localSceneActiveTab: getLocalSceneActiveTab,
+  countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
   countedActiveLayers: getCountedActiveLayers,

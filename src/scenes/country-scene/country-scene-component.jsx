@@ -12,15 +12,13 @@ import CountryMaskLayer from 'components/mask-country-manager';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
+import CountryChallengesChart from 'components/country-challenges-chart';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 // Utils
 import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-import { INDICATOR_LABELS } from 'constants/country-mode-constants';
-import { LOCAL_SCENE_TABS } from 'constants/ui-params';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const ScatterPlot = loadable(() => import('components/charts/scatter-plot'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -33,11 +31,11 @@ const CountrySceneComponent = ({
   countryExtent,
   sceneSettings,
   isHEModalOpen,
-  scatterplotData,
   handleModeChange,
   isFullscreenActive,
   handleGlobeUpdating,
   localSceneActiveTab,
+  countryChallengesSelectedKey
 }) => {
   const isOnMobile = useMobile();
   return (
@@ -78,14 +76,15 @@ const CountrySceneComponent = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
       />
-      <LocalSceneModeSwitch localSceneActiveTab={localSceneActiveTab} handleModeChange={handleModeChange}/>
-      {localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES &&
-        <ScatterPlot
-          data={scatterplotData}
-          countryISO={countryISO}
-          xAxisLabels={INDICATOR_LABELS}
-        />
-      }
+      <LocalSceneModeSwitch
+        handleModeChange={handleModeChange}
+        localSceneActiveTab={localSceneActiveTab}
+      />
+      <CountryChallengesChart
+        countryISO={countryISO}
+        localSceneActiveTab={localSceneActiveTab}
+        countryChallengesSelectedKey={countryChallengesSelectedKey}
+      />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>
