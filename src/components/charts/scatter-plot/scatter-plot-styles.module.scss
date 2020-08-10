@@ -17,13 +17,29 @@ $chart-margin: 14px;
   margin-top: $chart-margin;
 }
 
-.ticksContainer {
+.xAxisTicksContainer {
   width: 100%;
   color: white;
   display: flex;
   justify-content: space-between;
   position: absolute;
   bottom: -40px;
+}
+
+.yAxisTicksContainer {
+  color: white;
+  position: absolute;
+  bottom: -12px;
+  left: -30px;
+  transform-origin: left;
+  transform: rotate(-90deg);
+  width: 60vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tick {
+  color: $alto;
 }
 
 .tooltip {

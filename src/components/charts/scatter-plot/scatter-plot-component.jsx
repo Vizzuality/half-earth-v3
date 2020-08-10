@@ -10,6 +10,7 @@ import styles from './scatter-plot-styles.module.scss';
 const ScatterPlot = ({
   data,
   xAxisTicks,
+  yAxisTicks,
   countryISO,
   xAxisLabels,
   onBubbleClick,
@@ -33,14 +34,18 @@ const ScatterPlot = ({
   // init PIXI app and pixi viewport
   useEffect(() => {
     if (chartSurfaceRef.current && data) {
+      const App = new PIXI.Application({
+        width: chartSurfaceRef.current.offsetWidth,
+        height: chartSurfaceRef.current.offsetHeight,
+        transparent: true,
+        resolution: window.devicePixelRatio || 1,
+        resizeTo: chartSurfaceRef.current,
+        resizeThrottle: 250
+      })
+
       setAppConfig({
         ...appConfig,
-        App: new PIXI.Application({
-            width: chartSurfaceRef.current.offsetWidth,
-            height: chartSurfaceRef.current.offsetHeight,
-            transparent: true,
-            resolution: window.devicePixelRatio || 1,
-        }),
+        App,
         DomContainer: chartSurfaceRef.current,
         AppContainer: new PIXI.Container(),
         CircleTexture: PIXI.Texture.from(circleImg),
@@ -61,9 +66,6 @@ const ScatterPlot = ({
 
       setChartScale({ xScale, yScale })
     }
-    // return function cleanUp() {
-    //   chartSurfaceRef.current && chartSurfaceRef.current.remove();
-    // }
     }, [chartSurfaceRef.current, data]);
 
     useEffect(() => {
@@ -101,25 +103,6 @@ const ScatterPlot = ({
         })
       }
     }, [countryChallengesSelectedKey])
-
-    // useEffect(() => {
-    //   const { App } = appConfig;
-    //   const animatedCountries = [];
-      
-    //   if (App && countriesArray.length) {
-    //     console.log()
-    //     countriesArray.forEach((country, index) => {
-    //       const animation = ease.add(country, {x: chartScale.xScale(data[index].xAxisValues[countryChallengesSelectedKey])}, {duration: 1500, ease: 'easeInOutExpo', wait: index * 2 });
-    //       animatedCountries.push(animation);
-    //     })
-    //   }
-    //   return function cleanUp() {
-    //     if (animatedCountries.length) {
-    //       console.log(animatedCountries)
-    //       animatedCountries.forEach(ease => ease.remove())
-    //     }
-    //   }
-    // }, [countryChallengesSelectedKey])
 
     useEffect(() => {
       if (countriesArray.length && countryISO) {
@@ -180,7 +163,10 @@ const ScatterPlot = ({
     <>
       <div className={cx(styles.chartContainer)}>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}>
-          <div className={styles.ticksContainer}>
+          <div className={styles.yAxisTicksContainer}>
+            {yAxisTicks && yAxisTicks.map(tick => <span className={styles.tick}>{tick}</span>)}
+          </div>
+          <div className={styles.xAxisTicksContainer}>
             {xAxisTicks && xAxisTicks.map(tick => <span className={styles.tick}>{tick}</span>)}
           </div>
         </div>

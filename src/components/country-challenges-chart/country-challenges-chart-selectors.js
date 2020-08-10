@@ -41,10 +41,22 @@ const getXAxisTicks = createSelector(
   }
 )
 
+const getYAxisTicks = createSelector(
+  [getScatterplotData],
+  (plotData) => {
+    if (!plotData) return null;
+    return [
+      d3.min(plotData, d => d.yAxisValue),
+      d3.max(plotData, d => d.yAxisValue)
+    ]
+  }
+)
+
 
 const mapStateToProps = createStructuredSelector({
   data: getScatterplotData,
-  xAxisTicks: getXAxisTicks
+  xAxisTicks: getXAxisTicks,
+  yAxisTicks: getYAxisTicks,
 })
 
 export default mapStateToProps;
