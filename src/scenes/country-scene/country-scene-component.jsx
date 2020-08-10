@@ -14,11 +14,16 @@ import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 // Utils
-import {  useMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { INDICATOR_LABELS } from 'constants/country-mode-constants';
+import { LOCAL_SCENE_TABS } from 'constants/ui-params';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
+const ScatterPlot = loadable(() => import('components/charts/scatter-plot'));
+
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
+
 const CountrySceneComponent = ({
   onMapLoad,
   countryISO,
@@ -28,8 +33,11 @@ const CountrySceneComponent = ({
   countryExtent,
   sceneSettings,
   isHEModalOpen,
+  scatterplotData,
+  handleModeChange,
   isFullscreenActive,
   handleGlobeUpdating,
+  localSceneActiveTab,
 }) => {
   const isOnMobile = useMobile();
   return (
@@ -44,24 +52,11 @@ const CountrySceneComponent = ({
       >
         <LocalSceneViewManager extent={countryExtent} sceneSettings={sceneSettings}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
-        <LocalSceneSidebar
-          countryISO={countryISO}
-          countryName={countryName}
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-        />
         <CountryMaskLayer
           extent={countryExtent}
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <Widgets
-          hideSearch
-          isHEModalOpen={isHEModalOpen}
-          isFullscreenActive={isFullscreenActive}
-        />
-        <LocalSceneModeSwitch />
         <TerrainExaggerationLayer exaggeration={20}/>
         <LabelsLayer />
         <Legend
@@ -70,7 +65,27 @@ const CountrySceneComponent = ({
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
         />
+        <Widgets
+          hideSearch
+          isHEModalOpen={isHEModalOpen}
+          isFullscreenActive={isFullscreenActive}
+        />
       </Scene>
+      <LocalSceneSidebar
+        countryISO={countryISO}
+        countryName={countryName}
+        activeLayers={activeLayers}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+      />
+      <LocalSceneModeSwitch localSceneActiveTab={localSceneActiveTab} handleModeChange={handleModeChange}/>
+      {localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES &&
+        <ScatterPlot
+          data={scatterplotData}
+          countryISO={countryISO}
+          xAxisLabels={INDICATOR_LABELS}
+        />
+      }
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>

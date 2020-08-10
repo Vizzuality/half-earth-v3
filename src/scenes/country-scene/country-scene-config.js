@@ -44,7 +44,9 @@ export default {
     },
   },
   ui: {
-    sceneMode:'local'
+    sceneMode:'local',
+    localSceneFilters: 'all',
+    localSceneActiveTab: 'map'
   },
   listeners: false
 }
