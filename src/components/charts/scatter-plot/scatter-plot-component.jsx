@@ -4,19 +4,15 @@ import { ease } from 'pixi-ease';
 import circleImg from 'images/country-bubble.png'
 import * as d3 from 'd3';
 import cx from 'classnames';
-import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
-import { ReactComponent as PlusIcon } from 'icons/zoomIn.svg';
 
 import styles from './scatter-plot-styles.module.scss';
 
 const ScatterPlot = ({
   data,
   countryISO,
-  changeGlobe,
   xAxisLabels,
-  countryChallengesSelectedKey,
-  handleSelectNextIndicator,
-  handleSelectPreviousIndicator,
+  onBubbleClick,
+  countryChallengesSelectedKey
 }) => {
   const chartSurfaceRef = useRef(null);
   const [countriesArray, setCountriesArray] = useState([]);
@@ -171,7 +167,7 @@ const ScatterPlot = ({
     
           country.on('click', e => {
             if (!isSelectedCountry) {
-              changeGlobe({countryISO: data[index].iso, countryName: data[index].name, zoom: null, center: null})
+              onBubbleClick({ countryISO: data[index].iso, countryName: data[index].name })
             }
           })
         })
@@ -182,21 +178,7 @@ const ScatterPlot = ({
   return (
     <>
       <div className={cx(styles.chartContainer)}>
-        <PlusIcon className={styles.plusIcon}/>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}/>
-      </div>
-      <div className={styles.xAxisContainer}>
-        <span className={styles.zeroLabel}>0</span>
-        <div className={styles.xAxisLabelContainer}>
-          <button onClick={handleSelectPreviousIndicator} style={{ transform: "scaleX(-1)" }}>
-            <ArrowButton />
-          </button>
-          <span className={styles.xAxisLabel}>{xAxisLabels[countryChallengesSelectedKey]}</span>
-          <button onClick={handleSelectNextIndicator}>
-            <ArrowButton />
-          </button>
-        </div>
-        <PlusIcon className={styles.plusIcon}/>
         {tooltipState &&
           <div className={styles.tooltip} style={{ position: 'absolute', left: `${tooltipState.x + tooltipOffset}px`, top:`${tooltipState.y + tooltipOffset}px`}}>
             <section className={styles.countryLabel} style={{ backgroundColor: tooltipState.color}}>

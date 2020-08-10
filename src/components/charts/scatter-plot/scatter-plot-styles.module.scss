@@ -5,69 +5,16 @@ $icon-size: 20px;
 $chart-margin: 14px;
 
 .scatterPlotContainer {
-  border: 3px solid $elephant;
+  border-left: 3px solid $elephant;
+  border-bottom: 3px solid $elephant;
   width: 60vw;
   height: 60vh;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: $chart-margin;
-  margin-left: $chart-margin;
-  position: relative;
-
-  &::before {
-    @extend %bodyText;
-
-    content: 'Species Protection Index (SPI)';
-    bottom: -$chart-margin;
-    color: white;
-    left: -#{$icon-size + $chart-margin};
-    position: absolute;
-    text-align: center;
-    transform: rotate(-90deg);
-    transform-origin: 0 0;
-    width: 400px;
-  }
-}
-
-.xAxisLabelContainer {
-  align-items: center;
-  color: white;
-  display: flex;
-  justify-content: center;
-}
-
-.xAxisContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.xAxisLabel {
-  @extend %bodyText;
-  text-align: center;
-  width: 280px;
-}
-
-.zeroLabel {
-  color: white;
-  font-size: $icon-size;
 }
 
 .chartContainer {
   display: flex;
   margin-top: $chart-margin;
 }
-
-.plusIcon {
-  height: $icon-size;
-  width: $icon-size;
-}
-
-.countryLabel {
-  @extend %subtitle;
-  color: $white;
-}
-
 
 .tooltip {
   background-color: $elephant;
