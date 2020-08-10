@@ -181,7 +181,6 @@ const ScatterPlot = ({
   
   return (
     <>
-      <span className={styles.chartTitle}>Countries Challenges</span>
       <div className={cx(styles.chartContainer)}>
         <PlusIcon className={styles.plusIcon}/>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}/>

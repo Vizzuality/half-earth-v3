@@ -1,10 +1,7 @@
-.container {
-  top: 0;
-}
+@import 'styles/settings';
+@import 'styles/typography-extends';
 
-.containerChallenges {
-  background-color: #040E14;
-  position: absolute;
-  z-index: 4;
-  left: 490px;
+.chartTitle {
+  @extend %headline;
+  color: white;
 }
