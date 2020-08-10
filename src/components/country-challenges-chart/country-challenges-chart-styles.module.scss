@@ -1,7 +1,26 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+$chartWidth: 60vw;
+$xAxisContainerWidth: 330px;
+
 .chartTitle {
   @extend %headline;
   color: white;
+}
+
+.xAxisIndicator {
+  @extend %bodyText;
+  color: $white;
+}
+
+.xAxisContainer {
+  width: 330px;
+}
+.xAxisLabelContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    left: calc((#{$chartWidth}/2) - (#{$xAxisContainerWidth}/2));
+    position: relative;
 }

@@ -23,12 +23,11 @@ const CountryChallengesChartComponent = ({
       countryChallengesSelectedKey={countryChallengesSelectedKey}
     />
     <div className={styles.xAxisContainer}>
-      <span className={styles.zeroLabel}>0</span>
       <div className={styles.xAxisLabelContainer}>
         <button onClick={handleSelectPreviousIndicator} style={{ transform: "scaleX(-1)" }}>
           <ArrowButton />
         </button>
-        <span className={styles.xAxisLabel}>{INDICATOR_LABELS[countryChallengesSelectedKey]}</span>
+        <span className={styles.xAxisIndicator}>{INDICATOR_LABELS[countryChallengesSelectedKey]}</span>
         <button onClick={handleSelectNextIndicator}>
           <ArrowButton />
         </button>
