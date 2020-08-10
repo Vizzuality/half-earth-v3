@@ -9,10 +9,11 @@ import styles from './scatter-plot-styles.module.scss';
 
 const ScatterPlot = ({
   data,
+  xAxisTicks,
   countryISO,
   xAxisLabels,
   onBubbleClick,
-  countryChallengesSelectedKey
+  countryChallengesSelectedKey,
 }) => {
   const chartSurfaceRef = useRef(null);
   const [countriesArray, setCountriesArray] = useState([]);
@@ -178,7 +179,11 @@ const ScatterPlot = ({
   return (
     <>
       <div className={cx(styles.chartContainer)}>
-        <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}/>
+        <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}>
+          <div className={styles.ticksContainer}>
+            {xAxisTicks && xAxisTicks.map(tick => <span className={styles.tick}>{tick}</span>)}
+          </div>
+        </div>
         {tooltipState &&
           <div className={styles.tooltip} style={{ position: 'absolute', left: `${tooltipState.x + tooltipOffset}px`, top:`${tooltipState.y + tooltipOffset}px`}}>
             <section className={styles.countryLabel} style={{ backgroundColor: tooltipState.color}}>

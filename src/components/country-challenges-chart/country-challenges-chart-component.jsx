@@ -8,6 +8,7 @@ const CountryChallengesChartComponent = ({
   data,
   className,
   countryISO,
+  xAxisTicks,
   handleBubbleClick,
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
@@ -19,6 +20,7 @@ const CountryChallengesChartComponent = ({
       data={data}
       countryISO={countryISO}
       xAxisLabels={INDICATOR_LABELS}
+      xAxisTicks={xAxisTicks}
       onBubbleClick={handleBubbleClick}
       countryChallengesSelectedKey={countryChallengesSelectedKey}
     />

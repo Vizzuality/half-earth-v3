@@ -1,7 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
+import * as d3 from 'd3';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
+
+const getCountryChallengesSelectedKey = (state, props) => props && props.countryChallengesSelectedKey;
 
 const getScatterplotData = createSelector(
   [selectCountriesData],
@@ -27,9 +30,21 @@ const getScatterplotData = createSelector(
   }
 )
 
+const getXAxisTicks = createSelector(
+  [getScatterplotData, getCountryChallengesSelectedKey],
+  (plotData, selectedKey) => {
+    if (!plotData || !selectedKey) return null;
+    return [
+      d3.min(plotData, d => d.xAxisValues[selectedKey]),
+      d3.max(plotData, d => d.xAxisValues[selectedKey])
+    ]
+  }
+)
+
 
 const mapStateToProps = createStructuredSelector({
-  data: getScatterplotData
+  data: getScatterplotData,
+  xAxisTicks: getXAxisTicks
 })
 
 export default mapStateToProps;

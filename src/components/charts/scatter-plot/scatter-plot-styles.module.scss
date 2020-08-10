@@ -9,11 +9,21 @@ $chart-margin: 14px;
   border-bottom: 3px solid $elephant;
   width: 60vw;
   height: 60vh;
+  position: relative;
 }
 
 .chartContainer {
   display: flex;
   margin-top: $chart-margin;
+}
+
+.ticksContainer {
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -40px;
 }
 
 .tooltip {
