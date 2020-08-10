@@ -147,8 +147,8 @@ const ScatterPlot = ({
               color: data[index].color,
               yValue: Number.parseFloat(data[index].yAxisValue).toFixed(2),
               yLabel: 'Species Protection Index',
-              xValue: Number.parseFloat(data[index].xAxisValues[countryChallengesSelectedKey]).toFixed(2),
-              xLabel: xAxisLabels[countryChallengesSelectedKey]
+              xValue: filter => data[index].xAxisValues[filter],
+              xLabel: filter => xAxisLabels[filter]
             })
             if (!isSelectedCountry) {
               ease.add(country, {
@@ -205,7 +205,7 @@ const ScatterPlot = ({
               <span className={styles.continent}>({tooltipState.continent})</span>
             </section>
             <section className={styles.countryData}>
-              <p className={styles.data}>{tooltipState.xLabel}: {tooltipState.xValue}</p>
+              <p className={styles.data}>{tooltipState.xLabel(countryChallengesSelectedKey)}: {tooltipState.xValue(countryChallengesSelectedKey)}</p>
               <p className={styles.data}>{tooltipState.yLabel}: {tooltipState.yValue}</p>
             </section>
           </div>
