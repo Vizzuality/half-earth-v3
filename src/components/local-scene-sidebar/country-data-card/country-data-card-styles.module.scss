@@ -73,6 +73,7 @@
     position: relative;
     border: 1px solid $white;
     height: 30px;
+    transition: all .3s ease;
   }
 
   .meanMark {
@@ -89,6 +90,7 @@
     background-color: #A0AFB8;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    transition: all .3s ease;
   }
 }
 
