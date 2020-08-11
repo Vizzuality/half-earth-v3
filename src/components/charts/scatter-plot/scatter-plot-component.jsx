@@ -22,6 +22,8 @@ const ScatterPlot = ({
   const [tooltipState, setTooltipState] = useState(null);
   const padding = 40; // for chart edges
   const tooltipOffset = 50;
+  const bigBubble = 90;
+  const smallBubble = 45;
   const [appConfig, setAppConfig ] = useState({
     ready: false,
     App: null,
@@ -40,7 +42,7 @@ const ScatterPlot = ({
         transparent: true,
         resolution: window.devicePixelRatio || 1,
         resizeTo: chartSurfaceRef.current,
-        resizeThrottle: 250
+        resizeThrottle: 250,
       })
 
       setAppConfig({
@@ -71,23 +73,29 @@ const ScatterPlot = ({
     useEffect(() => {
       if (appConfig.ready) {
         const { App, AppContainer, DomContainer, CircleTexture } = appConfig
+        AppContainer.sortableChildren = true;
         DomContainer.appendChild(App.view);
         App.stage.addChild(AppContainer);
         
-        const countries = data.map(d => {
+        const bubbles = data.map(d => {
+          const bubbleWrapper = new PIXI.Container();
+          bubbleWrapper.y = chartScale.yScale(d.yAxisValue);
+          bubbleWrapper.x = chartScale.xScale(d.xAxisValues[countryChallengesSelectedKey]);
           const country = new PIXI.Sprite(CircleTexture);
           country.attributes = d;
           country.anchor.set(0.5);
-          country.x = chartScale.xScale(d.xAxisValues[countryChallengesSelectedKey]);
-          country.y = chartScale.yScale(d.yAxisValue);
           country.tint = PIXI.utils.string2hex(d.color);
           country.interactive = true;
           country.buttonMode = true;
-
-          AppContainer.addChild(country);
-          return country;
+          const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#ffffff'})
+          const countryIsoText = new PIXI.Text(d.iso, textStyle);
+          countryIsoText.anchor.set(0.5)
+          bubbleWrapper.addChild(country);
+          bubbleWrapper.addChild(countryIsoText);
+          AppContainer.addChild(bubbleWrapper);
+          return bubbleWrapper;
         })
-        setCountriesArray(countries)
+        setCountriesArray(bubbles)
       }
     }, [appConfig.ready])
 
@@ -106,12 +114,16 @@ const ScatterPlot = ({
 
     useEffect(() => {
       if (countriesArray.length && countryISO) {
-        countriesArray.forEach((country, index) => {
+        countriesArray.forEach((bubble, index) => {
+          const { children } = bubble;
+          const country = children[0];
           country.removeAllListeners()
           const isSelectedCountry = countryISO === data[index].iso;
-          country.width = isSelectedCountry ? 70 : 30;
-          country.height = isSelectedCountry ? 70 : 30;
+          if (isSelectedCountry) { bubble.zIndex = 1}
+          country.width = isSelectedCountry ? bigBubble : smallBubble;
+          country.height = isSelectedCountry ? bigBubble : smallBubble;
           country.alpha = 0.6;
+          
           country.blendMode = isSelectedCountry ? PIXI.BLEND_MODES.NORMAL : PIXI.BLEND_MODES.ADD;
           if (isSelectedCountry) {
             ease.add(country, {alpha: 1}, {reverse: true, repeat: true, duration: 700, ease: 'easeInOutExpo'});
@@ -132,8 +144,8 @@ const ScatterPlot = ({
             })
             if (!isSelectedCountry) {
               ease.add(country, {
-                width: 70,
-                height: 70,
+                width: bigBubble,
+                height: bigBubble,
               }, {duration: 150, ease: 'easeInOutExpo' });
             }
           });
@@ -143,8 +155,8 @@ const ScatterPlot = ({
             setTooltipState(null)
             if (!isSelectedCountry) {
               ease.add(country, {
-                width: 30,
-                height: 30,
+                width: smallBubble,
+                height: smallBubble,
               }, {duration: 150, ease: 'easeInOutExpo' });
             }
           });
