@@ -11,6 +11,7 @@ const CountryChallengesChartComponent = ({
   countryISO,
   xAxisTicks,
   yAxisTicks,
+  handleInfoClick,
   handleBubbleClick,
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
@@ -19,7 +20,7 @@ const CountryChallengesChartComponent = ({
   <div className={className}>
     <div>
       <span className={styles.chartTitle}>Countries challenges</span>
-      <QuestionIcon className={styles.question}/>
+      <QuestionIcon className={styles.question} onClick={handleInfoClick}/>
     </div>
     <ScatterPlot
       data={data}

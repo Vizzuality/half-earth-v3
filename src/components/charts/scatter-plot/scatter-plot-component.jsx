@@ -69,7 +69,7 @@ const ScatterPlot = ({
     }, [chartSurfaceRef.current, data]);
 
     useEffect(() => {
-      if (appConfig.ready && data) {
+      if (appConfig.ready) {
         const { App, AppContainer, DomContainer, CircleTexture } = appConfig
         DomContainer.appendChild(App.view);
         App.stage.addChild(AppContainer);
@@ -89,7 +89,7 @@ const ScatterPlot = ({
         })
         setCountriesArray(countries)
       }
-    }, [appConfig.ready, data])
+    }, [appConfig.ready])
 
     useEffect(() => {
       if (countriesArray.length) {
