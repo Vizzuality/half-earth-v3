@@ -58,4 +58,9 @@
   @extend %annotation;
   color: $_temporary-light-text;
   margin: 0;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }

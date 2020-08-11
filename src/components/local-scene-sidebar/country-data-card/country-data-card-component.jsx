@@ -10,6 +10,7 @@ const CountryDataCardComponent = ({
   countryName,
   indexStatement,
   vertebratesCount,
+  handleInfoClick,
   protectionNeeded,
   currentProtection,
   countryDescription,
@@ -25,7 +26,9 @@ const CountryDataCardComponent = ({
           <p className={styles.countryName}>{countryName}</p>
         </div>
         <div className={styles.overviewTextWrapper}>
-          <QuestionIcon />
+          <button onClick={handleInfoClick}>
+            <QuestionIcon />
+          </button>
           <p className={styles.overviewText}>The species protection index is:</p>
         </div>
         <div className={styles.indexWrapper}>
