@@ -24,7 +24,7 @@ const LocalPriorityCardComponent = ({
               the current protected areas.
             </p>
             <p className={styles.datasetSource} onClick={() => handleInfoClick(MERGED_PROTECTION)}>
-              {`Source: The World Database on Protected Areas (WDPA) (${sourceDate}).`}
+              Source: WDPA, OECM & RAISG.
             </p>
           </div>
         </div>
