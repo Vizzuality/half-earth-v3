@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
+import { LOCAL_SCENE_TABS } from 'constants/ui-params';
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
 import { setCSSvariable } from 'utils/generic-functions'
 import mapStateToProps from './local-scene-sidebar-selectors';
@@ -23,7 +24,7 @@ const LocalSceneSidebarContainer = (props) => {
   }, [])
 
   const handleSceneModeChange = () => {
-    changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE });
+    changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE, localSceneActiveTab: LOCAL_SCENE_TABS.MAP });
     changeGlobe({countryISO: null, countryName: null, activeLayers: dataSceneConfig.globe.activeLayers, zoom: 7});
   }
 
