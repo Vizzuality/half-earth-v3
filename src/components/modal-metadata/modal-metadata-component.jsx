@@ -67,7 +67,7 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
                 )
             }
             {
-              metadata && metadata.molLogo === "true" && (
+              metadata && metadata.molLogo === "TRUE" && (
               <div className={styles.logoContainer}>
                 <a href="https://mol.org/" target="_blank" rel="noopener noreferrer">
                   <img

@@ -4,6 +4,7 @@ import { intersection } from 'lodash';
 import Component from './legend-component';
 import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLayerManagerToggle, batchLayerManagerOpacity } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
+import metadataConfig from 'constants/metadata';
 import * as urlActions from 'actions/url-actions';
 import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import { VIEW_MODE } from 'constants/google-analytics-constants';
@@ -42,12 +43,13 @@ const LegendContainer = props => {
 
   const handleInfoClick = layer => {
     const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
+    const slug = getSlug(layer);
     setModalMetadata({
-      slug: getSlug(layer),
-      title: `${layer.legendConfig.title} metadata`,
+      slug,
+      title: metadataConfig[slug].title,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND }});
+    openLayerInfoModalAnalyticsEvent({ slug, query: { viewMode: VIEW_MODE.LEGEND }});
   };
   
   const spreadGroupLayers = (layers, activeLayers) => {
