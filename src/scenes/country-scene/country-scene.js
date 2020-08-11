@@ -26,8 +26,6 @@ const CountrySceneContainer = (props) => {
     setCountryDataError
   } = props;
 
-  console.log(countriesData)
-
   const [countryLayer, setCountryLayer] = useState(null);
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
 
