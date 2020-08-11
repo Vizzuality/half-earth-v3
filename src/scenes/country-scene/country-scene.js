@@ -9,13 +9,15 @@ import {
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   COUNTRIES_DATA_FEATURE_LAYER
  } from 'constants/layers-slugs';
+
 import { LAYERS_URLS } from 'constants/layers-urls';
+import mapStateToProps from './country-scene-selectors';
 
 const actions = {...countryExtentActions, ...countryDataActions }
 const CountrySceneContainer = (props) => {
   const {
-    countriesData,
     countryISO,
+    countriesData,
     setCountryExtentLoading,
     setCountryExtentReady,
     setCountryExtentError,
@@ -23,6 +25,8 @@ const CountrySceneContainer = (props) => {
     setCountryDataReady,
     setCountryDataError
   } = props;
+
+  console.log(countriesData)
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
@@ -86,4 +90,4 @@ const CountrySceneContainer = (props) => {
   )
 }
 
-export default connect(null, actions)(CountrySceneContainer);
+export default connect(mapStateToProps, actions)(CountrySceneContainer);

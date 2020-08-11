@@ -59,6 +59,7 @@ const CountryChallengesChartContainer = (props) => {
   return (
   <Component
     handleInfoClick={handleInfoClick}
+    handleBubbleHover={handleBubbleHover}
     handleBubbleClick={handleBubbleClick}
     handleSelectNextIndicator={handleSelectNextIndicator}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}
