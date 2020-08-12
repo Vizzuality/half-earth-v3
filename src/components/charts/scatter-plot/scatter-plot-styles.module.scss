@@ -5,52 +5,11 @@ $icon-size: 20px;
 $chart-margin: 14px;
 
 .scatterPlotContainer {
-  border: 3px solid $elephant;
+  border-left: 3px solid $elephant;
+  border-bottom: 3px solid $elephant;
   width: 60vw;
   height: 60vh;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: $chart-margin;
-  margin-left: $chart-margin;
   position: relative;
-
-  &::before {
-    @extend %bodyText;
-
-    content: 'Species Protection Index (SPI)';
-    bottom: -$chart-margin;
-    color: white;
-    left: -#{$icon-size + $chart-margin};
-    position: absolute;
-    text-align: center;
-    transform: rotate(-90deg);
-    transform-origin: 0 0;
-    width: 400px;
-  }
-}
-
-.xAxisLabelContainer {
-  align-items: center;
-  color: white;
-  display: flex;
-  justify-content: center;
-}
-
-.xAxisContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.xAxisLabel {
-  @extend %bodyText;
-  text-align: center;
-  width: 280px;
-}
-
-.zeroLabel {
-  color: white;
-  font-size: $icon-size;
 }
 
 .chartContainer {
@@ -58,18 +17,59 @@ $chart-margin: 14px;
   margin-top: $chart-margin;
 }
 
-.plusIcon {
-  height: $icon-size;
-  width: $icon-size;
-}
-
-.chartTitle {
-  @extend %headline;
+.xAxisTicksContainer {
+  width: 100%;
   color: white;
-  margin-left: #{$icon-size + $chart-margin};
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -40px;
 }
 
-.countryLabel {
-  @extend %subtitle;
-  color: $white;
+.yAxisTicksContainer {
+  color: white;
+  position: absolute;
+  bottom: -12px;
+  left: -30px;
+  transform-origin: left;
+  transform: rotate(-90deg);
+  width: 60vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tick {
+  color: $alto;
+}
+
+.tooltip {
+  background-color: $elephant;
+  border-radius: 2px;
+  max-width: 190px;
+  overflow: hidden;
+  .countryLabel{
+    padding: 5px;
+    .name {
+      @extend %_temporaryTitle;
+      letter-spacing: 0;
+      color: #222222;
+    }
+    .continent {
+      @extend %_temporaryTitle;
+      color: #222222;
+      letter-spacing: 0;
+      text-transform: initial;
+    }
+  }
+  .countryData {
+    padding: 5px;
+    .data {
+      @extend %_temporaryTitle;
+      margin: 0;
+      color: $white;
+      font-weight: normal;
+      text-transform: initial;
+      letter-spacing: 0;
+    }
+  }
 }

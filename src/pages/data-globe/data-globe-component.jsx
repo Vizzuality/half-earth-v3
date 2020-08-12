@@ -25,8 +25,10 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   countedActiveLayers,
+  localSceneActiveTab,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
+  countryChallengesSelectedKey,
 }) => (
   <>
     {sceneMode === LOCAL_SCENE &&
@@ -42,7 +44,9 @@ const DataGlobeComponent = ({
         selectedSpecies={selectedSpecies}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
+        localSceneActiveTab={localSceneActiveTab}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+        countryChallengesSelectedKey={countryChallengesSelectedKey}
         />
       }
     {sceneMode === DATA_SCENE &&

@@ -1,0 +1,45 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+$chartWidth: 60vw;
+$xAxisContainerWidth: 330px;
+
+.chartTitle {
+  @extend %headline;
+  color: $alto;
+  margin-right: 1rem;
+}
+
+.question {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
+.xAxisIndicator {
+  @extend %bodyText;
+  color: $alto;
+}
+
+.xAxisContainer {
+  width: 330px;
+}
+
+.xAxisLabelContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    left: calc((#{$chartWidth}/2) - (#{$xAxisContainerWidth}/2));
+    position: relative;
+}
+
+
+.yAxisContainer {
+  color: $alto;
+  width: 330px;
+  transform-origin: left;
+  transform: rotate(-90deg);
+  position: relative;
+  bottom: 210px;
+  left: -30px;
+}

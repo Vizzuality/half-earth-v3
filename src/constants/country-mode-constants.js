@@ -1,9 +1,9 @@
 export const INDICATOR_LABELS = {
-  'GNI_PPP': 'Gross National Income (GNI)',
-  'Population2016': 'Population (2016)',
-  'prop_hm_very_high': 'Proportion of very high human modification',
+  'N_SPECIES': 'Number of vertebrate species',
   'total_endemic': 'Number of endemic vertebrate species',
-  'N_SPECIES': 'Number of vertebrate species'
+  'prop_hm_very_high': 'Proportion of very high human modification',
+  'Population2016': 'Population (2016)',
+  'GNI_PPP': 'Gross National Income (GNI)',
 };
 
 export const CONTINENT_COLORS = {

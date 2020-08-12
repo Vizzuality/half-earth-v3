@@ -7,11 +7,17 @@ function setCountryDataLoading(state) {
 }
 
 function setCountryDataReady(state, { payload }) {
-  if (!payload) return {...state, data: null};
-  const country = payload[0];
-  const { attributes } = country;
-  const { GID_0 } = attributes;
-  return { ...state, error: false, loading: false, data: {...state.data, [GID_0]: attributes} };
+  if (!payload) return state;
+  
+  const countriesData = payload.reduce((acc, country) => {
+    const { attributes } = country;
+    const { GID_0 } = attributes;
+    return {
+      ...acc,
+      [GID_0]: attributes
+    }
+  }, {})
+  return { ...state, error: false, loading: false, data: {...state.data, ...countriesData } };
 }
 
 function setCountryDataError(state, { payload }) {

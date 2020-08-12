@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react';
 import loadable from '@loadable/component'
+import cx from 'classnames';
 // Components
 import Scene from 'components/scene';
 import About from 'components/about';
@@ -12,13 +13,20 @@ import CountryMaskLayer from 'components/mask-country-manager';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
+import CountryChallengesChart from 'components/country-challenges-chart';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 // Utils
-import {  useMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
+import { LOCAL_SCENE_TABS } from 'constants/ui-params';
+
+import styles from './country-scene-styles.module.scss';
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
+
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
+
 const CountrySceneComponent = ({
   onMapLoad,
   countryISO,
@@ -28,8 +36,11 @@ const CountrySceneComponent = ({
   countryExtent,
   sceneSettings,
   isHEModalOpen,
+  handleModeChange,
   isFullscreenActive,
   handleGlobeUpdating,
+  localSceneActiveTab,
+  countryChallengesSelectedKey
 }) => {
   const isOnMobile = useMobile();
   return (
@@ -44,33 +55,50 @@ const CountrySceneComponent = ({
       >
         <LocalSceneViewManager extent={countryExtent} sceneSettings={sceneSettings}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
-        <LocalSceneSidebar
-          countryISO={countryISO}
-          countryName={countryName}
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-        />
         <CountryMaskLayer
           extent={countryExtent}
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
+        <TerrainExaggerationLayer exaggeration={20}/>
+        <LabelsLayer />
+        {localSceneActiveTab === LOCAL_SCENE_TABS.MAP &&
+          <Legend
+            hideTutorial
+            hideCloseButton
+            activeLayers={activeLayers}
+            isFullscreenActive={isFullscreenActive}
+          />
+        }
         <Widgets
           hideSearch
           isHEModalOpen={isHEModalOpen}
           isFullscreenActive={isFullscreenActive}
         />
-        <LocalSceneModeSwitch />
-        <TerrainExaggerationLayer exaggeration={20}/>
-        <LabelsLayer />
-        <Legend
-          hideTutorial
-          hideCloseButton
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-        />
       </Scene>
+      <LocalSceneSidebar
+        countryISO={countryISO}
+        countryName={countryName}
+        activeLayers={activeLayers}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+      />
+      <LocalSceneModeSwitch
+        className={styles.modeSwitch}
+        handleModeChange={handleModeChange}
+        localSceneActiveTab={localSceneActiveTab}
+      />
+      <div className={cx(
+        styles.challengesViewContainer,
+        {[styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
+      )}>
+        <CountryChallengesChart
+          countryISO={countryISO}
+          className={styles.challengesChart}
+          localSceneActiveTab={localSceneActiveTab}
+          countryChallengesSelectedKey={countryChallengesSelectedKey}
+        />
+      </div>
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>

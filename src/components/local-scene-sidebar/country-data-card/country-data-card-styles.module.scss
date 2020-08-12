@@ -24,16 +24,19 @@
 
 .nameWrapper {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
 .flag {
   width: 33px;
   margin-right: $sidebar-paddings;
+  position: relative;
+  bottom: -4px;
 }
 
 .countryName {
-  @extend %headline;
+  @extend %display1;
+  margin-bottom: 0;
 }
 
 .indexStatement{
@@ -73,6 +76,7 @@
     position: relative;
     border: 1px solid $white;
     height: 30px;
+    transition: all .3s ease;
   }
 
   .meanMark {
@@ -89,6 +93,7 @@
     background-color: #A0AFB8;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    transition: all .3s ease;
   }
 }
 

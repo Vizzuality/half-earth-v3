@@ -1,0 +1,30 @@
+$sidebar-width: 490px;
+
+.modeSwitch {
+  z-index: 3;
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+}
+
+.challengesViewContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #040E14;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.challengesSelected {
+  opacity: 1;
+  pointer-events: inherit;
+}
+
+.challengesChart {
+  position: relative;
+  left: $sidebar-width;
+  top: 105px;
+}

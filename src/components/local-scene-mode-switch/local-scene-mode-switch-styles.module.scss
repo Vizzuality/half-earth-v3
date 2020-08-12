@@ -1,18 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-.container {
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.containerChallenges {
-  background-color: #040E14;
-  position: absolute;
-  z-index: 4;
-}
-
 .button {
   color: $white;
   position: relative;
@@ -50,9 +38,6 @@
 
 .switchContainer {
   display: inline-flex;
-  position: absolute;
-  left: 50%;
-  bottom: 30px;
   width: 300px;
   padding: 0 10px;
   background: linear-gradient(71.67deg, rgba(8,22,30,0.3) 0%, #0F2B3B 100%);

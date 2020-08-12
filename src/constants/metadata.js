@@ -39,10 +39,15 @@ import {
  } from 'constants/layers-slugs';
 
  export const SPECIES_PROTECTION_INDEX = 'spi-def';
+ export const CHALLENGES_CHART = 'challenges-plot';
  export const MERGED_PROTECTION = MERGED_WDPA_VECTOR_TILE_LAYER;
  export const COUNTRY_PRIORITY = COUNTRY_PRIORITY_LAYER;
 
 export default {
+  [CHALLENGES_CHART]: {
+    slug: CHALLENGES_CHART,
+    title: 'What are the challenges for a country?'
+  },
   [MERGED_PROTECTION]: {
     slug: MERGED_PROTECTION,
     title: 'Protected Areas'

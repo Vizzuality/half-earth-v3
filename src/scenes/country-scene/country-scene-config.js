@@ -44,7 +44,10 @@ export default {
     },
   },
   ui: {
-    sceneMode:'local'
+    sceneMode:'local',
+    localSceneFilters: 'all',
+    localSceneActiveTab: 'map',
+    countryChallengesSelectedKey: 'N_SPECIES'
   },
   listeners: false
 }
