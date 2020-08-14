@@ -4,7 +4,8 @@ import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, GRAPHIC_LAYER } from 'cons
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { connect } from 'react-redux';
-import actions from 'redux_modules/country-extent';
+import actions from 'redux_modules/countries-geometries';
+import mapStateToProps from './country-border-layer-selectors';
 
 import {
   createGraphic,
@@ -12,8 +13,9 @@ import {
   createPolygonGeometry
 } from 'utils/graphic-layer-utils';
 
+
 const CountryBorderLayer = props => {
-  const { view, spatialReference, countryISO, sceneMode } = props;
+  const { view, spatialReference, countryISO, countryBorder, sceneMode, setCountryBorderReady } = props;
 
   const [countryLayer, setCountryLayer] = useState(null);
   const [borderGraphic, setBorderGraphic] = useState(null);
@@ -28,7 +30,7 @@ const CountryBorderLayer = props => {
       })
   }, [])
 
-  const queryCountryData = () => {
+  const queryCountryData = (countryISO) => {
     const query = countryLayer.createQuery();
     query.where = `GID_0 = '${countryISO}'`;
     query.outSpatialReference = spatialReference;
@@ -36,9 +38,10 @@ const CountryBorderLayer = props => {
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        if (borderGraphic) { 
+        if (borderGraphic) {
           sceneMode === 'data' && view.goTo({target: geometry});
           borderGraphic.geometry = await createPolygonGeometry(geometry);
+          setCountryBorderReady({ iso: countryISO, border: borderGraphic.geometry });
         };
       })
   };
@@ -54,7 +57,13 @@ const CountryBorderLayer = props => {
 
   useEffect(() => {
     if (countryLayer && countryISO && borderGraphic) {
-      queryCountryData();
+      if (countryBorder) {
+        borderGraphic.geometry = countryBorder;
+        console.log(countryBorder)
+        sceneMode === 'data' && view.goTo({target: countryBorder});
+      } else {
+        queryCountryData(countryISO);
+      }
     }
   }, [countryLayer, countryISO, borderGraphic]);
 
@@ -67,4 +76,4 @@ const CountryBorderLayer = props => {
   return null
 }
 
-export default connect(null, actions)(CountryBorderLayer);
+export default connect(mapStateToProps, actions)(CountryBorderLayer);
