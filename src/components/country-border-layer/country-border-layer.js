@@ -59,7 +59,6 @@ const CountryBorderLayer = props => {
     if (countryLayer && countryISO && borderGraphic) {
       if (countryBorder) {
         borderGraphic.geometry = countryBorder;
-        console.log(countryBorder)
         sceneMode === 'data' && view.goTo({target: countryBorder});
       } else {
         queryCountryData(countryISO);

@@ -23,21 +23,17 @@ function setCountryBorderReady(state, { payload }) {
 }
 
 function setCountryMaskReady(state, { payload }) {
+  const iso = payload.iso;
+  const otherCountryGeometries = (state.data && state.data[iso]) || {}
   return {
-    ...state,
-    [payload.iso]: {
-      ...state[payload.iso],
-      mask: payload.mask
-    }
-  }
-}
-
-function setCountryExtentReady(state, { payload }) {
-  return {
-    ...state,
-    [payload.iso]: {
-      ...state[payload.iso],
-      extent: payload.extent
+    loading: false,
+    error: false,
+    data: {
+      ...state.data,
+      [payload.iso]: {
+        ...otherCountryGeometries,
+        mask: payload.mask
+      }
     }
   }
 }
@@ -49,7 +45,6 @@ function setCountryGeometryError(state, { payload }) {
 export default {
   [actions.setCountryGeometryLoading]: setCountryGeometryLoading,
   [actions.setCountryGeometryError]: setCountryGeometryError,
-  [actions.setCountryExtentReady]: setCountryExtentReady,
   [actions.setCountryBorderReady]: setCountryBorderReady,
   [actions.setCountryMaskReady]: setCountryMaskReady,
 };

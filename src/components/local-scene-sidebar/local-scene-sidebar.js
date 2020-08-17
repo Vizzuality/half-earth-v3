@@ -8,9 +8,8 @@ import mapStateToProps from './local-scene-sidebar-selectors';
 import Component from './local-scene-sidebar-component';
 import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
-import countriesListActions from 'redux_modules/countries-list';
 
-const actions = { ...urlActions, ...countryDataActions, ...countriesListActions };
+const actions = { ...urlActions, ...countryDataActions };
 
 const LocalSceneSidebarContainer = (props) => {
   const {
