@@ -87,7 +87,7 @@ const ScatterPlot = ({
           country.tint = PIXI.utils.string2hex(d.color);
           country.interactive = true;
           country.buttonMode = true;
-          const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#ffffff'})
+          const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#000000'})
           const countryIsoText = new PIXI.Text(d.iso, textStyle);
           countryIsoText.anchor.set(0.5)
           bubbleWrapper.addChild(country);
