@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { connect } from 'react-redux';
 import Component from './country-scene-component';
-import countryExtentActions from 'redux_modules/country-extent';
+import countriesGeometriesActions from 'redux_modules/countries-geometries';
 import countryDataActions from 'redux_modules/country-data';
 
 import {
@@ -13,14 +13,13 @@ import {
 import { LAYERS_URLS } from 'constants/layers-urls';
 import mapStateToProps from './country-scene-selectors';
 
-const actions = {...countryExtentActions, ...countryDataActions }
+const actions = {...countriesGeometriesActions, ...countryDataActions }
 const CountrySceneContainer = (props) => {
   const {
     countryISO,
     countriesData,
-    setCountryExtentLoading,
-    setCountryExtentReady,
-    setCountryExtentError,
+    countryBorder,
+    setCountryBorderReady,
     setCountryDataLoading,
     setCountryDataReady,
     setCountryDataError
@@ -29,21 +28,16 @@ const CountrySceneContainer = (props) => {
   const [countryLayer, setCountryLayer] = useState(null);
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
 
-  const createExtent = () => {
+  const setCountryGeometries = () => {
     const query = countryLayer.createQuery();
     query.where = `GID_0 = '${countryISO}'`;
     query.outSpatialReference = 102100;
-    setCountryExtentLoading();
     countryLayer.queryFeatures(query)
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        setCountryExtentReady(geometry.extent);
+        setCountryBorderReady({ iso: countryISO, border: geometry });
       })
-      .catch((error) => {
-        setCountryExtentError()
-        console.warn(error);
-      });
   };
 
   useEffect(() => {
@@ -60,6 +54,13 @@ const CountrySceneContainer = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (countryLayer && countryISO && !countryBorder) {
+      console.log('creating border')
+      setCountryGeometries();
+    }
+  }, [countryLayer, countryISO, countryBorder]);
+
 
   useEffect(() => {
     if (countriesDataLayer && !countriesData) {
@@ -75,12 +76,6 @@ const CountrySceneContainer = (props) => {
       });
     }
   }, [countriesDataLayer, countriesData])
-
-  useEffect(() => {
-    if (countryLayer && countryISO) {
-      createExtent();
-    }
-  }, [countryLayer, countryISO]);
 
 
   return (

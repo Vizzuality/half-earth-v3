@@ -1,7 +1,5 @@
 import { createStructuredSelector } from 'reselect';
 
-const selectCountriesData = ({ countryData }) => countryData.data || null;
-
 const getCountryBorder = ({ countriesGeometries }, { countryISO }) => {
   if (!countryISO || !countriesGeometries) return null;
   if (!countriesGeometries.data) return null;
@@ -10,6 +8,5 @@ const getCountryBorder = ({ countriesGeometries }, { countryISO }) => {
 }
 
 export default createStructuredSelector({
-  countriesData: selectCountriesData,
   countryBorder: getCountryBorder
 })
