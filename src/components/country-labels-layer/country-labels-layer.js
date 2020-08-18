@@ -88,6 +88,7 @@ const setTooltipContent = (country, flagSrc) => {
   countryName.className = "tooltip-country-name";
   button.className = "tooltip-country-explore";
   flag.src = flagSrc;
+  flag.alt = "";
   countryName.innerText = country;
   button.innerText = 'explore';
   container.appendChild(section);
