@@ -7,7 +7,6 @@ import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
-import PartnersCard from 'components/partners-card';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -103,8 +102,7 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
-      />
-      <PartnersCard />
+      />  
     </div>
   ) : null
 }

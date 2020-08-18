@@ -16,7 +16,7 @@ const CountryDataCardComponent = ({
   countryDescription,
   endemicVertebratesCount
 }) => {
-
+console.log(`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`)
   return (
     <div className={styles.container}>
 

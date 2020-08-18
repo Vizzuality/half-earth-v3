@@ -10,7 +10,7 @@
   position: absolute;
   height: 100vh;
   width: calc(#{$local-sidebar-width} + 15px);
-  top: $sidebar-top-margin;
+  top: $local-sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
   z-index: $bring-to-front;
