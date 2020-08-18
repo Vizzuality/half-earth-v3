@@ -39,7 +39,6 @@ const CountryBorderLayer = props => {
         const { features } = results;
         const { geometry } = features[0];
         if (borderGraphic) {
-          sceneMode === 'data' && view.goTo({target: geometry});
           borderGraphic.geometry = await createPolygonGeometry(geometry);
           setCountryBorderReady({ iso: countryISO, border: borderGraphic.geometry });
         };
