@@ -53,7 +53,6 @@ const CountryLabelsLayerContainer = props => {
 const onLabelEvent = (event) => {
   event.stopPropagation();
   view.hitTest(event).then( response => {
-    console.log(response)
     const { results } = response;
     const labelsLayer = getLabelsLayer(results);
     switch (event.type) {
