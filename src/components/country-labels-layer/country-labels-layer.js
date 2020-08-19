@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { debounce } from 'lodash';
 import * as urlActions from 'actions/url-actions';
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
@@ -9,7 +10,7 @@ import Component from './country-labels-layer-component';
 const actions = {...urlActions}
 
 const CountryLabelsLayerContainer = props => {
-  const { view, changeGlobe, changeUI, countryISO, sceneMode } = props;
+  const { view, changeGlobe, changeUI, countryISO, sceneMode, countryName } = props;
 
   const handleSceneModeChange = () => {
     changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
@@ -39,16 +40,20 @@ const CountryLabelsLayerContainer = props => {
 
   const onHoverHandler = labelsLayer => {
     if (labelsLayer) {
+      const { graphic } = labelsLayer;
+      const { attributes } = graphic;
       document.body.style.cursor = 'pointer';
-    } else {
+      changeGlobe({highlightedCountryIso: attributes.GID_0});
+    } else if (!countryName) {
       document.body.style.cursor = 'default';
+      changeGlobe({highlightedCountryIso: null});
     }
   }
 
 const onLabelEvent = (event) => {
   event.stopPropagation();
-  const point = view.toMap(event);
   view.hitTest(event).then( response => {
+    console.log(response)
     const { results } = response;
     const labelsLayer = getLabelsLayer(results);
     switch (event.type) {
@@ -56,6 +61,7 @@ const onLabelEvent = (event) => {
         onHoverHandler(labelsLayer);
         break;
       case 'click':
+        const point = view.toMap(event);
         onClickHandler(labelsLayer, point);
         break;
       default: return;
@@ -109,7 +115,13 @@ const setTooltipContent = (country, flagSrc) => {
   }, [])
 
   useEffect(() => {
-    const eventHandler = view.on("pointer-move", onLabelEvent);
+    const eventHandler = view.on("pointer-move",
+    debounce(
+      onLabelEvent,
+      150,
+      {leading: true, trailing: true}
+      )
+    );
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
