@@ -6,6 +6,7 @@ import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
 import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 import Component from './country-labels-layer-component';
+import close from 'icons/close.svg';
 
 const actions = {...urlActions}
 
@@ -85,14 +86,17 @@ const setTooltipContent = (country, flagSrc) => {
   const container = document.createElement("div");
   const section = document.createElement("section");
   const flag = document.createElement("img");
+  const closeButton = document.createElement("img");
   const countryName = document.createElement("span");
   const button = document.createElement("button");
   container.className = "tooltip-country-container";
   section.className = "tooltip-country-section";
   flag.className = "tooltip-country-flag";
+  closeButton.className = "tooltip-country-close";
   countryName.className = "tooltip-country-name";
   button.className = "tooltip-country-explore";
   flag.src = flagSrc;
+  closeButton.src = close;
   flag.alt = "";
   countryName.innerText = country;
   button.innerText = 'explore';
@@ -100,8 +104,13 @@ const setTooltipContent = (country, flagSrc) => {
   section.appendChild(flag);
   section.appendChild(countryName);
   container.appendChild(button);
+  container.appendChild(closeButton);
 
   button.onclick = handleSceneModeChange;
+  closeButton.onclick = () => {
+    view.popup.close();
+    changeGlobe({countryISO: null, countryName: null})
+  }
 
   return container;
 }

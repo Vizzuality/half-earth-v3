@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
