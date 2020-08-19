@@ -15,22 +15,24 @@ import {
 
 
 const CountryBorderLayer = props => {
-  const { view, spatialReference, countryISO, countryBorder, sceneMode, setCountryBorderReady } = props;
-
+  const { view, spatialReference, countryISO, countryBorder, setCountryBorderReady, highlightedCountryBorder, highlightedCountryIso } = props;
   const [countryLayer, setCountryLayer] = useState(null);
-  const [borderGraphic, setBorderGraphic] = useState(null);
+  const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
+  const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] = useState(null);
 
   //Create the graphics layer on mount
   useEffect(() => {
     loadModules(["esri/Graphic","esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
-        const _borderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
-        const graphicsLayer = createGraphicLayer(GraphicsLayer, [_borderGraphic], GRAPHIC_LAYER);
-        setBorderGraphic(_borderGraphic);
+        const _selectedCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
+        const _hoveredCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
+        const graphicsLayer = createGraphicLayer(GraphicsLayer, [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic], GRAPHIC_LAYER);
+        setSelectedCountryGraphic(_selectedCountryBorderGraphic);
+        setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
         view.map.add(graphicsLayer);
       })
   }, [])
 
-  const queryCountryData = (countryISO) => {
+  const queryCountryData = (countryISO, graphic) => {
     const query = countryLayer.createQuery();
     query.where = `GID_0 = '${countryISO}'`;
     query.outSpatialReference = spatialReference;
@@ -38,10 +40,9 @@ const CountryBorderLayer = props => {
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        if (borderGraphic) {
-          sceneMode === 'data' && view.goTo({target: geometry});
-          borderGraphic.geometry = await createPolygonGeometry(geometry);
-          setCountryBorderReady({ iso: countryISO, border: borderGraphic.geometry });
+        if (graphic) {
+          graphic.geometry = await createPolygonGeometry(geometry);
+          setCountryBorderReady({ iso: countryISO, border: graphic.geometry });
         };
       })
   };
@@ -56,21 +57,36 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer && countryISO && borderGraphic) {
+    if (countryLayer && countryISO && selectedCountryBorderGraphic) {
       if (countryBorder) {
-        borderGraphic.geometry = countryBorder;
-        sceneMode === 'data' && view.goTo({target: countryBorder});
+        selectedCountryBorderGraphic.geometry = countryBorder;
       } else {
-        queryCountryData(countryISO);
+        queryCountryData(countryISO, selectedCountryBorderGraphic);
       }
     }
-  }, [countryLayer, countryISO, borderGraphic]);
+  }, [countryLayer, countryISO, selectedCountryBorderGraphic]);
 
   useEffect(() => {
-    if (borderGraphic && !countryISO) {
-      borderGraphic.geometry = null;
+    if (countryLayer && highlightedCountryIso && hoveredCountryBorderGraphic) {
+      if (highlightedCountryBorder) {
+        hoveredCountryBorderGraphic.geometry = highlightedCountryBorder;
+      } else {
+        queryCountryData(highlightedCountryIso, hoveredCountryBorderGraphic);
+      }
+    }
+  }, [countryLayer, highlightedCountryIso, hoveredCountryBorderGraphic])
+
+  useEffect(() => {
+    if (selectedCountryBorderGraphic && !countryISO) {
+      selectedCountryBorderGraphic.geometry = null;
     }
   },[countryISO])
+
+  useEffect(() => {
+    if (hoveredCountryBorderGraphic && !highlightedCountryIso) {
+      hoveredCountryBorderGraphic.geometry = null;
+    }
+  },[highlightedCountryIso])
 
   return null
 }

@@ -56,7 +56,6 @@ const CountrySceneContainer = (props) => {
 
   useEffect(() => {
     if (countryLayer && countryISO && !countryBorder) {
-      console.log('creating border')
       setCountryGeometries();
     }
   }, [countryLayer, countryISO, countryBorder]);

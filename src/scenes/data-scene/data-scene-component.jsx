@@ -71,16 +71,13 @@ const CountrySceneComponent = ({
           <Slider />
         </MobileOnly>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
-        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName}/>
+        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode}/>
         <ArcgisLayerManager activeLayers={activeLayers} />
         <CountryBorderLayer
-          sceneMode={sceneMode}
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <DataGlobalSidebar
-          sceneMode={sceneMode}
-          countryName={countryName}
           activeLayers={activeLayers}
           activeOption={activeOption}
           isSidebarOpen={isSidebarOpen}
@@ -107,7 +104,7 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
-        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} hideSearch={!!countryISO}/>
+        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
         <TerrainExaggerationLayer exaggeration={3}/>
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
