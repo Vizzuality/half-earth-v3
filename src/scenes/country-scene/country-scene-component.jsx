@@ -14,6 +14,7 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
 import CountryChallengesChart from 'components/country-challenges-chart';
+import RankingChart from 'components/ranking-chart';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 // Utils
 import { useMobile } from 'constants/responsive';
@@ -46,28 +47,31 @@ const CountrySceneComponent = ({
   return (
     <>
       <Scene
-        sceneId='e96f61b2e79442b698ec2cec68af6db9'
+        sceneId="e96f61b2e79442b698ec2cec68af6db9"
         sceneName={'country-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
       >
-        <LocalSceneViewManager localGeometry={countryBorder} sceneSettings={sceneSettings}/>
+        <LocalSceneViewManager
+          localGeometry={countryBorder}
+          sceneSettings={sceneSettings}
+        />
         <ArcgisLayerManager activeLayers={activeLayers} />
         <CountryMaskLayer
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <TerrainExaggerationLayer exaggeration={20}/>
+        <TerrainExaggerationLayer exaggeration={20} />
         <LabelsLayer />
-        {localSceneActiveTab === LOCAL_SCENE_TABS.MAP &&
+        {localSceneActiveTab === LOCAL_SCENE_TABS.MAP && (
           <Legend
             hideTutorial
             hideCloseButton
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
           />
-        }
+        )}
         <Widgets
           hideSearch
           isHEModalOpen={isHEModalOpen}
@@ -86,11 +90,26 @@ const CountrySceneComponent = ({
         handleModeChange={handleModeChange}
         localSceneActiveTab={localSceneActiveTab}
       />
-      <div className={cx(
-        styles.challengesViewContainer,
-        {[styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
-      )}>
+      <div
+        className={cx(styles.challengesViewContainer, {
+          [styles.challengesSelected]:
+            localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES
+        })}
+      >
         <CountryChallengesChart
+          countryISO={countryISO}
+          className={styles.challengesChart}
+          localSceneActiveTab={localSceneActiveTab}
+          countryChallengesSelectedKey={countryChallengesSelectedKey}
+        />
+      </div>
+      <div
+        className={cx(styles.challengesViewContainer, {
+          [styles.challengesSelected]:
+            localSceneActiveTab === LOCAL_SCENE_TABS.RANKING
+        })}
+      >
+        <RankingChart
           countryISO={countryISO}
           className={styles.challengesChart}
           localSceneActiveTab={localSceneActiveTab}
@@ -100,7 +119,7 @@ const CountrySceneComponent = ({
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>
-  )
+  );
 }
 
 export default CountrySceneComponent;

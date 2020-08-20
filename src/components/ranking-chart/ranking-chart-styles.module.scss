@@ -1,0 +1,68 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+$sidebar-width: 490px;
+
+.chartTitle {
+  @extend %headline;
+  color: $alto;
+  margin-right: 1rem;
+}
+
+.chartTitleContainer {
+  margin-bottom: 3rem;
+}
+
+.titleText {
+  @extend %title;
+  color: $alto;
+}
+
+.header {
+  > div {
+    width: 85px;
+    margin-right: 7px;
+  }
+}
+
+.bar {
+  display: block;
+  width: 85px;
+  height: 18px;
+  margin-right: 7px;
+
+  &.species {
+    background-color: $persimmon;
+  }
+
+  &.human {
+    background-color: $active-purple;
+  }
+
+  &.protection {
+    background-color: $vida-loca;
+  }
+}
+
+.spiIndex {
+  margin-right: 2rem;
+  flex: 2;
+}
+
+.rankingChartContent {
+  padding-right: 3rem;
+  display: flex;
+  width: calc(100vw - #{$sidebar-width});
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.row {
+  display: flex;
+}
+
+.question {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
