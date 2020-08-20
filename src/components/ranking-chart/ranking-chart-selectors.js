@@ -4,18 +4,19 @@ import sortBy from 'lodash/sortBy';
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getRankingData = createSelector([selectCountriesData], countriesData => {
   if(!countriesData) return null;
+  console.log(countriesData)
   return Object.keys(countriesData).map((iso) => {
     const d = countriesData[iso];
     return {
       spi: d.SPI,
       name: d.NAME_0,
       species: {
-        nonEndemic: 1 - (d.nspecies - d.total_endemic / d.nspecies) * 100,
-        endemic: 1 - (d.total_endemic / d.nspecies) * 100
+        nonEndemic: 100 - (100 * d.total_endemic / d.nspecies),
+        endemic: (100 * d.total_endemic / d.nspecies)
       },
-      humanModification: {
-        totalMinusVeryHigh: 100 - d.HM_very_high,
-        veryHigh: d.HM_very_high
+      human: {
+        veryHigh: d.prop_hm_very_high,
+        totalMinusVeryHigh: 100 - d.prop_hm_very_high
       },
       protection: {
         protected: d.prop_protected,

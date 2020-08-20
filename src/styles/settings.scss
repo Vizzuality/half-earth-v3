@@ -56,6 +56,11 @@ $human-pressure-high: #282052;
 $human-pressure-mid: #9F82CE;
 $human-pressure-low: #F3E0F7;
 $human-pressures-gradient: linear-gradient(270deg, $human-pressure-high 0%, $human-pressure-mid 50%, $human-pressure-low 100%);
+
+$human-modification-high-color: #731CFF;
+$human-modification-color: #B284FD;
+$protection-non-needed-color: #AFB8A0;
+
 // Animations
 $animation-time: 0.3s;
 $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
@@ -77,7 +82,7 @@ $font-family-1-light: 'PierSans-Light';
 
 $font-family-2: 'EB Garamond', serif;
 
-// Layout 
+// Layout
 $site-gutter: 20px;
 $widget-button-size: 30px;
 
@@ -101,6 +106,7 @@ $high-sidebar-top-margin: 268px;
 $sidebar-header-height: 100px;
 $sidebar-header-height-mobile: 150px;
 $sidebar-width: 280px; // use this for entry boxes and sidebar width
+$country-sidebar-width: 490px;
 $local-sidebar-width: 350px;
 $widgetsTopMargin: 8px;
 $cards-bottom-margin: 8px;
@@ -126,4 +132,4 @@ $breakpoint-desktop: 75rem; // 1200px / 16px
 $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
 $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
 $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
-$desktop: 'screen and (min-width: #{$breakpoint-desktop})'; 
+$desktop: 'screen and (min-width: #{$breakpoint-desktop})';

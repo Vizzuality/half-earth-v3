@@ -1,8 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-$sidebar-width: 490px;
-
 .chartTitle {
   @extend %headline;
   color: $alto;
@@ -15,46 +13,64 @@ $sidebar-width: 490px;
 
 .titleText {
   @extend %title;
+  font-size: $font-size-xxs;
   color: $alto;
 }
 
 .header {
-  > div {
+  .headerItem {
     width: 85px;
     margin-right: 7px;
+    margin-bottom: 10px;
+
+    &:last-child {
+      width: 95px;
+    }
   }
 }
 
-.bar {
-  display: block;
-  width: 85px;
-  height: 18px;
+.fullBar {
   margin-right: 7px;
+  width: 85px;
+}
 
-  &.species {
-    background-color: $persimmon;
-  }
+.bar {
+  display: inline-block;
+  height: 18px;
+}
 
-  &.human {
-    background-color: $active-purple;
-  }
+.spiCountry {
+  max-width: 115px;
+  margin-left: 1em;
+  display: inline-block;
 
-  &.protection {
-    background-color: $vida-loca;
+  @media #{$desktop} {
+    max-width: 376px;
   }
 }
 
 .spiIndex {
-  margin-right: 2rem;
-  flex: 2;
+  display: inline-block;
+  @media #{$desktop} {
+    margin-right: 2rem;
+  }
 }
 
 .rankingChartContent {
   padding-right: 3rem;
+  padding-bottom: 2rem;
   display: flex;
-  width: calc(100vw - #{$sidebar-width});
+  width: calc(100vw - #{$country-sidebar-width});
   justify-content: flex-start;
   align-items: flex-start;
+  height: 500px;
+  overflow: auto;
+
+  flex-direction: column;
+
+  @media #{$desktop} {
+    flex-direction: row;
+  }
 }
 
 .row {
@@ -65,4 +81,100 @@ $sidebar-width: 490px;
   cursor: pointer;
   position: relative;
   top: 2px;
+}
+
+@mixin caret($color, $direction) {
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    transform: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    @if ($direction == 'up') {
+      border-top: 6px solid $color;
+      border-bottom: none;
+    }
+    @if ($direction == 'down') {
+      border-bottom: 6px solid $color;
+      border-top: none;
+    }
+  }
+}
+
+.sortArrows {
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+
+  .arrowUp {
+    @include caret($_temporary-light-text, 'up');
+    position: absolute;
+    top: -1px;
+  }
+
+  .arrowDown {
+    @include caret($_temporary-light-text, 'down');
+    position: absolute;
+    top: -26px;
+  }
+}
+
+.legend {
+  position: sticky;
+  top: 0;
+}
+
+.legendBlock {
+  margin-bottom: 2rem;
+
+  .legendItem {
+    display: flex;
+    margin-bottom: 6px;
+
+    .legendColor {
+      display: block;
+      width: 10px;
+      height: 18px;
+    }
+
+    .legendText {
+      @extend %bodyText;
+
+      font-family: $font-family-1-light;
+      font-size: $font-size-sm;
+      margin-left: 1rem;
+      margin-top: -3px;
+      color: $alto;
+    }
+  }
+}
+
+.nonEndemic {
+  background-color: $persimmon;
+}
+
+.endemic {
+  background-color: $saffron-mango;
+}
+
+.veryHigh {
+  background-color: $human-modification-high-color;
+}
+
+.totalMinusVeryHigh {
+  background-color: $human-modification-color;
+}
+
+.protected {
+  background-color: $vida-loca;
+}
+
+.protectionNeeded {
+  background-color: $screamin-green;
+}
+
+.protectionNotNeeded {
+  background-color: $protection-non-needed-color;
 }

@@ -1,4 +1,4 @@
-$sidebar-width: 490px;
+@import 'styles/settings';
 
 .modeSwitch {
   z-index: 3;
@@ -25,6 +25,6 @@ $sidebar-width: 490px;
 
 .challengesChart {
   position: relative;
-  left: $sidebar-width;
+  left: $country-sidebar-width;
   top: 105px;
 }
