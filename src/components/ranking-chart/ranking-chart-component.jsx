@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ranking-chart-styles.module.scss';
 import cx from 'classnames';
-// import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
+import { SORT } from './ranking-chart';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 
 const legendText = {
@@ -21,23 +22,49 @@ const legendText = {
 };
 const categories = Object.keys(legendText);
 
-const RankingChart = ({ data, className, handleInfoClick }) => {
-  const renderBar = (name, d) => ((!d || !d[name]) ? null :
-    <div className={styles.fullBar}>
-      {Object.keys(d[name]).map(k => (
-        <span className={cx(styles.bar, styles[k])} style={{ width: `${d[name][k]}%` }} />
-      ))}
-    </div>
-  );
-  const renderHeaderItem = (text) => (
-    <div className={cx(styles.headerItem, styles.titleText)} key={text}>
-      {text}
-      <span className={styles.sortArrows}>
-        <span className={styles.arrowUp} />
-        <span className={styles.arrowDown} />
-      </span>
-    </div>
-  );
+
+const RankingChart = ({
+  data,
+  className,
+  handleInfoClick,
+  sortRankingCategory,
+  handleSortClick
+}) => {
+  const renderBar = (name, d) =>
+    !d || !d[name] ? null : (
+      <div className={styles.fullBar}>
+        {Object.keys(d[name]).map((k) => (
+          <span
+            className={cx(styles.bar, styles[k])}
+            style={{ width: `${d[name][k]}%` }}
+          />
+        ))}
+      </div>
+    );
+  const renderHeaderItem = (category) => {
+    const sortedCategory = sortRankingCategory && sortRankingCategory.split('-')[0];
+    const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
+    return (
+      <button
+        className={cx(styles.headerItem, styles.titleText)}
+        key={category}
+        onClick={() => handleSortClick(category)}
+      >
+        {category}
+        <span className={styles.sortArrows}>
+          {(!sortRankingCategory ||
+            (sortedCategory === category && direction === SORT.ASC)) && (
+            <span className={styles.arrowUp} />
+          )}
+          {(!sortRankingCategory ||
+            (sortedCategory === category && direction === SORT.DESC)) && (
+            <span className={styles.arrowDown} />
+          )}
+        </span>
+      </button>
+    );
+  };
+
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
@@ -46,7 +73,7 @@ const RankingChart = ({ data, className, handleInfoClick }) => {
         </span>
         <QuestionIcon className={styles.question} onClick={handleInfoClick} />
       </div>
-      {data && data.length ?
+      {data && data.length ? (
         <div className={styles.rankingChartContent}>
           <div className={styles.table}>
             <div className={cx(styles.row, styles.header)}>
@@ -81,9 +108,17 @@ const RankingChart = ({ data, className, handleInfoClick }) => {
             ))}
           </div>
         </div>
-      : null}
+      ) : null}
     </div>
   );
+};
+
+RankingChart.propTypes = {
+  data: PropTypes.array,
+  className: PropTypes.string,
+  handleInfoClick: PropTypes.func.isRequired,
+  sortRankingCategory: PropTypes.func.isRequired,
+  handleSortClick: PropTypes.func.isRequired
 };
 
 export default RankingChart;

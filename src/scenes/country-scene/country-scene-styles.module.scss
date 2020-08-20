@@ -23,7 +23,8 @@
   pointer-events: inherit;
 }
 
-.challengesChart {
+.challengesChart,
+.rankingChart {
   position: relative;
   left: $country-sidebar-width;
   top: 105px;

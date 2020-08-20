@@ -47,7 +47,8 @@ export default {
     sceneMode:'local',
     localSceneFilters: 'all',
     localSceneActiveTab: 'map',
-    countryChallengesSelectedKey: 'N_SPECIES'
+    countryChallengesSelectedKey: 'N_SPECIES',
+    sortRankingCategory: null
   },
   listeners: false
 }

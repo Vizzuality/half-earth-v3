@@ -41,7 +41,8 @@ const CountrySceneComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   localSceneActiveTab,
-  countryChallengesSelectedKey
+  countryChallengesSelectedKey,
+  sortRankingCategory
 }) => {
   const isOnMobile = useMobile();
   return (
@@ -111,15 +112,15 @@ const CountrySceneComponent = ({
       >
         <RankingChart
           countryISO={countryISO}
-          className={styles.challengesChart}
+          className={styles.rankingChart}
           localSceneActiveTab={localSceneActiveTab}
-          countryChallengesSelectedKey={countryChallengesSelectedKey}
+          sortRankingCategory={sortRankingCategory}
         />
       </div>
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>
   );
-}
+};
 
 export default CountrySceneComponent;
