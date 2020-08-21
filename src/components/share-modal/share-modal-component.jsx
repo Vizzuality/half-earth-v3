@@ -5,6 +5,7 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import ReactTooltip from 'react-tooltip';
+import { getShortenUrl } from 'services/bitly';
 
 import styles from './share-modal-styles.module';
 
@@ -14,23 +15,35 @@ const EMBED = 'embed';
 const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
+  const [shortLink, setShortLink] = useState(null);
+  const [shareUrl, setShareUrl] = useState(null);
 
   const isActiveTabLink = activeTab === LINK;
+  const currentLocation = window.location.href;
   
   const setTab = () => {
     setActiveTab(isActiveTabLink ? EMBED : LINK);
   }
-  
-  const currentLocation = window.location.href;
-  
-  const embed = `<iframe id="map-iframe" src="${currentLocation}" />`;
-
   const resetFlags = () => setCopied({ [LINK]: false, [EMBED]: false });
-
-  const urlCopy = activeTab === LINK ? currentLocation : embed;
   const setCopiedFlags = () => {
     isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true });
   }
+
+  // Use bitly service to get a short link
+  useEffect(() => {
+    getShortenUrl(currentLocation)
+    .then(link => {
+      setShortLink(link);
+    })
+  }, [])
+
+  useEffect(() => {
+    if (shortLink) {
+      const iframe = `<iframe id="map-iframe" src="${currentLocation}" />`;
+      const urlCopy = activeTab === LINK ? shortLink : iframe;
+      setShareUrl(urlCopy);
+    }
+  },[shortLink, activeTab])
 
   // responsible for transitioning from COPIED text to COPY after some time
   useEffect(() => {
@@ -50,8 +63,8 @@ const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
         </div>
       </div>
       <div className={styles.copyContainer}>
-        <input type="text" value={urlCopy} readOnly className={styles.inputButton} />
-        <CopyToClipboard onCopy={setCopiedFlags} text={urlCopy}>
+        <input type="text" value={shareUrl} readOnly className={styles.inputButton} />
+        <CopyToClipboard onCopy={setCopiedFlags} text={shareUrl}>
           <Button theme={{ button: cx(styles.button, styles.copyButton, { [styles.copied]: copied[activeTab] } ) }}>
             <span className={cx({[styles.copiedText]: copied[activeTab]})}>{copied[activeTab] ? 'copied!': 'copy'}</span>
           </Button>
@@ -60,7 +73,7 @@ const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
           <button
-            onClick={() => window.open(`${socialMedia.link}${encodeURIComponent(currentLocation)}`)}
+            onClick={() => window.open(`${socialMedia.link}${encodeURIComponent(shortLink)}`)}
             className={styles.iconBackground}
             key={socialMedia.alt}
           >
