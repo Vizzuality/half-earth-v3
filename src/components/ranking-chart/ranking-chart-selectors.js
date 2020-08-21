@@ -18,7 +18,8 @@ const getRankingData = createSelector([selectCountriesData], countriesData => {
       },
       human: {
         veryHigh: d.prop_hm_very_high,
-        totalMinusVeryHigh: 100 - d.prop_hm_very_high
+        totalMinusVeryHigh: 100 - d.prop_hm_very_high - d.prop_hm_0,
+        noModification: d.prop_hm_0
       },
       protection: {
         protected: d.prop_protected,

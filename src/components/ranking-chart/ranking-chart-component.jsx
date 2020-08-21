@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styles from './ranking-chart-styles.module.scss';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
 import { SORT } from './ranking-chart';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
-
+import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
 
 const legendText = {
   species: {
@@ -14,7 +14,8 @@ const legendText = {
   },
   human: {
     veryHigh: 'Very high human modification',
-    totalMinusVeryHigh: 'Human modification'
+    totalMinusVeryHigh: 'Human modification',
+    noModification: 'No human modification'
   },
   protection: {
     protected: 'Protected areas',
@@ -33,6 +34,15 @@ const RankingChart = ({
   handleSortClick,
   handleCountryClick
 }) => {
+  const [hasScrolled, changeHasScrolled] = useState(false);
+  const tableRef = useRef();
+
+  const onScroll = () => {
+    if (!hasScrolled) {
+      changeHasScrolled(true);
+    }
+  }
+
   const renderBar = (name, d) =>
     !d || !d[name] ? null : (
       <Tooltip
@@ -145,10 +155,18 @@ const RankingChart = ({
       </div>
       {data && data.length ? (
         <div className={styles.rankingChartContentContainer}>
-          <div className={styles.rankingChartContent}>
+          <div
+            className={styles.rankingChartContent}
+            onScroll={onScroll}
+            ref={tableRef}
+          >
             {renderTable()}
-            {renderLegend()}
+            <div className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}>
+              <Arrow className={styles.arrow} />
+              Scroll
+            </div>
           </div>
+          {renderLegend()}
         </div>
       ) : null}
     </div>

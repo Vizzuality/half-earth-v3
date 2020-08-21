@@ -49,7 +49,7 @@
 
 .spiCountry {
   max-width: 115px;
-  margin-left: 1em;
+  margin-left: 1rem;
   display: inline-block;
   cursor: pointer;
 
@@ -71,37 +71,58 @@
 .spiIndex {
   display: inline-block;
   @media #{$desktop} {
-    min-width: 4em;
+    min-width: 4rem;
  }
 }
 
 .rankingChartContentContainer {
   position: relative;
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 250px;
-    height: 25px;
-    background: linear-gradient(transparent, white);
-    pointer-events: none;
-  }
-}
-
-.rankingChartContent {
-  padding-right: 3rem;
-  padding-bottom: 2rem;
   display: flex;
   width: calc(100vw - #{$country-sidebar-width});
   justify-content: flex-start;
   align-items: flex-start;
-  height: 500px;
+}
+
+.rankingChartContent {
+  padding-bottom: 2rem;
+  height: calc(100vh - #{$sidebar-header-height} - 200px);
+
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 
   flex-direction: column;
 
   @media #{$desktop} {
     flex-direction: row;
+  }
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  color: $alto;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(rgba($space-background, 0.5) 0%, $space-background 90%);
+  pointer-events: none;
+  opacity: 1;
+  animation: opacity 1s;
+
+  .arrow {
+    rotate: 90deg;
+    fill: $alto;
+    margin-right: 1rem;
+  }
+
+  &.fade {
+    opacity: 0;
   }
 }
 
@@ -154,8 +175,7 @@
 }
 
 .legend {
-  position: sticky;
-  top: 30px;
+  padding-left: 0.6rem;
 }
 
 .legendBlock {
@@ -240,6 +260,7 @@
   background-color: $screamin-green;
 }
 
-.protectionNotNeeded {
+.protectionNotNeeded,
+.noModification {
   background-color: $protection-non-needed-color;
 }
