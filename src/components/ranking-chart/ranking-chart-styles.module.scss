@@ -26,6 +26,10 @@
     text-align: left;
     padding: 0;
 
+    &:hover {
+      color: white;
+    }
+
     &:last-child {
       width: 95px;
     }
@@ -47,17 +51,28 @@
   max-width: 115px;
   margin-left: 1em;
   display: inline-block;
+  cursor: pointer;
 
   @media #{$desktop} {
     max-width: 376px;
   }
 }
 
+.spiCountryText {
+  text-align: left;
+  @media #{$desktop} {
+    max-width: 320px;
+  }
+  &:hover {
+    color: white;
+  }
+}
+
 .spiIndex {
   display: inline-block;
   @media #{$desktop} {
-    margin-right: 2rem;
-  }
+    min-width: 4em;
+ }
 }
 
 .rankingChartContentContainer {
@@ -140,7 +155,7 @@
 
 .legend {
   position: sticky;
-  top: 0;
+  top: 30px;
 }
 
 .legendBlock {

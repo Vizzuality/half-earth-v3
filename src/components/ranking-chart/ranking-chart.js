@@ -32,10 +32,16 @@ const RankingChartContainer = (props) => {
     changeUI({ sortRankingCategory: `${category}-${sortDirection}` })
   }
 
+  const handleCountryClick = (countryISO, countryName) => {
+    const { changeGlobe } = props;
+    changeGlobe({ countryISO, countryName, zoom: null, center: null });
+  };
+
   return (
   <Component
     handleSortClick={handleSortClick}
     handleInfoClick={handleInfoClick}
+    handleCountryClick={handleCountryClick}
     {...props}
   />
   )

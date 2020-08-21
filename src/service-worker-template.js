@@ -34,7 +34,7 @@ if ('function' === typeof importScripts) {
         ],
       })
     );
-    
+
     // Cache own fonts
     workbox.routing.registerRoute(
       /\.(?:otf)$/,
@@ -65,6 +65,6 @@ if ('function' === typeof importScripts) {
 
 
   } else {
-    console.log('Workbox could not be loaded. No Offline support');
+    console.info('Workbox could not be loaded. No Offline support');
   }
 }

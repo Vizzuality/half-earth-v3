@@ -30,7 +30,8 @@ const RankingChart = ({
   className,
   handleInfoClick,
   sortRankingCategory,
-  handleSortClick
+  handleSortClick,
+  handleCountryClick
 }) => {
   const renderBar = (name, d) =>
     !d || !d[name] ? null : (
@@ -38,22 +39,21 @@ const RankingChart = ({
         html={
           <div className={styles.tooltip}>
             <div className={styles.labels}>
-              {Object.keys(d[name]).map((k) => (
-                <div>{legendText[name][k]}: </div>
+              {Object.keys(d[name]).map((key) => (
+                <div>{legendText[name][key]}: </div>
               ))}
             </div>
             <div className={styles.values}>
-              {Object.keys(d[name]).map(
-                (k) =>
-                  (<div
-                    className={cx(styles.valuesBox, styles[k])}
-                    style={{
-                      height: `${100 / Object.keys(d[name]).length}%`
-                    }}
-                  >
-                    {Math.floor(d[name][k] * 100) / 100}%
-                  </div>)
-              )}
+              {Object.keys(d[name]).map((key) => (
+                <div
+                  className={cx(styles.valuesBox, styles[key])}
+                  style={{
+                    height: `${100 / Object.keys(d[name]).length}%`
+                  }}
+                >
+                  {Math.floor(d[name][key] * 100) / 100}%
+                </div>
+              ))}
             </div>
           </div>
         }
@@ -70,8 +70,10 @@ const RankingChart = ({
         </div>
       </Tooltip>
     );
+
   const renderHeaderItem = (category) => {
-    const sortedCategory = sortRankingCategory && sortRankingCategory.split('-')[0];
+    const sortedCategory =
+      sortRankingCategory && sortRankingCategory.split('-')[0];
     const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
     return (
       <button
@@ -94,6 +96,45 @@ const RankingChart = ({
     );
   };
 
+  const renderTable = () => (
+    <div className={styles.table}>
+      <div className={cx(styles.row, styles.header)}>
+        {categories.map((category) => renderHeaderItem(category.toUpperCase()))}
+      </div>
+      {data.map((d) => (
+        <div className={styles.row} key={d.name}>
+          {categories.map((category) => renderBar(category, d))}
+          <div className={styles.spiCountry}>
+            <span className={cx(styles.titleText, styles.spiIndex)}>
+              {d.index}.
+            </span>
+            <button
+              className={cx(styles.titleText, styles.spiCountryText)}
+              onClick={() => handleCountryClick(d.iso, d.name)}
+            >{`${d.name} (${d.spi})`}</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderLegend = () => (
+    <div className={styles.legend}>
+      {Object.keys(legendText).map((category) => (
+        <div className={styles.legendBlock} key={`legend-${category}`}>
+          {Object.keys(legendText[category]).map((text) => (
+            <div className={styles.legendItem} key={`legend-item-${text}`}>
+              <span className={cx(styles.legendColor, styles[text])} />
+              <span className={styles.legendText}>
+                {legendText[category][text]}
+              </span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
@@ -105,38 +146,8 @@ const RankingChart = ({
       {data && data.length ? (
         <div className={styles.rankingChartContentContainer}>
           <div className={styles.rankingChartContent}>
-            <div className={styles.table}>
-              <div className={cx(styles.row, styles.header)}>
-                {categories.map((c) => renderHeaderItem(c.toUpperCase()))}
-              </div>
-              {data.map((d) => (
-                <div className={styles.row} key={d.name}>
-                  {categories.map((c) => renderBar(c, d))}
-                  <div className={styles.spiCountry}>
-                    <span className={cx(styles.titleText, styles.spiIndex)}>
-                      {d.index}.
-                    </span>
-                    <span className={styles.titleText}>
-                      {`${d.name} (${d.spi})`}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className={styles.legend}>
-              {Object.keys(legendText).map((category) => (
-                <div className={styles.legendBlock}>
-                  {Object.keys(legendText[category]).map((text) => (
-                    <div className={styles.legendItem}>
-                      <span className={cx(styles.legendColor, styles[text])} />
-                      <span className={styles.legendText}>
-                        {legendText[category][text]}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
+            {renderTable()}
+            {renderLegend()}
           </div>
         </div>
       ) : null}
@@ -149,7 +160,8 @@ RankingChart.propTypes = {
   className: PropTypes.string,
   handleInfoClick: PropTypes.func.isRequired,
   sortRankingCategory: PropTypes.func.isRequired,
-  handleSortClick: PropTypes.func.isRequired
+  handleSortClick: PropTypes.func.isRequired,
+  handleCountryClick: PropTypes.func.isRequired
 };
 
 export default RankingChart;

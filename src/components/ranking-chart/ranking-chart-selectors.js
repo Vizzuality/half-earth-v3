@@ -6,12 +6,12 @@ const selectCountriesData = ({ countryData }) => (countryData && countryData.dat
 const getSortRankingCategory = (_, props) => (props && props.sortRankingCategory) || null;
 const getRankingData = createSelector([selectCountriesData], countriesData => {
   if(!countriesData) return null;
-  console.log(countriesData)
   return Object.keys(countriesData).map((iso) => {
     const d = countriesData[iso];
     return {
       spi: d.SPI,
       name: d.NAME_0,
+      iso,
       species: {
         nonEndemic: 100 - (100 * d.total_endemic / d.nspecies),
         endemic: (100 * d.total_endemic / d.nspecies)
@@ -36,7 +36,6 @@ const getDataWithSPIOrder = createSelector([getRankingData], data => {
 
 const getSortedData = createSelector([getDataWithSPIOrder, getSortRankingCategory], (data, sortRankingCategory) => {
   if(!sortRankingCategory) return data;
-  console.log(sortRankingCategory)
   const sortedCategory = sortRankingCategory && sortRankingCategory.split('-')[0].toLowerCase();
   const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
   const sortField = {
