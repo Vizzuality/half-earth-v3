@@ -1,12 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
+import { getCountryChallengesSelectedFilter, getCountryISO } from 'pages/data-globe/data-globe-selectors';
 import * as d3 from 'd3';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 
 const getCountryChallengesSelectedKey = (state, props) => props && props.countryChallengesSelectedKey;
 
-const getScatterplotData = createSelector(
+const getScatterplotRawData = createSelector(
   [selectCountriesData],
   countriesData => {
     if (!countriesData) return null;
@@ -30,8 +31,41 @@ const getScatterplotData = createSelector(
   }
 )
 
+const getSelectedCountryFilters = createSelector(
+  [selectCountriesData, getCountryISO],
+  (countriesData, selectedCountryIso) => {
+    if (!countriesData || !selectedCountryIso) return null;
+    console.log(countriesData[selectedCountryIso].filter_similar)
+    console.log(countriesData[selectedCountryIso].filter_similar)
+    return JSON.parse(countriesData[selectedCountryIso].filter_similar)
+  }
+)
+
+//FILTERS:
+// filter_Area
+// filter_Population2016
+// filter_prop_protected
+// filter_prop_hm_very_high
+// filter_protection_needed
+// filter_GNI_PPP
+// filter_total_endemic
+// filter_N_SPECIES
+// filter_SPI
+// filter_neigh
+// filter_steward
+
+const getFilteredData = createSelector(
+  [getScatterplotRawData, getCountryChallengesSelectedFilter, getSelectedCountryFilters],
+  (plotRawData, selectedFilter, selectedCountryFilters) => {
+    console.log(selectedCountryFilters)
+    if (!plotRawData) return null;
+    if (!selectedFilter || selectedFilter === 'all') return plotRawData;
+    return plotRawData;
+  }
+)
+
 const getXAxisTicks = createSelector(
-  [getScatterplotData, getCountryChallengesSelectedKey],
+  [getFilteredData, getCountryChallengesSelectedKey],
   (plotData, selectedKey) => {
     if (!plotData || !selectedKey) return null;
     return [
@@ -42,7 +76,7 @@ const getXAxisTicks = createSelector(
 )
 
 const getYAxisTicks = createSelector(
-  [getScatterplotData],
+  [getFilteredData],
   (plotData) => {
     if (!plotData) return null;
     return [
@@ -54,7 +88,7 @@ const getYAxisTicks = createSelector(
 
 
 const mapStateToProps = createStructuredSelector({
-  data: getScatterplotData,
+  data: getFilteredData,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
 })

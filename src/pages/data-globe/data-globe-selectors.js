@@ -58,6 +58,7 @@ const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.scen
 const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
+export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
 const getCountedActiveLayers = createSelector(
   [getActiveLayers],
   (activeLayers) => {
