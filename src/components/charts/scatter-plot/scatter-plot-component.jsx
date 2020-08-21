@@ -32,46 +32,49 @@ const ScatterPlot = ({
     CircleTexture: null
   })
 
+useEffect(() => {
+  if (chartSurfaceRef.current) {
+    const App = new PIXI.Application({
+      width: chartSurfaceRef.current.offsetWidth,
+      height: chartSurfaceRef.current.offsetHeight,
+      transparent: true,
+      resolution: window.devicePixelRatio,
+      resizeTo: chartSurfaceRef.current,
+      resizeThrottle: 250,
+    })
+
+    setAppConfig({
+      ...appConfig,
+      App,
+      DomContainer: chartSurfaceRef.current,
+      AppContainer: new PIXI.Container(),
+      CircleTexture: PIXI.Texture.from(circleImg),
+      ready: true
+    })
+  }
+}, [chartSurfaceRef.current])
 
   // init PIXI app and pixi viewport
   useEffect(() => {
-    if (chartSurfaceRef.current && data) {
-      const App = new PIXI.Application({
-        width: chartSurfaceRef.current.offsetWidth,
-        height: chartSurfaceRef.current.offsetHeight,
-        transparent: true,
-        resolution: window.devicePixelRatio || 1,
-        resizeTo: chartSurfaceRef.current,
-        resizeThrottle: 250,
-      })
-
-      setAppConfig({
-        ...appConfig,
-        App,
-        DomContainer: chartSurfaceRef.current,
-        AppContainer: new PIXI.Container(),
-        CircleTexture: PIXI.Texture.from(circleImg),
-        ready: true
-      })
+    if (appConfig.ready && data) {
 
       const xScale = d3.scaleLinear()
       .domain([0, d3.max(data, function(d) {
           return d.xAxisValues[countryChallengesSelectedKey];
       })])
       .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2]);
-
       const yScale = d3.scaleLinear()
       .domain([0, d3.max(data, function(d) {
           return d.yAxisValue;
       })])
-      .range([chartSurfaceRef.current.offsetHeight - padding, padding])
+      .range([chartSurfaceRef.current.offsetHeight - padding, padding]);
 
       setChartScale({ xScale, yScale })
     }
-    }, [chartSurfaceRef.current, data]);
+    }, [appConfig.ready, data]);
 
     useEffect(() => {
-      if (appConfig.ready) {
+      if (chartScale) {
         const { App, AppContainer, DomContainer, CircleTexture } = appConfig
         AppContainer.sortableChildren = true;
         DomContainer.appendChild(App.view);
@@ -97,7 +100,15 @@ const ScatterPlot = ({
         })
         setCountriesArray(bubbles)
       }
-    }, [appConfig.ready])
+
+      return function cleanUp() {
+        if (appConfig.ready) {
+          const { App, AppContainer } = appConfig
+          App.stage.removeChildren();
+          AppContainer.removeChildren();
+        }
+      }
+    }, [chartScale])
 
     useEffect(() => {
       if (countriesArray.length) {

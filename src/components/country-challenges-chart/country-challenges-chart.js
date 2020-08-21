@@ -56,11 +56,17 @@ const CountryChallengesChartContainer = (props) => {
     });
   }
 
+  const handleFilterSelection = (selectedFilter) => {
+    const { changeUI } = props;
+    changeUI({countryChallengesSelectedFilter: selectedFilter})
+  }
+
   return (
   <Component
     handleInfoClick={handleInfoClick}
     handleBubbleHover={handleBubbleHover}
     handleBubbleClick={handleBubbleClick}
+    handleFilterSelection={handleFilterSelection}
     handleSelectNextIndicator={handleSelectNextIndicator}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}
     {...props}

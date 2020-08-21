@@ -1,6 +1,6 @@
 import React from 'react';
 import ScatterPlot from 'components/charts/scatter-plot';
-import { INDICATOR_LABELS } from 'constants/country-mode-constants';
+import { INDICATOR_LABELS, CHALLENGES_RELATED_FILTERS } from 'constants/country-mode-constants';
 import styles from './country-challenges-chart-styles.module.scss';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
@@ -13,14 +13,23 @@ const CountryChallengesChartComponent = ({
   yAxisTicks,
   handleInfoClick,
   handleBubbleClick,
+  handleFilterSelection,
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
-}) => (
+}) => console.log(data) || (
   <div className={className}>
     <div>
       <span className={styles.chartTitle}>Countries challenges</span>
       <QuestionIcon className={styles.question} onClick={handleInfoClick}/>
+    </div>
+    <div>
+    <label for="cars">Filter countries with similar:</label>
+    <select name="cars" id="cars" onChange={(event) => handleFilterSelection(event.target.value)}>
+      {CHALLENGES_RELATED_FILTERS.map(filter => (
+        <option key={filter.slug} value={filter.slug}>{filter.name}</option>
+      ))}
+    </select>
     </div>
     <ScatterPlot
       data={data}

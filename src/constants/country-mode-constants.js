@@ -16,3 +16,17 @@ export const CONTINENT_COLORS = {
   'Australia': '#E87926',
   'South America': '#EB588F'
 }
+
+export const CHALLENGES_RELATED_FILTERS = [
+  {slug: 'filter_Area', name: 'Area'},
+  {slug: 'filter_Population2016', name: 'Population'},
+  {slug: 'filter_prop_protected', name: 'Proportion of protection'},
+  {slug: 'filter_prop_hm_very_high', name: 'Proportion of very high human encroachment'},
+  {slug: 'filter_protection_needed', name: 'Proportion of protection needed'},
+  {slug: 'filter_GNI_PPP', name: 'Gross National Incomme'},
+  {slug: 'filter_total_endemic', name: 'Number of endemic species'},
+  {slug: 'filter_N_SPECIES', name: 'Number of vertebrate species'},
+  {slug: 'filter_SPI', name: 'Species Protection Index'},
+  {slug: 'filter_neigh', name: 'Neighbouring countries'},
+  {slug: 'filter_steward', name: 'Species stewardship'},
+]
