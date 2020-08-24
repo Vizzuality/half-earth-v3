@@ -59,7 +59,7 @@ const CountrySceneComponent = ({
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <TerrainExaggerationLayer exaggeration={20}/>
-        <LabelsLayer />
+        <LabelsLayer countryISO={countryISO} />
         {localSceneActiveTab === LOCAL_SCENE_TABS.MAP &&
           <Legend
             hideTutorial

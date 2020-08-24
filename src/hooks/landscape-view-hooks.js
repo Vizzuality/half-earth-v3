@@ -14,7 +14,7 @@ import {
           if (isLandscapeViewOnEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current, countryISO)) {
             onZoomChange({ landscapeView: true })
             landscapeModeRef.current = true;
-          } else if (isLandscapeViewOffEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current)) {
+          } else if (isLandscapeViewOffEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current, countryISO)) {
             onZoomChange({ landscapeView: false })
             landscapeModeRef.current = false;
           }

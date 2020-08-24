@@ -44,7 +44,7 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
 }
 
 const LabelsLayer = props => {
-  const { map } = props;
+  const { map, countryISO } = props;
 
   useEffect(() => {
     loadModules(["esri/layers/support/LabelClass"])
@@ -59,10 +59,26 @@ const LabelsLayer = props => {
             layer.visible = true;
             layer.labelsVisible = true;
             layer.labelingInfo = labelingInfo;
+            if (countryISO) {
+              layer.definitionExpression = `GID_0 = '${countryISO}'`
+            }
           });
       })
     })
   }, [])
+
+  useEffect(() => {
+    LABELS_LAYERS.forEach( layerName => {
+      const layerConfig = layersConfig[layerName];
+      handleLayerCreation(layerConfig, map)
+        .then(layer => {
+          if (countryISO) {
+            layer.definitionExpression = `GID_0 = '${countryISO}'`
+          }
+        });
+    })
+  }, [countryISO])
+
 
 
   return null
