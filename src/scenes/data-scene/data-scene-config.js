@@ -1,9 +1,8 @@
 import {
   FIREFLY_BASEMAP_LAYER,
   GRAPHIC_LAYER,
-  LANDSCAPE_FEATURES_LABELS_LAYER,
-  CITIES_LABELS_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
+  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   ALL_TAXA_RARITY
 } from 'constants/layers-slugs';
 
@@ -13,10 +12,9 @@ export default {
   globe: {
     activeLayers: [
       { title: GRAPHIC_LAYER },
-      { title: CITIES_LABELS_LAYER },
       { title: FIREFLY_BASEMAP_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
-      { title: LANDSCAPE_FEATURES_LABELS_LAYER },
+      { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
       { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
     zoom: 1,
