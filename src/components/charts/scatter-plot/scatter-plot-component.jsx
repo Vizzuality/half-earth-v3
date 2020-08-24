@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as PIXI from 'pixi.js';
 import { ease } from 'pixi-ease';
+import { difference } from 'lodash';
 import circleImg from 'images/country-bubble.png'
 import * as d3 from 'd3';
 import cx from 'classnames';
@@ -17,7 +18,8 @@ const ScatterPlot = ({
   countryChallengesSelectedKey,
 }) => {
   const chartSurfaceRef = useRef(null);
-  const [countriesArray, setCountriesArray] = useState([]);
+  const [bubblesArray, setBubblesArray] = useState([]);
+  const [activeBubblesArray, setActiveBubblesArray] = useState([]);
   const [chartScale, setChartScale] = useState(null);
   const [tooltipState, setTooltipState] = useState(null);
   const padding = 40; // for chart edges
@@ -32,41 +34,58 @@ const ScatterPlot = ({
     CircleTexture: null
   })
 
-useEffect(() => {
-  if (chartSurfaceRef.current) {
-    const App = new PIXI.Application({
-      width: chartSurfaceRef.current.offsetWidth,
-      height: chartSurfaceRef.current.offsetHeight,
-      transparent: true,
-      resolution: window.devicePixelRatio,
-      resizeTo: chartSurfaceRef.current,
-      resizeThrottle: 250,
-    })
+  const minXValue = (data, selectedKey) => d3.min(data, (d) => d.xAxisValues[selectedKey])
+  const maxXValue = (data, selectedKey) => d3.max(data, (d) => d.xAxisValues[selectedKey])
+  const addBubblesToChart = (data, texture, appContainer) => data.map(d => {
+    const bubbleWrapper = new PIXI.Container();
+    bubbleWrapper.y = chartScale.yScale(d.yAxisValue);
+    bubbleWrapper.x = chartScale.xScale(d.xAxisValues[countryChallengesSelectedKey]);
+    bubbleWrapper.slug = d.iso;
+    const country = new PIXI.Sprite(texture);
+    country.attributes = d;
+    country.anchor.set(0.5);
+    country.tint = PIXI.utils.string2hex(d.color);
+    country.interactive = true;
+    country.buttonMode = true;
+    const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#000000'})
+    const countryIsoText = new PIXI.Text(d.iso, textStyle);
+    countryIsoText.anchor.set(0.5)
+    bubbleWrapper.addChild(country);
+    bubbleWrapper.addChild(countryIsoText);
+    appContainer.addChild(bubbleWrapper);
+    return bubbleWrapper;
+  })
 
-    setAppConfig({
-      ...appConfig,
-      App,
-      DomContainer: chartSurfaceRef.current,
-      AppContainer: new PIXI.Container(),
-      CircleTexture: PIXI.Texture.from(circleImg),
-      ready: true
-    })
-  }
-}, [chartSurfaceRef.current])
+  useEffect(() => {
+    if (chartSurfaceRef.current) {
+      const App = new PIXI.Application({
+        width: chartSurfaceRef.current.offsetWidth,
+        height: chartSurfaceRef.current.offsetHeight,
+        transparent: true,
+        resolution: window.devicePixelRatio,
+        resizeTo: chartSurfaceRef.current,
+        resizeThrottle: 250,
+      })
+
+      setAppConfig({
+        ...appConfig,
+        App,
+        DomContainer: chartSurfaceRef.current,
+        AppContainer: new PIXI.Container(),
+        CircleTexture: PIXI.Texture.from(circleImg),
+        ready: true
+      })
+    }
+  }, [chartSurfaceRef.current])
 
   // init PIXI app and pixi viewport
   useEffect(() => {
     if (appConfig.ready && data) {
-
       const xScale = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) {
-          return d.xAxisValues[countryChallengesSelectedKey];
-      })])
-      .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2]);
+      .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
+      .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
       const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) {
-          return d.yAxisValue;
-      })])
+      .domain([0, 100])
       .range([chartSurfaceRef.current.offsetHeight - padding, padding]);
 
       setChartScale({ xScale, yScale })
@@ -79,57 +98,61 @@ useEffect(() => {
         AppContainer.sortableChildren = true;
         DomContainer.appendChild(App.view);
         App.stage.addChild(AppContainer);
-        
-        const bubbles = data.map(d => {
-          const bubbleWrapper = new PIXI.Container();
-          bubbleWrapper.y = chartScale.yScale(d.yAxisValue);
-          bubbleWrapper.x = chartScale.xScale(d.xAxisValues[countryChallengesSelectedKey]);
-          const country = new PIXI.Sprite(CircleTexture);
-          country.attributes = d;
-          country.anchor.set(0.5);
-          country.tint = PIXI.utils.string2hex(d.color);
-          country.interactive = true;
-          country.buttonMode = true;
-          const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#000000'})
-          const countryIsoText = new PIXI.Text(d.iso, textStyle);
-          countryIsoText.anchor.set(0.5)
-          bubbleWrapper.addChild(country);
-          bubbleWrapper.addChild(countryIsoText);
-          AppContainer.addChild(bubbleWrapper);
-          return bubbleWrapper;
-        })
-        setCountriesArray(bubbles)
-      }
+        const currentData = data.map(bubble => bubble.iso);
+        const oldBubbles = AppContainer.children;
+        const bubblesToRemove = difference(activeBubblesArray, currentData);
+        const persistentBubbles = activeBubblesArray.filter(bubble => currentData.indexOf(bubble) !== -1);
+        const newBubbles = difference(currentData, persistentBubbles);
 
-      return function cleanUp() {
-        if (appConfig.ready) {
-          const { App, AppContainer } = appConfig
-          App.stage.removeChildren();
-          AppContainer.removeChildren();
+        oldBubbles
+          .filter(bubble => bubblesToRemove.includes(bubble.slug))
+          .forEach(bubble => {
+            const animation = ease.add(bubble, {alpha: 0}, {duration: 300, ease: 'easeInOutExpo'});
+            animation.once('complete', () => AppContainer.removeChild(bubble))
+          })
+
+        const persistent = oldBubbles
+          .filter(bubble => persistentBubbles.includes(bubble.slug))
+          .map((bubble, index) => {
+            ease.add(bubble,
+              {x: chartScale.xScale(bubble.children[0].attributes.xAxisValues[countryChallengesSelectedKey])}, 
+              {duration: 700, ease: 'easeInOutExpo', wait: index * 8}
+            )
+            return bubble
+          })
+
+        if (activeBubblesArray.length) {
+          const newData = data.filter(d => newBubbles.includes(d.iso));
+          const newbubbles = addBubblesToChart(newData, CircleTexture, AppContainer);
+          setBubblesArray([...persistent, ...newbubbles]);
+        } else {
+          const bubbles = addBubblesToChart(data, CircleTexture, AppContainer);
+          setBubblesArray(bubbles);
         }
+        setActiveBubblesArray(currentData);
       }
     }, [chartScale])
 
     useEffect(() => {
-      if (countriesArray.length) {
+      if (bubblesArray.length) {
         const newXScale = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) {
-            return d.xAxisValues[countryChallengesSelectedKey];
-        })])
-        .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2])
-        countriesArray.forEach((country, index) => {
-          ease.add(country, {x: newXScale(data[index].xAxisValues[countryChallengesSelectedKey])}, {duration: 1500, ease: 'easeInOutExpo', wait: index * 2 });
+        .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
+        .range([padding, chartSurfaceRef.current.offsetWidth - padding])
+        bubblesArray.forEach((bubble, index) => {
+          const { children } = bubble;
+          const country = children[0];
+          ease.add(bubble, {x: newXScale(country.attributes.xAxisValues[countryChallengesSelectedKey])}, {duration: 1500, ease: 'easeInOutExpo', wait: index * 2 });
         })
       }
     }, [countryChallengesSelectedKey])
 
     useEffect(() => {
-      if (countriesArray.length && countryISO) {
-        countriesArray.forEach((bubble, index) => {
+      if (bubblesArray.length && countryISO && chartScale) {
+        bubblesArray.forEach((bubble) => {
           const { children } = bubble;
           const country = children[0];
           country.removeAllListeners()
-          const isSelectedCountry = countryISO === data[index].iso;
+          const isSelectedCountry = countryISO === bubble.slug;
           if (isSelectedCountry) { bubble.zIndex = 1}
           country.width = isSelectedCountry ? bigBubble : smallBubble;
           country.height = isSelectedCountry ? bigBubble : smallBubble;
@@ -145,12 +168,12 @@ useEffect(() => {
             setTooltipState({
               x: e.data.global.x,
               y: e.data.global.y,
-              name: data[index].name,
-              continent: data[index].continent,
-              color: data[index].color,
-              yValue: Number.parseFloat(data[index].yAxisValue).toFixed(2),
+              name: country.attributes.name,
+              continent: country.attributes.continent,
+              color: country.attributes.color,
+              yValue: Number.parseFloat(country.attributes.yAxisValue).toFixed(2),
               yLabel: 'Species Protection Index',
-              xValue: filter => data[index].xAxisValues[filter],
+              xValue: filter => country.attributes.xAxisValues[filter],
               xLabel: filter => xAxisLabels[filter]
             })
             if (!isSelectedCountry) {
@@ -174,12 +197,12 @@ useEffect(() => {
     
           country.on('click', e => {
             if (!isSelectedCountry) {
-              onBubbleClick({ countryISO: data[index].iso, countryName: data[index].name })
+              onBubbleClick({ countryISO: country.attributes.iso, countryName: country.attributes.name })
             }
           })
         })
       }
-    },[countryISO, countriesArray])
+    },[countryISO, bubblesArray, chartScale])
 
   
   return (

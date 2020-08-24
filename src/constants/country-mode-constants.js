@@ -18,6 +18,7 @@ export const CONTINENT_COLORS = {
 }
 
 export const CHALLENGES_RELATED_FILTERS = [
+  {slug: 'all', name: 'All'},
   {slug: 'filter_Area', name: 'Area'},
   {slug: 'filter_Population2016', name: 'Population'},
   {slug: 'filter_prop_protected', name: 'Proportion of protection'},

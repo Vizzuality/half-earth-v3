@@ -17,7 +17,7 @@ const CountryChallengesChartComponent = ({
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
-}) => console.log(data) || (
+}) => (
   <div className={className}>
     <div>
       <span className={styles.chartTitle}>Countries challenges</span>

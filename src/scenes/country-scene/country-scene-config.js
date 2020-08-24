@@ -45,7 +45,7 @@ export default {
   },
   ui: {
     sceneMode:'local',
-    countryChallengesSelectedFilter: 'filter_steward',
+    countryChallengesSelectedFilter: 'all',
     localSceneActiveTab: 'map',
     countryChallengesSelectedKey: 'N_SPECIES'
   },
