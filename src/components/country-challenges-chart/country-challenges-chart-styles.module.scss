@@ -60,9 +60,7 @@ $xAxisContainerWidth: 330px;
   .filterOption {
     margin: 5px 0;
     &.selectedFilter {
-      opacity: 50%;
-      cursor: not-allowed;
-      pointer-events: none;
+      opacity: 0.5;
     }
   }
   .optionsLabel {
