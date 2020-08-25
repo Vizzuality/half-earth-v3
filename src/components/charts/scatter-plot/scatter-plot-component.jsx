@@ -62,11 +62,12 @@ const ScatterPlot = ({
         width: chartSurfaceRef.current.offsetWidth,
         height: chartSurfaceRef.current.offsetHeight,
         transparent: true,
-        resolution: window.devicePixelRatio,
+        resolution: window.devicePixelRatio || 1,
+        autoDensity: true,
         resizeTo: chartSurfaceRef.current,
         resizeThrottle: 250,
       })
-
+      
       setAppConfig({
         ...appConfig,
         App,
