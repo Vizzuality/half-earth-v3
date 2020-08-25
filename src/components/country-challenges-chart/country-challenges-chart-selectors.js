@@ -73,6 +73,7 @@ const mapStateToProps = createStructuredSelector({
   data: getFilteredData,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
+  selectedFilter: getCountryChallengesSelectedFilter
 })
 
 export default mapStateToProps;

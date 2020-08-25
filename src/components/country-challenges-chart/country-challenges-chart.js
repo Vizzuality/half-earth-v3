@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
 import metadataConfig from 'constants/metadata';
@@ -15,6 +15,9 @@ const actions = {...metadataActions, ...urlActions };
 
 const CountryChallengesChartContainer = (props) => {
   const xAxisKeys = Object.keys(INDICATOR_LABELS);
+
+
+  const [filtersOpen, setFiltersToggle] = useState(false);
 
   const handleSelectNextIndicator = () => {
     const { changeUI, countryChallengesSelectedKey } = props;
@@ -58,14 +61,21 @@ const CountryChallengesChartContainer = (props) => {
 
   const handleFilterSelection = (selectedFilter) => {
     const { changeUI } = props;
-    changeUI({countryChallengesSelectedFilter: selectedFilter})
+    changeUI({countryChallengesSelectedFilter: selectedFilter});
+    setFiltersToggle(false);
+  }
+
+  const handleFiltersToggle = () => {
+    setFiltersToggle(!filtersOpen);
   }
 
   return (
   <Component
+    filtersOpen={filtersOpen}
     handleInfoClick={handleInfoClick}
     handleBubbleHover={handleBubbleHover}
     handleBubbleClick={handleBubbleClick}
+    handleFiltersToggle={handleFiltersToggle}
     handleFilterSelection={handleFilterSelection}
     handleSelectNextIndicator={handleSelectNextIndicator}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}

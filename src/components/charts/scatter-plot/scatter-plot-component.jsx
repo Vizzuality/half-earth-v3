@@ -50,6 +50,8 @@ const ScatterPlot = ({
     const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#000000'})
     const countryIsoText = new PIXI.Text(d.iso, textStyle);
     countryIsoText.anchor.set(0.5)
+    country.width = 0;
+    country.height = 0;
     bubbleWrapper.addChild(country);
     bubbleWrapper.addChild(countryIsoText);
     appContainer.addChild(bubbleWrapper);
@@ -67,7 +69,7 @@ const ScatterPlot = ({
         resizeTo: chartSurfaceRef.current,
         resizeThrottle: 250,
       })
-      
+
       setAppConfig({
         ...appConfig,
         App,
@@ -84,7 +86,7 @@ const ScatterPlot = ({
     if (appConfig.ready && data) {
       const xScale = d3.scaleLinear()
       .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
-      .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
+      .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2]);
       const yScale = d3.scaleLinear()
       .domain([0, 100])
       .range([chartSurfaceRef.current.offsetHeight - padding, padding]);

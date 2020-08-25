@@ -16,6 +16,64 @@ $xAxisContainerWidth: 330px;
   top: 2px;
 }
 
+.filterSelectContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  align-items: flex-end;
+  right: 0;
+
+  .selectLabelContainer {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .filterSelectLabel {
+    color: $white;
+  }
+  .switchIcon {
+    margin-left: 10px;
+    transform: rotate(90deg);
+    transition: all .1s linear;
+    &.filtersOpen {
+      transform: rotate(-90deg);
+    }
+    path {
+      fill: $white;
+      stroke: $white;
+    }
+  }
+}
+
+.filterSelect {
+  @extend %bodyText;
+  color: #222;
+  cursor: pointer;
+  background-color: white;
+  list-style: none;
+  padding: $font-size-base;
+  margin: none;
+  margin: 0;
+  z-index: 6;
+  border-radius: 2px;
+  .filterOption {
+    margin: 5px 0;
+    &.selectedFilter {
+      opacity: 50%;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+  .optionsLabel {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ededed;
+    cursor: default;
+  }
+}
+
+
 .xAxisIndicator {
   @extend %bodyText;
   color: $alto;

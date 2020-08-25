@@ -17,17 +17,32 @@ export const CONTINENT_COLORS = {
   'South America': '#EB588F'
 }
 
-export const CHALLENGES_RELATED_FILTERS = [
-  {slug: 'all', name: 'All'},
-  {slug: 'filter_Area', name: 'Area'},
-  {slug: 'filter_Population2016', name: 'Population'},
-  {slug: 'filter_prop_protected', name: 'Proportion of protection'},
-  {slug: 'filter_prop_hm_very_high', name: 'Proportion of very high human encroachment'},
-  {slug: 'filter_protection_needed', name: 'Proportion of protection needed'},
-  {slug: 'filter_GNI_PPP', name: 'Gross National Incomme'},
-  {slug: 'filter_total_endemic', name: 'Number of endemic species'},
-  {slug: 'filter_N_SPECIES', name: 'Number of vertebrate species'},
-  {slug: 'filter_SPI', name: 'Species Protection Index'},
-  {slug: 'filter_neigh', name: 'Neighbouring countries'},
-  {slug: 'filter_steward', name: 'Species stewardship'},
+export const FILTERS_DICTIONARY = {
+  all: 'All countries',
+  filter_Area: 'Area',
+  filter_Population2016: 'Population',
+  filter_prop_protected: 'Proportion of protection',
+  filter_prop_hm_very_high: 'Proportion of very high human encroachment',
+  filter_protection_needed: 'Proportion of protection needed',
+  filter_GNI_PPP: 'Gross National Incomme',
+  filter_total_endemic: 'Number of endemic species',
+  filter_N_SPECIES: 'Number of vertebrate species',
+  filter_SPI: 'Species Protection Index',
+  filter_neigh: 'Neighbouring countries',
+  filter_steward: 'Species stewardship'
+}
+
+export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
+  {slug: 'all', name: FILTERS_DICTIONARY.all},
+  {slug: 'filter_Area', name: FILTERS_DICTIONARY.filter_Area},
+  {slug: 'filter_Population2016', name: FILTERS_DICTIONARY.filter_Population2016},
+  {slug: 'filter_prop_protected', name: FILTERS_DICTIONARY.filter_prop_protected},
+  {slug: 'filter_prop_hm_very_high', name: FILTERS_DICTIONARY.filter_prop_hm_very_high},
+  {slug: 'filter_protection_needed', name: FILTERS_DICTIONARY.filter_protection_needed},
+  {slug: 'filter_GNI_PPP', name: FILTERS_DICTIONARY.filter_GNI_PPP},
+  {slug: 'filter_total_endemic', name: FILTERS_DICTIONARY.filter_total_endemic},
+  {slug: 'filter_N_SPECIES', name: FILTERS_DICTIONARY.filter_N_SPECIES},
+  {slug: 'filter_SPI', name: FILTERS_DICTIONARY.filter_SPI},
+  {slug: 'filter_neigh', name: FILTERS_DICTIONARY.filter_neigh},
+  {slug: 'filter_steward', name: FILTERS_DICTIONARY.filter_steward},
 ]
