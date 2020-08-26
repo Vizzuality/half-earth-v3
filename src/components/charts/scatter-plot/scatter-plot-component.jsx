@@ -15,6 +15,7 @@ const ScatterPlot = ({
   countryISO,
   xAxisLabels,
   onBubbleClick,
+  handleContainerClick,
   countryChallengesSelectedKey,
 }) => {
   const chartSurfaceRef = useRef(null);
@@ -22,7 +23,7 @@ const ScatterPlot = ({
   const [activeBubblesArray, setActiveBubblesArray] = useState([]);
   const [chartScale, setChartScale] = useState(null);
   const [tooltipState, setTooltipState] = useState(null);
-  const padding = 40; // for chart edges
+  const padding = 50; // for chart edges
   const tooltipOffset = 50;
   const bigBubble = 90;
   const smallBubble = 45;
@@ -47,6 +48,7 @@ const ScatterPlot = ({
     country.tint = PIXI.utils.string2hex(d.color);
     country.interactive = true;
     country.buttonMode = true;
+    country.blendMode = PIXI.BLEND_MODES.ADD;
     const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#000000'})
     const countryIsoText = new PIXI.Text(d.iso, textStyle);
     countryIsoText.anchor.set(0.5)
@@ -86,7 +88,7 @@ const ScatterPlot = ({
     if (appConfig.ready && data) {
       const xScale = d3.scaleLinear()
       .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
-      .range([padding, chartSurfaceRef.current.offsetWidth - padding * 2]);
+      .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
       const yScale = d3.scaleLinear()
       .domain([0, 100])
       .range([chartSurfaceRef.current.offsetHeight - padding, padding]);
@@ -159,14 +161,7 @@ const ScatterPlot = ({
           if (isSelectedCountry) { bubble.zIndex = 1}
           country.width = isSelectedCountry ? bigBubble : smallBubble;
           country.height = isSelectedCountry ? bigBubble : smallBubble;
-          country.alpha = 0.6;
-          
-          country.blendMode = isSelectedCountry ? PIXI.BLEND_MODES.NORMAL : PIXI.BLEND_MODES.ADD;
-          if (isSelectedCountry) {
-            ease.add(country, {alpha: 1}, {reverse: true, repeat: true, duration: 700, ease: 'easeInOutExpo'});
-          } else {
-            ease.removeEase(country);
-          }
+          country.alpha = isSelectedCountry ? 1 : 0.6;
           country.on('pointerover', e => {
             setTooltipState({
               x: e.data.global.x,
@@ -210,7 +205,7 @@ const ScatterPlot = ({
   
   return (
     <>
-      <div className={cx(styles.chartContainer)}>
+      <div className={cx(styles.chartContainer)} onClick={handleContainerClick}>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}>
           <div className={styles.yAxisTicksContainer}>
             {yAxisTicks && yAxisTicks.map(tick => <span className={styles.tick}>{tick}</span>)}

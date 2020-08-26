@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import ScatterPlot from 'components/charts/scatter-plot';
 import { INDICATOR_LABELS, CHALLENGES_RELATED_FILTERS_OPTIONS, FILTERS_DICTIONARY } from 'constants/country-mode-constants';
@@ -19,6 +19,7 @@ const CountryChallengesChartComponent = ({
   handleBubbleClick,
   handleFiltersToggle,
   handleFilterSelection,
+  handleOutsideFiltersClick,
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
@@ -60,6 +61,7 @@ const CountryChallengesChartComponent = ({
         xAxisTicks={xAxisTicks}
         yAxisTicks={yAxisTicks}
         onBubbleClick={handleBubbleClick}
+        handleContainerClick={handleOutsideFiltersClick}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
       />
       <div className={styles.xAxisContainer}>

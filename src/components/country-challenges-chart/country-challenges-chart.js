@@ -20,6 +20,7 @@ const CountryChallengesChartContainer = (props) => {
   const [filtersOpen, setFiltersToggle] = useState(false);
 
   const handleSelectNextIndicator = () => {
+    setFiltersToggle(false);
     const { changeUI, countryChallengesSelectedKey } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex !== xAxisKeys.length - 1) { 
@@ -30,6 +31,7 @@ const CountryChallengesChartContainer = (props) => {
   }
 
   const handleSelectPreviousIndicator = () => {
+    setFiltersToggle(false);
     const { changeUI, countryChallengesSelectedKey } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex > 0) {
@@ -57,6 +59,7 @@ const CountryChallengesChartContainer = (props) => {
       title: md.title,
       isOpen: true
     });
+    setFiltersToggle(false);
   }
 
   const handleFilterSelection = (selectedFilter) => {
@@ -68,6 +71,10 @@ const CountryChallengesChartContainer = (props) => {
   const handleFiltersToggle = () => {
     setFiltersToggle(!filtersOpen);
   }
+  
+  const handleOutsideFiltersClick = () => {
+    setFiltersToggle(false);
+  }
 
   return (
   <Component
@@ -78,6 +85,7 @@ const CountryChallengesChartContainer = (props) => {
     handleFiltersToggle={handleFiltersToggle}
     handleFilterSelection={handleFilterSelection}
     handleSelectNextIndicator={handleSelectNextIndicator}
+    handleOutsideFiltersClick={handleOutsideFiltersClick}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}
     {...props}
   />
