@@ -24,7 +24,7 @@ export const FILTERS_DICTIONARY = {
   filter_prop_protected: 'Proportion of protection',
   filter_prop_hm_very_high: 'Proportion of very high human encroachment',
   filter_protection_needed: 'Proportion of protection needed',
-  filter_GNI_PPP: 'Gross National Incomme',
+  filter_GNI_PPP: 'Gross National Income',
   filter_total_endemic: 'Number of endemic species',
   filter_N_SPECIES: 'Number of vertebrate species',
   filter_SPI: 'Species Protection Index',
