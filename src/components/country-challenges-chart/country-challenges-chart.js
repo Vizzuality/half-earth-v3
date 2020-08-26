@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
 import metadataConfig from 'constants/metadata';
@@ -16,7 +16,11 @@ const actions = {...metadataActions, ...urlActions };
 const CountryChallengesChartContainer = (props) => {
   const xAxisKeys = Object.keys(INDICATOR_LABELS);
 
+
+  const [filtersOpen, setFiltersToggle] = useState(false);
+
   const handleSelectNextIndicator = () => {
+    setFiltersToggle(false);
     const { changeUI, countryChallengesSelectedKey } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex !== xAxisKeys.length - 1) { 
@@ -27,6 +31,7 @@ const CountryChallengesChartContainer = (props) => {
   }
 
   const handleSelectPreviousIndicator = () => {
+    setFiltersToggle(false);
     const { changeUI, countryChallengesSelectedKey } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex > 0) {
@@ -54,14 +59,33 @@ const CountryChallengesChartContainer = (props) => {
       title: md.title,
       isOpen: true
     });
+    setFiltersToggle(false);
+  }
+
+  const handleFilterSelection = (selectedFilter) => {
+    const { changeUI } = props;
+    changeUI({countryChallengesSelectedFilter: selectedFilter});
+    setFiltersToggle(false);
+  }
+
+  const handleFiltersToggle = () => {
+    setFiltersToggle(!filtersOpen);
+  }
+  
+  const handleOutsideFiltersClick = () => {
+    setFiltersToggle(false);
   }
 
   return (
   <Component
+    filtersOpen={filtersOpen}
     handleInfoClick={handleInfoClick}
     handleBubbleHover={handleBubbleHover}
     handleBubbleClick={handleBubbleClick}
+    handleFiltersToggle={handleFiltersToggle}
+    handleFilterSelection={handleFilterSelection}
     handleSelectNextIndicator={handleSelectNextIndicator}
+    handleOutsideFiltersClick={handleOutsideFiltersClick}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}
     {...props}
   />
