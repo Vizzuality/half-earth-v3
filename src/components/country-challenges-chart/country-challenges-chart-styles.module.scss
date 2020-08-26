@@ -1,7 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-$chartWidth: 60vw;
 $xAxisContainerWidth: 330px;
 
 .chartTitle {
@@ -82,13 +81,12 @@ $xAxisContainerWidth: 330px;
 }
 
 .xAxisLabelContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    left: calc((#{$chartWidth}/2) - (#{$xAxisContainerWidth}/2));
-    position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  left: calc((#{$country-scene-chart-width}/2) - (#{$xAxisContainerWidth}/2));
+  position: relative;
 }
-
 
 .yAxisContainer {
   color: $alto;

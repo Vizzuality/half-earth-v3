@@ -56,10 +56,14 @@ $human-pressure-high: #282052;
 $human-pressure-mid: #9F82CE;
 $human-pressure-low: #F3E0F7;
 $human-pressures-gradient: linear-gradient(270deg, $human-pressure-high 0%, $human-pressure-mid 50%, $human-pressure-low 100%);
-
+// country ranking
+$endemic-species: #F8D300;
+$non-endemic-species: #F87200;
 $human-modification-high-color: #731CFF;
 $human-modification-color: #B284FD;
 $protection-non-needed-color: #AFB8A0;
+$protected-areas: #008604;
+$protection-needed: #B3E74B;;
 
 // Animations
 $animation-time: 0.3s;
@@ -116,7 +120,8 @@ $border-radius-mobile: 16px 16px 0 0;
 // featured cards
 $card-max-width: 820px;
 $card-border-radius: 6px;
-
+// country scene
+$country-scene-chart-width: calc(90vw - #{$country-sidebar-width});
 
 //z indexes
 $bring-to-front: 5;

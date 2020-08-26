@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import styles from './ranking-chart-styles.module.scss';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
 import { SORT } from './ranking-chart';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
+import styles from './ranking-chart-styles.module.scss';
 
 const legendText = {
   species: {
@@ -43,32 +43,35 @@ const RankingChart = ({
     }
   }
 
+  const barTooltip = (d, name) => (
+    <div className={styles.tooltip}>
+      <div className={styles.labels}>
+        {Object.keys(d[name]).map((key) => (
+          <div>{legendText[name][key]}: </div>
+        ))}
+      </div>
+      <div className={styles.values}>
+        {Object.keys(d[name]).map((key) => (
+          <div
+            className={cx(styles.valuesBox, styles[key])}
+            style={{
+              height: `${100 / Object.keys(d[name]).length}%`
+            }}
+          >
+            {Math.floor(d[name][key] * 100) / 100}%
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
   const renderBar = (name, d) =>
     !d || !d[name] ? null : (
       <Tooltip
-        html={
-          <div className={styles.tooltip}>
-            <div className={styles.labels}>
-              {Object.keys(d[name]).map((key) => (
-                <div>{legendText[name][key]}: </div>
-              ))}
-            </div>
-            <div className={styles.values}>
-              {Object.keys(d[name]).map((key) => (
-                <div
-                  className={cx(styles.valuesBox, styles[key])}
-                  style={{
-                    height: `${100 / Object.keys(d[name]).length}%`
-                  }}
-                >
-                  {Math.floor(d[name][key] * 100) / 100}%
-                </div>
-              ))}
-            </div>
-          </div>
-        }
+        html={barTooltip(d, name)}
         animation="none"
-        position="bottom"
+        position="right"
+        className={styles.barContainer}
       >
         <div className={styles.fullBar}>
           {Object.keys(d[name]).map((k) => (
@@ -85,48 +88,36 @@ const RankingChart = ({
     const sortedCategory =
       sortRankingCategory && sortRankingCategory.split('-')[0];
     const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
+    const highlightAsc = sortedCategory === category && direction === SORT.ASC
+    const highlightDesc = sortedCategory === category && direction === SORT.DESC
     return (
       <button
-        className={cx(styles.headerItem, styles.titleText)}
+        className={cx(
+          styles.headerItem,
+          styles.titleText,
+          {[styles.highlightCategory]: sortedCategory === category}
+        )}
         key={category}
         onClick={() => handleSortClick(category)}
       >
         {category}
         <span className={styles.sortArrows}>
-          {(!sortRankingCategory ||
-            (sortedCategory === category && direction === SORT.ASC)) && (
-            <span className={styles.arrowUp} />
-          )}
-          {(!sortRankingCategory ||
-            (sortedCategory === category && direction === SORT.DESC)) && (
-            <span className={styles.arrowDown} />
-          )}
+            <span
+              className={cx(
+                styles.arrowUp,
+                {[styles.highlightedSort]: highlightAsc}
+              )}
+            />
+            <span
+              className={cx(
+                styles.arrowDown,
+                {[styles.highlightedSort]: highlightDesc}
+              )}
+            />
         </span>
       </button>
     );
   };
-
-  const renderTable = () => (
-    <div className={styles.table}>
-      <div className={cx(styles.row, styles.header)}>
-        {categories.map((category) => renderHeaderItem(category.toUpperCase()))}
-      </div>
-      {data.map((d) => (
-        <div className={styles.row} key={d.name}>
-          {categories.map((category) => renderBar(category, d))}
-          <div className={styles.spiCountry}>
-            <span className={cx(styles.titleText, styles.spiIndex)}>
-              {d.index}.
-            </span>
-            <button
-              className={cx(styles.titleText, styles.spiCountryText)}
-              onClick={() => handleCountryClick(d.iso, d.name)}
-            >{`${d.name} (${d.spi})`}</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
 
   const renderLegend = () => (
     <div className={styles.legend}>
@@ -155,12 +146,33 @@ const RankingChart = ({
       </div>
       {data && data.length ? (
         <div className={styles.rankingChartContentContainer}>
+          <div className={styles.header}>
+            {categories.map((category) => renderHeaderItem(category.toUpperCase()))}
+          </div>
           <div
-            className={styles.rankingChartContent}
+            className={cx(
+              styles.rankingChartContent,
+              {[styles.scrolled]: hasScrolled}
+              )}
             onScroll={onScroll}
             ref={tableRef}
           >
-            {renderTable()}
+            <div className={styles.table}>
+              {data.map((d) => (
+                <div className={styles.row} key={d.name}>
+                  {categories.map((category) => renderBar(category, d))}
+                  <div className={styles.spiCountry}>
+                    <span className={cx(styles.titleText, styles.spiIndex)}>
+                      {d.index}.
+                    </span>
+                    <button
+                      className={styles.spiCountryText}
+                      onClick={() => handleCountryClick(d.iso, d.name)}
+                    >{`${d.name} (${d.spi})`}</button>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}>
               <Arrow className={styles.arrow} />
               Scroll

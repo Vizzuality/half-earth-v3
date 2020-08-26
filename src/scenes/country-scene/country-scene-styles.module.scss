@@ -27,6 +27,6 @@
 .rankingChart {
   position: relative;
   left: $country-sidebar-width;
-  width: calc(100% - #{$country-sidebar-width});
+  width: $country-scene-chart-width;
   top: $sidebar-header-height;
 }

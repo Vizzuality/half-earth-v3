@@ -3,7 +3,7 @@
 
 .chartTitle {
   @extend %headline;
-  color: $alto;
+  color: $grey-text;
   margin-right: 1rem;
 }
 
@@ -13,32 +13,37 @@
 
 .titleText {
   @extend %title;
-  font-size: $font-size-xxs;
-  color: $alto;
+  color: $grey-text;
+  &.highlightCategory {
+    color: $white;
+    font-weight: bold;
+  }
 }
 
 .header {
+  position: fixed;
+  width: 51%;
+  display: flex;
   .headerItem {
-    width: 85px;
+    width: 18%;
     margin-right: 7px;
     margin-bottom: 10px;
-
     text-align: left;
     padding: 0;
 
     &:hover {
       color: white;
     }
-
-    &:last-child {
-      width: 95px;
-    }
   }
 }
 
-.fullBar {
+.barContainer {
+  width: 18%;
   margin-right: 7px;
-  width: 85px;
+}
+
+.fullBar {
+  width: 100%;
   cursor: default;
 }
 
@@ -59,65 +64,78 @@
 }
 
 .spiCountryText {
+  @extend %title;
+  color: $grey-text;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media #{$desktop} {
     max-width: 320px;
   }
   &:hover {
-    color: white;
+    color: $white;
   }
 }
 
 .spiIndex {
   display: inline-block;
   @media #{$desktop} {
-    min-width: 4rem;
+    min-width: 2rem;
  }
 }
 
 .rankingChartContentContainer {
   position: relative;
   display: flex;
-  width: calc(100vw - #{$country-sidebar-width});
+  width: $country-scene-chart-width;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
 .rankingChartContent {
+  margin-top: 30px;
   padding-bottom: 2rem;
+  margin-right: 2rem;
+  width: 80%;
   height: calc(100vh - #{$sidebar-header-height} - 200px);
-
   overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-
   flex-direction: column;
-
   @media #{$desktop} {
     flex-direction: row;
+  }
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    height: 190px;
+    border-radius: 10px;
+    background-color: #d8d8d8;
+  }
+  &.scrolled {
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
   }
 }
 
 .scrollHint {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  height: 60px;
-  color: $alto;
+  width: 80%;
+  height: 55px;
+  padding-left: 15px;
+  color: #D8D8D8;
   display: flex;
   align-items: center;
-  background: linear-gradient(rgba($space-background, 0.5) 0%, $space-background 90%);
+  background: linear-gradient(rgba(9, 20, 26, 0) 0%, rgba(9, 20, 26, .9) 80%);
   pointer-events: none;
   opacity: 1;
-  animation: opacity 1s;
 
   .arrow {
-    rotate: 90deg;
-    fill: $alto;
+    transform: rotate(90deg);
+    fill: $grey-text;
     margin-right: 1rem;
   }
 
@@ -165,12 +183,18 @@
     @include caret($_temporary-light-text, 'up');
     position: absolute;
     top: -1px;
+    &.highlightedSort::after {
+      border-top-color: $white;
+    }
   }
 
   .arrowDown {
     @include caret($_temporary-light-text, 'down');
     position: absolute;
     top: -26px;
+    &.highlightedSort::after {
+      border-bottom-color: $white;
+    }
   }
 }
 
@@ -192,13 +216,10 @@
     }
 
     .legendText {
-      @extend %bodyText;
-
-      font-family: $font-family-1-light;
-      font-size: $font-size-xs;
+      @extend %annotation;
       margin-left: 1rem;
       margin-top: -3px;
-      color: $alto;
+      color: $grey-text;
     }
   }
 }
@@ -213,10 +234,8 @@
     justify-content: center;
     padding: 6px;
 
-    @extend %bodyText;
-    font-family: $font-family-1-light;
-    font-size: $font-size-xs;
-    color: $alto;
+    @extend %annotation;
+    color: $grey-text;
   }
 
   .values {
@@ -237,11 +256,11 @@
 // Colors
 
 .nonEndemic {
-  background-color: $persimmon;
+  background-color: $non-endemic-species;
 }
 
 .endemic {
-  background-color: $saffron-mango;
+  background-color: $endemic-species;
 }
 
 .veryHigh {
@@ -253,11 +272,11 @@
 }
 
 .protected {
-  background-color: $vida-loca;
+  background-color: $protected-areas;
 }
 
 .protectionNeeded {
-  background-color: $screamin-green;
+  background-color: $protection-needed;
 }
 
 .protectionNotNeeded,
