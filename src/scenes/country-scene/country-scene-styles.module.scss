@@ -1,4 +1,4 @@
-$sidebar-width: 490px;
+@import 'styles/settings';
 
 .modeSwitch {
   z-index: 3;
@@ -23,9 +23,10 @@ $sidebar-width: 490px;
   pointer-events: inherit;
 }
 
-.challengesChart {
+.challengesChart,
+.rankingChart {
   position: relative;
-  left: $sidebar-width;
-  top: 105px;
-  width: 60vw;
+  left: $country-sidebar-width;
+  width: $country-scene-chart-width;
+  top: $sidebar-header-height;
 }

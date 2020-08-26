@@ -57,6 +57,7 @@ const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSett
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
 const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
+const getSortRankingCategory = createSelector(getUiSettings, uiSettings => uiSettings.sortRankingCategory);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
 const getCountedActiveLayers = createSelector(
@@ -66,7 +67,7 @@ const getCountedActiveLayers = createSelector(
     const protectionLayers = activeLayers ? activeLayers.filter(({ category, title }) => {
       // we have to filter 'RAISIG' layer because activating 'Community-based' checbox selects two layers on the globe: "protected_areas_vector_tile_layer" and "RAISIG_areas_vector_tile_layer"
       return category === LAYERS_CATEGORIES.PROTECTION && title !== RAISIG_AREAS_VECTOR_TILE_LAYER
-    }).length : 0; 
+    }).length : 0;
     const landHumanPressureLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.LAND_PRESSURES).length : 0;
 
     return {
@@ -99,7 +100,8 @@ export default createStructuredSelector({
   sceneMode: getSceneMode,
   localSceneActiveTab: getLocalSceneActiveTab,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
+  sortRankingCategory: getSortRankingCategory,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
-  countedActiveLayers: getCountedActiveLayers,
-})
+  countedActiveLayers: getCountedActiveLayers
+});

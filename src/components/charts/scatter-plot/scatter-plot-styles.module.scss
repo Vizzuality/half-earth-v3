@@ -7,7 +7,7 @@ $chart-margin: 14px;
 .scatterPlotContainer {
   border-left: 3px solid $elephant;
   border-bottom: 3px solid $elephant;
-  width: 60vw;
+  width: $country-scene-chart-width;
   height: 60vh;
   position: relative;
 }
