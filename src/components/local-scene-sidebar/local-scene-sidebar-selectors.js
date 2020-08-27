@@ -52,7 +52,7 @@ const getIndexStatement = createSelector(
   (SPI, SPIMean) => {
   if (!SPI || !SPIMean) return null;
   const comparation = SPI >=SPIMean ? 'higher' : 'lower';
-  return `The index of this country is ${comparation} than the average`;
+  return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average global SPI: ${SPIMean} `
 })
 
 const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
@@ -99,7 +99,6 @@ const chartData = [
 
 const mapStateToProps = (state, props) => ({
     SPI: getSpeciesProtectionIndex(state, props),
-    mean: getSPIMean(state, props),
     birds: getTaxa('birds')(state, props),
     mammals: getTaxa('mammals')(state, props),
     reptiles: getTaxa('reptiles')(state, props),

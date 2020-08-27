@@ -85,6 +85,7 @@ const LocalSceneSidebarComponent = ({
         endemicVertebratesCount={endemicVertebratesCount}
       />
       <LocalPriorityCard
+        countryName={countryName}
         protectionNeeded={protectionNeeded}
         currentProtection={currentProtection}
       />

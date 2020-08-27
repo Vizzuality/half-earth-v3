@@ -1,17 +1,16 @@
 import React from 'react';
+import cx from 'classnames';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 
 const CountryDataCardComponent = ({
   SPI,
-  mean,
   countryISO,
   countryName,
   indexStatement,
   vertebratesCount,
   handleInfoClick,
-  protectionNeeded,
   currentProtection,
   countryDescription,
   endemicVertebratesCount
@@ -28,11 +27,10 @@ const CountryDataCardComponent = ({
           <button onClick={handleInfoClick}>
             <QuestionIcon />
           </button>
-          <p className={styles.overviewText}>The species protection index is:</p>
+          <p className={styles.overviewText}>The national species protection index is:</p>
         </div>
         <div className={styles.indexWrapper}>
           <div className={styles.indexBar}>
-            <div className={styles.meanMark} style={{left: `${mean}%`}}/>
             <div className={styles.progressMark} style={{left: `${SPI}%`}}/>
             <div className={styles.improvementArea} style={{left: `${SPI}%`, width: `${100 - SPI}%`}}/>
           </div>
@@ -42,29 +40,23 @@ const CountryDataCardComponent = ({
       </section>
       <section className={styles.indexWidget}>
         <div className={styles.indexExplanation}>
-          <p className={styles.indexExplanationText}>The index is based on:</p>
+          <p className={styles.indexExplanationText}>This index is based on:</p>
           <div className={styles.indexBaseNumbersWrapper}>
-            <div className={styles.indexBaseDataElement}>
+            <div className={cx(styles.indexBaseDataElement, styles.protectionNumber)}>
               <p className={styles.baseNumber}>{`${currentProtection}`}</p>
               <p className={styles.numberText}>% of land</p>
               <p className={styles.numberText}>currently</p>
               <p className={styles.numberText}>protected</p>
             </div>
             <div className={styles.indexBaseDataElement}>
-              <p className={styles.baseNumber}>{`${protectionNeeded}`}</p>
-              <p className={styles.numberText}>% of</p>
-              <p className={styles.numberText}>protection</p>
-              <p className={styles.numberText}>needed</p>
-            </div>
-            <div className={styles.indexBaseDataElement}>
               <p className={styles.baseNumber}>{`${vertebratesCount}`}</p>
-              <p className={styles.numberText}>land</p>
+              <p className={styles.numberText}>total land</p>
               <p className={styles.numberText}>vertebrate</p>
               <p className={styles.numberText}>species</p>
             </div>
             <div className={styles.indexBaseDataElement}>
               <p className={styles.baseNumber}>{`${endemicVertebratesCount}`}</p>
-              <p className={styles.numberText}>endemic</p>
+              <p className={styles.numberText}>endemic land</p>
               <p className={styles.numberText}>vertebrated</p>
               <p className={styles.numberText}>species</p>
             </div>
