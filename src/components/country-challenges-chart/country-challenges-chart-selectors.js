@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
 import { getCountryChallengesSelectedFilter, getCountryISO } from 'pages/data-globe/data-globe-selectors';
+import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
@@ -53,9 +54,12 @@ const getXAxisTicks = createSelector(
   [getFilteredData, getCountryChallengesSelectedKey],
   (plotData, selectedKey) => {
     if (!plotData || !selectedKey) return null;
+    const highValue = d3.max(plotData, d => d.xAxisValues[selectedKey])
+    const lowValue = d3.min(plotData, d => d.xAxisValues[selectedKey])
+    const formatFunction = countryChallengesChartFormats[selectedKey];
     return [
-      d3.min(plotData, d => d.xAxisValues[selectedKey]),
-      d3.max(plotData, d => d.xAxisValues[selectedKey])
+      formatFunction(lowValue),
+      formatFunction(highValue)
     ]
   }
 )

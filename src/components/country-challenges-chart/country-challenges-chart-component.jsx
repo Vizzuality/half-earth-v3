@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import ScatterPlot from 'components/charts/scatter-plot';
+import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import { INDICATOR_LABELS, CHALLENGES_RELATED_FILTERS_OPTIONS, FILTERS_DICTIONARY } from 'constants/country-mode-constants';
 import styles from './country-challenges-chart-styles.module.scss';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
@@ -62,6 +63,7 @@ const CountryChallengesChartComponent = ({
         yAxisTicks={yAxisTicks}
         onBubbleClick={handleBubbleClick}
         handleContainerClick={handleOutsideFiltersClick}
+        tooltipValuesFormats={countryChallengesChartFormats}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
       />
       <div className={styles.xAxisContainer}>
