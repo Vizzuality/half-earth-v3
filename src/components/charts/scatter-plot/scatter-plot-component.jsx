@@ -16,6 +16,7 @@ const ScatterPlot = ({
   xAxisLabels,
   onBubbleClick,
   handleContainerClick,
+  tooltipValuesFormats,
   countryChallengesSelectedKey,
 }) => {
   const chartSurfaceRef = useRef(null);
@@ -162,6 +163,7 @@ const ScatterPlot = ({
           country.width = isSelectedCountry ? bigBubble : smallBubble;
           country.height = isSelectedCountry ? bigBubble : smallBubble;
           country.alpha = isSelectedCountry ? 1 : 0.6;
+          
           country.on('pointerover', e => {
             setTooltipState({
               x: e.data.global.x,
@@ -171,7 +173,7 @@ const ScatterPlot = ({
               color: country.attributes.color,
               yValue: Number.parseFloat(country.attributes.yAxisValue).toFixed(2),
               yLabel: 'Species Protection Index',
-              xValue: filter => country.attributes.xAxisValues[filter],
+              xValue: filter => tooltipValuesFormats[filter](country.attributes.xAxisValues[filter]),
               xLabel: filter => xAxisLabels[filter]
             })
             if (!isSelectedCountry) {
