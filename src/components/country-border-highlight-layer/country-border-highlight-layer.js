@@ -5,7 +5,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { connect } from 'react-redux';
 import actions from 'redux_modules/countries-geometries';
-import mapStateToProps from './country-border-layer-selectors';
+import mapStateToProps from './country-border-highlight-layer-selectors';
 
 import {
   createGraphic,
@@ -15,7 +15,7 @@ import {
 
 
 const CountryBorderLayer = props => {
-  const { view, spatialReference, countryISO, countryBorder, setCountryBorderReady, highlightedCountryBorder, highlightedCountryIso } = props;
+  const { view, spatialReference, countryTooltip, countryBorder, setCountryBorderReady, highlightedCountryBorder, highlightedCountryIso } = props;
   const [countryLayer, setCountryLayer] = useState(null);
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
   const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] = useState(null);
@@ -32,17 +32,18 @@ const CountryBorderLayer = props => {
       })
   }, [])
 
-  const queryCountryData = (countryISO, graphic) => {
+  const queryCountryData = (countryTooltip, graphic) => {
     const query = countryLayer.createQuery();
-    query.where = `GID_0 = '${countryISO}'`;
+    query.where = `GID_0 = '${countryTooltip}'`;
     query.outSpatialReference = spatialReference;
     countryLayer.queryFeatures(query)
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
         if (graphic) {
-          graphic.geometry = await createPolygonGeometry(geometry);
-          setCountryBorderReady({ iso: countryISO, border: graphic.geometry });
+          const polygon = await createPolygonGeometry(geometry);
+          graphic.geometry = polygon;
+          setCountryBorderReady({ iso: countryTooltip, borderGraphic: polygon, borderGeometry: geometry });
         };
       })
   };
@@ -57,14 +58,14 @@ const CountryBorderLayer = props => {
   }, []);
 
   useEffect(() => {
-    if (countryLayer && countryISO && selectedCountryBorderGraphic) {
+    if (countryLayer && countryTooltip && selectedCountryBorderGraphic) {
       if (countryBorder) {
         selectedCountryBorderGraphic.geometry = countryBorder;
       } else {
-        queryCountryData(countryISO, selectedCountryBorderGraphic);
+        queryCountryData(countryTooltip, selectedCountryBorderGraphic);
       }
     }
-  }, [countryLayer, countryISO, selectedCountryBorderGraphic]);
+  }, [countryLayer, countryTooltip, selectedCountryBorderGraphic]);
 
   useEffect(() => {
     if (countryLayer && highlightedCountryIso && hoveredCountryBorderGraphic) {
@@ -77,10 +78,10 @@ const CountryBorderLayer = props => {
   }, [countryLayer, highlightedCountryIso, hoveredCountryBorderGraphic])
 
   useEffect(() => {
-    if (selectedCountryBorderGraphic && !countryISO) {
+    if (selectedCountryBorderGraphic && !countryTooltip) {
       selectedCountryBorderGraphic.geometry = null;
     }
-  },[countryISO])
+  },[countryTooltip])
 
   useEffect(() => {
     if (hoveredCountryBorderGraphic && !highlightedCountryIso) {
