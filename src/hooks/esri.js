@@ -1,5 +1,6 @@
 import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
@@ -10,6 +11,20 @@ export const useWatchUtils = () => {
     })
   }, []);
   return watchUtils;
+}
+
+export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
+  const [layer, setLayer] = useState(null);
+  useEffect(() => {
+    loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+      const _layer = new FeatureLayer({
+        url: LAYERS_URLS[layerSlug],
+        outFields
+      });
+      setLayer(_layer)
+    });
+  }, [])
+  return layer;
 }
 
 export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent) => {
