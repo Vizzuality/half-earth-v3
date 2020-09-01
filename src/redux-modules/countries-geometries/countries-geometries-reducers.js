@@ -16,7 +16,7 @@ function setCountryBorderReady(state, { payload }) {
       ...state.data,
       [payload.iso]: {
         ...otherCountryGeometries,
-        border: payload.border
+        borderGraphic: payload.borderGraphic
       }
     }
   }

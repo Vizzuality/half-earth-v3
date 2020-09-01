@@ -36,7 +36,7 @@ const CountrySceneContainer = (props) => {
       .then(async function(results){
         const { features } = results;
         const { geometry } = features[0];
-        setCountryBorderReady({ iso: countryISO, border: geometry });
+        setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
       })
   };
 
