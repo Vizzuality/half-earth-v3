@@ -46,6 +46,7 @@ const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globe
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 export const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
+export const getCountryTooltip = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltip)
 export const getHighlightedCountryIso = createSelector(getGlobeSettings, globeSettings => globeSettings.highlightedCountryIso)
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
@@ -85,6 +86,7 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,
+  countryTooltip: getCountryTooltip,
   isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
@@ -102,6 +104,7 @@ export default createStructuredSelector({
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   sortRankingCategory: getSortRankingCategory,
   countryExtent: selectCountryExtent,
+  highlightedCountryIso: getHighlightedCountryIso,
   localSceneFilters: getLocalSceneFilters,
   countedActiveLayers: getCountedActiveLayers
 });
