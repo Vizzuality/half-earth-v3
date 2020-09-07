@@ -191,8 +191,8 @@ const RankingChart = ({
 RankingChart.propTypes = {
   data: PropTypes.array,
   className: PropTypes.string,
+  sortRankingCategory: PropTypes.string.isRequired,
   handleInfoClick: PropTypes.func.isRequired,
-  sortRankingCategory: PropTypes.func.isRequired,
   handleSortClick: PropTypes.func.isRequired,
   handleCountryClick: PropTypes.func.isRequired
 };

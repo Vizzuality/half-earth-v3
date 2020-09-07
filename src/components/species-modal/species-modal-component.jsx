@@ -5,7 +5,7 @@ import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 import styles from './species-modal-styles.module.scss';
 
-const SpeciesModalComponent = ({ handleModalClose, countryData }) => {
+const SpeciesModalComponent = ({ handleModalClose, countryData, open }) => {
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
     if (evt.keyCode === 27) {
@@ -32,6 +32,9 @@ const SpeciesModalComponent = ({ handleModalClose, countryData }) => {
       </button>
     </div>
   );
+
+  if (!open) return null;
+
   return ReactDOM.createPortal(
     renderSpeciesModal,
     document.getElementById('root')

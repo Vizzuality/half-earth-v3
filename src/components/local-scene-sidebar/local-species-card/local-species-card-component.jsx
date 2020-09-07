@@ -93,9 +93,7 @@ const LocalSpeciesCardComponent = ({
         <Button theme={buttonTheme} onClick={() => setModal(true)}>
           See all species
         </Button>
-        {openedModal === MODALS.SPECIES && (
-          <SpeciesModal handleModalClose={() => setModal(false)} />
-        )}
+        <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={() => setModal(false)} />
       </section>
     </LocalSceneCard>
   );
