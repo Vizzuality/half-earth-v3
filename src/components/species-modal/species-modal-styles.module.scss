@@ -11,9 +11,47 @@
   z-index: 11;
 
   @media #{$tablet-portrait} {
-    background-color: #020A14;;
+    background-color: $modal-light-background;
     height: 100vh;
     overflow-y: unset;
     position: absolute;
+  }
+
+  .grid {
+    @media #{$tablet-portrait} {
+      padding: 70px 5% 50px;
+      height: 100%;
+    }
+  }
+
+  .title {
+    font-family: $font-family-2;
+    font-size: $font-size-xl;
+    font-weight: $font-weight;
+  }
+
+  .summary,
+  .search {
+    font-family: $font-family-1;
+    font-size: $font-size-xs;
+  }
+
+  .closeButton {
+    svg g {
+      fill: $brand-color-secondary;
+      height: 22px;
+      stroke: $brand-color-secondary;
+      width: 22px;
+    }
+
+    &:hover svg g {
+      fill: $brand-color-secondary-hover;
+      stroke: $brand-color-secondary-hover;
+    }
+  }
+
+  .section {
+    display: flex;
+    justify-content: space-between;
   }
 }

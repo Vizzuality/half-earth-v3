@@ -1,3 +1,9 @@
 import Component from './species-modal-component';
+import { connect } from 'react-redux';
+import { getCountryData } from './species-modal-selectors';
 
-export default Component;
+const mapStateToProps = (state) => ({
+  countryData: getCountryData(state)
+});
+
+export default connect(mapStateToProps, null)(Component);
