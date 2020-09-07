@@ -47,7 +47,7 @@ const RankingChart = ({
     <div className={styles.tooltip}>
       <div className={styles.labels}>
         {Object.keys(d[name]).map((key) => (
-          <div>{legendText[name][key]}: </div>
+          <div key={`legend-${key}`}> {legendText[name][key]}: </div>
         ))}
       </div>
       <div className={styles.values}>
@@ -57,13 +57,14 @@ const RankingChart = ({
             style={{
               height: `${100 / Object.keys(d[name]).length}%`
             }}
+            key={`legend-value-${key}`}
           >
             {Math.floor(d[name][key] * 100) / 100}%
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 
   const renderBar = (name, d) =>
     !d || !d[name] ? null : (
@@ -72,12 +73,14 @@ const RankingChart = ({
         animation="none"
         position="right"
         className={styles.barContainer}
+        key={`tooltip-bar-${name}`}
       >
         <div className={styles.fullBar}>
           {Object.keys(d[name]).map((k) => (
             <span
               className={cx(styles.bar, styles[k])}
               style={{ width: `${d[name][k]}%` }}
+              key={`tooltip-${k}`}
             />
           ))}
         </div>
