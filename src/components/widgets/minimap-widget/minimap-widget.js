@@ -1,5 +1,6 @@
 import { loadModules } from 'esri-loader';
-import React, { useState } from 'react';
+import React from 'react';
+import { MODALS } from 'constants/ui-params';
 import { connect } from 'react-redux';
 
 import MinimapWidgetComponent from './minimap-widget-component';
@@ -13,10 +14,10 @@ const VIEW = 'half-earth-meter';
 const actions = { openHalfEarthMeterAnalyticsEvent, ...urlActions };
 
 const MinimapWidget = (props) => {
-  const { isHEModalOpen } = props;
+  const { openedModal } = props;
   const setModal = (opened) => {
     const { changeUI } = props;
-    changeUI({ isHEModalOpen: opened });
+    changeUI({ openedModal: opened ? MODALS.HE : null });
   }
 
   const isOnMobile = useMobile();
@@ -42,11 +43,10 @@ const MinimapWidget = (props) => {
   };
 
   const { textData, hidden } = props;
-
   return (
     <div style={{ display: hidden ? 'none' : 'block' }}>
       {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
-      {isHEModalOpen && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
+      {openedModal === MODALS.HE && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
     </div>
   );
 }

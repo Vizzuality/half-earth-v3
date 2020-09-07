@@ -1,0 +1,19 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.speciesModal {
+  height: 100%;
+  left: 0;
+  overflow-y: scroll;
+  top: 0;
+  width: 100vw;
+  z-index: 11;
+
+  @media #{$tablet-portrait} {
+    background-color: #020A14;;
+    height: 100vh;
+    overflow-y: unset;
+    position: absolute;
+  }
+}

@@ -42,7 +42,7 @@ const CountrySceneComponent = ({
   activeOption,
   sceneSettings,
   isSidebarOpen,
-  isHEModalOpen,
+  openedModal,
   activeCategory,
   isLandscapeMode,
   isGlobeUpdating,
@@ -67,7 +67,7 @@ const CountrySceneComponent = ({
         {!isOnMobile && <Switcher />}
         <MobileOnly>
           <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} isHEModalOpen={isHEModalOpen} />
+          <MenuSettings activeOption={activeOption} openedModal={openedModal} />
           <Slider />
         </MobileOnly>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
@@ -104,7 +104,7 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
-        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
+        <Widgets isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
         <TerrainExaggerationLayer exaggeration={3}/>
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}

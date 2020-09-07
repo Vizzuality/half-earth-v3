@@ -36,7 +36,7 @@ const CountrySceneComponent = ({
   activeLayers,
   countryBorder,
   sceneSettings,
-  isHEModalOpen,
+  openedModal,
   handleModeChange,
   isFullscreenActive,
   handleGlobeUpdating,
@@ -75,7 +75,7 @@ const CountrySceneComponent = ({
         )}
         <Widgets
           hideSearch
-          isHEModalOpen={isHEModalOpen}
+          openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />
       </Scene>
@@ -85,6 +85,7 @@ const CountrySceneComponent = ({
         activeLayers={activeLayers}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
+        openedModal={openedModal}
       />
       <LocalSceneModeSwitch
         className={styles.modeSwitch}

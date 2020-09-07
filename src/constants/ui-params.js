@@ -3,3 +3,8 @@ export const LOCAL_SCENE_TABS = {
   MAP: 'map',
   RANKING: 'ranking'
 }
+
+export const MODALS = {
+  HE: 'HE',
+  SPECIES: 'SPECIES'
+}
