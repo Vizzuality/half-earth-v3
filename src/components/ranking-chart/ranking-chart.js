@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Component from './ranking-chart-component';
 import metadataConfig from 'constants/metadata';
 import { RANKING_CHART } from 'constants/metadata';
+import { SORT } from 'components/header-item';
 
 import mapStateToProps from './ranking-chart-selectors';
 
@@ -10,8 +11,6 @@ import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 
 const actions = {...metadataActions, ...urlActions };
-
-export const SORT = { ASC: 'ASC', DESC: 'DESC' };
 
 const RankingChartContainer = (props) => {
   const handleInfoClick = () => {

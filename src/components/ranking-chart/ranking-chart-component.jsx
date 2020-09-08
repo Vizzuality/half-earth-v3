@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
-import { SORT } from './ranking-chart';
+import HeaderItem from 'components/header-item';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
 import styles from './ranking-chart-styles.module.scss';
@@ -87,41 +87,6 @@ const RankingChart = ({
       </Tooltip>
     );
 
-  const renderHeaderItem = (category) => {
-    const sortedCategory =
-      sortRankingCategory && sortRankingCategory.split('-')[0];
-    const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
-    const highlightAsc = sortedCategory === category && direction === SORT.ASC
-    const highlightDesc = sortedCategory === category && direction === SORT.DESC
-    return (
-      <button
-        className={cx(
-          styles.headerItem,
-          styles.titleText,
-          {[styles.highlightCategory]: sortedCategory === category}
-        )}
-        key={category}
-        onClick={() => handleSortClick(category)}
-      >
-        {category}
-        <span className={styles.sortArrows}>
-            <span
-              className={cx(
-                styles.arrowUp,
-                {[styles.highlightedSort]: highlightAsc}
-              )}
-            />
-            <span
-              className={cx(
-                styles.arrowDown,
-                {[styles.highlightedSort]: highlightDesc}
-              )}
-            />
-        </span>
-      </button>
-    );
-  };
-
   const renderLegend = () => (
     <div className={styles.legend}>
       {Object.keys(legendText).map((category) => (
@@ -150,13 +115,26 @@ const RankingChart = ({
       {data && data.length ? (
         <div className={styles.rankingChartContentContainer}>
           <div className={styles.header}>
-            {categories.map((category) => renderHeaderItem(category.toUpperCase()))}
+            {categories.map((category) => (
+              <HeaderItem
+                title={category.toUpperCase()}
+                className={cx(styles.headerItem, styles.titleText)}
+                isSortSelected={
+                  sortRankingCategory &&
+                  sortRankingCategory.split('-')[0] &&
+                  sortRankingCategory.split('-')[0] === category.toUpperCase()
+                }
+                sortDirection={
+                  sortRankingCategory && sortRankingCategory.split('-')[1]
+                }
+                handleSortClick={handleSortClick}
+              />
+            ))}
           </div>
           <div
-            className={cx(
-              styles.rankingChartContent,
-              {[styles.scrolled]: hasScrolled}
-              )}
+            className={cx(styles.rankingChartContent, {
+              [styles.scrolled]: hasScrolled
+            })}
             onScroll={onScroll}
             ref={tableRef}
           >
@@ -176,7 +154,9 @@ const RankingChart = ({
                 </div>
               ))}
             </div>
-            <div className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}>
+            <div
+              className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
+            >
               <Arrow className={styles.arrow} />
               Scroll
             </div>
@@ -191,7 +171,7 @@ const RankingChart = ({
 RankingChart.propTypes = {
   data: PropTypes.array,
   className: PropTypes.string,
-  sortRankingCategory: PropTypes.string.isRequired,
+  sortRankingCategory: PropTypes.string,
   handleInfoClick: PropTypes.func.isRequired,
   handleSortClick: PropTypes.func.isRequired,
   handleCountryClick: PropTypes.func.isRequired
