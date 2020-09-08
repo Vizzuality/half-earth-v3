@@ -118,6 +118,7 @@ const RankingChart = ({
             {categories.map((category) => (
               <HeaderItem
                 title={category.toUpperCase()}
+                key={category}
                 className={cx(styles.headerItem, styles.titleText)}
                 isSortSelected={
                   sortRankingCategory &&

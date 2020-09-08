@@ -34,6 +34,7 @@
   .search {
     font-family: $font-family-1;
     font-size: $font-size-xs;
+    margin-bottom: 25px;
   }
 
   .closeButton {
@@ -53,5 +54,95 @@
   .section {
     display: flex;
     justify-content: space-between;
+  }
+
+  .tableHeaderContainer {
+    height: 60px;
+    padding: 15px 40px;
+    background-color: $white;
+    padding-top: 30px;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 2px;
+  }
+
+  .tableHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tableHeaderItem {
+    color: $_temporary-light-text;
+    font-size: $font-size-xxs;
+    letter-spacing: $letter-spacing;
+    text-transform: uppercase;
+
+    // sort arrows
+    > span {
+      margin-bottom: -3px;
+    }
+  }
+
+  .tableRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 50px;
+    // padding: 15px 40px;
+    background-color: $white;
+    border: solid $alto;
+    border-width: 2px 0;
+
+    font-size: $font-size-sm;
+    font-family: $font-family-1-light;
+    color: $_temporary-dark-text;
+
+    > button {
+      flex: 1;
+    }
+  }
+
+  .tableItem {
+    &:nth-child(2) {
+      margin-left: 34px;
+    }
+
+    flex: 1;
+
+    &.bold {
+      font-family: $font-family-1;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .loader {
+    background-color: $white;
+  }
+
+  .searchIcon {
+    fill: $alto;
+  }
+
+  .groupColor {
+    display: block;
+    width: 6px;
+    height: 50px;
+    border: solid $alto;
+    border-width: 2px 0 2px 2px;
+
+    &.mammals {
+      background-color: $mammals-color;
+    }
+
+    &.amphibians {
+      background-color: $amphibians-color;
+    }
+
+    &.reptiles {
+      background-color: $reptiles-color;
+    }
+
+    &.birds {
+      background-color: $birds-color;
+    }
   }
 }
