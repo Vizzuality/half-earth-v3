@@ -16,6 +16,7 @@ import LocalSceneViewManager from 'components/local-scene-view-manager';
 import CountryChallengesChart from 'components/country-challenges-chart';
 import RankingChart from 'components/ranking-chart';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
+import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 // Utils
 import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
@@ -46,8 +47,9 @@ const CountrySceneComponent = ({
 }) => {
   const isOnMobile = useMobile();
   return (
-    <>
+    <div className={styles.container}>
       <Scene
+        className={styles.sceneWrapper}
         sceneId="e96f61b2e79442b698ec2cec68af6db9"
         sceneName={'country-scene'}
         sceneSettings={sceneSettings}
@@ -70,6 +72,7 @@ const CountrySceneComponent = ({
             hideTutorial
             hideCloseButton
             activeLayers={activeLayers}
+            className={styles.hideOnPrint}
             isFullscreenActive={isFullscreenActive}
           />
         )}
@@ -78,24 +81,27 @@ const CountrySceneComponent = ({
           isHEModalOpen={isHEModalOpen}
           isFullscreenActive={isFullscreenActive}
         />
+        <LocalSceneSidebar
+          countryISO={countryISO}
+          countryName={countryName}
+          activeLayers={activeLayers}
+          localGeometry={countryBorder}
+          className={styles.hideOnPrint}
+          isFullscreenActive={isFullscreenActive}
+          handleGlobeUpdating={handleGlobeUpdating}
+        />
       </Scene>
-      <LocalSceneSidebar
-        countryISO={countryISO}
-        countryName={countryName}
-        activeLayers={activeLayers}
-        isFullscreenActive={isFullscreenActive}
-        handleGlobeUpdating={handleGlobeUpdating}
-      />
       <LocalSceneModeSwitch
-        className={styles.modeSwitch}
+        className={cx(styles.modeSwitch, styles.hideOnPrint)}
         handleModeChange={handleModeChange}
         localSceneActiveTab={localSceneActiveTab}
       />
       <div
-        className={cx(styles.challengesViewContainer, {
-          [styles.challengesSelected]:
-            localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES
-        })}
+        className={cx(
+          styles.hideOnPrint,
+          styles.challengesViewContainer,
+          { [styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
+        )}
       >
         <CountryChallengesChart
           countryISO={countryISO}
@@ -105,10 +111,11 @@ const CountrySceneComponent = ({
         />
       </div>
       <div
-        className={cx(styles.challengesViewContainer, {
-          [styles.challengesSelected]:
-            localSceneActiveTab === LOCAL_SCENE_TABS.RANKING
-        })}
+        className={cx(
+          styles.hideOnPrint,
+          styles.challengesViewContainer,
+          { [styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.RANKING }
+        )}
       >
         <RankingChart
           countryISO={countryISO}
@@ -118,8 +125,14 @@ const CountrySceneComponent = ({
         />
       </div>
       {hasMetadata && <InfoModal />}
-      {!isOnMobile && <About />}
-    </>
+      {!isOnMobile && <About className={styles.hideOnPrint}/>}
+      <PdfNationalReport
+        countryISO={countryISO}
+        countryName={countryName}
+        countryBorder={countryBorder}
+        onMapLoad={onMapLoad}
+      />
+    </div>
   );
 };
 
