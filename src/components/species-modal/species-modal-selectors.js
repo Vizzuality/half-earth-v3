@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { getCountryISO } from 'pages/data-globe/data-globe-selectors';
 import get from 'lodash/get';
 
-export const getSearchTerm = ({ location }) => console.log(location, get(location, 'query.ui')) ||
+export const getSearchTerm = ({ location }) =>
 (location && get(location, 'query.ui.speciesModalSearch')) || null;
 
 const selectCountriesData = ({ countryData }) =>

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import usePrevious from 'hooks/use-previous';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import useEventListener from 'hooks/use-event-listener';
@@ -8,14 +7,12 @@ import { ReactComponent as SearchIcon } from 'icons/search.svg';
 import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { useFeatureLayer } from 'hooks/esri';
-import { SPECIES_LIST } from 'constants/layers-slugs';
 import { Loading } from 'he-components';
 import HeaderItem from 'components/header-item';
 
 import styles from './species-modal-styles.module.scss';
 
-const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCategory, handleSortClick, handleSearchChange, searchTerm }) => {
+const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCategory, handleSortClick, handleSearchChange, speciesList, searchTerm }) => {
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
     if (evt.keyCode === 27) {
@@ -25,49 +22,8 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
 
   useEventListener('keydown', keyEscapeEventListener);
 
-  const layer = useFeatureLayer({ layerSlug: SPECIES_LIST });
-
-  const [speciesList, setSpeciesList] = useState(null);
-  const [filteredSpeciesList, setFilteredSpeciesList] = useState(null);
-  useEffect(() => {
-    if (layer && countryData.iso && !speciesList) {
-      const getFeatures = async () => {
-        const query = await layer.createQuery();
-        query.where = `iso3 = '${countryData.iso}'`;
-        query.maxRecordCountFactor = '5000';
-        const results = await layer.queryFeatures(query);
-        const { features } = results;
-        if (features) {
-          setSpeciesList(features.map(f => f.attributes));
-        }
-      };
-
-      getFeatures(countryData.iso);
-    }
-  }, [layer, countryData.iso]);
-
-  const previousSearch = usePrevious(searchTerm);
-
-  useEffect(() => {
-    if(!searchTerm && speciesList && !filteredSpeciesList) {
-      setFilteredSpeciesList(speciesList);
-    }
-    if (previousSearch !== searchTerm && speciesList) {
-      if (!searchTerm) {
-        setFilteredSpeciesList(speciesList);
-      } else {
-        const speciesFilteredBySearch = speciesList.filter((c) =>
-          Object.values(c).some((v) =>
-            v && String(v).toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
-        setFilteredSpeciesList(speciesFilteredBySearch);
-      }
-    }
-  }, [searchTerm, previousSearch, speciesList])
-
   const Row = ({ index, style, data }) => {
-    const { species, speciesgroup, NSPS, percentprotected, stewardship } = filteredSpeciesList[index];
+    const { species, speciesgroup, NSPS, percentprotected, stewardship } = speciesList[index];
     return (
       <div className={styles.tableRow} style={style}>
         <div className={cx(styles.groupColor, styles[speciesgroup])} />
@@ -86,6 +42,7 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
   }
 
   const headers = ['Species group', 'Species', 'Range within country protected', 'Species protection score', 'Stewardship']
+  const MARGIN = { top: 160 };
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
@@ -100,45 +57,48 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
           </div>
         </section>
         <AutoSizer>
-          {({ height, width }) => (
-            <div>
-              <div className={styles.tableHeaderContainer} style={{ width }}>
-                <div className={styles.tableHeader} style={{ width: width - 200 }}>
-                  {headers.map((title) => (
-                    <HeaderItem
-                      title={title}
-                      className={styles.tableHeaderItem}
-                      key={title}
-                      isSortSelected={
-                        sortCategory &&
-                        sortCategory.split('-')[0] &&
-                        sortCategory.split('-')[0] === title
-                      }
-                      sortDirection={sortCategory && sortCategory.split('-')[1]}
-                      handleSortClick={handleSortClick || (() => {})}
-                    />
-                  ))}
+          {({ height, width }) => {
+            const adjustedHeight = height - MARGIN.top;
+            return (
+              <div>
+                <div className={styles.tableHeaderContainer} style={{ width }}>
+                  <div className={styles.tableHeader} style={{ width: width - 200 }}>
+                    {headers.map((title) => (
+                      <HeaderItem
+                        title={title}
+                        className={styles.tableHeaderItem}
+                        key={title}
+                        isSortSelected={
+                          sortCategory &&
+                          sortCategory.split('-')[0] &&
+                          sortCategory.split('-')[0] === title
+                        }
+                        sortDirection={sortCategory && sortCategory.split('-')[1]}
+                        handleSortClick={handleSortClick || (() => {})}
+                      />
+                    ))}
+                  </div>
                 </div>
+                {!speciesList ? (
+                  <div
+                    className={styles.loader}
+                    style={{ width, height: adjustedHeight }}
+                  >
+                    <Loading />
+                  </div>
+                ) : (
+                  <List
+                    height={adjustedHeight}
+                    width={width}
+                    itemCount={speciesList.length}
+                    itemSize={50}
+                  >
+                    {Row}
+                  </List>
+                )}
               </div>
-              {!filteredSpeciesList ? (
-                <div
-                  className={styles.loader}
-                  style={{ width, height, paddingTop: height / 2 - 100 }}
-                >
-                  <Loading />
-                </div>
-              ) : (
-                <List
-                  height={height}
-                  width={width}
-                  itemCount={filteredSpeciesList.length}
-                  itemSize={50}
-                >
-                  {Row}
-                </List>
-              )}
-            </div>
-          )}
+            );
+          }}
         </AutoSizer>
         <section></section>
       </div>
