@@ -9,11 +9,21 @@ import { Virtuoso } from 'react-virtuoso';
 import { Loading } from 'he-components';
 import HeaderItem from 'components/header-item';
 import useWindowSize from 'hooks/use-window-size';
-
+import ExpandedInfo from './expanded-info';
 import styles from './species-modal-styles.module.scss';
+import capitalize from 'lodash/capitalize';
 
-const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCategory, handleSortClick, handleSearchChange, speciesList, searchTerm }) => {
-   const { height } = useWindowSize();
+const SpeciesModalComponent = ({
+  handleModalClose,
+  countryData,
+  open,
+  sortCategory,
+  handleSortClick,
+  handleSearchChange,
+  speciesList,
+  searchTerm
+}) => {
+  const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
@@ -25,42 +35,59 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
   useEventListener('keydown', keyEscapeEventListener);
 
   const toggleExpand = (index) => {
-    setExpandedRow(index === expandedRow ? null : index)
+    setExpandedRow(index === expandedRow ? null : index);
   };
 
   const renderRow = (index) => {
-    const { species, speciesgroup, NSPS, percentprotected, stewardship } = speciesList[index];
+    const {
+      species,
+      speciesgroup,
+      NSPS,
+      percentprotected,
+      stewardship
+    } = speciesList[index];
     const isOpened = expandedRow === index;
     return (
-      <button
-        className={styles.tableRowContainer}
-        onClick={() => toggleExpand(index)}
-      >
+      <div className={styles.tableRowContainer}>
         <div className={cx(styles.groupColor, styles[speciesgroup])} />
         <div className={styles.tableRow}>
-          <div className={styles.mainInfo}>
-            <div className={styles.tableItem}>{speciesgroup}</div>
-            <div className={cx(styles.tableItem, styles.bold)}>{species}</div>
-            <div className={styles.tableItem}>{NSPS}</div>
-            <div className={styles.tableItem}>{percentprotected}</div>
-            <div
-              className={cx(styles.tableItem, {
-                [styles.bold]: stewardship === 1
-              })}
-            >
-              {stewardship === 1 ? 'Endemic' : stewardship}
+          <button onClick={() => toggleExpand(index)}>
+            <div className={styles.mainInfo}>
+              <div className={styles.tableItem}>{capitalize(speciesgroup)}</div>
+              <div className={cx(styles.tableItem, styles.bold)}>{species}</div>
+              <div className={styles.tableItem}>{NSPS}</div>
+              <div className={styles.tableItem}>{percentprotected}</div>
+              <div
+                className={cx(styles.tableItem, {
+                  [styles.bold]: stewardship === 1
+                })}
+              >
+                {stewardship === 1 ? 'Endemic' : stewardship}
+              </div>
+              <ArrowIcon
+                className={cx(styles.arrowIcon, {
+                  [styles.isOpened]: isOpened
+                })}
+              />
             </div>
-            <ArrowIcon className={cx(styles.arrowIcon, { [styles.isOpened]: isOpened })} />
-          </div>
-          <div className={cx(styles.expandedInfo, {[styles.isOpened]: isOpened })}>
-            Hello
+          </button>
+          <div
+            className={cx(styles.expandedInfo, { [styles.isOpened]: isOpened })}
+          >
+            {isOpened && <ExpandedInfo speciesName={species} />}
           </div>
         </div>
-      </button>
+      </div>
     );
-  }
+  };
 
-  const headers = ['Species group', 'Species', 'Range within country protected', 'Species protection score', 'Stewardship']
+  const headers = [
+    'Species group',
+    'Species',
+    'Range within country protected',
+    'Species protection score',
+    'Stewardship'
+  ];
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
   const renderSpeciesModal = (

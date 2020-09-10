@@ -58,7 +58,7 @@ const SpeciesModalContainer = (props) => {
         const speciesFilteredBySearch = speciesList.filter((c) =>
           Object.values(c).some(
             (v) =>
-              v && String(v).toLowerCase().includes(searchTerm.toLowerCase())
+              v && String(v).toLowerCase().startsWith(searchTerm.toLowerCase())
           )
         );
         setFilteredSpeciesList(speciesFilteredBySearch);

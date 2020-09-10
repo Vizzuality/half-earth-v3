@@ -96,6 +96,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    &:hover {
+      background-color: $athens-gray;
+    }
   }
 
   .arrowIcon {

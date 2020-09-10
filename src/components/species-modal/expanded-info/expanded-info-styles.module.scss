@@ -1,0 +1,51 @@
+@import 'styles/settings';
+
+
+.loaderContainer {
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.expandedInfo {
+  display: flex;
+  padding: 30px;
+}
+
+.imagesContainer {
+  flex: 1;
+  display: flex;
+}
+
+.image {
+  height: 196px;
+  object-fit: contain;
+  border-radius: 5px;
+  object-position: center;
+  margin-left: 10px;
+
+  &:not(:first-child) {
+    margin-left: 20px;
+  }
+}
+
+.descriptionContainer {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.description {
+  font-family: $font-family-1-light;
+  font-size: $font-size-sm;
+  flex: 1;
+  text-align: left;
+
+  // To add ellipsis after 4 lines
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+
+  margin-bottom: 20px;
+}
