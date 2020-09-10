@@ -8,10 +8,12 @@ import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 import { Virtuoso } from 'react-virtuoso';
 import { Loading } from 'he-components';
 import HeaderItem from 'components/header-item';
+import useWindowSize from 'hooks/use-window-size';
 
 import styles from './species-modal-styles.module.scss';
 
 const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCategory, handleSortClick, handleSearchChange, speciesList, searchTerm }) => {
+   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
@@ -59,6 +61,8 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
   }
 
   const headers = ['Species group', 'Species', 'Range within country protected', 'Species protection score', 'Stewardship']
+  const PX_TO_TOP = 300;
+  const tableHeight = height - PX_TO_TOP;
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
@@ -99,12 +103,15 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
             </div>
           </div>
           {!speciesList ? (
-            <div className={styles.loader} style={{ width: '100%', height: '600px' }}>
+            <div
+              className={styles.loader}
+              style={{ width: '100%', height: tableHeight }}
+            >
               <Loading />
             </div>
           ) : (
             <Virtuoso
-              style={{ width: '100%', height: '400px' }}
+              style={{ width: '100%', height: tableHeight }}
               totalCount={speciesList.length}
               item={renderRow}
             />
