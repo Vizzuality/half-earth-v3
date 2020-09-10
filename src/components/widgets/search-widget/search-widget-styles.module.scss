@@ -38,3 +38,9 @@
     width: 16px;
   }
 }
+
+@media print {
+  .searchButton {
+    display: none;
+  }
+}

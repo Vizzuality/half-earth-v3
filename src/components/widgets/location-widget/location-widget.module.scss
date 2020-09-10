@@ -57,3 +57,10 @@ $durationTime: 800ms;
   height: 16px;
   width: 16px;
 }
+
+
+@media print {
+  .locationButton {
+    display: none;
+  }
+}
