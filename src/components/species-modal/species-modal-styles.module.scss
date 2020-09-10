@@ -118,8 +118,26 @@
     background-color: $white;
   }
 
+  .searchInput {
+    font-family: $font-family-1;
+    font-size: $font-size-xs;
+    background-color: $modal-light-background;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing;
+    min-width: 300px;
+    text-transform: uppercase;
+    border: none;
+    margin-left: 1em;
+    color: $_temporary-dark-text;
+  }
+
   .searchIcon {
-    fill: $alto;
+    height: $icon-size;
+    width: $icon-size;
+
+    g {
+      stroke: $alto;
+    }
   }
 
   .groupColor {

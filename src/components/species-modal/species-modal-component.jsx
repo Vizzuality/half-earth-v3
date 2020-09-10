@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import usePrevious from 'hooks/use-previous';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import useEventListener from 'hooks/use-event-listener';
@@ -14,7 +15,7 @@ import HeaderItem from 'components/header-item';
 
 import styles from './species-modal-styles.module.scss';
 
-const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCategory, handleSortClick }) => {
+const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCategory, handleSortClick, handleSearchChange, searchTerm }) => {
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
     if (evt.keyCode === 27) {
@@ -27,6 +28,7 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
   const layer = useFeatureLayer({ layerSlug: SPECIES_LIST });
 
   const [speciesList, setSpeciesList] = useState(null);
+  const [filteredSpeciesList, setFilteredSpeciesList] = useState(null);
   useEffect(() => {
     if (layer && countryData.iso && !speciesList) {
       const getFeatures = async () => {
@@ -44,9 +46,28 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
     }
   }, [layer, countryData.iso]);
 
+  const previousSearch = usePrevious(searchTerm);
+
+  useEffect(() => {
+    if(!searchTerm && speciesList && !filteredSpeciesList) {
+      setFilteredSpeciesList(speciesList);
+    }
+    if (previousSearch !== searchTerm && speciesList) {
+      if (!searchTerm) {
+        setFilteredSpeciesList(speciesList);
+      } else {
+        const speciesFilteredBySearch = speciesList.filter((c) =>
+          Object.values(c).some((v) =>
+            v && String(v).toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+        setFilteredSpeciesList(speciesFilteredBySearch);
+      }
+    }
+  }, [searchTerm, previousSearch, speciesList])
 
   const Row = ({ index, style, data }) => {
-    const { species, speciesgroup, NSPS, percentprotected, stewardship } = speciesList[index];
+    const { species, speciesgroup, NSPS, percentprotected, stewardship } = filteredSpeciesList[index];
     return (
       <div className={styles.tableRow} style={style}>
         <div className={cx(styles.groupColor, styles[speciesgroup])} />
@@ -65,7 +86,6 @@ const SpeciesModalComponent = ({ handleModalClose, countryData, open, sortCatego
   }
 
   const headers = ['Species group', 'Species', 'Range within country protected', 'Species protection score', 'Stewardship']
-console.log('s', speciesList)
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
@@ -73,7 +93,7 @@ console.log('s', speciesList)
         <section className={styles.section}>
           <div className={styles.search}>
             <SearchIcon className={styles.searchIcon} />
-            SEARCH IN TABLE
+            <input type="text" className={styles.searchInput} placeholder="Search in table" onChange={handleSearchChange} value={searchTerm} />
           </div>
           <div className={styles.summary}>
             {countryData.speciesNumber} LAND VERTEBRATE SPECIES
@@ -100,7 +120,7 @@ console.log('s', speciesList)
                   ))}
                 </div>
               </div>
-              {!speciesList ? (
+              {!filteredSpeciesList ? (
                 <div
                   className={styles.loader}
                   style={{ width, height, paddingTop: height / 2 - 100 }}
@@ -111,7 +131,7 @@ console.log('s', speciesList)
                 <List
                   height={height}
                   width={width}
-                  itemCount={speciesList.length}
+                  itemCount={filteredSpeciesList.length}
                   itemSize={50}
                 >
                   {Row}

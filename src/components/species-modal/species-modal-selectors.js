@@ -1,5 +1,9 @@
 import { createSelector } from 'reselect';
 import { getCountryISO } from 'pages/data-globe/data-globe-selectors';
+import get from 'lodash/get';
+
+export const getSearchTerm = ({ location }) => console.log(location, get(location, 'query.ui')) ||
+(location && get(location, 'query.ui.speciesModalSearch')) || null;
 
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
