@@ -48,3 +48,8 @@
   margin-bottom: 20px;
   color: $white;
 }
+
+.actionButton {
+  @extend %title;
+  color: $white;;
+}

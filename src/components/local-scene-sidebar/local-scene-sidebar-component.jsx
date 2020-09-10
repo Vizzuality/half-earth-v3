@@ -17,6 +17,7 @@ const LocalSceneSidebarComponent = ({
   birds,
   mammals,
   reptiles,
+  className,
   amphibians,
   countryISO,
   countryName,
@@ -30,6 +31,8 @@ const LocalSceneSidebarComponent = ({
   speciesChartData,
   currentProtection,
   amphibiansEndemic,
+  handlePrintReport,
+  handleShareReport,
   isFullscreenActive,
   countryDescription,
   countryDataLoading,
@@ -59,9 +62,10 @@ const LocalSceneSidebarComponent = ({
   }
 
   return countryData ? (
-    <div className={cx(styles.container, {
-      [animationStyles.leftHidden]: sidebarHidden,
-    })}>
+    <div className={cx(styles.container, 
+      className,
+      {[animationStyles.leftHidden]: sidebarHidden}
+    )}>
       <button
         className={styles.backButton}
         onClick={handleSceneModeChange}
@@ -103,7 +107,13 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
-      />  
+      />
+      <div>
+        <button className={styles.actionButton} onClick={handlePrintReport}>download this info (pdf)</button>
+      </div>
+      <div>
+        <button className={styles.actionButton} onClick={handleShareReport}>share this info</button>
+      </div>
     </div>
   ) : null
 }
