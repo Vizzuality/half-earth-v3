@@ -4,6 +4,8 @@ import get from 'lodash/get';
 
 export const getSearchTerm = ({ location }) =>
 (location && get(location, 'query.ui.speciesModalSearch')) || null;
+export const getSpeciesModalSort = ({ location }) =>
+  (location && get(location, 'query.ui.speciesModalSort')) || null;
 
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;

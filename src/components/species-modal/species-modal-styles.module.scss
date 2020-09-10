@@ -82,15 +82,38 @@
     }
   }
 
+  .tableRowContainer {
+    display: flex;
+    position: relative;
+    min-height: 50px;
+    width: 100%;
+    background-color: $white;
+    border: solid $alto;
+    border-width: 2px 0;
+  }
+
   .tableRow {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .arrowIcon {
+    fill: $_temporary-dark-text;
+    transform: rotate(90deg);
+
+    &.isOpened {
+      transform:rotate(-90deg);
+    }
+
+    transition: transform 0.2s ease;
+  }
+
+  .mainInfo {
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 50px;
-    // padding: 15px 40px;
-    background-color: $white;
-    border: solid $alto;
-    border-width: 2px 0;
 
     font-size: $font-size-sm;
     font-family: $font-family-1-light;
@@ -99,6 +122,18 @@
     > button {
       flex: 1;
     }
+  }
+
+  .expandedInfo {
+    max-height: 0;
+    opacity: 0;
+
+    &.isOpened {
+      opacity: 1;
+      max-height: 600px;
+    }
+
+    transition: all 0.5s ease;
   }
 
   .tableItem {
@@ -141,11 +176,12 @@
   }
 
   .groupColor {
-    display: block;
+    position: absolute;
     width: 6px;
-    height: 50px;
-    border: solid $alto;
-    border-width: 2px 0 2px 2px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-left: 2px solid $alto;
 
     &.mammals {
       background-color: $mammals-color;
