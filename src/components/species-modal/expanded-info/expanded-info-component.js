@@ -39,9 +39,11 @@ const ExpandedInfo = (props) => {
           {info && info[0] && info[0].content}
         </div>
         <a
-          href={redlist_link}
-          title={`${speciesName} red list link`}
-          alt={`${speciesName} red list link`}
+          href={`https://mol.org/species/${scientificname}`}
+          title={`${speciesName} MoL link`}
+          alt={`${speciesName} MoL link`}
+          rel="noopener"
+          target="_blank"
           className={styles.link}
         >
           <Button theme={buttonTheme} className={styles.button}>
