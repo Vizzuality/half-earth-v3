@@ -1,6 +1,6 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
-import { SORT } from './ranking-chart';
+import { SORT } from 'components/header-item';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getSortRankingCategory = (_, props) => (props && props.sortRankingCategory) || null;

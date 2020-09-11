@@ -38,7 +38,7 @@ const CountrySceneComponent = ({
   activeLayers,
   countryBorder,
   sceneSettings,
-  isHEModalOpen,
+  openedModal,
   handleModeChange,
   isFullscreenActive,
   handleGlobeUpdating,
@@ -79,12 +79,13 @@ const CountrySceneComponent = ({
         )}
         <Widgets
           hideSearch
-          isHEModalOpen={isHEModalOpen}
+          openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />
         <LocalSceneSidebar
           countryISO={countryISO}
           countryName={countryName}
+          openedModal={openedModal}
           activeLayers={activeLayers}
           localGeometry={countryBorder}
           className={styles.hideOnPrint}

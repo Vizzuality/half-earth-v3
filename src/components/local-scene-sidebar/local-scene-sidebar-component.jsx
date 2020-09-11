@@ -36,6 +36,7 @@ const LocalSceneSidebarComponent = ({
   handlePrintReport,
   handleShareReport,
   isFullscreenActive,
+  openedModal,
   countryDescription,
   countryDataLoading,
   handleSceneModeChange,
@@ -109,6 +110,7 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
+        openedModal={openedModal}
       />
       <div className={styles.actionGroup}>
         <DownloadIcon />

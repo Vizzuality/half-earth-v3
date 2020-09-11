@@ -22,6 +22,7 @@
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-app-rewire-hot-loader": "^2.0.1",
+    "react-collapse": "^5.0.1",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.2",
@@ -33,6 +34,7 @@
     "react-tippy": "^1.4.0",
     "react-tooltip": "^3.10.0",
     "react-universal-component": "^4.0.0",
+    "react-virtuoso": "^0.20.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-first-router": "0.0.9-rudy",
@@ -42,6 +44,7 @@
     "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
+    "swr": "^0.3.2",
     "vega-lib": "^4.4.0",
     "vizzuality-components": "^1.1.1",
     "workbox-build": "^4.3.1"
