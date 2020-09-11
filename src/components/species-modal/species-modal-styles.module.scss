@@ -58,7 +58,7 @@
 
   .tableHeaderContainer {
     height: 60px;
-    padding: 15px 40px;
+    padding: 15px 74px 15px 40px;
     background-color: $white;
     padding-top: 30px;
     border-radius: 5px 5px 0 0;
@@ -67,7 +67,6 @@
 
   .tableHeader {
     display: flex;
-    justify-content: space-between;
   }
 
   .tableHeaderItem {
@@ -75,6 +74,8 @@
     font-size: $font-size-xxs;
     letter-spacing: $letter-spacing;
     text-transform: uppercase;
+    text-align: left;
+    width: 20%;
 
     // sort arrows
     > span {
@@ -115,17 +116,13 @@
 
   .mainInfo {
     display: flex;
-    justify-content: space-between;
+    padding: 0 40px;
     align-items: center;
     min-height: 50px;
 
     font-size: $font-size-sm;
     font-family: $font-family-1-light;
     color: $_temporary-dark-text;
-
-    > button {
-      flex: 1;
-    }
   }
 
   .expandedInfo {
@@ -141,11 +138,8 @@
   }
 
   .tableItem {
-    &:nth-child(2) {
-      margin-left: 34px;
-    }
-
-    flex: 1;
+    width: 20%;
+    text-align: left;
 
     &.bold {
       font-family: $font-family-1;
