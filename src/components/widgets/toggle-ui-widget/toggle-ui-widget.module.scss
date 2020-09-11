@@ -22,3 +22,9 @@
     stroke: $white;
   }
 }
+
+@media print {
+  .toggleButton {
+    display: none;
+  }
+}

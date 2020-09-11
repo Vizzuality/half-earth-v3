@@ -13,9 +13,11 @@ const actions = { ...urlActions, ...countryDataActions };
 
 const LocalSceneSidebarContainer = (props) => {
   const {
+    view,
     changeUI,
     sceneMode,
-    changeGlobe
+    changeGlobe,
+    localGeometry
   } = props;
 
   useEffect(() => {
@@ -28,8 +30,21 @@ const LocalSceneSidebarContainer = (props) => {
     setCSSvariable('--sidebar-top-margin', '60px');
   }
 
+  const handlePrintReport = () => {
+    const { extent } = localGeometry;
+    view.goTo({ target: extent, tilt: 0, heading: 0 })
+        .then(() => window.print())
+        .catch(() => window.print())
+  }
+
+  const handleShareReport = () => {
+
+  }
+
   return (
     <Component
+      handlePrintReport={handlePrintReport}
+      handleShareReport={handleShareReport}
       handleSceneModeChange={handleSceneModeChange}
       {...props}
     />

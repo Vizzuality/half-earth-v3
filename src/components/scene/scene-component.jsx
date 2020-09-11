@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
@@ -8,6 +9,7 @@ const SceneComponent = ({
   sceneId,
   children,
   sceneName,
+  className,
   loaderOptions,
   sceneSettings,
   spinner = true,
@@ -71,8 +73,8 @@ const SceneComponent = ({
     )
   } else if (loadState === 'loaded') {
     return (
-      <div style={{ height: '100%', position: 'relative', width: '100%', pointerEvents: interactionsDisabled ? 'none' : 'unset' }}>
-        <div id={`scene-container-${sceneName || sceneId}`} className={styles.sceneContainer} style={{width:'100%', height:'100%', backgroundColor: '#0A212E', ...style}}>
+      <div className={cx(styles.sceneWrapper, className)} style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}>
+        <div id={`scene-container-${sceneName || sceneId}`}>
           {React.Children.map(children || null, (child, i) => {
             return child && <child.type key={i} map={map} view={view} {...child.props}/>;
           })}

@@ -34,3 +34,9 @@
   margin: auto;
   width: 16px;
 }
+
+@media print {
+  .zoomComponent {
+    display: none;
+  }
+}
