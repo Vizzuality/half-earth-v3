@@ -17,7 +17,7 @@ const ExpandedInfo = (props) => {
     );
   }
 
-  const { rangemap, image, info, redlist_link } = data[0];
+  const { rangemap, image, info, scientificname } = data[0];
   return (
     <div className={styles.expandedInfo}>
       <div className={styles.imagesContainer}>
