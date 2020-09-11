@@ -49,6 +49,12 @@
   color: $white;
 }
 
+.actionGroup {
+  padding: $site-gutter;
+  padding-top: 0;
+  display: flex;
+}
+
 .actionButton {
   @extend %title;
   color: $white;;

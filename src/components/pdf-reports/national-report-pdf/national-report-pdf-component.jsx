@@ -1,31 +1,20 @@
 import React from 'react';
-import Scene from 'components/scene';
-import CountryMaskLayer from 'components/country-mask-layer';
-import { LIGHT_MASK_STYLES } from 'constants/graphic-styles';
-import LocalSceneViewManager from 'components/local-scene-view-manager';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import styles from './national-report-pdf.module.scss';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
-import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';import {
-  FIREFLY_BASEMAP_LAYER,
-  GRAPHIC_LAYER,
-  MERGED_WDPA_VECTOR_TILE_LAYER,
-  COUNTRY_PRIORITY_LAYER,
-} from 'constants/layers-slugs';
+import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 
 const NationalReportPdf = ({
   SPI,
   birds,
   mammals,
   reptiles,
+  shortLink,
   amphibians,
   countryISO,
   countryName,
   birdsEndemic,
-  countryBorder,
   indexStatement,
   mammalsEndemic,
   reptilesEndemic,
@@ -33,8 +22,7 @@ const NationalReportPdf = ({
   protectionNeeded,
   amphibiansEndemic,
   currentProtection,
-  endemicVertebratesCount,
-  onMapLoad
+  endemicVertebratesCount
 }) => {
 
   return (
@@ -70,7 +58,10 @@ const NationalReportPdf = ({
           </div>
         </div>
       </section>
-      <span className={styles.speciesSentence}>{`These are the four species in ${countryName} with the smallest global range (one per taxonomic group).`}</span>
+      <section className={styles.speciesSentence}>
+        <span>{`These are the four species in ${countryName} with the smallest global range (one per taxonomic group).`}</span>
+        <p className={styles.datasetSource}><a href="https://mol.org/">Source: Map of Life</a></p>      
+      </section>
       <section className={styles.speciesComposition}>
         <p className={styles.title}>species composition</p>
         <p className={styles.speciesCount}><span className={styles.amphibiansIcon}><AmphibiansIcon /></span> {`${amphibians} amphibians (${amphibiansEndemic} endemic)`}</p>
@@ -88,14 +79,7 @@ const NationalReportPdf = ({
             regions that are currently recognized 
             as being managed for the long-term conservation of nature.
             </span>
-            <p className={styles.datasetSource} >Source:
-              <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract" >
-                WDPA, OECM
-              </a>
-              <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract" >
-              & RAISG.
-              </a>
-            </p>
+            <p className={styles.datasetSource} >Source: WDPA, OECM & RAISG.</p>
           </div>
         </div>
       </section>
@@ -115,7 +99,9 @@ const NationalReportPdf = ({
             }
             </span>
             <p className={styles.datasetSource} >
-              Source: Rinnan DS and Jetz W, (2020).
+              <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract" >
+                Source: Rinnan DS and Jetz W, (2020).
+              </a>
             </p>
           </div>
         </div>
@@ -125,6 +111,9 @@ const NationalReportPdf = ({
         <span>coming soon</span>
       </section>
       <section className={styles.mapWrapper}/>
+      <section className={styles.urlWrapper} >
+        <a href={shortLink}>Half Earth Map: {shortLink}</a>
+      </section>
     </div>
   )
 }

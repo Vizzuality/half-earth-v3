@@ -6,6 +6,8 @@ import CountryDataCard from './country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
+import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -108,10 +110,12 @@ const LocalSceneSidebarComponent = ({
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
       />
-      <div>
+      <div className={styles.actionGroup}>
+        <DownloadIcon />
         <button className={styles.actionButton} onClick={handlePrintReport}>download this info (pdf)</button>
       </div>
-      <div>
+      <div className={styles.actionGroup}>
+        <ShareIcon />
         <button className={styles.actionButton} onClick={handleShareReport}>share this info</button>
       </div>
     </div>

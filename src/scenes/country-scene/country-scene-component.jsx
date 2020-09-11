@@ -30,6 +30,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
+  shortLink,
   onMapLoad,
   countryISO,
   countryName,
@@ -42,12 +43,12 @@ const CountrySceneComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   localSceneActiveTab,
+  sortRankingCategory,
   countryChallengesSelectedKey,
-  sortRankingCategory
 }) => {
   const isOnMobile = useMobile();
   return (
-    <div className={styles.container}>
+    <>
       <Scene
         className={styles.sceneWrapper}
         sceneId="e96f61b2e79442b698ec2cec68af6db9"
@@ -131,8 +132,9 @@ const CountrySceneComponent = ({
         countryName={countryName}
         countryBorder={countryBorder}
         onMapLoad={onMapLoad}
+        shortLink={shortLink}
       />
-    </div>
+    </>
   );
 };
 

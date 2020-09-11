@@ -4,7 +4,7 @@
 $gap: 20pt;
 
 .container {
-  dislpay: none;
+  display: none;
 }
 
 // @extends need to be outside @media rules
@@ -54,8 +54,6 @@ $gap: 20pt;
     size: A4 landscape;
     margin: 15pt;
     margin-bottom: 0pt;
-    border-top: 1px solid $_temporary-light-text;
-    border-bottom: 1px solid $_temporary-light-text;
   }
 
   a {
@@ -86,9 +84,9 @@ $gap: 20pt;
     "index index index index rg rg rg sp sp sp"
     "intro intro intro intro cmp cmp cmp sp sp sp"
     "exp exp exp exp cmp cmp cmp sp sp sp"
-    "map map map map prot prot prot prot prot prot"
-    "map map map map prior prior prior prior prior prior"
-    "map map map map url url url url url url";
+    ". . . . prot prot prot prot prot prot"
+    ". . . . prior prior prior prior prior prior"
+    ". . . . url url url url url url";
 
     .nameWrapper {
       grid-area: hd;
@@ -109,20 +107,23 @@ $gap: 20pt;
       align-self: center;
     }
 
+    .overviewText {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .indexStatement {
+      text-align: center;
+    }
+
     .indexExplanation {
       grid-area: exp;
     }
 
-    // .mapWrapper {
-    //   width: 100%;
-    //   height: 100%;
-    //   grid-area: map;
-    //   .mapContainer {
-    //     position: relative;
-    //     width: 100%;
-    //     height: 95%;
-    //   }
-    // }
+    .urlWrapper {
+      grid-area: url;
+      overflow: hidden;
+    }
 
     .species {
       grid-area: sp;
@@ -183,8 +184,36 @@ $gap: 20pt;
 
     .priorityLegend,
     .protectionLegend {
+      position:relative;
       padding-left: 13pt;
       border-left: 1px solid $_temporary-dark-text;
+      &:before {
+        content: '';
+        width: 9pt;
+        height: 9pt;
+        position: absolute;
+        top: calc(50% - 9pt);
+        left: -4pt;
+        transform: rotate(45deg);
+        display: block;
+        background-color: $white;
+        border: 1px solid $_temporary-dark-text;
+        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+        border-radius: 0 0 0 3px;
+      }
+      &:after {
+        content: '';
+        content: '';
+        width: 9pt;
+        height: 9pt;
+        position: absolute;
+        top: calc(50% - 9pt);
+        left: -3pt;
+        transform: rotate(45deg);
+        display: block;
+        background-color: $white;
+        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+      }
     }
 
     .legendTitle {
