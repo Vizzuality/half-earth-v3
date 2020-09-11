@@ -69,9 +69,7 @@
 
   .tableHeaderItem {
     color: $_temporary-light-text;
-    font-size: $font-size-xxs;
-    letter-spacing: $letter-spacing;
-    text-transform: uppercase;
+    @extend %subtitle;
     text-align: left;
     width: 20%;
 
