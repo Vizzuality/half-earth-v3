@@ -25,9 +25,7 @@
   }
 
   .title {
-    font-family: $font-family-2;
-    font-size: $font-size-xl;
-    font-weight: $font-weight;
+    @extend %headline;
   }
 
   .summary,
