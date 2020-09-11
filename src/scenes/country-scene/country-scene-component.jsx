@@ -85,6 +85,7 @@ const CountrySceneComponent = ({
         <LocalSceneSidebar
           countryISO={countryISO}
           countryName={countryName}
+          openedModal={openedModal}
           activeLayers={activeLayers}
           localGeometry={countryBorder}
           className={styles.hideOnPrint}
