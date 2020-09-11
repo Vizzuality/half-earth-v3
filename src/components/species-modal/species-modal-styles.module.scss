@@ -112,8 +112,7 @@
     align-items: center;
     min-height: 50px;
 
-    font-size: $font-size-sm;
-    font-family: $font-family-1-light;
+    @extend %bodyText;
     color: $_temporary-dark-text;
 
     &.isOpened, &:hover {
