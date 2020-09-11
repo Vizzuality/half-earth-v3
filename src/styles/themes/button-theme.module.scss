@@ -1,6 +1,8 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .button {
+  @extend %title;
   color: $alto;
   background-color: $brand-color-secondary;
 
