@@ -51,12 +51,17 @@ const SpeciesModalComponent = ({
       <div className={styles.tableRowContainer}>
         <div className={cx(styles.groupColor, styles[speciesgroup])} />
         <div className={styles.tableRow}>
-          <button onClick={() => toggleExpand(index)}>
-            <div className={styles.mainInfo}>
+          <button
+            className={styles.expandButton}
+            onClick={() => toggleExpand(index)}
+          >
+            <div
+              className={cx(styles.mainInfo, { [styles.isOpened]: isOpened })}
+            >
               <div className={styles.tableItem}>{capitalize(speciesgroup)}</div>
               <div className={cx(styles.tableItem, styles.bold)}>{species}</div>
-              <div className={styles.tableItem}>{NSPS}</div>
               <div className={styles.tableItem}>{percentprotected}</div>
+              <div className={styles.tableItem}>{NSPS}</div>
               <div
                 className={cx(styles.tableItem, {
                   [styles.bold]: stewardship === 1
@@ -151,7 +156,6 @@ const SpeciesModalComponent = ({
       </button>
     </div>
   );
-
   if (!open) return null;
 
   return ReactDOM.createPortal(

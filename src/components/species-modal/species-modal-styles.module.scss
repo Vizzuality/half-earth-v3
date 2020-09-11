@@ -97,10 +97,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-
-    &:hover {
-      background-color: $athens-gray;
-    }
   }
 
   .arrowIcon {
@@ -123,6 +119,10 @@
     font-size: $font-size-sm;
     font-family: $font-family-1-light;
     color: $_temporary-dark-text;
+
+    &.isOpened, &:hover {
+      background-color: $athens-gray;
+    }
   }
 
   .expandedInfo {
@@ -149,6 +149,8 @@
 
   .loader {
     background-color: $white;
+    display: flex;
+    justify-content: center;
   }
 
   .searchInput {
@@ -165,11 +167,10 @@
   }
 
   .searchIcon {
-    height: $icon-size;
-    width: $icon-size;
+    transform: translate(0, 9px) scale(0.5);
 
     g {
-      stroke: $alto;
+      stroke: $_temporary-dark-text;
     }
   }
 
@@ -197,4 +198,8 @@
       background-color: $birds-color;
     }
   }
+}
+
+.expandedButton {
+  padding: 0;
 }

@@ -38,7 +38,12 @@ const ExpandedInfo = (props) => {
         <div className={styles.description}>
           {info && info[0] && info[0].content}
         </div>
-        <a href={redlist_link}>
+        <a
+          href={redlist_link}
+          title={`${speciesName} red list link`}
+          alt={`${speciesName} red list link`}
+          className={styles.link}
+        >
           <Button theme={buttonTheme} className={styles.button}>
             View more on Map of Life
           </Button>
