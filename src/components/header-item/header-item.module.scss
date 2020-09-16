@@ -1,24 +1,5 @@
 @import 'styles/settings';
-
-@mixin caret($color, $direction) {
-  &::after {
-    content: '';
-    width: 0;
-    height: 0;
-    transform: none;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-
-    @if ($direction == 'up') {
-      border-top: 6px solid $color;
-      border-bottom: none;
-    }
-    @if ($direction == 'down') {
-      border-bottom: 6px solid $color;
-      border-top: none;
-    }
-  }
-}
+@import 'styles/mixins';
 
 .sortArrows {
   display: inline-block;

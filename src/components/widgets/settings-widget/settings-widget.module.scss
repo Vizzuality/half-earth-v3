@@ -1,0 +1,50 @@
+@import 'styles/settings';
+@import 'styles/mixins';
+@import 'styles/ui.module';
+
+.settingsButton {
+  @extend .uiRight;
+  top: 20px;
+  align-items: center;
+  background-color: $elephant;
+  border-radius: 2px;
+  display: flex;
+  height: $widget-button-size;
+  padding: 0;
+  width: $widget-button-size;
+
+  &:hover svg g {
+    fill: $robins-egg-blue;
+  }
+
+  svg g {
+    fill: $white;
+  }
+}
+
+.settingsTooltip {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  background-color: $elephant;
+  width: 230px;
+  height: 116px;
+
+  z-index: $bring-to-front;
+  color: $white;
+  padding: 10px 20px;
+
+  @include caret($elephant, 'right', 10px);
+
+  &::after {
+    position: absolute;
+    right: -10px;
+    top: 10px;
+  }
+}
+
+@media print {
+  .settingsButton {
+    display: none;
+  }
+}
