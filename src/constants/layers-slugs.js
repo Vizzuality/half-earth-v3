@@ -20,6 +20,7 @@ export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
+export const MARINE_HUMAN_PRESSURES_TILE_LAYER = 'marine_human_pressures';
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const COUNTRY_MASK_LAYER = 'mask-layer';
 // Label layer to display features labels (marine, terrestrial and urban).
