@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
-import { toggleFullScreenAnalyticsEvent } from 'actions/google-analytics-actions';
+import { settingsAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import SettingsComponent from './settings-widget-component';
 
-const actions = { ...urlActions, toggleFullScreenAnalyticsEvent };
+const actions = { ...urlActions, settingsAnalyticsEvent };
 
 const SettingsWidget = ({
-  isFullscreenActive,
   changeUI,
-  toggleFullScreenAnalyticsEvent
+  settingsAnalyticsEvent,
+  view,
+  hidden
 }) => {
   const openSettings = () => {
-    changeUI({ openSettings: !isFullscreenActive });
-    toggleFullScreenAnalyticsEvent({ isFullscreenActive: !isFullscreenActive });
+    changeUI({ openSettings: null });
+    settingsAnalyticsEvent({ notDisplayedLayers: null });
   };
+  useEffect(() => {
+    const node = document.createElement('div');
+    if (!hidden) {
+      view.ui.add(node, 'top-right');
+      ReactDOM.render(
+        <SettingsComponent
+          openSettings={openSettings}
+        />,
+        node
+      );
+    }
+    return function cleanup() {
+      view.ui.remove(node);
+    };
+  }, [view, hidden]);
 
-  return (
-    <SettingsComponent
-      openSettings={openSettings}
-      isFullscreenActive={isFullscreenActive}
-    />
-  );
+  return null;
 };
 
 export default connect(null, actions)(SettingsWidget);

@@ -28,7 +28,7 @@ const SettingsWidgetComponent = () => {
   const [isTooltipOpen, setTooltipOpen] = React.useState(false);
   useClickOutside(wrapperRef, () => setTooltipOpen(false), buttonRef);
   return (
-    <div className={styles.settingsContainer}>
+    <>
       <button
         data-tip
         data-for="settingsUi"
@@ -55,7 +55,7 @@ const SettingsWidgetComponent = () => {
           MAP SETTINGS
         </div>
       )}
-    </div>
+    </>
   );
 };
 
