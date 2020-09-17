@@ -60,7 +60,7 @@ const ExpandedInfo = (props) => {
           href={`https://mol.org/species/${scientificname}`}
           title={`${speciesName} MoL link`}
           alt={`${speciesName} MoL link`}
-          rel="noopener"
+          rel="noopener noreferrer"
           target="_blank"
           className={styles.link}
         >
