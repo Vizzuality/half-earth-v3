@@ -3,9 +3,13 @@ import { get } from 'lodash'
 
 const markerDefaultStyles = 'overflow: hidden; border-radius: 20px; position: absolute; display: none; width: 40px; height: 40px; pointer-events: none; background-size: cover;';
 
-export const setCursor = (viewPoint, featuredPlacesLayerTitle) => {
-  const featuredPoint = viewPoint.results.filter((result) => result.graphic.layer.title === featuredPlacesLayerTitle);
-  if (featuredPoint.length) {
+const hitResults = (viewPoint, layerTitle) => (
+  viewPoint.results.filter((result) => result.graphic.layer.title === layerTitle)
+)
+
+export const setCursor = (viewPoint, layerTitle) => {
+  const layerFeatures = hitResults(viewPoint, layerTitle);
+  if (layerFeatures.length) {
     document.body.style.cursor = 'pointer';
   } else {
     document.body.style.cursor = 'default';
@@ -21,7 +25,7 @@ export const removeAvatarImage = (markerElement) => {
 }
 
 export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, selectedFeaturedMap, featuredMapPlaces) => {
-  const featuredPoint = viewPoint.results.filter((result) => result.graphic.layer.title === featuredPlacesLayerTitle);
+  const featuredPoint = hitResults(viewPoint, featuredPlacesLayerTitle);
   let marker = document.getElementById('avatar');
   if (!marker) {
     marker = document.createElement('div');
@@ -45,7 +49,27 @@ export const setAvatarImage = (view, viewPoint, featuredPlacesLayerTitle, select
 }
 
 export const setSelectedFeaturedPlace = (viewPoint, featuredPlacesLayerTitle, changeUI) => {
-  const featuredPoint = viewPoint.results.filter((result) => result.graphic.layer.title === featuredPlacesLayerTitle);
+  const featuredPoint = hitResults(viewPoint, featuredPlacesLayerTitle);
   const selectedFeaturedPlace = featuredPoint.length ? get(featuredPoint, '[0].graphic.attributes.nam_slg') : null;
   if (selectedFeaturedPlace) changeUI({ selectedFeaturedPlace });
+}
+
+export const drawGeometry = (viewPoint, layerTitle, graphic) => {
+  const layerFeatures = hitResults(viewPoint, layerTitle);
+  if (layerFeatures.length) {
+    if (!graphic.geometry) {
+      graphic.geometry = layerFeatures[0].graphic.geometry;
+    } else if(graphic.geometry.centroid.x !== layerFeatures[0].graphic.geometry.centroid.x) {
+      graphic.geometry = layerFeatures[0].graphic.geometry;
+    } 
+  } else {
+    graphic.geometry = null;
+  }
+}
+
+export const flyToGeometry = (view, viewPoint, layerTitle) => {
+  const layerFeatures = hitResults(viewPoint, layerTitle);
+  if (layerFeatures.length) {
+    view.goTo(layerFeatures[0].graphic.geometry);
+  }
 }
