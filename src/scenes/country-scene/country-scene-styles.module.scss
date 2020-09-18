@@ -30,3 +30,18 @@
   width: $country-scene-chart-width;
   top: $sidebar-header-height;
 }
+
+
+@media print {
+  .hideOnPrint {
+    display: none;
+  }
+
+  .sceneWrapper {
+    position: absolute;
+    width: 312pt;
+    height: 294pt;
+    left: 0;
+    top: 300pt;
+  }
+}

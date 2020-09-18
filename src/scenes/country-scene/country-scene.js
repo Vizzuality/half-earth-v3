@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { connect } from 'react-redux';
+import { getShortenUrl } from 'services/bitly';
 import Component from './country-scene-component';
 import countriesGeometriesActions from 'redux_modules/countries-geometries';
 import countryDataActions from 'redux_modules/country-data';
@@ -25,8 +26,16 @@ const CountrySceneContainer = (props) => {
     setCountryDataError
   } = props;
 
+  const [shortLink, setShortLink] = useState(null);
   const [countryLayer, setCountryLayer] = useState(null);
   const [countriesDataLayer, setCountriesDataLayer] = useState(null);
+
+  useEffect(() => {
+    getShortenUrl(window.location.href)
+    .then(link => {
+      setShortLink(link);
+    })
+  }, [])
 
   const setCountryGeometries = () => {
     const query = countryLayer.createQuery();
@@ -78,7 +87,10 @@ const CountrySceneContainer = (props) => {
 
 
   return (
-    <Component {...props}/>
+    <Component
+      shortLink={shortLink}
+      {...props}
+    />
   )
 }
 

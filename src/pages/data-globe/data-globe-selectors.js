@@ -54,7 +54,7 @@ const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettin
 const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
-const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
+const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
 const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
@@ -96,7 +96,7 @@ export default createStructuredSelector({
   hasMetadata: selectMetadataData,
   listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,
-  isHEModalOpen: getHalfEarthModalOpen,
+  openedModal: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,

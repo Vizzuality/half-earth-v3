@@ -30,7 +30,7 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
 export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent) => {
   const [searchWidget, setSearchWidget ] = useState(null);
 
-  const keyEscapeEventListener = (evt) => { 
+  const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
     if (evt.keyCode === 27 && view && searchWidget) {
       handleCloseSearch();
@@ -58,7 +58,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
     document.removeEventListener('keydown', keyEscapeEventListener);
     setSearchWidget(null);
   }
-  
+
   const handleSearchStart = () => {
     searchLocationAnalyticsEvent();
     handleCloseSearch();
@@ -83,7 +83,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
         evt.placeholder = "Search for a location";
       });
     }
-    
+
     return function cleanUp() {
       document.removeEventListener('keydown', keyEscapeEventListener);
     }

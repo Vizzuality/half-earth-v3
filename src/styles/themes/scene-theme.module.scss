@@ -1,12 +1,18 @@
 @import 'styles/settings';
 
+.sceneWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .sceneContainer {
   width: 100vw;
   height: calc(100vh - 65px) !important;
   padding-left: 0;
   
   @media #{$tablet-portrait} {
-    height: 100vh  !important;
+    height: 100vh !important;
   }
 }
 

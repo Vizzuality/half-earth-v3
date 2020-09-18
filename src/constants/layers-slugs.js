@@ -82,3 +82,5 @@ export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
+// Species modal
+export const SPECIES_LIST = 'species-list';

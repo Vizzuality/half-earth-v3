@@ -1,0 +1,70 @@
+@import 'styles/settings';
+
+@mixin caret($color, $direction) {
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    transform: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    @if ($direction == 'up') {
+      border-top: 6px solid $color;
+      border-bottom: none;
+    }
+    @if ($direction == 'down') {
+      border-bottom: 6px solid $color;
+      border-top: none;
+    }
+  }
+}
+
+.sortArrows {
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+
+  .arrowUp {
+    @include caret($_temporary-light-text, 'up');
+    position: absolute;
+    top: -1px;
+    &.highlightedSort::after {
+      border-top-color: $white;
+    }
+  }
+
+  .arrowDown {
+    @include caret($_temporary-light-text, 'down');
+    position: absolute;
+    top: -26px;
+    &.highlightedSort::after {
+      border-bottom-color: $white;
+    }
+  }
+}
+
+
+.sortArrows {
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+
+  .arrowUp {
+    @include caret($_temporary-light-text, 'up');
+    position: absolute;
+    top: -1px;
+    &.highlightedSort::after {
+      border-top-color: $white;
+    }
+  }
+
+  .arrowDown {
+    @include caret($_temporary-light-text, 'down');
+    position: absolute;
+    top: -26px;
+    &.highlightedSort::after {
+      border-bottom-color: $white;
+    }
+  }
+}

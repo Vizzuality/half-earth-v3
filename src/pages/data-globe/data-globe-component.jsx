@@ -14,7 +14,7 @@ const DataGlobeComponent = ({
   activeLayers,
   activeOption,
   countryExtent,
-  isHEModalOpen,
+  openedModal,
   handleMapLoad,
   sceneSettings,
   isSidebarOpen,
@@ -40,7 +40,7 @@ const DataGlobeComponent = ({
         countryName={countryName}
         hasMetadata={hasMetadata}
         activeLayers={activeLayers}
-        isHEModalOpen={isHEModalOpen}
+        openedModal={openedModal}
         sceneSettings={sceneSettings}
         countryExtent={countryExtent}
         isGlobeUpdating={isGlobeUpdating}
@@ -48,9 +48,9 @@ const DataGlobeComponent = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
+        sortRankingCategory={sortRankingCategory}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
-        sortRankingCategory={sortRankingCategory}
       />
     )}
     {sceneMode === DATA_SCENE && (
@@ -62,7 +62,7 @@ const DataGlobeComponent = ({
         activeLayers={activeLayers}
         activeOption={activeOption}
         isSidebarOpen={isSidebarOpen}
-        isHEModalOpen={isHEModalOpen}
+        openedModal={openedModal}
         sceneSettings={sceneSettings}
         countryTooltip={countryTooltip}
         activeCategory={activeCategory}

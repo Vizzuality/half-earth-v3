@@ -6,6 +6,8 @@ import CountryDataCard from './country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
+import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -17,6 +19,7 @@ const LocalSceneSidebarComponent = ({
   birds,
   mammals,
   reptiles,
+  className,
   amphibians,
   countryISO,
   countryName,
@@ -30,7 +33,10 @@ const LocalSceneSidebarComponent = ({
   speciesChartData,
   currentProtection,
   amphibiansEndemic,
+  handlePrintReport,
+  handleShareReport,
   isFullscreenActive,
+  openedModal,
   countryDescription,
   countryDataLoading,
   handleSceneModeChange,
@@ -59,9 +65,10 @@ const LocalSceneSidebarComponent = ({
   }
 
   return countryData ? (
-    <div className={cx(styles.container, {
-      [animationStyles.leftHidden]: sidebarHidden,
-    })}>
+    <div className={cx(styles.container, 
+      className,
+      {[animationStyles.leftHidden]: sidebarHidden}
+    )}>
       <button
         className={styles.backButton}
         onClick={handleSceneModeChange}
@@ -103,7 +110,16 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
-      />  
+        openedModal={openedModal}
+      />
+      <div className={styles.actionGroup}>
+        <DownloadIcon />
+        <button className={styles.actionButton} onClick={handlePrintReport}>download this info (pdf)</button>
+      </div>
+      <div className={styles.actionGroup}>
+        <ShareIcon />
+        <button className={styles.actionButton} onClick={handleShareReport}>share this info</button>
+      </div>
     </div>
   ) : null
 }

@@ -27,7 +27,7 @@ export default {
     isGlobeUpdating: false,
     environment: {
       background: {
-        type: "color",
+        type: 'color',
         color: [0, 0, 0, 0]
       },
       starsEnabled: false,
@@ -41,14 +41,16 @@ export default {
       tilt: {
         max: 60
       }
-    },
+    }
   },
   ui: {
-    sceneMode:'local',
+    sceneMode: 'local',
     countryChallengesSelectedFilter: 'all',
     localSceneActiveTab: 'map',
     countryChallengesSelectedKey: 'N_SPECIES',
+    speciesModalSearch: null,
+    speciesModalSort: null,
     sortRankingCategory: null
   },
   listeners: false
-}
+};

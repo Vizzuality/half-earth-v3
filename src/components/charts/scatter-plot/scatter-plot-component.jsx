@@ -121,7 +121,7 @@ const ScatterPlot = ({
           .filter(bubble => persistentBubbles.includes(bubble.slug))
           .map((bubble, index) => {
             ease.add(bubble,
-              {x: chartScale.xScale(bubble.children[0].attributes.xAxisValues[countryChallengesSelectedKey])}, 
+              {x: chartScale.xScale(bubble.children[0].attributes.xAxisValues[countryChallengesSelectedKey])},
               {duration: 700, ease: 'easeInOutExpo', wait: index * 8}
             )
             return bubble
@@ -163,7 +163,7 @@ const ScatterPlot = ({
           country.width = isSelectedCountry ? bigBubble : smallBubble;
           country.height = isSelectedCountry ? bigBubble : smallBubble;
           country.alpha = isSelectedCountry ? 1 : 0.6;
-          
+
           country.on('pointerover', e => {
             setTooltipState({
               x: e.data.global.x,
@@ -183,7 +183,7 @@ const ScatterPlot = ({
               }, {duration: 150, ease: 'easeInOutExpo' });
             }
           });
-          
+
           // mouse leave
           country.on('pointerout', e => {
             setTooltipState(null)
@@ -194,7 +194,7 @@ const ScatterPlot = ({
               }, {duration: 150, ease: 'easeInOutExpo' });
             }
           });
-    
+
           country.on('click', e => {
             if (!isSelectedCountry) {
               onBubbleClick({ countryISO: country.attributes.iso, countryName: country.attributes.name })
@@ -204,33 +204,60 @@ const ScatterPlot = ({
       }
     },[countryISO, bubblesArray, chartScale])
 
-  
+
   return (
     <>
       <div className={cx(styles.chartContainer)} onClick={handleContainerClick}>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}>
           <div className={styles.yAxisTicksContainer}>
-            {yAxisTicks && yAxisTicks.map(tick => <span className={styles.tick}>{tick}</span>)}
+            {yAxisTicks &&
+              yAxisTicks.map((tick) => (
+                <span className={styles.tick} key={`y-${tick}`}>
+                  {tick}
+                </span>
+              ))}
           </div>
           <div className={styles.xAxisTicksContainer}>
-            {xAxisTicks && xAxisTicks.map(tick => <span className={styles.tick}>{tick}</span>)}
+            {xAxisTicks &&
+              xAxisTicks.map((tick) => (
+                <span className={styles.tick} key={`x-${tick}`}>
+                  {tick}
+                </span>
+              ))}
           </div>
         </div>
-        {tooltipState &&
-          <div className={styles.tooltip} style={{ position: 'absolute', left: `${tooltipState.x + tooltipOffset}px`, top:`${tooltipState.y + tooltipOffset}px`}}>
-            <section className={styles.countryLabel} style={{ backgroundColor: tooltipState.color}}>
+        {tooltipState && (
+          <div
+            className={styles.tooltip}
+            style={{
+              position: 'absolute',
+              left: `${tooltipState.x + tooltipOffset}px`,
+              top: `${tooltipState.y + tooltipOffset}px`
+            }}
+          >
+            <section
+              className={styles.countryLabel}
+              style={{ backgroundColor: tooltipState.color }}
+            >
               <span className={styles.name}>{tooltipState.name} </span>
-              <span className={styles.continent}>({tooltipState.continent})</span>
+              <span className={styles.continent}>
+                ({tooltipState.continent})
+              </span>
             </section>
             <section className={styles.countryData}>
-              <p className={styles.data}>{tooltipState.xLabel(countryChallengesSelectedKey)}: {tooltipState.xValue(countryChallengesSelectedKey)}</p>
-              <p className={styles.data}>{tooltipState.yLabel}: {tooltipState.yValue}</p>
+              <p className={styles.data}>
+                {tooltipState.xLabel(countryChallengesSelectedKey)}:{' '}
+                {tooltipState.xValue(countryChallengesSelectedKey)}
+              </p>
+              <p className={styles.data}>
+                {tooltipState.yLabel}: {tooltipState.yValue}
+              </p>
             </section>
           </div>
-        }
+        )}
       </div>
     </>
-  )
+  );
 }
 
 export default ScatterPlot;

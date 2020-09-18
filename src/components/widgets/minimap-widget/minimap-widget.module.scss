@@ -94,3 +94,9 @@ $ease-in-out: opacity $animation-time ease-in-out;
     display: none;
   }
 }
+
+@media print {
+  .wrapper {
+    display: none;
+  }
+}
