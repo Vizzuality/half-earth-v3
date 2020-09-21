@@ -71,15 +71,15 @@ export const flyToGeometry = (view, layerFeatures) => {
   }
 }
 
-export const toggleCountryTooltip = (layerFeatures, changeGlobe, countryTooltip) => {
+export const toggleCountryTooltip = (layerFeatures, changeGlobe, countryISO) => {
   if (layerFeatures && layerFeatures.length) {
-    changeGlobe({countryTooltip: null});
+    changeGlobe({countryISO: null});
     const { graphic } = layerFeatures[0];
     const { attributes } = graphic;
-    if (!countryTooltip || countryTooltip !== attributes.GID_0) {
-      changeGlobe({countryTooltip: attributes.GID_0, countryName: attributes.NAME_0});
+    if (!countryISO || countryISO !== attributes.GID_0) {
+      changeGlobe({countryISO: attributes.GID_0, countryName: attributes.NAME_0});
     } 
-  } else if (countryTooltip) {
-    changeGlobe({countryTooltip: null});
+  } else if (countryISO) {
+    changeGlobe({countryISO: null});
   }
 }
