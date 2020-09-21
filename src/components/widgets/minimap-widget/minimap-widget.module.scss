@@ -12,6 +12,7 @@ $ease-in-out: opacity $animation-time ease-in-out;
   position: absolute;
   right: 76px;
   top: 30px;
+  z-index: $send-to-back;
 
   &::before {
     align-items: center;
@@ -53,12 +54,12 @@ $ease-in-out: opacity $animation-time ease-in-out;
 }
 
 .title {
-  color: $white;	
-  font-family: $font-family-1;	
-  font-size: $font-size-xxs;;	
+  color: $white;
+  font-family: $font-family-1;
+  font-size: $font-size-xxs;;
   font-weight: bold;
-  letter-spacing: 1.5px;	
-  line-height: 14px;	
+  letter-spacing: 1.5px;
+  line-height: 14px;
   text-transform: uppercase;
 
   &::after {

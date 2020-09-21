@@ -81,13 +81,8 @@ const SettingsWidgetComponent = ({
       </ReactTooltip>
       {isTooltipOpen && (
         <div ref={wrapperRef} className={styles.settingsTooltip}>
-          <div>MAP SETTINGS</div>
-          {layers.map((option) =>
-            renderCheckbox(
-              option,
-              handleChangeLayer
-            )
-          )}
+          <div className={styles.settingsTooltipTitle}>MAP SETTINGS</div>
+          {layers.map((option) => renderCheckbox(option, handleChangeLayer))}
         </div>
       )}
     </>

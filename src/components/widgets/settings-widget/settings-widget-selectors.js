@@ -6,12 +6,12 @@ import { LABELS_LAYERS } from 'constants/layers-groups';
 
 const layers = [
   {
-    label: 'Labels',
-    value: LABELS_LAYERS
+    label: 'Political boundaries',
+    value: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER
   },
   {
-    label: 'Politic boundaries',
-    value: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER
+    label: 'Labels',
+    value: LABELS_LAYERS
   }
 ];
 

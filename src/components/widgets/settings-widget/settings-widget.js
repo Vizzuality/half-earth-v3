@@ -5,25 +5,11 @@ import * as urlActions from 'actions/url-actions';
 import { settingsAnalyticsEvent } from 'actions/google-analytics-actions';
 import { getCheckboxLayers } from './settings-widget-selectors';
 import {
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER
-} from 'constants/layers-slugs';
-import { LABELS_LAYERS } from 'constants/layers-groups';
-import {
   batchLayerManagerToggle,
   layerManagerToggle
 } from 'utils/layer-manager-utils';
 import SettingsComponent from './settings-widget-component';
 
-const layers = [
-  {
-    label: 'Labels',
-    value: LABELS_LAYERS
-  },
-  {
-    label: 'Politic boundaries',
-    value: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER
-  }
-];
 const actions = { ...urlActions, settingsAnalyticsEvent };
 
 
@@ -35,7 +21,7 @@ const SettingsWidget = ({
   hidden,
   activeLayers
 }) => {
-  const checkboxLayers = getCheckboxLayers({ layers, activeLayers });
+  const checkboxLayers = getCheckboxLayers({ activeLayers });
   const openSettings = () => {
     changeUI({ openSettings: null });
     settingsAnalyticsEvent({ notDisplayedLayers: null });
