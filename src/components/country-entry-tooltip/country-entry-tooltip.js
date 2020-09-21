@@ -8,13 +8,13 @@ import * as urlActions from 'actions/url-actions';
 import Component from './country-entry-tooltip-component';
 
 const CountryEntryTooltipContainer = props => {
-  const { countryTooltip } = props;
+  const { countryISO } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const countryCentroidsLayer = useFeatureLayer({ layerSlug, outFields: ["NAME_0"] });
 
-  const queryCountryCentroid = ({ countryCentroidsLayer, countryTooltip }) => {
+  const queryCountryCentroid = ({ countryCentroidsLayer, countryISO }) => {
     const query = countryCentroidsLayer.createQuery();
-    query.where = `GID_0 = '${countryTooltip}'`;
+    query.where = `GID_0 = '${countryISO}'`;
     query.returnGeometry = true;
     countryCentroidsLayer.queryFeatures(query)
       .then((results) => {
@@ -26,19 +26,22 @@ const CountryEntryTooltipContainer = props => {
 
 
   useEffect(() => {
-    if (countryCentroidsLayer && countryTooltip) {
-      queryCountryCentroid({countryCentroidsLayer, countryTooltip});
+    if (countryCentroidsLayer && countryISO) {
+      queryCountryCentroid({countryCentroidsLayer, countryISO});
     }
-  }, [countryCentroidsLayer, countryTooltip])
+  }, [countryCentroidsLayer, countryISO])
 
 
   const handleTooltipClose = () => {
     const { changeGlobe } = props;
-    changeGlobe({countryTooltip: null})
+    changeGlobe({countryISO: null})
   }
 
   const handleSceneModeChange = () => {
-    const { changeGlobe, changeUI,sceneMode } = props;
+    const { changeGlobe, changeUI, sceneMode } = props;
+    console.log('clicked explore', sceneMode)
+    console.log(DATA_SCENE)
+    console.log(LOCAL_SCENE)
     changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
   };

@@ -5,7 +5,7 @@ import styles from './country-entry-tooltip-styles.module.scss';
 const CountryEntryTooltipComponent = ({ 
   view,
   countryName,
-  countryTooltip,
+  countryISO,
   tooltipPosition,
   handleTooltipClose,
   handleExploreCountryClick }) => {
@@ -22,7 +22,7 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  if (tooltipPosition && tooltip) {
+  if (tooltipPosition && tooltip && countryISO) {
     view.popup.open({
       location: tooltipPosition,
       content: tooltipref.current
@@ -30,14 +30,14 @@ useEffect(() => {
   } else {
     view.popup.close()
   }
-}, [tooltipPosition, tooltip])
+}, [tooltipPosition, tooltip, countryISO])
 
   return tooltipPosition && tooltip ? (
     <div
       ref={tooltipref}
       className={styles.tooltipContainer}
     >
-      <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryTooltip}.svg`} alt="" />
+      <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
       <span className={styles.countryName}>{countryName}</span>
       <button
         className={styles.tooltipExplore}

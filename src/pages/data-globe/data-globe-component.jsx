@@ -18,7 +18,6 @@ const DataGlobeComponent = ({
   handleMapLoad,
   sceneSettings,
   isSidebarOpen,
-  countryTooltip,
   activeCategory,
   isLandscapeMode,
   isGlobeUpdating,
@@ -29,10 +28,9 @@ const DataGlobeComponent = ({
   sortRankingCategory,
   localSceneActiveTab,
   isBiodiversityActive,
-  highlightedCountryIso,
   isLandscapeSidebarCollapsed,
   countryChallengesSelectedKey,
-}) => (
+}) => console.log(sceneMode) || (
   <>
     {sceneMode === LOCAL_SCENE && (
       <CountryScene
@@ -64,7 +62,6 @@ const DataGlobeComponent = ({
         isSidebarOpen={isSidebarOpen}
         openedModal={openedModal}
         sceneSettings={sceneSettings}
-        countryTooltip={countryTooltip}
         activeCategory={activeCategory}
         isLandscapeMode={isLandscapeMode}
         isGlobeUpdating={isGlobeUpdating}
@@ -72,7 +69,6 @@ const DataGlobeComponent = ({
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
         isBiodiversityActive={isBiodiversityActive}
-        highlightedCountryIso={highlightedCountryIso}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
       />

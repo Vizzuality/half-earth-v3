@@ -14,13 +14,11 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
 import CountriesBordersLayer from 'components/countries-borders-layer';
-import CountryBorderHighlightLayer from 'components/country-border-highlight-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import CountryEntryTooltip from 'components/country-entry-tooltip'; 
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 // Utils
 import { MobileOnly, useMobile } from 'constants/responsive';
 // Dynamic imports
@@ -46,7 +44,6 @@ const CountrySceneComponent = ({
   isSidebarOpen,
   openedModal,
   activeCategory,
-  countryTooltip,
   isLandscapeMode,
   isGlobeUpdating,
   selectedSpecies,
@@ -54,7 +51,6 @@ const CountrySceneComponent = ({
   countedActiveLayers,
   handleGlobeUpdating,
   isBiodiversityActive,
-  highlightedCountryIso,
   isLandscapeSidebarCollapsed,
 }) => {
   const isOnMobile = useMobile();
@@ -75,13 +71,9 @@ const CountrySceneComponent = ({
           <Slider />
         </MobileOnly>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
-        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} countryTooltip={countryTooltip}/>
+        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} />
         <ArcgisLayerManager activeLayers={activeLayers} />
-        <CountryBorderHighlightLayer
-          countryTooltip={countryTooltip}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
-        />
-        <CountriesBordersLayer highlightedCountryIso={highlightedCountryIso} />
+        <CountriesBordersLayer countryISO={countryISO} />
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
@@ -112,7 +104,9 @@ const CountrySceneComponent = ({
         <Widgets isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
         <TerrainExaggerationLayer exaggeration={3}/>
         <CountryEntryTooltip
-          countryTooltip={countryTooltip}
+          countryISO={countryISO}
+          countryName={countryName}
+          sceneMode={sceneMode}
         />
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
