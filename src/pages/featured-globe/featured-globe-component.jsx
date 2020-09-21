@@ -71,24 +71,49 @@ const DataGlobeComponent = ({
     <>
       {!isMapsList && !isOnMobile && <Switcher />}
       <Scene
-        sceneId='e96f61b2e79442b698ec2cec68af6db9'
+        sceneId="e96f61b2e79442b698ec2cec68af6db9"
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
-        interactionsDisabled={(isMapsList || isFeaturedPlaceCard) && !isOnMobile}
+        interactionsDisabled={
+          (isMapsList || isFeaturedPlaceCard) && !isOnMobile
+        }
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
-          <MenuFooter featured selectedSidebar={selectedSidebar} selectedFeaturedMap={selectedFeaturedMap} activeOption={activeOption} isLandscapeMode={isLandscapeMode} />
+          <MenuFooter
+            featured
+            selectedSidebar={selectedSidebar}
+            selectedFeaturedMap={selectedFeaturedMap}
+            activeOption={activeOption}
+            isLandscapeMode={isLandscapeMode}
+          />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
           <Slider />
         </MobileOnly>
-        <ArcgisLayerManager activeLayers={activeLayers} customFunctions={customFunctions}/>
-        <GlobeEventsManager clickCallbacksArray={clickCallbacksArray} mouseMoveCallbacksArray={mouseMoveCallbacksArray} />
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <FeaturedPlaceViewManager selectedFeaturedPlace={selectedFeaturedPlace} isLandscapeMode={isLandscapeMode} />
-        <Widgets isFullscreenActive={isFullscreenActive} hidden={esriWidgetsHidden} openedModal={openedModal} />
-        {selectedFeaturedMap &&
+        <ArcgisLayerManager
+          activeLayers={activeLayers}
+          customFunctions={customFunctions}
+        />
+        <GlobeEventsManager
+          clickCallbacksArray={clickCallbacksArray}
+          mouseMoveCallbacksArray={mouseMoveCallbacksArray}
+        />
+        <LandscapeViewManager
+          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
+          isLandscapeMode={isLandscapeMode}
+        />
+        <FeaturedPlaceViewManager
+          selectedFeaturedPlace={selectedFeaturedPlace}
+          isLandscapeMode={isLandscapeMode}
+        />
+        <Widgets
+          activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
+          hidden={esriWidgetsHidden}
+          openedModal={openedModal}
+        />
+        {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}
             activeOption={activeOption}
@@ -100,14 +125,14 @@ const DataGlobeComponent = ({
             spinGlobe={spinGlobe}
             handle={spinGlobeHandle}
           />
-        }
+        )}
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
           isLandscapeMode={isLandscapeMode}
           handleLayerToggle={handleLayerToggle}
         />
-        {!isLandscapeMode &&
+        {!isLandscapeMode && (
           <PriorityPlacesPolygonsLayer
             selectedFeaturedMap={selectedFeaturedMap}
             selectedTaxa={selectedTaxa}
@@ -115,7 +140,7 @@ const DataGlobeComponent = ({
             isFullscreenActive={isFullscreenActive}
             handleLayerToggle={handleLayerToggle}
           />
-        }
+        )}
         <FeaturedTaxaSelector
           selectedTaxa={selectedTaxa}
           isMapsList={isMapsList}
@@ -133,7 +158,7 @@ const DataGlobeComponent = ({
           selectedTaxa={selectedTaxa}
           activeOption={activeOption}
         />
-        {isLandscapeMode &&
+        {isLandscapeMode && (
           <LandscapeSidebar
             activeLayers={activeLayers}
             activeOption={activeOption}
@@ -143,11 +168,18 @@ const DataGlobeComponent = ({
             handleGlobeUpdating={handleGlobeUpdating}
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           />
-        }
-        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
+        )}
+        {isLandscapeMode && (
+          <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
+        )}
+        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3} />}
         {isLandscapeMode && <LabelsLayer />}
-        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
+        {isLandscapeMode && (
+          <ProtectedAreasTooltips
+            activeLayers={activeLayers}
+            isLandscapeMode={isLandscapeMode}
+          />
+        )}
         <Legend
           showLegend={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
@@ -168,7 +200,7 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
       {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
-  )
+  );
 }
 
 export default DataGlobeComponent;

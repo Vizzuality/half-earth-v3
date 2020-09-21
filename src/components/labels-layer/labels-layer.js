@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { loadModules } from 'esri-loader';
 import { handleLayerCreation } from 'utils/layer-manager-utils';
-import { LABELS_LAYERS } from 'constants/layers-groups';
+import { LANDSCAPE_LABELS_LAYERS } from 'constants/layers-groups';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { stylesConfig } from './labels-layer-styles-config';
 
@@ -51,7 +51,7 @@ const LabelsLayer = props => {
     .then(([labelClassConstructor]) => {
       const labelingInfo = labelsStylesSlugs.map(slug => labelClassFactory(labelClassConstructor, slug))
       // Add layers to map and style them
-      LABELS_LAYERS.forEach( layerName => {
+      LANDSCAPE_LABELS_LAYERS.forEach( layerName => {
         const layerConfig = layersConfig[layerName];
         handleLayerCreation(layerConfig, map)
           .then(layer => {
@@ -65,10 +65,10 @@ const LabelsLayer = props => {
           });
       })
     })
-  }, [])
+  }, []);
 
   useEffect(() => {
-    LABELS_LAYERS.forEach( layerName => {
+    LANDSCAPE_LABELS_LAYERS.forEach( layerName => {
       const layerConfig = layersConfig[layerName];
       handleLayerCreation(layerConfig, map)
         .then(layer => {

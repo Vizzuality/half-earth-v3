@@ -12,6 +12,7 @@ import { useMobile } from 'constants/responsive';
 const WidgetsComponent = ({
   map,
   view,
+  activeLayers,
   hideToggle = false,
   hideSettings = false,
   hideZoom = false,
@@ -32,6 +33,7 @@ const WidgetsComponent = ({
         <SettingsWidget
           map={map}
           view={view}
+          activeLayers={activeLayers}
           isSettingsActive={isSettingsActive}
           hidden={hiddenWidget}
         />

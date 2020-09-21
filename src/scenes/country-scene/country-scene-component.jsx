@@ -44,7 +44,7 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   localSceneActiveTab,
   sortRankingCategory,
-  countryChallengesSelectedKey,
+  countryChallengesSelectedKey
 }) => {
   const isOnMobile = useMobile();
   const [infoModalAdditionalContent, setInfoModalAdditionalContent] = useState(null);
@@ -81,6 +81,7 @@ const CountrySceneComponent = ({
         )}
         <Widgets
           hideSearch
+          activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />

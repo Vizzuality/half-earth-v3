@@ -101,7 +101,7 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
-        <Widgets isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
+        <Widgets activeLayers={activeLayers} isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
         <TerrainExaggerationLayer exaggeration={3}/>
         <CountryEntryTooltip
           countryISO={countryISO}
