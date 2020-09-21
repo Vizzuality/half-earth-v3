@@ -15,7 +15,7 @@ const WidgetsComponent = ({
   hideZoom = false,
   hideMiniMap = false,
   hideSearch = false,
-  hideLocator = false,
+  hideLocator = true,
   isFullscreenActive,
   openedModal = null,
   isNotMapsList = true,

@@ -40,12 +40,15 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
   const handleOpenSearch = () => {
     if(searchWidget === null) {
       setSearchWidget(undefined); // reset search widget in case of multiple quick clicks
+      const container = document.createElement("div");
+      container.setAttribute("id", "searchWidget");
       loadModules(["esri/widgets/Search"]).then(([Search]) => {
         const sWidget = new Search({
           view: view,
-          locationEnabled: false, // don't show the Use current location box when clicking in the input field
+          locationEnabled: true, // show the Use current location box when clicking in the input field
           popupEnabled: false, // hide location popup
-          resultGraphicEnabled: false // hide location pin
+          resultGraphicEnabled: false, // hide location pin
+          container
         });
         setSearchWidget(sWidget);
         openPlacesSearchAnalyticsEvent();
@@ -66,12 +69,14 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
 
   const addSearchWidgetToView = async () => {
     await view.ui.add(searchWidget, "top-left");
-    const searchInput = document.querySelector(".esri-search__input");
-    searchInput && searchInput.focus()
-    // const esriSearch = document.querySelector('.esri-search');
-    // const rootNode = document.getElementById("root");
-    // if(esriSearch) { rootNode.appendChild(esriSearch); }
-    // document.querySelector(".esri-search__input").focus();
+    const esriSearch = document.querySelector('#searchWidget');
+    const rootNode = document.getElementById("root");
+    if(esriSearch) {
+      rootNode.appendChild(esriSearch);
+      setTimeout(() => {
+        document.querySelector('.esri-search__input').focus()
+      }, 100);
+    }
   }
 
   useEffect(() => {

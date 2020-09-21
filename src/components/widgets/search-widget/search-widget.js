@@ -16,7 +16,7 @@ const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent, searchLocationAnal
   );
 
   return (
-    <SearchWidgetComponent 
+    <SearchWidgetComponent
       handleOpenSearch={handleOpenSearch}
       handleCloseSearch={handleCloseSearch}
       showCloseButton={!!searchWidget}
