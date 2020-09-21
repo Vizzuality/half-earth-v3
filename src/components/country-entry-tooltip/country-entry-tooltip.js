@@ -39,9 +39,6 @@ const CountryEntryTooltipContainer = props => {
 
   const handleSceneModeChange = () => {
     const { changeGlobe, changeUI, sceneMode } = props;
-    console.log('clicked explore', sceneMode)
-    console.log(DATA_SCENE)
-    console.log(LOCAL_SCENE)
     changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
   };

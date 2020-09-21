@@ -29,6 +29,12 @@ const CountriesBordersLayerContainer = ({ view, changeGlobe, countryISO }) => {
         view.map.add(graphicsLayer);
       })
   }, [])
+
+  useEffect(() => {
+    if (selectedCountryBorderGraphic) {
+      if (!countryISO) {selectedCountryBorderGraphic.geometry = null}
+    }
+  }, [countryISO, selectedCountryBorderGraphic])
   
   const onClickHandler = bordersLayerFeatures => {
     flyToGeometry(view, bordersLayerFeatures);

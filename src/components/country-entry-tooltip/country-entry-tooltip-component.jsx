@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { loadModules } from 'esri-loader';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import styles from './country-entry-tooltip-styles.module.scss';
 
 const CountryEntryTooltipComponent = ({ 
@@ -37,8 +38,11 @@ useEffect(() => {
       ref={tooltipref}
       className={styles.tooltipContainer}
     >
-      <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
-      <span className={styles.countryName}>{countryName}</span>
+      <section className={styles.tooltipSection}>
+        <img className={styles.tooltipFlag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+        <span className={styles.tooltipName}>{countryName}</span>
+      </section>
+      <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose}/>
       <button
         className={styles.tooltipExplore}
         onClick={handleExploreCountryClick}
