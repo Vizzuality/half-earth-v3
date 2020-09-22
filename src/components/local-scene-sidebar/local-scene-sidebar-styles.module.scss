@@ -61,15 +61,6 @@
   margin-left: 1em;
 }
 
-.share {
-  flex-direction: row-reverse;
-}
-
 .shareText {
   @extend %title;
-}
-
-.shareButton {
-  padding: 0;
-  margin-right: 22px;
 }

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'he-components';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import ReactTooltip from 'react-tooltip';
 import { getShortenUrl } from 'services/bitly';
 
 import styles from './share-modal-styles.module';
@@ -12,7 +10,7 @@ import styles from './share-modal-styles.module';
 const LINK = 'link';
 const EMBED = 'embed';
 
-const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
+const ShareModalComponent = ({ handleClose, isOpen, shareSocialMedia }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
   const [shortLink, setShortLink] = useState(null);
@@ -85,66 +83,8 @@ const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
   );
 }
 
-const ShareModalComponent = (props) => {
-  const [isShareModalOpen, setShareModalOpen] = useState(false);
-
-  const handleOpenShareModal = () => {
-    const { openShareModalAnalyticsEvent, viewMode } = props;
-    setShareModalOpen(true);
-    openShareModalAnalyticsEvent(viewMode);
-  }
-  const handleCloseShareModal = () => setShareModalOpen(false);
-  const { theme, shareText = false } = props;
-
-  const tooltipId = {
-    'data-tip': 'data-tip',
-    'data-for': 'shareButtonId',
-    'data-place': 'right',
-    'data-effect':'solid',
-    'data-delay-show': 0
-  };
-
-  const shareButton = (withClickAndTooltip) => {
-    const tooltip = withClickAndTooltip ? {...tooltipId} : {};
-    return (
-      <button
-        className={cx(theme.shareButton)}
-        onClick={withClickAndTooltip ? handleOpenShareModal : (() => {})}
-        {...tooltip}
-      >
-        <ShareIcon className={styles.icon} />
-      </button>
-    )
-  }
-
-  return (
-    <>
-      {shareText && (
-        <div
-          className={cx(styles.share, theme.share)}
-          onClick={handleOpenShareModal}
-          {...tooltipId}
-        >
-          <span className={cx(styles.shareText, theme.shareText)}>{shareText}</span>
-          {shareButton(false)}
-        </div>
-      )}
-      {!shareText && shareButton(true)}
-      <ReactTooltip id="shareButtonId" className="infoTooltipStyle">
-        Click to share
-      </ReactTooltip>
-      {isShareModalOpen && (
-        <ShareModal
-          isOpen={isShareModalOpen}
-          handleClose={handleCloseShareModal}
-          {...props}
-        />
-      )}
-    </>
-  );
-}
-
 ShareModalComponent.propTypes = {
+  variant: PropTypes.string,
   shareSocialMedia: PropTypes.array.isRequired,
   shareText: PropTypes.string,
   route: PropTypes.string,

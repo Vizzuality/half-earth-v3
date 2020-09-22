@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
@@ -8,7 +8,8 @@ import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
-import ShareModalButton from 'components/share-modal';
+import ShareModal from 'components/share-modal';
+import ShareModalButton from 'components/share-button';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -45,6 +46,7 @@ const LocalSceneSidebarComponent = ({
 }) => {
 
   const sidebarHidden = isFullscreenActive;
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   if (countryDataLoading) {
     return (
@@ -118,8 +120,13 @@ const LocalSceneSidebarComponent = ({
       </div>
       <div className={styles.actionGroup}>
         <ShareModalButton
-          shareText="Share this info"
-          theme={{ shareButton: styles.shareButton, shareText: styles.shareText, share: styles.share }}
+          variant="longText"
+          theme={{ shareText: styles.shareText }}
+          setShareModalOpen={setShareModalOpen}
+        />
+        <ShareModal
+          isOpen={isShareModalOpen}
+          handleClose={() => setShareModalOpen(false)}
         />
       </div>
     </div>
