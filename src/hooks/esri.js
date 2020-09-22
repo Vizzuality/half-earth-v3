@@ -28,7 +28,7 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
   return layer;
 }
 
-export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent) => {
+export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, postSearchCallback) => {
   const [searchWidget, setSearchWidget ] = useState(null);
 
   const keyEscapeEventListener = (evt) => {
@@ -54,8 +54,9 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
             {
               layer: new FeatureLayer({
                 url: LAYERS_URLS[COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER],
-                outFields: ["*"]
+                title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
               }),
+              outFields: ["*"],
               searchFields: ["GID_0", "NAME_0"],
               name: "National admin data"
             },
@@ -93,8 +94,9 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
     if(esriSearch) {
       rootNode.appendChild(esriSearch);
       setTimeout(() => {
-        document.querySelector('.esri-search__input').focus()
-      }, 100);
+        const input = document.querySelector('.esri-search__input');
+        input && input.focus()
+      }, 300);
     }
   }
 
@@ -103,6 +105,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
       addSearchWidgetToView();
       document.addEventListener('keydown', keyEscapeEventListener);
       searchWidget.viewModel.on("search-start", handleSearchStart);
+      searchWidget.on('select-result', (event) => postSearchCallback(event));
     }
 
     return function cleanUp() {
