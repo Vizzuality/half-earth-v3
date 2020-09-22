@@ -50,14 +50,15 @@ const renderCheckbox = (option, handleChangeLayer) => (
 
 const SettingsWidgetComponent = ({
   layers,
-  handleChangeLayer
+  handleChangeLayer,
+  hidden
 }) => {
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
   const [isTooltipOpen, setTooltipOpen] = React.useState(false);
   useClickOutside(wrapperRef, () => setTooltipOpen(false), buttonRef);
   return (
-    <>
+    <div className={cx({ [styles.hidden]: hidden })}>
       <button
         data-tip
         data-for="settingsUi"
@@ -85,7 +86,7 @@ const SettingsWidgetComponent = ({
           {layers.map((option) => renderCheckbox(option, handleChangeLayer))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -3,6 +3,10 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+.hidden {
+  display: none;
+}
+
 .settingsButton {
   @extend .uiRight;
   top: 38px;

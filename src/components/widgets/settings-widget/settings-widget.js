@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
@@ -36,26 +36,29 @@ const SettingsWidget = ({
         )
       : layerManagerToggle(e.target.value, activeLayers, changeGlobe);
   };
-
+  const [uiNode, setUiNode] = useState(null);
   useEffect(() => {
     const node = document.createElement('div');
-    if (!hidden) {
-      view.ui.add(node, 'top-right');
-
-      ReactDOM.render(
-        <SettingsComponent
-          openSettings={openSettings}
-          layers={checkboxLayers}
-          handleChangeLayer={handleChangeLayer}
-        />,
-        node
-      );
-    }
+    view.ui.add(node, 'top-right');
+    setUiNode(node);
 
     return function cleanup() {
+      setUiNode(false);
       view.ui.remove(node);
     };
-  }, [view, hidden, checkboxLayers]);
+  }, []);
+
+  if (uiNode) {
+    ReactDOM.render(
+      <SettingsComponent
+        openSettings={openSettings}
+        layers={checkboxLayers}
+        handleChangeLayer={handleChangeLayer}
+        hidden={hidden}
+      />,
+      uiNode
+    );
+  }
 
   return null;
 };
