@@ -20,7 +20,7 @@ const ShareModal = ({ handleClose, isOpen, shareSocialMedia }) => {
 
   const isActiveTabLink = activeTab === LINK;
   const currentLocation = window.location.href;
-  
+
   const setTab = () => {
     setActiveTab(isActiveTabLink ? EMBED : LINK);
   }
@@ -120,33 +120,33 @@ const ShareModalComponent = (props) => {
   return (
     <>
       {shareText && (
-        <div 
-          className={styles.share}
+        <div
+          className={cx(styles.share, theme.share)}
           onClick={handleOpenShareModal}
           {...tooltipId}
         >
-          <span className={styles.shareText}>Share</span>
+          <span className={cx(styles.shareText, theme.shareText)}>{shareText}</span>
           {shareButton(false)}
         </div>
       )}
       {!shareText && shareButton(true)}
-      <ReactTooltip
-        id='shareButtonId'
-        className='infoTooltipStyle'
-      >
+      <ReactTooltip id="shareButtonId" className="infoTooltipStyle">
         Click to share
       </ReactTooltip>
-      {isShareModalOpen && <ShareModal 
-        isOpen={isShareModalOpen}
-        handleClose={handleCloseShareModal}
-        {...props}
-      />}
+      {isShareModalOpen && (
+        <ShareModal
+          isOpen={isShareModalOpen}
+          handleClose={handleCloseShareModal}
+          {...props}
+        />
+      )}
     </>
   );
 }
 
 ShareModalComponent.propTypes = {
   shareSocialMedia: PropTypes.array.isRequired,
+  shareText: PropTypes.string,
   route: PropTypes.string,
   theme: PropTypes.shape({
     shareButton: PropTypes.string

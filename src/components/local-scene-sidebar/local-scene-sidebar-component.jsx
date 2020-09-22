@@ -7,8 +7,8 @@ import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+import ShareModalButton from 'components/share-modal';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -65,15 +65,13 @@ const LocalSceneSidebarComponent = ({
   }
 
   return countryData ? (
-    <div className={cx(styles.container, 
-      className,
-      {[animationStyles.leftHidden]: sidebarHidden}
-    )}>
-      <button
-        className={styles.backButton}
-        onClick={handleSceneModeChange}
-      >
-        <BackIcon className={styles.icon}/>
+    <div
+      className={cx(styles.container, className, {
+        [animationStyles.leftHidden]: sidebarHidden
+      })}
+    >
+      <button className={styles.backButton} onClick={handleSceneModeChange}>
+        <BackIcon className={styles.icon} />
         <span className={styles.text}>back to global</span>
       </button>
       <DummyBlurWorkaround />
@@ -114,14 +112,18 @@ const LocalSceneSidebarComponent = ({
       />
       <div className={styles.actionGroup}>
         <DownloadIcon />
-        <button className={styles.actionButton} onClick={handlePrintReport}>download this info (pdf)</button>
+        <button className={styles.actionButton} onClick={handlePrintReport}>
+          download this info (pdf)
+        </button>
       </div>
       <div className={styles.actionGroup}>
-        <ShareIcon />
-        <button className={styles.actionButton} onClick={handleShareReport}>share this info</button>
+        <ShareModalButton
+          shareText="Share this info"
+          theme={{ shareButton: styles.shareButton, shareText: styles.shareText, share: styles.share }}
+        />
       </div>
     </div>
-  ) : null
+  ) : null;
 }
 
 

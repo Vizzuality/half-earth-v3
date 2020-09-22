@@ -46,7 +46,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
           </div>
         </div>
         <div className={styles.share}>
-          <ShareModalButton shareText />
+          <ShareModalButton shareText="Share" />
         </div>
       </div>
       <button
