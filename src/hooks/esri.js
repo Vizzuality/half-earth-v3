@@ -63,7 +63,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
               locator: new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
               singleLineFieldName: "SingleLine",
               outFields: ["Addr_type"],
-              categories: ['Populated Place'],
+              categories: ['Populated Place', 'Water Features', 'Land Features', 'Nature Reserve'],
               name: "ArcGIS World Geocoding Service"
             }
           ],

@@ -24,6 +24,7 @@ const LocalSceneSidebarComponent = ({
   countryISO,
   countryName,
   countryData,
+  openedModal,
   birdsEndemic,
   mammalsEndemic,
   indexStatement,
@@ -36,7 +37,6 @@ const LocalSceneSidebarComponent = ({
   handlePrintReport,
   handleShareReport,
   isFullscreenActive,
-  openedModal,
   countryDescription,
   countryDataLoading,
   handleSceneModeChange,
@@ -103,6 +103,7 @@ const LocalSceneSidebarComponent = ({
         chartData={speciesChartData}
         amphibians={amphibians}
         countryName={countryName}
+        openedModal={openedModal}
         birdsEndemic={birdsEndemic}
         mammalsEndemic={mammalsEndemic}
         reptilesEndemic={reptilesEndemic}
@@ -110,7 +111,6 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
-        openedModal={openedModal}
       />
       <div className={styles.actionGroup}>
         <DownloadIcon />

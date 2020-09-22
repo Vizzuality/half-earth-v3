@@ -15,7 +15,7 @@ const LocalPriorityCardComponent = ({
   return (
     <LocalSceneCard>
       <section>
-        <h3 className={styles.title}>{`The current protection ${currentProtection}%`}</h3>
+        <h3 className={styles.title}>{`The current protection: ${currentProtection}%`}</h3>
         <div className={styles.datasetWrapper}>
           <div className={styles.wdpaIcon}/>
           <div className={styles.datasetMetadata}>
@@ -31,7 +31,7 @@ const LocalPriorityCardComponent = ({
         </div>
       </section>
       <section className={styles.priorityLegend}>
-        <h3 className={styles.title}>{`Additional protection needed ${protectionNeeded}%`}</h3>
+        <h3 className={styles.title}>{`Additional protection needed: ${protectionNeeded}%`}</h3>
         <p className={styles.legendTag}>higher priority</p>
         <div className={styles.datasetWrapper}>
           <div className={styles.priorityIcon}/>
