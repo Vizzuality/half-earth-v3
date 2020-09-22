@@ -81,6 +81,14 @@
     }
   }
 
+  .esri-search__sources-button {
+    display: none;
+  }
+
+  .esri-icon-locate-circled {
+    display: none;
+  }
+
   // suggestions list
   .esri-menu.esri-search__suggestions-menu {
     background-color: transparent;
@@ -101,6 +109,11 @@
       &:hover, &:focus, &:active {
         background-color: rgba(255,255,255,0.05);
       }
+    }
+
+    .esri-search__suggestions-list--current-location li {
+      @extend %title;
+      color: $white;
     }
 
     strong {

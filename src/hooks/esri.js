@@ -1,6 +1,7 @@
 import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
 
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
@@ -42,13 +43,31 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
       setSearchWidget(undefined); // reset search widget in case of multiple quick clicks
       const container = document.createElement("div");
       container.setAttribute("id", "searchWidget");
-      loadModules(["esri/widgets/Search"]).then(([Search]) => {
+      loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
         const sWidget = new Search({
           view: view,
           locationEnabled: true, // show the Use current location box when clicking in the input field
           popupEnabled: false, // hide location popup
           resultGraphicEnabled: false, // hide location pin
-          container
+          container,
+          sources: [
+            {
+              layer: new FeatureLayer({
+                url: LAYERS_URLS[COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER],
+                outFields: ["*"]
+              }),
+              searchFields: ["GID_0", "NAME_0"],
+              name: "National admin data"
+            },
+            {
+              locator: new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
+              singleLineFieldName: "SingleLine",
+              outFields: ["Addr_type"],
+              categories: ['Populated Place'],
+              name: "ArcGIS World Geocoding Service"
+            }
+          ],
+          includeDefaultSources: false
         });
         setSearchWidget(sWidget);
         openPlacesSearchAnalyticsEvent();
@@ -84,9 +103,6 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
       addSearchWidgetToView();
       document.addEventListener('keydown', keyEscapeEventListener);
       searchWidget.viewModel.on("search-start", handleSearchStart);
-      searchWidget.watch('activeSource', function(evt) {
-        evt.placeholder = "Search for a location";
-      });
     }
 
     return function cleanUp() {
