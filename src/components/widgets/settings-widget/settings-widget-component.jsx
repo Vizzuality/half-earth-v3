@@ -55,8 +55,8 @@ const SettingsWidgetComponent = ({
 }) => {
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
-  const [isTooltipOpen, setTooltipOpen] = React.useState(false);
-  useClickOutside(wrapperRef, () => setTooltipOpen(false), buttonRef);
+  const [isMenuOpen, setMenuOpen] = React.useState(false);
+  useClickOutside(wrapperRef, () => setMenuOpen(false), buttonRef);
   return (
     <div className={cx({ [styles.hidden]: hidden })}>
       <button
@@ -65,7 +65,7 @@ const SettingsWidgetComponent = ({
         className={styles.settingsButton}
         ref={buttonRef}
         onClick={() => {
-          setTooltipOpen(!isTooltipOpen);
+          setMenuOpen(!isMenuOpen);
         }}
         data-effect="solid"
         data-delay-show={0}
@@ -80,9 +80,9 @@ const SettingsWidgetComponent = ({
       >
         Settings
       </ReactTooltip>
-      {isTooltipOpen && (
-        <div ref={wrapperRef} className={styles.settingsTooltip}>
-          <div className={styles.settingsTooltipTitle}>MAP SETTINGS</div>
+      {isMenuOpen && (
+        <div ref={wrapperRef} className={styles.settingsMenu}>
+          <div className={styles.settingsMenuTitle}>MAP SETTINGS</div>
           {layers.map((option) => renderCheckbox(option, handleChangeLayer))}
         </div>
       )}

@@ -28,7 +28,7 @@
   }
 }
 
-.settingsTooltip {
+.settingsMenu {
   position: absolute;
   top: 38px;
   right: 50px;
@@ -54,7 +54,7 @@
   }
 }
 
-.settingsTooltipTitle {
+.settingsMenuTitle {
   margin-bottom: 5px;
   @extend %title;
 
