@@ -75,15 +75,12 @@ const ShareButtonComponent = (props) => {
 ShareButtonComponent.propTypes = {
   variant: PropTypes.string,
   setShareModalOpen: PropTypes.func.isRequired,
-  shareSocialMedia: PropTypes.array.isRequired,
-  route: PropTypes.string,
   theme: PropTypes.shape({
     shareButton: PropTypes.string
   })
 };
 
 ShareButtonComponent.defaultProps = {
-  route: '',
   theme: {}
 };
 

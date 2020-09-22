@@ -84,13 +84,8 @@ const ShareModalComponent = ({ handleClose, isOpen, shareSocialMedia }) => {
 }
 
 ShareModalComponent.propTypes = {
-  variant: PropTypes.string,
-  shareSocialMedia: PropTypes.array.isRequired,
-  shareText: PropTypes.string,
   route: PropTypes.string,
-  theme: PropTypes.shape({
-    shareButton: PropTypes.string
-  })
+  theme: PropTypes.shape({})
 };
 
 ShareModalComponent.defaultProps = {
