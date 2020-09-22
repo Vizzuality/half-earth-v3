@@ -21,8 +21,7 @@
 }
 
 .header {
-  position: fixed;
-  width: 51%;
+  width: 100%;
   display: flex;
 
   .headerItem {
@@ -56,27 +55,33 @@
 .spiCountry {
   max-width: 115px;
   margin-left: 1rem;
-  display: inline-block;
+  display: flex;
   cursor: pointer;
-
-  @media #{$desktop} {
-    max-width: 376px;
-  }
 }
 
 .spiCountryText {
   @extend %title;
   color: $grey-text;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  @media #{$desktop} {
-    max-width: 320px;
-  }
+  display: flex;
+
   &:hover {
     color: $white;
   }
+}
+
+.spiCountryName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media #{$desktop} {
+    max-width: 130px;
+  }
+}
+
+.spiCountryIndex {
+  margin-left: 1rem;
 }
 
 .spiIndex {
@@ -89,7 +94,7 @@
 .rankingChartContentContainer {
   position: relative;
   display: flex;
-  width: $country-scene-chart-width;
+  width: calc(#{$country-scene-chart-width} + 50px);
   justify-content: flex-start;
   align-items: flex-start;
 }
@@ -102,9 +107,7 @@
   height: calc(100vh - #{$sidebar-header-height} - 200px);
   overflow-y: scroll;
   flex-direction: column;
-  @media #{$desktop} {
-    flex-direction: row;
-  }
+
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -112,8 +115,9 @@
   &::-webkit-scrollbar-thumb {
     height: 190px;
     border-radius: 10px;
-    background-color: #d8d8d8;
+    background-color: $white;
   }
+
   &.scrolled {
     &::-webkit-scrollbar {
       width: 7px;
@@ -127,7 +131,7 @@
   width: 80%;
   height: 55px;
   padding-left: 15px;
-  color: #D8D8D8;
+  color: $white;
   display: flex;
   align-items: center;
   background: linear-gradient(rgba(9, 20, 26, 0) 0%, rgba(9, 20, 26, .9) 80%);
