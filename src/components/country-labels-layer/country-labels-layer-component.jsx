@@ -5,7 +5,7 @@ import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { view, map, isLandscapeMode, countryName } = props;
+  const { map, isLandscapeMode, countryName } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [layerReady, setLayerReady] = useState(false)
