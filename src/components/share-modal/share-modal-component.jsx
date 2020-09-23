@@ -29,11 +29,12 @@ const ShareModalComponent = ({ handleClose, isOpen, shareSocialMedia }) => {
 
   // Use bitly service to get a short link
   useEffect(() => {
-    getShortenUrl(currentLocation)
-    .then(link => {
-      setShortLink(link);
-    })
-  }, [])
+    if (isOpen) {
+      getShortenUrl(currentLocation).then((link) => {
+        setShortLink(link);
+      });
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (shortLink) {
