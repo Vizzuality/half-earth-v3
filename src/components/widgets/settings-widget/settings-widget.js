@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import { settingsAnalyticsEvent } from 'actions/google-analytics-actions';
-import { getCheckboxLayers } from './settings-widget-selectors';
+import mapStateToProps from './settings-widget-selectors';
 import {
   batchLayerManagerToggle,
   layerManagerToggle
@@ -12,16 +12,15 @@ import SettingsComponent from './settings-widget-component';
 
 const actions = { ...urlActions, settingsAnalyticsEvent };
 
-
 const SettingsWidget = ({
   changeUI,
   changeGlobe,
   settingsAnalyticsEvent,
   view,
   hidden,
-  activeLayers
+  activeLayers,
+  checkboxLayers
 }) => {
-  const checkboxLayers = getCheckboxLayers({ activeLayers });
   const openSettings = () => {
     changeUI({ openSettings: null });
     settingsAnalyticsEvent({ notDisplayedLayers: null });
@@ -63,4 +62,4 @@ const SettingsWidget = ({
   return null;
 };
 
-export default connect(null, actions)(SettingsWidget);
+export default connect(mapStateToProps, actions)(SettingsWidget);
