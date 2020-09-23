@@ -20,7 +20,6 @@ const ShareButtonComponent = (props) => {
 
   const handleOpenShareModal = () => {
     const { openShareModalAnalyticsEvent, viewMode } = props;
-    console.log({ openShareModalAnalyticsEvent, viewMode });
     setShareModalOpen(true);
     openShareModalAnalyticsEvent(viewMode);
   };
