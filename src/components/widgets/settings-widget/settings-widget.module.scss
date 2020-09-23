@@ -114,3 +114,12 @@ input[type="checkbox"] {
     border: 2px solid $white;
   }
 }
+
+.disabled {
+  cursor: not-allowed;
+  color: $_temporary-light-text;
+
+  input, label {
+    cursor: not-allowed;
+  }
+}

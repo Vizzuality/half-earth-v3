@@ -112,6 +112,7 @@ const DataGlobeComponent = ({
           isFullscreenActive={isFullscreenActive}
           hidden={esriWidgetsHidden}
           openedModal={openedModal}
+          disableSettings
         />
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard

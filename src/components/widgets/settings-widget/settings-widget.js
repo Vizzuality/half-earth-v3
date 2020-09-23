@@ -19,7 +19,8 @@ const SettingsWidget = ({
   view,
   hidden,
   activeLayers,
-  checkboxLayers
+  checkboxLayers,
+  disableSettings
 }) => {
   const openSettings = () => {
     changeUI({ openSettings: null });
@@ -54,6 +55,7 @@ const SettingsWidget = ({
         layers={checkboxLayers}
         handleChangeLayer={handleChangeLayer}
         hidden={hidden}
+        disableSettings={disableSettings}
       />,
       uiNode
     );

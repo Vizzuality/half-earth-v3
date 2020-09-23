@@ -22,11 +22,12 @@ function useClickOutside(ref, callback, exceptionRef) {
   }, [ref]);
 }
 
-const renderCheckbox = (option, handleChangeLayer) => (
+const renderCheckbox = (option, handleChangeLayer, disableSettings) => (
   <div
     key={option.name}
     className={cx(styles.checkboxWrapper, {
-      [styles.checkboxWrapperSelected]: option.isChecked
+      [styles.checkboxWrapperSelected]: option.isChecked,
+      [styles.disabled]: disableSettings
     })}
   >
     <input
@@ -36,6 +37,7 @@ const renderCheckbox = (option, handleChangeLayer) => (
       id={option.value}
       checked={option.isChecked}
       onChange={handleChangeLayer}
+      disabled={disableSettings}
     />
     <label
       htmlFor={option.value}
@@ -51,7 +53,8 @@ const renderCheckbox = (option, handleChangeLayer) => (
 const SettingsWidgetComponent = ({
   layers,
   handleChangeLayer,
-  hidden
+  hidden,
+  disableSettings
 }) => {
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
@@ -83,7 +86,9 @@ const SettingsWidgetComponent = ({
       {isMenuOpen && (
         <div ref={wrapperRef} className={styles.settingsMenu}>
           <div className={styles.settingsMenuTitle}>MAP SETTINGS</div>
-          {layers.map((option) => renderCheckbox(option, handleChangeLayer))}
+          {layers.map((option) =>
+            renderCheckbox(option, handleChangeLayer, disableSettings)
+          )}
         </div>
       )}
     </div>

@@ -22,7 +22,8 @@ const WidgetsComponent = ({
   isFullscreenActive,
   openedModal = null,
   isNotMapsList = true,
-  hidden = false
+  hidden = false,
+  disableSettings = false
 }) => {
   const isOnMobile = useMobile();
   const hiddenWidget = hidden || isOnMobile;
@@ -34,6 +35,7 @@ const WidgetsComponent = ({
           view={view}
           activeLayers={activeLayers}
           hidden={hiddenWidget}
+          disableSettings={disableSettings}
         />
       )}
       {!hideToggle && (
