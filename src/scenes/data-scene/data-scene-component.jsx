@@ -73,7 +73,7 @@ const CountrySceneComponent = ({
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} />
         <ArcgisLayerManager activeLayers={activeLayers} />
-        <CountriesBordersLayer countryISO={countryISO} />
+        <CountriesBordersLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
