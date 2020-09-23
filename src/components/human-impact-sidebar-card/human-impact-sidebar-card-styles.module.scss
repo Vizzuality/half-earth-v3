@@ -16,6 +16,6 @@
   @include animationFunction($propertyToAnimate: height);
   &.open {
     overflow: visible;
-    height: 250px;
+    height: 400px; // we set a fixed height for the property to animate
   }
 }

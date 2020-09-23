@@ -3,31 +3,37 @@ import { connect } from 'react-redux';
 // Component
 import Component from './human-impact-layers-component';
 // Constants
-import { LAND_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
+import { LAND_HUMAN_PRESURES_LAYERS, MARINE_HUMAN_PRESURES_LAYERS } from 'constants/layers-groups';
 //Actions
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
-const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActions };
 
+const checkedOptions = (options, activeLayers) => options.reduce((acc, option) => ({
+  ...acc, [option]: activeLayers.some(layer => layer.title === option)
+}), {});
 
 const HumanImpactLayersContainer = props => {
 
   const { activeLayers } = props;
 
-  const [checkedOptions, setCheckedOptions] = useState({});
+  const [checkedLandOptions, setCheckedLandOptions] = useState({});
+  const [checkedMarineOptions, setCheckedMarineOptions] = useState({});
 
   useEffect(() => {
-    const alreadyChecked = LAND_HUMAN_PRESURES_LAYERS.reduce((acc, option) => ({
-      ...acc, [option]: activeLayers.some(layer => layer.title === option)
-    }), {});
-    setCheckedOptions(alreadyChecked);
+    const alreadyCheckedLandPressures = checkedOptions(LAND_HUMAN_PRESURES_LAYERS, activeLayers);
+    setCheckedLandOptions(alreadyCheckedLandPressures);
+  }, [activeLayers])
+
+  useEffect(() => {
+    const alreadyCheckedMarinePressures = checkedOptions(MARINE_HUMAN_PRESURES_LAYERS, activeLayers);
+    setCheckedMarineOptions(alreadyCheckedMarinePressures);
   }, [activeLayers])
 
   return (
     <Component
-      alreadyChecked={checkedOptions}
+      alreadyCheckedLandPressures={checkedLandOptions}
+      alreadyCheckedMarinePressures={checkedMarineOptions}
       {...props}
     />
   )
 } 
-export default connect(null, actions)(HumanImpactLayersContainer);
+export default connect(null, urlActions)(HumanImpactLayersContainer);

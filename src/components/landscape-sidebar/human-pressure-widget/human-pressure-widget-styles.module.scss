@@ -77,7 +77,7 @@
 }
 
 .selectedPressureBar {
-  background-color: $human-pressure-high;
+  background-color: $human-pressure-low;
   border: 2px solid $white;
   border-radius: 1px;
   height: 100%;
@@ -94,7 +94,7 @@
 }
 
 .nonSelectedPressureBar {
-  background-color: $human-pressure-high;
+  background-color: $human-pressure-low;
   height: 22px;
 }
 
