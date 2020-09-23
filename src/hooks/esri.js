@@ -46,7 +46,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
       loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
         const sWidget = new Search({
           view: view,
-          locationEnabled: true, // show the Use current location box when clicking in the input field
+          locationEnabled: false, // do not show the Use current location box when clicking in the input field
           popupEnabled: false, // hide location popup
           resultGraphicEnabled: false, // hide location pin
           container,
