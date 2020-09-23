@@ -59,7 +59,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
           />
           <ShareModal
             isOpen={isShareModalOpen}
-            handleClose={() => setShareModalOpen(false)}
+            setShareModalOpen={setShareModalOpen}
           />
         </div>
       </div>

@@ -57,10 +57,10 @@ const FeaturesMapCardComponent = ({
               <ShareModalButton
                 theme={{ shareButton: styles.shareButton }}
                 setShareModalOpen={setShareModalOpen}
-              />
+                />
               <ShareModal
                 isOpen={isShareModalOpen}
-                handleClose={() => setShareModalOpen(false)}
+                setShareModalOpen={setShareModalOpen}
               />
               <h2 className={styles.title}>{featuredMap.title}</h2>
             </section>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import facebookIcon from 'icons/facebook.png';
 import twitterIcon from 'icons/twitter.png';
@@ -28,7 +29,9 @@ const mapStateToProps = ({ location }) => ({
   shareSocialMedia
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(Component);
+const ShareModalContainer = (props) => {
+  const { setShareModalOpen } = props;
+  const handleClose = () => setShareModalOpen(false);
+  return <Component handleClose={handleClose} {...props} />;
+}
+export default connect(mapStateToProps, null)(ShareModalContainer);

@@ -37,7 +37,7 @@ const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions
           <ShareModal
             theme={{ shareButton: styles.shareButton }}
             isOpen={isShareModalOpen}
-            handleClose={() => setShareModalOpen(false)}
+            setShareModalOpen={setShareModalOpen}
           />
         </>
       )}

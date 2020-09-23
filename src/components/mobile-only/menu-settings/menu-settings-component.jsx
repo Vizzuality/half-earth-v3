@@ -42,7 +42,7 @@ const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal
                 />
                 <ShareModal
                   isOpen={isShareModalOpen}
-                  handleClose={() => setShareModalOpen(false)}
+                  setShareModalOpen={setShareModalOpen}
                 />
               </>
             )}

@@ -88,7 +88,7 @@ const FeaturedPlaceCardComponent = ({
                 />
                 <ShareModal
                   isOpen={isShareModalOpen}
-                  handleClose={() => setShareModalOpen(false)}
+                  setShareModalOpen={setShareModalOpen}
                 />
                 {featuredPlace.imageUrl && (
                   <img

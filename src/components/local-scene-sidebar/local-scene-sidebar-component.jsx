@@ -126,7 +126,7 @@ const LocalSceneSidebarComponent = ({
         />
         <ShareModal
           isOpen={isShareModalOpen}
-          handleClose={() => setShareModalOpen(false)}
+          setShareModalOpen={setShareModalOpen}
         />
       </div>
     </div>
