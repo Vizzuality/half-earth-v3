@@ -6,7 +6,7 @@ import MolLogo from 'logos/mol.png';
 import ReactMarkdown from 'react-markdown';
 import styles from './modal-metadata-styles.module.scss';
 
-const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
+const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, additionalContent }) => {
   return (
     <Modal
       onRequestClose={handleClose}
@@ -51,6 +51,7 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
                   )
               }
             </dl>
+            {additionalContent}
             {
               metadata && metadata.source && (
               <p className={styles.metadataSource}>
@@ -91,7 +92,8 @@ ModalMetadata.propTypes = {
   loading: PropTypes.bool,
   metadata: PropTypes.object,
   isOpen: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired
+  handleClose: PropTypes.func.isRequired,
+  additionalContent: PropTypes.node
 };
 
 ModalMetadata.defaultProps = { title: '', loading: false, metadata: undefined };
