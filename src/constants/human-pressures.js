@@ -1,5 +1,5 @@
 import {
-  MERGED_LAND_HUMAN_PRESSURES,
+  MARINE_AND_LAND_HUMAN_PRESSURES,
   URBAN_HUMAN_PRESSURES_TILE_LAYER,
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
@@ -56,7 +56,7 @@ export const legendSingleRasterTitles = {
 }
 
 export const legendConfigs = {
-  [MERGED_LAND_HUMAN_PRESSURES]: {
+  [MARINE_AND_LAND_HUMAN_PRESSURES]: {
     groupedLayer: true,
     type: "gradient",
     items: [

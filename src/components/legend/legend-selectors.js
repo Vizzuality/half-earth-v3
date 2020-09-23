@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { uniqBy } from 'lodash';
 import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, MARINE_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
-import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { PLEDGES_LAYER, MARINE_AND_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
@@ -88,7 +88,7 @@ const mergeHumanPressuresIntoOne = layers => {
     return layers;
   } else {
     const opacity = setGroupedLayersOpacity(humanPressuresLayers, DEFAULT_OPACITY);
-    const normalizedLayers = layers.map(layer => isHumanPressureLayer(layer.title) ? { title: MERGED_LAND_HUMAN_PRESSURES, opacity }: layer);
+    const normalizedLayers = layers.map(layer => isHumanPressureLayer(layer.title) ? { title: MARINE_AND_LAND_HUMAN_PRESSURES, opacity }: layer);
     const uniqNormalizedLayers = uniqBy(normalizedLayers, 'title');
     return uniqNormalizedLayers;
   }
