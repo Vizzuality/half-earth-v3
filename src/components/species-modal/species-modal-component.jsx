@@ -67,7 +67,7 @@ const SpeciesModalComponent = ({
                   [styles.bold]: stewardship === 1
                 })}
               >
-                {stewardship === 1 ? 'Endemic' : stewardship}
+                {stewardship === 1 ? 'Endemic' : `${stewardship} countries`}
               </div>
               <ArrowIcon
                 className={cx(styles.arrowIcon, {
@@ -95,6 +95,13 @@ const SpeciesModalComponent = ({
   ];
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
+  const speciesNumber = () => {
+    if (!speciesList) return countryData.speciesNumber;
+    console.log(speciesList.length, countryData.speciesNumber);
+    return speciesList.length < countryData.speciesNumber
+      ? `${speciesList.length} of ${countryData.speciesNumber}`
+      : speciesList.length;
+  }
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
@@ -111,7 +118,7 @@ const SpeciesModalComponent = ({
             />
           </div>
           <div className={styles.summary}>
-            {speciesList ? speciesList.length : countryData.speciesNumber} LAND
+            {speciesNumber()} LAND
             VERTEBRATE SPECIES
           </div>
         </section>
