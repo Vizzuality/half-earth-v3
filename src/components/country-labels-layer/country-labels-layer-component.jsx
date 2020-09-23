@@ -5,10 +5,9 @@ import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, isLandscapeMode, countryName } = props;
+  const { map, countryName } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
-  const [layerReady, setLayerReady] = useState(false)
 
   useEffect(() => {
     loadModules(["esri/layers/support/LabelClass"])
@@ -50,18 +49,9 @@ const CountryLabelsLayerComponent = props => {
                 size: 0
               }
             }
-            setLayerReady(layer);
           });
       }
   }, [labelingInfo])
-
-  useEffect(() => {
-    if (layerReady) {
-      layerReady.visible = !isLandscapeMode;
-      layerReady.labelsVisible = !isLandscapeMode;
-    }
-  }, [layerReady, isLandscapeMode])
-
 
   return null;
 }

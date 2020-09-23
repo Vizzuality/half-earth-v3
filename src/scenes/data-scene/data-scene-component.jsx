@@ -108,7 +108,7 @@ const CountrySceneComponent = ({
           countryName={countryName}
           sceneMode={sceneMode}
         />
-        {isLandscapeMode && <LabelsLayer />}
+        <LabelsLayer />
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
       </Scene>
