@@ -13,7 +13,9 @@ const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent, searchLocationAnal
 
   const postSearchCallback = ({result}) => {
     const { feature: { attributes: { GID_0, NAME_0 }}} = result;
-    changeGlobe({countryISO: GID_0, countryName: NAME_0});
+    if (GID_0) {
+      changeGlobe({countryISO: GID_0, countryName: NAME_0});
+    }
   }
 
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
