@@ -67,7 +67,7 @@ const SpeciesModalComponent = ({
                   [styles.bold]: stewardship === 1
                 })}
               >
-                {stewardship === 1 ? 'Endemic' : stewardship}
+                {stewardship === 1 ? 'Endemic' : `${stewardship} countries`}
               </div>
               <ArrowIcon
                 className={cx(styles.arrowIcon, {
