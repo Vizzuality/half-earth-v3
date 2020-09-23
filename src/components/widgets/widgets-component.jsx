@@ -22,7 +22,6 @@ const WidgetsComponent = ({
   isFullscreenActive,
   openedModal = null,
   isNotMapsList = true,
-  isSettingsActive = false,
   hidden = false
 }) => {
   const isOnMobile = useMobile();
@@ -34,7 +33,6 @@ const WidgetsComponent = ({
           map={map}
           view={view}
           activeLayers={activeLayers}
-          isSettingsActive={isSettingsActive}
           hidden={hiddenWidget}
         />
       )}
