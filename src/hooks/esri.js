@@ -46,7 +46,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
       loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
         const sWidget = new Search({
           view: view,
-          locationEnabled: false, // do not show the Use current location box when clicking in the input field
+          locationEnabled: true, // do not show the Use current location box when clicking in the input field
           popupEnabled: false, // hide location popup
           resultGraphicEnabled: false, // hide location pin
           container,
@@ -58,14 +58,14 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
               }),
               outFields: ["*"],
               searchFields: ["GID_0", "NAME_0"],
-              name: "National admin data"
+              name: "Explore countries"
             },
             {
               locator: new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
               singleLineFieldName: "SingleLine",
               outFields: ["Addr_type"],
-              categories: ['Populated Place', 'Water Features', 'Land Features', 'Nature Reserve'],
-              name: "ArcGIS World Geocoding Service"
+              categories: ['District', 'City', 'Metro Area','Subregion', 'Region', 'Territory', 'Water Features', 'Land Features', 'Nature Reserve'],
+              name: "other geographic results"
             }
           ],
           includeDefaultSources: false

@@ -58,17 +58,11 @@
   }
 
   // search input
-  .esri-input  {
-    background-color: transparent;
+  .esri-input {
+    @extend %headline;
     color: $white;
-    font-family: $font-family-1;	
-    font-size: 28px;
-    height: 50px;
-    line-height: 30px;
-    margin: auto;
+    background-color: transparent;
     outline: none;
-    padding-bottom: 20px;
-    width: 100%;
 
     &::placeholder {
       color: $white;
@@ -79,6 +73,12 @@
       width: 700px;
       letter-spacing: 1px;
     }
+  }
+
+  .esri-menu__header {
+    @extend %title;
+    text-align: center;
+    background-color: $brand-color-secondary;
   }
 
   .esri-search__sources-button {
@@ -95,16 +95,11 @@
     box-shadow: none;
 
     li {
+      @extend %title;
+      color: $brand-color-main;
       border: 0;
-      color: $robins-egg-blue;
-      font-family: $font-family-1;	
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      line-height: 14px;
       outline: none;
       padding: 10px;
-      text-transform: uppercase;
 
       &:hover, &:focus, &:active {
         background-color: rgba(255,255,255,0.05);
@@ -114,10 +109,27 @@
     .esri-search__suggestions-list--current-location li {
       @extend %title;
       color: $white;
+      padding-left: $mobile-sidebar-side-paddings;
+
+      &::before {
+        content: url('../assets/icons/location.svg');
+        position: absolute;
+        left: 5px;
+      }
     }
 
     strong {
       color: $white;
+    }
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      height: 100px;
+      border-radius: 10px;
+      background-color: $white;
     }
   }
 }
