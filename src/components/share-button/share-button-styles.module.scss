@@ -1,0 +1,31 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.button {
+  border: 1px solid $alto !important;
+  height: 40px !important;
+  color: $white !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+}
+
+.icon {
+  @extend %icon;
+}
+
+.shareText {
+  color: $white;
+  @extend %subtitle;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.longTextShareButton {
+  padding: 0;
+  margin-right: 22px;
+}

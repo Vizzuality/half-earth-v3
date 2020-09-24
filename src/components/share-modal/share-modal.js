@@ -1,13 +1,10 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import facebookIcon from 'icons/facebook.png';
 import twitterIcon from 'icons/twitter.png';
 import mailIcon from 'icons/email.png';
-import { openShareModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
-import styles from './share-modal-styles.module';
 import Component from './share-modal-component';
-
-const actions = { openShareModalAnalyticsEvent };
 
 const shareSocialMedia = [
   {
@@ -32,7 +29,9 @@ const mapStateToProps = ({ location }) => ({
   shareSocialMedia
 });
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Component);
+const ShareModalContainer = (props) => {
+  const { setShareModalOpen } = props;
+  const handleClose = () => setShareModalOpen(false);
+  return <Component handleClose={handleClose} {...props} />;
+}
+export default connect(mapStateToProps, null)(ShareModalContainer);
