@@ -35,6 +35,13 @@ $slate-gray: #6C828F;
 $catalina-blue: #0C2C84;
 $wild-sand: #f5f5f5;
 $sulu: #BFF78D;
+$shamrock: #34BD92;
+$conifer: #92EB57;
+$picton-blue: #3AA8EE;
+$gold: #F8D300;
+$medium-purple: #8B62E9;
+$tango: #E87926;
+$french-rose: #EB588F;
 
 // Project colours
 $space-background: #09141A;
@@ -49,10 +56,10 @@ $_temporary-light-text: #747474;
 $logos-text: $oslo-gray;
 $half-earth-meter-green: $screamin-green;
 $half-earth-meter-blue: $lochmara;
-$mammals-color: #92EB58;
+$mammals-color: $conifer;
 $amphibians-color: #9873EF;
-$birds-color: #34BD92;
-$reptiles-color: #3AA8EE;
+$birds-color: $shamrock;
+$reptiles-color: $picton-blue;
 $priority-blue: #0664F6;
 $human-pressure-high: #282052;
 $human-pressure-mid: #9F82CE;
@@ -66,6 +73,15 @@ $human-modification-color: #B284FD;
 $protection-non-needed-color: #AFB8A0;
 $protected-areas: #008604;
 $protection-needed: #B3E74B;;
+
+// Continent colors
+$africa: $shamrock;
+$antarctica: $conifer;
+$asia: $picton-blue;
+$europe: $gold;
+$north-america: $medium-purple;
+$oceania: $tango;
+$south-america: $french-rose;
 
 // Modal
 $modal-light-background: $athens-gray;

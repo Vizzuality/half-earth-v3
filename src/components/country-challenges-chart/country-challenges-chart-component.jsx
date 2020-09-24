@@ -5,6 +5,7 @@ import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import { LOCAL_SCENE_TABS } from 'constants/ui-params';
 import { INDICATOR_LABELS, CHALLENGES_RELATED_FILTERS_OPTIONS, FILTERS_DICTIONARY } from 'constants/country-mode-constants';
 import styles from './country-challenges-chart-styles.module.scss';
+import CountryChallengesModalAdditional from './country-challenges-modal-additional';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as SwitchArrow } from 'icons/switch.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
@@ -29,10 +30,8 @@ const CountryChallengesChartComponent = ({
   localSceneActiveTab
 }) => {
   useEffect(() => {
-    const modalAdditionalContent = <div>hi</div>;
-
     if (localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES) {
-      setInfoModalAdditionalContent(modalAdditionalContent);
+      setInfoModalAdditionalContent(<CountryChallengesModalAdditional />);
     } else {
       // We need to reset the modal as we are always rendering all the tabs
       setInfoModalAdditionalContent(null);
