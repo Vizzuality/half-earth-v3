@@ -114,24 +114,6 @@ const RankingChart = ({
       </div>
       {data && data.length ? (
         <div className={styles.rankingChartContentContainer}>
-          <div className={styles.header}>
-            {categories.map((category) => (
-              <HeaderItem
-                title={category.toUpperCase()}
-                key={category}
-                className={cx(styles.headerItem, styles.titleText)}
-                isSortSelected={
-                  sortRankingCategory &&
-                  sortRankingCategory.split('-')[0] &&
-                  sortRankingCategory.split('-')[0] === category.toUpperCase()
-                }
-                sortDirection={
-                  sortRankingCategory && sortRankingCategory.split('-')[1]
-                }
-                handleSortClick={handleSortClick}
-              />
-            ))}
-          </div>
           <div
             className={cx(styles.rankingChartContent, {
               [styles.scrolled]: hasScrolled
@@ -139,6 +121,24 @@ const RankingChart = ({
             onScroll={onScroll}
             ref={tableRef}
           >
+            <div className={styles.header}>
+              {categories.map((category) => (
+                <HeaderItem
+                  title={category.toUpperCase()}
+                  key={category}
+                  className={cx(styles.headerItem, styles.titleText)}
+                  isSortSelected={
+                    sortRankingCategory &&
+                    sortRankingCategory.split('-')[0] &&
+                    sortRankingCategory.split('-')[0] === category.toUpperCase()
+                  }
+                  sortDirection={
+                    sortRankingCategory && sortRankingCategory.split('-')[1]
+                  }
+                  handleSortClick={handleSortClick}
+                />
+              ))}
+            </div>
             <div className={styles.table}>
               {data.map((d) => (
                 <div className={styles.row} key={d.name}>
@@ -150,7 +150,10 @@ const RankingChart = ({
                     <button
                       className={styles.spiCountryText}
                       onClick={() => handleCountryClick(d.iso, d.name)}
-                    >{`${d.name} (${d.spi})`}</button>
+                    >
+                      <span className={styles.spiCountryName}>{d.name}</span>
+                      <span className={styles.spiCountryIndex}>({d.spi})</span>
+                    </button>
                   </div>
                 </div>
               ))}

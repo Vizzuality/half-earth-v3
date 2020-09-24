@@ -35,7 +35,7 @@ import {
   COUNTRY_PRIORITY_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  MERGED_LAND_HUMAN_PRESSURES
+  MARINE_AND_LAND_HUMAN_PRESSURES
  } from 'constants/layers-slugs';
 
  export const SPECIES_PROTECTION_INDEX = 'spi-def';
@@ -203,8 +203,8 @@ export default {
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     title: 'Protected areas'
   },
-  [MERGED_LAND_HUMAN_PRESSURES]: {
-    slug: MERGED_LAND_HUMAN_PRESSURES,
-    title: 'Land use pressures'
+  [MARINE_AND_LAND_HUMAN_PRESSURES]: {
+    slug: MARINE_AND_LAND_HUMAN_PRESSURES,
+    title: 'Marine and land human pressures'
   }
 };

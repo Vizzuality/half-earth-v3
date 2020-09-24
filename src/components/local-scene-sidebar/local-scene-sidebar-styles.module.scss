@@ -57,5 +57,10 @@
 
 .actionButton {
   @extend %title;
-  color: $white;;
+  color: $white;
+  margin-left: 1em;
+}
+
+.shareText {
+  @extend %title;
 }

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import GlobeImage from 'images/globe.png';
 import GlobeSmallImage from 'images/globeSmall.png';
 import { useMobile } from 'constants/responsive';
-import ShareModalButton from 'components/share-modal';
+import ShareModalButton from 'components/share-button';
+import ShareModal from 'components/share-modal';
 
 import data from './half-earth-modal-data';
 
@@ -23,6 +24,7 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
   useEventListener('keydown', keyEscapeEventListener);
 
   const isOnMobile = useMobile();
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   return (
     <div className={styles.halfEarthModal}>
@@ -33,29 +35,37 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
           source={textData && textData.content}
           escapeHtml={false}
         />
-        {legend.map(({ value, label, imageSrc}) => (
+        {legend.map(({ value, label, imageSrc }) => (
           <div key={label} className={styles.legendItem}>
             <span className={styles.value}>{value}</span>
             <span className={styles.label}>{label}</span>
-            <img src={imageSrc} className={styles.icon} alt={label}/>
+            <img src={imageSrc} className={styles.icon} alt={label} />
           </div>
         ))}
         <div className={styles.globeWrapper}>
           <div className={styles.progresBars}>
-            <img src={isOnMobile ? GlobeSmallImage : GlobeImage} className={styles.globe} alt="Half-Earth globe" />
+            <img
+              src={isOnMobile ? GlobeSmallImage : GlobeImage}
+              className={styles.globe}
+              alt="Half-Earth globe"
+            />
           </div>
         </div>
         <div className={styles.share}>
-          <ShareModalButton shareText />
+          <ShareModalButton
+            variant="shortText"
+            theme={{ shareButton: styles.shareButton }}
+            setShareModalOpen={setShareModalOpen}
+          />
+          <ShareModal
+            isOpen={isShareModalOpen}
+            setShareModalOpen={setShareModalOpen}
+          />
         </div>
       </div>
-      <button
-        className={styles.closeButton}
-        onClick={handleModalClose}
-      >
+      <button className={styles.closeButton} onClick={handleModalClose}>
         <CloseIcon />
       </button>
-
     </div>
   );
 }
