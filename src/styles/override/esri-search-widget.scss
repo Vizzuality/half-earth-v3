@@ -107,14 +107,20 @@
     }
 
     .esri-search__suggestions-list--current-location li {
-      @extend %title;
-      color: $white;
-      padding-left: $mobile-sidebar-side-paddings;
-
+      color: rgba($color: #000000, $alpha: 0); // hide original text
+      
       &::before {
         content: url('../assets/icons/location.svg');
         position: absolute;
         left: 5px;
+      }
+      
+      &::after {
+        content: "locate me";
+        @extend %title;
+        position: absolute;
+        left: 30px;
+        color: $white;
       }
     }
 
