@@ -13,7 +13,7 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, addition
       isOpen={isOpen}
       theme={styles}
     >
-      <h2>{title}</h2>
+      <h2 className={styles.modalTitle} >{title}</h2>
       {
         loading ? <Loading height={200} /> : (
           <>
