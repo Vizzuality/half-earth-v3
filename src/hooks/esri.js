@@ -58,7 +58,8 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
               }),
               outFields: ["*"],
               searchFields: ["GID_0", "NAME_0"],
-              name: "Explore countries"
+              name: "Explore countries",
+              maxSuggestions: 10
             },
             {
               locator: new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
