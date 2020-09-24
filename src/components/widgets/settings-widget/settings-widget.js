@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import { settingsAnalyticsEvent } from 'actions/google-analytics-actions';
 import mapStateToProps from './settings-widget-selectors';
+import userConfigActions from 'redux_modules/user-config/user-config';
 import {
   batchLayerManagerToggle,
   layerManagerToggle
 } from 'utils/layer-manager-utils';
 import SettingsComponent from './settings-widget-component';
 
-const actions = { ...urlActions, settingsAnalyticsEvent };
+const actions = { ...urlActions, ...userConfigActions, settingsAnalyticsEvent };
 
 const SettingsWidget = ({
   changeUI,
@@ -20,21 +21,26 @@ const SettingsWidget = ({
   hidden,
   activeLayers,
   checkboxLayers,
-  disableSettings
+  disableSettings,
+  setUserLayerSlugs
 }) => {
   const openSettings = () => {
     changeUI({ openSettings: null });
     settingsAnalyticsEvent({ notDisplayedLayers: null });
   };
 
-  const handleChangeLayer = (e) => {
-    Array.isArray(e.target.value.split(','))
-      ? batchLayerManagerToggle(
-          e.target.value.split(','),
-          activeLayers,
-          changeGlobe
-        )
-      : layerManagerToggle(e.target.value, activeLayers, changeGlobe);
+  const handleChangeLayer = (layer) => {
+    const toggleStoreLayer = () => {
+      const checkboxLayer = checkboxLayers.find(l => l.slug === layer.slug);
+      setUserLayerSlugs({ [layer.slug]: !checkboxLayer.isChecked });
+    }
+
+    // Set the user config for further reconciliating between scenes
+    // This won't be saved on the URL
+    toggleStoreLayer();
+    Array.isArray(layer.value)
+      ? batchLayerManagerToggle(layer.value, activeLayers, changeGlobe)
+      : layerManagerToggle(layer.value, activeLayers, changeGlobe);
   };
   const [uiNode, setUiNode] = useState(null);
   useEffect(() => {

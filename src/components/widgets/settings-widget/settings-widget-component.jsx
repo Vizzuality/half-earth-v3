@@ -36,7 +36,7 @@ const renderCheckbox = (option, handleChangeLayer, disableSettings) => (
       name={option.label}
       id={option.value}
       checked={option.isChecked}
-      onChange={handleChangeLayer}
+      onChange={() => handleChangeLayer(option)}
       disabled={disableSettings}
     />
     <label

@@ -7,10 +7,12 @@ import { LABELS_LAYERS } from 'constants/layers-groups';
 const layers = [
   {
     label: 'Political boundaries',
+    slug: 'boundaries',
     value: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER
   },
   {
     label: 'Labels',
+    slug: 'labels',
     value: LABELS_LAYERS
   }
 ];
