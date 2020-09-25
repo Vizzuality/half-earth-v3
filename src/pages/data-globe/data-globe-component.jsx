@@ -30,7 +30,7 @@ const DataGlobeComponent = ({
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
   countryChallengesSelectedKey,
-}) => console.log(sceneMode) || (
+}) => (
   <>
     {sceneMode === LOCAL_SCENE && (
       <CountryScene
