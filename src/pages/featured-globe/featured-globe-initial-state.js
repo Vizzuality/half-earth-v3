@@ -6,14 +6,15 @@ import {
   PRIORITY_POLYGONS_GRAPHIC_LAYER,
   FEATURED_PLACES_LAYER
 } from 'constants/layers-slugs';
+import LAYER_TYPES from 'constants/layers-types';
 
 export default {
   globe: {
     activeLayers: [
       { title: VIBRANT_BASEMAP_LAYER },
       { title: GRAPHIC_LAYER },
-      { title: LANDSCAPE_FEATURES_LABELS_LAYER },
-      { title: CITIES_LABELS_LAYER },
+      { title: LANDSCAPE_FEATURES_LABELS_LAYER, type: LAYER_TYPES.label },
+      { title: CITIES_LABELS_LAYER, type: LAYER_TYPES.label },
       { title: PRIORITY_POLYGONS_GRAPHIC_LAYER },
       { title: FEATURED_PLACES_LAYER }
     ],
@@ -26,8 +27,8 @@ export default {
     environment: {
       atmosphereEnabled: false,
       background: {
-        type: "color",
-        color: [0,10,16]
+        type: 'color',
+        color: [0, 10, 16]
       },
       alphaCompositingEnabled: true
     },
@@ -51,4 +52,4 @@ export default {
     isLandscapeMode: false
   },
   listeners: false
-}
+};

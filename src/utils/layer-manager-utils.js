@@ -103,10 +103,14 @@ export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) =>
 export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
-export const activateLayersOnLoad = (map, activeLayers, config) => {
-  const activeLayerIDs = activeLayers
-      .map(({ title }) => title);
-  
+export const activateLayersOnLoad = (map, activeLayers, config, userConfig) => {
+  const activeLayerIDs = activeLayers.filter(layer => (
+    !layer.type ||
+    !userConfig ||
+    !userConfig.layers ||
+    userConfig.layers[layer.type]
+    )).map(({ title }) => title);
+
     activeLayerIDs.forEach(async layerName => {
       const layerConfig = config[layerName];
       if (layerConfig) {

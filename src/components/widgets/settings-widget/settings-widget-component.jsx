@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ReactComponent as SettingsIcon } from 'icons/icon_settings.svg';
 import ReactTooltip from 'react-tooltip';
 import styles from './settings-widget.module.scss';
@@ -58,7 +58,7 @@ const SettingsWidgetComponent = ({
 }) => {
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
-  const [isMenuOpen, setMenuOpen] = React.useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
   useClickOutside(wrapperRef, () => setMenuOpen(false), buttonRef);
   return (
     <div className={cx({ [styles.hidden]: hidden })}>
@@ -86,7 +86,7 @@ const SettingsWidgetComponent = ({
       {isMenuOpen && (
         <div ref={wrapperRef} className={styles.settingsMenu}>
           <div className={styles.settingsMenuTitle}>MAP SETTINGS</div>
-          {layers.map((option) =>
+          {layers && layers.map((option) =>
             renderCheckbox(option, handleChangeLayer, disableSettings)
           )}
         </div>
