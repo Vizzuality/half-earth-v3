@@ -2,8 +2,7 @@
 @import 'styles/typography-extends';
 
 .continent,
-.modalAdditionalContent,
-.sizesLegendBubbles {
+.modalAdditionalContent {
   display: flex;
 }
 
@@ -53,45 +52,3 @@
   }
 }
 
-.sizesLegend {
-  height: 162px;
-  width: 210px;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  @extend %bodyText
-}
-
-.bubbles {
-  display: flex;
-}
-
-.bubbleContainer {
-  height: 130px;
-  width: 80px;
-  margin-right: 34px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  @extend %subtitle;
-}
-
-.bubbleCenter {
-  display: flex;
-  margin: auto 0;
-}
-
-.bubble {
-  background-color: $white;
-  border-radius: 50%;
-
-  &.bigBubble {
-    width: 55px;
-    height: 55px;
-  }
-
-  &.smallBubble {
-    width: 25px;
-    height: 25px;
-  }
-}
