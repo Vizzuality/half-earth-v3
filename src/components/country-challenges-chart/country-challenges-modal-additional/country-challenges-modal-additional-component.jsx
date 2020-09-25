@@ -26,25 +26,6 @@ const CountryChallengesModalAdditional = () => {
       <div className={styles.countriesLegend}>
         {CONTINENTS.map((continent) => renderContinent(continent))}
       </div>
-      <div className={styles.sizesLegend}>
-        The bubble's size is proportional to the country's area
-        <div className={styles.sizesLegendBubbles}>
-          <div className={styles.bubbles}>
-            <div className={styles.bubbleContainer}>
-              <div className={styles.bubbleCenter}>
-                <span className={cx(styles.bubble, styles.bigBubble)} />
-              </div>
-              <div>LARGER COUNTRIES</div>
-            </div>
-            <div className={styles.bubbleContainer}>
-              <div className={styles.bubbleCenter}>
-                <span className={cx(styles.bubble, styles.smallBubble)} />
-              </div>
-              <div>SMALLER COUNTRIES</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
