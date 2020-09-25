@@ -51,7 +51,9 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, addition
                   )
               }
             </dl>
-            {additionalContent}
+            {metadata && metadata.hasAdditionalContent === "TRUE" && (
+              additionalContent
+              )}
             {
               metadata && metadata.source && (
               <p className={styles.metadataSource}>
