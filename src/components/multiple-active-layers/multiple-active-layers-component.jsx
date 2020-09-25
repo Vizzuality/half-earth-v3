@@ -12,11 +12,11 @@ const MultipleActiveLayers = ({ title, description, options, handleClick, theme,
         <h2 className={styles.widgetTitle}>{title}</h2>
       </div>
       <p className={styles.description}>{description}</p>
-      <CheckboxGroup 
+      <CheckboxGroup
         handleClick={handleClick}
         checkedOptions={alreadyChecked}
         options={options}
-        theme={theme} 
+        theme={theme}
       />
     </div>
   )}

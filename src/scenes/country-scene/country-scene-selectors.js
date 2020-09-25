@@ -6,8 +6,8 @@ const selectCountriesData = ({ countryData }) =>
 const getCountryBorder = ({ countriesGeometries }, { countryISO }) => {
   if (!countryISO || !countriesGeometries) return null;
   if (!countriesGeometries.data) return null;
-  if (!countriesGeometries.data[countryISO] || !countriesGeometries.data[countryISO].border) return null;
-  return countriesGeometries.data[countryISO].border;
+  if (!countriesGeometries.data[countryISO] || !countriesGeometries.data[countryISO].borderGraphic) return null;
+  return countriesGeometries.data[countryISO].borderGraphic;
 }
 
 export default createStructuredSelector({

@@ -22,6 +22,7 @@ import {
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
   RANGELAND_HUMAN_PRESSURES_TILE_LAYER,
+  MARINE_HUMAN_PRESSURES_TILE_LAYER,
   SA_AMPHIB_RARITY,
   SA_AMPHIB_RICHNESS,
   SA_DRAGONFLIES_RARITY,
@@ -107,13 +108,15 @@ export const LAYERS_URLS = {
   [GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/human_pressure_55km/FeatureServer',
   [URBAN_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Urban_0_to_8/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Urban_inverted/MapServer',
   [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Irrigated_0_to_8/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Irrigated_inverted/MapServer',
   [RAINFED_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rainfed_0_to_8/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rainfed_inverted/MapServer',
   [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rangeland_0_to_8/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rangeland_inverted/MapServer',
+  [MARINE_HUMAN_PRESSURES_TILE_LAYER]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_Encroachment_ghm_ramp/MapServer',
   // REGIONAL 1km BIODIVERSITY
   [SA_AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
   [SA_AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,

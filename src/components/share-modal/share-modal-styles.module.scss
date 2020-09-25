@@ -15,7 +15,6 @@ $socialMediaIcon: 45px;
     padding: 50px 60px !important;
     max-width: 620px !important;
     width: 600px !important;
-    
   }
 }
 
@@ -141,7 +140,6 @@ $socialMediaIcon: 45px;
 
 .activeTab {
   color: $java;
-  
   &:after {
     content: '';
     position: absolute;
@@ -169,19 +167,4 @@ $socialMediaIcon: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.icon {
-  @extend %icon;
-}
-
-.shareText {
-  color: $white;
-  @extend %subtitle;
-}
-
-.share {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 }

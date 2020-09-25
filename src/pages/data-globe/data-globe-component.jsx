@@ -25,11 +25,11 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   countedActiveLayers,
+  sortRankingCategory,
   localSceneActiveTab,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
   countryChallengesSelectedKey,
-  sortRankingCategory
 }) => (
   <>
     {sceneMode === LOCAL_SCENE && (
@@ -46,9 +46,9 @@ const DataGlobeComponent = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
+        sortRankingCategory={sortRankingCategory}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
-        sortRankingCategory={sortRankingCategory}
       />
     )}
     {sceneMode === DATA_SCENE && (

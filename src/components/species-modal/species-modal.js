@@ -55,7 +55,6 @@ const SpeciesModalContainer = (props) => {
     const sortedCategory =
       speciesModalSort && speciesModalSort.split('-')[0];
     const direction = speciesModalSort && speciesModalSort.split('-')[1];
-    console.log(sortedCategory, direction)
     let sortDirection =
       sortedCategory === category && direction === SORT.DESC
         ? SORT.ASC

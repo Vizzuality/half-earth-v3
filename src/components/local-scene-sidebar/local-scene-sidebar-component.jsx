@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
@@ -7,8 +7,9 @@ import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+import ShareModal from 'components/share-modal';
+import ShareModalButton from 'components/share-button';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -24,6 +25,7 @@ const LocalSceneSidebarComponent = ({
   countryISO,
   countryName,
   countryData,
+  openedModal,
   birdsEndemic,
   mammalsEndemic,
   indexStatement,
@@ -36,7 +38,6 @@ const LocalSceneSidebarComponent = ({
   handlePrintReport,
   handleShareReport,
   isFullscreenActive,
-  openedModal,
   countryDescription,
   countryDataLoading,
   handleSceneModeChange,
@@ -45,6 +46,7 @@ const LocalSceneSidebarComponent = ({
 }) => {
 
   const sidebarHidden = isFullscreenActive;
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   if (countryDataLoading) {
     return (
@@ -65,15 +67,13 @@ const LocalSceneSidebarComponent = ({
   }
 
   return countryData ? (
-    <div className={cx(styles.container, 
-      className,
-      {[animationStyles.leftHidden]: sidebarHidden}
-    )}>
-      <button
-        className={styles.backButton}
-        onClick={handleSceneModeChange}
-      >
-        <BackIcon className={styles.icon}/>
+    <div
+      className={cx(styles.container, className, {
+        [animationStyles.leftHidden]: sidebarHidden
+      })}
+    >
+      <button className={styles.backButton} onClick={handleSceneModeChange}>
+        <BackIcon className={styles.icon} />
         <span className={styles.text}>back to global</span>
       </button>
       <DummyBlurWorkaround />
@@ -103,6 +103,7 @@ const LocalSceneSidebarComponent = ({
         chartData={speciesChartData}
         amphibians={amphibians}
         countryName={countryName}
+        openedModal={openedModal}
         birdsEndemic={birdsEndemic}
         mammalsEndemic={mammalsEndemic}
         reptilesEndemic={reptilesEndemic}
@@ -110,18 +111,26 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
-        openedModal={openedModal}
       />
       <div className={styles.actionGroup}>
         <DownloadIcon />
-        <button className={styles.actionButton} onClick={handlePrintReport}>download this info (pdf)</button>
+        <button className={styles.actionButton} onClick={handlePrintReport}>
+          download this info (pdf)
+        </button>
       </div>
       <div className={styles.actionGroup}>
-        <ShareIcon />
-        <button className={styles.actionButton} onClick={handleShareReport}>share this info</button>
+        <ShareModalButton
+          variant="longText"
+          theme={{ shareText: styles.shareText }}
+          setShareModalOpen={setShareModalOpen}
+        />
+        <ShareModal
+          isOpen={isShareModalOpen}
+          setShareModalOpen={setShareModalOpen}
+        />
       </div>
     </div>
-  ) : null
+  ) : null;
 }
 
 

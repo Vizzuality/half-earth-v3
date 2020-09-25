@@ -5,7 +5,7 @@
 
 $site-gutter: 20px;
 $map-attribution-height: 30px;
-$legend-item-height: 85px;
+$legend-item-height: auto;
 $legend-width: 260px;
 
 %legend-ramp-text {
@@ -116,7 +116,7 @@ $legend-width: 260px;
     @extend %verticalScrollbarStyled;
 
     @media #{$tablet-portrait} {
-      max-height: calc(4 * #{$legend-item-height});
+      max-height: calc(4 * 85px);
     }
   }
 }

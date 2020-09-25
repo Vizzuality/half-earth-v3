@@ -5,7 +5,7 @@ import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { view, map, isLandscapeMode, countryName } = props;
+  const { map, isLandscapeMode, countryName } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [layerReady, setLayerReady] = useState(false)
@@ -22,7 +22,7 @@ const CountryLabelsLayerComponent = props => {
           color: [213,207,202],
           font: {
             family: "Helvetica",
-            size: 12,
+            size: 10,
             weight: "normal"
           },
           haloColor: [0, 0, 0, 255],
@@ -41,7 +41,7 @@ const CountryLabelsLayerComponent = props => {
             layer.opacity = 0.7;
             layer.visible = true;
             layer.labelsVisible = true;
-            layer.minScale = 35000000;
+            layer.minScale = 37500000;
             layer.labelingInfo = [labelingInfo];
             layer.renderer = {
               type: "simple",

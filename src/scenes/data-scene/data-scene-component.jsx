@@ -13,12 +13,12 @@ import DataGlobalSidebar from 'components/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
-import CountryBorderLayer from 'components/country-border-layer';
+import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
+import CountryEntryTooltip from 'components/country-entry-tooltip'; 
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 // Utils
 import { MobileOnly, useMobile } from 'constants/responsive';
 // Dynamic imports
@@ -71,12 +71,9 @@ const CountrySceneComponent = ({
           <Slider />
         </MobileOnly>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
-        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode}/>
+        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} />
         <ArcgisLayerManager activeLayers={activeLayers} />
-        <CountryBorderLayer
-          countryISO={countryISO}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
-        />
+        <CountriesBordersLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
@@ -106,6 +103,11 @@ const CountrySceneComponent = ({
         />
         <Widgets isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
         <TerrainExaggerationLayer exaggeration={3}/>
+        <CountryEntryTooltip
+          countryISO={countryISO}
+          countryName={countryName}
+          sceneMode={sceneMode}
+        />
         {isLandscapeMode && <LabelsLayer />}
         {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
         {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
