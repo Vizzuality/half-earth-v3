@@ -57,7 +57,7 @@ const CountryDataCardComponent = ({
             <div className={styles.indexBaseDataElement}>
               <p className={styles.baseNumber}>{`${endemicVertebratesCount}`}</p>
               <p className={styles.numberText}>endemic land</p>
-              <p className={styles.numberText}>vertebrated</p>
+              <p className={styles.numberText}>vertebrate</p>
               <p className={styles.numberText}>species</p>
             </div>
           </div>

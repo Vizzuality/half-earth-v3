@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
+import { hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
 import { 
   FEATURED_PLACES_LAYER,
@@ -34,8 +34,9 @@ const feturedGlobeContainer = props => {
   }
   const handleMarkerHover = (viewPoint, view) => {
     if (!isOnMobile) {
-      setCursor(viewPoint, FEATURED_PLACES_LAYER);
-      if (!isFeaturedPlaceCard) setAvatarImage(view, viewPoint, FEATURED_PLACES_LAYER, selectedFeaturedMap, featuredMapPlaces);
+      const layerFeatures = hitResults(viewPoint, FEATURED_PLACES_LAYER)
+      setCursor(layerFeatures);
+      if (!isFeaturedPlaceCard) setAvatarImage(view, layerFeatures, selectedFeaturedMap, featuredMapPlaces);
     }
   };
 

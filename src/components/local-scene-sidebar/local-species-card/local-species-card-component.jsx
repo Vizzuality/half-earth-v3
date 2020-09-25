@@ -20,13 +20,13 @@ const LocalSpeciesCardComponent = ({
   chartData,
   amphibians,
   countryName,
+  openedModal,
   birdsEndemic,
   mammalsEndemic,
   reptilesEndemic,
+  vertebratesCount,
   amphibiansEndemic,
-  speciesCount,
   endemicVertebratesSentence,
-  openedModal,
   changeUI
 }) => {
   const setModal = (opened) => {
@@ -50,7 +50,7 @@ const LocalSpeciesCardComponent = ({
         <div className={styles.chartLegend}>
           <div className={styles.legendItem}>
             <SpeciesOval />
-            <span>{`${speciesCount}`}</span>
+            <span>{`${vertebratesCount}`}</span>
             <span>species</span>
           </div>
           <div className={styles.legendItem}>

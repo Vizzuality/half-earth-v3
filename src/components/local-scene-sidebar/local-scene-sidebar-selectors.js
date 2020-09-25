@@ -52,7 +52,7 @@ const getIndexStatement = createSelector(
   (SPI, SPIMean) => {
   if (!SPI || !SPIMean) return null;
   const comparation = SPI >=SPIMean ? 'higher' : 'lower';
-  return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average global SPI: ${SPIMean} `
+  return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average national SPI: ${SPIMean} `
 })
 
 const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
