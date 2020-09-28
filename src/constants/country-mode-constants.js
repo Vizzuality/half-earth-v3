@@ -6,6 +6,16 @@ export const INDICATOR_LABELS = {
   'GNI_PPP': 'Gross National Income (GNI)',
 };
 
+export const CONTINENTS = [
+  'Africa',
+  'Antarctica',
+  'Asia',
+  'Europe',
+  'North america',
+  'Oceania',
+  'South america'
+];
+
 export const CONTINENT_COLORS = {
   'Africa': '#34BD92',
   'Antarctica': '#92EB57',

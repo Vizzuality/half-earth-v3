@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react';
+import React, { useState } from 'react';
 import loadable from '@loadable/component'
 import cx from 'classnames';
 // Components
@@ -47,6 +47,8 @@ const CountrySceneComponent = ({
   countryChallengesSelectedKey,
 }) => {
   const isOnMobile = useMobile();
+  const [infoModalAdditionalContent, setInfoModalAdditionalContent] = useState(null);
+
   return (
     <>
       <Scene
@@ -66,7 +68,7 @@ const CountrySceneComponent = ({
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <TerrainExaggerationLayer exaggeration={20}/>
+        <TerrainExaggerationLayer exaggeration={20} />
         <LabelsLayer countryISO={countryISO} />
         {localSceneActiveTab === LOCAL_SCENE_TABS.MAP && (
           <Legend
@@ -99,25 +101,24 @@ const CountrySceneComponent = ({
         localSceneActiveTab={localSceneActiveTab}
       />
       <div
-        className={cx(
-          styles.hideOnPrint,
-          styles.challengesViewContainer,
-          { [styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES }
-        )}
+        className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+          [styles.challengesSelected]:
+            localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES
+        })}
       >
         <CountryChallengesChart
           countryISO={countryISO}
           className={styles.challengesChart}
           localSceneActiveTab={localSceneActiveTab}
           countryChallengesSelectedKey={countryChallengesSelectedKey}
+          setInfoModalAdditionalContent={setInfoModalAdditionalContent}
         />
       </div>
       <div
-        className={cx(
-          styles.hideOnPrint,
-          styles.challengesViewContainer,
-          { [styles.challengesSelected]: localSceneActiveTab === LOCAL_SCENE_TABS.RANKING }
-        )}
+        className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+          [styles.challengesSelected]:
+            localSceneActiveTab === LOCAL_SCENE_TABS.RANKING
+        })}
       >
         <RankingChart
           countryISO={countryISO}
@@ -126,8 +127,8 @@ const CountrySceneComponent = ({
           sortRankingCategory={sortRankingCategory}
         />
       </div>
-      {hasMetadata && <InfoModal />}
-      {!isOnMobile && <About className={styles.hideOnPrint}/>}
+      {hasMetadata && <InfoModal additionalContent={infoModalAdditionalContent} />}
+      {!isOnMobile && <About className={styles.hideOnPrint} />}
       <PdfNationalReport
         countryISO={countryISO}
         countryName={countryName}

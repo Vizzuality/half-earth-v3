@@ -29,6 +29,7 @@ const categories = Object.keys(legendText);
 const RankingChart = ({
   data,
   className,
+  countryISO,
   handleInfoClick,
   sortRankingCategory,
   handleSortClick,
@@ -151,8 +152,18 @@ const RankingChart = ({
                       className={styles.spiCountryText}
                       onClick={() => handleCountryClick(d.iso, d.name)}
                     >
-                      <span className={styles.spiCountryName}>{d.name}</span>
-                      <span className={styles.spiCountryIndex}>({d.spi})</span>
+                      <span className={cx(
+                        styles.spiCountryName,
+                        {[styles.selectedCountry]: countryISO === d.iso}
+                      )}>
+                        {d.name}
+                      </span>
+                      <span className={cx(
+                        styles.spiCountryIndex,
+                        {[styles.selectedCountry]: countryISO === d.iso}
+                      )}>
+                        ({d.spi})
+                      </span>
                     </button>
                   </div>
                 </div>
