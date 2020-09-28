@@ -22,12 +22,11 @@ function useClickOutside(ref, callback, exceptionRef) {
   }, [ref]);
 }
 
-const renderCheckbox = (option, handleChangeLayer, disableSettings) => (
+const renderCheckbox = (option, handleChangeLayer) => (
   <div
     key={option.name}
     className={cx(styles.checkboxWrapper, {
-      [styles.checkboxWrapperSelected]: option.isChecked,
-      [styles.disabled]: disableSettings
+      [styles.checkboxWrapperSelected]: option.isChecked
     })}
   >
     <input
@@ -37,7 +36,6 @@ const renderCheckbox = (option, handleChangeLayer, disableSettings) => (
       id={option.value}
       checked={option.isChecked}
       onChange={() => handleChangeLayer(option)}
-      disabled={disableSettings}
     />
     <label
       htmlFor={option.value}
@@ -65,10 +63,10 @@ const SettingsWidgetComponent = ({
       <button
         data-tip
         data-for="settingsUi"
-        className={styles.settingsButton}
+        className={cx(styles.settingsButton, {[styles.disabled]: disableSettings})}
         ref={buttonRef}
         onClick={() => {
-          setMenuOpen(!isMenuOpen);
+          !disableSettings && setMenuOpen(!isMenuOpen);
         }}
         data-effect="solid"
         data-delay-show={0}
@@ -86,9 +84,10 @@ const SettingsWidgetComponent = ({
       {isMenuOpen && (
         <div ref={wrapperRef} className={styles.settingsMenu}>
           <div className={styles.settingsMenuTitle}>MAP SETTINGS</div>
-          {layers && layers.map((option) =>
-            renderCheckbox(option, handleChangeLayer, disableSettings)
-          )}
+          {layers &&
+            layers.map((option) =>
+              renderCheckbox(option, handleChangeLayer)
+            )}
         </div>
       )}
     </div>

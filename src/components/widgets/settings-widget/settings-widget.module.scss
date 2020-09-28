@@ -19,13 +19,25 @@
   padding: 0;
   width: $widget-button-size;
 
+  svg g {
+    fill: $white;
+  }
+
   &:hover svg g {
     fill: $robins-egg-blue;
   }
 
-  svg g {
-    fill: $white;
+  &.disabled {
+    cursor: not-allowed;
+    svg g {
+      fill: rgba($white, 0.5);
+    }
+
+    &:hover svg g {
+      fill: rgba($white, 0.5);
+    }
   }
+
 }
 
 .settingsMenu {
@@ -112,14 +124,5 @@ input[type="checkbox"] {
   &:before {
     background: $java;
     border: 2px solid $white;
-  }
-}
-
-.disabled {
-  cursor: not-allowed;
-  color: $_temporary-light-text;
-
-  input, label {
-    cursor: not-allowed;
   }
 }
