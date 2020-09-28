@@ -92,13 +92,13 @@ const LocalSpeciesCardComponent = ({
       <section>
         <p
           className={styles.speciesSentence}
-        >{`These are the four species in ${countryName} with the smallest global range (one per taxonomic group).`}</p>
+        >{`These are the four vertebrates in ${countryName} with the smallest global range (one per taxonomic group).`}</p>
         <HighLightedSpeciesList
           countryISO={countryISO}
           maxHighlightedSpecies={maxHighlightedSpecies}
         />
         <Button theme={buttonTheme} onClick={() => setModal(true)}>
-          See all species
+          See all vertebrates
         </Button>
         <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={() => setModal(false)} />
       </section>
