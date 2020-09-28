@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -45,6 +45,11 @@ const getNumberOfVertebrates = createSelector(selectCountryData, countryData => 
 const getNumberOfEndemicVertebrates = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return countryData.total_endemic.toLocaleString('en');
+})
+
+const getMaxHighlightedSpecies = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.max_highlited_sp;
 })
 
 const getIndexStatement = createSelector(
@@ -97,26 +102,27 @@ const chartData = [
   return chartData
 })
 
-const mapStateToProps = (state, props) => ({
-    SPI: getSpeciesProtectionIndex(state, props),
-    birds: getTaxa('birds')(state, props),
-    mammals: getTaxa('mammals')(state, props),
-    reptiles: getTaxa('reptiles')(state, props),
-    amphibians: getTaxa('amphibians')(state, props),
-    countryData: selectCountryData(state, props),
-    birdsEndemic: getEndemicSpecies('birds')(state, props),
-    mammalsEndemic: getEndemicSpecies('mammals')(state, props),
-    indexStatement: getIndexStatement(state, props),
-    reptilesEndemic: getEndemicSpecies('reptiles')(state, props),
-    vertebratesCount: getNumberOfVertebrates(state, props),
-    protectionNeeded: getProtectionNeeded(state, props),
-    speciesChartData: getSpeciesChartData(state, props),
-    amphibiansEndemic: getEndemicSpecies('amphibians')(state, props),
-    currentProtection: getCurrentProtection(state, props),
-    countryDescription: getDescription(state, props),
-    countryDataLoading: selectCountryDataLoading(state, props),
-    endemicVertebratesCount: getNumberOfEndemicVertebrates(state, props),
-    endemicVertebratesSentence: getEndemicSpeciesSentence(state, props),
-  }
-)
+const mapStateToProps = createStructuredSelector({
+  SPI: getSpeciesProtectionIndex,
+  birds: getTaxa('birds'),
+  mammals: getTaxa('mammals'),
+  reptiles: getTaxa('reptiles'),
+  amphibians: getTaxa('amphibians'),
+  countryData: selectCountryData,
+  birdsEndemic: getEndemicSpecies('birds'),
+  mammalsEndemic: getEndemicSpecies('mammals'),
+  indexStatement: getIndexStatement,
+  reptilesEndemic: getEndemicSpecies('reptiles'),
+  vertebratesCount: getNumberOfVertebrates,
+  protectionNeeded: getProtectionNeeded,
+  speciesChartData: getSpeciesChartData,
+  amphibiansEndemic: getEndemicSpecies('amphibians'),
+  currentProtection: getCurrentProtection,
+  countryDescription: getDescription,
+  countryDataLoading: selectCountryDataLoading,
+  endemicVertebratesCount: getNumberOfEndemicVertebrates,
+  endemicVertebratesSentence: getEndemicSpeciesSentence,
+  maxHighlightedSpecies: getMaxHighlightedSpecies
+})
+
 export default mapStateToProps;
