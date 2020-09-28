@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as layerSlug } from 'constants/layers-slugs';
-import { useFeatureLayer } from 'hooks/esri';
+// Services
+import EsriFeatureService from 'services/esri-feature-service';
+// Constants
+import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
 import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 import * as urlActions from 'actions/url-actions';
@@ -10,27 +12,20 @@ import Component from './country-entry-tooltip-component';
 const CountryEntryTooltipContainer = props => {
   const { countryISO } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
-  const countryCentroidsLayer = useFeatureLayer({ layerSlug, outFields: ["NAME_0"] });
 
-  const queryCountryCentroid = ({ countryCentroidsLayer, countryISO }) => {
-    const query = countryCentroidsLayer.createQuery();
-    query.where = `GID_0 = '${countryISO}'`;
-    query.returnGeometry = true;
-    countryCentroidsLayer.queryFeatures(query)
-      .then((results) => {
-        const { features } = results;
-        const { geometry } = features[0];
-        setTooltipPosition(geometry.centroid);
-      })
-  };
-
-
+  // Set country tooltip position
   useEffect(() => {
-    if (countryCentroidsLayer && countryISO) {
-      queryCountryCentroid({countryCentroidsLayer, countryISO});
+    if (countryISO) {
+      EsriFeatureService.getFeatures({
+        url: COUNTRIES_DATA_SERVICE_URL,
+        whereClause: `GID_0 = '${countryISO}'`,
+        returnGeometry: true
+      }).then((features) => {
+        const { geometry } = features[0];
+        setTooltipPosition(geometry);
+      })
     }
-  }, [countryCentroidsLayer, countryISO])
-
+  }, [countryISO])
 
   const handleTooltipClose = () => {
     const { changeGlobe } = props;
