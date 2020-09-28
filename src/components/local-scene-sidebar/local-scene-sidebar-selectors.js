@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { random } from 'lodash';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -47,9 +48,11 @@ const getNumberOfEndemicVertebrates = createSelector(selectCountryData, countryD
   return countryData.total_endemic.toLocaleString('en');
 })
 
-const getMaxHighlightedSpecies = createSelector(selectCountryData, countryData => {
+const getHighlightedSpeciesRandomNumber = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.max_highlited_sp;
+  const max = countryData.max_highlited_sp;
+  const highlightedSpeciesRandomNumber = random(1, max);
+  return highlightedSpeciesRandomNumber;
 })
 
 const getIndexStatement = createSelector(
@@ -122,7 +125,7 @@ const mapStateToProps = createStructuredSelector({
   countryDataLoading: selectCountryDataLoading,
   endemicVertebratesCount: getNumberOfEndemicVertebrates,
   endemicVertebratesSentence: getEndemicSpeciesSentence,
-  maxHighlightedSpecies: getMaxHighlightedSpecies
+  highlightedSpeciesRandomNumber: getHighlightedSpeciesRandomNumber
 })
 
 export default mapStateToProps;

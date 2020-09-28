@@ -29,8 +29,8 @@ const LocalSpeciesCardComponent = ({
   reptilesEndemic,
   vertebratesCount,
   amphibiansEndemic,
-  maxHighlightedSpecies,
   endemicVertebratesSentence,
+  highlightedSpeciesRandomNumber,
 }) => {
   const setModal = (opened) => {
     changeUI({ openedModal: opened ? MODALS.SPECIES : null });
@@ -95,7 +95,7 @@ const LocalSpeciesCardComponent = ({
         >{`These are the four vertebrates in ${countryName} with the smallest global range (one per taxonomic group).`}</p>
         <HighLightedSpeciesList
           countryISO={countryISO}
-          maxHighlightedSpecies={maxHighlightedSpecies}
+          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
         />
         <Button theme={buttonTheme} onClick={() => setModal(true)}>
           See all vertebrates

@@ -41,9 +41,9 @@ const LocalSceneSidebarComponent = ({
   countryDescription,
   countryDataLoading,
   handleSceneModeChange,
-  maxHighlightedSpecies,
   endemicVertebratesCount,
-  endemicVertebratesSentence
+  endemicVertebratesSentence,
+  highlightedSpeciesRandomNumber,
 }) => {
 
   const sidebarHidden = isFullscreenActive;
@@ -111,9 +111,9 @@ const LocalSceneSidebarComponent = ({
         reptilesEndemic={reptilesEndemic}
         vertebratesCount={vertebratesCount}
         amphibiansEndemic={amphibiansEndemic}
-        maxHighlightedSpecies={maxHighlightedSpecies}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
+        highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
       />
       <div className={styles.actionGroup}>
         <DownloadIcon />
