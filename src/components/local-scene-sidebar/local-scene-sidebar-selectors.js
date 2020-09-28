@@ -32,6 +32,11 @@ const getProtectionNeeded = createSelector(selectCountryData, countryData => {
   return Math.round(parseFloat(countryData.protection_needed));
 })
 
+const getHasPriority = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.has_priority === 1;
+})
+
 const getSPIMean = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData.spi_mean));
@@ -117,6 +122,7 @@ const mapStateToProps = (state, props) => ({
     countryDataLoading: selectCountryDataLoading(state, props),
     endemicVertebratesCount: getNumberOfEndemicVertebrates(state, props),
     endemicVertebratesSentence: getEndemicSpeciesSentence(state, props),
+    hasPriority: getHasPriority(state, props),
   }
 )
 export default mapStateToProps;
