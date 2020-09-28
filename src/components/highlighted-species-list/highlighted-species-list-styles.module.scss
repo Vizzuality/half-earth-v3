@@ -1,0 +1,44 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $sidebar-margin;
+}
+
+.species {
+  display: flex;
+  flex-direction: row;
+  margin-top: $sidebar-margin;
+}
+
+.image {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.dataSection {
+  padding-left: $sidebar-paddings;
+
+  p {
+    margin: 0;
+  }
+
+  .name {
+    @extend %title;
+  }
+  
+  .scientificName {
+    @extend %annotation;
+    font-style: italic;
+  }
+
+  .rangeSentence,
+  .range {
+    @extend %bodyText;
+  }
+
+}
