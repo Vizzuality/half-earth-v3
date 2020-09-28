@@ -52,12 +52,13 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
+  userConfig
 }) => {
   const isOnMobile = useMobile();
   return (
     <>
       <Scene
-        sceneId='e96f61b2e79442b698ec2cec68af6db9'
+        sceneId="e96f61b2e79442b698ec2cec68af6db9"
         sceneName={'data-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
@@ -66,14 +67,18 @@ const CountrySceneComponent = ({
         {isGlobeUpdating && <Spinner floating />}
         {!isOnMobile && <Switcher />}
         <MobileOnly>
-          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
+          <MenuFooter
+            activeOption={activeOption}
+            isSidebarOpen={isSidebarOpen}
+            isLandscapeMode={isLandscapeMode}
+          />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
           <Slider />
         </MobileOnly>
         <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
         <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} />
-        <ArcgisLayerManager activeLayers={activeLayers} />
-        <CountriesBordersLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
+        <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
+        <CountriesBordersLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} spatialReference={LOCAL_SPATIAL_REFERENCE}/>
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
@@ -86,7 +91,7 @@ const CountrySceneComponent = ({
           isBiodiversityActive={isBiodiversityActive}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         />
-        {isLandscapeMode &&
+        {isLandscapeMode && (
           <LandscapeSidebar
             activeLayers={activeLayers}
             activeOption={activeOption}
@@ -96,7 +101,7 @@ const CountrySceneComponent = ({
             handleGlobeUpdating={handleGlobeUpdating}
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           />
-        }
+        )}
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
@@ -109,14 +114,21 @@ const CountrySceneComponent = ({
           sceneMode={sceneMode}
         />
         <LabelsLayer />
-        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
+        {isLandscapeMode && (
+          <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
+        )}
+        {isLandscapeMode && (
+          <ProtectedAreasTooltips
+            activeLayers={activeLayers}
+            isLandscapeMode={isLandscapeMode}
+          />
+        )}
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>
-  )
+  );
 }
 
 export default CountrySceneComponent;

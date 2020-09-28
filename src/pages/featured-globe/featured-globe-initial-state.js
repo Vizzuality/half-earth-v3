@@ -6,15 +6,14 @@ import {
   PRIORITY_POLYGONS_GRAPHIC_LAYER,
   FEATURED_PLACES_LAYER
 } from 'constants/layers-slugs';
-import LAYER_TYPES from 'constants/layers-types';
 
 export default {
   globe: {
     activeLayers: [
       { title: VIBRANT_BASEMAP_LAYER },
       { title: GRAPHIC_LAYER },
-      { title: LANDSCAPE_FEATURES_LABELS_LAYER, type: LAYER_TYPES.label },
-      { title: CITIES_LABELS_LAYER, type: LAYER_TYPES.label },
+      { title: LANDSCAPE_FEATURES_LABELS_LAYER },
+      { title: CITIES_LABELS_LAYER },
       { title: PRIORITY_POLYGONS_GRAPHIC_LAYER },
       { title: FEATURED_PLACES_LAYER }
     ],

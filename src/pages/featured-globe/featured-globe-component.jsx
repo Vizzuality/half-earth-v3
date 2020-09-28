@@ -62,6 +62,7 @@ const DataGlobeComponent = ({
   activeOption,
   isLandscapeSidebarCollapsed,
   openedModal,
+  userConfig
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = useMobile();
@@ -93,6 +94,7 @@ const DataGlobeComponent = ({
         </MobileOnly>
         <ArcgisLayerManager
           activeLayers={activeLayers}
+          userConfig={userConfig}
           customFunctions={customFunctions}
         />
         <GlobeEventsManager

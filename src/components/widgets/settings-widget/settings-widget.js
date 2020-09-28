@@ -30,18 +30,10 @@ const SettingsWidget = ({
   };
 
   const handleChangeLayer = (layer) => {
-    const toggleStoreLayer = () => {
-      const checkboxLayer = checkboxLayers.find(l => l.slug === layer.slug);
-      setUserLayerSlugs({ [layer.slug]: !checkboxLayer.isChecked });
-    }
-
-    // Set the user config for further reconciliating between scenes
-    // This won't be saved on the URL
-    toggleStoreLayer();
-    Array.isArray(layer.value)
-      ? batchLayerManagerToggle(layer.value, activeLayers, changeGlobe)
-      : layerManagerToggle(layer.value, activeLayers, changeGlobe);
+    const checkboxLayer = checkboxLayers.find(l => l.slug === layer.slug);
+    setUserLayerSlugs({ [layer.slug]: !checkboxLayer.isChecked });
   };
+
   const [uiNode, setUiNode] = useState(null);
   useEffect(() => {
     const node = document.createElement('div');

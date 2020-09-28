@@ -44,7 +44,8 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   localSceneActiveTab,
   sortRankingCategory,
-  countryChallengesSelectedKey
+  countryChallengesSelectedKey,
+  userConfig
 }) => {
   const isOnMobile = useMobile();
   const [infoModalAdditionalContent, setInfoModalAdditionalContent] = useState(null);
@@ -63,7 +64,10 @@ const CountrySceneComponent = ({
           localGeometry={countryBorder}
           sceneSettings={sceneSettings}
         />
-        <ArcgisLayerManager activeLayers={activeLayers} />
+        <ArcgisLayerManager
+          activeLayers={activeLayers}
+          userConfig={userConfig}
+        />
         <CountryMaskLayer
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}

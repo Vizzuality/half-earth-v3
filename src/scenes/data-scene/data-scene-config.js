@@ -5,7 +5,6 @@ import {
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   ALL_TAXA_RARITY
 } from 'constants/layers-slugs';
-import LAYER_TYPES from 'constants/layers-types';
 
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
 
@@ -14,8 +13,8 @@ export default {
     activeLayers: [
       { title: GRAPHIC_LAYER },
       { title: FIREFLY_BASEMAP_LAYER },
-      { title: COUNTRIES_LABELS_FEATURE_LAYER, type: LAYER_TYPES.label },
-      { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER, type: LAYER_TYPES.boundaries },
+      { title: COUNTRIES_LABELS_FEATURE_LAYER },
+      { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
       { title: ALL_TAXA_RARITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
     zoom: 1,
