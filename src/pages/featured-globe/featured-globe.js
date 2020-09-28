@@ -45,8 +45,8 @@ const feturedGlobeContainer = props => {
     setFeaturedMapsList();
   },[])
 
-  const handleMapLoad = (map, activeLayers, userConfig) => {
-    activateLayersOnLoad(map, activeLayers, layersConfig, userConfig);
+  const handleMapLoad = (map, activeLayers) => {
+    activateLayersOnLoad(map, activeLayers, layersConfig);
   }
 
   const spinGlobe = (view) => {
