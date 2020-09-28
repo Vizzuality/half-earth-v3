@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './national-report-pdf.module.scss';
+import HighLightedSpeciesList from 'components/highlighted-species-list';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
@@ -22,7 +23,8 @@ const NationalReportPdf = ({
   protectionNeeded,
   amphibiansEndemic,
   currentProtection,
-  endemicVertebratesCount
+  endemicVertebratesCount,
+  highlightedSpeciesRandomNumber,
 }) => {
 
   return (
@@ -108,7 +110,10 @@ const NationalReportPdf = ({
         <p className={styles.legendTag}>lower priority</p>
       </section>
       <section className={styles.species}>
-        <span>coming soon</span>
+        <HighLightedSpeciesList
+          countryISO={countryISO}
+          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
+        />
       </section>
       <section className={styles.mapWrapper}/>
       <section className={styles.urlWrapper} >

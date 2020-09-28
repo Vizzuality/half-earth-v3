@@ -8,7 +8,7 @@ const HighlightedSpeciesListComponent = ({
 }) => (
   <div className={styles.container}>
     {highlightedSpecies && highlightedSpecies.map(species => (
-      <div className={styles.species}>
+      <div className={styles.species} key={species.scientificName}>
         <img className={styles.image} src={species.imageUrl || speciesPlaceholder} alt={`${species.name}`}/>
         <section className={styles.dataSection}>
           <p className={styles.name}>{species.name}</p>

@@ -5,12 +5,18 @@
   display: flex;
   flex-direction: column;
   margin-bottom: $sidebar-margin;
+  @media print {
+    margin: 0;
+  }
 }
 
 .species {
   display: flex;
   flex-direction: row;
   margin-top: $sidebar-margin;
+  @media print {
+    margin: 0 0 15pt 0;
+  }
 }
 
 .image {
@@ -18,6 +24,10 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  @media print {
+    width: 40pt;
+    height: 40pt;
+  }
 }
 
 .dataSection {
@@ -39,6 +49,10 @@
   .rangeSentence,
   .range {
     @extend %bodyText;
+    @media print {
+      display: inline;
+      padding-right: 2pt;;
+    }
   }
 
 }
