@@ -58,7 +58,7 @@ const LocalPriorityCardComponent = (props) => {
                   className={styles.datasetSource}
                   onClick={() => handleInfoClick(COUNTRY_PRIORITY)}
                 >
-                  Source: Rinnan DS and Jetz W, (2020).
+                  Source: Rinnan DS and Jetz W (2020).
                 </p>
               </div>
             </div>
