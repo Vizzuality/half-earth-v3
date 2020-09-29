@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './national-report-pdf.module.scss';
+import HighLightedSpeciesList from 'components/highlighted-species-list';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
@@ -22,7 +23,8 @@ const NationalReportPdf = ({
   protectionNeeded,
   amphibiansEndemic,
   currentProtection,
-  endemicVertebratesCount
+  endemicVertebratesCount,
+  highlightedSpeciesRandomNumber,
 }) => {
 
   return (
@@ -30,6 +32,11 @@ const NationalReportPdf = ({
       <section className={styles.nameWrapper}>
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
         <span className={styles.countryName}>{countryName}</span>
+      </section>
+      <section className={styles.date}>
+        <span>
+          {Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(new Date())}
+        </span>
       </section>
       <section className={styles.indexWrapper}>
         <p className={styles.overviewText}>{`The national species protection index is: ${SPI}`}</p>
@@ -108,11 +115,14 @@ const NationalReportPdf = ({
         <p className={styles.legendTag}>lower priority</p>
       </section>
       <section className={styles.species}>
-        <span>coming soon</span>
+        <HighLightedSpeciesList
+          countryISO={countryISO}
+          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
+        />
       </section>
       <section className={styles.mapWrapper}/>
       <section className={styles.urlWrapper} >
-        <a href={shortLink}>Half Earth Map: {shortLink}</a>
+        <a href={shortLink}>{shortLink}</a>
       </section>
     </div>
   )

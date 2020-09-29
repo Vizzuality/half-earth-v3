@@ -132,7 +132,6 @@ const CountrySceneComponent = ({
       <PdfNationalReport
         countryISO={countryISO}
         countryName={countryName}
-        countryBorder={countryBorder}
         onMapLoad={onMapLoad}
         shortLink={shortLink}
       />

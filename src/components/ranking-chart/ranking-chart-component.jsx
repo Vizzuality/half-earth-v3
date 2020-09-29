@@ -145,7 +145,11 @@ const RankingChart = ({
                 <div className={styles.row} key={d.name}>
                   {categories.map((category) => renderBar(category, d))}
                   <div className={styles.spiCountry}>
-                    <span className={cx(styles.titleText, styles.spiIndex)}>
+                    <span className={cx(
+                      styles.titleText,
+                      styles.spiIndex,
+                      {[styles.selectedCountry]: countryISO === d.iso}
+                    )}>
                       {d.index}.
                     </span>
                     <button

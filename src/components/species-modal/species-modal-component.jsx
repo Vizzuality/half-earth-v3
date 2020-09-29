@@ -97,7 +97,6 @@ const SpeciesModalComponent = ({
   const tableHeight = height - PX_TO_TOP;
   const speciesNumber = () => {
     if (!speciesList) return countryData.speciesNumber;
-    console.log(speciesList.length, countryData.speciesNumber);
     return speciesList.length < countryData.speciesNumber
       ? `${speciesList.length} of ${countryData.speciesNumber}`
       : speciesList.length;

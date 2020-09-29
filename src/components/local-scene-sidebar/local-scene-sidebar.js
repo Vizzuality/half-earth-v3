@@ -17,6 +17,7 @@ const LocalSceneSidebarContainer = (props) => {
     changeUI,
     sceneMode,
     changeGlobe,
+    countryName,
     localGeometry
   } = props;
 
@@ -33,7 +34,14 @@ const LocalSceneSidebarContainer = (props) => {
   const handlePrintReport = () => {
     const { extent } = localGeometry;
     view.goTo({ target: extent, tilt: 0, heading: 0 })
-        .then(() => window.print())
+        .then(() => {
+          const today = new Date();
+          const date = Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(today);
+          const tempTitle = document.title;
+          document.title = `Half-Earth National Report Card ${date} - ${countryName}`;
+          window.print();
+          document.title = tempTitle;
+        })
         .catch(() => window.print())
   }
 
