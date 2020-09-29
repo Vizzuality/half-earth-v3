@@ -122,7 +122,7 @@ const NationalReportPdf = ({
       </section>
       <section className={styles.mapWrapper}/>
       <section className={styles.urlWrapper} >
-        <a href={shortLink}>Half Earth Map: {shortLink}</a>
+        <a href={shortLink}>{shortLink}</a>
       </section>
     </div>
   )

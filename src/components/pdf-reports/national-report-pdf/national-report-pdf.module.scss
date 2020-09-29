@@ -76,7 +76,7 @@ $gap: 20pt;
     height:595pt;
     background-color: $white;
     display: grid;
-    column-gap: $gap;
+    column-gap: 23pt;
     row-gap: $gap;
     grid-template-columns: repeat(10, 63pt);
     grid-template-rows: 30pt 78pt 13pt 100pt 73pt 168pt 15pt;
@@ -87,7 +87,7 @@ $gap: 20pt;
     "exp exp exp exp cmp cmp cmp sp sp sp"
     ". . . . prot prot prot prot prot prot"
     ". . . . prior prior prior prior prior prior"
-    ". . . . url url url url url url";
+    ". . . . . . . url url url";
 
     .nameWrapper {
       grid-area: hd;
@@ -129,6 +129,7 @@ $gap: 20pt;
     .urlWrapper {
       grid-area: url;
       overflow: hidden;
+      text-align: right;
     }
 
     .species {
