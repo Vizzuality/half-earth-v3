@@ -36,7 +36,7 @@ const LocalSceneSidebarContainer = (props) => {
     view.goTo({ target: extent, tilt: 0, heading: 0 })
         .then(() => {
           const today = new Date();
-          const date =  Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(today);
+          const date = Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(today);
           const tempTitle = document.title;
           document.title = `Half-Earth National Report Card ${date} - ${countryName}`;
           window.print();

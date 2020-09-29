@@ -37,12 +37,11 @@ const LocalPriorityCardComponent = ({
           <div className={styles.priorityIcon}/>
           <div className={styles.datasetMetadata}>
             <p className={styles.datasetExplanation}>{
-              `The brightly colored map layer indicates the minimum amount of 
-              additional conservation area needed for ${countryName} to achieve 
-              a National SPI of 100, and presents one possible pathway toward the 
-              Half-Earth goal of comprehensive terrestrial biodiversity conservation. 
-              Higher values indicate locations within the country that contribute 
-              more to the conservation of species habitat.`
+              `The brightly colored map layer presents one possible configuration
+               of the additional areas needed to achieve the Half-Earth goal of 
+               comprehensive terrestrial biodiversity conservation. Higher values 
+               indicate locations within ${countryName} that contribute more to the 
+               conservation of species habitat.`
             }
             </p>
             <p className={styles.datasetSource} onClick={() => handleInfoClick(COUNTRY_PRIORITY)}>
