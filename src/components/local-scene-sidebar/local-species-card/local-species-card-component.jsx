@@ -92,7 +92,7 @@ const LocalSpeciesCardComponent = ({
       <section>
         <p
           className={styles.speciesSentence}
-        >{`These are the four vertebrates in ${countryName} with the smallest global range (one per taxonomic group).`}</p>
+        >{`These are the four vertebrates in ${countryName} with the smallest global range.`}</p>
         <HighLightedSpeciesList
           countryISO={countryISO}
           highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}

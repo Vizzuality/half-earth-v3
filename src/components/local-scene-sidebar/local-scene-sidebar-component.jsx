@@ -25,6 +25,7 @@ const LocalSceneSidebarComponent = ({
   countryISO,
   countryName,
   countryData,
+  hasPriority,
   openedModal,
   birdsEndemic,
   mammalsEndemic,
@@ -45,7 +46,6 @@ const LocalSceneSidebarComponent = ({
   endemicVertebratesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
-
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
@@ -96,7 +96,8 @@ const LocalSceneSidebarComponent = ({
         countryName={countryName}
         protectionNeeded={protectionNeeded}
         currentProtection={currentProtection}
-        />
+        hasPriority={hasPriority}
+      />
       <LocalSpeciesCard
         birds={birds}
         mammals={mammals}
