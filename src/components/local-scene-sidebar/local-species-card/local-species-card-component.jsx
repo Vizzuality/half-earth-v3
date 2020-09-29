@@ -2,6 +2,7 @@ import React from 'react';
 import LocalSceneCard from 'components/local-scene-card';
 import SpeciesModal from 'components/species-modal';
 import PieChart from 'components/charts/pie-chart';
+import HighLightedSpeciesList from 'components/highlighted-species-list';
 import { MODALS } from 'constants/ui-params';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
@@ -17,7 +18,9 @@ const LocalSpeciesCardComponent = ({
   birds,
   mammals,
   reptiles,
+  changeUI,
   chartData,
+  countryISO,
   amphibians,
   countryName,
   openedModal,
@@ -27,7 +30,7 @@ const LocalSpeciesCardComponent = ({
   vertebratesCount,
   amphibiansEndemic,
   endemicVertebratesSentence,
-  changeUI
+  highlightedSpeciesRandomNumber,
 }) => {
   const setModal = (opened) => {
     changeUI({ openedModal: opened ? MODALS.SPECIES : null });
@@ -89,9 +92,13 @@ const LocalSpeciesCardComponent = ({
       <section>
         <p
           className={styles.speciesSentence}
-        >{`These are the four species in ${countryName} with the smallest global range (one per taxonomic group).`}</p>
+        >{`These are the four vertebrates in ${countryName} with the smallest global range (one per taxonomic group).`}</p>
+        <HighLightedSpeciesList
+          countryISO={countryISO}
+          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
+        />
         <Button theme={buttonTheme} onClick={() => setModal(true)}>
-          See all species
+          See all vertebrates
         </Button>
         <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={() => setModal(false)} />
       </section>

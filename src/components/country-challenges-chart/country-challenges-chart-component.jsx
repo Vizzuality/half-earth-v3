@@ -37,7 +37,7 @@ const CountryChallengesChartComponent = ({
   return (
     <div className={className}>
       <div>
-        <span className={styles.chartTitle}>Countries challenges</span>
+        <span className={styles.chartTitle}>Country challenges</span>
         <QuestionIcon className={styles.question} onClick={handleInfoClick} />
       </div>
       <div className={styles.filterSelectContainer}>

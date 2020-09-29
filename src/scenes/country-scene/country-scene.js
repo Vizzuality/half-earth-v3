@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { loadModules } from 'esri-loader';
 import { connect } from 'react-redux';
-import { getShortenUrl } from 'services/bitly';
 import Component from './country-scene-component';
-import countriesGeometriesActions from 'redux_modules/countries-geometries';
+// Services
+import { getShortenUrl } from 'services/bitly';
+import EsriFeatureService from 'services/esri-feature-service';
+// Constants
+import { COUNTRIES_GEOMETRIES_SERVICE_URL, COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+// Actions
 import countryDataActions from 'redux_modules/country-data';
+import countriesGeometriesActions from 'redux_modules/countries-geometries';
 
-import {
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
-  COUNTRIES_DATA_FEATURE_LAYER
- } from 'constants/layers-slugs';
-
-import { LAYERS_URLS } from 'constants/layers-urls';
 import mapStateToProps from './country-scene-selectors';
-
 const actions = {...countriesGeometriesActions, ...countryDataActions }
+
 const CountrySceneContainer = (props) => {
   const {
     countryISO,
-    countriesData,
-    countryBorder,
     setCountryBorderReady,
     setCountryDataLoading,
     setCountryDataReady,
@@ -27,8 +23,6 @@ const CountrySceneContainer = (props) => {
   } = props;
 
   const [shortLink, setShortLink] = useState(null);
-  const [countryLayer, setCountryLayer] = useState(null);
-  const [countriesDataLayer, setCountriesDataLayer] = useState(null);
 
   useEffect(() => {
     getShortenUrl(window.location.href)
@@ -37,54 +31,29 @@ const CountrySceneContainer = (props) => {
     })
   }, [])
 
-  const setCountryGeometries = () => {
-    const query = countryLayer.createQuery();
-    query.where = `GID_0 = '${countryISO}'`;
-    query.outSpatialReference = 102100;
-    countryLayer.queryFeatures(query)
-      .then(async function(results){
-        const { features } = results;
-        const { geometry } = features[0];
-        setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
-      })
-  };
-
+  // Get countries data on mount
   useEffect(() => {
-    loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
-      const _countryLayer = new FeatureLayer({
-        url: LAYERS_URLS[COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]
-      });
-      setCountryLayer(_countryLayer)
-      const _countriesDataLayer = new FeatureLayer({
-        url: LAYERS_URLS[COUNTRIES_DATA_FEATURE_LAYER]
-      });
-      _countriesDataLayer.outFields = ['*'];
-      setCountriesDataLayer(_countriesDataLayer)
-    });
-  }, []);
+    setCountryDataLoading();
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL
+    }).then((features) => {
+      setCountryDataReady(features);
+    }).catch((error) => {
+      setCountryDataError(error);
+    })
+  }, [])
 
+  // Get countries borders
   useEffect(() => {
-    if (countryLayer && countryISO && !countryBorder) {
-      setCountryGeometries();
-    }
-  }, [countryLayer, countryISO, countryBorder]);
-
-
-  useEffect(() => {
-    if (countriesDataLayer && !countriesData) {
-      setCountryDataLoading();
-      const query = countriesDataLayer.createQuery();
-      countriesDataLayer.queryFeatures(query)
-      .then((results) => {
-        const { features } = results;
-        setCountryDataReady(features);
-      })
-      .catch((error) => {
-        setCountryDataError(error);
-      });
-    }
-  }, [countriesDataLayer, countriesData])
-
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_GEOMETRIES_SERVICE_URL,
+      whereClause: `GID_0 = '${countryISO}'`,
+      returnGeometry: true
+    }).then((features) => {
+      const { geometry } = features[0];
+      setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
+    })
+  }, [countryISO])
 
   return (
     <Component
