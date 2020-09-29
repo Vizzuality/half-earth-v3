@@ -33,6 +33,11 @@ const NationalReportPdf = ({
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
         <span className={styles.countryName}>{countryName}</span>
       </section>
+      <section className={styles.date}>
+        <span>
+          {Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(new Date())}
+        </span>
+      </section>
       <section className={styles.indexWrapper}>
         <p className={styles.overviewText}>{`The national species protection index is: ${SPI}`}</p>
         <p className={styles.indexStatement}>{indexStatement}</p>
