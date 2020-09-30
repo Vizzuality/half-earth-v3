@@ -176,7 +176,7 @@ const DataGlobeComponent = ({
           <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
         )}
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3} />}
-        {isLandscapeMode && <LabelsLayer />}
+        {isLandscapeMode && <LabelsLayer activeLayers={activeLayers} />}
         {isLandscapeMode && (
           <ProtectedAreasTooltips
             activeLayers={activeLayers}

@@ -73,7 +73,7 @@ const CountrySceneComponent = ({
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <TerrainExaggerationLayer exaggeration={20} />
-        <LabelsLayer countryISO={countryISO} />
+        <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
         {localSceneActiveTab === LOCAL_SCENE_TABS.MAP && (
           <Legend
             hideTutorial
@@ -132,7 +132,9 @@ const CountrySceneComponent = ({
           sortRankingCategory={sortRankingCategory}
         />
       </div>
-      {hasMetadata && <InfoModal additionalContent={infoModalAdditionalContent} />}
+      {hasMetadata && (
+        <InfoModal additionalContent={infoModalAdditionalContent} />
+      )}
       {!isOnMobile && <About className={styles.hideOnPrint} />}
       <PdfNationalReport
         countryISO={countryISO}

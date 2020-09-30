@@ -119,9 +119,20 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
 export const handleLayerCreation = async (layerConfig, map) => {
   if (!isLayerInMap(layerConfig, map)) {
     const newLayer = await createLayer(layerConfig);
-    return addLayerToMap(newLayer, map).then(layer => layer);
+    return addLayerToMap(newLayer, map).then((layer) => layer);
   } else {
     return findLayerInMap(layerConfig.slug, map);
   }
-}
+};
+
+export const addLayerToActiveLayers = async (slug, activeLayers, callback) => {
+  addLayerAnalyticsEvent({ slug });
+  const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY }];
+  return (callback({
+    activeLayers: activeLayers ?
+      newActiveLayer.concat(activeLayers) :
+      newActiveLayer
+  })
+  );
+};
 

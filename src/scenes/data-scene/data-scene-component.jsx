@@ -76,10 +76,27 @@ const CountrySceneComponent = ({
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
           <Slider />
         </MobileOnly>
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
-        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} />
-        <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
-        <CountriesBordersLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} spatialReference={LOCAL_SPATIAL_REFERENCE}/>
+        <LandscapeViewManager
+          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
+          isLandscapeMode={isLandscapeMode}
+          countryISO={countryISO}
+        />
+        <CountryLabelsLayer
+          activeLayers={activeLayers}
+          countryISO={countryISO}
+          isLandscapeMode={isLandscapeMode}
+          countryName={countryName}
+          sceneMode={sceneMode}
+        />
+        <ArcgisLayerManager
+          activeLayers={activeLayers}
+          userConfig={userConfig}
+        />
+        <CountriesBordersLayer
+          countryISO={countryISO}
+          isLandscapeMode={isLandscapeMode}
+          spatialReference={LOCAL_SPATIAL_REFERENCE}
+        />
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
@@ -107,14 +124,18 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
-        <Widgets activeLayers={activeLayers} isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
-        <TerrainExaggerationLayer exaggeration={3}/>
+        <Widgets
+          activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
+          openedModal={openedModal}
+        />
+        <TerrainExaggerationLayer exaggeration={3} />
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
           sceneMode={sceneMode}
         />
-        <LabelsLayer />
+        <LabelsLayer activeLayers={activeLayers} />
         {isLandscapeMode && (
           <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
         )}

@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
-import { LABELS_LAYERS, BOUNDARIES_LAYERS } from 'constants/layers-groups';
+import {
+  LABELS_LAYERS,
+  BOUNDARIES_LAYERS
+} from 'constants/layers-groups';
 import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
+import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
 
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
   // Map prop is inherited from Webscene component
@@ -8,6 +12,35 @@ const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) 
   const userConfigLayerGroups = { labels: LABELS_LAYERS, boundaries: BOUNDARIES_LAYERS };
   const { layers } = map;
   const { items } = layers;
+
+  useEffect(() => {
+    const checkCreateLayers = async () => {
+      const addLayer = async (layer) => {
+        const newLayer = await createLayer(layer);
+        const addedLayer = await addLayerToMap(newLayer, map);
+        return addedLayer;
+      };
+
+      const createdLayersPromises = [];
+      activeLayers.forEach((layer) => {
+        const isLayerInMap = items.some((l) => l.title === layer.title);
+        if (!isLayerInMap) {
+          const addedLayer = addLayer(layer);
+          createdLayersPromises.push({ promise: addedLayer, slug: layer.title });
+        }
+      });
+
+      // if (createdLayersPromises.length) {
+      //   await Promise.all(createdLayersPromises.map(l => l.promise));
+      //   Time to style layers (Is this needed)
+      // }
+    }
+
+    if (activeLayers && activeLayers.length) {
+      checkCreateLayers();
+    }
+  }, [activeLayers]);
+
 
   useEffect(() => {
     const disabledUserLayers = userConfig && Object.keys(userConfig.layers).filter(
