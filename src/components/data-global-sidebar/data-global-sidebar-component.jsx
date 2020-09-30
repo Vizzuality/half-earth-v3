@@ -37,7 +37,6 @@ const DataGlobeSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
       />
       <HumanImpactSidebarCard
-        map={map}
         view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}

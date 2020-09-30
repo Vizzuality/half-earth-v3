@@ -140,13 +140,3 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
       }
     });
 }
-
-export const handleLayerCreation = async (layerConfig, map) => {
-  if (!isLayerInMap(layerConfig, map)) {
-    const newLayer = await createLayer(layerConfig);
-    return addLayerToMap(newLayer, map).then((layer) => layer);
-  } else {
-    return findLayerInMap(layerConfig.slug, map);
-  }
-};
-

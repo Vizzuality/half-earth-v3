@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Constants
-import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { humanPressuresLandUse, humanPressuresMarine } from 'constants/human-pressures';
 // Utils
-import { layerManagerToggle, handleLayerCreation } from 'utils/layer-manager-utils';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
 // Components
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 
 const HumanImpactLayers = ({
-  map,
   changeGlobe,
   activeLayers,
   alreadyCheckedLandPressures,
   alreadyCheckedMarinePressures,
 }) => {
 
-  
-  const toggleLayer = async (e, option) => {
-    const layerConfig = layersConfig[option.slug];
-    await handleLayerCreation(layerConfig, map);
+  const toggleLayer = async (_, option) => {
     layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 

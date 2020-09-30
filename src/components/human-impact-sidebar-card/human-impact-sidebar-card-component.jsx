@@ -7,8 +7,8 @@ import styles from './human-impact-sidebar-card-styles.module.scss'
 
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
-const HumanImpactSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers, map, view}) => {
-  
+const HumanImpactSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers, view}) => {
+
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
@@ -22,7 +22,6 @@ const HumanImpactSidebarCardComponent = ({activeLayers, handleGlobeUpdating, cou
       />
       <div className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen})}>
           <HumanImpactLayers
-            map={map}
             view={view}
             activeLayers={activeLayers}
             handleGlobeUpdating={handleGlobeUpdating}
