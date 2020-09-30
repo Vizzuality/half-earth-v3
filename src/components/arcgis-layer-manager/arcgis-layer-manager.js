@@ -3,8 +3,10 @@ import {
   LABELS_LAYERS,
   BOUNDARIES_LAYERS
 } from 'constants/layers-groups';
+import { layersConfig as MOLLayersConfig } from 'constants/mol-layers-configs';
 import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
 import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
+
 
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
   // Map prop is inherited from Webscene component
@@ -25,7 +27,8 @@ const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) 
       activeLayers.forEach((layer) => {
         const isLayerInMap = items.some((l) => l.title === layer.title);
         if (!isLayerInMap) {
-          const addedLayer = addLayer(layer);
+          const layerWithConfig = MOLLayersConfig[layer.title] || layer;
+          const addedLayer = addLayer(layerWithConfig);
           createdLayersPromises.push({ promise: addedLayer, slug: layer.title });
         }
       });

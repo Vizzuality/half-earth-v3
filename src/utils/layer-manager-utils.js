@@ -46,13 +46,38 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   }
 };
 
-export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
-  addLayerAnalyticsEvent({ slug: layerToActivate });
-  removeLayerAnalyticsEvent({ slug: layerToRemove });
-  const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.title !== layerToRemove) : activeLayers;
-  callback({ activeLayers: [{ title: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
+export const addLayerToActiveLayers = async (
+  slug,
+  activeLayers,
+  callback,
+  category
+) => {
+  addLayerAnalyticsEvent({ slug });
+  const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY, category }];
+  return callback({
+    activeLayers: activeLayers
+      ? newActiveLayer.concat(activeLayers)
+      : newActiveLayer
+  });
 };
 
+export const replaceLayerFromActiveLayers = (
+  slugToRemove,
+  slugToAdd,
+  activeLayers,
+  callback,
+  category
+) => {
+  addLayerAnalyticsEvent({ slug: slugToAdd });
+  removeLayerAnalyticsEvent({ slug: slugToRemove });
+  const filteredLayers = activeLayers.filter((layer) => layer.title !== slugToRemove);
+  return callback({
+    activeLayers: [
+      { title: slugToAdd, category, opacity: DEFAULT_OPACITY },
+      ...filteredLayers
+    ]
+  });
+};
 export const layerManagerVisibility = (layerTitle, visible, activeLayers, callback) => {
   const title = layerTitle;
   const isActive = activeLayers && activeLayers.some(l => l.title === title);
@@ -123,16 +148,5 @@ export const handleLayerCreation = async (layerConfig, map) => {
   } else {
     return findLayerInMap(layerConfig.slug, map);
   }
-};
-
-export const addLayerToActiveLayers = async (slug, activeLayers, callback) => {
-  addLayerAnalyticsEvent({ slug });
-  const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY }];
-  return (callback({
-    activeLayers: activeLayers ?
-      newActiveLayer.concat(activeLayers) :
-      newActiveLayer
-  })
-  );
 };
 
