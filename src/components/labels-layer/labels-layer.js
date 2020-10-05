@@ -57,7 +57,6 @@ const LabelsLayer = props => {
         const labelingInfo = labelsStylesSlugs.map(slug => labelClassFactory(labelClassConstructor, slug))
         layers.forEach(layer => {
           layer.opacity = 1;
-          layer.visible = true;
           layer.labelsVisible = true;
           layer.labelingInfo = labelingInfo;
           if (countryISO) {

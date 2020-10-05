@@ -38,7 +38,6 @@ const CountryLabelsLayerComponent = props => {
   useEffect(() => {
     const styleLayer = (layer) => {
       layer.opacity = 0.7;
-      layer.visible = true;
       layer.labelsVisible = true;
       layer.minScale = 37500000;
       layer.labelingInfo = [labelingInfo];
