@@ -22,6 +22,29 @@ import fieldMuseumLogo from 'logos/field-museum-logo_2018.png';
 import gorongosaLogo from 'logos/gorongosa_np_logo.png';
 import inaturalistLogo from 'logos/inaturalist.png';
 
+export const texts = {
+  partners: {
+    title: 'Half-Earth Project Map - Core Team',
+    content: [
+      'The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life.',
+      `Click here to know more about the core team of Half-Earth:
+      <a target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/">www.half-earthproject.org/half-earth-project-team-members</a>`
+    ]
+  },
+  platformPartners: {
+    title: 'Platform partner'
+  },
+  sponsors: {
+    title: 'Funding support'
+  },
+  dataPartners: {
+    title: 'Data partners'
+  },
+  researchPartners: {
+    title: 'Research partners'
+  },
+}
+
 export const partners = [
   { href: 'https://mol.org/', image: { src: molLogo, alt: 'Map of Life' } },
   {

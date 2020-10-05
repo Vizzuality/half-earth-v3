@@ -100,7 +100,7 @@ const AboutComponent = ({ className, buttonTitle, setPageTexts, textData, VIEW ,
         ReactDOM.createPortal(
           <AboutPage
             handleCloseAboutPage={handleCloseAboutPage}
-            tabsData={tabsData} 
+            tabsData={tabsData}
             switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
           />,
           document.getElementById('root')
