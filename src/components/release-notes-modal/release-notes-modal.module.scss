@@ -29,6 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: $paragraph-margin;
   .title {
     @extend %headline;
     margin: 0 $site-gutter;
@@ -43,6 +44,7 @@
 }
 
 .content {
+  margin-bottom: $paragraph-margin;
   .title {
     @extend %title;
   }
