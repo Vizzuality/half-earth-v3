@@ -25,12 +25,12 @@ export const userConfigInitialState = {
 export const releaseNotesData = {
   [NATIONAL_REPORT_CARDS]: [
     {
-      title: 'focus on biodiversity conservation within national borders!',
-      body: 'Explore the preliminary results on prioritisation by Rinnan and Jetz allowing to give a first idea of where governments should focus their conservation efforts. Discover the relationships between the Species Protection Index and various socio-political indicators of different nations.'
+      title: 'NATIONAL REPORT CARDS',
+      body: 'The National Report Cards summarize various aspects of conservation efforts at the national level. Use them to explore different national indicators measuring conservation needs and progress, to discover the relationships between these indicators and different socio-political metrics, and to compare differences between countries.'
     },
     {
       title: 'HOW TO?',
-      body: 'Search for a country in the find places tab or interact with the map by clicking on a given country area in the globe.'
+      body: 'Find a country’s National Report Card by using the “Find places” tab to search by country name or by clicking on a country directly within the map.'
     }
   ]
 }
