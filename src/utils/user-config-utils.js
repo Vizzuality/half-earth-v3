@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_USER_CONFIG_KEY, userConfigInitialState } from 'constants/tutorial';
+import { LOCAL_STORAGE_USER_CONFIG_KEY, userConfigInitialState } from 'constants/user-config-constants';
 
 export const getConfig = () => {
   try {
@@ -12,7 +12,7 @@ export const getConfig = () => {
   }
 }
 
-export const setConfig = (config, {payload}) => {
+export const setConfig = (config, payload) => {
   const newState = { ...config, ...payload};
   try {
     const serializedState = JSON.stringify(newState);

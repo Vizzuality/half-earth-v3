@@ -13,11 +13,11 @@ export const userConfigInitialState = {
   [RARITY_RICHNESS_TUTORIAL]: true,
   [LEGEND_TUTORIAL]: true,
   [LEGEND_DRAG_TUTORIAL]: true,
-  latestUpdate: updatesLog[0],
-  showLatestUpdate: true
+  latestReleaseNotes: updatesLog[0],
+  showLatestReleaseNotes: true
 }
 
-export const updatesData = {
+export const releaseNotesData = {
   [NATIONAL_REPORT_CARDS]: [
     {
       title: 'focus on biodiversity conservation within national borders!',
