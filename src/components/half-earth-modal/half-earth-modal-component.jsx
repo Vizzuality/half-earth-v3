@@ -8,12 +8,11 @@ import { useMobile } from 'constants/responsive';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
-import data from './half-earth-modal-data';
+import { legend } from 'constants/half-earth-modal';
 
 import styles from './half-earth-modal-styles.module.scss';
 
-const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
-  const { legend } = data;
+const HalfEarthModalComponent = ({ handleModalClose, pageTexts }) => {
 
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
@@ -29,17 +28,17 @@ const HalfEarthModalComponent = ({ handleModalClose, textData }) => {
   return (
     <div className={styles.halfEarthModal}>
       <div className={styles.grid}>
-        <h1 className={styles.title}>{textData && textData.title}</h1>
+        <h1 className={styles.title}>Monitoring Progress Toward the Goal of Half-Earth</h1>
         <ReactMarkdown
           className={styles.description}
-          source={textData && textData.content}
+          source={pageTexts && pageTexts.body}
           escapeHtml={false}
         />
-        {legend.map(({ value, label, imageSrc }) => (
-          <div key={label} className={styles.legendItem}>
-            <span className={styles.value}>{value}</span>
-            <span className={styles.label}>{label}</span>
-            <img src={imageSrc} className={styles.icon} alt={label} />
+        {legend.map(({ protectionLabel, imageSrc }) => (
+          <div key={protectionLabel} className={styles.legendItem}>
+            <span className={styles.value}>{`${pageTexts && pageTexts[protectionLabel]}%`}</span>
+            <span className={styles.label}>{protectionLabel}</span>
+            <img src={imageSrc} className={styles.icon} alt={protectionLabel} />
           </div>
         ))}
         <div className={styles.globeWrapper}>

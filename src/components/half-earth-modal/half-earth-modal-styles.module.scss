@@ -80,12 +80,8 @@
 }
 
 .title {
+  @extend %display1;
   color: $white;
-  font-family: $font-family-1;
-  font-size: 24px;
-  font-weight: unset;
-  letter-spacing: 1px;
-  line-height: 28px;
   margin: 0;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
   grid-area: title;
