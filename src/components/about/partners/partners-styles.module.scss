@@ -75,6 +75,11 @@
   text-align: center;
   padding: 20px;
 
+  a {
+    color: $brand-color-main;
+    text-decoration: none;
+  }
+
   @media #{$tablet-portrait} {
     padding: 0;
   }

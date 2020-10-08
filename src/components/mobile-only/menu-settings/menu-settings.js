@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { SETTINGS_OPTIONS } from 'constants/mobile-only';
 import { MODALS } from 'constants/ui-params';
 
-import pageTextsActions from 'redux_modules/page-texts/page-texts';
 import * as urlActions from 'actions/url-actions';
 
 import Partners from 'components/about/partners';
@@ -12,15 +11,10 @@ import MapInstructions from 'components/about/map-instructions/map-instructions-
 import HalfEarthModal from 'components/half-earth-modal';
 import Component from './menu-settings-component';
 
-const actions = { ...pageTextsActions, ...urlActions };
-const PARTNERS_TEXT_SLUG = 'partners';
-
-const mapStateToProps = ({ pageTexts }) => ({
-  textData: pageTexts.data[PARTNERS_TEXT_SLUG]
-});
+const actions = { ...urlActions };
 
 const MenuSettingsContainer = props => {
-  const { setPageTexts, textData, openedModal, changeUI } = props;
+  const { openedModal, changeUI } = props;
   const [activeModal, setActiveModal] = useState(null);
 
   // take opened half earth modal from the url state
@@ -50,7 +44,6 @@ const MenuSettingsContainer = props => {
       name: 'Partners',
       Component: Partners,
       onClickHandler: () => {
-        setPageTexts(PARTNERS_TEXT_SLUG)
         setActiveModal(ABOUT_PARTNERS);
       }
     },
@@ -66,9 +59,8 @@ const MenuSettingsContainer = props => {
   return <Component
     options={options}
     activeModal={activeModal}
-    textData={textData}
     closeModal={closeModal}
     {...props} />;
 }
 
-export default connect(mapStateToProps, actions)(MenuSettingsContainer);
+export default connect(null, actions)(MenuSettingsContainer);
