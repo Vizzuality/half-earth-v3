@@ -15,7 +15,7 @@ const LOCAL_STORAGE_ITEM_NAME = 'HEtutorial' // key in local storage
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
-    if (serializedState === null) { 
+    if (serializedState === null) {
       return defaultState; // if there is no tutorial data in local settings, return defult settings
     }
     return JSON.parse(serializedState);
