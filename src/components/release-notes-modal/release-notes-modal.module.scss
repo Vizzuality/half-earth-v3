@@ -1,0 +1,28 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .title {
+    @extend %headline;
+    margin: 0 $site-gutter;
+  }
+  .icon {
+    width: 40px;
+    height: 40px;
+    &.flipped {
+      transform: rotateZ(270deg);
+    }
+  }
+}
+
+.content {
+  .title {
+    @extend %title;
+  }
+  .body {
+    @extend %bodyText;
+  }
+}
