@@ -56,15 +56,19 @@ const CountrySceneComponent = ({
   userConfig
 }) => {
   const isOnMobile = useMobile();
-  return (
+  return console.log('sceneSettings',sceneSettings) || (
     <>
       <Scene
-        sceneId="e96f61b2e79442b698ec2cec68af6db9"
+        sceneId="8f71838a19624717a4e45de110eced1b"
         sceneName={'data-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
       >
+        <ArcgisLayerManager
+          activeLayers={activeLayers}
+          userConfig={userConfig}
+        />
         {isGlobeUpdating && <Spinner floating />}
         {!isOnMobile && <Switcher />}
         <MobileOnly>
@@ -87,10 +91,6 @@ const CountrySceneComponent = ({
           isLandscapeMode={isLandscapeMode}
           countryName={countryName}
           sceneMode={sceneMode}
-        />
-        <ArcgisLayerManager
-          activeLayers={activeLayers}
-          userConfig={userConfig}
         />
         <CountriesBordersLayer
           countryISO={countryISO}

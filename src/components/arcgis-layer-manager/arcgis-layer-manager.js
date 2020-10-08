@@ -14,6 +14,9 @@ const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) 
   const { layers } = map;
   const { items } = layers;
 
+  console.log('userConfig',userConfig)
+  console.log(activeLayers)
+  console.log(items.map(i => i.title))
   // Active layers will be always checked and added to the map if they are not
   useEffect(() => {
     const checkCreateLayers = async () => {

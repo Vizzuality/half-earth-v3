@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import {
   findLayerInMap,
-  addLayerToActiveLayers
+  addLayerToActiveLayers,
+  batchLayerManagerToggle
 } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
 import { LANDSCAPE_LABELS_LAYERS } from 'constants/layers-groups';
@@ -70,16 +71,19 @@ const LabelsLayer = props => {
       styleLayers(labelsLayers);
     } else {
       const layers = LANDSCAPE_LABELS_LAYERS.map(layer => findLayerInMap(layer, map)).filter(Boolean);
+      console.log(layers)
       if (layers.length) {
         setLabelsLayers(layers);
       } else {
-        LANDSCAPE_LABELS_LAYERS.forEach(layer =>
-          addLayerToActiveLayers(
-            layer,
-            activeLayers,
-            changeGlobe
-          )
-        )
+        console.log('lets add labels to' + activeLayers)
+        batchLayerManagerToggle(LANDSCAPE_LABELS_LAYERS, activeLayers, changeGlobe);
+        // LANDSCAPE_LABELS_LAYERS.forEach(layer => 
+        //   addLayerToActiveLayers(
+        //     layer,
+        //     activeLayers,
+        //     changeGlobe
+        //   )
+        // )
       }
     }
   }, [labelsLayers]);

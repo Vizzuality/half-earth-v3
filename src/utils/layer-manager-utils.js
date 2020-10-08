@@ -130,10 +130,11 @@ export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.t
 
 export const activateLayersOnLoad = (map, activeLayers, config) => {
   const activeLayerIDs = activeLayers.map(({ title }) => title);
-
+console.log('activeLayers on load', activeLayerIDs)
     activeLayerIDs.forEach(async layerName => {
       const layerConfig = config[layerName];
       if (layerConfig) {
+        console.log(layerConfig)
         const newLayer = await createLayer(layerConfig, map);
         newLayer.outFields = ["*"];
         addLayerToMap(newLayer, map);
