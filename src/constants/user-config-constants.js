@@ -4,16 +4,21 @@ export const LEGEND_TUTORIAL = 'legend-tutorial';
 export const LEGEND_DRAG_TUTORIAL = 'legend-drag-tutorial';
 
 const NATIONAL_REPORT_CARDS = 'nrc-10-2020';
-const updatesLog = [
+
+// Whenever a new release is to be displayed in the modal
+// add it to this log on index [0]
+const releasesLog = [
   NATIONAL_REPORT_CARDS
 ]
+
+export const getLatestReleaseSlug = () => releasesLog[0]
 
 export const userConfigInitialState = {
   showAllTutorials: true,
   [RARITY_RICHNESS_TUTORIAL]: true,
   [LEGEND_TUTORIAL]: true,
   [LEGEND_DRAG_TUTORIAL]: true,
-  latestReleaseNotes: updatesLog[0],
+  latestReleaseNotes: getLatestReleaseSlug(),
   showLatestReleaseNotes: true
 }
 

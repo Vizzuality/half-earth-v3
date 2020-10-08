@@ -4,7 +4,7 @@ export const getConfig = () => {
   try {
     const serializedState = localStorage.getItem(LOCAL_STORAGE_USER_CONFIG_KEY);
     if (serializedState === null) {
-      return userConfigInitialState; // if there is no config data in local settings, return defult settings
+      return userConfigInitialState; // if there is no config data in local settings, return default settings
     }
     return JSON.parse(serializedState);
   } catch (err) {
