@@ -29,6 +29,7 @@ const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) 
         const isLayerInMap = items.some((l) => l.title === layer.title);
         if (!isLayerInMap) {
           const layerWithConfig = MOLLayersConfig[layer.title] || layer;
+          console.log('ADDING', layerWithConfig)
           addLayer(layerWithConfig);
         }
       });
