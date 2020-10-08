@@ -1,13 +1,10 @@
 import React, { useState, useRef } from 'react';
 import ReactTooltip from 'react-tooltip';
+import { getConfig, setConfig } from 'utils/user-config-utils';
 import Component from './tutorial-modal-component';
-import { connect } from 'react-redux';
-import tutorialActions from 'redux_modules/tutorial';
 
-const actions = { ...tutorialActions };
 
 const TutorialModal = props => {
-  const { setTutorialData } = props;
   
   const tooltipRef = useRef(null);
   const [isChecked, setChecked] = useState(false);
@@ -30,9 +27,10 @@ const TutorialModal = props => {
 
   const handleCloseModal = (ids) => {
     forceHideTooltip(tooltipRef);
+    const userConfig = getConfig();
     const updateTutorials = ids && ids.reduce((acc, tutorialID) => { return { ...acc, [tutorialID]: false } }, {});
     const updatedAllTutorials = isChecked ? { showAllTutorials: false } : {}; // hide all tutorial prompts if selected
-    setTutorialData({  ...updatedAllTutorials, ...updateTutorials }); // hide this specific tutorial prompt
+    setConfig(userConfig, {...updateTutorials, ...updatedAllTutorials}); // hide this specific tutorial prompt
   }
 
   return (
@@ -47,4 +45,4 @@ const TutorialModal = props => {
   );
 }
 
-export default connect(null, actions)(TutorialModal);
+export default TutorialModal;
