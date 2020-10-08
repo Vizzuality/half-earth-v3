@@ -27,7 +27,7 @@ export const texts = {
     title: 'Half-Earth Project Map - Core Team',
     content: [
       'The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life.',
-      `Click here to know more about the core team of Half-Earth:
+      `<p style="margin-bottom: 0px;">Click here to know more about the core team of Half-Earth:</p>
       <a target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/">www.half-earthproject.org/half-earth-project-team-members</a>`
     ]
   },
