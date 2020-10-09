@@ -46,7 +46,7 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   }
 };
 
-export const addLayerToActiveLayers = async (
+export const addLayerToActiveLayers =  (
   slug,
   activeLayers,
   callback,
@@ -54,7 +54,7 @@ export const addLayerToActiveLayers = async (
 ) => {
   addLayerAnalyticsEvent({ slug });
   const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY, category }];
-  return callback({
+  callback({
     activeLayers: activeLayers
       ? newActiveLayer.concat(activeLayers)
       : newActiveLayer
