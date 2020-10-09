@@ -31,6 +31,10 @@
     text-align: left;
     padding: 0;
 
+    &:last-child {
+      padding-left: 1rem;
+    }
+
     &:hover {
       color: white;
     }
