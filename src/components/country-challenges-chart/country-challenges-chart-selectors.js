@@ -66,7 +66,7 @@ const getFilteredData = createSelector(
     if (!plotRawData) return null;
     if (!selectedFilter || selectedFilter === 'all') return plotRawData;
     const relatedCountries = selectedCountryRelations[selectedFilter];
-    const hasNotNullXValue = (country, selectedKey) => (
+    const hasNotNullXValue = (country) => (
       country.xAxisValues[selectedKey] ||
       country.xAxisValues[selectedKey] === 0
     );
