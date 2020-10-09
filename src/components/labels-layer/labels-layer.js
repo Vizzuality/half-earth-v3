@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import {
-  findLayerInMap,
-  addLayerToActiveLayers,
-  batchLayerManagerToggle
-} from 'utils/layer-manager-utils';
+import { findLayerInMap } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
 import { LANDSCAPE_LABELS_LAYERS } from 'constants/layers-groups';
 import { stylesConfig } from './labels-layer-styles-config';
@@ -49,7 +45,7 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
 }
 
 const LabelsLayer = props => {
-  const { map, countryISO, activeLayers, changeGlobe } = props;
+  const { map, countryISO, activeLayers } = props;
   const [labelsLayers, setLabelsLayers] = useState(null);
   useEffect(() => {
     const styleLayers = (layers) => {
@@ -66,27 +62,13 @@ const LabelsLayer = props => {
         });
       });
     };
-
-    if (labelsLayers) {
-      styleLayers(labelsLayers);
-    } else {
-      const layers = LANDSCAPE_LABELS_LAYERS.map(layer => findLayerInMap(layer, map)).filter(Boolean);
-      console.log(layers)
-      if (layers.length) {
-        setLabelsLayers(layers);
-      } else {
-        console.log('lets add labels to' + activeLayers)
-        batchLayerManagerToggle(LANDSCAPE_LABELS_LAYERS, activeLayers, changeGlobe);
-        // LANDSCAPE_LABELS_LAYERS.forEach(layer => 
-        //   addLayerToActiveLayers(
-        //     layer,
-        //     activeLayers,
-        //     changeGlobe
-        //   )
-        // )
-      }
-    }
-  }, [labelsLayers]);
+    
+    const layers = LANDSCAPE_LABELS_LAYERS.map(layer => findLayerInMap(layer, map)).filter(Boolean);
+    if (layers.length) {
+      styleLayers(layers);
+      setLabelsLayers(layers);
+    } 
+  }, [activeLayers]);
 
   useEffect(() => {
     if (countryISO && labelsLayers) {
