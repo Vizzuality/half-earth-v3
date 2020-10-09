@@ -56,21 +56,21 @@ const getSelectedCountryRelations = createSelector(
 )
 
 const getFilteredData = createSelector(
-  [getScatterplotRawData, getCountryChallengesSelectedFilter, getSelectedCountryRelations],
-  (plotRawData, selectedFilter, selectedCountryRelations) => {
+  [
+    getScatterplotRawData,
+    getCountryChallengesSelectedFilter,
+    getSelectedCountryRelations,
+    getCountryChallengesSelectedKey
+  ],
+  (plotRawData, selectedFilter, selectedCountryRelations, selectedKey) => {
     if (!plotRawData) return null;
     if (!selectedFilter || selectedFilter === 'all') return plotRawData;
     const relatedCountries = selectedCountryRelations[selectedFilter];
-    return plotRawData.filter(country => relatedCountries.includes(country.iso));
-  }
-);
-
-const getFilteredAvailableData = createSelector(
-  [getFilteredData, getCountryChallengesSelectedKey],
-  (data, selectedKey) => {
-    if (!data || !selectedKey) return null;
-    return data.filter(
-      (d) => d.xAxisValues[selectedKey] || d.xAxisValues[selectedKey] === 0
+    return plotRawData.filter(
+      (country) =>
+        (relatedCountries.includes(country.iso) &&
+          country.xAxisValues[selectedKey]) ||
+        country.xAxisValues[selectedKey] === 0
     );
   }
 );
@@ -118,7 +118,7 @@ const getYAxisTicks = createSelector(
 
 
 const mapStateToProps = createStructuredSelector({
-  data: getFilteredAvailableData,
+  data: getFilteredData,
   xAxisKeys: getXAxisKeys,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
