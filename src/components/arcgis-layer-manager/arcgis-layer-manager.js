@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { layersConfig  } from 'constants/mol-layers-configs';
-import { setLayerOrder, setOpacity, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
+import { setLayersOrder, setLayersVisibility, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
 import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
@@ -13,27 +13,8 @@ const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) 
   useEffect(() => {
     // Add not already created activeLayers to the map
     addActiveLayersToScene(activeLayers, layersConfig, map);
-    // Display layers in the correct order
-    setLayerOrder(activeLayers, map);
-  }, [activeLayers]);
-
-  useEffect(() => {
-
-      sceneLayers.forEach((sceneLayer) => {
-      const isVisible = activeLayers.some(
-        (activeLayer) => activeLayer.title === sceneLayer.title
-      );
-      sceneLayer.visible = isVisible;
-      // Show only active layers
-      if (isVisible) {
-        setOpacity(sceneLayer, activeLayers);
-      }
-
-      // Apply visibility for customFunctions (not serialized)
-      if (customFunctions) {
-        customFunctions.forEach((fn) => fn({ layer: sceneLayer, isVisible }));
-      }
-    });
+    setLayersOrder(activeLayers, map);
+    setLayersVisibility(activeLayers, sceneLayers, customFunctions)
   }, [activeLayers]);
 
   useEffect(() => {

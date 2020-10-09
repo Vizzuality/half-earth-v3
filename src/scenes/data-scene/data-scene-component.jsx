@@ -56,7 +56,7 @@ const CountrySceneComponent = ({
   userConfig
 }) => {
   const isOnMobile = useMobile();
-  return console.log('sceneSettings',sceneSettings) || (
+  return (
     <>
       <Scene
         sceneId="8f71838a19624717a4e45de110eced1b"

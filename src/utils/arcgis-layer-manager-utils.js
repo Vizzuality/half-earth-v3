@@ -2,7 +2,7 @@ import { includes } from 'lodash';
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { USER_CONFIG_LAYER_GROUPS } from 'constants/layers-groups';
 
-export const setLayerOrder = (activeLayers, map) => {
+export const setLayersOrder = (activeLayers, map) => {
   const { layers } = map;
   const { items } = layers;
   const activeLayersIds = activeLayers.filter(l => !includes(LEGEND_FREE_LAYERS, l.title)).map(l => l.title);
@@ -16,9 +16,26 @@ export const setLayerOrder = (activeLayers, map) => {
   })
 }
 
-export const setOpacity = (layer, activeLayers) => {
+const setOpacity = (layer, activeLayers) => {
   const l = activeLayers.find(o => o.title === layer.title);
   if (l) { layer.opacity = l.opacity !== undefined ? l.opacity : 1 };
+}
+
+export const setLayersVisibility = (activeLayers, sceneLayers, customFunctions) => {
+  sceneLayers.forEach((sceneLayer) => {
+    const isVisible = activeLayers.some(
+      (activeLayer) => activeLayer.title === sceneLayer.title
+    );
+    sceneLayer.visible = isVisible;
+    // Show only active layers
+    if (isVisible) {
+      setOpacity(sceneLayer, activeLayers);
+    }
+    // Apply visibility for customFunctions (not serialized)
+    if (customFunctions) {
+      customFunctions.forEach((fn) => fn({ layer: sceneLayer, isVisible }));
+    }
+  })
 }
 
 
