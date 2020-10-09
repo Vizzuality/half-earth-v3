@@ -1,5 +1,6 @@
 import { includes } from 'lodash';
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
+import { USER_CONFIG_LAYER_GROUPS } from 'constants/layers-groups';
 
 export const setLayerOrder = (activeLayers, map) => {
   const { layers } = map;
@@ -18,4 +19,19 @@ export const setLayerOrder = (activeLayers, map) => {
 export const setOpacity = (layer, activeLayers) => {
   const l = activeLayers.find(o => o.title === layer.title);
   if (l) { layer.opacity = l.opacity !== undefined ? l.opacity : 1 };
+}
+
+
+export const updateSceneLayersBasedOnUserConfig = (userConfig, sceneLayers) => {
+  if (userConfig) {
+    sceneLayers.forEach(sceneLayer => {
+      Object.keys(userConfig.layers).forEach((layerGroupKey) => {
+        if (
+          USER_CONFIG_LAYER_GROUPS[layerGroupKey].includes(sceneLayer.title)
+        ) {
+          sceneLayer.visible = userConfig.layers[layerGroupKey];
+        }
+      });
+    })
+  }
 }

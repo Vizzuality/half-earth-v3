@@ -140,9 +140,18 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
     });
 }
 
-export const handleLayerCreation = async (layerConfig, map) => {
+const handleLayerCreation = async (layerConfig, map) => {
   if (layerConfig && !isLayerInMap(layerConfig, map)) {
     const newLayer = await createLayer(layerConfig);
     addLayerToMap(newLayer, map).then(layer => layer);
+  }
+}
+
+export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
+  if (activeLayers && activeLayers.length) {
+    activeLayers.forEach((layer) => {
+      const layerConfig = layersConfig[layer.title];
+      handleLayerCreation(layerConfig, map);
+    });
   }
 }

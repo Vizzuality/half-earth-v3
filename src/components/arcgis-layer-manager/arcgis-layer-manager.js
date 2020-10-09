@@ -1,35 +1,23 @@
 import { useEffect } from 'react';
-import {
-  LABELS_LAYERS,
-  BOUNDARIES_LAYERS
-} from 'constants/layers-groups';
-import { layersConfig as MOLLayersConfig } from 'constants/mol-layers-configs';
-import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
-import { handleLayerCreation } from 'utils/layer-manager-utils';
+import { layersConfig  } from 'constants/mol-layers-configs';
+import { setLayerOrder, setOpacity, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
+import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
   // Map prop is inherited from Webscene component
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
-  const userConfigLayerGroups = { labels: LABELS_LAYERS, boundaries: BOUNDARIES_LAYERS };
   const { layers } = map;
   const { items: sceneLayers } = layers;
 
   // Active layers will be always checked and added to the map if they are not
   useEffect(() => {
-    if (activeLayers && activeLayers.length) {
-      activeLayers.forEach((layer) => {
-        const layerConfig = MOLLayersConfig[layer.title];
-        handleLayerCreation(layerConfig, map);
-      });
-    }
+    // Add not already created activeLayers to the map
+    addActiveLayersToScene(activeLayers, layersConfig, map);
+    // Display layers in the correct order
+    setLayerOrder(activeLayers, map);
   }, [activeLayers]);
 
   useEffect(() => {
-    const disabledUserLayers =
-      userConfig &&
-      Object.keys(userConfig.layers).filter(
-        (layerGroupKey) => !userConfig.layers[layerGroupKey]
-      );
 
       sceneLayers.forEach((sceneLayer) => {
       const isVisible = activeLayers.some(
@@ -41,26 +29,18 @@ const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) 
         setOpacity(sceneLayer, activeLayers);
       }
 
-      // Hide user config disabled layers (not serialized)
-      if (disabledUserLayers.length) {
-        Object.keys(userConfig.layers).forEach((layerGroupKey) => {
-          if (disabledUserLayers.includes(layerGroupKey)) {
-            if (
-              userConfigLayerGroups[layerGroupKey].includes(sceneLayer.title)
-            ) {
-              sceneLayer.visible = false;
-            }
-          }
-        });
-      }
-
       // Apply visibility for customFunctions (not serialized)
       if (customFunctions) {
         customFunctions.forEach((fn) => fn({ layer: sceneLayer, isVisible }));
       }
     });
-    setLayerOrder(activeLayers, map);
-  }, [activeLayers, userConfig]);
+  }, [activeLayers]);
+
+  useEffect(() => {
+    // We need to update layers visibility based on user config
+    // This state is not to be shared hence not part of the activeLayers
+    updateSceneLayersBasedOnUserConfig(userConfig, sceneLayers)
+  }, [activeLayers, userConfig])
 
   return null
 }
