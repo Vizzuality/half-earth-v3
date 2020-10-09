@@ -66,11 +66,12 @@ const getFilteredData = createSelector(
     if (!plotRawData) return null;
     if (!selectedFilter || selectedFilter === 'all') return plotRawData;
     const relatedCountries = selectedCountryRelations[selectedFilter];
+    const hasNotNullXValue = (country, selectedKey) => (
+      country.xAxisValues[selectedKey] ||
+      country.xAxisValues[selectedKey] === 0
+    );
     return plotRawData.filter(
-      (country) =>
-        (relatedCountries.includes(country.iso) &&
-          country.xAxisValues[selectedKey]) ||
-        country.xAxisValues[selectedKey] === 0
+      (country) => relatedCountries.includes(country.iso) && hasNotNullXValue(country)
     );
   }
 );
