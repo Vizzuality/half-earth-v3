@@ -245,7 +245,10 @@
   background-color: $protection-needed;
 }
 
-.protectionNotNeeded,
-.noModification {
+.protectionNotNeeded {
   background-color: $protection-non-needed-color;
+}
+
+.noModification {
+  background-color: $non-human-modification;
 }
