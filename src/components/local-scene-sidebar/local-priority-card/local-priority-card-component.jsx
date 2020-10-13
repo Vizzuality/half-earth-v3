@@ -8,11 +8,11 @@ import styles from './local-priority-card-styles.module.scss';
 
 const LocalPriorityCardComponent = (props) => {
   const {
-    countryName,
+    hasPriority,
     handleInfoClick,
     protectionNeeded,
     currentProtection,
-    hasPriority,
+    priorityAreasSentence,
   } = props;
   return (
     <LocalSceneCard>
@@ -48,11 +48,7 @@ const LocalPriorityCardComponent = (props) => {
               <div className={styles.priorityIcon} />
               <div className={styles.datasetMetadata}>
                 <p className={styles.datasetExplanation}>
-                  {`The brightly colored map layer presents one possible configuration
-               of the additional areas needed to achieve the Half-Earth goal of 
-               comprehensive terrestrial biodiversity conservation. Higher values 
-               indicate locations within ${countryName} that contribute more to the 
-               conservation of species habitat.`}
+                  {priorityAreasSentence}
                 </p>
                 <p
                   className={styles.datasetSource}
@@ -66,7 +62,7 @@ const LocalPriorityCardComponent = (props) => {
           </>
         ) : (
           <p className={styles.datasetExplanation}>
-            {`Our global model of comprehensive terrestrial vertebrate biodiversity conservation did not identify any areas in ${countryName} in need of additional protection. Further expansion of ${countryName}'s protected areas will nonetheless promote resilience towards global biodiversity loss, and can contribute to creating a global conservation network with more equity between countries.`}
+            {priorityAreasSentence}
           </p>
         )}
       </section>

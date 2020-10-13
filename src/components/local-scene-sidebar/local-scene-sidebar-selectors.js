@@ -20,6 +20,24 @@ const getDescription = createSelector(selectCountryData, countryData => {
   return countryData.sentence;
 })
 
+const getHasPriority = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.has_priority === 1;
+})
+
+const getPriorityAreasSentence = createSelector([selectCountryData, getHasPriority], (countryData, hasPriority) => {
+  if (!countryData) return null;
+  return hasPriority ?
+  `The brightly colored map layer presents one possible configuration
+  of the additional areas needed to achieve the Half-Earth goal of 
+  comprehensive terrestrial biodiversity conservation. Higher values 
+  indicate locations within ${countryData.NAME_0} that contribute more to the 
+  conservation of species habitat.` :
+  `Our global model of comprehensive terrestrial vertebrate biodiversity 
+  conservation did not identify any areas in ${countryData.NAME_0} in need of additional protection. 
+  Further expansion of ${countryData.NAME_0}'s protected areas will nonetheless promote resilience towards global biodiversity loss, 
+  and can contribute to creating a global conservation network with more equity between countries.` ;
+})
 
 const getSpeciesProtectionIndex = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
@@ -36,11 +54,6 @@ const getProtectionNeeded = createSelector(selectCountryData, countryData => {
   return Math.round(parseFloat(countryData.protection_needed));
 })
 
-const getHasPriority = createSelector(selectCountryData, countryData => {
-  if (!countryData) return null;
-  return countryData.has_priority === 1;
-})
-
 const getSPIMean = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData.spi_mean));
@@ -55,6 +68,13 @@ const getNumberOfEndemicVertebrates = createSelector(selectCountryData, countryD
   if (!countryData) return null;
   return countryData.total_endemic.toLocaleString('en');
 })
+
+const getHighlightedSpeciesSentence = createSelector(selectCountryData, countryData => {
+  if (!countryData) return null;
+  return `Here are some example species of significant conservation interest for each taxonomic group.
+   These species are either endemic to ${countryData.NAME_0} or have small range sizes`;
+})
+
 
 const getHighlightedSpeciesRandomNumber = createSelector(selectCountryData, countryData => {
   if (!countryData) return null;
@@ -114,26 +134,28 @@ const chartData = [
 })
 
 const mapStateToProps = createStructuredSelector({
-  SPI: getSpeciesProtectionIndex,
   birds: getTaxa('birds'),
   mammals: getTaxa('mammals'),
   hasPriority: getHasPriority,
   reptiles: getTaxa('reptiles'),
-  amphibians: getTaxa('amphibians'),
   countryData: selectCountryData,
-  birdsEndemic: getEndemicSpecies('birds'),
-  mammalsEndemic: getEndemicSpecies('mammals'),
+  SPI: getSpeciesProtectionIndex,
+  amphibians: getTaxa('amphibians'),
   indexStatement: getIndexStatement,
-  reptilesEndemic: getEndemicSpecies('reptiles'),
-  vertebratesCount: getNumberOfVertebrates,
+  countryDescription: getDescription,
   protectionNeeded: getProtectionNeeded,
   speciesChartData: getSpeciesChartData,
-  amphibiansEndemic: getEndemicSpecies('amphibians'),
   currentProtection: getCurrentProtection,
-  countryDescription: getDescription,
+  vertebratesCount: getNumberOfVertebrates,
+  birdsEndemic: getEndemicSpecies('birds'),
   countryDataLoading: selectCountryDataLoading,
-  endemicVertebratesCount: getNumberOfEndemicVertebrates,
+  mammalsEndemic: getEndemicSpecies('mammals'),
+  reptilesEndemic: getEndemicSpecies('reptiles'),
+  amphibiansEndemic: getEndemicSpecies('amphibians'),
+  priorityAreasSentence: getPriorityAreasSentence,
   endemicVertebratesSentence: getEndemicSpeciesSentence,
+  endemicVertebratesCount: getNumberOfEndemicVertebrates,
+  highlightedSpeciesSentence: getHighlightedSpeciesSentence,
   highlightedSpeciesRandomNumber: getHighlightedSpeciesRandomNumber
 })
 

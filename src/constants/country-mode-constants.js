@@ -31,15 +31,15 @@ export const FILTERS_DICTIONARY = {
   all: 'All countries',
   filter_Area: 'Area',
   filter_Population2016: 'Population',
-  filter_prop_protected: 'Proportion of protection',
-  filter_prop_hm_very_high: 'Proportion of very high human encroachment',
-  filter_protection_needed: 'Proportion of protection needed',
+  filter_prop_protected: 'Percentage of protection',
+  filter_prop_hm_very_high: 'Percentage of very high human encroachment',
+  filter_protection_needed: 'Percentage of protection needed',
   filter_GNI_PPP: 'Gross National Income',
   filter_total_endemic: 'Number of endemic species',
   filter_N_SPECIES: 'Number of vertebrate species',
   filter_SPI: 'Species Protection Index',
   filter_neigh: 'Neighbouring countries',
-  filter_steward: 'Species stewardship',
+  filter_steward: 'Shared species stewardship',
   filter_continent: 'Same continent countries'
 };
 

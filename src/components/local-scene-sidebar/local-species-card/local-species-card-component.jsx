@@ -30,6 +30,7 @@ const LocalSpeciesCardComponent = ({
   vertebratesCount,
   amphibiansEndemic,
   endemicVertebratesSentence,
+  highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
   const setModal = (opened) => {
@@ -92,7 +93,7 @@ const LocalSpeciesCardComponent = ({
       <section>
         <p
           className={styles.speciesSentence}
-        >{`These are the four vertebrates in ${countryName} with the smallest global range.`}</p>
+        >{highlightedSpeciesSentence}</p>
         <HighLightedSpeciesList
           countryISO={countryISO}
           highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}

@@ -18,9 +18,9 @@ const legendText = {
     noModification: 'No human modification'
   },
   protection: {
-    protected: 'Protected areas',
-    protectionNeeded: 'Protection needed',
-    protectionNotNeeded: 'Protection non-needed'
+    protected: 'Current protection',
+    protectionNeeded: ' Additional protection needed',
+    protectionNotNeeded: 'Non-formal protection needed'
   }
 };
 
@@ -110,7 +110,7 @@ const RankingChart = ({
     <div className={className}>
       <div className={styles.chartTitleContainer}>
         <span className={styles.chartTitle}>
-          Ranking Species Protection Index
+          Ranking countries
         </span>
         <QuestionIcon className={styles.question} onClick={handleInfoClick} />
       </div>
