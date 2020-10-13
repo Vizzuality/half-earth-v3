@@ -7,12 +7,11 @@ import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-sl
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SCENE } from 'constants/scenes-constants';
 import countrySceneConfig from 'scenes/country-scene/country-scene-config';
-import { useSearchWidgetLogic } from 'hooks/esri';
 
 const actions = { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, ...urlActions };
 
 const SearchWidget = (props) => {
-  const { view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, changeGlobe, changeUI } = props;
+  const { changeGlobe, changeUI } = props;
 
   const postSearchCallback = ({result}) => {
     const { feature: { attributes: { GID_0, NAME_0 }}} = result;
@@ -49,18 +48,9 @@ const SearchWidget = (props) => {
     searchSources
   }
 
-  const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
-    view,
-    openPlacesSearchAnalyticsEvent,
-    searchLocationAnalyticsEvent,
-    searchWidgetConfig
-  );
-
   return (
     <Component
-      handleOpenSearch={handleOpenSearch}
-      handleCloseSearch={handleCloseSearch}
-      showCloseButton={!!searchWidget}
+      searchWidgetConfig={searchWidgetConfig}
       {...props}
     />
   );
