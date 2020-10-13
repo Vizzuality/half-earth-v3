@@ -3,6 +3,10 @@ import { CONTINENT_COLORS } from 'constants/country-mode-constants';
 import { getCountryChallengesSelectedFilter, getCountryISO } from 'pages/data-globe/data-globe-selectors';
 import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
+import {
+  INDICATOR_LABELS,
+  CHALLENGES_RELATED_FILTERS_OPTIONS,
+} from 'constants/country-mode-constants';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 
@@ -32,6 +36,17 @@ const getScatterplotRawData = createSelector(
   }
 )
 
+const getXAxisKeys = createSelector(
+  [getCountryISO, getScatterplotRawData],
+  (countryIso, rawData) => {
+  const AllXAxisKeys = Object.keys(INDICATOR_LABELS);
+  if (!rawData) return AllXAxisKeys;
+  const countryData = rawData.find(country => country.iso === countryIso);
+  return AllXAxisKeys.filter(
+    (key) => countryData.xAxisValues[key] || countryData.xAxisValues[key] === 0
+  );
+});
+
 const getSelectedCountryRelations = createSelector(
   [selectCountriesData, getCountryISO],
   (countriesData, selectedCountryIso) => {
@@ -41,14 +56,44 @@ const getSelectedCountryRelations = createSelector(
 )
 
 const getFilteredData = createSelector(
-  [getScatterplotRawData, getCountryChallengesSelectedFilter, getSelectedCountryRelations],
-  (plotRawData, selectedFilter, selectedCountryRelations) => {
+  [
+    getScatterplotRawData,
+    getCountryChallengesSelectedFilter,
+    getSelectedCountryRelations,
+    getCountryChallengesSelectedKey
+  ],
+  (plotRawData, selectedFilter, selectedCountryRelations, selectedKey) => {
     if (!plotRawData) return null;
     if (!selectedFilter || selectedFilter === 'all') return plotRawData;
     const relatedCountries = selectedCountryRelations[selectedFilter];
-    return plotRawData.filter(country => relatedCountries.includes(country.iso));
+    const hasNotNullXValue = (country) => (
+      country.xAxisValues[selectedKey] ||
+      country.xAxisValues[selectedKey] === 0
+    );
+    return plotRawData.filter(
+      (country) => relatedCountries.includes(country.iso) && hasNotNullXValue(country)
+    );
   }
-)
+);
+
+const getChallengesFilterOptions = createSelector(
+  [getXAxisKeys],
+  (keys) => {
+    if (!keys) return [];
+    const indicatorDependantOptions = [
+      'filter_Population2016',
+      'filter_prop_hm_very_high',
+      'filter_GNI_PPP',
+      'filter_total_endemic',
+      'filter_N_SPECIES'
+    ];
+
+    return CHALLENGES_RELATED_FILTERS_OPTIONS.filter((option) => {
+      if (!indicatorDependantOptions.includes(option.slug)) return true;
+      return keys.some(key => option.slug.endsWith(key));
+    });
+  }
+);
 
 const getXAxisTicks = createSelector(
   [getFilteredData, getCountryChallengesSelectedKey],
@@ -75,9 +120,11 @@ const getYAxisTicks = createSelector(
 
 const mapStateToProps = createStructuredSelector({
   data: getFilteredData,
+  xAxisKeys: getXAxisKeys,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
-  selectedFilter: getCountryChallengesSelectedFilter
-})
+  selectedFilter: getCountryChallengesSelectedFilter,
+  challengesFilterOptions: getChallengesFilterOptions
+});
 
 export default mapStateToProps;

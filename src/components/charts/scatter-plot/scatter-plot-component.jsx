@@ -140,19 +140,6 @@ const ScatterPlot = ({
     }, [chartScale])
 
     useEffect(() => {
-      if (bubblesArray.length) {
-        const newXScale = d3.scaleLinear()
-        .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
-        .range([padding, chartSurfaceRef.current.offsetWidth - padding])
-        bubblesArray.forEach((bubble, index) => {
-          const { children } = bubble;
-          const country = children[0];
-          ease.add(bubble, {x: newXScale(country.attributes.xAxisValues[countryChallengesSelectedKey])}, {duration: 1500, ease: 'easeInOutExpo', wait: index * 2 });
-        })
-      }
-    }, [countryChallengesSelectedKey])
-
-    useEffect(() => {
       if (bubblesArray.length && countryISO && chartScale) {
         bubblesArray.forEach((bubble) => {
           const { children } = bubble;
@@ -219,8 +206,8 @@ const ScatterPlot = ({
           </div>
           <div className={styles.xAxisTicksContainer}>
             {xAxisTicks &&
-              xAxisTicks.map((tick) => (
-                <span className={styles.tick} key={`x-${tick}`}>
+              xAxisTicks.map((tick, index) => (
+                <span className={styles.tick} key={`x-${tick}-${index}`}>
                   {tick}
                 </span>
               ))}
