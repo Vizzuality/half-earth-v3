@@ -3,20 +3,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent } from 'actions/google-analytics-actions';
-import { changeGlobe } from 'actions/url-actions';
+import urlActions from 'actions/url-actions';
 import SearchWidgetComponent from './search-widget-component';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { LOCAL_SCENE } from 'constants/scenes-constants';
+import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 import { useSearchWidgetLogic } from 'hooks/esri';
 
-const actions = { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, changeGlobe };
+const actions = { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, ...urlActions };
 
-const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, changeGlobe }) => {
+const SearchWidget = ({ view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, changeGlobe, changeUI }) => {
 
   const postSearchCallback = ({result}) => {
     const { feature: { attributes: { GID_0, NAME_0 }}} = result;
     if (GID_0) {
-      changeGlobe({countryISO: GID_0, countryName: NAME_0});
+        changeGlobe({ countryISO: GID_0, countryName: NAME_0, activeLayers: countrySceneConfig.globe.activeLayers })
+        changeUI({ sceneMode: LOCAL_SCENE })
     }
   }
 
