@@ -21,8 +21,7 @@
 }
 
 .header {
-  width: 100%;
-  display: flex;
+  width: 80%;
 
   .headerItem {
     width: 18%;
@@ -36,7 +35,7 @@
     }
 
     &:hover {
-      color: white;
+      color: $white;
     }
   }
 }
@@ -109,7 +108,6 @@
 }
 
 .rankingChartContent {
-  margin-top: 30px;
   padding-bottom: 2rem;
   margin-right: 2rem;
   width: 80%;
