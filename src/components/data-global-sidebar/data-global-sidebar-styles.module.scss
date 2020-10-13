@@ -1,5 +1,6 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
+@import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
 .sidebarContainer {
@@ -11,4 +12,44 @@
   top: $sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
+}
+
+.findPlacesCard {
+  @include backdropBlur();
+  margin-bottom: $cards-bottom-margin;
+  padding: 0 40px;
+  height: 115px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 2px;
+  width: 100%;
+  transition: none;
+  cursor: pointer;
+
+  @media #{$tablet-portrait} {
+    width: $sidebar-width;
+    padding: 0 20px 0 20px;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      .icon {
+        opacity: 1;
+      }
+      .searchCardTitle {
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+    }
+  }
+}
+
+.searchCardTitle {
+  @extend %headline;
+  color: $white;
+  margin-bottom: 15px;
+}
+
+.searchSubtitle {
+  @extend %subtitle;
+  color: $white;
 }
