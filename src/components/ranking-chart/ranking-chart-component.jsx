@@ -23,8 +23,9 @@ const legendText = {
     protectionNotNeeded: 'Protection non-needed'
   }
 };
-const categories = Object.keys(legendText);
 
+const categories = Object.keys(legendText);
+const headers = categories.concat('spi');
 
 const RankingChart = ({
   data,
@@ -123,7 +124,7 @@ const RankingChart = ({
             ref={tableRef}
           >
             <div className={styles.header}>
-              {categories.map((category) => (
+              {headers.map((category) => (
                 <HeaderItem
                   title={category.toUpperCase()}
                   key={category}
