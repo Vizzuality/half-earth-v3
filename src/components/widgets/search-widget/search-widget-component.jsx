@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './search-widget-styles.module.scss';
-import { ReactComponent as PinIcon } from 'icons/places.svg';
+// import { ReactComponent as PinIcon } from 'icons/places.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 const SearchWidgetComponent = props => {
@@ -11,10 +11,12 @@ const SearchWidgetComponent = props => {
         className={styles.searchButton}
         onClick={handleOpenSearch}
       >
-        <span className={styles.iconWrapper}>
+        {/* <span className={styles.iconWrapper}>
           <PinIcon />
-        </span>
-        <span className={styles.searchButtonText}>FIND PLACES</span>
+        </span> */}
+        <span className={styles.searchCardTitle}>find places</span>
+        <span className={styles.searchSubtitle}>analyze countries,</span>
+        <span className={styles.searchSubtitle}>explore areas</span>
       </button>
       { showCloseButton &&
         <button
