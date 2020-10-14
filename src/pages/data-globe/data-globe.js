@@ -12,6 +12,7 @@ const DataGlobeContainer = props => {
   const { changeGlobe } = props;
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
+    map.ground.surfaceColor = '#0A212E'; // set surface color, before basemap is loaded
     activateLayersOnLoad(map, activeLayers, layersConfig);
   }
 
