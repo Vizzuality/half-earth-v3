@@ -12,7 +12,6 @@ const NationalReportPdfContainer = (props) => {
   const [sceneScreenshotUrl, setSceneScreenshotUrl] = useState();
 useEffect(() => {
   watchHandle = watchUtils && watchUtils.whenFalseOnce(view, "updating", function(updating) {
-    console.log(updating)
       getSceneImageUrl();
   })
   return function cleanUp() {
