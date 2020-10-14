@@ -127,7 +127,7 @@ const SpeciesModalComponent = ({
               {headers.map((title) => (
                 <HeaderItem
                   title={title}
-                  className={styles.tableHeaderItem}
+                  theme={{ headerItem: styles.tableHeaderItem, arrowUp: styles.arrowUp }}
                   key={title}
                   isSortSelected={
                     sortCategory &&
