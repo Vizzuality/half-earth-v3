@@ -54,7 +54,7 @@ const CountrySceneComponent = ({
     <>
       <Scene
         className={styles.sceneWrapper}
-        sceneId="e96f61b2e79442b698ec2cec68af6db9"
+        sceneId="8f71838a19624717a4e45de110eced1b"
         sceneName={'country-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
@@ -85,6 +85,7 @@ const CountrySceneComponent = ({
         )}
         <Widgets
           hideSearch
+          hideLocator
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
@@ -98,6 +99,12 @@ const CountrySceneComponent = ({
           className={styles.hideOnPrint}
           isFullscreenActive={isFullscreenActive}
           handleGlobeUpdating={handleGlobeUpdating}
+        />
+        <PdfNationalReport
+          countryISO={countryISO}
+          countryName={countryName}
+          onMapLoad={onMapLoad}
+          shortLink={shortLink}
         />
       </Scene>
       <LocalSceneModeSwitch
@@ -136,12 +143,6 @@ const CountrySceneComponent = ({
         <InfoModal additionalContent={infoModalAdditionalContent} />
       )}
       {!isOnMobile && <About className={styles.hideOnPrint} />}
-      <PdfNationalReport
-        countryISO={countryISO}
-        countryName={countryName}
-        onMapLoad={onMapLoad}
-        shortLink={shortLink}
-      />
     </>
   );
 };
