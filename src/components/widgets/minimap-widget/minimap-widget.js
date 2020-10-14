@@ -10,7 +10,6 @@ import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actio
 import * as urlActions from 'actions/url-actions';
 import { useMobile } from 'constants/responsive';
 
-const VIEW = 'half-earth-meter';
 const actions = { openHalfEarthMeterAnalyticsEvent, ...urlActions };
 
 const MinimapWidget = (props) => {
@@ -42,20 +41,15 @@ const MinimapWidget = (props) => {
     setModal(false);
   };
 
-  const { textData, hidden } = props;
+  const { hidden } = props;
   return (
     <div style={{ display: hidden ? 'none' : 'block' }}>
       {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
-      {openedModal === MODALS.HE && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
+      {openedModal === MODALS.HE && <HalfEarthModal handleModalClose={handleModalClose} />}
     </div>
   );
 }
 
-const mapStateToProps = ({ pageTexts }) => ({
-  textData: pageTexts.data[VIEW],
-  loading: pageTexts.loading,
-  error: pageTexts.error
-});
 
 
-export default connect(mapStateToProps, actions)(MinimapWidget);
+export default connect(null, actions)(MinimapWidget);
