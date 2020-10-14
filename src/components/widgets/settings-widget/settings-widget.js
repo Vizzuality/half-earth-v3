@@ -5,21 +5,15 @@ import * as urlActions from 'actions/url-actions';
 import { settingsAnalyticsEvent } from 'actions/google-analytics-actions';
 import mapStateToProps from './settings-widget-selectors';
 import userConfigActions from 'redux_modules/user-config/user-config';
-import {
-  batchLayerManagerToggle,
-  layerManagerToggle
-} from 'utils/layer-manager-utils';
 import SettingsComponent from './settings-widget-component';
 
 const actions = { ...urlActions, ...userConfigActions, settingsAnalyticsEvent };
 
 const SettingsWidget = ({
   changeUI,
-  changeGlobe,
   settingsAnalyticsEvent,
   view,
   hidden,
-  activeLayers,
   checkboxLayers,
   disableSettings,
   setUserLayerSlugs
