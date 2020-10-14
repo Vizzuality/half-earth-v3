@@ -24,7 +24,7 @@ function useClickOutside(ref, callback, exceptionRef) {
 
 const renderCheckbox = (option, handleChangeLayer) => (
   <div
-    key={option.name}
+    key={option.slug}
     className={cx(styles.checkboxWrapper, {
       [styles.checkboxWrapperSelected]: option.isChecked
     })}
