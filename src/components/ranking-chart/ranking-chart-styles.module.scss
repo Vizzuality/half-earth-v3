@@ -26,6 +26,7 @@ $scroll-bar-width: 7px;
 .header {
   width: calc(#{$chart-width-without-legend} * 0.8);
   padding-right: $scroll-bar-width;
+  display: flex;
 
   .headerItem {
     width: 18%;
@@ -33,6 +34,7 @@ $scroll-bar-width: 7px;
     margin-bottom: 10px;
     text-align: left;
     padding: 0;
+    align-items: baseline;
 
     &:last-child {
       padding-left: 1rem;

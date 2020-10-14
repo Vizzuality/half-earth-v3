@@ -119,7 +119,7 @@ const RankingChart = ({
           <HeaderItem
             title={category.toUpperCase()}
             key={category}
-            className={cx(styles.headerItem, styles.titleText)}
+            theme={{ headerItem: cx(styles.headerItem, styles.titleText) }}
             isSortSelected={
               sortRankingCategory &&
               sortRankingCategory.split('-')[0] &&

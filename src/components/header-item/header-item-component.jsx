@@ -9,7 +9,7 @@ const HeaderItem = ({
   isSortSelected,
   sortDirection,
   handleSortClick,
-  className
+  theme
 }) => {
   const highlightAsc = isSortSelected && sortDirection === SORT.ASC;
   const highlightDesc = isSortSelected && sortDirection === SORT.DESC;
@@ -20,22 +20,30 @@ const HeaderItem = ({
         {
           [styles.highlightCategory]: isSortSelected
         },
-        className
+        theme.headerItem
       )}
       key={title}
       onClick={() => handleSortClick(title)}
     >
-      {title}
+      <span>{title}</span>
       <span className={styles.sortArrows}>
         <span
-          className={cx(styles.arrowUp, {
-            [styles.highlightedSort]: highlightAsc
-          })}
+          className={cx(
+            styles.arrowUp,
+            {
+              [styles.highlightedSort]: highlightAsc
+            },
+            theme.arrowUp
+          )}
         />
         <span
-          className={cx(styles.arrowDown, {
-            [styles.highlightedSort]: highlightDesc
-          })}
+          className={cx(
+            styles.arrowDown,
+            {
+              [styles.highlightedSort]: highlightDesc
+            },
+            theme.arrowDown
+          )}
         />
       </span>
     </button>
@@ -47,7 +55,12 @@ HeaderItem.propTypes = {
   className: PropTypes.string,
   isSortSelected: PropTypes.bool,
   sortDirection: PropTypes.string,
-  handleSortClick: PropTypes.func.isRequired
+  handleSortClick: PropTypes.func.isRequired,
+  theme: PropTypes.object
+};
+
+HeaderItem.defaultProps = {
+  theme: {}
 };
 
 export default HeaderItem;
