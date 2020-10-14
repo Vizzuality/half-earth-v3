@@ -96,7 +96,7 @@ const ScatterPlot = ({
 
       setChartScale({ xScale, yScale })
     }
-    }, [appConfig.ready, data]);
+    }, [appConfig.ready, data, countryChallengesSelectedKey]);
 
     useEffect(() => {
       if (chartScale) {

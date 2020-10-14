@@ -24,6 +24,7 @@ const NationalReportPdf = ({
   amphibiansEndemic,
   currentProtection,
   priorityAreasSentence,
+  sceneScreenshotUrl,
   endemicVertebratesCount,
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
@@ -116,7 +117,9 @@ const NationalReportPdf = ({
           highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
         />
       </section>
-      <section className={styles.mapWrapper}/>
+      <section className={styles.mapWrapper}>
+        {sceneScreenshotUrl && <img src={sceneScreenshotUrl} alt={`${countryName} map`}/>}
+      </section>
       <section className={styles.urlWrapper} >
         <a href={shortLink}>{shortLink}</a>
       </section>

@@ -37,6 +37,7 @@ const DataGlobeComponent = ({
     {sceneMode === LOCAL_SCENE && (
       <CountryScene
         countryISO={countryISO}
+        userConfig={userConfig}
         countryName={countryName}
         hasMetadata={hasMetadata}
         activeLayers={activeLayers}
@@ -44,20 +45,18 @@ const DataGlobeComponent = ({
         sceneSettings={sceneSettings}
         countryExtent={countryExtent}
         isGlobeUpdating={isGlobeUpdating}
-        selectedSpecies={selectedSpecies}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
         sortRankingCategory={sortRankingCategory}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
-        sortRankingCategory={sortRankingCategory}
-        userConfig={userConfig}
       />
     )}
     {sceneMode === DATA_SCENE && (
       <DataScene
         sceneMode={sceneMode}
+        userConfig={userConfig}
         countryISO={countryISO}
         countryName={countryName}
         hasMetadata={hasMetadata}
@@ -67,6 +66,7 @@ const DataGlobeComponent = ({
         openedModal={openedModal}
         sceneSettings={sceneSettings}
         activeCategory={activeCategory}
+        selectedSpecies={selectedSpecies}
         isLandscapeMode={isLandscapeMode}
         isGlobeUpdating={isGlobeUpdating}
         isFullscreenActive={isFullscreenActive}
@@ -75,7 +75,6 @@ const DataGlobeComponent = ({
         isBiodiversityActive={isBiodiversityActive}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        userConfig={userConfig}
       />
     )}
     <ReleaseNotesModal />

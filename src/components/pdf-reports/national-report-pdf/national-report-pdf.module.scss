@@ -71,6 +71,8 @@ $gap: 20pt;
  }
 
   .container {
+    position: absolute;
+    top: 0;
     opacity: 1;
     width: 842pt;
     height:595pt;
@@ -85,8 +87,8 @@ $gap: 20pt;
     "index index index index rg rg rg sp sp sp"
     "intro intro intro intro cmp cmp cmp sp sp sp"
     "exp exp exp exp cmp cmp cmp sp sp sp"
-    ". . . . prot prot prot prot prot prot"
-    ". . . . prior prior prior prior prior prior"
+    "map map map map prot prot prot prot prot prot"
+    "map map map map prior prior prior prior prior prior"
     ". . . . . . . url url url";
 
     .nameWrapper {
@@ -124,6 +126,17 @@ $gap: 20pt;
 
     .indexExplanation {
       grid-area: exp;
+    }
+
+    .mapWrapper {
+      grid-area: map;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      img {
+        max-width: 100%;
+      }
     }
 
     .urlWrapper {

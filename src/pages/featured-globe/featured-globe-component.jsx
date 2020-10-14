@@ -116,6 +116,7 @@ const DataGlobeComponent = ({
           openedModal={openedModal}
           disableSettings
           hideSearch
+          hideLocator
         />
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
