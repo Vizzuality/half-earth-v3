@@ -1,5 +1,6 @@
 import { loadModules } from 'esri-loader';
-import React, { useState } from 'react';
+import React from 'react';
+import { MODALS } from 'constants/ui-params';
 import { connect } from 'react-redux';
 
 import MinimapWidgetComponent from './minimap-widget-component';
@@ -7,20 +8,18 @@ import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'u
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
 import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
-const VIEW = 'half-earth-meter';
 const actions = { openHalfEarthMeterAnalyticsEvent, ...urlActions };
 
 const MinimapWidget = (props) => {
-  const { isHEModalOpen } = props;
-
+  const { openedModal } = props;
   const setModal = (opened) => {
     const { changeUI } = props;
-    changeUI({ isHEModalOpen: opened });
+    changeUI({ openedModal: opened ? MODALS.HE : null });
   }
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
 
   const handleMapLoad = (map, view, globeView ) => {
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
@@ -42,21 +41,15 @@ const MinimapWidget = (props) => {
     setModal(false);
   };
 
-  const { textData, hidden } = props;
-
+  const { hidden } = props;
   return (
     <div style={{ display: hidden ? 'none' : 'block' }}>
       {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
-      {isHEModalOpen && <HalfEarthModal handleModalClose={handleModalClose} textData={textData}/>}
+      {openedModal === MODALS.HE && <HalfEarthModal handleModalClose={handleModalClose} />}
     </div>
   );
 }
 
-const mapStateToProps = ({ pageTexts }) => ({
-  textData: pageTexts.data[VIEW],
-  loading: pageTexts.loading,
-  error: pageTexts.error
-});
 
 
-export default connect(mapStateToProps, actions)(MinimapWidget);
+export default connect(null, actions)(MinimapWidget);

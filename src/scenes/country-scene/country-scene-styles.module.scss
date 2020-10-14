@@ -1,0 +1,43 @@
+@import 'styles/settings';
+
+.modeSwitch {
+  z-index: 3;
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+}
+
+.challengesViewContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #040E14;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.challengesSelected {
+  opacity: 1;
+  pointer-events: inherit;
+}
+
+.challengesChart,
+.rankingChart {
+  position: relative;
+  left: $country-sidebar-width;
+  width: $country-scene-chart-width;
+  top: $sidebar-header-height;
+}
+
+
+@media print {
+  .hideOnPrint {
+    display: none;
+  }
+
+  .sceneWrapper {
+    display: none;
+  }
+}

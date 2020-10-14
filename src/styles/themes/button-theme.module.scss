@@ -1,0 +1,13 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.button {
+  @extend %title;
+  color: $alto;
+  background-color: $brand-color-secondary;
+  max-width: 265px;
+
+  &:hover {
+    background-color: $brand-color-secondary-hover;
+  }
+}

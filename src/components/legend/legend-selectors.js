@@ -1,15 +1,15 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { uniqBy } from 'lodash';
-import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
-import { PLEDGES_LAYER, MERGED_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
+import { getConfig } from 'utils/user-config-utils';
+import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, MARINE_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { PLEDGES_LAYER, MARINE_AND_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
-import { selectTutorialState } from 'selectors/tutorial-selectors';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
-const isLandHumanPressureLayer = layerId => LAND_HUMAN_PRESURES_LAYERS.some( l => l === layerId);
+const isHumanPressureLayer = layerId => [...LAND_HUMAN_PRESURES_LAYERS, ...MARINE_HUMAN_PRESURES_LAYERS].some( l => l === layerId);
 const isCommunityLayer = layerId => COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.some( l => l === layerId);
 
 const getActiveLayers = (state, props) => props.activeLayers;
@@ -21,9 +21,10 @@ const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
 
 const getHumanPressuresDynamicTitle = createSelector(getVisibleLayers, visibleLayers => {
   if (!visibleLayers.length) return null;
-  const humanPresuresLayers = visibleLayers.filter(layer => isLandHumanPressureLayer(layer.title));
+  const humanPresuresLayers = visibleLayers.filter(layer => isHumanPressureLayer(layer.title));
   const titles = humanPresuresLayers.map(layer => legendSingleRasterTitles[layer.title]);
-  if (titles.length === 4) return 'All pressures';
+  if (titles.length === 5) return 'All pressures';
+  if (titles.length > 2) return `human pressures (${titles.length})`; 
   const hasAgricultureRasters = titles.some(title => title.toLowerCase().endsWith('agriculture'));
   if (hasAgricultureRasters) return joinAgricultureTitles(titles);
 
@@ -82,12 +83,12 @@ const setGroupedLayersOpacity = (layers, defaultOpacity) => {
 }
 
 const mergeHumanPressuresIntoOne = layers => {
-  const humanPressuresLayers = layers.filter(layer => isLandHumanPressureLayer(layer.title));
+  const humanPressuresLayers = layers.filter(layer => isHumanPressureLayer(layer.title));
   if (!humanPressuresLayers.length) {
     return layers;
   } else {
     const opacity = setGroupedLayersOpacity(humanPressuresLayers, DEFAULT_OPACITY);
-    const normalizedLayers = layers.map(layer => isLandHumanPressureLayer(layer.title) ? { title: MERGED_LAND_HUMAN_PRESSURES, opacity }: layer);
+    const normalizedLayers = layers.map(layer => isHumanPressureLayer(layer.title) ? { title: MARINE_AND_LAND_HUMAN_PRESSURES, opacity }: layer);
     const uniqNormalizedLayers = uniqBy(normalizedLayers, 'title');
     return uniqNormalizedLayers;
   }
@@ -106,12 +107,12 @@ const mergeCommunityIntoOne = layers => {
 }
 
 const getActiveTutorialData = createSelector(
-  [selectTutorialState, getLegendConfigs],
-  (tutorial, datasets) => {
-    if (!tutorial) return null;
+  [getLegendConfigs],
+  (datasets) => {
+    const userConfig = getConfig();
 
-    const enableLegendTutorial = tutorial[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
-    const enableLegendDragTutorial = tutorial[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
+    const enableLegendTutorial = userConfig[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
+    const enableLegendDragTutorial = userConfig[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
 
     const enabledTutorialIDs = [];
 

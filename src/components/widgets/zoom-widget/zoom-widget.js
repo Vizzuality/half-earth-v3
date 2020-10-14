@@ -9,7 +9,7 @@ import ZoomWidgetComponent from './zoom-widget-component';
 import * as actions from 'actions/url-actions';
 
 const ZoomWidget = props => {
-  const { view, changeGlobe, hidden } = props;
+  const { view, changeGlobe, hidden, disableStateUpdate } = props;
   const [zoomWidget, setZoomWidget] = useState(null);
   const watchUtils = useWatchUtils();
   const handleZoomChange = (zoom) => changeGlobe({ zoom });
@@ -35,7 +35,7 @@ const ZoomWidget = props => {
 
   // Update zoom in URL
   useEffect(() => {
-    const watchHandle = watchUtils && zoomWidget && watchUtils.whenTrue(zoomWidget.view, "stationary", function() {
+    const watchHandle = watchUtils && zoomWidget && !disableStateUpdate && watchUtils.whenTrue(zoomWidget.view, "stationary", function() {
       handleZoomChange(zoomWidget.view.zoom);
     });
     return function cleanUp() {

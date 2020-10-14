@@ -6,6 +6,7 @@ import initialState from './featured-globe-initial-state';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;
+const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -36,13 +37,14 @@ const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globe
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
-const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.isHEModalOpen);
+const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
 
 
 export default createStructuredSelector({
   isMapsList: getMapsListActive,
   sceneSettings: getGlobeSettings,
   sceneLayers: getFeaturedGlobeLayers,
+  userConfig: selectUserConfig,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
   hasMetadata: selectMetadataData,
@@ -54,7 +56,7 @@ export default createStructuredSelector({
   featuredMapPlaces: selectFeaturedMapPlaces,
   isGlobeUpdating: getGlobeUpdating,
   selectedSpecies: getSelectedSpecies,
-  isHEModalOpen: getHalfEarthModalOpen,
+  openedModal: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
-})
+});

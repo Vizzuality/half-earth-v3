@@ -1,4 +1,5 @@
 // Protected areas layers. Based on WDPA and RAISIG data.
+export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged-protected';
 export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
 export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
@@ -12,12 +13,16 @@ export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';
+export const COUNTRY_PRIORITY_LAYER = 'country_priority_layer';
 // Terrestrial human pressures tiled layers.
-export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
+export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures';
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
+export const MARINE_HUMAN_PRESSURES_TILE_LAYER = 'marine_human_pressures';
+export const GRAPHIC_LAYER = 'graphic_layer';
+export const COUNTRY_MASK_LAYER = 'mask-layer';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
@@ -36,7 +41,11 @@ export const SIGNED_PLEDGE_GRAPHIC_LAYER = 'signed_pledges_graphic_layer';
 export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer';
 // human settlements labels
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
-
+// layer with countries data and borders geometries
+export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer';
+export const COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER = 'countries_generalized_borders_layer';
+export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
+export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
 // South Africa layers
@@ -74,3 +83,5 @@ export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
+// Species modal
+export const SPECIES_LIST = 'species-list';

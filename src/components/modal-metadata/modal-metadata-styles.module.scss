@@ -1,4 +1,5 @@
 @import 'styles/settings';
+@import 'styles/typography-extends';
 
 .modal {
   padding: 0;
@@ -19,7 +20,17 @@
   @media #{$tablet-landscape} {
     padding: 50px 60px;
   }
-  
+
+  @extend %bodyText;
+}
+
+.modalTitle {
+  @extend %title;
+}
+
+.closeBtn {
+  background-color: transparent;
+  border: none;
 }
 
 .metadataDescription {

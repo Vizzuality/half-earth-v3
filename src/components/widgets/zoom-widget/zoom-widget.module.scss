@@ -3,7 +3,7 @@
 
 .zoomComponent {
   @extend .uiRight;
-  top: 50px;
+  top: 76px;
   display: flex;
   flex-direction: column;
   background-color: $elephant;
@@ -33,4 +33,10 @@
   opacity: 0.5;
   margin: auto;
   width: 16px;
+}
+
+@media print {
+  .zoomComponent {
+    display: none;
+  }
 }

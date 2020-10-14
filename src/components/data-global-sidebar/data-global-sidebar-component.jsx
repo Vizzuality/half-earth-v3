@@ -1,61 +1,56 @@
 import React from 'react';
-import loadable from '@loadable/component'
-
-import { biodiversityCategories } from 'constants/mol-layers-configs';
-
-import EntryBoxes from 'components/entry-boxes';
-import Sidebar from 'components/sidebar';
-const BiodiversityLayers = loadable(() => import('components/biodiversity-layers'));
-const HumanImpactLayers = loadable(() => import('components/human-impact-layers'));
-const ProtectedAreasLayers = loadable(() => import('components/protected-areas-layers'));
+import cx from 'classnames';
+import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
+import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
+import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
+import FindPlacesCard from 'components/find-places-card';
+import animationStyles from 'styles/common-animations.module.scss';
+import styles from './data-global-sidebar-styles.module.scss';
 
 const DataGlobeSidebarComponent = ({
-  isSidebarOpen,
-  isFullscreenActive,
-  activeCategory,
-  isLandscapeMode,
-  activeLayers,
   map,
   view,
+  activeLayers,
+  searchConfig,
+  isCountryMode,
+  activeCategory,
+  isLandscapeMode,
+  isFullscreenActive,
+  searchWidgetConfig,
+  countedActiveLayers,
   handleGlobeUpdating,
-  activeOption,
-  isLandscapeSidebarCollapsed
 }) => {
-  const isBiodiversityActive = activeCategory === 'Biodiversity';
-  const isHumanPressuresActive = activeCategory === 'Human pressures';
-  const isProtectedAreasActive = activeCategory === 'Existing protection';
+
+  const sidebarHidden = isCountryMode || isLandscapeMode || isFullscreenActive;
   return (
-    <>
-      <EntryBoxes isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} activeLayers={activeLayers} />
-      <Sidebar activeOption={activeOption} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} isSidebarOpen={isSidebarOpen} isFullscreenActive={isFullscreenActive} activeCategory={activeCategory} isLandscapeMode={isLandscapeMode} map={map} view={view}>
-        {isBiodiversityActive && (
-          biodiversityCategories.map(cat => (
-            <BiodiversityLayers
-              key={cat.name}
-              isFullscreenActive={isFullscreenActive}
-              title={cat.name}
-              description={cat.description}
-              subcategories={cat.subcategories}
-              options={cat.taxa}
-              activeLayers={activeLayers}
-            />
-          ))
-        )}
-        {isHumanPressuresActive && (
-          <HumanImpactLayers
-            activeLayers={activeLayers}
-            handleGlobeUpdating={handleGlobeUpdating}
-          />
-        )}
-        {isProtectedAreasActive && (
-          <ProtectedAreasLayers
-            handleGlobeUpdating={handleGlobeUpdating}
-            activeLayers={activeLayers}
-            activeCategory={activeCategory}
-          />
-        )}
-      </Sidebar>
-    </>
+    <div className={cx(styles.sidebarContainer, {[animationStyles.leftHidden]: sidebarHidden})}>
+      <FindPlacesCard
+        view={view}
+        searchWidgetConfig={searchWidgetConfig}
+      />
+      <BiodiversitySidebarCard
+        map={map}
+        view={view}
+        activeLayers={activeLayers}
+        activeCategory={activeCategory}
+        className={styles.biodiversitySidebarCard}
+        countedActiveLayers={countedActiveLayers}
+      />
+      <ProtectedAreasSidebarCard
+        map={map}
+        activeLayers={activeLayers}
+        activeCategory={activeCategory}
+        handleGlobeUpdating={handleGlobeUpdating}
+        countedActiveLayers={countedActiveLayers}
+      />
+      <HumanImpactSidebarCard
+        view={view}
+        activeLayers={activeLayers}
+        activeCategory={activeCategory}
+        handleGlobeUpdating={handleGlobeUpdating}
+        countedActiveLayers={countedActiveLayers}
+      />
+    </div>
   )
 }
 

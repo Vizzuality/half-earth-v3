@@ -1,0 +1,54 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.continent,
+.modalAdditionalContent {
+  display: flex;
+}
+
+.continent {
+  margin-bottom: 10px;
+  width: 134px;
+  margin-right: 60px;
+}
+
+.legendContinent {
+  @extend %subtitle;
+}
+
+.legendDot {
+  display: flex;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  margin-right: 12px;
+
+  &.africa {
+    background-color: $africa;
+  }
+
+  &.antarctica {
+    background-color: $antarctica;
+  }
+
+  &.asia {
+    background-color: $asia;
+  }
+
+  &.europe {
+    background-color: $europe;
+  }
+
+  &.north-america {
+    background-color: $north-america;
+  }
+
+  &.oceania {
+    background-color: $oceania;
+  }
+
+  &.south-america {
+    background-color: $south-america;
+  }
+}
+

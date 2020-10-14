@@ -1,3 +1,8 @@
+// variables
+:root {
+  --sidebar-top-margin: 60px;
+}
+
 // Colors
 $white: #fff;
 $black: #000000;
@@ -5,6 +10,7 @@ $elephant: #0F2B3B;
 $robins-egg-blue: #00BDB5;
 $oslo-gray: #7B878D;
 $alto: #D8D8D8;
+$athens-gray: #ECEFF2;
 $firefly: #0A212E;
 $vida-loca: #4B9217;
 $cobalt: #0041B1;
@@ -29,27 +35,64 @@ $slate-gray: #6C828F;
 $catalina-blue: #0C2C84;
 $wild-sand: #f5f5f5;
 $sulu: #BFF78D;
+$shamrock: #34BD92;
+$conifer: #92EB57;
+$picton-blue: #3AA8EE;
+$gold: #F8D300;
+$medium-purple: #8B62E9;
+$tango: #E87926;
+$french-rose: #EB588F;
 
 // Project colours
 $space-background: #09141A;
 $brand-color-main: $java;
 $brand-color-secondary: $elephant;
+$brand-color-secondary-hover: lighten($elephant, 10);
 $dark-text: $firefly;
 $grey-text: $alto;
 $light-text: $white;
+$_temporary-dark-text: #222;
+$_temporary-light-text: #747474;
 $logos-text: $oslo-gray;
 $half-earth-meter-green: $screamin-green;
 $half-earth-meter-blue: $lochmara;
+$mammals-color: $conifer;
+$amphibians-color: #9873EF;
+$birds-color: $shamrock;
+$reptiles-color: $picton-blue;
 $priority-blue: #0664F6;
-$human-pressure-high: #282052;
+$human-pressure-high: #F3E0F7;
 $human-pressure-mid: #9F82CE;
-$human-pressure-low: #F3E0F7;
+$human-pressure-low: #282052;
 $human-pressures-gradient: linear-gradient(270deg, $human-pressure-high 0%, $human-pressure-mid 50%, $human-pressure-low 100%);
+// country ranking
+$endemic-species: #F8D300;
+$non-endemic-species: #F87200;
+$human-modification-high-color: #731CFF;
+$human-modification-color: #B284FD;
+$non-human-modification: #a0afb8;
+$protection-non-needed-color: #AFB8A0;
+$protected-areas: #008604;
+$protection-needed: #B3E74B;;
+
+// Continent colors
+$africa: $shamrock;
+$antarctica: $conifer;
+$asia: $picton-blue;
+$europe: $gold;
+$north-america: $medium-purple;
+$oceania: $tango;
+$south-america: $french-rose;
+
+// Modal
+$modal-light-background: $athens-gray;
+
 // Animations
 $animation-time: 0.3s;
 $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
 // Font sizes
+$font-size-base: 1rem;
 $font-size-xxs: 10px;
 $font-size-xs: 12px;
 $font-size-sm: 14px;
@@ -66,7 +109,7 @@ $font-family-1-light: 'PierSans-Light';
 
 $font-family-2: 'EB Garamond', serif;
 
-// Layout 
+// Layout
 $site-gutter: 20px;
 $widget-button-size: 30px;
 
@@ -76,6 +119,7 @@ $blur-level: 16px;
 // Global
 $sidebar-margin: 24px;
 $sidebar-paddings: 20px;
+$paragraph-margin: 35px;
 
 $mobile-sidebar-side-paddings: 32px;
 
@@ -84,15 +128,28 @@ $letter-spacing: 1.5px;
 $line-height: 14px;
 
 // Sidebar
-$sidebar-top-margin: 60px;
+$sidebar-top-margin: 25px;
+$local-sidebar-top-margin: 20px;
+$high-sidebar-top-margin: 268px;
 $sidebar-header-height: 100px;
 $sidebar-header-height-mobile: 150px;
-$sidebar-width: 280px;  // use this for entry boxes and sidebar width
+$sidebar-width: 280px; // use this for entry boxes and sidebar width
+$country-sidebar-width: 490px;
+$local-sidebar-width: 350px;
 $widgetsTopMargin: 8px;
+$cards-bottom-margin: 8px;
 $border-radius-desktop: 2px;
 $border-radius-mobile: 16px 16px 0 0;
 // featured cards
 $card-max-width: 820px;
+$card-border-radius: 6px;
+// country scene
+$country-scene-chart-width: calc(90vw - #{$country-sidebar-width});
+
+//z indexes
+$bring-to-front: 5;
+$default-z-index: 1;
+$send-to-back: 0;
 
 // Breakpoints
 $breakpoint-mobile-only: 37.4375rem; // 599px / 16px
@@ -104,4 +161,4 @@ $breakpoint-desktop: 75rem; // 1200px / 16px
 $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
 $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
 $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
-$desktop: 'screen and (min-width: #{$breakpoint-desktop})'; 
+$desktop: 'screen and (min-width: #{$breakpoint-desktop})';

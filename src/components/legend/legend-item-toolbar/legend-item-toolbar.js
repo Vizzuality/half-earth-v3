@@ -5,6 +5,7 @@ import LegendItemButtonRemove from './remove-button';
 import styles from './legend-item-toolbar-styles.module.scss';
 
 const LegendItemToolbar = props => {
+  const { hideCloseButton } = props;
   const [isTooltipOpened, setTooltipOpened] = useState(false);
 
   const onTooltipVisibilityChange = (isOpened) => {
@@ -21,7 +22,7 @@ const LegendItemToolbar = props => {
     <div className={styles.legendItemToolbar}>
       <LegendItemButtonInfo tooltipText='Click to read the info of this layer' {...childrenProps} />
       <LegendItemButtonOpacity tooltipText='Change the opacity' {...childrenProps}/>
-      <LegendItemButtonRemove tooltipText='Close this layer' {...childrenProps}/>
+      {!hideCloseButton && <LegendItemButtonRemove tooltipText='Close this layer' {...childrenProps}/>}
     </div>
   );
 }

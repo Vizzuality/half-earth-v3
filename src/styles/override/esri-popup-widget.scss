@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
 
 .esri-popup__header, .esri-popup__footer {
   display: none;
@@ -16,6 +17,7 @@
   background-color: $firefly;
   color: $white;
   max-width: 200px;
+  border-radius: 2px;
 }
 
 .esri-popup__pointer-direction {

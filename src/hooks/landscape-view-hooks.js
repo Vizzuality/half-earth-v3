@@ -5,21 +5,25 @@ import {
   isLandscapeViewOffEvent
 } from 'utils/landscape-view-manager-utils';
 
-  export function useSetLandscapeViewParam(view, zoomLevelTrigger, onZoomChange) {
+  export function useSetLandscapeViewParam(view, zoomLevelTrigger, onZoomChange, countryISO) {
     const landscapeModeRef = useRef(false);
     useEffect(() => {
+      let watcher;
       loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-        watchUtils.whenTrue(view, "stationary", function() {
-          if (isLandscapeViewOnEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current)) {
+        watcher = watchUtils.whenTrue(view, "stationary", function() {
+          if (isLandscapeViewOnEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current, countryISO)) {
             onZoomChange({ landscapeView: true })
             landscapeModeRef.current = true;
-          } else if (isLandscapeViewOffEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current)) {
+          } else if (isLandscapeViewOffEvent(view.zoom, zoomLevelTrigger, landscapeModeRef.current, countryISO)) {
             onZoomChange({ landscapeView: false })
             landscapeModeRef.current = false;
           }
         })
       })
-    }, []);
+      return function cleanUp() {
+        watcher && watcher.remove();
+      }
+    }, [countryISO]);
   }
 
   export function useLandscapeViewCameraChange(view, isLandscapeMode) {

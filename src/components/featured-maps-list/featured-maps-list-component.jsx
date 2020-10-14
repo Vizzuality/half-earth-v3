@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -23,7 +23,7 @@ const FeaturedMapsListComponent = ({
 }) => {
   const isOpen = selectedSidebar === 'featuredMapsList';
   
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
   const visibleOnMobile = isOnMobile && isActive && isOpen && !selectedFeaturedPlace;

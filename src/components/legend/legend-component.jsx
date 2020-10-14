@@ -7,19 +7,19 @@ import Legend, {
   LegendItemTypes,
   LegendListItem,
 } from 'vizzuality-components/dist/legend';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import LegendItemToolbar from './legend-item-toolbar';
 import LegendTitle from './legend-title';
 import styles from './legend-styles.module.scss';
 
-const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
+const HELegend = ({ className, datasets, handlers, isFullscreenActive, hideTutorial, hideCloseButton, activeOption, handleInfoClick, handleRemoveLayer, handleChangeOpacity, handleChangeOrder, tutorialData, showLegend = true }) => {
   const { 
     handleLayerChange,
     handleChangeVisibility
   } = handlers;
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   const isLegendOpen = activeOption === FOOTER_OPTIONS.LEGEND;
   const showDisclaimer = isOnMobile && isLegendOpen;
   const canShowLegend = isOnMobile ? isLegendOpen : showLegend;
@@ -31,15 +31,16 @@ const HELegend = ({ datasets, handlers, isFullscreenActive, activeOption, handle
       onRemoveLayer={handleRemoveLayer}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
+      hideCloseButton={hideCloseButton}
     />
   );
 
   return (
-    <div className={cx(styles.legend)}>
+    <div className={cx(styles.legend, className)}>
       <Tutorial
         position={'top-left'}
         tutorialID={tutorialData.id}
-        showTutorial={!isFullscreenActive && !isOnMobile && tutorialData.showTutorial}
+        showTutorial={!hideTutorial && !isFullscreenActive && !isOnMobile && tutorialData.showTutorial}
       >
         {!isFullscreenActive && canShowLegend && <Legend sortable={datasets && datasets.length > 1} onChangeOrder={handleChangeOrder}>
           {datasets && datasets.map((dataset, i) => (

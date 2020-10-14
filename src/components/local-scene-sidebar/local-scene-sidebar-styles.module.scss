@@ -1,0 +1,66 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  @include backdropBlur();
+  @extend %verticalScrollBar;
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  height: 100vh;
+  width: calc(#{$local-sidebar-width} + 15px);
+  top: $local-sidebar-top-margin;
+  left: $site-gutter;
+  padding-bottom: $site-gutter;
+  z-index: $bring-to-front;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  .icon {
+    transform: rotate(180deg);
+  }
+  .text {
+    @extend %subtitle;
+    color: $brand-color-main;
+    text-transform: uppercase;
+    position: relative;
+    top: 4px;
+  }
+}
+
+.loading {
+  padding: $mobile-sidebar-side-paddings;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
+}
+
+.loadingText {
+  @extend %bodyText;
+  margin-bottom: 20px;
+  color: $white;
+}
+
+.actionGroup {
+  padding: $site-gutter;
+  padding-top: 0;
+  display: flex;
+}
+
+.actionButton {
+  @extend %title;
+  color: $white;
+  margin-left: 1em;
+}
+
+.shareText {
+  @extend %title;
+}

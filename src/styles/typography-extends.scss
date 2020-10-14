@@ -7,6 +7,10 @@
   font-weight: normal;
   letter-spacing: 1px;
   line-height: 50px;
+  @media print {
+    font-size: 34pt;
+    line-height: 50pt;
+  }
 }
 
 // Categories, Areas names, Search
@@ -16,6 +20,10 @@
   font-size: $font-size-xl;
   letter-spacing: 1px;
   line-height: 30px;
+  @media print {
+    font-size: 18pt;
+    line-height: 34pt;
+  }
 }
 
 // Datasets, Geodescriber
@@ -24,6 +32,10 @@
   font-size: $font-size-sm;
   letter-spacing: 0px;
   line-height: 22px;
+  @media print{
+    font-size: 10pt;
+    line-height: 16pt;
+  }
 }
 
 // Sections title
@@ -33,6 +45,10 @@
   letter-spacing: 2px;
   line-height: 20px;
   text-transform: uppercase;
+  @media print {
+    font-size: 8pt;
+    line-height: 18pt;
+  }
 }
 
 // Legend title, Actions, Small titles
@@ -42,6 +58,10 @@
   letter-spacing: 1.5px;
   line-height: 14px;
   text-transform: uppercase;
+  @media print {
+    font-size: 7pt;
+    line-height: 14pt;
+  }
 }
 
 // Tooltips, descriptions
@@ -59,4 +79,9 @@
   letter-spacing: 2px;
   line-height: 20px;
   text-transform: uppercase;
+}
+
+%_temporaryTitle {
+  @extend %title;
+  font-weight: bold;
 }

@@ -1,0 +1,75 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+$icon-size: 20px;
+$chart-margin: 14px;
+
+.scatterPlotContainer {
+  border-left: 3px solid $elephant;
+  border-bottom: 3px solid $elephant;
+  width: $country-scene-chart-width;
+  height: 60vh;
+  position: relative;
+}
+
+.chartContainer {
+  display: flex;
+  margin-top: $chart-margin;
+}
+
+.xAxisTicksContainer {
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -40px;
+}
+
+.yAxisTicksContainer {
+  color: white;
+  position: absolute;
+  bottom: -12px;
+  left: -30px;
+  transform-origin: left;
+  transform: rotate(-90deg);
+  width: 60vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tick {
+  color: $alto;
+}
+
+.tooltip {
+  background-color: $elephant;
+  border-radius: 2px;
+  width: 190px;
+  overflow: hidden;
+  .countryLabel{
+    padding: 5px;
+    .name {
+      @extend %_temporaryTitle;
+      letter-spacing: 0;
+      color: #222222;
+    }
+    .continent {
+      @extend %_temporaryTitle;
+      color: #222222;
+      letter-spacing: 0;
+      text-transform: initial;
+    }
+  }
+  .countryData {
+    padding: 5px;
+    .data {
+      @extend %_temporaryTitle;
+      margin: 0;
+      color: $white;
+      font-weight: normal;
+      text-transform: initial;
+      letter-spacing: 0;
+    }
+  }
+}

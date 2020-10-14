@@ -1,32 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Constants
-import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { humanPressuresLandUse } from 'constants/human-pressures';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { humanPressuresLandUse, humanPressuresMarine } from 'constants/human-pressures';
 // Utils
-import { layerManagerToggle, handleLayerCreation } from 'utils/layer-manager-utils';
+import { layerManagerToggle } from 'utils/layer-manager-utils';
 // Components
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
 
-const HumanImpactLayers = ({ alreadyChecked, map, activeLayers, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, changeGlobe }) => {
+const HumanImpactLayers = ({
+  changeGlobe,
+  activeLayers,
+  alreadyCheckedLandPressures,
+  alreadyCheckedMarinePressures,
+}) => {
 
-  
-  const toggleLayer = async (rasters, option) => {
-    const layerConfig = layersConfig[option.slug];
-    await handleLayerCreation(layerConfig, map);
+  const toggleLayer = async (_, option) => {
     layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 
 
   return (
-    <MultipleActiveLayers
-      options={humanPressuresLandUse}
-      alreadyChecked={alreadyChecked}
-      handleClick={toggleLayer}
-      title='Land use pressures'
-      description='Human pressures causing habitat loss and accelerating species extinction.'
-    />
+    <>
+      <MultipleActiveLayers
+        options={humanPressuresLandUse}
+        alreadyChecked={alreadyCheckedLandPressures}
+        handleClick={toggleLayer}
+        title='Land use pressures'
+        description='Human pressures causing habitat loss and accelerating species extinction.'
+      />
+      <MultipleActiveLayers
+        options={humanPressuresMarine}
+        alreadyChecked={alreadyCheckedMarinePressures}
+        handleClick={toggleLayer}
+        title='Marine use pressures'
+        description='Human pressures causing habitat loss and accelerating species extinction.'
+      />
+    </>
   )}
 
 HumanImpactLayers.propTypes = {

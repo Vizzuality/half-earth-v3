@@ -39,6 +39,10 @@ export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', n
   return { analytics: [ VIEW_MODE.GLOBE, 'Toggle fullscreen mode', fullscreenState] };
 });
 
+export const settingsAnalyticsEvent = createAction('changeLayers', null, ({ notDisplayedLayers }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Change layers (Not displayed layers)', notDisplayedLayers] };
+});
+
 export const switchAboutPageTabAnalyticsEvent = createAction('switchAboutPageTab', null, ({ activeTab }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Change an active tab in About page', activeTab] };
 });

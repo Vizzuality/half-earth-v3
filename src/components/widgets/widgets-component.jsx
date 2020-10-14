@@ -2,24 +2,74 @@ import React from 'react';
 // WIDGETS
 import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
+import SettingsWidget from 'components/widgets/settings-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
-import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 
-const WidgetsComponent = ({ map, view, isFullscreenActive, isHEModalOpen = false, isNotMapsList = true, hidden = false}) => {
-  const isOnMobile = isMobile();
+const WidgetsComponent = ({
+  map,
+  view,
+  activeLayers,
+  hideToggle = false,
+  hideSettings = false,
+  hideZoom = false,
+  hideMiniMap = false,
+  hideLocator = false,
+  isFullscreenActive,
+  openedModal = null,
+  isNotMapsList = true,
+  hidden = false,
+  disableSettings = false
+}) => {
+  const isOnMobile = useMobile();
   const hiddenWidget = hidden || isOnMobile;
   return (
     <>
-      <ToggleUiWidget map={map} view={view} isFullscreenActive={isFullscreenActive} hidden={hiddenWidget}/>
-      <ZoomWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
-      <MinimapWidget map={map} view={view} hidden={hiddenWidget} isHEModalOpen={isHEModalOpen} />
-      {!isOnMobile && <SearchWidget map={map} view={view} hidden={hiddenWidget} />}
-      <LocationWidget map={map} view={view} isNotMapsList={isNotMapsList} hidden={hiddenWidget} />
+      {!hideSettings && (
+        <SettingsWidget
+          map={map}
+          view={view}
+          activeLayers={activeLayers}
+          hidden={hiddenWidget}
+          disableSettings={disableSettings}
+        />
+      )}
+      {!hideToggle && (
+        <ToggleUiWidget
+          map={map}
+          view={view}
+          isFullscreenActive={isFullscreenActive}
+          hidden={hiddenWidget}
+        />
+      )}
+      {!hideZoom && (
+        <ZoomWidget
+          map={map}
+          view={view}
+          isNotMapsList={isNotMapsList}
+          hidden={hiddenWidget}
+        />
+      )}
+      {!hideMiniMap && (
+        <MinimapWidget
+          map={map}
+          view={view}
+          hidden={hiddenWidget}
+          openedModal={openedModal}
+        />
+      )}
+      {!hideLocator && (
+        <LocationWidget
+          map={map}
+          view={view}
+          isNotMapsList={isNotMapsList}
+          hidden={hiddenWidget}
+        />
+      )}
     </>
-  )
-}
+  );
+};
 
 export default WidgetsComponent;

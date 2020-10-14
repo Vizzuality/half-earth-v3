@@ -4,7 +4,7 @@
 
 .locationButton {
   @extend .uiRight;
-  top: 122px;
+  top: 146px;
   align-items: center;
   background-color: $elephant;
   border-radius: 2px;
@@ -56,4 +56,11 @@ $durationTime: 800ms;
 .icon {
   height: 16px;
   width: 16px;
+}
+
+
+@media print {
+  .locationButton {
+    display: none;
+  }
 }

@@ -18,7 +18,7 @@ const ToggleUiWidgetComponent = ({ toggleFullscreen, isFullscreenActive }) => {
       >
         {isFullscreenActive ? <ShowUiIcon /> : <HideUiIcon />}
       </button>
-      <ReactTooltip id='toggleUi' className='infoTooltipStyle'>
+      <ReactTooltip id='toggleUi' className='infoTooltipStyle' place="left">
         Full screen
       </ReactTooltip>
     </>

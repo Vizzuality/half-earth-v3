@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown/with-html';
 import cx from 'classnames';
 
 import styles from './partners-styles.module.scss';
@@ -25,7 +26,13 @@ const PartnersComponent = ({ sections }) => (
         <div className={styles.logosWrapper} key={`${title}-content`}>
           {content && content.map(logo => <Logo key={logo.href} {...logo} />)}
         </div>
-        <p className={styles.description} key={description}>{description}</p>
+        {description && description.map(paragraph => (
+          <ReactMarkdown
+            className={styles.description}
+            source={paragraph}
+            escapeHtml={false}
+          />
+        ))}
       </div>
     ))}
   </div>

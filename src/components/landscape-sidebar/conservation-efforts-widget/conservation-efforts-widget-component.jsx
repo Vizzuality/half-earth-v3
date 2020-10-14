@@ -1,5 +1,5 @@
 import React from 'react';
-import PieChart from 'components/pie-chart';
+import PieChart from 'components/charts/pie-chart';
 import CheckboxGroup from 'components/checkbox-group';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
@@ -20,38 +20,39 @@ const ConservationEffortsDescription = ({ allProp, rawData }) => {
 
 const ConservationEffortsWidget = ({
   dataFormatted,
-  colors,
+  chartData,
   rawData,
   allProp,
   alreadyChecked,
   protectedLayers,
-  activeSlices,
   toggleLayer,
   loading
 }) => {
   const noData = !loading && !rawData;
+
   return (
     <>
       <div className={styles.container} style={{ minHeight: noData ? 'auto' : '430px' }}>
         <DummyBlurWorkaround />
         <div className={styles.padding}>
           <h3 className={styles.title}>Conservation Efforts</h3>
-          {noData &&  <p className={styles.description}>No conservation efforts data for this area.</p>}
+          {noData && <p className={styles.description}>No conservation efforts data for this area.</p>}
           {!loading && rawData && (
             <>
               <ConservationEffortsDescription allProp={allProp} rawData={rawData} />
               <PieChart
-                data={rawData}
-                activeSlices={activeSlices}
-                colors={colors}
-                alreadyChecked={alreadyChecked}
+                id="conservation-widget"
+                width={150}
+                height={150}
+                data={chartData}
+                className={styles.pieChart}
               />
             </>
           )}
         </div>
         {!loading && rawData && (
           <>
-            <CheckboxGroup 
+            <CheckboxGroup
               handleClick={toggleLayer}
               checkedOptions={alreadyChecked}
               options={protectedLayers}

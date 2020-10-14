@@ -4,7 +4,7 @@
 
 .toggleButton {
   @extend .uiRight;
-  top: 10px;
+  top: 0;
   align-items: center;
   background-color: $elephant;
   border-radius: 2px;
@@ -17,8 +17,14 @@
   &:hover svg {
     stroke: $robins-egg-blue;
   }
-  
+
   svg {
     stroke: $white;
+  }
+}
+
+@media print {
+  .toggleButton {
+    display: none;
   }
 }

@@ -26,7 +26,7 @@
   grid-column-gap: 15px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 400px auto;
-  grid-template-areas: 
+  grid-template-areas:
     "title title"
     "globe globe"
     "marine-legend land-legend"
@@ -37,7 +37,7 @@
     grid-column-gap: 40px;
     grid-template-columns: 1fr 1fr 1fr 3fr;
     grid-template-rows: auto;
-    grid-template-areas: 
+    grid-template-areas:
       "title title title globe"
       "text text text globe"
       "marine-legend land-legend smth globe";
@@ -80,12 +80,8 @@
 }
 
 .title {
+  @extend %display1;
   color: $white;
-  font-family: $font-family-1;
-  font-size: 24px;
-  font-weight: unset;
-  letter-spacing: 1px;
-  line-height: 28px;
   margin: 0;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
   grid-area: title;
@@ -106,7 +102,7 @@
   margin: 20px 0 60px;
   padding: 25px 0;
   text-align: left;
-  
+
   p:first-child {
     margin-top: 0px;
   }
@@ -129,7 +125,7 @@ $icon-size: 40px;
 
 .legendItem {
   background-color: rgba(2,114,186,0.1);
-  color: $white; 
+  color: $white;
   display: flex;
   flex-direction: column;
   font-family: $font-family-1;
@@ -176,7 +172,7 @@ $icon-size: 40px;
   position: absolute;
   top: $icon-size / -2;
   width: $icon-size;
-  
+
   @media #{$tablet-portrait} {
     left: $icon-size / -2;
     top: calc(50% -  #{$icon-size} / 2);

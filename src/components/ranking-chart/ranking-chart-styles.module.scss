@@ -1,0 +1,263 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.chartTitle {
+  @extend %headline;
+  color: $grey-text;
+  margin-right: 1rem;
+}
+
+.chartTitleContainer {
+  margin-bottom: 3rem;
+}
+
+.titleText {
+  @extend %title;
+  color: $grey-text;
+  &.highlightCategory {
+    color: $white;
+    font-weight: bold;
+  }
+}
+
+$chart-width-without-legend: calc(#{$country-scene-chart-width} + 50px);
+$scroll-bar-width: 7px;
+
+.header {
+  width: calc(#{$chart-width-without-legend} * 0.8);
+  padding-right: $scroll-bar-width;
+  display: flex;
+
+  .headerItem {
+    width: 18%;
+    margin-right: 7px;
+    margin-bottom: 10px;
+    text-align: left;
+    padding: 0;
+    align-items: baseline;
+
+    &:last-child {
+      padding-left: 1rem;
+    }
+
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+.barContainer {
+  width: 18%;
+  margin-right: 7px;
+}
+
+.fullBar {
+  width: 100%;
+  cursor: default;
+}
+
+.bar {
+  display: inline-block;
+  height: 18px;
+}
+
+.spiCountry {
+  max-width: 115px;
+  margin-left: 1rem;
+  display: flex;
+  cursor: pointer;
+}
+
+.spiCountryText {
+  @extend %title;
+  color: $grey-text;
+  text-align: left;
+  display: flex;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.selectedCountry {
+  color: $brand-color-main;
+  font-weight: bold;
+}
+
+.spiCountryName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media #{$desktop} {
+    max-width: 130px;
+  }
+}
+
+.spiCountryIndex {
+  margin-left: 1rem;
+}
+
+.spiIndex {
+  display: inline-block;
+  @media #{$desktop} {
+    min-width: 2rem;
+ }
+}
+
+.rankingChartContentContainer {
+  position: relative;
+  display: flex;
+  width: $chart-width-without-legend;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.rankingChartContent {
+  padding-bottom: 2rem;
+  margin-right: 2rem;
+  min-width: 80%;
+  max-width: 80%;
+  height: calc(100vh - #{$sidebar-header-height} - 200px);
+  overflow-y: scroll;
+  flex-direction: column;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 190px;
+    border-radius: 10px;
+    background-color: $white;
+  }
+
+  &.scrolled {
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+  }
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 0;
+  width: 80%;
+  height: 55px;
+  padding-left: 15px;
+  color: $white;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(rgba(9, 20, 26, 0) 0%, rgba(9, 20, 26, .9) 80%);
+  pointer-events: none;
+  opacity: 1;
+
+  .arrow {
+    transform: rotate(90deg);
+    fill: $grey-text;
+    margin-right: 1rem;
+  }
+
+  &.fade {
+    opacity: 0;
+  }
+}
+
+.row {
+  display: flex;
+}
+
+.question {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
+.legend {
+  padding-left: 0.6rem;
+}
+
+.legendBlock {
+  margin-bottom: 2rem;
+
+  .legendItem {
+    display: flex;
+    margin-bottom: 6px;
+
+    .legendColor {
+      display: block;
+      width: 10px;
+      height: 18px;
+    }
+
+    .legendText {
+      @extend %annotation;
+      margin-left: 1rem;
+      margin-top: -3px;
+      color: $grey-text;
+    }
+  }
+}
+
+.tooltip {
+  background-color: $elephant;
+  display: flex;
+  position: relative;
+
+  .labels {
+    flex-direction: column;
+    justify-content: center;
+    padding: 6px;
+
+    @extend %annotation;
+    color: $grey-text;
+  }
+
+  .values {
+    position: relative;
+
+    .valuesBox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50%;
+      padding: 5px;
+      color: $_temporary-dark-text;
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// Colors
+
+.nonEndemic {
+  background-color: $non-endemic-species;
+}
+
+.endemic {
+  background-color: $endemic-species;
+}
+
+.veryHigh {
+  background-color: $human-modification-high-color;
+}
+
+.totalMinusVeryHigh {
+  background-color: $human-modification-color;
+}
+
+.protected {
+  background-color: $protected-areas;
+}
+
+.protectionNeeded {
+  background-color: $protection-needed;
+}
+
+.protectionNotNeeded {
+  background-color: $protection-non-needed-color;
+}
+
+.noModification {
+  background-color: $non-human-modification;
+}

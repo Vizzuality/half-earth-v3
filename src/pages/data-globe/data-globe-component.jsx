@@ -1,104 +1,84 @@
 import React from 'react';
 import loadable from '@loadable/component'
-import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-import Scene from 'components/scene';
-import Widgets from 'components/widgets';
-import DataGlobalSidebar from 'components/data-global-sidebar';
-import LandscapeViewManager from 'components/landscape-view-manager';
-import Legend from 'components/legend';
-import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import TutorialModal from 'components/tutorial/tutorial-modal';
-import LabelsLayer from 'components/labels-layer';
-import Spinner from 'components/spinner';
-import Switcher from 'components/switcher';
-import MenuFooter from 'components/mobile-only/menu-footer';
-import MenuSettings from 'components/mobile-only/menu-settings';
-import Slider from 'components/slider';
-import { MobileOnly, isMobile } from 'constants/responsive';
-import About from 'components/about';
+import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
 
-const InfoModal = loadable(() => import('components/modal-metadata'));
-const GridLayer = loadable(() => import('components/grid-layer'));
-const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
-const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
-
-const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
+import ReleaseNotesModal from 'components/release-notes-modal';
+const CountryScene = loadable(() => import('scenes/country-scene'));
+const DataScene = loadable(() => import('scenes/data-scene'));
 
 const DataGlobeComponent = ({
-  sceneSettings,
-  isFullscreenActive,
-  isSidebarOpen,
-  selectedSpecies,
-  activeCategory,
-  isLandscapeMode,
-  isBiodiversityActive,
-  isLandscapeSidebarCollapsed,
-  isGlobeUpdating,
+  sceneMode,
+  countryISO,
+  countryName,
   hasMetadata,
   activeLayers,
-  handleMapLoad,
-  handleGlobeUpdating,
   activeOption,
-  isHEModalOpen,
-}) => {
-
-  const isOnMobile = isMobile();
-
-  return (
-    <>
-      <Scene
-        sceneId='e96f61b2e79442b698ec2cec68af6db9'
+  countryExtent,
+  openedModal,
+  handleMapLoad,
+  sceneSettings,
+  isSidebarOpen,
+  activeCategory,
+  isLandscapeMode,
+  isGlobeUpdating,
+  selectedSpecies,
+  isFullscreenActive,
+  handleGlobeUpdating,
+  countedActiveLayers,
+  sortRankingCategory,
+  localSceneActiveTab,
+  isBiodiversityActive,
+  isLandscapeSidebarCollapsed,
+  countryChallengesSelectedKey,
+  userConfig
+}) => (
+  <>
+    {sceneMode === LOCAL_SCENE && (
+      <CountryScene
+        countryISO={countryISO}
+        userConfig={userConfig}
+        countryName={countryName}
+        hasMetadata={hasMetadata}
+        activeLayers={activeLayers}
+        openedModal={openedModal}
         sceneSettings={sceneSettings}
-        loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+        countryExtent={countryExtent}
+        isGlobeUpdating={isGlobeUpdating}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+        localSceneActiveTab={localSceneActiveTab}
+        sortRankingCategory={sortRankingCategory}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-      >
-        {isGlobeUpdating && <Spinner floating />}
-        <MobileOnly>
-          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
-          <MenuSettings activeOption={activeOption} isHEModalOpen={isHEModalOpen} />
-          <Slider />
-        </MobileOnly>
-        {!isOnMobile && <Switcher />}
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} />
-        <ArcgisLayerManager activeLayers={activeLayers} />
-        <Widgets isFullscreenActive={isFullscreenActive} isHEModalOpen={isHEModalOpen} />
-        <DataGlobalSidebar
-          isSidebarOpen={isSidebarOpen}
-          activeOption={activeOption}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          isFullscreenActive={isFullscreenActive}
-          activeCategory={activeCategory}
-          isLandscapeMode={isLandscapeMode}
-          isBiodiversityActive={isBiodiversityActive}
-          activeLayers={activeLayers}
-          handleGlobeUpdating={handleGlobeUpdating}
-        />
-        <Legend
-          isFullscreenActive={isFullscreenActive}
-          activeLayers={activeLayers}
-          activeOption={activeOption}
-        />
-        <LandscapeSidebar
-          isLandscapeMode={isLandscapeMode}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          activeOption={activeOption}
-          activeLayers={activeLayers}
-          selectedSpecies={selectedSpecies}
-        />
-        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3}/>}
-        {isLandscapeMode && <LabelsLayer />}
-        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
-      </Scene>
-      <TutorialModal />
-      {hasMetadata && <InfoModal />}
-      {!isOnMobile && <About />}
-    </>
-  )
-}
+        countryChallengesSelectedKey={countryChallengesSelectedKey}
+      />
+    )}
+    {sceneMode === DATA_SCENE && (
+      <DataScene
+        sceneMode={sceneMode}
+        userConfig={userConfig}
+        countryISO={countryISO}
+        countryName={countryName}
+        hasMetadata={hasMetadata}
+        activeLayers={activeLayers}
+        activeOption={activeOption}
+        isSidebarOpen={isSidebarOpen}
+        openedModal={openedModal}
+        sceneSettings={sceneSettings}
+        activeCategory={activeCategory}
+        selectedSpecies={selectedSpecies}
+        isLandscapeMode={isLandscapeMode}
+        isGlobeUpdating={isGlobeUpdating}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+        countedActiveLayers={countedActiveLayers}
+        isBiodiversityActive={isBiodiversityActive}
+        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+      />
+    )}
+    <ReleaseNotesModal />
+  </>
+);
 
 export default DataGlobeComponent;

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -30,8 +32,8 @@ const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalytics
   }
 
   const renderTabComponent = () => {
-    const { Component, textData } = tabsData[activeTab];
-    return <Component textData={textData} />
+    const { Component } = tabsData[activeTab];
+    return <Component />
   }
 
   return (
@@ -62,7 +64,7 @@ const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalytics
   );
 }
 
-const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent }) => {
+const AboutComponent = ({ className, buttonTitle, setPageTexts, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
@@ -76,8 +78,7 @@ const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsE
     [ABOUT_TABS.PARTNERS]: {
       slug: ABOUT_TABS.PARTNERS,
       text: 'PARTNERS',
-      Component: PartnersComponent,
-      textData: textData
+      Component: PartnersComponent
     },
     [ABOUT_TABS.INSTRUCTIONS]: {
       slug: ABOUT_TABS.INSTRUCTIONS,
@@ -89,17 +90,20 @@ const AboutComponent = ({ setPageTexts, textData, VIEW , openAboutPageAnalyticsE
   return (
     <>
       <button
-        className={styles.aboutButton}
+        className={cx(styles.aboutButton, className)}
         onClick={handleOpenAboutPage}
       >
-        About the Half-Earth map
+        {buttonTitle || 'About the Half-Earth map'}
       </button>
       {isAboutPageOpened && (
-        <AboutPage
-          handleCloseAboutPage={handleCloseAboutPage}
-          tabsData={tabsData} 
-          switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
-          />
+        ReactDOM.createPortal(
+          <AboutPage
+            handleCloseAboutPage={handleCloseAboutPage}
+            tabsData={tabsData}
+            switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
+          />,
+          document.getElementById('root')
+        )
       )}
     </>
   );

@@ -1,0 +1,274 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+$gap: 20pt;
+
+.container {
+  display: none;
+}
+
+// @extends need to be outside @media rules
+// https://sass-lang.com/documentation/at-rules/extend#extend-in-media
+.nameWrapper {
+  @extend %display1;
+}
+
+.baseNumber {
+  @extend %headline;
+  margin: 0;
+}
+
+.date,
+.numberText,
+.speciesCount,
+.speciesSentence,
+.datasetExplanation {
+  @extend %bodyText;
+}
+
+.title,
+.indexIntro,
+.legendTitle,
+.overviewText,
+.indexStatement {
+  @extend %title;
+}
+
+.numberText,
+.legendTag {
+  @extend %subtitle;
+}
+
+.datasetSource {
+  @extend %annotation;
+  color: $_temporary-light-text;
+}
+
+@media print {
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+ }
+
+  @page {
+    size: A4 landscape;
+    margin: 15pt;
+    margin-bottom: 0pt;
+  }
+
+  a {
+    text-decoration: none;
+    color: $_temporary-light-text;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  section {
+    page-break-inside: avoid;
+ }
+
+  .container {
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    width: 842pt;
+    height:595pt;
+    background-color: $white;
+    display: grid;
+    column-gap: 23pt;
+    row-gap: $gap;
+    grid-template-columns: repeat(10, 63pt);
+    grid-template-rows: 30pt 78pt 13pt 100pt 73pt 168pt 15pt;
+    grid-template-areas:
+    "hd hd hd hd hd hd hd hd hd date"
+    "index index index index rg rg rg sp sp sp"
+    "intro intro intro intro cmp cmp cmp sp sp sp"
+    "exp exp exp exp cmp cmp cmp sp sp sp"
+    "map map map map prot prot prot prot prot prot"
+    "map map map map prior prior prior prior prior prior"
+    ". . . . . . . url url url";
+
+    .nameWrapper {
+      grid-area: hd;
+      display: flex;
+      align-items: center;
+      .countryName {
+        margin-left: $gap;
+      }
+    }
+
+    .date {
+      grid-area: date;
+      text-align: right;
+    }
+
+    .indexWrapper {
+      grid-area: index;
+    }
+
+    .indexIntro {
+      grid-area: intro;
+      justify-self: center;
+      align-self: center;
+    }
+
+    .overviewText {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .indexStatement {
+      text-align: center;
+    }
+
+    .indexExplanation {
+      grid-area: exp;
+    }
+
+    .mapWrapper {
+      grid-area: map;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .urlWrapper {
+      grid-area: url;
+      overflow: hidden;
+      text-align: right;
+    }
+
+    .species {
+      grid-area: sp;
+    }
+
+    .indexWrapper,
+    .indexExplanation {
+      background-color: $grey-text;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .indexBaseNumbersWrapper {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .numberText {
+      margin: 0;
+    }
+
+    .indexBaseDataElement {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .speciesSentence {
+      grid-area: rg;
+      text-align: right;
+    }
+
+    .speciesComposition {
+      grid-area: cmp;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .protectionLegend {
+      grid-area: prot;
+    }
+
+    .priorityLegend {
+      grid-area: prior;
+    }
+
+    .priorityLegend,
+    .protectionLegend {
+      position:relative;
+      padding-left: 13pt;
+      border-left: 1px solid $_temporary-dark-text;
+      &:before {
+        content: '';
+        width: 9pt;
+        height: 9pt;
+        position: absolute;
+        top: calc(50% - 9pt);
+        left: -4pt;
+        transform: rotate(45deg);
+        display: block;
+        background-color: $white;
+        border: 1px solid $_temporary-dark-text;
+        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+        border-radius: 0 0 0 3px;
+      }
+      &:after {
+        content: '';
+        content: '';
+        width: 9pt;
+        height: 9pt;
+        position: absolute;
+        top: calc(50% - 9pt);
+        left: -3pt;
+        transform: rotate(45deg);
+        display: block;
+        background-color: $white;
+        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+      }
+    }
+
+    .legendTitle {
+      margin: 0;
+    }
+
+    .datasetWrapper {
+      display: flex;
+    }
+    
+    .wdpaIcon,
+    .priorityIcon {
+      min-width: 10pt;
+      margin-right: 10pt;
+    }
+    
+    .wdpaIcon {
+      width: 12pt;
+      height: 12pt;
+      position: relative;
+      border-radius: 2px;
+      background-color: #008604;
+    }
+    
+    .priorityIcon {
+      height: 100pt;
+      width: 12pt;
+      border-radius: 2px;
+      background: linear-gradient(0deg, #47039F 0%, #9C179E 12.51%, #BD3786 30.56%, #D8576B 46.02%, #ED7953 59.45%, #FA9E3B 74.07%, #FDC926 86.18%, #F0F921 100%);
+    }
+
+    .legendTag {
+      margin: 5pt 0;
+    }
+    
+    .priorityLegend {
+      .datasetWrapper {
+        padding: 5pt 0;
+        align-items: center;
+      }
+    }
+
+  }
+}

@@ -1,20 +1,15 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
-import { WDPALayers } from 'constants/protected-areas';
-import { getCellData } from 'selectors/grid-cell-selectors';
+import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR } from 'constants/protected-areas';
 
 export const COMMUNITY_BASED = 'community';
 export const PROTECTED = 'protected';
 export const NOT_UNDER_CONSERVATION = 'notUnderConservation';
 
-const COLORS = () => ({
-  [COMMUNITY_BASED]: '#FCC44A',
-  [PROTECTED]: '#FF6C47',
-  [NOT_UNDER_CONSERVATION]: '#6C828F'
-})
 
 const conservationEffortsData = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.data;
 const conservationEffortsLoading = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.loading;
+const gridCellData = ({ gridCellData }) => (gridCellData && gridCellData.data) || null;
 
 const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
@@ -87,7 +82,7 @@ const getConservationAreasFormatted = createSelector(
   }
 )
 
-const getAlreadyChecked  = createSelector(
+const getAlreadyChecked = createSelector(
   [getActiveLayersFromProps],
   (activeLayers) => {
     if (!activeLayers) return {};
@@ -97,6 +92,19 @@ const getAlreadyChecked  = createSelector(
     return alreadyChecked;
 });
 
+const getChartData = createSelector(
+  [getConservationAreasLogic, getAlreadyChecked],
+  (chartValues, alreadyChecked) => {
+    if (!chartValues) return null;
+    const chartData = [
+      {name: 'protected', value: chartValues[PROTECTED], color: PROTECTED_AREAS_COLOR, explodedSlice: alreadyChecked['Protected areas'] },
+      {name: 'community', value: chartValues[COMMUNITY_BASED], color: COMMUNITY_AREAS_COLOR, explodedSlice: alreadyChecked['Community areas']},
+      {name: 'not under conservation', value: chartValues[NOT_UNDER_CONSERVATION], color: NOT_UNDER_CONSERVATION_COLOR, explodedSlice: false},
+    ]
+    return chartData;
+  }
+)
+
 const getProtectedLayers = createSelector(
   [getConservationAreasFormatted],
   (dataFormatted) => {
@@ -105,7 +113,7 @@ const getProtectedLayers = createSelector(
       ...layer,
       name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
       metadataTitle: layer.metadataTitle,
-      rightDot: layer.name === 'Protected areas' ? COLORS[PROTECTED] : COLORS[COMMUNITY_BASED]
+      rightDot: layer.name === 'Protected areas' ? PROTECTED_AREAS_COLOR : COMMUNITY_AREAS_COLOR
     })) || [];
     return protectedLayers;
 });
@@ -127,15 +135,26 @@ const getActiveSlices = createSelector(
     return activeSlices;
 });
 
+const getSelectedCellsIds = createSelector(
+  [gridCellData],
+  (cellData) => {
+  if(!cellData) return null;
+  const selectedCellsIDs = cellData.map(i => {
+    const id = i.ID || i.CELL_ID;
+    return `'${id}'`;
+  });
+  return selectedCellsIDs;
+});
+
 export default createStructuredSelector({
-  terrestrialCellData: getCellData,
+  selectedCellsIDs: getSelectedCellsIds,
   pieChartData: getConservationEfforts,
   dataFormatted: getConservationAreasFormatted,
-  rawData: getConservationAreasLogic, 
-  colors: COLORS,
+  rawData: getConservationAreasLogic,
+  chartData: getChartData,
   allProp: getAllPropsForDynamicSentence,
   alreadyChecked: getAlreadyChecked,
   protectedLayers: getProtectedLayers,
-  activeSlices: getActiveSlices,
+  explodedSlices: getActiveSlices,
   loading: conservationEffortsLoading
 });

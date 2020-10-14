@@ -6,14 +6,14 @@ import MolLogo from 'logos/mol.png';
 import ReactMarkdown from 'react-markdown';
 import styles from './modal-metadata-styles.module.scss';
 
-const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
+const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, additionalContent }) => {
   return (
     <Modal
       onRequestClose={handleClose}
       isOpen={isOpen}
       theme={styles}
     >
-      <h2>{title}</h2>
+      <h2 className={styles.modalTitle} >{title}</h2>
       {
         loading ? <Loading height={200} /> : (
           <>
@@ -51,6 +51,9 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
                   )
               }
             </dl>
+            {metadata && metadata.hasAdditionalContent === "TRUE" && (
+              additionalContent
+              )}
             {
               metadata && metadata.source && (
               <p className={styles.metadataSource}>
@@ -67,7 +70,7 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata }) => {
                 )
             }
             {
-              metadata && metadata.molLogo === "true" && (
+              metadata && metadata.molLogo === "TRUE" && (
               <div className={styles.logoContainer}>
                 <a href="https://mol.org/" target="_blank" rel="noopener noreferrer">
                   <img
@@ -91,7 +94,8 @@ ModalMetadata.propTypes = {
   loading: PropTypes.bool,
   metadata: PropTypes.object,
   isOpen: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired
+  handleClose: PropTypes.func.isRequired,
+  additionalContent: PropTypes.node
 };
 
 ModalMetadata.defaultProps = { title: '', loading: false, metadata: undefined };

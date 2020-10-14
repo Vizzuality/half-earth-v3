@@ -1,0 +1,57 @@
+@import 'styles/settings';
+@import 'styles/mixins';
+
+.headerItem {
+  display: flex;
+  padding-right: 20px;
+  align-items: flex-end;
+  align-self: flex-end;
+}
+
+.sortArrows {
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+
+  .arrowUp {
+    @include caret($_temporary-light-text, 'up');
+    position: absolute;
+    top: -1px;
+    &.highlightedSort::after {
+      border-top-color: $white;
+    }
+  }
+
+  .arrowDown {
+    @include caret($_temporary-light-text, 'down');
+    position: absolute;
+    top: -26px;
+    &.highlightedSort::after {
+      border-bottom-color: $white;
+    }
+  }
+}
+
+
+.sortArrows {
+  display: inline-block;
+  position: relative;
+  margin-left: 5px;
+
+  .arrowUp {
+    @include caret($_temporary-light-text, 'up');
+    position: absolute;
+    &.highlightedSort::after {
+      border-top-color: $white;
+    }
+  }
+
+  .arrowDown {
+    @include caret($_temporary-light-text, 'down');
+    position: absolute;
+    top: -26px;
+    &.highlightedSort::after {
+      border-bottom-color: $white;
+    }
+  }
+}

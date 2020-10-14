@@ -4,11 +4,12 @@ import { intersection } from 'lodash';
 import Component from './legend-component';
 import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLayerManagerToggle, batchLayerManagerOpacity } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
+import metadataConfig from 'constants/metadata';
 import * as urlActions from 'actions/url-actions';
 import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import { VIEW_MODE } from 'constants/google-analytics-constants';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
-import { MERGED_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
+import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
 import mapStateToProps from './legend-selectors';
 
 const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
@@ -36,18 +37,19 @@ const LegendContainer = props => {
   }
 
   const getSlug = (layer) => {
-    if(layer.title.includes('human_pressures')) return MERGED_LAND_HUMAN_PRESSURES;
+    if(layer.title.includes('human_pressures')) return MARINE_AND_LAND_HUMAN_PRESSURES;
     return layer.legendConfig.slug || layer.title;
   }
 
   const handleInfoClick = layer => {
     const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
+    const slug = getSlug(layer);
     setModalMetadata({
-      slug: getSlug(layer),
-      title: `${layer.legendConfig.title} metadata`,
+      slug,
+      title: metadataConfig[slug].title,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND }});
+    openLayerInfoModalAnalyticsEvent({ slug, query: { viewMode: VIEW_MODE.LEGEND }});
   };
   
   const spreadGroupLayers = (layers, activeLayers) => {

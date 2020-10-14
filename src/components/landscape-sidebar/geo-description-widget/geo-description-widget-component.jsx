@@ -4,12 +4,12 @@ import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
 import FixedHeader from 'components/fixed-header'
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import errorGif from 'icons/error.gif'
 
 const GeoDescriptionWidget = (props) => {
   const { data, loading, error, view, handleBackClick, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed } = props;
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
   
   if (loading) {
     return (

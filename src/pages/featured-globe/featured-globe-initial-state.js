@@ -1,6 +1,6 @@
 import {
   VIBRANT_BASEMAP_LAYER,
-  GRID_LAYER,
+  GRAPHIC_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   PRIORITY_POLYGONS_GRAPHIC_LAYER,
@@ -11,7 +11,7 @@ export default {
   globe: {
     activeLayers: [
       { title: VIBRANT_BASEMAP_LAYER },
-      { title: GRID_LAYER },
+      { title: GRAPHIC_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: CITIES_LABELS_LAYER },
       { title: PRIORITY_POLYGONS_GRAPHIC_LAYER },
@@ -26,8 +26,8 @@ export default {
     environment: {
       atmosphereEnabled: false,
       background: {
-        type: "color",
-        color: [0,10,16]
+        type: 'color',
+        color: [0, 10, 16]
       },
       alphaCompositingEnabled: true
     },
@@ -51,4 +51,4 @@ export default {
     isLandscapeMode: false
   },
   listeners: false
-}
+};

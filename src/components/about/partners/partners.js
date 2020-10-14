@@ -1,27 +1,27 @@
 import React from 'react';
 import PartnersComponent from './partners-component';
-import { partners, platformPartners, dataPartners, researchPartners, sponsors } from './partners-data';
+import { texts, partners, platformPartners, dataPartners, researchPartners, sponsors } from './partners-data';
 import styles from './partners-styles.module.scss';
 
-const PartnersContainer = ({ textData }) => {
-  const sections = textData && [
+const PartnersContainer = () => {
+  const sections = [
     {
-      title: textData.title,
-      description: textData.content,
+      title: texts.partners.title,
+      description: texts.partners.content,
       content: partners,
       theme: styles.partners
     },
     {
-      title: textData.platformPartners,
+      title: texts.platformPartners.title,
       content: platformPartners,
       theme: styles.platformPartners
 
     },
-    { title: textData.title2,
+    { title: texts.sponsors.title,
       content: sponsors
     },
-    { title: textData.title3, content: dataPartners },
-    { title: textData.title4, content: researchPartners }
+    { title: texts.dataPartners.title, content: dataPartners },
+    { title: texts.researchPartners.title, content: researchPartners }
   ];
 
   return <PartnersComponent sections={sections}/>

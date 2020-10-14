@@ -5,17 +5,14 @@ import conservationEffortsActions from 'redux_modules/conservation-efforts';
 
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
-import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manager-utils';
+import { batchLayerManagerToggle } from 'utils/layer-manager-utils';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { COMMUNITY_AREAS_VECTOR_TILE_LAYER, GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
 import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
+import { PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
 
 import * as urlActions from 'actions/url-actions';
 
-import { 
-  COMMUNITY_BASED,
-  PROTECTED
-} from './conservation-efforts-widget-selectors';
 import Component from './conservation-efforts-widget-component';
 import mapStateToProps from './conservation-efforts-widget-selectors';
 
@@ -26,8 +23,7 @@ const findInDOM = (id) => document.getElementById(id);
 const ConservationEffortsWidget = (props) => {
   const {
     alreadyChecked,
-    colors,
-    terrestrialCellData,
+    selectedCellsIDs,
     setConservationEfforts
   } = props;
 
@@ -51,8 +47,8 @@ const ConservationEffortsWidget = (props) => {
 
   useEffect(() => {
     const svg = findInDOM('conservation-widget');
-    const orangeSlice = findInDOM(colors[PROTECTED]);
-    const yellowSlice = findInDOM(colors[COMMUNITY_BASED]);
+    const orangeSlice = findInDOM(PROTECTED_AREAS_COLOR);
+    const yellowSlice = findInDOM(COMMUNITY_AREAS_COLOR);
 
     if (svg && orangeSlice) {
       if (orangeActive && yellowActive && orangeSlice && yellowSlice) {
@@ -70,29 +66,22 @@ const ConservationEffortsWidget = (props) => {
   }, [orangeActive, yellowActive])
 
   useEffect(() => {
-    if (terrestrialCellData && queryParams) {
+    if (selectedCellsIDs && queryParams) {
       setConservationEfforts({ data: null, loading: true });
-      queryParams.where = `ID IN (${terrestrialCellData.map(i => i.ID).join(', ')})`;
+      queryParams.where = `ID IN (${selectedCellsIDs.join(', ')})`;
       conservationPropsLayer.queryFeatures(queryParams).then(function(results){
         const { features } = results;
         setConservationEfforts({ data: features.map(c => c.attributes), loading: false });
       }).catch(() => setConservationEfforts({ data: null, loading: false }));
     }
-  }, [terrestrialCellData])
+  }, [selectedCellsIDs])
 
-  const handleLayerToggle = async (layersPassed, option) => {
-    const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
+  const handleLayerToggle = async (_, option) => {
+    const { activeLayers, changeGlobe } = props;
     if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
-      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(async layerName => {
-        const layerConfig = layersConfig[layerName];
-        await handleLayerCreation(layerConfig, map);
-      })
       batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     } else {
-      const layer = layersConfig[option.title];
-      await handleLayerCreation(layer, map);
-      layerManagerToggle(layer.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
-      removeLayerAnalyticsEvent({ slug: layer.slug });
+      layerManagerToggle(option.title, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     }
   }
 

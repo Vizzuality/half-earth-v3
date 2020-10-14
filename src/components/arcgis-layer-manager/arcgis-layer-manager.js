@@ -1,22 +1,27 @@
 import { useEffect } from 'react';
-import { setLayerOrder, setOpacity } from 'utils/arcgis-layer-manager-utils';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { setLayersOrder, setLayersVisibility, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
+import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
-const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
+const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
   // Map prop is inherited from Webscene component
   // reference: https://github.com/Esri/react-arcgis#advanced-usage
-  
   const { layers } = map;
-  const { items } = layers;
-  
+  const { items: sceneLayers } = layers;
+
+  // Active layers will be always checked and added to the map if they are not
   useEffect(() => {
-    items.forEach(sceneLayer => {
-      const isVisible = activeLayers.some(activeLayer => activeLayer.title === sceneLayer.title)
-      sceneLayer.visible = isVisible;
-      if (isVisible) { setOpacity(sceneLayer, activeLayers); }
-      customFunctions && customFunctions.forEach(fn => fn({ layer: sceneLayer, isVisible }))
-    })
-    setLayerOrder(activeLayers, map);
-  }, [activeLayers])
+    // Add not already created activeLayers to the map
+    addActiveLayersToScene(activeLayers, layersConfig, map);
+    setLayersOrder(activeLayers, map);
+    setLayersVisibility(activeLayers, sceneLayers, customFunctions)
+  }, [activeLayers]);
+
+  useEffect(() => {
+    // We need to update layers visibility based on user config
+    // This state is not to be shared hence not part of the activeLayers
+    updateSceneLayersBasedOnUserConfig(userConfig, sceneLayers)
+  }, [activeLayers, userConfig])
 
   return null
 }

@@ -6,7 +6,7 @@ import RadioButton from './radio-button/radio-button';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as SwitchIcon } from 'icons/switch.svg';
 import Tutorial from 'components/tutorial'
-import { isMobile } from 'constants/responsive';
+import { useMobile } from 'constants/responsive';
 import { RARITY_RICHNESS_TUTORIAL } from 'constants/tutorial';
 
 import styles from './radio-group-styles.module.scss';
@@ -32,7 +32,7 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
   const variant = (selected && selected.variant) || RARITY;
   const isRarityActive = variant === RARITY;
 
-  const isOnMobile = isMobile();
+  const isOnMobile = useMobile();
 
   const isSelected = (option) => !!(activeLayers.find(l => l.title === option.layers[variant]));
   const isLastSelected = (option) => {
@@ -40,51 +40,54 @@ const RadioGroup = ({ activeLayers, options, title, handleSimpleLayerToggle, han
     return firstSelectedLayer && firstSelectedLayer.title === option.layers[variant];
   }
 
-  const renderRadioButton = option => (
-    <div key={option.value} className={cx(
-      styles.radioOption,
-      { [styles.radioOptionSelected]: isSelected(option) }
-    )}>
-      <RadioButton
-        key={option.value}
-        name={title}
-        value={option.value}
-        checked={isSelected(option)}
-        onClick={() => {
-          if (isSelected(option)) {
-            handleSimpleLayerToggle(option.layers[variant]);
-          } else {
-            handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
-          }
-        }}
-        text={option.name}
-      />
-      {isSelected(option) && (
-        <div className={styles.toggle}>
-          <InfoIcon
-            className={styles.icon}
-            onClick={() => handleInfoClick(option, variant)}
-            data-tip
-            data-for='infoLayerButtonId'
-            data-effect='solid'
-            data-delay-show={0}
-          />
-          <button type="button" className={styles.button} onClick={() => {
-            const changeVariantType = isRarityActive ? RICHNESS : RARITY;
-            handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
-          }}>
-            <span className={styles.variant}>
-              {variant}
-            </span>
-            <SwitchIcon className={cx({ [styles.reverseSwitchIcon]: !isRarityActive })} />
-          </button>
-          <ReactTooltip id='infoLayerButtonId' className='infoTooltipStyle'>
-            Click to read the info of this layer
-          </ReactTooltip>
-        </div>
-      )}
-    </div>
-  )
+  const renderRadioButton = option => {
+    const isOptionSelected = isSelected(option);
+    return (
+      <div key={option.value} className={cx(
+        styles.radioOption,
+        { [styles.radioOptionSelected]: isOptionSelected }
+      )}>
+        <RadioButton
+          key={option.value}
+          name={title}
+          value={option.value}
+          checked={isOptionSelected}
+          onClick={() => {
+            if (isOptionSelected || !selectedLayer) {
+              handleSimpleLayerToggle(option.layers[variant], isOptionSelected);
+            } else {
+              handleExclusiveLayerToggle(option.layers[variant], selectedLayer);
+            }
+          }}
+          text={option.name}
+        />
+        {isOptionSelected && (
+          <div className={styles.toggle}>
+            <InfoIcon
+              className={styles.icon}
+              onClick={() => handleInfoClick(option, variant)}
+              data-tip
+              data-for='infoLayerButtonId'
+              data-effect='solid'
+              data-delay-show={0}
+            />
+            <button type="button" className={styles.button} onClick={() => {
+              const changeVariantType = isRarityActive ? RICHNESS : RARITY;
+              handleExclusiveLayerToggle(option.layers[changeVariantType], selectedLayer);
+            }}>
+              <span className={styles.variant}>
+                {variant}
+              </span>
+              <SwitchIcon className={cx({ [styles.reverseSwitchIcon]: !isRarityActive })} />
+            </button>
+            <ReactTooltip id='infoLayerButtonId' className='infoTooltipStyle'>
+              Click to read the info of this layer
+            </ReactTooltip>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <>
