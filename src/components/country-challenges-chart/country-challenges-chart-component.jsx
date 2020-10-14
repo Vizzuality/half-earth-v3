@@ -7,7 +7,7 @@ import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as SwitchArrow } from 'icons/switch.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 
-import { INDICATOR_LABELS, CHALLENGES_RELATED_FILTERS_OPTIONS, FILTERS_DICTIONARY } from 'constants/country-mode-constants';
+import { INDICATOR_LABELS, FILTERS_DICTIONARY } from 'constants/country-mode-constants';
 import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import styles from './country-challenges-chart-styles.module.scss';
 
@@ -27,11 +27,11 @@ const CountryChallengesChartComponent = ({
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
-  setInfoModalAdditionalContent
+  setInfoModalAdditionalContent,
+  challengesFilterOptions
 }) => {
-
   useEffect(() => {
-      setInfoModalAdditionalContent(<CountryChallengesModalAdditional />);
+    setInfoModalAdditionalContent(<CountryChallengesModalAdditional />);
   }, []);
 
   return (
@@ -59,7 +59,7 @@ const CountryChallengesChartComponent = ({
             <li className={cx(styles.filterOption, styles.optionsLabel)}>
               Filter countries with similar:
             </li>
-            {CHALLENGES_RELATED_FILTERS_OPTIONS.map((filter) => (
+            {challengesFilterOptions.map((filter) => (
               <li
                 className={cx(styles.filterOption, {
                   [styles.selectedFilter]: filter.slug === selectedFilter

@@ -39,8 +39,9 @@ export const FILTERS_DICTIONARY = {
   filter_N_SPECIES: 'Number of vertebrate species',
   filter_SPI: 'Species Protection Index',
   filter_neigh: 'Neighbouring countries',
-  filter_steward: 'Species stewardship'
-}
+  filter_steward: 'Species stewardship',
+  filter_continent: 'Same continent countries'
+};
 
 export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'all', name: FILTERS_DICTIONARY.all},
@@ -55,4 +56,5 @@ export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'filter_SPI', name: FILTERS_DICTIONARY.filter_SPI},
   {slug: 'filter_neigh', name: FILTERS_DICTIONARY.filter_neigh},
   {slug: 'filter_steward', name: FILTERS_DICTIONARY.filter_steward},
+  {slug: 'filter_continent', name: FILTERS_DICTIONARY.filter_continent}
 ]

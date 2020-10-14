@@ -1,12 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { uniqBy } from 'lodash';
+import { getConfig } from 'utils/user-config-utils';
 import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, MARINE_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 import { PLEDGES_LAYER, MARINE_AND_LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
 import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
-import { selectTutorialState } from 'selectors/tutorial-selectors';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
 const isHumanPressureLayer = layerId => [...LAND_HUMAN_PRESURES_LAYERS, ...MARINE_HUMAN_PRESURES_LAYERS].some( l => l === layerId);
@@ -107,12 +107,12 @@ const mergeCommunityIntoOne = layers => {
 }
 
 const getActiveTutorialData = createSelector(
-  [selectTutorialState, getLegendConfigs],
-  (tutorial, datasets) => {
-    if (!tutorial) return null;
+  [getLegendConfigs],
+  (datasets) => {
+    const userConfig = getConfig();
 
-    const enableLegendTutorial = tutorial[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
-    const enableLegendDragTutorial = tutorial[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
+    const enableLegendTutorial = userConfig[LEGEND_TUTORIAL] && datasets && datasets.length > 1;
+    const enableLegendDragTutorial = userConfig[LEGEND_DRAG_TUTORIAL] && datasets && datasets.length > 2;
 
     const enabledTutorialIDs = [];
 

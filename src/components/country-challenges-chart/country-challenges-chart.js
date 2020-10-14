@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
 import metadataConfig from 'constants/metadata';
 import { CHALLENGES_CHART } from 'constants/metadata';
-import { INDICATOR_LABELS } from 'constants/country-mode-constants';
 
 import mapStateToProps from './country-challenges-chart-selectors';
 
@@ -14,16 +13,13 @@ const actions = {...metadataActions, ...urlActions };
 
 
 const CountryChallengesChartContainer = (props) => {
-  const xAxisKeys = Object.keys(INDICATOR_LABELS);
-
-
   const [filtersOpen, setFiltersToggle] = useState(false);
 
   const handleSelectNextIndicator = () => {
     setFiltersToggle(false);
-    const { changeUI, countryChallengesSelectedKey } = props;
+    const { changeUI, countryChallengesSelectedKey, xAxisKeys } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
-    if (currentIndex !== xAxisKeys.length - 1) { 
+    if (currentIndex !== xAxisKeys.length - 1) {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
     } else {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[0] });
@@ -32,7 +28,7 @@ const CountryChallengesChartContainer = (props) => {
 
   const handleSelectPreviousIndicator = () => {
     setFiltersToggle(false);
-    const { changeUI, countryChallengesSelectedKey } = props;
+    const { changeUI, countryChallengesSelectedKey, xAxisKeys } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex > 0) {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex - 1] });
@@ -71,7 +67,7 @@ const CountryChallengesChartContainer = (props) => {
   const handleFiltersToggle = () => {
     setFiltersToggle(!filtersOpen);
   }
-  
+
   const handleOutsideFiltersClick = () => {
     setFiltersToggle(false);
   }
