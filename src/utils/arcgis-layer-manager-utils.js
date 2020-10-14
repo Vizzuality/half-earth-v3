@@ -11,16 +11,19 @@ export const setLayersOrder = (activeLayers, map) => {
     ), {});
   const reversedLayers = [...activeLayersIds].reverse();
   reversedLayers.forEach((layer, i) => {
-    // We are adding 2 to the index since this is the starting index 
-    // to reorder the layers since there are two layers that need to be 
+    // We are adding 2 to the index since this is the starting index
+    // to reorder the layers since there are two layers that need to be
     // underneath the rest: satellite basemap and he basemap (firefly or vibrant)
     map.reorder(visibleLayers[layer], i + 2);
   })
 }
 
 const setOpacity = (layer, activeLayers) => {
-  const l = activeLayers.find(o => o.title === layer.title);
-  if (l) { layer.opacity = l.opacity !== undefined ? l.opacity : 1 };
+  const activeLayer = activeLayers.find(o => o.title === layer.title);
+  if (activeLayer) {
+    layer.opacity =
+      activeLayer.opacity !== undefined ? activeLayer.opacity : 1;
+  };
 }
 
 export const setLayersVisibility = (activeLayers, sceneLayers, customFunctions) => {
