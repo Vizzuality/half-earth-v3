@@ -5,7 +5,7 @@ import conservationEffortsActions from 'redux_modules/conservation-efforts';
 
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
-import { handleLayerCreation, batchLayerManagerToggle } from 'utils/layer-manager-utils';
+import { batchLayerManagerToggle } from 'utils/layer-manager-utils';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { COMMUNITY_AREAS_VECTOR_TILE_LAYER, GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
 import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
@@ -76,19 +76,12 @@ const ConservationEffortsWidget = (props) => {
     }
   }, [selectedCellsIDs])
 
-  const handleLayerToggle = async (layersPassed, option) => {
-    const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, map } = props;
+  const handleLayerToggle = async (_, option) => {
+    const { activeLayers, changeGlobe } = props;
     if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
-      COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.forEach(async layerName => {
-        const layerConfig = layersConfig[layerName];
-        await handleLayerCreation(layerConfig, map);
-      })
       batchLayerManagerToggle(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     } else {
-      const layer = layersConfig[option.title];
-      await handleLayerCreation(layer, map);
-      layerManagerToggle(layer.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
-      removeLayerAnalyticsEvent({ slug: layer.slug });
+      layerManagerToggle(option.title, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     }
   }
 

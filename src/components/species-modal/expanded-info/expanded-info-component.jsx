@@ -61,6 +61,7 @@ const ExpandedInfo = (props) => {
           title={`${speciesName} MoL link`}
           alt={`${speciesName} MoL link`}
           rel="noopener"
+          // eslint-disable-next-line react/jsx-no-target-blank
           target="_blank"
           className={styles.link}
         >

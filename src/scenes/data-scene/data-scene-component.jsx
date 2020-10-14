@@ -19,6 +19,7 @@ import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 // Utils
 import { MobileOnly, useMobile } from 'constants/responsive';
 // Dynamic imports
@@ -52,28 +53,50 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
+  userConfig
 }) => {
   const isOnMobile = useMobile();
   return (
     <>
       <Scene
-        sceneId='e96f61b2e79442b698ec2cec68af6db9'
+        sceneId="8f71838a19624717a4e45de110eced1b"
         sceneName={'data-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
       >
+        <ArcgisLayerManager
+          activeLayers={activeLayers}
+          userConfig={userConfig}
+        />
         {isGlobeUpdating && <Spinner floating />}
         {!isOnMobile && <Switcher />}
         <MobileOnly>
-          <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} isLandscapeMode={isLandscapeMode} />
+          <MenuFooter
+            activeOption={activeOption}
+            isSidebarOpen={isSidebarOpen}
+            isLandscapeMode={isLandscapeMode}
+          />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
           <Slider />
         </MobileOnly>
-        <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} isLandscapeMode={isLandscapeMode} countryISO={countryISO}/>
-        <CountryLabelsLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode} countryName={countryName} sceneMode={sceneMode} />
-        <ArcgisLayerManager activeLayers={activeLayers} />
-        <CountriesBordersLayer countryISO={countryISO} isLandscapeMode={isLandscapeMode}/>
+        <LandscapeViewManager
+          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
+          isLandscapeMode={isLandscapeMode}
+          countryISO={countryISO}
+        />
+        <CountryLabelsLayer
+          activeLayers={activeLayers}
+          countryISO={countryISO}
+          isLandscapeMode={isLandscapeMode}
+          countryName={countryName}
+          sceneMode={sceneMode}
+        />
+        <CountriesBordersLayer
+          countryISO={countryISO}
+          isLandscapeMode={isLandscapeMode}
+          spatialReference={LOCAL_SPATIAL_REFERENCE}
+        />
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
@@ -86,7 +109,7 @@ const CountrySceneComponent = ({
           isBiodiversityActive={isBiodiversityActive}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         />
-        {isLandscapeMode &&
+        {isLandscapeMode && (
           <LandscapeSidebar
             activeLayers={activeLayers}
             activeOption={activeOption}
@@ -96,27 +119,38 @@ const CountrySceneComponent = ({
             handleGlobeUpdating={handleGlobeUpdating}
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           />
-        }
+        )}
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
-        <Widgets isFullscreenActive={isFullscreenActive} openedModal={openedModal} />
-        <TerrainExaggerationLayer exaggeration={3}/>
+        <Widgets
+          activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
+          openedModal={openedModal}
+        />
+        <TerrainExaggerationLayer exaggeration={3} />
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
           sceneMode={sceneMode}
         />
-        {isLandscapeMode && <LabelsLayer />}
-        {isLandscapeMode && <GridLayer handleGlobeUpdating={handleGlobeUpdating}/>}
-        {isLandscapeMode && <ProtectedAreasTooltips activeLayers={activeLayers} isLandscapeMode={isLandscapeMode} />}
+        <LabelsLayer activeLayers={activeLayers} />
+        {isLandscapeMode && (
+          <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
+        )}
+        {isLandscapeMode && (
+          <ProtectedAreasTooltips
+            activeLayers={activeLayers}
+            isLandscapeMode={isLandscapeMode}
+          />
+        )}
       </Scene>
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!isOnMobile && <About />}
     </>
-  )
+  );
 }
 
 export default CountrySceneComponent;

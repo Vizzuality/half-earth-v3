@@ -8,7 +8,10 @@ const SPECIES_COLOR = {
   reptiles: '#3AA8EE'
 }
 
-const selectCountryData = ({ countryData }, { countryISO }) => (countryData && countryData.data && countryData.data[countryISO]) || null;
+const selectCountryData = ({ countryData }, { countryISO }) => {
+  if (!countryISO || !countryData) return null;
+  return (countryData.data && countryData.data[countryISO]) || null;
+}
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 
 

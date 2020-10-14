@@ -6,6 +6,7 @@ import initialState from './featured-globe-initial-state';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces;
+const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
   return {
@@ -43,6 +44,7 @@ export default createStructuredSelector({
   isMapsList: getMapsListActive,
   sceneSettings: getGlobeSettings,
   sceneLayers: getFeaturedGlobeLayers,
+  userConfig: selectUserConfig,
   activeLayers: getActiveLayers,
   isLandscapeMode: getLandscapeMode,
   hasMetadata: selectMetadataData,
@@ -57,4 +59,4 @@ export default createStructuredSelector({
   openedModal: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed // mobile
-})
+});

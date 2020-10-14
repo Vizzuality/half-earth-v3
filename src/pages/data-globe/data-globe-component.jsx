@@ -31,6 +31,7 @@ const DataGlobeComponent = ({
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
   countryChallengesSelectedKey,
+  userConfig
 }) => (
   <>
     {sceneMode === LOCAL_SCENE && (
@@ -50,6 +51,8 @@ const DataGlobeComponent = ({
         sortRankingCategory={sortRankingCategory}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
+        sortRankingCategory={sortRankingCategory}
+        userConfig={userConfig}
       />
     )}
     {sceneMode === DATA_SCENE && (
@@ -72,6 +75,7 @@ const DataGlobeComponent = ({
         isBiodiversityActive={isBiodiversityActive}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        userConfig={userConfig}
       />
     )}
     <ReleaseNotesModal />

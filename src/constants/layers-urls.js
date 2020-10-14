@@ -57,7 +57,8 @@ import {
   HUMMINGBIRDS_RICHNESS,
   PLEDGES_LAYER,
   EDUCATOR_AMBASSADORS_LAYER,
-  SPECIES_LIST
+  SPECIES_LIST,
+  FIREFLY_BASEMAP_LAYER
 } from 'constants/layers-slugs';
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
@@ -69,6 +70,8 @@ export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUA
 export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0';
 
 export const LAYERS_URLS = {
+  [FIREFLY_BASEMAP_LAYER]:
+  'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Prioritisation_per_country_plasma_27072020/MapServer',
   [PLEDGES_LAYER]:

@@ -9,7 +9,6 @@ import 'redux_modules/land-human-encroachment';
 import { GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE } from 'constants/layers-slugs';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 // Utils
-import { handleLayerCreation } from 'utils/layer-manager-utils';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 //Actions
 import landHumanPressuresActions from 'redux_modules/land-human-encroachment';
@@ -57,10 +56,8 @@ const HumanPressureWidgetContainer = props => {
   }, [cellData])
 
 
-    const toggleLayer = async (rasters, option) => {
+    const toggleLayer = async (_, option) => {
       const { changeGlobe } = props;
-      const layerConfig = layersConfig[option.slug];
-      await handleLayerCreation(layerConfig, map);
       layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 

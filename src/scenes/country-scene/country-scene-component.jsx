@@ -45,6 +45,7 @@ const CountrySceneComponent = ({
   localSceneActiveTab,
   sortRankingCategory,
   countryChallengesSelectedKey,
+  userConfig
 }) => {
   const isOnMobile = useMobile();
   const [infoModalAdditionalContent, setInfoModalAdditionalContent] = useState(null);
@@ -63,13 +64,16 @@ const CountrySceneComponent = ({
           localGeometry={countryBorder}
           sceneSettings={sceneSettings}
         />
-        <ArcgisLayerManager activeLayers={activeLayers} />
+        <ArcgisLayerManager
+          activeLayers={activeLayers}
+          userConfig={userConfig}
+        />
         <CountryMaskLayer
           countryISO={countryISO}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <TerrainExaggerationLayer exaggeration={20} />
-        <LabelsLayer countryISO={countryISO} />
+        <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
         {localSceneActiveTab === LOCAL_SCENE_TABS.MAP && (
           <Legend
             hideTutorial
@@ -81,6 +85,7 @@ const CountrySceneComponent = ({
         )}
         <Widgets
           hideSearch
+          activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />
@@ -127,7 +132,9 @@ const CountrySceneComponent = ({
           sortRankingCategory={sortRankingCategory}
         />
       </div>
-      {hasMetadata && <InfoModal additionalContent={infoModalAdditionalContent} />}
+      {hasMetadata && (
+        <InfoModal additionalContent={infoModalAdditionalContent} />
+      )}
       {!isOnMobile && <About className={styles.hideOnPrint} />}
       <PdfNationalReport
         countryISO={countryISO}

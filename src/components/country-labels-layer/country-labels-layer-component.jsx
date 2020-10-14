@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
-import { handleLayerCreation } from 'utils/layer-manager-utils';
+import {
+  findLayerInMap,
+  addLayerToActiveLayers
+} from 'utils/layer-manager-utils';
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
-import { layersConfig } from 'constants/mol-layers-configs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, isLandscapeMode, countryName } = props;
+  const { map, countryName, changeGlobe, activeLayers } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
-  const [layerReady, setLayerReady] = useState(false)
+  const [countryLabelsLayer, setCountryLabelsLayer] = useState(null)
 
   useEffect(() => {
     loadModules(["esri/layers/support/LabelClass"])
@@ -34,34 +36,33 @@ const CountryLabelsLayerComponent = props => {
   }, [countryName]);
 
   useEffect(() => {
-      if (labelingInfo) {
-        const layerConfig = layersConfig[COUNTRIES_LABELS_FEATURE_LAYER];
-        handleLayerCreation(layerConfig, map)
-          .then(layer => {
-            layer.opacity = 0.7;
-            layer.visible = true;
-            layer.labelsVisible = true;
-            layer.minScale = 37500000;
-            layer.labelingInfo = [labelingInfo];
-            layer.renderer = {
-              type: "simple",
-              symbol: {
-                type: "simple-marker",
-                size: 0
-              }
-            }
-            setLayerReady(layer);
-          });
-      }
-  }, [labelingInfo])
-
-  useEffect(() => {
-    if (layerReady) {
-      layerReady.visible = !isLandscapeMode;
-      layerReady.labelsVisible = !isLandscapeMode;
+    const styleLayer = (layer) => {
+      layer.opacity = 0.7;
+      layer.labelsVisible = true;
+      layer.minScale = 37500000;
+      layer.labelingInfo = [labelingInfo];
+      layer.renderer = {
+        type: 'simple',
+        symbol: {
+          type: 'simple-marker',
+          size: 0
+        }
+      };
     }
-  }, [layerReady, isLandscapeMode])
 
+    if (labelingInfo) {
+      if (countryLabelsLayer) {
+        styleLayer(countryLabelsLayer)
+      } else {
+        const layer = findLayerInMap(COUNTRIES_LABELS_FEATURE_LAYER, map);
+        if (layer) {
+          setCountryLabelsLayer(layer);
+        } else {
+          addLayerToActiveLayers(COUNTRIES_LABELS_FEATURE_LAYER, activeLayers, changeGlobe);
+        }
+      }
+    }
+  }, [labelingInfo, activeLayers, countryLabelsLayer])
 
   return null;
 }

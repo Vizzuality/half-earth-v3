@@ -17,17 +17,26 @@ const DataGlobeComponent = ({
   onLoad,
   listeners,
   handleZoomChange,
-  handlePostRobotUpdates
+  handlePostRobotUpdates,
+  userConfig
 }) => (
   <Scene
-    sceneId='e96f61b2e79442b698ec2cec68af6db9'
+    sceneId="e96f61b2e79442b698ec2cec68af6db9"
     onViewLoad={onLoad}
     sceneSettings={sceneSettings}
     loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
   >
-    <ArcgisLayerManager activeLayers={activeLayers}/>
-    <PostRobotManager activeLayers={activeLayers} handlePostRobotUpdates={handlePostRobotUpdates} listeners={listeners} />
-    <LandscapeViewManager zoomLevelTrigger={ZOOM_LEVEL_TRIGGER} onZoomChange={handleZoomChange} isLandscapeMode={isLandscapeMode} />
+    <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
+    <PostRobotManager
+      activeLayers={activeLayers}
+      handlePostRobotUpdates={handlePostRobotUpdates}
+      listeners={listeners}
+    />
+    <LandscapeViewManager
+      zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
+      onZoomChange={handleZoomChange}
+      isLandscapeMode={isLandscapeMode}
+    />
     <ConstantContactLayers activeLayers={activeLayers} />
     <Legend activeLayers={activeLayers} />
     {isLandscapeMode && <GridLayer />}

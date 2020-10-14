@@ -27,14 +27,13 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap,  isLandscapeMode, is
   useEffect(() => {
     if (featuredPlacesLayerView) {
       const whereClause = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`
-      featuredPlacesLayerView.visible = true;
       loadModules(["esri/views/layers/support/FeatureFilter"]).then(([FeatureFilter]) => {
         const filter = new FeatureFilter({
           where: whereClause
         });
         featuredPlacesLayerView.filter = filter;
       })
-    } 
+    }
   }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa])
 
   useEffect(() => {

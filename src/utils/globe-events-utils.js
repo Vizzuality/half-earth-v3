@@ -49,7 +49,9 @@ export const setAvatarImage = (view, layerFeatures, selectedFeaturedMap, feature
 
 export const setSelectedFeaturedPlace = (viewPoint, featuredPlacesLayerTitle, changeUI) => {
   const featuredPoint = hitResults(viewPoint, featuredPlacesLayerTitle);
-  const selectedFeaturedPlace = featuredPoint.length ? get(featuredPoint, '[0].graphic.attributes.nam_slg') : null;
+  const selectedFeaturedPlace = featuredPoint && featuredPoint.length
+    ? get(featuredPoint, '[0].graphic.attributes.nam_slg')
+    : null;
   if (selectedFeaturedPlace) changeUI({ selectedFeaturedPlace });
 }
 
@@ -59,7 +61,7 @@ export const drawGeometry = (layerFeatures, graphic) => {
       graphic.geometry = layerFeatures[0].graphic.geometry;
     } else if(graphic.geometry.centroid.x !== layerFeatures[0].graphic.geometry.centroid.x) {
       graphic.geometry = layerFeatures[0].graphic.geometry;
-    } 
+    }
   } else {
     graphic.geometry = null;
   }
@@ -78,7 +80,7 @@ export const toggleCountryTooltip = (layerFeatures, changeGlobe, countryISO) => 
     const { attributes } = graphic;
     if (!countryISO || countryISO !== attributes.GID_0) {
       changeGlobe({countryISO: attributes.GID_0, countryName: attributes.NAME_0});
-    } 
+    }
   } else if (countryISO) {
     changeGlobe({countryISO: null});
   }

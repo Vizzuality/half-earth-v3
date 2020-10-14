@@ -4,11 +4,11 @@ import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
-import { 
+import {
   FEATURED_PLACES_LAYER,
   VIBRANT_BASEMAP_LAYER
 } from 'constants/layers-slugs';
-import { 
+import {
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
 } from 'constants/layers-groups';
 import { useMobile } from 'constants/responsive';
@@ -86,14 +86,14 @@ const feturedGlobeContainer = props => {
       layer.maxScale = 250000.0
     }
   }
-
+  const { activeLayers, userConfig } = props;
   return (
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
-      onMapLoad={(map) => handleMapLoad(map, props.activeLayers)}
+      onMapLoad={(map) => handleMapLoad(map, activeLayers, userConfig)}
       customFunctions={[showLayersOnlyOnLandscape, setVibrantLayerMaxScale]}
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}

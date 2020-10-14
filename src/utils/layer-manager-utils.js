@@ -46,13 +46,38 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   }
 };
 
-export const exclusiveLayersToggle = (layerToActivate, layerToRemove, activeLayers, callback, category) => {
-  addLayerAnalyticsEvent({ slug: layerToActivate });
-  removeLayerAnalyticsEvent({ slug: layerToRemove });
-  const layersAfterRemove = layerToRemove ? activeLayers.filter(l => l.title !== layerToRemove) : activeLayers;
-  callback({ activeLayers: [{ title: layerToActivate, category, opacity: DEFAULT_OPACITY }].concat(layersAfterRemove)})
+export const addLayerToActiveLayers =  (
+  slug,
+  activeLayers,
+  callback,
+  category
+) => {
+  addLayerAnalyticsEvent({ slug });
+  const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY, category }];
+  callback({
+    activeLayers: activeLayers
+      ? newActiveLayer.concat(activeLayers)
+      : newActiveLayer
+  });
 };
 
+export const replaceLayerFromActiveLayers = (
+  slugToRemove,
+  slugToAdd,
+  activeLayers,
+  callback,
+  category
+) => {
+  addLayerAnalyticsEvent({ slug: slugToAdd });
+  removeLayerAnalyticsEvent({ slug: slugToRemove });
+  const filteredLayers = activeLayers.filter((layer) => layer.title !== slugToRemove);
+  return callback({
+    activeLayers: [
+      { title: slugToAdd, category, opacity: DEFAULT_OPACITY },
+      ...filteredLayers
+    ]
+  });
+};
 export const layerManagerVisibility = (layerTitle, visible, activeLayers, callback) => {
   const title = layerTitle;
   const isActive = activeLayers && activeLayers.some(l => l.title === title);
@@ -104,9 +129,7 @@ export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
 export const activateLayersOnLoad = (map, activeLayers, config) => {
-  const activeLayerIDs = activeLayers
-      .map(({ title }) => title);
-  
+  const activeLayerIDs = activeLayers.map(({ title }) => title);
     activeLayerIDs.forEach(async layerName => {
       const layerConfig = config[layerName];
       if (layerConfig) {
@@ -117,12 +140,18 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
     });
 }
 
-export const handleLayerCreation = async (layerConfig, map) => {
-  if (!isLayerInMap(layerConfig, map)) {
+const handleLayerCreation = async (layerConfig, map) => {
+  if (layerConfig && !isLayerInMap(layerConfig, map)) {
     const newLayer = await createLayer(layerConfig);
-    return addLayerToMap(newLayer, map).then(layer => layer);
-  } else {
-    return findLayerInMap(layerConfig.slug, map);
+    addLayerToMap(newLayer, map).then(layer => layer);
   }
 }
 
+export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
+  if (activeLayers && activeLayers.length) {
+    activeLayers.forEach((layer) => {
+      const layerConfig = layersConfig[layer.title];
+      handleLayerCreation(layerConfig, map);
+    });
+  }
+}

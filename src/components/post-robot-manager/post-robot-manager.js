@@ -7,9 +7,6 @@ import {
   layerManagerOpacity
 } from 'utils/layer-manager-utils';
 import {
-  handleLayerCreation
-} from 'utils/layer-manager-utils';
-import {
   layersConfig
 } from 'constants/mol-layers-configs';
 
@@ -24,7 +21,6 @@ const PostRobotManagerContainer = ({ map, view, activeLayers, listeners, handleP
   const toggleLayer = async (layerTitle, activeLayers) => {
     const layerConfig = layersConfig[layerTitle];
     if (!layerConfig) return;
-    await handleLayerCreation(layerConfig, map);
     layerManagerToggle(layerTitle, activeLayers, handlePostRobotUpdates);
   }
 
@@ -48,7 +44,7 @@ const PostRobotManagerContainer = ({ map, view, activeLayers, listeners, handleP
       return { done: true };
     });
 
-    const layerOpacityListener = postRobot.on('setLayersOpacity', event => { // [ { id: 'Pledges', opacity: 1 }, { id: 'Biodiversity', opacity: 0.6 } ] 
+    const layerOpacityListener = postRobot.on('setLayersOpacity', event => { // [ { id: 'Pledges', opacity: 1 }, { id: 'Biodiversity', opacity: 0.6 } ]
       const { layers = [] } = event.data;
       layers.forEach(layer => layerManagerOpacity(layer.id, layer.opacity, activeLayers, handlePostRobotUpdates));
       return { done: true };

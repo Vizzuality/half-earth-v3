@@ -11,6 +11,7 @@ import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
+const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getInitialSceneMode = createSelector(selectUiUrlState, uiUrlState => {
   if (!uiUrlState || !uiUrlState.sceneMode) return 'data';
@@ -102,5 +103,6 @@ export default createStructuredSelector({
   sortRankingCategory: getSortRankingCategory,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
-  countedActiveLayers: getCountedActiveLayers
+  countedActiveLayers: getCountedActiveLayers,
+  userConfig: selectUserConfig
 });

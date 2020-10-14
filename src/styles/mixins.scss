@@ -1,0 +1,25 @@
+@mixin caret($color, $direction, $size: 5px) {
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    transform: none;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+
+    @if ($direction == 'up') {
+      border-top: $size solid $color;
+      border-bottom: none;
+    }
+    @if ($direction == 'down') {
+      border-bottom: $size solid $color;
+      border-top: none;
+    }
+    @if ($direction == 'right') {
+      border-right: none;
+      border-left: $size solid $color;
+      border-top: $size solid transparent;
+      border-bottom: $size solid transparent;
+    }
+  }
+}
