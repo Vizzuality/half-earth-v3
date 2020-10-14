@@ -18,9 +18,9 @@ const legendText = {
     noModification: 'No human modification'
   },
   protection: {
-    protected: 'Protected areas',
-    protectionNeeded: 'Protection needed',
-    protectionNotNeeded: 'Protection non-needed'
+    protected: 'Current protection',
+    protectionNeeded: ' Additional protection needed',
+    protectionNotNeeded: 'Non-formal protection needed'
   }
 };
 
@@ -110,9 +110,27 @@ const RankingChart = ({
     <div className={className}>
       <div className={styles.chartTitleContainer}>
         <span className={styles.chartTitle}>
-          Ranking Species Protection Index
+          Ranking countries
         </span>
         <QuestionIcon className={styles.question} onClick={handleInfoClick} />
+      </div>
+      <div className={styles.header}>
+        {headers.map((category) => (
+          <HeaderItem
+            title={category.toUpperCase()}
+            key={category}
+            className={cx(styles.headerItem, styles.titleText)}
+            isSortSelected={
+              sortRankingCategory &&
+              sortRankingCategory.split('-')[0] &&
+              sortRankingCategory.split('-')[0] === category.toUpperCase()
+            }
+            sortDirection={
+              sortRankingCategory && sortRankingCategory.split('-')[1]
+            }
+            handleSortClick={handleSortClick}
+          />
+        ))}
       </div>
       {data && data.length ? (
         <div className={styles.rankingChartContentContainer}>
@@ -123,24 +141,6 @@ const RankingChart = ({
             onScroll={onScroll}
             ref={tableRef}
           >
-            <div className={styles.header}>
-              {headers.map((category) => (
-                <HeaderItem
-                  title={category.toUpperCase()}
-                  key={category}
-                  className={cx(styles.headerItem, styles.titleText)}
-                  isSortSelected={
-                    sortRankingCategory &&
-                    sortRankingCategory.split('-')[0] &&
-                    sortRankingCategory.split('-')[0] === category.toUpperCase()
-                  }
-                  sortDirection={
-                    sortRankingCategory && sortRankingCategory.split('-')[1]
-                  }
-                  handleSortClick={handleSortClick}
-                />
-              ))}
-            </div>
             <div className={styles.table}>
               {data.map((d) => (
                 <div className={styles.row} key={d.name}>

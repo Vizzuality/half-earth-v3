@@ -4,7 +4,6 @@ import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import SettingsWidget from 'components/widgets/settings-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
-import SearchWidget from 'components/widgets/search-widget';
 import MinimapWidget from 'components/widgets/minimap-widget';
 
 import { useMobile } from 'constants/responsive';
@@ -17,7 +16,6 @@ const WidgetsComponent = ({
   hideSettings = false,
   hideZoom = false,
   hideMiniMap = false,
-  hideSearch = false,
   hideLocator = false,
   isFullscreenActive,
   openedModal = null,
@@ -61,9 +59,6 @@ const WidgetsComponent = ({
           hidden={hiddenWidget}
           openedModal={openedModal}
         />
-      )}
-      {!isOnMobile && !hideSearch && (
-        <SearchWidget map={map} view={view} hidden={hiddenWidget} />
       )}
       {!hideLocator && (
         <LocationWidget

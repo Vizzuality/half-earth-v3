@@ -41,9 +41,11 @@ const LocalSceneSidebarComponent = ({
   isFullscreenActive,
   countryDescription,
   countryDataLoading,
+  priorityAreasSentence,
   handleSceneModeChange,
   endemicVertebratesCount,
   endemicVertebratesSentence,
+  highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
   const sidebarHidden = isFullscreenActive;
@@ -93,10 +95,10 @@ const LocalSceneSidebarComponent = ({
         endemicVertebratesCount={endemicVertebratesCount}
         />
       <LocalPriorityCard
-        countryName={countryName}
+        hasPriority={hasPriority}
         protectionNeeded={protectionNeeded}
         currentProtection={currentProtection}
-        hasPriority={hasPriority}
+        priorityAreasSentence={priorityAreasSentence}
       />
       <LocalSpeciesCard
         birds={birds}
@@ -114,6 +116,7 @@ const LocalSceneSidebarComponent = ({
         amphibiansEndemic={amphibiansEndemic}
         endemicVertebratesCount={endemicVertebratesCount}
         endemicVertebratesSentence={endemicVertebratesSentence}
+        highlightedSpeciesSentence={highlightedSpeciesSentence}
         highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
       />
       <div className={styles.actionGroup}>

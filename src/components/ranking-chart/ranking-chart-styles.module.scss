@@ -20,9 +20,12 @@
   }
 }
 
+$chart-width-without-legend: calc(#{$country-scene-chart-width} + 50px);
+$scroll-bar-width: 7px;
+
 .header {
-  width: 100%;
-  display: flex;
+  width: calc(#{$chart-width-without-legend} * 0.8);
+  padding-right: $scroll-bar-width;
 
   .headerItem {
     width: 18%;
@@ -36,7 +39,7 @@
     }
 
     &:hover {
-      color: white;
+      color: $white;
     }
   }
 }
@@ -103,16 +106,16 @@
 .rankingChartContentContainer {
   position: relative;
   display: flex;
-  width: calc(#{$country-scene-chart-width} + 50px);
+  width: $chart-width-without-legend;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
 .rankingChartContent {
-  margin-top: 30px;
   padding-bottom: 2rem;
   margin-right: 2rem;
-  width: 80%;
+  min-width: 80%;
+  max-width: 80%;
   height: calc(100vh - #{$sidebar-header-height} - 200px);
   overflow-y: scroll;
   flex-direction: column;

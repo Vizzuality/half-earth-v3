@@ -45,14 +45,9 @@ const LocalSceneSidebarContainer = (props) => {
         .catch(() => window.print())
   }
 
-  const handleShareReport = () => {
-
-  }
-
   return (
     <Component
       handlePrintReport={handlePrintReport}
-      handleShareReport={handleShareReport}
       handleSceneModeChange={handleSceneModeChange}
       {...props}
     />

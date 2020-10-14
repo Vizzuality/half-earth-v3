@@ -23,7 +23,9 @@ const NationalReportPdf = ({
   protectionNeeded,
   amphibiansEndemic,
   currentProtection,
+  priorityAreasSentence,
   endemicVertebratesCount,
+  highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
 
@@ -66,18 +68,18 @@ const NationalReportPdf = ({
         </div>
       </section>
       <section className={styles.speciesSentence}>
-        <span>{`These are the four species in ${countryName} with the smallest global range (one per taxonomic group).`}</span>
-        <p className={styles.datasetSource}><a href="https://mol.org/">Source: Map of Life</a></p>      
+        <span>{highlightedSpeciesSentence}</span>
+        <p className={styles.datasetSource}><a href="https://mol.org/">Source: Map of Life</a></p>
       </section>
       <section className={styles.speciesComposition}>
-        <p className={styles.title}>species composition</p>
+        <p className={styles.title}>species composition:</p>
         <p className={styles.speciesCount}><span className={styles.amphibiansIcon}><AmphibiansIcon /></span> {`${amphibians} amphibians (${amphibiansEndemic} endemic)`}</p>
         <p className={styles.speciesCount}><span className={styles.birdsIcon}><BirdsIcon /></span> {`${birds} birds (${birdsEndemic} endemic)`}</p>
         <p className={styles.speciesCount}><span className={styles.mammalsIcon}><MammalsIcon /></span> {`${mammals} mammals (${mammalsEndemic} endemic)`}</p>
         <p className={styles.speciesCount}><span className={styles.reptilesIcon}><ReptilesIcon /></span> {`${reptiles} reptiles (${reptilesEndemic} endemic)`}</p>
       </section>
       <section className={styles.protectionLegend}>
-        <h3 className={styles.legendTitle}>{`The current protection ${currentProtection}%`}</h3>
+        <h3 className={styles.legendTitle}>{`The current protection: ${currentProtection}%`}</h3>
         <div className={styles.datasetWrapper}>
           <div className={styles.wdpaIcon}/>
           <div className={styles.datasetMetadata}>
@@ -91,19 +93,13 @@ const NationalReportPdf = ({
         </div>
       </section>
       <section className={styles.priorityLegend}>
-        <h3 className={styles.legendTitle}>{`Additional protection needed ${protectionNeeded}%`}</h3>
+        <h3 className={styles.legendTitle}>{`Additional protection needed: ${protectionNeeded}%`}</h3>
         <p className={styles.legendTag}>higher priority</p>
         <div className={styles.datasetWrapper}>
           <div className={styles.priorityIcon}/>
           <div className={styles.datasetMetadata}>
-            <span className={styles.datasetExplanation}>{
-              `The brightly colored map layer indicates the minimum amount of 
-              additional conservation area needed for ${countryName} to achieve 
-              a National SPI of 100, and presents one possible pathway toward the 
-              Half-Earth goal of comprehensive terrestrial biodiversity conservation. 
-              Higher values indicate locations within the country that contribute 
-              more to the conservation of species habitat.`
-            }
+            <span className={styles.datasetExplanation}>
+              {priorityAreasSentence}
             </span>
             <p className={styles.datasetSource} >
               <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract" >

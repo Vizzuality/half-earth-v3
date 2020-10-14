@@ -3,24 +3,31 @@ import cx from 'classnames';
 import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
 import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
 import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
+import FindPlacesCard from 'components/find-places-card';
 import animationStyles from 'styles/common-animations.module.scss';
-import styles from './data-global-sidebar-styles.module.scss'
+import styles from './data-global-sidebar-styles.module.scss';
 
 const DataGlobeSidebarComponent = ({
   map,
   view,
   activeLayers,
+  searchConfig,
   isCountryMode,
   activeCategory,
   isLandscapeMode,
   isFullscreenActive,
+  searchWidgetConfig,
   countedActiveLayers,
-  handleGlobeUpdating
+  handleGlobeUpdating,
 }) => {
 
   const sidebarHidden = isCountryMode || isLandscapeMode || isFullscreenActive;
   return (
     <div className={cx(styles.sidebarContainer, {[animationStyles.leftHidden]: sidebarHidden})}>
+      <FindPlacesCard
+        view={view}
+        searchWidgetConfig={searchWidgetConfig}
+      />
       <BiodiversitySidebarCard
         map={map}
         view={view}

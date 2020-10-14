@@ -1,7 +1,6 @@
 import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
 
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
@@ -28,9 +27,9 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
   return layer;
 }
 
-export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, postSearchCallback) => {
+export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget ] = useState(null);
-
+  const { searchSources, postSearchCallback} = searchWidgetConfig;
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
     if (evt.keyCode === 27 && view && searchWidget) {
@@ -50,25 +49,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
           popupEnabled: false, // hide location popup
           resultGraphicEnabled: false, // hide location pin
           container,
-          sources: [
-            {
-              layer: new FeatureLayer({
-                url: LAYERS_URLS[COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER],
-                title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
-              }),
-              outFields: ["*"],
-              searchFields: ["GID_0", "NAME_0"],
-              name: "Explore countries",
-              maxSuggestions: 10
-            },
-            {
-              locator: new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
-              singleLineFieldName: "SingleLine",
-              outFields: ["Addr_type"],
-              categories: ['District', 'City', 'Metro Area','Subregion', 'Region', 'Territory', 'Water Features', 'Land Features', 'Nature Reserve'],
-              name: "other geographic results"
-            }
-          ],
+          sources: searchSources(FeatureLayer, Locator),
           includeDefaultSources: false
         });
         setSearchWidget(sWidget);
