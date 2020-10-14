@@ -7,7 +7,7 @@ const FindPlacesCardComponent = ({
   showCloseButton,
   handleOpenSearch,
   handleCloseSearch,
-}) => console.log(showCloseButton) || (
+}) => (
   <div
     className={styles.container}
     onClick={handleOpenSearch}
