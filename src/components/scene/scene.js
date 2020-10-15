@@ -14,13 +14,12 @@ const SceneContainer = (props) => {
     changeGlobe,
     onMapLoad,
     onViewLoad,
+    urlParamsUpdateDisabled
   } = props;
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
   const [loadState, setLoadState] = useState('loading');
-  // const watchUtils = useWatchUtils();
-  const handleLocationChange = (center) => changeGlobe({ center });
 
   useEffect(() => {
     loadModules(["esri/WebScene"], loaderOptions)
@@ -67,11 +66,11 @@ const SceneContainer = (props) => {
   // Update location in URL
   useEffect(() => {
     let watchHandle;
-    if (view && view.center) {
+    if (view && view.center && !urlParamsUpdateDisabled) {
       loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
         watchUtils.whenTrue(view, "stationary", function() {
           const { longitude, latitude } = view.center;
-          handleLocationChange([longitude, latitude]);
+          changeGlobe({ center: [longitude, latitude], zoom: view.zoom });
         });
       })
     }

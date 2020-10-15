@@ -79,6 +79,7 @@ const DataGlobeComponent = ({
         interactionsDisabled={
           (isMapsList || isFeaturedPlaceCard) && !isOnMobile
         }
+        urlParamsUpdateDisabled
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
