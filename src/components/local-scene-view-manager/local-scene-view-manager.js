@@ -9,7 +9,15 @@ const LocalSceneViewManager = ({
       const { extent } = localGeometry;
       view.extent = extent;
       view.clippingArea = extent;
-      view.goTo({ target: extent, tilt: 40 });
+      
+      view.goTo({ target: extent, tilt: 40 })
+      .catch(error => {
+        const newViewpoint = view.viewpoint.clone();
+        newViewpoint.targetGeometry = extent;
+        view.viewpoint = newViewpoint;
+        view.goTo({tilt: 40})
+      }
+        )
     }
   }, [localGeometry]);
 
