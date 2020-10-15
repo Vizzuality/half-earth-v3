@@ -60,10 +60,7 @@ const CountrySceneComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
       >
-        <LocalSceneViewManager
-          localGeometry={countryBorder}
-          sceneSettings={sceneSettings}
-        />
+        <LocalSceneViewManager localGeometry={countryBorder} />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
