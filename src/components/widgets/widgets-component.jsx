@@ -1,6 +1,5 @@
 import React from 'react';
 // WIDGETS
-import LocationWidget from 'components/widgets/location-widget';
 import ZoomWidget from 'components/widgets/zoom-widget';
 import SettingsWidget from 'components/widgets/settings-widget';
 import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
@@ -16,7 +15,6 @@ const WidgetsComponent = ({
   hideSettings = false,
   hideZoom = false,
   hideMiniMap = false,
-  hideLocator = false,
   isFullscreenActive,
   openedModal = null,
   isNotMapsList = true,
@@ -58,14 +56,6 @@ const WidgetsComponent = ({
           view={view}
           hidden={hiddenWidget}
           openedModal={openedModal}
-        />
-      )}
-      {!hideLocator && (
-        <LocationWidget
-          map={map}
-          view={view}
-          isNotMapsList={isNotMapsList}
-          hidden={hiddenWidget}
         />
       )}
     </>

@@ -84,8 +84,6 @@ const CountrySceneComponent = ({
           />
         )}
         <Widgets
-          hideSearch
-          hideLocator
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}

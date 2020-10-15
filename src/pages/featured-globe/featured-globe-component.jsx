@@ -79,6 +79,7 @@ const DataGlobeComponent = ({
         interactionsDisabled={
           (isMapsList || isFeaturedPlaceCard) && !isOnMobile
         }
+        urlParamsUpdateDisabled
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -115,8 +116,6 @@ const DataGlobeComponent = ({
           hidden={esriWidgetsHidden}
           openedModal={openedModal}
           disableSettings
-          hideSearch
-          hideLocator
         />
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard

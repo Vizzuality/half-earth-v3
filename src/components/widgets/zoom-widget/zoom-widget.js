@@ -1,18 +1,13 @@
-// Docs for Zoom ui widget
-// https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Zoom.html
 import { loadModules } from 'esri-loader';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { useWatchUtils } from 'hooks/esri';
 import ZoomWidgetComponent from './zoom-widget-component';
 import * as actions from 'actions/url-actions';
 
 const ZoomWidget = props => {
-  const { view, changeGlobe, hidden, disableStateUpdate } = props;
+  const { view, hidden } = props;
   const [zoomWidget, setZoomWidget] = useState(null);
-  const watchUtils = useWatchUtils();
-  const handleZoomChange = (zoom) => changeGlobe({ zoom });
 
   // Load custom zoom widget
   useEffect(() => {
@@ -33,15 +28,6 @@ const ZoomWidget = props => {
     };
   }, [view, hidden])
 
-  // Update zoom in URL
-  useEffect(() => {
-    const watchHandle = watchUtils && zoomWidget && !disableStateUpdate && watchUtils.whenTrue(zoomWidget.view, "stationary", function() {
-      handleZoomChange(zoomWidget.view.zoom);
-    });
-    return function cleanUp() {
-      watchHandle && watchHandle.remove()
-    }
-  }, [watchUtils, zoomWidget]);
 
   return null;
 }

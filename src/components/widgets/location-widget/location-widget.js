@@ -1,10 +1,7 @@
-// Docs for Locate ui widget
-// https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Locate.html
 import { loadModules } from 'esri-loader';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { useWatchUtils } from 'hooks/esri';
 
 import LocationWidgetComponent from './location-widget-component';
 import * as urlActions from 'actions/url-actions';
@@ -13,10 +10,8 @@ import { clickFindMyPositionAnalyticsEvent } from 'actions/google-analytics-acti
 const actions = { ...urlActions, clickFindMyPositionAnalyticsEvent };
 
 const LocationWidget = props => {
-  const { view, changeGlobe, clickFindMyPositionAnalyticsEvent, hidden } = props;
+  const { view, clickFindMyPositionAnalyticsEvent, hidden } = props;
   const [locationWidget, setLocationWidget] = useState(null);
-  const watchUtils = useWatchUtils();
-  const handleLocationChange = (center) => changeGlobe({ center });
 
   useEffect(() => {
     const node = document.createElement("div");
@@ -38,20 +33,6 @@ const LocationWidget = props => {
       ReactDOM.render(null, node);
     };
   }, [view, hidden])
-
-  // Update location in URL
-  useEffect(() => {
-    let watchHandle;
-    if (view) {
-      watchHandle = watchUtils && locationWidget && watchUtils.whenTrue(view, "stationary", function() {
-        const { longitude, latitude } = view.center;
-        handleLocationChange([longitude, latitude]);
-      });
-    }
-    return function cleanUp() {
-      watchHandle && watchHandle.remove()
-    }
-  }, [view, watchUtils, locationWidget]);
 
   return null;
 }

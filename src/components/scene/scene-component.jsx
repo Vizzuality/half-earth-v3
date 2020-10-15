@@ -1,68 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import cx from 'classnames';
-import { loadModules } from 'esri-loader';
 import Spinner from 'components/spinner';
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const SceneComponent = ({ 
-  style,
+const SceneComponent = ({
+  map,
+  view,
+  loadState,
   sceneId,
   children,
   sceneName,
   className,
-  loaderOptions,
-  sceneSettings,
   spinner = true,
-  onMapLoad = null,
-  onViewLoad = null,
   interactionsDisabled = false,
 }) => {
-
-  const [map, setMap] = useState(null);
-  const [view, setView] = useState(null);
-  const [loadState, setLoadState] = useState('loading');
-
-  useEffect(() => {
-    loadModules(["esri/WebScene"], loaderOptions)
-      .then(([WebScene]) => {
-        const _map = new WebScene({
-          portalItem: {
-            id: sceneId
-          }
-        });
-        _map.load().then(map => { 
-          setMap(map);
-          onMapLoad && onMapLoad(map);
-        })
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }, [])
-
-  useEffect(() => {
-    if (map) {
-      loadModules(["esri/views/SceneView"], loaderOptions)
-        .then(([SceneView]) => {
-          const _view = new SceneView({
-            map: map,
-            container: `scene-container-${sceneName || sceneId}`,
-            ...sceneSettings
-          });
-          setView(_view);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
-  },[map])
-
-  useEffect(() => {
-    if (map && view) {
-      setLoadState('loaded');
-      onViewLoad && onViewLoad(map, view);
-    }
-  }, [map, view]);
 
   if (loadState === 'loading') {
     return (
