@@ -115,8 +115,6 @@ const DataGlobeComponent = ({
           hidden={esriWidgetsHidden}
           openedModal={openedModal}
           disableSettings
-          hideSearch
-          hideLocator
         />
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
