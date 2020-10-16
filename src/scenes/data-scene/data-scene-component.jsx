@@ -12,6 +12,7 @@ import TutorialModal from 'components/tutorial/tutorial-modal';
 import DataGlobalSidebar from 'components/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import { LANDSCAPE_FEATURES_LABELS_LAYER } from 'constants/layers-slugs';
 import CountryLabelsLayer from 'components/country-labels-layer';
 import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
@@ -56,6 +57,18 @@ const CountrySceneComponent = ({
   userConfig
 }) => {
   const isOnMobile = useMobile();
+  const hideDots = ({ layer }) => {
+    if (layer.title === LANDSCAPE_FEATURES_LABELS_LAYER) {
+      // Hides the dots but keeps the landscape feature layers
+      layer.renderer = {
+        type: 'simple',
+        symbol: {
+          type: 'simple-marker',
+          size: 0
+        }
+      };
+    }
+  };
   return (
     <>
       <Scene
@@ -68,6 +81,7 @@ const CountrySceneComponent = ({
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
+          customFunctions={[hideDots]}
         />
         {isGlobeUpdating && <Spinner floating />}
         {!isOnMobile && <Switcher />}
