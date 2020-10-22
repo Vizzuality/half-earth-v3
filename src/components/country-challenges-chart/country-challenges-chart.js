@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
 import metadataConfig from 'constants/metadata';
+import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 import { CHALLENGES_CHART } from 'constants/metadata';
 
 import mapStateToProps from './country-challenges-chart-selectors';
@@ -9,7 +10,7 @@ import mapStateToProps from './country-challenges-chart-selectors';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 
-const actions = {...metadataActions, ...urlActions };
+const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
 
 
 const CountryChallengesChartContainer = (props) => {
@@ -42,13 +43,11 @@ const CountryChallengesChartContainer = (props) => {
     changeGlobe({countryISO, countryName, zoom: null, center: null})
   }
 
-  const handleBubbleHover = (bubbleGeneralData) => {
-    // TODO
-    // display the tooltip
-  }
-
   const handleInfoClick = () => {
-    const { setModalMetadata } = props;
+    const {
+      setModalMetadata,
+      openInfoModalAnalyticsEvent
+    } = props;
     const md = metadataConfig[CHALLENGES_CHART]
     setModalMetadata({
       slug: md.slug,
@@ -56,6 +55,7 @@ const CountryChallengesChartContainer = (props) => {
       isOpen: true
     });
     setFiltersToggle(false);
+    openInfoModalAnalyticsEvent('Country challenges chart');
   }
 
   const handleFilterSelection = (selectedFilter) => {
@@ -76,7 +76,6 @@ const CountryChallengesChartContainer = (props) => {
   <Component
     filtersOpen={filtersOpen}
     handleInfoClick={handleInfoClick}
-    handleBubbleHover={handleBubbleHover}
     handleBubbleClick={handleBubbleClick}
     handleFiltersToggle={handleFiltersToggle}
     handleFilterSelection={handleFilterSelection}

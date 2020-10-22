@@ -89,9 +89,9 @@ export const downloadCountryPdfAnalyticsEvent = createAction('downloadCountryPdf
   return { analytics: [ VIEW_MODE.NRC, 'Download National Report CArd PDF', countryName ] };
 });
 
-export const clickSpeciesProtectionIndexInfoAnalyticsEvent = createAction('clickSpeciesProtectionIndexInfo', null, () => {
-  console.log('SPI info button cl')
-  return { analytics: [ VIEW_MODE.NRC, 'SPI info button clicked' ] };
+export const openInfoModalAnalyticsEvent = createAction('openInfoModal', null, (infoTarget) => {
+  console.log(infoTarget)
+  return { analytics: [VIEW_MODE.NRC, `${infoTarget} info button clicked`, infoTarget] };
 });
 
 export default {
@@ -114,5 +114,5 @@ export default {
   searchTermsAnalyticsEvent,
   clickOnCountryAnalyticsEvent,
   downloadCountryPdfAnalyticsEvent,
-  clickSpeciesProtectionIndexInfoAnalyticsEvent
+  openInfoModalAnalyticsEvent
 }
