@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { exploreCountryFromSearch } from 'actions/google-analytics-actions';
+import { exploreCountryFromSearchAnalyticsEvent } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 import Component from './data-global-sidebar-component.jsx';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
@@ -8,7 +8,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SCENE } from 'constants/scenes-constants';
 import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 
-const actions = { exploreCountryFromSearch,...urlActions };
+const actions = { exploreCountryFromSearchAnalyticsEvent,...urlActions };
 
 const SearchWidget = (props) => {
   const { changeGlobe, changeUI } = props;
@@ -18,7 +18,7 @@ const SearchWidget = (props) => {
     if (GID_0) {
         changeGlobe({ countryISO: GID_0, countryName: NAME_0, activeLayers: countrySceneConfig.globe.activeLayers })
         changeUI({ sceneMode: LOCAL_SCENE })
-        exploreCountryFromSearch({countryName:NAME_0})
+        exploreCountryFromSearchAnalyticsEvent({countryName:NAME_0})
     }
   }
 

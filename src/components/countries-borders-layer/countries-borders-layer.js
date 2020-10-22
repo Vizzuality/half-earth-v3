@@ -10,9 +10,9 @@ import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 import { hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip, dispatchClickedCountryAnalyticsEvent } from 'utils/globe-events-utils';
 // ACTIONS
 import * as urlActions from 'actions/url-actions';
-import { clickOnCountry } from 'actions/google-analytics-actions';
+import { clickOnCountryAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = {...urlActions, clickOnCountry }
+const actions = {...urlActions, clickOnCountryAnalyticsEvent }
 
 const CountriesBordersLayerContainer = (props) => {
 const { view, changeGlobe, countryISO, isLandscapeMode } = props;
@@ -40,11 +40,11 @@ const { view, changeGlobe, countryISO, isLandscapeMode } = props;
   }, [countryISO, selectedCountryBorderGraphic])
   
   const onClickHandler = bordersLayerFeatures => {
-    const { clickOnCountry } = props;
+    const { clickOnCountryAnalyticsEvent } = props;
     flyToGeometry(view, bordersLayerFeatures);
     toggleCountryTooltip(bordersLayerFeatures, changeGlobe, countryISO);
     drawGeometry(bordersLayerFeatures, selectedCountryBorderGraphic);
-    dispatchClickedCountryAnalyticsEvent(bordersLayerFeatures, clickOnCountry);
+    dispatchClickedCountryAnalyticsEvent(bordersLayerFeatures, clickOnCountryAnalyticsEvent);
   }
 
   const onHoverHandler = bordersLayerFeatures => {

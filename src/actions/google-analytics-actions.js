@@ -68,11 +68,11 @@ export const openShareModalAnalyticsEvent = createAction('openShareModal', null,
 });
 
 // Country related actions on Globe 
-export const exploreCountryFromTooltip = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
+export const exploreCountryFromTooltipAnalyticsEvent = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
 });
 
-export const exploreCountryFromSearch = createAction('exploreCountryFromSearch', null, ({ countryName }) => {
+export const exploreCountryFromSearchAnalyticsEvent = createAction('exploreCountryFromSearch', null, ({ countryName }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Use search to visit country', countryName ] };
 });
 
@@ -80,8 +80,13 @@ export const searchTermsAnalyticsEvent = createAction('searchTermsAnalyticsEvent
   return { analytics: [ VIEW_MODE.GLOBE, 'Search a location from find places', searchTerm ] };
 });
 
-export const clickOnCountry = createAction('clickOnCountry', null, ({ countryName }) => {
+export const clickOnCountryAnalyticsEvent = createAction('clickOnCountry', null, ({ countryName }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Click on a country on the globe', countryName ] };
+});
+
+// National Report Cards events
+export const downloadCountryPdfAnalyticsEvent = createAction('downloadCountryPdf', null, (countryName) => {
+  return { analytics: [ VIEW_MODE.NRC, 'Download Narional Report CArd PDF', countryName ] };
 });
 
 export default {
@@ -99,7 +104,9 @@ export default {
   changeLayersOrderAnalyticsEvent,
   helpCompleteDatabaseAnalyticsEvent,
   openShareModalAnalyticsEvent,
-  exploreCountryFromTooltip,
+  exploreCountryFromTooltipAnalyticsEvent,
+  exploreCountryFromSearchAnalyticsEvent,
   searchTermsAnalyticsEvent,
-  clickOnCountry
+  clickOnCountryAnalyticsEvent,
+  downloadCountryPdfAnalyticsEvent
 }

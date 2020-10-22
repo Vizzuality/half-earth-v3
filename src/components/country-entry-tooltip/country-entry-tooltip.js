@@ -7,10 +7,10 @@ import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
 import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 import * as urlActions from 'actions/url-actions';
-import { exploreCountryFromTooltip } from 'actions/google-analytics-actions';
+import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';
 
-const actions = {...urlActions, exploreCountryFromTooltip}
+const actions = {...urlActions, exploreCountryFromTooltipAnalyticsEvent}
 
 const CountryEntryTooltipContainer = props => {
   const { countryISO } = props;
@@ -37,7 +37,7 @@ const CountryEntryTooltipContainer = props => {
 
   const handleSceneModeChange = () => {
     const { changeGlobe, changeUI, sceneMode, countryName } = props;
-    exploreCountryFromTooltip({countryName});
+    exploreCountryFromTooltipAnalyticsEvent({countryName});
     changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
   };
