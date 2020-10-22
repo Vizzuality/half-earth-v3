@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from 'actions/url-actions';
 import { useSearchWidgetLogic } from 'hooks/esri';
-import { openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent } from 'actions/google-analytics-actions';
+import { openPlacesSearchAnalyticsEvent, searchTermsAnalyticsEvent } from 'actions/google-analytics-actions';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 // icons
@@ -19,7 +19,7 @@ const MenuFooterContainer = props => {
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
     openPlacesSearchAnalyticsEvent,
-    searchLocationAnalyticsEvent
+    searchTermsAnalyticsEvent
   );
 
   const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';

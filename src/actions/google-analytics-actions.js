@@ -48,15 +48,11 @@ export const switchAboutPageTabAnalyticsEvent = createAction('switchAboutPageTab
 });
 
 export const openPlacesSearchAnalyticsEvent = createAction('openPlacesSearch', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Click on find places' ] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Open Find places search modal' ] };
 });
 
 export const enterLandscapeModeAnalyticsEvent = createAction('enterLandscapeMode', null, () => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Enter landscape mode' ] };
-});
-
-export const searchLocationAnalyticsEvent = createAction('searchLocation', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Search for a location' ] };
 });
 
 export const changeLayersOrderAnalyticsEvent = createAction('changeLayersOrder', null, () => {
@@ -76,6 +72,14 @@ export const exploreCountryFromTooltip = createAction('exploreCountryFromTooltip
   return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
 });
 
+export const exploreCountryFromSearch = createAction('exploreCountryFromSearch', null, ({ countryName }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Use search to visit country', countryName ] };
+});
+
+export const searchTermsAnalyticsEvent = createAction('searchTermsAnalyticsEvent', null, (searchTerm) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Search a location from find places', searchTerm ] };
+});
+
 export const clickOnCountry = createAction('clickOnCountry', null, ({ countryName }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Click on a country on the globe', countryName ] };
 });
@@ -92,10 +96,10 @@ export default {
   switchAboutPageTabAnalyticsEvent,
   openPlacesSearchAnalyticsEvent,
   enterLandscapeModeAnalyticsEvent,
-  searchLocationAnalyticsEvent,
   changeLayersOrderAnalyticsEvent,
   helpCompleteDatabaseAnalyticsEvent,
   openShareModalAnalyticsEvent,
   exploreCountryFromTooltip,
+  searchTermsAnalyticsEvent,
   clickOnCountry
 }
