@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './local-scene-mode-switch-component';
+import { selectNRCSectionAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as actions from 'actions/url-actions';
 
 const LocalSceneModeSwitch = (props) => {
   const handleTabSelection = slug => {
     const { changeUI } = props;
-    changeUI({ localSceneActiveTab: slug })
+    changeUI({ localSceneActiveTab: slug });
+    selectNRCSectionAnalyticsEvent(slug);
   };
 
 

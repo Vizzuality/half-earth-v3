@@ -90,8 +90,11 @@ export const downloadCountryPdfAnalyticsEvent = createAction('downloadCountryPdf
 });
 
 export const openInfoModalAnalyticsEvent = createAction('openInfoModal', null, (infoTarget) => {
-  console.log(infoTarget)
   return { analytics: [VIEW_MODE.NRC, `${infoTarget} info button clicked`, infoTarget] };
+});
+
+export const selectNRCSectionAnalyticsEvent = createAction('selectNRCsection', null, (sectionSlug) => {
+  return { analytics: [VIEW_MODE.NRC, `Selected ${sectionSlug} view`, sectionSlug] };
 });
 
 export default {
@@ -114,5 +117,6 @@ export default {
   searchTermsAnalyticsEvent,
   clickOnCountryAnalyticsEvent,
   downloadCountryPdfAnalyticsEvent,
+  selectNRCSectionAnalyticsEvent,
   openInfoModalAnalyticsEvent
 }
