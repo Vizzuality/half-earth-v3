@@ -85,3 +85,11 @@ export const toggleCountryTooltip = (layerFeatures, changeGlobe, countryISO) => 
     changeGlobe({countryISO: null});
   }
 }
+
+export const dispatchClickedCountryAnalyticsEvent = (layerFeatures, clickedCountryAction) => {
+  if (layerFeatures && layerFeatures.length) {
+    const { graphic } = layerFeatures[0];
+    const { attributes } = graphic;
+    clickedCountryAction({countryName: attributes.NAME_0});
+  }
+}

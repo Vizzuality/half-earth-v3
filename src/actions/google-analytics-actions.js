@@ -71,8 +71,13 @@ export const openShareModalAnalyticsEvent = createAction('openShareModal', null,
   return { analytics: [ viewMode || VIEW_MODE.GLOBE, 'Open share modal',  ] };
 });
 
+// Country related actions on Globe 
 export const exploreCountryFromTooltip = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
+});
+
+export const clickOnCountry = createAction('clickOnCountry', null, ({ countryName }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Click on a country on the globe', countryName ] };
 });
 
 export default {
@@ -91,5 +96,6 @@ export default {
   changeLayersOrderAnalyticsEvent,
   helpCompleteDatabaseAnalyticsEvent,
   openShareModalAnalyticsEvent,
-  exploreCountryFromTooltip
+  exploreCountryFromTooltip,
+  clickOnCountry
 }
