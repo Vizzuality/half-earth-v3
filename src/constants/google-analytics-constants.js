@@ -1,7 +1,8 @@
 export const VIEW_MODE = {
   GLOBE: 'Global view',
   LANDSCAPE: 'Landscape view',
-  LEGEND: 'Legend'
+  LEGEND: 'Legend',
+  NRC: 'National Report Cards'
 }
 
 export const ABOUT_TABS = {

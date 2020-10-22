@@ -1,6 +1,6 @@
 
 import { createAction } from 'redux-tools';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { VIEW_MODE } from 'constants/google-analytics-constants';
 
 export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug, query }) => {
   const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
@@ -71,6 +71,10 @@ export const openShareModalAnalyticsEvent = createAction('openShareModal', null,
   return { analytics: [ viewMode || VIEW_MODE.GLOBE, 'Open share modal',  ] };
 });
 
+export const exploreCountryFromTooltip = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
+});
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -86,5 +90,6 @@ export default {
   searchLocationAnalyticsEvent,
   changeLayersOrderAnalyticsEvent,
   helpCompleteDatabaseAnalyticsEvent,
-  openShareModalAnalyticsEvent
+  openShareModalAnalyticsEvent,
+  exploreCountryFromTooltip
 }
