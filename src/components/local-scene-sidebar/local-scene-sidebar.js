@@ -17,7 +17,8 @@ const LocalSceneSidebarContainer = (props) => {
     changeUI,
     sceneMode,
     changeGlobe,
-    countryName
+    countryName,
+    downloadCountryPdfAnalyticsEvent
   } = props;
 
   useEffect(() => {

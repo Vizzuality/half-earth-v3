@@ -12,7 +12,7 @@ import countriesGeometriesActions from 'redux_modules/countries-geometries';
 import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import mapStateToProps from './country-scene-selectors';
-const actions = {...countriesGeometriesActions, ...countryDataActions }
+const actions = {...countriesGeometriesActions, ...countryDataActions, visitCountryReportCardAnalyticsEvent }
 
 const CountrySceneContainer = (props) => {
   const {
@@ -21,7 +21,8 @@ const CountrySceneContainer = (props) => {
     setCountryBorderReady,
     setCountryDataLoading,
     setCountryDataReady,
-    setCountryDataError
+    setCountryDataError,
+    visitCountryReportCardAnalyticsEvent
   } = props;
 
   const [shortLink, setShortLink] = useState(null);

@@ -10,7 +10,7 @@ const actions = {...urlActions, openSpeciesListAnalyticsEvent };
 const LocalSpeciesCardContainer = (props) => {
 
   const toggleModal = () => {
-    const { openedModal, changeUI } = props;
+    const { openedModal, changeUI, openSpeciesListAnalyticsEvent } = props;
     changeUI({ openedModal: !openedModal ? MODALS.SPECIES : null });
     if (!openedModal) {
       openSpeciesListAnalyticsEvent()

@@ -11,7 +11,7 @@ import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 const actions = { exploreCountryFromSearchAnalyticsEvent,...urlActions };
 
 const SearchWidget = (props) => {
-  const { changeGlobe, changeUI } = props;
+  const { changeGlobe, changeUI, exploreCountryFromSearchAnalyticsEvent } = props;
 
   const postSearchCallback = ({result}) => {
     const { feature: { attributes: { GID_0, NAME_0 }}} = result;

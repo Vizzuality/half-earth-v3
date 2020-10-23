@@ -10,7 +10,7 @@ import * as urlActions from 'actions/url-actions';
 import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';
 
-const actions = {...urlActions, exploreCountryFromTooltipAnalyticsEvent}
+const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions}
 
 const CountryEntryTooltipContainer = props => {
   const { countryISO } = props;
@@ -36,7 +36,7 @@ const CountryEntryTooltipContainer = props => {
   }
 
   const handleSceneModeChange = () => {
-    const { changeGlobe, changeUI, sceneMode, countryName } = props;
+    const { changeGlobe, changeUI, sceneMode, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
     exploreCountryFromTooltipAnalyticsEvent({countryName});
     changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
     changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
