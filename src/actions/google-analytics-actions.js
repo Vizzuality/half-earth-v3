@@ -97,6 +97,10 @@ export const selectNRCSectionAnalyticsEvent = createAction('selectNRCsection', n
   return { analytics: [VIEW_MODE.NRC, `Selected ${sectionSlug} view`, sectionSlug] };
 });
 
+export const openSpeciesListAnalyticsEvent = createAction('openSpeciesList', null, () => {
+  return { analytics: [VIEW_MODE.NRC, 'Open All Species list'] };
+});
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -118,5 +122,6 @@ export default {
   clickOnCountryAnalyticsEvent,
   downloadCountryPdfAnalyticsEvent,
   selectNRCSectionAnalyticsEvent,
+  openSpeciesListAnalyticsEvent,
   openInfoModalAnalyticsEvent
 }
