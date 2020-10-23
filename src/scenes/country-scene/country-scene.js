@@ -9,6 +9,7 @@ import { COUNTRIES_GEOMETRIES_SERVICE_URL, COUNTRIES_DATA_SERVICE_URL } from 'co
 // Actions
 import countryDataActions from 'redux_modules/country-data';
 import countriesGeometriesActions from 'redux_modules/countries-geometries';
+import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import mapStateToProps from './country-scene-selectors';
 const actions = {...countriesGeometriesActions, ...countryDataActions }
@@ -16,6 +17,7 @@ const actions = {...countriesGeometriesActions, ...countryDataActions }
 const CountrySceneContainer = (props) => {
   const {
     countryISO,
+    countryName,
     setCountryBorderReady,
     setCountryDataLoading,
     setCountryDataReady,
@@ -24,6 +26,7 @@ const CountrySceneContainer = (props) => {
 
   const [shortLink, setShortLink] = useState(null);
 
+  //Create bitly sortLink
   useEffect(() => {
     getShortenUrl(window.location.href)
     .then(link => {
@@ -54,6 +57,10 @@ const CountrySceneContainer = (props) => {
       setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
     })
   }, [countryISO])
+
+  useEffect(() => {
+    visitCountryReportCardAnalyticsEvent(countryName)
+  }, [countryName])
 
   return (
     <Component

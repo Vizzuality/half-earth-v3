@@ -101,6 +101,10 @@ export const openSpeciesListAnalyticsEvent = createAction('openSpeciesList', nul
   return { analytics: [VIEW_MODE.NRC, 'Open All Species list'] };
 });
 
+export const visitCountryReportCardAnalyticsEvent = createAction('visitCountryReportCard', null, (countryName) => {
+  return { analytics: [VIEW_MODE.NRC, 'Visit a country card', countryName] };
+});
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -123,5 +127,6 @@ export default {
   downloadCountryPdfAnalyticsEvent,
   selectNRCSectionAnalyticsEvent,
   openSpeciesListAnalyticsEvent,
+  visitCountryReportCardAnalyticsEvent,
   openInfoModalAnalyticsEvent
 }
