@@ -1,6 +1,6 @@
 
 import { createAction } from 'redux-tools';
-import { VIEW_MODE } from 'constants/google-analytics-constants';
+import { VIEW_MODE, OTHER_CATEGORIES } from 'constants/google-analytics-constants';
 
 export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug, query }) => {
   const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
@@ -67,7 +67,7 @@ export const openShareModalAnalyticsEvent = createAction('openShareModal', null,
   return { analytics: [ viewMode || VIEW_MODE.GLOBE, 'Open share modal',  ] };
 });
 
-// Country related actions on Globe 
+// Country related actions on Globe
 export const exploreCountryFromTooltipAnalyticsEvent = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
 });
@@ -104,6 +104,13 @@ export const openSpeciesListAnalyticsEvent = createAction('openSpeciesList', nul
 export const visitCountryReportCardAnalyticsEvent = createAction('visitCountryReportCard', null, (countryName) => {
   return { analytics: [VIEW_MODE.NRC, 'Visit a country card', countryName] };
 });
+
+// Navigation
+
+export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null, (countryName) => {
+  return { analytics: [OTHER_CATEGORIES.NAVIGATION, 'Click on the map scene change tab', countryName] };
+});
+
 
 export default {
   addLayerAnalyticsEvent,
