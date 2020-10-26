@@ -86,7 +86,7 @@ export const clickOnCountryAnalyticsEvent = createAction('clickOnCountry', null,
 
 // National Report Cards events
 export const downloadCountryPdfAnalyticsEvent = createAction('downloadCountryPdf', null, (countryName) => {
-  return { analytics: [ VIEW_MODE.NRC, 'Download National Report CArd PDF', countryName ] };
+  return { analytics: [ VIEW_MODE.NRC, 'Download National Report Card PDF', countryName ] };
 });
 
 export const openInfoModalAnalyticsEvent = createAction('openInfoModal', null, (infoTarget) => {
