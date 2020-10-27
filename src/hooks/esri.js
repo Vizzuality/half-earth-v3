@@ -27,7 +27,7 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
   return layer;
 }
 
-export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchLocationAnalyticsEvent, searchWidgetConfig) => {
+export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchTermsAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget ] = useState(null);
   const { searchSources, postSearchCallback} = searchWidgetConfig;
   const keyEscapeEventListener = (evt) => {
@@ -65,7 +65,6 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
   }
 
   const handleSearchStart = () => {
-    searchLocationAnalyticsEvent();
     handleCloseSearch();
   }
 
@@ -88,6 +87,7 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
       document.addEventListener('keydown', keyEscapeEventListener);
       searchWidget.viewModel.on("search-start", handleSearchStart);
       searchWidget.on('select-result', (event) => postSearchCallback(event));
+      searchWidget.on('suggest-complete', (event) => searchTermsAnalyticsEvent(event.searchTerm));
     }
 
     return function cleanUp() {

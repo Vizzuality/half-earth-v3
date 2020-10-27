@@ -19,7 +19,6 @@ const actions = { ...landHumanPressuresActions, addLayerAnalyticsEvent, removeLa
 
 const HumanPressureWidgetContainer = props => {
   const {
-    map,
     cellData,
     activeLayers,
     SET_LAND_PRESSURES_DATA_READY,

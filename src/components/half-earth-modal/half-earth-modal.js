@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 // Services
 import EsriFeatureService from 'services/esri-feature-service';
 
@@ -29,7 +28,7 @@ const HalfEarthModal = props => {
   }, [])
 
   return (
-    <HalfEarthModalComponent 
+    <HalfEarthModalComponent
       {...props}
       pageTexts={pageTexts}
     />

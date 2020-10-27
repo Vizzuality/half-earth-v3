@@ -1,6 +1,6 @@
 
 import { createAction } from 'redux-tools';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
+import { VIEW_MODE, OTHER_CATEGORIES } from 'constants/google-analytics-constants';
 
 export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug, query }) => {
   const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
@@ -48,15 +48,11 @@ export const switchAboutPageTabAnalyticsEvent = createAction('switchAboutPageTab
 });
 
 export const openPlacesSearchAnalyticsEvent = createAction('openPlacesSearch', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Click on find places' ] };
+  return { analytics: [ VIEW_MODE.GLOBE, 'Open Find places search modal' ] };
 });
 
 export const enterLandscapeModeAnalyticsEvent = createAction('enterLandscapeMode', null, () => {
   return { analytics: [ VIEW_MODE.GLOBE, 'Enter landscape mode' ] };
-});
-
-export const searchLocationAnalyticsEvent = createAction('searchLocation', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Search for a location' ] };
 });
 
 export const changeLayersOrderAnalyticsEvent = createAction('changeLayersOrder', null, () => {
@@ -71,6 +67,51 @@ export const openShareModalAnalyticsEvent = createAction('openShareModal', null,
   return { analytics: [ viewMode || VIEW_MODE.GLOBE, 'Open share modal',  ] };
 });
 
+// Country related actions on Globe
+export const exploreCountryFromTooltipAnalyticsEvent = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
+});
+
+export const exploreCountryFromSearchAnalyticsEvent = createAction('exploreCountryFromSearch', null, ({ countryName }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Use search to visit country', countryName ] };
+});
+
+export const searchTermsAnalyticsEvent = createAction('searchTermsAnalyticsEvent', null, (searchTerm) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Search a location from find places', searchTerm ] };
+});
+
+export const clickOnCountryAnalyticsEvent = createAction('clickOnCountry', null, ({ countryName }) => {
+  return { analytics: [ VIEW_MODE.GLOBE, 'Click on a country on the globe', countryName ] };
+});
+
+// National Report Cards events
+export const downloadCountryPdfAnalyticsEvent = createAction('downloadCountryPdf', null, (countryName) => {
+  return { analytics: [ VIEW_MODE.NRC, 'Download National Report Card PDF', countryName ] };
+});
+
+export const openInfoModalAnalyticsEvent = createAction('openInfoModal', null, (infoTarget) => {
+  return { analytics: [VIEW_MODE.NRC, `${infoTarget} info button clicked`, infoTarget] };
+});
+
+export const selectNRCSectionAnalyticsEvent = createAction('selectNRCsection', null, (sectionSlug) => {
+  return { analytics: [VIEW_MODE.NRC, `Selected ${sectionSlug} view`, sectionSlug] };
+});
+
+export const openSpeciesListAnalyticsEvent = createAction('openSpeciesList', null, () => {
+  return { analytics: [VIEW_MODE.NRC, 'Open All Species list'] };
+});
+
+export const visitCountryReportCardAnalyticsEvent = createAction('visitCountryReportCard', null, (countryName) => {
+  return { analytics: [VIEW_MODE.NRC, 'Visit a country card', countryName] };
+});
+
+// Navigation
+
+export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null, (countryName) => {
+  return { analytics: [OTHER_CATEGORIES.NAVIGATION, 'Click on the map scene change tab', countryName] };
+});
+
+
 export default {
   addLayerAnalyticsEvent,
   removeLayerAnalyticsEvent,
@@ -83,8 +124,16 @@ export default {
   switchAboutPageTabAnalyticsEvent,
   openPlacesSearchAnalyticsEvent,
   enterLandscapeModeAnalyticsEvent,
-  searchLocationAnalyticsEvent,
   changeLayersOrderAnalyticsEvent,
   helpCompleteDatabaseAnalyticsEvent,
-  openShareModalAnalyticsEvent
+  openShareModalAnalyticsEvent,
+  exploreCountryFromTooltipAnalyticsEvent,
+  exploreCountryFromSearchAnalyticsEvent,
+  searchTermsAnalyticsEvent,
+  clickOnCountryAnalyticsEvent,
+  downloadCountryPdfAnalyticsEvent,
+  selectNRCSectionAnalyticsEvent,
+  openSpeciesListAnalyticsEvent,
+  visitCountryReportCardAnalyticsEvent,
+  openInfoModalAnalyticsEvent
 }

@@ -8,17 +8,17 @@ import mapStateToProps from './local-scene-sidebar-selectors';
 import Component from './local-scene-sidebar-component';
 import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
+import { downloadCountryPdfAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = { ...urlActions, ...countryDataActions };
+const actions = { ...urlActions, ...countryDataActions, downloadCountryPdfAnalyticsEvent };
 
 const LocalSceneSidebarContainer = (props) => {
   const {
-    view,
     changeUI,
     sceneMode,
     changeGlobe,
     countryName,
-    localGeometry
+    downloadCountryPdfAnalyticsEvent
   } = props;
 
   useEffect(() => {
@@ -37,6 +37,7 @@ const LocalSceneSidebarContainer = (props) => {
     const tempTitle = document.title;
     document.title = `Half-Earth National Report Card ${date} - ${countryName}`;
     window.print();
+    downloadCountryPdfAnalyticsEvent(countryName)
     document.title = tempTitle;
   }
 

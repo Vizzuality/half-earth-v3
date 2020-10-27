@@ -11,7 +11,6 @@ const DataGlobeSidebarComponent = ({
   map,
   view,
   activeLayers,
-  searchConfig,
   isCountryMode,
   activeCategory,
   isLandscapeMode,
