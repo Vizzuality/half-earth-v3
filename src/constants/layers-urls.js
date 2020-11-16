@@ -6,6 +6,7 @@ import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
+  SATELLITE_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
   MERGED_WDPA_VECTOR_TILE_LAYER,
   PROTECTED_AREAS_FEATURE_LAYER,
@@ -90,6 +91,8 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/CityLabels/FeatureServer',
   [VIBRANT_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Vibrant/MapServer',
+  [SATELLITE_BASEMAP_LAYER]:
+  "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
   [PRIORITY_PLACES_POLYGONS]:
     'https://utility.arcgis.com/usrsvcs/servers/685d69cda038469f93dcfd96355abefc/rest/services/PriorPolygons/FeatureServer',
   [FEATURED_PLACES_LAYER]:

@@ -33,6 +33,8 @@ export const FIREFLY_BASEMAP_LAYER = 'firefly_basemap';
 export const FEATURED_PLACES_LAYER = 'featured_places';
 // Basemap (featured mode)
 export const VIBRANT_BASEMAP_LAYER = 'Vibrant';
+// Basemap (featured mode)
+export const SATELLITE_BASEMAP_LAYER = 'satellite';
 // Pledges layer
 export const PLEDGES_LAYER = 'signed_pledges';
 export const EDUCATOR_AMBASSADORS_LAYER = 'educator_ambassadors';
