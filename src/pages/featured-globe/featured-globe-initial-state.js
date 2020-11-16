@@ -1,5 +1,4 @@
 import {
-  VIBRANT_BASEMAP_LAYER,
   GRAPHIC_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
@@ -10,7 +9,6 @@ import {
 export default {
   globe: {
     activeLayers: [
-      { title: VIBRANT_BASEMAP_LAYER },
       { title: GRAPHIC_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: CITIES_LABELS_LAYER },
