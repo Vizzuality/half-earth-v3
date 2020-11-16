@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Component from './scene-component';
 import { loadModules } from 'esri-loader';
 import * as urlActions from 'actions/url-actions';
+
 const actions = { ...urlActions };
 
 const SceneContainer = (props) => {
@@ -22,17 +23,17 @@ const SceneContainer = (props) => {
   const [loadState, setLoadState] = useState('loading');
 
   useEffect(() => {
-    loadModules(["esri/WebScene"], loaderOptions)
-      .then(([WebScene]) => {
-        const _map = new WebScene({
-          portalItem: {
-            id: sceneId
-          }
+    loadModules([
+      "esri/Map",
+    ], loaderOptions)
+      .then(([Map]) => {
+
+        const _map = new Map({
+          basemap: 'satellite',
         });
-        _map.load().then(map => { 
-          setMap(map);
-          onMapLoad && onMapLoad(map);
-        })
+
+        setMap(_map);
+        onMapLoad && onMapLoad(_map);
       })
       .catch(err => {
         console.error(err);
