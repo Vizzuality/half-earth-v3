@@ -11,10 +11,7 @@ export const setLayersOrder = (activeLayers, map) => {
     ), {});
   const reversedLayers = [...activeLayersIds].reverse();
   reversedLayers.forEach((layer, i) => {
-    // We are adding 2 to the index since this is the starting index
-    // to reorder the layers since there are two layers that need to be
-    // underneath the rest: satellite basemap and he basemap (firefly or vibrant)
-    map.reorder(visibleLayers[layer], i + 2);
+    map.reorder(visibleLayers[layer], i);
   })
 }
 
