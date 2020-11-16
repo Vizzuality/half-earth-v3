@@ -72,7 +72,6 @@ const DataGlobeComponent = ({
     <>
       {!isMapsList && !isOnMobile && <Switcher />}
       <Scene
-        sceneId="e96f61b2e79442b698ec2cec68af6db9"
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}

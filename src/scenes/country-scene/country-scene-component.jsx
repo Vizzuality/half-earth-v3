@@ -54,7 +54,6 @@ const CountrySceneComponent = ({
     <>
       <Scene
         className={styles.sceneWrapper}
-        sceneId="8f71838a19624717a4e45de110eced1b"
         sceneName={'country-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
