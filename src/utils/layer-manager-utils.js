@@ -109,7 +109,7 @@ export const layerManagerOrder = (legendLayers, activeLayers, callback) => {
 };
 
 export const createLayer = layerConfig => {
-  const { url, slug, type } = layerConfig;
+  const { url, slug, type, opacity } = layerConfig;
   const layerType = type || 'WebTileLayer';
   return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
     return new layer({
@@ -117,7 +117,7 @@ export const createLayer = layerConfig => {
       urlTemplate: url,
       title: slug,
       id: slug,
-      opacity: DEFAULT_OPACITY
+      opacity: opacity || DEFAULT_OPACITY
     })
   });
 }
@@ -159,6 +159,7 @@ export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
 export const setBasemap = async ({map, surfaceColor, layersArray}) => {
   map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(layersArray.map(async layer => await createLayer(layersConfig[layer])));
+  console.log()
   loadModules(["esri/Basemap"]).then(([Basemap]) => {
     const basemap = new Basemap({
       baseLayers,
