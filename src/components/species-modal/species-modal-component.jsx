@@ -59,7 +59,7 @@ const SpeciesModalComponent = ({
               className={cx(styles.mainInfo, { [styles.isOpened]: isOpened })}
             >
               <div className={styles.tableItem}>{capitalize(speciesgroup)}</div>
-              <div className={cx(styles.tableItem, styles.bold)}>{species}</div>
+              <div className={cx(styles.tableItem, styles.bold, styles.italic)}>{species}</div>
               <div className={styles.tableItem}>{percentprotected}</div>
               <div className={styles.tableItem}>{NSPS}</div>
               <div
