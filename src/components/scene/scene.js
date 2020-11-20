@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import Component from './scene-component';
 import { loadModules } from 'esri-loader';
+import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import * as urlActions from 'actions/url-actions';
 
 const actions = { ...urlActions };
@@ -29,7 +30,7 @@ const SceneContainer = (props) => {
       .then(([Map]) => {
 
         const _map = new Map({
-          basemap: 'satellite',
+          basemap: SATELLITE_BASEMAP_LAYER,
         });
 
         setMap(_map);
