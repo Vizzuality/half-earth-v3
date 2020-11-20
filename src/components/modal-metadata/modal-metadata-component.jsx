@@ -6,8 +6,7 @@ import MolLogo from 'logos/mol.png';
 import ReactMarkdown from 'react-markdown';
 import styles from './modal-metadata-styles.module.scss';
 
-const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, additionalContent }) => {
-  return (
+const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, additionalContent }) => (
     <Modal
       onRequestClose={handleClose}
       isOpen={isOpen}
@@ -56,18 +55,13 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, addition
               )}
             {
               metadata && metadata.source && (
-              <p className={styles.metadataSource}>
-                <ReactMarkdown source={`Source: ${metadata.source}`} escapeHtml={false}/>
-                {' '}
-                {
-                      metadata.sourceUrl && (
-                      <a href={metadata.sourceUrl} target="_blank" rel="noopener noreferrer">
-                        {metadata.sourceUrl}
-                      </a>
-                        )
-                    }
-              </p>
-                )
+              <div className={styles.metadataSource}>
+                <ReactMarkdown
+                  renderers={{link: ({href, children}) => <a href={href} target="_blank" rel="noopener noreferrer">{children[0].props.children}</a>}}
+                  children={`Source: ${metadata.source}`}
+                />
+              </div>
+              )
             }
             {
               metadata && metadata.molLogo === "TRUE" && (
@@ -83,11 +77,10 @@ const ModalMetadata = ({ isOpen, handleClose, loading, title, metadata, addition
                 )
             }
           </>
-)
+       )
       }
     </Modal>
-  )
-}
+)
 
 ModalMetadata.propTypes = {
   title: PropTypes.string,
