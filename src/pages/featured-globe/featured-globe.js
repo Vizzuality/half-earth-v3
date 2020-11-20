@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
-import { layerManagerToggle, activateLayersOnLoad } from 'utils/layer-manager-utils';
+import { layerManagerToggle, activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import {
   FEATURED_PLACES_LAYER,
-  VIBRANT_BASEMAP_LAYER
+  VIBRANT_BASEMAP_LAYER,
+  SATELLITE_BASEMAP_LAYER
 } from 'constants/layers-slugs';
 import {
   FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
@@ -46,6 +47,7 @@ const feturedGlobeContainer = props => {
   },[])
 
   const handleMapLoad = (map, activeLayers) => {
+    setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER,VIBRANT_BASEMAP_LAYER]});
     activateLayersOnLoad(map, activeLayers, layersConfig);
   }
 

@@ -2,7 +2,7 @@ import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { intersection } from 'lodash';
 import { loadModules } from 'esri-loader';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
 
 export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
   const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
@@ -109,7 +109,7 @@ export const layerManagerOrder = (legendLayers, activeLayers, callback) => {
 };
 
 export const createLayer = layerConfig => {
-  const { url, slug, type } = layerConfig;
+  const { url, slug, type, opacity } = layerConfig;
   const layerType = type || 'WebTileLayer';
   return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
     return new layer({
@@ -117,7 +117,7 @@ export const createLayer = layerConfig => {
       urlTemplate: url,
       title: slug,
       id: slug,
-      opacity: DEFAULT_OPACITY
+      opacity: opacity || DEFAULT_OPACITY
     })
   });
 }
@@ -154,4 +154,17 @@ export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
       handleLayerCreation(layerConfig, map);
     });
   }
+}
+
+export const setBasemap = async ({map, surfaceColor, layersArray}) => {
+  map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
+  const baseLayers = await Promise.all(layersArray.map(async layer => await createLayer(layersConfig[layer])));
+  loadModules(["esri/Basemap"]).then(([Basemap]) => {
+    const basemap = new Basemap({
+      baseLayers,
+      title: "half-earth-basemap",
+      id: "half-earth-basemap"
+    });
+    map.basemap = basemap;
+  })
 }

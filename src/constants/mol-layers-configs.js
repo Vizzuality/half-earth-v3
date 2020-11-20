@@ -6,6 +6,7 @@ import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
+  SATELLITE_BASEMAP_LAYER,
   FIREFLY_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
   MERGED_WDPA_VECTOR_TILE_LAYER,
@@ -71,6 +72,8 @@ const LAYER_TYPES = {
 }
 
 export const DEFAULT_OPACITY = 0.6;
+export const BASEMAP_OPACITY = 1;
+
 export const LAYERS_CATEGORIES = {
   BIODIVERSITY: 'Biodiversity',
   PROTECTION: 'Existing protection',
@@ -246,6 +249,15 @@ export const layersConfig = {
     slug: VIBRANT_BASEMAP_LAYER,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[VIBRANT_BASEMAP_LAYER],
+    opacity: BASEMAP_OPACITY,
+    bbox: null
+  },
+  [SATELLITE_BASEMAP_LAYER]: {
+    title: SATELLITE_BASEMAP_LAYER,
+    slug: SATELLITE_BASEMAP_LAYER,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[SATELLITE_BASEMAP_LAYER],
+    opacity: BASEMAP_OPACITY,
     bbox: null
   },
   [FIREFLY_BASEMAP_LAYER]: {
@@ -253,6 +265,7 @@ export const layersConfig = {
     slug: FIREFLY_BASEMAP_LAYER,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[FIREFLY_BASEMAP_LAYER],
+    opacity: BASEMAP_OPACITY,
     bbox: null
   },
   [COUNTRY_PRIORITY_LAYER]: {

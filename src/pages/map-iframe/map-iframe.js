@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { createLayer, addLayerToMap } from 'utils/layer-manager-utils';
+import { createLayer, addLayerToMap, setBasemap } from 'utils/layer-manager-utils';
+import {
+  FIREFLY_BASEMAP_LAYER,
+  SATELLITE_BASEMAP_LAYER
+} from 'constants/layers-slugs';
 
 import Component from './map-iframe-component.jsx';
 import mapStateToProps from './map-iframe-selectors';
@@ -12,6 +16,7 @@ const actions = { ...ownActions };
 
 
 const handleMapLoad = (map, activeLayers) => {
+  setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER]});
   activeLayers
     .map(({ title }) => title)
     .forEach(layerName => {

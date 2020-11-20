@@ -59,7 +59,6 @@ const CountrySceneComponent = ({
   return (
     <>
       <Scene
-        sceneId="8f71838a19624717a4e45de110eced1b"
         sceneName={'data-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
