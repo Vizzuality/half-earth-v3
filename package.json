@@ -54,13 +54,7 @@
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "build-service-worker": "node ./src/service-worker-build.js",
     "build": "react-app-rewired build && npm run build-service-worker && npm run clean-cra-sw",
-    "test:e2e:dev": "npm-run-all --parallel start cy:open",
-    "cy:open": "cypress open",
-    "pre:test:e2e:ci": "yarn build && npm-run-all --parallel --race start cy:run",
-    "test:e2e:ci": "npm-run-all --parallel --race start cy:run",
-    "cy:run": "cypress run",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "cypress:open": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -75,43 +69,12 @@
   "devDependencies": {
     "@babel/preset-env": "^7.5.3",
     "@babel/preset-react": "^7.0.0",
-    "@testing-library/cypress": "^4.0.4",
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^8.0.4",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "cypress": "^3.4.0",
+    "cypress": "^6.3.0",
     "identity-obj-proxy": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "react-app-rewired": "^2.1.1"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "layouts/(.*)$": "<rootDir>/src/layouts/$1/$1.js",
-      "components/Provider": "react-redux",
-      "components/connectAdvanced": "react-redux",
-      "components/Context": "react-redux",
-      "components/widgets/(.*)": "<rootDir>/src/components/widgets/$1/$1.js",
-      "components/(.*)/(.*)$": "<rootDir>/src/components/$1/$2.jsx",
-      "components/(.*)$": "<rootDir>/src/components/$1/$1.js",
-      "\\.svg": "<rootDir>/src/__tests__/integration/mocks/svg-mock.js",
-      "\\.module\\.scss$": "identity-obj-proxy",
-      "\\.scss$": "<rootDir>/src/__tests__/integration/mocks/style-mock.js"
-    },
-    "modulePaths": [
-      "<rootDir>/src",
-      "<rootDir>/test"
-    ],
-    "testMatch": [
-      "**/__tests__/integration/tests/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).[jt]s?(x)"
-    ],
-    "testEnvironmentOptions": {
-      "testUrl": "https://half-earth.test.com"
-    },
-    "collectCoverageFrom": [
-      "**/src/**/*.{js,jsx}"
-    ]
   }
 }
