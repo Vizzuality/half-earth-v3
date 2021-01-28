@@ -1,0 +1,24 @@
+name: E2E tests
+on: [push]
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.13.x'
+
+      - name: Yarn install
+        run: yarn
+
+      - name: Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn build
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          config: baseUrl=https://localhost:3000
