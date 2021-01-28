@@ -4,18 +4,18 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout branch
         uses: actions/checkout@v1
 
-      - name: Setup node
+      - name: Setup node & npm
         uses: actions/setup-node@v1
         with:
           node-version: '12.13.x'
 
-      - name: Yarn install
+      - name: Install project dependencies
         run: yarn
 
-      - name: Cypress tests
+      - name: Run tests
         uses: cypress-io/github-action@v2
         env:
           # more info on the CI variable fix on: 
