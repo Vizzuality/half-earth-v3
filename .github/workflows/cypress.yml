@@ -17,8 +17,11 @@ jobs:
 
       - name: Cypress tests
         uses: cypress-io/github-action@v2
+        env:
+          # more info on the CI variable fix on: 
+          # https://github.community/t/treating-warnings-as-errors-because-process-env-ci-true/18032/5
+          CI: ""
         with:
-          build: yarn build
           start: yarn start
           wait-on: 'http://localhost:3000'
           config: baseUrl=https://localhost:3000
