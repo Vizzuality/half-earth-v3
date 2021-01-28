@@ -1,5 +1,5 @@
-describe('My First Test', () => {
-  it('disables it', function () {
+describe('General navigation', () => {
+  it('User lands on Data Globe if no path is provided ', function () {
     cy.visit('https://half-earth.vizzuality.com/', {
       onBeforeLoad (win) {
         delete win.navigator.__proto__.serviceWorker
