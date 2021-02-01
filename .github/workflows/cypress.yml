@@ -1,0 +1,27 @@
+name: E2E tests
+on: [push]
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+
+      - name: Setup node & npm
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.13.x'
+
+      - name: Install project dependencies
+        run: yarn
+
+      - name: Run tests
+        uses: cypress-io/github-action@v2
+        env:
+          # more info on the CI variable fix on: 
+          # https://github.community/t/treating-warnings-as-errors-because-process-env-ci-true/18032/5
+          CI: ""
+        with:
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          config: baseUrl=https://localhost:3000
