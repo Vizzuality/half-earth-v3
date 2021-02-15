@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import styles from './spinner-styles.module';
+import styles from './spinner-styles.module.scss';
 
 const Spinner = ({ floating = false, spinnerWithOverlay = false, initialLoading = false, display = true }) => {
   return display ? (
