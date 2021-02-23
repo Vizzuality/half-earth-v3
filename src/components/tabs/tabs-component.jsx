@@ -35,7 +35,7 @@ const Tabs = ({ tabs }) =>  {
     <div className={styles.tabs}>
       <ul role="tablist">
         {tabs.map((tab, i) => (
-          <li role="presentation">
+          <li role="presentation" key={`tab-${i}`}>
             <div
               id={`tab_${i}`}
               href={`#tabpanel_${i}`}
