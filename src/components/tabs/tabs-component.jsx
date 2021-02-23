@@ -15,8 +15,7 @@ const Tab = ({ children, index, isSelected }) => (
   </div>
 );
 
-const Tabs = ({ tabs }) =>  {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+const Tabs = ({ tabs, selectedTabIndex, setSelectedTabIndex }) =>  {
   const [activeTitle, setActiveTitle] = useState(null);
 
   useEffect(() => {
@@ -83,10 +82,14 @@ Tabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
     content: PropTypes.node,
     title: PropTypes.string
-  }))
+  })),
+  selectedTabIndex: PropTypes.number.isRequired,
+  setSelectedTabIndex: PropTypes.func.isRequired
 };
+
 Tabs.defaultProps = {
-  tabs: []
+  tabs: [],
+  selectedTabIndex: 0,
 };
 
 export default Tabs;

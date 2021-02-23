@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import RadioGroup from 'components/radio-group';
 import Tabs from 'components/tabs';
@@ -14,6 +14,7 @@ const BiodiversityLayers = ({
   handleExclusiveLayerToggle,
   isFullscreenActive
 }) => {
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
   return (
     <>
@@ -32,6 +33,8 @@ const BiodiversityLayers = ({
             title: 'Rarity'
           }
         ]}
+        selectedTabIndex={selectedTabIndex}
+        setSelectedTabIndex={setSelectedTabIndex}
       />
       {!subcategories ? (
         <div className={styles.wrapper}>
