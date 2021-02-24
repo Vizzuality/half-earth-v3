@@ -1,5 +1,5 @@
 import React from 'react';
-import LocalSceneCard from 'components/local-scene-card';
+import SidebarCardWrapper from 'components/sidebar-card-wrapper';
 import SpeciesModal from 'components/species-modal';
 import PieChart from 'components/charts/pie-chart';
 import HighLightedSpeciesList from 'components/highlighted-species-list';
@@ -32,7 +32,7 @@ const LocalSpeciesCardComponent = ({
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => (
-  <LocalSceneCard>
+  <SidebarCardWrapper>
     <section className={styles.chartContainer}>
       <h3 className={styles.title}>Species composition:</h3>
       <PieChart
@@ -97,7 +97,7 @@ const LocalSpeciesCardComponent = ({
       </Button>
       <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={toggleModal} />
     </section>
-  </LocalSceneCard>
+  </SidebarCardWrapper>
 )
 
 export default LocalSpeciesCardComponent;

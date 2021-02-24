@@ -1,0 +1,75 @@
+
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.title {
+  @extend %_temporaryTitle;
+  margin: 0;
+  color: $_temporary-dark-text;
+  text-align: center;
+  padding-bottom: $sidebar-cards-padding;
+}
+
+.datasetWrapper,
+.descriptionWrapper {
+  display: flex;
+}
+
+.wdpaIcon {
+  min-width: 13px;
+  margin-right: 15px;
+}
+
+.wdpaIcon {
+  width: 13px;
+  height: 13px;
+  position: relative;
+  top: 5px;
+  border-radius: 2px;
+}
+
+.gradientLegend {
+  & :first-child {
+    padding-bottom: $paragraph-gutter;
+  }
+  .description {
+    padding: $paragraph-gutter;
+  }
+  & :last-child {
+    padding-top: $paragraph-gutter;
+  }
+}
+
+.legendTag {
+  @extend %subtitle;
+  display: block;
+  color: $_temporary-dark-text;
+}
+
+.gradient {
+  min-width: 6px;
+  flex-basis: 1rem;
+  border-radius: 3px;
+  background: $biodiversity-gradient;
+}
+
+.description {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+  margin: 0;
+}
+
+.sourcesWrapper {
+  @extend %annotation;
+  color: $_temporary-light-text;
+  display: block;
+  padding-top: $paragraph-gutter;
+
+  .source {
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+      color: darken($_temporary-light-text, 20%)
+    }
+  }
+}

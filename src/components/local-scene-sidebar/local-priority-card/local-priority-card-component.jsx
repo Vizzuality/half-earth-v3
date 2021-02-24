@@ -1,10 +1,19 @@
 import React from 'react';
-import LocalSceneCard from 'components/local-scene-card';
+import SidebarCardWrapper from 'components/sidebar-card-wrapper';
+import SidebarCardContent from 'components/sidebar-card-content';
+
 import {
   MERGED_PROTECTION,
   COUNTRY_PRIORITY
 } from 'constants/metadata';
-import styles from './local-priority-card-styles.module.scss';
+
+const protectionSources = [
+  {label: 'WDPA, OECM & RAISG', matadataService:  MERGED_PROTECTION}
+]
+
+const prioritySources = [
+  {label: 'Rinnan DS and Jetz W (2020)', matadataService:  COUNTRY_PRIORITY}
+]
 
 const LocalPriorityCardComponent = (props) => {
   const {
@@ -15,58 +24,26 @@ const LocalPriorityCardComponent = (props) => {
     priorityAreasSentence,
   } = props;
   return (
-    <LocalSceneCard>
-      <section>
-        <h3
-          className={styles.title}
-        >{`The current protection: ${currentProtection}%`}</h3>
-        <div className={styles.datasetWrapper}>
-          <div className={styles.wdpaIcon} />
-          <div className={styles.datasetMetadata}>
-            <p className={styles.datasetExplanation}>
-              The green areas on the map represent regions that are currently
-              recognized as being managed for the long-term conservation of
-              nature.
-            </p>
-            <p
-              className={styles.datasetSource}
-              onClick={() => handleInfoClick(MERGED_PROTECTION)}
-            >
-              Source: WDPA, OECM & RAISG.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.priorityLegend}>
-        <h3
-          className={styles.title}
-        >{`Additional protection needed: ${protectionNeeded}%`}</h3>
-        {hasPriority ? (
-          <>
-            <p className={styles.legendTag}>higher priority</p>
-            <div className={styles.datasetWrapper}>
-              <div className={styles.priorityIcon} />
-              <div className={styles.datasetMetadata}>
-                <p className={styles.datasetExplanation}>
-                  {priorityAreasSentence}
-                </p>
-                <p
-                  className={styles.datasetSource}
-                  onClick={() => handleInfoClick(COUNTRY_PRIORITY)}
-                >
-                  Source: Rinnan DS and Jetz W (2020).
-                </p>
-              </div>
-            </div>
-            <p className={styles.legendTag}>lower priority</p>
-          </>
-        ) : (
-          <p className={styles.datasetExplanation}>
-            {priorityAreasSentence}
-          </p>
-        )}
-      </section>
-    </LocalSceneCard>
+    <SidebarCardWrapper>
+      <SidebarCardContent
+        title={`The current protection: ${currentProtection}%`}
+        description="The green areas on the map represent regions that are currently
+        recognized as being managed for the long-term conservation of
+        nature."
+        legendType="basic"
+        handleSourceClick={handleInfoClick}
+        metaDataSources={protectionSources}
+      />
+      <SidebarCardContent
+        title={`Additional protection needed: ${protectionNeeded}%`}
+        description={priorityAreasSentence}
+        legendType={hasPriority && 'gradient'}
+        lowValueLabel="low priority"
+        highValueLabel="high priority"
+        handleSourceClick={handleInfoClick}
+        metaDataSources={prioritySources}
+      />
+    </SidebarCardWrapper>
   );
 }
 

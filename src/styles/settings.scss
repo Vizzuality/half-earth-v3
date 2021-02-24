@@ -61,6 +61,7 @@ $amphibians-color: #9873EF;
 $birds-color: $shamrock;
 $reptiles-color: $picton-blue;
 $priority-blue: #0664F6;
+$biodiversity-gradient: linear-gradient(0deg, #0664F6 0%, #2172DB 14.73%, #3D80BF 27%, #749C89 40%, #8FAB6D 52%, #ABB952 62%, #C6C737 74%, #E2D51B 86%, #FDE300 100%);
 $human-pressure-high: #F3E0F7;
 $human-pressure-mid: #9F82CE;
 $human-pressure-low: #282052;
@@ -120,6 +121,8 @@ $blur-level: 16px;
 $sidebar-margin: 24px;
 $sidebar-paddings: 20px;
 $paragraph-margin: 35px;
+$paragraph-gutter: 10px;
+$sidebar-cards-padding: 25px;
 
 $mobile-sidebar-side-paddings: 32px;
 
