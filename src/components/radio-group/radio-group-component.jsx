@@ -66,11 +66,13 @@ const RadioGroup = ({
 
 
 RadioGroup.propTypes = {
-  options: PropTypes.array
+  options: PropTypes.array,
+  multiple: PropTypes.boolean
 };
 
 RadioGroup.defaultProps = {
-  options: []
+  options: [],
+  multiple: false
 };
 
 export default RadioGroup;

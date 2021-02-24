@@ -3,7 +3,6 @@ import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
-
 import BiodiversityLayers from 'components/biodiversity-layers';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import styles from './biodiversity-sidebar-card-styles.module.scss'
