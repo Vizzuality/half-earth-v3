@@ -31,14 +31,12 @@
   }
 
   .tab {
-    font-family: $font-family-1;
-    font-size: $font-size-xxs;
+    @extend %subtitle;
     display: inline-block;
     padding: 15px 0;
     height: 46px;
     width: 100%;
     color: $white;
-    text-transform: uppercase;
     text-align: center;
     cursor: pointer;
 
