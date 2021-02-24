@@ -41,7 +41,7 @@
     cursor: pointer;
 
     &[aria-selected="true"] {
-      background-color: $robins-egg-blue;
+    background-color: $brand-color-main;
       color: $black;
     }
   }
