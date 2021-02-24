@@ -22,23 +22,6 @@
   padding: 0 $sidebar-paddings;
 }
 
-.nameWrapper {
-  display: flex;
-  align-items: baseline;
-}
-
-.flag {
-  width: 33px;
-  margin-right: $sidebar-paddings;
-  position: relative;
-  bottom: -4px;
-}
-
-.countryName {
-  @extend %display1;
-  margin-bottom: 0;
-}
-
 .indexStatement{
   @extend %title;
 }
