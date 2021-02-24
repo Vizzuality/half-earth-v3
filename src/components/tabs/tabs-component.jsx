@@ -1,95 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import styles from './tabs-styles.module.scss';
 
-const Tab = ({ children, index, isSelected }) => (
-  <div
-    id={`tabpanel_${index}`}
-    name={`tabpanel_${index}`}
-    role="tabpanel"
-    aria-labelledby={`tab_${index}`}
-    aria-hidden={!isSelected}
-  >
-    {children}
-  </div>
-);
+const getDefaultTabIndex = (tabs, defaultTabSlug) => {
+  const defaultTab = tabs.find(t => t.slug === defaultTabSlug || t.title === defaultTabSlug);
+  const defaultTabIndex = tabs.indexOf(defaultTab);
+  return defaultTabIndex > -1 ? defaultTabIndex : 0;
+}
 
-const Tabs = ({ tabs, selectedTabIndex, setSelectedTabIndex }) =>  {
-  const [activeTitle, setActiveTitle] = useState(null);
-
-  useEffect(() => {
-    if (activeTitle && activeTitle.current) {
-      activeTitle.current.focus()
-    }
-  }, [activeTitle])
-
-
-  const handleClick = (e, i) => {
-    e.preventDefault();
-    setSelectedTabIndex(i)
-  }
-
+const Tabs = ({ tabs, onClick, defaultTabSlug }) =>  {
+  const [selectedTabIndex, setSelectedTabIndex] = useState(getDefaultTabIndex(tabs, defaultTabSlug));
   return (
     <div className={styles.tabs}>
       <ul role="tablist">
-        {tabs.map((tab, i) => (
-          <li role="presentation" key={`tab-${i}`}>
-            <div
-              id={`tab_${i}`}
-              href={`#tabpanel_${i}`}
-              role="tab"
-              aria-selected={i === selectedTabIndex}
-              aria-controls={`tabpanel_${i}`}
-              onClick={(e) => handleClick(e, i)}
-              ref={(link) => {
-                if (i === selectedTabIndex) {
-                  setActiveTitle(link);
-                }
-              }}
-            >
+        {tabs.map((tab, i) => {
+          const { slug, title } = tab;
+          const tabSlug = slug || title;
+          return (
+            <li role="presentation" key={`tab-${tabSlug}`}>
               <div
-                className={cx(
-                  styles.title,
-                  { [styles.active]: i === selectedTabIndex },
-                  { [styles.first]: i === 0 },
-                  {
-                    [styles.hasBorder]:
-                      i !== selectedTabIndex &&
-                      i !== (selectedTabIndex + 1) &&
-                      i !== (selectedTabIndex - 1)
-                  }
-                )}
+                className={styles.tab}
+                role="tab"
+                aria-selected={selectedTabIndex === i}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedTabIndex(i);
+                  onClick(tabSlug);
+                }}
               >
-                {tab.title}
+                <div
+                  className={cx(
+                    styles.title,
+                    { [styles.active]: i === selectedTabIndex },
+                    { [styles.first]: i === 0 },
+                    {
+                      [styles.hasBorder]:
+                        i !== selectedTabIndex &&
+                        i !== selectedTabIndex + 1 &&
+                        i !== selectedTabIndex - 1
+                    }
+                  )}
+                >
+                  {title}
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
-      <div>
-        {tabs.map((tab, i) => (
-          <Tab key={`tab-${i}`} index={i} isSelected={i === selectedTabIndex}>
-            {tab.content}
-          </Tab>
-        ))}
-      </div>
     </div>
   );
 }
 
 Tabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
-    content: PropTypes.node,
-    title: PropTypes.string
+    slug: PropTypes.string,
+    title: PropTypes.string.isRequired
   })),
-  selectedTabIndex: PropTypes.number.isRequired,
-  setSelectedTabIndex: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 Tabs.defaultProps = {
   tabs: [],
-  selectedTabIndex: 0,
+  onClick: () => {},
 };
 
 export default Tabs;

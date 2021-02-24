@@ -24,7 +24,7 @@
     }
   }
 
-  *[role="tab"] {
+  .tab {
     font-family: $font-family-1;
     font-size: $font-size-xxs;
     display: inline-block;
@@ -43,11 +43,5 @@
   .title {
     padding: 3px 20px;
     height: 20px;
-  }
-
-  *[role="tabpanel"] {
-    &[aria-hidden="true"] {
-      display: none;
-    }
   }
 }
