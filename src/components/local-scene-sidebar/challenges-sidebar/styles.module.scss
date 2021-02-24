@@ -62,9 +62,10 @@
 .circlesLegend {
   display: flex;
   align-items: center;
-  padding: 25px;
+  padding: 0px 25px 25px;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 40px;
   div {
     display: flex;
     flex-direction: column;
