@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RadioGroup from 'components/radio-group';
-
 import styles from './biodiversity-layers-styles.module.scss';
 
 const BiodiversityLayers = ({
@@ -14,7 +13,6 @@ const BiodiversityLayers = ({
   handleExclusiveLayerToggle,
   isFullscreenActive
 }) => {
-
   return (
     <>
       {!subcategories ? (
@@ -38,29 +36,25 @@ const BiodiversityLayers = ({
             <h2 className={styles.widgetTitle}>{title}</h2>
           </div>
           <p className={styles.description}>{description}</p>
-          {
-            subcategories.map(subct => (
-              <div className={styles.widgetWrapper} key={subct.name}>
-                <h2 className={styles.widgetSubTitle}>{subct.name}</h2>
-                <div className={styles.subcategoryRadioContainer}>
-                  <RadioGroup
-                    activeLayers={activeLayers}
-                    options={subct.taxa}
-                    title={subct.name}
-                    handleExclusiveLayerToggle={handleExclusiveLayerToggle}
-                    handleSimpleLayerToggle={handleSimpleLayerToggle}
-                    isFullscreenActive={isFullscreenActive}
-                  />
-                </div>
+          {subcategories.map((subct) => (
+            <div className={styles.widgetWrapper} key={subct.name}>
+              <h2 className={styles.widgetSubTitle}>{subct.name}</h2>
+              <div className={styles.subcategoryRadioContainer}>
+                <RadioGroup
+                  activeLayers={activeLayers}
+                  options={subct.taxa}
+                  title={subct.name}
+                  handleExclusiveLayerToggle={handleExclusiveLayerToggle}
+                  handleSimpleLayerToggle={handleSimpleLayerToggle}
+                  isFullscreenActive={isFullscreenActive}
+                />
               </div>
-            ))
-          }
+            </div>
+          ))}
         </div>
-      )
-      }
+      )}
     </>
-
-  )}
+  );}
 
 
 BiodiversityLayers.propTypes = {
