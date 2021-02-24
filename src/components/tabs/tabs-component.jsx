@@ -54,16 +54,19 @@ const Tabs = ({ tabs, onClick, defaultTabSlug }) =>  {
 }
 
 Tabs.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    slug: PropTypes.string,
-    title: PropTypes.string.isRequired
-  })),
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string,
+      title: PropTypes.string.isRequired
+    })
+  ),
   onClick: PropTypes.func.isRequired,
+  defaultTabSlug: PropTypes.string
 };
 
 Tabs.defaultProps = {
   tabs: [],
-  onClick: () => {},
+  onClick: () => {}
 };
 
 export default Tabs;
