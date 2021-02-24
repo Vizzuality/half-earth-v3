@@ -8,7 +8,7 @@
   > :not(:last-child)::after {
     content: '';
     position: relative;
-    bottom: -$sidebar-paddings;
+    bottom: -$sidebar-cards-padding;
     display: block;
     margin: 0 auto;
     border-bottom: 1px dotted $_temporary-dark-text;
