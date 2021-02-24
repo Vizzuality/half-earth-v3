@@ -11,7 +11,13 @@ import {
   MERGED_PROTECTION,
 } from 'constants/metadata';
 const protectionSources = [
-  {label: 'WDPA, OECM & RAISG', matadataService:  MERGED_PROTECTION}
+  {label: 'Gross National Income', matadataService:  MERGED_PROTECTION},
+  {label: 'Population', matadataService:  MERGED_PROTECTION},
+  {label: 'proportion of very high human modification', matadataService:  MERGED_PROTECTION},
+  {label: 'number of endemic vertebrates', matadataService:  MERGED_PROTECTION},
+  {label: 'total number of vertebrate species', matadataService:  MERGED_PROTECTION},
+  {label: 'SPI', matadataService:  MERGED_PROTECTION},
+
 ]
 
 const Component = ({
@@ -34,6 +40,32 @@ const Component = ({
         </div>
       ))}
     </div>
+    <section className={styles.circlesLegend}>
+    <div>
+        <svg height="32" width="32">
+          <circle cx="16" cy="16" r="15" stroke="white" stroke-width="1" fill-opacity="0" />
+        </svg>
+        <span>{`>100`}</span>
+      </div>
+      <div>
+        <svg height="52" width="52">
+          <circle cx="26" cy="26" r="25" stroke="white" stroke-width="1" fill-opacity="0" />
+        </svg>
+        <span>{`>100`}</span>
+      </div>
+      <div>
+        <svg height="72" width="72">
+          <circle cx="36" cy="36" r="35" stroke="white" stroke-width="1" fill-opacity="0" />
+        </svg>
+        <span>{`>100`}</span>
+      </div>
+      <div>
+        <svg height="92" width="92">
+          <circle cx="46" cy="46" r="45" stroke="white" stroke-width="1" fill-opacity="0" />
+        </svg>
+        <span>{`>100`}</span>
+      </div>
+    </section>
   </>
 )
 

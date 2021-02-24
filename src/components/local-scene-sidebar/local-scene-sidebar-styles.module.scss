@@ -11,7 +11,7 @@
   border-radius: $sidebar-border-radius;
   position: absolute;
   height: 100vh;
-  width: calc(#{$local-sidebar-width} + 15px);
+  width: $local-sidebar-width;
   top: $local-sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
