@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
-import CountryDataCard from './country-data-card';
-import LocalPriorityCard from './local-priority-card';
-import LocalSpeciesCard from './local-species-card';
 import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -12,10 +9,16 @@ import ShareModal from 'components/share-modal';
 import ShareModalButton from 'components/share-button';
 import Tabs from 'components/tabs';
 
+import OverviewSidebar from './overview-sidebar';
+
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
-import { LOCAL_SCENE_TABS, LOCAL_SCENE_DEFAULT_TAB } from 'constants/ui-params';
+import { 
+  LOCAL_SCENE_TABS_SLUGS,
+  LOCAL_SCENE_TABS,
+  LOCAL_SCENE_DEFAULT_TAB 
+} from 'constants/ui-params';
 
 const LocalSceneSidebarComponent = ({
   SPI,
@@ -86,50 +89,46 @@ const LocalSceneSidebarComponent = ({
         <span className={styles.text}>back to global</span>
       </button>
       <DummyBlurWorkaround />
+      <div className={styles.nameWrapper}>
+        <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+        <p className={styles.countryName}>{countryName}</p>
+      </div>
       <Tabs
         tabs={LOCAL_SCENE_TABS}
         onClick={handleTabSelection}
         defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
       />
-      <CountryDataCard
-        SPI={SPI}
-        mean={mean}
-        countryISO={countryISO}
-        countryName={countryName}
-        countryData={countryData}
-        indexStatement={indexStatement}
-        vertebratesCount={vertebratesCount}
-        protectionNeeded={protectionNeeded}
-        currentProtection={currentProtection}
-        countryDescription={countryDescription}
-        countryDataLoading={countryDataLoading}
-        endemicVertebratesCount={endemicVertebratesCount}
+      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
+        <OverviewSidebar 
+          SPI={SPI}
+          mean={mean}
+          birds={birds}
+          mammals={mammals}
+          reptiles={reptiles}
+          amphibians={amphibians}
+          countryISO={countryISO}
+          openedModal={openedModal}
+          countryName={countryName}
+          countryData={countryData}
+          hasPriority={hasPriority}
+          birdsEndemic={birdsEndemic}
+          speciesChartData={speciesChartData}
+          indexStatement={indexStatement}
+          mammalsEndemic={mammalsEndemic}
+          reptilesEndemic={reptilesEndemic}
+          vertebratesCount={vertebratesCount}
+          protectionNeeded={protectionNeeded}
+          currentProtection={currentProtection}
+          amphibiansEndemic={amphibiansEndemic}
+          countryDescription={countryDescription}
+          countryDataLoading={countryDataLoading}
+          priorityAreasSentence={priorityAreasSentence}
+          endemicVertebratesCount={endemicVertebratesCount}
+          endemicVertebratesSentence={endemicVertebratesSentence}
+          highlightedSpeciesSentence={highlightedSpeciesSentence}
+          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
         />
-      <LocalPriorityCard
-        hasPriority={hasPriority}
-        protectionNeeded={protectionNeeded}
-        currentProtection={currentProtection}
-        priorityAreasSentence={priorityAreasSentence}
-      />
-      <LocalSpeciesCard
-        birds={birds}
-        mammals={mammals}
-        reptiles={reptiles}
-        amphibians={amphibians}
-        countryISO={countryISO}
-        countryName={countryName}
-        openedModal={openedModal}
-        birdsEndemic={birdsEndemic}
-        chartData={speciesChartData}
-        mammalsEndemic={mammalsEndemic}
-        reptilesEndemic={reptilesEndemic}
-        vertebratesCount={vertebratesCount}
-        amphibiansEndemic={amphibiansEndemic}
-        endemicVertebratesCount={endemicVertebratesCount}
-        endemicVertebratesSentence={endemicVertebratesSentence}
-        highlightedSpeciesSentence={highlightedSpeciesSentence}
-        highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
-      />
+      }
       <div className={styles.actionGroup}>
         <DownloadIcon />
         <button className={styles.actionButton} onClick={handlePrintReport}>

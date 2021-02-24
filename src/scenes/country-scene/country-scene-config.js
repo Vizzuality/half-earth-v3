@@ -7,6 +7,9 @@ import {
   COUNTRY_PRIORITY_LAYER,
 } from 'constants/layers-slugs';
 
+import { 
+  LOCAL_SCENE_TABS_SLUGS,
+} from 'constants/ui-params';
 
 export default {
   globe: {
@@ -44,7 +47,7 @@ export default {
   ui: {
     sceneMode: 'local',
     countryChallengesSelectedFilter: 'all',
-    localSceneActiveTab: 'map',
+    localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
     countryChallengesSelectedKey: 'N_SPECIES',
     speciesModalSearch: null,
     speciesModalSort: null,

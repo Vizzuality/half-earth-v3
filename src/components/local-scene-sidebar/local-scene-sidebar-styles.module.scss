@@ -49,6 +49,25 @@
   color: $white;
 }
 
+.nameWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: baseline;
+}
+
+.flag {
+  width: 30px;
+  margin-left: $site-gutter;
+  position: relative;
+}
+
+.countryName {
+  @extend %display1;
+  color: $white;
+  padding-left: $site-gutter;
+  margin: 0;
+}
+
 .actionGroup {
   padding: $site-gutter;
   padding-top: 0;
