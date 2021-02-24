@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import RadioGroup from 'components/radio-group';
-import Tabs from 'components/tabs';
 import styles from './biodiversity-layers-styles.module.scss';
 
 const BiodiversityLayers = ({
@@ -14,28 +13,8 @@ const BiodiversityLayers = ({
   handleExclusiveLayerToggle,
   isFullscreenActive
 }) => {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-
   return (
     <>
-      <Tabs
-        tabs={[
-          {
-            content: <div>Hi</div>,
-            title: 'Priority'
-          },
-          {
-            content: <div>Hu</div>,
-            title: 'Richness'
-          },
-          {
-            content: <div>Ho</div>,
-            title: 'Rarity'
-          }
-        ]}
-        selectedTabIndex={selectedTabIndex}
-        setSelectedTabIndex={setSelectedTabIndex}
-      />
       {!subcategories ? (
         <div className={styles.wrapper}>
           <div className={styles.titleSection}>

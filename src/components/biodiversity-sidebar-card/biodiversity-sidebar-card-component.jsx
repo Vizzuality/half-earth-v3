@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
@@ -14,14 +15,30 @@ const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, ma
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
-        title='mapping'
+        title="mapping"
         category={biodiversity}
         counter={countedActiveLayers[biodiversity]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
-      <div className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen})}>
-        {biodiversityCategories.map(cat => (
+      <div
+        className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
+      >
+        <Tabs
+          tabs={[
+            {
+              title: 'Priority'
+            },
+            {
+              title: 'Richness'
+            },
+            {
+              title: 'Rarity'
+            }
+          ]}
+          onClick={() => console.info('Remove me I am just here for demo')}
+        />
+        {biodiversityCategories.map((cat) => (
           <BiodiversityLayers
             key={cat.name}
             title={cat.name}
@@ -35,7 +52,7 @@ const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, ma
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default BiodiversitySidebarCardComponent;
