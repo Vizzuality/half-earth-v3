@@ -7,6 +7,8 @@
   @include backdropBlur();
   @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
   position: absolute;
   height: 100vh;
   width: calc(#{$local-sidebar-width} + 15px);

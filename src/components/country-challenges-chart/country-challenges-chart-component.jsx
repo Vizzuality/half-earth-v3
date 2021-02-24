@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cx from 'classnames';
 
 import ScatterPlot from 'components/charts/scatter-plot';
-import CountryChallengesModalAdditional from './country-challenges-modal-additional';
+// import CountryChallengesModalAdditional from './country-challenges-modal-additional';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as SwitchArrow } from 'icons/switch.svg';
 import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
@@ -30,9 +30,9 @@ const CountryChallengesChartComponent = ({
   setInfoModalAdditionalContent,
   challengesFilterOptions
 }) => {
-  useEffect(() => {
-    setInfoModalAdditionalContent(<CountryChallengesModalAdditional />);
-  }, []);
+  // useEffect(() => {
+  //   setInfoModalAdditionalContent(<CountryChallengesModalAdditional />);
+  // }, []);
 
   return (
     <div className={className}>

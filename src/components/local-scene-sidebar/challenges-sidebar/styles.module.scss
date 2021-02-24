@@ -1,6 +1,13 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.countriesLegend {
+  padding: 5px 25px;
+  display: flex;
+  flex-flow: column wrap;
+  height: 110px;
+  color: white;
+}
 .continent,
 .modalAdditionalContent {
   display: flex;
@@ -9,7 +16,7 @@
 .continent {
   margin-bottom: 10px;
   width: 134px;
-  margin-right: 60px;
+  margin-right: 45px;
 }
 
 .legendContinent {
