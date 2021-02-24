@@ -8,7 +8,7 @@ import mapStateToProps from './local-scene-sidebar-selectors';
 import Component from './local-scene-sidebar-component';
 import * as urlActions from 'actions/url-actions';
 import countryDataActions from 'redux_modules/country-data';
-import { downloadCountryPdfAnalyticsEvent } from 'actions/google-analytics-actions';
+import { downloadCountryPdfAnalyticsEvent, selectNRCSectionAnalyticsEvent } from 'actions/google-analytics-actions';
 
 const actions = { ...urlActions, ...countryDataActions, downloadCountryPdfAnalyticsEvent };
 
@@ -31,6 +31,12 @@ const LocalSceneSidebarContainer = (props) => {
     setCSSvariable('--sidebar-top-margin', '60px');
   }
 
+  const handleTabSelection = slug => {
+    const { changeUI } = props;
+    changeUI({ localSceneActiveTab: slug });
+    selectNRCSectionAnalyticsEvent(slug);
+  };
+
   const handlePrintReport = () => {
     const today = new Date();
     const date = Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(today);
@@ -44,6 +50,7 @@ const LocalSceneSidebarContainer = (props) => {
   return (
     <Component
       handlePrintReport={handlePrintReport}
+      handleTabSelection={handleTabSelection}
       handleSceneModeChange={handleSceneModeChange}
       {...props}
     />

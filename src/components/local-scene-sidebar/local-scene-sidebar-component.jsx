@@ -10,9 +10,12 @@ import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import ShareModal from 'components/share-modal';
 import ShareModalButton from 'components/share-button';
+import Tabs from 'components/tabs';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
+
+import { LOCAL_SCENE_TABS, LOCAL_SCENE_DEFAULT_TAB } from 'constants/ui-params';
 
 const LocalSceneSidebarComponent = ({
   SPI,
@@ -38,9 +41,11 @@ const LocalSceneSidebarComponent = ({
   amphibiansEndemic,
   handlePrintReport,
   handleShareReport,
+  handleTabSelection,
   isFullscreenActive,
   countryDescription,
   countryDataLoading,
+  localSceneActiveTab,
   priorityAreasSentence,
   handleSceneModeChange,
   endemicVertebratesCount,
@@ -50,6 +55,7 @@ const LocalSceneSidebarComponent = ({
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+
 
   if (countryDataLoading) {
     return (
@@ -80,6 +86,11 @@ const LocalSceneSidebarComponent = ({
         <span className={styles.text}>back to global</span>
       </button>
       <DummyBlurWorkaround />
+      <Tabs
+        tabs={LOCAL_SCENE_TABS}
+        onClick={handleTabSelection}
+        defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
+      />
       <CountryDataCard
         SPI={SPI}
         mean={mean}
