@@ -24,6 +24,7 @@ const Component = ({
   speciesChartData,
   currentProtection,
   amphibiansEndemic,
+  handleSourceClick,
   handleShareReport,
   countryDescription,
   countryDataLoading,
@@ -52,6 +53,7 @@ const Component = ({
         <LocalPriorityCard
           hasPriority={hasPriority}
           protectionNeeded={protectionNeeded}
+          handleSourceClick={handleSourceClick}
           currentProtection={currentProtection}
           priorityAreasSentence={priorityAreasSentence}
         />
