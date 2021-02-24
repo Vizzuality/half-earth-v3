@@ -18,7 +18,7 @@
   }
 
   .hasBorder {
-    border-left: solid 2px $oslo-gray;
+    border-left: 1px solid $grey-text;
 
     &.first {
       border-left: 0;
