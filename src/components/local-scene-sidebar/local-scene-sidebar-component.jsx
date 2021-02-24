@@ -10,6 +10,9 @@ import ShareModalButton from 'components/share-button';
 import Tabs from 'components/tabs';
 
 import OverviewSidebar from './overview-sidebar';
+import ChallengesSidebar from './challenges-sidebar';
+// import RankingSidebar from './Ranking-sidebar';
+
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -21,40 +24,17 @@ import {
 } from 'constants/ui-params';
 
 const LocalSceneSidebarComponent = ({
-  SPI,
-  mean,
-  birds,
-  mammals,
-  reptiles,
   className,
-  amphibians,
   countryISO,
   countryName,
   countryData,
-  hasPriority,
-  openedModal,
-  birdsEndemic,
-  mammalsEndemic,
-  indexStatement,
-  reptilesEndemic,
-  vertebratesCount,
-  protectionNeeded,
-  speciesChartData,
-  currentProtection,
-  amphibiansEndemic,
   handlePrintReport,
-  handleShareReport,
+  handleSourceClick,
   handleTabSelection,
   isFullscreenActive,
-  countryDescription,
   countryDataLoading,
   localSceneActiveTab,
-  priorityAreasSentence,
   handleSceneModeChange,
-  endemicVertebratesCount,
-  endemicVertebratesSentence,
-  highlightedSpeciesSentence,
-  highlightedSpeciesRandomNumber,
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -100,35 +80,21 @@ const LocalSceneSidebarComponent = ({
       />
       {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
         <OverviewSidebar 
-          SPI={SPI}
-          mean={mean}
-          birds={birds}
-          mammals={mammals}
-          reptiles={reptiles}
-          amphibians={amphibians}
           countryISO={countryISO}
-          openedModal={openedModal}
-          countryName={countryName}
-          countryData={countryData}
-          hasPriority={hasPriority}
-          birdsEndemic={birdsEndemic}
-          speciesChartData={speciesChartData}
-          indexStatement={indexStatement}
-          mammalsEndemic={mammalsEndemic}
-          reptilesEndemic={reptilesEndemic}
-          vertebratesCount={vertebratesCount}
-          protectionNeeded={protectionNeeded}
-          currentProtection={currentProtection}
-          amphibiansEndemic={amphibiansEndemic}
-          countryDescription={countryDescription}
-          countryDataLoading={countryDataLoading}
-          priorityAreasSentence={priorityAreasSentence}
-          endemicVertebratesCount={endemicVertebratesCount}
-          endemicVertebratesSentence={endemicVertebratesSentence}
-          highlightedSpeciesSentence={highlightedSpeciesSentence}
-          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
+          handleSourceClick={handleSourceClick}
         />
       }
+      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && 
+        <ChallengesSidebar 
+          countryISO={countryISO}
+          handleSourceClick={handleSourceClick}
+        />
+      }
+      {/* {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 
+        <RankingSidebar 
+          countryISO={countryISO}
+        />
+      } */}
       <div className={styles.actionGroup}>
         <DownloadIcon />
         <button className={styles.actionButton} onClick={handlePrintReport}>
