@@ -44,17 +44,12 @@ const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, ma
         className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
       >
         <Tabs
-          tabs={[
-            {
-              title: 'Priority'
-            },
-            {
-              title: 'Richness'
-            },
-            {
-              title: 'Rarity'
-            }
-          ]}
+          tabs={
+            Object.values(LAYER_VARIANTS).map(variant => ({
+              title: capitalize(variant),
+              slug: variant
+            }))
+          }
           onClick={() => console.info('Remove me I am just here for demo')}
         />
         {biodiversityCategories.map((cat) => (
