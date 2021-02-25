@@ -73,3 +73,21 @@
     }
   }
 }
+
+.metadataSource {
+  @extend %annotation;
+  color: $_temporary-light-text;
+  display: block;
+  padding-top: $paragraph-gutter;
+  p {
+    margin: 0;
+    a {
+      text-decoration: underline;
+      color: $_temporary-light-text;
+      &:hover {
+        cursor: pointer;
+        color: darken($_temporary-light-text, 20%)
+      }
+    }
+  }
+}

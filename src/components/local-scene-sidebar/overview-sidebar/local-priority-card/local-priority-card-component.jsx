@@ -8,11 +8,11 @@ import {
 } from 'constants/metadata';
 
 const protectionSources = [
-  {label: 'WDPA, OECM & RAISG', matadataService:  MERGED_PROTECTION}
+  {label: 'WDPA, OECM & RAISG', metadataService:  MERGED_PROTECTION}
 ]
 
 const prioritySources = [
-  {label: 'Rinnan DS and Jetz W (2020)', matadataService:  COUNTRY_PRIORITY}
+  {label: 'Rinnan DS and Jetz W (2020)', metadataService:  COUNTRY_PRIORITY}
 ]
 
 const LocalPriorityCardComponent = (props) => {
@@ -32,7 +32,7 @@ const LocalPriorityCardComponent = (props) => {
         nature."
         legendType="basic"
         handleSourceClick={handleInfoClick}
-        metaDataSources={protectionSources}
+        sources={protectionSources}
       />
       <SidebarCardContent
         title={`Additional protection needed: ${protectionNeeded}%`}
@@ -41,7 +41,7 @@ const LocalPriorityCardComponent = (props) => {
         lowValueLabel="low priority"
         highValueLabel="high priority"
         handleSourceClick={handleInfoClick}
-        metaDataSources={prioritySources}
+        sources={prioritySources}
       />
     </SidebarCardWrapper>
   );
