@@ -27,13 +27,15 @@ const Component = ({
 
   return (
     <>
-      <SidebarCardWrapper className={styles.cardWrapper}>
-        <SidebarCardContent
-          title="what are the challenges of a country?"
-          description={metadata && metadata.description}
-          metaDataSources={metadata && metadata.source}
-        />
-      </SidebarCardWrapper>
+      <div className={styles.cardContainer}>
+        <SidebarCardWrapper>
+          <SidebarCardContent
+            title={metadataConfig[CHALLENGES_CHART].title}
+            description={metadata && metadata.description}
+            metaDataSources={metadata && metadata.source}
+          />
+        </SidebarCardWrapper>
+      </div>
       <div className={styles.countriesLegend}>
         {CONTINENTS.map((continent) => (
           <div key={`legend-${continent}`} className={cx(styles.continent)}>

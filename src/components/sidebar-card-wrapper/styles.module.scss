@@ -4,7 +4,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: $sidebar-paddings;
+  min-height: inherit;
+  background-color: $white;
+  border-radius: $card-border-radius;
   > :not(:last-child)::after {
     content: '';
     position: relative;
@@ -16,7 +18,5 @@
 }
 
 .section {
-  background-color: $white;
-  border-radius: $card-border-radius;
   padding: $sidebar-cards-padding;
 }

@@ -11,7 +11,7 @@ import Tabs from 'components/tabs';
 
 import OverviewSidebar from './overview-sidebar';
 import ChallengesSidebar from './challenges-sidebar';
-// import RankingSidebar from './Ranking-sidebar';
+import RankingSidebar from './ranking-sidebar';
 
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -91,11 +91,11 @@ const LocalSceneSidebarComponent = ({
           handleSourceClick={handleSourceClick}
         />
       }
-      {/* {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 
+      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 
         <RankingSidebar 
           countryISO={countryISO}
         />
-      } */}
+      }
       <div className={styles.actionGroup}>
         <DownloadIcon />
         <button className={styles.actionButton} onClick={handlePrintReport}>

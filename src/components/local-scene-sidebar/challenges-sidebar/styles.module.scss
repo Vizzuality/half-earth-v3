@@ -1,9 +1,9 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-.cardWrapper {
-  padding: 0 20px;
-  margin: 25px 0;
+.cardContainer {
+  padding: $sidebar-paddings;
+  min-height: 387px;
 }
 
 .countriesLegend {
