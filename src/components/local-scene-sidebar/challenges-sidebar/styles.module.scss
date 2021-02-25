@@ -1,6 +1,11 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.cardWrapper {
+  padding: 0 20px;
+  margin: 25px 0;
+}
+
 .countriesLegend {
   padding: 5px 25px;
   display: flex;

@@ -76,6 +76,7 @@ const LocalSceneSidebarComponent = ({
       <Tabs
         tabs={LOCAL_SCENE_TABS}
         onClick={handleTabSelection}
+        className={styles.tabsContainer}
         defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
       />
       {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 

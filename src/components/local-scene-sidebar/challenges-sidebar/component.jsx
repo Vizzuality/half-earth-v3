@@ -27,7 +27,7 @@ const Component = ({
 
   return (
     <>
-      <SidebarCardWrapper>
+      <SidebarCardWrapper className={styles.cardWrapper}>
         <SidebarCardContent
           title="what are the challenges of a country?"
           description={metadata && metadata.description}

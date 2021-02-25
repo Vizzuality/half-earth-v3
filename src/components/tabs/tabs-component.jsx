@@ -9,10 +9,10 @@ const getDefaultTabIndex = (tabs, defaultTabSlug) => {
   return defaultTabIndex > -1 ? defaultTabIndex : 0;
 }
 
-const Tabs = ({ tabs, onClick, defaultTabSlug }) =>  {
+const Tabs = ({ tabs, onClick, defaultTabSlug, className }) =>  {
   const [selectedTabIndex, setSelectedTabIndex] = useState(getDefaultTabIndex(tabs, defaultTabSlug));
   return (
-    <div className={styles.tabs}>
+    <div className={cx(styles.tabs, className)}>
       <ul role="tablist">
         {tabs.map((tab, i) => {
           const { slug, title } = tab;
