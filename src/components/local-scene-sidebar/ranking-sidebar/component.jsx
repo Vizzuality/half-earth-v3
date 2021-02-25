@@ -7,6 +7,11 @@ import
 metadataConfig, {
   RANKING_CHART,
 } from 'constants/metadata';
+
+import {
+  RANKING_COLORS,
+  RANKING_LEGEND
+} from 'constants/country-mode-constants';
 import metadataService from 'services/metadata-service';
 
 const Component = () => {
@@ -19,6 +24,25 @@ const Component = () => {
     })
   }, []);
 
+  const LegendBlock = ({legendItems}) => (
+    <div className={styles.legendBlock}>
+      {
+        legendItems.map(item => (
+          <div className={styles.legendItem}>
+            <span
+              className={styles.color}
+              style={{backgroundColor:`${RANKING_COLORS[item.slug]}`}}/>
+            <span
+              className={styles.label}
+            >
+              {item.label}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+  )
+
   return (
     <>
     <div className={styles.cardContainer}>
@@ -29,6 +53,11 @@ const Component = () => {
           metaDataSources={metadata && metadata.source}
         />
       </SidebarCardWrapper>
+    </div>
+    <div className={styles.legendContainer}>
+      <LegendBlock legendItems={RANKING_LEGEND.species}/>
+      <LegendBlock legendItems={RANKING_LEGEND.human}/>
+      <LegendBlock legendItems={RANKING_LEGEND.protection}/>
     </div>
     </>
   )

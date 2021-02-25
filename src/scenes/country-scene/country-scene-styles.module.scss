@@ -26,11 +26,9 @@
 .challengesChart,
 .rankingChart {
   position: relative;
-  left: $country-sidebar-width;
-  width: $country-scene-chart-width;
+  left: calc(#{$sidebar-width} + 83px);
   top: $sidebar-header-height;
 }
-
 
 @media print {
   .hideOnPrint {

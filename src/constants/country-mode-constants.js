@@ -58,3 +58,34 @@ export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'filter_steward', name: FILTERS_DICTIONARY.filter_steward},
   {slug: 'filter_continent', name: FILTERS_DICTIONARY.filter_continent}
 ]
+
+export const RANKING_COLORS = {
+  non_endemic: '#F87200',
+  endemic: '#F8D300',
+  high_human: '#731CFF',
+  some_human: '#B284FD',
+  non_human: '#A0AFB8',
+  protected: '#008604',
+  needed: '#B3E74B',
+  non_needed: '#AFB8A0',
+}
+
+export const RANKING_LEGEND = {
+  species : [
+    {slug: 'non_endemic', label: 'non endemic species'},
+    {slug: 'endemic', label: 'endemic species'},
+
+  ],
+  human : [
+    {slug: 'high_human', label: 'very high human modification'},
+    {slug: 'some_human', label: 'some human modification'},
+    {slug: 'non_human', label: 'non-human modification'},
+
+
+  ],
+  protection : [
+    {slug: 'protected', label: 'protected areas'},
+    {slug: 'needed', label: 'protection needed'},
+    {slug: 'non_needed', label: 'protection non-needed'},
+  ],
+}
