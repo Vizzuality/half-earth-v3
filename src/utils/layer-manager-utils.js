@@ -4,25 +4,28 @@ import { loadModules } from 'esri-loader';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
 
-export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
+// Toggles all the layers passed as ids on the first parameter
+export const batchLayerManagerToggle = (layerIdsToToggle, activeLayers, callback, category) => {
   const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
-  const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
-  if (areActive) {
-    const updatedLayers = layerNamesArray.reduce((acc, title) => {
+  const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersNamesArray);
+  const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
+
+  let updatedLayers = activeLayers;
+  if (layersToRemove.length) {
+    updatedLayers = layersToRemove.reduce((acc, title) => {
       removeLayerAnalyticsEvent({ slug: title });
       return [...acc.filter(l => l.title !== title)];
     }, activeLayers);
-    callback({activeLayers: updatedLayers });
-  } else {
-    const layersToAdd = layerNamesArray.map(title => {
+  }
+  if (layersToAdd.length) {
+    const updatedLayersToAdd = layersToAdd.map(title => {
       addLayerAnalyticsEvent({ slug: title });
       return { title, category, opacity: DEFAULT_OPACITY }
     });
-    activeLayers
-      ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
-      : callback({ activeLayers: layersToAdd });
+    updatedLayers = updatedLayers.concat(updatedLayersToAdd)
   }
-}
+  callback({ activeLayers: updatedLayers });
+};
 
 export const layerManagerToggle = (layerTitle, activeLayers, callback, category) => {
   const title = layerTitle;
