@@ -78,22 +78,13 @@ const CountrySceneComponent = ({
             isFullscreenActive={isFullscreenActive}
           />
         )}
-        <Widgets
+        {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
+          <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />
-        <LocalSceneSidebar
-          countryISO={countryISO}
-          countryName={countryName}
-          openedModal={openedModal}
-          activeLayers={activeLayers}
-          localGeometry={countryBorder}
-          className={styles.hideOnPrint}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          localSceneActiveTab={localSceneActiveTab}
-        />
+        )}
         <PdfNationalReport
           countryISO={countryISO}
           countryName={countryName}
@@ -101,6 +92,17 @@ const CountrySceneComponent = ({
           shortLink={shortLink}
         />
       </Scene>
+      <LocalSceneSidebar
+        countryISO={countryISO}
+        countryName={countryName}
+        openedModal={openedModal}
+        activeLayers={activeLayers}
+        localGeometry={countryBorder}
+        className={styles.hideOnPrint}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+        localSceneActiveTab={localSceneActiveTab}
+      />
       <div
         className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
           [styles.challengesSelected]:
