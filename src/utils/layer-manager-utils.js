@@ -6,16 +6,19 @@ import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-l
 
 // Toggles all the layers passed as ids on the first parameter
 export const batchLayerManagerToggle = (layerIdsToToggle, activeLayers, callback, category) => {
-  const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
-  const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersNamesArray);
+  const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
+  const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersIds);
   const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
 
   let updatedLayers = activeLayers;
-  if (layersToRemove.length) {
-    updatedLayers = layersToRemove.reduce((acc, title) => {
-      removeLayerAnalyticsEvent({ slug: title });
-      return [...acc.filter(l => l.title !== title)];
-    }, activeLayers);
+if (layersToRemove.length) {
+    updatedLayers = activeLayers.filter((layer) => {
+      const hasToBeRemoved = layersToRemove.includes(layer.title);
+      if (hasToBeRemoved) {
+        removeLayerAnalyticsEvent({ slug: layer.title });
+      }
+      return !hasToBeRemoved;
+    });
   }
   if (layersToAdd.length) {
     const updatedLayersToAdd = layersToAdd.map(title => {

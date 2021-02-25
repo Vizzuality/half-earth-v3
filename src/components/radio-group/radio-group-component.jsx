@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
@@ -6,34 +6,22 @@ import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import RadioButton from './radio-button/radio-button';
 import styles from './radio-group-styles.module.scss';
 
+const getSelectedLayerId = (options) => {
+  const selectedLayer = options && options.find((o) => o.selected);
+  return selectedLayer && selectedLayer.layer;
+}
+
 const RadioGroup = ({
   radioOptions,
   title,
   handleSimpleLayerToggle,
   handleExclusiveLayerToggle,
   handleInfoClick,
-  variant,
-  defaultValue,
-  selectedLayerType
+  variant
 }) => {
-  const selectedLayer = radioOptions.find((o) => o.selected);
-  const selectedLayerId = selectedLayer && selectedLayer.layer;
-
-  useEffect(() => {
-    if (defaultValue && !selectedLayer) {
-      const defaultOption = radioOptions.find(o => o.value === defaultValue);
-      if (defaultOption) {
-        handleSimpleLayerToggle(defaultOption.layer);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log('v', 'variantChanged', selectedLayerType)
-  }, [selectedLayerType]);
-
+  const selectedLayerId = useMemo(() => getSelectedLayerId(radioOptions), [radioOptions]);
   const renderRadioButton = (option) => {
-    const key =`radio-button-${title}-${option.value}-${variant}`;
+    const key = `radio-button-${title}-${option.value}-${variant}`;
     return (
       <div
         key={key}
@@ -78,13 +66,11 @@ const RadioGroup = ({
 
 
 RadioGroup.propTypes = {
-  options: PropTypes.array,
-  multiple: PropTypes.boolean
+  options: PropTypes.array
 };
 
 RadioGroup.defaultProps = {
-  options: [],
-  multiple: false
+  options: []
 };
 
 export default RadioGroup;
