@@ -10,7 +10,7 @@
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
   position: absolute;
-  height: 100vh;
+  height: 95vh;
   width: $local-sidebar-width;
   top: $local-sidebar-top-margin;
   left: $site-gutter;
@@ -72,7 +72,24 @@
 
 .tabsContainer {
   padding: 0px 20px;
-  margin: 7px 0 0 0;
+  margin: 7px 0 $sidebar-paddings 0;
+}
+
+.scrollableArea {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 85%;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    max-height: 66px;
+    border-radius: 3px;
+    background-color: #DBDBDB;
+    width: 30px;
+  }
 }
 
 .actionGroup {

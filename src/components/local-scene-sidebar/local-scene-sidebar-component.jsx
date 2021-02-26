@@ -39,26 +39,7 @@ const LocalSceneSidebarComponent = ({
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
-
-  if (countryDataLoading) {
-    return (
-      <div className={styles.container}>
-        <button
-        className={styles.backButton}
-        onClick={handleSceneModeChange}
-      >
-        <BackIcon className={styles.icon}/>
-        <span className={styles.text}>back to global</span>
-      </button>
-        <div className={styles.loading}>
-          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
-          <Loading />
-        </div>
-      </div>
-    );
-  }
-
-  return countryData ? (
+  return (
     <div
       className={cx(styles.container, className, {
         [animationStyles.leftHidden]: sidebarHidden
@@ -79,42 +60,51 @@ const LocalSceneSidebarComponent = ({
         className={styles.tabsContainer}
         defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
       />
-      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
-        <OverviewSidebar 
-          countryISO={countryISO}
-          handleSourceClick={handleSourceClick}
-        />
-      }
-      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && 
-        <ChallengesSidebar 
-          countryISO={countryISO}
-          handleSourceClick={handleSourceClick}
-        />
-      }
-      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 
-        <RankingSidebar 
-          countryISO={countryISO}
-        />
-      }
-      <div className={styles.actionGroup}>
-        <DownloadIcon />
-        <button className={styles.actionButton} onClick={handlePrintReport}>
-          download this info (pdf)
-        </button>
-      </div>
-      <div className={styles.actionGroup}>
-        <ShareModalButton
-          variant="longText"
-          theme={{ shareText: styles.shareText }}
-          setShareModalOpen={setShareModalOpen}
-        />
-        <ShareModal
-          isOpen={isShareModalOpen}
-          setShareModalOpen={setShareModalOpen}
-        />
-      </div>
+      {!countryData ? (
+        <div className={styles.loading}>
+          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
+          <Loading />
+        </div>
+      ) : (
+        <div className={styles.scrollableArea}>
+          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
+            <OverviewSidebar 
+              countryISO={countryISO}
+              handleSourceClick={handleSourceClick}
+            />
+          }
+          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && 
+            <ChallengesSidebar 
+              countryISO={countryISO}
+              handleSourceClick={handleSourceClick}
+            />
+          }
+          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 
+            <RankingSidebar 
+              countryISO={countryISO}
+            />
+          }
+          <div className={styles.actionGroup}>
+            <DownloadIcon />
+            <button className={styles.actionButton} onClick={handlePrintReport}>
+              download this info (pdf)
+            </button>
+          </div>
+          <div className={styles.actionGroup}>
+            <ShareModalButton
+              variant="longText"
+              theme={{ shareText: styles.shareText }}
+              setShareModalOpen={setShareModalOpen}
+            />
+            <ShareModal
+              isOpen={isShareModalOpen}
+              setShareModalOpen={setShareModalOpen}
+            />
+          </div>
+        </div>
+      )}
     </div>
-  ) : null;
+  );
 }
 
 
