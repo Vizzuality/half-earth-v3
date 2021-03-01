@@ -3,15 +3,15 @@ import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
+import usePrevious from 'hooks/use-previous';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
-import styles from './biodiversity-sidebar-card-styles.module.scss'
 import { LAYER_VARIANTS } from 'constants/landscape-view-constants';
+import styles from './biodiversity-sidebar-card-styles.module.scss'
+
 import capitalize from 'lodash/capitalize';
 
 const biodiversity = LAYERS_CATEGORIES.BIODIVERSITY;
-const intersection = (...arrays) => arrays.reduce((a, b) => a.filter((c) => b.includes(c)));
-
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
@@ -19,46 +19,72 @@ const BiodiversitySidebarCardComponent = ({
   view,
   changeUI,
   handleClearAndAddLayers,
-  biodiversityLayerType
+  biodiversityLayerVariant
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+
+  const previousBiodiversityLayerVariant = usePrevious(
+    biodiversityLayerVariant
+  );
 
   // Select matching or default layers on layer type switch
   useEffect(() => {
     const bioLayers = activeLayers.filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY).map(l => l.title);
     let updatedTabSelectedLayers = [];
+
     if (bioLayers.length && biodiversityCategories) {
-      const getTaxaMatches = (taxa) => {
+      const getTaxaMatches = ({ taxa, categoryName, subcategoryName }) => {
         const matches = [];
-        taxa.forEach(t => {
-          const hasMatch = intersection(Object.values(t.layers), bioLayers).length > 0;
-          if (hasMatch && t.layers[biodiversityLayerType]) {
-            matches.push(t.layers[biodiversityLayerType]);
+        bioLayers.forEach((bioLayer) => {
+          const taxaToMatch = taxa.find(t => t.layer === bioLayer);
+          if (taxaToMatch) {
+            let matchingCategory = biodiversityCategories[biodiversityLayerVariant].find(c => c.name === categoryName);
+            if (matchingCategory && subcategoryName) {
+              matchingCategory = matchingCategory.subcategories.find(
+                (s) => s.name === subcategoryName
+              );
+            }
+            const matchingLayer = matchingCategory && matchingCategory.taxa.find(
+              (layer) => layer.value === taxaToMatch.value
+            );
+            if (matchingLayer) {
+              matches.push(matchingLayer.layer);
+            }
           }
         });
         return matches;
       };
 
-      biodiversityCategories.forEach((category) => {
-        if(category.subcategories) {
-          category.subcategories.forEach(subcategory =>  {
-            updatedTabSelectedLayers = updatedTabSelectedLayers.concat(getTaxaMatches(subcategory.taxa));
-          })
-        } else {
-          updatedTabSelectedLayers = updatedTabSelectedLayers.concat(getTaxaMatches(category.taxa));
-        }
-      });
+      previousBiodiversityLayerVariant &&
+        biodiversityCategories[previousBiodiversityLayerVariant].forEach(
+          (category) => {
+            if (category.subcategories) {
+              category.subcategories.forEach((subcategory) => {
+                updatedTabSelectedLayers = updatedTabSelectedLayers.concat(
+                  getTaxaMatches({ taxa: subcategory.taxa, categoryName: category.name, subcategoryName: subcategory.name })
+                );
+              });
+            } else {
+              updatedTabSelectedLayers = updatedTabSelectedLayers.concat(
+                getTaxaMatches({ taxa: category.taxa, categoryName: category.name })
+              );
+            }
+          }
+        );
     }
     if (!updatedTabSelectedLayers.length) {
-      const defaultTabSelection = biodiversityCategories[0].taxa[0].layers[biodiversityLayerType];
+      const defaultTabSelection =
+        biodiversityLayerVariant && biodiversityCategories[
+          biodiversityLayerVariant
+        ][0].taxa[0].layer;
       if (defaultTabSelection) {
         updatedTabSelectedLayers.push(defaultTabSelection);
       }
     }
 
-    handleClearAndAddLayers(updatedTabSelectedLayers);
-  }, [biodiversityLayerType]);
+    handleClearAndAddLayers(bioLayers, updatedTabSelectedLayers);
+  }, [biodiversityLayerVariant]);
 
   return (
     <div className={styles.sidebarCardContainer}>
@@ -78,11 +104,13 @@ const BiodiversitySidebarCardComponent = ({
             slug: variant
           }))}
           onClick={(slug) => {
-            changeUI({ biodiversityLayerType: slug });
+            changeUI({ biodiversityLayerVariant: slug });
           }}
-          defaultTabSlug={biodiversityLayerType}
+          defaultTabSlug={biodiversityLayerVariant}
         />
-        {biodiversityCategories.map((cat) => (
+        {biodiversityLayerVariant && biodiversityCategories[
+          biodiversityLayerVariant
+        ].map((cat) => (
           <BiodiversityLayers
             key={cat.name}
             title={cat.name}
@@ -92,7 +120,7 @@ const BiodiversitySidebarCardComponent = ({
             activeLayers={activeLayers}
             map={map}
             view={view}
-            layerType={biodiversityLayerType}
+            layerType={biodiversityLayerVariant}
           />
         ))}
       </div>

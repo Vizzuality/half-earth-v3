@@ -49,7 +49,7 @@ export default {
     countryChallengesSelectedFilter: 'all',
     localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
     countryChallengesSelectedKey: 'N_SPECIES',
-    biodiversityLayerType: 'priority',
+    biodiversityLayerVariant: 'priority',
     speciesModalSearch: null,
     speciesModalSort: null,
     sortRankingCategory: null
