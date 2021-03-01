@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
+import isEqual from 'lodash/isEqual';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
@@ -11,7 +12,6 @@ import styles from './biodiversity-sidebar-card-styles.module.scss'
 
 import capitalize from 'lodash/capitalize';
 
-const biodiversity = LAYERS_CATEGORIES.BIODIVERSITY;
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
@@ -30,13 +30,13 @@ const BiodiversitySidebarCardComponent = ({
 
   // Select matching or default layers on layer type switch
   useEffect(() => {
-    const bioLayers = activeLayers.filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY).map(l => l.title);
+    const bioLayerIds = activeLayers.filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY).map(l => l.title);
     let updatedTabSelectedLayers = [];
 
-    if (bioLayers.length && biodiversityCategories) {
+    if (bioLayerIds.length && biodiversityCategories) {
       const getTaxaMatches = ({ taxa, categoryName, subcategoryName }) => {
         const matches = [];
-        bioLayers.forEach((bioLayer) => {
+        bioLayerIds.forEach((bioLayer) => {
           const taxaToMatch = taxa.find(t => t.layer === bioLayer);
           if (taxaToMatch) {
             let matchingCategory = biodiversityCategories[biodiversityLayerVariant].find(c => c.name === categoryName);
@@ -82,16 +82,17 @@ const BiodiversitySidebarCardComponent = ({
         updatedTabSelectedLayers.push(defaultTabSelection);
       }
     }
-
-    handleClearAndAddLayers(bioLayers, updatedTabSelectedLayers);
+    if(!isEqual(bioLayerIds, updatedTabSelectedLayers)) {
+      handleClearAndAddLayers(bioLayerIds, updatedTabSelectedLayers);
+    }
   }, [biodiversityLayerVariant]);
 
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
         title="mapping"
-        category={biodiversity}
-        counter={countedActiveLayers[biodiversity]}
+        category={LAYERS_CATEGORIES.BIODIVERSITY}
+        counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />

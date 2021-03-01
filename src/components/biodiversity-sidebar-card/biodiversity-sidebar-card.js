@@ -9,9 +9,9 @@ import mapStateToProps from './biodiversity-sidebar-card-selectors';
 const BiodiversitySidebarCard = (props)  => {
   const { changeGlobe, activeLayers } = props;
 
-  const handleClearAndAddLayers = (bioLayers, layerIds) => {
+  const handleClearAndAddLayers = (bioLayerIds, layerIds) => {
     batchLayerManagerToggle(
-      bioLayers.map((l) => l.title).concat(layerIds),
+      bioLayerIds.concat(layerIds),
       activeLayers,
       changeGlobe,
       LAYERS_CATEGORIES.BIODIVERSITY

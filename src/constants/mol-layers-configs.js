@@ -970,6 +970,11 @@ export const legendConfigs = {
     title: "Hummingbirds rarity"
   },
   // Global data
+  [MAMMALS_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "Mammals priority"
+  },
   [MAMMALS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
@@ -1010,6 +1015,11 @@ export const legendConfigs = {
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Cacti richness"
   },
+  [AMPHIB_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "Amphibian priority"
+  },
   [AMPHIB_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
@@ -1019,6 +1029,11 @@ export const legendConfigs = {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian richness"
+  },
+  [REPTILES_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "Reptile priority"
   },
   [REPTILES_RICHNESS]: {
     type: "gradient",
@@ -1030,6 +1045,11 @@ export const legendConfigs = {
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Reptile rarity"
   },
+  [BIRDS_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "Birds priority"
+  },
   [BIRDS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
@@ -1039,6 +1059,11 @@ export const legendConfigs = {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Birds richness"
+  },
+  [ALL_TAXA_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "All groups priority"
   },
   [ALL_TAXA_RARITY]: {
     type: "gradient",
