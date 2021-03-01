@@ -28,7 +28,10 @@ const Component = () => {
     <div className={styles.legendBlock}>
       {
         legendItems.map(item => (
-          <div className={styles.legendItem}>
+          <div
+            key={`${RANKING_COLORS[item.slug]}`}
+            className={styles.legendItem}
+          >
             <span
               className={styles.color}
               style={{backgroundColor:`${RANKING_COLORS[item.slug]}`}}/>
