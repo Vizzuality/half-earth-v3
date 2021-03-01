@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 
 import Tabs from 'components/tabs';
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
-import ShareModalButton from 'components/share-button';
+
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import OverviewSidebar from './overview-sidebar';
@@ -36,7 +37,6 @@ const LocalSceneSidebarComponent = ({
   handleSourceClick,
   handleTabSelection,
   isFullscreenActive,
-  countryDataLoading,
   localSceneActiveTab,
   handleSceneModeChange,
 }) => {
@@ -90,23 +90,24 @@ const LocalSceneSidebarComponent = ({
               countryISO={countryISO}
             />
           }
-          <div className={styles.actionGroup}>
-            <DownloadIcon />
-            <button className={styles.actionButton} onClick={handlePrintReport}>
-              download this info (pdf)
-            </button>
-          </div>
-          <div className={styles.actionGroup}>
-            <ShareModalButton
-              variant="longText"
-              theme={{ shareText: styles.shareText }}
-              setShareModalOpen={setShareModalOpen}
+          <Button 
+            type='compound'
+            Icon={DownloadIcon}
+            handleClick={handlePrintReport}
+            className={styles.actionButton}
+            label="download this info (pdf)"
             />
+          <Button 
+            type='compound'
+            Icon={ShareIcon}
+            handleClick={setShareModalOpen}
+            className={styles.actionButton}
+            label="share this info"
+          />
             <ShareModal
               isOpen={isShareModalOpen}
               setShareModalOpen={setShareModalOpen}
             />
-          </div>
         </div>
       )}
     </div>

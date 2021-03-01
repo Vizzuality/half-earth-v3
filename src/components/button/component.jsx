@@ -12,10 +12,16 @@ const Component = ({
 }) => (
   <button 
     onClick={handleClick}
-		className={cx(styles.container, className, { [styles.rounded]: type === 'rounded'})}
+		className={cx(
+      className,
+      {
+        [styles.rounded]: type === 'rounded',
+        [styles.compound]: type === 'compound',
+      }
+    )}
   >
     {Icon && <Icon className={styles.icon}/>}
-    {label && <span>{label}</span>}
+    {label && <span className={styles.label}>{label}</span>}
   </button>
 )
 

@@ -81,18 +81,8 @@
   }
 }
 
-.actionGroup {
-  padding: $site-gutter;
-  padding-top: 0;
-  display: flex;
-}
-
 .actionButton {
-  @extend %title;
-  color: $white;
-  margin-left: 1em;
+  margin-left: $site-gutter;
+  margin-bottom: $site-gutter;
 }
 
-.shareText {
-  @extend %title;
-}

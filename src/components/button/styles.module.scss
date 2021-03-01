@@ -1,10 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-.container {
-  color:red;
-}
-
 .rounded {
   display: flex;
   justify-content: center;
@@ -16,7 +12,24 @@
 
   .icon {
     fill: $dark-text;
-    width: 12px;
-    height: 12px;
+    width: $font-size-xs;
+    height: $font-size-xs;
+  }
+}
+
+.compound {
+  display: flex;
+  padding: 6px;
+  background-color: $brand-color-secondary;
+  border-radius: $border-radius-desktop;
+
+  .icon {
+    fill: $white;
+    margin-right: $paragraph-gutter;
+  }
+  
+  .label {
+    @extend %title;
+    color: $white;
   }
 }
