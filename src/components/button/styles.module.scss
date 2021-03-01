@@ -1,0 +1,16 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  color:red;
+}
+.rounded {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  background-color: $white;
+
+  .icon {
+    fill: red;
+  }
+}
