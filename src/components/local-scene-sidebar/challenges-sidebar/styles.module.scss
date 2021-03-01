@@ -7,7 +7,7 @@
 }
 
 .countriesLegend {
-  padding: 5px 25px;
+  padding: 5px $sidebar-cards-padding;
   display: flex;
   flex-flow: column wrap;
   height: 110px;
@@ -19,9 +19,9 @@
 }
 
 .continent {
-  margin-bottom: 10px;
+  margin-bottom: $paragraph-gutter;
   width: 134px;
-  margin-right: 30px;
+  margin-right: $sidebar-cards-padding;
 }
 
 .legendContinent {
