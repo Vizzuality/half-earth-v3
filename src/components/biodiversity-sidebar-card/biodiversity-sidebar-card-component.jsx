@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
-import isEqual from 'lodash/isEqual';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
-import usePrevious from 'hooks/use-previous';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { LAYER_VARIANTS } from 'constants/landscape-view-constants';
-import styles from './biodiversity-sidebar-card-styles.module.scss'
-
 import capitalize from 'lodash/capitalize';
+import styles from './biodiversity-sidebar-card-styles.module.scss';
 
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
@@ -18,74 +15,10 @@ const BiodiversitySidebarCardComponent = ({
   map,
   view,
   changeUI,
-  handleClearAndAddLayers,
   biodiversityLayerVariant
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
-
-  const previousBiodiversityLayerVariant = usePrevious(
-    biodiversityLayerVariant
-  );
-
-  // Select matching or default layers on layer type switch
-  useEffect(() => {
-    const bioLayerIds = activeLayers.filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY).map(l => l.title);
-    let updatedTabSelectedLayers = [];
-
-    if (bioLayerIds.length && biodiversityCategories) {
-      const getTaxaMatches = ({ taxa, categoryName, subcategoryName }) => {
-        const matches = [];
-        bioLayerIds.forEach((bioLayer) => {
-          const taxaToMatch = taxa.find(t => t.layer === bioLayer);
-          if (taxaToMatch) {
-            let matchingCategory = biodiversityCategories[biodiversityLayerVariant].find(c => c.name === categoryName);
-            if (matchingCategory && subcategoryName) {
-              matchingCategory = matchingCategory.subcategories.find(
-                (s) => s.name === subcategoryName
-              );
-            }
-            const matchingLayer = matchingCategory && matchingCategory.taxa.find(
-              (layer) => layer.value === taxaToMatch.value
-            );
-            if (matchingLayer) {
-              matches.push(matchingLayer.layer);
-            }
-          }
-        });
-        return matches;
-      };
-
-      previousBiodiversityLayerVariant &&
-        biodiversityCategories[previousBiodiversityLayerVariant].forEach(
-          (category) => {
-            if (category.subcategories) {
-              category.subcategories.forEach((subcategory) => {
-                updatedTabSelectedLayers = updatedTabSelectedLayers.concat(
-                  getTaxaMatches({ taxa: subcategory.taxa, categoryName: category.name, subcategoryName: subcategory.name })
-                );
-              });
-            } else {
-              updatedTabSelectedLayers = updatedTabSelectedLayers.concat(
-                getTaxaMatches({ taxa: category.taxa, categoryName: category.name })
-              );
-            }
-          }
-        );
-    }
-    if (!updatedTabSelectedLayers.length) {
-      const defaultTabSelection =
-        biodiversityLayerVariant && biodiversityCategories[
-          biodiversityLayerVariant
-        ][0].taxa[0].layer;
-      if (defaultTabSelection) {
-        updatedTabSelectedLayers.push(defaultTabSelection);
-      }
-    }
-    if(!isEqual(bioLayerIds, updatedTabSelectedLayers)) {
-      handleClearAndAddLayers(bioLayerIds, updatedTabSelectedLayers);
-    }
-  }, [biodiversityLayerVariant]);
 
   return (
     <div className={styles.sidebarCardContainer}>

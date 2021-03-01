@@ -5,9 +5,11 @@ import Component from './biodiversity-sidebar-card-component';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { batchLayerManagerToggle } from 'utils/layer-manager-utils';
 import mapStateToProps from './biodiversity-sidebar-card-selectors';
+import { biodiversityCategories } from 'constants/mol-layers-configs';
+import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
 
 const BiodiversitySidebarCard = (props)  => {
-  const { changeGlobe, activeLayers } = props;
+  const { changeGlobe, activeLayers, biodiversityLayerVariant } = props;
 
   const handleClearAndAddLayers = (bioLayerIds, layerIds) => {
     batchLayerManagerToggle(
@@ -17,6 +19,13 @@ const BiodiversitySidebarCard = (props)  => {
       LAYERS_CATEGORIES.BIODIVERSITY
     );
   };
+
+  useSelectLayersOnTabChange({
+    biodiversityLayerVariant,
+    activeLayers,
+    biodiversityCategories,
+    handleClearAndAddLayers
+  });
 
   return (
     <Component
