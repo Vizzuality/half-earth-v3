@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
-import { ReactComponent as BackIcon } from 'icons/arrow_expand.svg';
+import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+
+import Tabs from 'components/tabs';
+import Button from 'components/button';
 import ShareModal from 'components/share-modal';
 import ShareModalButton from 'components/share-button';
-import Tabs from 'components/tabs';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import OverviewSidebar from './overview-sidebar';
 import ChallengesSidebar from './challenges-sidebar';
 import RankingSidebar from './ranking-sidebar';
+
+
 
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -45,10 +49,12 @@ const LocalSceneSidebarComponent = ({
         [animationStyles.leftHidden]: sidebarHidden
       })}
     >
-      <button className={styles.backButton} onClick={handleSceneModeChange}>
-        <BackIcon className={styles.icon} />
-        <span className={styles.text}>back to global</span>
-      </button>
+      <Button 
+        type='rounded'
+        handleClick={handleSceneModeChange}
+        Icon={CloseIcon}
+        className={styles.backButton}
+      />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />

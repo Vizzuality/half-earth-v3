@@ -9,10 +9,10 @@ const Component = ({
   label,
 	className,
   handleClick,
-}) => console.log(type, label) || (
+}) => (
   <button 
     onClick={handleClick}
-		className={cx(styles.container, { [styles.rounded]: type === 'rounded'})}
+		className={cx(styles.container, className, { [styles.rounded]: type === 'rounded'})}
   >
     {Icon && <Icon className={styles.icon}/>}
     {label && <span>{label}</span>}
