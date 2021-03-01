@@ -1,8 +1,10 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import styles from './styles.module.scss';
 
 const Component = ({
   title,
+  sources,
   legendType,
   basicColor = '#008604',
   description,
@@ -11,8 +13,8 @@ const Component = ({
   metaDataSources,
   handleSourceClick,
 }) => {
-  const lastSource = metaDataSources.length -1;
-  const isMultiSource = metaDataSources.length > 1;
+  const lastSource = sources && sources.length -1;
+  const isMultiSource = sources && sources.length > 1;
   return (
     <section>
         <h3
@@ -49,14 +51,23 @@ const Component = ({
             </div>
           }
         </div>
-        <span className={styles.sourcesWrapper}>
+        {metaDataSources && (
+          <div className={styles.metadataSource}>
+            <ReactMarkdown
+              renderers={{link: ({href, children}) => <a href={href} target="_blank" rel="noopener noreferrer">{children[0].props.children}</a>}}
+              children={`Source: ${metaDataSources}`}
+            />
+          </div>
+          )
+        }
+        {sources && (<span className={styles.sourcesWrapper}>
           {`Source: `}
-          {metaDataSources.map((source, index) => (
+          {sources.map((source, index) => (
             <>
             {(isMultiSource && index === lastSource) && <span> and </span> }
               <span
                 className={styles.source}
-                onClick={() => handleSourceClick(source.matadataService)}
+                onClick={() => handleSourceClick(source.metadataService)}
               >
                 {`${source.label}`}
               </span>
@@ -65,7 +76,7 @@ const Component = ({
             </>
           ))
           }
-        </span>
+        </span>)}
       </section>
   )
 }

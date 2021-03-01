@@ -7,9 +7,11 @@
   @include backdropBlur();
   @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
   position: absolute;
-  height: 100vh;
-  width: calc(#{$local-sidebar-width} + 15px);
+  height: 95vh;
+  width: $local-sidebar-width;
   top: $local-sidebar-top-margin;
   left: $site-gutter;
   padding-bottom: $site-gutter;
@@ -47,6 +49,47 @@
   @extend %bodyText;
   margin-bottom: 20px;
   color: $white;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: baseline;
+}
+
+.flag {
+  width: 30px;
+  margin-left: $site-gutter;
+  position: relative;
+}
+
+.countryName {
+  @extend %display1;
+  color: $white;
+  padding-left: $site-gutter;
+  margin: 0;
+}
+
+.tabsContainer {
+  padding: 0px 20px;
+  margin: 7px 0 $sidebar-paddings 0;
+}
+
+.scrollableArea {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 85%;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    max-height: 66px;
+    border-radius: 3px;
+    background-color: #DBDBDB;
+    width: 30px;
+  }
 }
 
 .actionGroup {

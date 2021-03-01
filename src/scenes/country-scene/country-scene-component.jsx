@@ -11,7 +11,6 @@ import LabelsLayer from 'components/labels-layer';
 import LocalSceneSidebar from 'components/local-scene-sidebar';
 import CountryMaskLayer from 'components/country-mask-layer';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import LocalSceneModeSwitch from 'components/local-scene-mode-switch';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
 import CountryChallengesChart from 'components/country-challenges-chart';
 import RankingChart from 'components/ranking-chart';
@@ -21,7 +20,7 @@ import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-import { LOCAL_SCENE_TABS } from 'constants/ui-params';
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import styles from './country-scene-styles.module.scss';
 
@@ -70,7 +69,7 @@ const CountrySceneComponent = ({
         />
         <TerrainExaggerationLayer exaggeration={20} />
         <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-        {localSceneActiveTab === LOCAL_SCENE_TABS.MAP && (
+        {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
           <Legend
             hideTutorial
             hideCloseButton
@@ -79,21 +78,13 @@ const CountrySceneComponent = ({
             isFullscreenActive={isFullscreenActive}
           />
         )}
-        <Widgets
+        {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
+          <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />
-        <LocalSceneSidebar
-          countryISO={countryISO}
-          countryName={countryName}
-          openedModal={openedModal}
-          activeLayers={activeLayers}
-          localGeometry={countryBorder}
-          className={styles.hideOnPrint}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-        />
+        )}
         <PdfNationalReport
           countryISO={countryISO}
           countryName={countryName}
@@ -101,15 +92,21 @@ const CountrySceneComponent = ({
           shortLink={shortLink}
         />
       </Scene>
-      <LocalSceneModeSwitch
-        className={cx(styles.modeSwitch, styles.hideOnPrint)}
-        handleModeChange={handleModeChange}
+      <LocalSceneSidebar
+        countryISO={countryISO}
+        countryName={countryName}
+        openedModal={openedModal}
+        activeLayers={activeLayers}
+        localGeometry={countryBorder}
+        className={styles.hideOnPrint}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
       />
       <div
         className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
           [styles.challengesSelected]:
-            localSceneActiveTab === LOCAL_SCENE_TABS.CHALLENGES
+            localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES
         })}
       >
         <CountryChallengesChart
@@ -123,7 +120,7 @@ const CountrySceneComponent = ({
       <div
         className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
           [styles.challengesSelected]:
-            localSceneActiveTab === LOCAL_SCENE_TABS.RANKING
+            localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING
         })}
       >
         <RankingChart

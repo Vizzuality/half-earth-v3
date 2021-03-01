@@ -1,6 +1,10 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.cardContainer {
+  padding: $sidebar-paddings;
+}
+
 .chartContainer {
   position: relative;
 }
@@ -23,8 +27,8 @@
   border-radius: 77px;
   align-items: center;
   position: absolute;
-  top: 85px;
-  left: 65px;
+  top: 75px;
+  left: 55px;
 }
 
 .legendItem {

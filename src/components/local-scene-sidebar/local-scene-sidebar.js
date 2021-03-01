@@ -7,10 +7,12 @@ import { setCSSvariable } from 'utils/generic-functions'
 import mapStateToProps from './local-scene-sidebar-selectors';
 import Component from './local-scene-sidebar-component';
 import * as urlActions from 'actions/url-actions';
+import metadataActions from 'redux_modules/metadata';
 import countryDataActions from 'redux_modules/country-data';
-import { downloadCountryPdfAnalyticsEvent } from 'actions/google-analytics-actions';
+import { downloadCountryPdfAnalyticsEvent, selectNRCSectionAnalyticsEvent } from 'actions/google-analytics-actions';
+import metadataConfig from 'constants/metadata';
 
-const actions = { ...urlActions, ...countryDataActions, downloadCountryPdfAnalyticsEvent };
+const actions = { ...urlActions, ...countryDataActions, ...metadataActions, downloadCountryPdfAnalyticsEvent };
 
 const LocalSceneSidebarContainer = (props) => {
   const {
@@ -31,6 +33,22 @@ const LocalSceneSidebarContainer = (props) => {
     setCSSvariable('--sidebar-top-margin', '60px');
   }
 
+  const handleTabSelection = slug => {
+    const { changeUI } = props;
+    changeUI({ localSceneActiveTab: slug });
+    selectNRCSectionAnalyticsEvent(slug);
+  };
+
+  const handleSourceClick = slug => {
+    const { setModalMetadata } = props;
+    const md = metadataConfig[slug];
+    setModalMetadata({
+      slug: md.slug,
+      title: md.title,
+      isOpen: true
+    });
+  }
+
   const handlePrintReport = () => {
     const today = new Date();
     const date = Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(today);
@@ -44,6 +62,8 @@ const LocalSceneSidebarContainer = (props) => {
   return (
     <Component
       handlePrintReport={handlePrintReport}
+      handleSourceClick={handleSourceClick}
+      handleTabSelection={handleTabSelection}
       handleSceneModeChange={handleSceneModeChange}
       {...props}
     />

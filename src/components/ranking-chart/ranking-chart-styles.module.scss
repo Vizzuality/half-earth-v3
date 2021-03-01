@@ -108,7 +108,7 @@ $scroll-bar-width: 7px;
 .rankingChartContentContainer {
   position: relative;
   display: flex;
-  width: $chart-width-without-legend;
+  width: 100%;
   justify-content: flex-start;
   align-items: flex-start;
 }

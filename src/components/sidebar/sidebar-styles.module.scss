@@ -27,6 +27,7 @@
 
 .wrapper {
   @include backdropBlur();
+  border: $sidebar-border;
   display: flex;
   flex-direction: column;
   position: relative;

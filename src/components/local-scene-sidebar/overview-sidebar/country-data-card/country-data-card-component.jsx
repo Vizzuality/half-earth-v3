@@ -6,8 +6,6 @@ import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 
 const CountryDataCardComponent = ({
   SPI,
-  countryISO,
-  countryName,
   indexStatement,
   vertebratesCount,
   handleInfoClick,
@@ -19,10 +17,6 @@ const CountryDataCardComponent = ({
     <div className={styles.container}>
 
       <section className={styles.indexOverview}>
-        <div className={styles.nameWrapper}>
-          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
-          <p className={styles.countryName}>{countryName}</p>
-        </div>
         <div className={styles.overviewTextWrapper}>
           <button onClick={handleInfoClick}>
             <QuestionIcon />

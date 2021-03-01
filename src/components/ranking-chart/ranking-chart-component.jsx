@@ -89,23 +89,6 @@ const RankingChart = ({
       </Tooltip>
     );
 
-  const renderLegend = () => (
-    <div className={styles.legend}>
-      {Object.keys(legendText).map((category) => (
-        <div className={styles.legendBlock} key={`legend-${category}`}>
-          {Object.keys(legendText[category]).map((text) => (
-            <div className={styles.legendItem} key={`legend-item-${text}`}>
-              <span className={cx(styles.legendColor, styles[text])} />
-              <span className={styles.legendText}>
-                {legendText[category][text]}
-              </span>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
@@ -181,7 +164,6 @@ const RankingChart = ({
               Scroll
             </div>
           </div>
-          {renderLegend()}
         </div>
       ) : null}
     </div>
