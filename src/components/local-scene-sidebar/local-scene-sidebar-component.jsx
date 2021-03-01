@@ -54,6 +54,7 @@ const LocalSceneSidebarComponent = ({
         handleClick={handleSceneModeChange}
         Icon={CloseIcon}
         className={styles.backButton}
+        tooltipText="Go back to the globe"
       />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
@@ -96,6 +97,7 @@ const LocalSceneSidebarComponent = ({
             handleClick={handlePrintReport}
             className={styles.actionButton}
             label="download this info (pdf)"
+            tooltipText="Download national data report"
             />
           <Button 
             type='compound'
@@ -103,6 +105,7 @@ const LocalSceneSidebarComponent = ({
             handleClick={setShareModalOpen}
             className={styles.actionButton}
             label="share this info"
+            tooltipText="Share the URL to this view"
           />
             <ShareModal
               isOpen={isShareModalOpen}

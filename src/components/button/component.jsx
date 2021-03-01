@@ -3,15 +3,24 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
+const tooltipStyles = {
+  'data-place': 'right',
+  'data-effect':'solid',
+  'data-delay-show': 0,
+}
+
 const Component = ({
   type,
   Icon,
   label,
 	className,
   handleClick,
+  tooltipText
 }) => (
   <button 
     onClick={handleClick}
+    data-tip={tooltipText}
+    {...tooltipStyles}
 		className={cx(
       className,
       {
