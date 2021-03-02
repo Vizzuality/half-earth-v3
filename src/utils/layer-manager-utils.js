@@ -5,7 +5,7 @@ import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/googl
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
 
 // Toggles all the layers passed as ids on the first parameter
-export const batchLayerManagerToggle = (layerIdsToToggle, activeLayers, callback, category) => {
+export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, category) => {
   const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
   const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersIds);
   const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
@@ -98,7 +98,7 @@ export const layerManagerVisibility = (layerTitle, visible, activeLayers, callba
   }
 };
 
-export const batchLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
+export const batchSetLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
   const setOpacity = (layer) => layerNamesArray.includes(layer.title) ? { ...layer, opacity } : layer;
   callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
 };

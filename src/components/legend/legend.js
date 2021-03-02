@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import intersection from 'lodash/intersection';
 import Component from './legend-component';
-import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLayerManagerToggle, batchLayerManagerOpacity } from 'utils/layer-manager-utils';
+import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchToggleLayers, batchSetLayerManagerOpacity } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
 import metadataConfig from 'constants/metadata';
 import * as urlActions from 'actions/url-actions';
@@ -19,7 +19,12 @@ const LegendContainer = props => {
   const handleChangeOpacity = (layer, opacity) => {
     const { activeLayers, changeLayerOpacityAnalyticsEvent, changeGlobe } = props;
     if (layer.legendConfig.groupedLayer) {
-      batchLayerManagerOpacity(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], opacity, activeLayers, changeGlobe);
+      batchSetLayerManagerOpacity(
+        LEGEND_GROUPED_LAYERS_GROUPS[layer.title],
+        opacity,
+        activeLayers,
+        changeGlobe
+      );
     } else {
       layerManagerOpacity(layer.title, opacity, activeLayers, changeGlobe);
       changeLayerOpacityAnalyticsEvent({ slug: getSlug(layer), query: { opacity }});
@@ -33,7 +38,7 @@ const LegendContainer = props => {
         activeLayers.map((l) => l.title),
         LEGEND_GROUPED_LAYERS_GROUPS[layer.title]
       );
-      batchLayerManagerToggle(activeGroupedLayers, activeLayers, changeGlobe);
+      batchToggleLayers(activeGroupedLayers, activeLayers, changeGlobe);
     } else {
       layerManagerVisibility(layer.title, false, activeLayers, changeGlobe);
       removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });

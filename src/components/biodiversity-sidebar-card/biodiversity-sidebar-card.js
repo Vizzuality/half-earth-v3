@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import Component from './biodiversity-sidebar-card-component';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { batchLayerManagerToggle } from 'utils/layer-manager-utils';
+import { batchToggleLayers } from 'utils/layer-manager-utils';
 import mapStateToProps from './biodiversity-sidebar-card-selectors';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
@@ -12,7 +12,7 @@ const BiodiversitySidebarCard = (props)  => {
   const { changeGlobe, activeLayers, biodiversityLayerVariant } = props;
 
   const handleClearAndAddLayers = (bioLayerIds, layerIds) => {
-    batchLayerManagerToggle(
+    batchToggleLayers(
       bioLayerIds.concat(layerIds),
       activeLayers,
       changeGlobe,
