@@ -10,7 +10,6 @@ import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
 const actions = { addLayerAnalyticsEvent, ...urlActions };
 
 const ProtectedAreasLayersContainer = props => {
-
   const handleLayerToggle = async layerName => {
     const { activeLayers, changeGlobe, activeCategory } = props;
     if (layerName === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {

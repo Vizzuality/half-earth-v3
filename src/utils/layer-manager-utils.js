@@ -11,7 +11,7 @@ export const batchLayerManagerToggle = (layerIdsToToggle, activeLayers, callback
   const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
 
   let updatedLayers = activeLayers;
-if (layersToRemove.length) {
+  if (layersToRemove.length) {
     updatedLayers = activeLayers.filter((layer) => {
       const hasToBeRemoved = layersToRemove.includes(layer.title);
       if (hasToBeRemoved) {
