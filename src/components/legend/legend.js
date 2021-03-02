@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { intersection } from 'lodash';
+import intersection from 'lodash/intersection';
 import Component from './legend-component';
 import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLayerManagerToggle, batchLayerManagerOpacity } from 'utils/layer-manager-utils';
 import metadataActions from 'redux_modules/metadata';
@@ -29,7 +29,11 @@ const LegendContainer = props => {
   const handleRemoveLayer = (layer) => {
     const { activeLayers, removeLayerAnalyticsEvent, changeGlobe } = props;
     if (layer.legendConfig.groupedLayer) {
-      batchLayerManagerToggle(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], activeLayers, changeGlobe);
+      const activeGroupedLayers = intersection(
+        activeLayers.map((l) => l.title),
+        LEGEND_GROUPED_LAYERS_GROUPS[layer.title]
+      );
+      batchLayerManagerToggle(activeGroupedLayers, activeLayers, changeGlobe);
     } else {
       layerManagerVisibility(layer.title, false, activeLayers, changeGlobe);
       removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
@@ -51,7 +55,7 @@ const LegendContainer = props => {
     });
     openLayerInfoModalAnalyticsEvent({ slug, query: { viewMode: VIEW_MODE.LEGEND }});
   };
-  
+
   const spreadGroupLayers = (layers, activeLayers) => {
     const activeLayersTitles = activeLayers.map(l => l.title);
     return layers.reduce((acc, layerName) => {
@@ -59,7 +63,7 @@ const LegendContainer = props => {
       return layer ? [...acc, ...layer] : acc;
     }, []);
   }
-  
+
   const handleChangeOrder = layers => {
     const { activeLayers, changeLayersOrderAnalyticsEvent, changeGlobe } = props;
     const flattenedGroupedLayers = spreadGroupLayers(layers, activeLayers);
