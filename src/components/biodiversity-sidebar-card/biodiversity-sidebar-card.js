@@ -9,7 +9,11 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
 
 const BiodiversitySidebarCard = (props)  => {
-  const { changeGlobe, activeLayers, biodiversityLayerVariant } = props;
+  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant } = props;
+
+  const handleTabSelection = (slug) => {
+    changeUI({ biodiversityLayerVariant: slug });
+  };
 
   const handleClearAndAddLayers = (bioLayerIds, layerIds) => {
     batchToggleLayers(
@@ -30,6 +34,7 @@ const BiodiversitySidebarCard = (props)  => {
   return (
     <Component
       handleClearAndAddLayers={handleClearAndAddLayers}
+      handleTabSelection={handleTabSelection}
       {...props}
     />
   );

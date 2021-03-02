@@ -8,14 +8,19 @@
   overflow: hidden;
 }
 
-.layersTogglesContainer{
+.layersTogglesContainer {
   @include backdropBlur();
   overflow: hidden;
   width: $sidebar-width;
   height: 0;
   @include animationFunction($propertyToAnimate: height);
+
   &.open {
     overflow: visible;
     height: 952px;
+
+    &.biodiversityTab {
+      height: 338px;
+    }
   }
 }

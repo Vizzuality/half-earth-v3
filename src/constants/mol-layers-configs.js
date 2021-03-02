@@ -66,7 +66,7 @@ import {
   PLEDGES_LAYER
 } from 'constants/layers-slugs'
 
-import { LAYER_VARIANTS } from 'constants/landscape-view-constants';
+import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 const LAYER_TYPES = {
