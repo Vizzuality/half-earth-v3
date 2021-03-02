@@ -23,7 +23,10 @@ import {
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
   RANGELAND_HUMAN_PRESSURES_TILE_LAYER,
-  MARINE_HUMAN_PRESSURES_TILE_LAYER,
+  MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
+  MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
+  COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
+  ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
   SA_AMPHIB_RARITY,
   SA_AMPHIB_RICHNESS,
   SA_DRAGONFLIES_RARITY,
@@ -125,8 +128,10 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rainfed_inverted/MapServer',
   [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rangeland_inverted/MapServer',
-  [MARINE_HUMAN_PRESSURES_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_Encroachment_ghm_ramp/MapServer',
+  [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mHM_Land_drivers_aligned_masked/MapServer',
+  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mHM_Ocean_drivers_aligned_masked/MapServer',
+  [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mHM_Commercial_fishing_aligned_masked/MapServer',
+  [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mHM_Artisanal_fishing_aligned_masked/MapServer',
   // REGIONAL 1km BIODIVERSITY
   [SA_AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
   [SA_AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
