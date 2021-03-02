@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import loadable from '@loadable/component'
 import cx from 'classnames';
+import ReactTooltip from 'react-tooltip';
 // Components
 import Scene from 'components/scene';
 import About from 'components/about';
@@ -134,6 +135,9 @@ const CountrySceneComponent = ({
         <InfoModal additionalContent={infoModalAdditionalContent} />
       )}
       {!isOnMobile && <About className={styles.hideOnPrint} />}
+      <ReactTooltip 
+        className="infoTooltipStyle"
+      />
     </>
   );
 };

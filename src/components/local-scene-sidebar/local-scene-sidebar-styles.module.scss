@@ -5,33 +5,22 @@
 
 .container {
   @include backdropBlur();
-  @extend %verticalScrollBar;
   @include animationFunction($propertyToAnimate: all);
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
   position: absolute;
-  height: 95vh;
+  height: calc(95vh + #{$sidebar-cards-padding});
   width: $local-sidebar-width;
   top: $local-sidebar-top-margin;
   left: $site-gutter;
-  padding-bottom: $site-gutter;
+  padding: $site-gutter 0;
   z-index: $bring-to-front;
 }
 
 .backButton {
-  display: flex;
-  align-items: center;
-  padding: 0;
-  .icon {
-    transform: rotate(180deg);
-  }
-  .text {
-    @extend %subtitle;
-    color: $brand-color-main;
-    text-transform: uppercase;
-    position: relative;
-    top: 4px;
-  }
+  position: absolute;
+  top: -$local-sidebar-top-margin;
+  left: calc(#{$local-sidebar-width}/2 - #{$rounded-button-size}/2);
 }
 
 .loading {
@@ -78,7 +67,7 @@
 .scrollableArea {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 85%;
+  height: 84%;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -92,18 +81,8 @@
   }
 }
 
-.actionGroup {
-  padding: $site-gutter;
-  padding-top: 0;
-  display: flex;
-}
-
 .actionButton {
-  @extend %title;
-  color: $white;
-  margin-left: 1em;
+  margin-left: $site-gutter;
+  margin-bottom: $site-gutter;
 }
 
-.shareText {
-  @extend %title;
-}

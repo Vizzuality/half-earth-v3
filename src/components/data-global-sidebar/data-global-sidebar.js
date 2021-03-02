@@ -17,7 +17,7 @@ const SearchWidget = (props) => {
     const { feature: { attributes: { GID_0, NAME_0 }}} = result;
     if (GID_0) {
         changeGlobe({ countryISO: GID_0, countryName: NAME_0, activeLayers: countrySceneConfig.globe.activeLayers })
-        changeUI({ sceneMode: LOCAL_SCENE })
+        changeUI({ sceneMode: LOCAL_SCENE,localSceneActiveTab: countrySceneConfig.ui.localSceneActiveTab })
         exploreCountryFromSearchAnalyticsEvent({countryName:NAME_0})
     }
   }
