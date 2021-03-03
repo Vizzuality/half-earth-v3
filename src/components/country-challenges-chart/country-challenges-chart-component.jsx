@@ -1,12 +1,10 @@
 import React from 'react';
-import cx from 'classnames';
 
 import ScatterPlot from 'components/charts/scatter-plot';
+import Dropdown from 'components/dropdown';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
-import { ReactComponent as SwitchArrow } from 'icons/switch.svg';
-import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 
-import { INDICATOR_LABELS, FILTERS_DICTIONARY } from 'constants/country-mode-constants';
+import { INDICATOR_LABELS } from 'constants/country-mode-constants';
 import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import styles from './country-challenges-chart-styles.module.scss';
 
@@ -16,57 +14,24 @@ const CountryChallengesChartComponent = ({
   countryISO,
   xAxisTicks,
   yAxisTicks,
-  filtersOpen,
-  selectedFilter,
-  handleInfoClick,
   handleBubbleClick,
-  handleFiltersToggle,
+  selectedFilterOption,
   handleFilterSelection,
-  handleOutsideFiltersClick,
+  challengesFilterOptions,
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
-  challengesFilterOptions
 }) => {
-
+console.log(selectedFilterOption)
   return (
     <div className={className}>
-      <div>
-        <span className={styles.chartTitle}>Country challenges</span>
-        <QuestionIcon className={styles.question} onClick={handleInfoClick} />
-      </div>
-      <div className={styles.filterSelectContainer}>
-        <div
-          className={styles.selectLabelContainer}
-          onClick={handleFiltersToggle}
-        >
-          <p className={styles.filterSelectLabel}>
-            {FILTERS_DICTIONARY[selectedFilter]}
-          </p>
-          <SwitchArrow
-            className={cx(styles.switchIcon, {
-              [styles.filtersOpen]: filtersOpen
-            })}
-          />
-        </div>
-        {filtersOpen && (
-          <ul className={styles.filterSelect} name="filters" id="filters">
-            <li className={cx(styles.filterOption, styles.optionsLabel)}>
-              Filter countries with similar:
-            </li>
-            {challengesFilterOptions.map((filter) => (
-              <li
-                className={cx(styles.filterOption, {
-                  [styles.selectedFilter]: filter.slug === selectedFilter
-                })}
-                key={filter.slug}
-                onClick={() => handleFilterSelection(filter.slug)}
-              >
-                {filter.name}
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className={styles.headerContainer}>
+        <span className={styles.chartTitle}>Filter countries</span>
+        <Dropdown 
+          options={challengesFilterOptions}
+          selectedOption={selectedFilterOption}
+          handleOptionSelection={handleFilterSelection}
+        />
       </div>
       <ScatterPlot
         data={data}
@@ -75,7 +40,6 @@ const CountryChallengesChartComponent = ({
         xAxisTicks={xAxisTicks}
         yAxisTicks={yAxisTicks}
         onBubbleClick={handleBubbleClick}
-        handleContainerClick={handleOutsideFiltersClick}
         tooltipValuesFormats={countryChallengesChartFormats}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
       />

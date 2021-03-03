@@ -95,6 +95,12 @@ const getChallengesFilterOptions = createSelector(
   }
 );
 
+const getSelectedFilterOption = createSelector(
+  getCountryChallengesSelectedFilter,
+  selectedFilter => CHALLENGES_RELATED_FILTERS_OPTIONS.find(option => option.slug === selectedFilter)
+);
+
+
 const getXAxisTicks = createSelector(
   [getFilteredData, getCountryChallengesSelectedKey],
   (plotData, selectedKey) => {
@@ -123,7 +129,7 @@ const mapStateToProps = createStructuredSelector({
   xAxisKeys: getXAxisKeys,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
-  selectedFilter: getCountryChallengesSelectedFilter,
+  selectedFilterOption: getSelectedFilterOption,
   challengesFilterOptions: getChallengesFilterOptions
 });
 
