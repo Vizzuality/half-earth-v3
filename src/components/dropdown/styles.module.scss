@@ -1,0 +1,66 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+
+.dropdownContainer {
+  padding: 10px;
+  background-color: $white;
+  border-radius: 2px;
+  position: relative;
+  &.open {
+    background-color: $accent-grey;
+  }
+}
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.selectedOptionLabel {
+  @extend %subtitle;
+  color: $_temporary-dark-text;
+}
+
+.arrowIcon {
+  margin-left: 10px;
+  transform: rotate(90deg);
+  transition: all .1s linear;
+  &.dropdownOpen {
+    position: relative;
+    top: -2px;
+    transform: rotate(-90deg);
+  }
+  path {
+    fill: $_temporary-dark-text;
+    stroke: $_temporary-dark-text;
+  }
+}
+
+.optionsList {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+  position: absolute;
+  cursor: pointer;
+  background-color: $white;
+  list-style: none;
+  padding: $sidebar-paddings 0;
+  margin: 0;
+  margin-top: 14px;
+  left: 0;
+  z-index: 6;
+  border-radius: 2px;
+  min-width: 320px;
+  width: max-content;
+
+  .option {
+    padding: 5px $sidebar-paddings;
+    &:hover {
+      background-color: $accent-grey;
+    }
+    &.selectedOption {
+      opacity: 0.5;
+    }
+  }
+}
