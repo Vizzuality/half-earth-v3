@@ -39,7 +39,7 @@ export const FILTERS_DICTIONARY = {
   filter_SPI: 'with similar species Protection Index',
   filter_neigh: 'by proximity',
   filter_steward: 'with shared stewardship',
-  filter_continent: 'from the same continent'
+  filter_continent: 'by continent'
 };
 
 export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
