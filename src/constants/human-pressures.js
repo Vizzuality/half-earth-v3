@@ -26,7 +26,7 @@ const URBAN = 'Urban pressures';
 const RANGELAND = 'Rangeland';
 const LAND_DRIVERS = 'Marine land drivers';
 const OCEAN_DRIVERS = 'Marine ocean drivers';
-const COMMERCIAL_FISHING = 'commercial fishing';
+const COMMERCIAL_FISHING = 'Commercial fishing';
 const ARTISANAL_FISHING = 'Artisanal fishing';
 
 export const PRESSURES_SLUGS = {
