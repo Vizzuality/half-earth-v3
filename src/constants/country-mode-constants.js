@@ -37,7 +37,7 @@ export const FILTERS_DICTIONARY = {
   filter_total_endemic: 'with similar number of endemic species',
   filter_N_SPECIES: 'with similar number of vertebrate species',
   filter_SPI: 'with similar species Protection Index',
-  filter_neigh: 'with similar geographic location',
+  filter_neigh: 'by proximity',
   filter_steward: 'with shared stewardship',
   filter_continent: 'from the same continent'
 };
