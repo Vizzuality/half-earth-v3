@@ -52,11 +52,11 @@ $chart-margin: 14px;
     .name {
       @extend %_temporaryTitle;
       letter-spacing: 0;
-      color: #222222;
+      color: $_temporary-dark-text;
     }
     .continent {
       @extend %_temporaryTitle;
-      color: #222222;
+      color: $_temporary-dark-text;
       letter-spacing: 0;
       text-transform: initial;
     }
