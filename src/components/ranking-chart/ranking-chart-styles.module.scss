@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
+@import 'styles/ui.module';
 
 .chartTitle {
   @extend %headline;
@@ -116,27 +117,13 @@ $scroll-bar-width: 7px;
 .rankingChartContent {
   padding-bottom: 2rem;
   margin-right: 2rem;
-  min-width: 80%;
-  max-width: 80%;
+  min-width: calc(100vw - #{$sidebar-width} - 100px);
+  max-width: calc(100vw - #{$sidebar-width} - 100px);
   height: calc(100vh - #{$sidebar-header-height} - 200px);
-  overflow-y: scroll;
   flex-direction: column;
 
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
+  @extend %verticalScrollbar;
 
-  &::-webkit-scrollbar-thumb {
-    height: 190px;
-    border-radius: 10px;
-    background-color: $white;
-  }
-
-  &.scrolled {
-    &::-webkit-scrollbar {
-      width: 7px;
-    }
-  }
 }
 
 .scrollHint {
