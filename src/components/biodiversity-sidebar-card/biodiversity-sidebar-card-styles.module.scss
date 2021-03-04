@@ -1,22 +1,15 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
-@import 'styles/common-animations.module';
+@import 'styles/shared-sidebar.module';
 
 .sidebarCardContainer {
-  width: calc(#{$sidebar-width} + 15px);
-  margin-bottom: $cards-bottom-margin;
-  overflow: hidden;
+  @extend .sharedSidebarCardContainer;
 }
 
 .layersTogglesContainer {
-  @include backdropBlur();
-  overflow: hidden;
-  width: $sidebar-width;
-  height: 0;
-  @include animationFunction($propertyToAnimate: height);
+  @extend .sharedLayersTogglesContainer;
 
   &.open {
-    overflow: visible;
     height: 952px;
 
     &.biodiversityTab {

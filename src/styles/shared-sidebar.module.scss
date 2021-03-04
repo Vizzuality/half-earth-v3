@@ -1,0 +1,26 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+
+.sharedSidebarCardContainer {
+  width: $sidebar-width;
+  margin-bottom: $cards-bottom-margin;
+  overflow: hidden;
+  border: solid 1.5px $elephant;
+  border-radius: 4px;
+
+  &:hover {
+    border-color: $brand-color-main;
+  }
+}
+
+.sharedLayersTogglesContainer{
+  @include backdropBlur();
+  overflow: hidden;
+  width: $sidebar-width;
+  height: 0;
+  @include animationFunction($propertyToAnimate: height);
+  &.open {
+    overflow: visible;
+  }
+}
