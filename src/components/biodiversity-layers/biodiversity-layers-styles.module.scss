@@ -3,14 +3,7 @@
 @import 'styles/typography-extends';
 
 .wrapper {
-  padding-bottom: 24px;
-  &:first-child {
-    padding-top: $sidebar-paddings;
-  }
-
-  &:last-child {
-    padding-top: 20px;
-  }
+  padding: $sidebar-paddings 0 24px;
 }
 
 .titleSection {

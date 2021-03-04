@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import { layersConfig } from 'constants/mol-layers-configs';
+import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   layerManagerToggle,
   replaceLayerFromActiveLayers
@@ -32,7 +32,12 @@ const BiodiversityLayerContainer = props => {
   }
 
   const handleSimpleLayerToggle = (layerName, isSelected) => {
-    const { removeLayerAnalyticsEvent, activeLayers, changeGlobe, activeCategory } = props;
+    const {
+      removeLayerAnalyticsEvent,
+      activeLayers,
+      changeGlobe,
+      activeCategory = LAYERS_CATEGORIES.BIODIVERSITY
+    } = props;
     const layer = layersConfig[layerName];
     if (layer) {
       layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
@@ -54,7 +59,7 @@ const BiodiversityLayerContainer = props => {
         layer.slug,
         activeLayers,
         changeGlobe,
-        'Biodiversity'
+        LAYERS_CATEGORIES.BIODIVERSITY
       );
       layer.bbox && flyToLayerExtent(layer.bbox);
     }

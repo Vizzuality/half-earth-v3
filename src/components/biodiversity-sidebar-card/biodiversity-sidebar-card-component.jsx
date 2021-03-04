@@ -5,54 +5,59 @@ import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
-import styles from './biodiversity-sidebar-card-styles.module.scss'
 
-const biodiversity = LAYERS_CATEGORIES.BIODIVERSITY;
+import { BIODIVERSITY_TABS, BIODIVERSITY_TABS_SLUGS } from 'constants/ui-params';
+import styles from './biodiversity-sidebar-card-styles.module.scss';
 
-const BiodiversitySidebarCardComponent = ({activeLayers, countedActiveLayers, map, view}) => {
-  const [isOpen, setOpen] = useState(false)
+const BiodiversitySidebarCardComponent = ({
+  activeLayers,
+  countedActiveLayers,
+  map,
+  view,
+  handleTabSelection,
+  biodiversityLayerVariant
+}) => {
+  const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
         title="mapping"
-        category={biodiversity}
-        counter={countedActiveLayers[biodiversity]}
+        category={LAYERS_CATEGORIES.BIODIVERSITY}
+        counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
       <div
-        className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
+        className={cx(styles.layersTogglesContainer, {
+          [styles.open]: isOpen,
+          [styles.biodiversityTab]:
+            biodiversityLayerVariant === BIODIVERSITY_TABS_SLUGS.PRIORITY
+        })}
       >
         <Tabs
-          tabs={[
-            {
-              title: 'Priority'
-            },
-            {
-              title: 'Richness'
-            },
-            {
-              title: 'Rarity'
-            }
-          ]}
-          onClick={() => console.info('Remove me I am just here for demo')}
+          tabs={BIODIVERSITY_TABS}
+          onClick={handleTabSelection}
+          defaultTabSlug={biodiversityLayerVariant}
         />
-        {biodiversityCategories.map((cat) => (
-          <BiodiversityLayers
-            key={cat.name}
-            title={cat.name}
-            description={cat.description}
-            subcategories={cat.subcategories}
-            options={cat.taxa}
-            activeLayers={activeLayers}
-            map={map}
-            view={view}
-          />
-        ))}
+        {biodiversityLayerVariant &&
+          biodiversityCategories[biodiversityLayerVariant].map((cat) => (
+            <BiodiversityLayers
+              key={cat.name}
+              title={cat.name}
+              description={cat.description}
+              subcategories={cat.subcategories}
+              options={cat.taxa}
+              activeLayers={activeLayers}
+              map={map}
+              view={view}
+              variant={biodiversityLayerVariant}
+            />
+          ))}
       </div>
     </div>
   );
-}
+};
 
 export default BiodiversitySidebarCardComponent;

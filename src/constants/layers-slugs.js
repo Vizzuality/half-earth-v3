@@ -71,20 +71,26 @@ export const SA_PROTEA_RICHNESS = 'protea-rich-sa';
 export const SA_REPTILES_RARITY = 'reptiles-rare-sa';
 export const SA_REPTILES_RICHNESS = 'reptiles-rich-sa';
 // Global biodiversity
-export const AMPHIB_RARITY = 'amphib-rarity';
-export const AMPHIB_RICHNESS = 'amphib-rich';
-export const FISHES_RARITY = 'fishes-rarity';
-export const FISHES_RICHNESS = 'fishes-rich';
-export const MAMMALS_RARITY = 'mammals-rare';
-export const MAMMALS_RICHNESS = 'mammals-rich';
-export const BIRDS_RARITY = 'birds-rarity';
-export const BIRDS_RICHNESS = 'birds-rich';
+
+export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
+export const AMPHIB_RARITY = 'amphib-rarity';
+export const AMPHIB_RICHNESS = 'amphib-rich';
+export const AMPHIB_PRIORITY = 'amphib-priority';
+export const FISHES_RARITY = 'fishes-rarity';
+export const FISHES_RICHNESS = 'fishes-rich';
+export const MAMMALS_PRIORITY = 'mammals-priority';
+export const MAMMALS_RARITY = 'mammals-rare';
+export const MAMMALS_RICHNESS = 'mammals-rich';
+export const BIRDS_PRIORITY = 'birds-priority';
+export const BIRDS_RARITY = 'birds-rarity';
+export const BIRDS_RICHNESS = 'birds-rich';
 export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
 export const CONIFERS_RICHNESS = 'conifers-rich';
+export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds

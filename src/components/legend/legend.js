@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { intersection } from 'lodash';
-import Component from './legend-component';
-import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchLayerManagerToggle, batchLayerManagerOpacity } from 'utils/layer-manager-utils';
+import intersection from 'lodash/intersection';
 import metadataActions from 'redux_modules/metadata';
+import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchToggleLayers, batchSetLayerManagerOpacity, getActiveLayersFromLayerGroup } from 'utils/layer-manager-utils';
 import metadataConfig from 'constants/metadata';
-import * as urlActions from 'actions/url-actions';
-import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
-import { VIEW_MODE } from 'constants/google-analytics-constants';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
+import { VIEW_MODE } from 'constants/google-analytics-constants';
+import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
+import * as urlActions from 'actions/url-actions';
+import Component from './legend-component';
 import mapStateToProps from './legend-selectors';
 
 const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
@@ -19,7 +19,12 @@ const LegendContainer = props => {
   const handleChangeOpacity = (layer, opacity) => {
     const { activeLayers, changeLayerOpacityAnalyticsEvent, changeGlobe } = props;
     if (layer.legendConfig.groupedLayer) {
-      batchLayerManagerOpacity(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], opacity, activeLayers, changeGlobe);
+      batchSetLayerManagerOpacity(
+        LEGEND_GROUPED_LAYERS_GROUPS[layer.title],
+        opacity,
+        activeLayers,
+        changeGlobe
+      );
     } else {
       layerManagerOpacity(layer.title, opacity, activeLayers, changeGlobe);
       changeLayerOpacityAnalyticsEvent({ slug: getSlug(layer), query: { opacity }});
@@ -29,7 +34,8 @@ const LegendContainer = props => {
   const handleRemoveLayer = (layer) => {
     const { activeLayers, removeLayerAnalyticsEvent, changeGlobe } = props;
     if (layer.legendConfig.groupedLayer) {
-      batchLayerManagerToggle(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], activeLayers, changeGlobe);
+      const activeGroupedLayers = getActiveLayersFromLayerGroup(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], activeLayers);
+      batchToggleLayers(activeGroupedLayers, activeLayers, changeGlobe);
     } else {
       layerManagerVisibility(layer.title, false, activeLayers, changeGlobe);
       removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
@@ -51,7 +57,7 @@ const LegendContainer = props => {
     });
     openLayerInfoModalAnalyticsEvent({ slug, query: { viewMode: VIEW_MODE.LEGEND }});
   };
-  
+
   const spreadGroupLayers = (layers, activeLayers) => {
     const activeLayersTitles = activeLayers.map(l => l.title);
     return layers.reduce((acc, layerName) => {
@@ -59,7 +65,7 @@ const LegendContainer = props => {
       return layer ? [...acc, ...layer] : acc;
     }, []);
   }
-  
+
   const handleChangeOrder = layers => {
     const { activeLayers, changeLayersOrderAnalyticsEvent, changeGlobe } = props;
     const flattenedGroupedLayers = spreadGroupLayers(layers, activeLayers);

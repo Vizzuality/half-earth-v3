@@ -7,7 +7,7 @@ import FindPlacesCard from 'components/find-places-card';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './data-global-sidebar-styles.module.scss';
 
-const DataGlobeSidebarComponent = ({
+const DataGlobalSidebarComponent = ({
   map,
   view,
   activeLayers,
@@ -53,4 +53,4 @@ const DataGlobeSidebarComponent = ({
   )
 }
 
-export default DataGlobeSidebarComponent;
+export default DataGlobalSidebarComponent;

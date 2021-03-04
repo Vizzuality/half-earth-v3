@@ -7,8 +7,9 @@ import {
   COUNTRY_PRIORITY_LAYER,
 } from 'constants/layers-slugs';
 
-import { 
+import {
   LOCAL_SCENE_TABS_SLUGS,
+  BIODIVERSITY_DEFAULT_TAB
 } from 'constants/ui-params';
 
 export default {
@@ -49,6 +50,7 @@ export default {
     countryChallengesSelectedFilter: 'all',
     localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
     countryChallengesSelectedKey: 'N_SPECIES',
+    biodiversityLayerVariant: BIODIVERSITY_DEFAULT_TAB,
     speciesModalSearch: null,
     speciesModalSort: null,
     sortRankingCategory: null
