@@ -3,10 +3,11 @@ import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
+import SidebarCardWrapper from 'components/sidebar-card-wrapper'
+import SidebarCardContent from 'components/sidebar-card-content';
 import BiodiversityLayers from 'components/biodiversity-layers';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
-
-import { BIODIVERSITY_TABS, BIODIVERSITY_TABS_SLUGS } from 'constants/ui-params';
+import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 
 const BiodiversitySidebarCardComponent = ({
@@ -15,8 +16,10 @@ const BiodiversitySidebarCardComponent = ({
   map,
   view,
   handleTabSelection,
-  biodiversityLayerVariant
+  biodiversityLayerVariant,
+  cardMetadata
 }) => {
+  const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
@@ -30,17 +33,26 @@ const BiodiversitySidebarCardComponent = ({
         isOpen={isOpen}
       />
       <div
-        className={cx(styles.layersTogglesContainer, {
-          [styles.open]: isOpen,
-          [styles.biodiversityTab]:
-            biodiversityLayerVariant === BIODIVERSITY_TABS_SLUGS.PRIORITY
-        })}
+        className={cx(styles.layersTogglesContainer,
+          styles[`${biodiversityLayerVariant}Tab`],
+          {[styles.open]: isOpen }
+        )}
       >
         <Tabs
           tabs={BIODIVERSITY_TABS}
           onClick={handleTabSelection}
           defaultTabSlug={biodiversityLayerVariant}
         />
+        <div className={styles.cardContainer}>
+          <SidebarCardWrapper>
+            <SidebarCardContent
+              title={title}
+              description={description}
+              legendType="gradient"
+              metaDataSources={source}
+            />
+          </SidebarCardWrapper>
+        </div>
         {biodiversityLayerVariant &&
           biodiversityCategories[biodiversityLayerVariant].map((cat) => (
             <BiodiversityLayers

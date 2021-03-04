@@ -37,7 +37,6 @@ const LocalPriorityCardComponent = (props) => {
   }, []);
 
   return (
-
     <div className={styles.cardContainer}>
       <SidebarCardWrapper>
         <SidebarCardContent

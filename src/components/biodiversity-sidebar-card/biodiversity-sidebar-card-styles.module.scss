@@ -10,10 +10,18 @@
   @extend .sharedLayersTogglesContainer;
 
   &.open {
-    height: 952px;
+    height: 1307px;
 
-    &.biodiversityTab {
-      height: 338px;
+    &.priorityTab {
+      height: 782px;
+    }
+
+    &.richnessTab {
+      height: 1287px;
     }
   }
+}
+
+.cardContainer {
+  padding: 20px;
 }
