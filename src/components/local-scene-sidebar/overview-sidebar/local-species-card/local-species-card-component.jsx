@@ -32,7 +32,6 @@ const LocalSpeciesCardComponent = ({
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => (
-
   <div className={styles.cardContainer}>
     <SidebarCardWrapper>
       <section className={styles.chartContainer}>
