@@ -1,5 +1,5 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-import { intersection } from 'lodash';
+import intersection from 'lodash/intersection';
 import { loadModules } from 'esri-loader';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
@@ -174,3 +174,7 @@ export const setBasemap = async ({map, surfaceColor, layersArray}) => {
     map.basemap = basemap;
   })
 }
+
+export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) => (
+  intersection(activeLayers.map((l) => l.title), layerGroup)
+);
