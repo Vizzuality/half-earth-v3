@@ -40,7 +40,7 @@ $circle-size: 15px;
   }
 
   input[type="radio"]:checked + .radioInput::before {
-    background: $biodiversity-gradient;
+    background: $biodiversity-gradient-rotated;
     border: 3px solid $white;
   }
 }
