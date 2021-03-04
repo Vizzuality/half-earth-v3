@@ -14,7 +14,6 @@ import metadataService from 'services/metadata-service';
 const LocalPriorityCardComponent = (props) => {
   const {
     hasPriority,
-    handleInfoClick,
     protectionNeeded,
     currentProtection,
     priorityAreasSentence,
