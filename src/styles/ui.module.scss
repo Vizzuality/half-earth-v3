@@ -39,7 +39,7 @@ $scrollbar-width: 4px;
 
 @mixin backdropBlur($colour: rgba(9, 20, 26, 0.4), $fallback: $space-background, $fallbackOpacity: 0.7) {
   background-color: rgba($fallback, $fallbackOpacity);
-  
+
   @supports ((-webkit-backdrop-filter: blur($blur-level)) or (backdrop-filter: blur($blur-level))) {
       background-color: $colour;
       -webkit-backdrop-filter: blur($blur-level);
@@ -70,27 +70,16 @@ $scrollbar-width: 4px;
     fill: $white;
     stroke: $white;
   }
-  
+
 }
 
-%verticalScrollBar {
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
-}
-
-%verticalScrollbarStyled {
+%verticalScrollbar {
   overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: $scrollbar-width;
     background-color: rgba($wild-sand, 0.2);
-  } 
+  }
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;

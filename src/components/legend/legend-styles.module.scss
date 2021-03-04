@@ -35,7 +35,7 @@ $legend-width: 260px;
     border: none !important;
     border-radius: 2px !important;
   }
-  
+
   .wri_api__name {
     @extend %legend-ramp-text;
   }
@@ -75,7 +75,7 @@ $legend-width: 260px;
     }
 
     &:not(:last-child) {
-      &::before { 
+      &::before {
         @extend %spacer;
         content: '';
         position: absolute;
@@ -113,7 +113,7 @@ $legend-width: 260px;
   }
 
   .wri_api__c-legend-list {
-    @extend %verticalScrollbarStyled;
+    @extend %verticalScrollbar;
 
     @media #{$tablet-portrait} {
       max-height: calc(4 * 85px);
