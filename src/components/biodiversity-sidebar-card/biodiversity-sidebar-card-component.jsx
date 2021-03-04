@@ -52,6 +52,7 @@ const BiodiversitySidebarCardComponent = ({
               activeLayers={activeLayers}
               map={map}
               view={view}
+              variant={biodiversityLayerVariant}
             />
           ))}
       </div>

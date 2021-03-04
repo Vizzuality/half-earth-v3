@@ -12,6 +12,7 @@ const BiodiversityLayers = ({
   handleSimpleLayerToggle,
   handleExclusiveLayerToggle,
   isFullscreenActive,
+  variant,
 }) => {
   return (
     <>
@@ -28,6 +29,7 @@ const BiodiversityLayers = ({
             handleExclusiveLayerToggle={handleExclusiveLayerToggle}
             handleSimpleLayerToggle={handleSimpleLayerToggle}
             isFullscreenActive={isFullscreenActive}
+            variant={variant}
           />
         </div>
       ) : (
@@ -47,6 +49,7 @@ const BiodiversityLayers = ({
                   handleExclusiveLayerToggle={handleExclusiveLayerToggle}
                   handleSimpleLayerToggle={handleSimpleLayerToggle}
                   isFullscreenActive={isFullscreenActive}
+                  variant={variant}
                 />
               </div>
             </div>
@@ -55,7 +58,7 @@ const BiodiversityLayers = ({
       )}
     </>
   );
-}
+};
 
 
 BiodiversityLayers.propTypes = {
