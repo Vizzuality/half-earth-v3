@@ -17,10 +17,12 @@
     .searchInput {
       background-color: transparent;
       color: $white;
+      margin-bottom: 9px;
+      min-width: 150px;
     }
 
     .searchIcon {
-      transform: translate(0, 9px) scale(0.5);
+      transform: translate(0, -6px) scale(0.5);
     }
   }
 }
