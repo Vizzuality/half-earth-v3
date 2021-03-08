@@ -53,6 +53,7 @@ export default {
     biodiversityLayerVariant: BIODIVERSITY_DEFAULT_TAB,
     speciesModalSearch: null,
     speciesModalSort: null,
+    rankingSearch: null,
     sortRankingCategory: null
   },
   listeners: false

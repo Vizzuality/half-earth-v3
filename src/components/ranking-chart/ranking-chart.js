@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './ranking-chart-component';
-import metadataConfig from 'constants/metadata';
-import { RANKING_CHART } from 'constants/metadata';
 import { SORT } from 'components/header-item';
 
 import mapStateToProps from './ranking-chart-selectors';
@@ -14,17 +12,6 @@ import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
 
 const RankingChartContainer = (props) => {
-  const handleInfoClick = () => {
-    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
-    openInfoModalAnalyticsEvent('Countries ranking');
-    const md = metadataConfig[RANKING_CHART];
-    setModalMetadata({
-      slug: md.slug,
-      title: md.title,
-      isOpen: true
-    });
-  }
-
   const handleSortClick = (category) => {
     const { changeUI, sortRankingCategory } = props;
     const sortedCategory = sortRankingCategory && sortRankingCategory.split('-')[0];
@@ -38,11 +25,17 @@ const RankingChartContainer = (props) => {
     changeGlobe({ countryISO, countryName, zoom: null, center: null });
   };
 
+  const handleSearchChange = (event) => {
+    const { changeUI } = props;
+    const { value } = event.target;
+    changeUI({ rankingSearch: value });
+  };
+
   return (
   <Component
     handleSortClick={handleSortClick}
-    handleInfoClick={handleInfoClick}
     handleCountryClick={handleCountryClick}
+    handleSearchChange={handleSearchChange}
     {...props}
   />
   )

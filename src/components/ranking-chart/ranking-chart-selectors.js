@@ -1,9 +1,12 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
+import get from 'lodash/get';
 import { SORT } from 'components/header-item';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getSortRankingCategory = (_, props) => (props && props.sortRankingCategory) || null;
+const getSearchTerm = ({ location }) => (location && get(location, 'query.ui.rankingSearch')) || null;
+
 const getRankingData = createSelector([selectCountriesData], countriesData => {
   if(!countriesData) return null;
   return Object.keys(countriesData).map((iso) => {
@@ -16,7 +19,7 @@ const getRankingData = createSelector([selectCountriesData], countriesData => {
         nonEndemic: 100 - (100 * d.total_endemic / d.nspecies),
         endemic: (100 * d.total_endemic / d.nspecies)
       },
-      human: {
+      'human modification': {
         veryHigh: d.prop_hm_very_high,
         totalMinusVeryHigh: 100 - d.prop_hm_very_high - d.prop_hm_0,
         noModification: d.prop_hm_0
@@ -41,15 +44,23 @@ const getSortedData = createSelector([getDataWithSPIOrder, getSortRankingCategor
   const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
   const sortField = {
     species: 'endemic',
-    human: 'veryHigh',
+    'human modification': 'veryHigh',
     protection: 'protected'
   };
   const sortedData = sortBy(data, d => d[sortedCategory][sortField[sortedCategory]]);
   return direction === SORT.ASC ? sortedData.reverse() : sortedData;
 });
 
+const getScrollPosition = createSelector([getSortedData, getSearchTerm], (data, searchTerm) => {
+  if (!data || !searchTerm) return null;
+  const index = data.findIndex(d => d.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
+  return index;
+});
+
 const mapStateToProps = createStructuredSelector({
-  data: getSortedData
+  data: getSortedData,
+  searchTerm: getSearchTerm,
+  scrollPosition: getScrollPosition
 });
 
 export default mapStateToProps;
