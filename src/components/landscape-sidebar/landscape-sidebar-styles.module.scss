@@ -5,7 +5,7 @@
 $margin: 20px;
 
 .sidebar {
-  @extend %verticalScrollBar;
+  @extend %verticalScrollbar;
   display: inline-block;
   box-sizing: border-box;
   border-radius: $border-radius-mobile;

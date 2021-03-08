@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { random } from 'lodash';
+import { selectUiUrlState } from 'selectors/location-selectors';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -7,6 +8,8 @@ const SPECIES_COLOR = {
   amphibians: '#9873EF',
   reptiles: '#3AA8EE'
 }
+
+const getModalOpen = createSelector(selectUiUrlState, uiSettings => uiSettings.openedModal);
 
 const selectCountryData = ({ countryData }, { countryISO }) => {
   if (!countryISO || !countryData) return null;
@@ -29,13 +32,13 @@ const getPriorityAreasSentence = createSelector([selectCountryData, getHasPriori
   if (!countryData) return null;
   return hasPriority ?
   `The brightly colored map layer presents one possible configuration
-  of the additional areas needed to achieve the Half-Earth goal of 
-  comprehensive terrestrial biodiversity conservation. Higher values 
-  indicate locations within ${countryData.NAME_0} that contribute more to the 
+  of the additional areas needed to achieve the Half-Earth goal of
+  comprehensive terrestrial biodiversity conservation. Higher values
+  indicate locations within ${countryData.NAME_0} that contribute more to the
   conservation of species habitat.` :
-  `Our global model of comprehensive terrestrial vertebrate biodiversity 
-  conservation did not identify any areas in ${countryData.NAME_0} in need of additional protection. 
-  Further expansion of ${countryData.NAME_0}'s protected areas will nonetheless promote resilience towards global biodiversity loss, 
+  `Our global model of comprehensive terrestrial vertebrate biodiversity
+  conservation did not identify any areas in ${countryData.NAME_0} in need of additional protection.
+  Further expansion of ${countryData.NAME_0}'s protected areas will nonetheless promote resilience towards global biodiversity loss,
   and can contribute to creating a global conservation network with more equity between countries.` ;
 })
 
@@ -141,6 +144,7 @@ const mapStateToProps = createStructuredSelector({
   SPI: getSpeciesProtectionIndex,
   amphibians: getTaxa('amphibians'),
   indexStatement: getIndexStatement,
+  openedModal: getModalOpen,
   countryDescription: getDescription,
   protectionNeeded: getProtectionNeeded,
   speciesChartData: getSpeciesChartData,

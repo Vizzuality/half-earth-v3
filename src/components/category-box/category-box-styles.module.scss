@@ -16,7 +16,6 @@
 
   @media #{$tablet-portrait} {
     width: $sidebar-width;
-    padding: 0 20px 0 20px;
     transition: all 0.2s ease-out;
 
     &:hover {

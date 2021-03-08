@@ -94,7 +94,7 @@
 }
 
 .description {
-  @extend %verticalScrollBar;
+  @extend %verticalScrollbar;
   @extend %bodyText;
 
   color:  $white;
