@@ -10,7 +10,7 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 
-import BiodiversityThumbnail from "images/biodiversity.webp";
+import BiodiversityThumbnail from "images/biodiversity.png";
 
 const BiodiversitySidebarCardComponent = ({
   activeLayers,

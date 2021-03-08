@@ -4,7 +4,7 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
 import styles from './protected-areas-sidebar-card-styles.module.scss'
-import ExistingProtectionThumbnail from 'images/existing-protection.webp';
+import ExistingProtectionThumbnail from 'images/existing-protection.png';
 
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 

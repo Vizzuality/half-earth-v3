@@ -4,7 +4,7 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import HumanImpactLayers from 'components/human-impact-layers';
 import styles from './human-impact-sidebar-card-styles.module.scss'
-import HumanPressuresThumbnail from "images/human-pressures.webp";
+import HumanPressuresThumbnail from "images/human-pressures.png";
 
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
