@@ -4,6 +4,7 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
 import styles from './protected-areas-sidebar-card-styles.module.scss'
+import ExistingProtectionThumbnail from 'images/existing-protection.webp';
 
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
@@ -13,13 +14,16 @@ const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, 
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
-        title='mapping'
+        title="mapping"
+        image={ExistingProtectionThumbnail}
         category={protectedAreas}
         counter={countedActiveLayers[protectedAreas]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
-      <div className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen})}>
+      <div
+        className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
+      >
         <ProtectedAreasLayers
           map={map}
           handleGlobeUpdating={handleGlobeUpdating}
@@ -28,7 +32,7 @@ const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, 
         />
       </div>
     </div>
-  )
+  );
 }
 
 export default ProtectedAreasSidebarCardComponent;

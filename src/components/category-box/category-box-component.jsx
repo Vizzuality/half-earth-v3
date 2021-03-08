@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
-
 import styles from './category-box-styles.module.scss';
 
-const CategoryBox = ({ title, category, handleBoxClick, counter, isOpen }) => (
+const CategoryBox = ({ title, image, category, handleBoxClick, counter, isOpen }) => (
   <>
     <div className={styles.box} onClick={handleBoxClick}>
       <div className={styles.categoryContainer}>
-        <img src="#" alt={category} className={styles.categoryThumbnail} />
+        <img
+          src={image}
+          alt={category}
+          className={styles.categoryThumbnail}
+        />
         <div className={styles.titleContainer}>
           <div className={styles.title}>
             {title}

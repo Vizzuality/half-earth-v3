@@ -10,6 +10,8 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 
+import BiodiversityThumbnail from "images/biodiversity.webp";
+
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
@@ -28,14 +30,16 @@ const BiodiversitySidebarCardComponent = ({
       <CategoryBox
         title="mapping"
         category={LAYERS_CATEGORIES.BIODIVERSITY}
+        image={BiodiversityThumbnail}
         counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
       <div
-        className={cx(styles.layersTogglesContainer,
+        className={cx(
+          styles.layersTogglesContainer,
           styles[`${biodiversityLayerVariant}Tab`],
-          {[styles.open]: isOpen }
+          { [styles.open]: isOpen }
         )}
       >
         <Tabs
