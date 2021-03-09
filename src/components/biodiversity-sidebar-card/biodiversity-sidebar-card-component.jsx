@@ -51,6 +51,8 @@ const BiodiversitySidebarCardComponent = ({
           <SidebarCardWrapper>
             <SidebarCardContent
               title={title}
+              highValueLabel={`HIGH ${biodiversityLayerVariant}`}
+              lowValueLabel={`LOW ${biodiversityLayerVariant}`}
               description={description}
               legendType="gradient"
               metaDataSources={source}
