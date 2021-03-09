@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './ranking-chart-component';
-import { SORT } from 'components/header-item';
 
 import mapStateToProps from './ranking-chart-selectors';
 
@@ -12,12 +11,9 @@ import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
 
 const RankingChartContainer = (props) => {
-  const handleSortClick = (category) => {
-    const { changeUI, sortRankingCategory } = props;
-    const sortedCategory = sortRankingCategory && sortRankingCategory.split('-')[0];
-    const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
-    let sortDirection = sortedCategory === category && direction === SORT.ASC ? SORT.DESC : SORT.ASC;
-    changeUI({ sortRankingCategory: `${category}-${sortDirection}` })
+  const handleFilterSelection = (selectedFilter) => {
+    const { changeUI } = props;
+    changeUI({ sortRankingCategory: selectedFilter })
   }
 
   const handleCountryClick = (countryISO, countryName) => {
@@ -33,9 +29,9 @@ const RankingChartContainer = (props) => {
 
   return (
   <Component
-    handleSortClick={handleSortClick}
     handleCountryClick={handleCountryClick}
     handleSearchChange={handleSearchChange}
+    handleFilterSelection={handleFilterSelection}
     {...props}
   />
   )

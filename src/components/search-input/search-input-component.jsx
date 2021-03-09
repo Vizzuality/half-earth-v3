@@ -4,9 +4,15 @@ import { ReactComponent as SearchIcon } from "icons/search.svg";
 import cx from 'classnames';
 import styles from './search-input-styles.module';
 
-const SearchInput = ({ placeholder, onChange, value, type }) => {
+const SearchInput = ({ placeholder, onChange, value, type, className }) => {
   return (
-    <div className={cx(styles.searchInputContainer, { [styles[type]]: type })}>
+    <div
+      className={cx(
+        styles.searchInputContainer,
+        { [styles[type]]: type },
+        className
+      )}
+    >
       <SearchIcon className={styles.searchIcon} />
       <input
         type="text"
@@ -20,6 +26,7 @@ const SearchInput = ({ placeholder, onChange, value, type }) => {
 };
 
 SearchInput.propTypes = {
+  className: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   type: PropTypes.string,

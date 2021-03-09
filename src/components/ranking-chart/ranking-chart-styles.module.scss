@@ -10,6 +10,7 @@
 
 .chartTitleContainer {
   margin-bottom: 3rem;
+  display: flex;
 }
 
 .titleText {
@@ -44,9 +45,10 @@ $scroll-bar-width: 7px;
     padding: 0;
     align-items: baseline;
 
-    &:last-child {
-      padding-left: 1rem;
-    }
+  }
+
+  .searchInput {
+    padding-left: 9px;
   }
 }
 

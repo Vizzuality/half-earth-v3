@@ -1,6 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
-
+@import 'styles/ui.module';
 
 .dropdownContainer {
   padding: 10px;
@@ -38,6 +38,35 @@
   }
 }
 
+.group {
+  &:not(:last-child) {
+    &::after {
+      background-color: $accent-grey;
+      height: 1px;
+      content: "";
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .groupList {
+    padding: 10px 0;
+    list-style: none;
+  }
+
+  &:first-child {
+    .groupList {
+      padding: 0 0 10px;
+    }
+  }
+
+  &:last-child {
+    .groupList {
+      padding: 10px 0 0;
+    }
+  }
+}
+
 .optionsList {
   @extend %bodyText;
   color: $_temporary-dark-text;
@@ -56,11 +85,13 @@
 
   .option {
     padding: 5px $sidebar-paddings;
+
     &:hover {
       background-color: $accent-grey;
     }
+
     &.selectedOption {
-      opacity: 0.5;
+      color: rgba($_temporary-dark-text, 0.5);
     }
   }
 }
