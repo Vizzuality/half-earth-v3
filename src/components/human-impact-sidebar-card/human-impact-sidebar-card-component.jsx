@@ -4,6 +4,7 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import HumanImpactLayers from 'components/human-impact-layers';
 import styles from './human-impact-sidebar-card-styles.module.scss'
+import HumanPressuresThumbnail from "images/human-pressures.png";
 
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
@@ -14,21 +15,24 @@ const HumanImpactSidebarCardComponent = ({activeLayers, handleGlobeUpdating, cou
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
-        title='mapping'
+        title="mapping"
         category={humanImpact}
+        image={HumanPressuresThumbnail}
         counter={countedActiveLayers[humanImpact]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
-      <div className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen})}>
-          <HumanImpactLayers
-            view={view}
-            activeLayers={activeLayers}
-            handleGlobeUpdating={handleGlobeUpdating}
-          />
+      <div
+        className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
+      >
+        <HumanImpactLayers
+          view={view}
+          activeLayers={activeLayers}
+          handleGlobeUpdating={handleGlobeUpdating}
+        />
       </div>
     </div>
-  )
+  );
 }
 
 export default HumanImpactSidebarCardComponent;
