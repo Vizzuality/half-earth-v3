@@ -5,6 +5,7 @@ import { SORT_OPTIONS } from './ranking-chart-component';
 
 export const RANKING_INDICATORS = {
   spi: 'spi',
+  speciesRichness: 'speciesRichness',
   nonEndemic: 'nonEndemic',
   endemic: 'endemic',
   veryHigh: 'veryHigh',
@@ -41,7 +42,8 @@ const getRankingData = createSelector([selectCountriesData], countriesData => {
   return Object.keys(countriesData).map((iso) => {
     const d = countriesData[iso];
     return {
-      spi: d.SPI,
+      [RANKING_INDICATORS.spi]: d.SPI,
+      [RANKING_INDICATORS.speciesRichness]: d.nspecies, // Just for sorting
       name: d.NAME_0,
       iso,
       [RANKING_GROUPS_SLUGS.species]: {

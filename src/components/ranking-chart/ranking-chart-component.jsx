@@ -32,7 +32,7 @@ const GROUPS_SLUGS = { spi: 'spi', ...RANKING_GROUPS_SLUGS };
 const GROUPS = [GROUPS_SLUGS.spi, GROUPS_SLUGS.species, GROUPS_SLUGS.humanModification, GROUPS_SLUGS.protection];
 export const SORT_OPTIONS = [
   { label: 'species protection index', slug: RANKING_INDICATORS.spi, group: GROUPS_SLUGS.spi },
-  { label: 'proportion of non endemic species', slug: RANKING_INDICATORS.nonEndemic, group: GROUPS_SLUGS.species },
+  { label: 'species richness', slug: RANKING_INDICATORS.speciesRichness, group: GROUPS_SLUGS.species },
   { label: 'proportion of endemic species', slug: RANKING_INDICATORS.endemic, group: GROUPS_SLUGS.species },
   {
     label: 'proportion of very high human modification',
