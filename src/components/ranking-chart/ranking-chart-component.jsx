@@ -3,71 +3,16 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
-import styles from './ranking-chart-styles.module.scss';
 import SearchInput from 'components/search-input';
 import Dropdown from "components/dropdown";
+import styles from './ranking-chart-styles.module.scss';
 import {
-  RANKING_GROUPS_SLUGS,
-  RANKING_INDICATORS,
-} from "./ranking-chart-selectors";
+  RANKING_LEGEND,
+  SORT_OPTIONS,
+  SORT_GROUPS,
+} from "constants/country-mode-constants";
 
-const LEGEND_TEXT = {
-  [RANKING_GROUPS_SLUGS.species]: {
-    [RANKING_INDICATORS.nonEndemic]: 'Non endemic species',
-    [RANKING_INDICATORS.endemic]: 'Endemic species',
-  },
-  [RANKING_GROUPS_SLUGS.humanModification]: {
-    [RANKING_INDICATORS.veryHigh]: 'Very high human modification',
-    [RANKING_INDICATORS.totalMinusVeryHigh]: 'Human modification',
-    [RANKING_INDICATORS.noModification]: 'No human modification',
-  },
-  [RANKING_GROUPS_SLUGS.protection]: {
-    [RANKING_INDICATORS.protected]: 'Current protection',
-    [RANKING_INDICATORS.protectionNeeded]: 'Additional protection needed',
-    [RANKING_INDICATORS.protectionNotNeeded]: 'Non-formal protection needed',
-  },
-};
-
-const GROUPS_SLUGS = { spi: 'spi', ...RANKING_GROUPS_SLUGS };
-const GROUPS = [GROUPS_SLUGS.spi, GROUPS_SLUGS.species, GROUPS_SLUGS.humanModification, GROUPS_SLUGS.protection];
-export const SORT_OPTIONS = [
-  { label: 'species protection index', slug: RANKING_INDICATORS.spi, group: GROUPS_SLUGS.spi },
-  { label: 'species richness', slug: RANKING_INDICATORS.speciesRichness, group: GROUPS_SLUGS.species },
-  { label: 'proportion of endemic species', slug: RANKING_INDICATORS.endemic, group: GROUPS_SLUGS.species },
-  {
-    label: 'proportion of very high human modification',
-    slug: RANKING_INDICATORS.veryHigh,
-    group: GROUPS_SLUGS.humanModification,
-  },
-  {
-    label: 'proportion of human modification',
-    slug: RANKING_INDICATORS.totalMinusVeryHigh,
-    group: GROUPS_SLUGS.humanModification,
-  },
-  {
-    label: 'proportion of non human modification',
-    slug: RANKING_INDICATORS.noModification,
-    group: GROUPS_SLUGS.humanModification,
-  },
-  {
-    label: 'proportion of protection',
-    slug: RANKING_INDICATORS.protected,
-    group: GROUPS_SLUGS.protection,
-  },
-  {
-    label: 'proportion of additional protection needed',
-    slug: RANKING_INDICATORS.protectionNeeded,
-    group: GROUPS_SLUGS.protection,
-  },
-  {
-    label: 'proportion of Non-formal protection needed',
-    slug: RANKING_INDICATORS.protectionNotNeeded,
-    group: GROUPS_SLUGS.protection,
-  },
-];
-
-const categories = Object.keys(LEGEND_TEXT);
-
+const categories = Object.keys(RANKING_LEGEND);
 const RankingChart = ({
   data,
   className,
@@ -76,20 +21,18 @@ const RankingChart = ({
   selectedFilterOption,
   handleSearchChange,
   handleCountryClick,
-  scrollPosition,
+  scrollIndex,
   searchTerm,
 }) => {
   const [hasScrolled, changeHasScrolled] = useState(false);
+
   const tableRef = useRef();
   useEffect(() => {
-    if (scrollPosition > -1 && tableRef.current) {
-      const foundElement = document.getElementById(`country-${scrollPosition}`)
-      if (foundElement) {
-        foundElement.scrollIntoView();
-        tableRef.current.scrollBy(0, -10);
-      }
+    const ROW_HEIGHT = 24;
+    if (scrollIndex > -1 && tableRef.current) {
+      tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
     }
-  }, [scrollPosition, tableRef]);
+  }, [scrollIndex, tableRef]);
 
   const onScroll = () => {
     if (!hasScrolled) {
@@ -101,7 +44,7 @@ const RankingChart = ({
     <div className={styles.tooltip}>
       <div className={styles.labels}>
         {Object.keys(d[name]).map((key) => (
-          <div key={`legend-${key}`}> {LEGEND_TEXT[name][key]}: </div>
+          <div key={`legend-${key}`}> {RANKING_LEGEND[name][key]}: </div>
         ))}
       </div>
       <div className={styles.values}>
@@ -141,14 +84,14 @@ const RankingChart = ({
         </div>
       </Tooltip>
     );
-
+console.log('s', handleSearchChange);
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
         <span className={styles.chartTitle}>Sort countries by</span>
         <Dropdown
           options={SORT_OPTIONS}
-          groups={GROUPS}
+          groups={SORT_GROUPS}
           selectedOption={selectedFilterOption}
           handleOptionSelection={handleFilterSelection}
         />
@@ -185,7 +128,7 @@ const RankingChart = ({
                   {categories.map((category) => renderBar(category, d))}
                   <div
                     className={cx(styles.spiCountry, {
-                      [styles.found]: scrollPosition === i,
+                      [styles.found]: scrollIndex === i,
                     })}
                     id={`country-${i}`}
                   >
@@ -236,9 +179,8 @@ RankingChart.propTypes = {
   data: PropTypes.array,
   className: PropTypes.string,
   searchTerm: PropTypes.string,
-  scrollPosition: PropTypes.number,
+  scrollIndex: PropTypes.number,
   sortRankingCategory: PropTypes.string,
-  handleSortClick: PropTypes.func.isRequired,
   handleCountryClick: PropTypes.func.isRequired,
 };
 
