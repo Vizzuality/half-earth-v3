@@ -69,14 +69,16 @@ const Component = ({
 export default Component;
 
 Component.propTypes = {
-  options: Proptypes.shape({
-    label: Proptypes.string,
-    slug: Proptypes.string,
-    group: Proptypes.string
-  }),
+  options: Proptypes.arrayOf(
+    Proptypes.shape({
+      label: Proptypes.string,
+      slug: Proptypes.string,
+      group: Proptypes.string,
+    })
+  ),
   dropdownOpen: Proptypes.bool,
   hasGroups: Proptypes.bool,
   onDropdownToggle: Proptypes.func.isRequired,
   selectedOption: Proptypes.shape(),
-  onOptionSelection: Proptypes.func.isRequired
+  onOptionSelection: Proptypes.func.isRequired,
 };
