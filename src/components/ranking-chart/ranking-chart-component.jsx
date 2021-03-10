@@ -84,7 +84,6 @@ const RankingChart = ({
         </div>
       </Tooltip>
     );
-console.log('s', handleSearchChange);
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
