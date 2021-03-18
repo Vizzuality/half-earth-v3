@@ -55,28 +55,28 @@
   }
 
   &:nth-child(1) { // REPTILES SLICE
-    &:after {   
+    &:after {
       content: 'Reptiles';
       transform: rotate(-45deg) translate(-10px, 10px);
     }
   }
 
   &:nth-child(2) {  // BIRDS SLICE
-    &:after {   
+    &:after {
       content: 'Birds';
       transform: rotate(45deg) translate(58px, -37px);
     }
   }
 
   &:nth-child(3) { // MAMMALS SLICE
-    &:after {   
+    &:after {
       content: 'Mammals';
       transform: rotate(45deg) translate(43px, 51px);
     }
   }
 
   &:nth-child(4) { // AMPHIBIANS SLICE
-    &:after {   
+    &:after {
       content: 'Amphibians';
       transform: rotate(-45deg) translate(-16px, 81px);
     }
@@ -133,7 +133,7 @@
     content: '';
     display: block;
     height: 4px;
-    margin-right: 14px; 
+    margin-right: 14px;
     width: 4px;
   }
 
@@ -146,7 +146,7 @@
   display: flex;
   margin: 20px 0;
   margin-bottom: 8px;
-  
+
   .speciesEngName {
     @extend %annotation;
     color: $white;
@@ -154,7 +154,7 @@
     text-transform: uppercase;
     text-decoration: none;
   }
-  
+
   .speciesLatName {
     @extend %annotation;
     color: $white;
@@ -171,7 +171,7 @@
   .carrouselButton:first-child svg{
     transform: rotate(180deg);
   }
-  
+
   .speciesImage {
     border: 1px solid $sulu;
     border-radius: 50%;
