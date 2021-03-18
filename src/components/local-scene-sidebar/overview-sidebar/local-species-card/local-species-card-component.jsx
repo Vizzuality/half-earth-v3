@@ -58,7 +58,7 @@ const LocalSpeciesCardComponent = ({
             <span>endemic</span>
           </div>
         </div>
-        <div>
+        <div className={styles.speciesLegend}>
           <p className={styles.speciesCount}>
             <span className={styles.amphibiansIcon}>
               <AmphibiansIcon />
@@ -84,6 +84,9 @@ const LocalSpeciesCardComponent = ({
             {`${reptiles} reptiles (${reptilesEndemic} endemic)`}
           </p>
         </div>
+        <Button theme={buttonTheme} onClick={toggleModal}>
+          See all vertebrates
+        </Button>
       </section>
       <section>
         <p
@@ -93,9 +96,6 @@ const LocalSpeciesCardComponent = ({
           countryISO={countryISO}
           highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
         />
-        <Button theme={buttonTheme} onClick={toggleModal}>
-          See all vertebrates
-        </Button>
         <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={toggleModal} />
       </section>
     </SidebarCardWrapper>
