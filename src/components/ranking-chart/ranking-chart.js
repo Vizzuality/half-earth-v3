@@ -1,12 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Component from './ranking-chart-component';
-import metadataConfig from 'constants/metadata';
-import { RANKING_CHART } from 'constants/metadata';
-import { SORT } from 'components/header-item';
-
 import mapStateToProps from './ranking-chart-selectors';
-
+import useDebounce from 'hooks/use-debounce';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -14,23 +10,22 @@ import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
 
 const RankingChartContainer = (props) => {
-  const handleInfoClick = () => {
-    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
-    openInfoModalAnalyticsEvent('Countries ranking');
-    const md = metadataConfig[RANKING_CHART];
-    setModalMetadata({
-      slug: md.slug,
-      title: md.title,
-      isOpen: true
-    });
-  }
+  const { data } = props;
+  const [searchTerm, setSearchTerm] = useState();
+  const [scrollIndex, setScrollIndex] = useState();
+  const debouncedSearchTerm = useDebounce(searchTerm, 30);
 
-  const handleSortClick = (category) => {
-    const { changeUI, sortRankingCategory } = props;
-    const sortedCategory = sortRankingCategory && sortRankingCategory.split('-')[0];
-    const direction = sortRankingCategory && sortRankingCategory.split('-')[1];
-    let sortDirection = sortedCategory === category && direction === SORT.ASC ? SORT.DESC : SORT.ASC;
-    changeUI({ sortRankingCategory: `${category}-${sortDirection}` })
+  useEffect(() => {
+    if (data && searchTerm) {
+      const newIndex = data.findIndex(d => d.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
+      setScrollIndex(newIndex);
+    }
+    return undefined;
+  }, [debouncedSearchTerm])
+
+  const handleFilterSelection = (selectedFilter) => {
+    const { changeUI } = props;
+    changeUI({ sortRankingCategory: selectedFilter })
   }
 
   const handleCountryClick = (countryISO, countryName) => {
@@ -38,13 +33,19 @@ const RankingChartContainer = (props) => {
     changeGlobe({ countryISO, countryName, zoom: null, center: null });
   };
 
+  const handleSearchChange = (event) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+  };
   return (
-  <Component
-    handleSortClick={handleSortClick}
-    handleInfoClick={handleInfoClick}
-    handleCountryClick={handleCountryClick}
-    {...props}
-  />
+    <Component
+      handleCountryClick={handleCountryClick}
+      handleSearchChange={handleSearchChange}
+      handleFilterSelection={handleFilterSelection}
+      scrollIndex={scrollIndex}
+      searchTerm={searchTerm}
+      {...props}
+    />
   )
 }
 

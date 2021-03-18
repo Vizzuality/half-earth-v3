@@ -26,7 +26,6 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   countedActiveLayers,
-  sortRankingCategory,
   localSceneActiveTab,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
@@ -48,7 +47,6 @@ const DataGlobeComponent = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
-        sortRankingCategory={sortRankingCategory}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
       />

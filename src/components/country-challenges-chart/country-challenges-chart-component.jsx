@@ -22,12 +22,11 @@ const CountryChallengesChartComponent = ({
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
 }) => {
-console.log(selectedFilterOption)
   return (
     <div className={className}>
       <div className={styles.headerContainer}>
         <span className={styles.chartTitle}>Filter countries</span>
-        <Dropdown 
+        <Dropdown
           options={challengesFilterOptions}
           selectedOption={selectedFilterOption}
           handleOptionSelection={handleFilterSelection}

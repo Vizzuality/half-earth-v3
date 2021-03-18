@@ -43,7 +43,6 @@ const CountrySceneComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   localSceneActiveTab,
-  sortRankingCategory,
   countryChallengesSelectedKey,
   userConfig
 }) => {
@@ -128,14 +127,13 @@ const CountrySceneComponent = ({
           countryISO={countryISO}
           className={styles.rankingChart}
           localSceneActiveTab={localSceneActiveTab}
-          sortRankingCategory={sortRankingCategory}
         />
       </div>
       {hasMetadata && (
         <InfoModal additionalContent={infoModalAdditionalContent} />
       )}
       {!isOnMobile && <About className={styles.hideOnPrint} />}
-      <ReactTooltip 
+      <ReactTooltip
         className="infoTooltipStyle"
       />
     </>

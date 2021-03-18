@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Component from './component.jsx';
+import Component from './dropdown-component.jsx';
 
-const Container = (props) => {
+const DropdownContainer = (props) => {
   const { handleOptionSelection } = props;
   const [dropdownOpen, setDropdownToggle] = useState(false);
 
@@ -13,9 +13,9 @@ const Container = (props) => {
   const dropdownToggle = () => {
     setDropdownToggle(!dropdownOpen);
   }
-  
+
   return (
-    <Component 
+    <Component
       dropdownOpen={dropdownOpen}
       onDropdownToggle={dropdownToggle}
       onOptionSelection={onOptionSelection}
@@ -24,4 +24,4 @@ const Container = (props) => {
   )
 }
 
-export default Container;
+export default DropdownContainer;

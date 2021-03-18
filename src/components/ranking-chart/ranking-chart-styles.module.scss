@@ -10,6 +10,7 @@
 
 .chartTitleContainer {
   margin-bottom: 3rem;
+  display: flex;
 }
 
 .titleText {
@@ -24,10 +25,17 @@
 $chart-width-without-legend: calc(#{$country-scene-chart-width} + 50px);
 $scroll-bar-width: 7px;
 
+%tableItem {
+  margin-right: 2rem;
+  min-width: calc(100vw - #{$sidebar-width} - 100px);
+  max-width: calc(100vw - #{$sidebar-width} - 100px);
+}
+
 .header {
-  width: calc(#{$chart-width-without-legend} * 0.8);
+  width: $chart-width-without-legend;
   padding-right: $scroll-bar-width;
   display: flex;
+  @extend %tableItem;
 
   .headerItem {
     width: 18%;
@@ -36,14 +44,11 @@ $scroll-bar-width: 7px;
     text-align: left;
     padding: 0;
     align-items: baseline;
+    cursor: default;
+  }
 
-    &:last-child {
-      padding-left: 1rem;
-    }
-
-    &:hover {
-      color: $white;
-    }
+  .searchInput {
+    padding-left: 9px;
   }
 }
 
@@ -67,6 +72,12 @@ $scroll-bar-width: 7px;
   margin-left: 1rem;
   display: flex;
   cursor: pointer;
+
+  &.found {
+    .spiCountryText, .spiCountryIndex, .spiIndex {
+      color: $white;
+    }
+  }
 }
 
 .spiCountryText {
@@ -115,15 +126,12 @@ $scroll-bar-width: 7px;
 }
 
 .rankingChartContent {
-  padding-bottom: 2rem;
-  margin-right: 2rem;
-  min-width: calc(100vw - #{$sidebar-width} - 100px);
-  max-width: calc(100vw - #{$sidebar-width} - 100px);
-  height: calc(100vh - #{$sidebar-header-height} - 200px);
-  flex-direction: column;
-
+  @extend %tableItem;
   @extend %verticalScrollbar;
 
+  padding-bottom: 2rem;
+  height: calc(100vh - #{$sidebar-header-height} - 200px);
+  flex-direction: column;
 }
 
 .scrollHint {

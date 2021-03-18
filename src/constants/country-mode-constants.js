@@ -57,33 +57,99 @@ export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent}
 ]
 
+export const RANKING_INDICATORS = {
+  spi: 'spi',
+  speciesRichness: 'speciesRichness',
+  nonEndemic: 'nonEndemic',
+  endemic: 'endemic',
+  veryHigh: 'veryHigh',
+  totalMinusVeryHigh: 'totalMinusVeryHigh',
+  noModification: 'noModification',
+  protected: 'protected',
+  protectionNeeded: 'protectionNeeded',
+  protectionNotNeeded: 'protectionNotNeeded',
+};
+
 export const RANKING_COLORS = {
-  non_endemic: '#F87200',
-  endemic: '#F8D300',
-  high_human: '#731CFF',
-  some_human: '#B284FD',
-  non_human: '#A0AFB8',
-  protected: '#008604',
-  needed: '#B3E74B',
-  non_needed: '#AFB8A0',
+  [RANKING_INDICATORS.nonEndemic]: '#F87200',
+  [RANKING_INDICATORS.endemic]: '#F8D300',
+  [RANKING_INDICATORS.veryHigh]: '#731CFF',
+  [RANKING_INDICATORS.totalMinusVeryHigh]: '#B284FD',
+  [RANKING_INDICATORS.noModification]: '#A0AFB8',
+  [RANKING_INDICATORS.protected]: '#008604',
+  [RANKING_INDICATORS.protectionNeeded]: '#B3E74B',
+  [RANKING_INDICATORS.protectionNotNeeded]: '#AFB8A0',
 }
+
+export const RANKING_GROUPS_SLUGS = {
+  species: 'species',
+  humanModification: 'human modification',
+  protection: 'protection'
+};
+
+export const RANKING_INDICATOR_GROUPS = {
+  [RANKING_INDICATORS.nonEndemic]: RANKING_GROUPS_SLUGS.species,
+  [RANKING_INDICATORS.endemic]: RANKING_GROUPS_SLUGS.species,
+  [RANKING_INDICATORS.veryHigh]: RANKING_GROUPS_SLUGS.humanModification,
+  [RANKING_INDICATORS.totalMinusVeryHigh]: RANKING_GROUPS_SLUGS.humanModification,
+  [RANKING_INDICATORS.noModification]: RANKING_GROUPS_SLUGS.humanModification,
+  [RANKING_INDICATORS.protected]: RANKING_GROUPS_SLUGS.protection,
+  [RANKING_INDICATORS.protectionNeeded]: RANKING_GROUPS_SLUGS.protection,
+  [RANKING_INDICATORS.protectionNotNeeded]: RANKING_GROUPS_SLUGS.protection
+};
 
 export const RANKING_LEGEND = {
-  species : [
-    {slug: 'non_endemic', label: 'non endemic species'},
-    {slug: 'endemic', label: 'endemic species'},
+  [RANKING_GROUPS_SLUGS.species]: {
+    [RANKING_INDICATORS.nonEndemic]: 'Non endemic species',
+    [RANKING_INDICATORS.endemic]: 'Endemic species',
+  },
+  [RANKING_GROUPS_SLUGS.humanModification]: {
+    [RANKING_INDICATORS.veryHigh]: 'Very high human modification',
+    [RANKING_INDICATORS.totalMinusVeryHigh]: 'Human modification',
+    [RANKING_INDICATORS.noModification]: 'No human modification',
+  },
+  [RANKING_GROUPS_SLUGS.protection]: {
+    [RANKING_INDICATORS.protected]: 'Current protection',
+    [RANKING_INDICATORS.protectionNeeded]: 'Additional protection needed',
+    [RANKING_INDICATORS.protectionNotNeeded]: 'Non-formal protection needed',
+  },
+};
 
-  ],
-  human : [
-    {slug: 'high_human', label: 'very high human modification'},
-    {slug: 'some_human', label: 'some human modification'},
-    {slug: 'non_human', label: 'non-human modification'},
+export const SORT_GROUPS_SLUGS = { spi: 'spi', ...RANKING_GROUPS_SLUGS };
+export const SORT_GROUPS = [SORT_GROUPS_SLUGS.spi, SORT_GROUPS_SLUGS.species, SORT_GROUPS_SLUGS.humanModification, SORT_GROUPS_SLUGS.protection];
+export const SORT_OPTIONS = [
+  { label: 'species protection index', slug: RANKING_INDICATORS.spi, group: SORT_GROUPS_SLUGS.spi },
+  { label: 'species richness', slug: RANKING_INDICATORS.speciesRichness, group: SORT_GROUPS_SLUGS.species },
+  { label: 'proportion of endemic species', slug: RANKING_INDICATORS.endemic, group: SORT_GROUPS_SLUGS.species },
+  {
+    label: 'proportion of very high human modification',
+    slug: RANKING_INDICATORS.veryHigh,
+    group: SORT_GROUPS_SLUGS.humanModification,
+  },
+  {
+    label: 'proportion of human modification',
+    slug: RANKING_INDICATORS.totalMinusVeryHigh,
+    group: SORT_GROUPS_SLUGS.humanModification,
+  },
+  {
+    label: 'proportion of non human modification',
+    slug: RANKING_INDICATORS.noModification,
+    group: SORT_GROUPS_SLUGS.humanModification,
+  },
+  {
+    label: 'proportion of protection',
+    slug: RANKING_INDICATORS.protected,
+    group: SORT_GROUPS_SLUGS.protection,
+  },
+  {
+    label: 'proportion of additional protection needed',
+    slug: RANKING_INDICATORS.protectionNeeded,
+    group: SORT_GROUPS_SLUGS.protection,
+  },
+  {
+    label: 'proportion of Non-formal protection needed',
+    slug: RANKING_INDICATORS.protectionNotNeeded,
+    group: SORT_GROUPS_SLUGS.protection,
+  },
+];
 
-
-  ],
-  protection : [
-    {slug: 'protected', label: 'protected areas'},
-    {slug: 'needed', label: 'protection needed'},
-    {slug: 'non_needed', label: 'protection non-needed'},
-  ],
-}
