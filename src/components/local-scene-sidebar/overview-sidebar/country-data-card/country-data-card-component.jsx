@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
-import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 
 const CountryDataCardComponent = ({
   SPI,
@@ -15,18 +14,19 @@ const CountryDataCardComponent = ({
 }) => {
   return (
     <div className={styles.container}>
-
       <section className={styles.indexOverview}>
         <div className={styles.overviewTextWrapper}>
-          <button onClick={handleInfoClick}>
-            <QuestionIcon />
+          <button onClick={handleInfoClick} className={styles.overviewText}>
+            The national species protection index:
           </button>
-          <p className={styles.overviewText}>The national species protection index is:</p>
         </div>
         <div className={styles.indexWrapper}>
           <div className={styles.indexBar}>
-            <div className={styles.progressMark} style={{left: `${SPI}%`}}/>
-            <div className={styles.improvementArea} style={{left: `${SPI}%`, width: `${100 - SPI}%`}}/>
+            <div className={styles.progressMark} style={{ left: `${SPI}%` }} />
+            <div
+              className={styles.improvementArea}
+              style={{ left: `${SPI}%`, width: `${100 - SPI}%` }}
+            />
           </div>
           <div className={styles.index}>{`${SPI}`}</div>
         </div>
@@ -36,7 +36,12 @@ const CountryDataCardComponent = ({
         <div className={styles.indexExplanation}>
           <p className={styles.indexExplanationText}>This index is based on:</p>
           <div className={styles.indexBaseNumbersWrapper}>
-            <div className={cx(styles.indexBaseDataElement, styles.protectionNumber)}>
+            <div
+              className={cx(
+                styles.indexBaseDataElement,
+                styles.protectionNumber
+              )}
+            >
               <p className={styles.baseNumber}>{`${currentProtection}`}</p>
               <p className={styles.numberText}>% of land</p>
               <p className={styles.numberText}>currently</p>
@@ -49,7 +54,9 @@ const CountryDataCardComponent = ({
               <p className={styles.numberText}>species</p>
             </div>
             <div className={styles.indexBaseDataElement}>
-              <p className={styles.baseNumber}>{`${endemicVertebratesCount}`}</p>
+              <p
+                className={styles.baseNumber}
+              >{`${endemicVertebratesCount}`}</p>
               <p className={styles.numberText}>endemic land</p>
               <p className={styles.numberText}>vertebrate</p>
               <p className={styles.numberText}>species</p>
@@ -60,7 +67,10 @@ const CountryDataCardComponent = ({
           <BulbIcon />
           <p className={styles.hintTitle}>Why only land vertebrates?</p>
           <p className={styles.hintText}>
-            Terrestrial vertebrates represent the species groups with the most comprehensive coverage of distribution data. The Half-Earth Project is actively engaging in research to expand coverage of other taxonomic groups.
+            Terrestrial vertebrates represent the species groups with the most
+            comprehensive coverage of distribution data. The Half-Earth Project
+            is actively engaging in research to expand coverage of other
+            taxonomic groups.
           </p>
         </div>
       </section>
