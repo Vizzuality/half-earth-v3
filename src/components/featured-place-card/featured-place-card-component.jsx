@@ -51,14 +51,14 @@ const FeaturedPlaceCardComponent = ({
           { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile }
         )}
       >
+        <Button
+          type="rounded"
+          handleClick={handleAllMapsClick}
+          Icon={CloseIcon}
+          className={styles.backButton}
+          tooltipText="Go back to all maps"
+        />
         <section className={styles.cardGrid}>
-          <Button
-            type="rounded"
-            handleClick={handleAllMapsClick}
-            Icon={CloseIcon}
-            className={styles.backButton}
-            tooltipText="Go back to all maps"
-          />
           <div className={styles.breadcrumb}>
             {hotspotsNumbers &&
               `${hotspotsNumbers.position} / ${hotspotsNumbers.size} Hotspots`}

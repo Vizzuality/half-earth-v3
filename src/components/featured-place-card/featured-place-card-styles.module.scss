@@ -40,7 +40,7 @@ $card-content-max-height: 220px;
 .cardGrid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 170px 1fr;
+  grid-template-rows: 1fr 1fr 1fr 170px 1fr;
   grid-template-areas:
     "breadcrumb"
     "navigation"
@@ -134,9 +134,11 @@ $card-content-max-height: 220px;
     @extend %verticalScrollbar;
     grid-area: text;
     padding-bottom: 20px;
+    overflow-y: unset;
 
     @media #{$tablet-portrait} {
       max-height: $card-content-max-height;
+      overflow-y: auto;
     }
   }
 
@@ -252,4 +254,5 @@ $card-content-max-height: 220px;
   top: -20px;
   left: calc(50% - #{$rounded-button-size} / 2);
   box-shadow: $box-shadow-strong;
+  z-index: $bring-to-front;
 }
