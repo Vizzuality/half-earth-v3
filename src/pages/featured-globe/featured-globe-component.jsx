@@ -66,17 +66,17 @@ const DataGlobeComponent = ({
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = useMobile();
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
+  const esriWidgetsHidden = isFeaturedPlaceCard || isOnMobile;
 
   return (
     <>
-      {!isMapsList && !isOnMobile && <Switcher />}
+      {!isOnMobile && <Switcher />}
       <Scene
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         interactionsDisabled={
-          (isMapsList || isFeaturedPlaceCard) && !isOnMobile
+          (isFeaturedPlaceCard) && !isOnMobile
         }
         urlParamsUpdateDisabled
       >

@@ -34,6 +34,10 @@ const feturedGlobeContainer = props => {
     }
   }
   const handleMarkerHover = (viewPoint, view) => {
+    if (handle && viewPoint.results.length) {
+      handle.remove();
+    }
+
     if (!isOnMobile) {
       const layerFeatures = hitResults(viewPoint, FEATURED_PLACES_LAYER)
       setCursor(layerFeatures);
