@@ -66,10 +66,10 @@ const FeaturedPlaceCardContainer = props => {
   let hotspotsNumbers = null;
   if (featuredPlacesList && selectedFeaturedPlace) {
     const position = featuredPlacesList.indexOf(selectedFeaturedPlace);
-    if (position > 0) {
+    if (position > -1) {
       hotspotsNumbers = {
         size: featuredPlacesList.length,
-        position: featuredPlacesList.indexOf(selectedFeaturedPlace),
+        position: position + 1,
       };
     }
   }
