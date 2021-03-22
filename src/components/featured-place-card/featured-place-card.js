@@ -47,7 +47,7 @@ const FeaturedPlaceCardContainer = props => {
     }
   }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa])
 
-  const handleAllMapsClick = () => { 
+  const handleAllMapsClick = () => {
     view.goTo({ tilt: 0, zoom: 1 });
     changeUI({ selectedFeaturedPlace: null });
   }
@@ -63,6 +63,16 @@ const FeaturedPlaceCardContainer = props => {
   }
 
   const handleLandscapeTrigger = () => view.goTo({ zoom: 8.1 })
+  let hotspotsNumbers = null;
+  if (featuredPlacesList && selectedFeaturedPlace) {
+    const position = featuredPlacesList.indexOf(selectedFeaturedPlace);
+    if (position > 0) {
+      hotspotsNumbers = {
+        size: featuredPlacesList.length,
+        position: featuredPlacesList.indexOf(selectedFeaturedPlace),
+      };
+    }
+  }
 
   return (
     <Component
@@ -73,6 +83,7 @@ const FeaturedPlaceCardContainer = props => {
       handleNextPlaceClick={handleNextPlaceClick}
       handlePrevPlaceClick={handlePrevPlaceClick}
       handleLandscapeTrigger={handleLandscapeTrigger}
+      hotspotsNumbers={hotspotsNumbers}
       {...props }
     />
   )
