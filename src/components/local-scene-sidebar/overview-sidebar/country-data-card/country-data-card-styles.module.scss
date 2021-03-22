@@ -22,16 +22,18 @@
   padding: 0 $sidebar-paddings;
 }
 
-.indexStatement{
-  @extend %title;
-}
-
 .overviewText {
-  @extend %title;
-  font-size: 11px;
-  margin-left: $sidebar-paddings;
+  @extend %subtitle;
+  text-decoration: underline;
+  color: $white;
+  text-align: left;
+  padding: 0 0 $sidebar-paddings;
 }
 
+.indexStatement{
+  @extend %subtitle;
+  padding-bottom: $sidebar-paddings;
+}
 
 .overviewTextWrapper {
   display: flex;
@@ -50,7 +52,7 @@
   position: relative;
   height: 22px;
   width: 70%;
-  background-color: $brand-color-main;
+  background-color: $white;
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -66,14 +68,14 @@
     position: absolute;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 6px solid white;
+    border-top: 6px solid $white;
     bottom: -6px;
   }
 
   .improvementArea {
     position: relative;
     height: 22px;
-    background-color: $accent-grey;
+    background-color: rgba($_temporary-dark-text, 0.9);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     transition: all .3s ease;
