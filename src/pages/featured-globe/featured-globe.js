@@ -22,7 +22,7 @@ import featuredMapsActions from 'redux_modules/featured-maps-list';
 
 const actions = { ...featuredMapsActions, ...urlActions}
 
-const feturedGlobeContainer = props => {
+const featuredGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
   const isOnMobile = useMobile();
   const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard, isFullscreenActive } = props;
@@ -40,7 +40,6 @@ const feturedGlobeContainer = props => {
       if (!isFeaturedPlaceCard) setAvatarImage(view, layerFeatures, selectedFeaturedMap, featuredMapPlaces);
     }
   };
-
   useEffect(() => {
     const { setFeaturedMapsList } = props;
     setFeaturedMapsList();
@@ -106,4 +105,4 @@ const feturedGlobeContainer = props => {
   )
 }
 
-export default connect(mapStateToProps, actions)(feturedGlobeContainer);
+export default connect(mapStateToProps, actions)(featuredGlobeContainer);

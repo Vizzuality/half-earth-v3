@@ -35,7 +35,8 @@ export const setAvatarImage = (view, layerFeatures, selectedFeaturedMap, feature
   if (layerFeatures && layerFeatures.length) {
     const { latitude, longitude } = layerFeatures[0].graphic.geometry;
     const slug = get(layerFeatures, '[0].graphic.attributes.nam_slg');
-    const imageUrl = featuredMapPlaces.data[selectedFeaturedMap][slug].imageUrl ;
+    const featureMapPlace = featuredMapPlaces.data[selectedFeaturedMap][slug];
+    const imageUrl = featureMapPlace && featureMapPlace.imageUrl;
     loadModules(["esri/geometry/Point"]).then(([Point]) => {
       const point = new Point({latitude, longitude});
       const screenCoords = view.toScreen(point);
