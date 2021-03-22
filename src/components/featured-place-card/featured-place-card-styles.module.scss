@@ -80,6 +80,7 @@ $card-content-max-height: 220px;
     .placesNavigator {
       width: 100px;
       height: 20px;
+      margin-right: -10px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -147,6 +148,8 @@ $card-content-max-height: 220px;
     margin: 0;
     margin-bottom: 12px;
     grid-area: title;
+    text-decoration: underline;
+    cursor: pointer;
 
     @media #{$tablet-portrait} {
       margin-bottom: 0;

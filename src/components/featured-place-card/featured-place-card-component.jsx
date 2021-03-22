@@ -116,7 +116,10 @@ const FeaturedPlaceCardComponent = ({
               )}
               <div className={styles.contentContainer} ref={contentWrapper}>
                 {!isOnMobile && (
-                  <h2 className={styles.title}>{featuredPlace.title}</h2>
+                  <h2 className={styles.title} onClick={handleLandscapeTrigger} role="button">
+                    {hotspotsNumbers && `${hotspotsNumbers.position}. `}
+                    {featuredPlace.title}
+                  </h2>
                 )}
                 <div>
                   <p className={styles.text}>{featuredPlace.description}</p>
