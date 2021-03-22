@@ -21,7 +21,9 @@ export const setDefaultCursor = () => document.body.style.cursor = 'default';
 export const removeAvatarImage = (markerElement) => {
   setDefaultCursor();
   const marker = markerElement || document.getElementById('avatar');
-  marker.setAttribute("style", `${markerDefaultStyles}`);
+  if (marker) {
+    marker.setAttribute("style", `${markerDefaultStyles}`);
+  }
 }
 
 export const setAvatarImage = (view, layerFeatures, selectedFeaturedMap, featuredMapPlaces) => {
