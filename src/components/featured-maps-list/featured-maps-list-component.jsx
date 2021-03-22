@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 
 import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
@@ -8,7 +7,7 @@ import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './featured-maps-list-styles.module';
 
-const FeaturedMapsListComponent = ({ 
+const FeaturedMapsListComponent = ({
   featuredMapsList,
   selectedSidebar,
   selectedFeaturedMap,
@@ -18,11 +17,9 @@ const FeaturedMapsListComponent = ({
   handleFeaturedMapClick,
   handleFeatureMapHover,
   handle,
-  view,
   activeOption
 }) => {
   const isOpen = selectedSidebar === 'featuredMapsList';
-  
   const isOnMobile = useMobile();
   const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
 
@@ -41,9 +38,9 @@ const FeaturedMapsListComponent = ({
   }
 
   const resetCardOpen = () => setCardOpen(null);
-  const mouseOver = (card) => { 
-    setCardOpen(card); 
-    handleFeatureMapHover(card.slug) 
+  const mouseOver = (card) => {
+    setCardOpen(card);
+    handleFeatureMapHover(card.slug)
   };
 
   const selectCard = (card) => {
@@ -55,19 +52,12 @@ const FeaturedMapsListComponent = ({
   }
 
   const handleClick = (card) => {
-    if (!isOnMobile) { selectCard(card); } 
+    if (!isOnMobile) { selectCard(card); }
     else { mouseOver(card); }
   };
 
   return (
     <div className={cx(styles.cardsContainer, { [animationStyles.leftHidden]: !isMapsListVisible && !isOnMobile, [animationStyles.bottomHidden]: !isMapsListVisible && isOnMobile, [styles.delayOnIn]: isMapsListVisible })}>
-      {featuredMapsList && <button
-        className={styles.button}
-        onClick={() => handleClick(featuredMapsList[0])}
-      >
-        <ArrowExpandIcon className={styles.icon} />
-        <span className={styles.backButton}>BACK</span>
-      </button>}
       <div className={styles.scrollable}>
         {featuredMapsList && featuredMapsList.map(featuredMap => (
           <div key={featuredMap.slug} className={cx(styles.card, { [styles.border]: isCardSelected(featuredMap), [styles.hidden]: isHiddenOnMobile(featuredMap) })}

@@ -40,7 +40,7 @@ export default {
     }
   },
   ui: {
-    selectedSidebar: 'featuredMapCard',
+    selectedSidebar: 'featuredMapsList',
     selectedFeaturedMap: 'priorPlaces',
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
