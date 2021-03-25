@@ -210,41 +210,78 @@ const ScatterPlot = ({
     <>
       <div className={cx(styles.chartContainer)} onClick={handleContainerClick}>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className={styles.chartSurfaceSvg}
-          height="100%"
-          width="100%">
-          {chartScale && data.map(bubble => (
-            <circle
-              key={bubble.iso}
-              cx={chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey])}
-              cy={chartScale.yScale(bubble.yAxisValue)}
-              onClick={() => onBubbleClick({ countryISO: bubble.iso, countryName: bubble.name })}
-              className={styles.bubble}
-              r={bubble.size}
-              fill={bubble.color}
-              strokeWidth="2"
-              stroke="#040E14"
-            >
-              <foreignObject
-                width="100%"
-                height="100%"
-                x="50%"
-                y="50%"
-                requiredExtensions="http://www.w3.org/1999/xhtml"
-              >
-                <span 
-                // data-xmlns="http://www.w3.org/1999/xhtml"
-                className={styles.bubbleText}
-                >
-                  {bubble.iso}
-                </span>
-              </foreignObject>
-            </circle>
-          ))}   
-        </svg>
-          
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.chartSurfaceSvg}
+            height="100%"
+            width="100%"
+          >
+            {chartScale &&
+              data.map((bubble) => (
+                <g>
+                  <circle
+                    key={bubble.iso}
+                    onClick={() =>
+                      onBubbleClick({
+                        countryISO: bubble.iso,
+                        countryName: bubble.name,
+                      })
+                    }
+                    className={styles.bubble}
+                    cx={chartScale.xScale(
+                      bubble.xAxisValues[countryChallengesSelectedKey]
+                    )}
+                    cy={chartScale.yScale(bubble.yAxisValue)}
+                    r={bubble.size}
+                    fill={bubble.color}
+                    strokeWidth="2"
+                    stroke="#040E14"
+                  />
+                  <foreignObject
+                    width={bubble.size * 2}
+                    height={bubble.size * 2}
+                    x={
+                      chartScale.xScale(
+                        bubble.xAxisValues[countryChallengesSelectedKey]
+                      ) - bubble.size
+                    }
+                    y={chartScale.yScale(bubble.yAxisValue) - bubble.size}
+                    requiredExtensions="http://www.w3.org/1999/xhtml"
+                    onMouseOver={(e) =>
+                      setTooltipState({
+                        x:
+                          e.clientX -
+                          chartSurfaceRef.current.getBoundingClientRect().left,
+                        y:
+                          e.clientY -
+                          chartSurfaceRef.current
+                            .getBoundingClientRect().top,
+                        name: bubble.name,
+                        continent: bubble.continent,
+                        color: bubble.color,
+                        yValue: Number.parseFloat(bubble.yAxisValue).toFixed(2),
+                        yLabel: "Species Protection Index",
+                        xValue: (filter) =>
+                          tooltipValuesFormats[filter](
+                            bubble.xAxisValues[filter]
+                          ),
+                        xLabel: (filter) => xAxisLabels[filter],
+                      })
+                    }
+                  >
+                    <div className={styles.bubbleTextContainer}>
+                      <span
+                        // data-xmlns="http://www.w3.org/1999/xhtml"
+                        className={styles.bubbleText}
+                      >
+                        {bubble.iso}
+                      </span>
+                    </div>
+                  </foreignObject>
+                </g>
+              ))}
+          </svg>
+
           <div className={styles.yAxisTicksContainer}>
             {yAxisTicks &&
               yAxisTicks.map((tick) => (
@@ -266,9 +303,9 @@ const ScatterPlot = ({
           <div
             className={styles.tooltip}
             style={{
-              position: 'absolute',
+              position: "absolute",
               left: `${tooltipState.x + tooltipOffset}px`,
-              top: `${tooltipState.y + tooltipOffset}px`
+              top: `${tooltipState.y + tooltipOffset}px`,
             }}
           >
             <section
@@ -282,7 +319,7 @@ const ScatterPlot = ({
             </section>
             <section className={styles.countryData}>
               <p className={styles.data}>
-                {tooltipState.xLabel(countryChallengesSelectedKey)}:{' '}
+                {tooltipState.xLabel(countryChallengesSelectedKey)}:{" "}
                 {tooltipState.xValue(countryChallengesSelectedKey)}
               </p>
               <p className={styles.data}>
