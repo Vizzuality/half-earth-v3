@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
 import { getCountryChallengesSelectedFilter, getCountryISO } from 'pages/data-globe/data-globe-selectors';
-import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
+import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import {
   INDICATOR_LABELS,
@@ -23,6 +23,7 @@ const getScatterplotRawData = createSelector(
         name: country.NAME_0,
         color: CONTINENT_COLORS[country.continent] || '#fff',
         iso: country.GID_0,
+        size: countryChallengesSizes(country.AREA_KM2),
         xAxisValues: {
           Population2016: country.Population2016,
           GNI_PPP: country.GNI_PPP,
@@ -32,7 +33,7 @@ const getScatterplotRawData = createSelector(
         },
         yAxisValue: country.SPI
       }
-        })
+        }).sort((a, b) => (b.size - a.size))
   }
 )
 

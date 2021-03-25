@@ -12,6 +12,11 @@ $chart-margin: 14px;
   position: relative;
 }
 
+.bubbleText {
+  @extend %subtitle;
+  color: $dark-text;
+}
+
 .chartContainer {
   display: flex;
   margin-top: $chart-margin;
