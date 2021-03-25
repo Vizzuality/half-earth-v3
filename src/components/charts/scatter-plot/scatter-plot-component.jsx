@@ -24,8 +24,9 @@ const ScatterPlot = ({
   // const [activeBubblesArray, setActiveBubblesArray] = useState([]);
   const [chartScale, setChartScale] = useState(null);
   const [tooltipState, setTooltipState] = useState(null);
+  const [tickLineState, setTickLineState] = useState(null);
   const padding = 50; // for chart edges
-  const tooltipOffset = 50;
+  const tooltipOffset = 20;
   // const bigBubble = 90;
   // const smallBubble = 45;
   // const [appConfig, setAppConfig ] = useState({
@@ -35,6 +36,9 @@ const ScatterPlot = ({
   //   AppContainer: null,
   //   CircleTexture: null
   // })
+
+  const getX = (e, ref) => e.clientX - ref.current.getBoundingClientRect().left;
+  const getY = (e, ref) => e.clientY - ref.current.getBoundingClientRect().top;
 
   const minXValue = (data, selectedKey) => d3.min(data, (d) => d.xAxisValues[selectedKey])
   const maxXValue = (data, selectedKey) => d3.max(data, (d) => d.xAxisValues[selectedKey])
@@ -214,20 +218,29 @@ const ScatterPlot = ({
             xmlns="http://www.w3.org/2000/svg"
             className={styles.chartSurfaceSvg}
             height="100%"
-            width="100%"
+            width="110%"
           >
             {chartScale &&
               data.map((bubble) => (
-                <g>
+                <g key={bubble.iso} onClick={() =>
+                  onBubbleClick({
+                    countryISO: bubble.iso,
+                    countryName: bubble.name,
+                  })
+                }>
                   <circle
-                    key={bubble.iso}
-                    onClick={() =>
-                      onBubbleClick({
-                        countryISO: bubble.iso,
-                        countryName: bubble.name,
-                      })
-                    }
-                    className={styles.bubble}
+                    className={cx(
+                      {[styles.animatedBubble]: bubble.iso === countryISO}
+                    )}
+                    cx={chartScale.xScale(
+                      bubble.xAxisValues[countryChallengesSelectedKey]
+                    )}
+                    cy={chartScale.yScale(bubble.yAxisValue)}
+                    r={bubble.size}
+                    fill={bubble.color}
+                  />
+                  <circle
+                    
                     cx={chartScale.xScale(
                       bubble.xAxisValues[countryChallengesSelectedKey]
                     )}
@@ -237,6 +250,16 @@ const ScatterPlot = ({
                     strokeWidth="2"
                     stroke="#040E14"
                   />
+                  {tickLineState && (
+                      <line
+                      x1={tickLineState.x}
+                      x2="0"
+                      y1={tickLineState.y}
+                      y2="0"
+                      strokeWidth="5"
+                      stroke="red"
+                    />
+                    )}
                   <foreignObject
                     width={bubble.size * 2}
                     height={bubble.size * 2}
@@ -247,31 +270,27 @@ const ScatterPlot = ({
                     }
                     y={chartScale.yScale(bubble.yAxisValue) - bubble.size}
                     requiredExtensions="http://www.w3.org/1999/xhtml"
-                    onMouseOver={(e) =>
+                    onMouseEnter={(e) => {
                       setTooltipState({
-                        x:
-                          e.clientX -
-                          chartSurfaceRef.current.getBoundingClientRect().left,
-                        y:
-                          e.clientY -
-                          chartSurfaceRef.current
-                            .getBoundingClientRect().top,
+                        x:getX(e, chartSurfaceRef),
+                        y:getY(e, chartSurfaceRef),
                         name: bubble.name,
                         continent: bubble.continent,
-                        color: bubble.color,
-                        yValue: Number.parseFloat(bubble.yAxisValue).toFixed(2),
-                        yLabel: "Species Protection Index",
-                        xValue: (filter) =>
-                          tooltipValuesFormats[filter](
-                            bubble.xAxisValues[filter]
-                          ),
-                        xLabel: (filter) => xAxisLabels[filter],
+                        color: bubble.color
+                      })
+                      setTickLineState({
+                        x: chartSurfaceRef.current.getBoundingClientRect().left,
+                        y: chartSurfaceRef.current.getBoundingClientRect().top
                       })
                     }
+                    }
+                    onMouseLeave={() => {
+                      setTooltipState(null);
+                      setTickLineState(null);
+                    }}
                   >
                     <div className={styles.bubbleTextContainer}>
                       <span
-                        // data-xmlns="http://www.w3.org/1999/xhtml"
                         className={styles.bubbleText}
                       >
                         {bubble.iso}
@@ -316,15 +335,6 @@ const ScatterPlot = ({
               <span className={styles.continent}>
                 ({tooltipState.continent})
               </span>
-            </section>
-            <section className={styles.countryData}>
-              <p className={styles.data}>
-                {tooltipState.xLabel(countryChallengesSelectedKey)}:{" "}
-                {tooltipState.xValue(countryChallengesSelectedKey)}
-              </p>
-              <p className={styles.data}>
-                {tooltipState.yLabel}: {tooltipState.yValue}
-              </p>
             </section>
           </div>
         )}

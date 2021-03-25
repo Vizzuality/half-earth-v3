@@ -17,10 +17,17 @@ $chart-margin: 14px;
   align-items: center;
   justify-content: center;
   height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.animatedBubble {
+  animation: pulse 4s infinite;
 }
 
 .bubbleText {
-  @extend %subtitle;
+  @extend %title;
   color: $dark-text;
 }
 
@@ -83,5 +90,29 @@ $chart-margin: 14px;
       text-transform: initial;
       letter-spacing: 0;
     }
+  }
+}
+
+
+@keyframes pulse {
+  0% {
+    r: 1%;
+    opacity: 0;
+    animation-timing-function:cubic-bezier(1,.01,.91,.46);
+  }
+  50% {
+    r: 1%;
+    opacity: 0.1;
+    animation-timing-function: linear;
+  }
+  70% {
+    r: 5%;
+    opacity: 0.3;
+    animation-timing-function: linear;
+  }
+  100% {
+    r: 7%;
+    opacity: 0;
+    animation-timing-function: linear;
   }
 }
