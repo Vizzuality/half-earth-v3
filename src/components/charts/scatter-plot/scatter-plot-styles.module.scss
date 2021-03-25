@@ -21,14 +21,21 @@ $chart-margin: 14px;
     cursor: pointer;
   }
 }
-
+.pulseBubble {
+  display: none;
+}
 .animatedBubble {
-  animation: pulse 4s infinite;
+  display: block;
+  animation: pulse 3s infinite;
 }
 
 .bubbleText {
   @extend %title;
   color: $dark-text;
+}
+.bubbleValue {
+  @extend %title;
+  color: $white;
 }
 
 .chartContainer {
@@ -57,8 +64,21 @@ $chart-margin: 14px;
   justify-content: space-between;
 }
 
-.tick {
+.tick,
+.tickValue {
   color: $alto;
+}
+
+.tickValue {
+  width: auto;
+}
+.xAxis {
+  transform: translateX(-50%);
+}
+.yAxis {
+  transform-origin: left;
+  transform: rotate(-90deg);
+  left: -10px;
 }
 
 .tooltip {
