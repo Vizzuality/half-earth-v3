@@ -28,6 +28,8 @@ const getScatterplotRawData = createSelector(
           Population2016: country.Population2016,
           GNI_PPP: country.GNI_PPP,
           prop_hm_very_high: country.prop_hm_very_high,
+          prop_protected: country.prop_protected,
+          protection_needed: country.protection_needed,
           total_endemic: country.total_endemic,
           N_SPECIES: country.N_SPECIES
         },

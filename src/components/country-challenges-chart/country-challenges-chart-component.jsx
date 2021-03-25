@@ -5,7 +5,6 @@ import Dropdown from 'components/dropdown';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 
 import { INDICATOR_LABELS } from 'constants/country-mode-constants';
-import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import styles from './country-challenges-chart-styles.module.scss';
 
 const CountryChallengesChartComponent = ({
@@ -35,11 +34,9 @@ const CountryChallengesChartComponent = ({
       <ScatterPlot
         data={data}
         countryISO={countryISO}
-        xAxisLabels={INDICATOR_LABELS}
         xAxisTicks={xAxisTicks}
         yAxisTicks={yAxisTicks}
         onBubbleClick={handleBubbleClick}
-        tooltipValuesFormats={countryChallengesChartFormats}
         countryChallengesSelectedKey={countryChallengesSelectedKey}
       />
       <div className={styles.xAxisContainer}>

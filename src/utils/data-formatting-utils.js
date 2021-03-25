@@ -7,6 +7,8 @@ export const countryChallengesChartFormats = {
   Population2016: value => localeFormatting(value),
   GNI_PPP: value => `${currencyFormatting(value)} B`,
   prop_hm_very_high: value => `${d3.format(".2f")(value)}%`,
+  prop_protected: value => `${d3.format(".2f")(value)}%`,
+  protection_needed: value => `${d3.format(".2f")(value)}%`,
   total_endemic: value => localeFormatting(value),
   N_SPECIES: value => localeFormatting(value),
 }
