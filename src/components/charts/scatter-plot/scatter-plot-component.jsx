@@ -154,7 +154,7 @@ const ScatterPlot = ({
                           continent: bubble.continent,
                           color: bubble.color
                         })
-                        setTickLine(bubble.iso),
+                        setTickLine(bubble.iso);
                         setXAxisValue(bubble.xAxisValues[countryChallengesSelectedKey]);
                         setYAxisValue(bubble.yAxisValue);
                       }
