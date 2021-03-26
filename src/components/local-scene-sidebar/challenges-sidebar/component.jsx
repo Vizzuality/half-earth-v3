@@ -46,8 +46,8 @@ const Component = ({
       </div>
       <section className={styles.circlesLegend}>
       <div>
-          <svg height="32" width="32">
-            <circle cx="16" cy="16" r="15" stroke="white" strokeWidth="1" fillOpacity="0" />
+          <svg height="38" width="38">
+            <circle cx="19" cy="19" r="18" stroke="white" strokeWidth="1" fillOpacity="0" />
           </svg>
           <div>
             <span className={styles.value}>&#60;150</span>
@@ -55,8 +55,8 @@ const Component = ({
           </div>
         </div>
         <div>
-          <svg height="52" width="52">
-            <circle cx="26" cy="26" r="25" stroke="white" strokeWidth="1" fillOpacity="0" />
+          <svg height="58" width="58">
+            <circle cx="29" cy="29" r="28" stroke="white" strokeWidth="1" fillOpacity="0" />
           </svg>
           <div>
             <span className={styles.value}>&#60;22,000</span>

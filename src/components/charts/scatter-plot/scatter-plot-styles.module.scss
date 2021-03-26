@@ -84,6 +84,7 @@ $chart-margin: 14px;
 .tooltip {
   background-color: $elephant;
   border-radius: 2px;
+  border: 2px solid $firefly;
   width: 190px;
   overflow: hidden;
   .countryLabel{
@@ -98,17 +99,6 @@ $chart-margin: 14px;
       color: $_temporary-dark-text;
       letter-spacing: 0;
       text-transform: initial;
-    }
-  }
-  .countryData {
-    padding: 5px;
-    .data {
-      @extend %_temporaryTitle;
-      margin: 0;
-      color: $white;
-      font-weight: normal;
-      text-transform: initial;
-      letter-spacing: 0;
     }
   }
 }
