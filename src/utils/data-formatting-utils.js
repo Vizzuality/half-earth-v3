@@ -14,8 +14,8 @@ export const countryChallengesChartFormats = {
 }
 
 export const countryChallengesSizes = (area) => {
-  if (area < 2000) return 10;
-  if (area < 200000) return 20;
-  if (area < 20000000) return 30;
+  if (area <= 150 ) return 15;
+  if (area <= 22000) return 25;
+  if (area <= 3250000) return 35;
   return 45
 }
