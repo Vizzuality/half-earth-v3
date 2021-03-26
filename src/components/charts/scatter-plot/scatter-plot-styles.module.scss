@@ -49,14 +49,14 @@ $chart-margin: 14px;
   display: flex;
   justify-content: space-between;
   position: absolute;
-  bottom: -40px;
+  bottom: -25px;
 }
 
 .yAxisTicksContainer {
   color: white;
   position: absolute;
   bottom: -12px;
-  left: -30px;
+  left: -10px;
   transform-origin: left;
   transform: rotate(-90deg);
   width: 60vh;

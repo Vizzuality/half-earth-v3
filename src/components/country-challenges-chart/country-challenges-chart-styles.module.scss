@@ -18,7 +18,8 @@ $xAxisContainerWidth: 330px;
   display: inline-block;
 }
 
-.xAxisIndicator {
+.xAxisIndicator,
+.yAxisIndicator {
   @extend %bodyText;
   color: $alto;
 }
@@ -30,7 +31,7 @@ $xAxisContainerWidth: 330px;
 .xAxisLabelContainer {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 50px;
   left: calc((#{$country-scene-chart-width}/2) - (#{$xAxisContainerWidth}/2));
   position: relative;
 }

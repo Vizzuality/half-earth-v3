@@ -23,7 +23,12 @@
   pointer-events: inherit;
 }
 
-.challengesChart,
+.challengesChart {
+  position: relative;
+  left: calc(#{$sidebar-width} + 120px);
+  top: $sidebar-header-height;
+}
+
 .rankingChart {
   position: relative;
   left: calc(#{$sidebar-width} + 83px);
