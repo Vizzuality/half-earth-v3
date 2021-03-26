@@ -63,8 +63,8 @@ const ScatterPlot = ({
   const maxXValue = (data, selectedKey) => d3.max(data, (d) => d.xAxisValues[selectedKey])
   const formatFunction = countryChallengesChartFormats[countryChallengesSelectedKey];
 
-  useEffect(() => {
-    if (data) {
+  const calculateScale = () => {
+    if (data && chartSurfaceRef.current) {
       const xScale = d3.scaleLinear()
       .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
       .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
@@ -74,7 +74,15 @@ const ScatterPlot = ({
 
       setChartScale({ xScale, yScale })
     }
-    }, [data, countryChallengesSelectedKey]);
+  }
+
+  useEffect(() => {
+    calculateScale();
+    window.addEventListener('resize', 
+    () => {
+      calculateScale();
+    });
+  }, [data, countryChallengesSelectedKey, chartSurfaceRef.current])
 
   const animationTransitionConfig = {
     type: "spring",
