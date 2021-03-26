@@ -1101,7 +1101,7 @@ export const legendConfigs = {
   },
   [COUNTRY_PRIORITY_LAYER]: {
     type: "gradient",
-    items: getLegendGradient(PRIORITY_PLACES_COLOUR_RAMP, 'low priority', 'high priority'),
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low priority', 'high priority'),
     title: "Protection needed"
   }
 }
