@@ -29,6 +29,7 @@ $card-content-max-height: 220px;
   flex-direction: column;
   width: 100%;
   height: 400px;
+  margin-top: 40px;
 
   @media #{$tablet-portrait} {
     height: unset;
@@ -36,96 +37,13 @@ $card-content-max-height: 220px;
   }
 }
 
-.navigation {
-  width: 100%;
-  max-width: $card-max-width;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  pointer-events: all;
-  background-color: $white;
-  padding: 22px $mobile-sidebar-side-paddings 10px $mobile-sidebar-side-paddings;
-  border-radius: $border-radius-mobile;
-
-  @media #{$tablet-portrait} {
-    padding: 0;
-    border-radius: 0;
-    height: 45px;
-    background-color: transparent;
-  }
-
-  .backToMap {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-
-    .text {
-      @extend %title;
-      color: $black;
-      margin: 0;
-
-      @media #{$tablet-portrait} {
-        color: $white;
-      }
-    }
-
-    .arrowIcon {
-      top: 2px;
-      position: relative;
-      transform: rotate(180deg);
-      margin-right: 10px;
-      fill: $black;
-
-      @media #{$tablet-portrait} {
-        fill: $white;
-        margin-right: 30px;
-      }
-    }
-  }
-
-  .placesNavigator {
-    width: 100px;
-    padding: 0 10px;
-    height: 100%;
-    background-color: $white;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-
-    .arrowWrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 40%;
-      height: 100%;
-      cursor: pointer;
-    }
-
-    .leftArrow {
-      transform: rotate(180deg);
-      fill: $dark-text;
-      stroke: $dark-text;
-    }
-
-    .separator {
-      height: 20px;
-      width: 1px;
-      background-color: $grey-text;
-    }
-
-    .rightArrow {
-      fill: $dark-text;
-      stroke: $dark-text;
-    }
-  }
-}
-
 .cardGrid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 170px 1fr;
+  grid-template-rows: 1fr 1fr 1fr 170px 1fr;
   grid-template-areas:
+    "breadcrumb"
+    "navigation"
     "title"
     "picture"
     "text";
@@ -134,22 +52,67 @@ $card-content-max-height: 220px;
   pointer-events: all;
   position: relative;
   max-width: $card-max-width;
-  padding: 12px $mobile-sidebar-side-paddings 0;
+  padding: $mobile-sidebar-side-paddings 42px 40px;
   overflow-y: scroll;
   width: 100%;
 
   @media #{$tablet-portrait} {
     grid-column-gap: 40px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 190px 1fr;
+    grid-template-rows: 1fr 190px 1fr;
     grid-template-areas:
+      "breadcrumb navigation"
       "picture text"
       "exploreButton text";
 
     overflow-y: unset;
-    height: 350px;
-    padding: 60px 40px 40px;
   }
+
+  .breadcrumb {
+    grid-area: breadcrumb;
+    @extend %title;
+  }
+
+  .navigation {
+    grid-area: navigation;
+    justify-self: flex-end;
+
+    .placesNavigator {
+      width: 100px;
+      height: 20px;
+      margin-right: -10px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .arrowWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      .leftArrow {
+        transform: rotate(180deg);
+        fill: $dark-text;
+        stroke: $dark-text;
+      }
+
+      .separator {
+        height: 20px;
+        width: 1px;
+        background-color: $grey-text;
+      }
+
+      .rightArrow {
+        fill: $dark-text;
+        stroke: $dark-text;
+      }
+    }
+  }
+
 
   .landscapeTriggerButton {
     align-self: end;
@@ -171,9 +134,11 @@ $card-content-max-height: 220px;
     @extend %verticalScrollbar;
     grid-area: text;
     padding-bottom: 20px;
+    overflow-y: unset;
 
     @media #{$tablet-portrait} {
       max-height: $card-content-max-height;
+      overflow-y: auto;
     }
   }
 
@@ -185,6 +150,8 @@ $card-content-max-height: 220px;
     margin: 0;
     margin-bottom: 12px;
     grid-area: title;
+    text-decoration: underline;
+    cursor: pointer;
 
     @media #{$tablet-portrait} {
       margin-bottom: 0;
@@ -280,4 +247,12 @@ $card-content-max-height: 220px;
   right: 0;
   top: 0;
   width: 32px;
+}
+
+.backButton {
+  position: absolute;
+  top: -20px;
+  left: calc(50% - #{$rounded-button-size} / 2);
+  box-shadow: $box-shadow-strong;
+  z-index: $bring-to-front;
 }
