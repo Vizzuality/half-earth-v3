@@ -76,10 +76,16 @@
     flex-direction: column;
     align-items: center;
   }
-  span {
+  .value {
     @extend %subtitle;
     position: absolute;
     color: $white;
     bottom: 0px;
+  }
+  .unit {
+    @extend %annotation;
+    position: absolute;
+    color: $white;
+    bottom: -20px;
   }
 }

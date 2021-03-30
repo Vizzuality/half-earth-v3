@@ -1,6 +1,8 @@
 export const INDICATOR_LABELS = {
   'N_SPECIES': 'Number of vertebrate species',
   'total_endemic': 'Number of endemic vertebrate species',
+  'prop_protected': 'Proportion of land protected',
+  'protection_needed': 'Additional land protection needed',
   'prop_hm_very_high': 'Proportion of very high human modification',
   'Population2016': 'Population (2016)',
   'GNI_PPP': 'Gross National Income (GNI)',
