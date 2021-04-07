@@ -24,8 +24,8 @@ const RAINFED = 'Rainfed agriculture';
 const IRRIGATED = 'Irrigated agriculture';
 const URBAN = 'Urban pressures';
 const RANGELAND = 'Rangeland';
-const LAND_DRIVERS = 'Marine land drivers';
-const OCEAN_DRIVERS = 'Marine ocean drivers';
+const LAND_DRIVERS = 'Land-based drivers';
+const OCEAN_DRIVERS = 'Ocean-based drivers';
 const COMMERCIAL_FISHING = 'Commercial fishing';
 const ARTISANAL_FISHING = 'Artisanal fishing';
 

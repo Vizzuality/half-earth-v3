@@ -35,18 +35,18 @@ const BiodiversitySidebarCard = (props)  => {
   // This should be replaced with fetched metadata. Update the heights on the styles if needed
   const mockedMetadata = {
     [BIODIVERSITY_TABS_SLUGS.PRIORITY] : {
-      title: 'WHERE TO PROTECT?',
-      description: 'The brightly colored map layer indicates the minimum amount of additional conservation area needed for Peru to achieve a National SPI of 100, and presents one possible pathway toward the Half-Earth goal of comprehensive terrestrial biodiversity conservation. Higher values indicate locations within the country that contribute more to the conservation of species habitat',
+      title: 'WHERE TO START TO PROTECT?',
+      description: 'The priority layer indicates the minimum amount of additional global conservation needed to protect the bulk of terrestrial vertebrate biodiversity, with locations identified via spatial conservation planning. It presents one possible pathway of many toward comprehensive terrestrial biodiversity conservation. Locations with higher values indicate places of higher priority for conservation that contribute more to the safeguarding of species habitat.',
       source: 'Rinnan DS and Jetz W, (2020).'
     },
     [BIODIVERSITY_TABS_SLUGS.RICHNESS] : {
       title: 'WHAT DOES RICHNESS MEAN?',
-      description: 'Richness: How many species compose a site? The higher the number of species in a site, the higher its richness.',
+      description: 'How many species compose a site? Species richness is a measure of the number of different species in a given region. This quantity can be summarized by distinct geographic regions such as countries or protected areas, or by equal-area grids to reveal global patterns.',
       source: 'Map Of Life, (Yale University).'
     },
     [BIODIVERSITY_TABS_SLUGS.RARITY] : {
       title: 'WHAT DOES RARITY MEAN?',
-      description: 'How unique is the composition in species of a site? The more species unique to a site, i.e. not found anywhere else in the world, the higher the rarity of the site.',
+      description: 'How unique is the composition in species of a site? Species rarity is the proportion of the distribution of a species that is found in a given region, averaged across all species in that region. It is a measure of the average geographic range-restrictedness of species. This is also known as average range-size rarity or simply range size rarity.',
       source: 'Map Of Life, (Yale University).'
     },
   }[biodiversityLayerVariant];
