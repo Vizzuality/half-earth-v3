@@ -97,7 +97,7 @@ export const biodiversityCategories = {
       taxa: [
         {
           value: 'all groups',
-          name: 'all groups',
+          name: 'All terrestrial vertebrates',
           layer: ALL_TAXA_PRIORITY
         },
         {
@@ -997,7 +997,7 @@ export const legendConfigs = {
   [MAMMALS_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals priority"
+    title: "Global Mammals priority"
   },
   [MAMMALS_RARITY]: {
     type: "gradient",
@@ -1042,7 +1042,7 @@ export const legendConfigs = {
   [AMPHIB_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian priority"
+    title: "Global Amphibian priority"
   },
   [AMPHIB_RARITY]: {
     type: "gradient",
@@ -1057,7 +1057,7 @@ export const legendConfigs = {
   [REPTILES_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptile priority"
+    title: "Global Reptile priority"
   },
   [REPTILES_RICHNESS]: {
     type: "gradient",
@@ -1072,7 +1072,7 @@ export const legendConfigs = {
   [BIRDS_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds priority"
+    title: "Global Birds priority"
   },
   [BIRDS_RARITY]: {
     type: "gradient",
@@ -1087,7 +1087,7 @@ export const legendConfigs = {
   [ALL_TAXA_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "All groups priority"
+    title: "Global terrestrial vertebrate priority"
   },
   [ALL_TAXA_RARITY]: {
     type: "gradient",
