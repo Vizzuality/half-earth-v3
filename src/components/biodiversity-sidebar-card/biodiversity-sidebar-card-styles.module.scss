@@ -10,14 +10,14 @@
   @extend .sharedLayersTogglesContainer;
 
   &.open {
-    height: 1335px;
+    height: 1440px;
 
     &.priorityTab {
-      height: 810px;
+      height: 845px;
     }
 
     &.richnessTab {
-      height: 1315px;
+      height: 1400px;
     }
   }
 }

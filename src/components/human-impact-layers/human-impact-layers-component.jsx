@@ -34,7 +34,7 @@ const HumanImpactLayers = ({
         options={humanPressuresMarine}
         alreadyChecked={alreadyCheckedMarinePressures}
         handleClick={toggleLayer}
-        title='Marine use pressures'
+        title='Ocean use pressures'
         description='Human pressures causing habitat loss and accelerating species extinction.'
       />
     </>

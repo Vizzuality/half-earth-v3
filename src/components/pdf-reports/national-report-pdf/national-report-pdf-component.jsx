@@ -89,7 +89,7 @@ const NationalReportPdf = ({
             regions that are currently recognized 
             as being managed for the long-term conservation of nature.
             </span>
-            <p className={styles.datasetSource} >Source: WDPA, OECM & RAISG.</p>
+            <p className={styles.datasetSource} >Source: WDPA (Jan 2020), OECM (Jan 2020) & RAISG (2019).</p>
           </div>
         </div>
       </section>
