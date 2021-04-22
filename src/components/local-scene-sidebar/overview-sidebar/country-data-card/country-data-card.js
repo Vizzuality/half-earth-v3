@@ -18,7 +18,6 @@ const CountryDataCardContainer = props => {
     const md = metadataConfig[SPECIES_PROTECTION_INDEX]
     setModalMetadata({
       slug: md.slug,
-      title: md.title,
       isOpen: true
     });
   }

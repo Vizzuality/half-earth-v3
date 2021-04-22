@@ -13,7 +13,6 @@ const RadioGroupContainer = props => {
     const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
     setModalMetadata({
       slug: `${layer.layer}`,
-      title: `${capitalize(layer.name)} ${variant} metadata`,
       isOpen: true
     });
     openLayerInfoModalAnalyticsEvent({ slug: `${layer.layer}` });

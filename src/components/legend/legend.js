@@ -52,7 +52,6 @@ const LegendContainer = props => {
     const slug = getSlug(layer);
     setModalMetadata({
       slug,
-      title: metadataConfig[slug].title,
       isOpen: true
     });
     openLayerInfoModalAnalyticsEvent({ slug, query: { viewMode: VIEW_MODE.LEGEND }});

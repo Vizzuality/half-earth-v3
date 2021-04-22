@@ -10,7 +10,6 @@ const LocalPriorityCardContainer = props => {
     const md = metadataConfig[slug];
     setModalMetadata({
       slug: md.slug,
-      title: md.title,
       isOpen: true
     });
   }

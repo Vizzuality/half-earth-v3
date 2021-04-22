@@ -1,7 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 const selectOpen = ({ metadata }) => metadata.isOpen;
-const selectTitle = ({ metadata }) => metadata.title;
 const selectLoading = ({ metadata }) => metadata.loading;
 const selectSlug = ({ metadata }) => metadata.slug;
 const selectData = ({ metadata }) => metadata.data;
@@ -14,6 +13,5 @@ export const getMetadata = createSelector([ selectSlug, selectData ], (slug, dat
 export const mapStateToProps = createStructuredSelector({
   isOpen: selectOpen,
   loading: selectLoading,
-  metadata: getMetadata,
-  title: selectTitle
+  metadata: getMetadata
 });
