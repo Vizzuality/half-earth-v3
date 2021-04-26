@@ -108,11 +108,13 @@ const RankingChart = ({
         {categories.map((category) => (
           <div
             key={category}
-            className={cx(styles.headerItem, styles.titleText, {
+            className={cx(styles.headerItem, {
               [styles.spiHeader]: category === 'spi'
             })}
           >
-            {RANKING_HEADER_LABELS[category].toUpperCase()}
+            {RANKING_HEADER_LABELS[category].split(" ").map(word => (
+              <p className={styles.titleText}>{`${word.toUpperCase()}`}</p>
+            ))}
           </div>
         ))}
       </div>

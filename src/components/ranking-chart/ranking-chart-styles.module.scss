@@ -16,10 +16,7 @@
 .titleText {
   @extend %title;
   color: $grey-text;
-  &.highlightCategory {
-    color: $white;
-    font-weight: bold;
-  }
+  margin: 0;
 }
 
 $chart-width-without-legend: calc(#{$country-scene-chart-width} + 50px);
