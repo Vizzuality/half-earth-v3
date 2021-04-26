@@ -3,6 +3,7 @@
 
 .searchInputContainer {
   display: flex;
+  align-items: flex-start;
 
   .searchInput {
     @extend %_temporaryTitle;

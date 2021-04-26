@@ -85,7 +85,7 @@ export const RANKING_COLORS = {
 
 export const RANKING_GROUPS_SLUGS = {
   species: 'species',
-  humanModification: 'human modification',
+  humanModification: 'humanModification',
   protection: 'protection'
 };
 
@@ -119,6 +119,13 @@ export const RANKING_LEGEND = {
 
 export const SORT_GROUPS_SLUGS = { spi: 'spi', ...RANKING_GROUPS_SLUGS };
 export const SORT_GROUPS = [SORT_GROUPS_SLUGS.species, SORT_GROUPS_SLUGS.humanModification, SORT_GROUPS_SLUGS.protection, SORT_GROUPS_SLUGS.spi];
+
+export const RANKING_HEADER_LABELS = {
+  [SORT_GROUPS_SLUGS.species]: 'species',
+  [SORT_GROUPS_SLUGS.humanModification]: 'human modification',
+  [SORT_GROUPS_SLUGS.protection]: 'protection',
+  [SORT_GROUPS_SLUGS.spi]: 'spi',
+}
 export const SORT_OPTIONS = [
   { label: 'species protection index', slug: RANKING_INDICATORS.spi, group: SORT_GROUPS_SLUGS.spi },
   { label: 'species richness', slug: RANKING_INDICATORS.speciesRichness, group: SORT_GROUPS_SLUGS.species },
@@ -154,5 +161,3 @@ export const SORT_OPTIONS = [
     group: SORT_GROUPS_SLUGS.protection,
   },
 ];
-
-export const RANKING_HEADER_ITEMS = SORT_GROUPS;

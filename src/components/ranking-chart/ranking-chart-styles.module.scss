@@ -35,10 +35,11 @@ $scroll-bar-width: 7px;
   width: $chart-width-without-legend;
   padding-right: $scroll-bar-width;
   display: flex;
+  align-items: flex-end;
   @extend %tableItem;
 
   .headerItem {
-    width: 18%;
+    width: 19%;
     margin-right: 7px;
     margin-bottom: 10px;
     text-align: left;
@@ -47,13 +48,18 @@ $scroll-bar-width: 7px;
     cursor: default;
   }
 
+  .spiHeader {
+    width: 4rem;
+    margin-right: 0;
+  }
+
   .searchInput {
-    padding-left: 9px;
+    width: 25%;
   }
 }
 
 .barContainer {
-  width: 18%;
+  width: 19%;
   margin-right: 7px;
 }
 
@@ -64,27 +70,29 @@ $scroll-bar-width: 7px;
 
 .bar {
   display: inline-block;
-  height: 18px;
+  height: 19px;
+}
+
+.spiIndex {
+  display: inline-block;
+  width: 4rem;
 }
 
 .spiCountry {
-  max-width: 115px;
-  margin-left: 1rem;
-  display: flex;
+  width: 25%;
   cursor: pointer;
 
-  &.found {
-    .spiCountryText, .spiCountryIndex, .spiIndex {
-      color: $white;
-    }
-  }
+  
 }
 
-.spiCountryText {
+.spiCountryButton {
   @extend %title;
   color: $grey-text;
   text-align: left;
-  display: flex;
+  width: 25%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 
   &:hover {
     color: $white;
@@ -96,33 +104,15 @@ $scroll-bar-width: 7px;
   font-weight: bold;
 }
 
+.spiCountryIndex {
+  width: 2.5rem;
+  display: inline-block;
+}
+
 .spiCountryName {
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  @media #{$desktop} {
-    max-width: 130px;
-  }
-}
-
-.spiCountryIndex {
-  margin-left: 1rem;
-}
-
-.spiIndex {
-  display: inline-block;
-  @media #{$desktop} {
-    min-width: 2rem;
- }
-}
-
-.rankingChartContentContainer {
-  position: relative;
-  display: flex;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: flex-start;
+  white-space: nowrap;
 }
 
 .rankingChartContent {
@@ -160,36 +150,10 @@ $scroll-bar-width: 7px;
 
 .row {
   display: flex;
-}
 
-.question {
-  cursor: pointer;
-  position: relative;
-  top: 2px;
-}
-
-.legend {
-  padding-left: 0.6rem;
-}
-
-.legendBlock {
-  margin-bottom: 2rem;
-
-  .legendItem {
-    display: flex;
-    margin-bottom: 6px;
-
-    .legendColor {
-      display: block;
-      width: 10px;
-      height: 18px;
-    }
-
-    .legendText {
-      @extend %annotation;
-      margin-left: 1rem;
-      margin-top: -3px;
-      color: $grey-text;
+  &.found {
+    .spiCountryText, .spiCountryIndex, .spiCountryName {
+      color: $white;
     }
   }
 }
