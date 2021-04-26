@@ -7,12 +7,14 @@ import SearchInput from 'components/search-input';
 import Dropdown from "components/dropdown";
 import styles from './ranking-chart-styles.module.scss';
 import {
-  RANKING_LEGEND,
-  SORT_OPTIONS,
   SORT_GROUPS,
+  SORT_OPTIONS,
+  RANKING_LEGEND,
+  SORT_GROUPS_SLUGS,
+  RANKING_HEADER_LABELS,
 } from "constants/country-mode-constants";
 
-const categories = Object.keys(RANKING_LEGEND);
+const categories = Object.keys(SORT_GROUPS_SLUGS);
 const RankingChart = ({
   data,
   className,
@@ -96,14 +98,6 @@ const RankingChart = ({
         />
       </div>
       <div className={styles.header}>
-        {categories.map((category) => (
-          <div
-            key={category}
-            className={cx(styles.headerItem, styles.titleText)}
-          >
-            {category.toUpperCase()}
-          </div>
-        ))}
         <SearchInput
           className={styles.searchInput}
           placeholder="Search country"
@@ -111,62 +105,61 @@ const RankingChart = ({
           value={searchTerm}
           type="transparent"
         />
+        {categories.map((category) => (
+          <div
+            key={category}
+            className={cx(styles.headerItem, {
+              [styles.spiHeader]: category === 'spi'
+            })}
+          >
+            {RANKING_HEADER_LABELS[category].split(" ").map(word => (
+              <p className={styles.titleText}>{`${word.toUpperCase()}`}</p>
+            ))}
+          </div>
+        ))}
       </div>
       {data && data.length ? (
-        <div className={styles.rankingChartContentContainer}>
-          <div
-            className={cx(styles.rankingChartContent, {
-              [styles.scrolled]: hasScrolled,
-            })}
-            onScroll={onScroll}
-            ref={tableRef}
-          >
-            <div className={styles.table}>
-              {data.map((d, i) => (
-                <div className={styles.row} key={d.name}>
-                  {categories.map((category) => renderBar(category, d))}
-                  <div
-                    className={cx(styles.spiCountry, {
-                      [styles.found]: scrollIndex === i,
+        <div
+          className={cx(styles.rankingChartContent, {
+            [styles.scrolled]: hasScrolled,
+          })}
+          onScroll={onScroll}
+          ref={tableRef}
+        >
+          <div className={styles.table}>
+            {data.map((d, i) => (
+              <div className={cx(styles.row, {
+                [styles.found]: scrollIndex === i,
+              }
+              )} key={d.name}>
+                <button
+                  className={styles.spiCountryButton}
+                  onClick={() => handleCountryClick(d.iso, d.name)}
+                >
+                  <span
+                    className={cx(styles.spiCountryIndex, {
+                      [styles.selectedCountry]: countryISO === d.iso,
                     })}
-                    id={`country-${i}`}
                   >
-                    <span
-                      className={cx(styles.titleText, styles.spiIndex, {
-                        [styles.selectedCountry]: countryISO === d.iso,
-                      })}
-                    >
-                      {d.index}.
-                    </span>
-                    <button
-                      className={styles.spiCountryText}
-                      onClick={() => handleCountryClick(d.iso, d.name)}
-                    >
-                      <span
-                        className={cx(styles.spiCountryName, {
-                          [styles.selectedCountry]: countryISO === d.iso,
-                        })}
-                      >
-                        {d.name}
-                      </span>
-                      <span
-                        className={cx(styles.spiCountryIndex, {
-                          [styles.selectedCountry]: countryISO === d.iso,
-                        })}
-                      >
-                        ({d.spi})
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div
-              className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
-            >
-              <Arrow className={styles.arrow} />
-              Scroll
-            </div>
+                    {`${i + 1}.`}
+                  </span>
+                  <span
+                    className={cx(styles.spiCountryName, {
+                      [styles.selectedCountry]: countryISO === d.iso,
+                    })}
+                  >
+                    {d.name}
+                  </span>
+                </button>
+                {categories.map((category) => category === 'spi' ? <span key={category} className={cx(styles.titleText, styles.spiIndex)}>{d[category]}</span> : renderBar(category, d))}
+              </div>
+            ))}
+          </div>
+          <div
+            className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
+          >
+            <Arrow className={styles.arrow} />
+            Scroll
           </div>
         </div>
       ) : null}

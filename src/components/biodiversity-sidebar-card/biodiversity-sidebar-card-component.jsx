@@ -24,7 +24,6 @@ const BiodiversitySidebarCardComponent = ({
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
-
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox

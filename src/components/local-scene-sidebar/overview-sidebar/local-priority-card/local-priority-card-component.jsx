@@ -1,40 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SidebarCardWrapper from 'components/sidebar-card-wrapper';
 import SidebarCardContent from 'components/sidebar-card-content';
 
 import styles from './local-priority-card-styles.module.scss';
 
-import metadataConfig, {
-  MERGED_PROTECTION,
-  COUNTRY_PRIORITY
-} from 'constants/metadata';
-import metadataService from 'services/metadata-service';
-
-
 const LocalPriorityCardComponent = (props) => {
   const {
     hasPriority,
     protectionNeeded,
+    priorityMetadata,
     currentProtection,
+    protectionMetadata,
     priorityAreasSentence,
   } = props;
-
-  const [priorityMetadata, setPriorityMetadata] = useState(null);
-  const [protectionMetadata, setProtectionsMetadata] = useState(null);
-
-  useEffect(() => {
-    const md = metadataConfig[MERGED_PROTECTION]
-    metadataService.getMetadata(md.slug).then( data => {
-      setProtectionsMetadata(data);
-    })
-  }, []);
-
-  useEffect(() => {
-    const md = metadataConfig[COUNTRY_PRIORITY]
-    metadataService.getMetadata(md.slug).then( data => {
-      setPriorityMetadata(data);
-    })
-  }, []);
 
   return (
     <div className={styles.cardContainer}>
@@ -49,6 +27,8 @@ const LocalPriorityCardComponent = (props) => {
           title={`Additional protection needed: ${protectionNeeded}%`}
           description={priorityAreasSentence}
           legendType={hasPriority && 'gradient'}
+          highValueLabel={'high priority'}
+          lowValueLabel={'low priority'}
           metaDataSources={priorityMetadata && priorityMetadata.source}
         />
       </SidebarCardWrapper>

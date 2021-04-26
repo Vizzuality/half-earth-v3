@@ -85,7 +85,7 @@ export const RANKING_COLORS = {
 
 export const RANKING_GROUPS_SLUGS = {
   species: 'species',
-  humanModification: 'human modification',
+  humanModification: 'humanModification',
   protection: 'protection'
 };
 
@@ -113,12 +113,19 @@ export const RANKING_LEGEND = {
   [RANKING_GROUPS_SLUGS.protection]: {
     [RANKING_INDICATORS.protected]: 'Current protection',
     [RANKING_INDICATORS.protectionNeeded]: 'Additional protection needed',
-    [RANKING_INDICATORS.protectionNotNeeded]: 'Non-formal protection needed',
+    [RANKING_INDICATORS.protectionNotNeeded]: 'No formal protection needed',
   },
 };
 
 export const SORT_GROUPS_SLUGS = { spi: 'spi', ...RANKING_GROUPS_SLUGS };
-export const SORT_GROUPS = [SORT_GROUPS_SLUGS.spi, SORT_GROUPS_SLUGS.species, SORT_GROUPS_SLUGS.humanModification, SORT_GROUPS_SLUGS.protection];
+export const SORT_GROUPS = [SORT_GROUPS_SLUGS.species, SORT_GROUPS_SLUGS.humanModification, SORT_GROUPS_SLUGS.protection, SORT_GROUPS_SLUGS.spi];
+
+export const RANKING_HEADER_LABELS = {
+  [SORT_GROUPS_SLUGS.species]: 'species',
+  [SORT_GROUPS_SLUGS.humanModification]: 'human modification',
+  [SORT_GROUPS_SLUGS.protection]: 'protection',
+  [SORT_GROUPS_SLUGS.spi]: 'spi',
+}
 export const SORT_OPTIONS = [
   { label: 'species protection index', slug: RANKING_INDICATORS.spi, group: SORT_GROUPS_SLUGS.spi },
   { label: 'species richness', slug: RANKING_INDICATORS.speciesRichness, group: SORT_GROUPS_SLUGS.species },
@@ -149,9 +156,8 @@ export const SORT_OPTIONS = [
     group: SORT_GROUPS_SLUGS.protection,
   },
   {
-    label: 'proportion of Non-formal protection needed',
+    label: 'proportion of No formal protection needed',
     slug: RANKING_INDICATORS.protectionNotNeeded,
     group: SORT_GROUPS_SLUGS.protection,
   },
 ];
-
