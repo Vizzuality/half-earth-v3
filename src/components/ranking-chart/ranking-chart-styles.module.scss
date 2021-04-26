@@ -147,6 +147,7 @@ $scroll-bar-width: 7px;
 
 .row {
   display: flex;
+  align-items: flex-end;
 
   &.found {
     .spiCountryText, .spiCountryIndex, .spiCountryName {
