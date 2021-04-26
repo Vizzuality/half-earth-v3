@@ -9,8 +9,9 @@ import styles from './ranking-chart-styles.module.scss';
 import {
   SORT_GROUPS,
   SORT_OPTIONS,
+  RANKING_LEGEND,
   SORT_GROUPS_SLUGS,
-  RANKING_HEADER_LABELS
+  RANKING_HEADER_LABELS,
 } from "constants/country-mode-constants";
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);

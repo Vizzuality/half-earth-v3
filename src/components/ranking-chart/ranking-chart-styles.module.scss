@@ -120,7 +120,7 @@ $scroll-bar-width: 7px;
   @extend %verticalScrollbar;
 
   padding-bottom: 2rem;
-  height: calc(100vh - #{$sidebar-header-height} - 200px);
+  height: calc(100vh - 250px);
   flex-direction: column;
 }
 

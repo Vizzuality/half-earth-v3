@@ -26,13 +26,13 @@
 .challengesChart {
   position: relative;
   left: calc(#{$sidebar-width} + 120px);
-  top: $sidebar-header-height;
+  top: 50px;
 }
 
 .rankingChart {
   position: relative;
   left: calc(#{$sidebar-width} + 83px);
-  top: $sidebar-header-height;
+  top: 50px;
 }
 
 @media print {
