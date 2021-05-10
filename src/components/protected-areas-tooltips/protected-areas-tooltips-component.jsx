@@ -10,7 +10,7 @@ import {
 
 import {
   layersConfig
-} from 'constants/mol-layers-configs';
+} from 'constants/layers-config';
 
 const PROTECTED_AREA_COLOR = '#FF6C47';
 const COMMUNITY_AREA_COLOR = '#FCC44A';

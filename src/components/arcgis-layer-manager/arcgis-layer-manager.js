@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { layersConfig } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/layers-config';
 import { setLayersOrder, setLayersVisibility, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
 import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
