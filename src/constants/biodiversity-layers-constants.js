@@ -475,7 +475,7 @@ export const legendConfigs = {
   },
   [MAMMALS_RARITY]: {
     ...defaultGradientConfig,
-    title: "Mammals rarity"
+    title: "Terrestrial Mammals rarity"
   },
   [MAMMALS_RICHNESS]: {
     ...defaultGradientConfig,
