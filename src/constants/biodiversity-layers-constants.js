@@ -491,7 +491,7 @@ export const legendConfigs = {
   },
   [FISHES_PRIORITY]: {
     ...defaultGradientConfig,
-    title: "Fishes priority"
+    title: "Global fishes priority"
   },
   [MARINE_MAMMALS_RICHNESS]: {
     ...defaultGradientConfig,
