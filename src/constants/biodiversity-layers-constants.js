@@ -579,7 +579,7 @@ export const legendConfigs = {
   },
   [ALL_TAXA_RICHNESS]: {
     ...defaultGradientConfig,
-    title: "All groups richness"
+    title: "All terrestrial groups richness"
   },
   [COUNTRY_PRIORITY_LAYER]: {
     type: "gradient",
