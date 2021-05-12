@@ -471,7 +471,7 @@ export const legendConfigs = {
   // Global data
   [MAMMALS_PRIORITY]: {
     ...defaultGradientConfig,
-    title: "Global Mammals priority"
+    title: "Global Terrestrial Mammals priority"
   },
   [MAMMALS_RARITY]: {
     ...defaultGradientConfig,
