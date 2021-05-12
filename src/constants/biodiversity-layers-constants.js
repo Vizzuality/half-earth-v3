@@ -479,7 +479,7 @@ export const legendConfigs = {
   },
   [MAMMALS_RICHNESS]: {
     ...defaultGradientConfig,
-    title: "Mammals richness"
+    title: "Terrestrial Mammals richness"
   },
   [FISHES_RARITY]: {
     ...defaultGradientConfig,
