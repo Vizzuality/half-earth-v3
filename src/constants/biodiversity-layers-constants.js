@@ -503,7 +503,7 @@ export const legendConfigs = {
   },
   [MARINE_MAMMALS_PRIORITY]: {
     ...defaultGradientConfig,
-    title: "Marine mammals priority"
+    title: "Global marine mammals priority"
   },
   [ALL_MARINE_VERTEBRATES_RICHNESS]: {
     ...defaultGradientConfig,
