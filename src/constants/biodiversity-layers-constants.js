@@ -92,7 +92,7 @@ export const biodiversityCategories = {
       taxa: [
         {
           value: 'marine vertebrates',
-          name: 'marine vertebrates',
+          name: 'all marine vertebrates',
           layer: ALL_MARINE_VERTEBRATES_PRIORITY
         },
         {
