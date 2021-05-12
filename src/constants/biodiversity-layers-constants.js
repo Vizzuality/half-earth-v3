@@ -575,7 +575,7 @@ export const legendConfigs = {
   },
   [ALL_TAXA_RARITY]: {
     ...defaultGradientConfig,
-    title: "All groups rarity"
+    title: "All terrestrial groups rarity"
   },
   [ALL_TAXA_RICHNESS]: {
     ...defaultGradientConfig,
