@@ -3,7 +3,7 @@ import loadable from '@loadable/component'
 
 import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
 
-import ReleaseNotesModal from 'components/release-notes-modal';
+import UserDataModal from 'components/user-data-modal';
 const CountryScene = loadable(() => import('scenes/country-scene'));
 const DataScene = loadable(() => import('scenes/data-scene'));
 
@@ -75,7 +75,7 @@ const DataGlobeComponent = ({
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
       />
     )}
-    <ReleaseNotesModal />
+    <UserDataModal />
   </>
 );
 
