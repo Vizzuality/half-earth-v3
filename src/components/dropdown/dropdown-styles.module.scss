@@ -9,12 +9,18 @@
   &.open {
     background-color: $accent-grey;
   }
+  &.fullWidth {
+    width: 100%;
+  }
 }
 
 .toggleContainer {
   display: flex;
   align-items: center;
   cursor: pointer;
+  &.fullWidth {
+    justify-content: space-between;
+  }
 }
 
 .selectedOptionLabel {
@@ -81,6 +87,10 @@
   border-radius: 2px;
   min-width: 320px;
   width: max-content;
+
+  &.fullWidth {
+    width: 100%;
+  }
 
   .option {
     padding: 5px $sidebar-paddings;
