@@ -5,12 +5,13 @@ import Proptypes from 'prop-types';
 import styles from './dropdown-styles.module.scss';
 
 const Component = ({
+  width,
   options,
   dropdownOpen,
   onDropdownToggle,
   selectedOption,
   onOptionSelection,
-  groups
+  groups,
 }) => {
   const renderFilters = () => {
     const renderOptions = (groupFilter) => {
@@ -41,11 +42,14 @@ const Component = ({
 
   return (
     <div className={cx(styles.dropdownContainer, {
-        [styles.open]: dropdownOpen
+        [styles.open]: dropdownOpen,
+        [styles.fullWidth]: width === 'full'
       })}
     >
       <div
-        className={styles.toggleContainer}
+        className={cx(styles.toggleContainer, {
+          [styles.fullWidth]: width === 'full'
+        })}
         onClick={onDropdownToggle}
       >
         <span className={styles.selectedOptionLabel}>
@@ -58,7 +62,11 @@ const Component = ({
         />
       </div>
       {dropdownOpen && (
-        <ul className={styles.optionsList} name="filters" id="filters">
+        <ul className={cx(styles.optionsList, {
+          [styles.fullWidth]: width === 'full'
+        })} 
+          name="filters"
+          id="filters">
           {renderFilters()}
         </ul>
       )}
@@ -81,4 +89,9 @@ Component.propTypes = {
   onDropdownToggle: Proptypes.func.isRequired,
   selectedOption: Proptypes.shape(),
   onOptionSelection: Proptypes.func.isRequired,
+  width: Proptypes.oneOf(['fluid', 'full'])
 };
+
+Component.defaultProps = {
+  width: 'fluid'
+}
