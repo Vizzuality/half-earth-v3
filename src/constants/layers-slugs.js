@@ -20,7 +20,12 @@ export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
-export const MARINE_HUMAN_PRESSURES_TILE_LAYER = 'marine_human_pressures';
+// Marine human pressures tiled layers.
+export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_land_drivers_human_pressures';
+export const MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_ocean_drivers_human_pressures';
+export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'commercial_fishing_human_pressures';
+export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_human_pressures';
+//////
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const COUNTRY_MASK_LAYER = 'mask-layer';
 // Label layer to display features labels (marine, terrestrial and urban).
@@ -66,20 +71,26 @@ export const SA_PROTEA_RICHNESS = 'protea-rich-sa';
 export const SA_REPTILES_RARITY = 'reptiles-rare-sa';
 export const SA_REPTILES_RICHNESS = 'reptiles-rich-sa';
 // Global biodiversity
-export const AMPHIB_RARITY = 'amphib-rarity';
-export const AMPHIB_RICHNESS = 'amphib-rich';
-export const FISHES_RARITY = 'fishes-rarity';
-export const FISHES_RICHNESS = 'fishes-rich';
-export const MAMMALS_RARITY = 'mammals-rare';
-export const MAMMALS_RICHNESS = 'mammals-rich';
-export const BIRDS_RARITY = 'birds-rarity';
-export const BIRDS_RICHNESS = 'birds-rich';
+
+export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
+export const AMPHIB_RARITY = 'amphib-rarity';
+export const AMPHIB_RICHNESS = 'amphib-rich';
+export const AMPHIB_PRIORITY = 'amphib-priority';
+export const FISHES_RARITY = 'fishes-rarity';
+export const FISHES_RICHNESS = 'fishes-rich';
+export const MAMMALS_PRIORITY = 'mammals-priority';
+export const MAMMALS_RARITY = 'mammals-rare';
+export const MAMMALS_RICHNESS = 'mammals-rich';
+export const BIRDS_PRIORITY = 'birds-priority';
+export const BIRDS_RARITY = 'birds-rarity';
+export const BIRDS_RICHNESS = 'birds-rich';
 export const CACTI_RARITY = 'cacti-rarity';
 export const CACTI_RICHNESS = 'cacti-richness';
 export const CONIFERS_RARITY = 'conifers-rarity';
 export const CONIFERS_RICHNESS = 'conifers-rich';
+export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
 // Hummingbirds

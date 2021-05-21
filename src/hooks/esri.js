@@ -29,7 +29,7 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
 
 export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchTermsAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget ] = useState(null);
-  const { searchSources, postSearchCallback} = searchWidgetConfig;
+  const { searchSources, postSearchCallback} = searchWidgetConfig || {};
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;
     if (evt.keyCode === 27 && view && searchWidget) {

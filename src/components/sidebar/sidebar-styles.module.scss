@@ -27,6 +27,7 @@
 
 .wrapper {
   @include backdropBlur();
+  border: $sidebar-border;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -66,7 +67,7 @@
 }
 
 .content {
-  @extend %verticalScrollBar;
+  @extend %verticalScrollbar;
   max-height: calc(100vh - (#{$sidebar-top-margin} + #{$sidebar-header-height}));
   width: auto;
   position: relative;

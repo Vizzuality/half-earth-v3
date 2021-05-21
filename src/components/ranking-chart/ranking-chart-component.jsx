@@ -1,55 +1,52 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
-import HeaderItem from 'components/header-item';
-import { ReactComponent as QuestionIcon } from 'icons/borderedQuestion.svg';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
+import SearchInput from 'components/search-input';
+import Dropdown from "components/dropdown";
 import styles from './ranking-chart-styles.module.scss';
+import {
+  SORT_GROUPS,
+  SORT_OPTIONS,
+  RANKING_LEGEND,
+  SORT_GROUPS_SLUGS,
+  RANKING_HEADER_LABELS,
+} from "constants/country-mode-constants";
 
-const legendText = {
-  species: {
-    nonEndemic: 'Non endemic species',
-    endemic: 'Endemic species'
-  },
-  human: {
-    veryHigh: 'Very high human modification',
-    totalMinusVeryHigh: 'Human modification',
-    noModification: 'No human modification'
-  },
-  protection: {
-    protected: 'Current protection',
-    protectionNeeded: ' Additional protection needed',
-    protectionNotNeeded: 'Non-formal protection needed'
-  }
-};
-
-const categories = Object.keys(legendText);
-const headers = categories.concat('spi');
-
+const categories = Object.keys(SORT_GROUPS_SLUGS);
 const RankingChart = ({
   data,
   className,
   countryISO,
-  handleInfoClick,
-  sortRankingCategory,
-  handleSortClick,
-  handleCountryClick
+  handleFilterSelection,
+  selectedFilterOption,
+  handleSearchChange,
+  handleCountryClick,
+  scrollIndex,
+  searchTerm,
 }) => {
   const [hasScrolled, changeHasScrolled] = useState(false);
+
   const tableRef = useRef();
+  useEffect(() => {
+    const ROW_HEIGHT = 24;
+    if (scrollIndex > -1 && tableRef.current) {
+      tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
+    }
+  }, [scrollIndex, tableRef]);
 
   const onScroll = () => {
     if (!hasScrolled) {
       changeHasScrolled(true);
     }
-  }
+  };
 
   const barTooltip = (d, name) => (
     <div className={styles.tooltip}>
       <div className={styles.labels}>
         {Object.keys(d[name]).map((key) => (
-          <div key={`legend-${key}`}> {legendText[name][key]}: </div>
+          <div key={`legend-${key}`}> {RANKING_LEGEND[name][key]}: </div>
         ))}
       </div>
       <div className={styles.values}>
@@ -57,7 +54,7 @@ const RankingChart = ({
           <div
             className={cx(styles.valuesBox, styles[key])}
             style={{
-              height: `${100 / Object.keys(d[name]).length}%`
+              height: `${100 / Object.keys(d[name]).length}%`,
             }}
             key={`legend-value-${key}`}
           >
@@ -73,6 +70,7 @@ const RankingChart = ({
       <Tooltip
         html={barTooltip(d, name)}
         animation="none"
+        delay={50}
         position="right"
         className={styles.barContainer}
         key={`tooltip-bar-${name}`}
@@ -88,100 +86,81 @@ const RankingChart = ({
         </div>
       </Tooltip>
     );
-
-  const renderLegend = () => (
-    <div className={styles.legend}>
-      {Object.keys(legendText).map((category) => (
-        <div className={styles.legendBlock} key={`legend-${category}`}>
-          {Object.keys(legendText[category]).map((text) => (
-            <div className={styles.legendItem} key={`legend-item-${text}`}>
-              <span className={cx(styles.legendColor, styles[text])} />
-              <span className={styles.legendText}>
-                {legendText[category][text]}
-              </span>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        <span className={styles.chartTitle}>
-          Ranking countries
-        </span>
-        <QuestionIcon className={styles.question} onClick={handleInfoClick} />
+        <span className={styles.chartTitle}>Sort countries by</span>
+        <Dropdown
+          options={SORT_OPTIONS}
+          groups={SORT_GROUPS}
+          selectedOption={selectedFilterOption}
+          handleOptionSelection={handleFilterSelection}
+        />
       </div>
       <div className={styles.header}>
-        {headers.map((category) => (
-          <HeaderItem
-            title={category.toUpperCase()}
+        <SearchInput
+          className={styles.searchInput}
+          placeholder="Search country"
+          onChange={handleSearchChange}
+          value={searchTerm}
+          type="transparent"
+        />
+        {categories.map((category) => (
+          <div
             key={category}
-            theme={{ headerItem: cx(styles.headerItem, styles.titleText) }}
-            isSortSelected={
-              sortRankingCategory &&
-              sortRankingCategory.split('-')[0] &&
-              sortRankingCategory.split('-')[0] === category.toUpperCase()
-            }
-            sortDirection={
-              sortRankingCategory && sortRankingCategory.split('-')[1]
-            }
-            handleSortClick={handleSortClick}
-          />
+            className={cx(styles.headerItem, {
+              [styles.spiHeader]: category === 'spi'
+            })}
+          >
+            {RANKING_HEADER_LABELS[category].split(" ").map(word => (
+              <p className={styles.titleText}>{`${word.toUpperCase()}`}</p>
+            ))}
+          </div>
         ))}
       </div>
       {data && data.length ? (
-        <div className={styles.rankingChartContentContainer}>
-          <div
-            className={cx(styles.rankingChartContent, {
-              [styles.scrolled]: hasScrolled
-            })}
-            onScroll={onScroll}
-            ref={tableRef}
-          >
-            <div className={styles.table}>
-              {data.map((d) => (
-                <div className={styles.row} key={d.name}>
-                  {categories.map((category) => renderBar(category, d))}
-                  <div className={styles.spiCountry}>
-                    <span className={cx(
-                      styles.titleText,
-                      styles.spiIndex,
-                      {[styles.selectedCountry]: countryISO === d.iso}
-                    )}>
-                      {d.index}.
-                    </span>
-                    <button
-                      className={styles.spiCountryText}
-                      onClick={() => handleCountryClick(d.iso, d.name)}
-                    >
-                      <span className={cx(
-                        styles.spiCountryName,
-                        {[styles.selectedCountry]: countryISO === d.iso}
-                      )}>
-                        {d.name}
-                      </span>
-                      <span className={cx(
-                        styles.spiCountryIndex,
-                        {[styles.selectedCountry]: countryISO === d.iso}
-                      )}>
-                        ({d.spi})
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div
-              className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
-            >
-              <Arrow className={styles.arrow} />
-              Scroll
-            </div>
+        <div
+          className={cx(styles.rankingChartContent, {
+            [styles.scrolled]: hasScrolled,
+          })}
+          onScroll={onScroll}
+          ref={tableRef}
+        >
+          <div className={styles.table}>
+            {data.map((d, i) => (
+              <div className={cx(styles.row, {
+                [styles.found]: scrollIndex === i,
+              }
+              )} key={d.name}>
+                <button
+                  className={styles.spiCountryButton}
+                  onClick={() => handleCountryClick(d.iso, d.name)}
+                >
+                  <span
+                    className={cx(styles.spiCountryIndex, {
+                      [styles.selectedCountry]: countryISO === d.iso,
+                    })}
+                  >
+                    {`${i + 1}.`}
+                  </span>
+                  <span
+                    className={cx(styles.spiCountryName, {
+                      [styles.selectedCountry]: countryISO === d.iso,
+                    })}
+                  >
+                    {d.name}
+                  </span>
+                </button>
+                {categories.map((category) => category === 'spi' ? <span key={category} className={cx(styles.titleText, styles.spiIndex)}>{d[category]}</span> : renderBar(category, d))}
+              </div>
+            ))}
           </div>
-          {renderLegend()}
+          <div
+            className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
+          >
+            <Arrow className={styles.arrow} />
+            Scroll
+          </div>
         </div>
       ) : null}
     </div>
@@ -191,10 +170,10 @@ const RankingChart = ({
 RankingChart.propTypes = {
   data: PropTypes.array,
   className: PropTypes.string,
+  searchTerm: PropTypes.string,
+  scrollIndex: PropTypes.number,
   sortRankingCategory: PropTypes.string,
-  handleInfoClick: PropTypes.func.isRequired,
-  handleSortClick: PropTypes.func.isRequired,
-  handleCountryClick: PropTypes.func.isRequired
+  handleCountryClick: PropTypes.func.isRequired,
 };
 
 export default RankingChart;

@@ -53,6 +53,7 @@ $grey-text: $alto;
 $light-text: $white;
 $_temporary-dark-text: #222;
 $_temporary-light-text: #747474;
+$accent-grey: #a0afb8;
 $logos-text: $oslo-gray;
 $half-earth-meter-green: $screamin-green;
 $half-earth-meter-blue: $lochmara;
@@ -61,6 +62,8 @@ $amphibians-color: #9873EF;
 $birds-color: $shamrock;
 $reptiles-color: $picton-blue;
 $priority-blue: #0664F6;
+$biodiversity-gradient: linear-gradient(0deg, #0664F6 0%, #2172DB 14.73%, #3D80BF 27%, #749C89 40%, #8FAB6D 52%, #ABB952 62%, #C6C737 74%, #E2D51B 86%, #FDE300 100%);
+$biodiversity-gradient-rotated: linear-gradient(90deg, #0664F6 0%, #2172DB 14.73%, #3D80BF 27%, #749C89 40%, #8FAB6D 52%, #ABB952 62%, #C6C737 74%, #E2D51B 86%, #FDE300 100%);
 $human-pressure-high: #F3E0F7;
 $human-pressure-mid: #9F82CE;
 $human-pressure-low: #282052;
@@ -112,14 +115,23 @@ $font-family-2: 'EB Garamond', serif;
 // Layout
 $site-gutter: 20px;
 $widget-button-size: 30px;
+$rounded-button-size: 42px;
 
 // Blur
 $blur-level: 16px;
+
+// Box shadow
+
+$box-shadow-strong: 0 2px 10px 0 $firefly;
 
 // Global
 $sidebar-margin: 24px;
 $sidebar-paddings: 20px;
 $paragraph-margin: 35px;
+$paragraph-gutter: 10px;
+$sidebar-cards-padding: 25px;
+$sidebar-border: 1.5px solid $brand-color-secondary;
+$sidebar-border-radius: 4px;
 
 $mobile-sidebar-side-paddings: 32px;
 
@@ -133,7 +145,7 @@ $local-sidebar-top-margin: 20px;
 $high-sidebar-top-margin: 268px;
 $sidebar-header-height: 100px;
 $sidebar-header-height-mobile: 150px;
-$sidebar-width: 280px; // use this for entry boxes and sidebar width
+$sidebar-width: 350px; // use this for entry boxes and sidebar width
 $country-sidebar-width: 490px;
 $local-sidebar-width: 350px;
 $widgetsTopMargin: 8px;

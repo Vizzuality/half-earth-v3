@@ -1,92 +1,70 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as PIXI from 'pixi.js';
-import { ease } from 'pixi-ease';
-import { difference } from 'lodash';
-import circleImg from 'images/country-bubble.png'
+import { motion, AnimatePresence } from "framer-motion"
+import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import cx from 'classnames';
 
 import styles from './scatter-plot-styles.module.scss';
+
+const TickLines = ({tickLine, bubble, countryChallengesSelectedKey, chartScale}) => {
+  if (!tickLine || tickLine !== bubble.iso) return null;
+  return (
+    <g>
+      <line
+        x1={chartScale.xScale(
+          bubble.xAxisValues[countryChallengesSelectedKey]
+        )}
+        y1={chartScale.yScale(bubble.yAxisValue)}
+        x2={chartScale.xScale(
+          bubble.xAxisValues[countryChallengesSelectedKey]
+        )}
+        y2="100%"
+        strokeWidth="1"
+        stroke="#ffffff"
+        strokeDasharray="2 3"
+      />
+      <line
+        x2={chartScale.xScale(
+          bubble.xAxisValues[countryChallengesSelectedKey]
+        )}
+        y1={chartScale.yScale(bubble.yAxisValue)}
+        x1="0"
+        y2={chartScale.yScale(bubble.yAxisValue)}
+        strokeWidth="1"
+        stroke="#ffffff"
+        strokeDasharray="2 3"
+      />
+    </g>
+  )
+}
 
 const ScatterPlot = ({
   data,
   xAxisTicks,
   yAxisTicks,
   countryISO,
-  xAxisLabels,
   onBubbleClick,
   handleContainerClick,
-  tooltipValuesFormats,
   countryChallengesSelectedKey,
 }) => {
   const chartSurfaceRef = useRef(null);
-  const [bubblesArray, setBubblesArray] = useState([]);
-  const [activeBubblesArray, setActiveBubblesArray] = useState([]);
   const [chartScale, setChartScale] = useState(null);
   const [tooltipState, setTooltipState] = useState(null);
+  const [tickLine, setTickLine] = useState(null);
+  const [xAxisValue, setXAxisValue] = useState(null);
+  const [yAxisValue, setYAxisValue] = useState(null);
   const padding = 50; // for chart edges
-  const tooltipOffset = 50;
-  const bigBubble = 90;
-  const smallBubble = 45;
-  const [appConfig, setAppConfig ] = useState({
-    ready: false,
-    App: null,
-    DomContainer: null,
-    AppContainer: null,
-    CircleTexture: null
-  })
+  const tooltipOffset = 20;
+
+  const getX = (e, ref) => e.clientX - ref.current.getBoundingClientRect().left;
+  const getY = (e, ref) => e.clientY - ref.current.getBoundingClientRect().top;
 
   const minXValue = (data, selectedKey) => d3.min(data, (d) => d.xAxisValues[selectedKey])
   const maxXValue = (data, selectedKey) => d3.max(data, (d) => d.xAxisValues[selectedKey])
-  const addBubblesToChart = (data, texture, appContainer) => data.map(d => {
-    const bubbleWrapper = new PIXI.Container();
-    bubbleWrapper.y = chartScale.yScale(d.yAxisValue);
-    bubbleWrapper.x = chartScale.xScale(d.xAxisValues[countryChallengesSelectedKey]);
-    bubbleWrapper.slug = d.iso;
-    const country = new PIXI.Sprite(texture);
-    country.attributes = d;
-    country.anchor.set(0.5);
-    country.tint = PIXI.utils.string2hex(d.color);
-    country.interactive = true;
-    country.buttonMode = true;
-    country.blendMode = PIXI.BLEND_MODES.ADD;
-    const textStyle = new PIXI.TextStyle({fontFamily: 'Arial, sans', fontSize: 16, fill: '#000000'})
-    const countryIsoText = new PIXI.Text(d.iso, textStyle);
-    countryIsoText.anchor.set(0.5)
-    country.width = 0;
-    country.height = 0;
-    bubbleWrapper.addChild(country);
-    bubbleWrapper.addChild(countryIsoText);
-    appContainer.addChild(bubbleWrapper);
-    return bubbleWrapper;
-  })
+  const formatFunction = countryChallengesChartFormats[countryChallengesSelectedKey];
 
-  useEffect(() => {
-    if (chartSurfaceRef.current) {
-      const App = new PIXI.Application({
-        width: chartSurfaceRef.current.offsetWidth,
-        height: chartSurfaceRef.current.offsetHeight,
-        transparent: true,
-        resolution: window.devicePixelRatio || 1,
-        autoDensity: true,
-        resizeTo: chartSurfaceRef.current,
-        resizeThrottle: 250,
-      })
-
-      setAppConfig({
-        ...appConfig,
-        App,
-        DomContainer: chartSurfaceRef.current,
-        AppContainer: new PIXI.Container(),
-        CircleTexture: PIXI.Texture.from(circleImg),
-        ready: true
-      })
-    }
-  }, [chartSurfaceRef.current])
-
-  // init PIXI app and pixi viewport
-  useEffect(() => {
-    if (appConfig.ready && data) {
+  const calculateScale = () => {
+    if (data && chartSurfaceRef.current) {
       const xScale = d3.scaleLinear()
       .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
       .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
@@ -96,106 +74,119 @@ const ScatterPlot = ({
 
       setChartScale({ xScale, yScale })
     }
-    }, [appConfig.ready, data, countryChallengesSelectedKey]);
+  }
 
-    useEffect(() => {
-      if (chartScale) {
-        const { App, AppContainer, DomContainer, CircleTexture } = appConfig
-        AppContainer.sortableChildren = true;
-        DomContainer.appendChild(App.view);
-        App.stage.addChild(AppContainer);
-        const currentData = data.map(bubble => bubble.iso);
-        const oldBubbles = AppContainer.children;
-        const bubblesToRemove = difference(activeBubblesArray, currentData);
-        const persistentBubbles = activeBubblesArray.filter(bubble => currentData.indexOf(bubble) !== -1);
-        const newBubbles = difference(currentData, persistentBubbles);
+  useEffect(() => {
+    calculateScale();
+    window.addEventListener('resize', 
+    () => {
+      calculateScale();
+    });
+  }, [data, countryChallengesSelectedKey, chartSurfaceRef.current])
 
-        oldBubbles
-          .filter(bubble => bubblesToRemove.includes(bubble.slug))
-          .forEach(bubble => {
-            const animation = ease.add(bubble, {alpha: 0}, {duration: 300, ease: 'easeInOutExpo'});
-            animation.once('complete', () => AppContainer.removeChild(bubble))
-          })
-
-        const persistent = oldBubbles
-          .filter(bubble => persistentBubbles.includes(bubble.slug))
-          .map((bubble, index) => {
-            ease.add(bubble,
-              {x: chartScale.xScale(bubble.children[0].attributes.xAxisValues[countryChallengesSelectedKey])},
-              {duration: 700, ease: 'easeInOutExpo', wait: index * 8}
-            )
-            return bubble
-          })
-
-        if (activeBubblesArray.length) {
-          const newData = data.filter(d => newBubbles.includes(d.iso));
-          const newbubbles = addBubblesToChart(newData, CircleTexture, AppContainer);
-          setBubblesArray([...persistent, ...newbubbles]);
-        } else {
-          const bubbles = addBubblesToChart(data, CircleTexture, AppContainer);
-          setBubblesArray(bubbles);
-        }
-        setActiveBubblesArray(currentData);
-      }
-    }, [chartScale])
-
-    useEffect(() => {
-      if (bubblesArray.length && countryISO && chartScale) {
-        bubblesArray.forEach((bubble) => {
-          const { children } = bubble;
-          const country = children[0];
-          country.removeAllListeners()
-          const isSelectedCountry = countryISO === bubble.slug;
-          if (isSelectedCountry) { bubble.zIndex = 1}
-          country.width = isSelectedCountry ? bigBubble : smallBubble;
-          country.height = isSelectedCountry ? bigBubble : smallBubble;
-          country.alpha = isSelectedCountry ? 1 : 0.6;
-
-          country.on('pointerover', e => {
-            setTooltipState({
-              x: e.data.global.x,
-              y: e.data.global.y,
-              name: country.attributes.name,
-              continent: country.attributes.continent,
-              color: country.attributes.color,
-              yValue: Number.parseFloat(country.attributes.yAxisValue).toFixed(2),
-              yLabel: 'Species Protection Index',
-              xValue: filter => tooltipValuesFormats[filter](country.attributes.xAxisValues[filter]),
-              xLabel: filter => xAxisLabels[filter]
-            })
-            if (!isSelectedCountry) {
-              ease.add(country, {
-                width: bigBubble,
-                height: bigBubble,
-              }, {duration: 150, ease: 'easeInOutExpo' });
-            }
-          });
-
-          // mouse leave
-          country.on('pointerout', e => {
-            setTooltipState(null)
-            if (!isSelectedCountry) {
-              ease.add(country, {
-                width: smallBubble,
-                height: smallBubble,
-              }, {duration: 150, ease: 'easeInOutExpo' });
-            }
-          });
-
-          country.on('click', e => {
-            if (!isSelectedCountry) {
-              onBubbleClick({ countryISO: country.attributes.iso, countryName: country.attributes.name })
-            }
-          })
-        })
-      }
-    },[countryISO, bubblesArray, chartScale])
-
+  const animationTransitionConfig = {
+    type: "spring",
+    damping: 20,
+    stiffness: 200
+  }
 
   return (
     <>
       <div className={cx(styles.chartContainer)} onClick={handleContainerClick}>
         <div className={styles.scatterPlotContainer} ref={chartSurfaceRef}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.chartSurfaceSvg}
+            height="100%"
+            width="110%"
+          >
+            {chartScale &&
+              data.map((bubble) => (
+                <g key={bubble.iso} onClick={() =>
+                  onBubbleClick({
+                    countryISO: bubble.iso,
+                    countryName: bubble.name,
+                  })
+                }>
+                  <TickLines
+                    tickLine={tickLine}
+                    bubble={bubble}
+                    countryChallengesSelectedKey={countryChallengesSelectedKey}
+                    chartScale={chartScale}
+                  />
+                  <AnimatePresence>
+                  {bubble.iso === countryISO &&
+                    <motion.circle
+                    key={bubble.iso}
+                    transition={animationTransitionConfig}
+                    className={cx(
+                      {[styles.animatedBubble]: bubble.iso === countryISO}
+                      )}
+                      animate={{ cx: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) }}
+                      exit={{ cx: 0 }}
+                      cy={chartScale.yScale(bubble.yAxisValue)}
+                      r={bubble.size}
+                      fill={bubble.color}
+                      />
+                  }
+                  </AnimatePresence>
+                  <AnimatePresence>
+                    <motion.circle
+                      key={bubble.iso}
+                      transition={animationTransitionConfig}
+                      animate={{ cx: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) }}
+                      exit={{ cx: 0 }}
+                      cy={chartScale.yScale(bubble.yAxisValue)}
+                      r={bubble.size}
+                      fill={bubble.color}
+                      strokeWidth="2"
+                      stroke="#040E14"
+                    />
+                  </AnimatePresence>
+                  <AnimatePresence>
+                    <motion.foreignObject
+                      width={bubble.size * 2}
+                      height={bubble.size * 2}
+                      key={bubble.iso}
+                      transition={animationTransitionConfig}
+                      initial={{x: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) - bubble.size}}
+                      animate={{ x: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) - bubble.size }}
+                      exit={{ x: 0 }}
+                      y={chartScale.yScale(bubble.yAxisValue) - bubble.size}
+                      requiredExtensions="http://www.w3.org/1999/xhtml"
+                      onMouseEnter={(e) => {
+                        setTooltipState({
+                          x:getX(e, chartSurfaceRef),
+                          y:getY(e, chartSurfaceRef),
+                          name: bubble.name,
+                          continent: bubble.continent,
+                          color: bubble.color
+                        })
+                        setTickLine(bubble.iso);
+                        setXAxisValue(bubble.xAxisValues[countryChallengesSelectedKey]);
+                        setYAxisValue(bubble.yAxisValue);
+                      }
+                      }
+                      onMouseLeave={() => {
+                        setTooltipState(null);
+                        setTickLine(null);
+                        setXAxisValue(null);
+                        setYAxisValue(null);
+                      }}
+                    >
+                      <div className={styles.bubbleTextContainer}>
+                        <span
+                          className={styles.bubbleText}
+                        >
+                          {bubble.iso}
+                        </span>
+                      </div>
+                    </motion.foreignObject>
+                  </AnimatePresence>
+                </g>
+              ))}
+          </svg>
+
           <div className={styles.yAxisTicksContainer}>
             {yAxisTicks &&
               yAxisTicks.map((tick) => (
@@ -204,6 +195,34 @@ const ScatterPlot = ({
                 </span>
               ))}
           </div>
+          {yAxisValue &&
+            <span
+              className={cx(
+                styles.tickValue,
+                styles.yAxis,
+              )}
+              style={{
+                position: "absolute",
+                top: `${chartScale.yScale(yAxisValue)}px`,
+              }}
+            >
+              {yAxisValue}
+            </span>
+          }
+          {xAxisValue &&
+            <span
+              className={cx(
+                styles.tickValue,
+                styles.xAxis,
+              )}
+              style={{
+                position: "absolute",
+                left: `${chartScale.xScale(xAxisValue)}px`,
+              }}
+            >
+              {formatFunction(xAxisValue)}
+            </span>
+          }
           <div className={styles.xAxisTicksContainer}>
             {xAxisTicks &&
               xAxisTicks.map((tick, index) => (
@@ -217,9 +236,9 @@ const ScatterPlot = ({
           <div
             className={styles.tooltip}
             style={{
-              position: 'absolute',
+              position: "absolute",
               left: `${tooltipState.x + tooltipOffset}px`,
-              top: `${tooltipState.y + tooltipOffset}px`
+              top: `${tooltipState.y + tooltipOffset}px`,
             }}
           >
             <section
@@ -230,15 +249,6 @@ const ScatterPlot = ({
               <span className={styles.continent}>
                 ({tooltipState.continent})
               </span>
-            </section>
-            <section className={styles.countryData}>
-              <p className={styles.data}>
-                {tooltipState.xLabel(countryChallengesSelectedKey)}:{' '}
-                {tooltipState.xValue(countryChallengesSelectedKey)}
-              </p>
-              <p className={styles.data}>
-                {tooltipState.yLabel}: {tooltipState.yValue}
-              </p>
             </section>
           </div>
         )}

@@ -12,6 +12,32 @@ $chart-margin: 14px;
   position: relative;
 }
 
+.bubbleTextContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.pulseBubble {
+  display: none;
+}
+.animatedBubble {
+  display: block;
+  animation: pulse 3s infinite;
+}
+
+.bubbleText {
+  @extend %title;
+  color: $dark-text;
+}
+.bubbleValue {
+  @extend %title;
+  color: $white;
+}
+
 .chartContainer {
   display: flex;
   margin-top: $chart-margin;
@@ -23,14 +49,14 @@ $chart-margin: 14px;
   display: flex;
   justify-content: space-between;
   position: absolute;
-  bottom: -40px;
+  bottom: -25px;
 }
 
 .yAxisTicksContainer {
   color: white;
   position: absolute;
   bottom: -12px;
-  left: -30px;
+  left: -10px;
   transform-origin: left;
   transform: rotate(-90deg);
   width: 60vh;
@@ -38,13 +64,27 @@ $chart-margin: 14px;
   justify-content: space-between;
 }
 
-.tick {
+.tick,
+.tickValue {
   color: $alto;
+}
+
+.tickValue {
+  width: auto;
+}
+.xAxis {
+  transform: translateX(-50%);
+}
+.yAxis {
+  transform-origin: left;
+  transform: rotate(-90deg);
+  left: -10px;
 }
 
 .tooltip {
   background-color: $elephant;
   border-radius: 2px;
+  border: 2px solid $firefly;
   width: 190px;
   overflow: hidden;
   .countryLabel{
@@ -52,24 +92,37 @@ $chart-margin: 14px;
     .name {
       @extend %_temporaryTitle;
       letter-spacing: 0;
-      color: #222222;
+      color: $_temporary-dark-text;
     }
     .continent {
       @extend %_temporaryTitle;
-      color: #222222;
+      color: $_temporary-dark-text;
       letter-spacing: 0;
       text-transform: initial;
     }
   }
-  .countryData {
-    padding: 5px;
-    .data {
-      @extend %_temporaryTitle;
-      margin: 0;
-      color: $white;
-      font-weight: normal;
-      text-transform: initial;
-      letter-spacing: 0;
-    }
+}
+
+
+@keyframes pulse {
+  0% {
+    r: 1%;
+    opacity: 0;
+    animation-timing-function:cubic-bezier(1,.01,.91,.46);
+  }
+  50% {
+    r: 1%;
+    opacity: 0.1;
+    animation-timing-function: linear;
+  }
+  70% {
+    r: 5%;
+    opacity: 0.3;
+    animation-timing-function: linear;
+  }
+  100% {
+    r: 7%;
+    opacity: 0;
+    animation-timing-function: linear;
   }
 }

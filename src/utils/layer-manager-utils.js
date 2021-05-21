@@ -1,28 +1,34 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-import { intersection } from 'lodash';
+import intersection from 'lodash/intersection';
 import { loadModules } from 'esri-loader';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
 
-export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
-  const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
-  const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
-  if (areActive) {
-    const updatedLayers = layerNamesArray.reduce((acc, title) => {
-      removeLayerAnalyticsEvent({ slug: title });
-      return [...acc.filter(l => l.title !== title)];
-    }, activeLayers);
-    callback({activeLayers: updatedLayers });
-  } else {
-    const layersToAdd = layerNamesArray.map(title => {
+// Toggles all the layers passed as ids on the first parameter
+export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, category) => {
+  const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
+  const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersIds);
+  const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
+
+  let updatedLayers = activeLayers;
+  if (layersToRemove.length) {
+    updatedLayers = activeLayers.filter((layer) => {
+      const hasToBeRemoved = layersToRemove.includes(layer.title);
+      if (hasToBeRemoved) {
+        removeLayerAnalyticsEvent({ slug: layer.title });
+      }
+      return !hasToBeRemoved;
+    });
+  }
+  if (layersToAdd.length) {
+    const updatedLayersToAdd = layersToAdd.map(title => {
       addLayerAnalyticsEvent({ slug: title });
       return { title, category, opacity: DEFAULT_OPACITY }
     });
-    activeLayers
-      ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
-      : callback({ activeLayers: layersToAdd });
+    updatedLayers = updatedLayers.concat(updatedLayersToAdd)
   }
-}
+  callback({ activeLayers: updatedLayers });
+};
 
 export const layerManagerToggle = (layerTitle, activeLayers, callback, category) => {
   const title = layerTitle;
@@ -92,7 +98,7 @@ export const layerManagerVisibility = (layerTitle, visible, activeLayers, callba
   }
 };
 
-export const batchLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
+export const batchSetLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
   const setOpacity = (layer) => layerNamesArray.includes(layer.title) ? { ...layer, opacity } : layer;
   callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
 };
@@ -168,3 +174,7 @@ export const setBasemap = async ({map, surfaceColor, layersArray}) => {
     map.basemap = basemap;
   })
 }
+
+export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) => (
+  intersection(activeLayers.map((l) => l.title), layerGroup)
+);

@@ -1,0 +1,35 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.rounded {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $rounded-button-size;
+  height: $rounded-button-size;
+  border-radius: 100%;
+  background-color: $white;
+
+  .icon {
+    fill: $dark-text;
+    width: $font-size-xs;
+    height: $font-size-xs;
+  }
+}
+
+.compound {
+  display: flex;
+  padding: 6px;
+  background-color: $brand-color-secondary;
+  border-radius: $border-radius-desktop;
+
+  .icon {
+    fill: $white;
+    margin-right: $paragraph-gutter;
+  }
+  
+  .label {
+    @extend %title;
+    color: $white;
+  }
+}

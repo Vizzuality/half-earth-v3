@@ -1,0 +1,29 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.searchInputContainer {
+  display: flex;
+  align-items: flex-start;
+
+  .searchInput {
+    @extend %_temporaryTitle;
+    background-color: $modal-light-background;
+    min-width: 300px;
+    border: none;
+    margin-left: 1em;
+    color: $_temporary-dark-text;
+  }
+
+  &.transparent {
+    .searchInput {
+      background-color: transparent;
+      color: $white;
+      margin-bottom: 9px;
+      min-width: 150px;
+    }
+
+    .searchIcon {
+      transform: translate(-3px, -6px) scale(0.5);
+    }
+  }
+}

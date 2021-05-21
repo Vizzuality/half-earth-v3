@@ -4,7 +4,10 @@ import {
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
   RANGELAND_HUMAN_PRESSURES_TILE_LAYER,
-  MARINE_HUMAN_PRESSURES_TILE_LAYER
+  MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
+  MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
+  COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
+  ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 } from 'constants/layers-slugs';
 
 export const HUMAN_PRESSURES_COLOR_RAMP = [
@@ -21,14 +24,20 @@ const RAINFED = 'Rainfed agriculture';
 const IRRIGATED = 'Irrigated agriculture';
 const URBAN = 'Urban pressures';
 const RANGELAND = 'Rangeland';
-const MARINE = 'Marine human modification';
+const LAND_DRIVERS = 'Land-based drivers';
+const OCEAN_DRIVERS = 'Ocean-based drivers';
+const COMMERCIAL_FISHING = 'Commercial fishing';
+const ARTISANAL_FISHING = 'Artisanal fishing';
 
 export const PRESSURES_SLUGS = {
   urban: URBAN_HUMAN_PRESSURES_TILE_LAYER,
   rainfed: RAINFED_HUMAN_PRESSURES_TILE_LAYER,
   irrigated: IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   rangeland: RANGELAND_HUMAN_PRESSURES_TILE_LAYER,
-  marine: MARINE_HUMAN_PRESSURES_TILE_LAYER,
+  land: MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
+  ocean: MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
+  commercial: COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
+  artisanal:   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 }
 
 export const humanPressuresLandUse = [
@@ -39,12 +48,15 @@ export const humanPressuresLandUse = [
 ];
 
 export const humanPressuresMarine = [
-  { name: MARINE, value: PRESSURES_SLUGS.marine, slug: PRESSURES_SLUGS.marine }
+  { name: LAND_DRIVERS, value: PRESSURES_SLUGS.land, slug: PRESSURES_SLUGS.land },
+  { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
+  { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
+  { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
 ]
 
 export const humanPressuresLandscapeWidget = [
   ...humanPressuresLandUse,
-  { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' }
+  { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' },
 ];
 
 export const legendSingleRasterTitles = {
@@ -52,7 +64,10 @@ export const legendSingleRasterTitles = {
   [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]: IRRIGATED,
   [URBAN_HUMAN_PRESSURES_TILE_LAYER]: URBAN,
   [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]: RANGELAND,
-  [MARINE_HUMAN_PRESSURES_TILE_LAYER]: MARINE
+  [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: LAND_DRIVERS,
+  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: OCEAN_DRIVERS,
+  [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: COMMERCIAL_FISHING,
+  [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: ARTISANAL_FISHING,
 }
 
 export const legendConfigs = {

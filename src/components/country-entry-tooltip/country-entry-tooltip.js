@@ -39,7 +39,10 @@ const CountryEntryTooltipContainer = props => {
     const { changeGlobe, changeUI, sceneMode, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
     exploreCountryFromTooltipAnalyticsEvent({countryName});
     changeGlobe({ activeLayers: countrySceneConfig.globe.activeLayers })
-    changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE })
+    changeUI({ 
+        sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE,
+        localSceneActiveTab: countrySceneConfig.ui.localSceneActiveTab
+      })
   };
 
   return (

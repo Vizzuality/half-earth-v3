@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
-import metadataConfig from 'constants/metadata';
 import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
-import { CHALLENGES_CHART } from 'constants/metadata';
 
 import mapStateToProps from './country-challenges-chart-selectors';
 
@@ -14,10 +12,8 @@ const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent 
 
 
 const CountryChallengesChartContainer = (props) => {
-  const [filtersOpen, setFiltersToggle] = useState(false);
 
   const handleSelectNextIndicator = () => {
-    setFiltersToggle(false);
     const { changeUI, countryChallengesSelectedKey, xAxisKeys } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex !== xAxisKeys.length - 1) {
@@ -28,7 +24,6 @@ const CountryChallengesChartContainer = (props) => {
   }
 
   const handleSelectPreviousIndicator = () => {
-    setFiltersToggle(false);
     const { changeUI, countryChallengesSelectedKey, xAxisKeys } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex > 0) {
@@ -43,44 +38,16 @@ const CountryChallengesChartContainer = (props) => {
     changeGlobe({countryISO, countryName, zoom: null, center: null})
   }
 
-  const handleInfoClick = () => {
-    const {
-      setModalMetadata,
-      openInfoModalAnalyticsEvent
-    } = props;
-    const md = metadataConfig[CHALLENGES_CHART]
-    setModalMetadata({
-      slug: md.slug,
-      title: md.title,
-      isOpen: true
-    });
-    setFiltersToggle(false);
-    openInfoModalAnalyticsEvent('Country challenges chart');
-  }
-
   const handleFilterSelection = (selectedFilter) => {
     const { changeUI } = props;
     changeUI({countryChallengesSelectedFilter: selectedFilter});
-    setFiltersToggle(false);
-  }
-
-  const handleFiltersToggle = () => {
-    setFiltersToggle(!filtersOpen);
-  }
-
-  const handleOutsideFiltersClick = () => {
-    setFiltersToggle(false);
   }
 
   return (
   <Component
-    filtersOpen={filtersOpen}
-    handleInfoClick={handleInfoClick}
     handleBubbleClick={handleBubbleClick}
-    handleFiltersToggle={handleFiltersToggle}
     handleFilterSelection={handleFilterSelection}
     handleSelectNextIndicator={handleSelectNextIndicator}
-    handleOutsideFiltersClick={handleOutsideFiltersClick}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}
     {...props}
   />

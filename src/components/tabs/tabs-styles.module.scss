@@ -1,0 +1,53 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.tabs {
+  padding: $site-gutter/2 $site-gutter;
+  display: flex;
+  justify-content: center;
+
+  ul[role="tablist"] {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    border: 1px solid $brand-color-main;
+  }
+
+  .hasBorder {
+    border-left: 1px solid $grey-text;
+
+    &.first {
+      border-left: 0;
+      border-right: 1px solid $grey-text;
+    }
+  }
+
+  li[role="presentation"] {
+    flex: 1;
+  }
+
+  .tab {
+    @extend %subtitle;
+    display: inline-block;
+    padding: 15px 0;
+    height: 46px;
+    width: 100%;
+    color: $white;
+    text-align: center;
+    cursor: pointer;
+
+    &[aria-selected="true"] {
+    background-color: $brand-color-main;
+      color: $black;
+    }
+  }
+
+  .title {
+    padding: 4px 0;
+  }
+}

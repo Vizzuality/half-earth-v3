@@ -1,0 +1,23 @@
+@import 'styles/settings';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: inherit;
+  border-radius: $card-border-radius;
+  > :not(:last-child)::after {
+    content: '';
+    position: relative;
+    bottom: -$sidebar-cards-padding;
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px dotted $_temporary-dark-text;
+  }
+}
+
+.section {
+  padding: $sidebar-cards-padding;
+  border-radius: $card-border-radius;
+  background-color: $white;
+}

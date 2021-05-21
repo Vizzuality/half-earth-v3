@@ -3,75 +3,24 @@
 
 $xAxisContainerWidth: 330px;
 
+
+.headerContainer {
+  display: flex;
+  margin-bottom: 70px;
+}
+
 .chartTitle {
   @extend %headline;
   color: $alto;
   margin-right: 1rem;
 }
 
-.question {
-  cursor: pointer;
-  position: relative;
-  top: 2px;
+.filtersContainer {
+  display: inline-block;
 }
 
-.filterSelectContainer {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  align-items: flex-end;
-  right: 0;
-
-  .selectLabelContainer {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  .filterSelectLabel {
-    color: $white;
-  }
-  .switchIcon {
-    margin-left: 10px;
-    transform: rotate(90deg);
-    transition: all .1s linear;
-    &.filtersOpen {
-      transform: rotate(-90deg);
-    }
-    path {
-      fill: $white;
-      stroke: $white;
-    }
-  }
-}
-
-.filterSelect {
-  @extend %bodyText;
-  color: #222;
-  cursor: pointer;
-  background-color: white;
-  list-style: none;
-  padding: $font-size-base;
-  margin: none;
-  margin: 0;
-  z-index: 6;
-  border-radius: 2px;
-  .filterOption {
-    margin: 5px 0;
-    &.selectedFilter {
-      opacity: 0.5;
-    }
-  }
-  .optionsLabel {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ededed;
-    cursor: default;
-  }
-}
-
-
-.xAxisIndicator {
+.xAxisIndicator,
+.yAxisIndicator {
   @extend %bodyText;
   color: $alto;
 }
@@ -83,7 +32,7 @@ $xAxisContainerWidth: 330px;
 .xAxisLabelContainer {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 50px;
   left: calc((#{$country-scene-chart-width}/2) - (#{$xAxisContainerWidth}/2));
   position: relative;
 }

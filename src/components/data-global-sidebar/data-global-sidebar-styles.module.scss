@@ -4,7 +4,7 @@
 @import 'styles/common-animations.module';
 
 .sidebarContainer {
-  @extend %verticalScrollBar;
+  @extend %verticalScrollbar;
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
   height: calc(100vh - #{$sidebar-top-margin});

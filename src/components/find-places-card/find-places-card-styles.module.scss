@@ -1,16 +1,16 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
 @import 'styles/typography-extends';
+@import 'styles/shared-sidebar.module';
 
 .container {
   @include backdropBlur();
-  margin-bottom: $cards-bottom-margin;
+  @extend .sharedSidebarCardContainer;
   padding: 0 40px;
-  height: 115px;
+  height: 130px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 2px;
   width: 100%;
   transition: none;
   cursor: pointer;

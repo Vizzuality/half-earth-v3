@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { connect } from 'react-redux';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 // CONSTANTS
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
@@ -38,7 +38,7 @@ const { view, changeGlobe, countryISO, isLandscapeMode } = props;
       if (!countryISO) {selectedCountryBorderGraphic.geometry = null}
     }
   }, [countryISO, selectedCountryBorderGraphic])
-  
+
   const onClickHandler = bordersLayerFeatures => {
     const { clickOnCountryAnalyticsEvent } = props;
     flyToGeometry(view, bordersLayerFeatures);

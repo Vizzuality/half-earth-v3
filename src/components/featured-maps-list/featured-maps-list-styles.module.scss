@@ -28,15 +28,14 @@ $scrollbar-gutter: 15px;
 }
 
 .scrollable {
-
   @media #{$tablet-portrait} {
-    height: 600px; // %verticalScrollbarStyled styles, cannot use @extend inside @media
+    height: 600px; // %verticalScrollbar styles, cannot use @extend inside @media
     overflow-y: auto;
 
     &::-webkit-scrollbar {
       width: 4px;
       background-color: rgba($wild-sand, 0.2);
-    } 
+    }
 
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;

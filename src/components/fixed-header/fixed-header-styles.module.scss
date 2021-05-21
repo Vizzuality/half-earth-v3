@@ -20,7 +20,7 @@ $icon-size: 25px;
 }
 
 .higherHeader {
-  height: 130px; 
+  height: 130px;
 }
 
 .autoHeightHeader {
@@ -88,7 +88,7 @@ $icon-size: 25px;
   padding-right: 10px;
   margin-bottom: 0;
   padding-bottom: 10px;
-  display: flex; 
+  display: flex;
   flex-direction: column;
 
   @media #{$tablet-portrait} {
@@ -114,7 +114,7 @@ $icon-size: 25px;
 }
 
 .titleOptionsList {
-  @extend %verticalScrollbarStyled;
+  @extend %verticalScrollbar;
   position: absolute;
   overflow-y: scroll;
   border-radius: 2px;

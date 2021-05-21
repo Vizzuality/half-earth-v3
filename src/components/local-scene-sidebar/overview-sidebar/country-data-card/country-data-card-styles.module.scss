@@ -1,0 +1,164 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+.container {
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  color: $white;
+  border-radius: 2px;
+  margin-bottom: $cards-bottom-margin;
+}
+
+.indexOverview,
+.indexWidget {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 $sidebar-paddings;
+}
+
+.overviewText {
+  @extend %subtitle;
+  text-decoration: underline;
+  color: $white;
+  text-align: left;
+  padding: 0 0 $sidebar-paddings;
+}
+
+.indexStatement{
+  @extend %subtitle;
+  padding-bottom: $sidebar-paddings;
+}
+
+.overviewTextWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.indexWrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: $sidebar-paddings;
+}
+
+.indexBar {
+  position: relative;
+  height: 22px;
+  width: 70%;
+  background-color: $white;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  .progressMark {
+    position: relative;
+    border: 1px solid $white;
+    height: 30px;
+    transition: all .3s ease;
+  }
+
+  .meanMark {
+    position: absolute;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid $white;
+    bottom: -6px;
+  }
+
+  .improvementArea {
+    position: relative;
+    height: 22px;
+    background-color: rgba($_temporary-dark-text, 0.9);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    transition: all .3s ease;
+  }
+}
+
+.index {
+  @extend %headline;
+}
+
+.indexExplanation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: $white;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: $site-gutter;
+}
+
+
+.indexExplanationText {
+  @extend %_temporaryTitle;
+  margin: 0;
+  color: $_temporary-dark-text;
+}
+
+.indexBaseNumbersWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.indexBaseDataElement {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $sidebar-paddings;
+}
+
+.protectionNumber {
+  width: 51%;
+}
+
+.baseNumber{
+  @extend %headline;
+  color: $_temporary-dark-text;
+  margin: 0 0 5px 0;
+}
+
+.numberText {
+  @extend %subtitle;
+  color: $_temporary-dark-text;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $sidebar-paddings;
+  background-color: $accent-grey;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.hintTitle {
+  @extend %_temporaryTitle;
+  color: $_temporary-dark-text;
+}
+
+.hintText {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+}
+
+.descriptionWrapper {
+  padding:  $sidebar-paddings  $sidebar-paddings 0px;
+  p {
+    @extend %bodyText;
+    margin: 0 0 10px;
+  }
+}

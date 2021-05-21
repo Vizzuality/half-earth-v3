@@ -8,22 +8,30 @@ import { openLayerInfoModalAnalyticsEvent } from 'actions/google-analytics-actio
 const actions = { ...metadataActions, openLayerInfoModalAnalyticsEvent };
 
 const RadioGroupContainer = props => {
-
-  const handleInfoClick = (layer,option) => {
+  const { activeLayers, options } = props;
+  const handleInfoClick = (layer, variant) => {
     const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
     setModalMetadata({
-      slug: `${layer.layers[option]}`,
-      title: `${capitalize(layer.name)} ${option} metadata`,
+      slug: `${layer.layer}`,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug: `${layer.layers[option]}` });
+    openLayerInfoModalAnalyticsEvent({ slug: `${layer.layer}` });
   };
- return (
-  <Component
-    handleInfoClick={handleInfoClick}
-    {...props}
-  />
- )
+
+  const activeLayersIds = activeLayers.map((l) => l.title);
+  const radioOptions = options.map(option => (
+    {
+      ...option,
+      selected: !!activeLayersIds.find((l) => l === option.layer)
+    }
+  ));
+  return (
+    <Component
+      handleInfoClick={handleInfoClick}
+      radioOptions={radioOptions}
+      {...props}
+    />
+  );
 }
 
 export default connect(null, actions)(RadioGroupContainer);

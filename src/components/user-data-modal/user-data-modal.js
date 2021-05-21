@@ -22,7 +22,7 @@ const UserDataModalContainer = () => {
   }
 
   const storeFirstStepData = async (userData, storeUserId, nextStep) => {
-    if (!userData.job_role || !userData.map_usage) {
+    if (userData.job_role.slug === 'placeholder' || userData.map_usage.slug === 'placeholder') {
       setRequiredFieldsWarning(true)
     } else {
       const createdUser = await createUserEntry({...userData});

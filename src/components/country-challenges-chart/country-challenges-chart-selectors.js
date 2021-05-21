@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
 import { getCountryChallengesSelectedFilter, getCountryISO } from 'pages/data-globe/data-globe-selectors';
-import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
+import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import {
   INDICATOR_LABELS,
@@ -23,16 +23,19 @@ const getScatterplotRawData = createSelector(
         name: country.NAME_0,
         color: CONTINENT_COLORS[country.continent] || '#fff',
         iso: country.GID_0,
+        size: countryChallengesSizes(country.AREA_KM2),
         xAxisValues: {
           Population2016: country.Population2016,
           GNI_PPP: country.GNI_PPP,
           prop_hm_very_high: country.prop_hm_very_high,
+          prop_protected: country.prop_protected,
+          protection_needed: country.protection_needed,
           total_endemic: country.total_endemic,
           N_SPECIES: country.N_SPECIES
         },
         yAxisValue: country.SPI
       }
-        })
+        }).sort((a, b) => (b.size - a.size))
   }
 )
 
@@ -95,6 +98,12 @@ const getChallengesFilterOptions = createSelector(
   }
 );
 
+const getSelectedFilterOption = createSelector(
+  getCountryChallengesSelectedFilter,
+  selectedFilter => CHALLENGES_RELATED_FILTERS_OPTIONS.find(option => option.slug === selectedFilter)
+);
+
+
 const getXAxisTicks = createSelector(
   [getFilteredData, getCountryChallengesSelectedKey],
   (plotData, selectedKey) => {
@@ -123,7 +132,7 @@ const mapStateToProps = createStructuredSelector({
   xAxisKeys: getXAxisKeys,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
-  selectedFilter: getCountryChallengesSelectedFilter,
+  selectedFilterOption: getSelectedFilterOption,
   challengesFilterOptions: getChallengesFilterOptions
 });
 
