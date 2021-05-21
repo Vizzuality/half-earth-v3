@@ -72,13 +72,19 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepD
         <p className={styles.question}>Would you like to help us improve the map?</p>
         <p className={styles.bodyText}>If you share your email with us, we will contact you and invite you to share with us your experience with the map, so we can improve it.</p>
         <input
-          type='text'
+          required
+          type='email'
           value={userData.email}
           className={styles.textInput}
           placeholder={'Write your email here'}
           onChange={(event) => userDataUpdate('email', event.target.value)}
         />
-        <button className={styles.button} onClick={() => storeSecondStepData(userId, userData)}>done</button>
+        <button
+          className={styles.button}
+          onClick={() => storeSecondStepData(userId, userData)}
+        >
+          done
+        </button>
       </section>
     )
   }

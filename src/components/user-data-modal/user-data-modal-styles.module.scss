@@ -3,7 +3,7 @@
 
 .modal {
   max-width: 600px;
-  max-height: 650px;
+  max-height: 660px;
   height: 100vh;
   @media #{$tablet-portrait} {
     height: 85vh;
@@ -45,7 +45,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 2em;
   margin-top: 1em;
 }
 
@@ -91,19 +90,24 @@
 .textInput {
   @extend %bodyText;
   background-color: transparent;
+  opacity: 1;
+  pointer-events: all;
   border: 1px solid $white;
   width: 100%;
   height: 100%;
   padding: 10px 20px;
   color: $white;
+  transition: all ease-in .3s;
 }
 .textInput::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
 .textInput:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0;
+  height: 0;
+  padding: 0;
 }
 
 .bodyText {
@@ -133,21 +137,6 @@ $circle-size: 14px;
     width: $circle-size;
     border: 2px solid $white; 
     border-radius: 50%;
-  }
-}
-
-.radioButton {
-  input[type="radio"] {
-    opacity: 0;
-    position: absolute;
-    cursor: pointer;
-    // prevent the default radio button from taking up the space
-    // display: none would screw up the keyboard navigation, so let's go for opacity
-  }
-  
-  input[type="radio"]:checked + .radioInput::before {
-    background: $brand-color-main;
-    border-width: 2px;
   }
 }
 
