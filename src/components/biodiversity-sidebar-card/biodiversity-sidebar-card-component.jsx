@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/layers-config';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import CategoryBox from 'components/category-box';
 import SidebarCardWrapper from 'components/sidebar-card-wrapper'
 import SidebarCardContent from 'components/sidebar-card-content';
 import BiodiversityLayers from 'components/biodiversity-layers';
-import { biodiversityCategories } from 'constants/biodiversity-layers-constants';
+import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 

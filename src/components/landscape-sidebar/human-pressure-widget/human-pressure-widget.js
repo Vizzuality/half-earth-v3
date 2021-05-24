@@ -7,7 +7,7 @@ import mapStateToProps from './human-pressure-selectors';
 import 'redux_modules/land-human-encroachment';
 // Constants
 import { GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE } from 'constants/layers-slugs';
-import { layersConfig, LAYERS_CATEGORIES } from 'constants/layers-config';
+import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 // Utils
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 //Actions

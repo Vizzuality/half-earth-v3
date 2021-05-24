@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import { layersConfig } from 'constants/layers-config';
+import { layersConfig } from 'constants/mol-layers-configs';
 import { hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import {

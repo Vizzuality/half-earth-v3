@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import isEqual from 'lodash/isEqual';
-import { LAYERS_CATEGORIES } from 'constants/layers-config';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import usePrevious from 'hooks/use-previous';
 
 // Select matching or default layers on layer variant switch

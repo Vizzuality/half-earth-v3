@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
 import { PRIORITY_PLACES_POLYGONS, PRIORITY_POLYGONS_GRAPHIC_LAYER } from 'constants/layers-slugs';
-import { layersConfig } from 'constants/layers-config';
+import { layersConfig } from 'constants/mol-layers-configs';
 
 const PriorityPlacesPolygonsLayer = ({ view, selectedFeaturedMap, selectedTaxa }) => {
   const priorityPolygonsInitialState = {

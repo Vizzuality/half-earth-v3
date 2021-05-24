@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
-import { layersConfig, LAYERS_CATEGORIES } from 'constants/layers-config';
+import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   layerManagerToggle,
   replaceLayerFromActiveLayers
