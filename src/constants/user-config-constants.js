@@ -19,7 +19,8 @@ export const userConfigInitialState = {
   [LEGEND_TUTORIAL]: true,
   [LEGEND_DRAG_TUTORIAL]: true,
   latestReleaseNotes: getLatestReleaseSlug(),
-  showLatestReleaseNotes: true
+  showLatestReleaseNotes: true,
+  showUserResearchModal: true
 }
 
 export const releaseNotesData = {
