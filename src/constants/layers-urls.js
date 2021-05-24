@@ -46,13 +46,6 @@ import {
   AMPHIB_RICHNESS,
   FISHES_RARITY,
   FISHES_RICHNESS,
-  FISHES_PRIORITY,
-  MARINE_MAMMALS_RICHNESS,
-  MARINE_MAMMALS_RARITY,
-  MARINE_MAMMALS_PRIORITY,
-  ALL_MARINE_VERTEBRATES_RICHNESS,
-  ALL_MARINE_VERTEBRATES_RARITY,
-  ALL_MARINE_VERTEBRATES_PRIORITY,
   MAMMALS_PRIORITY,
   MAMMALS_RARITY,
   MAMMALS_RICHNESS,
@@ -80,7 +73,6 @@ import {
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
 export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer";
 export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Metadata2/FeatureServer/0';
-export const DEV_METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_dev/FeatureServer/0';
 export const MONITORING_HE_GOAL_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/monitoringHEgoal/FeatureServer/0'
 export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsvcs/servers/aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0';
 export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer/0';
@@ -186,13 +178,6 @@ export const LAYERS_URLS = {
   [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/373ad88574cc403cb4707a5491b8a661/rest/services/Amphibians_Richness_55km/MapServer`,
   [FISHES_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/672fd2c2e15d43dba3c452ca600884a8/rest/services/Marine_Fish_Rarity_55km/MapServer`,
   [FISHES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/5212259d151744438c610d5104b91591/rest/services/Marine_Fish_Richness_55km/MapServer`,
-  [FISHES_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_marine_fish_prioritisation_TL/MapServer',
-  [MARINE_MAMMALS_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/marine_mammals_rich_55km/MapServer',
-  [MARINE_MAMMALS_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/marine_mammals_rar_55km/MapServer',
-  [MARINE_MAMMALS_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_marine_mammals_prioritisation_TL/MapServer',
-  [ALL_MARINE_VERTEBRATES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_marine_mammals_and_fish/MapServer',
-  [ALL_MARINE_VERTEBRATES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_marine_mammals_and_fish/MapServer',
-  [ALL_MARINE_VERTEBRATES_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_marine_fish_and_mammals_prioritisation_TL/MapServer',
   [SPECIES_LIST]:
     'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer'
 };

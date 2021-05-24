@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/layers-config';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import ProtectedAreasLayers from 'components/protected-areas-layers';
 import styles from './protected-areas-sidebar-card-styles.module.scss'

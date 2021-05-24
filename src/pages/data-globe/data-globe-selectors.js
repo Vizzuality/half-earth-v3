@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
-import { LAYERS_CATEGORIES } from 'constants/layers-config';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
 import countrySceneConfig from 'scenes/country-scene/country-scene-config';

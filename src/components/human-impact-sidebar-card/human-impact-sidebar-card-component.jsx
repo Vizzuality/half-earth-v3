@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/layers-config';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import HumanImpactLayers from 'components/human-impact-layers';
 import styles from './human-impact-sidebar-card-styles.module.scss'

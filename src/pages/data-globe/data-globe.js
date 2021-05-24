@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { layersConfig } from 'constants/layers-config';
+import { layersConfig } from 'constants/mol-layers-configs';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import mapStateToProps from './data-globe-selectors';
 import DataGlobeComponent from './data-globe-component.jsx';
