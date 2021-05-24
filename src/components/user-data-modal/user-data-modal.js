@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getConfig, setConfig } from 'utils/user-config-utils';
 import { createUserEntry, updateUserEntry } from 'services/airtable.js';
 import Component from './user-data-modal-component';
 import { STEP_2 } from 'constants/user-modal-constants';
@@ -7,17 +8,18 @@ const UserDataModalContainer = () => {
   const [isModalOpen, setModalOpen] = useState(true);
   const [requiredFieldsWarning, setRequiredFieldsWarning] = useState(false);
 
+
   useEffect(() => {
-    const doesModalKeyExists = localStorage.getItem('user-data-modal');
-    if (doesModalKeyExists === null) {
-      localStorage.setItem('user-data-modal', 'true')
-    } else if (doesModalKeyExists === 'false') {
+    const userConfig = getConfig();
+    if (!userConfig.showUserResearchModal) {
+      // close modal in case the usermodal has been seen before
       setModalOpen(false);
     }
   }, [])
 
   const handleModalClose = () => {
-    localStorage.setItem('user-data-modal', 'false')
+    const userConfig = getConfig();
+    setConfig(userConfig, {showUserResearchModal: false})
     setModalOpen(false);
   }
 
