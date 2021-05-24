@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Constants
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { LAYERS_CATEGORIES } from 'constants/layers-config';
 import { humanPressuresLandUse, humanPressuresMarine } from 'constants/human-pressures';
 // Utils
 import { layerManagerToggle } from 'utils/layer-manager-utils';

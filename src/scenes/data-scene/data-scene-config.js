@@ -7,7 +7,7 @@ import {
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/layers-config'
 
 export default {
   globe: {
