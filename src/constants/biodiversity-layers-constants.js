@@ -515,7 +515,7 @@ export const legendConfigs = {
   },
   [ALL_MARINE_VERTEBRATES_PRIORITY]: {
     ...defaultGradientConfig,
-    title: "Marine vertebrates priority"
+    title: "Global marine vertebrates priority"
   },
   [CONIFERS_RARITY]: {
     ...defaultGradientConfig,
