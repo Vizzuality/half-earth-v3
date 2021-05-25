@@ -8,7 +8,7 @@ import Component from './biodiversity-sidebar-card-component';
 import { LAYERS_CATEGORIES } from 'constants/layers-config';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 import mapStateToProps from './biodiversity-sidebar-card-selectors';
-import { biodiversityCategories } from 'constants/layers-config';
+import { biodiversityCategories } from 'constants/biodiversity-layers-constants';
 import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
 import { BIODIVERSITY_TABS_SLUGS } from 'constants/ui-params';
 const actions = {...metadataActions, ...urlActions};
