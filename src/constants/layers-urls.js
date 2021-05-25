@@ -106,7 +106,7 @@ export const LAYERS_URLS = {
   [FEATURED_PLACES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Bioplaces/FeatureServer',
   [MERGED_WDPA_VECTOR_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/merged_protection_wdpa_oecm_and_raisg/VectorTileServer',
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
   [PROTECTED_AREAS_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_areas_FL/FeatureServer',
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]:
