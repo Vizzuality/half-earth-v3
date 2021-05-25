@@ -47,6 +47,13 @@ import {
   AMPHIB_RICHNESS,
   FISHES_RARITY,
   FISHES_RICHNESS,
+  FISHES_PRIORITY,
+  MARINE_MAMMALS_RICHNESS,
+  MARINE_MAMMALS_RARITY,
+  MARINE_MAMMALS_PRIORITY,
+  ALL_MARINE_VERTEBRATES_RICHNESS,
+  ALL_MARINE_VERTEBRATES_RARITY,
+  ALL_MARINE_VERTEBRATES_PRIORITY,
   MAMMALS_PRIORITY,
   MAMMALS_RARITY,
   MAMMALS_RICHNESS,
@@ -69,14 +76,12 @@ import {
   PLEDGES_LAYER
 } from 'constants/layers-slugs'
 
-import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 const LAYER_TYPES = {
   FEATURE_LAYER: 'FeatureLayer',
   TILE_LAYER: 'TileLayer',
-  VECTOR_TILE_LAYER: 'VectorTileLayer',
-  IMAGERY_LAYER: 'ImageryLayer'
+  VECTOR_TILE_LAYER: 'VectorTileLayer'
 }
 
 export const DEFAULT_OPACITY = 0.6;
@@ -88,267 +93,6 @@ export const LAYERS_CATEGORIES = {
   LAND_PRESSURES: 'Human pressures'
 }
 
-export const biodiversityCategories = {
-  [LAYER_VARIANTS.PRIORITY]: [
-    {
-      name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'all groups',
-          name: 'All terrestrial vertebrates',
-          layer: ALL_TAXA_PRIORITY
-        },
-        {
-          value: 'amphibians',
-          name: 'amphibians',
-          layer: AMPHIB_PRIORITY
-        },
-        {
-          value: 'birds',
-          name: 'birds',
-          layer: BIRDS_PRIORITY
-        },
-        {
-          value: 'mammals',
-          name: 'mammals',
-          layer: MAMMALS_PRIORITY
-        },
-        {
-          value: 'reptiles',
-          name: 'reptiles',
-          layer:  REPTILES_PRIORITY
-        }
-      ]
-    }
-  ],
-  [LAYER_VARIANTS.RICHNESS]: [
-    {
-      name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'all groups',
-          name: 'all groups',
-          layer: ALL_TAXA_RICHNESS
-        },
-        {
-          value: 'amphibians',
-          name: 'amphibians',
-          layer: AMPHIB_RICHNESS
-        },
-        {
-          value: 'birds',
-          name: 'birds',
-          layer: BIRDS_RICHNESS
-        },
-        {
-          value: 'cacti',
-          name: 'cacti',
-          layer: CACTI_RICHNESS
-        },
-        {
-          value: 'conifers',
-          name: 'conifers',
-          layer: CONIFERS_RICHNESS
-        },
-        {
-          value: 'mammals',
-          name: 'mammals',
-          layer: MAMMALS_RICHNESS
-        },
-        {
-          value: 'reptiles',
-          name: 'reptiles',
-          layer: REPTILES_RICHNESS
-        }
-      ]
-    },
-    {
-      name: 'MARINE SPECIES',
-      description: 'Global, ~55 km cell size mapping of marine species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'fishes',
-          name: 'fishes',
-          layer: FISHES_RICHNESS
-        }
-      ]
-    },
-    {
-      name: 'FINE SCALE DATA',
-      description: 'Maps with 1km cell size for select species.',
-      subcategories: [
-        {
-          name: 'hummingbirds',
-          taxa: [
-            {
-              value: 'hummingbirds',
-              name: 'hummingbirds',
-              layer: HUMMINGBIRDS_RICHNESS
-            }
-          ]
-        },
-        {
-          name: 'south africa',
-          taxa: [
-            {
-              value: 'sa_amphibians',
-              name: 'amphibians',
-              layer: SA_AMPHIB_RICHNESS
-            },
-            {
-              value: 'sa_dragonflies',
-              name: 'dragonflies',
-              layer: SA_DRAGONFLIES_RICHNESS
-            },
-            {
-              value: 'sa_mammals',
-              name: 'mammals',
-              layer: SA_MAMMALS_RICHNESS
-            },
-            {
-              value: 'sa_birds',
-              name: 'birds',
-              layer: SA_BIRDS_RICHNESS
-            },
-            {
-              value: 'sa_restio',
-              name: 'restio',
-              layer: SA_RESTIO_RICHNESS
-            },
-            {
-              value: 'sa_protea',
-              name: 'protea',
-              layer: SA_PROTEA_RICHNESS
-            },
-            {
-              value: 'sa_reptiles',
-              name: 'reptiles',
-              layer: SA_REPTILES_RICHNESS
-            },
-
-          ]
-        }
-      ]
-    }
-  ],
-  [LAYER_VARIANTS.RARITY]: [
-    {
-      name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'all groups',
-          name: 'all groups',
-          layer: ALL_TAXA_RARITY
-        },
-        {
-          value: 'amphibians',
-          name: 'amphibians',
-          layer: AMPHIB_RARITY
-        },
-        {
-          value: 'birds',
-          name: 'birds',
-          layer: BIRDS_RARITY
-        },
-        {
-          value: 'cacti',
-          name: 'cacti',
-          layer: CACTI_RARITY
-        },
-        {
-          value: 'conifers',
-          name: 'conifers',
-          layer: CONIFERS_RARITY
-        },
-        {
-          value: 'mammals',
-          name: 'mammals',
-          layer: MAMMALS_RARITY
-        },
-        {
-          value: 'reptiles',
-          name: 'reptiles',
-          layer: REPTILES_RARITY
-        }
-      ]
-    },
-    {
-      name: 'MARINE SPECIES',
-      description: 'Global, ~55 km cell size mapping of marine species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'fishes',
-          name: 'fishes',
-          layer: FISHES_RARITY
-        }
-      ]
-    },
-    {
-      name: 'FINE SCALE DATA',
-      description: 'Maps with 1km cell size for select species.',
-      subcategories: [
-        {
-          name: 'hummingbirds',
-          taxa: [
-            {
-              value: 'hummingbirds',
-              name: 'hummingbirds',
-              layer: HUMMINGBIRDS_RARITY
-            }
-          ]
-        },
-        {
-          name: 'south africa',
-          taxa: [
-            {
-              value: 'sa_amphibians',
-              name: 'amphibians',
-              layer: SA_AMPHIB_RARITY
-            },
-            {
-              value: 'sa_dragonflies',
-              name: 'dragonflies',
-              layer: SA_DRAGONFLIES_RARITY
-            },
-            {
-              value: 'sa_mammals',
-              name: 'mammals',
-              layer: SA_MAMMALS_RARITY
-            },
-            {
-              value: 'sa_birds',
-              name: 'birds',
-              layer: SA_BIRDS_RARITY
-            },
-            {
-              value: 'sa_restio',
-              name: 'restio',
-              layer: SA_RESTIO_RARITY
-            },
-            {
-              value: 'sa_protea',
-              name: 'protea',
-              layer: SA_PROTEA_RARITY
-            },
-            {
-              value: 'sa_reptiles',
-              name: 'reptiles',
-              layer: SA_REPTILES_RARITY
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -697,6 +441,55 @@ export const layersConfig = {
     url: LAYERS_URLS[FISHES_RICHNESS],
     bbox: null
   },
+  [FISHES_PRIORITY]: {
+    title: FISHES_PRIORITY,
+    slug: FISHES_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[FISHES_PRIORITY],
+    bbox: null
+  },
+  [MARINE_MAMMALS_RICHNESS]: {
+    title: MARINE_MAMMALS_RICHNESS,
+    slug: MARINE_MAMMALS_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MARINE_MAMMALS_RICHNESS],
+    bbox: null
+  },
+  [MARINE_MAMMALS_RARITY]: {
+    title: MARINE_MAMMALS_RARITY,
+    slug: MARINE_MAMMALS_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MARINE_MAMMALS_RARITY],
+    bbox: null
+  },
+  [MARINE_MAMMALS_PRIORITY]: {
+    title: MARINE_MAMMALS_PRIORITY,
+    slug: MARINE_MAMMALS_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MARINE_MAMMALS_PRIORITY],
+    bbox: null
+  },
+  [ALL_MARINE_VERTEBRATES_RICHNESS]: {
+    title: ALL_MARINE_VERTEBRATES_RICHNESS,
+    slug: ALL_MARINE_VERTEBRATES_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_MARINE_VERTEBRATES_RICHNESS],
+    bbox: null
+  },
+  [ALL_MARINE_VERTEBRATES_RARITY]: {
+    title: ALL_MARINE_VERTEBRATES_RARITY,
+    slug: ALL_MARINE_VERTEBRATES_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_MARINE_VERTEBRATES_RARITY],
+    bbox: null
+  },
+  [ALL_MARINE_VERTEBRATES_PRIORITY]: {
+    title: ALL_MARINE_VERTEBRATES_PRIORITY,
+    slug: ALL_MARINE_VERTEBRATES_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_MARINE_VERTEBRATES_PRIORITY],
+    bbox: null
+  },
   [AMPHIB_PRIORITY]: {
     title: AMPHIB_PRIORITY,
     slug: AMPHIB_PRIORITY,
@@ -830,278 +623,4 @@ export const layersConfig = {
     url: LAYERS_URLS[CONIFERS_RICHNESS],
     bbox: null
   },
-}
-
-const getLegendGradient = (gradientSteps, lowValue, highValue) => {
-  const stepsLength = gradientSteps.length;
-  return gradientSteps.map((color, stepIndex) => ({
-    color,
-    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
-  }))
-}
-
-const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
-  if (stepIndex === 0) {
-    return lowValue;
-  } else if (stepIndex === stepsLength -1) {
-    return highValue;
-  } else {
-    return '';
-  }
-}
-
-export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
-  '#0664F6',
-  '#2172DB',
-  '#3D80BF',
-  '#588EA4',
-  '#749C89',
-  '#8FAB6D',
-  '#ABB952',
-  '#C6C737',
-  '#E2D51B',
-  "#FDE300"
-]
-export const PRIORITY_PLACES_COLOUR_RAMP = [
-  '#47039F',
-  '#9C179E',
-  '#BD3786',
-  '#D8576B',
-  '#ED7953',
-  '#FA9E3B',
-  '#FDC926',
-  '#F0F921'
-]
-
-export const legendConfigs = {
-  // South Africa
-  [SA_AMPHIB_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian regional rarity"
-  },
-  [SA_AMPHIB_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian regional richness"
-  },
-  [SA_DRAGONFLIES_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Dragonflies rarity"
-  },
-  [SA_DRAGONFLIES_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Dragonflies richness"
-  },
-  [SA_MAMMALS_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals regional rarity"
-  },
-  [SA_MAMMALS_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals regional richness"
-  },
-  [SA_BIRDS_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds regional rarity"
-  },
-  [SA_BIRDS_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds regional richness"
-  },
-  [SA_RESTIO_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Restio regional rarity"
-  },
-  [SA_RESTIO_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Restio regional richness"
-  },
-  [SA_PROTEA_RARITY]: {
-    type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
-    title: "Protea regional rarity"
-  },
-  [SA_PROTEA_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Protea regional richness"
-  },
-  [SA_REPTILES_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptiles regional rarity"
-  },
-  [SA_REPTILES_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptiles regional richness"
-  },
-  // Hummingbirds
-  [HUMMINGBIRDS_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Hummingbirds richness"
-  },
-  [HUMMINGBIRDS_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Hummingbirds rarity"
-  },
-  // Global data
-  [MAMMALS_PRIORITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Mammals priority"
-  },
-  [MAMMALS_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals rarity"
-  },
-  [MAMMALS_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals richness"
-  },
-  [FISHES_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Fishes rarity"
-  },
-  [FISHES_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Fishes richness"
-  },
-  [CONIFERS_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Conifers rarity"
-  },
-  [CONIFERS_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Conifers richness"
-  },
-  [CACTI_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Cacti rarity"
-  },
-  [CACTI_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Cacti richness"
-  },
-  [AMPHIB_PRIORITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Amphibian priority"
-  },
-  [AMPHIB_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian rarity"
-  },
-  [AMPHIB_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian richness"
-  },
-  [REPTILES_PRIORITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Reptile priority"
-  },
-  [REPTILES_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptile richness"
-  },
-  [REPTILES_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptile rarity"
-  },
-  [BIRDS_PRIORITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Birds priority"
-  },
-  [BIRDS_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds rarity"
-  },
-  [BIRDS_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds richness"
-  },
-  [ALL_TAXA_PRIORITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global terrestrial vertebrate priority"
-  },
-  [ALL_TAXA_RARITY]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "All groups rarity"
-  },
-  [ALL_TAXA_RICHNESS]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "All groups richness"
-  },
-  [COUNTRY_PRIORITY_LAYER]: {
-    type: "gradient",
-    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low priority', 'high priority'),
-    title: "Protection needed"
-  }
 }
