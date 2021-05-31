@@ -1,3 +1,8 @@
+---
+layout: default
+title: Release cycles & versioning
+---
+
 _Target readers_: 👩🏽‍💻 | 🌍
 _What you'll get from this page_: 
 

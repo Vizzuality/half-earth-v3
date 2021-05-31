@@ -1,3 +1,9 @@
+---
+layout: default
+title: Layers update flow
+parent: Working with layers
+---
+
 _Target readers_: 👩🏽‍💻 
 _What you'll get from this page_: 
 
