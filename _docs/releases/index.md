@@ -2,7 +2,7 @@
 layout: default
 title: Release cycles & versioning
 nav_order: 2
-permalink: /changelog
+permalink: /_docs/changelog
 ---
 
 _Target readers_  👩🏽‍💻  🌍  
