@@ -54,6 +54,7 @@
     "build-service-worker": "node ./src/service-worker-build.js",
     "build": "react-app-rewired build && npm run build-service-worker && npm run clean-cra-sw",
     "cypress:open": "cypress open",
+    "docs": "bundle exec jekyll serve",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
