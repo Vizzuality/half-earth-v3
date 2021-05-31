@@ -1,7 +1,7 @@
 title: "Half-Earth map documentation"
 # theme: just-the-docs
 remote_theme: pmarsceill/just-the-docs
-url: "https://vizzuality.github.io/half-earth-v3/" # the base hostname & protocol for your site, e.g. http://example.com
+# url: "https://vizzuality.github.io/half-earth-v3/" # the base hostname & protocol for your site, e.g. http://example.com
 color_scheme: light
 # Aux links for the upper right navigation
 aux_links:
