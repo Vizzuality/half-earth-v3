@@ -1,7 +1,7 @@
 title: "Half-Earth map documentation"
 # theme: just-the-docs
 remote_theme: pmarsceill/just-the-docs
-# color_scheme: dark
+color_scheme: light
 # Aux links for the upper right navigation
 aux_links:
   "Production site":
@@ -25,3 +25,22 @@ gh_edit_branch: "develop" # the branch that your docs is served from
 gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately
 
 
+collections:
+  # Define a collection named "docs", its documents reside in the "_docs" directory
+  docs:
+    permalink: "/:collection/:path/"
+    output: true
+
+just_the_docs:
+  # Define which collections are used in just-the-docs
+  collections:
+    # Reference the "docs" collection
+    docs:
+      # Give the collection a name
+      name: Documentation
+      # Exclude the collection from the navigation
+      # Supports true or false (default)
+      nav_exclude: false
+      # Exclude the collection from the search
+      # Supports true or false (default)
+      search_exclude: false
