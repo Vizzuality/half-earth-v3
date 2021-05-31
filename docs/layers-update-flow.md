@@ -1,3 +1,6 @@
+_Target readers_: 👩🏽‍💻 
+_What you'll get from this page_: 
+
 # Layers update flow.
 
 Adding layers to the project is just a matter of following some steps to create the proper entry in the `layersConfig` object. This config will be consumed by the code that will take care of creating and adding the layers to the globe (that is the `createLayer` and `addLayerToMap` functions on `utils/layer-manager-utils`).  
