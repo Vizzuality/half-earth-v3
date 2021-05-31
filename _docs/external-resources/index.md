@@ -2,7 +2,7 @@
 layout: default
 title: Useful Resources
 nav_order: 4
-permalink: /resources
+permalink: /_docs/resources
 ---
 
 
