@@ -1,10 +1,14 @@
 ---
 layout: default
 title: Release cycles & versioning
+nav_order: 2
+permalink: /changelog
 ---
 
-_Target readers_: 👩🏽‍💻 | 🌍
-_What you'll get from this page_: 
+_Target readers_  👩🏽‍💻  🌍  
+
+
+[Current release](https://github.com/Vizzuality/half-earth-v3/releases){: .btn .btn-outline}
 
 # Releases and changelog
  What we want to accomplish through releases and changelog (share the state of the project with stake holders, allow dev to have )
