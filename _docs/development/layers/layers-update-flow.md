@@ -1,7 +1,10 @@
 ---
 layout: default
-title: Layers update flow
+title: Add/update layers
 parent: Working with layers
+grand_parent: Developers
+nav_order: 1
+permalink: /_docs/dev/layers/add-update
 ---
 
 _Target readers_: 👩🏽‍💻 

@@ -1,8 +1,11 @@
 ---
 layout: default
 title: Working with layers
-nav_order: 3
+parent: Developers
 has_children: true
 has_toc: true
-permalink: /_docs/layers
+nav_order: 2
+permalink: /_docs/dev/layers
 ---
+
+layers intro

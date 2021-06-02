@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Release cycles & versioning
-nav_order: 2
-permalink: /_docs/changelog
+parent: Stakeholders
+permalink: /_docs/general/changelog
 ---
 
 _Target readers_  👩🏽‍💻  🌍  
