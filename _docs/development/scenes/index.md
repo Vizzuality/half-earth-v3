@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Scenes
-parent: Developers
+parent: Developers 👩🏽‍💻
 has_children: true
 has_toc: true
 permalink: /_docs/dev/scenes
