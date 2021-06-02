@@ -2,7 +2,7 @@
 layout: default
 title: Add/update layers
 parent: Working with layers
-grand_parent: Developers
+grand_parent: Developers 👩🏽‍💻
 nav_order: 1
 permalink: /_docs/dev/layers/add-update
 ---

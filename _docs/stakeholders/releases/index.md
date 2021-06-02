@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Release cycles & versioning
-parent: Stakeholders
+parent: Stakeholders 🌍
 permalink: /_docs/general/changelog
 ---
 

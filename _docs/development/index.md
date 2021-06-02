@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Developers
+title: Developers 👩🏽‍💻
 has_children: true
 has_toc: true
 permalink: /_docs/dev
