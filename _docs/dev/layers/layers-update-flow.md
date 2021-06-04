@@ -7,9 +7,6 @@ nav_order: 1
 permalink: /_docs/dev/layers/add-update
 ---
 
-_Target readers_: 👩🏽‍💻 
-_What you'll get from this page_: 
-
 # Layers update flow.
 
 Adding layers to the project is just a matter of following some steps to create the proper entry in the `layersConfig` object. This config will be consumed by the code that will take care of creating and adding the layers to the globe (that is the `createLayer` and `addLayerToMap` functions on `utils/layer-manager-utils`).  
@@ -32,7 +29,7 @@ Lets explain the steps with an example on how we would add a layer with fishes p
     }
     ```
 - First of all we need to know if the type of layer we want to add is already present on the `LAYER_TYPES` constant on the `constants/layers-config` file.  
-Find [in this link](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html) the list of the available layer types on the ArcGIS js API.  
+Find [in this link](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html){:target="_blank"} the list of the available layer types on the ArcGIS js API.  
 These are the layer types we are currently using in the platform:
     ```js
     const LAYER_TYPES = {
