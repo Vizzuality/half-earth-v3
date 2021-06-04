@@ -129,8 +129,6 @@ const ScatterPlot = ({
                       fill={bubble.color}
                       />
                   }
-                  </AnimatePresence>
-                  <AnimatePresence>
                     <motion.circle
                       key={bubble.iso}
                       transition={animationTransitionConfig}
@@ -143,46 +141,41 @@ const ScatterPlot = ({
                       stroke="#040E14"
                     />
                   </AnimatePresence>
-                  <AnimatePresence>
-                    <motion.foreignObject
-                      width={bubble.size * 2}
-                      height={bubble.size * 2}
-                      key={bubble.iso}
-                      transition={animationTransitionConfig}
-                      initial={{x: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) - bubble.size}}
-                      animate={{ x: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) - bubble.size }}
-                      exit={{ x: 0 }}
-                      y={chartScale.yScale(bubble.yAxisValue) - bubble.size}
-                      requiredExtensions="http://www.w3.org/1999/xhtml"
-                      onMouseEnter={(e) => {
-                        setTooltipState({
-                          x:getX(e, chartSurfaceRef),
-                          y:getY(e, chartSurfaceRef),
-                          name: bubble.name,
-                          continent: bubble.continent,
-                          color: bubble.color
-                        })
-                        setTickLine(bubble.iso);
-                        setXAxisValue(bubble.xAxisValues[countryChallengesSelectedKey]);
-                        setYAxisValue(bubble.yAxisValue);
-                      }
-                      }
-                      onMouseLeave={() => {
-                        setTooltipState(null);
-                        setTickLine(null);
-                        setXAxisValue(null);
-                        setYAxisValue(null);
-                      }}
-                    >
-                      <div className={styles.bubbleTextContainer}>
-                        <span
-                          className={styles.bubbleText}
-                        >
-                          {bubble.iso}
-                        </span>
-                      </div>
-                    </motion.foreignObject>
-                  </AnimatePresence>
+                  <foreignObject
+                    width={bubble.size * 2}
+                    height={bubble.size * 2}
+                    key={bubble.iso}
+                    y={chartScale.yScale(bubble.yAxisValue) - bubble.size}
+                    x={chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) - bubble.size}
+                    requiredExtensions="http://www.w3.org/1999/xhtml"
+                    onMouseEnter={(e) => {
+                      setTooltipState({
+                        x:getX(e, chartSurfaceRef),
+                        y:getY(e, chartSurfaceRef),
+                        name: bubble.name,
+                        continent: bubble.continent,
+                        color: bubble.color
+                      })
+                      setTickLine(bubble.iso);
+                      setXAxisValue(bubble.xAxisValues[countryChallengesSelectedKey]);
+                      setYAxisValue(bubble.yAxisValue);
+                    }
+                    }
+                    onMouseLeave={() => {
+                      setTooltipState(null);
+                      setTickLine(null);
+                      setXAxisValue(null);
+                      setYAxisValue(null);
+                    }}
+                  >
+                    <div className={styles.bubbleTextContainer}>
+                      <span
+                        className={styles.bubbleText}
+                      >
+                        {bubble.iso}
+                      </span>
+                    </div>
+                  </foreignObject>
                 </g>
               ))}
           </svg>
