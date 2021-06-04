@@ -45,5 +45,5 @@ The map provides an interactive summary of progress toward Half-Earth goal, offe
 
 If you are a technician and want to jump start into contributting to the repo go ahead and head to the README of the project, where you'll find instructions to get started.  
 
-[README 👩🏽‍💻](https://github.com/Vizzuality/half-earth-v3/blob/master/README.md){: .btn .btn-outline } 
+[README 👩🏽‍💻](https://github.com/Vizzuality/half-earth-v3/blob/master/README.md){:target="_blank" .btn .btn-outline }
 
