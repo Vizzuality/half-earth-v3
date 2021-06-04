@@ -8,6 +8,9 @@
 # production
 /build
 
+# local jekyll docs
+/_site
+
 # misc
 .DS_Store
 .env.local
