@@ -2,7 +2,7 @@ import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import intersection from 'lodash/intersection';
 import { loadModules } from 'esri-loader';
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/layers-config';
 
 // Toggles all the layers passed as ids on the first parameter
 export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, category) => {

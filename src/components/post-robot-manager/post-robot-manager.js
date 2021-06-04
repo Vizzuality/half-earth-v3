@@ -8,7 +8,7 @@ import {
 } from 'utils/layer-manager-utils';
 import {
   layersConfig
-} from 'constants/mol-layers-configs';
+} from 'constants/layers-config';
 
 const PostRobotManagerContainer = ({ map, view, activeLayers, listeners, handlePostRobotUpdates }) => {
 

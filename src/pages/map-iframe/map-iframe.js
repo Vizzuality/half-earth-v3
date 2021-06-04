@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { layersConfig } from 'constants/mol-layers-configs';
+import { layersConfig } from 'constants/layers-config';
 import { createLayer, addLayerToMap, setBasemap } from 'utils/layer-manager-utils';
 import {
   FIREFLY_BASEMAP_LAYER,
