@@ -8,6 +8,9 @@
 # production
 /build
 
+# local jekyll docs
+/_site
+
 # misc
 .DS_Store
 .env.local
@@ -19,3 +22,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/_site
