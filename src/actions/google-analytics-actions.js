@@ -3,12 +3,8 @@ import { createAction } from 'redux-tools';
 import { CATEGORIES, ACTIONS } from 'constants/google-analytics-constants';
 const createGtagEventStructure = (category, action, label = null) => ({ analytics: { category, action, label }})
 
-export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug }) => {
-  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.ADD_LAYER, slug)
-});
-
-export const removeLayerAnalyticsEvent = createAction('removeLayer', null, ({ slug }) => {
-  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.REMOVE_LAYER, slug)
+export const layerToggleAnalyticsEvent = createAction('removeLayer', null, ({ slug }) => {
+  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.TOGGLE_LAYER, slug)
 });
 
 export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', null, ({ slug }) => {
@@ -85,8 +81,7 @@ export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null,
 
 
 export default {
-  addLayerAnalyticsEvent,
-  removeLayerAnalyticsEvent,
+  layerToggleAnalyticsEvent,
   changeLayerOpacityAnalyticsEvent,
   openInfoModalAnalyticsEvent,
   openHalfEarthMeterAnalyticsEvent,
