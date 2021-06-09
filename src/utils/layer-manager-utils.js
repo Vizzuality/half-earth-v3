@@ -1,7 +1,6 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import intersection from 'lodash/intersection';
 import { loadModules } from 'esri-loader';
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
 
 // Toggles all the layers passed as ids on the first parameter
@@ -14,15 +13,11 @@ export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, cate
   if (layersToRemove.length) {
     updatedLayers = activeLayers.filter((layer) => {
       const hasToBeRemoved = layersToRemove.includes(layer.title);
-      if (hasToBeRemoved) {
-        removeLayerAnalyticsEvent({ slug: layer.title });
-      }
       return !hasToBeRemoved;
     });
   }
   if (layersToAdd.length) {
     const updatedLayersToAdd = layersToAdd.map(title => {
-      addLayerAnalyticsEvent({ slug: title });
       return { title, category, opacity: DEFAULT_OPACITY }
     });
     updatedLayers = updatedLayers.concat(updatedLayersToAdd)
@@ -37,16 +32,13 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });
-    removeLayerAnalyticsEvent({ slug: title });
   } else if (category === LAYERS_CATEGORIES.LAND_PRESSURES) {
     const groupLayer = activeLayers.find(l => l.category === LAYERS_CATEGORIES.LAND_PRESSURES);
     const groupOpacity = groupLayer && groupLayer.opacity;
-    addLayerAnalyticsEvent({ slug: title })
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: groupOpacity || DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { title, category, opacity: groupOpacity || DEFAULT_OPACITY }] });
   } else {
-    addLayerAnalyticsEvent({ slug: title });
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
       : callback({ activeLayers: [ { title, category, opacity: DEFAULT_OPACITY }] });
@@ -59,7 +51,6 @@ export const addLayerToActiveLayers =  (
   callback,
   category
 ) => {
-  addLayerAnalyticsEvent({ slug });
   const newActiveLayer = [{ title: slug, opacity: DEFAULT_OPACITY, category }];
   callback({
     activeLayers: activeLayers
@@ -75,8 +66,6 @@ export const replaceLayerFromActiveLayers = (
   callback,
   category
 ) => {
-  addLayerAnalyticsEvent({ slug: slugToAdd });
-  removeLayerAnalyticsEvent({ slug: slugToRemove });
   const filteredLayers = activeLayers.filter((layer) => layer.title !== slugToRemove);
   return callback({
     activeLayers: [
