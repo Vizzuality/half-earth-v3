@@ -33,6 +33,7 @@ export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, cate
 export const layerManagerToggle = (layerTitle, activeLayers, callback, category) => {
   const title = layerTitle;
   const isActive = activeLayers && activeLayers.some(l => l.title === title);
+  console.log(title)
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
     callback({activeLayers: updatedLayers });

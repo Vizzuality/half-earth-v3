@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from 'actions/url-actions';
 import { useSearchWidgetLogic } from 'hooks/esri';
-import { openPlacesSearchAnalyticsEvent, searchTermsAnalyticsEvent } from 'actions/google-analytics-actions';
+import { searchTermsAnalyticsEvent } from 'actions/google-analytics-actions';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 // icons
@@ -18,7 +18,6 @@ const MenuFooterContainer = props => {
   const { view, isSidebarOpen, isLandscapeMode, activeOption, selectedSidebar, selectedFeaturedMap, featured = false } = props;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
-    openPlacesSearchAnalyticsEvent,
     searchTermsAnalyticsEvent
   );
 

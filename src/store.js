@@ -5,7 +5,7 @@ import { all } from 'redux-saga/effects';
 import router from './router';
 import reducerRegistry from './reducerRegistry';
 import sagaRegistry from './sagaRegistry';
-import { middleware as analyticsMiddleware } from 'providers/analytics';
+import { middleware as analyticsMiddleware } from 'store-middleware/analytics';
 
 const sagaMiddleware = createSagaMiddleware();
 

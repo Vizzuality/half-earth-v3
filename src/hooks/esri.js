@@ -27,7 +27,7 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
   return layer;
 }
 
-export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searchTermsAnalyticsEvent, searchWidgetConfig) => {
+export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget ] = useState(null);
   const { searchSources, postSearchCallback} = searchWidgetConfig || {};
   const keyEscapeEventListener = (evt) => {
@@ -53,7 +53,6 @@ export const useSearchWidgetLogic = (view, openPlacesSearchAnalyticsEvent, searc
           includeDefaultSources: false
         });
         setSearchWidget(sWidget);
-        openPlacesSearchAnalyticsEvent();
       }).catch((err) => console.error(err));
     }
   };
