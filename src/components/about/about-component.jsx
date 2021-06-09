@@ -7,7 +7,7 @@ import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import PartnersComponent from './partners/partners';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
 import { openAboutPageAnalyticsEvent } from 'actions/google-analytics-actions';
-import { ABOUT_TABS } from 'constants/google-analytics-constants';
+import { ABOUT_TABS } from 'constants/ui-params';
 
 import styles from './about-styles.module.scss';
 

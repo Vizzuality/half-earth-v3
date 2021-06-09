@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import { capitalize } from 'lodash';
 import Component from './radio-group-component';
 import metadataActions from 'redux_modules/metadata';
-import { openLayerInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
+import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = { ...metadataActions, openLayerInfoModalAnalyticsEvent };
+const actions = { ...metadataActions, openInfoModalAnalyticsEvent };
 
 const RadioGroupContainer = props => {
   const { activeLayers, options } = props;
   const handleInfoClick = (layer, variant) => {
-    const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
+    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
     setModalMetadata({
       slug: `${layer.layer}`,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug: `${layer.layer}` });
+    openInfoModalAnalyticsEvent({ slug: `${layer.layer}` });
   };
 
   const activeLayersIds = activeLayers.map((l) => l.title);

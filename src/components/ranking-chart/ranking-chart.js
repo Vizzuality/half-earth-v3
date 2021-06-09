@@ -5,9 +5,8 @@ import mapStateToProps from './ranking-chart-selectors';
 import useDebounce from 'hooks/use-debounce';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions };
 
 const RankingChartContainer = (props) => {
   const { data } = props;
