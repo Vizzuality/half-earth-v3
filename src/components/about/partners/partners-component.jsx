@@ -6,7 +6,7 @@ import styles from './partners-styles.module.scss';
 
 const Logo = ({ href, image, label }) => (
   label ? (
-    <span>{label}</span>
+    <span >{label}</span>
   ) : (
     <a
       href={href}
@@ -24,10 +24,11 @@ const PartnersComponent = ({ sections }) => (
       <div className={cx(styles.section, theme)} key={`${title}-section`}>
         <h1 className={styles.title} key={title}>{title}</h1>
         <div className={styles.logosWrapper} key={`${title}-content`}>
-          {content && content.map(logo => <Logo key={logo.href} {...logo} />)}
+          {content && content.map(logo => <Logo {...logo} key={logo.label || logo.href}/>)}
         </div>
         {description && description.map(paragraph => (
           <ReactMarkdown
+            key={paragraph}
             className={styles.description}
             source={paragraph}
             escapeHtml={false}
