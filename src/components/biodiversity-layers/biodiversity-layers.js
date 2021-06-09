@@ -9,9 +9,9 @@ import {
 import * as urlActions from 'actions/url-actions';
 
 import Component from './biodiversity-layers-component';
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { layerToggleAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = { addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActions }
+const actions = { layerToggleAnalyticsEvent, ...urlActions }
 
 const BiodiversityLayerContainer = props => {
   const flyToLayerExtent = bbox => {
@@ -33,7 +33,7 @@ const BiodiversityLayerContainer = props => {
 
   const handleSimpleLayerToggle = (layerName, isSelected) => {
     const {
-      removeLayerAnalyticsEvent,
+      layerToggleAnalyticsEvent,
       activeLayers,
       changeGlobe,
       activeCategory = LAYERS_CATEGORIES.BIODIVERSITY
@@ -41,7 +41,7 @@ const BiodiversityLayerContainer = props => {
     const layer = layersConfig[layerName];
     if (layer) {
       layerManagerToggle(layer.slug, activeLayers, changeGlobe, activeCategory);
-      removeLayerAnalyticsEvent({ slug: layer.slug });
+      layerToggleAnalyticsEvent({ slug: layer.slug });
 
       if (!isSelected) {
         layer.bbox && flyToLayerExtent(layer.bbox);
@@ -50,9 +50,10 @@ const BiodiversityLayerContainer = props => {
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
-    const { activeLayers, changeGlobe } = props;
+    const { activeLayers, changeGlobe, layerToggleAnalyticsEvent } = props;
     const layer = layersConfig[layerToAdd];
     const removeLayer = layersConfig[layerToRemove];
+    layerToggleAnalyticsEvent({ slug: layer.slug });
     if (layer && removeLayer) {
       replaceLayerFromActiveLayers(
         removeLayer.slug,

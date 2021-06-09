@@ -5,12 +5,12 @@ import metadataActions from 'redux_modules/metadata';
 import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchToggleLayers, batchSetLayerManagerOpacity, getActiveLayersFromLayerGroup } from 'utils/layer-manager-utils';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
-import { changeLayerOpacityAnalyticsEvent, openInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
+import { changeLayerOpacityAnalyticsEvent, openInfoModalAnalyticsEvent, layerToggleAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 import Component from './legend-component';
 import mapStateToProps from './legend-selectors';
 
-const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openInfoModalAnalyticsEvent, layerToggleAnalyticsEvent, changeLayersOrderAnalyticsEvent };
 
 const LegendContainer = props => {
 
@@ -30,13 +30,13 @@ const LegendContainer = props => {
   }
 
   const handleRemoveLayer = (layer) => {
-    const { activeLayers, removeLayerAnalyticsEvent, changeGlobe } = props;
+    const { activeLayers, layerToggleAnalyticsEvent, changeGlobe } = props;
     if (layer.legendConfig.groupedLayer) {
       const activeGroupedLayers = getActiveLayersFromLayerGroup(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], activeLayers);
       batchToggleLayers(activeGroupedLayers, activeLayers, changeGlobe);
     } else {
       layerManagerVisibility(layer.title, false, activeLayers, changeGlobe);
-      removeLayerAnalyticsEvent({ slug: getSlug(layer) });
+      layerToggleAnalyticsEvent({ slug: getSlug(layer) });
     }
   }
 
