@@ -13,7 +13,7 @@ const BACK = 'BACK';
 
 const differentFixedHeaderHeights = ['Existing protection', 'Human pressures'];
 
-const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions, selectableTitle, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
+const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
   const [titleDropdownOpen, setTitleDropdownOpen] = useState(false)
