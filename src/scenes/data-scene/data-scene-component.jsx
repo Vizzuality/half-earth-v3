@@ -15,7 +15,6 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
 import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
-import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
@@ -128,7 +127,6 @@ const CountrySceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           openedModal={openedModal}
         />
-        <TerrainExaggerationLayer exaggeration={3} />
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
