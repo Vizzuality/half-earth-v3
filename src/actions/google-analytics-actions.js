@@ -1,128 +1,91 @@
 
 import { createAction } from 'redux-tools';
-import { VIEW_MODE, OTHER_CATEGORIES } from 'constants/google-analytics-constants';
+import { CATEGORIES, ACTIONS } from 'constants/google-analytics-constants';
+const createGtagEventStructure = (category, action, label = null) => ({ analytics: { category, action, label }})
 
-export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug, query }) => {
-  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
-  return { analytics: [ viewMode, 'Add layer', `${slug}` ] };
+export const layerToggleAnalyticsEvent = createAction('removeLayer', null, ({ slug }) => {
+  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.TOGGLE_LAYER, slug)
 });
 
-export const removeLayerAnalyticsEvent = createAction('removeLayer', null, ({ slug, query }) => {
-  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
-  return { analytics: [ viewMode, 'Remove layer', `${slug}` ] };
+export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', null, ({ slug }) => {
+  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.CHANGE_OPACITY, slug)
 });
 
-export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', null, ({ slug, query }) => {
-  const opacity = query && query.opacity;
-  return { analytics: [ VIEW_MODE.LEGEND, 'Change layer opacity', `${slug}`, opacity ] };
-});
-
-export const openLayerInfoModalAnalyticsEvent = createAction('openLayerInfoModal', null, ({ slug, query }) => {
-  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
-  return { analytics: [ viewMode, 'Open layer info modal', `${slug}`] };
+export const openInfoModalAnalyticsEvent = createAction('openLayerInfoModal', null, ({ slug }) => {
+  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.OPEN_INFO, slug)
 });
 
 export const openHalfEarthMeterAnalyticsEvent = createAction('openHalfEarthMeter', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Open half earth meter'] };
+  return createGtagEventStructure(CATEGORIES.PROJECT_INFO, ACTIONS.OPEN_HALFEARTH_METER)
 });
 
 export const openAboutPageAnalyticsEvent = createAction('openAboutPage', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Open about page'] };
+  return createGtagEventStructure(CATEGORIES.PROJECT_INFO, ACTIONS.CONSULT_ABOUT_PAGE)
 });
 
-export const clickFindMyPositionAnalyticsEvent = createAction('findMyPosition', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Find my position'] };
-});
-
-export const toggleFullScreenAnalyticsEvent = createAction('enableFullScreen', null, ({ isFullscreenActive }) => {
-  const fullscreenState = isFullscreenActive ? 'enabled' : 'disabled';
-  return { analytics: [ VIEW_MODE.GLOBE, 'Toggle fullscreen mode', fullscreenState] };
-});
-
-export const settingsAnalyticsEvent = createAction('changeLayers', null, ({ notDisplayedLayers }) => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Change layers (Not displayed layers)', notDisplayedLayers] };
-});
-
-export const switchAboutPageTabAnalyticsEvent = createAction('switchAboutPageTab', null, ({ activeTab }) => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Change an active tab in About page', activeTab] };
-});
-
-export const openPlacesSearchAnalyticsEvent = createAction('openPlacesSearch', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Open Find places search modal' ] };
+export const settingsAnalyticsEvent = createAction('updateMapSettings', null, ({ notDisplayedLayers }) => {
+  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.UPDATE_SETTINGS, notDisplayedLayers)
 });
 
 export const enterLandscapeModeAnalyticsEvent = createAction('enterLandscapeMode', null, () => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Enter landscape mode' ] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.ENTER_LANDSCAPE)
 });
 
 export const changeLayersOrderAnalyticsEvent = createAction('changeLayersOrder', null, () => {
-  return { analytics: [ VIEW_MODE.LEGEND, 'Change layers order' ] };
+  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.CHANGE_ORDER)
 });
 
 export const helpCompleteDatabaseAnalyticsEvent = createAction('helpCompleteDatabase', null, () => {
-  return { analytics: [ VIEW_MODE.LANDSCAPE, 'Help to complete database' ] };
+  return createGtagEventStructure(CATEGORIES.FOLLOW_UP_ACTIONS, ACTIONS.CONTRIBUTE_DATA)
 });
 
 export const openShareModalAnalyticsEvent = createAction('openShareModal', null, (viewMode) => {
-  return { analytics: [ viewMode || VIEW_MODE.GLOBE, 'Open share modal',  ] };
+  return createGtagEventStructure(CATEGORIES.FOLLOW_UP_ACTIONS, ACTIONS.SHARE_MAP, viewMode)
 });
 
 // Country related actions on Globe
 export const exploreCountryFromTooltipAnalyticsEvent = createAction('exploreCountryFromTooltip', null, ({ countryName }) => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Use explore button to visit country', countryName ] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.ENTER_COUNTRY_FROM_TOOLTIP, countryName)
 });
 
 export const exploreCountryFromSearchAnalyticsEvent = createAction('exploreCountryFromSearch', null, ({ countryName }) => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Use search to visit country', countryName ] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.ENTER_COUNTRY_FROM_SEARCH, countryName)
 });
 
 export const searchTermsAnalyticsEvent = createAction('searchTermsAnalyticsEvent', null, (searchTerm) => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Search a location from find places', searchTerm ] };
-});
-
-export const clickOnCountryAnalyticsEvent = createAction('clickOnCountry', null, ({ countryName }) => {
-  return { analytics: [ VIEW_MODE.GLOBE, 'Click on a country on the globe', countryName ] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.FIND_PLACES_SEARCH, searchTerm)
 });
 
 // National Report Cards events
 export const downloadCountryPdfAnalyticsEvent = createAction('downloadCountryPdf', null, (countryName) => {
-  return { analytics: [ VIEW_MODE.NRC, 'Download National Report Card PDF', countryName ] };
-});
-
-export const openInfoModalAnalyticsEvent = createAction('openInfoModal', null, (infoTarget) => {
-  return { analytics: [VIEW_MODE.NRC, `${infoTarget} info button clicked`, infoTarget] };
+  return createGtagEventStructure(CATEGORIES.FOLLOW_UP_ACTIONS, ACTIONS.DOWNLOAD_REPORT, countryName)
 });
 
 export const selectNRCSectionAnalyticsEvent = createAction('selectNRCsection', null, (sectionSlug) => {
-  return { analytics: [VIEW_MODE.NRC, `Selected ${sectionSlug} view`, sectionSlug] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.CHANGE_NRC_VIEW, sectionSlug)
 });
 
 export const openSpeciesListAnalyticsEvent = createAction('openSpeciesList', null, () => {
-  return { analytics: [VIEW_MODE.NRC, 'Open All Species list'] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.OPEN_SPECIES_LIST)
 });
 
 export const visitCountryReportCardAnalyticsEvent = createAction('visitCountryReportCard', null, (countryName) => {
-  return { analytics: [VIEW_MODE.NRC, 'Visit a country card', countryName] };
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.ENTER_COUNTRY, countryName)
 });
 
 // Navigation
 
-export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null, (countryName) => {
-  return { analytics: [OTHER_CATEGORIES.NAVIGATION, 'Click on the map scene change tab', countryName] };
+export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null, (scene) => {
+  return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.CHANGE_SCENE, scene)
 });
 
 
 export default {
-  addLayerAnalyticsEvent,
-  removeLayerAnalyticsEvent,
+  layerToggleAnalyticsEvent,
   changeLayerOpacityAnalyticsEvent,
-  openLayerInfoModalAnalyticsEvent,
+  openInfoModalAnalyticsEvent,
   openHalfEarthMeterAnalyticsEvent,
   openAboutPageAnalyticsEvent,
-  clickFindMyPositionAnalyticsEvent,
-  toggleFullScreenAnalyticsEvent,
-  switchAboutPageTabAnalyticsEvent,
-  openPlacesSearchAnalyticsEvent,
   enterLandscapeModeAnalyticsEvent,
   changeLayersOrderAnalyticsEvent,
   helpCompleteDatabaseAnalyticsEvent,
@@ -130,10 +93,8 @@ export default {
   exploreCountryFromTooltipAnalyticsEvent,
   exploreCountryFromSearchAnalyticsEvent,
   searchTermsAnalyticsEvent,
-  clickOnCountryAnalyticsEvent,
   downloadCountryPdfAnalyticsEvent,
   selectNRCSectionAnalyticsEvent,
   openSpeciesListAnalyticsEvent,
   visitCountryReportCardAnalyticsEvent,
-  openInfoModalAnalyticsEvent
 }

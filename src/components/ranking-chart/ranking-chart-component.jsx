@@ -113,7 +113,7 @@ const RankingChart = ({
             })}
           >
             {RANKING_HEADER_LABELS[category].split(" ").map(word => (
-              <p className={styles.titleText}>{`${word.toUpperCase()}`}</p>
+              <p key={word} className={styles.titleText}>{`${word.toUpperCase()}`}</p>
             ))}
           </div>
         ))}

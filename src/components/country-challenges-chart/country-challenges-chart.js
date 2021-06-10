@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
-import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import mapStateToProps from './country-challenges-chart-selectors';
 
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 
-const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions };
 
 
 const CountryChallengesChartContainer = (props) => {

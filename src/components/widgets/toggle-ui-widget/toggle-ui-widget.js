@@ -3,16 +3,14 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
-import { toggleFullScreenAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import ToggleUiComponent from './toggle-ui-widget-component';
 
-const actions = {...urlActions, toggleFullScreenAnalyticsEvent};
+const actions = {...urlActions};
 
-const ToggleUiWidget = ({ isFullscreenActive, changeUI, view, toggleFullScreenAnalyticsEvent, hidden }) => {
+const ToggleUiWidget = ({ isFullscreenActive, changeUI, view, hidden }) => {
   const toggleFullscreen  = () => {
     changeUI({ isFullscreenActive: !isFullscreenActive })
-    toggleFullScreenAnalyticsEvent({ isFullscreenActive: !isFullscreenActive });
   }
 
   useEffect(() => {
