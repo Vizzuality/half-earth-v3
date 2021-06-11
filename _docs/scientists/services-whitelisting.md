@@ -17,7 +17,7 @@ Map of Life is the data provider of the biodiversity data. Some layers are hoste
 The logic is as follows:
 1. Publish a first service, 
 2. Use the URL of the service to create the second service as an "Item from the web". Here you have to enter your credentials and select:
-[x] Store credentials with service item. Do not prompt for authentication option
+- [x] Store credentials with service item. Do not prompt for authentication option
 3. In the settings tab of the second service, go to `Limit Usage`. Add all the urls that should be whitelisted.  
 4. change the settings of the second service to Everyone. **The limit access has priority over the share with everyone.**
 

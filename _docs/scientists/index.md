@@ -6,12 +6,12 @@ has_children: true
 has_toc: true
 permalink: /_docs/science
 ---
-# Intro
+# Intro [to be moved to Readme file]
 Welcome to the Half Earth docs for Scientists. These docs cover specific elements of the Half-Earth Project in terms of data wrangling and management, but also some general tips to work with ESRI's `arcgis API for Python`, `arcpy` and Arcgis Online. 
 # How to add to this documentation
 ## Clone the repository. 
 Run `yarn docs:serve`. Errors that might appear could be related to: 
-- not having `xcode` installed (if running in a Mac). After installing make sure you accept the user agreement (`sudo xcodebuild -license accept`). 
+- not having `xcode` installed (if running in a Mac). Check if you have it installed by using `xcode-select -p`. After installing make sure you accept the user agreement (`sudo xcodebuild -license accept`). 
 - not having run `bundle install`
 
 ## Run in local
