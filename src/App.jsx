@@ -6,14 +6,13 @@ import DataGlobe from 'pages/data-globe';
 import MapIframe from 'pages/map-iframe';
 import NationalReportCard from 'pages/nrc';
 
+import { Icons as VizzIcons } from 'vizzuality-components';
+import 'he-components/dist/main.css';
+import 'vizzuality-components/dist/legend.css';
+
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type]
 });
-
-import { Icons as VizzIcons } from 'vizzuality-components';
-
-import 'he-components/dist/main.css';
-import 'vizzuality-components/dist/legend.css';
 
 const AppLayout = (props) => {
   const { route } = props;
