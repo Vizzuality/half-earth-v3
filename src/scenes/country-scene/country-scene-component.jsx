@@ -39,7 +39,6 @@ const CountrySceneComponent = ({
   countryBorder,
   sceneSettings,
   openedModal,
-  handleModeChange,
   isFullscreenActive,
   handleGlobeUpdating,
   localSceneActiveTab,
@@ -70,15 +69,6 @@ const CountrySceneComponent = ({
         <TerrainExaggerationLayer exaggeration={20} />
         <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
         {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
-          <Legend
-            hideTutorial
-            hideCloseButton
-            activeLayers={activeLayers}
-            className={styles.hideOnPrint}
-            isFullscreenActive={isFullscreenActive}
-          />
-        )}
-        {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
           <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
@@ -92,6 +82,15 @@ const CountrySceneComponent = ({
           shortLink={shortLink}
         />
       </Scene>
+      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
+          <Legend
+            hideTutorial
+            hideCloseButton
+            activeLayers={activeLayers}
+            className={styles.hideOnPrint}
+            isFullscreenActive={isFullscreenActive}
+          />
+        )}
       <LocalSceneSidebar
         countryISO={countryISO}
         countryName={countryName}

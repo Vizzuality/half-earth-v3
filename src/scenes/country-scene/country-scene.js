@@ -63,12 +63,7 @@ const CountrySceneContainer = (props) => {
     visitCountryReportCardAnalyticsEvent(countryName)
   }, [countryName])
 
-  return (
-    <Component
-      shortLink={shortLink}
-      {...props}
-    />
-  )
+  return <Component {...props}/>
 }
 
 export default connect(mapStateToProps, actions)(CountrySceneContainer);
