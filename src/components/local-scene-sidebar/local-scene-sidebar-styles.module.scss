@@ -9,7 +9,7 @@
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
   position: absolute;
-  height: calc(95vh + #{$sidebar-cards-padding});
+  height: calc(92vh + #{$sidebar-cards-padding});
   width: $local-sidebar-width;
   top: $local-sidebar-top-margin;
   left: $site-gutter;
@@ -68,7 +68,7 @@
 .scrollableArea {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 84%;
+  height: 74%;
 
   &::-webkit-scrollbar {
     width: 6px;
