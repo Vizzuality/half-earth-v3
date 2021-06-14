@@ -6,6 +6,8 @@
 .container {
   @include backdropBlur();
   @include animationFunction($propertyToAnimate: all);
+  display: flex;
+  flex-direction: column;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
   position: absolute;
@@ -68,7 +70,6 @@
 .scrollableArea {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 74%;
 
   &::-webkit-scrollbar {
     width: 6px;
