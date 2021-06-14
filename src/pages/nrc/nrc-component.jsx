@@ -9,11 +9,11 @@ import RankingChart from 'components/ranking-chart';
 import LocalSceneSidebar from 'components/local-scene-sidebar';
 import CountryChallengesChart from 'components/country-challenges-chart';
 
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 import { useMobile } from 'constants/responsive';
 import styles from './nrc-styles.module.scss';
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 const NationalReportCard = ({
   countryISO,
   userConfig,
@@ -84,7 +84,7 @@ const NationalReportCard = ({
       </div>
     )}
     {hasMetadata && (
-      <InfoModal additionalContent={infoModalAdditionalContent} />
+      <InfoModal />
     )}
     {!useMobile() && <About className={styles.hideOnPrint} />}
     <UserDataModal />
