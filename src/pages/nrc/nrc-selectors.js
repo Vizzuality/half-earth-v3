@@ -3,8 +3,8 @@ import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
 
-import dataSceneConfig from 'scenes/data-scene/data-scene-config';
-import countrySceneConfig from 'scenes/country-scene/country-scene-config';
+import nrcSceneConfig from 'scenes/nrc-scene/nrc-scene-config';
+import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
@@ -15,7 +15,7 @@ const selectCountryIso = ({location}) => location.payload.iso
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
   return {
-    ...countrySceneConfig.globe,
+    ...nrcSceneConfig,
     ...globeUrlState
   }
 })
@@ -23,7 +23,7 @@ const getGlobeSettings = createSelector([selectGlobeUrlState],
 const getUiSettings = createSelector([selectUiUrlState],
   (uiUrlState) => {
   return {
-    ...countrySceneConfig.ui,
+    ...NRC_UI_DEFAULTS,
     ...uiUrlState
   }
 })
@@ -41,17 +41,17 @@ export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, 
 
 
 export default createStructuredSelector({
-    countryISO: selectCountryIso,
-    userConfig: selectUserConfig,
-    countryName: getCountryName,
-    sceneLayers: getDataGlobeLayers,
-    openedModal: getHalfEarthModalOpen,
-    hasMetadata: selectMetadataData,
-    activeLayers: getActiveLayers,
-    sceneSettings: getGlobeSettings,
-    countryExtent: selectCountryExtent,
-    isGlobeUpdating: getGlobeUpdating,
-    speciesCategories: selectBiodiversityData,
-    localSceneActiveTab: getLocalSceneActiveTab,
-    countryChallengesSelectedKey: getCountryChallengesSelectedKey,
+  countryISO: selectCountryIso,
+  userConfig: selectUserConfig,
+  countryName: getCountryName,
+  sceneLayers: getDataGlobeLayers,
+  openedModal: getHalfEarthModalOpen,
+  hasMetadata: selectMetadataData,
+  activeLayers: getActiveLayers,
+  sceneSettings: getGlobeSettings,
+  countryExtent: selectCountryExtent,
+  isGlobeUpdating: getGlobeUpdating,
+  speciesCategories: selectBiodiversityData,
+  localSceneActiveTab: getLocalSceneActiveTab,
+  countryChallengesSelectedKey: getCountryChallengesSelectedKey,
 });

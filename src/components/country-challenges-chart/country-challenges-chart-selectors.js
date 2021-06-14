@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
-import { getCountryChallengesSelectedFilter, getCountryISO } from 'pages/data-globe/data-globe-selectors';
+import { getCountryChallengesSelectedFilter } from 'pages/nrc/nrc-selectors';
 import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import {
@@ -9,8 +9,9 @@ import {
 } from 'constants/country-mode-constants';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
-
+const selectCountryIso = ({location}) => location.payload.iso.toUpperCase()
 const getCountryChallengesSelectedKey = (state, props) => props && props.countryChallengesSelectedKey;
+
 
 const getScatterplotRawData = createSelector(
   [selectCountriesData],
@@ -40,7 +41,7 @@ const getScatterplotRawData = createSelector(
 )
 
 const getXAxisKeys = createSelector(
-  [getCountryISO, getScatterplotRawData],
+  [selectCountryIso, getScatterplotRawData],
   (countryIso, rawData) => {
   const AllXAxisKeys = Object.keys(INDICATOR_LABELS);
   if (!rawData) return AllXAxisKeys;
@@ -51,8 +52,9 @@ const getXAxisKeys = createSelector(
 });
 
 const getSelectedCountryRelations = createSelector(
-  [selectCountriesData, getCountryISO],
+  [selectCountriesData, selectCountryIso],
   (countriesData, selectedCountryIso) => {
+    console.log(countriesData)
     if (!countriesData || !selectedCountryIso) return null;
     return JSON.parse(countriesData[selectedCountryIso].filter_similar)
   }

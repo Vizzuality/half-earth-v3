@@ -11,8 +11,6 @@ import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 // Constants
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-import styles from './nrc-scene-styles.module.scss';
-
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
@@ -30,7 +28,6 @@ const CountrySceneComponent = ({
 
   return (
     <Scene
-      className={styles.sceneWrapper}
       sceneName={'nrc-scene'}
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
@@ -52,12 +49,12 @@ const CountrySceneComponent = ({
         openedModal={openedModal}
         isFullscreenActive={isFullscreenActive}
       />
-      {/* <PdfNationalReport
+      <PdfNationalReport
         countryISO={countryISO}
         countryName={countryName}
         onMapLoad={onMapLoad}
         shortLink={shortLink}
-      /> */}
+      />
     </Scene>
   );
 };

@@ -31,7 +31,7 @@ const DataGlobeComponent = ({
   isLandscapeSidebarCollapsed,
   countryChallengesSelectedKey,
   userConfig
-}) => (
+}) => console.log(sceneMode) || (
   <>
     {sceneMode === LOCAL_SCENE && (
       <CountryScene
