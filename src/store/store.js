@@ -2,9 +2,9 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects';
-import router from './router';
-import reducerRegistry from './reducerRegistry';
-import sagaRegistry from './sagaRegistry';
+import router from 'router';
+import reducerRegistry from 'reducerRegistry';
+import sagaRegistry from 'sagaRegistry';
 import { middleware as analyticsMiddleware } from 'store-middleware/analytics';
 
 const sagaMiddleware = createSagaMiddleware();
