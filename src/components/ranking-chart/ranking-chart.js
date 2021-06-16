@@ -5,6 +5,7 @@ import mapStateToProps from './ranking-chart-selectors';
 import useDebounce from 'hooks/use-debounce';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
+import { NATIONAL_REPORT_CARD } from 'router'
 
 const actions = {...metadataActions, ...urlActions };
 
@@ -27,9 +28,9 @@ const RankingChartContainer = (props) => {
     changeUI({ sortRankingCategory: selectedFilter })
   }
 
-  const handleCountryClick = (countryISO, countryName) => {
-    const { changeGlobe } = props;
-    changeGlobe({ countryISO, countryName, zoom: null, center: null });
+  const handleCountryClick = (countryISO) => {
+    const { browsePage } = props;
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
   };
 
   const handleSearchChange = (event) => {
