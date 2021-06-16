@@ -1,60 +1,58 @@
 // Dependencies
 import React from 'react';
+import cx from 'classnames';
 import loadable from '@loadable/component'
 // Components
 import Scene from 'components/scene';
 import Legend from 'components/legend';
-import Slider from 'components/slider';
 import Widgets from 'components/widgets';
-import Switcher from 'components/switcher';
-import MenuFooter from 'components/mobile-only/menu-footer';
-import TutorialModal from 'components/tutorial/tutorial-modal';
-import DataGlobalSidebar from 'components/data-global-sidebar';
-import MenuSettings from 'components/mobile-only/menu-settings';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
 import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import DataGlobalSidebar from 'components/data-global-sidebar';
+import MenuSettings from 'components/mobile-only/menu-settings';
+import Slider from 'components/slider';
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-// Utils
 import { MobileOnly, useMobile } from 'constants/responsive';
+
+import styles from './data-scene-styles.module.scss';
+import animationStyles from 'styles/common-animations.module.scss';
 // Dynamic imports
-const About = loadable(() => import('components/about'));
 const Spinner = loadable(() => import('components/spinner'));
 const GridLayer = loadable(() => import('components/grid-layer'));
-const InfoModal = loadable(() => import('components/modal-metadata'));
 const LabelsLayer = loadable(() => import('components/labels-layer'));
-const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
+  view,
   sceneMode,
   onMapLoad,
+  userConfig,
   countryISO,
   countryName,
-  hasMetadata,
+  openedModal,
   activeLayers,
   activeOption,
   sceneSettings,
   isSidebarOpen,
-  openedModal,
   activeCategory,
   isLandscapeMode,
   isGlobeUpdating,
-  selectedSpecies,
   isFullscreenActive,
-  countedActiveLayers,
   handleGlobeUpdating,
+  countedActiveLayers,
   isBiodiversityActive,
-  isLandscapeSidebarCollapsed,
-  userConfig
+  isLandscapeSidebarCollapsed
 }) => {
-  const isOnMobile = useMobile();
+
+  const sidebarHidden =  isLandscapeMode || isFullscreenActive || useMobile();
   return (
     <>
       <Scene
@@ -68,7 +66,19 @@ const CountrySceneComponent = ({
           userConfig={userConfig}
         />
         {isGlobeUpdating && <Spinner floating />}
-        {!isOnMobile && <Switcher />}
+        <DataGlobalSidebar
+          activeLayers={activeLayers}
+          activeOption={activeOption}
+          isSidebarOpen={isSidebarOpen}
+          activeCategory={activeCategory}
+          isLandscapeMode={isLandscapeMode}
+          isFullscreenActive={isFullscreenActive}
+          countedActiveLayers={countedActiveLayers}
+          handleGlobeUpdating={handleGlobeUpdating}
+          isBiodiversityActive={isBiodiversityActive}
+          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          className={cx(styles.sidebarContainer, {[animationStyles.leftHidden]: sidebarHidden})}
+        />
         <MobileOnly>
           <MenuFooter
             activeOption={activeOption}
@@ -95,29 +105,6 @@ const CountrySceneComponent = ({
           isLandscapeMode={isLandscapeMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <DataGlobalSidebar
-          activeLayers={activeLayers}
-          activeOption={activeOption}
-          isSidebarOpen={isSidebarOpen}
-          activeCategory={activeCategory}
-          isLandscapeMode={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          countedActiveLayers={countedActiveLayers}
-          handleGlobeUpdating={handleGlobeUpdating}
-          isBiodiversityActive={isBiodiversityActive}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        />
-        {isLandscapeMode && (
-          <LandscapeSidebar
-            activeLayers={activeLayers}
-            activeOption={activeOption}
-            selectedSpecies={selectedSpecies}
-            isLandscapeMode={isLandscapeMode}
-            isFullscreenActive={isFullscreenActive}
-            handleGlobeUpdating={handleGlobeUpdating}
-            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          />
-        )}
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
@@ -143,9 +130,6 @@ const CountrySceneComponent = ({
           />
         )}
       </Scene>
-      <TutorialModal />
-      {hasMetadata && <InfoModal />}
-      {!isOnMobile && <About />}
     </>
   );
 }
