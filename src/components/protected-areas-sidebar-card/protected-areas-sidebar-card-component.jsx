@@ -8,7 +8,7 @@ import ExistingProtectionThumbnail from 'images/existing-protection.png';
 
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
-const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers,map}) => {
+const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers }) => {
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
@@ -25,7 +25,6 @@ const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, 
         className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
       >
         <ProtectedAreasLayers
-          map={map}
           handleGlobeUpdating={handleGlobeUpdating}
           activeLayers={activeLayers}
           activeCategory={LAYERS_CATEGORIES.PROTECTION}
