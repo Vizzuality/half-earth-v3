@@ -1,38 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadModules } from 'esri-loader';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
+  flyToLayerExtent,
   layerManagerToggle,
-  replaceLayerFromActiveLayers
+  replaceLayerFromActiveLayers,
 } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
-
 import Component from './biodiversity-layers-component';
 import { layerToggleAnalyticsEvent } from 'actions/google-analytics-actions';
 
 const actions = { layerToggleAnalyticsEvent, ...urlActions }
 
 const BiodiversityLayerContainer = props => {
-  const flyToLayerExtent = bbox => {
-    const { view } = props;
-    loadModules(["esri/geometry/Extent"]).then(([Extent]) => {
-      const [xmin, ymin, xmax, ymax] = bbox;
-      const target = new Extent({
-        xmin, xmax, ymin, ymax
-      })
-      view.goTo({target})
-        .catch(function(error) {
-          // Avoid displaying console errors when transition is aborted by user interacions
-          if (error.name !== "AbortError") {
-            console.error(error);
-          }
-        });
-    })
-  }
 
   const handleSimpleLayerToggle = (layerName, isSelected) => {
     const {
+      view,
       layerToggleAnalyticsEvent,
       activeLayers,
       changeGlobe,
@@ -44,13 +28,13 @@ const BiodiversityLayerContainer = props => {
       layerToggleAnalyticsEvent({ slug: layer.slug });
 
       if (!isSelected) {
-        layer.bbox && flyToLayerExtent(layer.bbox);
+        layer.bbox && flyToLayerExtent(layer.bbox, view);
       }
     }
   }
 
   const handleExclusiveLayerToggle = (layerToAdd, layerToRemove) => {
-    const { activeLayers, changeGlobe, layerToggleAnalyticsEvent } = props;
+    const { activeLayers, changeGlobe, layerToggleAnalyticsEvent, view } = props;
     const layer = layersConfig[layerToAdd];
     const removeLayer = layersConfig[layerToRemove];
     layerToggleAnalyticsEvent({ slug: layer.slug });
@@ -62,7 +46,7 @@ const BiodiversityLayerContainer = props => {
         changeGlobe,
         LAYERS_CATEGORIES.BIODIVERSITY
       );
-      layer.bbox && flyToLayerExtent(layer.bbox);
+      layer.bbox && flyToLayerExtent(layer.bbox, view);
     }
   }
   return (
