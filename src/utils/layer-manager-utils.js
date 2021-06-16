@@ -167,3 +167,19 @@ export const setBasemap = async ({map, surfaceColor, layersArray}) => {
 export const getActiveLayersFromLayerGroup = (layerGroup, activeLayers) => (
   intersection(activeLayers.map((l) => l.title), layerGroup)
 );
+
+export const flyToLayerExtent = (bbox, view) => {
+  loadModules(["esri/geometry/Extent"]).then(([Extent]) => {
+    const [xmin, ymin, xmax, ymax] = bbox;
+    const target = new Extent({
+      xmin, xmax, ymin, ymax
+    })
+    view.goTo({target})
+      .catch(function(error) {
+        // Avoid displaying console errors when transition is aborted by user interacions
+        if (error.name !== "AbortError") {
+          console.error(error);
+        }
+      });
+  })
+}
