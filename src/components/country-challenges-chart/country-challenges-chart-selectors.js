@@ -54,7 +54,6 @@ const getXAxisKeys = createSelector(
 const getSelectedCountryRelations = createSelector(
   [selectCountriesData, selectCountryIso],
   (countriesData, selectedCountryIso) => {
-    console.log(countriesData)
     if (!countriesData || !selectedCountryIso) return null;
     return JSON.parse(countriesData[selectedCountryIso].filter_similar)
   }

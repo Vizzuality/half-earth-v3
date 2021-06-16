@@ -9,15 +9,11 @@ import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import Tabs from 'components/tabs';
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
-
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import OverviewSidebar from './overview-sidebar';
 import ChallengesSidebar from './challenges-sidebar';
 import RankingSidebar from './ranking-sidebar';
-
-
-
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -42,7 +38,7 @@ const LocalSceneSidebarComponent = ({
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-
+  
   return (
     <div
       className={cx(styles.container, className, {
