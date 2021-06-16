@@ -4,9 +4,8 @@ import Component from './scene-component';
 import { loadModules } from 'esri-loader';
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import urlActions from 'actions/url-actions';
-import sceneActions from 'redux_modules/scene';
 
-const actions = { ...urlActions, ...sceneActions };
+const actions = { ...urlActions };
 
 const SceneContainer = (props) => {
   const {
@@ -16,9 +15,7 @@ const SceneContainer = (props) => {
     sceneSettings,
     changeGlobe,
     onMapLoad,
-    setSceneMap,
     onViewLoad,
-    setSceneView,
     urlParamsUpdateDisabled
   } = props;
 
@@ -37,7 +34,6 @@ const SceneContainer = (props) => {
         });
 
         setMap(_map);
-        setSceneMap(_map);
         onMapLoad && onMapLoad(_map);
       })
       .catch(err => {
@@ -55,7 +51,6 @@ const SceneContainer = (props) => {
             ...sceneSettings
           });
           setView(_view);
-          setSceneView(_view);
         })
         .catch(err => {
           console.error(err);
