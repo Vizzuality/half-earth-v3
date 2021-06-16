@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
 // Constants
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
-import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 import * as urlActions from 'actions/url-actions';
 import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';

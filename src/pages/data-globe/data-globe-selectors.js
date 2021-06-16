@@ -6,34 +6,24 @@ import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
-import countrySceneConfig from 'scenes/country-scene/country-scene-config';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 const selectUserConfig = ({ userConfig }) => userConfig || null;
 
-const getInitialSceneMode = createSelector(selectUiUrlState, uiUrlState => {
-  if (!uiUrlState || !uiUrlState.sceneMode) return 'data';
-  return uiUrlState.sceneMode;
-})
-
-const getSceneConfig = createSelector(getInitialSceneMode, sceneMode => {
-  return sceneMode === 'data' ? dataSceneConfig : countrySceneConfig;
-})
-
-const getGlobeSettings = createSelector([selectGlobeUrlState, getSceneConfig],
-  (globeUrlState, sceneConfig) => {
+const getGlobeSettings = createSelector(selectGlobeUrlState,
+  (globeUrlState) => {
   return {
-    ...sceneConfig.globe,
+    ...dataSceneConfig.globe,
     ...globeUrlState
   }
 })
 
-const getUiSettings = createSelector([selectUiUrlState, getSceneConfig],
-  (uiUrlState, sceneConfig) => {
+const getUiSettings = createSelector(selectUiUrlState,
+  (uiUrlState) => {
   return {
-    ...sceneConfig.ui,
+    ...dataSceneConfig.ui,
     ...uiUrlState
   }
 })
