@@ -48,6 +48,7 @@ const NationalReportCard = ({
       sceneSettings={sceneSettings}
       isFullscreenActive={isFullscreenActive}
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+      isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
     />
     {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
       <Legend
