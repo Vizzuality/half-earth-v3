@@ -17,7 +17,6 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const NationalReportCard = ({
   countryISO,
   userConfig,
-  countryName,
   openedModal,
   hasMetadata,
   activeLayers,
@@ -31,7 +30,6 @@ const NationalReportCard = ({
   <>
     <LocalSceneSidebar
       countryISO={countryISO}
-      countryName={countryName}
       openedModal={openedModal}
       activeLayers={activeLayers}
       className={styles.hideOnPrint}
@@ -39,18 +37,15 @@ const NationalReportCard = ({
       handleGlobeUpdating={handleGlobeUpdating}
       localSceneActiveTab={localSceneActiveTab}
     />
-    <>
-      <NationalReportCardScene
-        countryISO={countryISO}
-        userConfig={userConfig}
-        countryName={countryName}
-        openedModal={openedModal}
-        activeLayers={activeLayers}
-        sceneSettings={sceneSettings}
-        isFullscreenActive={isFullscreenActive}
-        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-      />
-    </>
+    <NationalReportCardScene
+      countryISO={countryISO}
+      userConfig={userConfig}
+      openedModal={openedModal}
+      activeLayers={activeLayers}
+      sceneSettings={sceneSettings}
+      isFullscreenActive={isFullscreenActive}
+      onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+    />
     {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
       <Legend
         hideTutorial

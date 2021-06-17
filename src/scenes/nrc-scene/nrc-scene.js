@@ -15,7 +15,6 @@ const actions = {...countriesGeometriesActions, visitCountryReportCardAnalyticsE
 const NrcSceneContainer = (props) => {
   const {
     countryISO,
-    countryName,
     setCountryBorderReady,
     visitCountryReportCardAnalyticsEvent
   } = props;
@@ -33,10 +32,8 @@ const NrcSceneContainer = (props) => {
   }, [countryISO])
 
   useEffect(() => {
-    if (countryName) {
-      visitCountryReportCardAnalyticsEvent(countryName)
-    }
-  }, [countryName])
+    visitCountryReportCardAnalyticsEvent(countryISO);
+  }, [countryISO])
 
   return (
     <Component

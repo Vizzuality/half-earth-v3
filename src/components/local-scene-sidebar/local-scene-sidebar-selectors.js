@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { random } from 'lodash';
-import { selectUiUrlState } from 'selectors/location-selectors';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -8,8 +7,6 @@ const SPECIES_COLOR = {
   amphibians: '#9873EF',
   reptiles: '#3AA8EE'
 }
-
-// const getModalOpen = createSelector(selectUiUrlState, uiSettings => uiSettings.openedModal);
 
 const selectCountryIso = ({location}) => location.payload.iso
 const selectCountriesData = ({ countryData }) => countryData && countryData.data;
@@ -21,6 +18,11 @@ const getCountryData = createSelector(
     return (countriesData && countriesData[countryIso]) || null;
   }
 )
+
+const getCountryName = createSelector(getCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.NAME_0;
+})
 
 const getDescription = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
@@ -145,6 +147,7 @@ const mapStateToProps = createStructuredSelector({
   hasPriority: getHasPriority,
   reptiles: getTaxa('reptiles'),
   countryData: getCountryData,
+  countryName: getCountryName,
   SPI: getSpeciesProtectionIndex,
   amphibians: getTaxa('amphibians'),
   indexStatement: getIndexStatement,
