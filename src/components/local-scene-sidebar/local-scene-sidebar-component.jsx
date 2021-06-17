@@ -29,6 +29,7 @@ const LocalSceneSidebarComponent = ({
   countryISO,
   countryData,
   countryName,
+  openedModal,
   handlePrintReport,
   handleSourceClick,
   handleTabSelection,
@@ -73,6 +74,7 @@ const LocalSceneSidebarComponent = ({
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
             <OverviewSidebar 
               countryISO={countryISO}
+              openedModal={openedModal}
               handleSourceClick={handleSourceClick}
             />
           }
