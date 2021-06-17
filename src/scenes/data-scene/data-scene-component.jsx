@@ -26,6 +26,7 @@ import animationStyles from 'styles/common-animations.module.scss';
 const Spinner = loadable(() => import('components/spinner'));
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LabelsLayer = loadable(() => import('components/labels-layer'));
+const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
@@ -43,6 +44,7 @@ const CountrySceneComponent = ({
   isSidebarOpen,
   activeCategory,
   isLandscapeMode,
+  selectedSpecies,
   isGlobeUpdating,
   isFullscreenActive,
   handleGlobeUpdating,
@@ -121,6 +123,17 @@ const CountrySceneComponent = ({
         <LabelsLayer activeLayers={activeLayers} />
         {isLandscapeMode && (
           <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
+        )}
+        {isLandscapeMode && (
+          <LandscapeSidebar
+            activeLayers={activeLayers}
+            activeOption={activeOption}
+            selectedSpecies={selectedSpecies}
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          />
         )}
         {isLandscapeMode && (
           <ProtectedAreasTooltips
