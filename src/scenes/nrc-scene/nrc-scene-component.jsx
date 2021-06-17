@@ -14,12 +14,10 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
-  shortLink,
   onMapLoad,
   countryISO,
   userConfig,
   openedModal,
-  countryName,
   activeLayers,
   countryBorder,
   sceneSettings,
@@ -50,10 +48,8 @@ const CountrySceneComponent = ({
         isFullscreenActive={isFullscreenActive}
       />
       <PdfNationalReport
-        countryISO={countryISO}
-        countryName={countryName}
         onMapLoad={onMapLoad}
-        shortLink={shortLink}
+        countryISO={countryISO}
       />
     </Scene>
   );

@@ -27,8 +27,8 @@ import {
 const LocalSceneSidebarComponent = ({
   className,
   countryISO,
-  countryName,
   countryData,
+  countryName,
   handlePrintReport,
   handleSourceClick,
   handleTabSelection,
@@ -38,7 +38,7 @@ const LocalSceneSidebarComponent = ({
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  
+
   return (
     <div
       className={cx(styles.container, className, {
@@ -55,7 +55,7 @@ const LocalSceneSidebarComponent = ({
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
-        <p className={styles.countryName}>{countryName}</p>
+        {countryName && <p className={styles.countryName}>{countryName}</p>}
       </div>
       <Tabs
         tabs={LOCAL_SCENE_TABS}
@@ -65,7 +65,7 @@ const LocalSceneSidebarComponent = ({
       />
       {!countryData ? (
         <div className={styles.loading}>
-          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
+          <span className={styles.loadingText}>{`Loading country information...`}</span>
           <Loading />
         </div>
       ) : (

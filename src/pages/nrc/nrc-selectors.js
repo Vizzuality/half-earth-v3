@@ -29,9 +29,8 @@ const getUiSettings = createSelector([selectUiUrlState],
 })
 
 
-export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
-const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
+export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
+const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
 const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
@@ -43,7 +42,6 @@ export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
   userConfig: selectUserConfig,
-  countryName: getCountryName,
   sceneLayers: getDataGlobeLayers,
   openedModal: getHalfEarthModalOpen,
   hasMetadata: selectMetadataData,
