@@ -13,7 +13,6 @@ import { useMobile } from 'constants/responsive';
 import styles from './data-globe-styles.module.scss';
 // Dynamic imports
 const About = loadable(() => import('components/about'));
-const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 
@@ -56,6 +55,7 @@ const DataGlobeComponent = ({
         isBiodiversityActive={isBiodiversityActive}
         countedActiveLayers={countedActiveLayers}
         activeCategory={activeCategory}
+        selectedSpecies={selectedSpecies}
         isLandscapeMode={isLandscapeMode}
         isGlobeUpdating={isGlobeUpdating}
         isFullscreenActive={isFullscreenActive}
@@ -63,17 +63,6 @@ const DataGlobeComponent = ({
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
-      {isLandscapeMode && (
-        <LandscapeSidebar
-          activeLayers={activeLayers}
-          activeOption={activeOption}
-          selectedSpecies={selectedSpecies}
-          isLandscapeMode={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          handleGlobeUpdating={handleGlobeUpdating}
-          isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        />
-      )}
       {!useMobile() && <Switcher />}
       <UserDataModal />
       <TutorialModal />
