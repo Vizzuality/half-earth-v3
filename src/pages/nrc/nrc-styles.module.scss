@@ -1,10 +1,28 @@
 @import 'styles/settings';
+@import 'styles/common-animations.module';
+@import 'styles/ui.module';
+
+.sidebarContainer {
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  top: $ui-left-top;
+  left: $site-gutter;
+}
 
 .modeSwitch {
   z-index: 3;
   position: absolute;
   left: 50%;
   bottom: 30px;
+}
+
+.halfEarthLogo {
+  position: absolute;
+  width: $he-project-logo-size;
+  height: $he-project-logo-size;
+  top: $layout-top-margin;
+  left: $site-gutter;
+  z-index: $bring-to-front;
 }
 
 .challengesViewContainer {

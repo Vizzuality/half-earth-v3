@@ -113,7 +113,6 @@ $site-gutter: 20px;
 $widget-button-size: 30px;
 $rounded-button-size: 42px;
 $he-project-logo-size: 40px;
-
 // Blur
 $blur-level: 16px;
 
@@ -142,6 +141,7 @@ $local-sidebar-top-margin: 20px;
 $high-sidebar-top-margin: 268px;
 $sidebar-header-height: 100px;
 $sidebar-header-height-mobile: 150px;
+$ui-left-top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
 $sidebar-width: 350px; // use this for entry boxes and sidebar width
 $country-sidebar-width: 490px;
 $local-sidebar-width: 350px;

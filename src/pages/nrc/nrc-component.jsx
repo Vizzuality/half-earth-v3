@@ -1,11 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
 import loadable from '@loadable/component'
-import UserDataModal from 'components/user-data-modal';
-import NationalReportCardScene from 'scenes/nrc-scene';
+
 import Legend from 'components/legend';
 import About from 'components/about';
 import RankingChart from 'components/ranking-chart';
+import UserDataModal from 'components/user-data-modal';
+import NationalReportCardScene from 'scenes/nrc-scene';
+import HalfEarthLogo from 'components/half-earth-logo';
 import LocalSceneSidebar from 'components/local-scene-sidebar';
 import CountryChallengesChart from 'components/country-challenges-chart';
 
@@ -28,11 +30,12 @@ const NationalReportCard = ({
   countryChallengesSelectedKey,
 }) => (
   <>
+    <HalfEarthLogo className={styles.halfEarthLogo}/> 
     <LocalSceneSidebar
       countryISO={countryISO}
       openedModal={openedModal}
       activeLayers={activeLayers}
-      className={styles.hideOnPrint}
+      className={cx(styles.sidebarContainer, styles.hideOnPrint)}
       isFullscreenActive={isFullscreenActive}
       handleGlobeUpdating={handleGlobeUpdating}
       localSceneActiveTab={localSceneActiveTab}
