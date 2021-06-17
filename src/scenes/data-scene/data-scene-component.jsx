@@ -31,7 +31,6 @@ const ProtectedAreasTooltips = loadable(() => import('components/protected-areas
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
-  view,
   sceneMode,
   onMapLoad,
   userConfig,
