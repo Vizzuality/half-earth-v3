@@ -5,17 +5,12 @@
 
 .container {
   @include backdropBlur();
-  @include animationFunction($propertyToAnimate: all);
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
-  position: absolute;
-  height: calc(95vh + #{$sidebar-cards-padding});
-  width: $local-sidebar-width;
-  top: $local-sidebar-top-margin;
-  left: $site-gutter;
+  height: calc(100vh - #{$ui-left-top});
+  width: calc(#{$sidebar-width} + 15px);
   padding: $site-gutter 0;
   z-index: $bring-to-front;
-  margin-top: $local-sidebar-top-margin;
 }
 
 .backButton {
