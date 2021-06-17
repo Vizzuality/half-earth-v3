@@ -10,7 +10,7 @@ const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (bi
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 const selectUserConfig = ({ userConfig }) => userConfig || null;
-const selectCountryIso = ({location}) => location.payload.iso
+const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {

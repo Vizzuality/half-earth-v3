@@ -8,7 +8,7 @@ const SPECIES_COLOR = {
   reptiles: '#3AA8EE'
 }
 
-const selectCountryIso = ({location}) => location.payload.iso
+const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
 const selectCountriesData = ({ countryData }) => countryData && countryData.data;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 const getCountryData = createSelector(

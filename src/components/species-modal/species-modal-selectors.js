@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import { SORT } from 'components/header-item';
 import sortBy from 'lodash/sortBy';
-const selectCountryIso = ({location}) => location.payload.iso
+const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
 
 export const getSearchTerm = ({ location }) =>
 (location && get(location, 'query.ui.speciesModalSearch')) || null;
