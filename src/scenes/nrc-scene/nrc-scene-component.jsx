@@ -15,6 +15,7 @@ const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
   onMapLoad,
+  isVisible,
   countryISO,
   userConfig,
   openedModal,
@@ -42,11 +43,13 @@ const CountrySceneComponent = ({
       />
       <TerrainExaggerationLayer exaggeration={20} />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      <Widgets
-        activeLayers={activeLayers}
-        openedModal={openedModal}
-        isFullscreenActive={isFullscreenActive}
-      />
+      {isVisible && 
+        <Widgets
+          activeLayers={activeLayers}
+          openedModal={openedModal}
+          isFullscreenActive={isFullscreenActive}
+        />
+      }
       <PdfNationalReport
         onMapLoad={onMapLoad}
         countryISO={countryISO}
