@@ -9,9 +9,9 @@ import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 const NationalReportPdf = ({
   SPI,
   birds,
+  nrcUrl,
   mammals,
   reptiles,
-  shortLink,
   amphibians,
   countryISO,
   countryName,
@@ -121,7 +121,7 @@ const NationalReportPdf = ({
         {sceneScreenshotUrl && <img src={sceneScreenshotUrl} alt={`${countryName} map`}/>}
       </section>
       <section className={styles.urlWrapper} >
-        <a href={shortLink}>{shortLink}</a>
+        <a href={nrcUrl}>{nrcUrl}</a>
       </section>
     </div>
   )
