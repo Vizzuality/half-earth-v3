@@ -117,7 +117,7 @@ const ScatterPlot = ({
                   <AnimatePresence>
                   {bubble.iso === countryISO &&
                     <motion.circle
-                    key={bubble.iso}
+                    key={`${bubble.iso}-aura`}
                     transition={animationTransitionConfig}
                     className={cx(
                       {[styles.animatedBubble]: bubble.iso === countryISO}

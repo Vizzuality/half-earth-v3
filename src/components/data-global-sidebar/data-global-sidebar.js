@@ -5,20 +5,18 @@ import urlActions from 'actions/url-actions';
 import Component from './data-global-sidebar-component.jsx';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { LOCAL_SCENE } from 'constants/scenes-constants';
-import countrySceneConfig from 'scenes/country-scene/country-scene-config';
+import { NATIONAL_REPORT_CARD } from 'router'
 
 const actions = { exploreCountryFromSearchAnalyticsEvent,...urlActions };
 
 const SearchWidget = (props) => {
-  const { changeGlobe, changeUI, exploreCountryFromSearchAnalyticsEvent } = props;
+  const { browsePage, exploreCountryFromSearchAnalyticsEvent } = props;
 
   const postSearchCallback = ({result}) => {
     const { feature: { attributes: { GID_0, NAME_0 }}} = result;
     if (GID_0) {
-        changeGlobe({ countryISO: GID_0, countryName: NAME_0, activeLayers: countrySceneConfig.globe.activeLayers })
-        changeUI({ sceneMode: LOCAL_SCENE,localSceneActiveTab: countrySceneConfig.ui.localSceneActiveTab })
-        exploreCountryFromSearchAnalyticsEvent({countryName:NAME_0})
+      browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: GID_0 }});
+      exploreCountryFromSearchAnalyticsEvent({countryName:NAME_0})
     }
   }
 

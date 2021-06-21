@@ -24,9 +24,13 @@ export const BIODIVERSITY_TABS = [
   {slug: BIODIVERSITY_TABS_SLUGS.RARITY, title: BIODIVERSITY_TABS_SLUGS.RARITY},
 ]
 
-
-
 export const MODALS = {
   HE: 'HE',
   SPECIES: 'SPECIES',
+}
+
+
+export const ABOUT_TABS = {
+  PARTNERS: 'partners',
+  INSTRUCTIONS: 'map_instructions'
 }

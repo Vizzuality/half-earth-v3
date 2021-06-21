@@ -12,9 +12,9 @@ import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 //Actions
 import landHumanPressuresActions from 'redux_modules/land-human-encroachment';
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { layerToggleAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
-const actions = { ...landHumanPressuresActions, addLayerAnalyticsEvent, removeLayerAnalyticsEvent, ...urlActions };
+const actions = { ...landHumanPressuresActions, layerToggleAnalyticsEvent, ...urlActions };
 
 
 const HumanPressureWidgetContainer = props => {
@@ -56,7 +56,8 @@ const HumanPressureWidgetContainer = props => {
 
 
     const toggleLayer = async (_, option) => {
-      const { changeGlobe } = props;
+      const { changeGlobe, layerToggleAnalyticsEvent } = props;
+      layerToggleAnalyticsEvent({slug: option.slug})
       layerManagerToggle(option.slug, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
   }
 

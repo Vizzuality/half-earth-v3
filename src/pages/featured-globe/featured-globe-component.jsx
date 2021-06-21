@@ -15,6 +15,7 @@ import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'components/featured-places-layer';
+import HalfEarthLogo from 'components/half-earth-logo';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
@@ -71,6 +72,7 @@ const DataGlobeComponent = ({
   return (
     <>
       {!isMapsList && !isOnMobile && <Switcher />}
+      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
       <Scene
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}

@@ -1,4 +1,13 @@
 @import 'styles/settings';
+@import 'styles/common-animations.module';
+@import 'styles/ui.module';
+
+.sidebarContainer {
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  top: $ui-left-top;
+  left: $site-gutter;
+}
 
 .modeSwitch {
   z-index: 3;
@@ -12,16 +21,10 @@
   top: 0;
   left: 0;
   background-color: $challenges-view-background;
-  opacity: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none;
 }
 
-.challengesSelected {
-  opacity: 1;
-  pointer-events: inherit;
-}
 
 .challengesChart {
   position: relative;

@@ -15,7 +15,6 @@ import BiodiversityThumbnail from "images/biodiversity.png";
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
-  map,
   view,
   handleTabSelection,
   biodiversityLayerVariant,
@@ -67,7 +66,6 @@ const BiodiversitySidebarCardComponent = ({
               subcategories={cat.subcategories}
               options={cat.taxa}
               activeLayers={activeLayers}
-              map={map}
               view={view}
               variant={biodiversityLayerVariant}
             />

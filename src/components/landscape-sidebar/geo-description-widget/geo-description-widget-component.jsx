@@ -1,6 +1,5 @@
 import React from 'react';
 import { Loading } from 'he-components';
-import { VIEW_MODE } from  'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
 import FixedHeader from 'components/fixed-header'
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -33,7 +32,6 @@ const GeoDescriptionWidget = (props) => {
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           closeSidebar={handleBackClick}
           view={view}
-          viewMode={VIEW_MODE.LANDSCAPE}
           autoHeight
         />
         <div className={styles.errorWrapper}>
@@ -58,7 +56,6 @@ const GeoDescriptionWidget = (props) => {
         closeSidebar={handleBackClick}
         title={data.title}
         view={view}
-        viewMode={VIEW_MODE.LANDSCAPE}
         autoHeight 
       />
       <div className={styles.descriptionWrapper}>

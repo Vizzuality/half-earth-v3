@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import conservationEffortsActions from 'redux_modules/conservation-efforts';
 
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { layerToggleAnalyticsEvent } from 'actions/google-analytics-actions';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
@@ -16,7 +16,7 @@ import * as urlActions from 'actions/url-actions';
 import Component from './conservation-efforts-widget-component';
 import mapStateToProps from './conservation-efforts-widget-selectors';
 
-const actions = { ...conservationEffortsActions, ...urlActions, addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
+const actions = { ...conservationEffortsActions, ...urlActions, layerToggleAnalyticsEvent };
 
 const findInDOM = (id) => document.getElementById(id);
 
@@ -77,7 +77,8 @@ const ConservationEffortsWidget = (props) => {
   }, [selectedCellsIDs])
 
   const handleLayerToggle = async (_, option) => {
-    const { activeLayers, changeGlobe } = props;
+    const { activeLayers, changeGlobe, layerToggleAnalyticsEvent } = props;
+    layerToggleAnalyticsEvent({slug: option.title})
     if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
       batchToggleLayers(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     } else {

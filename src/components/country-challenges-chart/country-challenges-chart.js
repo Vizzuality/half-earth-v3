@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
-import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import mapStateToProps from './country-challenges-chart-selectors';
+import { NATIONAL_REPORT_CARD } from 'router'
 
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 
-const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions };
 
 
 const CountryChallengesChartContainer = (props) => {
@@ -33,9 +33,9 @@ const CountryChallengesChartContainer = (props) => {
     }
   }
 
-  const handleBubbleClick = ({ countryISO, countryName }) => {
-    const { changeGlobe } = props;
-    changeGlobe({countryISO, countryName, zoom: null, center: null})
+  const handleBubbleClick = ({ countryISO }) => {
+    const { browsePage } = props;
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
   }
 
   const handleFilterSelection = (selectedFilter) => {

@@ -9,7 +9,7 @@ const CountryEntryTooltipComponent = ({
   countryISO,
   tooltipPosition,
   handleTooltipClose,
-  handleExploreCountryClick }) => {
+  onExploreCountryClick }) => {
 const tooltipref = useRef(null);
 const [tooltip, setTooltip] = useState(null);
 
@@ -45,7 +45,7 @@ useEffect(() => {
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose}/>
       <button
         className={styles.tooltipExplore}
-        onClick={handleExploreCountryClick}
+        onClick={onExploreCountryClick}
       >
         explore
       </button>

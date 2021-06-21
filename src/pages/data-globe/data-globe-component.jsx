@@ -1,21 +1,30 @@
+// dependencies
 import React from 'react';
 import loadable from '@loadable/component'
-
-import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
-
+// components
+import DataScene from 'scenes/data-scene';
 import UserDataModal from 'components/user-data-modal';
-const CountryScene = loadable(() => import('scenes/country-scene'));
-const DataScene = loadable(() => import('scenes/data-scene'));
+import TutorialModal from 'components/tutorial/tutorial-modal';
+import Switcher from 'components/switcher';
+import HalfEarthLogo from 'components/half-earth-logo';
+// constants
+import { useMobile } from 'constants/responsive';
+//styles
+import uiStyles from 'styles/ui.module.scss';
+// Dynamic imports
+const About = loadable(() => import('components/about'));
+const InfoModal = loadable(() => import('components/modal-metadata'));
+
 
 const DataGlobeComponent = ({
   sceneMode,
   countryISO,
+  userConfig,
   countryName,
   hasMetadata,
+  openedModal,
   activeLayers,
   activeOption,
-  countryExtent,
-  openedModal,
   handleMapLoad,
   sceneSettings,
   isSidebarOpen,
@@ -26,57 +35,41 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   handleGlobeUpdating,
   countedActiveLayers,
-  localSceneActiveTab,
   isBiodiversityActive,
   isLandscapeSidebarCollapsed,
-  countryChallengesSelectedKey,
-  userConfig
-}) => (
-  <>
-    {sceneMode === LOCAL_SCENE && (
-      <CountryScene
-        countryISO={countryISO}
-        userConfig={userConfig}
-        countryName={countryName}
-        hasMetadata={hasMetadata}
-        activeLayers={activeLayers}
-        openedModal={openedModal}
-        sceneSettings={sceneSettings}
-        countryExtent={countryExtent}
-        isGlobeUpdating={isGlobeUpdating}
-        isFullscreenActive={isFullscreenActive}
-        handleGlobeUpdating={handleGlobeUpdating}
-        localSceneActiveTab={localSceneActiveTab}
-        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-        countryChallengesSelectedKey={countryChallengesSelectedKey}
-      />
-    )}
-    {sceneMode === DATA_SCENE && (
+}) => {
+
+  return (
+    <>
+      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
       <DataScene
         sceneMode={sceneMode}
         userConfig={userConfig}
         countryISO={countryISO}
         countryName={countryName}
-        hasMetadata={hasMetadata}
-        activeLayers={activeLayers}
-        activeOption={activeOption}
-        isSidebarOpen={isSidebarOpen}
         openedModal={openedModal}
+        activeOption={activeOption}
+        activeLayers={activeLayers}
         sceneSettings={sceneSettings}
+        isSidebarOpen={isSidebarOpen}
+        isBiodiversityActive={isBiodiversityActive}
+        countedActiveLayers={countedActiveLayers}
         activeCategory={activeCategory}
         selectedSpecies={selectedSpecies}
         isLandscapeMode={isLandscapeMode}
         isGlobeUpdating={isGlobeUpdating}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
-        countedActiveLayers={countedActiveLayers}
-        isBiodiversityActive={isBiodiversityActive}
-        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
-    )}
-    <UserDataModal />
-  </>
-);
+      {!useMobile() && <Switcher />}
+      <UserDataModal />
+      <TutorialModal />
+      {hasMetadata && <InfoModal />}
+      {!useMobile() && <About />}
+    </>
+  );
+}
 
 export default DataGlobeComponent;

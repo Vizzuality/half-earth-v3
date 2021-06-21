@@ -26,7 +26,13 @@ export const changeGlobe = createThunkAction(
     )
 );
 
+export const browsePage = createThunkAction(
+  'browsePage',
+  routerAction => (dispatch) => dispatch(routerAction)
+)
+
 export default {
   changeUI,
-  changeGlobe
+  changeGlobe,
+  browsePage
 }

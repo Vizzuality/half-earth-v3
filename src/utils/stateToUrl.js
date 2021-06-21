@@ -6,7 +6,7 @@ export const decodeUrlForState = url => {
   const params = qs.parse(url);
   Object.keys(params).forEach(key => {
     try {
-      paramsParsed[key] = JSON.parse(atob(params[key]));
+      paramsParsed[key] = JSON.parse(params[key]);
     } catch (err) {
       paramsParsed[key] = params[key];
     }
@@ -18,7 +18,7 @@ export const encodeStateForUrl = params => {
   const paramsParsed = {};
   Object.keys(params).forEach(key => {
     if (typeof params[key] === 'object') {
-      paramsParsed[key] = btoa(JSON.stringify(params[key]));
+      paramsParsed[key] = JSON.stringify(params[key]);
     } else {
       paramsParsed[key] = params[key];
     }

@@ -8,9 +8,18 @@ $menuFooterHeight: 65px;
 $landscapeSidebarCollapsedHeight: 175px;
 $scrollbar-width: 4px;
 
+.halfEarthLogoTopLeft {
+  position: absolute;
+  width: $he-project-logo-size;
+  height: $he-project-logo-size;
+  top: $layout-top-margin;
+  left: $site-gutter;
+  z-index: $bring-to-front;
+}
+
 .uiTopLeft {
   position: absolute;
-  top: $sidebar-top-margin;
+  top:  $ui-left-top;
   left: $site-gutter;
 }
 
@@ -22,7 +31,7 @@ $scrollbar-width: 4px;
 
 @mixin topLeft() {
   position: absolute;
-  top: $sidebar-top-margin;
+  top:  $ui-left-top;
   left: $site-gutter;
 }
 

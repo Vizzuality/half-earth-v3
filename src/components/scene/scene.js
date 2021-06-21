@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Component from './scene-component';
 import { loadModules } from 'esri-loader';
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-import * as urlActions from 'actions/url-actions';
+import urlActions from 'actions/url-actions';
 
 const actions = { ...urlActions };
 

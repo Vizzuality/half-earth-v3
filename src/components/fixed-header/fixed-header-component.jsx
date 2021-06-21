@@ -13,10 +13,9 @@ const BACK = 'BACK';
 
 const differentFixedHeaderHeights = ['Existing protection', 'Human pressures'];
 
-const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions, selectableTitle, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
+const FixedHeader = ({ closeSidebar, title, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
-  const [titleDropdownOpen, setTitleDropdownOpen] = useState(false)
   const isOnMobile = useMobile();
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
@@ -60,35 +59,6 @@ const FixedHeader = ({ closeSidebar, title, handleTitleOptionClick, titleOptions
               [styles.collapsedFlipToggleSwitchIcon]: isLandscapeSidebarCollapsed
             })}
           />
-        )}
-        {titleOptions && (
-          <ChevronIcon
-            onClick={() => setTitleDropdownOpen(!titleDropdownOpen)}
-            className={cx(styles.optionsToggle, {
-              [styles.openList]: titleDropdownOpen
-            })}
-          />
-        )}
-        {titleOptions && (
-          <div className={styles.dropdownWrapper}>
-            <ul
-              className={cx(styles.titleOptionsList, {
-                [styles.open]: titleDropdownOpen
-              })}
-            >
-              {titleOptions.map((option) => {
-                return (
-                  <li
-                    key={option.name}
-                    className={styles.titleOptionItem}
-                    onClick={() => handleTitleOptionClick(option)}
-                  >
-                    {option.name}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
         )}
       </div>
       {title && <div className={styles.spacer} />}

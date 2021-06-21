@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { random } from 'lodash';
-import { selectUiUrlState } from 'selectors/location-selectors';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -9,26 +8,33 @@ const SPECIES_COLOR = {
   reptiles: '#3AA8EE'
 }
 
-const getModalOpen = createSelector(selectUiUrlState, uiSettings => uiSettings.openedModal);
-
-const selectCountryData = ({ countryData }, { countryISO }) => {
-  if (!countryISO || !countryData) return null;
-  return (countryData.data && countryData.data[countryISO]) || null;
-}
+const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
+const selectCountriesData = ({ countryData }) => countryData && countryData.data;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
+const getCountryData = createSelector(
+  [selectCountriesData, selectCountryIso],
+  (countriesData, countryIso) => {
+    if (!countryIso || !countriesData) return null;
+    return (countriesData && countriesData[countryIso]) || null;
+  }
+)
 
+const getCountryName = createSelector(getCountryData, countryData => {
+  if (!countryData) return null;
+  return countryData.NAME_0;
+})
 
-const getDescription = createSelector(selectCountryData, countryData => {
+const getDescription = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData.sentence;
 })
 
-const getHasPriority = createSelector(selectCountryData, countryData => {
+const getHasPriority = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData.has_priority === 1;
 })
 
-const getPriorityAreasSentence = createSelector([selectCountryData, getHasPriority], (countryData, hasPriority) => {
+const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority], (countryData, hasPriority) => {
   if (!countryData) return null;
   return hasPriority ?
   `The brightly colored map layer presents one possible configuration
@@ -42,44 +48,44 @@ const getPriorityAreasSentence = createSelector([selectCountryData, getHasPriori
   and can contribute to creating a global conservation network with more equity between countries.` ;
 })
 
-const getSpeciesProtectionIndex = createSelector(selectCountryData, countryData => {
+const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData.SPI;
 })
 
-const getCurrentProtection = createSelector(selectCountryData, countryData => {
+const getCurrentProtection = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData.prop_protected));
 })
 
-const getProtectionNeeded = createSelector(selectCountryData, countryData => {
+const getProtectionNeeded = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData.protection_needed));
 })
 
-const getSPIMean = createSelector(selectCountryData, countryData => {
+const getSPIMean = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData.spi_mean));
 })
 
-const getNumberOfVertebrates = createSelector(selectCountryData, countryData => {
+const getNumberOfVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData.N_SPECIES.toLocaleString('en');
 })
 
-const getNumberOfEndemicVertebrates = createSelector(selectCountryData, countryData => {
+const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData.total_endemic.toLocaleString('en');
 })
 
-const getHighlightedSpeciesSentence = createSelector(selectCountryData, countryData => {
+const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return `Here are some example species of significant conservation interest for each taxonomic group.
    These species are either endemic to ${countryData.NAME_0} or have small range sizes`;
 })
 
 
-const getHighlightedSpeciesRandomNumber = createSelector(selectCountryData, countryData => {
+const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   const max = countryData.max_highlited_sp;
   const highlightedSpeciesRandomNumber = random(1, max);
@@ -99,15 +105,15 @@ const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, 
   return endemicVertebrates === '1' ? `${endemicVertebrates} is` : `${endemicVertebrates} are`
 })
 
-const getTaxa = (taxa) => createSelector(selectCountryData, countryData => {
+const getTaxa = (taxa) => createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData[taxa];
 })
-const getEndemicSpecies = (taxa) => createSelector(selectCountryData, countryData => {
+const getEndemicSpecies = (taxa) => createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return countryData[`endemic_${taxa}`];
 })
-const getSpeciesChartData = createSelector(selectCountryData, countryData => {
+const getSpeciesChartData = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
 
 const {
@@ -140,11 +146,12 @@ const mapStateToProps = createStructuredSelector({
   mammals: getTaxa('mammals'),
   hasPriority: getHasPriority,
   reptiles: getTaxa('reptiles'),
-  countryData: selectCountryData,
+  countryData: getCountryData,
+  countryName: getCountryName,
   SPI: getSpeciesProtectionIndex,
   amphibians: getTaxa('amphibians'),
   indexStatement: getIndexStatement,
-  openedModal: getModalOpen,
+  // openedModal: getModalOpen,
   countryDescription: getDescription,
   protectionNeeded: getProtectionNeeded,
   speciesChartData: getSpeciesChartData,

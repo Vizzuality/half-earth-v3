@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Modal, Button } from 'he-components';
 import cx from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { getShortenUrl } from 'services/bitly';
 
 import styles from './share-modal-styles.module';
 
@@ -13,7 +12,6 @@ const EMBED = 'embed';
 const ShareModalComponent = ({ handleClose, isOpen, shareSocialMedia }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
-  const [shortLink, setShortLink] = useState(null);
   const [shareUrl, setShareUrl] = useState(null);
 
   const isActiveTabLink = activeTab === LINK;
@@ -27,22 +25,11 @@ const ShareModalComponent = ({ handleClose, isOpen, shareSocialMedia }) => {
     isActiveTabLink ? setCopied({ [LINK]: true, [EMBED]: false }) : setCopied({ [LINK]: false, [EMBED]: true });
   }
 
-  // Use bitly service to get a short link
   useEffect(() => {
-    if (isOpen) {
-      getShortenUrl(currentLocation).then((link) => {
-        setShortLink(link);
-      });
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (shortLink) {
-      const iframe = `<iframe id="map-iframe" src="${currentLocation}" />`;
-      const urlCopy = activeTab === LINK ? shortLink : iframe;
-      setShareUrl(urlCopy);
-    }
-  },[shortLink, activeTab])
+    const iframe = `<iframe id="map-iframe" src="${currentLocation}" />`;
+    const urlCopy = activeTab === LINK ? currentLocation : iframe;
+    setShareUrl(urlCopy);
+  },[activeTab])
 
   // responsible for transitioning from COPIED text to COPY after some time
   useEffect(() => {
@@ -72,7 +59,7 @@ const ShareModalComponent = ({ handleClose, isOpen, shareSocialMedia }) => {
       <div className={styles.socialMediaContainer}>
         {shareSocialMedia.map(socialMedia => (
           <button
-            onClick={() => window.open(`${socialMedia.link}${encodeURIComponent(shortLink)}`)}
+            onClick={() => window.open(`${socialMedia.link}${encodeURIComponent(currentLocation)}`)}
             className={styles.iconBackground}
             key={socialMedia.alt}
           >

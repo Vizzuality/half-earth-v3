@@ -33,7 +33,7 @@ const UserDataModalComponent = ({ isModalOpen, handleModalClose, storeFirstStepD
       <p className={styles.bodyText}>We are trying to improve your experience on the map. Can you tell us a bit about yourself?</p>
       <div className={styles.sectionsWrapper}>
         {USER_MODAL_QUESTIONS.map(q => (
-          <section className={styles.questionSection}>
+          <section key={q.userStateKey} className={styles.questionSection}>
             <p className={styles.question}>{q.text}
               {userData[q.userStateKey].slug === 'placeholder' && q.required && requiredFieldsWarning &&
                 <span className={styles.requiredWarning}>Required fields are empty!</span>

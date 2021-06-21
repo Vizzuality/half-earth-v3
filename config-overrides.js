@@ -17,19 +17,19 @@ module.exports = function override(config, env) {
       logos: path.resolve(__dirname, 'src/assets/logos'),
       styles: path.resolve(__dirname, 'src/styles'),
       router: path.resolve(__dirname, 'src/router'),
-      selectors: path.resolve(__dirname, 'src/selectors'),
+      selectors: path.resolve(__dirname, 'src/store/selectors'),
       sideEffects: path.resolve(__dirname, 'src/side-effects'),
-      actions: path.resolve(__dirname, 'src/actions'),
+      actions: path.resolve(__dirname, 'src/store/actions'),
       utils: path.resolve(__dirname, 'src/utils'),
       constants: path.resolve(__dirname, 'src/constants'),
-      redux_modules: path.resolve(__dirname, 'src/redux-modules'),
+      redux_modules: path.resolve(__dirname, 'src/store/redux-modules'),
       services: path.resolve(__dirname, 'src/services'),
-      reducerRegistry: path.resolve(__dirname, 'src/reducerRegistry'),
-      sagaRegistry: path.resolve(__dirname, 'src/sagaRegistry'),
+      reducerRegistry: path.resolve(__dirname, 'src/store/reducerRegistry'),
+      sagaRegistry: path.resolve(__dirname, 'src/store/sagaRegistry'),
       sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
       hooks: path.resolve(__dirname, 'src/hooks'),
       images: path.resolve(__dirname, 'src/assets/images'),
-      providers: path.resolve(__dirname, 'src/providers')
+      'store-middleware': path.resolve(__dirname, 'src/store/store-middleware')
     }
   }
   config = rewireReactHotLoader(config, env);

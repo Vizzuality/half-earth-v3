@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
-import { getCountryISO } from 'pages/data-globe/data-globe-selectors';
 import get from 'lodash/get';
 import { SORT } from 'components/header-item';
 import sortBy from 'lodash/sortBy';
+const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
 
 export const getSearchTerm = ({ location }) =>
 (location && get(location, 'query.ui.speciesModalSearch')) || null;
@@ -13,7 +13,7 @@ const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
 
 export const getCountryData = createSelector(
-  [selectCountriesData, getCountryISO],
+  [selectCountriesData, selectCountryIso],
   (countriesData, iso) => {
     if (!countriesData) return null;
     const countryData = countriesData[iso];
