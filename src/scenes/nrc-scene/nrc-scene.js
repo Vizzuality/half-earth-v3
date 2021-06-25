@@ -7,10 +7,12 @@ import EsriFeatureService from 'services/esri-feature-service';
 import { COUNTRIES_GEOMETRIES_SERVICE_URL } from 'constants/layers-urls';
 // Actions
 import countriesGeometriesActions from 'redux_modules/countries-geometries';
+import * as urlActions from 'actions/url-actions';
 import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-actions';
+import { DATA } from 'router'
 
 import mapStateToProps from './nrc-scene-selectors';
-const actions = {...countriesGeometriesActions, visitCountryReportCardAnalyticsEvent }
+const actions = {...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
 
 const NrcSceneContainer = (props) => {
   const {
@@ -28,6 +30,10 @@ const NrcSceneContainer = (props) => {
     }).then((features) => {
       const { geometry } = features[0];
       setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
+    }).catch(error => {
+      console.error('Inexistent country ISO code on the URL. Redirected to main page')
+      const { browsePage } = props;
+      browsePage({ type: DATA });
     })
   }, [countryISO])
 
