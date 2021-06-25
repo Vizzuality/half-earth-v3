@@ -37,7 +37,7 @@ const NationalReportPdf = ({
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
         <span className={styles.countryName}>{countryName}</span>
       </section>
-      <HalfEarthLogo background className={styles.logo}/> 
+      <HalfEarthLogo withBackground className={styles.logo}/> 
       <section className={styles.date}>
         <span>
           {Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(new Date())}
