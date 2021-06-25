@@ -83,7 +83,7 @@ $gap: 20pt;
     grid-template-columns: repeat(10, 63pt);
     grid-template-rows: 30pt 78pt 13pt 100pt 73pt 168pt 15pt;
     grid-template-areas:
-    "hd hd hd hd hd hd hd hd hd date"
+    "hd hd hd hd hd hd hd hd date logo"
     "index index index index rg rg rg sp sp sp"
     "intro intro intro intro cmp cmp cmp sp sp sp"
     "exp exp exp exp cmp cmp cmp sp sp sp"
@@ -103,6 +103,12 @@ $gap: 20pt;
     .date {
       grid-area: date;
       text-align: right;
+    }
+
+    .logo {
+      grid-area: logo;
+      width: $he-project-logo-size;
+      height: $he-project-logo-size;
     }
 
     .indexWrapper {
