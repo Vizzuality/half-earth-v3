@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './national-report-pdf.module.scss';
 import HighLightedSpeciesList from 'components/highlighted-species-list';
+import HalfEarthLogo from 'components/half-earth-logo';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
@@ -36,6 +37,7 @@ const NationalReportPdf = ({
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
         <span className={styles.countryName}>{countryName}</span>
       </section>
+      <HalfEarthLogo background className={styles.logo}/> 
       <section className={styles.date}>
         <span>
           {Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(new Date())}

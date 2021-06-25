@@ -31,7 +31,7 @@ const NationalReportCard = ({
   countryChallengesSelectedKey,
 }) => (
   <>
-    <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
+    <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/> 
     <LocalSceneSidebar
       countryISO={countryISO}
       openedModal={openedModal}
