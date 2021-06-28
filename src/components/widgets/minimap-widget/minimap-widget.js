@@ -4,7 +4,7 @@ import { MODALS } from 'constants/ui-params';
 import { connect } from 'react-redux';
 
 import MinimapWidgetComponent from './minimap-widget-component';
-import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'utils/minimap-utils';
+import { minimapLayerStyles, synchronizeWebScenes } from 'utils/minimap-utils';
 import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
 import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
@@ -23,7 +23,6 @@ const MinimapWidget = (props) => {
 
   const handleMapLoad = (map, view, globeView ) => {
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
-    disableInteractions(view); // disable all interactions on the minimap globe
     loadModules(["esri/layers/VectorTileLayer"]).then(([VectorTileLayer]) => { // load two-colors vector-tile-layer into minimap globe
       const minimapLayer = new VectorTileLayer(minimapLayerStyles);
       map.add(minimapLayer);
