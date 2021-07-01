@@ -8,6 +8,20 @@ export default {
     },
     starsEnabled: false,
   },
+  constraints: {
+    altitude: {
+      max: 12500000,
+      min: 12500000
+    },
+    tilt: {
+      max: 0
+    }
+  },
+   // Disable mouse-wheel and single-touch map navigation.
+   navigation: {
+    mouseWheelZoomEnabled: false,
+    browserTouchPanEnabled: false
+  },
   zoom: 0,
   ui: {
     components: []
