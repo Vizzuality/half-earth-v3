@@ -16,6 +16,12 @@ const RankingChartContainer = (props) => {
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
 
   useEffect(() => {
+    const { countryISO, data } = props;
+    const newIndex = data.findIndex(d => d.iso === countryISO);
+    setScrollIndex(newIndex);
+  }, [])
+
+  useEffect(() => {
     if (data && searchTerm) {
       const newIndex = data.findIndex(d => d.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
       setScrollIndex(newIndex);
