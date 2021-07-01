@@ -129,7 +129,7 @@ const RankingChart = ({
           <div className={styles.table}>
             {data.map((d, i) => (
               <div className={cx(styles.row, {
-                [styles.found]: scrollIndex === i,
+                [styles.selectedCountry]: countryISO === d.iso,
               }
               )} key={d.name}>
                 <button
@@ -138,6 +138,7 @@ const RankingChart = ({
                 >
                   <span
                     className={cx(styles.spiCountryIndex, {
+                      [styles.found]: scrollIndex === i,
                       [styles.selectedCountry]: countryISO === d.iso,
                     })}
                   >
@@ -145,6 +146,7 @@ const RankingChart = ({
                   </span>
                   <span
                     className={cx(styles.spiCountryName, {
+                      [styles.found]: scrollIndex === i,
                       [styles.selectedCountry]: countryISO === d.iso,
                     })}
                   >
