@@ -26,7 +26,7 @@ const CountryMaskLayer = props => {
         graphicsLayer.graphics = [countryMask];
       } else {
         loadModules(["esri/Graphic", "esri/geometry/geometryEngine"]).then(async ([Graphic, geometryEngine]) => {
-          const expandedExtent = countryBorder.extent.clone().expand(1.1)
+          const expandedExtent = countryBorder.extent.clone().expand(10)
           const maskGeometry = await geometryEngine.difference(expandedExtent, countryBorder);
           const maskGraphic = createGraphic(Graphic, MASK_STYLES, maskGeometry);
           graphicsLayer.graphics = [maskGraphic];
