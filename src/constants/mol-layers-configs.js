@@ -79,7 +79,7 @@ const LAYER_TYPES = {
   IMAGERY_LAYER: 'ImageryLayer'
 }
 
-export const DEFAULT_OPACITY = 0.6;
+export const DEFAULT_OPACITY = 0.8;
 export const BASEMAP_OPACITY = 1;
 
 export const LAYERS_CATEGORIES = {
@@ -851,16 +851,16 @@ const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
 }
 
 export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
-  '#0664F6',
-  '#2172DB',
-  '#3D80BF',
-  '#588EA4',
-  '#749C89',
-  '#8FAB6D',
-  '#ABB952',
-  '#C6C737',
-  '#E2D51B',
-  "#FDE300"
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(0, 133, 170, .6)',
+  'rgba(0, 133, 170, .6)',
+  'rgba(0, 226, 136, .8)',
+  'rgba(0, 226, 136, .8)',
+  'rgb(236, 255, 26)',
 ]
 export const PRIORITY_PLACES_COLOUR_RAMP = [
   '#47039F',

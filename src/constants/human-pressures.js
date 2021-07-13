@@ -11,13 +11,10 @@ import {
 } from 'constants/layers-slugs';
 
 export const HUMAN_PRESSURES_COLOR_RAMP = [
-  "#282052",
-  "#3f3576",
-  "#826dba",
-  "#9f82ce",
-  "#b998dd",
-  "#d1afe8",
-  "#f3e0f7"
+  "rgba(0, 77, 168, 0.1)",
+  "rgba(166, 0, 212, 0.2)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgb(255, 191, 0)",
 ]
 
 const RAINFED = 'Rainfed agriculture';
@@ -69,40 +66,27 @@ export const legendSingleRasterTitles = {
   [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: COMMERCIAL_FISHING,
   [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: ARTISANAL_FISHING,
 }
+const getLegendGradient = (gradientSteps, lowValue, highValue) => {
+  const stepsLength = gradientSteps.length;
+  return gradientSteps.map((color, stepIndex) => ({
+    color,
+    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
+  }))
+}
 
+const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
+  if (stepIndex === 0) {
+    return lowValue;
+  } else if (stepIndex === stepsLength -1) {
+    return highValue;
+  } else {
+    return '';
+  }
+}
 export const legendConfigs = {
   [MARINE_AND_LAND_HUMAN_PRESSURES]: {
     groupedLayer: true,
     type: "gradient",
-    items: [
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[0],
-        value: "0% use"
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[1],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[2],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[3],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[4],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[5],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[6],
-        value: "100% use"
-      }
-    ]
+    items: getLegendGradient(HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
   }
 }
