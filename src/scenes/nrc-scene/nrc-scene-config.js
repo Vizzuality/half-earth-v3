@@ -7,14 +7,16 @@ import {
   COUNTRY_PRIORITY_LAYER,
 } from 'constants/layers-slugs';
 
+import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js'
+
 export default {
   activeLayers: [
     { title: GRAPHIC_LAYER },
     { title: COUNTRY_MASK_LAYER },
     { title: CITIES_LABELS_LAYER },
     { title: LANDSCAPE_FEATURES_LABELS_LAYER },
-    { title: COUNTRY_PRIORITY_LAYER, opacity: 0.4 },
-    { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: 0.4 }
+    { title: COUNTRY_PRIORITY_LAYER, opacity: DEFAULT_OPACITY },
+    { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY }
   ],
   padding: {
     bottom: 60,
@@ -32,7 +34,6 @@ export default {
   ui: {
     components: []
   },
-  viewingMode: 'local',
   constraints: {
     tilt: {
       max: 60
