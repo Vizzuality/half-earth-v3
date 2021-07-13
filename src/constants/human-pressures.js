@@ -11,26 +11,36 @@ import {
   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 } from 'constants/layers-slugs';
 
-export const HUMAN_PRESSURES_COLOR_RAMP = [
+import {
+  getLegendGradient
+} from 'utils/legend-utils';
+
+export const LAND_HUMAN_PRESSURES_COLOR_RAMP = [
+  "rgba(0, 77, 168, 0.1)",
   "rgba(0, 77, 168, 0.1)",
   "rgba(166, 0, 212, 0.2)",
+  "rgba(166, 0, 212, 0.2)",
+  "rgba(166, 0, 212, 0.2)",
   "rgba(255, 0, 0, 0.5)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgb(255, 191, 0)",
   "rgb(255, 191, 0)",
 ]
 
 export const MARINE_HUMAN_PRESSURES_COLOR_RAMP = [
   "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(0, 14, 224, 0.25)",
+  "rgba(0, 14, 224, 0.25)",
   "rgba(0, 14, 224, 0.25)",
   "rgb(0, 197, 255)",
   "rgb(0, 255, 230)",
 ]
 
-export const LAND_HUMAN_PRESSURES_COLOR_RAMP = [
-  "rgba(0, 77, 168, 0.1)",
-  "rgba(166, 0, 212, 0.2)",
-  "rgba(255, 0, 0, 0.5)",
-  "rgb(255, 191, 0)",
-]
 
 const RAINFED = 'Rainfed agriculture';
 const IRRIGATED = 'Irrigated agriculture';
@@ -60,7 +70,10 @@ export const humanPressuresLandUse = [
 ];
 
 export const humanPressuresMarine = [
-  { name: LAND_DRIVERS, value: PRESSURES_SLUGS.land, slug: PRESSURES_SLUGS.land },
+  { name: LAND_DRIVERS,
+    value: PRESSURES_SLUGS.land,
+    slug: PRESSURES_SLUGS.land
+  },
   { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
   { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
   { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
@@ -81,23 +94,7 @@ export const legendSingleRasterTitles = {
   [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: COMMERCIAL_FISHING,
   [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: ARTISANAL_FISHING,
 }
-const getLegendGradient = (gradientSteps, lowValue, highValue) => {
-  const stepsLength = gradientSteps.length;
-  return gradientSteps.map((color, stepIndex) => ({
-    color,
-    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
-  }))
-}
 
-const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
-  if (stepIndex === 0) {
-    return lowValue;
-  } else if (stepIndex === stepsLength -1) {
-    return highValue;
-  } else {
-    return '';
-  }
-}
 export const legendConfigs = {
   [MARINE_HUMAN_PRESSURES]: {
     groupedLayer: true,

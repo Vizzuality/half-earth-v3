@@ -1,0 +1,22 @@
+@import 'styles/settings';
+
+.landPressures {
+  input[type="checkbox"]:checked + label::before {
+      background: $human-pressures-gradient;
+      border: 2px solid $white; 
+  }
+}
+
+.marinePressures {
+  input[type="checkbox"]:checked + label::before {
+      background: $marine-pressures-gradient;
+      border: 2px solid $white; 
+  }
+}
+
+.protectedAreas {
+  input[type="checkbox"]:checked + label::before {
+    background: $protected-areas;
+    border: 2px solid $white; 
+  }
+}

@@ -72,6 +72,10 @@ import {
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
+import {
+  getLegendGradient
+} from 'utils/legend-utils';
+
 const LAYER_TYPES = {
   FEATURE_LAYER: 'FeatureLayer',
   TILE_LAYER: 'TileLayer',
@@ -832,24 +836,6 @@ export const layersConfig = {
   },
 }
 
-const getLegendGradient = (gradientSteps, lowValue, highValue) => {
-  const stepsLength = gradientSteps.length;
-  return gradientSteps.map((color, stepIndex) => ({
-    color,
-    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
-  }))
-}
-
-const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
-  if (stepIndex === 0) {
-    return lowValue;
-  } else if (stepIndex === stepsLength -1) {
-    return highValue;
-  } else {
-    return '';
-  }
-}
-
 export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
   'rgba(9, 0, 114, .25)',
   'rgba(9, 0, 114, .25)',
@@ -861,16 +847,6 @@ export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
   'rgba(0, 226, 136, .8)',
   'rgba(0, 226, 136, .8)',
   'rgb(236, 255, 26)',
-]
-export const PRIORITY_PLACES_COLOUR_RAMP = [
-  '#47039F',
-  '#9C179E',
-  '#BD3786',
-  '#D8576B',
-  '#ED7953',
-  '#FA9E3B',
-  '#FDC926',
-  '#F0F921'
 ]
 
 export const legendConfigs = {
@@ -927,44 +903,7 @@ export const legendConfigs = {
   },
   [SA_PROTEA_RARITY]: {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Protea regional rarity"
   },
   [SA_PROTEA_RICHNESS]: {

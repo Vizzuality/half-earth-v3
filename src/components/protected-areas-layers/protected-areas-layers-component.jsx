@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { WDPALayers } from 'constants/protected-areas';
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
-import styles from './protected-areas-layers-styles.module';
+import styles from 'styles/themes/checkboxes-theme.module';
 
 const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers }) => {
 
@@ -21,7 +21,7 @@ const ProtectedAreasLayers = ({ handleLayerToggle, activeLayers }) => {
       options={WDPALayers}
       alreadyChecked={alreadyChecked}
       handleClick={toggleLayer}
-      theme={styles}
+      theme={styles.protectedAreas}
       title='Conservation Areas'
       description='Protections classified according to their management objectives.'
     />
