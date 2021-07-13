@@ -1,5 +1,6 @@
 import {
-  MARINE_AND_LAND_HUMAN_PRESSURES,
+  LAND_HUMAN_PRESSURES,
+  MARINE_HUMAN_PRESSURES,
   URBAN_HUMAN_PRESSURES_TILE_LAYER,
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
@@ -11,6 +12,20 @@ import {
 } from 'constants/layers-slugs';
 
 export const HUMAN_PRESSURES_COLOR_RAMP = [
+  "rgba(0, 77, 168, 0.1)",
+  "rgba(166, 0, 212, 0.2)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgb(255, 191, 0)",
+]
+
+export const MARINE_HUMAN_PRESSURES_COLOR_RAMP = [
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(0, 14, 224, 0.25)",
+  "rgb(0, 197, 255)",
+  "rgb(0, 255, 230)",
+]
+
+export const LAND_HUMAN_PRESSURES_COLOR_RAMP = [
   "rgba(0, 77, 168, 0.1)",
   "rgba(166, 0, 212, 0.2)",
   "rgba(255, 0, 0, 0.5)",
@@ -84,9 +99,16 @@ const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
   }
 }
 export const legendConfigs = {
-  [MARINE_AND_LAND_HUMAN_PRESSURES]: {
+  [MARINE_HUMAN_PRESSURES]: {
     groupedLayer: true,
+    group: MARINE_HUMAN_PRESSURES,
     type: "gradient",
-    items: getLegendGradient(HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
-  }
+    items: getLegendGradient(MARINE_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
+  },
+  [LAND_HUMAN_PRESSURES]: {
+    groupedLayer: true,
+    group: LAND_HUMAN_PRESSURES,
+    type: "gradient",
+    items: getLegendGradient(LAND_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
+  },
 }
