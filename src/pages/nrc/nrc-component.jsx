@@ -5,7 +5,6 @@ import loadable from '@loadable/component'
 import Legend from 'components/legend';
 import About from 'components/about';
 import RankingChart from 'components/ranking-chart';
-import UserDataModal from 'components/user-data-modal';
 import NationalReportCardScene from 'scenes/nrc-scene';
 import HalfEarthLogo from 'components/half-earth-logo';
 import LocalSceneSidebar from 'components/local-scene-sidebar';
@@ -31,7 +30,7 @@ const NationalReportCard = ({
   countryChallengesSelectedKey,
 }) => (
   <>
-    <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
+    <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/> 
     <LocalSceneSidebar
       countryISO={countryISO}
       openedModal={openedModal}
@@ -87,7 +86,6 @@ const NationalReportCard = ({
       <InfoModal />
     )}
     {!useMobile() && <About className={styles.hideOnPrint} />}
-    <UserDataModal />
   </>
 );
 

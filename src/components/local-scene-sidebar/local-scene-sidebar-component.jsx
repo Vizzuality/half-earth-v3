@@ -55,7 +55,10 @@ const LocalSceneSidebarComponent = ({
       />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
-        <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+        <div className={styles.flagWrapper}>
+          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+          <span className={styles.nrcTitle}>National report card of</span>
+        </div>
         {countryName && <p className={styles.countryName}>{countryName}</p>}
       </div>
       <Tabs

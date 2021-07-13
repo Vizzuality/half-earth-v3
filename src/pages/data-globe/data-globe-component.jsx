@@ -3,7 +3,6 @@ import React from 'react';
 import loadable from '@loadable/component'
 // components
 import DataScene from 'scenes/data-scene';
-import UserDataModal from 'components/user-data-modal';
 import TutorialModal from 'components/tutorial/tutorial-modal';
 import Switcher from 'components/switcher';
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -64,7 +63,6 @@ const DataGlobeComponent = ({
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
       {!useMobile() && <Switcher />}
-      <UserDataModal />
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!useMobile() && <About />}

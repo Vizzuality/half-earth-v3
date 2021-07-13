@@ -70,7 +70,7 @@ const SceneContainer = (props) => {
     let watchHandle;
     if (view && view.center && !urlParamsUpdateDisabled) {
       loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-        watchUtils.whenTrue(view, "stationary", function() {
+        watchHandle = watchUtils.whenTrue(view, "stationary", function() {
           const { longitude, latitude } = view.center;
           changeGlobe({ center: [longitude, latitude], zoom: view.zoom });
         });

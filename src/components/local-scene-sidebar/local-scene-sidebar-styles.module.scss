@@ -34,7 +34,7 @@
 
 .loadingText {
   @extend %bodyText;
-  margin-bottom: 20px;
+  margin-bottom: $site-gutter;
   color: $white;
 }
 
@@ -44,10 +44,23 @@
   align-items: baseline;
 }
 
+.flagWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: $site-gutter;
+}
+
 .flag {
   width: 30px;
   margin-left: $site-gutter;
   position: relative;
+}
+
+.nrcTitle {
+  @extend %title;
+  color: $white;
+  margin-left: $paragraph-gutter;
+  padding-top: 5px;
 }
 
 .countryName {
