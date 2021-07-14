@@ -27,6 +27,7 @@ const NationalReportCard = ({
   isFullscreenActive,
   handleGlobeUpdating,
   localSceneActiveTab,
+  countryTooltipDisplayFor,
   countryChallengesSelectedKey,
 }) => (
   <>
@@ -47,6 +48,7 @@ const NationalReportCard = ({
       activeLayers={activeLayers}
       sceneSettings={sceneSettings}
       isFullscreenActive={isFullscreenActive}
+      countryTooltipDisplayFor={countryTooltipDisplayFor}
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
     />

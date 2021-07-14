@@ -50,6 +50,7 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   countedActiveLayers,
   isBiodiversityActive,
+  countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed
 }) => {
 
@@ -116,9 +117,8 @@ const CountrySceneComponent = ({
           openedModal={openedModal}
         />
         <CountryEntryTooltip
-          countryISO={countryISO}
           countryName={countryName}
-          sceneMode={sceneMode}
+          countryTooltipDisplayFor={countryTooltipDisplayFor}
         />
         <LabelsLayer activeLayers={activeLayers} />
         {isLandscapeMode && (

@@ -11,32 +11,32 @@ import { NATIONAL_REPORT_CARD } from 'router'
 const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions}
 
 const CountryEntryTooltipContainer = props => {
-  const { countryISO } = props;
+  const { countryTooltipDisplayFor } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
 
   // Set country tooltip position
   useEffect(() => {
-    if (countryISO) {
+    if (countryTooltipDisplayFor) {
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
-        whereClause: `GID_0 = '${countryISO}'`,
+        whereClause: `GID_0 = '${countryTooltipDisplayFor}'`,
         returnGeometry: true
       }).then((features) => {
         const { geometry } = features[0];
         setTooltipPosition(geometry);
       })
     }
-  }, [countryISO])
+  }, [countryTooltipDisplayFor])
 
   const handleTooltipClose = () => {
     const { changeGlobe } = props;
-    changeGlobe({countryISO: null})
+    changeGlobe({countryTooltipDisplayFor: null})
   }
 
   const handleExploreCountryClick = () => {
-    const { countryISO, browsePage, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
+    const { countryTooltipDisplayFor, browsePage, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
     exploreCountryFromTooltipAnalyticsEvent({countryName});
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryTooltipDisplayFor }});
   };
 
   return (

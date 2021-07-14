@@ -5,7 +5,10 @@ import Widgets from 'components/widgets';
 import LabelsLayer from 'components/labels-layer';
 import CountryMaskLayer from 'components/country-mask-layer';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import CountryEntryTooltip from 'components/country-entry-tooltip';
+import CountriesBordersLayer from 'components/countries-borders-layer';
 import LocalSceneViewManager from 'components/local-scene-view-manager';
+import CountryLabelsLayer from 'components/country-labels-layer';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 // Constants
@@ -23,6 +26,7 @@ const CountrySceneComponent = ({
   countryBorder,
   sceneSettings,
   isFullscreenActive,
+  countryTooltipDisplayFor,
 }) => {
 
   return (
@@ -40,6 +44,19 @@ const CountrySceneComponent = ({
       <CountryMaskLayer
         countryISO={countryISO}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
+      />
+      <CountriesBordersLayer
+        countryISO={countryISO}
+        spatialReference={LOCAL_SPATIAL_REFERENCE}
+      />
+      <CountryEntryTooltip
+        countryTooltipDisplayFor={countryTooltipDisplayFor}
+        countryName="mocked country"
+      />
+      <CountryLabelsLayer
+        activeLayers={activeLayers}
+        countryISO={countryISO}
+        countryName={"mocked country"}
       />
       <TerrainExaggerationLayer exaggeration={3} />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />

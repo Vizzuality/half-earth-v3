@@ -30,6 +30,7 @@ const getUiSettings = createSelector([selectUiUrlState],
 
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
+export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
 const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
@@ -51,5 +52,6 @@ export default createStructuredSelector({
   isGlobeUpdating: getGlobeUpdating,
   speciesCategories: selectBiodiversityData,
   localSceneActiveTab: getLocalSceneActiveTab,
+  countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
 });

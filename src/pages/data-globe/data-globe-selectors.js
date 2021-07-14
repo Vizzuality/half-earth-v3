@@ -32,6 +32,7 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
 })
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
+export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor);
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
@@ -84,6 +85,7 @@ export default createStructuredSelector({
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
   localSceneActiveTab: getLocalSceneActiveTab,
+  countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
