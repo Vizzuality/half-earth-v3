@@ -1,11 +1,9 @@
-// Protected areas layers. Based on WDPA and RAISIG data.
+// Protected areas layers.
 export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged-protected';
 export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
 export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
-export const RAISIG_AREAS_FEATURE_LAYER = 'RAISIG_areas_feature_layer';
-export const RAISIG_AREAS_VECTOR_TILE_LAYER = 'RAISIG_areas_vector_tile_layer';
 export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
 export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species';
 export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human_pressures_percentage';

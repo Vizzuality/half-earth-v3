@@ -13,8 +13,6 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  RAISIG_AREAS_FEATURE_LAYER,
-  RAISIG_AREAS_VECTOR_TILE_LAYER,
   GRID_CELLS_PROTECTED_AREAS_PERCENTAGE,
   GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER,
   GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE,
@@ -111,10 +109,6 @@ export const LAYERS_URLS = {
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/VectorTileServer',
   [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/FeatureServer', 
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
-  [RAISIG_AREAS_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/RAISG_Tls/FeatureServer',
-  [RAISIG_AREAS_VECTOR_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Territorios_Ind%C3%ADgenas_RAISG/VectorTileServer',
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',
   [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]:
