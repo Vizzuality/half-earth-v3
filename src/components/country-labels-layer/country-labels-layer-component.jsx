@@ -7,7 +7,7 @@ import {
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, countryName, changeGlobe, activeLayers } = props;
+  const { map, countryName, countryISO, changeGlobe, activeLayers } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [countryLabelsLayer, setCountryLabelsLayer] = useState(null)
@@ -32,6 +32,8 @@ const CountryLabelsLayerComponent = props => {
         }
       });
       setLabelingInfo(_labelingInfo);
+    }).catch((error) => {
+      console.warn(error)
     })
   }, [countryName]);
 
@@ -41,6 +43,9 @@ const CountryLabelsLayerComponent = props => {
       layer.labelsVisible = true;
       layer.minScale = 37500000;
       layer.labelingInfo = [labelingInfo];
+      if (countryISO) {
+        layer.definitionExpression = `NOT GID_0 = '${countryISO}'`;
+      }
       layer.renderer = {
         type: 'simple',
         symbol: {
