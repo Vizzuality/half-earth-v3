@@ -4,9 +4,7 @@ import {
   MERGED_WDPA_VECTOR_TILE_LAYER
 } from 'constants/layers-slugs';
 
-export const PROTECTED_AREAS_COLOR = '#FF6C47';
-export const COMMUNITY_AREAS_COLOR = '#FCC44A';
-export const MERGED_WDPA_COLOR = "#008604";
+export const PROTECTED_AREAS_COLOR = '#008604';
 export const NOT_UNDER_CONSERVATION_COLOR = '#6C828F';
 export const WDPALayers = [
   { 
@@ -35,7 +33,7 @@ export const legendConfigs = {
     items: [
       {
         name: "Community-based",
-        color: COMMUNITY_AREAS_COLOR
+        color: PROTECTED_AREAS_COLOR
       }
     ],
     title: "Community-based protected areas",
@@ -58,7 +56,7 @@ export const legendConfigs = {
     items: [
       {
         name: "",
-        color: MERGED_WDPA_COLOR
+        color: PROTECTED_AREAS_COLOR
       }
     ],
     title: "Protected Areas",

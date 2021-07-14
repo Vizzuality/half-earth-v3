@@ -7,7 +7,7 @@ import { layerToggleAnalyticsEvent } from 'actions/google-analytics-actions';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
-import { PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
+import { PROTECTED_AREAS_COLOR } from 'constants/protected-areas';
 
 import * as urlActions from 'actions/url-actions';
 
@@ -46,7 +46,7 @@ const ConservationEffortsWidget = (props) => {
   useEffect(() => {
     const svg = findInDOM('conservation-widget');
     const orangeSlice = findInDOM(PROTECTED_AREAS_COLOR);
-    const yellowSlice = findInDOM(COMMUNITY_AREAS_COLOR);
+    const yellowSlice = findInDOM(PROTECTED_AREAS_COLOR);
 
     if (svg && orangeSlice) {
       if (orangeActive && yellowActive && orangeSlice && yellowSlice) {
