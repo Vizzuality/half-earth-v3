@@ -11,7 +11,7 @@ export const COUNTRY_BORDER_STYLES = {
   fillOpacity: 0,
   outlineColor: [216, 216, 216],
   outlineOpacity: 1,
-  outlineWidth: 0.5
+  outlineWidth: 1
 }
 
 export const GRID_CELL_STYLES = {

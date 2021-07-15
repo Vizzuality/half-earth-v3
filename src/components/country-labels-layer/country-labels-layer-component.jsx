@@ -7,7 +7,7 @@ import {
 import { COUNTRIES_LABELS_FEATURE_LAYER } from 'constants/layers-slugs';
 
 const CountryLabelsLayerComponent = props => {
-  const { map, countryName, countryISO, changeGlobe, activeLayers } = props;
+  const { map, countryISO, changeGlobe, activeLayers } = props;
 
   const [labelingInfo, setLabelingInfo] = useState(null)
   const [countryLabelsLayer, setCountryLabelsLayer] = useState(null)
@@ -35,7 +35,7 @@ const CountryLabelsLayerComponent = props => {
     }).catch((error) => {
       console.warn(error)
     })
-  }, [countryName]);
+  }, [countryISO]);
 
   useEffect(() => {
     const styleLayer = (layer) => {

@@ -6,7 +6,6 @@ import ShareModal from 'components/share-modal';
 import ShareModalButton from 'components/share-button';
 import styles from './fixed-header-styles.module.scss';
 
-import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import { useMobile } from 'constants/responsive';
 
 const BACK = 'BACK';

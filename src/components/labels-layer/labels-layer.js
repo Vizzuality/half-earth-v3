@@ -45,8 +45,8 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
 }
 
 const LabelsLayer = props => {
-  const { map, countryISO, activeLayers } = props;
-  const [labelsLayers, setLabelsLayers] = useState(null);
+  const { map,  activeLayers } = props;
+  const [ setLabelsLayers] = useState(null);
   useEffect(() => {
     const styleLayers = (layers) => {
       loadModules(["esri/layers/support/LabelClass"])
