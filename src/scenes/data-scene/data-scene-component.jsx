@@ -8,6 +8,7 @@ import Legend from 'components/legend';
 import Widgets from 'components/widgets';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
+import SpeciesRangeLayer from 'components/species-range-layer';
 import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -22,6 +23,7 @@ import { MobileOnly, useMobile } from 'constants/responsive';
 
 import styles from './data-scene-styles.module.scss';
 import animationStyles from 'styles/common-animations.module.scss';
+
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 const GridLayer = loadable(() => import('components/grid-layer'));
@@ -66,6 +68,7 @@ const CountrySceneComponent = ({
           activeLayers={activeLayers}
           userConfig={userConfig}
         />
+        <SpeciesRangeLayer />
         {isGlobeUpdating && <Spinner floating />}
         <DataGlobalSidebar
           activeLayers={activeLayers}
