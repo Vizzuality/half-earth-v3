@@ -74,7 +74,7 @@ export function getSpeciesRangeTiff(species_name, aoiFeature) {
         const jobId = jobInfo.jobId;
         GP.waitForJobCompletion(jobId).then(() => {
           GP.getResultData(jobId, 'range_extent').then((data) => {
-             resolve({jobId,data})
+             resolve({jobInfo,jobId,data})
            })
          }).catch(error => {
            console.log('jobCompletion error', error)
