@@ -45,7 +45,13 @@ const GridLayer = ({ view, setGridCellData, setGridCellGeometry }) => {
         "esri/Graphic",
         "esri/layers/GraphicsLayer"
       ]).then(([Graphic, GraphicsLayer]) => {
-        const _gridCellGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
+        const _gridCellGraphic = createGraphic(Graphic, {
+          fillColor: [147, 255, 95],
+          fillOpacity: 0,
+          outlineColor: [147, 255, 95],
+          outlineOpacity: 0,
+          outlineWidth: 2,
+        });
         const graphicsLayer = createGraphicLayer(GraphicsLayer, [_gridCellGraphic], GRAPHIC_LAYER);
         setGridCellGraphic(_gridCellGraphic);
         view.map.add(graphicsLayer);
