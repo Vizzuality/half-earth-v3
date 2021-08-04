@@ -21,6 +21,7 @@ const CountrySceneComponent = ({
   isVisible,
   countryISO,
   userConfig,
+  countryName,
   openedModal,
   activeLayers,
   countryBorder,
@@ -51,12 +52,11 @@ const CountrySceneComponent = ({
       />
       <CountryEntryTooltip
         countryTooltipDisplayFor={countryTooltipDisplayFor}
-        countryName="mocked country"
+        countryName={countryName}
       />
       <CountryLabelsLayer
         activeLayers={activeLayers}
         countryISO={countryISO}
-        countryName={"mocked country"}
       />
       <TerrainExaggerationLayer exaggeration={3} />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />

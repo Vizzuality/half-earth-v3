@@ -37,11 +37,12 @@ const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSett
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
-
+const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 
 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
+  countryName: getCountryName,
   userConfig: selectUserConfig,
   sceneLayers: getDataGlobeLayers,
   openedModal: getHalfEarthModalOpen,

@@ -20,6 +20,7 @@ const NationalReportCard = ({
   countryISO,
   userConfig,
   openedModal,
+  countryName,
   hasMetadata,
   activeLayers,
   sceneSettings,
@@ -45,6 +46,7 @@ const NationalReportCard = ({
       countryISO={countryISO}
       userConfig={userConfig}
       openedModal={openedModal}
+      countryName={countryName}
       activeLayers={activeLayers}
       sceneSettings={sceneSettings}
       isFullscreenActive={isFullscreenActive}
