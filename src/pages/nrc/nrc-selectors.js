@@ -11,6 +11,7 @@ const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 const selectUserConfig = ({ userConfig }) => userConfig || null;
 const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
+const selectActiveView = ({location}) => location.payload.view || NRC_UI_DEFAULTS.view;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
@@ -33,7 +34,6 @@ export const getActiveLayers = createSelector(getGlobeSettings, globeSettings =>
 export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
-const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
@@ -51,7 +51,7 @@ export default createStructuredSelector({
   countryExtent: selectCountryExtent,
   isGlobeUpdating: getGlobeUpdating,
   speciesCategories: selectBiodiversityData,
-  localSceneActiveTab: getLocalSceneActiveTab,
+  localSceneActiveTab: selectActiveView,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
 });

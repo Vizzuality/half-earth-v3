@@ -7,7 +7,7 @@ import metadataActions from 'redux_modules/metadata';
 import countryDataActions from 'redux_modules/country-data';
 import { downloadCountryPdfAnalyticsEvent, selectNRCSectionAnalyticsEvent } from 'actions/google-analytics-actions';
 import metadataConfig from 'constants/metadata';
-import { DATA } from 'router'
+import { DATA, NATIONAL_REPORT_CARD } from 'router'
 
 const actions = { ...urlActions, ...countryDataActions, ...metadataActions, downloadCountryPdfAnalyticsEvent };
 
@@ -23,8 +23,8 @@ const LocalSceneSidebarContainer = (props) => {
   }
 
   const handleTabSelection = slug => {
-    const { changeUI } = props;
-    changeUI({ localSceneActiveTab: slug });
+    const { browsePage, countryISO } = props;
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  slug }});
     selectNRCSectionAnalyticsEvent(slug);
   };
 
