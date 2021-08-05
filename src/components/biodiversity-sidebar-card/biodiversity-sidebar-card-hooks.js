@@ -15,6 +15,7 @@ export const useSelectLayersOnTabChange = ({
   );
 
   useEffect(() => {
+    if (!previousBiodiversityLayerVariant) return;
     const bioLayerIds = activeLayers
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
