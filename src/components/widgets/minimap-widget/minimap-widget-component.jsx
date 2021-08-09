@@ -5,7 +5,7 @@ import sceneSettings from './minimap-settings';
 
 const { REACT_APP_MINIMAP_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const MinimapWidgetComponent = ({ view: globeView, handleMapLoad, handleModalOpen }) => {
+const MinimapWidgetComponent = ({ view: globeView, handleMapLoad }) => {
   return (
     <div className={styles.wrapper}>
       <Scene

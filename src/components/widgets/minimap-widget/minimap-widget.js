@@ -1,6 +1,5 @@
 import { loadModules } from 'esri-loader';
 import React from 'react';
-import { connect } from 'react-redux';
 
 import MinimapWidgetComponent from './minimap-widget-component';
 import { synchronizeWebScenes, updateMainViewExtentGraphic } from 'utils/minimap-utils';
@@ -34,4 +33,4 @@ const MinimapWidget = (props) => {
 
 
 
-export default connect(null, null)(MinimapWidget);
+export default MinimapWidget;
