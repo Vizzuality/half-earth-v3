@@ -58,14 +58,14 @@ const CountrySceneComponent = ({
   return (
     <>
       <Scene
+        onMapLoad={onMapLoad}
         sceneName={'data-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
-        onMapLoad={onMapLoad}
       >
         <ArcgisLayerManager
-          activeLayers={activeLayers}
           userConfig={userConfig}
+          activeLayers={activeLayers}
         />
         {isGlobeUpdating && <Spinner floating />}
         <DataGlobalSidebar
@@ -91,16 +91,16 @@ const CountrySceneComponent = ({
           <Slider />
         </MobileOnly>
         <LandscapeViewManager
-          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
-          isLandscapeMode={isLandscapeMode}
           countryISO={countryISO}
+          isLandscapeMode={isLandscapeMode}
+          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
         />
         <CountryLabelsLayer
-          activeLayers={activeLayers}
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          countryName={countryName}
           sceneMode={sceneMode}
+          countryISO={countryISO}
+          countryName={countryName}
+          activeLayers={activeLayers}
+          isLandscapeMode={isLandscapeMode}
         />
         <CountriesBordersLayer
           countryISO={countryISO}
@@ -108,13 +108,13 @@ const CountrySceneComponent = ({
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <Legend
-          isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
         />
         <Widgets
+          openedModal={openedModal}
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
-          openedModal={openedModal}
         />
         <CountryEntryTooltip
           countryName={countryName}

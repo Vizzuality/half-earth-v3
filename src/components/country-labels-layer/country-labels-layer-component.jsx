@@ -39,9 +39,9 @@ const CountryLabelsLayerComponent = props => {
 
   useEffect(() => {
     const styleLayer = (layer) => {
-      layer.opacity = 0.7;
+      layer.opacity = 0.9;
       layer.labelsVisible = true;
-      layer.minScale = 37500000;
+      layer.minScale = 36060039.65489027;
       layer.labelingInfo = [labelingInfo];
       if (countryISO) {
         layer.definitionExpression = `NOT GID_0 = '${countryISO}'`;
