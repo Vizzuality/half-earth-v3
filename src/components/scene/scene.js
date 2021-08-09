@@ -4,18 +4,20 @@ import Component from './scene-component';
 import { loadModules } from 'esri-loader';
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import urlActions from 'actions/url-actions';
+import sceneActions from 'redux_modules/scene';
 
-const actions = { ...urlActions };
+const actions = { ...urlActions, ...sceneActions };
 
 const SceneContainer = (props) => {
   const {
     sceneId,
     sceneName,
-    loaderOptions,
-    sceneSettings,
-    changeGlobe,
     onMapLoad,
     onViewLoad,
+    changeGlobe,
+    setSceneView,
+    loaderOptions,
+    sceneSettings,
     urlParamsUpdateDisabled
   } = props;
 
@@ -51,6 +53,7 @@ const SceneContainer = (props) => {
             ...sceneSettings
           });
           setView(_view);
+          setSceneView(_view);
         })
         .catch(err => {
           console.error(err);

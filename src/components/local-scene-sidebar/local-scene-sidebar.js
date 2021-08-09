@@ -13,13 +13,14 @@ const actions = { ...urlActions, ...countryDataActions, ...metadataActions, down
 
 const LocalSceneSidebarContainer = (props) => {
   const {
+    scene,
     browsePage,
     countryName,
     downloadCountryPdfAnalyticsEvent
   } = props;
 
   const handleSceneModeChange = () => {
-    browsePage({ type: DATA });
+    browsePage({ type: DATA, query: { globe: { center: [scene.view.center.longitude, scene.view.center.latitude], zoom: 4}}});
   }
 
   const handleTabSelection = slug => {
