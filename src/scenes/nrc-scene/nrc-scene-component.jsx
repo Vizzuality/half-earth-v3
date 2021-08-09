@@ -28,51 +28,48 @@ const CountrySceneComponent = ({
   sceneSettings,
   isFullscreenActive,
   countryTooltipDisplayFor,
-}) => {
-
-  return (
-    <Scene
-      sceneName={'nrc-scene'}
-      sceneSettings={sceneSettings}
-      loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+}) => (
+  <Scene
+    sceneName={'nrc-scene'}
+    sceneSettings={sceneSettings}
+    loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+    onMapLoad={onMapLoad}
+  >
+    <LocalSceneViewManager localGeometry={countryBorder} />
+    <ArcgisLayerManager
+      activeLayers={activeLayers}
+      userConfig={userConfig}
+    />
+    <CountryMaskLayer
+      countryISO={countryISO}
+      spatialReference={LOCAL_SPATIAL_REFERENCE}
+    />
+    <CountriesBordersLayer
+      countryISO={countryISO}
+      spatialReference={LOCAL_SPATIAL_REFERENCE}
+    />
+    <CountryEntryTooltip
+      countryTooltipDisplayFor={countryTooltipDisplayFor}
+      countryName={countryName}
+    />
+    <CountryLabelsLayer
+      activeLayers={activeLayers}
+      countryISO={countryISO}
+    />
+    <TerrainExaggerationLayer exaggeration={3} />
+    <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
+    {isVisible && 
+      <Widgets
+        activeLayers={activeLayers}
+        openedModal={openedModal}
+        isFullscreenActive={isFullscreenActive}
+      />
+    }
+    <PdfNationalReport
       onMapLoad={onMapLoad}
-    >
-      <LocalSceneViewManager localGeometry={countryBorder} />
-      <ArcgisLayerManager
-        activeLayers={activeLayers}
-        userConfig={userConfig}
-      />
-      <CountryMaskLayer
-        countryISO={countryISO}
-        spatialReference={LOCAL_SPATIAL_REFERENCE}
-      />
-      <CountriesBordersLayer
-        countryISO={countryISO}
-        spatialReference={LOCAL_SPATIAL_REFERENCE}
-      />
-      <CountryEntryTooltip
-        countryTooltipDisplayFor={countryTooltipDisplayFor}
-        countryName={countryName}
-      />
-      <CountryLabelsLayer
-        activeLayers={activeLayers}
-        countryISO={countryISO}
-      />
-      <TerrainExaggerationLayer exaggeration={3} />
-      <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {isVisible && 
-        <Widgets
-          activeLayers={activeLayers}
-          openedModal={openedModal}
-          isFullscreenActive={isFullscreenActive}
-        />
-      }
-      <PdfNationalReport
-        onMapLoad={onMapLoad}
-        countryISO={countryISO}
-      />
-    </Scene>
-  );
-};
+      countryISO={countryISO}
+    />
+  </Scene>
+);
 
 export default CountrySceneComponent;
