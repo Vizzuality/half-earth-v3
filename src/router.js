@@ -8,10 +8,6 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 
 export const routes = {
   [DATA]: {
-    path: '/v2',
-    page: 'data-globe'
-  },
-  [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe'
   },
