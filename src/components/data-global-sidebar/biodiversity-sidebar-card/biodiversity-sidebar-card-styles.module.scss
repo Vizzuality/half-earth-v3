@@ -4,6 +4,9 @@
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
+  &.open {
+    border-color: $brand-color-main;
+  }
 }
 
 .layersTogglesContainer {
@@ -22,6 +25,7 @@
   }
 }
 
-.cardContainer {
-  padding: 20px;
+.cardContainer,
+.legendContainer {
+  padding: $sidebar-paddings;
 }

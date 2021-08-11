@@ -6,8 +6,10 @@ import CategoryBox from 'components/category-box';
 import SidebarCardWrapper from 'components/sidebar-card-wrapper'
 import SidebarCardContent from 'components/sidebar-card-content';
 import BiodiversityLayers from 'components/biodiversity-layers';
+import Legend from 'components/sidebar-legend';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
+import { BIODIVERSITY_SLUG } from 'constants/legend-configs';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 
 import BiodiversityThumbnail from "images/biodiversity.png";
@@ -24,9 +26,11 @@ const BiodiversitySidebarCardComponent = ({
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   return (
-    <div className={styles.sidebarCardContainer}>
+    <div className={cx(
+      styles.sidebarCardContainer,
+      { [styles.open]: isOpen }
+    )}>
       <CategoryBox
-        title="mapping"
         category={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
         counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
@@ -40,6 +44,7 @@ const BiodiversitySidebarCardComponent = ({
           { [styles.open]: isOpen }
         )}
       >
+        <Legend legendItem={BIODIVERSITY_SLUG} className={styles.legendContainer}/>
         <Tabs
           tabs={BIODIVERSITY_TABS}
           onClick={handleTabSelection}
