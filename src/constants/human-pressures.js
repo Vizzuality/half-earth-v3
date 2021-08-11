@@ -1,5 +1,6 @@
 import {
-  MARINE_AND_LAND_HUMAN_PRESSURES,
+  LAND_HUMAN_PRESSURES,
+  MARINE_HUMAN_PRESSURES,
   URBAN_HUMAN_PRESSURES_TILE_LAYER,
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
@@ -10,15 +11,36 @@ import {
   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 } from 'constants/layers-slugs';
 
-export const HUMAN_PRESSURES_COLOR_RAMP = [
-  "#282052",
-  "#3f3576",
-  "#826dba",
-  "#9f82ce",
-  "#b998dd",
-  "#d1afe8",
-  "#f3e0f7"
+import {
+  getLegendGradient
+} from 'utils/legend-utils';
+
+export const LAND_HUMAN_PRESSURES_COLOR_RAMP = [
+  "rgba(0, 77, 168, 0.1)",
+  "rgba(0, 77, 168, 0.1)",
+  "rgba(166, 0, 212, 0.2)",
+  "rgba(166, 0, 212, 0.2)",
+  "rgba(166, 0, 212, 0.2)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgba(255, 0, 0, 0.5)",
+  "rgb(255, 191, 0)",
+  "rgb(255, 191, 0)",
 ]
+
+export const MARINE_HUMAN_PRESSURES_COLOR_RAMP = [
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(86, 0, 115, 0.15)",
+  "rgba(0, 14, 224, 0.25)",
+  "rgba(0, 14, 224, 0.25)",
+  "rgba(0, 14, 224, 0.25)",
+  "rgb(0, 197, 255)",
+  "rgb(0, 255, 230)",
+]
+
 
 const RAINFED = 'Rainfed agriculture';
 const IRRIGATED = 'Irrigated agriculture';
@@ -48,7 +70,10 @@ export const humanPressuresLandUse = [
 ];
 
 export const humanPressuresMarine = [
-  { name: LAND_DRIVERS, value: PRESSURES_SLUGS.land, slug: PRESSURES_SLUGS.land },
+  { name: LAND_DRIVERS,
+    value: PRESSURES_SLUGS.land,
+    slug: PRESSURES_SLUGS.land
+  },
   { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
   { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
   { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
@@ -71,38 +96,16 @@ export const legendSingleRasterTitles = {
 }
 
 export const legendConfigs = {
-  [MARINE_AND_LAND_HUMAN_PRESSURES]: {
+  [MARINE_HUMAN_PRESSURES]: {
     groupedLayer: true,
+    group: MARINE_HUMAN_PRESSURES,
     type: "gradient",
-    items: [
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[0],
-        value: "0% use"
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[1],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[2],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[3],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[4],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[5],
-        value: ""
-      },
-      {
-        color: HUMAN_PRESSURES_COLOR_RAMP[6],
-        value: "100% use"
-      }
-    ]
-  }
+    items: getLegendGradient(MARINE_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
+  },
+  [LAND_HUMAN_PRESSURES]: {
+    groupedLayer: true,
+    group: LAND_HUMAN_PRESSURES,
+    type: "gradient",
+    items: getLegendGradient(LAND_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
+  },
 }

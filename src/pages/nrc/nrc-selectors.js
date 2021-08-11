@@ -11,6 +11,7 @@ const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 const selectUserConfig = ({ userConfig }) => userConfig || null;
 const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
+const selectActiveView = ({location}) => location.payload.view || NRC_UI_DEFAULTS.view;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
@@ -30,17 +31,18 @@ const getUiSettings = createSelector([selectUiUrlState],
 
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
+export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
-const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
-
+const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 
 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
+  countryName: getCountryName,
   userConfig: selectUserConfig,
   sceneLayers: getDataGlobeLayers,
   openedModal: getHalfEarthModalOpen,
@@ -50,6 +52,7 @@ export default createStructuredSelector({
   countryExtent: selectCountryExtent,
   isGlobeUpdating: getGlobeUpdating,
   speciesCategories: selectBiodiversityData,
-  localSceneActiveTab: getLocalSceneActiveTab,
+  localSceneActiveTab: selectActiveView,
+  countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
 });

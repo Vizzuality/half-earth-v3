@@ -1,96 +1,13 @@
-@import 'styles/settings';
-@import 'styles/ui.module';
-
-$widget-size: 84px;
 $globe-size: 60px;
-$ease-in-out: opacity $animation-time ease-in-out;
 
 .wrapper {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   position: absolute;
   right: 76px;
   top: 30px;
-  z-index: $send-to-back;
-
-  &::before {
-    align-items: center;
-    background-color: rgba(15,43,59,0.95);
-    border-radius: 50%;
-    bottom: 0;
-    color: $white;
-    content: 'GLOBAL PROGRESS';
-    cursor: pointer;
-    display: flex;
-    font-family: $font-family-1;
-    font-size: $font-size-xxs;
-    font-weight: bold;
-    left: 0;
-    letter-spacing: 1.4px;
-    line-height: 14px;
-    text-align: center;
-    height: $widget-size;
-    overflow: hidden;
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-
-    opacity: 0;
-    transition: $ease-in-out;
-  }
-
-  &:hover {
-    .title {
-      opacity: 0;
-      transition: $ease-in-out;
-    }
-
-    &::before {
-      opacity: 1;
-      transition: $ease-in-out;
-    }
-  }
-}
-
-.title {
-  color: $white;
-  font-family: $font-family-1;
-  font-size: $font-size-xxs;;
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  line-height: 14px;
-  text-transform: uppercase;
-
-  &::after {
-    height: 10px;
-    width:  2px;
-  }
-}
-
-.progressBars {
-  @include backdropBlur();
-
-  align-items: center;
-  background-image: url('../../../assets/icons/halfEarthMeter.svg');
-  background-position: 2px 2px;
-  background-repeat: no-repeat;
-  border-radius: 50%;
-  box-shadow: 0 2px 10px 0 rgba(23,27,48,0.15);
-  display: flex;
-  height: $widget-size;
-  justify-content: center;
-  padding: 6px;
-  position: relative;
-  width: $widget-size;
-}
-
-.globeComponentWrapper {
-  border-radius: 50%;
-  overflow: hidden;
+  pointer-events: none;
   height: $globe-size;
   width: $globe-size;
-
+  
   .esri-ui-top-left {
     display: none;
   }

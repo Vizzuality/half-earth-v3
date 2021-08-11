@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
-import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR } from 'constants/protected-areas';
+import { WDPALayers, PROTECTED_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR } from 'constants/protected-areas';
 
 export const COMMUNITY_BASED = 'community';
 export const PROTECTED = 'protected';
@@ -98,7 +98,7 @@ const getChartData = createSelector(
     if (!chartValues) return null;
     const chartData = [
       {name: 'protected', value: chartValues[PROTECTED], color: PROTECTED_AREAS_COLOR, explodedSlice: alreadyChecked['Protected areas'] },
-      {name: 'community', value: chartValues[COMMUNITY_BASED], color: COMMUNITY_AREAS_COLOR, explodedSlice: alreadyChecked['Community areas']},
+      {name: 'community', value: chartValues[COMMUNITY_BASED], color: PROTECTED_AREAS_COLOR, explodedSlice: alreadyChecked['Community areas']},
       {name: 'not under conservation', value: chartValues[NOT_UNDER_CONSERVATION], color: NOT_UNDER_CONSERVATION_COLOR, explodedSlice: false},
     ]
     return chartData;
@@ -113,7 +113,7 @@ const getProtectedLayers = createSelector(
       ...layer,
       name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
       metadataTitle: layer.metadataTitle,
-      rightDot: layer.name === 'Protected areas' ? PROTECTED_AREAS_COLOR : COMMUNITY_AREAS_COLOR
+      rightDot: PROTECTED_AREAS_COLOR
     })) || [];
     return protectedLayers;
 });

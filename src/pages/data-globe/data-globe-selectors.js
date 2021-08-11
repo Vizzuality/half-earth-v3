@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
-import { RAISIG_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
@@ -33,6 +32,7 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
 })
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
+export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor);
 const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
@@ -45,7 +45,6 @@ const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.a
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
-const getLocalSceneActiveTab = createSelector(getUiSettings, uiSettings => uiSettings.localSceneActiveTab);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
@@ -53,10 +52,7 @@ const getCountedActiveLayers = createSelector(
   [getActiveLayers],
   (activeLayers) => {
     const biodiversityLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.BIODIVERSITY).length : 0;
-    const protectionLayers = activeLayers ? activeLayers.filter(({ category, title }) => {
-      // we have to filter 'RAISIG' layer because activating 'Community-based' checbox selects two layers on the globe: "protected_areas_vector_tile_layer" and "RAISIG_areas_vector_tile_layer"
-      return category === LAYERS_CATEGORIES.PROTECTION && title !== RAISIG_AREAS_VECTOR_TILE_LAYER
-    }).length : 0;
+    const protectionLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.PROTECTION).length : 0;
     const landHumanPressureLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.LAND_PRESSURES).length : 0;
 
     return {
@@ -87,7 +83,7 @@ export default createStructuredSelector({
   activeOption: getActiveOption, // mobile
   isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
-  localSceneActiveTab: getLocalSceneActiveTab,
+  countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,

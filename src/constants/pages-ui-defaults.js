@@ -6,6 +6,7 @@ import {
 export const NRC_UI_DEFAULTS = {
   sceneMode: 'local',
   countryChallengesSelectedFilter: 'filter_steward',
+  view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
   localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
   countryChallengesSelectedKey: 'N_SPECIES',
   biodiversityLayerVariant: BIODIVERSITY_DEFAULT_TAB,

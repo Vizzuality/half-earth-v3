@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { capitalize } from 'lodash';
 import Component from './radio-group-component';
 import metadataActions from 'redux_modules/metadata';
 import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';

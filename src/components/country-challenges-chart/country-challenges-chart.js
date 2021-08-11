@@ -8,6 +8,8 @@ import { NATIONAL_REPORT_CARD } from 'router'
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+
 const actions = {...metadataActions, ...urlActions };
 
 
@@ -35,7 +37,7 @@ const CountryChallengesChartContainer = (props) => {
 
   const handleBubbleClick = ({ countryISO }) => {
     const { browsePage } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  LOCAL_SCENE_TABS_SLUGS.CHALLENGES }});
   }
 
   const handleFilterSelection = (selectedFilter) => {

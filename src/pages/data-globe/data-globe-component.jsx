@@ -35,6 +35,7 @@ const DataGlobeComponent = ({
   handleGlobeUpdating,
   countedActiveLayers,
   isBiodiversityActive,
+  countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed,
 }) => {
 
@@ -59,6 +60,7 @@ const DataGlobeComponent = ({
         isGlobeUpdating={isGlobeUpdating}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
+        countryTooltipDisplayFor={countryTooltipDisplayFor}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />

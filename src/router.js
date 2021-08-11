@@ -8,10 +8,6 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 
 export const routes = {
   [DATA]: {
-    path: '/v2',
-    page: 'data-globe'
-  },
-  [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe'
   },
@@ -24,7 +20,7 @@ export const routes = {
     page: 'map-iframe'
   },
   [NATIONAL_REPORT_CARD]: {
-    path: '/nrc/:iso',
+    path: '/nrc/:iso/:view?',
     page: 'nrc'
   },
   [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
