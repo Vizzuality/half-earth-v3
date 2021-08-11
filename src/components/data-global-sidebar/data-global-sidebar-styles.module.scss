@@ -4,6 +4,6 @@
 .container {
   @extend %verticalScrollbar;
   height: calc(100vh - #{$sidebar-top-margin});
-  width: calc(#{$sidebar-width} + 15px);
+  width: calc(#{$sidebar-width} + 25px);
   padding-bottom: $site-gutter;
 }

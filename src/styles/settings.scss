@@ -104,13 +104,13 @@ $font-weight-light: lighter;
 $font-weight: normal;
 $font-weight-bold: bold;
 
-$font-family-1: 'Inter';
-$font-family-1-light: 'Inter';
+$font-family-1: 'Inter', sans-serif;
+$font-family-1-light: 'Inter', sans-serif;
      
 $font-family-2: 'ivypresto-display', serif;
 
 // Layout
-$site-gutter: 20px;
+$site-gutter: 20px; 
 $widget-button-size: 30px;
 $rounded-button-size: 42px;
 $he-project-logo-size: 25px;
@@ -126,7 +126,9 @@ $sidebar-paddings: 20px;
 $paragraph-margin: 35px;
 $paragraph-gutter: 10px;
 $sidebar-cards-padding: 25px;
-$sidebar-border: 1.5px solid $brand-color-secondary;
+$sidebar-border-width: 2px;
+$sidebar-border: $sidebar-border-width solid $brand-color-secondary;
+;
 $sidebar-border-radius: 4px;
 
 $mobile-sidebar-side-paddings: 32px;
@@ -150,6 +152,7 @@ $widgetsTopMargin: 8px;
 $cards-bottom-margin: 8px;
 $border-radius-desktop: 2px;
 $border-radius-mobile: 16px 16px 0 0;
+$counter-size: 25px;
 // featured cards
 $card-max-width: 820px;
 $card-border-radius: 6px;

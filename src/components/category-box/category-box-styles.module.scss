@@ -32,32 +32,23 @@
   cursor: pointer;
 }
 
-.title {
-  @extend %subtitle;
-  color: $white;
-  text-transform: uppercase;
-  margin: 0;
-  margin-bottom: 8px;
-  user-select: none;
-  display: flex;
-  align-items: baseline;
-}
-
 .counter {
-  align-items: center;
-  background-color: $brand-color-main;
-  border-radius: 8px;
-  color: $dark-text;
+  @extend %subtitle;
+  position: absolute;
+  top: calc(50% - #{$counter-size/2});
+  right: calc(-#{$counter-size/2});
   display: flex;
-  font-weight: $font-weight-bold;
-  height: 16px;
   justify-content: center;
-  margin-left: 6px;
-  width: 16px;
-}
-
-.counterText {
-  height: 10px;
+  align-items: center;
+  height: $counter-size;
+  width: $counter-size;
+  color: $dark-text;
+  background-color: $brand-color-main;
+  font-weight: $font-weight-bold;
+  border-radius: $counter-size;
+  &.openBox {
+    display: none;
+  }
 }
 
 .categoryContainer {
