@@ -90,11 +90,6 @@ const CountrySceneComponent = ({
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
           <Slider />
         </MobileOnly>
-        <LandscapeViewManager
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
-        />
         <CountryLabelsLayer
           sceneMode={sceneMode}
           countryISO={countryISO}
@@ -107,10 +102,6 @@ const CountrySceneComponent = ({
           isLandscapeMode={isLandscapeMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <Legend
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-        />
         <Widgets
           openedModal={openedModal}
           activeLayers={activeLayers}
@@ -121,26 +112,6 @@ const CountrySceneComponent = ({
           countryTooltipDisplayFor={countryTooltipDisplayFor}
         />
         <LabelsLayer activeLayers={activeLayers} />
-        {isLandscapeMode && (
-          <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
-        )}
-        {isLandscapeMode && (
-          <LandscapeSidebar
-            activeLayers={activeLayers}
-            activeOption={activeOption}
-            selectedSpecies={selectedSpecies}
-            isLandscapeMode={isLandscapeMode}
-            isFullscreenActive={isFullscreenActive}
-            handleGlobeUpdating={handleGlobeUpdating}
-            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          />
-        )}
-        {isLandscapeMode && (
-          <ProtectedAreasTooltips
-            activeLayers={activeLayers}
-            isLandscapeMode={isLandscapeMode}
-          />
-        )}
       </Scene>
     </>
   );

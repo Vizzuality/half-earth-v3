@@ -64,10 +64,8 @@ const DataGlobeComponent = ({
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
-      {!useMobile() && <Switcher />}
       <TutorialModal />
       {hasMetadata && <InfoModal />}
-      {!useMobile() && <About />}
     </>
   );
 }
