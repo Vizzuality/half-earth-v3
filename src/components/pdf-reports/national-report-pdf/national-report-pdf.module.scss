@@ -10,7 +10,7 @@ $gap: 20pt;
 // @extends need to be outside @media rules
 // https://sass-lang.com/documentation/at-rules/extend#extend-in-media
 .nameWrapper {
-  @extend %display1;
+  @extend %display2;
 }
 
 .baseNumber {

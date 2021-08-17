@@ -80,7 +80,7 @@
 }
 
 .title {
-  @extend %display1;
+  @extend %display2;
   color: $white;
   margin: 0;
   text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);

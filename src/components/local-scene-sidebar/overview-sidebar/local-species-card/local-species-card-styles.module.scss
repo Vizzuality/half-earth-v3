@@ -10,7 +10,7 @@
 }
 
 .title {
-  @extend %_temporaryTitle;
+  @extend %title;
   margin: 0;
   color: $_temporary-dark-text;
   text-align: center;

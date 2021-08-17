@@ -51,7 +51,7 @@ $socialMediaIcon: 45px;
 .coordinates {
   margin-bottom: 54px;
   font-size: $font-size-xs;
-  color: $java;
+  color: $brand-color-main;
 }
 
 .inputButton {
@@ -97,7 +97,7 @@ $socialMediaIcon: 45px;
 }
 
 .copied {
-  background-color: $java;
+  background-color: $brand-color-main;
   color: $black;
   font-weight: bold;
 }
@@ -139,7 +139,7 @@ $socialMediaIcon: 45px;
 }
 
 .activeTab {
-  color: $java;
+  color: $brand-color-main;
   &:after {
     content: '';
     position: absolute;
@@ -147,7 +147,7 @@ $socialMediaIcon: 45px;
     bottom: -10px; // ($tabsMarginBottom + 2) * -1
     width: 100%;
     height: 4px;
-    background-color: $java;
+    background-color: $brand-color-main;
   }
 }
 

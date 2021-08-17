@@ -143,7 +143,7 @@ $card-content-max-height: 220px;
   }
 
   .title {
-    @extend %display1;
+    @extend %display2;
     font-size: $font-size-xl;
     line-height: 30px;
     color: $dark-text;
