@@ -27,7 +27,7 @@ export const MINIMAP_EXTENT_GRAPHIC_STYLES = {
   fillOpacity: 0.3,
   outlineColor: [24, 186, 180],
   outlineOpacity: 0.9,
-  outlineWidth: 2,
+  outlineWidth: 4,
 }
 
 // Sample code about using VectorTileLayers on the globe
