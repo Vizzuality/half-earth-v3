@@ -1,4 +1,4 @@
-import { getGeoProcessor, createFeatureSet, getDefaultJsonFeatureSet } from 'utils/geo-processing-services';
+import { getGeoProcessor, createFeatureSet, getDefaultJsonFeatureSet, jobTimeProfiling } from 'utils/geo-processing-services';
 
 import { ZONAL_STATISTICS_AS_TABLE_CONFIG } from 'constants/geo-processing-services';
 
@@ -26,13 +26,17 @@ export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = t
               features: [{ geometry: aoiFeatureGeometry, attributes: { OBJECTID: 1 } }]
             })
           }).then((jobInfo) => {
+            const JOB_START = Date.now();
+            jobTimeProfiling(jobInfo, JOB_START);
             const jobId = jobInfo.jobId;
             GP.waitForJobCompletion(jobId).then(() => {
               GP.getResultData(jobId, outputParamKey).then((data) => {
-                console.log('data',data)
+                jobTimeProfiling(jobInfo, JOB_START);
+                console.log(`${crfName} DATA`,data)
                  resolve({jobInfo,jobId,data})
                })
              }).catch(error => {
+              jobTimeProfiling(jobInfo, JOB_START);
                console.log('jobCompletion error', error)
              })
           }).catch(error => {

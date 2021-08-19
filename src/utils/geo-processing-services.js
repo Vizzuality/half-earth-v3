@@ -25,3 +25,10 @@ export function getDefaultJsonFeatureSet(metadata, inputGeometryKey) {
     }
   });
 }
+
+export function jobTimeProfiling(jobInfo, jobStart) {
+  const jobStatusTime = Date.now();
+  console.log(jobInfo.jobStatus);
+  const miliseconds = Math.abs(jobStart - jobStatusTime);
+  console.log('TIME ELLAPSED ', miliseconds/1000, ' SECONDS');
+}

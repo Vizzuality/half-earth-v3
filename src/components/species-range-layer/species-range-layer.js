@@ -46,13 +46,12 @@ const SpeciesRangeLayer = ({
 
     useEffect(() => {
       getTestingPolygon().then(features => {
-        console.log(features[0].geometry)
         getCrfData({ 
-          crfName: 'population2020',
+          crfName: 'hummingbirds_binary',
           aoiFeatureGeometry: features[0].geometry,
           isMultidimensional: false
         }).then(({jobInfo, jobId, data}) => {
-          console.log(data)
+          return data.value.features;
         })
       })
     }, [])
