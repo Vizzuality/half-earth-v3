@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
-import { loadModules } from 'esri-loader';
 
 import { 
   getTestingPolygon,
-  getSpeciesRangeTiff,
-  TESTING_SPECIES_NAME,
-  SPECIES_RANGE_SERVICE_URL
  } from 'services/geo-processing-services/species-range-service';
 
 import { 
@@ -44,17 +40,7 @@ const SpeciesRangeLayer = ({
   //   })
   //   }, [])
 
-    useEffect(() => {
-      getTestingPolygon().then(features => {
-        getCrfData({ 
-          crfName: 'hummingbirds_binary',
-          aoiFeatureGeometry: features[0].geometry,
-          isMultidimensional: false
-        }).then(({jobInfo, jobId, data}) => {
-          return data.value.features;
-        })
-      })
-    }, [])
+    
   return null
 }
 

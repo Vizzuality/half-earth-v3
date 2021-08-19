@@ -9,6 +9,7 @@ const SPECIES_COLOR = {
 }
 
 const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
+const selectScene = ({scene}) => scene;
 const selectCountriesData = ({ countryData }) => countryData && countryData.data;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 const getCountryData = createSelector(
@@ -150,6 +151,7 @@ const mapStateToProps = createStructuredSelector({
   countryName: getCountryName,
   SPI: getSpeciesProtectionIndex,
   amphibians: getTaxa('amphibians'),
+  scene: selectScene,
   indexStatement: getIndexStatement,
   // openedModal: getModalOpen,
   countryDescription: getDescription,

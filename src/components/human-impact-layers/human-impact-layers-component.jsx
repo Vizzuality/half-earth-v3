@@ -8,6 +8,8 @@ import { layerManagerToggle } from 'utils/layer-manager-utils';
 // Components
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
+import styles from 'styles/themes/checkboxes-theme.module'
+
 
 const HumanImpactLayers = ({
   changeGlobe,
@@ -27,6 +29,7 @@ const HumanImpactLayers = ({
         options={humanPressuresLandUse}
         alreadyChecked={alreadyCheckedLandPressures}
         handleClick={toggleLayer}
+        theme={styles.landPressures}
         title='Land use pressures'
         description='Human pressures causing habitat loss and accelerating species extinction.'
       />
@@ -34,6 +37,7 @@ const HumanImpactLayers = ({
         options={humanPressuresMarine}
         alreadyChecked={alreadyCheckedMarinePressures}
         handleClick={toggleLayer}
+        theme={styles.marinePressures}
         title='Ocean use pressures'
         description='Human pressures causing habitat loss and accelerating species extinction.'
       />

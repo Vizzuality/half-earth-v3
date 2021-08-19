@@ -4,8 +4,6 @@ import { setLayersOrder, setLayersVisibility, updateSceneLayersBasedOnUserConfig
 import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
-  // Map prop is inherited from Webscene component
-  // reference: https://github.com/Esri/react-arcgis#advanced-usage
   const { layers } = map;
   const { items: sceneLayers } = layers;
 

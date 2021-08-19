@@ -58,13 +58,6 @@ input[type="checkbox"] {
   margin-right: 8px;
 }
 
-.checkboxSelected {
-  &:before {
-    background: $human-pressures-gradient;
-    border: 2px solid $white;
-  }
-}
-
 .icon {
   @extend %icon;
 }

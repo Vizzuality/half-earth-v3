@@ -57,12 +57,13 @@ $amphibians-color: #9873EF;
 $birds-color: $shamrock;
 $reptiles-color: $picton-blue;
 $priority-blue: #0664F6;
-$biodiversity-gradient: linear-gradient(0deg, #0664F6 0%, #2172DB 14.73%, #3D80BF 27%, #749C89 40%, #8FAB6D 52%, #ABB952 62%, #C6C737 74%, #E2D51B 86%, #FDE300 100%);
-$biodiversity-gradient-rotated: linear-gradient(90deg, #0664F6 0%, #2172DB 14.73%, #3D80BF 27%, #749C89 40%, #8FAB6D 52%, #ABB952 62%, #C6C737 74%, #E2D51B 86%, #FDE300 100%);
+$biodiversity-gradient: linear-gradient(0deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
+$biodiversity-gradient-rotated: linear-gradient(90deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
 $human-pressure-high: #F3E0F7;
 $human-pressure-mid: #9F82CE;
 $human-pressure-low: #282052;
-$human-pressures-gradient: linear-gradient(270deg, $human-pressure-high 0%, $human-pressure-mid 50%, $human-pressure-low 100%);
+$human-pressures-gradient: linear-gradient(90deg, rgba(0, 77, 168, 0.1) 0%, rgba(166, 0, 212, 0.2) 15%, rgba(255, 0, 0, 0.5) 54%, rgb(255, 191, 0) 100%);
+$marine-pressures-gradient: linear-gradient(90deg, rgba(86, 0, 115, 0.15) 0%, rgba(0, 14, 224, 0.25) 50%, rgb(0, 197, 255) 94%, rgb(0, 255, 230) 100%);
 $challenges-view-background: #040E14;
 // country ranking
 $endemic-species: #F8D300;
@@ -112,7 +113,7 @@ $font-family-2: 'EB Garamond', serif;
 $site-gutter: 20px;
 $widget-button-size: 30px;
 $rounded-button-size: 42px;
-$he-project-logo-size: 40px;
+$he-project-logo-size: 25px;
 // Blur
 $blur-level: 16px;
 

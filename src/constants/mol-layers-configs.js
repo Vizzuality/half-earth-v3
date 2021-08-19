@@ -14,8 +14,6 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  RAISIG_AREAS_FEATURE_LAYER,
-  RAISIG_AREAS_VECTOR_TILE_LAYER,
   GRID_CELLS_PROTECTED_AREAS_PERCENTAGE,
   GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER,
   GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE,
@@ -72,6 +70,10 @@ import {
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
+import {
+  getLegendGradient
+} from 'utils/legend-utils';
+
 const LAYER_TYPES = {
   FEATURE_LAYER: 'FeatureLayer',
   TILE_LAYER: 'TileLayer',
@@ -79,7 +81,7 @@ const LAYER_TYPES = {
   IMAGERY_LAYER: 'ImageryLayer'
 }
 
-export const DEFAULT_OPACITY = 0.6;
+export const DEFAULT_OPACITY = 0.8;
 export const BASEMAP_OPACITY = 1;
 
 export const LAYERS_CATEGORIES = {
@@ -480,20 +482,6 @@ export const layersConfig = {
     url: LAYERS_URLS[COMMUNITY_AREAS_VECTOR_TILE_LAYER],
     bbox: null
   },
-  [RAISIG_AREAS_FEATURE_LAYER]: {
-    title: RAISIG_AREAS_FEATURE_LAYER,
-    slug: RAISIG_AREAS_FEATURE_LAYER,
-    type: LAYER_TYPES.FEATURE_LAYER,
-    url: LAYERS_URLS[RAISIG_AREAS_FEATURE_LAYER],
-    bbox: null
-  },
-  [RAISIG_AREAS_VECTOR_TILE_LAYER]: {
-    title: RAISIG_AREAS_VECTOR_TILE_LAYER,
-    slug: RAISIG_AREAS_VECTOR_TILE_LAYER,
-    type: LAYER_TYPES.VECTOR_TILE_LAYER,
-    url: LAYERS_URLS[RAISIG_AREAS_VECTOR_TILE_LAYER],
-    bbox: null
-  },
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]: {
     title: GRID_CELLS_PROTECTED_AREAS_PERCENTAGE,
     slug: GRID_CELLS_PROTECTED_AREAS_PERCENTAGE,
@@ -832,45 +820,17 @@ export const layersConfig = {
   },
 }
 
-const getLegendGradient = (gradientSteps, lowValue, highValue) => {
-  const stepsLength = gradientSteps.length;
-  return gradientSteps.map((color, stepIndex) => ({
-    color,
-    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
-  }))
-}
-
-const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
-  if (stepIndex === 0) {
-    return lowValue;
-  } else if (stepIndex === stepsLength -1) {
-    return highValue;
-  } else {
-    return '';
-  }
-}
-
 export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
-  '#0664F6',
-  '#2172DB',
-  '#3D80BF',
-  '#588EA4',
-  '#749C89',
-  '#8FAB6D',
-  '#ABB952',
-  '#C6C737',
-  '#E2D51B',
-  "#FDE300"
-]
-export const PRIORITY_PLACES_COLOUR_RAMP = [
-  '#47039F',
-  '#9C179E',
-  '#BD3786',
-  '#D8576B',
-  '#ED7953',
-  '#FA9E3B',
-  '#FDC926',
-  '#F0F921'
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(0, 133, 170, .6)',
+  'rgba(0, 133, 170, .6)',
+  'rgba(0, 226, 136, .8)',
+  'rgba(0, 226, 136, .8)',
+  'rgb(236, 255, 26)',
 ]
 
 export const legendConfigs = {
@@ -927,44 +887,7 @@ export const legendConfigs = {
   },
   [SA_PROTEA_RARITY]: {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Protea regional rarity"
   },
   [SA_PROTEA_RICHNESS]: {

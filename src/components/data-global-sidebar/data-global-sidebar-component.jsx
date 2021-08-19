@@ -32,13 +32,13 @@ const DataGlobalSidebarComponent = ({
         className={styles.biodiversitySidebarCard}
         countedActiveLayers={countedActiveLayers}
       />
-      <ProtectedAreasSidebarCard
+      <HumanImpactSidebarCard
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
       />
-      <HumanImpactSidebarCard
+      <ProtectedAreasSidebarCard
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}

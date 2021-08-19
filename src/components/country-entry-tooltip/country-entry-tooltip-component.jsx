@@ -6,7 +6,7 @@ import styles from './country-entry-tooltip-styles.module.scss';
 const CountryEntryTooltipComponent = ({ 
   view,
   countryName,
-  countryISO,
+  countryTooltipDisplayFor,
   tooltipPosition,
   handleTooltipClose,
   onExploreCountryClick }) => {
@@ -23,7 +23,7 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  if (tooltipPosition && tooltip && countryISO) {
+  if (tooltipPosition && tooltip && countryTooltipDisplayFor) {
     view.popup.open({
       location: tooltipPosition,
       content: tooltipref.current
@@ -31,7 +31,7 @@ useEffect(() => {
   } else {
     view.popup.close()
   }
-}, [tooltipPosition, tooltip, countryISO])
+}, [tooltipPosition, tooltip, countryTooltipDisplayFor])
 
   return tooltipPosition && tooltip ? (
     <div
@@ -39,7 +39,7 @@ useEffect(() => {
       className={styles.tooltipContainer}
     >
       <section className={styles.tooltipSection}>
-        <img className={styles.tooltipFlag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+        <img className={styles.tooltipFlag} src={`${process.env.PUBLIC_URL}/flags/${countryTooltipDisplayFor}.svg`} alt="" />
         <span className={styles.tooltipName}>{countryName}</span>
       </section>
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose}/>

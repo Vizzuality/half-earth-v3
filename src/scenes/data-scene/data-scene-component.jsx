@@ -8,7 +8,6 @@ import Legend from 'components/legend';
 import Widgets from 'components/widgets';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
-import SpeciesRangeLayer from 'components/species-range-layer';
 import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -52,6 +51,7 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   countedActiveLayers,
   isBiodiversityActive,
+  countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed
 }) => {
 
@@ -59,16 +59,15 @@ const CountrySceneComponent = ({
   return (
     <>
       <Scene
+        onMapLoad={onMapLoad}
         sceneName={'data-scene'}
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
-        onMapLoad={onMapLoad}
       >
         <ArcgisLayerManager
-          activeLayers={activeLayers}
           userConfig={userConfig}
+          activeLayers={activeLayers}
         />
-        <SpeciesRangeLayer />
         {isGlobeUpdating && <Spinner floating />}
         <DataGlobalSidebar
           activeLayers={activeLayers}
@@ -93,16 +92,16 @@ const CountrySceneComponent = ({
           <Slider />
         </MobileOnly>
         <LandscapeViewManager
-          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
-          isLandscapeMode={isLandscapeMode}
           countryISO={countryISO}
+          isLandscapeMode={isLandscapeMode}
+          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
         />
         <CountryLabelsLayer
-          activeLayers={activeLayers}
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          countryName={countryName}
           sceneMode={sceneMode}
+          countryISO={countryISO}
+          countryName={countryName}
+          activeLayers={activeLayers}
+          isLandscapeMode={isLandscapeMode}
         />
         <CountriesBordersLayer
           countryISO={countryISO}
@@ -110,18 +109,17 @@ const CountrySceneComponent = ({
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <Legend
-          isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
         />
         <Widgets
+          openedModal={openedModal}
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
-          openedModal={openedModal}
         />
         <CountryEntryTooltip
-          countryISO={countryISO}
           countryName={countryName}
-          sceneMode={sceneMode}
+          countryTooltipDisplayFor={countryTooltipDisplayFor}
         />
         <LabelsLayer activeLayers={activeLayers} />
         {isLandscapeMode && (
