@@ -1,4 +1,4 @@
-import { getGeoProcessor, createFeatureSet } from 'utils/geo-processing-services';
+import { getGeoProcessor, createFeatureSet, getDefaultJsonFeatureSet } from 'utils/geo-processing-services';
 
 import { ZONAL_STATISTICS_AS_TABLE_CONFIG } from 'constants/geo-processing-services';
 
@@ -14,20 +14,18 @@ const {
 export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = true }) {
   return new Promise((resolve, reject) => {
     getGeoProcessor(url).then(GP => {
-      console.log(GP)
-      fetch(`${url}?f=pjson`).then(response => response.json()).then(data => {
-        console.log('metadata', data)
-        createFeatureSet(data.parameters.find(p => p.name === inputGeometryKey).defaultValue).then(defaultFeatureSet => {
+      fetch(`${url}?f=pjson`).then(response => response.json()).then(async metadata => {
+        const defaultJsonFeatureSet = await getDefaultJsonFeatureSet(metadata, inputGeometryKey);
+        const defaultFeatureSet = await createFeatureSet(defaultJsonFeatureSet);
           GP.submitJob({
             [inputRasterKey]: `${basePath}/${crfName}.crf`,
             [inputMultidimensionKey]: isMultidimensional,
             [inputGeometryKey]: defaultFeatureSet.set({
               hasZ: defaultFeatureSet.hasZ,
-              geometryType: "polygon",//correctedGeometry.type,
+              geometryType: "polygon",
               features: [{ geometry: aoiFeatureGeometry, attributes: { OBJECTID: 1 } }]
             })
           }).then((jobInfo) => {
-            console.log('jobInfo',jobInfo)
             const jobId = jobInfo.jobId;
             GP.waitForJobCompletion(jobId).then(() => {
               GP.getResultData(jobId, outputParamKey).then((data) => {
@@ -40,7 +38,6 @@ export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = t
           }).catch(error => {
             console.log('job submission' , error)
           })
-        });
       })
     })
   })

@@ -10,8 +10,18 @@ export function getGeoProcessor(url) {
 
 export function createFeatureSet(defaultJsonFeatureSet) {
   return new Promise((resolve, reject) => {
-    loadModules(["esri/tasks/support/FeatureSet"]).then(([FeatureSet]) => {
+    loadModules(["esri/rest/support/FeatureSet"]).then(([FeatureSet]) => {
       resolve(FeatureSet.fromJSON(defaultJsonFeatureSet));
     }).catch(error => reject(error))
+  });
+}
+
+export function getDefaultJsonFeatureSet(metadata, inputGeometryKey) {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(metadata.parameters.find(p => p.name === inputGeometryKey).defaultValue)
+    } catch (error) {
+      reject(error)
+    }
   });
 }

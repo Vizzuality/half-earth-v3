@@ -3,7 +3,7 @@ import { METADATA_SERVICE_URL } from 'constants/layers-urls';
 
 function getMetadata(slug) {
   return new Promise((resolve, reject) => {
-    loadModules(["esri/tasks/QueryTask", "esri/tasks/support/Query"]).then(([QueryTask, Query]) => {
+    loadModules(["esri/tasks/QueryTask", "esri/rest/support/Query"]).then(([QueryTask, Query]) => {
       var queryTask = new QueryTask({
         url: METADATA_SERVICE_URL
       });

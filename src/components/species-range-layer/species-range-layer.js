@@ -48,7 +48,7 @@ const SpeciesRangeLayer = ({
       getTestingPolygon().then(features => {
         console.log(features[0].geometry)
         getCrfData({ 
-          crfName: 'ELU',
+          crfName: 'population2020',
           aoiFeatureGeometry: features[0].geometry,
           isMultidimensional: false
         }).then(({jobInfo, jobId, data}) => {

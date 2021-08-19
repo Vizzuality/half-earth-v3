@@ -11,5 +11,5 @@ export const CRF_NAMES = {
   HUMMINGBIRDS: 'hummingbirds_binary',
   MAMMALS: 'mammals_for_greta',
   ECOLOGICAL_LAND_UNITS: 'ELU',
-  
+  POPULATION: 'population2020'
 }
