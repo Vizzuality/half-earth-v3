@@ -16,7 +16,7 @@ Use `calculate value` as much as possible, Python is quicker than adding extra g
 
 It is key to have set up the `parallel processing`to `80%`. 
 
-# How to publish a geoprocessing service in 14 easy steps (and a good portion of patience).
+# How to publish a geoprocessing service in several easy steps (and a good portion of patience).
 1. run the geoprocessing model against the whole crf
 2. create a small subset of the crf using "Subset Multidimensional raster", set the environment setting of extent to "current Display"
 3. run the geoprocessing against the subset crf
@@ -24,10 +24,11 @@ It is key to have set up the `parallel processing`to `80%`.
 5. Set the parameters by right clicking on them: (1) input polygon/points, (2) crf and (3) output (A letter P appears on them).
 6. For the output right click and enable "add to dispay"
 7. Save the model, close it and run it as a geoprocessing tool
-8. From the History, right click and share as a web tool
+8. From the History, right click on the ran model and share as a web tool (make sure you are logged into the Portal)
 9. In the configuration panel increase the maximum number to 100000 records
 10. In the content panel configure the tool properties (this is the tricky part)
-11. Set the crf as choice list
+11. Set the polygon to `determined by user`
+11. Set the crf as choice list, make sure only the subset crf is selected
 12. Add the description to the different parameters
 13. Analyse before publishing to check which parameters or info is missing on the description of the tool
 14. cross your fingers
