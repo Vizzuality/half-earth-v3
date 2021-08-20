@@ -14,6 +14,8 @@ permalink: /_docs/science/aois-crfs
 Set names of the parameters so they legible by the Front End, inside model builder rename the parameters (right click on the ovals). 
 Use `calculate value` as much as possible, Python is quicker than adding extra geoprocessing tools. 
 
+It is key to have set up the `parallel processing`to `80%`. 
+
 # How to publish a geoprocessing service in 14 easy steps (and a good portion of patience).
 1. run the geoprocessing model against the whole crf
 2. create a small subset of the crf using "Subset Multidimensional raster", set the environment setting of extent to "current Display"
