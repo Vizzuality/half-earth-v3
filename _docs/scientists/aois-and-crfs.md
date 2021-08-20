@@ -8,10 +8,11 @@ permalink: /_docs/science/aois-crfs
 # Existing documents
 - [Basecamp thread](https://basecamp.com/1756858/projects/13899003/messages/93850769) with videos.
 - [Rapid summaries report](https://docs.google.com/document/d/1ndUZfxKBKqpFgUymfge8JKyEcJu3r1IbsVCUQnjnWec/edit): you will find some tricks to build the models of model builder, also a test of performance.
-- [CRF creation](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit): the process to build a crf is in this document.
+- [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit): the process to build a crf is in this document.
 
-# Building a tool to publish @TODO
+# Building a tool to publish 
 Set names of the parameters so they legible by the Front End, inside model builder rename the parameters (right click on the ovals). 
+Use `calculate value` as much as possible, Python is quicker than adding extra geoprocessing tools. 
 
 # How to publish a geoprocessing service in 14 easy steps (and a good portion of patience).
 1. run the geoprocessing model against the whole crf
