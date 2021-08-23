@@ -55,13 +55,13 @@
 
 .description {
   @extend %bodyText;
-  color: $_temporary-dark-text;
+  color: $dark-text;
   margin: 0;
 }
 
 .sourcesWrapper {
   @extend %annotation;
-  color: $_temporary-light-text;
+  color: $dark-text;
   display: block;
   padding-top: $paragraph-gutter;
 
@@ -76,17 +76,17 @@
 
 .metadataSource {
   @extend %annotation;
-  color: $_temporary-light-text;
+  color: $dark-text;
   display: block;
   padding-top: $paragraph-gutter;
   p {
     margin: 0;
     a {
       text-decoration: underline;
-      color: $_temporary-light-text;
+      color: $dark-text;
       &:hover {
         cursor: pointer;
-        color: darken($_temporary-light-text, 20%)
+        color: darken($dark-text, 20%)
       }
     }
   }

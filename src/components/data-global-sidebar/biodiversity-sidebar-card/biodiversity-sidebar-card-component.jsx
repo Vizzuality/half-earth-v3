@@ -51,13 +51,10 @@ const BiodiversitySidebarCardComponent = ({
           defaultTabSlug={biodiversityLayerVariant}
         />
         <div className={styles.cardContainer}>
-          <SidebarCardWrapper>
+          <SidebarCardWrapper collapsable >
             <SidebarCardContent
               title={title}
-              highValueLabel={`HIGH ${biodiversityLayerVariant}`}
-              lowValueLabel={`LOW ${biodiversityLayerVariant}`}
               description={description}
-              legendType="gradient"
               metaDataSources={source}
             />
           </SidebarCardWrapper>
