@@ -22,6 +22,7 @@ import { MobileOnly, useMobile } from 'constants/responsive';
 
 import styles from './data-scene-styles.module.scss';
 import animationStyles from 'styles/common-animations.module.scss';
+
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 const GridLayer = loadable(() => import('components/grid-layer'));

@@ -4,6 +4,7 @@ import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
 export const NATIONAL_REPORT_CARD = 'location/NATIONAL_REPORT_CARD';
+export const AREA_OF_INTEREST = 'location/AREA_OF_INTEREST';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
 
 export const routes = {
@@ -22,6 +23,10 @@ export const routes = {
   [NATIONAL_REPORT_CARD]: {
     path: '/nrc/:iso/:view?',
     page: 'nrc'
+  },
+  [AREA_OF_INTEREST]: {
+    path: '/aoi/:id?',
+    page: 'aoi'
   },
   [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
 };
