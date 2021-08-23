@@ -6,6 +6,7 @@ permalink: /_docs/science/tile-services
 ---
 
 # Creating tile services
+Tiles are used when an interaction is not necessary. It is key to get the colour style of the data correctly because once the tile service is created it is not possible to change the styles. If a change in the colour ramp has to be done then a whole new tile service must be created. After the ESRI Cartographic Review (July 2021), there is an ArcGIS Pro Project Package backed up in the arcgis organisation. [This item](https://eowilson.maps.arcgis.com/home/item.html?id=84ee84cc0b6944f69896e16627df8e0c) is shared within Vizzuality (see [Groups](/_docs/science/arcgis-groups) information).
 
 ### Publishing tiles from ArcGIS Pro
 1. Create a project and open the layer you want to create the tiles from. By default the new map will have the [3857 projection](https://epsg.io/3857) and a default basemap with that projection appears. 
