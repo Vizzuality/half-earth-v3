@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Creating tile services
+title: Virtual machine and ArcGIS Pro 
 parent: Scientists 🧑‍🔬
 permalink: /_docs/science/vm-arcgis-pro
 ---

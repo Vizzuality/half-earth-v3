@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Metadata service
+title: ArcGIS groups
 parent: Scientists 🧑‍🔬
 permalink: /_docs/science/arcgis-groups
 ---
