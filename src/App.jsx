@@ -5,6 +5,7 @@ import FeaturedGlobe from 'pages/featured-globe';
 import DataGlobe from 'pages/data-globe';
 import MapIframe from 'pages/map-iframe';
 import NationalReportCard from 'pages/nrc';
+import AreaOfInterest from 'pages/aoi';
 
 import { Icons as VizzIcons } from 'vizzuality-components';
 import 'he-components/dist/main.css';
@@ -22,6 +23,8 @@ const AppLayout = (props) => {
       return <FeaturedGlobe />;
     case 'nrc':
       return <NationalReportCard />;
+    case 'aoi':
+      return <AreaOfInterest />;
     case 'map-iframe':
       return <MapIframe />;
     default:
