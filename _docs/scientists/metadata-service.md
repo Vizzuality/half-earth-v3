@@ -23,6 +23,8 @@ use the [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/Me
 - in an editor provide the information for each field: slug, title (text), description (text), source (markdown text), mol Logo (boolean).
 - merge the new information to the downloaded csv
 - overwrite the service with the complete csv
+
+
 ### if using the arcgis online IDE
 Use the append data button and select a file with the new rows. 
 ## edit existing entries
