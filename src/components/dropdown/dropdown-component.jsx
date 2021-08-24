@@ -6,6 +6,7 @@ import styles from './dropdown-styles.module.scss';
 
 const Component = ({
   width,
+  theme,
   options,
   dropdownOpen,
   onDropdownToggle,
@@ -43,7 +44,8 @@ const Component = ({
   return (
     <div className={cx(styles.dropdownContainer, {
         [styles.open]: dropdownOpen,
-        [styles.fullWidth]: width === 'full'
+        [styles.fullWidth]: width === 'full',
+        [styles.dark]: theme === 'dark',
       })}
     >
       <div
@@ -89,9 +91,11 @@ Component.propTypes = {
   onDropdownToggle: Proptypes.func.isRequired,
   selectedOption: Proptypes.shape(),
   onOptionSelection: Proptypes.func.isRequired,
-  width: Proptypes.oneOf(['fluid', 'full'])
+  width: Proptypes.oneOf(['fluid', 'full']),
+  theme: Proptypes.oneOf(['light', 'dark'])
 };
 
 Component.defaultProps = {
-  width: 'fluid'
+  width: 'fluid',
+  theme: 'light'
 }

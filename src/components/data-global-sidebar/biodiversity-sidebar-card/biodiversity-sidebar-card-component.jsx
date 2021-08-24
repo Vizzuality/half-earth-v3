@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
+import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
 import SidebarCardWrapper from 'components/sidebar-card-wrapper'
 import SidebarCardContent from 'components/sidebar-card-content';
@@ -59,6 +60,12 @@ const BiodiversitySidebarCardComponent = ({
             />
           </SidebarCardWrapper>
         </div>
+        <Dropdown
+          theme={'dark'}
+          options={[{slug: '55km', label: '~55km RESOLUTION'}, {slug: '1km', label: '~1km RESOLUTION'}]}
+          selectedOption={{slug: '55km', label: '~55km RESOLUTION'}}
+          handleOptionSelection={(op) => console.log(op)}
+        />
         {biodiversityLayerVariant &&
           biodiversityCategories[biodiversityLayerVariant].map((cat) => (
             <BiodiversityLayers

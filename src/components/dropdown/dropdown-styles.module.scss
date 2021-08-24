@@ -1,13 +1,14 @@
 @import 'styles/settings';
+@import 'styles/ui.module';
 @import 'styles/typography-extends';
 
 .dropdownContainer {
   padding: 10px;
   background-color: $white;
-  border-radius: 2px;
+  border-radius: 6px;
   position: relative;
   &.open {
-    background-color: $accent-grey;
+    background-color: $dark-opacity;
   }
   &.fullWidth {
     width: 100%;
@@ -25,7 +26,7 @@
 
 .selectedOptionLabel {
   @extend %subtitle;
-  color: $_temporary-dark-text;
+  color: $dark-text;
 }
 
 .arrowIcon {
@@ -38,15 +39,15 @@
     transform: rotate(-90deg);
   }
   path {
-    fill: $_temporary-dark-text;
-    stroke: $_temporary-dark-text;
+    fill: $dark-text;
+    stroke: $dark-text;
   }
 }
 
 .group {
   &:not(:last-child) {
     &::after {
-      background-color: $accent-grey;
+      background-color: $dark-opacity;
       height: 1px;
       content: "";
       display: block;
@@ -81,10 +82,11 @@
   list-style: none;
   padding: $sidebar-paddings 0;
   margin: 0;
-  margin-top: 14px;
+  margin-top: 10px;
   left: 0;
   z-index: 6;
-  border-radius: 2px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   min-width: 320px;
   width: max-content;
 
@@ -96,11 +98,28 @@
     padding: 5px $sidebar-paddings;
 
     &:hover {
-      background-color: $accent-grey;
+      background-color: $dark-opacity;
     }
 
     &.selectedOption {
       color: rgba($_temporary-dark-text, 0.5);
+    }
+  }
+}
+
+.dark {
+  @include backdropBlur();
+  border: 1px solid $white-opacity;
+  &.open {
+    background-color: $white-opacity;
+  }
+  .selectedOptionLabel {
+    color: $white;
+  }
+  .arrowIcon {
+    path {
+      fill: $white;
+      stroke: $white;
     }
   }
 }
