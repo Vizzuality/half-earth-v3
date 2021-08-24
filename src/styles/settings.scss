@@ -45,6 +45,8 @@ $brand-color-secondary-hover: lighten($elephant, 10);
 $dark-text: #222;
 $grey-text: $alto;
 $light-text: $white;
+$white-opacity: rgba(255, 255, 255, 0.1);
+$dark-opacity: rgba(34, 34, 34, 0.1);
 $_temporary-dark-text: #222;
 $_temporary-light-text: #747474;
 $accent-grey: #a0afb8;
