@@ -45,8 +45,7 @@ const labelClassFactory = (LabelClassConstructor, styleGroup) => {
 }
 
 const LabelsLayer = props => {
-  const { map, countryISO, activeLayers } = props;
-  const [labelsLayers, setLabelsLayers] = useState(null);
+  const { map,  activeLayers } = props;
   useEffect(() => {
     const styleLayers = (layers) => {
       loadModules(["esri/layers/support/LabelClass"])
@@ -56,9 +55,6 @@ const LabelsLayer = props => {
           layer.opacity = 1;
           layer.labelsVisible = true;
           layer.labelingInfo = labelingInfo;
-          if (countryISO) {
-            layer.definitionExpression = `GID_0 = '${countryISO}'`
-          }
           if (layer.title === LANDSCAPE_FEATURES_LABELS_LAYER) {
             // Hides the dots but keeps the landscape feature layers
             layer.renderer = {
@@ -76,17 +72,8 @@ const LabelsLayer = props => {
     const layers = LANDSCAPE_LABELS_LAYERS.map(layer => findLayerInMap(layer, map)).filter(Boolean);
     if (layers.length) {
       styleLayers(layers);
-      setLabelsLayers(layers);
     }
   }, [activeLayers]);
-
-  useEffect(() => {
-    if (countryISO && labelsLayers) {
-      labelsLayers.forEach(layer => {
-        layer.definitionExpression = `GID_0 = '${countryISO}'`;
-      });
-    }
-  }, [countryISO, labelsLayers]);
 
   return null
 }

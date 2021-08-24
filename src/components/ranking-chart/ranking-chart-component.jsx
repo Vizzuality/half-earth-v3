@@ -113,7 +113,7 @@ const RankingChart = ({
             })}
           >
             {RANKING_HEADER_LABELS[category].split(" ").map(word => (
-              <p className={styles.titleText}>{`${word.toUpperCase()}`}</p>
+              <p key={word} className={styles.titleText}>{`${word.toUpperCase()}`}</p>
             ))}
           </div>
         ))}
@@ -129,7 +129,7 @@ const RankingChart = ({
           <div className={styles.table}>
             {data.map((d, i) => (
               <div className={cx(styles.row, {
-                [styles.found]: scrollIndex === i,
+                [styles.selectedCountry]: countryISO === d.iso,
               }
               )} key={d.name}>
                 <button
@@ -138,6 +138,7 @@ const RankingChart = ({
                 >
                   <span
                     className={cx(styles.spiCountryIndex, {
+                      [styles.found]: scrollIndex === i,
                       [styles.selectedCountry]: countryISO === d.iso,
                     })}
                   >
@@ -145,6 +146,7 @@ const RankingChart = ({
                   </span>
                   <span
                     className={cx(styles.spiCountryName, {
+                      [styles.found]: scrollIndex === i,
                       [styles.selectedCountry]: countryISO === d.iso,
                     })}
                   >

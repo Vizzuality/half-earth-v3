@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { LOCAL_SCENE, DATA_SCENE } from 'constants/scenes-constants';
-import dataSceneConfig from 'scenes/data-scene/data-scene-config';
-import { setCSSvariable } from 'utils/generic-functions'
 import mapStateToProps from './local-scene-sidebar-selectors';
 import Component from './local-scene-sidebar-component';
 import * as urlActions from 'actions/url-actions';
@@ -10,31 +7,25 @@ import metadataActions from 'redux_modules/metadata';
 import countryDataActions from 'redux_modules/country-data';
 import { downloadCountryPdfAnalyticsEvent, selectNRCSectionAnalyticsEvent } from 'actions/google-analytics-actions';
 import metadataConfig from 'constants/metadata';
+import { DATA, NATIONAL_REPORT_CARD } from 'router'
 
 const actions = { ...urlActions, ...countryDataActions, ...metadataActions, downloadCountryPdfAnalyticsEvent };
 
 const LocalSceneSidebarContainer = (props) => {
   const {
-    changeUI,
-    sceneMode,
-    changeGlobe,
+    scene,
+    browsePage,
     countryName,
     downloadCountryPdfAnalyticsEvent
   } = props;
 
-  useEffect(() => {
-    setCSSvariable('--sidebar-top-margin', '20px');
-  }, [])
-
   const handleSceneModeChange = () => {
-    changeUI({ sceneMode: sceneMode === DATA_SCENE ? LOCAL_SCENE : DATA_SCENE });
-    changeGlobe({countryISO: null, countryName: null, activeLayers: dataSceneConfig.globe.activeLayers, zoom: 7});
-    setCSSvariable('--sidebar-top-margin', '60px');
+    browsePage({ type: DATA, query: { globe: { center: [scene.view.center.longitude, scene.view.center.latitude], zoom: 4}}});
   }
 
   const handleTabSelection = slug => {
-    const { changeUI } = props;
-    changeUI({ localSceneActiveTab: slug });
+    const { browsePage, countryISO } = props;
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  slug }});
     selectNRCSectionAnalyticsEvent(slug);
   };
 

@@ -3,20 +3,18 @@ import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import conservationEffortsActions from 'redux_modules/conservation-efforts';
 
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+import { layerToggleAnalyticsEvent } from 'actions/google-analytics-actions';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
-import { batchToggleLayers } from 'utils/layer-manager-utils';
 import { layersConfig, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { COMMUNITY_AREAS_VECTOR_TILE_LAYER, GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
-import { COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
-import { PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR } from 'constants/protected-areas';
+import { GRID_CELLS_PROTECTED_AREAS_PERCENTAGE } from 'constants/layers-slugs';
+import { PROTECTED_AREAS_COLOR } from 'constants/protected-areas';
 
 import * as urlActions from 'actions/url-actions';
 
 import Component from './conservation-efforts-widget-component';
 import mapStateToProps from './conservation-efforts-widget-selectors';
 
-const actions = { ...conservationEffortsActions, ...urlActions, addLayerAnalyticsEvent, removeLayerAnalyticsEvent };
+const actions = { ...conservationEffortsActions, ...urlActions, layerToggleAnalyticsEvent };
 
 const findInDOM = (id) => document.getElementById(id);
 
@@ -48,7 +46,7 @@ const ConservationEffortsWidget = (props) => {
   useEffect(() => {
     const svg = findInDOM('conservation-widget');
     const orangeSlice = findInDOM(PROTECTED_AREAS_COLOR);
-    const yellowSlice = findInDOM(COMMUNITY_AREAS_COLOR);
+    const yellowSlice = findInDOM(PROTECTED_AREAS_COLOR);
 
     if (svg && orangeSlice) {
       if (orangeActive && yellowActive && orangeSlice && yellowSlice) {
@@ -77,12 +75,9 @@ const ConservationEffortsWidget = (props) => {
   }, [selectedCellsIDs])
 
   const handleLayerToggle = async (_, option) => {
-    const { activeLayers, changeGlobe } = props;
-    if (option.title === COMMUNITY_AREAS_VECTOR_TILE_LAYER) {
-      batchToggleLayers(COMMUNITY_PROTECTED_AREAS_LAYER_GROUP, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
-    } else {
-      layerManagerToggle(option.title, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
-    }
+    const { activeLayers, changeGlobe, layerToggleAnalyticsEvent } = props;
+    layerToggleAnalyticsEvent({slug: option.title});
+    layerManagerToggle(option.title, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
   }
 
   return <Component {...props} toggleLayer={handleLayerToggle} />;

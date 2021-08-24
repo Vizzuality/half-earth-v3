@@ -1,55 +1,36 @@
 import { loadModules } from 'esri-loader';
 import React from 'react';
-import { MODALS } from 'constants/ui-params';
-import { connect } from 'react-redux';
 
 import MinimapWidgetComponent from './minimap-widget-component';
-import { disableInteractions, minimapLayerStyles, synchronizeWebScenes } from 'utils/minimap-utils';
-import HalfEarthModal from 'components/half-earth-modal/half-earth-modal';
-import { openHalfEarthMeterAnalyticsEvent } from 'actions/google-analytics-actions';
-import * as urlActions from 'actions/url-actions';
+import { synchronizeWebScenes, updateMainViewExtentGraphic } from 'utils/minimap-utils';
+import {createGraphic } from 'utils/graphic-layer-utils';
+import { MINIMAP_EXTENT_GRAPHIC_STYLES, MINIMAP_BASE_LAYER_STYLES } from 'constants/graphic-styles';
 import { useMobile } from 'constants/responsive';
 
-const actions = { openHalfEarthMeterAnalyticsEvent, ...urlActions };
-
 const MinimapWidget = (props) => {
-  const { openedModal } = props;
-  const setModal = (opened) => {
-    const { changeUI } = props;
-    changeUI({ openedModal: opened ? MODALS.HE : null });
-  }
-
   const isOnMobile = useMobile();
 
   const handleMapLoad = (map, view, globeView ) => {
+    map.basemap = null; // Avoid displaying the default satellite basemap
     map.ground.surfaceColor = '#0A212E';  // set surface color, before basemap is loaded
-    disableInteractions(view); // disable all interactions on the minimap globe
-    loadModules(["esri/layers/VectorTileLayer"]).then(([VectorTileLayer]) => { // load two-colors vector-tile-layer into minimap globe
-      const minimapLayer = new VectorTileLayer(minimapLayerStyles);
+    loadModules(["esri/layers/VectorTileLayer", "esri/Graphic"]).then(([VectorTileLayer, Graphic]) => { // load two-colors vector-tile-layer into minimap globe
+      const minimapLayer = new VectorTileLayer(MINIMAP_BASE_LAYER_STYLES);
+      const extentGraphic = createGraphic(Graphic, MINIMAP_EXTENT_GRAPHIC_STYLES);
+      view.graphics.add(extentGraphic);
       map.add(minimapLayer);
+      synchronizeWebScenes(globeView, view); // synchronize data-globe position, zoom etc. with minimap-globe
+      updateMainViewExtentGraphic(globeView, extentGraphic);
     });
-    synchronizeWebScenes(globeView, view); // synchronize data-globe position, zoom etc. with minimap-globe
-  };
-
-  const handleModalOpen = () => {
-    setModal(true);
-    const { openHalfEarthMeterAnalyticsEvent } = props;
-    openHalfEarthMeterAnalyticsEvent();
-  };
-
-  const handleModalClose = () => {
-    setModal(false);
   };
 
   const { hidden } = props;
   return (
     <div style={{ display: hidden ? 'none' : 'block' }}>
-      {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props} handleModalOpen={handleModalOpen}/>}
-      {openedModal === MODALS.HE && <HalfEarthModal handleModalClose={handleModalClose} />}
+      {!isOnMobile && <MinimapWidgetComponent handleMapLoad={handleMapLoad} {...props}/>}
     </div>
   );
 }
 
 
 
-export default connect(null, actions)(MinimapWidget);
+export default MinimapWidget;

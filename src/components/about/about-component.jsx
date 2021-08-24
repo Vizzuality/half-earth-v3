@@ -6,14 +6,14 @@ import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import PartnersComponent from './partners/partners';
 import MapInstructionsComponent from './map-instructions/map-instructions-component';
-import { openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent } from 'actions/google-analytics-actions';
-import { ABOUT_TABS } from 'constants/google-analytics-constants';
+import { openAboutPageAnalyticsEvent } from 'actions/google-analytics-actions';
+import { ABOUT_TABS } from 'constants/ui-params';
 
 import styles from './about-styles.module.scss';
 
-const actions = { openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent };
+const actions = { openAboutPageAnalyticsEvent };
 
-const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalyticsEvent }) => {
+const AboutPage = ({ handleCloseAboutPage, tabsData }) => {
   const [activeTab, setActiveTab] = useState(ABOUT_TABS.PARTNERS);
 
   const keyEscapeEventListener = (evt) => {
@@ -27,7 +27,6 @@ const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalytics
   const changeActiveTab = (ACTIVE_TAB) => {
     if(ACTIVE_TAB !== activeTab) {
       setActiveTab(ACTIVE_TAB);
-      switchAboutPageTabAnalyticsEvent({ activeTab: ACTIVE_TAB });
     }
   }
 
@@ -64,7 +63,7 @@ const AboutPage = ({ handleCloseAboutPage, tabsData, switchAboutPageTabAnalytics
   );
 }
 
-const AboutComponent = ({ className, buttonTitle, setPageTexts, VIEW , openAboutPageAnalyticsEvent, switchAboutPageTabAnalyticsEvent }) => {
+const AboutComponent = ({ className, buttonTitle, setPageTexts, VIEW , openAboutPageAnalyticsEvent }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
@@ -100,7 +99,6 @@ const AboutComponent = ({ className, buttonTitle, setPageTexts, VIEW , openAbout
           <AboutPage
             handleCloseAboutPage={handleCloseAboutPage}
             tabsData={tabsData}
-            switchAboutPageTabAnalyticsEvent={switchAboutPageTabAnalyticsEvent}
           />,
           document.getElementById('root')
         )

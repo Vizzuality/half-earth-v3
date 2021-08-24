@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './national-report-pdf.module.scss';
 import HighLightedSpeciesList from 'components/highlighted-species-list';
+import HalfEarthLogo from 'components/half-earth-logo';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
@@ -9,9 +10,9 @@ import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 const NationalReportPdf = ({
   SPI,
   birds,
+  nrcUrl,
   mammals,
   reptiles,
-  shortLink,
   amphibians,
   countryISO,
   countryName,
@@ -36,6 +37,7 @@ const NationalReportPdf = ({
         <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
         <span className={styles.countryName}>{countryName}</span>
       </section>
+      <HalfEarthLogo withBackground className={styles.logo}/> 
       <section className={styles.date}>
         <span>
           {Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(new Date())}
@@ -121,7 +123,7 @@ const NationalReportPdf = ({
         {sceneScreenshotUrl && <img src={sceneScreenshotUrl} alt={`${countryName} map`}/>}
       </section>
       <section className={styles.urlWrapper} >
-        <a href={shortLink}>{shortLink}</a>
+        <a href={nrcUrl}>{nrcUrl}</a>
       </section>
     </div>
   )

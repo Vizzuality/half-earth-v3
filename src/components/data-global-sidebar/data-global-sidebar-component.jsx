@@ -1,49 +1,44 @@
+// dependencies
 import React from 'react';
 import cx from 'classnames';
+// components
 import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
 import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
 import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
 import FindPlacesCard from 'components/find-places-card';
-import animationStyles from 'styles/common-animations.module.scss';
+// styles
 import styles from './data-global-sidebar-styles.module.scss';
 
 const DataGlobalSidebarComponent = ({
-  map,
   view,
+  className,
   activeLayers,
-  isCountryMode,
   activeCategory,
-  isLandscapeMode,
-  isFullscreenActive,
   searchWidgetConfig,
   countedActiveLayers,
   handleGlobeUpdating,
 }) => {
 
-  const sidebarHidden = isCountryMode || isLandscapeMode || isFullscreenActive;
   return (
-    <div className={cx(styles.sidebarContainer, {[animationStyles.leftHidden]: sidebarHidden})}>
+    <div className={cx(styles.container,className)}>
       <FindPlacesCard
         view={view}
         searchWidgetConfig={searchWidgetConfig}
       />
       <BiodiversitySidebarCard
-        map={map}
         view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         className={styles.biodiversitySidebarCard}
         countedActiveLayers={countedActiveLayers}
       />
-      <ProtectedAreasSidebarCard
-        map={map}
+      <HumanImpactSidebarCard
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
       />
-      <HumanImpactSidebarCard
-        view={view}
+      <ProtectedAreasSidebarCard
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}

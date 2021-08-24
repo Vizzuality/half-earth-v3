@@ -3,16 +3,14 @@ import { connect } from 'react-redux';
 import intersection from 'lodash/intersection';
 import metadataActions from 'redux_modules/metadata';
 import { layerManagerOrder, layerManagerOpacity, layerManagerVisibility, batchToggleLayers, batchSetLayerManagerOpacity, getActiveLayersFromLayerGroup } from 'utils/layer-manager-utils';
-import metadataConfig from 'constants/metadata';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
-import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
-import { VIEW_MODE } from 'constants/google-analytics-constants';
-import { changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
+// import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
+import { changeLayerOpacityAnalyticsEvent, openInfoModalAnalyticsEvent, layerToggleAnalyticsEvent, changeLayersOrderAnalyticsEvent } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 import Component from './legend-component';
 import mapStateToProps from './legend-selectors';
 
-const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openLayerInfoModalAnalyticsEvent, removeLayerAnalyticsEvent, changeLayersOrderAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions, changeLayerOpacityAnalyticsEvent, openInfoModalAnalyticsEvent, layerToggleAnalyticsEvent, changeLayersOrderAnalyticsEvent };
 
 const LegendContainer = props => {
 
@@ -32,29 +30,29 @@ const LegendContainer = props => {
   }
 
   const handleRemoveLayer = (layer) => {
-    const { activeLayers, removeLayerAnalyticsEvent, changeGlobe } = props;
+    const { activeLayers, layerToggleAnalyticsEvent, changeGlobe } = props;
     if (layer.legendConfig.groupedLayer) {
       const activeGroupedLayers = getActiveLayersFromLayerGroup(LEGEND_GROUPED_LAYERS_GROUPS[layer.title], activeLayers);
       batchToggleLayers(activeGroupedLayers, activeLayers, changeGlobe);
     } else {
       layerManagerVisibility(layer.title, false, activeLayers, changeGlobe);
-      removeLayerAnalyticsEvent({ slug: getSlug(layer), query: { viewMode: VIEW_MODE.LEGEND } });
+      layerToggleAnalyticsEvent({ slug: getSlug(layer) });
     }
   }
 
   const getSlug = (layer) => {
-    if(layer.title.includes('human_pressures')) return MARINE_AND_LAND_HUMAN_PRESSURES;
+    // if(layer.title.includes('human_pressures')) return MARINE_AND_LAND_HUMAN_PRESSURES;
     return layer.legendConfig.slug || layer.title;
   }
 
   const handleInfoClick = layer => {
-    const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
+    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
     const slug = getSlug(layer);
     setModalMetadata({
       slug,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug, query: { viewMode: VIEW_MODE.LEGEND }});
+    openInfoModalAnalyticsEvent({ slug });
   };
 
   const spreadGroupLayers = (layers, activeLayers) => {

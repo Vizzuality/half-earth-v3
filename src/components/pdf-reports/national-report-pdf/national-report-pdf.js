@@ -10,27 +10,34 @@ const NationalReportPdfContainer = (props) => {
   const { view, countryISO } = props;
   const watchUtils = useWatchUtils();
   const [sceneScreenshotUrl, setSceneScreenshotUrl] = useState();
-useEffect(() => {
-  watchHandle = watchUtils && watchUtils.whenFalseOnce(view, "updating", function(updating) {
-      getSceneImageUrl();
-  })
-  return function cleanUp() {
-    watchHandle && watchHandle.remove();
-  }
-},[watchUtils, countryISO]);
+  const [nrcUrl, setNrcUrl] = useState();
 
-const getSceneImageUrl = ()=> {
-  const options = {
-    width: 430
+  useEffect(() => {
+    setNrcUrl(`${window.location.origin}${window.location.pathname}`);
+  }, [countryISO])
+
+  useEffect(() => {
+    watchHandle = watchUtils && watchUtils.whenFalseOnce(view, "updating", function(updating) {
+        getSceneImageUrl();
+    })
+    return function cleanUp() {
+      watchHandle && watchHandle.remove();
+    }
+  },[watchUtils, countryISO]);
+
+  const getSceneImageUrl = ()=> {
+    const options = {
+      width: 430
+    }
+    view.takeScreenshot(options).then(function(screenshot) {
+      setSceneScreenshotUrl(screenshot.dataUrl);
+    })
   }
-  view.takeScreenshot(options).then(function(screenshot) {
-    setSceneScreenshotUrl(screenshot.dataUrl);
-  })
-}
 
   return (
     ReactDOM.createPortal(
       <Component
+        nrcUrl={nrcUrl}
         sceneScreenshotUrl={sceneScreenshotUrl}
         {...props}
       />,

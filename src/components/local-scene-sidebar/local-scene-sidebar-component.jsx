@@ -9,15 +9,11 @@ import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import Tabs from 'components/tabs';
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
-
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import OverviewSidebar from './overview-sidebar';
 import ChallengesSidebar from './challenges-sidebar';
 import RankingSidebar from './ranking-sidebar';
-
-
-
 
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
@@ -31,8 +27,9 @@ import {
 const LocalSceneSidebarComponent = ({
   className,
   countryISO,
-  countryName,
   countryData,
+  countryName,
+  openedModal,
   handlePrintReport,
   handleSourceClick,
   handleTabSelection,
@@ -58,8 +55,11 @@ const LocalSceneSidebarComponent = ({
       />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
-        <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
-        <p className={styles.countryName}>{countryName}</p>
+        <div className={styles.flagWrapper}>
+          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+          <span className={styles.nrcTitle}>National report card of</span>
+        </div>
+        {countryName && <p className={styles.countryName}>{countryName}</p>}
       </div>
       <Tabs
         tabs={LOCAL_SCENE_TABS}
@@ -69,7 +69,7 @@ const LocalSceneSidebarComponent = ({
       />
       {!countryData ? (
         <div className={styles.loading}>
-          <span className={styles.loadingText}>{`Loading ${countryName} information...`}</span>
+          <span className={styles.loadingText}>{`Loading country information...`}</span>
           <Loading />
         </div>
       ) : (
@@ -77,6 +77,7 @@ const LocalSceneSidebarComponent = ({
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
             <OverviewSidebar 
               countryISO={countryISO}
+              openedModal={openedModal}
               handleSourceClick={handleSourceClick}
             />
           }

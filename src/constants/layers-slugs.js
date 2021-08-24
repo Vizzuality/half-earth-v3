@@ -1,11 +1,9 @@
-// Protected areas layers. Based on WDPA and RAISIG data.
+// Protected areas layers.
 export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged-protected';
 export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
 export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
-export const RAISIG_AREAS_FEATURE_LAYER = 'RAISIG_areas_feature_layer';
-export const RAISIG_AREAS_VECTOR_TILE_LAYER = 'RAISIG_areas_vector_tile_layer';
 export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
 export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species';
 export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human_pressures_percentage';
@@ -15,7 +13,9 @@ export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 export const GRID_LAYER = 'grid_layer';
 export const COUNTRY_PRIORITY_LAYER = 'country_priority_layer';
 // Terrestrial human pressures tiled layers.
-export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures';
+export const LAND_HUMAN_PRESSURES = 'land_human_pressures'
+export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures'
+// Land human pressures
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';

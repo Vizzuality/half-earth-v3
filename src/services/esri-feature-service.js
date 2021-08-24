@@ -3,7 +3,7 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 function getFeatures({ url, whereClause = "", outFields = ["*"], returnGeometry = false, outSpatialReference = LOCAL_SPATIAL_REFERENCE }) {
   return new Promise((resolve, reject) => {
-    loadModules(["esri/tasks/QueryTask", "esri/tasks/support/Query"]).then(([QueryTask, Query]) => {
+    loadModules(["esri/tasks/QueryTask", "esri/rest/support/Query"]).then(([QueryTask, Query]) => {
       var queryTask = new QueryTask({
         url
       });

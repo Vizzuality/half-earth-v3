@@ -17,7 +17,8 @@ $margin: 20px;
   @media #{$tablet-portrait} {
     @include animationFunction();
     position: absolute;
-    height: calc(100vh - 60px);
+    top: $ui-left-top;
+    height: calc(100vh - #{$ui-left-top});
     border-radius: 2px;
     bottom: auto;
   }

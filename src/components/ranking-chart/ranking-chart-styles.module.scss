@@ -96,11 +96,6 @@ $scroll-bar-width: 7px;
   }
 }
 
-.selectedCountry {
-  color: $brand-color-main;
-  font-weight: bold;
-}
-
 .spiCountryIndex {
   width: 2.5rem;
   display: inline-block;
@@ -148,12 +143,15 @@ $scroll-bar-width: 7px;
 .row {
   display: flex;
   align-items: flex-end;
+}
 
-  &.found {
-    .spiCountryText, .spiCountryIndex, .spiCountryName {
-      color: $white;
-    }
-  }
+.found {
+  color: $white;
+}
+
+.selectedCountry {
+  color: $brand-color-main;
+  font-weight: bold;
 }
 
 .tooltip {

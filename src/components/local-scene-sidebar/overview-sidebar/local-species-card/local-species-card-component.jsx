@@ -11,8 +11,7 @@ import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as SpeciesOval } from 'icons/species_oval.svg';
 import { ReactComponent as EndemicOval } from 'icons/endemic_oval.svg';
 import styles from './local-species-card-styles.module.scss';
-import buttonTheme from 'styles/themes/button-theme.module.scss';
-import { Button } from 'he-components';
+import Button from 'components/button';
 
 const LocalSpeciesCardComponent = ({
   birds,
@@ -84,9 +83,13 @@ const LocalSpeciesCardComponent = ({
             {`${reptiles} reptiles (${reptilesEndemic} endemic)`}
           </p>
         </div>
-        <Button theme={buttonTheme} onClick={toggleModal}>
-          See all vertebrates
-        </Button>
+        <Button 
+          type='compound'
+          handleClick={toggleModal}
+          label="See all vertebrates"
+          tooltipText="Open vertebrates list modal"
+          className={styles.actionButton}
+        />
       </section>
       <section>
         <p

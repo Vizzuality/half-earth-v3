@@ -2,20 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Component from './checkbox-component';
 import metadataActions from 'redux_modules/metadata';
-import { openLayerInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
+import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = { ...metadataActions, openLayerInfoModalAnalyticsEvent };
+const actions = { ...metadataActions, openInfoModalAnalyticsEvent };
 
 const CheckboxContainer = props => {
 
   const handleInfoClick = (option) => {
-    const { setModalMetadata, openLayerInfoModalAnalyticsEvent } = props;
+    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
     setModalMetadata({
       slug: `${option.slug}`,
       title: `${option.metadataTitle || option.name} metadata`,
       isOpen: true
     });
-    openLayerInfoModalAnalyticsEvent({ slug: `${option.slug}` });
+    openInfoModalAnalyticsEvent({ slug: `${option.slug}` });
   };
  return (
   <Component

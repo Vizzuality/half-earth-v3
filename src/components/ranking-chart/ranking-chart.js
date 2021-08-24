@@ -5,15 +5,22 @@ import mapStateToProps from './ranking-chart-selectors';
 import useDebounce from 'hooks/use-debounce';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
+import { NATIONAL_REPORT_CARD } from 'router';
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
-const actions = {...metadataActions, ...urlActions, openInfoModalAnalyticsEvent };
+const actions = {...metadataActions, ...urlActions };
 
 const RankingChartContainer = (props) => {
   const { data } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState();
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
+
+  useEffect(() => {
+    const { countryISO, data } = props;
+    const newIndex = data.findIndex(d => d.iso === countryISO);
+    setScrollIndex(newIndex);
+  }, [])
 
   useEffect(() => {
     if (data && searchTerm) {
@@ -28,9 +35,9 @@ const RankingChartContainer = (props) => {
     changeUI({ sortRankingCategory: selectedFilter })
   }
 
-  const handleCountryClick = (countryISO, countryName) => {
-    const { changeGlobe } = props;
-    changeGlobe({ countryISO, countryName, zoom: null, center: null });
+  const handleCountryClick = (countryISO) => {
+    const { browsePage } = props;
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  LOCAL_SCENE_TABS_SLUGS.RANKING }});
   };
 
   const handleSearchChange = (event) => {

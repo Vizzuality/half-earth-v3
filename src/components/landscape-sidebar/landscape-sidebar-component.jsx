@@ -36,15 +36,11 @@ const LandscapeSidebarComponent = ({
         <GeoDescriptionWidget view={view} isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed} activeOption={activeOption} />
         <SpeciesWidget selectedSpecies={selectedSpecies}/>
         <ConservationEffortsWidget
-          map={map}
-          view={view}
           activeLayers={activeLayers}
           handleGlobeUpdating={handleGlobeUpdating}
           handleLayerToggle={handleLayerToggle}
         />
         <HumanPressureWidget
-          map={map}
-          view={view}
           activeLayers={activeLayers}
           setLayerVisibility={setLayerVisibility}
           handleGlobeUpdating={handleGlobeUpdating}

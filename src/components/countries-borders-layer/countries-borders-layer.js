@@ -7,12 +7,11 @@ import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
 // UTILS
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
-import { hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip, dispatchClickedCountryAnalyticsEvent } from 'utils/globe-events-utils';
+import { hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip } from 'utils/globe-events-utils';
 // ACTIONS
 import * as urlActions from 'actions/url-actions';
-import { clickOnCountryAnalyticsEvent } from 'actions/google-analytics-actions';
 
-const actions = {...urlActions, clickOnCountryAnalyticsEvent }
+const actions = {...urlActions }
 
 const CountriesBordersLayerContainer = (props) => {
 const { view, changeGlobe, countryISO, isLandscapeMode } = props;
@@ -40,11 +39,9 @@ const { view, changeGlobe, countryISO, isLandscapeMode } = props;
   }, [countryISO, selectedCountryBorderGraphic])
 
   const onClickHandler = bordersLayerFeatures => {
-    const { clickOnCountryAnalyticsEvent } = props;
     flyToGeometry(view, bordersLayerFeatures);
     toggleCountryTooltip(bordersLayerFeatures, changeGlobe, countryISO);
     drawGeometry(bordersLayerFeatures, selectedCountryBorderGraphic);
-    dispatchClickedCountryAnalyticsEvent(bordersLayerFeatures, clickOnCountryAnalyticsEvent);
   }
 
   const onHoverHandler = bordersLayerFeatures => {

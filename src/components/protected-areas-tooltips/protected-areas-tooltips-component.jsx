@@ -64,7 +64,7 @@ const ProtectedAreasTooltips = ({ view, isLandscapeMode, activeLayers }) => {
     const protectedAreaReady = isProtectedAreasRendered && protectedAreasFL;
     const communityAreaReady = isCommunityAreasRendered && communityAreasFL;
 
-    loadModules(["esri/tasks/support/Query"]).then(([Query]) => {
+    loadModules(["esri/rest/support/Query"]).then(([Query]) => {
       const query = new Query({
         geometry: _point,
         spatialRelationship: 'intersects',
