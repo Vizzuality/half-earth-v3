@@ -7,6 +7,7 @@ import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import mapStateToProps from './selectors';
 import * as urlActions from 'actions/url-actions';
 import { AOIS_HISTORIC } from 'constants/layers-urls';
+import { CRF_NAMES } from 'constants/geo-processing-services';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { 
@@ -15,7 +16,7 @@ import {
 
 import { 
   getCrfData
- } from 'services/geo-processing-services/zonal-statistics-as-table';
+ } from 'services/geo-processing-services/sample';
 const actions = {...urlActions};
 
 const Container = props => {
@@ -45,7 +46,7 @@ const Container = props => {
         getTestingPolygon().then(features => {
           setAoiGeometry(features[0].geometry);
           getCrfData({ 
-            crfName: 'hummingbirds_binary',
+            crfName: CRF_NAMES.MAMMALS_SUBSET,
             aoiFeatureGeometry: features[0].geometry,
             isMultidimensional: true
           }).then(({jobInfo, jobId, data}) => {
