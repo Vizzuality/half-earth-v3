@@ -5,8 +5,8 @@ import metadataActions from 'redux_modules/metadata';
 import metadataService from 'services/metadata-service';
 import isEmpty from 'lodash/isEmpty';
 import Component from './biodiversity-sidebar-card-component';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { batchToggleLayers, layerManagerToggle } from 'utils/layer-manager-utils';
+import { LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
+import { batchToggleLayers, layerManagerToggle, flyToLayerExtent } from 'utils/layer-manager-utils';
 import mapStateToProps from './biodiversity-sidebar-card-selectors';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
@@ -14,7 +14,7 @@ import { BIODIVERSITY_TABS_SLUGS } from 'constants/ui-params';
 import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
 const actions = {...metadataActions, ...urlActions};
 const BiodiversitySidebarCard = (props)  => {
-  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant } = props;
+  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view } = props;
   const { PRIORITY, RICHNESS, RARITY } = BIODIVERSITY_TABS_SLUGS;
   const [cardMetadata, setCardMetadata] = useState({
     [PRIORITY] : {},
@@ -52,14 +52,17 @@ const BiodiversitySidebarCard = (props)  => {
 
   const handleLayerToggle = (e, option) => {
     e.preventDefault();
+    const layer = layersConfig[option.layer];
     if (selectedLayer === option.layer) {
       layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
       setSelectedLayer(null);
     } else if(selectedLayer) {
+      layer.bbox && flyToLayerExtent(layer.bbox, view);
       batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
       setSelectedLayer(option.layer);
     } else {
-      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+      layer.bbox && flyToLayerExtent(layer.bbox, view);
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
       setSelectedLayer(option.layer);
     }
   }
