@@ -6,11 +6,11 @@ import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
 import SidebarCardWrapper from 'components/sidebar-card-wrapper'
 import SidebarCardContent from 'components/sidebar-card-content';
-import BiodiversityLayers from 'components/biodiversity-layers';
+import LayerToggle from 'components/layer-toggle';
 import Legend from 'components/sidebar-legend';
-import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/legend-configs';
+import { LAYERS_TOGGLE_CONFIG, LAYERS_RESOLUTION, TERRESTRIAL, MARINE, RESOLUTIONS } from 'constants/biodiversity-layers-constants';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 
 import BiodiversityThumbnail from "images/biodiversity.png";
@@ -18,12 +18,16 @@ import BiodiversityThumbnail from "images/biodiversity.png";
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
+  handleLayerToggle,
+  selectedLayer,
   view,
   handleTabSelection,
+  handleOptionSelection,
   biodiversityLayerVariant,
   cardMetadata
 }) => {
   const { title, description, source } = cardMetadata || {};
+  const [selectedResolution, setSelectedResolution] = useState({[TERRESTRIAL]: RESOLUTIONS.LOW.slug, [MARINE]: RESOLUTIONS.LOW.slug})
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   return (
@@ -60,25 +64,31 @@ const BiodiversitySidebarCardComponent = ({
             />
           </SidebarCardWrapper>
         </div>
-        <Dropdown
-          theme={'dark'}
-          options={[{slug: '55km', label: '~55km RESOLUTION'}, {slug: '1km', label: '~1km RESOLUTION'}]}
-          selectedOption={{slug: '55km', label: '~55km RESOLUTION'}}
-          handleOptionSelection={(op) => console.log(op)}
-        />
-        {biodiversityLayerVariant &&
-          biodiversityCategories[biodiversityLayerVariant].map((cat) => (
-            <BiodiversityLayers
-              key={cat.name}
-              title={cat.name}
-              description={cat.description}
-              subcategories={cat.subcategories}
-              options={cat.taxa}
-              activeLayers={activeLayers}
-              view={view}
-              variant={biodiversityLayerVariant}
-            />
-          ))}
+        <div style={{display: 'flex'}}>
+          <span style={{color: 'white'}}>Terrestrial species</span>
+          <Dropdown
+            theme={'dark'}
+            options={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL]}
+            selectedOption={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL][0]}
+            handleOptionSelection={(op) => setSelectedResolution({
+              ...selectedResolution,
+              [TERRESTRIAL]: op
+            })}
+            disabled={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL].length < 2}
+          />
+        </div>
+          {
+            LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][selectedResolution[TERRESTRIAL]].map(layer => (
+              <LayerToggle
+                type='radio'
+                optionSelected={selectedLayer}
+                option={layer}
+                title='my title'
+                handleInfoClick={() => console.log('info clicked')}
+                onClick={handleLayerToggle}
+              />
+            ))
+          }
       </div>
     </div>
   );

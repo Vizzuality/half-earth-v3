@@ -90,267 +90,267 @@ export const LAYERS_CATEGORIES = {
   LAND_PRESSURES: 'Human pressures'
 }
 
-export const biodiversityCategories = {
-  [LAYER_VARIANTS.PRIORITY]: [
-    {
-      name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'all groups',
-          name: 'All terrestrial vertebrates',
-          layer: ALL_TAXA_PRIORITY
-        },
-        {
-          value: 'amphibians',
-          name: 'amphibians',
-          layer: AMPHIB_PRIORITY
-        },
-        {
-          value: 'birds',
-          name: 'birds',
-          layer: BIRDS_PRIORITY
-        },
-        {
-          value: 'mammals',
-          name: 'mammals',
-          layer: MAMMALS_PRIORITY
-        },
-        {
-          value: 'reptiles',
-          name: 'reptiles',
-          layer:  REPTILES_PRIORITY
-        }
-      ]
-    }
-  ],
-  [LAYER_VARIANTS.RICHNESS]: [
-    {
-      name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'all groups',
-          name: 'all groups',
-          layer: ALL_TAXA_RICHNESS
-        },
-        {
-          value: 'amphibians',
-          name: 'amphibians',
-          layer: AMPHIB_RICHNESS
-        },
-        {
-          value: 'birds',
-          name: 'birds',
-          layer: BIRDS_RICHNESS
-        },
-        {
-          value: 'cacti',
-          name: 'cacti',
-          layer: CACTI_RICHNESS
-        },
-        {
-          value: 'conifers',
-          name: 'conifers',
-          layer: CONIFERS_RICHNESS
-        },
-        {
-          value: 'mammals',
-          name: 'mammals',
-          layer: MAMMALS_RICHNESS
-        },
-        {
-          value: 'reptiles',
-          name: 'reptiles',
-          layer: REPTILES_RICHNESS
-        }
-      ]
-    },
-    {
-      name: 'MARINE SPECIES',
-      description: 'Global, ~55 km cell size mapping of marine species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'fishes',
-          name: 'fishes',
-          layer: FISHES_RICHNESS
-        }
-      ]
-    },
-    {
-      name: 'FINE SCALE DATA',
-      description: 'Maps with 1km cell size for select species.',
-      subcategories: [
-        {
-          name: 'hummingbirds',
-          taxa: [
-            {
-              value: 'hummingbirds',
-              name: 'hummingbirds',
-              layer: HUMMINGBIRDS_RICHNESS
-            }
-          ]
-        },
-        {
-          name: 'south africa',
-          taxa: [
-            {
-              value: 'sa_amphibians',
-              name: 'amphibians',
-              layer: SA_AMPHIB_RICHNESS
-            },
-            {
-              value: 'sa_dragonflies',
-              name: 'dragonflies',
-              layer: SA_DRAGONFLIES_RICHNESS
-            },
-            {
-              value: 'sa_mammals',
-              name: 'mammals',
-              layer: SA_MAMMALS_RICHNESS
-            },
-            {
-              value: 'sa_birds',
-              name: 'birds',
-              layer: SA_BIRDS_RICHNESS
-            },
-            {
-              value: 'sa_restio',
-              name: 'restio',
-              layer: SA_RESTIO_RICHNESS
-            },
-            {
-              value: 'sa_protea',
-              name: 'protea',
-              layer: SA_PROTEA_RICHNESS
-            },
-            {
-              value: 'sa_reptiles',
-              name: 'reptiles',
-              layer: SA_REPTILES_RICHNESS
-            },
+// export const biodiversityCategories = {
+//   [LAYER_VARIANTS.PRIORITY]: [
+//     {
+//       name: 'TERRESTRIAL SPECIES',
+//       description: 'Global, ~55 km cell size mapping of terrestrial species. ',
+//       subcategories: false,
+//       taxa: [
+//         {
+//           value: 'all groups',
+//           name: 'All terrestrial vertebrates',
+//           layer: ALL_TAXA_PRIORITY
+//         },
+//         {
+//           value: 'amphibians',
+//           name: 'amphibians',
+//           layer: AMPHIB_PRIORITY
+//         },
+//         {
+//           value: 'birds',
+//           name: 'birds',
+//           layer: BIRDS_PRIORITY
+//         },
+//         {
+//           value: 'mammals',
+//           name: 'mammals',
+//           layer: MAMMALS_PRIORITY
+//         },
+//         {
+//           value: 'reptiles',
+//           name: 'reptiles',
+//           layer:  REPTILES_PRIORITY
+//         }
+//       ]
+//     }
+//   ],
+//   [LAYER_VARIANTS.RICHNESS]: [
+//     {
+//       name: 'TERRESTRIAL SPECIES',
+//       description: 'Global, ~55 km cell size mapping of terrestrial species. ',
+//       subcategories: false,
+//       taxa: [
+//         {
+//           value: 'all groups',
+//           name: 'all groups',
+//           layer: ALL_TAXA_RICHNESS
+//         },
+//         {
+//           value: 'amphibians',
+//           name: 'amphibians',
+//           layer: AMPHIB_RICHNESS
+//         },
+//         {
+//           value: 'birds',
+//           name: 'birds',
+//           layer: BIRDS_RICHNESS
+//         },
+//         {
+//           value: 'cacti',
+//           name: 'cacti',
+//           layer: CACTI_RICHNESS
+//         },
+//         {
+//           value: 'conifers',
+//           name: 'conifers',
+//           layer: CONIFERS_RICHNESS
+//         },
+//         {
+//           value: 'mammals',
+//           name: 'mammals',
+//           layer: MAMMALS_RICHNESS
+//         },
+//         {
+//           value: 'reptiles',
+//           name: 'reptiles',
+//           layer: REPTILES_RICHNESS
+//         }
+//       ]
+//     },
+//     {
+//       name: 'MARINE SPECIES',
+//       description: 'Global, ~55 km cell size mapping of marine species. ',
+//       subcategories: false,
+//       taxa: [
+//         {
+//           value: 'fishes',
+//           name: 'fishes',
+//           layer: FISHES_RICHNESS
+//         }
+//       ]
+//     },
+//     {
+//       name: 'FINE SCALE DATA',
+//       description: 'Maps with 1km cell size for select species.',
+//       subcategories: [
+//         {
+//           name: 'hummingbirds',
+//           taxa: [
+//             {
+//               value: 'hummingbirds',
+//               name: 'hummingbirds',
+//               layer: HUMMINGBIRDS_RICHNESS
+//             }
+//           ]
+//         },
+//         {
+//           name: 'south africa',
+//           taxa: [
+//             {
+//               value: 'sa_amphibians',
+//               name: 'amphibians',
+//               layer: SA_AMPHIB_RICHNESS
+//             },
+//             {
+//               value: 'sa_dragonflies',
+//               name: 'dragonflies',
+//               layer: SA_DRAGONFLIES_RICHNESS
+//             },
+//             {
+//               value: 'sa_mammals',
+//               name: 'mammals',
+//               layer: SA_MAMMALS_RICHNESS
+//             },
+//             {
+//               value: 'sa_birds',
+//               name: 'birds',
+//               layer: SA_BIRDS_RICHNESS
+//             },
+//             {
+//               value: 'sa_restio',
+//               name: 'restio',
+//               layer: SA_RESTIO_RICHNESS
+//             },
+//             {
+//               value: 'sa_protea',
+//               name: 'protea',
+//               layer: SA_PROTEA_RICHNESS
+//             },
+//             {
+//               value: 'sa_reptiles',
+//               name: 'reptiles',
+//               layer: SA_REPTILES_RICHNESS
+//             },
 
-          ]
-        }
-      ]
-    }
-  ],
-  [LAYER_VARIANTS.RARITY]: [
-    {
-      name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'all groups',
-          name: 'all groups',
-          layer: ALL_TAXA_RARITY
-        },
-        {
-          value: 'amphibians',
-          name: 'amphibians',
-          layer: AMPHIB_RARITY
-        },
-        {
-          value: 'birds',
-          name: 'birds',
-          layer: BIRDS_RARITY
-        },
-        {
-          value: 'cacti',
-          name: 'cacti',
-          layer: CACTI_RARITY
-        },
-        {
-          value: 'conifers',
-          name: 'conifers',
-          layer: CONIFERS_RARITY
-        },
-        {
-          value: 'mammals',
-          name: 'mammals',
-          layer: MAMMALS_RARITY
-        },
-        {
-          value: 'reptiles',
-          name: 'reptiles',
-          layer: REPTILES_RARITY
-        }
-      ]
-    },
-    {
-      name: 'MARINE SPECIES',
-      description: 'Global, ~55 km cell size mapping of marine species. ',
-      subcategories: false,
-      taxa: [
-        {
-          value: 'fishes',
-          name: 'fishes',
-          layer: FISHES_RARITY
-        }
-      ]
-    },
-    {
-      name: 'FINE SCALE DATA',
-      description: 'Maps with 1km cell size for select species.',
-      subcategories: [
-        {
-          name: 'hummingbirds',
-          taxa: [
-            {
-              value: 'hummingbirds',
-              name: 'hummingbirds',
-              layer: HUMMINGBIRDS_RARITY
-            }
-          ]
-        },
-        {
-          name: 'south africa',
-          taxa: [
-            {
-              value: 'sa_amphibians',
-              name: 'amphibians',
-              layer: SA_AMPHIB_RARITY
-            },
-            {
-              value: 'sa_dragonflies',
-              name: 'dragonflies',
-              layer: SA_DRAGONFLIES_RARITY
-            },
-            {
-              value: 'sa_mammals',
-              name: 'mammals',
-              layer: SA_MAMMALS_RARITY
-            },
-            {
-              value: 'sa_birds',
-              name: 'birds',
-              layer: SA_BIRDS_RARITY
-            },
-            {
-              value: 'sa_restio',
-              name: 'restio',
-              layer: SA_RESTIO_RARITY
-            },
-            {
-              value: 'sa_protea',
-              name: 'protea',
-              layer: SA_PROTEA_RARITY
-            },
-            {
-              value: 'sa_reptiles',
-              name: 'reptiles',
-              layer: SA_REPTILES_RARITY
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
+//           ]
+//         }
+//       ]
+//     }
+//   ],
+//   [LAYER_VARIANTS.RARITY]: [
+//     {
+//       name: 'TERRESTRIAL SPECIES',
+//       description: 'Global, ~55 km cell size mapping of terrestrial species. ',
+//       subcategories: false,
+//       taxa: [
+//         {
+//           value: 'all groups',
+//           name: 'all groups',
+//           layer: ALL_TAXA_RARITY
+//         },
+//         {
+//           value: 'amphibians',
+//           name: 'amphibians',
+//           layer: AMPHIB_RARITY
+//         },
+//         {
+//           value: 'birds',
+//           name: 'birds',
+//           layer: BIRDS_RARITY
+//         },
+//         {
+//           value: 'cacti',
+//           name: 'cacti',
+//           layer: CACTI_RARITY
+//         },
+//         {
+//           value: 'conifers',
+//           name: 'conifers',
+//           layer: CONIFERS_RARITY
+//         },
+//         {
+//           value: 'mammals',
+//           name: 'mammals',
+//           layer: MAMMALS_RARITY
+//         },
+//         {
+//           value: 'reptiles',
+//           name: 'reptiles',
+//           layer: REPTILES_RARITY
+//         }
+//       ]
+//     },
+//     {
+//       name: 'MARINE SPECIES',
+//       description: 'Global, ~55 km cell size mapping of marine species. ',
+//       subcategories: false,
+//       taxa: [
+//         {
+//           value: 'fishes',
+//           name: 'fishes',
+//           layer: FISHES_RARITY
+//         }
+//       ]
+//     },
+//     {
+//       name: 'FINE SCALE DATA',
+//       description: 'Maps with 1km cell size for select species.',
+//       subcategories: [
+//         {
+//           name: 'hummingbirds',
+//           taxa: [
+//             {
+//               value: 'hummingbirds',
+//               name: 'hummingbirds',
+//               layer: HUMMINGBIRDS_RARITY
+//             }
+//           ]
+//         },
+//         {
+//           name: 'south africa',
+//           taxa: [
+//             {
+//               value: 'sa_amphibians',
+//               name: 'amphibians',
+//               layer: SA_AMPHIB_RARITY
+//             },
+//             {
+//               value: 'sa_dragonflies',
+//               name: 'dragonflies',
+//               layer: SA_DRAGONFLIES_RARITY
+//             },
+//             {
+//               value: 'sa_mammals',
+//               name: 'mammals',
+//               layer: SA_MAMMALS_RARITY
+//             },
+//             {
+//               value: 'sa_birds',
+//               name: 'birds',
+//               layer: SA_BIRDS_RARITY
+//             },
+//             {
+//               value: 'sa_restio',
+//               name: 'restio',
+//               layer: SA_RESTIO_RARITY
+//             },
+//             {
+//               value: 'sa_protea',
+//               name: 'protea',
+//               layer: SA_PROTEA_RARITY
+//             },
+//             {
+//               value: 'sa_reptiles',
+//               name: 'reptiles',
+//               layer: SA_REPTILES_RARITY
+//             }
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// };
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {

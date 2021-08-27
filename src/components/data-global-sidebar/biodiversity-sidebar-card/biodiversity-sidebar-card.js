@@ -6,11 +6,12 @@ import metadataService from 'services/metadata-service';
 import isEmpty from 'lodash/isEmpty';
 import Component from './biodiversity-sidebar-card-component';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import { batchToggleLayers } from 'utils/layer-manager-utils';
+import { batchToggleLayers, layerManagerToggle } from 'utils/layer-manager-utils';
 import mapStateToProps from './biodiversity-sidebar-card-selectors';
 import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
 import { BIODIVERSITY_TABS_SLUGS } from 'constants/ui-params';
+import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
 const actions = {...metadataActions, ...urlActions};
 const BiodiversitySidebarCard = (props)  => {
   const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant } = props;
@@ -20,6 +21,8 @@ const BiodiversitySidebarCard = (props)  => {
     [RICHNESS] : {},
     [RARITY] : {},
   })
+
+  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY)
 
   useEffect(() => {
     if (isEmpty(cardMetadata[biodiversityLayerVariant])) {
@@ -47,15 +50,31 @@ const BiodiversitySidebarCard = (props)  => {
     );
   };
 
-  useSelectLayersOnTabChange({
-    biodiversityLayerVariant,
-    activeLayers,
-    biodiversityCategories,
-    handleClearAndAddLayers
-  });
+  const handleLayerToggle = (e, option) => {
+    e.preventDefault();
+    if (selectedLayer === option.layer) {
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+      setSelectedLayer(null);
+    } else if(selectedLayer) {
+      batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+      setSelectedLayer(option.layer);
+    } else {
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+      setSelectedLayer(option.layer);
+    }
+  }
+
+  // useSelectLayersOnTabChange({
+  //   biodiversityLayerVariant,
+  //   activeLayers,
+  //   biodiversityCategories,
+  //   handleClearAndAddLayers
+  // });
 
   return (
     <Component
+      handleLayerToggle={handleLayerToggle}
+      selectedLayer={selectedLayer}
       handleClearAndAddLayers={handleClearAndAddLayers}
       handleTabSelection={handleTabSelection}
       cardMetadata={cardMetadata[biodiversityLayerVariant]}
