@@ -119,4 +119,4 @@ If you forget to set a high limit for the records returned, the front end might 
 - [ ] [Get percentage presence of species](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate){:target="_blank"} It needs to be joined with a table in arcgis online
 - [ ] [Get percentage of protection](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage){:target="_blank"}
 - [ ] [Get most prevalent climate regime and land cover](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"} It needs to be joined with a table in arcgis online.
-- [ ] [Get percentage of land human encroachment](){:target="_blank"}
+- [ ] [Get percentage of land human encroachment](){:target="_blank"} the crf name is `land_encroachment.crf`. The lookup table is in [arcgis online](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer).
