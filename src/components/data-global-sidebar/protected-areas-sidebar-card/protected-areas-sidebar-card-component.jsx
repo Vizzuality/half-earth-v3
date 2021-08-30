@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { WDPALayers } from 'constants/protected-areas';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
-import ProtectedAreasLayers from 'components/protected-areas-layers';
+import LayerToggle from 'components/layer-toggle';
 import styles from './protected-areas-sidebar-card-styles.module.scss'
 import ExistingProtectionThumbnail from 'images/existing-protection.png';
 
+import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
-const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, countedActiveLayers }) => {
+const ProtectedAreasSidebarCardComponent = ({
+  map,
+  selectedLayers,
+  handleLayerToggle,
+  countedActiveLayers,
+}) => {
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
@@ -24,11 +31,18 @@ const ProtectedAreasSidebarCardComponent = ({activeLayers, handleGlobeUpdating, 
       <div
         className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
       >
-        <ProtectedAreasLayers
-          handleGlobeUpdating={handleGlobeUpdating}
-          activeLayers={activeLayers}
-          activeCategory={LAYERS_CATEGORIES.PROTECTION}
-        />
+        {WDPALayers.map(layer => (
+          <LayerToggle
+            map={map}
+            type='checkbox'
+            theme={checkboxTheme.protectedAreas}
+            optionsSelected={selectedLayers}
+            option={layer}
+            title='my title'
+            handleInfoClick={() => console.log('info clicked')}
+            onClick={handleLayerToggle}
+          />
+        ))}
       </div>
     </div>
   );

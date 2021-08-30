@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
@@ -21,6 +22,7 @@ const BiodiversitySidebarCardComponent = ({
   handleLayerToggle,
   selectedLayer,
   view,
+  map,
   handleTabSelection,
   handleOptionSelection,
   biodiversityLayerVariant,
@@ -80,6 +82,7 @@ const BiodiversitySidebarCardComponent = ({
           {
             LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][selectedResolution[TERRESTRIAL]].map(layer => (
               <LayerToggle
+                map={map}
                 type='radio'
                 optionSelected={selectedLayer}
                 option={layer}
