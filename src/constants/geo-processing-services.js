@@ -35,7 +35,7 @@ export const PROTECTED_PERCENTAGE_CONFIG = {
 }
 
 export const ABC_SAMPLE_CONFIG = {
-  url: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueModelIDMax/GPServer/sampleUniqueModelIDParam',
+  url: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate',
   inputRasterKey: 'crf_name',
   inputGeometryKey: 'geometry',
   inputFeatureServiceNameKey: 'esri_out_feature_service_name',
