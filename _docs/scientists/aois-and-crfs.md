@@ -13,13 +13,32 @@ permalink: /_docs/science/aois-crfs
 **IMPORTANT NOTE**
 This documentation has been written using the ArcGIS Pro version `2.6.4` and the Portal version `10.8.1`. 
 
-# Building a tool to publish 
-Set names of the parameters so they legible by the Front End, inside model builder rename the parameters (right click on the ovals). 
+# Creating a crf `WIP`
+Check the document of [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"} for detailed steps. The most critical step is `Build multidimensional info`, this is because it has to be clear what are the `variables` and what are the `dimensions`. After creating a new field in the attribute table of the Mosaic dataset, use the following input as guide. This example is how the encroachment datacube has been created. 
+
+##### 1. The geoprocessing parameters
+**IMPORTANT NOTE:** Be aware that when you check the ran geoprocess in the history, automatically, the information in `Variable Field` changes to the new `Variable` field. Always check the python snippet to see what has been done.  
+```Python
+arcpy.md.BuildMultidimensionalInfo("land_encroachment", "Variable_new", "SliceNumber # #", "ghm # #")
+```
+
+![](/public/multidimensional_info_parameters.png)
+
+##### 2. Then the multidimensional info properties of the Mosaic dataset should look like this:
+
+![](/public/multidimensional_info_properties.png)
+
+##### 3. And finally the changes in the table of attributes that shows the multidimensional information
+
+![](/public/multidimensional_info_table.png)
+
+# Building a tool to publish a _webtool_
+Set names of the parameters so they are legible by the Front End, inside model builder rename the parameters (right click on the ovals). 
 Use `calculate value` as much as possible, Python is quicker than adding extra geoprocessing tools. 
 
 It is key to have set up the `parallel processing` to `80%`. 
 
-# How to publish a geoprocessing service in several easy steps (and a good portion of patience).
+## How to publish a geoprocessing service in several easy steps (and a good portion of patience).
 1. run the geoprocessing model against the whole crf
 2. create a small subset of the crf using `Subset Multidimensional raster`, set the environment setting of extent to "current Display"
 3. run the geoprocessing against the subset crf
@@ -36,16 +55,16 @@ It is key to have set up the `parallel processing` to `80%`.
 13. Analyse before publishing to check which parameters or info is missing on the description of the tool
 14. cross your fingers
 
-# Particularities of certain tools within the Model Builder working with CRFs
-## `Sample`
+## Particularities of certain tools within the Model Builder working with CRFs
+### `Sample`
 This is a super powerful tool. Its power lays on the fact that it is the first tool developed to deal with multidimensional data. Our testing showed that the time of processing increases as the area of interest increases. To use it in the portal server it was necessary to provide a new field to the polygon that had an integer. 
 
 ![](/public/unique_field.png)
 
-## `Zonal Statistics as Table`
+### `Zonal Statistics as Table`
 Our testing showed that the time of processing increased as the number of slices increased, not the area of interest. 
 
-## Rasterizing a polygon and getting the area (`Polygon to Raster`)
+### Rasterizing a polygon and getting the area (`Polygon to Raster`)
 When rasterizing a polygon for the purpose of calculating proportions it is key that the cell size is the same as the input crf. In this case, opposite to `Sample`, the field that worked well was `OBJECTID`. In the ArcGIS Pro version we were working, the raster created did not have an attribute table. Within Model Builder we got the number of pixels using `Calculate Value` and the following Python codeblock:
 `getAreaRaster(r"%custom_raster%")` 
 **It is key to use the right double quotes.**
@@ -59,10 +78,10 @@ def getAreaRaster(rst):
 ```
 `%custom_raster%` refers to the output from `Polygon to Raster`. The `%` uses ESRI's in-line variable scripting. 
 
-## Filtering a table using SQL
+### Filtering a table using SQL
 To obtain only the necessary rows, we have used `Table Select`. This tool uses an SQL expression that is built using `Calculate value` and python codeblock.
 
-### Example 1: Getting the top 20% most prevalent species
+#### Example 1: Getting the top 20% most prevalent species
 `getTopRows(r"%table_in%")`
 ```Python
 import arcpy
@@ -78,7 +97,7 @@ def getTopRows(table, prop = 0.2 ):
     return out
 ```
 
-### Example 2: Getting only the rows with presence
+#### Example 2: Getting only the rows with presence
 `getPresentSpecies(r"%table_in%")`
 ```Python
 import arcpy
@@ -100,4 +119,4 @@ If you forget to set a high limit for the records returned, the front end might 
 - [ ] [Get percentage presence of species](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate){:target="_blank"} It needs to be joined with a table in arcgis online
 - [ ] [Get percentage of protection](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage){:target="_blank"}
 - [ ] [Get most prevalent climate regime and land cover](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"} It needs to be joined with a table in arcgis online.
-- [ ] [Get percentage of land human encroachment](){:target="_blank"}
+- [ ] [Get percentage of land human encroachment](){:target="_blank"} the crf name is `land_encroachment.crf`. The lookup table is in [arcgis online](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer).
