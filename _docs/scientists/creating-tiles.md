@@ -53,7 +53,7 @@ The biodiversity data is binned and for each layer a different number of bins ha
 
 ![](/public/biodiversity_colour_ramp.png)
 
-##### Biodiversity colour ramp:
+##### Biodiversity colour ramp
 ```
 position 0%, transparency 75%, #090072
 position 50%, transparency 40%, #0085AA
