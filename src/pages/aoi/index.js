@@ -46,7 +46,7 @@ const Container = props => {
         getTestingPolygon().then(features => {
           setAoiGeometry(features[0].geometry);
           getCrfData({ 
-            crfName: CRF_NAMES.MAMMALS_SUBSET,
+            crfName: CRF_NAMES.MAMMALS,
             aoiFeatureGeometry: features[0].geometry,
             isMultidimensional: true
           }).then(({jobInfo, jobId, data}) => {

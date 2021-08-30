@@ -4,8 +4,14 @@ import EsriFeatureService from 'services/esri-feature-service';
 export const TESTING_SPECIES_NAME = 49;
 export const SPECIES_RANGE_SERVICE_URL = 'https://hepportal.arcgis.com/server/rest/services/GetSpeciesRangeClippedmapService/GPServer/GetSpeciesRangeInExtent';
 export const SPECIES_RANGE_SERVICE_CRF = 'hummingbirds_binary_Subset.crf';
-export const testingPolygonService = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/square_test/FeatureServer/0'
+// export const testingPolygonService = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/unique_square/FeatureServer/0'
+// export const testingPolygonService = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/square_test/FeatureServer/0'
 export const input_fs = 'custom_polygon';
+const TESTING_POLYGONS_URLS = {
+  AMAZON_SMALL_SQUARE: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/square_test/FeatureServer/0',
+  USA_BIG_SQUARE: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/rectangulo_usa/FeatureServer/0',
+  GALICIA: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/unique_square/FeatureServer/0'
+}
 
 export function getGeoProcessor(url) {
   return new Promise((resolve, reject) => {
@@ -29,7 +35,7 @@ export function getServiceMetadata(url) {
 export function getTestingPolygon() {
   return new Promise((resolve, reject) => {
     EsriFeatureService.getFeatures({
-      url: testingPolygonService,
+      url: TESTING_POLYGONS_URLS.AMAZON_SMALL_SQUARE,
       returnGeometry: true
     }).then((features) => {
       resolve(features)

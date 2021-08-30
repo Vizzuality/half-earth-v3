@@ -34,11 +34,24 @@ export const PROTECTED_PERCENTAGE_CONFIG = {
   basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
 }
 
+export const ABC_SAMPLE_CONFIG = {
+  url: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueModelIDMax/GPServer/sampleUniqueModelIDParam',
+  inputRasterKey: 'crf_name',
+  inputGeometryKey: 'geometry',
+  inputFeatureServiceNameKey: 'esri_out_feature_service_name',
+  uniqueFieldID: 'unique_id_field',
+  outputParamKey: 'output_table',
+  basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
+} 
+
 export const CRF_NAMES = {
   HUMMINGBIRDS: 'hummingbirds_binary',
   MAMMALS: 'mammals_for_greta',
   ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
   PROTECTED_AREAS: 'clean_wdpa_april',
-  MAMMALS_SUBSET: 'mammals_for_greta_SliceNumber_1_300'
+  MAMMALS_SUBSET: 'mammals_for_greta_SliceNumber_1_300',
+  MAMMALS_GALICIA_SUBSET: 'mammals_for_greta_Subset_Subset_galicia_transpose.crf'
 }
+
+

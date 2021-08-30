@@ -1,15 +1,14 @@
 import { getGeoProcessor, createFeatureSet, getDefaultJsonFeatureSet, jobTimeProfiling } from 'utils/geo-processing-services';
 
-import { SAMPLE_SERVICE_CONFIG, SIMPLE_SAMPLE_SERVICE_CONFIG, PROTECTED_PERCENTAGE_CONFIG } from 'constants/geo-processing-services';
+import { SAMPLE_SERVICE_CONFIG, SIMPLE_SAMPLE_SERVICE_CONFIG, PROTECTED_PERCENTAGE_CONFIG, ABC_SAMPLE_CONFIG } from 'constants/geo-processing-services';
 
 const { 
     url,
     basePath,
     inputRasterKey,
     inputGeometryKey,
-    // inputFeatureServiceNameKey,
     outputParamKey,
-  } = PROTECTED_PERCENTAGE_CONFIG;
+  } = ABC_SAMPLE_CONFIG;
 
 export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = true }) {
     return new Promise((resolve, reject) => {
@@ -19,7 +18,6 @@ export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = t
           const defaultFeatureSet = await createFeatureSet(defaultJsonFeatureSet);
             GP.submitJob({
               [inputRasterKey]: `${basePath}/${crfName}.crf`,
-            //   [inputFeatureServiceNameKey]: 'esto_que_es',
               [inputGeometryKey]: defaultFeatureSet.set({
                 hasZ: defaultFeatureSet.hasZ,
                 geometryType: "polygon",
