@@ -58,36 +58,3 @@
   color: $dark-text;
   margin: 0;
 }
-
-.sourcesWrapper {
-  @extend %annotation;
-  color: $dark-text;
-  display: block;
-  padding-top: $paragraph-gutter;
-
-  .source {
-    text-decoration: underline;
-    &:hover {
-      cursor: pointer;
-      color: darken($_temporary-light-text, 20%)
-    }
-  }
-}
-
-.metadataSource {
-  @extend %annotation;
-  color: $dark-text;
-  display: block;
-  padding-top: $paragraph-gutter;
-  p {
-    margin: 0;
-    a {
-      text-decoration: underline;
-      color: $dark-text;
-      &:hover {
-        cursor: pointer;
-        color: darken($dark-text, 20%)
-      }
-    }
-  }
-}

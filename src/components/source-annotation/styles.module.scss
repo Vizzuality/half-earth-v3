@@ -1,0 +1,57 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.sourcesWrapper {
+  @extend %annotation;
+  color: $dark-text;
+  display: block;
+  padding-top: $paragraph-gutter;
+  font-style: normal;
+
+  .source {
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+      color: $dark-text-hover;
+    }
+  }
+  
+  &.light {
+    color: $grey-text;
+    .source {
+      &:hover {
+        color: $grey-text-hover;
+      }
+    }
+  }
+}
+
+.metadataSource {
+  @extend %annotation;
+  color: $dark-text;
+  display: block;
+  padding-top: $paragraph-gutter;
+  font-style: normal;
+  
+  p {
+    margin: 0;
+    a {
+      text-decoration: underline;
+      color: $dark-text;
+      &:hover {
+        cursor: pointer;
+        color: $dark-text-hover;
+      }
+    }
+  }
+
+  &.light {
+    color: $grey-text;
+    a {
+      color: $grey-text;
+      &:hover {
+        color: $grey-text-hover;
+      }
+    }
+  }
+}

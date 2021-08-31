@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactTooltip from 'react-tooltip';
+import SourceAnnotation from 'components/source-annotation';
 import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
@@ -62,7 +62,6 @@ const BiodiversitySidebarCardComponent = ({
             <SidebarCardContent
               title={title}
               description={description}
-              metaDataSources={source}
             />
           </SidebarCardWrapper>
         </div>
@@ -92,6 +91,10 @@ const BiodiversitySidebarCardComponent = ({
               />
             ))
           }
+          <SourceAnnotation
+            theme='light'
+            metaDataSources={source}
+          />
       </div>
     </div>
   );
