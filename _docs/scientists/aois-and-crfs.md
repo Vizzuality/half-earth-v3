@@ -116,7 +116,79 @@ def getPresentSpecies(table):
 If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`. 
 
 # Current geoprocessing services in use `WIP`
-- [ ] [Get percentage presence of species](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate){:target="_blank"} It needs to be joined with a table in arcgis online
-- [ ] [Get percentage of protection](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage){:target="_blank"}
-- [ ] [Get most prevalent climate regime and land cover](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"} It needs to be joined with a table in arcgis online.
-- [ ] [Get percentage of land human encroachment](){:target="_blank"} the crf name is `land_encroachment.crf`. The lookup table is in [arcgis online](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer).
+- [Get percentage presence of species](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate){:target="_blank"} It needs to be joined with a table in arcgis online. For each taxa there will be a datacube
+- [Get percentage of protection](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage){:target="_blank"}. The crf will be updated once the WDPA version is established, currently it is `clean_wdpa_april.crf` 
+- [Get most prevalent climate regime and land cover](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"}. It needs to be joined with a table in [arcgis online.](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer){:target="_blank"} The name of the crf is `ELU.crf`. 
+- [Get percentage of land human encroachment](https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage){:target="_blank"} the crf name is `land_encroachment.crf`. The lookup table is in [arcgis online](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer){:target="_blank"} .
+- [Get population in area](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"}. Field with information: `SUM`
+
+
+
+
+| **Front end element** | **Crf name** | **Gp service** | **Field to use from response** | **AGOL table to use** | **AGOL field to use** |
+|--|--|--|--|--|--|
+| population | population2020.crf | [GP ZsatSum](https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum)|`SUM` | _none_   | _none_ |
+| climate_regime | ELU.crf| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY` | [item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) |  |
+| land_cover | ELU.crf | [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY`  | [item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) |  |
+| Protection_percentage | clean_wdpa_april.crf |   [GP paPercentage](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage) | `Percentage_protected` |_none_  |_none_ |
+| biodiversity_data | mammals_for_greta.crf | [GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculateParallel/GPServer/sampleUniqueSelectCalculate) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |TBD  | `SliceNumber`, `species_name`, `species_target`, `species_global_range`, `global_percent_protected` |
+|Human_encroachment|land_encroachment.crf|[GP LandEncroachmentPercentage](https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage)|`SliceNumber` has the code of the type of human activity. `percentage_land_encroachment`|[item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
+
+
+
+#### geoprocessing services as javascript
+```JavaScript
+export const SUM_VALUE_SERVICE_CONFIG = {
+  url: 'https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum',
+  inputRasterKey: 'crf_name',
+  inputGeometryKey: 'geometry',
+  inputFeatureServiceNameKey: 'esri_out_feature_service_name',
+  outputParamKey: 'output_table',
+  basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
+}
+
+export const MAJORITY_VALUE_SERVICE_CONFIG = {
+  url: 'https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority',
+  inputRasterKey: 'crf_name',
+  inputGeometryKey: 'geometry',
+  inputFeatureServiceNameKey: 'esri_out_feature_service_name',
+  outputParamKey: 'output_table',
+  basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
+}
+
+export const PROTECTED_PERCENTAGE_CONFIG = {
+  url: 'https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage',
+  inputRasterKey: 'crf_name',
+  inputGeometryKey: 'geometry',
+  inputFeatureServiceNameKey: 'esri_out_feature_service_name',
+  outputParamKey: 'output_table',
+  basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
+}
+
+export const LAND_ENCROACHMENT_PERCENTAGE_CONFIG = {
+  url: 'https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage',
+  inputRasterKey: 'crf_name',
+  inputGeometryKey: 'geometry',
+  inputFeatureServiceNameKey: 'esri_out_feature_service_name',
+  outputParamKey: 'output_table',
+  basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
+}
+
+export const BIODIVERSITY_SAMPLE_CONFIG = {
+  url: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculateParallel/GPServer/sampleUniqueSelectCalculate',
+  inputRasterKey: 'crf_name',
+  inputGeometryKey: 'geometry',
+  inputFeatureServiceNameKey: 'esri_out_feature_service_name',
+  uniqueFieldID: 'unique_id_field',
+  outputParamKey: 'output_table',
+  basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
+} 
+
+export const CRF_NAMES = {
+  HUMMINGBIRDS: 'hummingbirds_binary', // Should use BIODIVERSITY_SAMPLE_CONFIG
+  MAMMALS: 'mammals_for_greta', // Should use BIODIVERSITY_SAMPLE_CONFIG
+  ECOLOGICAL_LAND_UNITS: 'ELU', // Should use MAJORITY_VALUE_SERVICE_CONFIG
+  POPULATION: 'population2020', // SUM_VALUE_SERVICE_CONFIG
+  PROTECTED_AREAS: 'clean_wdpa_april' // PROTECTED_PERCENTAGE_CONFIG
+}
+```
