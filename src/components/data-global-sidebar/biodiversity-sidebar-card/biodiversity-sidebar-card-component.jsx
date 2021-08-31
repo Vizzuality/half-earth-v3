@@ -38,7 +38,7 @@ const BiodiversitySidebarCardComponent = ({
       { [styles.open]: isOpen }
     )}>
       <CategoryBox
-        category={LAYERS_CATEGORIES.BIODIVERSITY}
+        title={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
         counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
         handleBoxClick={handleBoxClick}

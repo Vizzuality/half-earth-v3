@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import Component from './protected-areas-sidebar-card-component';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { batchToggleLayers, layerManagerToggle } from 'utils/layer-manager-utils';
+import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
+import metadataService from 'services/metadata-service';
 const actions = {...metadataActions, ...urlActions};
 
 const Container = (props) => {
@@ -14,6 +16,15 @@ const Container = (props) => {
   } = props;
 
   const [selectedLayers, setSelectedLayers] = useState([]);
+  const [protectionMetadataSource, setProtectionsMetadataSource] = useState(null);
+
+  useEffect(() => {
+    const md = metadataConfig[MERGED_PROTECTION]
+    metadataService.getMetadata(md.slug).then( data => {
+      console.log(data)
+      setProtectionsMetadataSource(data.source);
+    })
+  }, []);
 
   const handleLayerToggle = (e, option) => {
     e.preventDefault();
@@ -32,6 +43,7 @@ const Container = (props) => {
     <Component 
       selectedLayers={selectedLayers}
       handleLayerToggle={handleLayerToggle}
+      source={protectionMetadataSource}
       {...props}
     />
   )

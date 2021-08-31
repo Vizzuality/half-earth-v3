@@ -16,6 +16,8 @@
 
 .sharedLayersTogglesContainer{
   @include backdropBlur();
+  padding-left: $sidebar-paddings;
+  padding-right: $sidebar-paddings;
   overflow: hidden;
   width: $sidebar-width;
   height: 0;

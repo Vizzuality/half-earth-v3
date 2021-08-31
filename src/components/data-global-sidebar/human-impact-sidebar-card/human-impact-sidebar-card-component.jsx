@@ -22,8 +22,7 @@ const HumanImpactSidebarCardComponent = ({
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
-        title="mapping"
-        category={humanImpact}
+        title={humanImpact}
         image={HumanPressuresThumbnail}
         counter={countedActiveLayers[humanImpact]}
         handleBoxClick={handleBoxClick}

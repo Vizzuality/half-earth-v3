@@ -2,6 +2,7 @@
 @import 'styles/settings';
 @import 'styles/common-animations.module';
 @import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends';
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
@@ -13,4 +14,14 @@
   &.open {
     height: 192px;
   }
+}
+
+.layersTitle {
+  @extend %subtitle;
+  color: $white;
+}
+
+.description {
+  @extend %bodyText;
+  color: $white; 
 }

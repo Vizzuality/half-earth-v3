@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { WDPALayers } from 'constants/protected-areas';
+import { WDPALayers, TEXTS } from 'constants/protected-areas';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
+import SourceAnnotation from 'components/source-annotation';
 import styles from './protected-areas-sidebar-card-styles.module.scss'
-import ExistingProtectionThumbnail from 'images/existing-protection.png';
-
+import hrTheme from 'styles/themes/hr-theme.module.scss';
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
+import ExistingProtectionThumbnail from 'images/existing-protection.png';
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
 const ProtectedAreasSidebarCardComponent = ({
   map,
+  source,
   selectedLayers,
   handleLayerToggle,
   countedActiveLayers,
@@ -21,9 +23,8 @@ const ProtectedAreasSidebarCardComponent = ({
   return (
     <div className={styles.sidebarCardContainer}>
       <CategoryBox
-        title="mapping"
         image={ExistingProtectionThumbnail}
-        category={protectedAreas}
+        title={TEXTS.categoryTitle}
         counter={countedActiveLayers[protectedAreas]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
@@ -31,6 +32,9 @@ const ProtectedAreasSidebarCardComponent = ({
       <div
         className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
       >
+        <span className={styles.description}>{TEXTS.description}</span>
+        <hr className={hrTheme.dark}/>
+        <span className={styles.layersTitle}>{TEXTS.layersTitle}</span>
         {WDPALayers.map(layer => (
           <LayerToggle
             map={map}
@@ -43,6 +47,10 @@ const ProtectedAreasSidebarCardComponent = ({
             onClick={handleLayerToggle}
           />
         ))}
+        <SourceAnnotation
+          theme='light'
+          metaDataSources={source}
+        />
       </div>
     </div>
   );

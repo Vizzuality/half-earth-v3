@@ -4,13 +4,13 @@ import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 import styles from './category-box-styles.module.scss';
 
-const CategoryBox = ({ image, category, handleBoxClick, counter, isOpen }) => (
+const CategoryBox = ({ image, title, handleBoxClick, counter, isOpen }) => (
   <>
     <div className={styles.box} onClick={handleBoxClick}>
       <div className={styles.categoryContainer}>
         <img
           src={image}
-          alt={category}
+          alt={title}
           className={styles.categoryThumbnail}
         />
         <div className={styles.titleContainer}>
@@ -19,7 +19,7 @@ const CategoryBox = ({ image, category, handleBoxClick, counter, isOpen }) => (
               <span className={styles.counterText}>{counter}</span>
             </div>
           )}
-          <p className={styles.category}>{category}</p>
+          <p className={styles.category}>{title}</p>
         </div>
         <div className={cx(styles.icon, { [styles.openBox]: isOpen })}>
           <ArrowExpandIcon />
@@ -30,13 +30,12 @@ const CategoryBox = ({ image, category, handleBoxClick, counter, isOpen }) => (
 );
 
 CategoryBox.propTypes = {
-  category: PropTypes.string,
+  title: PropTypes.string,
   isSidebarOpen: PropTypes.bool,
   counter: PropTypes.number
 };
 
 CategoryBox.defaultProps = {
-  category: {},
   isSidebarOpen: true,
   counter: 0
 };
