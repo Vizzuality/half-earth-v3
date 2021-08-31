@@ -116,7 +116,8 @@ def getPresentSpecies(table):
 If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`. 
 
 # Current geoprocessing services in use `WIP`
-- [ ] [Get percentage presence of species](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate){:target="_blank"} It needs to be joined with a table in arcgis online
-- [ ] [Get percentage of protection](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage){:target="_blank"}
-- [ ] [Get most prevalent climate regime and land cover](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"} It needs to be joined with a table in arcgis online.
-- [ ] [Get percentage of land human encroachment](){:target="_blank"} the crf name is `land_encroachment.crf`. The lookup table is in [arcgis online](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer).
+- [Get percentage presence of species](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate){:target="_blank"} It needs to be joined with a table in arcgis online. For each taxa there will be a datacube
+- [Get percentage of protection](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage){:target="_blank"}. The crf will be updated once the WDPA version is established, currently it is `clean_wdpa_april.crf` 
+- [Get most prevalent climate regime and land cover](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"}. It needs to be joined with a table in [arcgis online.](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer){:target="_blank"} The name of the crf is `ELU.crf`. 
+- [Get percentage of land human encroachment](https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage){:target="_blank"} the crf name is `land_encroachment.crf`. The lookup table is in [arcgis online](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer){:target="_blank"} .
+- [Get population in area](https://hepportal.arcgis.com/server/rest/services/Simple_Zonal_Stats_boolean/GPServer/ZonalStats){:target="_blank"}. Field with information: `SUM`
