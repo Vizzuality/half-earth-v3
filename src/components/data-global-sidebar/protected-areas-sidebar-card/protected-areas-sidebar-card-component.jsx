@@ -5,7 +5,7 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
-import styles from './protected-areas-sidebar-card-styles.module.scss'
+import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import ExistingProtectionThumbnail from 'images/existing-protection.png';
