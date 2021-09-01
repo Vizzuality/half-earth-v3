@@ -5,47 +5,27 @@
 .radioOption {
   @extend %subtitle;
   color: $white;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 4px;
   cursor: pointer;
   height: 30px;
-
-  &:hover {
-    @extend .radioOptionSelected;
-  }
-}
-
-.radioOptionSelected {
-  background-color: rgba(255,255,255,0.05);
+  width: 100%;
 }
 
 .reverseSwitchIcon {
   transform: rotate(180deg);
 }
 
-.toggle {
+.container {
   display: flex;
-  align-items: center;
-  margin-left: 5px;
-  margin-right: 20px;
-}
+  width: $sidebar-width;
+  left: -20px;
+  padding: 0 20px;
+  position: relative;
+  justify-content: space-between;
+  &:hover,
+  &.checked {
+    background-color: $white-opacity;
+  }
 
-.variant {
-  @extend %subtitle;
-  color: $white;
-  text-transform: uppercase;
-  padding: 0 5px 0 0;
-  cursor: pointer;
-}
-
-.button {
-  display: flex;
-  height: 12px;
-}
-
-.icon {
-  @extend %icon;
-  fill: $white;
 }
