@@ -1,6 +1,7 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
 @import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends';
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
@@ -13,19 +14,25 @@
   @extend .sharedLayersTogglesContainer;
 
   &.open {
-    height: 1440px;
-
-    &.priorityTab {
-      height: 895px;
-    }
-
-    &.richnessTab {
-      height: 1400px;
-    }
+    height: auto;
   }
 }
 
 .cardContainer,
-.legendContainer {
-  padding: $sidebar-paddings;
+.tabsContainer,
+.legendContainer,
+.sourceContainer,
+.togglesContainer,
+.dropdownContainer {
+  padding-top: $sidebar-paddings;
+}
+
+.dropdownContainer {
+  display: flex;
+  align-items: center;
+  .dropdownLabel {
+    @extend %subtitle;
+    color: $white;
+    padding-right: $sidebar-paddings;
+  }
 }

@@ -10,6 +10,7 @@ import FindPlacesCard from 'components/find-places-card';
 import styles from './data-global-sidebar-styles.module.scss';
 
 const DataGlobalSidebarComponent = ({
+  map,
   view,
   className,
   activeLayers,
@@ -26,6 +27,7 @@ const DataGlobalSidebarComponent = ({
         searchWidgetConfig={searchWidgetConfig}
       />
       <BiodiversitySidebarCard
+        map={map}
         view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
@@ -33,12 +35,14 @@ const DataGlobalSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
       />
       <ProtectedAreasSidebarCard
+        map={map}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
       />
       <HumanImpactSidebarCard
+        map={map}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}

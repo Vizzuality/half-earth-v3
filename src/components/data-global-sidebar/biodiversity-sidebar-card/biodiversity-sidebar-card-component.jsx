@@ -55,6 +55,7 @@ const BiodiversitySidebarCardComponent = ({
         <Tabs
           tabs={BIODIVERSITY_TABS}
           onClick={handleTabSelection}
+          className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
         />
         <div className={styles.cardContainer}>
@@ -65,8 +66,8 @@ const BiodiversitySidebarCardComponent = ({
             />
           </SidebarCardWrapper>
         </div>
-        <div style={{display: 'flex'}}>
-          <span style={{color: 'white'}}>Terrestrial species</span>
+        <div className={styles.dropdownContainer}>
+          <span className={styles.dropdownLabel}>Terrestrial species</span>
           <Dropdown
             theme={'dark'}
             options={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL]}
@@ -78,8 +79,8 @@ const BiodiversitySidebarCardComponent = ({
             disabled={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL].length < 2}
           />
         </div>
-          {
-            LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][selectedResolution[TERRESTRIAL]].map(layer => (
+        <div className={styles.togglesContainer}>
+          {LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][selectedResolution[TERRESTRIAL]].map(layer => (
               <LayerToggle
                 map={map}
                 type='radio'
@@ -91,10 +92,12 @@ const BiodiversitySidebarCardComponent = ({
               />
             ))
           }
-          <SourceAnnotation
-            theme='light'
-            metaDataSources={source}
-          />
+        </div>
+        <SourceAnnotation
+          theme='light'
+          className={styles.sourceContainer}
+          metaDataSources={source}
+        />
       </div>
     </div>
   );
