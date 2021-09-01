@@ -1,0 +1,35 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+.toggle {
+  display: flex;
+  align-items: center;
+}
+
+.variant {
+  @extend %subtitle;
+  color: $white;
+  text-transform: uppercase;
+  padding: 0 5px 0 0;
+  cursor: pointer;
+}
+
+.button {
+  display: flex;
+  height: 12px;
+}
+
+.icon {
+  @extend %icon;
+  fill: $white;
+}
+
+.iconWrapper {
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
