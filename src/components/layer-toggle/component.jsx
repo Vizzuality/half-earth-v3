@@ -9,21 +9,37 @@ const LayerToggleComponent = ({
   title,
   onClick,
   optionSelected,
+  optionsSelected,
   handleInfoClick,
+  handleOpacityClick,
+  handleBringToBackClick,
+  handleBringToFrontClick,
 }) => {
-  if (type === 'radio') {
-    return (
-      <div onClick={(e) => onClick(e,option)}>
-        <RadioTypeToggle 
-          isChecked={optionSelected === option.value}
-          option={option}
-          title={title}
-          onInfoClick={handleInfoClick}
-          variant='priority'
-        />
-      </div>
+    return type === 'radio' ? (
+      <RadioTypeToggle 
+        title={title}
+        option={option}
+        variant='priority'
+        onClick={onClick}
+        onInfoClick={handleInfoClick}
+        onOpacityClick={handleOpacityClick}
+        onBringToBackClick={handleBringToBackClick}
+        onBringToFrontClick={handleBringToFrontClick}
+        isChecked={optionSelected === option.value}
+      />
+    ) : (
+      <CheckboxTypeToggle 
+        theme={theme}
+        title={title}
+        option={option}
+        onClick={onClick}
+        onInfoClick={handleInfoClick}
+        onOpacityClick={handleOpacityClick}
+        onBringToBackClick={handleBringToBackClick}
+        onBringToFrontClick={handleBringToFrontClick}
+        isChecked={optionsSelected.indexOf(option.value) !== -1}
+      />
     )
-  }
 }
 
 export default LayerToggleComponent;
