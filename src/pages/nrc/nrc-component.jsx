@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'classnames';
 import loadable from '@loadable/component'
 
-import Legend from 'components/legend';
 import About from 'components/about';
 import RankingChart from 'components/ranking-chart';
 import NationalReportCardScene from 'scenes/nrc-scene';
@@ -54,15 +53,6 @@ const NationalReportCard = ({
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
     />
-    {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
-      <Legend
-        hideTutorial
-        hideCloseButton
-        activeLayers={activeLayers}
-        className={styles.hideOnPrint}
-        isFullscreenActive={isFullscreenActive}
-      />
-    )}
     {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
       <div
         className={cx(styles.hideOnPrint, styles.challengesViewContainer)}

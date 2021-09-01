@@ -6,12 +6,13 @@ import styles from './styles.module.scss';
 const Component = ({
   theme,
   sources,
+  className,
   metaDataSources,
 }) => {
   const lastSource = sources && sources.length -1;
   const isMultiSource = sources && sources.length > 1;
   return (
-    <section>
+    <section className={className}>
       {metaDataSources && (
         <cite className={cx(
           styles.metadataSource,

@@ -5,8 +5,6 @@ import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import PostRobotManager from 'components/post-robot-manager';
 import ConstantContactLayers from 'components/constant-contact-layers';
-import GridLayer from 'components/grid-layer';
-import Legend from 'components/legend';
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env;
 
@@ -37,8 +35,6 @@ const DataGlobeComponent = ({
       isLandscapeMode={isLandscapeMode}
     />
     <ConstantContactLayers activeLayers={activeLayers} />
-    <Legend activeLayers={activeLayers} />
-    {isLandscapeMode && <GridLayer />}
   </Scene>
 );
 
