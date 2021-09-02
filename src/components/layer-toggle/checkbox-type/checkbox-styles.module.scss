@@ -11,11 +11,6 @@ $checkbox-size: 15px;
   align-items: center;
   margin-bottom: 4px;
   cursor: pointer;
-  padding-right: $mobile-sidebar-side-paddings;
-
-  @media #{$tablet-portrait} {
-    padding-right: $sidebar-paddings;
-  }
 
   &:hover {
     @extend .checkboxWrapperSelected;
@@ -23,7 +18,7 @@ $checkbox-size: 15px;
 }
 
 .checkboxWrapperSelected {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: $dark-opacity;
 }
 
 input[type="checkbox"] {
@@ -38,11 +33,6 @@ input[type="checkbox"] {
   cursor: pointer;
   height: 30px;
   width: 100%;
-  padding-left: $mobile-sidebar-side-paddings;
-
-  @media #{$tablet-portrait} {
-    padding-left: $sidebar-paddings;
-  }
 
   &:before {
     content: "";
@@ -54,12 +44,19 @@ input[type="checkbox"] {
   }
 }
 
+.toggle {
+  display: flex;
+  align-items: center;
+}
+
 .label {
   margin-right: 8px;
 }
 
 .icon {
   @extend %icon;
+  fill: $white;
+  margin-left: 10px;
 }
 
 .rightDot {

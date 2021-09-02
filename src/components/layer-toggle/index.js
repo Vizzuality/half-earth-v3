@@ -1,10 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import Component from './component';
 
-import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils'
-
-import mapStateToProps from './selectors';
+import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 
 const Container = (props) => {
   const { map } = props;
@@ -35,4 +32,4 @@ const Container = (props) => {
   )
 }
 
-export default connect(null, null)(Container);
+export default Container;

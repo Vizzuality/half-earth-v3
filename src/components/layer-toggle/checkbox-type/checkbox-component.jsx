@@ -1,71 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
-
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
-import { ReactComponent as OpacityIcon } from 'icons/opacity.svg';
-import { ReactComponent as BringToBackIcon } from 'icons/bring_to_back.svg';
-import { ReactComponent as BringToFrontIcon } from 'icons/bring_to_front.svg';
+import LayerTools from 'components/layer-toggle/layers-tools';
 
 import styles from './checkbox-styles.module.scss';
 
-const Checkbox = ({ option, onChange, checked, theme, handleInfoClick }) => {
+const Checkbox = ({
+  theme,
+  option,
+  isChecked,
+  onClick,
+  handleInfoClick,
+  onBringToFrontClick,
+  onBringToBackClick,
+  onOpacityClick,
+ }) => {
   return (
-    <div key={option.name} className={cx(
-      styles.checkboxWrapper,
-      { [styles.checkboxWrapperSelected]: checked, [theme]: checked }
-    )}>
+    <div 
+      key={option.name}
+      onClick={(e) => onClick(e,option)}
+      className={cx(
+        styles.checkboxWrapper,
+        { [styles.checkboxWrapperSelected]: isChecked, [theme]: isChecked }
+      )}
+    >
       <input
         type="checkbox"
         value={option.value}
         name={option.name}
         id={option.value}
-        checked={checked}
-        onChange={(e) => onChange(e, option)}
+        checked={isChecked}
       />
-      <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: checked })}>
+      <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: isChecked })}>
         <span className={styles.label}>{option.name}</span>
-        {option.rightDot && !checked && <span className={styles.rightDot} style={{ background: option.rightDot }} />}
+        {option.rightDot && !isChecked && <span className={styles.rightDot} style={{ background: option.rightDot }} />}
       </label>
-      {checked && (
-      <>
-        <BringToFrontIcon
-          className={styles.icon}
-          onClick={() => handleInfoClick(option)}
-          data-tip
-          data-for='infoLayerCheckboxButtonId'
-          data-effect='solid'
-          data-delay-show={0}
+      {isChecked && (
+        <LayerTools 
+          option={option}
+          handleInfoClick={handleInfoClick}
+          onOpacityClick={onOpacityClick}
+          onBringToBackClick={onBringToBackClick}
+          onBringToFrontClick={onBringToFrontClick}
         />
-        <BringToBackIcon
-          className={styles.icon}
-          onClick={() => handleInfoClick(option)}
-          data-tip
-          data-for='infoLayerCheckboxButtonId'
-          data-effect='solid'
-          data-delay-show={0}
-        />
-        <OpacityIcon
-          className={styles.icon}
-          onClick={() => handleInfoClick(option)}
-          data-tip
-          data-for='infoLayerCheckboxButtonId'
-          data-effect='solid'
-          data-delay-show={0}
-        />
-        <InfoIcon
-          className={styles.icon}
-          onClick={() => handleInfoClick(option)}
-          data-tip
-          data-for='infoLayerCheckboxButtonId'
-          data-effect='solid'
-          data-delay-show={0}
-        />
-        <ReactTooltip id='infoLayerCheckboxButtonId' className='infoTooltipStyle'>
-          Click to read the info of this layer
-        </ReactTooltip>
-      </>
       )}
     </div>
   )}
