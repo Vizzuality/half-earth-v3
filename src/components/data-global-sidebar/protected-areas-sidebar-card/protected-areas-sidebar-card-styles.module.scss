@@ -25,3 +25,10 @@
   @extend %bodyText;
   color: $white; 
 }
+
+.legendContainer,
+.sourceContainer,
+.togglesContainer,
+.dropdownContainer {
+  padding-top: $sidebar-vertical-flow;
+}

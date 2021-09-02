@@ -40,36 +40,39 @@ const HumanImpactSidebarCardComponent = ({
       <hr className={hrTheme.dark}/>
       <span className={styles.layersTitle}>{TEXTS.terrestrialLayersTitle}</span>
       <Legend legendItem={LAND_HUMAN_PRESSURES_SLUG} className={styles.legendContainer}/>
-      {humanPressuresLandUse.map(layer => (
-        <LayerToggle
-          map={map}
-          type='checkbox'
-          theme={checkboxTheme.landPressures}
-          optionsSelected={selectedLayers}
-          option={layer}
-          title='my title'
-          handleInfoClick={() => console.log('info clicked')}
-          onClick={handleLayerToggle}
-        />
-      ))}
+      <div className={styles.togglesContainer}>
+        {humanPressuresLandUse.map(layer => (
+          <LayerToggle
+            map={map}
+            option={layer}
+            type='checkbox'
+            optionsSelected={selectedLayers}
+            theme={checkboxTheme.landPressures}
+            onClick={handleLayerToggle}
+            handleInfoClick={() => console.log('info clicked')}
+          />
+        ))}
+      </div>
       <hr className={hrTheme.dark}/>
       <span className={styles.layersTitle}>{TEXTS.marineLayersTitle}</span>
       <Legend legendItem={MARINE_HUMAN_PRESSURES_SLUG} className={styles.legendContainer}/>
-      {humanPressuresMarine.map(layer => (
-        <LayerToggle
-          map={map}
-          type='checkbox'
-          theme={checkboxTheme.marinePressures}
-          optionsSelected={selectedLayers}
-          option={layer}
-          title='my title'
-          handleInfoClick={() => console.log('info clicked')}
-          onClick={handleLayerToggle}
-        />
-      ))}
+      <div className={styles.togglesContainer}>
+        {humanPressuresMarine.map(layer => (
+          <LayerToggle
+            map={map}
+            option={layer}
+            type='checkbox'
+            optionsSelected={selectedLayers}
+            theme={checkboxTheme.marinePressures}
+            handleInfoClick={() => console.log('info clicked')}
+            onClick={handleLayerToggle}
+          />
+        ))}
+      </div>
       <SourceAnnotation
         theme='light'
         metaDataSources={source}
+        className={styles.sourceContainer}
       />
       </div>
     </div>

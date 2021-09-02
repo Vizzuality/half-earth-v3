@@ -35,21 +35,24 @@ const ProtectedAreasSidebarCardComponent = ({
         <span className={styles.description}>{TEXTS.description}</span>
         <hr className={hrTheme.dark}/>
         <span className={styles.layersTitle}>{TEXTS.layersTitle}</span>
-        {WDPALayers.map(layer => (
-          <LayerToggle
-            map={map}
-            type='checkbox'
-            theme={checkboxTheme.protectedAreas}
-            optionsSelected={selectedLayers}
-            option={layer}
-            title='my title'
-            handleInfoClick={() => console.log('info clicked')}
-            onClick={handleLayerToggle}
-          />
-        ))}
+        <div className={styles.togglesContainer}>
+          {WDPALayers.map(layer => (
+            <LayerToggle
+              map={map}
+              type='checkbox'
+              theme={checkboxTheme.protectedAreas}
+              optionsSelected={selectedLayers}
+              option={layer}
+              title='my title'
+              handleInfoClick={() => console.log('info clicked')}
+              onClick={handleLayerToggle}
+            />
+          ))}
+        </div>
         <SourceAnnotation
           theme='light'
           metaDataSources={source}
+          className={styles.sourceContainer}
         />
       </div>
     </div>

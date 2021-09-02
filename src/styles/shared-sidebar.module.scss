@@ -24,5 +24,6 @@
   @include animationFunction($propertyToAnimate: height);
   &.open {
     overflow: visible;
+    padding-bottom: $sidebar-paddings;
   }
 }

@@ -11,10 +11,9 @@
   @extend .sharedLayersTogglesContainer;
 
   &.open {
-    height: auto; // we set a fixed height for the property to animate
+    height: auto;
   }
 }
-
 
 .layersTitle {
   @extend %subtitle;
@@ -24,4 +23,11 @@
 .description {
   @extend %bodyText;
   color: $white; 
+}
+
+.legendContainer,
+.sourceContainer,
+.togglesContainer,
+.dropdownContainer {
+  padding-top: $sidebar-vertical-flow;
 }
