@@ -103,6 +103,17 @@ export const layerManagerOrder = (legendLayers, activeLayers, callback) => {
   callback({ activeLayers: updatedLayers });
 };
 
+export const bringLayerToFront = (layerTitle, map) => {
+  const layer = findLayerInMap(layerTitle, map);
+  map.reorder(layer, map.layers.items.length)
+}
+
+export const bringLayerToBack = (layerTitle, map) => {
+  const layer = findLayerInMap(layerTitle, map);
+  map.reorder(layer, 0);
+}
+
+
 export const createLayer = layerConfig => {
   const { url, slug, type, opacity } = layerConfig;
   const layerType = type || 'WebTileLayer';
