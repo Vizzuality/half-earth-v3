@@ -7,9 +7,7 @@ import MapIframe from 'pages/map-iframe';
 import NationalReportCard from 'pages/nrc';
 import AreaOfInterest from 'pages/aoi';
 
-import { Icons as VizzIcons } from 'vizzuality-components';
 import 'he-components/dist/main.css';
-import 'vizzuality-components/dist/legend.css';
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type]
@@ -37,7 +35,6 @@ class App extends Component {
     return (
       <div className="App" style={{width:'100vw', height:'100vh', backgroundColor: '#0a212e'}} >
         <AppLayout {...this.props}/>
-        <VizzIcons />
       </div>
     );
   }
