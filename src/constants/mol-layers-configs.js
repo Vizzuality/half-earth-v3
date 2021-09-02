@@ -81,7 +81,7 @@ const LAYER_TYPES = {
   IMAGERY_LAYER: 'ImageryLayer'
 }
 
-export const DEFAULT_OPACITY = 0.8;
+export const DEFAULT_OPACITY = 0.6;
 export const BASEMAP_OPACITY = 1;
 
 export const LAYERS_CATEGORIES = {
