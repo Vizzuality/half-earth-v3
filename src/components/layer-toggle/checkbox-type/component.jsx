@@ -1,15 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
+import Checkbox from 'components/checkbox';
 import LayerTools from 'components/layer-toggle/layers-tools';
 
 import styles from './styles.module.scss';
 
-const Checkbox = ({
+const CheckboxType = ({
   theme,
   option,
   isChecked,
-  onClick,
+  onChange,
   onInfoClick,
   onOpacityClick,
   onBringToBackClick,
@@ -18,23 +18,24 @@ const Checkbox = ({
   return (
     <div 
       key={option.name}
-      onClick={(e) => onClick(e,option)}
       className={cx(
-        styles.checkboxWrapper,
-        { [styles.checkboxWrapperSelected]: isChecked, [theme]: isChecked }
+        styles.container, {
+          [styles.checked]: isChecked,
+          [theme]: isChecked
+        }
       )}
     >
-      <input
-        type="checkbox"
-        value={option.value}
-        name={option.name}
-        id={option.value}
-        checked={isChecked}
-      />
-      <label htmlFor={option.value} className={cx(styles.checkbox, { [styles.checkboxSelected]: isChecked })}>
-        <span className={styles.label}>{option.name}</span>
-        {option.rightDot && !isChecked && <span className={styles.rightDot} style={{ background: option.rightDot }} />}
-      </label>
+      <div
+        className={styles.checkboxOption}
+      >
+        <Checkbox
+          theme={theme}
+          option={option}
+          checked={isChecked}
+          onChange={onChange}
+          className={styles.labelStyles}
+        />
+      </div>
       {isChecked && (
         <LayerTools 
           option={option}
@@ -47,18 +48,4 @@ const Checkbox = ({
     </div>
   )}
 
-export default Checkbox;
-
-Checkbox.propTypes = {
-  options: PropTypes.array,
-  onChange: PropTypes.func,
-  checked: PropTypes.bool,
-  theme: PropTypes.string
-};
-
-Checkbox.defaultProps = {
-  options: [],
-  onChange: () => {},
-  checked: false,
-  theme: ''
-};
+export default CheckboxType;

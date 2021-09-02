@@ -10,10 +10,10 @@ const RadioGroup = ({
   title,
   option,
   variant,
-  onClick,
+  onChange,
   isChecked,
-  onOpacityClick,
   onInfoClick,
+  onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
 }) => {
@@ -25,15 +25,14 @@ const RadioGroup = ({
         )}>
         <div
           key={key}
-          onClick={(e) => onClick(e,option)}
           className={styles.radioOption}
         >
           <RadioButton
-            name={title}
-            value={option.value}
-            checked={isChecked}
             id={key}
-            text={option.name}
+            name={title}
+            option={option}
+            checked={isChecked}
+            onChange={onChange}
           />
         </div>
         {isChecked && (

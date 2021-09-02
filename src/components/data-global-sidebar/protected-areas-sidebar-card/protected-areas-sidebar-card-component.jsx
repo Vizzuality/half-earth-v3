@@ -45,7 +45,7 @@ const ProtectedAreasSidebarCardComponent = ({
               option={layer}
               title='my title'
               handleInfoClick={() => console.log('info clicked')}
-              onClick={handleLayerToggle}
+              onChange={handleLayerToggle}
             />
           ))}
         </div>

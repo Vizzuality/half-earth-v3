@@ -22,14 +22,12 @@ const Container = (props) => {
   useEffect(() => {
     const md = metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES];
     metadataService.getMetadata(md.slug).then( data => {
-      console.log(data)
       setMetadataSource(data.source);
     })
   }, []);
 
 
-  const handleLayerToggle = (e, option) => {
-    e.preventDefault();
+  const handleLayerToggle = (option) => {
     if (option.layer === 'all') {
       // batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
     } else {

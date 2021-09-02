@@ -4,12 +4,9 @@
 
 .radioOption {
   @extend %subtitle;
-  color: $white;
-  align-items: center;
-  margin-bottom: 4px;
-  cursor: pointer;
-  height: 30px;
   width: 100%;
+  color: $white;
+  cursor: pointer;
 }
 
 .reverseSwitchIcon {
@@ -27,5 +24,4 @@
   &.checked {
     background-color: $white-opacity;
   }
-
 }

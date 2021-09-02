@@ -3,20 +3,20 @@ import cx from 'classnames';
 
 import styles from './radio-button-styles.module.scss';
 
-const RadioButton = ({ text, value, checked, onChange, name, theme, id }) => {
+const RadioButton = ({ option, checked, onChange, theme, id }) => {
   return (
     <div className={cx(styles.radioButton, theme)}>
       <input
-        type="radio"
-        name={name}
         id={id}
-        value={value}
+        type="radio"
+        name={option.name}
+        value={option.value}
         checked={checked}
-        onChange={onChange}
+        onChange={() => onChange(option)}
         readOnly
       />
       <label htmlFor={id} className={styles.radioInput}>
-        {text}
+        {option.name}
       </label>
     </div>
   );

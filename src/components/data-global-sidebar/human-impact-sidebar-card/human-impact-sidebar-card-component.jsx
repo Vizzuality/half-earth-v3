@@ -48,7 +48,7 @@ const HumanImpactSidebarCardComponent = ({
             type='checkbox'
             optionsSelected={selectedLayers}
             theme={checkboxTheme.landPressures}
-            onClick={handleLayerToggle}
+            onChange={handleLayerToggle}
           />
         ))}
       </div>
@@ -63,7 +63,7 @@ const HumanImpactSidebarCardComponent = ({
             type='checkbox'
             optionsSelected={selectedLayers}
             theme={checkboxTheme.marinePressures}
-            onClick={handleLayerToggle}
+            onChange={handleLayerToggle}
           />
         ))}
       </div>

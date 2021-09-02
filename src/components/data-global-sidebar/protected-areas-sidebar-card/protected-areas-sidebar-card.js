@@ -26,8 +26,7 @@ const Container = (props) => {
     })
   }, []);
 
-  const handleLayerToggle = (e, option) => {
-    e.preventDefault();
+  const handleLayerToggle = (option) => {
     if (option.layer === 'all') {
       // batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
     } else {
