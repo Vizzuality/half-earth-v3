@@ -12,8 +12,8 @@ const RadioGroup = ({
   variant,
   onClick,
   isChecked,
-  handleInfoClick,
   onOpacityClick,
+  onInfoClick,
   onBringToBackClick,
   onBringToFrontClick,
 }) => {
@@ -39,7 +39,7 @@ const RadioGroup = ({
         {isChecked && (
           <LayerTools 
             option={option}
-            handleInfoClick={handleInfoClick}
+            onInfoClick={onInfoClick}
             onOpacityClick={onOpacityClick}
             onBringToBackClick={onBringToBackClick}
             onBringToFrontClick={onBringToFrontClick}

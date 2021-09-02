@@ -84,10 +84,8 @@ const BiodiversitySidebarCardComponent = ({
               <LayerToggle
                 map={map}
                 type='radio'
-                optionSelected={selectedLayer}
                 option={layer}
-                title='my title'
-                handleInfoClick={() => console.log('info clicked')}
+                optionSelected={selectedLayer}
                 onClick={handleLayerToggle}
               />
             ))

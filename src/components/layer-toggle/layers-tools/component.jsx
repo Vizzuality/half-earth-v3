@@ -8,8 +8,7 @@ import styles from './styles.module.scss';
 
 const Component = ({
   option,
-  variant,
-  handleInfoClick,
+  onInfoClick,
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
@@ -17,8 +16,8 @@ const Component = ({
 }) => (
   <div className={styles.toggle}>
     <span
-      className ={styles.iconWrapper}
       title='movelayer to the front'
+      className ={styles.iconWrapper}
       onClick={(e) => onBringToFrontClick(e, option.value)}
     >
       <BringToFrontIcon
@@ -26,8 +25,8 @@ const Component = ({
       />
     </span>
     <span
-      className ={styles.iconWrapper}
       title='movelayer to the back'
+      className ={styles.iconWrapper}
       onClick={(e) => onBringToBackClick(e, option.value)}
     >
       <BringToBackIcon
@@ -37,9 +36,9 @@ const Component = ({
     </span>
     <LayerOpacityControl />
     <span
-      className ={styles.iconWrapper}
       title='show layer metadata'
-      onClick={() => handleInfoClick(option, variant)}
+      className ={styles.iconWrapper}
+      onClick={() => onInfoClick(option)}
     >
       <InfoIcon
         className={styles.icon}

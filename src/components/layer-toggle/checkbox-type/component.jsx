@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import LayerTools from 'components/layer-toggle/layers-tools';
 
-import styles from './checkbox-styles.module.scss';
+import styles from './styles.module.scss';
 
 const Checkbox = ({
   theme,
   option,
   isChecked,
   onClick,
-  handleInfoClick,
-  onBringToFrontClick,
-  onBringToBackClick,
+  onInfoClick,
   onOpacityClick,
+  onBringToBackClick,
+  onBringToFrontClick,
  }) => {
   return (
     <div 
@@ -38,7 +38,7 @@ const Checkbox = ({
       {isChecked && (
         <LayerTools 
           option={option}
-          handleInfoClick={handleInfoClick}
+          onInfoClick={onInfoClick}
           onOpacityClick={onOpacityClick}
           onBringToBackClick={onBringToBackClick}
           onBringToFrontClick={onBringToFrontClick}

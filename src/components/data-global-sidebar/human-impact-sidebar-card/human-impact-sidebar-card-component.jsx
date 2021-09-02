@@ -49,7 +49,6 @@ const HumanImpactSidebarCardComponent = ({
             optionsSelected={selectedLayers}
             theme={checkboxTheme.landPressures}
             onClick={handleLayerToggle}
-            handleInfoClick={() => console.log('info clicked')}
           />
         ))}
       </div>
@@ -64,7 +63,6 @@ const HumanImpactSidebarCardComponent = ({
             type='checkbox'
             optionsSelected={selectedLayers}
             theme={checkboxTheme.marinePressures}
-            handleInfoClick={() => console.log('info clicked')}
             onClick={handleLayerToggle}
           />
         ))}

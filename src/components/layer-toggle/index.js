@@ -1,15 +1,27 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import Component from './component';
+import metadataActions from 'redux_modules/metadata';
+import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
+
+const actions = { ...metadataActions, openInfoModalAnalyticsEvent };
 
 const Container = (props) => {
   const { map } = props;
 
 
-  const handleInfoClick = () => {
-
+  const handleInfoClick = (option) => {
+    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
+    setModalMetadata({
+      slug: `${option.slug || option.value}`,
+      title: `${option.metadataTitle || option.name} metadata`,
+      isOpen: true
+    });
+    openInfoModalAnalyticsEvent({ slug: `${option.slug}` });
   }
+
   const handleOpacityClick = () => {
 
   }
@@ -25,6 +37,7 @@ const Container = (props) => {
 
   return (
     <Component
+      handleInfoClick={handleInfoClick}
       handleBringToBackClick={handleBringToBackClick}
       handleBringToFrontClick={handleBringToFrontClick}
       {...props}
@@ -32,4 +45,4 @@ const Container = (props) => {
   )
 }
 
-export default Container;
+export default connect(null, actions)(Container);
