@@ -5,14 +5,16 @@ import styles from './radio-button-styles.module.scss';
 
 const RadioButton = ({ option, checked, onChange, theme, id }) => {
   return (
-    <div className={cx(styles.radioButton, theme)}>
+    <div className={cx(styles.radioButton, theme)} onClick={(e) => {
+      e.preventDefault()
+      onChange(option)
+    }}>
       <input
         id={id}
         type="radio"
         name={option.name}
         value={option.value}
         checked={checked}
-        onChange={() => onChange(option)}
         readOnly
       />
       <label htmlFor={id} className={styles.radioInput}>

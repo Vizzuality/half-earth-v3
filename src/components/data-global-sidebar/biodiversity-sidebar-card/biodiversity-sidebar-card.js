@@ -64,7 +64,7 @@ const BiodiversitySidebarCard = (props)  => {
   const handleLayerToggle = (option) => {
     const layer = layersConfig[option.layer];
     if (selectedLayer === option.layer) {
-      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
       setSelectedLayer(null);
     } else if(selectedLayer) {
       layer.bbox && flyToLayerExtent(layer.bbox, view);
@@ -87,7 +87,6 @@ const BiodiversitySidebarCard = (props)  => {
   return (
     <Component
       handleLayerToggle={handleLayerToggle}
-      selectedLayer={selectedLayer}
       selectedResolution={selectedResolution}
       setSelectedResolution={setSelectedResolution}
       handleClearAndAddLayers={handleClearAndAddLayers}

@@ -40,7 +40,6 @@ const Container = (props) => {
 
   return (
     <Component 
-      selectedLayers={selectedLayers}
       handleLayerToggle={handleLayerToggle}
       source={metadataSource}
       {...props}

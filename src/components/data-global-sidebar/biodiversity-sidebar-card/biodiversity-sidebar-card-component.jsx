@@ -21,13 +21,10 @@ const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
   handleLayerToggle,
-  selectedLayer,
-  view,
   map,
   handleTabSelection,
   selectedResolution,
   setSelectedResolution,
-  handleOptionSelection,
   biodiversityLayerVariant,
   cardMetadata
 }) => {
@@ -100,7 +97,6 @@ const BiodiversitySidebarCardComponent = ({
                 option={layer}
                 activeLayers={activeLayers}
                 onChange={handleLayerToggle}
-                optionSelected={selectedLayer}
               />
             ))
           }
@@ -129,7 +125,6 @@ const BiodiversitySidebarCardComponent = ({
                     option={layer}
                     activeLayers={activeLayers}
                     onChange={handleLayerToggle}
-                    optionSelected={selectedLayer}
                   />
                 ))
               }

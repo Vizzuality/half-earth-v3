@@ -55,8 +55,8 @@ const TAXA_DISTRIBUTION = {
 export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION
 
 export const RESOLUTIONS = {
-  LOW: {label: '~55km2 resolution', slug: '55'},
-  HIGH: {label: '~1km2 resolution', slug: '1'},
+  LOW: {label: '~27km2 resolution', slug: 'LOW'},
+  HIGH: {label: '~1km2 resolution', slug: 'HIGH'},
 }
 
 
@@ -74,10 +74,12 @@ export const LAYERS_RESOLUTION = {
   },
 }
 
+export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOW'}; 
+
 export const LAYERS_TOGGLE_CONFIG = {
   [PRIORITY]: {
     [TERRESTRIAL]: {
-      [RESOLUTIONS.LOW.slug]: [
+      'LOW': [
         {
           value: ALL_TAXA_PRIORITY,
           name: 'All terrestrial vertebrates',
@@ -108,7 +110,7 @@ export const LAYERS_TOGGLE_CONFIG = {
   },
   [RICHNESS]: {
     [TERRESTRIAL]: {
-      [RESOLUTIONS.LOW.slug]: [
+      'LOW': [
         {
           value: ALL_TAXA_RICHNESS,
           name: 'all groups',
@@ -145,7 +147,7 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: REPTILES_RICHNESS
         }
       ],
-      [RESOLUTIONS.HIGH.slug]: [
+      'HIGH': [
         {
           value: HUMMINGBIRDS_RICHNESS,
           name: 'hummingbirds',
@@ -189,7 +191,7 @@ export const LAYERS_TOGGLE_CONFIG = {
       ]
     },
     [MARINE]: {
-      [RESOLUTIONS.LOW.slug]: [
+      'LOW': [
         {
           value: FISHES_RICHNESS,
           name: 'fishes',
@@ -200,7 +202,7 @@ export const LAYERS_TOGGLE_CONFIG = {
   },
   [RARITY]: {
     [TERRESTRIAL]: {
-      [RESOLUTIONS.LOW.slug]: [
+      'LOW': [
         {
           value: ALL_TAXA_RARITY,
           name: 'all groups',
@@ -237,7 +239,7 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: REPTILES_RARITY
         }
       ],
-      [RESOLUTIONS.HIGH.slug]: [
+      'HIGH': [
         {
           value: HUMMINGBIRDS_RARITY,
           name: 'hummingbirds',
@@ -281,7 +283,7 @@ export const LAYERS_TOGGLE_CONFIG = {
       ]
     },
     [MARINE]: {
-      [RESOLUTIONS.LOW.slug]: [
+      'LOW': [
         {
           value: FISHES_RARITY,
           name: 'fishes',

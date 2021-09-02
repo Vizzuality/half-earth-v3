@@ -9,8 +9,6 @@ const LayerToggleComponent = ({
   title,
   onChange,
   activeLayers,
-  optionSelected,
-  optionsSelected,
   handleInfoClick,
   handleOpacityClick,
   handleBringToBackClick,
@@ -27,7 +25,7 @@ const LayerToggleComponent = ({
         onOpacityClick={handleOpacityClick}
         onBringToBackClick={handleBringToBackClick}
         onBringToFrontClick={handleBringToFrontClick}
-        isChecked={optionSelected === option.value}
+        isChecked={activeLayers.some(layer => layer.title === option.value)}
       />
     ) : (
       <CheckboxTypeToggle 
@@ -40,7 +38,7 @@ const LayerToggleComponent = ({
         onOpacityClick={handleOpacityClick}
         onBringToBackClick={handleBringToBackClick}
         onBringToFrontClick={handleBringToFrontClick}
-        isChecked={optionsSelected.indexOf(option.value) !== -1}
+        isChecked={activeLayers.some(layer => layer.title === option.value)}
       />
     )
 }
