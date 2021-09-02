@@ -1,6 +1,7 @@
 @import 'styles/ui.module';
 @import 'styles/settings';
 @import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends';
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
@@ -10,6 +11,17 @@
   @extend .sharedLayersTogglesContainer;
 
   &.open {
-    height: 500px; // we set a fixed height for the property to animate
+    height: auto; // we set a fixed height for the property to animate
   }
+}
+
+
+.layersTitle {
+  @extend %subtitle;
+  color: $white;
+}
+
+.description {
+  @extend %bodyText;
+  color: $white; 
 }
