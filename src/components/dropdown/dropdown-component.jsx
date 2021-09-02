@@ -12,6 +12,7 @@ const Component = ({
   onDropdownToggle,
   selectedOption,
   onOptionSelection,
+  disabled,
   groups,
 }) => {
   const renderFilters = () => {
@@ -46,6 +47,7 @@ const Component = ({
         [styles.open]: dropdownOpen,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
+        [styles.disabled]: disabled
       })}
     >
       <div

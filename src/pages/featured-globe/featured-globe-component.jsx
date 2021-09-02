@@ -16,7 +16,6 @@ import HalfEarthLogo from 'components/half-earth-logo';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import Switcher from 'components/switcher';
 import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
 import MenuFooter from 'components/mobile-only/menu-footer';
@@ -25,7 +24,6 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
 const About = loadable(() => import('components/about'));
 
@@ -62,7 +60,6 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      {!isMapsList && !isOnMobile && <Switcher />}
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
       <Scene
         sceneSettings={sceneSettings}
@@ -128,15 +125,6 @@ const DataGlobeComponent = ({
           isLandscapeMode={isLandscapeMode}
           handleLayerToggle={handleLayerToggle}
         />
-        {!isLandscapeMode && (
-          <PriorityPlacesPolygonsLayer
-            selectedFeaturedMap={selectedFeaturedMap}
-            selectedTaxa={selectedTaxa}
-            isLandscapeMode={isLandscapeMode}
-            isFullscreenActive={isFullscreenActive}
-            handleLayerToggle={handleLayerToggle}
-          />
-        )}
         <FeaturedTaxaSelector
           selectedTaxa={selectedTaxa}
           isMapsList={isMapsList}

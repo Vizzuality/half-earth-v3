@@ -3,14 +3,10 @@ import React from 'react';
 import loadable from '@loadable/component'
 // components
 import DataScene from 'scenes/data-scene';
-import Switcher from 'components/switcher';
 import HalfEarthLogo from 'components/half-earth-logo';
-// constants
-import { useMobile } from 'constants/responsive';
 //styles
 import uiStyles from 'styles/ui.module.scss';
 // Dynamic imports
-const About = loadable(() => import('components/about'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 

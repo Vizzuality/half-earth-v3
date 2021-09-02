@@ -123,3 +123,13 @@
     }
   }
 }
+
+.disabled {
+  pointer-events: none;
+  .arrowIcon {
+    path {
+      fill: $white-opacity;
+      stroke: $white-opacity;
+    }
+  }
+}
