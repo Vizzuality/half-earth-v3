@@ -14,6 +14,7 @@ const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 const ProtectedAreasSidebarCardComponent = ({
   map,
   source,
+  activeLayers,
   selectedLayers,
   handleLayerToggle,
   countedActiveLayers,
@@ -39,13 +40,12 @@ const ProtectedAreasSidebarCardComponent = ({
           {WDPALayers.map(layer => (
             <LayerToggle
               map={map}
-              type='checkbox'
-              theme={checkboxTheme.protectedAreas}
-              optionsSelected={selectedLayers}
               option={layer}
-              title='my title'
-              handleInfoClick={() => console.log('info clicked')}
+              type='checkbox'
+              activeLayers={activeLayers}
               onChange={handleLayerToggle}
+              optionsSelected={selectedLayers}
+              theme={checkboxTheme.protectedAreas}
             />
           ))}
         </div>

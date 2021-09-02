@@ -85,8 +85,9 @@ const BiodiversitySidebarCardComponent = ({
                 map={map}
                 type='radio'
                 option={layer}
-                optionSelected={selectedLayer}
+                activeLayers={activeLayers}
                 onChange={handleLayerToggle}
+                optionSelected={selectedLayer}
               />
             ))
           }

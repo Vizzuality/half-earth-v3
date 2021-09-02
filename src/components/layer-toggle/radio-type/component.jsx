@@ -13,6 +13,7 @@ const RadioGroup = ({
   onChange,
   isChecked,
   onInfoClick,
+  activeLayers,
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
@@ -39,6 +40,7 @@ const RadioGroup = ({
           <LayerTools 
             option={option}
             onInfoClick={onInfoClick}
+            activeLayers={activeLayers}
             onOpacityClick={onOpacityClick}
             onBringToBackClick={onBringToBackClick}
             onBringToFrontClick={onBringToFrontClick}

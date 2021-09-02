@@ -30,7 +30,7 @@ const formatValue = (value) => {
   return `${Math.round(value * 100)}%`
 }
 
-const OpacityButton = forwardRef(({ isOpen, toggleOpen }, ref) => (
+const OpacityButton = forwardRef(({ isOpen }, ref) => (
   <div 
     ref={ref}
     className={cx(
@@ -47,7 +47,7 @@ const OpacityButton = forwardRef(({ isOpen, toggleOpen }, ref) => (
   </div>
 ));
 
-const TooltipContent = (value, setValue) => (
+const TooltipContent = (value, setValue, onOpacityChange) => (
   <div className={styles.sliderContainer}>
     <span>opacity</span>
     <div className={styles.sliderWrapper}>
@@ -59,6 +59,7 @@ const TooltipContent = (value, setValue) => (
         startPoint={value}
         className={styles.slider}
         onChange={(value) => setValue(value)}
+        onAfterChange={(value) => onOpacityChange(value)}
         railStyle={railStyle}
         handleStyle={handleStyle}
         formatValue={formatValue}
@@ -69,10 +70,16 @@ const TooltipContent = (value, setValue) => (
   </div>
 )
 
-const Component = () => {
+const Component = ({
+  onOpacityChange
+}) => {
   const [value, setValue] = useState(0.6);
-  const [isOpen, toggleOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [source, target] = useSingleton();
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <>
@@ -83,21 +90,15 @@ const Component = () => {
         placement='top-end'
         hideOnClick={true}
         delay={[0, 0]}
-        onTrigger={(_,e) => {
-          e.stopPropagation();
-          toggleOpen(!isOpen)
-        }}
-        onHidden={() => {
-          toggleOpen(!isOpen)
-        }}
+        onTrigger={toggleOpen}
+        onHidden={toggleOpen}
       />
       <Tooltip
-        content={TooltipContent(value, setValue)}
+        content={TooltipContent(value, setValue, onOpacityChange)}
         singleton={target}
       >
         <OpacityButton
           isOpen={isOpen}
-          toggleOpen={toggleOpen}
         />
       </Tooltip>
     </>

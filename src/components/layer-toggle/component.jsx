@@ -8,6 +8,7 @@ const LayerToggleComponent = ({
   option,
   title,
   onChange,
+  activeLayers,
   optionSelected,
   optionsSelected,
   handleInfoClick,
@@ -21,6 +22,7 @@ const LayerToggleComponent = ({
         option={option}
         variant='priority'
         onChange={onChange}
+        activeLayers={activeLayers}
         onInfoClick={handleInfoClick}
         onOpacityClick={handleOpacityClick}
         onBringToBackClick={handleBringToBackClick}
@@ -33,6 +35,7 @@ const LayerToggleComponent = ({
         title={title}
         option={option}
         onChange={onChange}
+        activeLayers={activeLayers}
         onInfoClick={handleInfoClick}
         onOpacityClick={handleOpacityClick}
         onBringToBackClick={handleBringToBackClick}

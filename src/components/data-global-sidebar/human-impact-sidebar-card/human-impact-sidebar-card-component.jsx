@@ -17,6 +17,7 @@ const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 const HumanImpactSidebarCardComponent = ({
   map,
   source,
+  activeLayers,
   selectedLayers,
   handleLayerToggle,
   countedActiveLayers,
@@ -46,6 +47,7 @@ const HumanImpactSidebarCardComponent = ({
             map={map}
             option={layer}
             type='checkbox'
+            activeLayers={activeLayers}
             optionsSelected={selectedLayers}
             theme={checkboxTheme.landPressures}
             onChange={handleLayerToggle}
@@ -61,8 +63,9 @@ const HumanImpactSidebarCardComponent = ({
             map={map}
             option={layer}
             type='checkbox'
-            optionsSelected={selectedLayers}
+            activeLayers={activeLayers}
             theme={checkboxTheme.marinePressures}
+            optionsSelected={selectedLayers}
             onChange={handleLayerToggle}
           />
         ))}

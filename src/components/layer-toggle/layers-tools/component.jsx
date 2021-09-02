@@ -9,10 +9,10 @@ import styles from './styles.module.scss';
 const Component = ({
   option,
   onInfoClick,
-  onOpacityClick,
+  changeGlobe,
+  activeLayers,
   onBringToBackClick,
   onBringToFrontClick,
-  activeLayer = {opacity: 1}
 }) => (
   <div className={styles.toggle}>
     <span
@@ -34,7 +34,11 @@ const Component = ({
         className={styles.icon}
       />
     </span>
-    <LayerOpacityControl />
+    <LayerOpacityControl
+      layer={option}
+      changeGlobe={changeGlobe}
+      activeLayers={activeLayers}
+    />
     <span
       title='show layer metadata'
       className ={styles.iconWrapper}

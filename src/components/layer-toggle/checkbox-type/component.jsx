@@ -11,6 +11,7 @@ const CheckboxType = ({
   isChecked,
   onChange,
   onInfoClick,
+  activeLayers,
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
@@ -40,6 +41,7 @@ const CheckboxType = ({
         <LayerTools 
           option={option}
           onInfoClick={onInfoClick}
+          activeLayers={activeLayers}
           onOpacityClick={onOpacityClick}
           onBringToBackClick={onBringToBackClick}
           onBringToFrontClick={onBringToFrontClick}
