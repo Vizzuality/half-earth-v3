@@ -13,6 +13,7 @@ import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/legend-configs';
 import { LAYERS_TOGGLE_CONFIG, LAYERS_RESOLUTION, TERRESTRIAL, MARINE, RESOLUTIONS } from 'constants/biodiversity-layers-constants';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
+import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import BiodiversityThumbnail from "images/biodiversity.png";
 
@@ -24,14 +25,26 @@ const BiodiversitySidebarCardComponent = ({
   view,
   map,
   handleTabSelection,
+  selectedResolution,
+  setSelectedResolution,
   handleOptionSelection,
   biodiversityLayerVariant,
   cardMetadata
 }) => {
   const { title, description, source } = cardMetadata || {};
-  const [selectedResolution, setSelectedResolution] = useState({[TERRESTRIAL]: RESOLUTIONS.LOW.slug, [MARINE]: RESOLUTIONS.LOW.slug})
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+
+  const layerTogglesToDisplay = (category) => {
+    const resolutionsForSelectedCategory = LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][category];
+    const layersForSelectedResolution = resolutionsForSelectedCategory && resolutionsForSelectedCategory[selectedResolution[category]];
+    if (resolutionsForSelectedCategory && layersForSelectedResolution) {
+      return layersForSelectedResolution;
+    } else {
+      return [];
+    }
+  }
+
   return (
     <div className={cx(
       styles.sidebarCardContainer,
@@ -71,7 +84,7 @@ const BiodiversitySidebarCardComponent = ({
           <Dropdown
             theme={'dark'}
             options={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL]}
-            selectedOption={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL][0]}
+            selectedOption={RESOLUTIONS[selectedResolution[TERRESTRIAL]]}
             handleOptionSelection={(op) => setSelectedResolution({
               ...selectedResolution,
               [TERRESTRIAL]: op
@@ -80,7 +93,7 @@ const BiodiversitySidebarCardComponent = ({
           />
         </div>
         <div className={styles.togglesContainer}>
-          {LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][selectedResolution[TERRESTRIAL]].map(layer => (
+          {layerTogglesToDisplay(TERRESTRIAL).map(layer => (
               <LayerToggle
                 map={map}
                 type='radio'
@@ -92,6 +105,37 @@ const BiodiversitySidebarCardComponent = ({
             ))
           }
         </div>
+        {layerTogglesToDisplay(MARINE).length && (
+          <>
+            <hr className={hrTheme.dark}/>
+            <div className={styles.dropdownContainer}>
+              <span className={styles.dropdownLabel}>Marine species</span>
+              <Dropdown
+                theme={'dark'}
+                options={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE]}
+                selectedOption={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE][0]}
+                handleOptionSelection={(op) => setSelectedResolution({
+                  ...selectedResolution,
+                  [MARINE]: op
+                })}
+                disabled={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE].length < 2}
+              />
+            </div>
+            <div className={styles.togglesContainer}>
+              {layerTogglesToDisplay(MARINE).map(layer => (
+                  <LayerToggle
+                    map={map}
+                    type='radio'
+                    option={layer}
+                    activeLayers={activeLayers}
+                    onChange={handleLayerToggle}
+                    optionSelected={selectedLayer}
+                  />
+                ))
+              }
+            </div>
+          </>
+        )}
         <SourceAnnotation
           theme='light'
           className={styles.sourceContainer}

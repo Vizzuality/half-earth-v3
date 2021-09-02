@@ -12,6 +12,8 @@ import { biodiversityCategories } from 'constants/mol-layers-configs';
 import { useSelectLayersOnTabChange } from './biodiversity-sidebar-card-hooks';
 import { BIODIVERSITY_TABS_SLUGS } from 'constants/ui-params';
 import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
+import { LAYERS_RESOLUTION, TERRESTRIAL, DEFAULT_RESOLUTION } from 'constants/biodiversity-layers-constants';
+
 const actions = {...metadataActions, ...urlActions};
 const BiodiversitySidebarCard = (props)  => {
   const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view } = props;
@@ -22,8 +24,10 @@ const BiodiversitySidebarCard = (props)  => {
     [RARITY] : {},
   })
 
-  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY)
+  
 
+  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY)
+  const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION)
   useEffect(() => {
     if (isEmpty(cardMetadata[biodiversityLayerVariant])) {
       metadataService.getMetadata(biodiversityLayerVariant).then( data => {
@@ -35,6 +39,13 @@ const BiodiversitySidebarCard = (props)  => {
         });
       })
     }
+  }, [biodiversityLayerVariant]);
+
+  useEffect(() => {
+    const resolutionExists = (category) => LAYERS_RESOLUTION[biodiversityLayerVariant][category].some(res => res.slug === selectedResolution[category]);
+    if (!resolutionExists(TERRESTRIAL)) {
+      setSelectedResolution(DEFAULT_RESOLUTION);
+    } 
   }, [biodiversityLayerVariant]);
 
   const handleTabSelection = (slug) => {
@@ -77,6 +88,8 @@ const BiodiversitySidebarCard = (props)  => {
     <Component
       handleLayerToggle={handleLayerToggle}
       selectedLayer={selectedLayer}
+      selectedResolution={selectedResolution}
+      setSelectedResolution={setSelectedResolution}
       handleClearAndAddLayers={handleClearAndAddLayers}
       handleTabSelection={handleTabSelection}
       cardMetadata={cardMetadata[biodiversityLayerVariant]}
