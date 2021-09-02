@@ -10,6 +10,7 @@ Tiles are used when an interaction is not necessary. It is key to get the colour
 
 ### Publishing tiles from ArcGIS Pro
 1. Create a project and open the layer you want to create the tiles from. By default the new map will have the [3857 projection](https://epsg.io/3857) and a default basemap with that projection appears. 
+2. Tweak the symbols, make sure they are exactly what they should be, if something is off the whole tile service will have to be republished.
 2. In the 'Contents' panel select the layer you want to publish as a tile service. Right click on the layer and select `Sharing`, then `Web layer` and `Publish Web Layer` . You can also access from the top menu following the path `Share > Web Layer > Publish Web Layer`. 
 3. The Sharing panel opens and the description fields appear to be filled. 
     - This is the information that is going to describe the item in ArcGIS Online
@@ -24,6 +25,14 @@ Tiles are used when an interaction is not necessary. It is key to get the colour
 Press Analyse (Warnings may appear, especially about the Reference System) and then Publish.
 
 The layer should now appear in ArcGIS online, but it may be visible only at some zoom levels. To make it visible at higher zoom levels follow the section [Using the tiles from a level in the subsequent levels](#using-the-tiles-from-a-level-in-the-subsequent-levels)
+
+#### Checking tile services have been published with the correct settings. 
+Once the tile service has been published certain settings are needed:
+- the deletion protection should be enabled
+- check the shared options (public for tile services, whitelisted for feature services)
+- check the visibility of the service (zoom levels)
+- check the spatial reference
+[This notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/check_publication.ipynb) uses the arcgis API for Python to access the services that are provided in a csv.
 
 ### Publishing vector tiles from ArcGIS Pro
 It is the same procedure, but if the tiles come from a Vector layer you may need to load the layer directly into the project as a **shapefile or feature class** instead of pulling it from the ArcGIS online Feature Layer. Follow the same steps, but select `Vector Tile` in **Layer Type**.  
