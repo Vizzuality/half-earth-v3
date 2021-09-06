@@ -1,9 +1,10 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
 
+$esri-calcite-styles-correction: 15px;
 .zoomComponent {
   @extend .uiRight;
-  top: 76px;
+  top: calc(#{$nav-bar-height} - #{$esri-calcite-styles-correction});
   display: flex;
   flex-direction: column;
   background-color: $elephant;
