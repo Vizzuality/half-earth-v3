@@ -22,7 +22,7 @@ const ProtectedAreasSidebarCardComponent = ({
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
-    <div className={styles.sidebarCardContainer}>
+    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
       <CategoryBox
         image={ExistingProtectionThumbnail}
         title={TEXTS.categoryTitle}

@@ -26,7 +26,7 @@ const HumanImpactSidebarCardComponent = ({
   const [isOpen, setOpen] = useState(false)
   const handleBoxClick = () => setOpen(!isOpen);
   return (
-    <div className={styles.sidebarCardContainer}>
+    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
       <CategoryBox
         title={TEXTS.categoryTitle}
         image={HumanPressuresThumbnail}

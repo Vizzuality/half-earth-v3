@@ -12,6 +12,10 @@
   &:hover {
     border-color: $brand-color-main;
   }
+
+  &.open {
+    border-color: $brand-color-main;
+  }
 }
 
 .sharedLayersTogglesContainer{
