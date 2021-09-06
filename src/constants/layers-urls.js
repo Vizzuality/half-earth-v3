@@ -149,8 +149,8 @@ export const LAYERS_URLS = {
   [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_bird/MapServer`,
   [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_rept/MapServer`,
   //// Terrestrial vertebrates richness and rarity services
-  [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_amphib_0_25deg_global/MapServer`,
-  [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_amphib_025deg/MapServer`,
+  [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer`,
+  [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer`,
   
   [MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_mammals_0_25deg_global/MapServer`,
   [MAMMALS_RICHNESS]: `https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_mamm_025deg_global/VectorTileServer`,
