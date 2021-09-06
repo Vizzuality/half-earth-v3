@@ -21,7 +21,6 @@ const Container = (props) => {
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION]
     metadataService.getMetadata(md.slug).then( data => {
-      console.log(data)
       setProtectionsMetadataSource(data.source);
     })
   }, []);

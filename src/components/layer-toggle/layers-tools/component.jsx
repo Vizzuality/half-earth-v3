@@ -13,6 +13,7 @@ const Component = ({
   activeLayers,
   onBringToBackClick,
   onBringToFrontClick,
+  initialOpacityValue,
 }) => (
   <div className={styles.toggle}>
     <span
@@ -38,6 +39,7 @@ const Component = ({
       layer={option}
       changeGlobe={changeGlobe}
       activeLayers={activeLayers}
+      initialOpacityValue={initialOpacityValue}
     />
     <span
       title='show layer metadata'

@@ -1,4 +1,4 @@
-import React, {useState, forwardRef} from 'react';
+import React, {useState, forwardRef, useEffect } from 'react';
 import cx from 'classnames';
 import Slider from 'rc-slider';
 import Tooltip, {useSingleton} from '@tippyjs/react';
@@ -71,11 +71,16 @@ const TooltipContent = (value, setValue, onOpacityChange) => (
 )
 
 const Component = ({
-  onOpacityChange
+  onOpacityChange,
+  initialOpacityValue
 }) => {
-  const [value, setValue] = useState(0.6);
+  const [value, setValue] = useState(initialOpacityValue);
   const [isOpen, setIsOpen] = useState(false);
   const [source, target] = useSingleton();
+
+  useEffect(() => {
+    setValue(initialOpacityValue)
+  }, [initialOpacityValue])
 
   const toggleOpen = () => {
     setIsOpen(!isOpen)
