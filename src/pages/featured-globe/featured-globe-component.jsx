@@ -6,10 +6,7 @@ import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import LandscapeViewManager from 'components/landscape-view-manager';
 import GlobeEventsManager from 'components/globe-events-manager';
-import Legend from 'components/legend';
-import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import LabelsLayer from 'components/labels-layer';
 import Spinner from 'components/spinner';
 import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
 import SelectedFeaturedMapCard from 'components/featured-map-card';
@@ -19,22 +16,16 @@ import HalfEarthLogo from 'components/half-earth-logo';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import Switcher from 'components/switcher';
 import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
-import TutorialModal from 'components/tutorial/tutorial-modal';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const GridLayer = loadable(() => import('components/grid-layer'));
-const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
-const PriorityPlacesPolygonsLayer = loadable(() => import('components/priority-places-polygons-layer'));
 const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
 const About = loadable(() => import('components/about'));
-const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
@@ -54,14 +45,12 @@ const DataGlobeComponent = ({
   selectedTaxa,
   onMapLoad,
   handleLayerToggle,
-  handleGlobeUpdating,
   spinGlobeHandle,
   spinGlobe,
   customFunctions,
   clickCallbacksArray,
   mouseMoveCallbacksArray,
   activeOption,
-  isLandscapeSidebarCollapsed,
   openedModal,
   userConfig
 }) => {
@@ -71,7 +60,6 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      {!isMapsList && !isOnMobile && <Switcher />}
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
       <Scene
         sceneSettings={sceneSettings}
@@ -137,15 +125,6 @@ const DataGlobeComponent = ({
           isLandscapeMode={isLandscapeMode}
           handleLayerToggle={handleLayerToggle}
         />
-        {!isLandscapeMode && (
-          <PriorityPlacesPolygonsLayer
-            selectedFeaturedMap={selectedFeaturedMap}
-            selectedTaxa={selectedTaxa}
-            isLandscapeMode={isLandscapeMode}
-            isFullscreenActive={isFullscreenActive}
-            handleLayerToggle={handleLayerToggle}
-          />
-        )}
         <FeaturedTaxaSelector
           selectedTaxa={selectedTaxa}
           isMapsList={isMapsList}
@@ -163,35 +142,6 @@ const DataGlobeComponent = ({
           selectedTaxa={selectedTaxa}
           activeOption={activeOption}
         />
-        {isLandscapeMode && (
-          <LandscapeSidebar
-            activeLayers={activeLayers}
-            activeOption={activeOption}
-            selectedSpecies={selectedSpecies}
-            isLandscapeMode={isLandscapeMode}
-            isFullscreenActive={isFullscreenActive}
-            handleGlobeUpdating={handleGlobeUpdating}
-            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          />
-        )}
-        {isLandscapeMode && (
-          <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
-        )}
-        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3} />}
-        {isLandscapeMode && <LabelsLayer activeLayers={activeLayers} />}
-        {isLandscapeMode && (
-          <ProtectedAreasTooltips
-            activeLayers={activeLayers}
-            isLandscapeMode={isLandscapeMode}
-          />
-        )}
-        <Legend
-          showLegend={isLandscapeMode}
-          isFullscreenActive={isFullscreenActive}
-          activeLayers={activeLayers}
-          activeOption={activeOption}
-        />
-        <TutorialModal />
       </Scene>
       <FeaturedMapsList
         selectedSidebar={selectedSidebar}

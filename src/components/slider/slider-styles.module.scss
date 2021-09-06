@@ -75,6 +75,6 @@ input:checked + .slider {
   }
   &:before {
     transform: translateY(-117%);
-    background-color: $java;
+    background-color: $brand-color-main;
   }
 }

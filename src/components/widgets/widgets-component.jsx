@@ -25,23 +25,6 @@ const WidgetsComponent = ({
   const hiddenWidget = hidden || isOnMobile;
   return (
     <>
-      {!hideSettings && (
-        <SettingsWidget
-          map={map}
-          view={view}
-          activeLayers={activeLayers}
-          hidden={hiddenWidget}
-          disableSettings={disableSettings}
-        />
-      )}
-      {!hideToggle && (
-        <ToggleUiWidget
-          map={map}
-          view={view}
-          isFullscreenActive={isFullscreenActive}
-          hidden={hiddenWidget}
-        />
-      )}
       {!hideZoom && (
         <ZoomWidget
           map={map}

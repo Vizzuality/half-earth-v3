@@ -2,14 +2,15 @@
 import React from 'react';
 import cx from 'classnames';
 // components
-import BiodiversitySidebarCard from 'components/biodiversity-sidebar-card';
-import ProtectedAreasSidebarCard from 'components/protected-areas-sidebar-card';
-import HumanImpactSidebarCard from 'components/human-impact-sidebar-card';
+import BiodiversitySidebarCard from './biodiversity-sidebar-card';
+import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
+import HumanImpactSidebarCard from './human-impact-sidebar-card';
 import FindPlacesCard from 'components/find-places-card';
 // styles
 import styles from './data-global-sidebar-styles.module.scss';
 
 const DataGlobalSidebarComponent = ({
+  map,
   view,
   className,
   activeLayers,
@@ -26,19 +27,22 @@ const DataGlobalSidebarComponent = ({
         searchWidgetConfig={searchWidgetConfig}
       />
       <BiodiversitySidebarCard
+        map={map}
         view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         className={styles.biodiversitySidebarCard}
         countedActiveLayers={countedActiveLayers}
       />
-      <HumanImpactSidebarCard
+      <ProtectedAreasSidebarCard
+        map={map}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
       />
-      <ProtectedAreasSidebarCard
+      <HumanImpactSidebarCard
+        map={map}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}

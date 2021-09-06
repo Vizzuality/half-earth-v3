@@ -1,23 +1,37 @@
 @import 'styles/settings';
 
-// Big titles, HE-Meter page
+// Onboarding landing page
 %display1 {
-  font-family: $font-family-2;
-  font-size: $font-size-xxl;
-  font-weight: normal;
-  letter-spacing: 1px;
-  line-height: 50px;
+  font-family: $font-family-serif;
+  font-size: 45px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 55px;
   @media print {
     font-size: 34pt;
     line-height: 50pt;
   }
 }
 
-// Categories, Areas names, Search
+// Mainly cards and section titles
+%display2 {
+  font-family: $font-family-serif;
+  font-size: 32px;        
+  font-weight: 300;
+  line-height: 36px;
+  letter-spacing: 2px;
+  @media print {
+    font-size: 25pt;
+    line-height: 30pt;
+  }
+}
+
+// Titles H1
+// Categories, Areas names
 %headline {
-  font-family: $font-family-2;
-  font-weight: normal;
-  font-size: $font-size-xl;
+  font-family: $font-family-sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   letter-spacing: 1px;
   line-height: 30px;
   @media print {
@@ -26,24 +40,14 @@
   }
 }
 
-// Datasets, Geodescriber
-%bodyText {
-  font-family: $font-family-1-light;
-  font-size: $font-size-sm;
-  letter-spacing: 0px;
-  line-height: 22px;
-  @media print{
-    font-size: 10pt;
-    line-height: 16pt;
-  }
-}
-
+// Titles H2
 // Sections title
 %title {
-  font-family: $font-family-1;
-  font-size: $font-size-xs;
-  letter-spacing: 2px;
+  font-family: $font-family-sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 20px;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   @media print {
     font-size: 8pt;
@@ -51,12 +55,14 @@
   }
 }
 
+// Subtitles H3
 // Legend title, Actions, Small titles
 %subtitle {
-  font-family: $font-family-1;
-  font-size: $font-size-xxs;
-  letter-spacing: 1.5px;
-  line-height: 14px;
+  font-family: $font-family-sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 22px;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   @media print {
     font-size: 7pt;
@@ -64,24 +70,39 @@
   }
 }
 
+// Datasets, Geodescriber
+%bodyText {
+  font-family: $font-family-sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 22px;
+  letter-spacing: 0px;
+  @media print{
+    font-size: 10pt;
+    line-height: 16pt;
+  }
+}
+
+// Sources
 // Tooltips, descriptions
 %annotation {
-  font-family: $font-family-1-light;
-  font-size: $font-size-xs;
+  font-family: $font-family-sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 22px;
   letter-spacing: 0px;
-  line-height: 16px;
 }
 
 // Sections title - mobile
 %titleMobile {
-  font-family: $font-family-1;
+  font-family: $font-family-sans-serif;
   font-size: $font-size-xxs;
   letter-spacing: 2px;
   line-height: 20px;
   text-transform: uppercase;
 }
 
-%_temporaryTitle {
+%title {
   @extend %title;
   font-weight: bold;
 }

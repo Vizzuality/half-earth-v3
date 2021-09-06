@@ -6,7 +6,7 @@
   align-items: flex-start;
 
   .searchInput {
-    @extend %_temporaryTitle;
+    @extend %title;
     background-color: $modal-light-background;
     min-width: 300px;
     border: none;

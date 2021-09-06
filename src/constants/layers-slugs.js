@@ -13,6 +13,7 @@ export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 export const GRID_LAYER = 'grid_layer';
 export const COUNTRY_PRIORITY_LAYER = 'country_priority_layer';
 // Terrestrial human pressures tiled layers.
+export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures'
 export const LAND_HUMAN_PRESSURES = 'land_human_pressures'
 export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures'
 // Land human pressures

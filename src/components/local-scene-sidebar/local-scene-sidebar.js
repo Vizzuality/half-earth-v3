@@ -6,7 +6,6 @@ import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import countryDataActions from 'redux_modules/country-data';
 import { downloadCountryPdfAnalyticsEvent, selectNRCSectionAnalyticsEvent } from 'actions/google-analytics-actions';
-import metadataConfig from 'constants/metadata';
 import { DATA, NATIONAL_REPORT_CARD } from 'router'
 
 const actions = { ...urlActions, ...countryDataActions, ...metadataActions, downloadCountryPdfAnalyticsEvent };
@@ -29,15 +28,6 @@ const LocalSceneSidebarContainer = (props) => {
     selectNRCSectionAnalyticsEvent(slug);
   };
 
-  const handleSourceClick = slug => {
-    const { setModalMetadata } = props;
-    const md = metadataConfig[slug];
-    setModalMetadata({
-      slug: md.slug,
-      isOpen: true
-    });
-  }
-
   const handlePrintReport = () => {
     const today = new Date();
     const date = Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(today);
@@ -51,7 +41,6 @@ const LocalSceneSidebarContainer = (props) => {
   return (
     <Component
       handlePrintReport={handlePrintReport}
-      handleSourceClick={handleSourceClick}
       handleTabSelection={handleTabSelection}
       handleSceneModeChange={handleSceneModeChange}
       {...props}

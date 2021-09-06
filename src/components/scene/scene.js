@@ -15,6 +15,7 @@ const SceneContainer = (props) => {
     onMapLoad,
     onViewLoad,
     changeGlobe,
+    setSceneMap,
     setSceneView,
     loaderOptions,
     sceneSettings,
@@ -53,7 +54,6 @@ const SceneContainer = (props) => {
             ...sceneSettings
           });
           setView(_view);
-          setSceneView(_view);
         })
         .catch(err => {
           console.error(err);
@@ -65,6 +65,8 @@ const SceneContainer = (props) => {
     if (map && view) {
       setLoadState('loaded');
       onViewLoad && onViewLoad(map, view);
+      setSceneMap(map);
+      setSceneView(view);
     }
   }, [map, view]);
 

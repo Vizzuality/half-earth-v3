@@ -15,7 +15,6 @@ $port-gore: #282052;
 $blue: #0E2B3B;
 $inactive-purple: #5E5C7A;
 $active-purple: #3F3576;
-$java: #18BAB4;
 $mandalay: #A47916;
 $marzipan: #F7DEA1;
 $color-facebook: #39579a;
@@ -40,12 +39,16 @@ $french-rose: #EB588F;
 
 // Project colours
 $space-background: #09141A;
-$brand-color-main: $java;
+$brand-color-main: #18BAB4;
 $brand-color-secondary: $elephant;
 $brand-color-secondary-hover: lighten($elephant, 10);
-$dark-text: $firefly;
-$grey-text: $alto;
+$dark-text: #222;
+$dark-text-hover: darken($dark-text, 30%);
+$grey-text: #A0AFB8;
+$grey-text-hover: lighten($grey-text, 10%);
 $light-text: $white;
+$white-opacity: rgba(255, 255, 255, 0.1);
+$dark-opacity: rgba(34, 34, 34, 0.1);
 $_temporary-dark-text: #222;
 $_temporary-light-text: #747474;
 $accent-grey: #a0afb8;
@@ -104,16 +107,18 @@ $font-weight-light: lighter;
 $font-weight: normal;
 $font-weight-bold: bold;
 
-$font-family-1: 'PierSans';
-$font-family-1-light: 'PierSans-Light';
-
-$font-family-2: 'EB Garamond', serif;
+$font-family-1: 'Inter', sans-serif;
+$font-family-1-light: 'Inter', sans-serif;
+     
+$font-family-serif: 'ivypresto-display', serif;
+$font-family-sans-serif: 'Inter', sans-serif;
 
 // Layout
-$site-gutter: 20px;
+$site-gutter: 20px; 
 $widget-button-size: 30px;
 $rounded-button-size: 42px;
 $he-project-logo-size: 25px;
+$nav-bar-height: 55px;
 // Blur
 $blur-level: 16px;
 
@@ -126,7 +131,9 @@ $sidebar-paddings: 20px;
 $paragraph-margin: 35px;
 $paragraph-gutter: 10px;
 $sidebar-cards-padding: 25px;
-$sidebar-border: 1.5px solid $brand-color-secondary;
+$sidebar-border-width: 2px;
+$sidebar-border: $sidebar-border-width solid $brand-color-secondary;
+;
 $sidebar-border-radius: 4px;
 
 $mobile-sidebar-side-paddings: 32px;
@@ -136,6 +143,7 @@ $letter-spacing: 1.5px;
 $line-height: 14px;
 
 // Sidebar
+$sidebar-vertical-flow: 1em;
 $layout-top-margin: 15px;
 $sidebar-top-margin: 30px;
 $local-sidebar-top-margin: 20px;
@@ -143,13 +151,14 @@ $high-sidebar-top-margin: 268px;
 $sidebar-header-height: 100px;
 $sidebar-header-height-mobile: 150px;
 $ui-left-top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
-$sidebar-width: 350px; // use this for entry boxes and sidebar width
+$sidebar-width: 420px; // use this for entry boxes and sidebar width
 $country-sidebar-width: 490px;
-$local-sidebar-width: 350px;
+$local-sidebar-width: 420px;
 $widgetsTopMargin: 8px;
 $cards-bottom-margin: 8px;
 $border-radius-desktop: 2px;
 $border-radius-mobile: 16px 16px 0 0;
+$counter-size: 25px;
 // featured cards
 $card-max-width: 820px;
 $card-border-radius: 6px;

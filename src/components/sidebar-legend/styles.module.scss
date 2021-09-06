@@ -1,0 +1,45 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.gradient {
+  display: flex;
+  height: 8px;
+  border-radius: 5px;
+}
+
+.gradientItem {
+  width: 100%;
+}
+
+.land-human-pressures {
+  background: $human-pressures-gradient;
+}
+
+.marine-human-pressures {
+  background: $marine-pressures-gradient;
+}
+
+.biodiversity {
+  background: $biodiversity-gradient-rotated;
+}
+
+.valuesWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+  &:last-child {
+    text-align: right;
+  }
+  span {
+    @extend %subtitle;
+    color: $white;
+  }
+}
+  
+  
+  
+  
+    

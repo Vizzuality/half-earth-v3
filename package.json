@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.10.1",
+    "@tippyjs/react": "^4.2.5",
     "airtable": "^0.8.1",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
@@ -18,6 +19,7 @@
     "post-robot": "8.0.28",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
+    "rc-slider": "^9.7.2",
     "react": "^16.8.6",
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-collapse": "^5.0.1",
@@ -29,7 +31,6 @@
     "react-redux": "^6.0.1",
     "react-responsive": "^8.0.1",
     "react-scripts": "2.1.8",
-    "react-spring": "^8.0.27",
     "react-tippy": "^1.4.0",
     "react-tooltip": "^3.10.0",
     "react-universal-component": "^4.0.0",
@@ -45,7 +46,6 @@
     "reselect": "^4.0.0",
     "swr": "^0.3.2",
     "vega-lib": "^4.4.0",
-    "vizzuality-components": "^1.1.1",
     "workbox-build": "^4.3.1"
   },
   "scripts": {

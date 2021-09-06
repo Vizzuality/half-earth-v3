@@ -6,17 +6,6 @@
 @import 'styles/override/esri-search-widget.scss';
 @import 'styles/override/esri-popup-widget.scss';
 
-// load the fonts
-@font-face {
-  font-family: 'PierSans';
-  src: url('../assets/fonts/pier-regular.otf');
-}
-
-@font-face {
-  font-family: 'PierSans-Light';
-  src: url('../assets/fonts/PierSans-Light.otf');
-}
-
 $site-gutter: 20px;
 
 html {

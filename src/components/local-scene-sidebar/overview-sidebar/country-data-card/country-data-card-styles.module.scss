@@ -99,7 +99,7 @@
 
 
 .indexExplanationText {
-  @extend %_temporaryTitle;
+  @extend %title;
   margin: 0;
   color: $_temporary-dark-text;
 }
@@ -146,7 +146,7 @@
 }
 
 .hintTitle {
-  @extend %_temporaryTitle;
+  @extend %title;
   color: $_temporary-dark-text;
 }
 

@@ -6,12 +6,11 @@ import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
   const { layers } = map;
   const { items: sceneLayers } = layers;
-
   // Active layers will be always checked and added to the map if they are not
   useEffect(() => {
     // Add not already created activeLayers to the map
     addActiveLayersToScene(activeLayers, layersConfig, map);
-    setLayersOrder(activeLayers, map);
+    // setLayersOrder(activeLayers, map);
     setLayersVisibility(activeLayers, sceneLayers, customFunctions)
   }, [activeLayers]);
 

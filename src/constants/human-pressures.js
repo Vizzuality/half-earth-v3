@@ -109,3 +109,10 @@ export const legendConfigs = {
     items: getLegendGradient(LAND_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
   },
 }
+
+export const TEXTS = {
+  categoryTitle: 'Human pressures',
+  marineLayersTitle: 'Marine use pressures',
+  terrestrialLayersTitle: 'Land use pressures',
+  description: 'Global human pressures causing habitat loss and accelerating species extintion'
+}

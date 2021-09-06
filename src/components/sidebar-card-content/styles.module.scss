@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 
 .title {
-  @extend %_temporaryTitle;
+  @extend %title;
   margin: 0;
   color: $_temporary-dark-text;
   text-align: center;
@@ -55,39 +55,6 @@
 
 .description {
   @extend %bodyText;
-  color: $_temporary-dark-text;
+  color: $dark-text;
   margin: 0;
-}
-
-.sourcesWrapper {
-  @extend %annotation;
-  color: $_temporary-light-text;
-  display: block;
-  padding-top: $paragraph-gutter;
-
-  .source {
-    text-decoration: underline;
-    &:hover {
-      cursor: pointer;
-      color: darken($_temporary-light-text, 20%)
-    }
-  }
-}
-
-.metadataSource {
-  @extend %annotation;
-  color: $_temporary-light-text;
-  display: block;
-  padding-top: $paragraph-gutter;
-  p {
-    margin: 0;
-    a {
-      text-decoration: underline;
-      color: $_temporary-light-text;
-      &:hover {
-        cursor: pointer;
-        color: darken($_temporary-light-text, 20%)
-      }
-    }
-  }
 }

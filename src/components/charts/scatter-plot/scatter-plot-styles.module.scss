@@ -90,12 +90,12 @@ $chart-margin: 14px;
   .countryLabel{
     padding: 5px;
     .name {
-      @extend %_temporaryTitle;
+      @extend %title;
       letter-spacing: 0;
       color: $_temporary-dark-text;
     }
     .continent {
-      @extend %_temporaryTitle;
+      @extend %title;
       color: $_temporary-dark-text;
       letter-spacing: 0;
       text-transform: initial;

@@ -1,0 +1,36 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+$checkbox-size: 15px;
+
+.container {
+  display: flex;
+  width: $sidebar-width;
+  left: -20px;
+  padding: 0 20px;
+  position: relative;
+  justify-content: space-between;
+  &:hover,
+  &.checked {
+    background-color: $white-opacity;
+  }
+}
+
+.checkboxOption {
+  align-items: center;
+  margin-bottom: 4px;
+  cursor: pointer;
+  height: 30px;
+  width: 100%;
+}
+
+.labelStyles {
+  @extend %bodyText;
+  color: $white;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+}

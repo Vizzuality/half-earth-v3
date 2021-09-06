@@ -31,7 +31,6 @@ const LocalSceneSidebarComponent = ({
   countryName,
   openedModal,
   handlePrintReport,
-  handleSourceClick,
   handleTabSelection,
   isFullscreenActive,
   localSceneActiveTab,
@@ -78,13 +77,11 @@ const LocalSceneSidebarComponent = ({
             <OverviewSidebar 
               countryISO={countryISO}
               openedModal={openedModal}
-              handleSourceClick={handleSourceClick}
             />
           }
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && 
             <ChallengesSidebar 
               countryISO={countryISO}
-              handleSourceClick={handleSourceClick}
             />
           }
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 

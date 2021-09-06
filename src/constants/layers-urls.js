@@ -141,28 +141,36 @@ export const LAYERS_URLS = {
   [SA_REPTILES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Reptiles_of_Southern_Africa/MapServer`,
   [HUMMINGBIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Species_Rarity_Patterns_for_Hummingbirds/MapServer`,
   [HUMMINGBIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hummingbirds_binary_Aggregate_crf/MapServer`,
-  // 55 km biodiversity services
-  [AMPHIB_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_amph/MapServer`,
-  [AMPHIB_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/dfae6e65b8054d469bb3d9a262a6a012/rest/services/Amphibians_Rarity_55km/MapServer`,
-  [MAMMALS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_mamm/MapServer`,
-  [MAMMALS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/c86a668ccf7c49e89dea321bbe5d6838/rest/services/Mammals_Rarity_55km/MapServer`,
-  [MAMMALS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/da62311c8b354dfe82975cbfc83ca10c/rest/services/Mammals_Richness_55km/MapServer`,
-  [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_bird/MapServer`,
-  [BIRDS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/319076f4e6484084a6b61d2b5174fdde/rest/services/Birds_Rarity_55km/MapServer`,
-  [BIRDS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/9044251ae4dd44a49096c0d4342da1dc/rest/services/Birds_Richness_55km/MapServer`,
-  [CACTI_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/d5d959cb7b73494eb86178ce8723033b/rest/services/Cacti_Rarity_55km/MapServer`,
-  [CACTI_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/1620d2b2e23e4722bd405f95cc49c0c2/rest/services/Cacti_Richness_55km/MapServer`,
-  [CONIFERS_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/e931b9d4c3194dcdbc96bf51c530163e/rest/services/Conifers_Rarity_55km/MapServer`,
-  [CONIFERS_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/ac39f4e35750448d93464d4807e3ac3f/rest/services/Conifers_Richness_55km/MapServer`,
-  [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_rept/MapServer`,
-  [REPTILES_RARITY]:
-    'https://utility.arcgis.com/usrsvcs/servers/857da983a2a54a2fa6516059501547ac/rest/services/Reptiles_Rarity_55km/MapServer',
-  [REPTILES_RICHNESS]:
-    'https://utility.arcgis.com/usrsvcs/servers/fc2ad4d2955b446687afcf545cdef135/rest/services/Reptiles_Richness/MapServer',
+  // Global biodiversity services
+  //// Terrestrial Priority services
   [ALL_TAXA_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer',
-  [ALL_TAXA_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_All_MeriamNelson_30clipped/MapServer',
-  [ALL_TAXA_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_All_clipped30_MeriamNelson/MapServer',
-  [AMPHIB_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/373ad88574cc403cb4707a5491b8a661/rest/services/Amphibians_Richness_55km/MapServer`,
+  [AMPHIB_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_amph/MapServer`,
+  [MAMMALS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_mamm/MapServer`,
+  [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_bird/MapServer`,
+  [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_rept/MapServer`,
+  //// Terrestrial vertebrates richness and rarity services
+  [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer`,
+  [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer`,
+  
+  [MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_mammals_0_25deg_global/MapServer`,
+  [MAMMALS_RICHNESS]: `https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_mamm_025deg_global/VectorTileServer`,
+  
+  [BIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_bird_0_25deg_global/MapServer`,
+  [BIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_birds_0_25deg_global/MapServer`,
+  [REPTILES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_reptiles_0_25deg_global/MapServer',
+  [REPTILES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_reptile_0_25deg_global/MapServer',
+
+  //// Plants richness and rarity services
+  [CACTI_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_cacti_0_25deg_global/MapServer`,
+  [CACTI_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_cact_0_25deg_global/MapServer`,
+  [CONIFERS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_conifers_0_25deg_global/MapServer`,
+  [CONIFERS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_conifer_0_25deg_global/MapServer`,
+  
+  //// All terrestrial richness and rarity services
+  [ALL_TAXA_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_all_0_25deg_global/MapServer',
+  [ALL_TAXA_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_all_0_25deg_global/MapServer',
+  
+  //// Marine richness and rarity services
   [FISHES_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/672fd2c2e15d43dba3c452ca600884a8/rest/services/Marine_Fish_Rarity_55km/MapServer`,
   [FISHES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/5212259d151744438c610d5104b91591/rest/services/Marine_Fish_Richness_55km/MapServer`,
   [SPECIES_LIST]:
