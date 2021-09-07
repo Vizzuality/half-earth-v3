@@ -5,7 +5,7 @@ import cx from 'classnames';
 import BiodiversitySidebarCard from './biodiversity-sidebar-card';
 import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import HumanImpactSidebarCard from './human-impact-sidebar-card';
-import FindPlacesCard from 'components/find-places-card';
+import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
 // styles
 import styles from './data-global-sidebar-styles.module.scss';
 
@@ -15,16 +15,14 @@ const DataGlobalSidebarComponent = ({
   className,
   activeLayers,
   activeCategory,
-  searchWidgetConfig,
   countedActiveLayers,
   handleGlobeUpdating,
 }) => {
 
   return (
     <div className={cx(styles.container,className)}>
-      <FindPlacesCard
+      <AnalyzeAreasSidebarCard
         view={view}
-        searchWidgetConfig={searchWidgetConfig}
       />
       <BiodiversitySidebarCard
         map={map}

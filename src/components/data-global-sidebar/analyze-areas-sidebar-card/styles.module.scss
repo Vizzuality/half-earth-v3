@@ -1,0 +1,6 @@
+@import 'styles/settings';
+@import 'styles/shared-sidebar.module';
+
+.sidebarCardContainer {
+  @extend .sharedSidebarCardContainer;
+}
