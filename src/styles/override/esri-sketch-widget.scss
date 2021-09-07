@@ -1,0 +1,13 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+#root {
+  #sketchTool {
+    @include backdropBlur();
+    position: absolute;
+    left: 50%;
+    top: $nav-bar-height;
+    border: 1px solid $brand-color-main;
+  
+  }
+}

@@ -9,7 +9,9 @@ import {ReactComponent as AddShapeIcon} from "icons/add_shape_icon.svg";
 import {ReactComponent as AreasHistoryIcon} from "icons/areas_history_icon.svg";
 import styles from './styles.module.scss';
 
-const AnalyzeAreasCardComponent = ({}) => {
+const AnalyzeAreasCardComponent = ({
+  handleDrawClick
+}) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const [selectedAnalysis, setSelectedAnalysis] = useState('click');
@@ -75,7 +77,7 @@ const AnalyzeAreasCardComponent = ({}) => {
             <Button
               type="rectangular"
               label="start drawing"
-              handleClick={() => console.log('draw')}
+              handleClick={handleDrawClick}
             />
             <span className={styles.separatorLabel}>or</span>
             <div className={styles.shapeUploader}>
