@@ -99,3 +99,6 @@ export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
 // Species modal
 export const SPECIES_LIST = 'species-list';
+// AOIs precalculated layers
+export const ECOREGIONS_FEATURE_LAYER = 'ecoregions-feature-layer';
+export const ADMIN_AREAS_FEATURE_LAYER = 'admin-areas-feature-layer';

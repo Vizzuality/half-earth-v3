@@ -37,10 +37,10 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
     }
   };
 
-  const handleOpenSearch = () => {
+  const handleOpenSearch = (ref) => {
     if(searchWidget === null) {
       setSearchWidget(undefined); // reset search widget in case of multiple quick clicks
-      const container = document.createElement("div");
+      const container = ref ? ref : document.createElement("div");
       container.setAttribute("id", "searchWidget");
       loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
         const sWidget = new Search({
