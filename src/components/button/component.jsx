@@ -25,6 +25,7 @@ const Component = ({
 		className={cx(
       className,
       {
+        [styles.rectangular]: type === 'rectangular',
         [styles.rounded]: type === 'rounded',
         [styles.compound]: type === 'compound',
         [styles.square]: type === 'square',

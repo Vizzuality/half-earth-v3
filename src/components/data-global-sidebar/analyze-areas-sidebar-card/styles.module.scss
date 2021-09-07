@@ -15,12 +15,46 @@
   justify-content: space-between;
   padding-top: $sidebar-paddings;
 }
-
+.drawPromptContainer,
 .dropdownContainer {
   padding-top: $sidebar-paddings;
 }
 
-.dropdownLabel {
+.separatorLabel,
+.label {
   @extend %bodyText;
   color: $white;
+  display: block;
+  padding-bottom: $paragraph-gutter;
+}
+
+.separatorLabel {
+  text-align: center;
+  padding: $sidebar-paddings 0;
+}
+
+.shapeUploader {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  width: 100%;
+  height: 100px;
+  border: 1px dashed $white;
+  border-radius: $border-radius-desktop;
+  .uploadShapeButton{
+    margin-right: $paragraph-gutter;
+  }
+  .label {
+    padding-bottom: 0;
+  }
+}
+
+.areasHistoryButton {
+  background-color: transparent;
+  border: 1px solid $white-opacity;
+  border-radius: $border-radius-desktop;
+  margin-top: $sidebar-paddings;
+  &:hover {
+    background-color: $white-opacity;
+  }
 }

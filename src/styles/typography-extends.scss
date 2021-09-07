@@ -45,7 +45,7 @@
 %title {
   font-family: $font-family-sans-serif;
   font-size: 14px;
-  font-weight: normal;
+  font-weight: normal !important;
   line-height: 20px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
