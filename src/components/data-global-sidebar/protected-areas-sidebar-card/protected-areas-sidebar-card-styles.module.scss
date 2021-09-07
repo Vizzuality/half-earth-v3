@@ -10,10 +10,6 @@
 
 .layersTogglesContainer{
   @extend .sharedLayersTogglesContainer;
-
-  &.open {
-    height: auto;
-  }
 }
 
 .layersTitle {

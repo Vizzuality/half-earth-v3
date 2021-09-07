@@ -33,3 +33,38 @@
     color: $white;
   }
 }
+
+.square {
+  width: 180px;
+  height: 104px;
+  border: 1px solid $brand-color-main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 4px;
+
+  .icon {
+    width: 35px;
+    height: 35px;
+    fill: $white;
+    margin-bottom: $paragraph-gutter;
+  }
+  
+  .label {
+    @extend %title;
+    font-weight: normal;
+    color: $white;
+  }
+
+  &:hover,
+  &.active {
+    background-color: $brand-color-main;
+    .icon {
+      fill: $dark-text;
+    }
+    .label {
+      color: $dark-text;
+    }
+  }
+}

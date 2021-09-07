@@ -1,6 +1,26 @@
 @import 'styles/settings';
 @import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends.scss';
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
+}
+
+.cardContentContainer {
+  @extend .sharedLayersTogglesContainer;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: $sidebar-paddings;
+}
+
+.dropdownContainer {
+  padding-top: $sidebar-paddings;
+}
+
+.dropdownLabel {
+  @extend %bodyText;
+  color: $white;
 }

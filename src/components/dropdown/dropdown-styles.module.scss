@@ -108,8 +108,9 @@
 }
 
 .dark {
-  @include backdropBlur();
+  background-color: transparent;
   border: 1px solid $white-opacity;
+  &:hover,
   &.open {
     background-color: $white-opacity;
   }

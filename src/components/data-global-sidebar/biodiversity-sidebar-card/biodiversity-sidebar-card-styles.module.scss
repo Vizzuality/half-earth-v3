@@ -9,10 +9,6 @@
 
 .layersTogglesContainer {
   @extend .sharedLayersTogglesContainer;
-
-  &.open {
-    height: auto;
-  }
 }
 
 .cardContainer,

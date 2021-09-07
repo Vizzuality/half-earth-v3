@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import CategoryBox from 'components/category-box';
+import Button from 'components/button';
+import Dropdown from 'components/dropdown';
 import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
+import {ReactComponent as AoisClickIcon} from "icons/globe.svg";
 import styles from './styles.module.scss';
 
 const AnalyzeAreasCardComponent = ({}) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+  const [selectedAnalysis, setSelectedAnalysis] = useState('click');
+
+  const options = [
+    {slug: 'political-boundaries', label: 'Politica boundaries'}
+  ]
 
   return (
     <div className={cx(
@@ -19,6 +27,47 @@ const AnalyzeAreasCardComponent = ({}) => {
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
+      <div
+        className={cx(
+          styles.cardContentContainer,
+          { [styles.open]: isOpen }
+        )}
+      >
+        <div className={styles.buttonsContainer}>
+          <Button
+            type="square"
+            label="By clicking on the map"
+            Icon={AoisClickIcon}
+            active={selectedAnalysis === 'click'}
+            handleClick={() => setSelectedAnalysis('click')}
+          />
+          <Button
+            type="square"
+            label="Draw or upload a shape"
+            Icon={AoisClickIcon}
+            active={selectedAnalysis === 'draw'}
+            handleClick={() => setSelectedAnalysis('draw')}
+          />
+        </div>
+        {selectedAnalysis === 'click' && (
+          <div className={styles.dropdownContainer}>
+          <span className={styles.dropdownLabel}>Analyze an area prompt on:</span>
+          <Dropdown
+              theme={'dark'}
+              width={'full'}
+              options={options}
+              selectedOption={options[0]}
+              handleOptionSelection={(op) => console.log(op)}
+            />
+          </div>
+        )}
+        {selectedAnalysis === 'draw' && (
+          <div className={styles.dropdownContainer}>
+          <span className={styles.dropdownLabel}>Draw on the map the area you want to analyze:</span>
+          
+          </div>
+        )}
+      </div>
     </div>
   )
 
