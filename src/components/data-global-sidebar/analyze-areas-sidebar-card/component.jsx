@@ -7,6 +7,7 @@ import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
 import {ReactComponent as AoisClickIcon} from "icons/globe.svg";
 import {ReactComponent as AddShapeIcon} from "icons/add_shape_icon.svg";
 import {ReactComponent as AreasHistoryIcon} from "icons/areas_history_icon.svg";
+import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
 import styles from './styles.module.scss';
 
 const AnalyzeAreasCardComponent = ({
@@ -14,12 +15,9 @@ const AnalyzeAreasCardComponent = ({
   handleDrawClick
 }) => {
   const [isOpen, setOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const handleBoxClick = () => setOpen(!isOpen);
   const [selectedAnalysis, setSelectedAnalysis] = useState('click');
-
-  const options = [
-    {slug: 'political-boundaries', label: 'Politica boundaries'}
-  ]
 
   return (
     <div className={cx(
@@ -59,10 +57,11 @@ const AnalyzeAreasCardComponent = ({
           <span className={styles.label}>Analyze an area prompt on:</span>
           <Dropdown
               theme={'dark'}
-              width={'full'}
-              options={options}
-              selectedOption={options[0]}
-              handleOptionSelection={(op) => console.log(op)}
+              width="full"
+              parentWidth="380px"
+              options={PRECALCULATED_AOI_OPTIONS}
+              selectedOption={selectedOption}
+              handleOptionSelection={(op) => setSelectedOption(op)}
             />
             <Button 
               type="compound"

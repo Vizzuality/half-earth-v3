@@ -80,11 +80,12 @@ const BiodiversitySidebarCardComponent = ({
           <span className={styles.dropdownLabel}>Terrestrial species</span>
           <Dropdown
             theme={'dark'}
+            parentWidth="170px"
             options={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL]}
             selectedOption={RESOLUTIONS[selectedResolution[TERRESTRIAL]]}
             handleOptionSelection={(op) => setSelectedResolution({
               ...selectedResolution,
-              [TERRESTRIAL]: op
+              [TERRESTRIAL]: op.slug
             })}
             disabled={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL].length < 2}
           />
@@ -113,7 +114,7 @@ const BiodiversitySidebarCardComponent = ({
                 selectedOption={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE][0]}
                 handleOptionSelection={(op) => setSelectedResolution({
                   ...selectedResolution,
-                  [MARINE]: op
+                  [MARINE]: op.slug
                 })}
                 disabled={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE].length < 2}
               />

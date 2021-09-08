@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import urlActions from 'actions/url-actions';
 import Component from './component.jsx';
 import { getEcoregionsSearchSource, getAdminsSearchSource, getProtectedAreasSearchSource } from 'utils/analyze-areas-utils';
-import { ECOREGIONS, ADMIN_AREAS, PROTECTED_AREAS, DEFAULT_SOURCE } from 'constants/analyze-areas-constants';
+import { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS, DEFAULT_SOURCE } from 'constants/analyze-areas-constants';
 import { useSketchWidget} from 'hooks/esri';
 import { AREA_OF_INTEREST } from 'router'
 
@@ -46,7 +46,7 @@ const AnalyzeAreasContainer = (props) => {
           const { feature: { attributes: { WDPAID }}} = result;
           browsePage({type: AREA_OF_INTEREST, query: { wdpa_id: WDPAID }});
         }
-      case ADMIN_AREAS:
+      case POLITICAL_BOUNDARIES:
         return function({result}) {
           const { feature: { attributes: { ISO_CODE }}} = result;
           browsePage({type: AREA_OF_INTEREST, query: { wdpa_id: ISO_CODE }});
@@ -69,7 +69,7 @@ const AnalyzeAreasContainer = (props) => {
         return function() {
           getProtectedAreasSearchSource(FeatureLayer);
         }
-      case ADMIN_AREAS:
+      case POLITICAL_BOUNDARIES:
         return function() {
           getAdminsSearchSource(FeatureLayer);
         }
