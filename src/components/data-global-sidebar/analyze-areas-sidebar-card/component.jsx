@@ -10,6 +10,7 @@ import {ReactComponent as AreasHistoryIcon} from "icons/areas_history_icon.svg";
 import styles from './styles.module.scss';
 
 const AnalyzeAreasCardComponent = ({
+  isSketchToolActive,
   handleDrawClick
 }) => {
   const [isOpen, setOpen] = useState(false);
@@ -76,7 +77,7 @@ const AnalyzeAreasCardComponent = ({
             <span className={styles.label}>Draw on the map the area you want to analyze:</span>
             <Button
               type="rectangular"
-              label="start drawing"
+              label={isSketchToolActive ? "cancel drawing" : "start drawing"}
               handleClick={handleDrawClick}
             />
             <span className={styles.separatorLabel}>or</span>

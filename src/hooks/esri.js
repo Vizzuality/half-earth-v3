@@ -100,3 +100,60 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
     searchWidget
   }
 }
+
+export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
+  const [sketchTool, setSketchTool ] = useState(null);
+  const [sketchLayer, setSketchLayer ] = useState(null);
+  const { postDrawCallback} = sketchWidgetConfig;
+  
+  const handleSketchToolActivation = () => {
+    loadModules(["esri/widgets/Sketch",  "esri/layers/GraphicsLayer"]).then(([Sketch, GraphicsLayer]) => {
+      const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
+      setSketchLayer(_sketchLayer);
+      view.map.add(_sketchLayer);
+      const _sketchTool = new Sketch({
+        view,
+        layer: _sketchLayer,
+        availableCreateTools: ['polygon', 'rectangle', 'circle'],
+        defaultCreateOptions: { hasZ: false },
+        defaultUpdateOptions: { enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true },
+        visibleElements: {
+          settingsMenu: false
+        }
+      });
+      setSketchTool(_sketchTool)
+    });
+  }
+
+  const addWidgetToTheUi = () => {
+    view.ui.add(sketchTool, "manual");
+    const container = document.createElement("div");
+    const rootNode = document.getElementById("root");
+    rootNode.appendChild(container);
+  }
+
+  const  handleSketchToolDestroy = () => {
+    view.ui.remove(sketchTool);
+    setSketchTool(null)
+    sketchTool.destroy();
+  }
+
+  useEffect(() => {
+    if(sketchTool) {
+      addWidgetToTheUi();
+      // searchWidget.viewModel.on("search-start", handleSearchStart);
+      // searchWidget.on('select-result', (event) => postSearchCallback(event));
+      // searchWidget.on('suggest-complete', (event) => searchTermsAnalyticsEvent(event.searchTerm));
+    }
+
+    return function cleanUp() {
+      sketchLayer && view.map.remove(sketchLayer)
+    }
+  }, [sketchTool]);
+
+  return {
+    handleSketchToolActivation,
+    handleSketchToolDestroy,
+    sketchTool
+  }
+}
