@@ -10,8 +10,7 @@ const NationalReportCard = ({
   userConfig,
   aoiGeometry,
   activeLayers,
-  sceneSettings,
-  handleMapLoad,
+  sceneSettings
 }) => (
   <>
     <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/> 
@@ -20,7 +19,6 @@ const NationalReportCard = ({
       userConfig={userConfig}
       activeLayers={activeLayers}
       sceneSettings={sceneSettings}
-      onMapLoad={(map) => handleMapLoad(map, activeLayers)}
     />
   </>
 );

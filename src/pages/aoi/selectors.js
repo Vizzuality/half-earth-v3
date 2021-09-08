@@ -5,6 +5,7 @@ import nrcSceneConfig from 'scenes/nrc-scene/nrc-scene-config';
 
 const selectUserConfig = ({ userConfig }) => userConfig || null;
 const selectAoiId = ({location}) => location.payload.id;
+const selectAoiGeometry = ({location}) => location.query.aoi_geometry;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
@@ -21,6 +22,7 @@ const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globe
 export default createStructuredSelector({
   userConfig: selectUserConfig,
   aoiId: selectAoiId,
+  aoiGeometry: selectAoiGeometry,
   activeLayers: getActiveLayers,
   sceneSettings: getGlobeSettings,
   isGlobeUpdating: getGlobeUpdating,
