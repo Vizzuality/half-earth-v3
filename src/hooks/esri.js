@@ -140,10 +140,14 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
 
   useEffect(() => {
     if(sketchTool) {
+
       addWidgetToTheUi();
-      // searchWidget.viewModel.on("search-start", handleSearchStart);
-      // searchWidget.on('select-result', (event) => postSearchCallback(event));
-      // searchWidget.on('suggest-complete', (event) => searchTermsAnalyticsEvent(event.searchTerm));
+
+      sketchTool.on('create', (event) => {
+        if (event.state === 'complete') {
+          postDrawCallback(event.graphic);
+        }
+      });
     }
 
     return function cleanUp() {

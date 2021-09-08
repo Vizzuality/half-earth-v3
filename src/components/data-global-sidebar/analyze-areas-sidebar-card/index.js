@@ -14,13 +14,16 @@ const AnalyzeAreasContainer = (props) => {
   const [selectedSource, setSelectedSource] = useState(DEFAULT_SOURCE)
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({})
   
-  
+  const postDrawCallback = (graphic) => {
+    console.log(graphic);
+    browsePage({type: AREA_OF_INTEREST, query: { aoi_geometry: graphic.geometry }});
+  }
 
   const {
     handleSketchToolActivation,
     handleSketchToolDestroy,
     sketchTool
-  } = useSketchWidget(view);
+  } = useSketchWidget(view, { postDrawCallback });
 
   const handleDrawClick = () => {
     if (!sketchTool) {
