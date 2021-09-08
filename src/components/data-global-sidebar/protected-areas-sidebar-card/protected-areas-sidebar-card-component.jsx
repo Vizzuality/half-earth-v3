@@ -39,6 +39,7 @@ const ProtectedAreasSidebarCardComponent = ({
         <div className={styles.togglesContainer}>
           {WDPALayers.map(layer => (
             <LayerToggle
+              key={layer.value}
               map={map}
               option={layer}
               type='checkbox'

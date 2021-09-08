@@ -92,6 +92,7 @@ const BiodiversitySidebarCardComponent = ({
         <div className={styles.togglesContainer}>
           {layerTogglesToDisplay(TERRESTRIAL).map(layer => (
               <LayerToggle
+                key={layer.value}
                 map={map}
                 type='radio'
                 option={layer}
@@ -120,6 +121,7 @@ const BiodiversitySidebarCardComponent = ({
             <div className={styles.togglesContainer}>
               {layerTogglesToDisplay(MARINE).map(layer => (
                   <LayerToggle
+                    key={layer.value}
                     map={map}
                     type='radio'
                     option={layer}

@@ -44,6 +44,7 @@ const HumanImpactSidebarCardComponent = ({
       <div className={styles.togglesContainer}>
         {humanPressuresLandUse.map(layer => (
           <LayerToggle
+            key={layer.value}
             map={map}
             option={layer}
             type='checkbox'
@@ -60,6 +61,7 @@ const HumanImpactSidebarCardComponent = ({
       <div className={styles.togglesContainer}>
         {humanPressuresMarine.map(layer => (
           <LayerToggle
+            key={layer.value}
             map={map}
             option={layer}
             type='checkbox'
