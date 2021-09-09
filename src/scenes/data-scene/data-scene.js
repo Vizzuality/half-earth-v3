@@ -9,8 +9,12 @@ const Container = (props) => {
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   useEffect(() => {
-    const activeOption = getSelectedAnalysisLayer(activeLayers);
-    setSelectedAnalysisLayer(activeOption);
+    if (activeLayers) {
+      const activeOption = getSelectedAnalysisLayer(activeLayers);
+      console.log(getSelectedAnalysisLayer)
+      console.log(activeOption)
+      setSelectedAnalysisLayer(activeOption);
+    }
   }, [activeLayers])
 
   return (

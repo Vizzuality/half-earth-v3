@@ -57,5 +57,6 @@ export function logGeometryArea(geometry) {
 }
 
 export function getSelectedAnalysisLayer(activeLayers) {
-  return _intersectionBy(PRECALCULATED_AOI_OPTIONS, activeLayers, 'title')[0];
+  const intersectionArray = _intersectionBy(PRECALCULATED_AOI_OPTIONS, activeLayers, 'title');
+  return intersectionArray[0];
 }
