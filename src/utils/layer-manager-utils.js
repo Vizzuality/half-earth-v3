@@ -5,6 +5,7 @@ import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-l
 
 // Toggles all the layers passed as ids on the first parameter
 export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, category) => {
+  console.log(layerIdsToToggle, activeLayers)
   const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
   const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersIds);
   const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));

@@ -28,7 +28,7 @@ const Component = ({
   const renderFilters = () => {
     const renderOptions = (groupFilter) => {
       const filteredOptions = groupFilter ? options.filter(option => option.group === groupFilter) : options;
-      return filteredOptions.filter(option => option.group === groupFilter).map((option) => console.log(option, selectedOption) || (
+      return filteredOptions.filter(option => option.group === groupFilter).map((option) => (
         <li
           className={cx(styles.option, {
             [styles.selectedOption]: option.slug === selectedOption.slug,

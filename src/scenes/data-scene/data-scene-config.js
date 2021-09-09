@@ -4,7 +4,7 @@ import {
   CITIES_LABELS_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  ADMIN_AREAS_VECTOR_TILE_LAYER,
 } from 'constants/layers-slugs';
 
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
@@ -16,7 +16,7 @@ export default {
       { title: CITIES_LABELS_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
-      { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
+      { title: ADMIN_AREAS_VECTOR_TILE_LAYER, opacity: 1 },
       { title: ALL_TAXA_PRIORITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
     zoom: 3.8,

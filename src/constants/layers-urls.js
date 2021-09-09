@@ -67,7 +67,9 @@ import {
   SPECIES_LIST,
   FIREFLY_BASEMAP_LAYER,
   ECOREGIONS_FEATURE_LAYER,
-  ADMIN_AREAS_FEATURE_LAYER
+  ECOREGIONS_VECTOR_TILE_LAYER,
+  ADMIN_AREAS_FEATURE_LAYER,
+  ADMIN_AREAS_VECTOR_TILE_LAYER,
 } from 'constants/layers-slugs';
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
@@ -182,4 +184,6 @@ export const LAYERS_URLS = {
   // AOIs precalculated layers
   [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_pop_protection_climate_landCover/FeatureServer',
   [ADMIN_AREAS_FEATURE_LAYER]: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Administrative_Divisions/FeatureServer',
+  [ADMIN_AREAS_VECTOR_TILE_LAYER]: 'https://eowilson.maps.arcgis.com/sharing/rest/content/items/d1ce2d0e7fe547108b7e4ed8ea4c7a51/resources/styles/root.json?f=pjson&token=WCNleftehrOq31VgXoWf4Pm2wNw_OnHf7-G0aNhLcUQmspGhba64GGE3DOeJ7RgIpF01ljSQmYvjbYlI-bhqlVvCUNIk0ZZFpzudFz_r-olL8KTvwWXLlAtpnA8KQYWXIqFE3rvvq_1NH4JrzAeC7WSHqDs7GVUWq-LlHsBOF-N_hGRn8MLUIb3xRXGmndqfK7TrMn6DYRmMM8Y5_OBbldRLBt_9Q-hJoMPRIfWmW2I.',
+  [ECOREGIONS_VECTOR_TILE_LAYER]: 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer',
 };

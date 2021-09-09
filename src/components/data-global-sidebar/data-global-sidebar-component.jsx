@@ -23,6 +23,7 @@ const DataGlobalSidebarComponent = ({
     <div className={cx(styles.container,className)}>
       <AnalyzeAreasSidebarCard
         view={view}
+        activeLayers={activeLayers}
       />
       <BiodiversitySidebarCard
         map={map}

@@ -3,19 +3,29 @@ import { connect } from 'react-redux';
 import urlActions from 'actions/url-actions';
 import Component from './component.jsx';
 import { getEcoregionsSearchSource, getAdminsSearchSource, getProtectedAreasSearchSource } from 'utils/analyze-areas-utils';
-import { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS, DEFAULT_SOURCE } from 'constants/analyze-areas-constants';
+import { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS, DEFAULT_SOURCE, PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
+import { batchToggleLayers } from 'utils/layer-manager-utils';
 import { useSketchWidget} from 'hooks/esri';
 import { AREA_OF_INTEREST } from 'router'
 
 const actions = { ...urlActions };
 
 const AnalyzeAreasContainer = (props) => {
-  const { browsePage, view } = props;
+  const { browsePage, view, activeLayers, changeGlobe } = props;
+  const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedSource, setSelectedSource] = useState(DEFAULT_SOURCE)
-  const [searchWidgetConfig, setSearchWidgetConfig] = useState({})
+  const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
+
+  const handleOptionSelection = (option) => {
+    handleLayerToggle(option);
+    setSelectedOption(option);
+  }
+
+  const handleLayerToggle = (option) => {
+    batchToggleLayers([selectedOption.slug, option.slug], activeLayers, changeGlobe)
+  }
   
   const postDrawCallback = (graphic) => {
-    console.log(graphic);
     browsePage({type: AREA_OF_INTEREST, query: { aoi_geometry: graphic.geometry }});
   }
 
@@ -90,9 +100,11 @@ const AnalyzeAreasContainer = (props) => {
 
   return (
     <Component
+      selectedOption={selectedOption}
       isSketchToolActive={sketchTool}
-      searchWidgetConfig={searchWidgetConfig}
       handleDrawClick={handleDrawClick}
+      searchWidgetConfig={searchWidgetConfig}
+      handleOptionSelection={handleOptionSelection}
       {...props}
     />
   );

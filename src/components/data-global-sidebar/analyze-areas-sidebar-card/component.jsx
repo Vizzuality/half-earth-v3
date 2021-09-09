@@ -11,11 +11,12 @@ import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
 import styles from './styles.module.scss';
 
 const AnalyzeAreasCardComponent = ({
+  selectedOption,
+  handleDrawClick,
   isSketchToolActive,
-  handleDrawClick
+  handleOptionSelection
 }) => {
   const [isOpen, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const handleBoxClick = () => setOpen(!isOpen);
   const [selectedAnalysis, setSelectedAnalysis] = useState('click');
 
@@ -61,7 +62,7 @@ const AnalyzeAreasCardComponent = ({
               parentWidth="380px"
               options={PRECALCULATED_AOI_OPTIONS}
               selectedOption={selectedOption}
-              handleOptionSelection={(op) => setSelectedOption(op)}
+              handleOptionSelection={handleOptionSelection}
             />
             <Button 
               type="compound"
