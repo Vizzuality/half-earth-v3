@@ -1,5 +1,6 @@
 export const CRF_NAMES = {
   BIRDS: 'birds',
+  REPTILES: 'reptiles',
   AMPHIBIANS: 'amphibians',
   MAMMALS: 'mammals_for_greta',
   ECOLOGICAL_LAND_UNITS: 'ELU',
@@ -13,7 +14,7 @@ export const CRF_DATA_CATEGORIES = {
   BIODIVERSITY: 'biodiversity'
 }
 
-export const { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES } = CRF_NAMES;
+export const { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES, REPTILES } = CRF_NAMES;
 
 export const CRFS_CONFIG = {
   inputRasterKey: 'crf_name',
@@ -30,6 +31,7 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 
 export const GEOPROCESSING_SERVICES_URLS = {
   [BIRDS]: 'https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds',
+  [REPTILES]: 'https://hepportal.arcgis.com/server/rest/services/SampleRept/GPServer/SampleRept',
   [MAMMALS]: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate',
   [AMPHIBIANS]: 'https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph',
   [HUMAN_PRESSURES]: 'https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage',
