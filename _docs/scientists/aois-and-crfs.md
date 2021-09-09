@@ -116,14 +116,30 @@ def getPresentSpecies(table):
 If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`. 
 
 # Current geoprocessing services in use `WIP`
-@Todo: change the protected area crf to use the one provided by MOL (`WDPA_OECM_prop.crf`), it should be a Zonal Stats getting the mean.
+@todo: gp service that returns the name of the WDPAs in the area of interest
+
+
 | **Front end element** | **Crf name** |**Crf variable**| **Gp service** | **Field to use from response** | **AGOL table to use** | **AGOL field to use** |
 |--|--|--|--|--|--|
 | population | population2020.crf |_none_| [GP ZsatSum](https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum)|`SUM` | _none_   | _none_ |
 | climate_regime | ELU.crf|_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY` | [item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `cr_type` contains the name of the type of climate regime |
 | land_cover | ELU.crf |_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY`  | [item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
-| Protection_percentage | clean_wdpa_april.crf | _none_|  [GP paPercentage](https://hepportal.arcgis.com/server/rest/services/paPercentage/GPServer/paPercentage) | `Percentage_protected` |_none_  |_none_ |
+| Protection_percentage | wdpa_oecm_zeros.crf | _none_|  [GP ZsatMean](https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean) | `MEAN` |_none_  |_none_ |
 | mammal_data | mammals_for_greta.crf | `presence` |[GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculateParallel/GPServer/sampleUniqueSelectCalculate) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/826fc7ca52b2418c9feb0269ec0b185e/rest/services/mammals_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
-| amphibian_data | amphibians.crf |`amphibians`| [GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/d723a804327b401395728c66ad5a1e08/rest/services/amphibians_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
-| bird_data | birds.crf | `birds`|[GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/8e6944b5c940408ab4f16d812435ba34/rest/services/birds_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
+| amphibian_data | amphibians.crf |`amphibians`| [GP SampleAmph](https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/d723a804327b401395728c66ad5a1e08/rest/services/amphibians_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
+| bird_data | birds.crf | `birds`|[GP SampleBirds](https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/8e6944b5c940408ab4f16d812435ba34/rest/services/birds_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
+| reptile_data | birds.crf | `birds`|[GP SampleRept](https://hepportal.arcgis.com/server/rest/services/SampleRept/GPServer/SampleRept) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/058444d3b85e44a4a4614751e193aebb/rest/services/reptiles_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
 |Human_encroachment|land_encroachment.crf|_none_|[GP LandEncroachmentPercentage](https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage)|`SliceNumber` has the code of the type of human activity. `percentage_land_encroachment`|[item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
+
+## Querying the AGOL tables
+For those Geoprocessing services that require to query information from a table in ArcGIS Online, Arcade can be used to return the information.
+The [`Filter`](https://developers.arcgis.com/arcade/function-reference/data_functions/#filter) function accepts an SQL expression and a layer. 
+
+The structure of the SQL expression is composed of the name of the field to query (in our case `SliceNumber`), then the condition `IN` and between parenthesis all the ids of species returned by the geoprocessing service. 
+
+``` javascript
+var lay = $layer
+var sqlExpr = 'SliceNumber IN (164, 250)'
+var val = Filter(lay, sqlExpr)
+return val
+```
