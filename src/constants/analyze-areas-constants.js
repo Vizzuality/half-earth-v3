@@ -1,9 +1,15 @@
 const SEARCH_SOURCES = {
   ECOREGIONS: 'ecoregions',
-  ADMIN_AREAS: 'admin',
+  POLITICAL_BOUNDARIES: 'political-boundaries',
   PROTECTED_AREAS: 'protected-areas'
 }
 
-export const { ECOREGIONS, ADMIN_AREAS, PROTECTED_AREAS } = SEARCH_SOURCES;
+export const { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS } = SEARCH_SOURCES;
 
-export const DEFAULT_SOURCE = ADMIN_AREAS;
+export const DEFAULT_SOURCE = POLITICAL_BOUNDARIES;
+
+export const PRECALCULATED_AOI_OPTIONS = [
+  {slug: POLITICAL_BOUNDARIES, label: 'Political boundaries'},
+  {slug: ECOREGIONS, label: 'Ecoregions'},
+  {slug: PROTECTED_AREAS, label: 'Protected areas'},
+]

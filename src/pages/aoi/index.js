@@ -4,8 +4,9 @@ import Component from './component.jsx';
 import mapStateToProps from './selectors';
 import * as urlActions from 'actions/url-actions';
 import { AOIS_HISTORIC } from 'constants/layers-urls';
-import { CRF_NAMES } from 'constants/geo-processing-services';
+import { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES } from 'constants/geo-processing-services';
 import EsriFeatureService from 'services/esri-feature-service';
+import { logGeometryArea } from 'utils/analyze-areas-utils';
 
 import { getCrfData } from 'services/geo-processing-services/sample';
 const actions = {...urlActions};
@@ -26,17 +27,52 @@ const Container = props => {
         // setAoiGeometry(geometry);
         setAoiData(attributes);
       } else {
-        console.log('NO FEATURE WITH THAT AOI ID')
+        logGeometryArea(aoiGeometry);
         // TODO
         // take the geometry from redux
         // get data from the crfs
         // store everything in the database
         getCrfData({ 
-          crfName: CRF_NAMES.MAMMALS,
-          aoiFeatureGeometry: aoiGeometry,
-          isMultidimensional: true
+          dataset: ECOLOGICAL_LAND_UNITS,
+          aoiFeatureGeometry: aoiGeometry
         }).then(({jobInfo, jobId, data}) => {
-          setAoiData(data.value.features);
+          console.log(`${ECOLOGICAL_LAND_UNITS} data`, data)
+        })
+        getCrfData({ 
+          dataset: BIRDS,
+          aoiFeatureGeometry: aoiGeometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${BIRDS} data`, data)
+        })
+        getCrfData({ 
+          dataset: AMPHIBIANS,
+          aoiFeatureGeometry: aoiGeometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${AMPHIBIANS} data`, data)
+        })
+        getCrfData({ 
+          dataset: MAMMALS,
+          aoiFeatureGeometry: aoiGeometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${MAMMALS} data`, data)
+        })
+        getCrfData({ 
+          dataset: POPULATION,
+          aoiFeatureGeometry: aoiGeometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${POPULATION} data`, data)
+        })
+        getCrfData({ 
+          dataset: PROTECTED_AREAS,
+          aoiFeatureGeometry: aoiGeometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${PROTECTED_AREAS} data`, data)
+        })
+        getCrfData({ 
+          dataset: HUMAN_PRESSURES,
+          aoiFeatureGeometry: aoiGeometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${HUMAN_PRESSURES} data`, data)
         })
       }
     }).catch(error => {

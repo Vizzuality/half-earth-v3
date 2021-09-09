@@ -1,4 +1,4 @@
-
+import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   ECOREGIONS_FEATURE_LAYER,
@@ -43,4 +43,13 @@ export function getProtectedAreasSearchSource(FeatureLayer) {
     searchFields:  ["WDPA_PID"],
     name: "Protected Areas"
   })
+}
+
+export function logGeometryArea(geometry) {
+  loadModules(["esri/geometry/geometryEngine"])
+    .then(([geometryEngine]) => {
+      const SQ_KM_WKID = 109414;
+      const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID)
+      console.log('AREA', area, 'KM2')
+    })
 }
