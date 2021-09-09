@@ -7,14 +7,13 @@ import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
-import CountriesBordersLayer from 'components/countries-borders-layer';
+import FeatureHighlightLayer from 'components/feature-highlight-layer';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import DataGlobalSidebar from 'components/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 // Constants
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
 import styles from './data-scene-styles.module.scss';
@@ -44,6 +43,7 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   countedActiveLayers,
   isBiodiversityActive,
+  selectedAnalysisLayer,
   countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed
 }) => {
@@ -91,11 +91,12 @@ const CountrySceneComponent = ({
           activeLayers={activeLayers}
           isLandscapeMode={isLandscapeMode}
         />
-        <CountriesBordersLayer
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
-        />
+        {selectedAnalysisLayer && 
+          <FeatureHighlightLayer
+            isLandscapeMode={isLandscapeMode}
+            featureLayerSlug={selectedAnalysisLayer.slug}
+          />
+        }
         <Widgets
           openedModal={openedModal}
           activeLayers={activeLayers}

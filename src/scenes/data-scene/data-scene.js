@@ -1,3 +1,24 @@
+import React, { useState } from 'react';
+import { useEffect } from 'react/cjs/react.development';
+import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
 import Component from './data-scene-component';
 
-export default Component;
+
+const Container = (props) => {
+  const { activeLayers } = props;
+  const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+
+  useEffect(() => {
+    const activeOption = getSelectedAnalysisLayer(activeLayers);
+    setSelectedAnalysisLayer(activeOption);
+  }, [activeLayers])
+
+  return (
+    <Component
+      selectedAnalysisLayer={selectedAnalysisLayer}
+      {...props}
+    />
+  )
+}
+
+export default Container;

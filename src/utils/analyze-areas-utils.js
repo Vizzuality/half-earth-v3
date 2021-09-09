@@ -1,9 +1,11 @@
 import { loadModules } from 'esri-loader';
+import _intersectionBy from 'lodash/intersectionBy';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   ECOREGIONS_FEATURE_LAYER,
   PROTECTED_AREAS_FEATURE_LAYER
 } from 'constants/layers-slugs';
+import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
 
 function getSource({FeatureLayer, layerSlug, searchFields, name, outFields = ["*"], maxSuggestions = 4}) {
   return ({
@@ -52,4 +54,8 @@ export function logGeometryArea(geometry) {
       const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID)
       console.log('AREA', area, 'KM2')
     })
+}
+
+export function getSelectedAnalysisLayer(activeLayers) {
+  return _intersectionBy(PRECALCULATED_AOI_OPTIONS, activeLayers, 'title')[0];
 }

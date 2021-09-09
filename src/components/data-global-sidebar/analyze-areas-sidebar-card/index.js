@@ -4,9 +4,10 @@ import urlActions from 'actions/url-actions';
 import Component from './component.jsx';
 import { getEcoregionsSearchSource, getAdminsSearchSource, getProtectedAreasSearchSource } from 'utils/analyze-areas-utils';
 import { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS, DEFAULT_SOURCE, PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
+import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 import { useSketchWidget} from 'hooks/esri';
-import { AREA_OF_INTEREST } from 'router'
+import { AREA_OF_INTEREST } from 'router';
 
 const actions = { ...urlActions };
 
@@ -15,6 +16,11 @@ const AnalyzeAreasContainer = (props) => {
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedSource, setSelectedSource] = useState(DEFAULT_SOURCE)
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
+
+  useEffect(() => {
+    const activeOption = getSelectedAnalysisLayer(activeLayers);
+    setSelectedOption(activeOption);
+  }, [])
 
   const handleOptionSelection = (option) => {
     handleLayerToggle(option);
