@@ -17,6 +17,10 @@ This documentation has been written using the ArcGIS Pro version `2.6.4` and the
 # Creating a crf `WIP`
 Check the document of [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"} for detailed steps. Before starting, make sure you are NOT building pyramids. This can add hours to the processing. Your Pro may be set to do this automatically. You can turn it off in Options.
 
+![](/public/option-pyramids.jpg)
+
+[This notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Create_crf.ipynb) has the geoprocessing steps to follow. 
+
 The most critical step is `Build multidimensional info`, this is because it has to be clear what are the `variables` and what are the `dimensions`. After creating a new field in the attribute table of the Mosaic dataset, use the following input as guide. This example is how the encroachment datacube has been created. 
 
 ##### 1. The geoprocessing parameters
@@ -141,18 +145,26 @@ If you forget to set a high limit for the records returned, the front end might 
 # Current geoprocessing services in use `WIP`
 @todo: gp service that returns the name of the WDPAs in the area of interest
 
+## Models from Model Builder as Python code
+The process inside the Geoprocessing service can be found in the `he-scratchfolder` [repo](https://github.com/Vizzuality/he-scratchfolder/tree/master/ModelBuilderGPs).
+
 
 | **Front end element** | **Crf name** |**Crf variable**| **Gp service** | **Field to use from response** | **AGOL table to use** | **AGOL field to use** |
 |--|--|--|--|--|--|
 | population | population2020.crf |_none_| [GP ZsatSum](https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum)|`SUM` | _none_   | _none_ |
-| climate_regime | ELU.crf|_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY` | [item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `cr_type` contains the name of the type of climate regime |
-| land_cover | ELU.crf |_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY`  | [item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
+| climate_regime | ELU.crf|_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY` | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `cr_type` contains the name of the type of climate regime |
+| land_cover | ELU.crf |_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY`  | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
 | Protection_percentage | wdpa_oecm_zeros.crf | _none_|  [GP ZsatMean](https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean) | `MEAN` |_none_  |_none_ |
-| mammal_data | mammals_for_greta.crf | `presence` |[GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculateParallel/GPServer/sampleUniqueSelectCalculate) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/826fc7ca52b2418c9feb0269ec0b185e/rest/services/mammals_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
-| amphibian_data | amphibians.crf |`amphibians`| [GP SampleAmph](https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/d723a804327b401395728c66ad5a1e08/rest/services/amphibians_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
-| bird_data | birds.crf | `birds`|[GP SampleBirds](https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/8e6944b5c940408ab4f16d812435ba34/rest/services/birds_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
-| reptile_data | reptiles.crf | `reptiles`|[GP SampleRept](https://hepportal.arcgis.com/server/rest/services/SampleRept/GPServer/SampleRept) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/058444d3b85e44a4a4614751e193aebb/rest/services/reptiles_lookup/FeatureServer)| `SliceNumber`, `Name`, `global_target`, `global_range_km2`, `global_percent_protected` |
-|Human_encroachment|land_encroachment.crf|_none_|[GP LandEncroachmentPercentage](https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage)|`SliceNumber` has the code of the type of human activity. `percentage_land_encroachment`|[item](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
+| mammal_data | mammals_for_greta.crf | `presence` |[GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculateParallel/GPServer/sampleUniqueSelectCalculate) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol tbd]()| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
+| amphibian_data | amphibians.crf |`amphibians`| [GP SampleAmph](https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/182fa83a03544cbd8bd88836d9dea895/rest/services/amphibians_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
+| bird_data | birds.crf | `birds`|[GP SampleBirds](https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link]()| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship`  |
+| reptile_data | reptiles.crf | `reptiles`|[GP SampleRept](https://hepportal.arcgis.com/server/rest/services/SampleRept/GPServer/SampleRept) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link]()| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship`  |
+|Human_encroachment|land_encroachment.crf|_none_|[GP LandEncroachmentPercentage](https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage)|`SliceNumber` has the code of the type of human activity. `percentage_land_encroachment`|[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
+
+
+### Source of data
+Population: WorldPop 2020 - [web](https://www.worldpop.org/geodata/summary?id=24777)
+World Terrestrial Ecosystem - [Living Atlas](https://eowilson.maps.arcgis.com/home/item.html?id=926a206393ec40a590d8caf29ae9a93e)
 
 ## Querying the AGOL tables
 For those Geoprocessing services that require to query information from a table in ArcGIS Online, Arcade can be used to return the information ([more about Arcade in this docs](/_docs/science/arcade)).

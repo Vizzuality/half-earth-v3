@@ -10,6 +10,8 @@ permalink: /_docs/science
 The documentation for scientists has been living at Vizzuality's Science Team wiki, it is currently being moved to this wiki ([ArcGIS Online](https://github.com/Vizzuality/sci-team-wiki/wiki/ESRI---ArcGIS-Online) and [ArcPy](https://github.com/Vizzuality/sci-team-wiki/wiki/ESRI-Arcpy)). 
 
 Most of the notebooks used in the Half-Earth Project are saved in Vizzuality's repository [`he-scratchfolder`](https://github.com/Vizzuality/he-scratchfolder). 
+
+One of the most important tools is the [ArcGIS Online Assistant(https://ago-assistant.esri.com/)]
 # Intro [to be moved to Readme file]
 Welcome to the Half Earth docs for Scientists. These docs cover specific elements of the Half-Earth Project in terms of data wrangling and management, but also some general tips to work with ESRI's `arcgis API for Python`, `arcpy` and Arcgis Online. 
 # How to add to this documentation
