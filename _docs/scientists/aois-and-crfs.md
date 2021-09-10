@@ -4,7 +4,7 @@ title: AOIs and CRFs
 parent: Scientists 🧑‍🔬
 permalink: /_docs/science/aois-crfs
 ---
-# Areas of Interest driven by Cloud Raster Format in the ESRI portal
+# Areas of Interest driven by Cloud Raster Format and webtools in the ESRI portal
 ## Existing documents
 - [Basecamp thread](https://basecamp.com/1756858/projects/13899003/messages/93850769){:target="_blank"} with videos.
 - [Rapid summaries report](https://docs.google.com/document/d/1ndUZfxKBKqpFgUymfge8JKyEcJu3r1IbsVCUQnjnWec/edit){:target="_blank"}: you will find some tricks to build the models of model builder, also a test of performance.
@@ -15,7 +15,9 @@ permalink: /_docs/science/aois-crfs
 This documentation has been written using the ArcGIS Pro version `2.6.4` and the Portal version `10.8.1`. 
 
 # Creating a crf `WIP`
-Check the document of [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"} for detailed steps. The most critical step is `Build multidimensional info`, this is because it has to be clear what are the `variables` and what are the `dimensions`. After creating a new field in the attribute table of the Mosaic dataset, use the following input as guide. This example is how the encroachment datacube has been created. 
+Check the document of [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"} for detailed steps. Before starting, make sure you are NOT building pyramids. This can add hours to the processing. Your Pro may be set to do this automatically. You can turn it off in Options.
+
+The most critical step is `Build multidimensional info`, this is because it has to be clear what are the `variables` and what are the `dimensions`. After creating a new field in the attribute table of the Mosaic dataset, use the following input as guide. This example is how the encroachment datacube has been created. 
 
 ##### 1. The geoprocessing parameters
 **IMPORTANT NOTE:** Be aware that when you check the ran geoprocess in the history, automatically, the information in `Variable Field` changes to the new `Variable` field. Always check the python snippet to see what has been done.  
@@ -33,10 +35,20 @@ arcpy.md.BuildMultidimensionalInfo("land_encroachment", "Variable_new", "SliceNu
 
 ![](/public/multidimensional_info_table.png)
 
+# Where do the CRFs live?
+They live in an Azure bucket in the cloud. They are managed using Microsoft Azure Storage Explorer. Check [this doc]((https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"}) for specific details, section: `Storing crf files for the Half-Earth Project`.
+## Accessing the CRFs from ArcGIS Pro
+The Virtual machine  already has the `.acs` file that makes the connection. When a new project is created a connection is done via the ribbon. The `yaleCube.acs` file is located in `Documents/ArcGIS/Projects`
+
+
 # Building a tool to publish a _webtool_
-In the Catalogue, create a new model (Model Builder) in the project's Toolbox. Once the model is ready, indicate which ovals are Parameters by right clicking on them (a small P appears). Set their names so they are legible by the Front End, inside model builder rename the parameters (right click on the ovals). Currently we are using: `geometry`, `crf_name` and `output_table`.
+In the Catalogue, create a new model (Model Builder) in the project's Toolbox. 
+![](/public/new-model.png)
+Once the model is ready, indicate which ovals are Parameters by right clicking on them (a small `P` appears). Set their names so they are legible by the Front End, inside model builder rename the parameters (right click on the ovals). Currently we are using: `geometry`, `crf_name` and `output_table`.
 
 Use `calculate value` as much as possible (this is a Model Builder Utility tool), Python is quicker than adding extra geoprocessing tools. 
+
+![](/public/model-builder-utilities.png)
 
 It is key to have set up the `parallel processing` to `80%`. 
 
@@ -44,6 +56,7 @@ It is key to have set up the `parallel processing` to `80%`.
 These steps take into account that the Model (made with Model Builder) is done. 
 1. run the geoprocessing model against the whole crf
 2. If you haven't needed during the design of the model, create a small subset of the crf using `Subset Multidimensional raster`, set the environment setting of `extent` to "current Display". _This is so a very small portion of the crf is copied in the portal. So, the smaller the extent, the better, but make sure it is larger than the extent to the polygon used for testing._
+![](/public/subset-crf.png)
 3. run the geoprocessing against the subset crf as a geoprocessing tool. Select `80%` for parallel processing.
 8. From the History, right click on the ran model and share as a web tool (make sure you are logged into the Portal, look at the top right, otherwise the option won't appear).
 9. In the configuration panel increase the maximum number to 10000 records. **This is very important** to avoid no returning a response to the front end. 
@@ -53,6 +66,13 @@ These steps take into account that the Model (made with Model Builder) is done.
     - Add the description to the different parameters
 13. Analyse before publishing to check which parameters or info is missing on the description of the tool. Sometimes analyse has to be run a couple of times without having to change anything between analyses.
 14. Click on `Publish` cross your fingers so the deployment is successful 🚀
+
+### The Url to the geoprocessing service
+Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web. The feel and look of the portal is identical to ArcGIS online. Protect the tool from deletion and update to public the sharing options in the settings. Then, in the overview, on the bottom right you will find the url of the service. Click to View the tool in a new window. 
+
+![](/public/tool-url.png)
+
+Click on the Task. The new url is the one that the front end must use. The url should look like this: `https://hepportal.arcgis.com/server/rest/services/<Tool name>/GPServer/<task name>`.
 
 ## Particularities of certain tools within the Model Builder working with CRFs
 **IMPORTANT NOTE**
