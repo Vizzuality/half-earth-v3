@@ -52,10 +52,20 @@ From the settings of the tile service:
 ![](https://www.pivotaltracker.com/file_attachments/103212465/download?inline=true&size=big)
 
 ### Updating a color scheme in ArcGIS Pro
+In june 2021 there was a cartographic review by John Nelson and Emily Meriam. All the documentation is in the project [folder](https://drive.google.com/drive/folders/11JCwr9toaGieBPn9AK2OmIQrNybup22B). The ArcGIS Pro project with all the layers reviewed and the colour ramps is in the Virtual Machine, but also [the original project](https://eowilson.maps.arcgis.com/home/item.html?id=84ee84cc0b6944f69896e16627df8e0c) is backed up in the ArcGIS online organisation. All the tile and feature services derived from this review are shared within the [Cartographic Review Group](https://eowilson.maps.arcgis.com/home/group.html?id=9129a4a0040045a189a0ce1a7863bd69#overview).
 #### For human pressure raster
 The ArcGIS Pro Project should be open and showing a map. Select the layer, right click on it and two new tabs appear on the top (Appearance and Raster). Go to the 'Appearence' tab on the top and click on 'Symbology' and then on 'Stretch' (there are other methods like Classify that makes intervals and gives a color to each). A new panel opens on the right with options to assign a continous palette with breaking points. You can decide the Color scheme and the type of Stretch to apply (PercentClip). 
 To change colors of the palette, click on the Color scheme and at the bottom, go to 'Format color scheme...', this will open a pop up window with options to change the colors and the position. At the right of this panel there is also a symbol with two triangles that allows to reverse the color scheme.
 The colour scheme is indicated in designs UI Kit.
+
+The process of dividing the Global Human Modification raster in 4 anthrome rasters is shown in this [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Classification_Human_Encroachment.ipynb). 
+
+#### The priority layer
+The priority layer has two values (Living Atlas link): 
+1. the rank of priority of an area, ranging from 1 to 100 and 
+1. the percentage of area needed by a cell. 
+
+In the app the layer is shown as the "putative protected area network". The process to create the layer is shown in [this notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Classification_of_raster_putatitve_pa_by_country.ipynb). 
 
 #### For biodiversity data
 The biodiversity data is binned and for each layer a different number of bins has to be applied. The simbology type has to be classified and the number, the method should be equal intervals and the number of classes has to match the number of bins. If the number of bins is higher than 32 the number must be introduced manually. 
