@@ -148,6 +148,9 @@ If you forget to set a high limit for the records returned, the front end might 
 ## Models from Model Builder as Python code
 The process inside the Geoprocessing service can be found in the `he-scratchfolder` [repo](https://github.com/Vizzuality/he-scratchfolder/tree/master/ModelBuilderGPs).
 
+## Creating the lookup tables
+The process of creation of the tables consist on getting the slice number and matching name from the raster moisaic dataset and then merge using the scientific name with data from MOL. ([notebook](https://eowilson.maps.arcgis.com/home/item.html?id=ea3b17b950114b909a62c5a791cfe539)).
+
 
 | **Front end element** | **Crf name** |**Crf variable**| **Gp service** | **Field to use from response** | **AGOL table to use** | **AGOL field to use** |
 |--|--|--|--|--|--|
