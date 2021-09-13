@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { setLayersOrder, setLayersVisibility, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
+import { setLayersVisibility, updateSceneLayersBasedOnUserConfig } from 'utils/arcgis-layer-manager-utils';
 import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
 const ArcgisLayerManager = ({ map, activeLayers, userConfig, customFunctions }) => {
