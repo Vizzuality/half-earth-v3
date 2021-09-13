@@ -18,9 +18,12 @@ export const useSelectLayersOnTabChange = ({
     const bioLayerIds = activeLayers
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
-    let updatedTabSelectedLayers = [];
 
-    if (bioLayerIds.length && biodiversityCategories) {
+    let updatedTabSelectedLayers = [];
+    const initialLoadWithSelectedBioLayer = !previousBiodiversityLayerVariant && bioLayerIds.length
+
+
+    if (!initialLoadWithSelectedBioLayer && bioLayerIds.length) {
       const getTaxaMatches = ({ taxa, categoryName, subcategoryName }) => {
         const matches = [];
         bioLayerIds.forEach((bioLayer) => {
@@ -71,15 +74,8 @@ export const useSelectLayersOnTabChange = ({
           }
         );
     }
-    if (!updatedTabSelectedLayers.length) {
-      const defaultTabSelection =
-        biodiversityLayerVariant &&
-        biodiversityCategories[biodiversityLayerVariant][0].taxa[0].layer;
-      if (defaultTabSelection) {
-        updatedTabSelectedLayers.push(defaultTabSelection);
-      }
-    }
-    if (!isEqual(bioLayerIds, updatedTabSelectedLayers)) {
+    
+    if (!initialLoadWithSelectedBioLayer && !isEqual(bioLayerIds, updatedTabSelectedLayers)) {
       handleClearAndAddLayers(bioLayerIds, updatedTabSelectedLayers);
     }
   }, [biodiversityLayerVariant]);
