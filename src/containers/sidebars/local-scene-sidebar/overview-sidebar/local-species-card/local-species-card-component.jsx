@@ -1,5 +1,5 @@
 import React from 'react';
-import SidebarCardWrapper from 'components/sidebar-card-wrapper';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SpeciesModal from 'components/species-modal';
 import PieChart from 'components/charts/pie-chart';
 import HighLightedSpeciesList from 'components/highlighted-species-list';

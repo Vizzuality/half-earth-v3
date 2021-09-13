@@ -1,6 +1,6 @@
 import React from 'react';
-import SidebarCardWrapper from 'components/sidebar-card-wrapper';
-import SidebarCardContent from 'components/sidebar-card-content';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 
 import styles from './local-priority-card-styles.module.scss';
 

@@ -6,7 +6,7 @@ import About from 'components/about';
 import RankingChart from 'components/ranking-chart';
 import NationalReportCardScene from 'scenes/nrc-scene';
 import HalfEarthLogo from 'components/half-earth-logo';
-import LocalSceneSidebar from 'components/local-scene-sidebar';
+import LocalSceneSidebar from 'containers/sidebars/local-scene-sidebar';
 import CountryChallengesChart from 'components/country-challenges-chart';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';

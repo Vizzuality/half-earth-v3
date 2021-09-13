@@ -5,10 +5,10 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import Tabs from 'components/tabs';
 import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
-import SidebarCardWrapper from 'components/sidebar-card-wrapper'
-import SidebarCardContent from 'components/sidebar-card-content';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper'
+import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import LayerToggle from 'components/layer-toggle';
-import Legend from 'components/sidebar-legend';
+import Legend from 'containers/sidebars/sidebar-legend';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/legend-configs';
 import { LAYERS_TOGGLE_CONFIG, LAYERS_RESOLUTION, TERRESTRIAL, MARINE, RESOLUTIONS } from 'constants/biodiversity-layers-constants';

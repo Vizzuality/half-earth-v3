@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
-import Legend from 'components/sidebar-legend';
+import Legend from 'containers/sidebars/sidebar-legend';
 import SourceAnnotation from 'components/source-annotation';
 import { LAND_HUMAN_PRESSURES_SLUG, MARINE_HUMAN_PRESSURES_SLUG } from 'constants/legend-configs';
 import { humanPressuresLandUse, humanPressuresMarine, TEXTS } from 'constants/human-pressures';

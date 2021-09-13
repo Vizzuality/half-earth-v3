@@ -1,10 +1,10 @@
 import React from 'react';
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import Scene from 'components/scene';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import LandscapeViewManager from 'components/landscape-view-manager';
-import PostRobotManager from 'components/post-robot-manager';
-import ConstantContactLayers from 'components/constant-contact-layers';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import LandscapeViewManager from 'containers/managers/landscape-view-manager';
+import PostRobotManager from 'containers/managers/post-robot-manager';
+import ConstantContactLayers from 'containers/layers/constant-contact-layers';
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env;
 

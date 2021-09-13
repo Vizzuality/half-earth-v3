@@ -1,9 +1,9 @@
 import React from 'react';
 // WIDGETS
-import ZoomWidget from 'components/widgets/zoom-widget';
-import SettingsWidget from 'components/widgets/settings-widget';
-import ToggleUiWidget from 'components/widgets/toggle-ui-widget';
-import MinimapWidget from 'components/widgets/minimap-widget';
+import ZoomWidget from 'containers/widgets/zoom-widget';
+import SettingsWidget from 'containers/widgets/settings-widget';
+import ToggleUiWidget from 'containers/widgets/toggle-ui-widget';
+import MinimapWidget from 'containers/widgets/minimap-widget';
 
 import { useMobile } from 'constants/responsive';
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { findLayerInMap } from 'utils/layer-manager-utils';

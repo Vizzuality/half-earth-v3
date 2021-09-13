@@ -3,28 +3,28 @@ import loadable from '@loadable/component'
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
 import Scene from 'components/scene';
-import Widgets from 'components/widgets';
-import LandscapeViewManager from 'components/landscape-view-manager';
-import GlobeEventsManager from 'components/globe-events-manager';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import Widgets from 'containers/widgets';
+import LandscapeViewManager from 'containers/managers/landscape-view-manager';
+import GlobeEventsManager from 'containers/managers/globe-events-manager';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import Spinner from 'components/spinner';
-import FeaturedPlaceViewManager from 'components/featured-place-view-manager';
-import SelectedFeaturedMapCard from 'components/featured-map-card';
+import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
+import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
-import FeaturedPlacesLayer from 'components/featured-places-layer';
+import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import HalfEarthLogo from 'components/half-earth-logo';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
 import Slider from 'components/slider';
-import FeaturedMapsList from 'components/featured-maps-list';
+import FeaturedMapsList from 'containers/sidebars/featured-maps-list';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const FeaturedPlaceCard = loadable(() => import('components/featured-place-card'));
+const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
 const About = loadable(() => import('components/about'));
 
 
