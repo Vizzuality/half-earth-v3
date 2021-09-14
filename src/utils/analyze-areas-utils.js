@@ -1,5 +1,6 @@
 import { loadModules } from 'esri-loader';
 import _intersectionBy from 'lodash/intersectionBy';
+import sha1 from 'sha1';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   ECOREGIONS_FEATURE_LAYER,
@@ -59,4 +60,10 @@ export function logGeometryArea(geometry) {
 export function getSelectedAnalysisLayer(activeLayers) {
   const intersectionArray = _intersectionBy(PRECALCULATED_AOI_OPTIONS, activeLayers, 'title');
   return intersectionArray[0];
+}
+
+export function createHashFromGraphic(graphic) {
+  const ringsArray = graphic.geometry.rings;
+  const flatRings = ringsArray.flat(Infinity);
+  return sha1(flatRings.toString())
 }

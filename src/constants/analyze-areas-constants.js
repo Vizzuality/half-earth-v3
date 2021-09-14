@@ -2,6 +2,8 @@ import {
 ECOREGIONS_FEATURE_LAYER,
 ADMIN_AREAS_FEATURE_LAYER,
 PROTECTED_AREAS_VECTOR_TILE_LAYER,
+AOIS_HISTORIC_PRODUCTION,
+AOIS_HISTORIC_DEVELOPMENT
 } from 'constants/layers-slugs';
 
 const SEARCH_SOURCES = {
@@ -19,3 +21,5 @@ export const PRECALCULATED_AOI_OPTIONS = [
   {title: ECOREGIONS, slug: ECOREGIONS, label: 'Ecoregions'},
   {title: ECOREGIONS, slug: PROTECTED_AREAS, label: 'Protected areas'},
 ]
+
+export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;

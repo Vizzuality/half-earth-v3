@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import loadable from '@loadable/component'
 import {connect} from 'react-redux'; 
 import { hot } from 'react-hot-loader';
-import FeaturedGlobe from 'pages/featured-globe';
-import DataGlobe from 'pages/data-globe';
-import MapIframe from 'pages/map-iframe';
-import NationalReportCard from 'pages/nrc';
-import AreaOfInterest from 'pages/aoi';
-
 import 'he-components/dist/main.css';
+// Dynamic imports
+const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
+const DataGlobe = loadable(() => import('pages/data-globe'));
+const MapIframe = loadable(() => import('pages/map-iframe'));
+const NationalReportCard = loadable(() => import('pages/nrc'));
+const AreaOfInterest = loadable(() => import('pages/aoi'));
+
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type]

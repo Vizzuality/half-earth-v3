@@ -16,7 +16,7 @@ const AoiSceneComponent = ({
   sceneSettings,
 }) => (
   <Scene
-    sceneName={'nrc-scene'}
+    sceneName={'aoi-scene'}
     sceneSettings={sceneSettings}
     loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     onMapLoad={onMapLoad}

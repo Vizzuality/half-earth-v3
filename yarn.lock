@@ -4842,10 +4842,10 @@ esrecurse@^4.1.0:
   dependencies:
     estraverse "^5.2.0"
 
-esri-loader@^2.10.0:
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/esri-loader/-/esri-loader-2.16.0.tgz#995c83f2ae93bdae0e64b36bb821d29dc56c039d"
-  integrity sha512-0lneVO6aizdRFt1mbrOsRgbF/F1v4LBUwKg+kfiBmoGJPf2ATFI/OimBlfeDI6J1rEQiWHi1PsALFCF4yRf2mw==
+esri-loader@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/esri-loader/-/esri-loader-3.2.0.tgz#7aabafe6cee08ab01ce5cdab7b3877433f6b2a76"
+  integrity sha512-9UANUR5603YvKkjOxo+LLGtmiZBXvdJOb7MEGpKAmgsKEStleQW28xqyQolvQVXGgPJu2XLMzrPf6Xu8n1QOAQ==
 
 estraverse@^4.1.1, estraverse@^4.2.0:
   version "4.3.0"

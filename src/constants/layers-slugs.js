@@ -104,3 +104,5 @@ export const ECOREGIONS_FEATURE_LAYER = 'ecoregions-feature-layer';
 export const ADMIN_AREAS_FEATURE_LAYER = 'admin-areas-feature-layer';
 export const ADMIN_AREAS_VECTOR_TILE_LAYER = 'admin-areas-vector-tile-layer';
 export const ECOREGIONS_VECTOR_TILE_LAYER = 'ecoregions-vector-tile-layer';
+export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
+export const AOIS_HISTORIC_DEVELOPMENT = 'aois-historic-development';

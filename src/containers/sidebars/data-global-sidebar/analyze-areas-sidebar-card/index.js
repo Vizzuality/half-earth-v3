@@ -4,7 +4,7 @@ import urlActions from 'actions/url-actions';
 import Component from './component.jsx';
 import { getEcoregionsSearchSource, getAdminsSearchSource, getProtectedAreasSearchSource } from 'utils/analyze-areas-utils';
 import { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS, DEFAULT_SOURCE, PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
-import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
+import { getSelectedAnalysisLayer, createHashFromGraphic } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 import { useSketchWidget} from 'hooks/esri';
 import { AREA_OF_INTEREST } from 'router';
@@ -32,7 +32,8 @@ const AnalyzeAreasContainer = (props) => {
   }
   
   const postDrawCallback = (graphic) => {
-    browsePage({type: AREA_OF_INTEREST, query: { aoi_geometry: graphic.geometry }});
+    const aoi_hash = createHashFromGraphic(graphic);
+    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: graphic.geometry }});
   }
 
   const {
