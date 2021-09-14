@@ -45,6 +45,7 @@
     "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
+    "sha1": "^1.1.1",
     "swr": "^0.3.2",
     "vega-lib": "^4.4.0",
     "workbox-build": "^4.3.1"
