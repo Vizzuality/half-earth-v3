@@ -50,10 +50,13 @@
 }
 
 .areasHistoryButton {
-  @extend %bodyText;
   background-color: transparent;
   border-radius: $border-radius-desktop;
   margin-top: $sidebar-paddings;
+  span {
+    @extend %bodyText;
+    text-transform: none !important;
+  }
   &:hover {
     background-color: $white-opacity;
   }

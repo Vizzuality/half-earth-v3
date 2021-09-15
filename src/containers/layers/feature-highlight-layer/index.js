@@ -13,7 +13,7 @@ import * as urlActions from 'actions/url-actions';
 
 const actions = {...urlActions }
 
-const CountriesBordersLayerContainer = (props) => {
+const FeatureHighlightLayerContainer = (props) => {
 const { view, changeGlobe, countryISO, featureLayerSlug, onClickCallback } = props;
 
 
@@ -35,7 +35,6 @@ const { view, changeGlobe, countryISO, featureLayerSlug, onClickCallback } = pro
       })
     }
     return function cleanUp() {
-      console.log('CLEANING UP', selectedCountryBorderGraphic, hoveredCountryBorderGraphic)
       if (selectedCountryBorderGraphic) selectedCountryBorderGraphic.geometry = null;
       if (hoveredCountryBorderGraphic) hoveredCountryBorderGraphic.geometry = null;
     }
@@ -94,4 +93,4 @@ const onLabelEvent = (event) => {
   return null;
 }
 
-export default connect(null, actions)(CountriesBordersLayerContainer);
+export default connect(null, actions)(FeatureHighlightLayerContainer);

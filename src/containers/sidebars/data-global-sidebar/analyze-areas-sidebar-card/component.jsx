@@ -69,6 +69,7 @@ const AnalyzeAreasCardComponent = ({
               Icon={AreasHistoryIcon}
               label="Open your analyzed areas history"
               className={styles.areasHistoryButton}
+              theme={styles.areasHistoryButton}
             />
           </div>
         )}
