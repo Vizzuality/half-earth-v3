@@ -4,17 +4,16 @@ import cx from 'classnames';
 import loadable from '@loadable/component'
 // Components
 import Scene from 'components/scene';
-import Widgets from 'components/widgets';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import CountryLabelsLayer from 'components/country-labels-layer';
-import CountriesBordersLayer from 'components/countries-borders-layer';
+import Widgets from 'containers/widgets';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
-import DataGlobalSidebar from 'components/data-global-sidebar';
+import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 // Constants
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
 import styles from './data-scene-styles.module.scss';
@@ -22,7 +21,7 @@ import animationStyles from 'styles/common-animations.module.scss';
 
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
-const LabelsLayer = loadable(() => import('components/labels-layer'));
+const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -44,6 +43,7 @@ const CountrySceneComponent = ({
   handleGlobeUpdating,
   countedActiveLayers,
   isBiodiversityActive,
+  selectedAnalysisLayer,
   countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed
 }) => {
@@ -91,11 +91,12 @@ const CountrySceneComponent = ({
           activeLayers={activeLayers}
           isLandscapeMode={isLandscapeMode}
         />
-        <CountriesBordersLayer
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
-        />
+        {selectedAnalysisLayer && 
+          <FeatureHighlightLayer
+            isLandscapeMode={isLandscapeMode}
+            featureLayerSlug={selectedAnalysisLayer.slug}
+          />
+        }
         <Widgets
           openedModal={openedModal}
           activeLayers={activeLayers}

@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import cx from 'classnames';
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import Proptypes from 'prop-types';
 import styles from './dropdown-styles.module.scss';
+
+import { usePopper } from 'react-popper';
+
+
 
 const Component = ({
   width,
   theme,
   options,
   dropdownOpen,
+  parentWidth,
   onDropdownToggle,
   selectedOption,
   onOptionSelection,
   disabled,
   groups,
 }) => {
+
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
   const renderFilters = () => {
     const renderOptions = (groupFilter) => {
       const filteredOptions = groupFilter ? options.filter(option => option.group === groupFilter) : options;
@@ -24,7 +34,7 @@ const Component = ({
             [styles.selectedOption]: option.slug === selectedOption.slug,
           })}
           key={option.slug}
-          onClick={() => onOptionSelection(option.slug)}
+          onClick={() => onOptionSelection(option)}
         >
           {option.label}
         </li>
@@ -42,7 +52,7 @@ const Component = ({
       : renderOptions();
   }
 
-  return (
+  return  (
     <div className={cx(styles.dropdownContainer, {
         [styles.open]: dropdownOpen,
         [styles.fullWidth]: width === 'full',
@@ -55,6 +65,7 @@ const Component = ({
           [styles.fullWidth]: width === 'full'
         })}
         onClick={onDropdownToggle}
+        ref={setReferenceElement}
       >
         <span className={styles.selectedOptionLabel}>
           {selectedOption.label}
@@ -66,13 +77,22 @@ const Component = ({
         />
       </div>
       {dropdownOpen && (
-        <ul className={cx(styles.optionsList, {
-          [styles.fullWidth]: width === 'full'
-        })} 
-          name="filters"
-          id="filters">
-          {renderFilters()}
-        </ul>
+        createPortal(
+          <div
+            ref={setPopperElement}
+            style={{ ...popperStyles.popper, width: parentWidth }}
+            {...attributes.popper}
+          >
+            <ul className={cx(styles.optionsList, {
+              [styles.fullWidth]: width === 'full'
+            })} 
+              name="filters"
+              id="filters">
+              {renderFilters()}
+            </ul>
+          </div>,
+          document.getElementById('root')
+        )
       )}
     </div>
   );

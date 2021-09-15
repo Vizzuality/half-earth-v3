@@ -37,10 +37,10 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
     }
   };
 
-  const handleOpenSearch = () => {
+  const handleOpenSearch = (ref) => {
     if(searchWidget === null) {
       setSearchWidget(undefined); // reset search widget in case of multiple quick clicks
-      const container = document.createElement("div");
+      const container = ref ? ref : document.createElement("div");
       container.setAttribute("id", "searchWidget");
       loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
         const sWidget = new Search({
@@ -98,5 +98,66 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
     handleOpenSearch,
     handleCloseSearch,
     searchWidget
+  }
+}
+
+export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
+  const [sketchTool, setSketchTool ] = useState(null);
+  const [sketchLayer, setSketchLayer ] = useState(null);
+  const { postDrawCallback} = sketchWidgetConfig;
+  
+  const handleSketchToolActivation = () => {
+    loadModules(["esri/widgets/Sketch",  "esri/layers/GraphicsLayer"]).then(([Sketch, GraphicsLayer]) => {
+      const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
+      setSketchLayer(_sketchLayer);
+      view.map.add(_sketchLayer);
+      const _sketchTool = new Sketch({
+        view,
+        layer: _sketchLayer,
+        availableCreateTools: ['polygon', 'rectangle', 'circle'],
+        defaultCreateOptions: { hasZ: false },
+        defaultUpdateOptions: { enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true },
+        visibleElements: {
+          settingsMenu: false
+        }
+      });
+      setSketchTool(_sketchTool)
+    });
+  }
+
+  const addWidgetToTheUi = () => {
+    view.ui.add(sketchTool, "manual");
+    const container = document.createElement("div");
+    const rootNode = document.getElementById("root");
+    rootNode.appendChild(container);
+  }
+
+  const  handleSketchToolDestroy = () => {
+    view.ui.remove(sketchTool);
+    setSketchTool(null)
+    sketchTool.destroy();
+  }
+
+  useEffect(() => {
+    if(sketchTool) {
+
+      addWidgetToTheUi();
+
+      sketchTool.on('create', (event) => {
+        if (event.state === 'complete') {
+          postDrawCallback(event.graphic);
+        }
+      });
+    }
+
+    return function cleanUp() {
+      sketchLayer && view.map.remove(sketchLayer)
+    }
+  }, [sketchTool]);
+
+  return {
+    handleSketchToolActivation,
+    handleSketchToolDestroy,
+    sketchTool
   }
 }

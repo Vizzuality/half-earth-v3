@@ -10,6 +10,7 @@ module.exports = function override(config, env) {
     plugins: [ new DirectoryNamedWebpackPlugin() ],
     alias: {
       components: path.resolve(__dirname, 'src/components'),
+      containers: path.resolve(__dirname, 'src/containers'),
       scenes: path.resolve(__dirname, 'src/scenes'),
       layouts: path.resolve(__dirname, 'src/layouts'),
       pages: path.resolve(__dirname, 'src/pages'),

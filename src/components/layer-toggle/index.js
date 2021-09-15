@@ -22,10 +22,6 @@ const Container = (props) => {
     openInfoModalAnalyticsEvent({ slug: `${option.slug}` });
   }
 
-  const handleOpacityClick = () => {
-
-  }
-
   const handleBringToBackClick = (e,layer) => {
     e.stopPropagation();
     bringLayerToBack(layer, map);

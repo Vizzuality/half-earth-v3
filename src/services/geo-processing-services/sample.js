@@ -1,23 +1,25 @@
 import { getGeoProcessor, createFeatureSet, getDefaultJsonFeatureSet, jobTimeProfiling } from 'utils/geo-processing-services';
 
-import { SAMPLE_SERVICE_CONFIG, SIMPLE_SAMPLE_SERVICE_CONFIG, PROTECTED_PERCENTAGE_CONFIG, ABC_SAMPLE_CONFIG } from 'constants/geo-processing-services';
+import {
+  CRFS_CONFIG,
+  GEOPROCESSING_SERVICES_URLS
+ } from 'constants/geo-processing-services';
 
-const { 
-    url,
+const {
     basePath,
     inputRasterKey,
     inputGeometryKey,
     outputParamKey,
-  } = ABC_SAMPLE_CONFIG;
+  } = CRFS_CONFIG;
 
-export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = true }) {
+export function getCrfData({ dataset, aoiFeatureGeometry }) {
     return new Promise((resolve, reject) => {
-      getGeoProcessor(url).then(GP => {
-        fetch(`${url}?f=pjson`).then(response => response.json()).then(async metadata => {
+      getGeoProcessor(GEOPROCESSING_SERVICES_URLS[dataset]).then(GP => {
+        fetch(`${GEOPROCESSING_SERVICES_URLS[dataset]}?f=pjson`).then(response => response.json()).then(async metadata => {
           const defaultJsonFeatureSet = await getDefaultJsonFeatureSet(metadata, inputGeometryKey);
           const defaultFeatureSet = await createFeatureSet(defaultJsonFeatureSet);
             GP.submitJob({
-              [inputRasterKey]: `${basePath}/${crfName}.crf`,
+              [inputRasterKey]: `${basePath}/${dataset}.crf`,
               [inputGeometryKey]: defaultFeatureSet.set({
                 hasZ: defaultFeatureSet.hasZ,
                 geometryType: "polygon",
@@ -25,12 +27,10 @@ export function getCrfData({ crfName, aoiFeatureGeometry, isMultidimensional = t
               })
             }).then((jobInfo) => {
               const JOB_START = Date.now();
-              jobTimeProfiling(jobInfo, JOB_START);
               const jobId = jobInfo.jobId;
               GP.waitForJobCompletion(jobId).then(() => {
                 GP.getResultData(jobId, outputParamKey).then((data) => {
                   jobTimeProfiling(jobInfo, JOB_START);
-                  console.log(`${crfName} DATA`,data)
                    resolve({jobInfo,jobId,data})
                  })
                }).catch(error => {

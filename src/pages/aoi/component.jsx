@@ -7,20 +7,19 @@ import styles from './styles.module.scss';
 import uiStyles from 'styles/ui.module.scss';
 
 const NationalReportCard = ({
+  aoiData,
+  geometry,
   userConfig,
-  aoiGeometry,
   activeLayers,
   sceneSettings,
-  handleMapLoad,
 }) => (
   <>
-    <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/> 
+    <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/>
     <AreaOfInterestScene
-      geometry={aoiGeometry}
+      geometry={geometry}
       userConfig={userConfig}
       activeLayers={activeLayers}
       sceneSettings={sceneSettings}
-      onMapLoad={(map) => handleMapLoad(map, activeLayers)}
     />
   </>
 );

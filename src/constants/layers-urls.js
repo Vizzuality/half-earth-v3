@@ -65,7 +65,13 @@ import {
   PLEDGES_LAYER,
   EDUCATOR_AMBASSADORS_LAYER,
   SPECIES_LIST,
-  FIREFLY_BASEMAP_LAYER
+  FIREFLY_BASEMAP_LAYER,
+  ECOREGIONS_FEATURE_LAYER,
+  ECOREGIONS_VECTOR_TILE_LAYER,
+  ADMIN_AREAS_FEATURE_LAYER,
+  ADMIN_AREAS_VECTOR_TILE_LAYER,
+  AOIS_HISTORIC_PRODUCTION,
+  AOIS_HISTORIC_DEVELOPMENT
 } from 'constants/layers-slugs';
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
@@ -74,10 +80,11 @@ export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH
 export const MONITORING_HE_GOAL_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/monitoringHEgoal/FeatureServer/0'
 export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsvcs/servers/aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0';
 export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer/0';
-export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0';
-export const AOIS_HISTORIC = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/aois_historic/FeatureServer'
+export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0'; 
 
 export const LAYERS_URLS = {
+  [AOIS_HISTORIC_PRODUCTION]: 'https://utility.arcgis.com/usrsvcs/servers/5e66921fb50f475981b5ef66678f29f7/rest/services/aois_historic/FeatureServer/0',
+  [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/aois_historic_6a796b684c874ef4bbe2f97b4857bf35/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:
@@ -121,7 +128,7 @@ export const LAYERS_URLS = {
   [RAINFED_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rainfed_MerimNelson/MapServer',
   [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rangeland_MerimNelson/MapServer',
   [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Land_Based_Drivers_MeriamNelson_cont/MapServer',
-  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Ocean_Based_Drivers/MapServer',
+  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Ocean_Based_Drivers_MeriamNelson_cont/MapServer',
   [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Commercial_Fishing_MeriamNelson_cont/MapServer',
   [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Artisanal_Fishing_MeriamNelson_cont/MapServer',
   // REGIONAL 1km BIODIVERSITY
@@ -149,30 +156,37 @@ export const LAYERS_URLS = {
   [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_bird/MapServer`,
   [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_rept/MapServer`,
   //// Terrestrial vertebrates richness and rarity services
-  [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer`,
-  [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer`,
+  [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_amphib/MapServer`,
+  [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_amphibians/MapServer`,
   
-  [MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_mammals_0_25deg_global/MapServer`,
-  [MAMMALS_RICHNESS]: `https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_mamm_025deg_global/VectorTileServer`,
+  [MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_mammals/MapServer`,
+  [MAMMALS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_mammals/MapServer`,
   
-  [BIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_bird_0_25deg_global/MapServer`,
-  [BIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_birds_0_25deg_global/MapServer`,
-  [REPTILES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_reptiles_0_25deg_global/MapServer',
-  [REPTILES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_reptile_0_25deg_global/MapServer',
+  [BIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_birds/MapServer`,
+  [BIRDS_RICHNESS]: ` https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_birds/MapServer`,
+  
+  [REPTILES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_reptiles/MapServer',
+  [REPTILES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_reptiles/MapServer',
 
   //// Plants richness and rarity services
-  [CACTI_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_cacti_0_25deg_global/MapServer`,
-  [CACTI_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_cact_0_25deg_global/MapServer`,
-  [CONIFERS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_conifers_0_25deg_global/MapServer`,
-  [CONIFERS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_conifer_0_25deg_global/MapServer`,
+  [CACTI_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_cacti/MapServer`,
+  [CACTI_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_cacti/MapServer`,
+ 
+  [CONIFERS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_conifers/MapServer`,
+  [CONIFERS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_conifers/MapServer`,
   
   //// All terrestrial richness and rarity services
-  [ALL_TAXA_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rar_all_0_25deg_global/MapServer',
-  [ALL_TAXA_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rich_all_0_25deg_global/MapServer',
+  [ALL_TAXA_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_all/MapServer',
+  [ALL_TAXA_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_taxa/MapServer',
   
   //// Marine richness and rarity services
   [FISHES_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/672fd2c2e15d43dba3c452ca600884a8/rest/services/Marine_Fish_Rarity_55km/MapServer`,
   [FISHES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/5212259d151744438c610d5104b91591/rest/services/Marine_Fish_Richness_55km/MapServer`,
   [SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer'
+    'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer',
+  // AOIs precalculated layers
+  [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_pop_protection_climate_landCover/FeatureServer',
+  [ADMIN_AREAS_FEATURE_LAYER]: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Administrative_Divisions/FeatureServer',
+  [ADMIN_AREAS_VECTOR_TILE_LAYER]: 'https://eowilson.maps.arcgis.com/sharing/rest/content/items/d1ce2d0e7fe547108b7e4ed8ea4c7a51/resources/styles/root.json?f=pjson&token=WCNleftehrOq31VgXoWf4Pm2wNw_OnHf7-G0aNhLcUQmspGhba64GGE3DOeJ7RgIpF01ljSQmYvjbYlI-bhqlVvCUNIk0ZZFpzudFz_r-olL8KTvwWXLlAtpnA8KQYWXIqFE3rvvq_1NH4JrzAeC7WSHqDs7GVUWq-LlHsBOF-N_hGRn8MLUIb3xRXGmndqfK7TrMn6DYRmMM8Y5_OBbldRLBt_9Q-hJoMPRIfWmW2I.',
+  [ECOREGIONS_VECTOR_TILE_LAYER]: 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer',
 };

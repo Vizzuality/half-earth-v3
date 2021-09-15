@@ -1,78 +1,140 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { layersConfig } from 'constants/mol-layers-configs';
-import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { loadModules } from 'esri-loader';
 import Component from './component.jsx';
-import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import mapStateToProps from './selectors';
 import * as urlActions from 'actions/url-actions';
-import { AOIS_HISTORIC } from 'constants/layers-urls';
-import { CRF_NAMES } from 'constants/geo-processing-services';
+import { LAYERS_URLS } from 'constants/layers-urls';
+import { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES, REPTILES } from 'constants/geo-processing-services';
 import EsriFeatureService from 'services/esri-feature-service';
+import { logGeometryArea } from 'utils/analyze-areas-utils';
+import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
+import { DATA } from 'router'
 
-import { 
-  getTestingPolygon,
- } from 'services/geo-processing-services/species-range-service';
-
-import { 
-  getCrfData
- } from 'services/geo-processing-services/sample';
+import { getCrfData } from 'services/geo-processing-services/sample';
 const actions = {...urlActions};
 
 const Container = props => {
-
-
-  const { changeGlobe, aoiId } = props;
-  const [aoiGeometry, setAoiGeometry] = useState(null);
+  const { changeGlobe, aoiId, urlQueryGeometry, browsePage } = props;
+  const [isAoiStored, setIsAoiStored] = useState(true);
+  const [newStoredAoi, setNewStoredAoi] = useState(null);
   const [aoiData, setAoiData] = useState(null);
-  // Get country borders
+  const [geometry, setGeometry] = useState(null);
+
+
+  // Get stored aoi data on mount
   useEffect(() => {
     EsriFeatureService.getFeatures({
-      url: AOIS_HISTORIC,
+      url: LAYERS_URLS[AOIS_HISTORIC],
       whereClause: `hash_id = '${aoiId}'`,
       returnGeometry: true
-    }).then((results) => {
-      console.log(results)
-      if (results && results.features.length) {
-        const { geometry, attributes } = results.features[0];
-        setAoiGeometry(geometry);
-        setAoiData(attributes);
+    }).then((features) => {
+      if (features) {
+        setAoiData(features[0].attributes);
+        setGeometry(features[0].geometry);
+        // LOG AOI GEOMETRY AREA
+        logGeometryArea(features[0].geometry);
       } else {
-        console.log('NO FEATURE WITH THAT AOI')
-        // TODO
-        // take the geometry from redux
-        // get data from the crfs
-        // store everything in the database
-        getTestingPolygon().then(features => {
-          setAoiGeometry(features[0].geometry);
-          getCrfData({ 
-            crfName: CRF_NAMES.MAMMALS,
-            aoiFeatureGeometry: features[0].geometry,
-            isMultidimensional: true
-          }).then(({jobInfo, jobId, data}) => {
-            setAoiData(data.value.features);
-          })
-        })
+        setIsAoiStored(false);
+        setGeometry(urlQueryGeometry);
+
+        // LOG AOI GEOMETRY AREA
+        logGeometryArea(urlQueryGeometry);
       }
-    }).catch(error => {
-      console.error('The AoI you are looking for is not stored on the data base, please redraw it again');
-      console.log(error)
-      // TODO
-      // redirect to data globe
+    }).catch((error) => {
+      console.error(error);
+      // browsePage({ type: DATA });
     })
+  }, [aoiId]);
+
+  // Add aoi to local storage historic
+  useEffect(() => {
+
   }, [aoiId])
 
+  // Store aoi on historic feature layer
+  useEffect(() => {
+    if (!isAoiStored && geometry)  {
+      EsriFeatureService.getLayer({
+        slug: AOIS_HISTORIC
+      }).then((layer) => {
+        loadModules(["esri/Graphic"]).then(([Graphic]) => { 
+          const newAoi =  new Graphic({
+            geometry: geometry,
+            attributes: {
+              hash_id: aoiId
+            }
+          });
+          layer.applyEdits({
+            addFeatures: [newAoi]
+          });
+          setNewStoredAoi(newAoi)
+        })
+      })
+    }
+  }, [isAoiStored, geometry])
+
+  useEffect(() => {
+    if (newStoredAoi) {
+        getCrfData({ 
+          dataset: ECOLOGICAL_LAND_UNITS,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${ECOLOGICAL_LAND_UNITS} data`, data.value.features)
+        })
+        getCrfData({ 
+          dataset: BIRDS,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${BIRDS} species count`, data.value.features.length, data.value)
+        })
+        getCrfData({ 
+          dataset: AMPHIBIANS,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${AMPHIBIANS} species count`, data.value.features.length, data.value)
+        })
+        getCrfData({ 
+          dataset: MAMMALS,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${MAMMALS} species count`, data.value.features.length, data.value)
+        })
+        getCrfData({ 
+          dataset: POPULATION,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${POPULATION} data`, data.value.features)
+        })
+        getCrfData({ 
+          dataset: PROTECTED_AREAS,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${PROTECTED_AREAS} data`, data.value.features)
+        })
+        getCrfData({ 
+          dataset: HUMAN_PRESSURES,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${HUMAN_PRESSURES} data`, data.value.features)
+        })
+        getCrfData({ 
+          dataset: REPTILES,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${REPTILES} species count`, data.value.features.length, data.value)
+        })
+    }
+
+  },[newStoredAoi])
+
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
-  const handleMapLoad = (map, activeLayers) => {
-    setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER]});
-    activateLayersOnLoad(map, activeLayers, layersConfig);
-  }
+  
 
   return (
     <Component
       aoiData={aoiData}
-      aoiGeometry={aoiGeometry}
-      handleMapLoad={handleMapLoad}
+      geometry={geometry}
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />

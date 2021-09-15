@@ -1,0 +1,32 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.esri-sketch {
+  background-color: $firefly;
+  position: absolute;
+  left: 50%;
+  top: $nav-bar-height;
+  border-radius: 2px;
+}
+
+.esri-sketch__tool-section:first-child {
+  display: none;
+}
+
+.esri-sketch__button {
+  &:hover,
+  &:focus {
+    background-color: $firefly;
+    color: $brand-color-main;
+    outline:none;
+  }
+
+  &.esri-sketch__button--selected {
+    background-color: $firefly;
+    color: $brand-color-main;
+    &:hover {
+      background-color: $firefly;
+      color: $brand-color-main;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends';
+
+.sidebarCardContainer {
+  @extend .sharedSidebarCardContainer;
+}
+
+.layersTogglesContainer {
+  @extend .sharedLayersTogglesContainer;
+}
+
+.cardContainer,
+.tabsContainer,
+.legendContainer,
+.sourceContainer,
+.togglesContainer,
+.dropdownContainer {
+  padding-top: $sidebar-vertical-flow;
+}
+
+.dropdownContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .dropdownLabel {
+    @extend %subtitle;
+    color: $white;
+    padding-right: $sidebar-paddings;
+  }
+}

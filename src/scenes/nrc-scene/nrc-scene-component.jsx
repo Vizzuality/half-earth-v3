@@ -1,15 +1,15 @@
 import React from 'react';
 // Components
 import Scene from 'components/scene';
-import Widgets from 'components/widgets';
-import LabelsLayer from 'components/labels-layer';
-import CountryMaskLayer from 'components/country-mask-layer';
-import ArcgisLayerManager from 'components/arcgis-layer-manager';
+import Widgets from 'containers/widgets';
+import LabelsLayer from 'containers/layers/labels-layer';
+import CountryMaskLayer from 'containers/layers/country-mask-layer';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
-import CountriesBordersLayer from 'components/countries-borders-layer';
-import LocalSceneViewManager from 'components/local-scene-view-manager';
-import CountryLabelsLayer from 'components/country-labels-layer';
-import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
+import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
+import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 // Constants
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';

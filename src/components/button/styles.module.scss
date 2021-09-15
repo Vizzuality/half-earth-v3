@@ -1,6 +1,22 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.rectangular {
+  @extend %title;
+  width: 100%;
+  height: 40px;
+  background-color: $white;
+  color: $dark-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius-desktop;
+  &:hover {
+    background-color: $brand-color-main;
+  }
+}
+
+
 .rounded {
   display: flex;
   justify-content: center;
@@ -31,5 +47,39 @@
   .label {
     @extend %title;
     color: $white;
+  }
+}
+
+.square {
+  width: 180px;
+  height: 104px;
+  border: 1px solid $brand-color-main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 4px;
+
+  .icon {
+    width: 35px;
+    height: 35px;
+    fill: $white;
+    margin-bottom: $paragraph-gutter;
+  }
+  
+  .label {
+    @extend %title;
+    color: $white;
+  }
+
+  &:hover,
+  &.active {
+    background-color: $brand-color-main;
+    .icon {
+      fill: $dark-text;
+    }
+    .label {
+      color: $dark-text;
+    }
   }
 }
