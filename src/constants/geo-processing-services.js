@@ -5,7 +5,7 @@ export const CRF_NAMES = {
   MAMMALS: 'mammals_for_greta',
   ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
-  PROTECTED_AREAS: 'clean_wdpa_april',
+  PROTECTED_AREAS: 'wdpa_oecm_zeros',
   HUMAN_PRESSURES: 'land_encroachment'
 }
 
