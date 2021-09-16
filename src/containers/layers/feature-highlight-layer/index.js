@@ -7,14 +7,15 @@ import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { GRAPHIC_LAYER } from 'constants/layers-slugs';
 // UTILS
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
-import { hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip } from 'utils/globe-events-utils';
+import { hitResults, setCursor, drawGeometry, flyToGeometry } from 'utils/globe-events-utils';
 // ACTIONS
 import * as urlActions from 'actions/url-actions';
+import mapTooltipActions from 'redux_modules/map-tooltip';
 
-const actions = {...urlActions }
+const actions = {...urlActions, ...mapTooltipActions };
 
 const FeatureHighlightLayerContainer = (props) => {
-const { view, changeGlobe, countryISO, featureLayerSlug, onClickCallback } = props;
+const { view, featureLayerSlug, onFeatureClick } = props;
 
 
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
@@ -42,8 +43,8 @@ const { view, changeGlobe, countryISO, featureLayerSlug, onClickCallback } = pro
 
   const onClickHandler = features => {
     flyToGeometry(view, features);
-    toggleCountryTooltip(features, changeGlobe, countryISO);
     drawGeometry(features, selectedCountryBorderGraphic);
+    onFeatureClick(features);
   }
 
   const onHoverHandler = features => {

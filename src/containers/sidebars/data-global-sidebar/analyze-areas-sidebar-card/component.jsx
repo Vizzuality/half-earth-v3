@@ -55,22 +55,22 @@ const AnalyzeAreasCardComponent = ({
         </div>
         {selectedAnalysis === 'click' && (
           <div className={styles.dropdownContainer}>
-          <span className={styles.label}>Analyze an area prompt on:</span>
-          <Dropdown
-              theme={'dark'}
-              width="full"
-              parentWidth="380px"
-              options={PRECALCULATED_AOI_OPTIONS}
-              selectedOption={selectedOption}
-              handleOptionSelection={handleOptionSelection}
-            />
-            <Button 
-              type="compound"
-              Icon={AreasHistoryIcon}
-              label="Open your analyzed areas history"
-              className={styles.areasHistoryButton}
-              theme={styles.areasHistoryButton}
-            />
+            <span className={styles.label}>Analyze an area prompt on:</span>
+            <Dropdown
+                theme={'dark'}
+                width="full"
+                parentWidth="380px"
+                options={PRECALCULATED_AOI_OPTIONS}
+                selectedOption={selectedOption}
+                handleOptionSelection={handleOptionSelection}
+              />
+              <Button 
+                type="compound"
+                Icon={AreasHistoryIcon}
+                label="Open your analyzed areas history"
+                className={styles.areasHistoryButton}
+                theme={styles.areasHistoryButton}
+              />
           </div>
         )}
         {selectedAnalysis === 'draw' && (

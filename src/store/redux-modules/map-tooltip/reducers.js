@@ -1,6 +1,6 @@
 import * as actions from './actions';
 
-export const initialState = { isOpen: false, content: null, geometry: null };
+export const initialState = { isVisible: false, content: null, geometry: null };
 
 function setTooltipContent(state, { payload }) {
   return { ...state, content: { ...payload } };
@@ -11,9 +11,13 @@ function setTooltipIsVisible(state, { payload }) {
 function setTooltipFeatureGeometry(state, { payload }) {
   return { ...state, geometry: payload };
 }
+function setBatchTooltipData(state, { payload: { isVisible, content, geometry} }) {
+  return { isVisible, content, geometry };
+}
 
 export default {
   [actions.setTooltipContent]: setTooltipContent,
   [actions.setTooltipIsVisible]: setTooltipIsVisible,
+  [actions.setBatchTooltipData]: setBatchTooltipData,
   [actions.setTooltipFeatureGeometry]: setTooltipFeatureGeometry,
 };

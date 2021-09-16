@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
+import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import styles from './country-entry-tooltip-styles.module.scss';
+import styles from './styles.module.scss';
 
 const CountryEntryTooltipComponent = ({ 
   img,
   view,
+  content,
+  isVisible,
   tooltipPosition,
   onCloseButtonClick,
   onActionButtonClick }) => {
@@ -22,34 +25,44 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  if (tooltipPosition && tooltip) {
+  if (isVisible && tooltip && tooltipPosition) {
     view.popup.open({
-      location: tooltipPosition,
+      location: tooltipPosition.centroid,
       content: tooltipref.current
     })
   } else {
-    view.popup.close()
+    view.popup.close();
   }
-}, [tooltipPosition, tooltip])
+}, [isVisible, tooltipPosition, tooltip])
 
-  return tooltipPosition && tooltip ? (
+  return (
     <div
       ref={tooltipref}
-      className={styles.tooltipContainer}
+      className={cx(
+        styles.tooltipContainer,
+        {[styles.isVisible]: isVisible}
+      )}
     >
-      <section className={styles.tooltipSection}>
-        {img && <img className={styles.tooltipFlag}  alt="" />}
-        <span className={styles.tooltipName}>content here</span>
-      </section>
-      <CloseIcon className={styles.tooltipClose} onClick={onCloseButtonClick}/>
-      <button
-        className={styles.tooltipExplore}
-        onClick={onActionButtonClick}
-      >
-        explore
-      </button>
+      {content && 
+      <>
+        <section className={styles.tooltipSection}>
+          {img && <img className={styles.tooltipFlag}  alt="" />}
+          <div className={styles.featureNaming}>
+            <span className={styles.title}>{content.title}</span>
+            <span className={styles.subtitle}>{content.subtitle}</span>
+          </div>
+        </section>
+        <CloseIcon className={styles.tooltipClose} onClick={onCloseButtonClick}/>
+          <button
+          className={styles.tooltipExplore}
+          onClick={onActionButtonClick}
+        >
+          {content.buttonText}
+        </button>
+      </>
+      }
     </div>
-  ) : null;
+  );
 }
 
 export default CountryEntryTooltipComponent;

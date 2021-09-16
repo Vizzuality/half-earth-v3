@@ -2,11 +2,14 @@
 @import 'styles/typography-extends';
 
 .tooltipContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin: 0;
-  transition: all .3s linear;
+  display: none;
+  &.isVisible {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    transition: all .3s linear;
+  }
 }
 
 .tooltipSection {
@@ -21,10 +24,18 @@
   width: 30px;
   margin-right: 10px;
 }
-
-.tooltipName {
-  @extend %title;
-  color: $white;
+.featureNaming {
+  display: flex;
+  flex-direction: column;
+  .title {
+    @extend %title;
+    color: $white;
+  }
+  
+  .subtitle {
+    @extend %annotation;
+    color: $white;
+  }
 }
 
 .tooltipExplore {

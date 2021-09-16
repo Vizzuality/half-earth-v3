@@ -2,31 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
-import Component from './country-entry-tooltip-component';
-const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions}
+import mapTooltipActions from 'redux_modules/map-tooltip';
+import Component from './component';
+import mapStateToProps from 'selectors/map-tooltip-selectors';
+const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...mapTooltipActions}
 
 const CountryEntryTooltipContainer = props => {
-  const { geometry } = props;
+  const { mapTooltipGeometry, mapTooltipContent, mapTooltipIsVisible, setBatchTooltipData, handleExploreClick } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
-
+  
   // Set country tooltip position
   useEffect(() => {
-    // get the geometry from the store (it should be added whenever a feature is clicked)
-    if (geometry) {
-      setTooltipPosition(geometry);
+    if (mapTooltipGeometry) {
+      setTooltipPosition(mapTooltipGeometry);
     }
-  }, [geometry])
+  }, [mapTooltipGeometry])
 
   const handleCloseButtonClick = () => {
-    // boolean on tooltip store to update its state isOpen
+    setBatchTooltipData({
+      isVisible: false,
+      content: null,
+      geometry: null
+    })
   }
 
   const handleActionButtonClick = () => {
+    handleExploreClick(mapTooltipGeometry);
     // does this always triggers a browse page action??
   };
 
   return (
     <Component
+      content={mapTooltipContent}
+      isVisible={mapTooltipIsVisible}
       tooltipPosition={tooltipPosition}
       onCloseButtonClick={handleCloseButtonClick}
       onActionButtonClick={handleActionButtonClick}
@@ -35,4 +43,4 @@ const CountryEntryTooltipContainer = props => {
   )
 }
 
-export default connect(null, actions)(CountryEntryTooltipContainer);
+export default connect(mapStateToProps, actions)(CountryEntryTooltipContainer);

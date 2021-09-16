@@ -5,6 +5,6 @@ import reducers, { initialState } from './reducers';
 
 export const reduxConfig = { actions, reducers, initialState };
 
-reducerRegistry.registerModule('map-tooltip', reduxConfig);
+reducerRegistry.registerModule('mapTooltip', reduxConfig);
 
 export default actions;
