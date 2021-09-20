@@ -56,7 +56,7 @@ const CountrySceneComponent = ({
       activeLayers={activeLayers}
       countryISO={countryISO}
     />
-    <TerrainExaggerationLayer exaggeration={3} />
+    <TerrainExaggerationLayer />
     <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
     {isVisible && 
       <Widgets

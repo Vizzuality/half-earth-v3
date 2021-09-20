@@ -36,7 +36,7 @@ const Container = (props) => {
   }
 
   const handleTooltipActionButtonClick = () => {
-    browsePage({type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { aoi_geometry: mapTooltipGeometry, precalculatedLayer: selectedAnalysisLayer.slugy }});
+    browsePage({type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug, aoi_geometry: mapTooltipGeometry }});
   }
 
   useEffect(() => {

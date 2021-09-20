@@ -2,9 +2,11 @@ import React from 'react';
 // Components
 import Scene from 'components/scene';
 import Widgets from 'containers/widgets';
+import LabelsLayer from 'containers/layers/labels-layer';
 import MaskGraphicLayer from 'containers/layers/mask-graphic-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
+import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -34,6 +36,8 @@ const AoiSceneComponent = ({
     <Widgets
       activeLayers={activeLayers}
     />
+    <TerrainExaggerationLayer /> 
+    <LabelsLayer activeLayers={activeLayers} />
   </Scene>
 );
 
