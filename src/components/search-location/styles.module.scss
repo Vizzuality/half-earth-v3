@@ -3,24 +3,30 @@
 @import 'styles/typography-extends';
 
 .dropdownContainer {
-  padding: 10px;
+  @extend %title;
   background-color: $white;
   border-radius: 6px;
   position: relative;
-  &.open {
-    background-color: $dark-opacity;
-  }
   &.fullWidth {
     width: 100%;
   }
 }
 
-.toggleContainer {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &.fullWidth {
-    justify-content: space-between;
+.input {
+  @extend %title;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  padding: 10px;
+  border: none;
+  color: $white;
+  &::placeholder {
+    color: $grey-text;
+    padding-left: 30px;
+    opacity: 1; /* Firefox */
+  }
+  &:focus{
+    background-color: $dark-opacity;
   }
 }
 
@@ -111,10 +117,15 @@
   .selectedOptionLabel {
     color: $white;
   }
-  .arrowIcon {
-    path {
-      fill: $white;
-      stroke: $white;
+  .input {
+    color: $white;
+    &::placeholder {
+      color: $grey-text;
+      padding-left: 30px;
+      opacity: 1; /* Firefox */
+    }
+    &:focus{
+      background-color: $dark-opacity;
     }
   }
 }

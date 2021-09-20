@@ -3,6 +3,7 @@ import cx from 'classnames';
 import CategoryBox from 'components/category-box';
 import Button from 'components/button';
 import Dropdown from 'components/dropdown';
+import SearchLocation from 'components/search-location';
 import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
 import {ReactComponent as AoisClickIcon} from "icons/globe.svg";
 import {ReactComponent as AddShapeIcon} from "icons/add_shape_icon.svg";
@@ -14,7 +15,8 @@ const AnalyzeAreasCardComponent = ({
   selectedOption,
   handleDrawClick,
   isSketchToolActive,
-  handleOptionSelection
+  handleOptionSelection,
+  searchWidgetConfig
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -54,9 +56,11 @@ const AnalyzeAreasCardComponent = ({
           />
         </div>
         {selectedAnalysis === 'click' && (
-          <div className={styles.dropdownContainer}>
+          <section className={styles.sectionContainer}>
             <span className={styles.label}>Analyze an area prompt on:</span>
-            <Dropdown
+            <div className={styles.dropdownContainer}>
+              <Dropdown
+                stacked
                 theme={'dark'}
                 width="full"
                 parentWidth="380px"
@@ -64,17 +68,24 @@ const AnalyzeAreasCardComponent = ({
                 selectedOption={selectedOption}
                 handleOptionSelection={handleOptionSelection}
               />
-              <Button 
-                type="compound"
-                Icon={AreasHistoryIcon}
-                label="Open your analyzed areas history"
-                className={styles.areasHistoryButton}
-                theme={styles.areasHistoryButton}
+              <SearchLocation
+                stacked
+                theme={'dark'}
+                width="full"
+                parentWidth="380px"
               />
-          </div>
+            </div>
+            <Button 
+              type="compound"
+              Icon={AreasHistoryIcon}
+              label="Open your analyzed areas history"
+              className={styles.areasHistoryButton}
+              theme={styles.areasHistoryButton}
+            />
+          </section>
         )}
         {selectedAnalysis === 'draw' && (
-          <div className={styles.drawPromptContainer}>
+          <section className={styles.sectionContainer}>
             <span className={styles.label}>Draw on the map the area you want to analyze:</span>
             <Button
               type="rectangular"
@@ -96,7 +107,7 @@ const AnalyzeAreasCardComponent = ({
               label="Open your analyzed areas history"
               className={styles.areasHistoryButton}
             />
-          </div>
+          </section>
         )}
       </div>
     </div>

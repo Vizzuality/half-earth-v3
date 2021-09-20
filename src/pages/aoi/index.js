@@ -15,12 +15,27 @@ import { getCrfData } from 'services/geo-processing-services/sample';
 const actions = {...urlActions};
 
 const Container = props => {
-  const { changeGlobe, aoiId, urlQueryGeometry, browsePage } = props;
+  const { changeGlobe, aoiId, urlQueryGeometry, precalculatedLayerSlug, browsePage } = props;
   const [isAoiStored, setIsAoiStored] = useState(true);
   const [newStoredAoi, setNewStoredAoi] = useState(null);
   const [aoiData, setAoiData] = useState(null);
   const [geometry, setGeometry] = useState(null);
 
+  useEffect(() => {
+    if (precalculatedLayerSlug) {
+      console.log('PRECALCULATED DATA', precalculatedLayerSlug)
+      // EsriFeatureService.getFeatures({
+      //   url: LAYERS_URLS[precalculatedLayerSlug],
+      //   whereClause: `hash_id = '${aoiId}'`,
+      //   returnGeometry: true
+      // }).then((features) => {
+      //   setAoiData(features[0].attributes);
+      //   setGeometry(features[0].geometry);
+      //   // LOG AOI GEOMETRY AREA
+        // logGeometryArea(features[0].geometry);
+      // })
+    }
+  }, [precalculatedLayerSlug])
 
   // Get stored aoi data on mount
   useEffect(() => {

@@ -7,41 +7,41 @@ import {
   PROTECTED_AREAS_FEATURE_LAYER
 } from 'constants/layers-slugs';
 import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
+import { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS, } from 'constants/analyze-areas-constants';
 
-function getSource({FeatureLayer, layerSlug, searchFields, name, outFields = ["*"], maxSuggestions = 4}) {
-  return ({
-    layer: new FeatureLayer({
-      url: LAYERS_URLS[layerSlug],
-      title: layerSlug,
-    }),
-    outFields,
-    searchFields,
-    name,
-    maxSuggestions
-  })
+function getSource({ layerSlug, searchFields, name, outFields = ["*"], maxSuggestions = 4}) {
+  console.log({ layerSlug, searchFields, name})
+  return loadModules("esri/layers/FeatureLayer").then((FeatureLayer) => ({
+      layer: new FeatureLayer({
+        url: LAYERS_URLS[layerSlug],
+        title: layerSlug,
+      }),
+      outFields,
+      searchFields,
+      name,
+      maxSuggestions
+    })
+  );
 }
 
-export function getEcoregionsSearchSource(FeatureLayer) {
+export function getEcoregionsSearchSource() {
   return getSource({
-    FeatureLayer,
     layerSlug: ECOREGIONS_FEATURE_LAYER,
     searchFields: ["ECO_ID"],
     name: "Ecoregions"
   })
 }
 
-export function getAdminsSearchSource(FeatureLayer) {
+export function getAdminsSearchSource() {
   return getSource({
-    FeatureLayer,
     layerSlug: ECOREGIONS_FEATURE_LAYER,
     searchFields: ["ISO_CODE"],
     name: "Admin areas"
   })
 }
 
-export function getProtectedAreasSearchSource(FeatureLayer) {
+export function getProtectedAreasSearchSource() {
   return getSource({
-    FeatureLayer,
     layerSlug: PROTECTED_AREAS_FEATURE_LAYER,
     searchFields:  ["WDPA_PID"],
     name: "Protected Areas"
@@ -66,4 +66,17 @@ export function createHashFromGraphic(graphic) {
   const ringsArray = graphic.geometry.rings;
   const flatRings = ringsArray.flat(Infinity);
   return sha1(flatRings.toString())
+}
+
+export const searchSources = async selectedSource => {
+  switch (selectedSource) {
+    case ECOREGIONS:
+      return await getEcoregionsSearchSource();
+    case PROTECTED_AREAS:
+      return await getProtectedAreasSearchSource();
+    case POLITICAL_BOUNDARIES:
+      return await getAdminsSearchSource();
+    default:
+      return await getAdminsSearchSource();
+  }
 }

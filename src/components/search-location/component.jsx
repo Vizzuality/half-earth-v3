@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import cx from 'classnames';
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import Proptypes from 'prop-types';
-import styles from './dropdown-styles.module.scss';
+import styles from './styles.module.scss';
 
 import { usePopper } from 'react-popper';
 
@@ -26,58 +26,31 @@ const Component = ({
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
-  const renderFilters = () => {
-    const renderOptions = (groupFilter) => {
-      const filteredOptions = groupFilter ? options.filter(option => option.group === groupFilter) : options;
-      return filteredOptions.filter(option => option.group === groupFilter).map((option) => (
-        <li
-          className={cx(styles.option, {
-            [styles.selectedOption]: option.slug === selectedOption.slug,
-          })}
-          key={option.slug}
-          onClick={() => onOptionSelection(option)}
-        >
-          {option.label}
-        </li>
-      ))
-    };
-
-    return groups
-      ? groups.map((group) => (
-          <li className={cx(styles.group)} key={group}>
-            <ul className={styles.groupList}>
-              {renderOptions(group)}
-            </ul>
-          </li>
-        ))
-      : renderOptions();
-  }
 
   return  (
     <div className={cx(styles.dropdownContainer, {
-        [styles.stacked]: stacked,
+      [styles.stacked]: stacked,
         [styles.open]: dropdownOpen,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled
       })}
     >
-      <div
-        className={cx(styles.toggleContainer, {
-          [styles.fullWidth]: width === 'full'
-        })}
-        onClick={onDropdownToggle}
+      <input
+        className={styles.input}
+        onChange={onDropdownToggle}
         ref={setReferenceElement}
-      >
-        <span className={styles.selectedOptionLabel}>
-          {selectedOption.label}
+        type="text"
+        placeholder={'search'}
+      />
+        {/* <span className={styles.selectedOptionLabel}>
+          Search
         </span>
         <IconArrow
           className={cx(styles.arrowIcon, {
             [styles.dropdownOpen]: dropdownOpen
           })}
-        />
-      </div>
+        /> */}
       {dropdownOpen && (
         createPortal(
           <div
@@ -90,7 +63,15 @@ const Component = ({
             })} 
               name="filters"
               id="filters">
-              {renderFilters()}
+              <li
+                className={cx(styles.option, {
+                  // [styles.selectedOption]: option.slug === selectedOption.slug,
+                })}
+                // key={option.slug}
+                onClick={() => {}}
+              >
+                one filter
+              </li>
             </ul>
           </div>,
           document.getElementById('root')
