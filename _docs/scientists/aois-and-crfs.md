@@ -142,8 +142,7 @@ def getPresentSpecies(table):
 # About the limit of records returned
 If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`. 
 
-# Current geoprocessing services in use `WIP`
-@todo: gp service that returns the name of the WDPAs in the area of interest
+# Current geoprocessing services in use 
 
 ## Models from Model Builder as Python code
 The process inside the Geoprocessing service can be found in the `he-scratchfolder` [repo](https://github.com/Vizzuality/he-scratchfolder/tree/master/ModelBuilderGPs).
@@ -159,7 +158,7 @@ The process of creation of the tables consist on getting the slice number and ma
 | land_cover | ELU.crf |_none_| [GP ZsatMajority](https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority)| `MAJORITY`  | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
 | Protection_percentage | wdpa_oecm_zeros.crf | _none_|  [GP ZsatMean](https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean) | `MEAN` |_none_  |_none_ |
 | Protection_id | WDPA_OECM.crf | _none_|  [GP clipSelect](https://hepportal.arcgis.com/server/rest/services/clipSelect/GPServer/clipSelect) | `Value` |[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer) non whitelisted yet|`WDPA_PID` |
-| mammal_data | mammals_for_greta.crf | `presence` |[GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/10063857c3d2447a8f149cd1b4554d3f/rest/services/mammals_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
+| mammal_data | mammals_for_greta.crf | `presence` |[GP sampleUniqueSelectCalculate](https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/10063857c3d2447a8f149cd1b4554d3f/rest/services/mammals_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
 | amphibian_data | amphibians.crf |`amphibians`| [GP SampleAmph](https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/182fa83a03544cbd8bd88836d9dea895/rest/services/amphibians_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
 | bird_data | birds.crf | `birds`|[GP SampleBirds](https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/4876d75b2ac94a068ec96c8f256e7e79/rest/services/birds_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship`  |
 | reptile_data | reptiles.crf | `reptiles`|[GP SampleRept](https://hepportal.arcgis.com/server/rest/services/SampleRept/GPServer/SampleRept) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/ef12e99ccea24faca6d5597988c3fb82/rest/services/reptiles_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship`  |
@@ -182,3 +181,9 @@ var sqlExpr = 'SliceNumber IN (164, 250)'
 var val = Filter(lay, sqlExpr)
 return val
 ```
+
+# Historic of AOIs and its maintenance
+## Notebooks in ArcGIS online
+ArcGIS online allows to run jupyter notebooks. There are different kinds, some cost credits, but for small tasks they are included. Users need to be provided the permissions to use the Notebooks. Once a notebook is saved as an item in the organisation it is possible to schedule tasks. Check [ESRI's documentation](https://doc.arcgis.com/en/arcgis-online/create-maps/prepare-a-notebook-for-automated-execution.htm) on how to schedule tasks.
+## Cleaning the historic AOIs service
+[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`. 
