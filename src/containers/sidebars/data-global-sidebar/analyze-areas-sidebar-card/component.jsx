@@ -16,11 +16,12 @@ const AnalyzeAreasCardComponent = ({
   selectedOption,
   handleDrawClick,
   isSketchToolActive,
+  selectedAnalysisTab,
   handleOptionSelection,
+  handleAnalysisTabClick,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
-  const [selectedAnalysis, setSelectedAnalysis] = useState('click');
 
   return (
     <div className={cx(
@@ -44,18 +45,18 @@ const AnalyzeAreasCardComponent = ({
             type="square"
             label="By clicking on the map"
             Icon={AoisClickIcon}
-            active={selectedAnalysis === 'click'}
-            handleClick={() => setSelectedAnalysis('click')}
+            active={selectedAnalysisTab === 'click'}
+            handleClick={() => handleAnalysisTabClick('click')}
           />
           <Button
             type="square"
             label="Draw or upload a shape"
             Icon={AoisClickIcon}
-            active={selectedAnalysis === 'draw'}
-            handleClick={() => setSelectedAnalysis('draw')}
+            active={selectedAnalysisTab === 'draw'}
+            handleClick={() => handleAnalysisTabClick('draw')}
           />
         </div>
-        {selectedAnalysis === 'click' && (
+        {selectedAnalysisTab === 'click' && (
           <section className={styles.sectionContainer}>
             <span className={styles.label}>Analyze an area prompt on:</span>
             <div className={styles.dropdownContainer}>
@@ -86,7 +87,7 @@ const AnalyzeAreasCardComponent = ({
             />
           </section>
         )}
-        {selectedAnalysis === 'draw' && (
+        {selectedAnalysisTab === 'draw' && (
           <section className={styles.sectionContainer}>
             <span className={styles.label}>Draw on the map the area you want to analyze:</span>
             <Button

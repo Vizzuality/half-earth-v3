@@ -18,11 +18,41 @@ const actions = { ...urlActions, ...mapTooltipActions };
 const AnalyzeAreasContainer = (props) => {
   const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
+  const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
     setSelectedOption(activeOption);
   }, [])
+
+  const postDrawCallback = (graphic) => {
+    const aoi_hash = createHashFromGraphic(graphic);
+    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: graphic.geometry }});
+  }
+
+  const {
+    handleSketchToolActivation,
+    handleSketchToolDestroy,
+    sketchTool
+  } = useSketchWidget(view, { postDrawCallback });
+
+  const handleAnalysisTabClick = (selectedTab) => {
+    switch (selectedTab) {
+      case 'draw':
+        setSelectedAnalysisTab('draw');
+        handleLayerToggle(selectedOption);
+        break;
+      case 'click':
+        setSelectedAnalysisTab('click');
+        handleLayerToggle(selectedOption);
+        if (sketchTool) {handleSketchToolDestroy();}
+        break;
+      default:
+        setSelectedAnalysisTab('click');
+        handleSketchToolDestroy();
+        break;
+    }
+  }
 
   const handleOptionSelection = (option) => {
     handleLayerToggle(option);
@@ -34,16 +64,6 @@ const AnalyzeAreasContainer = (props) => {
     batchToggleLayers([selectedOption.slug, option.slug], activeLayers, changeGlobe)
   }
   
-  const postDrawCallback = (graphic) => {
-    const aoi_hash = createHashFromGraphic(graphic);
-    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: graphic.geometry }});
-  }
-
-  const {
-    handleSketchToolActivation,
-    handleSketchToolDestroy,
-    sketchTool
-  } = useSketchWidget(view, { postDrawCallback });
 
   const handleDrawClick = () => {
     if (!sketchTool) {
@@ -58,7 +78,9 @@ const AnalyzeAreasContainer = (props) => {
       selectedOption={selectedOption}
       isSketchToolActive={sketchTool}
       handleDrawClick={handleDrawClick}
+      selectedAnalysisTab={selectedAnalysisTab}
       handleOptionSelection={handleOptionSelection}
+      handleAnalysisTabClick={handleAnalysisTabClick}
       {...props}
     />
   );
