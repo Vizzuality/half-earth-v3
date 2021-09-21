@@ -12,11 +12,11 @@ import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
 import styles from './styles.module.scss';
 
 const AnalyzeAreasCardComponent = ({
+  view,
   selectedOption,
   handleDrawClick,
   isSketchToolActive,
   handleOptionSelection,
-  searchWidgetConfig
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -70,9 +70,11 @@ const AnalyzeAreasCardComponent = ({
               />
               <SearchLocation
                 stacked
+                view={view}
                 theme={'dark'}
                 width="full"
                 parentWidth="380px"
+                searchSourceLayerSlug={selectedOption.slug}
               />
             </div>
             <Button 

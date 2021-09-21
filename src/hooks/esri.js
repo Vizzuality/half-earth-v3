@@ -28,27 +28,17 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
 }
 
 export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidgetConfig) => {
-  const [searchWidget, setSearchWidget ] = useState(null);
-  const { searchSources, postSearchCallback} = searchWidgetConfig || {};
-  const keyEscapeEventListener = (evt) => {
-    evt = evt || window.event;
-    if (evt.keyCode === 27 && view && searchWidget) {
-      handleCloseSearch();
-    }
-  };
+  const [searchWidget, setSearchWidget] = useState(null);
+  const { searchSources, postSearchCallback, searchResultsCallback} = searchWidgetConfig || {};
 
   const handleOpenSearch = (ref) => {
     if(searchWidget === null) {
-      setSearchWidget(undefined); // reset search widget in case of multiple quick clicks
-      const container = ref ? ref : document.createElement("div");
-      container.setAttribute("id", "searchWidget");
       loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
         const sWidget = new Search({
           view: view,
           locationEnabled: true, // do not show the Use current location box when clicking in the input field
           popupEnabled: false, // hide location popup
           resultGraphicEnabled: false, // hide location pin
-          container,
           sources: searchSources(FeatureLayer, Locator),
           includeDefaultSources: false
         });
@@ -58,45 +48,33 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
   };
 
   const handleCloseSearch = () => {
-    view.ui.remove(searchWidget);
-    document.removeEventListener('keydown', keyEscapeEventListener);
     setSearchWidget(null);
   }
 
-  const handleSearchStart = () => {
-    handleCloseSearch();
+  const handleSearchInputChange = (event) => {
+    if (searchWidget) {
+      searchWidget.suggest(event.target.value);
+    }
   }
 
-  const addSearchWidgetToView = async () => {
-    await view.ui.add(searchWidget, "top-left");
-    const esriSearch = document.querySelector('#searchWidget');
-    const rootNode = document.getElementById("root");
-    if(esriSearch) {
-      rootNode.appendChild(esriSearch);
-      setTimeout(() => {
-        const input = document.querySelector('.esri-search__input');
-        input && input.focus()
-      }, 300);
+  const handleSearchSuggestionClick = (option) => {
+    if (searchWidget) {
+      searchWidget.search(option);
     }
   }
 
   useEffect(() => {
-    if( searchWidget ) {
-      addSearchWidgetToView();
-      document.addEventListener('keydown', keyEscapeEventListener);
-      searchWidget.viewModel.on("search-start", handleSearchStart);
-      searchWidget.on('select-result', (event) => postSearchCallback(event));
-      searchWidget.on('suggest-complete', (event) => searchTermsAnalyticsEvent(event.searchTerm));
+    if(searchWidget) {
+      searchWidget.on('suggest-complete', searchResultsCallback);
+      searchWidget.on('select-result', postSearchCallback);
     }
-
-    return function cleanUp() {
-      document.removeEventListener('keydown', keyEscapeEventListener);
-    }
-  }, [searchWidget]);
+  }, [searchWidget, searchWidgetConfig]);
 
   return {
     handleOpenSearch,
     handleCloseSearch,
+    handleSearchInputChange,
+    handleSearchSuggestionClick,
     searchWidget
   }
 }
