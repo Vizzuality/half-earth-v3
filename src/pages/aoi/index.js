@@ -5,7 +5,7 @@ import Component from './component.jsx';
 import mapStateToProps from './selectors';
 import * as urlActions from 'actions/url-actions';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES, REPTILES } from 'constants/geo-processing-services';
+import { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREA_PERCENTAGE, PROTECTED_AREAS_INSIDE_AOI, HUMAN_PRESSURES, REPTILES } from 'constants/geo-processing-services';
 import EsriFeatureService from 'services/esri-feature-service';
 import { logGeometryArea } from 'utils/analyze-areas-utils';
 import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
@@ -122,10 +122,10 @@ const Container = props => {
           console.log(`${POPULATION} data`, data.value.features)
         })
         getCrfData({ 
-          dataset: PROTECTED_AREAS,
+          dataset: PROTECTED_AREA_PERCENTAGE,
           aoiFeatureGeometry: geometry
         }).then(({jobInfo, jobId, data}) => {
-          console.log(`${PROTECTED_AREAS} data`, data.value.features)
+          console.log(`${PROTECTED_AREA_PERCENTAGE} data`, data.value.features)
         })
         getCrfData({ 
           dataset: HUMAN_PRESSURES,
@@ -138,6 +138,12 @@ const Container = props => {
           aoiFeatureGeometry: geometry
         }).then(({jobInfo, jobId, data}) => {
           console.log(`${REPTILES} species count`, data.value.features.length, data.value)
+        })
+        getCrfData({ 
+          dataset: PROTECTED_AREAS_INSIDE_AOI,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${PROTECTED_AREAS_INSIDE_AOI} species count`, data.value.features.length, data.value)
         })
     }
 

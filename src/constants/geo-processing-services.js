@@ -5,7 +5,8 @@ export const CRF_NAMES = {
   MAMMALS: 'mammals_for_greta',
   ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
-  PROTECTED_AREAS: 'wdpa_oecm_zeros',
+  PROTECTED_AREA_PERCENTAGE: 'wdpa_oecm_zeros',
+  PROTECTED_AREAS_INSIDE_AOI: 'WDPA_OECM',
   HUMAN_PRESSURES: 'land_encroachment'
 }
 
@@ -14,7 +15,7 @@ export const CRF_DATA_CATEGORIES = {
   BIODIVERSITY: 'biodiversity'
 }
 
-export const { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES, REPTILES } = CRF_NAMES;
+export const { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREA_PERCENTAGE, HUMAN_PRESSURES, REPTILES, PROTECTED_AREAS_INSIDE_AOI } = CRF_NAMES;
 
 export const CRFS_CONFIG = {
   inputRasterKey: 'crf_name',
@@ -35,7 +36,8 @@ export const GEOPROCESSING_SERVICES_URLS = {
   [MAMMALS]: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate',
   [AMPHIBIANS]: 'https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph',
   [HUMAN_PRESSURES]: 'https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage',
-   [PROTECTED_AREAS]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean',
+  [PROTECTED_AREA_PERCENTAGE]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean',
+  [PROTECTED_AREAS_INSIDE_AOI]: 'https://hepportal.arcgis.com/server/rest/services/clipSelect/GPServer/clipSelect',
   [ECOLOGICAL_LAND_UNITS]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority',
   [POPULATION]: 'https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum'
 }
