@@ -1,7 +1,7 @@
 import {
   ECOREGIONS_FEATURE_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
-  PROTECTED_AREAS_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_LAYER,
   } from 'constants/layers-slugs';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
@@ -21,7 +21,11 @@ export const SEARCH_SOURCES_CONFIG = {
     searchFields: ["ECO_NAME"],
     suggestionTemplate: '{ECO_NAME}'
   },
-  [PROTECTED_AREAS_FEATURE_LAYER]: {
-
+  [WDPA_OECM_FEATURE_LAYER]: {
+    url: LAYERS_URLS[WDPA_OECM_FEATURE_LAYER],
+    title: WDPA_OECM_FEATURE_LAYER,
+    outFields: ["*"],
+    searchFields: ["NAME"],
+    suggestionTemplate: '{NAME}, {ISO3}'
   }
 }

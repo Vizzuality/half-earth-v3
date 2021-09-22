@@ -1,6 +1,7 @@
 import {
   ECOREGIONS_FEATURE_LAYER,
-  ADMIN_AREAS_FEATURE_LAYER
+  ADMIN_AREAS_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_LAYER
 } from 'constants/layers-slugs';
 
 
@@ -16,6 +17,12 @@ const MAP_TOOLTIP_CONFIG = {
     subtitle: 'COUNTRY',
     buttonText: 'analyze area',
     id: 'ISO_CODE'
+  },
+  [WDPA_OECM_FEATURE_LAYER] : {
+    title: 'NAME',
+    subtitle: '',
+    buttonText: 'analyze area',
+    id: 'WDPAID'
   }
 }
 

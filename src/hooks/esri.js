@@ -30,22 +30,36 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
 export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget] = useState(null);
   const { searchSources, postSearchCallback, searchResultsCallback} = searchWidgetConfig || {};
+  const [esriConstructors, setEsriConstructors] = useState();
+
+  useEffect(() => {
+    loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"])
+      .then(([Search, FeatureLayer, Locator]) => {
+        setEsriConstructors({Search, FeatureLayer, Locator})
+      }).catch((err) => console.error(err));
+  },[])
 
   const handleOpenSearch = (ref) => {
+    const {Search, FeatureLayer, Locator} = esriConstructors;
     if(searchWidget === null) {
-      loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"]).then(([Search, FeatureLayer, Locator]) => {
-        const sWidget = new Search({
-          view: view,
-          locationEnabled: true, // do not show the Use current location box when clicking in the input field
-          popupEnabled: false, // hide location popup
-          resultGraphicEnabled: false, // hide location pin
-          sources: searchSources(FeatureLayer, Locator),
-          includeDefaultSources: false
-        });
-        setSearchWidget(sWidget);
-      }).catch((err) => console.error(err));
+      const sWidget = new Search({
+        view: view,
+        locationEnabled: true, // do not show the Use current location box when clicking in the input field
+        popupEnabled: false, // hide location popup
+        resultGraphicEnabled: false, // hide location pin
+        sources: searchSources(FeatureLayer, Locator),
+        includeDefaultSources: false
+      });
+      setSearchWidget(sWidget);
     }
   };
+
+  const updateSources = (searchSourcesFunction) => {
+    if (searchWidget) {
+      const {FeatureLayer, Locator} = esriConstructors;
+      searchWidget.sources = searchSourcesFunction(FeatureLayer, Locator)
+    }
+  }
 
   const handleCloseSearch = () => {
     setSearchWidget(null);
@@ -68,9 +82,17 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
       searchWidget.on('suggest-complete', searchResultsCallback);
       searchWidget.on('select-result', postSearchCallback);
     }
-  }, [searchWidget, searchWidgetConfig]);
+  }, [searchWidget]);
+
+  useEffect(() => {
+    if(searchWidget) {
+      searchWidget.on('suggest-complete', searchResultsCallback);
+      searchWidget.on('select-result', postSearchCallback);
+    }
+  }, [searchWidgetConfig]);
 
   return {
+    updateSources,
     handleOpenSearch,
     handleCloseSearch,
     handleSearchInputChange,

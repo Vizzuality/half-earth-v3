@@ -2,7 +2,7 @@ export const CRF_NAMES = {
   BIRDS: 'birds',
   REPTILES: 'reptiles',
   AMPHIBIANS: 'amphibians',
-  MAMMALS: 'mammals_for_greta',
+  MAMMALS: 'mammals_202109',
   ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
   PROTECTED_AREA_PERCENTAGE: 'wdpa_oecm_zeros',

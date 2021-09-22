@@ -24,6 +24,7 @@ const SearchLocationContainer = (props) => {
 
   const browseSelectedFeature = ({result}) => {
     const { setBatchTooltipData } = props;
+    console.log(result)
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
       const { title, subtitle, buttonText, id } = tooltipConfig;
       const { geometry, attributes } = result.feature;
@@ -62,9 +63,22 @@ const SearchLocationContainer = (props) => {
           }]
         }
       })
-  }, [searchSourceLayerSlug])
+  }, [])
 
-  const { handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick } = useSearchWidgetLogic(view, () => {}, searchWidgetConfig);
+  const { updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick } = useSearchWidgetLogic(view, () => {}, searchWidgetConfig);
+  
+  useEffect(() => {
+    const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
+    const { url, title, outFields, searchFields, suggestionTemplate } = config;
+    updateSources((FeatureLayer) => {
+      return [{
+        outFields,
+        searchFields,
+        suggestionTemplate,
+        layer: new FeatureLayer({ url, title, outFields }),
+      }]
+    })
+  }, [searchSourceLayerSlug])
 
   const onOptionSelection = (selectedOption) => {
     handleSearchSuggestionClick(selectedOption)
