@@ -16,8 +16,12 @@ import {
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
+  FISHES_PRIORITY,
   FISHES_RARITY,
   FISHES_RICHNESS,
+  MARINE_MAMMALS_PRIORITY,
+  MARINE_MAMMALS_RICHNESS,
+  MARINE_MAMMALS_RARITY,
   MAMMALS_PRIORITY,
   MAMMALS_RARITY,
   MAMMALS_RICHNESS,
@@ -27,6 +31,9 @@ import {
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   ALL_TAXA_PRIORITY,
+  ALL_MARINE_VERTEBRATES_PRIORITY,
+  ALL_MARINE_VERTEBRATES_RICHNESS,
+  ALL_MARINE_VERTEBRATES_RARITY,
   REPTILES_PRIORITY,
   REPTILES_RARITY,
   REPTILES_RICHNESS,
@@ -55,6 +62,7 @@ const TAXA_DISTRIBUTION = {
 export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION
 
 export const RESOLUTIONS = {
+  LOWEST: {label: '~55km2 resolution', slug: 'LOWEST'},
   LOW: {label: '~27km2 resolution', slug: 'LOW'},
   HIGH: {label: '~1km2 resolution', slug: 'HIGH'},
 }
@@ -62,19 +70,20 @@ export const RESOLUTIONS = {
 
 export const LAYERS_RESOLUTION = {
   [PRIORITY]: {
-    [TERRESTRIAL]: [RESOLUTIONS.LOW]
+    [TERRESTRIAL]: [RESOLUTIONS.LOW],
+    [MARINE]: [RESOLUTIONS.LOWEST]
   },
   [RICHNESS]: {
     [TERRESTRIAL]: [RESOLUTIONS.LOW, RESOLUTIONS.HIGH],
-    [MARINE]: [RESOLUTIONS.LOW]
+    [MARINE]: [RESOLUTIONS.LOWEST]
   },
   [RARITY]: {
     [TERRESTRIAL]: [RESOLUTIONS.LOW, RESOLUTIONS.HIGH],
-    [MARINE]: [RESOLUTIONS.LOW]
+    [MARINE]: [RESOLUTIONS.LOWEST]
   },
 }
 
-export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOW'}; 
+export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST'}; 
 
 export const LAYERS_TOGGLE_CONFIG = {
   [PRIORITY]: {
@@ -105,6 +114,25 @@ export const LAYERS_TOGGLE_CONFIG = {
           name: 'reptiles',
           layer:  REPTILES_PRIORITY
         }
+      ]
+    },
+    [MARINE]: {
+      'LOWEST': [
+        {
+          value: ALL_MARINE_VERTEBRATES_PRIORITY,
+          name: 'All marine vertebrates',
+          layer: ALL_MARINE_VERTEBRATES_PRIORITY
+        },
+        {
+          value: FISHES_PRIORITY,
+          name: 'fishes',
+          layer: FISHES_PRIORITY
+        },
+        {
+          value: MARINE_MAMMALS_PRIORITY,
+          name: 'mammals',
+          layer: MARINE_MAMMALS_PRIORITY
+        },
       ]
     }
   },
@@ -191,11 +219,21 @@ export const LAYERS_TOGGLE_CONFIG = {
       ]
     },
     [MARINE]: {
-      'LOW': [
+      'LOWEST': [
+        {
+          value: ALL_MARINE_VERTEBRATES_RICHNESS,
+          name: 'all marine vertebrates',
+          layer: ALL_MARINE_VERTEBRATES_RICHNESS
+        },
         {
           value: FISHES_RICHNESS,
           name: 'fishes',
           layer: FISHES_RICHNESS
+        },
+        {
+          value: MARINE_MAMMALS_RICHNESS,
+          name: 'mammals',
+          layer: MARINE_MAMMALS_RICHNESS
         }
       ]
     }
@@ -283,11 +321,21 @@ export const LAYERS_TOGGLE_CONFIG = {
       ]
     },
     [MARINE]: {
-      'LOW': [
+      'LOWEST': [
+        {
+          value: ALL_MARINE_VERTEBRATES_RARITY,
+          name: 'all marine vertebrates',
+          layer: ALL_MARINE_VERTEBRATES_RARITY
+        },
         {
           value: FISHES_RARITY,
           name: 'fishes',
           layer: FISHES_RARITY
+        },
+        {
+          value: MARINE_MAMMALS_RARITY,
+          name: 'mammals',
+          layer: MARINE_MAMMALS_RARITY
         }
       ]
     }

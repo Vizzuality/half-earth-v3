@@ -76,11 +76,20 @@ export const SA_REPTILES_RICHNESS = 'reptiles-rich-sa';
 export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
+
+export const ALL_MARINE_VERTEBRATES_PRIORITY = 'all-marine-priority';
+export const ALL_MARINE_VERTEBRATES_RICHNESS = 'all-marine-richness';
+export const ALL_MARINE_VERTEBRATES_RARITY = 'all-marine-rarity';
+
+export const FISHES_PRIORITY = 'fishes-priority';
+export const FISHES_RARITY = 'fishes-rarity';
+export const FISHES_RICHNESS = 'fishes-rich';
+export const MARINE_MAMMALS_PRIORITY = 'marine-mammals-priority';
+export const MARINE_MAMMALS_RICHNESS = 'marine-mammals-richness';
+export const MARINE_MAMMALS_RARITY = 'marine-mammals-rarity';
 export const AMPHIB_RARITY = 'amphib-rarity';
 export const AMPHIB_RICHNESS = 'amphib-rich';
 export const AMPHIB_PRIORITY = 'amphib-priority';
-export const FISHES_RARITY = 'fishes-rarity';
-export const FISHES_RICHNESS = 'fishes-rich';
 export const MAMMALS_PRIORITY = 'mammals-priority';
 export const MAMMALS_RARITY = 'mammals-rare';
 export const MAMMALS_RICHNESS = 'mammals-rich';
