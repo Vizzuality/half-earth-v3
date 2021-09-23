@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
-import { getSelectedAnalysisLayer, createHashFromGraphic } from 'utils/analyze-areas-utils';
+import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 // HOOKS
 import { useSketchWidget} from 'hooks/esri';
@@ -19,21 +19,35 @@ const AnalyzeAreasContainer = (props) => {
   const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
-
+  
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
-    setSelectedOption(activeOption);
+    if (activeOption) {
+      setSelectedOption(activeOption);
+    }
   }, [])
 
   const postDrawCallback = (graphic) => {
-    const aoi_hash = createHashFromGraphic(graphic);
-    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: graphic.geometry }});
+    const { geometry } = graphic;
+    const aoi_hash = createHashFromGeometry(geometry);
+    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: geometry }});
+  }
+
+  const onFeatureSetGenerated = (response) => {
+    const geometry = {
+      ...response.data.featureCollection.layers[0].featureSet.features[0].geometry,
+      ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
+      ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
+    }
+    const aoi_hash = createHashFromGeometry(geometry);
+    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: geometry }});
   }
 
   const {
-    handleSketchToolActivation,
+    sketchTool,
+    geometryArea,
     handleSketchToolDestroy,
-    sketchTool
+    handleSketchToolActivation,
   } = useSketchWidget(view, { postDrawCallback });
 
   const handleAnalysisTabClick = (selectedTab) => {
@@ -73,13 +87,21 @@ const AnalyzeAreasContainer = (props) => {
     }
   }
 
+  useEffect(() => {
+    if (geometryArea) {
+      console.log(geometryArea)
+    }
+  }, [geometryArea])
+
   return (
     <Component
+      geometryArea={geometryArea}
       selectedOption={selectedOption}
       isSketchToolActive={sketchTool}
       handleDrawClick={handleDrawClick}
       selectedAnalysisTab={selectedAnalysisTab}
       handleOptionSelection={handleOptionSelection}
+      onFeatureSetGenerated={onFeatureSetGenerated}
       handleAnalysisTabClick={handleAnalysisTabClick}
       {...props}
     />

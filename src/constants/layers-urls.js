@@ -202,12 +202,9 @@ export const LAYERS_URLS = {
   [SPECIES_LIST]:
     'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer',
   // AOIs precalculated layers
-  // [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_pop_protection_climate_landCover/FeatureServer',
-  [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825/FeatureServer',
-  // [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825/FeatureServer',
+  [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_simple/FeatureServer',
   [ADMIN_AREAS_FEATURE_LAYER]: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/World_Administrative_Divisions/FeatureServer/0',
-  // [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/admin_breakdown/FeatureServer/2',
-  [ADMIN_AREAS_VECTOR_TILE_LAYER]: 'https://eowilson.maps.arcgis.com/sharing/rest/content/items/d1ce2d0e7fe547108b7e4ed8ea4c7a51/resources/styles/root.json?f=pjson&token=WCNleftehrOq31VgXoWf4Pm2wNw_OnHf7-G0aNhLcUQmspGhba64GGE3DOeJ7RgIpF01ljSQmYvjbYlI-bhqlVvCUNIk0ZZFpzudFz_r-olL8KTvwWXLlAtpnA8KQYWXIqFE3rvvq_1NH4JrzAeC7WSHqDs7GVUWq-LlHsBOF-N_hGRn8MLUIb3xRXGmndqfK7TrMn6DYRmMM8Y5_OBbldRLBt_9Q-hJoMPRIfWmW2I.',
+  // [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_1_simple/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
 
 

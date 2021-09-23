@@ -1,6 +1,7 @@
 import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
@@ -104,10 +105,22 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
 export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   const [sketchTool, setSketchTool ] = useState(null);
   const [sketchLayer, setSketchLayer ] = useState(null);
-  const { postDrawCallback} = sketchWidgetConfig;
+  const { postDrawCallback } = sketchWidgetConfig;
+  const [Constructors, setConstructors] = useState(null);
+  const [geometryArea, setGeometryArea] = useState(0);
+
+  useEffect(() => {
+    loadModules(["esri/widgets/Sketch/SketchViewModel","esri/geometry/geometryEngine"]).then(([SketchViewModel, geometryEngine]) => {
+      setConstructors({
+        geometryEngine,
+        SketchViewModel
+      })
+    })
+  }, [])
+
   
   const handleSketchToolActivation = () => {
-    loadModules(["esri/widgets/Sketch",  "esri/layers/GraphicsLayer"]).then(([Sketch, GraphicsLayer]) => {
+    loadModules(["esri/widgets/Sketch",  "esri/widgets/Sketch/SketchViewModel","esri/layers/GraphicsLayer"]).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
       const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
       setSketchLayer(_sketchLayer);
       view.map.add(_sketchLayer);
@@ -119,7 +132,15 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
         defaultUpdateOptions: { enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true },
         visibleElements: {
           settingsMenu: false
-        }
+        },
+        // viewModel: new SketchViewModel({
+        //   view: view,
+        //   layer:_sketchLayer,
+        //   polygonSymbol: {
+        //     type: "simple-fill", 
+        //     color: [147, 255, 95, 0.2]
+        //   }
+        // })
       });
       setSketchTool(_sketchTool)
     });
@@ -144,8 +165,13 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
       addWidgetToTheUi();
 
       sketchTool.on('create', (event) => {
-        if (event.state === 'complete') {
-          postDrawCallback(event.graphic);
+        if (event.state === 'active') {
+          if (event.graphic.geometry.rings[0].length > 3) {
+            setGeometryArea(calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine))
+          }
+        }
+        else if (event.state === 'complete') {
+          postDrawCallback(event.graphic, calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine));
         }
       });
     }
@@ -156,8 +182,9 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   }, [sketchTool]);
 
   return {
-    handleSketchToolActivation,
+    sketchTool,
+    geometryArea,
     handleSketchToolDestroy,
-    sketchTool
+    handleSketchToolActivation,
   }
 }
