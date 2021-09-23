@@ -6,7 +6,8 @@ import Dropdown from 'components/dropdown';
 import ShapeFileUploader from 'components/shape-file-uploader';
 import SearchLocation from 'components/search-location';
 import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
-import {ReactComponent as AoisClickIcon} from "icons/globe.svg";
+import {ReactComponent as AoisDrawIcon} from "icons/aois_draw.svg";
+import {ReactComponent as AoisClickIcon} from "icons/aois_click.svg";
 import {ReactComponent as AreasHistoryIcon} from "icons/areas_history_icon.svg";
 import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
 import styles from './styles.module.scss';
@@ -52,7 +53,7 @@ const AnalyzeAreasCardComponent = ({
           <Button
             type="square"
             label="Draw or upload a shape"
-            Icon={AoisClickIcon}
+            Icon={AoisDrawIcon}
             active={selectedAnalysisTab === 'draw'}
             handleClick={() => handleAnalysisTabClick('draw')}
           />
