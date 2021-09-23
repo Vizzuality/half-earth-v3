@@ -8,7 +8,7 @@ import Widgets from 'containers/widgets';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
-import CountryEntryTooltip from 'components/country-entry-tooltip';
+import MapTooltip from 'components/map-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
@@ -44,8 +44,9 @@ const CountrySceneComponent = ({
   countedActiveLayers,
   isBiodiversityActive,
   selectedAnalysisLayer,
-  countryTooltipDisplayFor,
-  isLandscapeSidebarCollapsed
+  isLandscapeSidebarCollapsed,
+  handleTooltipActionButtonClick,
+  handleHighlightLayerFeatureClick,
 }) => {
 
   const sidebarHidden =  isLandscapeMode || isFullscreenActive || useMobile();
@@ -95,6 +96,7 @@ const CountrySceneComponent = ({
           <FeatureHighlightLayer
             isLandscapeMode={isLandscapeMode}
             featureLayerSlug={selectedAnalysisLayer.slug}
+            onFeatureClick={handleHighlightLayerFeatureClick}
           />
         }
         <Widgets
@@ -102,10 +104,7 @@ const CountrySceneComponent = ({
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
         />
-        <CountryEntryTooltip
-          countryName={countryName}
-          countryTooltipDisplayFor={countryTooltipDisplayFor}
-        />
+        <MapTooltip onActionButtonClick={handleTooltipActionButtonClick}/>
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>
     </>

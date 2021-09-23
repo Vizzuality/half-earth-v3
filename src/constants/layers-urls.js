@@ -42,8 +42,12 @@ import {
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
+  FISHES_PRIORITY,
   FISHES_RARITY,
   FISHES_RICHNESS,
+  MARINE_MAMMALS_PRIORITY,
+  MARINE_MAMMALS_RICHNESS,
+  MARINE_MAMMALS_RARITY,
   MAMMALS_PRIORITY,
   MAMMALS_RARITY,
   MAMMALS_RICHNESS,
@@ -53,6 +57,9 @@ import {
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   ALL_TAXA_PRIORITY,
+  ALL_MARINE_VERTEBRATES_PRIORITY,
+  ALL_MARINE_VERTEBRATES_RICHNESS,
+  ALL_MARINE_VERTEBRATES_RARITY,
   CACTI_RARITY,
   CACTI_RICHNESS,
   CONIFERS_RARITY,
@@ -67,7 +74,7 @@ import {
   SPECIES_LIST,
   FIREFLY_BASEMAP_LAYER,
   ECOREGIONS_FEATURE_LAYER,
-  ECOREGIONS_VECTOR_TILE_LAYER,
+  WDPA_OECM_FEATURE_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
   ADMIN_AREAS_VECTOR_TILE_LAYER,
   AOIS_HISTORIC_PRODUCTION,
@@ -150,11 +157,11 @@ export const LAYERS_URLS = {
   [HUMMINGBIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hummingbirds_binary_Aggregate_crf/MapServer`,
   // Global biodiversity services
   //// Terrestrial Priority services
-  [ALL_TAXA_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority__All_MeriamNelson/MapServer',
-  [AMPHIB_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_amph/MapServer`,
-  [MAMMALS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_mamm/MapServer`,
-  [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_bird/MapServer`,
-  [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Putative_PA_network_PR_rept/MapServer`,
+  [ALL_TAXA_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_allTaxa_global_025/MapServer',
+  [AMPHIB_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_amphibians_global_025/MapServer`,
+  [MAMMALS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_mammals_global_025/MapServer`,
+  [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_birds_global_025/MapServer`,
+  [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_reptiles_global_025/MapServer`,
   //// Terrestrial vertebrates richness and rarity services
   [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_amphib/MapServer`,
   [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_amphibians/MapServer`,
@@ -179,14 +186,43 @@ export const LAYERS_URLS = {
   [ALL_TAXA_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_all/MapServer',
   [ALL_TAXA_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_taxa/MapServer',
   
-  //// Marine richness and rarity services
-  [FISHES_RARITY]: `https://utility.arcgis.com/usrsvcs/servers/672fd2c2e15d43dba3c452ca600884a8/rest/services/Marine_Fish_Rarity_55km/MapServer`,
-  [FISHES_RICHNESS]: `https://utility.arcgis.com/usrsvcs/servers/5212259d151744438c610d5104b91591/rest/services/Marine_Fish_Richness_55km/MapServer`,
+  //// Marine priority services, 55km
+  [ALL_MARINE_VERTEBRATES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRall_55km/MapServer`,
+  [FISHES_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_marine_fish_prioritisation_TL/MapServer',
+  [MARINE_MAMMALS_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRmammals_55km/MapServer',
+
+  //// Marine vertebrates richness and rarity services
+  [ALL_MARINE_VERTEBRATES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_taxa_global55km/MapServer',
+  [ALL_MARINE_VERTEBRATES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_taxa_global55km/MapServer',
+  [MARINE_MAMMALS_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_mammal_global55km/MapServer',
+  [MARINE_MAMMALS_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_mammal_global55km/MapServer',
+  [FISHES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_fish_global55km/MapServer`,
+  [FISHES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_fish_global55km/MapServer`,
+
   [SPECIES_LIST]:
     'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer',
   // AOIs precalculated layers
-  [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_pop_protection_climate_landCover/FeatureServer',
-  [ADMIN_AREAS_FEATURE_LAYER]: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Administrative_Divisions/FeatureServer',
-  [ADMIN_AREAS_VECTOR_TILE_LAYER]: 'https://eowilson.maps.arcgis.com/sharing/rest/content/items/d1ce2d0e7fe547108b7e4ed8ea4c7a51/resources/styles/root.json?f=pjson&token=WCNleftehrOq31VgXoWf4Pm2wNw_OnHf7-G0aNhLcUQmspGhba64GGE3DOeJ7RgIpF01ljSQmYvjbYlI-bhqlVvCUNIk0ZZFpzudFz_r-olL8KTvwWXLlAtpnA8KQYWXIqFE3rvvq_1NH4JrzAeC7WSHqDs7GVUWq-LlHsBOF-N_hGRn8MLUIb3xRXGmndqfK7TrMn6DYRmMM8Y5_OBbldRLBt_9Q-hJoMPRIfWmW2I.',
-  [ECOREGIONS_VECTOR_TILE_LAYER]: 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer',
+  [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_simple/FeatureServer',
+  [ADMIN_AREAS_FEATURE_LAYER]: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/World_Administrative_Divisions/FeatureServer/0',
+  // [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_1_simple/FeatureServer/0',
+  [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
+
+  
+  
+  
+  
+  
 };

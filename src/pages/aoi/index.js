@@ -5,7 +5,7 @@ import Component from './component.jsx';
 import mapStateToProps from './selectors';
 import * as urlActions from 'actions/url-actions';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREAS, HUMAN_PRESSURES, REPTILES } from 'constants/geo-processing-services';
+import { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREA_PERCENTAGE, PROTECTED_AREAS_INSIDE_AOI, HUMAN_PRESSURES, REPTILES } from 'constants/geo-processing-services';
 import EsriFeatureService from 'services/esri-feature-service';
 import { logGeometryArea } from 'utils/analyze-areas-utils';
 import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
@@ -15,12 +15,27 @@ import { getCrfData } from 'services/geo-processing-services/sample';
 const actions = {...urlActions};
 
 const Container = props => {
-  const { changeGlobe, aoiId, urlQueryGeometry, browsePage } = props;
+  const { changeGlobe, aoiId, urlQueryGeometry, precalculatedLayerSlug, browsePage } = props;
   const [isAoiStored, setIsAoiStored] = useState(true);
   const [newStoredAoi, setNewStoredAoi] = useState(null);
   const [aoiData, setAoiData] = useState(null);
   const [geometry, setGeometry] = useState(null);
 
+  useEffect(() => {
+    if (precalculatedLayerSlug) {
+      console.log('PRECALCULATED DATA', precalculatedLayerSlug)
+      // EsriFeatureService.getFeatures({
+      //   url: LAYERS_URLS[precalculatedLayerSlug],
+      //   whereClause: `hash_id = '${aoiId}'`,
+      //   returnGeometry: true
+      // }).then((features) => {
+      //   setAoiData(features[0].attributes);
+      //   setGeometry(features[0].geometry);
+      //   // LOG AOI GEOMETRY AREA
+        // logGeometryArea(features[0].geometry);
+      // })
+    }
+  }, [precalculatedLayerSlug])
 
   // Get stored aoi data on mount
   useEffect(() => {
@@ -107,10 +122,10 @@ const Container = props => {
           console.log(`${POPULATION} data`, data.value.features)
         })
         getCrfData({ 
-          dataset: PROTECTED_AREAS,
+          dataset: PROTECTED_AREA_PERCENTAGE,
           aoiFeatureGeometry: geometry
         }).then(({jobInfo, jobId, data}) => {
-          console.log(`${PROTECTED_AREAS} data`, data.value.features)
+          console.log(`${PROTECTED_AREA_PERCENTAGE} data`, data.value.features)
         })
         getCrfData({ 
           dataset: HUMAN_PRESSURES,
@@ -123,6 +138,12 @@ const Container = props => {
           aoiFeatureGeometry: geometry
         }).then(({jobInfo, jobId, data}) => {
           console.log(`${REPTILES} species count`, data.value.features.length, data.value)
+        })
+        getCrfData({ 
+          dataset: PROTECTED_AREAS_INSIDE_AOI,
+          aoiFeatureGeometry: geometry
+        }).then(({jobInfo, jobId, data}) => {
+          console.log(`${PROTECTED_AREAS_INSIDE_AOI} species count`, data.value.features.length, data.value)
         })
     }
 

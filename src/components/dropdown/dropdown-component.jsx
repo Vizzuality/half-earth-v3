@@ -12,6 +12,7 @@ import { usePopper } from 'react-popper';
 const Component = ({
   width,
   theme,
+  stacked,
   options,
   dropdownOpen,
   parentWidth,
@@ -54,6 +55,7 @@ const Component = ({
 
   return  (
     <div className={cx(styles.dropdownContainer, {
+        [styles.stacked]: stacked,
         [styles.open]: dropdownOpen,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
@@ -68,7 +70,7 @@ const Component = ({
         ref={setReferenceElement}
       >
         <span className={styles.selectedOptionLabel}>
-          {selectedOption.label}
+          {selectedOption && selectedOption.label}
         </span>
         <IconArrow
           className={cx(styles.arrowIcon, {

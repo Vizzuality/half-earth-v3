@@ -1,0 +1,56 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.tooltipContainer {
+  display: none;
+  &.isVisible {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    transition: all .3s linear;
+  }
+}
+
+.tooltipSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.tooltipFlag {
+  width: 30px;
+  margin-right: 10px;
+}
+.featureNaming {
+  display: flex;
+  flex-direction: column;
+  .title {
+    @extend %title;
+    color: $white;
+  }
+  
+  .subtitle {
+    @extend %annotation;
+    color: $white;
+  }
+}
+
+.tooltipExplore {
+  @extend %title;
+  background-color: $brand-color-main;
+  width: 100%;
+  height: 30px;
+  padding: 5px 20px;
+  border-radius: 2px;
+}
+
+.tooltipClose {
+  width: 15px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}

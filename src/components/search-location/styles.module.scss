@@ -1,0 +1,102 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.inputContainer {
+  @extend %title;
+  background-color: $white;
+  border-radius: 6px;
+  position: relative;
+  &.fullWidth {
+    width: 100%;
+  }
+  &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}
+
+.placeholderIcon {
+  fill: $grey-text;
+  pointer-events: none;
+  position: absolute;
+  height: 16px;
+  left: 16px;
+  top: 11px;
+} 
+
+.input {
+  @extend %title;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  padding: 10px;
+  border: none;
+  color: $white;
+  &::placeholder {
+    color: $grey-text;
+    padding-left: 30px;
+    opacity: 1; /* Firefox */
+  }
+  &:focus{
+    background-color: $dark-opacity;
+  }
+  &:not(:placeholder-shown) ~ .placeholderIcon {
+    display: none;
+  }
+}
+
+.optionsList {
+  @extend %bodyText;
+  color: $dark-text;
+  cursor: pointer;
+  background-color: $white;
+  list-style: none;
+  margin: 0;
+  padding: $sidebar-paddings 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  .option {
+    padding: 5px $sidebar-paddings;
+
+    &:hover {
+      background-color: $dark-opacity;
+    }
+  }
+}
+
+.dark {
+  background-color: transparent;
+  border: 1px solid $white-opacity;
+  &:hover,
+  &.open {
+    background-color: $white-opacity;
+  }
+  .input {
+    color: $white;
+    &::placeholder {
+      color: $grey-text;
+      padding-left: 30px;
+      opacity: 1; /* Firefox */
+    }
+    &:focus{
+      background-color: $dark-opacity;
+    }
+  }
+}
+
+.stacked {
+  &:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &:last-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
