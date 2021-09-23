@@ -70,7 +70,7 @@ const Component = ({
         ref={setReferenceElement}
       >
         <span className={styles.selectedOptionLabel}>
-          {selectedOption.label}
+          {selectedOption && selectedOption.label}
         </span>
         <IconArrow
           className={cx(styles.arrowIcon, {

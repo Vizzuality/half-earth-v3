@@ -10,6 +10,7 @@ const Component = ({
   width,
   theme,
   stacked,
+  disabled,
   parentWidth,
   searchResults,
   handleOpenSearch,
@@ -26,6 +27,7 @@ const Component = ({
       [styles.stacked]: stacked,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
+        [styles.disabled]: disabled,
       })}
     > 
       <input
