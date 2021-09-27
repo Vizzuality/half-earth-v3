@@ -10,17 +10,15 @@ import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
-import LayerToggle from 'components/layer-toggle';
-import Legend from 'containers/sidebars/sidebar-legend';
-import SourceAnnotation from 'components/source-annotation';
+import SidebarCardContent from './sidebar-card-content';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { WDPALayers } from 'constants/protected-areas';
+import { AOI_BIODIVERSITY_TOGGLES } from 'constants/biodiversity-layers-constants';
 import { LAND_HUMAN_PRESSURES_SLUG, BIODIVERSITY_SLUG } from 'constants/legend-configs';
 
-import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import styles from './styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
@@ -29,9 +27,7 @@ const LocalSceneSidebarComponent = ({
   className,
   activeLayers,
   handlePrintReport,
-  percentageProtected,
   handleSceneModeChange,
-  percentageUnderPressure,
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
@@ -51,91 +47,30 @@ const LocalSceneSidebarComponent = ({
         <p className={styles.areaName}>{areaName || 'Custom Area'}</p>
       </div>
       <SidebarCardWrapper>
-        <div>
-          <p>
-            What is the biodiversity pattern in this area?
-          </p>
-          <Legend legendItem={BIODIVERSITY_SLUG} className={styles.legendContainer}/>
-          <p>
-            Species range maps are summarised in biodiversity richness which informs rarity driving Half-Earth Project’s prioritisation exercise.
-          </p>
-          <SourceAnnotation
-            theme='dark'
-            metaDataSources={'RInnan'}
-            className={styles.sourceContainer}
-          />
-        </div>
-        <div className={styles.togglesContainer}>
-          {WDPALayers.map(layer => (
-            <LayerToggle
-              key={layer.value}
-              map={map}
-              option={layer}
-              type='checkbox'
-              activeLayers={activeLayers}
-              optionsSelected={[]}
-              theme={checkboxTheme.landPressures}
-              onChange={() => {}}
-            />
-          ))}
-        </div>
+        <SidebarCardContent 
+          map={map}
+          toggleType='radio'
+          activeLayers={activeLayers}
+          legendItem={BIODIVERSITY_SLUG}
+          layers={AOI_BIODIVERSITY_TOGGLES}
+        />
       </SidebarCardWrapper>
       <SidebarCardWrapper>
-        <div>
-          <p>
-            What is already protected in this area?
-          </p>
-          <p>
-            {`Of the current area, ${percentageProtected} is under protection, the majority of which are protected areas.`}
-          </p>
-          <SourceAnnotation
-            theme='dark'
-            metaDataSources={' WDPA, OECM & RAISG.'}
-            className={styles.sourceContainer}
-          />
-        </div>
-        <div className={styles.togglesContainer}>
-          {WDPALayers.map(layer => (
-            <LayerToggle
-              key={layer.value}
-              map={map}
-              option={layer}
-              type='checkbox'
-              activeLayers={activeLayers}
-              optionsSelected={[]}
-              theme={checkboxTheme.landPressures}
-              onChange={() => {}}
-            />
-          ))}
-        </div>
+        <SidebarCardContent 
+          map={map}
+          layers={WDPALayers}
+          toggleType='checkbox'
+          activeLayers={activeLayers}
+        />
       </SidebarCardWrapper>
       <SidebarCardWrapper>
-        <div>
-          <p>How are humans affecting this area?</p>
-          <Legend legendItem={LAND_HUMAN_PRESSURES_SLUG} className={styles.legendContainer}/>
-          <p>
-            {`Of the current area, ${percentageUnderPressure} is under human pressure, the majority of which are pressures from irrigated agriculture.`}
-          </p>
-          <SourceAnnotation
-            theme='dark'
-            metaDataSources={' WDPA, OECM & RAISG.'}
-            className={styles.sourceContainer}
-          />
-        </div>
-        <div className={styles.togglesContainer}>
-          {humanPressuresLandUse.map(layer => (
-            <LayerToggle
-              key={layer.value}
-              map={map}
-              option={layer}
-              type='checkbox'
-              activeLayers={activeLayers}
-              optionsSelected={[]}
-              theme={checkboxTheme.landPressures}
-              onChange={() => {}}
-            />
-          ))}
-        </div>
+        <SidebarCardContent 
+          map={map}
+          toggleType='checkbox'
+          activeLayers={activeLayers}
+          layers={humanPressuresLandUse}
+          legendItem={LAND_HUMAN_PRESSURES_SLUG}
+        />
       </SidebarCardWrapper>
 
       {/* <div className={styles.scrollableArea}>

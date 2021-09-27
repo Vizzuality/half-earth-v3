@@ -69,7 +69,7 @@ const BiodiversitySidebarCardComponent = ({
           defaultTabSlug={biodiversityLayerVariant}
         />
         <div className={styles.cardContainer}>
-          <SidebarCardWrapper collapsable >
+          <SidebarCardWrapper collapsable dark>
             <SidebarCardContent
               title={title}
               description={description}
