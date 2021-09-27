@@ -1,6 +1,6 @@
 import {
+  MASK_LAYER,
   GRAPHIC_LAYER,
-  COUNTRY_MASK_LAYER,
   CITIES_LABELS_LAYER,
   COUNTRY_PRIORITY_LAYER,
   MERGED_WDPA_VECTOR_TILE_LAYER,
@@ -13,8 +13,8 @@ import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js'
 
 export default {
   activeLayers: [
+    { title: MASK_LAYER },
     { title: GRAPHIC_LAYER },
-    { title: COUNTRY_MASK_LAYER },
     { title: CITIES_LABELS_LAYER },
     { title: COUNTRIES_LABELS_FEATURE_LAYER },
     { title: LANDSCAPE_FEATURES_LABELS_LAYER },

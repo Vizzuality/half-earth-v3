@@ -1,4 +1,5 @@
 import {
+  MASK_LAYER,
   GRAPHIC_LAYER,
   CITIES_LABELS_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
@@ -8,6 +9,7 @@ import {
 
 export default {
   activeLayers: [
+    { title: MASK_LAYER },
     { title: GRAPHIC_LAYER },
     { title: CITIES_LABELS_LAYER },
     { title: COUNTRIES_LABELS_FEATURE_LAYER },

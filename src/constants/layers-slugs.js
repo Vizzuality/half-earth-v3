@@ -28,7 +28,7 @@ export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'commercial_fishing
 export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_human_pressures';
 //////
 export const GRAPHIC_LAYER = 'graphic_layer';
-export const COUNTRY_MASK_LAYER = 'mask-layer';
+export const MASK_LAYER = 'mask-layer';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
