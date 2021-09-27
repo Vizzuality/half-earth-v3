@@ -3,7 +3,8 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-.container {
+.container { 
+  @extend %verticalScrollbar;
   @include backdropBlur();
   position: absolute;
   top: $ui-left-top;

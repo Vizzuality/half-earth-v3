@@ -20,3 +20,52 @@
     border: 2px solid $white; 
   }
 }
+
+.protectedAreasLight {
+  &:hover,
+  &.checked {
+    background-color: $dark-opacity;
+  }
+  label::after {
+    border: 1px solid $dark-text;
+  }
+  input[type="checkbox"]:checked + label::after {
+    background: $protected-areas;
+    border: 2px solid $dark-text; 
+  }
+}
+
+
+.landPressuresLight {
+  &:hover,
+  &.checked {
+    background-color: $dark-opacity;
+  }
+  label::after {
+    border: 1px solid $dark-text;
+  }
+  input[type="checkbox"]:checked + label::after {
+      background: $human-pressures-gradient;
+      border: 2px solid $dark-text; 
+  }
+  input[type="checkbox"]:checked + label::before {
+    background: $brand-color-secondary;
+  }
+}
+
+.biodiversityLight {
+  &:hover,
+  &.checked {
+    background-color: $dark-opacity;
+  }
+  label::after {
+    border: 1px solid $dark-text;
+  }
+  input[type="radio"]:checked + label::after {
+    background: $biodiversity-gradient-rotated;
+    border: 2px solid $dark-text;
+  }
+  input[type="radio"]:checked + label::before {
+    background: $brand-color-secondary;
+  }
+}

@@ -1,0 +1,24 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.cardWrapper {
+  margin-top: $site-gutter;
+}
+
+.togglesContainer {
+  fill: $dark-text;
+  width: calc(100% + (2*#{$sidebar-cards-padding}));
+  left: -$sidebar-cards-padding;
+  position: relative;
+}
+
+.title {
+  @extend %display2;
+  text-align: center;
+  margin: 0;
+  padding-bottom: $site-gutter;
+}
+
+.description {
+  @extend %bodyText;
+}

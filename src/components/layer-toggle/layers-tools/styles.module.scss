@@ -5,14 +5,8 @@
 .toggle {
   display: flex;
   align-items: center;
-}
-
-.variant {
-  @extend %subtitle;
-  color: $white;
-  text-transform: uppercase;
-  padding: 0 5px 0 0;
-  cursor: pointer;
+  fill: $dark-text;
+  stroke: $dark-text;
 }
 
 .button {
@@ -22,7 +16,6 @@
 
 .icon {
   @extend %icon;
-  fill: $white;
 }
 
 .iconWrapper {

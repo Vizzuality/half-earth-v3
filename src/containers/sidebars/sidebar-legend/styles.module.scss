@@ -1,6 +1,13 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.gradientWrapper {
+  height: 8px;
+  border-radius: 5px;
+  background-color: $brand-color-secondary;
+  // background-color: red;
+}
+
 .gradient {
   display: flex;
   height: 8px;
@@ -35,7 +42,7 @@
   }
   span {
     @extend %subtitle;
-    color: $white;
+    color: inherit;
   }
 }
   

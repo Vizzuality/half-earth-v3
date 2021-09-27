@@ -16,6 +16,7 @@ const LayerToggleComponent = ({
 }) => {
     return type === 'radio' ? (
       <RadioTypeToggle 
+        theme={theme}
         title={title}
         option={option}
         variant='priority'

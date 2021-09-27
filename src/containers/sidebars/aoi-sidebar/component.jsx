@@ -10,8 +10,7 @@ import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
-import SidebarCardContent from './sidebar-card-content';
-import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+import SidebarCard from './sidebar-card-content';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
@@ -19,6 +18,7 @@ import { WDPALayers } from 'constants/protected-areas';
 import { AOI_BIODIVERSITY_TOGGLES } from 'constants/biodiversity-layers-constants';
 import { LAND_HUMAN_PRESSURES_SLUG, BIODIVERSITY_SLUG } from 'constants/legend-configs';
 
+import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import styles from './styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
@@ -46,32 +46,29 @@ const LocalSceneSidebarComponent = ({
       <div className={styles.nameWrapper}>
         <p className={styles.areaName}>{areaName || 'Custom Area'}</p>
       </div>
-      <SidebarCardWrapper>
-        <SidebarCardContent 
-          map={map}
-          toggleType='radio'
-          activeLayers={activeLayers}
-          legendItem={BIODIVERSITY_SLUG}
-          layers={AOI_BIODIVERSITY_TOGGLES}
-        />
-      </SidebarCardWrapper>
-      <SidebarCardWrapper>
-        <SidebarCardContent 
-          map={map}
-          layers={WDPALayers}
-          toggleType='checkbox'
-          activeLayers={activeLayers}
-        />
-      </SidebarCardWrapper>
-      <SidebarCardWrapper>
-        <SidebarCardContent 
-          map={map}
-          toggleType='checkbox'
-          activeLayers={activeLayers}
-          layers={humanPressuresLandUse}
-          legendItem={LAND_HUMAN_PRESSURES_SLUG}
-        />
-      </SidebarCardWrapper>
+      <SidebarCard 
+        map={map}
+        toggleType='radio'
+        activeLayers={activeLayers}
+        legendItem={BIODIVERSITY_SLUG}
+        layers={AOI_BIODIVERSITY_TOGGLES}
+        toggleTheme={checkboxTheme.biodiversityLight}
+      />
+      <SidebarCard 
+        map={map}
+        layers={WDPALayers}
+        toggleType='checkbox'
+        activeLayers={activeLayers}
+        toggleTheme={checkboxTheme.protectedAreasLight}
+      />
+      <SidebarCard 
+        map={map}
+        toggleType='checkbox'
+        activeLayers={activeLayers}
+        layers={humanPressuresLandUse}
+        legendItem={LAND_HUMAN_PRESSURES_SLUG}
+        toggleTheme={checkboxTheme.landPressuresLight}
+      />
 
       {/* <div className={styles.scrollableArea}>
         <Button 

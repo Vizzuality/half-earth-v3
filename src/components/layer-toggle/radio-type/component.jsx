@@ -7,6 +7,7 @@ import LayerTools from 'components/layer-toggle/layers-tools';
 import styles from './styles.module.scss';
 
 const RadioGroup = ({
+  theme,
   title,
   option,
   variant,
@@ -19,8 +20,9 @@ const RadioGroup = ({
   onBringToFrontClick,
 }) => {
     const key = `radio-button-${title}-${option.value}-${variant}`;
-    return (
+    return console.log(`radio-button-${title}-${option.value}-${variant}`, isChecked) || (
       <div className={cx(
+        theme,
         styles.container,
         { [styles.checked]:isChecked}
         )}>
