@@ -6,6 +6,16 @@ AOIS_HISTORIC_DEVELOPMENT,
 WDPA_OECM_FEATURE_LAYER
 } from 'constants/layers-slugs';
 
+export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
+export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
+export const BIODIVERSITY_SLUG = 'biodiversity';
+export const PROTECTION_SLUG = 'protected-areas';
+
+export const AOI_LEGEND_CATEGORIES = [
+  LAND_HUMAN_PRESSURES_SLUG,
+  BIODIVERSITY_SLUG
+]
+
 const SEARCH_SOURCES = {
   ECOREGIONS: ECOREGIONS_FEATURE_LAYER,
   POLITICAL_BOUNDARIES: ADMIN_AREAS_FEATURE_LAYER,

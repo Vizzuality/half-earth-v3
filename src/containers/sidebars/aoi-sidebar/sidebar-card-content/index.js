@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './component';
+import { AOI_LEGEND_CATEGORIES } from 'constants/analyze-areas-constants';
 import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
@@ -11,6 +12,7 @@ const Container = (props) => {
     toggleType,
     changeGlobe,
     activeLayers,
+    cardCategory,
   } = props;
   
   const [selectedLayer, setSelectedLayer] = useState(null);
@@ -32,8 +34,11 @@ const Container = (props) => {
     layerManagerToggle(option.value, activeLayers, changeGlobe);
   }
 
+
+
   return (
     <Component 
+      hasLegend={AOI_LEGEND_CATEGORIES.some(c => c === cardCategory)}
       onChange={toggleType === 'radio' ? radioTypeToggle : checkboxTypeToggle}
       {...props}
     />

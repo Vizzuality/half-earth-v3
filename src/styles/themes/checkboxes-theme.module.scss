@@ -1,71 +1,34 @@
 @import 'styles/settings';
 
-.landPressures {
-  input[type="checkbox"]:checked + label::before {
-      background: $human-pressures-gradient;
-      border: 2px solid $white; 
+.land-human-pressures {
+  input:checked + label::after {
+    background: $human-pressures-gradient;
   }
-}
-
-.marinePressures {
-  input[type="checkbox"]:checked + label::before {
-      background: $marine-pressures-gradient;
-      border: 2px solid $white; 
-  }
-}
-
-.protectedAreas {
-  input[type="checkbox"]:checked + label::before {
-    background: $protected-areas;
-    border: 2px solid $white; 
-  }
-}
-
-.protectedAreasLight {
-  &:hover,
-  &.checked {
-    background-color: $dark-opacity;
-  }
-  label::after {
-    border: 1px solid $dark-text;
-  }
-  input[type="checkbox"]:checked + label::after {
-    background: $protected-areas;
-    border: 2px solid $dark-text; 
-  }
-}
-
-
-.landPressuresLight {
-  &:hover,
-  &.checked {
-    background-color: $dark-opacity;
-  }
-  label::after {
-    border: 1px solid $dark-text;
-  }
-  input[type="checkbox"]:checked + label::after {
-      background: $human-pressures-gradient;
-      border: 2px solid $dark-text; 
-  }
-  input[type="checkbox"]:checked + label::before {
+  input:checked + label::before {
     background: $brand-color-secondary;
   }
 }
 
-.biodiversityLight {
-  &:hover,
-  &.checked {
-    background-color: $dark-opacity;
+.marine-human-pressures {
+  input:checked + label::after {
+    background: $marine-pressures-gradient;
   }
-  label::after {
-    border: 1px solid $dark-text;
+  input:checked + label::before {
+    background: $brand-color-secondary;
   }
-  input[type="radio"]:checked + label::after {
+}
+
+.protected-areas {
+  input:checked + label::after {
+    background: $protected-areas;
+  }
+}
+
+.biodiversity {
+  input:checked + label::after {
     background: $biodiversity-gradient-rotated;
-    border: 2px solid $dark-text;
   }
-  input[type="radio"]:checked + label::before {
+  input:checked + label::before {
     background: $brand-color-secondary;
   }
 }

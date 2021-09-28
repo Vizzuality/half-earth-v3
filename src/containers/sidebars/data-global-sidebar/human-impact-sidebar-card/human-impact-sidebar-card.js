@@ -16,7 +16,6 @@ const Container = (props) => {
     activeLayers,
   } = props;
 
-  const [selectedLayers, setSelectedLayers] = useState([]);
   const [metadataSource, setMetadataSource] = useState(null);
 
   useEffect(() => {
@@ -31,9 +30,6 @@ const Container = (props) => {
     if (option.layer === 'all') {
       // batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
     } else {
-      selectedLayers.find(layer => layer === option.value) ?
-        setSelectedLayers(selectedLayers.filter(layer => layer !== option.value)) :
-        setSelectedLayers([...selectedLayers, option.value]);
       layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.LAND_PRESSURES);
     }
   }

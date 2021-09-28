@@ -5,13 +5,13 @@
   height: 8px;
   border-radius: 5px;
   background-color: $brand-color-secondary;
-  // background-color: red;
 }
 
 .gradient {
   display: flex;
   height: 8px;
   border-radius: 5px;
+  border: 1px solid $brand-color-secondary;
 }
 
 .gradientItem {

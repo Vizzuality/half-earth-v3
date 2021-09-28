@@ -7,15 +7,14 @@ import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import ExistingProtectionThumbnail from 'images/existing-protection.png';
+import { PROTECTION_SLUG } from 'constants/analyze-areas-constants';
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
 const ProtectedAreasSidebarCardComponent = ({
   map,
   source,
   activeLayers,
-  selectedLayers,
   handleLayerToggle,
   countedActiveLayers,
 }) => {
@@ -39,14 +38,14 @@ const ProtectedAreasSidebarCardComponent = ({
         <div className={styles.togglesContainer}>
           {WDPALayers.map(layer => (
             <LayerToggle
-              key={layer.value}
               map={map}
               option={layer}
               type='checkbox'
+              variant='light'
+              key={layer.value}
               activeLayers={activeLayers}
               onChange={handleLayerToggle}
-              optionsSelected={selectedLayers}
-              theme={checkboxTheme.protectedAreas}
+              toggleCategory={PROTECTION_SLUG}
             />
           ))}
         </div>

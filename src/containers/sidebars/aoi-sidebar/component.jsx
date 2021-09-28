@@ -16,9 +16,8 @@ import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { WDPALayers } from 'constants/protected-areas';
 import { AOI_BIODIVERSITY_TOGGLES } from 'constants/biodiversity-layers-constants';
-import { LAND_HUMAN_PRESSURES_SLUG, BIODIVERSITY_SLUG } from 'constants/legend-configs';
+import { LAND_HUMAN_PRESSURES_SLUG, BIODIVERSITY_SLUG, PROTECTION_SLUG } from 'constants/analyze-areas-constants';
 
-import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import styles from './styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
@@ -50,24 +49,22 @@ const LocalSceneSidebarComponent = ({
         map={map}
         toggleType='radio'
         activeLayers={activeLayers}
-        legendItem={BIODIVERSITY_SLUG}
+        cardCategory={BIODIVERSITY_SLUG}
         layers={AOI_BIODIVERSITY_TOGGLES}
-        toggleTheme={checkboxTheme.biodiversityLight}
       />
       <SidebarCard 
         map={map}
         layers={WDPALayers}
         toggleType='checkbox'
         activeLayers={activeLayers}
-        toggleTheme={checkboxTheme.protectedAreasLight}
+        cardCategory={PROTECTION_SLUG}
       />
       <SidebarCard 
         map={map}
         toggleType='checkbox'
         activeLayers={activeLayers}
         layers={humanPressuresLandUse}
-        legendItem={LAND_HUMAN_PRESSURES_SLUG}
-        toggleTheme={checkboxTheme.landPressuresLight}
+        cardCategory={LAND_HUMAN_PRESSURES_SLUG}
       />
 
       {/* <div className={styles.scrollableArea}>

@@ -10,7 +10,7 @@ import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import LayerToggle from 'components/layer-toggle';
 import Legend from 'containers/sidebars/sidebar-legend';
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
-import { BIODIVERSITY_SLUG } from 'constants/legend-configs';
+import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
 import { LAYERS_TOGGLE_CONFIG, LAYERS_RESOLUTION, TERRESTRIAL, MARINE, RESOLUTIONS } from 'constants/biodiversity-layers-constants';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -93,12 +93,14 @@ const BiodiversitySidebarCardComponent = ({
         <div className={styles.togglesContainer}>
           {layerTogglesToDisplay(TERRESTRIAL).map(layer => (
               <LayerToggle
-                key={layer.value}
                 map={map}
                 type='radio'
                 option={layer}
+                variant='light'
+                key={layer.value}
                 activeLayers={activeLayers}
                 onChange={handleLayerToggle}
+                toggleCategory={BIODIVERSITY_SLUG}
               />
             ))
           }
@@ -122,12 +124,14 @@ const BiodiversitySidebarCardComponent = ({
             <div className={styles.togglesContainer}>
               {layerTogglesToDisplay(MARINE).map(layer => (
                   <LayerToggle
-                    key={layer.value}
                     map={map}
                     type='radio'
                     option={layer}
+                    variant='light'
+                    key={layer.value}
                     activeLayers={activeLayers}
                     onChange={handleLayerToggle}
+                    toggleCategory={BIODIVERSITY_SLUG}
                   />
                 ))
               }

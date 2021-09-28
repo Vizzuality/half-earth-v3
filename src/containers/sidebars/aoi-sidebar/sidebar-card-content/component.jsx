@@ -9,16 +9,16 @@ const Component = ({
   map,
   layers,
   onChange,
+  hasLegend,
   toggleType,
-  legendItem,
-  toggleTheme,
+  cardCategory,
   activeLayers,
   percentageUnderPressure,
 }) => (
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
       <p className={styles.title}>How are humans affecting this area?</p>
-      {legendItem && <Legend legendItem={legendItem} className={styles.legendContainer}/>}
+      {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer}/>}
       <p className={styles.description}>
         {`Of the current area, ${percentageUnderPressure} is under human pressure, the majority of which are pressures from irrigated agriculture.`}
       </p>
@@ -32,11 +32,12 @@ const Component = ({
       {layers.map(layer => (
         <LayerToggle
           map={map}
+          variant='dark'
           option={layer}
           key={layer.value}
           type={toggleType}
           onChange={onChange}
-          theme={toggleTheme}
+          toggleCategory={cardCategory}
           activeLayers={activeLayers}
         />
       ))}
