@@ -15,8 +15,8 @@ import { getCrfData } from 'services/geo-processing-services/sample';
 const actions = {...urlActions};
 
 const Container = props => {
-  const { changeGlobe, aoiId, urlQueryGeometry, precalculatedLayerSlug, browsePage } = props;
-  const [isAoiStored, setIsAoiStored] = useState(true);
+  const { changeGlobe, aoiId, aoiStoredGeometry, precalculatedLayerSlug, browsePage } = props;
+  const [isAoiInDatabase, setIsAoiInDatabase] = useState(true);
   const [newStoredAoi, setNewStoredAoi] = useState(null);
   const [aoiData, setAoiData] = useState(null);
   const [geometry, setGeometry] = useState(null);
@@ -50,11 +50,7 @@ const Container = props => {
         // LOG AOI GEOMETRY AREA
         logGeometryArea(features[0].geometry);
       } else {
-        setIsAoiStored(false);
-        setGeometry(urlQueryGeometry);
-
-        // LOG AOI GEOMETRY AREA
-        logGeometryArea(urlQueryGeometry);
+        setIsAoiInDatabase(false);
       }
     }).catch((error) => {
       console.error(error);
@@ -63,13 +59,13 @@ const Container = props => {
   }, [aoiId]);
 
   // Add aoi to local storage historic
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [aoiId])
+  // }, [aoiId])
 
   // Store aoi on historic feature layer
   useEffect(() => {
-    if (!isAoiStored && geometry)  {
+    if (!isAoiInDatabase && aoiStoredGeometry)  {
       EsriFeatureService.getLayer({
         slug: AOIS_HISTORIC
       }).then((layer) => {
@@ -87,7 +83,7 @@ const Container = props => {
         })
       })
     }
-  }, [isAoiStored, geometry])
+  }, [isAoiInDatabase, aoiStoredGeometry])
 
   useEffect(() => {
     if (newStoredAoi) {
@@ -155,7 +151,6 @@ const Container = props => {
   return (
     <Component
       aoiData={aoiData}
-      geometry={geometry}
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
