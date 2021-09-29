@@ -17,3 +17,14 @@ export const esriGeometryToGeojson = (geometry) => {
 
   return JSON.stringify(geojsonObject);
 };
+
+export const geoJsonObject = (geometry) => {
+  return {
+   type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Polygon',
+          coordinates: geometry.rings
+        }
+      }
+}

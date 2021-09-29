@@ -8,17 +8,22 @@ import uiStyles from 'styles/ui.module.scss';
 
 const AreaOfInterestPageComponent = ({
   aoiData,
+  geometry,
   userConfig,
   activeLayers,
   sceneSettings,
-}) => (
+}) => console.log(aoiData) || (
   <>
     <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/>
-    <AreaOfInterestScene
-      userConfig={userConfig}
-      activeLayers={activeLayers}
-      sceneSettings={sceneSettings}
-    />
+    {geometry &&
+      <AreaOfInterestScene
+        aoiData={aoiData}
+        geometry={geometry}
+        userConfig={userConfig}
+        activeLayers={activeLayers}
+        sceneSettings={sceneSettings}
+      />
+    }
   </>
 );
 

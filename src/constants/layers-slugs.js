@@ -115,3 +115,7 @@ export const ADMIN_AREAS_VECTOR_TILE_LAYER = 'admin-areas-vector-tile-layer';
 export const WDPA_OECM_FEATURE_LAYER = 'wdpa-oecm-feature-layer';
 export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
 export const AOIS_HISTORIC_DEVELOPMENT = 'aois-historic-development';
+
+// AOIs lookup tables
+export const ELU_LOOKUP_TABLE = 'elu-lookup-table';
+export const WDPA_LOOKUP_TABLE = 'wdpa-lookup-table';

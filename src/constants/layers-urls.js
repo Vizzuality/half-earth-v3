@@ -78,7 +78,9 @@ import {
   ADMIN_AREAS_FEATURE_LAYER,
   ADMIN_AREAS_VECTOR_TILE_LAYER,
   AOIS_HISTORIC_PRODUCTION,
-  AOIS_HISTORIC_DEVELOPMENT
+  AOIS_HISTORIC_DEVELOPMENT,
+  ELU_LOOKUP_TABLE,
+  WDPA_LOOKUP_TABLE
 } from 'constants/layers-slugs';
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
@@ -207,7 +209,9 @@ export const LAYERS_URLS = {
   // [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_1_simple/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
 
-
+  // AOIs lookup tables
+  [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
+  [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer'
 
 
 
