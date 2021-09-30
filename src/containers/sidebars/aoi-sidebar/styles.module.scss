@@ -3,18 +3,31 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
+
+
+.headerCard {
+  @include backdropBlur();
+  position: fixed;
+  z-index: $bring-to-front;
+  top: $ui-left-top;
+  left: $site-gutter;
+  width: $sidebar-width;
+  padding: $sidebar-paddings;
+  border: $sidebar-border;
+}
+
 .container { 
   @extend %verticalScrollbar;
   @include backdropBlur();
   position: absolute;
-  top: $ui-left-top;
+  top: 160px;
   left: $site-gutter;
   display: flex;
   flex-direction: column;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
-  height: calc(100vh - #{$ui-left-top});
-  width: calc(#{$sidebar-width} + 15px);
+  height: calc(100vh - 160px);
+  width: $sidebar-width;
   padding: $site-gutter;
   z-index: $bring-to-front;
 }
@@ -42,6 +55,12 @@
   color: $white;
 }
 
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 .nameWrapper {
   display: flex;
   flex-flow: column nowrap;
@@ -52,6 +71,38 @@
   @extend %display2;
   color: $white;
   margin: 0;
+}
+
+.area {
+  @extend %annotation;
+  color: $grey-text;
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  button {
+    margin-left: 5px;
+  }
+}
+
+.contextualDataRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contextualIndicator {
+  display: flex;
+  align-items: center;
+  cursor: help;
+  span {
+    @extend %subtitle;
+    position: relative;
+    top: 2px;
+    color: $white;
+    margin-left: 5px;
+  }
 }
 
 .scrollableArea {

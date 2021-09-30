@@ -102,7 +102,7 @@ export function getLandPressuresData(geometry) {
       if (!data.value.features.length > 0) resolve({});
       const pressures = data.value.features.reduce((acc, value) => ({
         ...acc,
-        [landPressuresLookup[value.attributes.SliceNumber]]: value.attributes.AREA
+        [landPressuresLookup[value.attributes.SliceNumber]]: value.attributes.percentage_land_encroachment
       }), {});
       resolve({pressures});
     }).catch((error) => {
@@ -118,7 +118,7 @@ export function getPercentageProtectedData(geometry) {
       aoiFeatureGeometry: geometry
     }).then(({jobInfo, jobId, data}) => {
       const protectionPercentage = data.value.features[0].attributes.MEAN;
-      resolve({protectionPercentage});
+      resolve({ protectionPercentage });
     }).catch((error) => {
       console.error('PROTECTED_AREA_PERCENTAGECrfError', error)
     })

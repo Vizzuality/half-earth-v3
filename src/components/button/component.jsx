@@ -3,11 +3,6 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-const tooltipStyles = {
-  'data-place': 'right',
-  'data-effect':'solid',
-  'data-delay-show': 0,
-}
 
 const Component = ({
   type,
@@ -20,12 +15,12 @@ const Component = ({
 }) => (
   <button 
     onClick={handleClick}
-    data-tip={tooltipText}
-    {...tooltipStyles}
+    title={tooltipText}
 		className={cx(
       className,
       {
         [styles.rectangular]: type === 'rectangular',
+        [styles.iconSquare]: type === 'icon-square',
         [styles.rounded]: type === 'rounded',
         [styles.compound]: type === 'compound',
         [styles.square]: type === 'square',

@@ -5,9 +5,19 @@ import { loadModules } from 'esri-loader';
 import mapStateToProps from './selectors';
 import * as urlActions from 'actions/url-actions';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
-import { fetchDataAndUpdateForageAoi, writeToItem } from 'utils/local-forage-utils';
+import {
+  fetchDataAndUpdateForageItem,
+  writeToForageItem
+} from 'utils/local-forage-utils';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
-import { getEluData, getPopulationData, getProtectedAreasListData, getLandPressuresData, getPercentageProtectedData, getAoiFromDataBase } from 'utils/geo-processing-services';
+import { 
+  getEluData,
+  getPopulationData,
+  getAoiFromDataBase, 
+  getLandPressuresData,
+  getProtectedAreasListData,
+  getPercentageProtectedData,
+} from 'utils/geo-processing-services';
 import { DATA } from 'router'
 
 import Component from './component.jsx';
@@ -41,7 +51,7 @@ const Container = props => {
   //   }
   // }, [precalculatedLayerSlug])
 
-  // Add aoi to local storage historic
+  
   useEffect(() => {
     if (geometryEngine &&  jsonUtils) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
@@ -59,12 +69,12 @@ const Container = props => {
               const jsonGeometry = aoiStoredGeometry.toJSON();
               setAreaData({area});
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
-              writeToItem(aoiId, {jsonGeometry, area});
-              fetchDataAndUpdateForageAoi(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
-              fetchDataAndUpdateForageAoi(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
-              fetchDataAndUpdateForageAoi(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
-              fetchDataAndUpdateForageAoi(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
-              fetchDataAndUpdateForageAoi(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
+              writeToForageItem(aoiId, {jsonGeometry, area});
+              fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
+              fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
+              fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
+              fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
+              fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
             }
           }) 
         }

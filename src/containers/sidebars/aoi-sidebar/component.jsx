@@ -6,7 +6,9 @@ import { Loading } from 'he-components';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
-import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
+import { ReactComponent as PopulationIcon } from 'icons/population.svg';
+import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
 
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
@@ -22,18 +24,21 @@ import styles from './styles.module.scss';
 
 const LocalSceneSidebarComponent = ({
   map,
+  area,
   areaName,
   className,
+  landCover,
+  population,
   activeLayers,
+  climateRegime,
   handlePrintReport,
   handleSceneModeChange,
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   return (
-    <div
-      className={cx(styles.container, className)}
-    >
+    <>
+    <section className={styles.headerCard}>
       <Button 
         type='rounded'
         handleClick={handleSceneModeChange}
@@ -42,54 +47,71 @@ const LocalSceneSidebarComponent = ({
         tooltipText="Go back to the globe"
       />
       <DummyBlurWorkaround />
-      <div className={styles.nameWrapper}>
-        <p className={styles.areaName}>{areaName || 'Custom Area'}</p>
+      <div className={styles.topRow}>
+        <div className={styles.nameWrapper}>
+          <p className={styles.areaName}>{areaName || 'Custom area'}</p>
+          {area && <p className={styles.area}>{`${area} `}<span>km<sup>2</sup></span></p>}
+        </div>
+        <div className={styles.actionButtons}>
+          <Button 
+            Icon={EditIcon}
+            type="icon-square"
+            handleClick={() => console.log('edit')}
+            tooltipText="Share the URL to this view"
+          />
+          <Button 
+            Icon={ShareIcon}
+            type="icon-square"
+            handleClick={setShareModalOpen}
+            tooltipText="Share this Area"
+          />
+        </div>
       </div>
-      <SidebarCard 
-        map={map}
-        toggleType='radio'
-        activeLayers={activeLayers}
-        cardCategory={BIODIVERSITY_SLUG}
-        layers={AOI_BIODIVERSITY_TOGGLES}
-      />
-      <SidebarCard 
-        map={map}
-        layers={WDPALayers}
-        toggleType='checkbox'
-        activeLayers={activeLayers}
-        cardCategory={PROTECTION_SLUG}
-      />
-      <SidebarCard 
-        map={map}
-        toggleType='checkbox'
-        activeLayers={activeLayers}
-        layers={humanPressuresLandUse}
-        cardCategory={LAND_HUMAN_PRESSURES_SLUG}
-      />
-
-      {/* <div className={styles.scrollableArea}>
-        <Button 
-          type='compound'
-          Icon={DownloadIcon}
-          handleClick={handlePrintReport}
-          className={styles.actionButton}
-          label="download this info (pdf)"
-          tooltipText="Download national data report"
-          />
-        <Button 
-          type='compound'
-          Icon={ShareIcon}
-          handleClick={setShareModalOpen}
-          className={styles.actionButton}
-          label="share this info"
-          tooltipText="Share the URL to this view"
+    </section>
+      <div
+        className={cx(styles.container, className)}
+      >
+        <div className={styles.contextualDataRow}>
+          <div className={styles.contextualIndicator} title="population">
+            <PopulationIcon />
+            <span>{population}</span>
+          </div>
+          <div className={styles.contextualIndicator} title="land cover">
+            <LandCoverIcon />
+            <span>{landCover}</span>
+          </div>
+          <div className={styles.contextualIndicator}  title="climate regime">
+            <ClimateRegimeIcon />
+            <span>{climateRegime}</span>
+          </div>
+        </div>
+        <SidebarCard 
+          map={map}
+          toggleType='radio'
+          activeLayers={activeLayers}
+          cardCategory={BIODIVERSITY_SLUG}
+          layers={AOI_BIODIVERSITY_TOGGLES}
         />
-          <ShareModal
-            isOpen={isShareModalOpen}
-            setShareModalOpen={setShareModalOpen}
-          />
-      </div> */}
-    </div>
+        <SidebarCard 
+          map={map}
+          layers={WDPALayers}
+          toggleType='checkbox'
+          activeLayers={activeLayers}
+          cardCategory={PROTECTION_SLUG}
+        />
+        <SidebarCard 
+          map={map}
+          toggleType='checkbox'
+          activeLayers={activeLayers}
+          layers={humanPressuresLandUse}
+          cardCategory={LAND_HUMAN_PRESSURES_SLUG}
+        />
+        <ShareModal
+          isOpen={isShareModalOpen}
+          setShareModalOpen={setShareModalOpen}
+        />
+      </div>
+    </>
   );
 }
 

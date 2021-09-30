@@ -1,22 +1,21 @@
 import localforage from 'localforage';
 
-export function fetchDataAndUpdateForageAoi(itemKey, fetchGpDataFunction, geometry) {
-
+export function fetchDataAndUpdateForageItem(itemKey, fetchGpDataFunction, geometry) {
   return new Promise((resolve, reject) => {
     fetchGpDataFunction(geometry).then((data) => {
-      writeToItem(itemKey, data);
+      writeToForageItem(itemKey, data);
       resolve(data);
     }).catch((error) => reject(error))
   })
 }
 
-export function writeToItem(itemKey, newValues) {
+export function writeToForageItem(itemKey, newValues) {
     localforage.getItem(itemKey).then((storedValues) => {
-      console.log('STORED VALUES', storedValues);
-      console.log('NEW VALUES', newValues);
       if (!storedValues) {
+        console.log('storing on FORAGE', newValues)
         localforage.setItem(itemKey, {...newValues})
       } else {
+        console.log('storing on FORAGE', newValues)
         localforage.setItem(itemKey, {
           ...storedValues,
           ...newValues

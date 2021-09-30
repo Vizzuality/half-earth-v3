@@ -6,6 +6,8 @@ AOIS_HISTORIC_DEVELOPMENT,
 WDPA_OECM_FEATURE_LAYER
 } from 'constants/layers-slugs';
 
+import { getTotalPressures, getMainPressure} from 'utils/analyze-areas-utils';
+
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';

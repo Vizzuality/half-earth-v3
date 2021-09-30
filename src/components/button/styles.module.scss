@@ -1,6 +1,19 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.iconSquare {
+  background-color: $brand-color-secondary;
+  border-radius: 2px;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: $brand-color-secondary-hover;
+  }
+}
+
 .rectangular {
   @extend %title;
   width: 100%;
