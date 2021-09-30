@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-
+$sidebar-content-top: 180px;
 
 .headerCard {
   @include backdropBlur();
@@ -20,13 +20,13 @@
   @extend %verticalScrollbar;
   @include backdropBlur();
   position: absolute;
-  top: 160px;
+  top: $sidebar-content-top;
   left: $site-gutter;
   display: flex;
   flex-direction: column;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
-  height: calc(100vh - 160px);
+  height: calc(100vh - #{$sidebar-content-top});
   width: $sidebar-width;
   padding: $site-gutter;
   z-index: $bring-to-front;
@@ -59,6 +59,7 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  margin-top: $site-gutter;
 }
 
 .nameWrapper {

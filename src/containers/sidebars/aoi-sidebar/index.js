@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils';
 import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
 import Component from './component';
+import * as urlActions from 'actions/url-actions';
+import { DATA } from 'router'
+
+const actions = {...urlActions}
 
 const AoiSidebarContainer = (props) => {
-  const { aoiData } = props;
+  const { aoiData, browsePage } = props;
   const [values, setFormattedValues ] = useState({})
   useEffect(() => {
     if (Object.keys(aoiData).length > 0) {
       setFormattedValues({
-        landCover: aoiData.elu.landCover,
+        landCover: aoiData.elu && aoiData.elu.landCover,
         area: localeFormatting(aoiData.area),
-        climateRegime: aoiData.elu.climateRegime,
-        population: localeFormatting(aoiData.population),
-        mainPressure: getMainPressure(aoiData.pressures),
-        totalPressures: getTotalPressures(aoiData.pressures),
-        protectionPercentage: percentageFormat(aoiData.protectionPercentage),
+        climateRegime: aoiData.elu && aoiData.elu.climateRegime,
+        population: aoiData.population && localeFormatting(aoiData.population),
+        mainPressure: aoiData.pressures && getMainPressure(aoiData.pressures),
+        totalPressures: aoiData.pressures && getTotalPressures(aoiData.pressures),
+        protectionPercentage: aoiData.protectionPercentage && percentageFormat(aoiData.protectionPercentage),
       })
     }
   }, [aoiData])
+
+
+  const handleSceneModeChange = () => browsePage({type: DATA})
 
   return (
     <Component 
@@ -26,9 +34,10 @@ const AoiSidebarContainer = (props) => {
       landCover={values.landCover}
       population={values.population}
       climateRegime={values.climateRegime}
+      handleSceneModeChange={handleSceneModeChange}
       {...props}
     />
   )
 }
 
-export default AoiSidebarContainer;
+export default connect(null, actions)(AoiSidebarContainer);

@@ -18,14 +18,13 @@ import {
   getProtectedAreasListData,
   getPercentageProtectedData,
 } from 'utils/geo-processing-services';
-import { DATA } from 'router'
 
 import Component from './component.jsx';
 
 const actions = {...urlActions, aoisGeometriesActions};
 
 const Container = props => {
-  const { changeGlobe, aoiId, aoiStoredGeometry, precalculatedLayerSlug, browsePage } = props;
+  const { changeGlobe, aoiId, aoiStoredGeometry, precalculatedLayerSlug } = props;
 
   const [elu, setEluData] = useState(null);
   const [aoiData, setAoiData] = useState({})
