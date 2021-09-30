@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Component from './component';
-import { AOI_LEGEND_CATEGORIES } from 'constants/analyze-areas-constants';
+import { AOI_LEGEND_CATEGORIES, SIDEBAR_CARDS_CONFIG } from 'constants/analyze-areas-constants';
 import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
+
 const actions = {...metadataActions, ...urlActions};
 
 const Container = (props) => {
   const { 
+    aoiData,
     toggleType,
     changeGlobe,
     activeLayers,
@@ -16,6 +18,14 @@ const Container = (props) => {
   } = props;
   
   const [selectedLayer, setSelectedLayer] = useState(null);
+  const [cardDescription, setCardDescription] = useState(null);
+  const { description, title } = SIDEBAR_CARDS_CONFIG[cardCategory];
+
+  useEffect(() => {
+    if (Object.keys(aoiData).length > 0) {
+      setCardDescription(description(aoiData));
+    }
+  }, [aoiData])
 
   const radioTypeToggle = (option) => {
     if (selectedLayer === option.slug) {
@@ -30,14 +40,16 @@ const Container = (props) => {
     }
   }
 
+  
+
   const checkboxTypeToggle = (option) => {
     layerManagerToggle(option.value, activeLayers, changeGlobe);
   }
 
-
-
   return (
     <Component 
+      cardTitle={title}
+      cardDescription={cardDescription}
       hasLegend={AOI_LEGEND_CATEGORIES.some(c => c === cardCategory)}
       onChange={toggleType === 'radio' ? radioTypeToggle : checkboxTypeToggle}
       {...props}

@@ -7,6 +7,7 @@ WDPA_OECM_FEATURE_LAYER
 } from 'constants/layers-slugs';
 
 import { getTotalPressures, getMainPressure} from 'utils/analyze-areas-utils';
+import { percentageFormat } from 'utils/data-formatting-utils';
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
@@ -35,3 +36,21 @@ export const PRECALCULATED_AOI_OPTIONS = [
 ]
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;
+
+export const SIDEBAR_CARDS_CONFIG = {
+  [BIODIVERSITY_SLUG]: {
+    title: 'What is the biodiversity pattern in this area?',
+    description: () => 'Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.',
+  },
+  [PROTECTION_SLUG]: {
+    title: 'What is already protected in this area?',
+    description: ({protectionPercentage}) => `Of the current area, __${percentageFormat(protectionPercentage)}% of land is under formal protection__, 
+    the majority of which are protected areas.`,
+  },
+  [LAND_HUMAN_PRESSURES_SLUG]: {
+    title: 'How are humans affecting this area?',
+    description: ({pressures}) => `Of the current area, __${getTotalPressures(pressures)}% is under human pressure__,
+    the majority of which are pressures from ${getMainPressure(pressures)}.`
+  },
+
+} 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown/with-html';
 import LayerToggle from 'components/layer-toggle';
 import Legend from 'containers/sidebars/sidebar-legend';
 import SourceAnnotation from 'components/source-annotation';
@@ -10,18 +11,24 @@ const Component = ({
   layers,
   onChange,
   hasLegend,
+  cardTitle,
   toggleType,
   cardCategory,
   activeLayers,
+  cardDescription,
   percentageUnderPressure,
 }) => (
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
-      <p className={styles.title}>How are humans affecting this area?</p>
+      <p className={styles.title}>{cardTitle}</p>
       {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer}/>}
-      <p className={styles.description}>
-        {`Of the current area, ${percentageUnderPressure} is under human pressure, the majority of which are pressures from irrigated agriculture.`}
-      </p>
+      {/* <p className={styles.description}>
+        {cardDescription}
+      </p> */}
+      <ReactMarkdown 
+        className={styles.description}
+        source={cardDescription}
+      />
       <SourceAnnotation
         theme='dark'
         metaDataSources={' WDPA, OECM & RAISG.'}

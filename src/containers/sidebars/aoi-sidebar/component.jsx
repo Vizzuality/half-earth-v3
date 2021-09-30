@@ -25,6 +25,7 @@ import styles from './styles.module.scss';
 const LocalSceneSidebarComponent = ({
   map,
   area,
+  aoiData,
   areaName,
   className,
   landCover,
@@ -57,13 +58,13 @@ const LocalSceneSidebarComponent = ({
             Icon={EditIcon}
             type="icon-square"
             handleClick={() => console.log('edit')}
-            tooltipText="Share the URL to this view"
+            tooltipText="Draw a new area"
           />
           <Button 
             Icon={ShareIcon}
             type="icon-square"
             handleClick={setShareModalOpen}
-            tooltipText="Share this Area"
+            tooltipText="Share this area"
           />
         </div>
       </div>
@@ -87,6 +88,7 @@ const LocalSceneSidebarComponent = ({
         </div>
         <SidebarCard 
           map={map}
+          aoiData={aoiData}
           toggleType='radio'
           activeLayers={activeLayers}
           cardCategory={BIODIVERSITY_SLUG}
@@ -94,6 +96,7 @@ const LocalSceneSidebarComponent = ({
         />
         <SidebarCard 
           map={map}
+          aoiData={aoiData}
           layers={WDPALayers}
           toggleType='checkbox'
           activeLayers={activeLayers}
@@ -101,6 +104,7 @@ const LocalSceneSidebarComponent = ({
         />
         <SidebarCard 
           map={map}
+          aoiData={aoiData}
           toggleType='checkbox'
           activeLayers={activeLayers}
           layers={humanPressuresLandUse}

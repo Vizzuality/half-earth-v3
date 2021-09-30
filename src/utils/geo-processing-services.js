@@ -87,10 +87,10 @@ export function getPopulationData(geometry) {
 }
 
 const landPressuresLookup = {
-  1: 'irrigated',
-  2: 'rainfed',
-  3: 'rangeland',
-  4: 'urban'
+  1: 'irrigated agriculture',
+  2: 'rainfed agriculture',
+  3: 'rangelands',
+  4: 'urban activities'
 }
 
 export function getLandPressuresData(geometry) {

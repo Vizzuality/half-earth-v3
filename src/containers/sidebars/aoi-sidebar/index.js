@@ -23,13 +23,14 @@ const AoiSidebarContainer = (props) => {
         protectionPercentage: aoiData.protectionPercentage && percentageFormat(aoiData.protectionPercentage),
       })
     }
-  }, [aoiData])
+  }, [aoiData]);
 
 
   const handleSceneModeChange = () => browsePage({type: DATA})
 
   return (
     <Component 
+      aoiData={aoiData}
       area={values.area}
       landCover={values.landCover}
       population={values.population}
