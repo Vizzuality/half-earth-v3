@@ -12,7 +12,7 @@ const AreaOfInterestPageComponent = ({
   userConfig,
   activeLayers,
   sceneSettings,
-}) => console.log(aoiData) || (
+}) => (
   <>
     <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/>
     {geometry &&

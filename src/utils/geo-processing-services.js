@@ -13,11 +13,13 @@ import {
   REPTILES,
   POPULATION,
   AMPHIBIANS,
+  LOOKUP_TABLES,
   HUMAN_PRESSURES,
   ECOLOGICAL_LAND_UNITS,
   PROTECTED_AREA_PERCENTAGE,
   PROTECTED_AREAS_INSIDE_AOI,
 } from 'constants/geo-processing-services';
+
 
 export function getGeoProcessor(url) {
   return new Promise((resolve, reject) => {
@@ -158,70 +160,72 @@ export function getProtectedAreasListData(geometry) {
   })
 }
 
-export function getAmphibiansData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: AMPHIBIANS,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const amphibians = data.value.features.map(f =>({
-        sliceNumber: f.attributes.SliceNumber,
-        presencePercentage: f.attributes.percentage_presence
-      }));
-      resolve({amphibians});
-    }).catch((error) => {
-      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
-    })
+export function getBiodiversityData(dataset) {
+  return (geometry) => {
+    return new Promise((resolve, reject) => {
+      getCrfData({ 
+        dataset,
+        aoiFeatureGeometry: geometry
+      }).then(({data}) => {
+        const crfSlices = data.value.features.reduce((acc, f) =>({
+          ...acc,
+          [f.attributes.SliceNumber]:{
+            sliceNumber: f.attributes.SliceNumber,
+            presencePercentage: f.attributes.percentage_presence
+          }
+        }), {});
+       const ids = data.value.features.map(f => f.attributes.SliceNumber);
+       console.log(ids)
+       EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[LOOKUP_TABLES[dataset]],
+        whereClause: `SliceNumber IN (${ids.toString()})`,
+      }).then((features) => {
+        const result = features
+          .map((f) => ({
+            isFlagship: f.attributes.is_flagship,
+            sliceNumber: f.attributes.SliceNumber,
+            name: f.attributes.scientific_name,
+            globalProtectedArea: f.attributes.wdpa_km2,
+            globaldRangeArea: f.attributes.range_area_km2,
+            globalProtectedPercentage: f.attributes.percent_protected,
+            protectionTarget: f.attributes.conservation_target,
+            presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
+          }))
+          .sort((a, b) => (b.isFlagship - a.isFlagship))
+          .filter(f => f.name !== null)
+        resolve({[dataset]:result});
+      }).catch((error) => {
+        reject(error)
+      });
+    });
   })
 }
-
-export function getMammalsData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: MAMMALS,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const mammals = data.value.features.map(f =>({
-        sliceNumber: f.attributes.SliceNumber,
-        presencePercentage: f.attributes.percentage_presence
-      }));
-      resolve({mammals});
-    }).catch((error) => {
-      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
-    })
-  })
 }
 
-export function getBirdsData(geometry) {
+export function getSpeciesFromLookupTable(crfData, lookupTableSlug) {
   return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: BIRDS,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const birds = data.value.features.map(f =>({
-        sliceNumber: f.attributes.SliceNumber,
-        presencePercentage: f.attributes.percentage_presence
-      }));
-      resolve({birds});
-    }).catch((error) => {
-      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
-    })
-  })
-}
-
-export function getReptilesData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: REPTILES,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const reptiles = data.value.features.map(f =>({
-        sliceNumber: f.attributes.SliceNumber,
-        presencePercentage: f.attributes.percentage_presence
-      }));
-      resolve({reptiles});
-    }).catch((error) => {
-      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+    const ids = Object.keys(crfData);
+    
+    EsriFeatureService.getFeatures({
+      url: LAYERS_URLS[lookupTableSlug],
+      whereClause: `SliceNumber IN (${ids.toString()})`,
+    }).then((features) => {
+      const result = features
+        .map((f) => ({
+          isFlagship: f.attributes.is_flagship,
+          sliceNumber: f.attributes.SliceNumber,
+          name: f.attributes.scientific_name,
+          globalProtectedArea: f.attributes.wdpa_km2,
+          globaldRangeArea: f.attributes.range_area_km2,
+          globalProtectedPercentage: f.attributes.percent_protected,
+          protectionTarget: f.attributes.conservation_target,
+          presenceInArea: crfData[f.attributes.SliceNumber].presencePercentage
+        }))
+        .sort((a, b) => (b.isFlagship - a.isFlagship))
+        .filter(f => f.name !== null)
+      resolve(result);
+    }).catch((getFeaturesError) => {
+      reject(getFeaturesError)
     })
   })
 }

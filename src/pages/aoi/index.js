@@ -12,16 +12,24 @@ import {
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { 
   getEluData,
-  getBirdsData,
-  getMammalsData,
-  getReptilesData,
   getPopulationData,
-  getAmphibiansData,
   getAoiFromDataBase, 
+  getBiodiversityData,
   getLandPressuresData,
   getProtectedAreasListData,
   getPercentageProtectedData,
 } from 'utils/geo-processing-services';
+import {
+  BIRDS,
+  MAMMALS,
+  REPTILES,
+  POPULATION,
+  AMPHIBIANS,
+  HUMAN_PRESSURES,
+  ECOLOGICAL_LAND_UNITS,
+  PROTECTED_AREA_PERCENTAGE,
+  PROTECTED_AREAS_INSIDE_AOI,
+} from 'constants/geo-processing-services';
 
 import Component from './component.jsx';
 
@@ -78,14 +86,14 @@ const Container = props => {
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area});
               fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
-              fetchDataAndUpdateForageItem(aoiId, getBirdsData, aoiStoredGeometry).then(data => setBirdsData(data));
-              fetchDataAndUpdateForageItem(aoiId, getMammalsData, aoiStoredGeometry).then(data => setMammalsData(data));
-              fetchDataAndUpdateForageItem(aoiId, getReptilesData, aoiStoredGeometry).then(data => setReptilesData(data));
               fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
-              fetchDataAndUpdateForageItem(aoiId, getAmphibiansData, aoiStoredGeometry).then(data => setAmphibiansData(data));
               fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
               fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
               fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
+              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(BIRDS), aoiStoredGeometry).then(data => setBirdsData(data));
+              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(MAMMALS), aoiStoredGeometry).then(data => setMammalsData(data));
+              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(REPTILES), aoiStoredGeometry).then(data => setReptilesData(data));
+              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(AMPHIBIANS), aoiStoredGeometry).then(data => setAmphibiansData(data));
             }
           }) 
         }
@@ -97,14 +105,15 @@ const Container = props => {
   }, [aoiId, geometryEngine, jsonUtils])
 
   useEffect(() => {
+    console.log('REPTILES BEFORE SET aoi', reptiles)
     setAoiData({
       ...elu,
       ...area,
-      ...birds,
-      ...mammals,
-      ...reptiles,
+      birds,
+      mammals,
+      reptiles,
       ...pressures,
-      ...amphibians,
+      amphibians,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,
