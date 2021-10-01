@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
 import LayerToggle from 'components/layer-toggle';
+import SpeciesModal from 'components/species-modal';
 import Legend from 'containers/sidebars/sidebar-legend';
 import SourceAnnotation from 'components/source-annotation';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -22,13 +23,11 @@ const Component = ({
     <div>
       <p className={styles.title}>{cardTitle}</p>
       {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer}/>}
-      {/* <p className={styles.description}>
-        {cardDescription}
-      </p> */}
       <ReactMarkdown 
         className={styles.description}
         source={cardDescription}
       />
+      {/* <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={toggleModal} /> */}
       <SourceAnnotation
         theme='dark'
         metaDataSources={' WDPA, OECM & RAISG.'}

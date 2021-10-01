@@ -1,6 +1,9 @@
 import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { ELU_LOOKUP_TABLE, WDPA_LOOKUP_TABLE } from 'constants/layers-slugs';
+import {
+  ELU_LOOKUP_TABLE,
+  WDPA_LOOKUP_TABLE,
+} from 'constants/layers-slugs';
 import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/sample';
@@ -131,15 +134,21 @@ export function getProtectedAreasListData(geometry) {
       dataset: PROTECTED_AREAS_INSIDE_AOI,
       aoiFeatureGeometry: geometry
     }).then(({jobInfo, jobId, data}) => {
-      console.log('PROTECTED_AREAS_INSIDE_AOI', data)
       const wdpaIds = data.value.features.map(f => f.attributes.Value);
-      console.log('ids array', wdpaIds)
-      console.log('ids string', wdpaIds.toString())
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[WDPA_LOOKUP_TABLE],
-        whereClause: `WDPA_PID = '${555523072}'`,
+        whereClause: `WDPAID IN (${wdpaIds.toString()})`,
       }).then((features) => {
-        console.log('PAS', features);
+        const protectedAreasList = features.map(f => ({
+          name: f.attributes.NAME,
+          iso3: f.attributes.ISO3,
+          year: f.attributes.STATUS_YR,
+          governance: f.attributes.GOV_TYPE,
+          designation: f.attributes.DESIG_ENG,
+          iucnCategory: f.attributes.IUCN_CAT,
+          designationType: f.attributes.DESIG_TYPE,
+        }))
+        resolve({protectedAreasList})
       }).catch((getFeaturesError) => {
         console.error('getFeaturesError', getFeaturesError)
       })
@@ -149,7 +158,73 @@ export function getProtectedAreasListData(geometry) {
   })
 }
 
+export function getAmphibiansData(geometry) {
+  return new Promise((resolve, reject) => {
+    getCrfData({ 
+      dataset: AMPHIBIANS,
+      aoiFeatureGeometry: geometry
+    }).then(({jobInfo, jobId, data}) => {
+      const amphibians = data.value.features.map(f =>({
+        sliceNumber: f.attributes.SliceNumber,
+        presencePercentage: f.attributes.percentage_presence
+      }));
+      resolve({amphibians});
+    }).catch((error) => {
+      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+    })
+  })
+}
 
+export function getMammalsData(geometry) {
+  return new Promise((resolve, reject) => {
+    getCrfData({ 
+      dataset: MAMMALS,
+      aoiFeatureGeometry: geometry
+    }).then(({jobInfo, jobId, data}) => {
+      const mammals = data.value.features.map(f =>({
+        sliceNumber: f.attributes.SliceNumber,
+        presencePercentage: f.attributes.percentage_presence
+      }));
+      resolve({mammals});
+    }).catch((error) => {
+      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+    })
+  })
+}
+
+export function getBirdsData(geometry) {
+  return new Promise((resolve, reject) => {
+    getCrfData({ 
+      dataset: BIRDS,
+      aoiFeatureGeometry: geometry
+    }).then(({jobInfo, jobId, data}) => {
+      const birds = data.value.features.map(f =>({
+        sliceNumber: f.attributes.SliceNumber,
+        presencePercentage: f.attributes.percentage_presence
+      }));
+      resolve({birds});
+    }).catch((error) => {
+      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+    })
+  })
+}
+
+export function getReptilesData(geometry) {
+  return new Promise((resolve, reject) => {
+    getCrfData({ 
+      dataset: REPTILES,
+      aoiFeatureGeometry: geometry
+    }).then(({jobInfo, jobId, data}) => {
+      const reptiles = data.value.features.map(f =>({
+        sliceNumber: f.attributes.SliceNumber,
+        presencePercentage: f.attributes.percentage_presence
+      }));
+      resolve({reptiles});
+    }).catch((error) => {
+      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+    })
+  })
+}
 
 export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {

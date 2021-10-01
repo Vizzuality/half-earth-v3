@@ -12,7 +12,11 @@ import {
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { 
   getEluData,
+  getBirdsData,
+  getMammalsData,
+  getReptilesData,
   getPopulationData,
+  getAmphibiansData,
   getAoiFromDataBase, 
   getLandPressuresData,
   getProtectedAreasListData,
@@ -29,6 +33,10 @@ const Container = props => {
   const [elu, setEluData] = useState(null);
   const [aoiData, setAoiData] = useState({})
   const [area, setAreaData] = useState(null);
+  const [birds, setBirdsData] = useState(null);
+  const [mammals, setMammalsData] = useState(null);
+  const [reptiles, setReptilesData] = useState(null);
+  const [amphibians, setAmphibiansData] = useState(null);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -70,7 +78,11 @@ const Container = props => {
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area});
               fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
+              fetchDataAndUpdateForageItem(aoiId, getBirdsData, aoiStoredGeometry).then(data => setBirdsData(data));
+              fetchDataAndUpdateForageItem(aoiId, getMammalsData, aoiStoredGeometry).then(data => setMammalsData(data));
+              fetchDataAndUpdateForageItem(aoiId, getReptilesData, aoiStoredGeometry).then(data => setReptilesData(data));
               fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
+              fetchDataAndUpdateForageItem(aoiId, getAmphibiansData, aoiStoredGeometry).then(data => setAmphibiansData(data));
               fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
               fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
               fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
@@ -88,12 +100,16 @@ const Container = props => {
     setAoiData({
       ...elu,
       ...area,
+      ...birds,
+      ...mammals,
+      ...reptiles,
       ...pressures,
+      ...amphibians,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,
     })
-  },[elu, area, population, pressures, percentageProtected, protectedAreasList])
+  },[elu, area, birds, mammals, reptiles, amphibians, population, pressures, percentageProtected, protectedAreasList])
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   
