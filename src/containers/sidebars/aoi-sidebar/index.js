@@ -1,29 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { LAYERS_URLS } from 'constants/layers-urls';
-import EsriFeatureService from 'services/esri-feature-service';
 import { connect } from 'react-redux';
-import {
-  BIRDS_LOOKUP,
-  MAMMALS_LOOKUP,
-  REPTILES_LOOKUP,
-  AMPHIBIAN_LOOKUP,
-  ELU_LOOKUP_TABLE,
-  WDPA_LOOKUP_TABLE,
-} from 'constants/layers-slugs';
-import {
-  BIRDS,
-  MAMMALS,
-  REPTILES,
-  POPULATION,
-  AMPHIBIANS,
-  HUMAN_PRESSURES,
-  ECOLOGICAL_LAND_UNITS,
-  PROTECTED_AREA_PERCENTAGE,
-  PROTECTED_AREAS_INSIDE_AOI,
-} from 'constants/geo-processing-services';
 import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils';
 import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
-import { getSpeciesFromLookupTable } from 'utils/geo-processing-services';
 import Component from './component';
 import * as urlActions from 'actions/url-actions';
 import { DATA } from 'router'

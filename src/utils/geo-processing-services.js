@@ -8,11 +8,7 @@ import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/sample';
 import {
-  BIRDS,
-  MAMMALS,
-  REPTILES,
   POPULATION,
-  AMPHIBIANS,
   LOOKUP_TABLES,
   HUMAN_PRESSURES,
   ECOLOGICAL_LAND_UNITS,
@@ -160,11 +156,11 @@ export function getProtectedAreasListData(geometry) {
   })
 }
 
-export function getBiodiversityData(dataset) {
+export function getBiodiversityData(crfName) {
   return (geometry) => {
     return new Promise((resolve, reject) => {
       getCrfData({ 
-        dataset,
+        dataset: crfName,
         aoiFeatureGeometry: geometry
       }).then(({data}) => {
         const crfSlices = data.value.features.reduce((acc, f) =>({
@@ -175,59 +171,30 @@ export function getBiodiversityData(dataset) {
           }
         }), {});
        const ids = data.value.features.map(f => f.attributes.SliceNumber);
-       console.log(ids)
-       EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[LOOKUP_TABLES[dataset]],
-        whereClause: `SliceNumber IN (${ids.toString()})`,
-      }).then((features) => {
-        const result = features
-          .map((f) => ({
-            isFlagship: f.attributes.is_flagship,
-            sliceNumber: f.attributes.SliceNumber,
-            name: f.attributes.scientific_name,
-            globalProtectedArea: f.attributes.wdpa_km2,
-            globaldRangeArea: f.attributes.range_area_km2,
-            globalProtectedPercentage: f.attributes.percent_protected,
-            protectionTarget: f.attributes.conservation_target,
-            presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
-          }))
-          .sort((a, b) => (b.isFlagship - a.isFlagship))
-          .filter(f => f.name !== null)
-        resolve({[dataset]:result});
-      }).catch((error) => {
-        reject(error)
+        EsriFeatureService.getFeatures({
+          url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
+          whereClause: `SliceNumber IN (${ids.toString()})`,
+        }).then((features) => {
+          const result = features
+            .map((f) => ({
+              isFlagship: f.attributes.is_flagship,
+              sliceNumber: f.attributes.SliceNumber,
+              name: f.attributes.scientific_name,
+              globalProtectedArea: f.attributes.wdpa_km2,
+              globaldRangeArea: f.attributes.range_area_km2,
+              globalProtectedPercentage: f.attributes.percent_protected,
+              protectionTarget: f.attributes.conservation_target,
+              presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
+            }))
+            .sort((a, b) => (b.isFlagship - a.isFlagship))
+            .filter(f => f.name !== null)
+          resolve({[crfName]:result});
+        }).catch((error) => {
+          reject(error)
+        });
       });
-    });
-  })
-}
-}
-
-export function getSpeciesFromLookupTable(crfData, lookupTableSlug) {
-  return new Promise((resolve, reject) => {
-    const ids = Object.keys(crfData);
-    
-    EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[lookupTableSlug],
-      whereClause: `SliceNumber IN (${ids.toString()})`,
-    }).then((features) => {
-      const result = features
-        .map((f) => ({
-          isFlagship: f.attributes.is_flagship,
-          sliceNumber: f.attributes.SliceNumber,
-          name: f.attributes.scientific_name,
-          globalProtectedArea: f.attributes.wdpa_km2,
-          globaldRangeArea: f.attributes.range_area_km2,
-          globalProtectedPercentage: f.attributes.percent_protected,
-          protectionTarget: f.attributes.conservation_target,
-          presenceInArea: crfData[f.attributes.SliceNumber].presencePercentage
-        }))
-        .sort((a, b) => (b.isFlagship - a.isFlagship))
-        .filter(f => f.name !== null)
-      resolve(result);
-    }).catch((getFeaturesError) => {
-      reject(getFeaturesError)
-    })
-  })
+    }) 
+  }
 }
 
 export const getAoiFromDataBase = (id) => {

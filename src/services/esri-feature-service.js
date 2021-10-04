@@ -27,10 +27,6 @@ function getFeatures({ url, whereClause = "", outFields = ["*"], returnGeometry 
 
 function getLayer({slug, outFields= ["*"]}) {
   return loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
-    console.log('featurelayer', new FeatureLayer({
-      url: LAYERS_URLS[slug],
-      outFields: ["WDPA_ID"]
-    }))
     return new FeatureLayer({
       url: LAYERS_URLS[slug],
       outFields

@@ -105,15 +105,14 @@ const Container = props => {
   }, [aoiId, geometryEngine, jsonUtils])
 
   useEffect(() => {
-    console.log('REPTILES BEFORE SET aoi', reptiles)
     setAoiData({
       ...elu,
       ...area,
-      birds,
-      mammals,
-      reptiles,
+      ...birds,
+      ...mammals,
+      ...reptiles,
       ...pressures,
-      amphibians,
+      ...amphibians,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,

@@ -3,8 +3,6 @@ import {
   MAMMALS_LOOKUP,
   REPTILES_LOOKUP,
   AMPHIBIAN_LOOKUP,
-  ELU_LOOKUP_TABLE,
-  WDPA_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
 
 export const CRF_NAMES = {
