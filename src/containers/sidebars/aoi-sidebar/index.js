@@ -9,31 +9,32 @@ import { DATA } from 'router'
 const actions = {...urlActions}
 
 const AoiSidebarContainer = (props) => {
-  const { aoiData, browsePage } = props;
+  const { speciesData, contextualData, browsePage } = props;
   const [values, setFormattedValues ] = useState({})
   useEffect(() => {
-    if (Object.keys(aoiData).length > 0) {
+    if (Object.keys(contextualData).length > 0) {
       setFormattedValues({
-        landCover: aoiData.elu && aoiData.elu.landCover,
-        area: localeFormatting(aoiData.area),
-        climateRegime: aoiData.elu && aoiData.elu.climateRegime,
-        population: aoiData.population && localeFormatting(aoiData.population),
-        mainPressure: aoiData.pressures && getMainPressure(aoiData.pressures),
-        totalPressures: aoiData.pressures && getTotalPressures(aoiData.pressures),
-        protectionPercentage: aoiData.protectionPercentage && percentageFormat(aoiData.protectionPercentage),
+        landCover: contextualData.elu && contextualData.elu.landCover,
+        area: localeFormatting(contextualData.area),
+        climateRegime: contextualData.elu && contextualData.elu.climateRegime,
+        population: contextualData.population && localeFormatting(contextualData.population),
+        mainPressure: contextualData.pressures && getMainPressure(contextualData.pressures),
+        totalPressures: contextualData.pressures && getTotalPressures(contextualData.pressures),
+        protectionPercentage: contextualData.protectionPercentage && percentageFormat(contextualData.protectionPercentage),
       })
     }
-  }, [aoiData]);
+  }, [contextualData]);
 
 
   const handleSceneModeChange = () => browsePage({type: DATA})
 
-  return console.log(aoiData) || (
-    <Component 
-      aoiData={aoiData}
+  return console.log(speciesData, contextualData) || (
+    <Component
       area={values.area}
+      speciesData={speciesData}
       landCover={values.landCover}
       population={values.population}
+      contextualData={contextualData}
       climateRegime={values.climateRegime}
       handleSceneModeChange={handleSceneModeChange}
       {...props}

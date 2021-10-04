@@ -177,6 +177,7 @@ export function getBiodiversityData(crfName) {
         }).then((features) => {
           const result = features
             .map((f) => ({
+              category: crfName,
               isFlagship: f.attributes.is_flagship,
               sliceNumber: f.attributes.SliceNumber,
               name: f.attributes.scientific_name,
@@ -195,6 +196,45 @@ export function getBiodiversityData(crfName) {
       });
     }) 
   }
+}
+
+export function getSpeciesData(crfName, geometry) {
+  return new Promise((resolve, reject) => {
+    getCrfData({ 
+      dataset: crfName,
+      aoiFeatureGeometry: geometry
+    }).then(({data}) => {
+      const crfSlices = data.value.features.reduce((acc, f) =>({
+        ...acc,
+        [f.attributes.SliceNumber]:{
+          sliceNumber: f.attributes.SliceNumber,
+          presencePercentage: f.attributes.percentage_presence
+        }
+      }), {});
+      const ids = data.value.features.map(f => f.attributes.SliceNumber);
+      EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
+        whereClause: `SliceNumber IN (${ids.toString()})`,
+      }).then((features) => {
+        const result = features
+          .map((f) => ({
+            category: crfName,
+            isFlagship: f.attributes.is_flagship,
+            sliceNumber: f.attributes.SliceNumber,
+            name: f.attributes.scientific_name,
+            globalProtectedArea: f.attributes.wdpa_km2,
+            globaldRangeArea: f.attributes.range_area_km2,
+            globalProtectedPercentage: f.attributes.percent_protected,
+            protectionTarget: f.attributes.conservation_target,
+            presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
+          }))
+          .filter(f => f.name !== null)
+        resolve(result);
+      }).catch((error) => {
+        reject(error)
+      });
+    });
+  })
 }
 
 export const getAoiFromDataBase = (id) => {

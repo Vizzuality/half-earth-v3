@@ -13,6 +13,7 @@ import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
 import SidebarCard from './sidebar-card-content';
+import SpeciesCard from './species-card';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import { humanPressuresLandUse } from 'constants/human-pressures';
@@ -25,7 +26,8 @@ import styles from './styles.module.scss';
 const LocalSceneSidebarComponent = ({
   map,
   area,
-  aoiData,
+  speciesData,
+  contextualData,
   areaName,
   className,
   landCover,
@@ -86,9 +88,12 @@ const LocalSceneSidebarComponent = ({
             <span>{climateRegime}</span>
           </div>
         </div>
+        <SpeciesCard
+          speciesData={speciesData}
+        />
         <SidebarCard 
           map={map}
-          aoiData={aoiData}
+          contextualData={contextualData}
           toggleType='radio'
           activeLayers={activeLayers}
           cardCategory={BIODIVERSITY_SLUG}
@@ -96,7 +101,7 @@ const LocalSceneSidebarComponent = ({
         />
         <SidebarCard 
           map={map}
-          aoiData={aoiData}
+          contextualData={contextualData}
           layers={WDPALayers}
           toggleType='checkbox'
           activeLayers={activeLayers}
@@ -104,7 +109,7 @@ const LocalSceneSidebarComponent = ({
         />
         <SidebarCard 
           map={map}
-          aoiData={aoiData}
+          contextualData={contextualData}
           toggleType='checkbox'
           activeLayers={activeLayers}
           layers={humanPressuresLandUse}

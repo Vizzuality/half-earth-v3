@@ -10,7 +10,7 @@ const actions = {...metadataActions, ...urlActions};
 
 const Container = (props) => {
   const { 
-    aoiData,
+    contextualData,
     toggleType,
     changeGlobe,
     activeLayers,
@@ -22,10 +22,10 @@ const Container = (props) => {
   const { description, title } = SIDEBAR_CARDS_CONFIG[cardCategory];
 
   useEffect(() => {
-    if (Object.keys(aoiData).length > 0) {
-      setCardDescription(description(aoiData));
+    if (Object.keys(contextualData).length > 0) {
+      setCardDescription(description(contextualData));
     }
-  }, [aoiData])
+  }, [contextualData])
 
   const radioTypeToggle = (option) => {
     if (selectedLayer === option.slug) {

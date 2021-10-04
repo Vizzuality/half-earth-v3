@@ -24,7 +24,6 @@ const SearchLocationContainer = (props) => {
 
   const browseSelectedFeature = ({result}) => {
     const { setBatchTooltipData } = props;
-    console.log(result)
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
       const { title, subtitle, buttonText, id } = tooltipConfig;
       const { geometry, attributes } = result.feature;

@@ -41,9 +41,9 @@ import {
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { 
   getEluData,
+  getSpeciesData,
   getPopulationData,
   getAoiFromDataBase, 
-  getBiodiversityData,
   getLandPressuresData,
   getProtectedAreasListData,
   getPercentageProtectedData,
@@ -63,12 +63,10 @@ const Container = props => {
   const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug } = props;
 
   const [elu, setEluData] = useState(null);
-  const [aoiData, setAoiData] = useState({})
+  const [speciesData, setSpeciesData] = useState({species: []})
+  const [taxaData, setTaxaData] = useState([])
+  const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
-  const [birds, setBirdsData] = useState(null);
-  const [mammals, setMammalsData] = useState(null);
-  const [reptiles, setReptilesData] = useState(null);
-  const [amphibians, setAmphibiansData] = useState(null);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -95,14 +93,20 @@ const Container = props => {
     if (geometryEngine &&  jsonUtils) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
         if (localStoredAoi) {
-          const { jsonGeometry, ...rest } = localStoredAoi;
-          setAoiData({ ...rest });
+          const { jsonGeometry, species, ...rest } = localStoredAoi;
+          console.log('localStoredAoi', localStoredAoi)
+          console.log('species', {species})
+          setSpeciesData({species});
+          setContextualData({ ...rest })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
         } else {
             getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
               console.log('data from arcgisonline', aoiData)
-              setAoiData(aoiData);
+              const { geometry, species, ...rest } = aoiData;
+              setGeometry(geometry);
+              setSpeciesData(species);
+              setContextualData({ ...rest })
             } else {
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
               const jsonGeometry = aoiStoredGeometry.toJSON();
@@ -114,10 +118,10 @@ const Container = props => {
               fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
               fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
               fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
-              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(BIRDS), aoiStoredGeometry).then(data => setBirdsData(data));
-              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(MAMMALS), aoiStoredGeometry).then(data => setMammalsData(data));
-              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(REPTILES), aoiStoredGeometry).then(data => setReptilesData(data));
-              fetchDataAndUpdateForageItem(aoiId, getBiodiversityData(AMPHIBIANS), aoiStoredGeometry).then(data => setAmphibiansData(data));
+              getSpeciesData(BIRDS, aoiStoredGeometry).then(data => setTaxaData(data));
+              getSpeciesData(MAMMALS, aoiStoredGeometry).then(data => setTaxaData(data));
+              getSpeciesData(REPTILES, aoiStoredGeometry).then(data => setTaxaData(data));
+              getSpeciesData(AMPHIBIANS, aoiStoredGeometry).then(data => setTaxaData(data));
             }
           }) 
         }
@@ -129,19 +133,32 @@ const Container = props => {
   }, [aoiId, geometryEngine, jsonUtils])
 
   useEffect(() => {
-    setAoiData({
+    setContextualData({
       ...elu,
       ...area,
-      ...birds,
-      ...mammals,
-      ...reptiles,
       ...pressures,
-      ...amphibians,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,
     })
-  },[elu, area, birds, mammals, reptiles, amphibians, population, pressures, percentageProtected, protectedAreasList])
+  },[elu, area, population, pressures, percentageProtected, protectedAreasList]);
+
+  useEffect(() => {
+    setSpeciesData({
+      species: [
+        ...speciesData.species,
+        ...taxaData
+      ]
+    })
+  },[taxaData])
+
+
+  useEffect(() => {
+    if(speciesData.species.length > 0) {
+      writeToForageItem(aoiId, {species: [...speciesData.species]});
+    }
+  },[speciesData]);
+
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
@@ -151,8 +168,9 @@ const Container = props => {
 
   return (
     <Component
-      aoiData={aoiData}
       geometry={geometry}
+      speciesData={speciesData}
+      contextualData={contextualData}
       handleGlobeUpdating={handleGlobeUpdating}
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       {...props}

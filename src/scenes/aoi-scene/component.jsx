@@ -12,12 +12,13 @@ import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-lay
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const AoiSceneComponent = ({
-  aoiData,
   geometry,
   onMapLoad,
   userConfig,
+  speciesData,
   activeLayers,
   sceneSettings,
+  contextualData,
 }) => (
   <Scene
     sceneName={'aoi-scene'}
@@ -43,8 +44,9 @@ const AoiSceneComponent = ({
       activeLayers={activeLayers}
     />
     <AoiSidebar
-      aoiData={aoiData}
+      speciesData={speciesData}
       activeLayers={activeLayers}
+      contextualData={contextualData}
     />
   </Scene>
 );
