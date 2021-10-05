@@ -9,6 +9,7 @@ export const CRF_NAMES = {
   BIRDS: 'birds',
   REPTILES: 'reptiles',
   AMPHIBIANS: 'amphibians',
+  // MAMMALS: 'mammals_equal_area_20211003',
   MAMMALS: 'mammals_for_greta',
   ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
@@ -22,7 +23,7 @@ export const CRF_DATA_CATEGORIES = {
   BIODIVERSITY: 'biodiversity'
 }
 
-export const { BIRDS, AMPHIBIANS, MAMMALS, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREA_PERCENTAGE, HUMAN_PRESSURES, REPTILES, PROTECTED_AREAS_INSIDE_AOI } = CRF_NAMES;
+export const { BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREA_PERCENTAGE, HUMAN_PRESSURES, PROTECTED_AREAS_INSIDE_AOI } = CRF_NAMES;
 
 
 export const LOOKUP_TABLES = {
@@ -37,6 +38,7 @@ export const CRFS_CONFIG = {
   inputGeometryKey: 'geometry',
   inputFeatureServiceNameKey: 'esri_out_feature_service_name',
   outputParamKey: 'output_table',
+  // basePath: '/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft/'
   basePath: '/cloudStores/HECloudstore_ds_fuwwtcoj9blciafm/'
 }
 
@@ -48,6 +50,7 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 export const GEOPROCESSING_SERVICES_URLS = {
   [BIRDS]: 'https://hepportal.arcgis.com/server/rest/services/SampleBirds/GPServer/SampleBirds',
   [REPTILES]: 'https://hepportal.arcgis.com/server/rest/services/SampleRept/GPServer/SampleRept',
+  // [MAMMALS]: ' https://heportal.esri.com/server/rest/services/SampleMammals/GPServer/sampleUniqueSelectCalculate',
   [MAMMALS]: 'https://hepportal.arcgis.com/server/rest/services/sampleUniqueSelectCalculate/GPServer/sampleUniqueSelectCalculate',
   [AMPHIBIANS]: 'https://hepportal.arcgis.com/server/rest/services/SampleAmph/GPServer/SampleAmph',
   [HUMAN_PRESSURES]: 'https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage',

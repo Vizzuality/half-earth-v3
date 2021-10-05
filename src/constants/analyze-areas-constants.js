@@ -6,6 +6,8 @@ AOIS_HISTORIC_DEVELOPMENT,
 WDPA_OECM_FEATURE_LAYER
 } from 'constants/layers-slugs';
 
+import { BIRDS, AMPHIBIANS, MAMMALS, REPTILES } from 'constants/geo-processing-services';
+
 import { getTotalPressures, getMainPressure} from 'utils/analyze-areas-utils';
 import { percentageFormat } from 'utils/data-formatting-utils';
 
@@ -52,5 +54,28 @@ export const SIDEBAR_CARDS_CONFIG = {
     description: ({pressures}) => `Of the current area, __${getTotalPressures(pressures)}% is under human pressure__,
     the majority of which are pressures from ${getMainPressure(pressures)}.`
   },
-
 } 
+
+export const SPECIES_FILTERS = [
+  {slug: 'all', label: 'vertebrates'},
+  {slug: BIRDS, label: 'birds'},
+  {slug: MAMMALS, label: 'mammals'},
+  {slug: REPTILES, label: 'reptiles'},
+  {slug: AMPHIBIANS, label: 'amphibians'},
+  {slug: 'smallestRange', label: 'smallest range species'},
+  {slug: 'flagship', label: 'flagship species'},
+]
+
+export const DEFAULT_SPECIES_FILTER = {slug: 'all', label: 'vertebrates'};
+
+export const IUCN_CATEGORIES = {
+  EX: 'Extinct',
+  EW: 'Extinct in the wild',
+  CR: 'Critically endangered',
+  EN: 'Endangered',
+  VU: 'Vulnerable',
+  NT: 'Near threatened',
+  LC: 'Least concern',
+  DD: 'Data deficient',
+  NE: 'Not evaluated',
+}

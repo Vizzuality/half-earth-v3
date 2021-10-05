@@ -36,7 +36,12 @@ export function createFeatureSet(defaultJsonFeatureSet) {
 export function getDefaultJsonFeatureSet(metadata, inputGeometryKey) {
   return new Promise((resolve, reject) => {
     try {
-      resolve(metadata.parameters.find(p => p.name === inputGeometryKey).defaultValue)
+      console.log(metadata)
+      if (metadata.error) {
+        reject(metadata.error)
+      }else {
+        resolve(metadata.parameters.find(p => p.name === inputGeometryKey).defaultValue)
+      }
     } catch (error) {
       reject(error)
     }
@@ -187,6 +192,7 @@ export function getBiodiversityData(crfName) {
               protectionTarget: f.attributes.conservation_target,
               presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
             }))
+            // .sort((a, b) => ((b.globalProtectedPercentage - b.protectionTarget) - (a.globalProtectedPercentage - a.protectionTarget)))
             .sort((a, b) => (b.isFlagship - a.isFlagship))
             .filter(f => f.name !== null)
           resolve({[crfName]:result});
@@ -228,6 +234,7 @@ export function getSpeciesData(crfName, geometry) {
             protectionTarget: f.attributes.conservation_target,
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
           }))
+          .sort((a, b) => (b.isFlagship - a.isFlagship))
           .filter(f => f.name !== null)
         resolve(result);
       }).catch((error) => {

@@ -22,3 +22,61 @@
 .description {
   @extend %bodyText;
 }
+
+.infoClue {
+  cursor: help;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: $dark-opacity;
+}
+
+.globalRangeArea {
+  @extend %bodyText;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    font-weight: 500;
+    margin: 0 0 10px;
+  }
+}
+
+.speciesImageWrapper {
+  height: 150px;
+  width: 330px;
+  margin-top: $site-gutter;
+  border-radius: 6px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.sliderControls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: baseline;
+  margin-top: $site-gutter;
+
+  .speciesNames {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    .commonName {
+      @extend %title;
+    }
+    .scientificName {
+      @extend %annotation;
+      font-style: italic;
+    }
+  }
+  .icon {
+    fill: $dark-text;
+    cursor: pointer;
+    &.rotateLeft {
+      transform: rotate(180deg);
+    }
+  }
+}
+
