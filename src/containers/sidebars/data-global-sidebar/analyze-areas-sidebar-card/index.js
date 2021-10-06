@@ -39,7 +39,6 @@ const AnalyzeAreasContainer = (props) => {
     const geometry = {
       ...response.data.featureCollection.layers[0].featureSet.features[0].geometry,
       ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
-      ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
     }
     const hash = createHashFromGeometry(geometry);
     setAoiGeometry({ hash, geometry });

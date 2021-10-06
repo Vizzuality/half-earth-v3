@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DEFAULT_SPECIES_FILTER, IUCN_CATEGORIES } from 'constants/analyze-areas-constants';
+import { getPlaceholderSpeciesImage } from 'utils/analyze-areas-utils';
 import MolService from 'services/mol';
 import Component from './component';
 
@@ -8,6 +9,7 @@ const SpeciesCardContainer = (props) => {
   const { species } = speciesData;
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER); 
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0); 
+  const [placeholderText, setPlaceholderText] = useState(null); 
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species); 
   const [imageBackgroundPosition, setImageBackgroundPosition] = useState('center'); 
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
@@ -55,9 +57,10 @@ const SpeciesCardContainer = (props) => {
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
-            imageUrl: results[0].image ? results[0].image.url : 'results[0].taxa',
+            imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: IUCN_CATEGORIES[results[0].redlist]
-          })
+          });
+          results[0].image ? setPlaceholderText(null) : setPlaceholderText(`Photo not available for this ${results[0].taxa.substring(0, results[0].taxa.length -1)}`)
         } else {
           handleNextSpeciesSelection();
         }
@@ -71,7 +74,6 @@ const SpeciesCardContainer = (props) => {
       img.onload = () => {
         const width = img.naturalWidth;
         const height = img.naturalHeight;
-        console.log(width, height)
         if (width - height > 0) {
           setImageBackgroundPosition('center')
         } else {
@@ -84,6 +86,7 @@ const SpeciesCardContainer = (props) => {
 
   return (
     <Component
+      placeholderText={placeholderText}
       selectedSpecies={selectedSpecies}
       speciesToDisplay={speciesToDisplay}
       setSpeciesFilter={setSpeciesFilter}
