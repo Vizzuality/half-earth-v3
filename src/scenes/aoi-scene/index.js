@@ -1,34 +1,9 @@
-// import React from 'react';
-// import Component from './component.jsx';
-// import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
-// import { layersConfig } from 'constants/mol-layers-configs';
-// import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-
-// const AoiSceneContainer = (props) => {
-//   const { activeLayers } = props;
-//   const handleMapLoad = (map, activeLayers) => {
-//     setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER]});
-//     activateLayersOnLoad(map, activeLayers, layersConfig);
-//   }
-
-//   return (
-//     <Component
-//       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-//       {...props}
-//     />
-//   )
-// }
-
-// export default AoiSceneContainer;
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import localforage from 'localforage';
 import { loadModules } from 'esri-loader';
 import mapStateToProps from './selectors';
+import EsriFeatureService from 'services/esri-feature-service';
 import * as urlActions from 'actions/url-actions';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
@@ -56,6 +31,7 @@ import {
 } from 'constants/geo-processing-services';
 
 import Component from './component.jsx';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 const actions = {...urlActions, aoisGeometriesActions};
 
@@ -82,20 +58,32 @@ const Container = props => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   if (precalculatedLayerSlug) {
-  //     console.log('PRECALCULATED DATA', precalculatedLayerSlug)
-  //   }
-  // }, [precalculatedLayerSlug])
+  useEffect(() => {
+    if (precalculatedLayerSlug && geometryEngine) {
+      console.log('PRECALCULATED DATA', precalculatedLayerSlug)
+      EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[precalculatedLayerSlug],
+        whereClause: `MOL_ID = '${aoiId}'`,
+        returnGeometry: true
+      }).then((features) => {
+        console.log(features)
+        const { geometry, attributes } = features[0];
+        console.log(attributes.amphibians)
+        // const amphibians = JSON.parse(attributes.amphibians);
+        // console.log(amphibians)
+        setGeometry(geometry);
+        const area = calculateGeometryArea(geometry, geometryEngine)
+        setAreaData({area});
+      })
+    }
+  }, [precalculatedLayerSlug, geometryEngine])
 
   
   useEffect(() => {
-    if (geometryEngine &&  jsonUtils) {
+    if (geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
         if (localStoredAoi) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
-          console.log('localStoredAoi', localStoredAoi)
-          console.log('species', {species})
           setSpeciesData({species});
           setContextualData({ ...rest })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
@@ -154,10 +142,10 @@ const Container = props => {
 
 
   useEffect(() => {
-    if(speciesData.species.length > 0) {
+    if(speciesData.species.length > 0 && !precalculatedLayerSlug) {
       writeToForageItem(aoiId, {species: [...speciesData.species]});
     }
-  },[speciesData]);
+  },[speciesData, precalculatedLayerSlug]);
 
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });

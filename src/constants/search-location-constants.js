@@ -11,7 +11,7 @@ export const SEARCH_SOURCES_CONFIG = {
     url: LAYERS_URLS[ADMIN_AREAS_FEATURE_LAYER],
     title: ADMIN_AREAS_FEATURE_LAYER,
     outFields: ["*"],
-    searchFields: ["NAME_1", "GUID_1"],
+    searchFields: ["NAME_1", "NAME_0"],
     suggestionTemplate: '{NAME_1}, {NAME_0}'
   },
   [ECOREGIONS_FEATURE_LAYER]: {

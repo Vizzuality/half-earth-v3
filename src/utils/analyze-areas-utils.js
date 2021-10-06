@@ -1,5 +1,9 @@
 import sha1 from 'sha1';
 import { loadModules } from 'esri-loader';
+import amphibiansPlaceholder from 'images/no-amphibian.png';
+import mammalsPlaceholder from 'images/no-mammal.png';
+import reptilesPlaceholder from 'images/no-reptile.png';
+import birdsPlaceholder from 'images/no-bird.png';
 import _intersectionBy from 'lodash/intersectionBy';
 import { percentageFormat } from 'utils/data-formatting-utils';
 import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
@@ -68,3 +72,18 @@ export const getMainPressure = (pressures) => {
   );
   return sorted[0];
 }
+
+export const getPlaceholderSpeciesImage = (taxa) => {
+  switch (taxa) {
+    case 'amphibians':
+      return amphibiansPlaceholder
+    case 'mammals':
+      return mammalsPlaceholder
+    case 'reptiles':
+      return reptilesPlaceholder
+    case 'birds':
+      return birdsPlaceholder
+    default:
+      return mammalsPlaceholder
+  }
+} 

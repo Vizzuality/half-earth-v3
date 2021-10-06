@@ -13,10 +13,10 @@ const MAP_TOOLTIP_CONFIG = {
     id: 'fid'
   },
   [ADMIN_AREAS_FEATURE_LAYER] : {
-    title: 'NAME',
-    subtitle: 'COUNTRY',
+    title: 'NAME_1',
+    subtitle: 'NAME_0',
     buttonText: 'analyze area',
-    id: 'ISO_CODE'
+    id: 'MOL_ID'
   },
   [WDPA_OECM_FEATURE_LAYER] : {
     title: 'NAME',
