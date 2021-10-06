@@ -53,6 +53,7 @@ const Component = ({
         theme={'light'}
         width="full"
         parentWidth="322px"
+        onOptionSelection={(option) => console.log(option)}
       />
       {individualSpeciesData &&
         <section className={styles.speciesDataContainer}>
