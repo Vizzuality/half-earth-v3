@@ -9,8 +9,21 @@ const SpeciesCardContainer = (props) => {
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER); 
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0); 
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species); 
+  const [imageBackgroundPosition, setImageBackgroundPosition] = useState('center'); 
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null)
+
+
+  const handleNextSpeciesSelection = () => {
+    selectedSpeciesIndex === speciesToDisplay.length - 1 ?
+    setSelectedSpeciesIndex(0) :
+    setSelectedSpeciesIndex(selectedSpeciesIndex + 1)
+  }
+  const handlePreviousSpeciesSelection = () => {
+    selectedSpeciesIndex === 0 ?
+    setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
+    setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
+  }
 
   useEffect(() => {
     switch (selectedSpeciesFilter.slug) {
@@ -32,29 +45,42 @@ const SpeciesCardContainer = (props) => {
   }, [speciesToDisplay, selectedSpeciesIndex])
 
   useEffect(() => {
+    setSelectedSpeciesIndex(0);
+  }, [selectedSpeciesFilter])
+
+  useEffect(() => {
     if (selectedSpecies) {
       MolService.getSpecies(selectedSpecies.name).then((results) => {
-        setIndividualSpeciesData({
-          ...selectedSpecies,
-          commonname: results[0].commonname,
-          imageUrl: results[0].image ? results[0].image.url : 'results[0].taxa',
-          iucnCategory: IUCN_CATEGORIES[results[0].redlist]
-        })
+        if (results.length > 0) {
+          setIndividualSpeciesData({
+            ...selectedSpecies,
+            commonname: results[0].commonname,
+            imageUrl: results[0].image ? results[0].image.url : 'results[0].taxa',
+            iucnCategory: IUCN_CATEGORIES[results[0].redlist]
+          })
+        } else {
+          handleNextSpeciesSelection();
+        }
       })
     }
   }, [selectedSpecies])
 
-
-  const handleNextSpeciesSelection = () => {
-    selectedSpeciesIndex === speciesToDisplay.length - 1 ?
-    setSelectedSpeciesIndex(0) :
-    setSelectedSpeciesIndex(selectedSpeciesIndex + 1)
-  }
-  const handlePreviousSpeciesSelection = () => {
-    selectedSpeciesIndex === 0 ?
-    setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
-    setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
-  }
+  useEffect(() => {
+    if (individualSpeciesData) {
+      const img = new Image();
+      img.onload = () => {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        console.log(width, height)
+        if (width - height > 0) {
+          setImageBackgroundPosition('center')
+        } else {
+          setImageBackgroundPosition('50% 10%')
+        }
+      }
+      img.src = individualSpeciesData.imageUrl;
+    }
+  },[individualSpeciesData])
 
   return (
     <Component
@@ -63,6 +89,7 @@ const SpeciesCardContainer = (props) => {
       setSpeciesFilter={setSpeciesFilter}
       selectedSpeciesFilter={selectedSpeciesFilter}
       individualSpeciesData={individualSpeciesData}
+      imageBackgroundPosition={imageBackgroundPosition}
       handleNextSpeciesSelection={handleNextSpeciesSelection}
       handlePreviousSpeciesSelection={handlePreviousSpeciesSelection}
       {...props}

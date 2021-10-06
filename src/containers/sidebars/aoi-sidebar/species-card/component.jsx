@@ -22,11 +22,12 @@ const Component = ({
   speciesToDisplay,
   selectedSpeciesFilter,
   individualSpeciesData,
+  imageBackgroundPosition,
   searchTerm,
   handleSearchChange,
   handleNextSpeciesSelection,
   handlePreviousSpeciesSelection
-}) => console.log(individualSpeciesData) || (
+}) => console.log(imageBackgroundPosition) || (
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
       <p className={styles.title}>
@@ -55,7 +56,13 @@ const Component = ({
       {individualSpeciesData &&
         <section className={styles.speciesDataContainer}>
           <div>
-            <div className={styles.speciesImageWrapper} style={{backgroundImage: `url(${individualSpeciesData.imageUrl})`}}/>
+            <div
+              className={styles.speciesImageWrapper}
+              style={{
+                backgroundImage: `url(${individualSpeciesData.imageUrl})`,
+                backgroundPosition: imageBackgroundPosition
+              }}
+            />
             <div className={styles.sliderControls}>
               <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
               <div className={styles.speciesNames}>
