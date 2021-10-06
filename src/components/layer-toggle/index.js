@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux'
 import Component from './component';
 import metadataActions from 'redux_modules/metadata';
@@ -9,7 +9,8 @@ import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 const actions = { ...metadataActions, openInfoModalAnalyticsEvent };
 
 const Container = (props) => {
-  const { map } = props;
+  const { map, activeLayers, option } = props;
+  const [isChecked, setIsChecked] = useState(false)
 
 
   const handleInfoClick = (option) => {
@@ -26,13 +27,20 @@ const Container = (props) => {
     e.stopPropagation();
     bringLayerToBack(layer, map);
   }
+
   const handleBringToFrontClick = (e,layer) => {
     e.stopPropagation();
     bringLayerToFront(layer, map);
   }
 
+  useEffect(() => {
+    const _isChecked = activeLayers.some(layer => layer.title === option.value);
+    setIsChecked(_isChecked);
+  }, [activeLayers])
+
   return (
     <Component
+      isChecked={isChecked}
       handleInfoClick={handleInfoClick}
       handleBringToBackClick={handleBringToBackClick}
       handleBringToFrontClick={handleBringToFrontClick}

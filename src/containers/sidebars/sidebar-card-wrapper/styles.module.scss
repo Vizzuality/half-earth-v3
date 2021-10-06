@@ -23,18 +23,25 @@
   width: 100%;
   min-height: inherit;
   border-radius: $card-border-radius;
+  color: $dark-text;
   > :not(:last-child)::after {
     content: '';
     position: relative;
     bottom: -$sidebar-cards-padding;
     display: block;
     margin: 0 auto;
-    border-bottom: 1px dotted $_temporary-dark-text;
+    border-bottom: 1px dotted $dark-text;
+  }
+  .section {
+    padding: $sidebar-cards-padding;
+    border-radius: $card-border-radius;
+    background-color: $white;
   }
 }
 
-.section {
-  padding: $sidebar-cards-padding;
-  border-radius: $card-border-radius;
-  background-color: $accent-grey;
+.dark {
+  color: $dark-text;
+  .section {
+    background-color: $accent-grey;
+  }
 }

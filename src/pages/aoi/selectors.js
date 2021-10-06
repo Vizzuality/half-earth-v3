@@ -1,11 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { selectGlobeUrlState } from 'selectors/location-selectors';
+import { selectAoiId, getAoiGeometry } from 'selectors/aoi-selectors';
 
 import aoiSceneConfig from 'scenes/aoi-scene/config';
 
 const selectUserConfig = ({ userConfig }) => userConfig || null;
-const selectAoiId = ({location}) => location.payload.id;
-const selectAoiGeometry = ({location}) => location.query && location.query.aoi_geometry;
 const selectPrecalculatedLayerSlug = ({location}) => location.query && location.query.precalculatedLayer;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
@@ -26,6 +25,6 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   sceneSettings: getGlobeSettings,
   isGlobeUpdating: getGlobeUpdating,
-  urlQueryGeometry: selectAoiGeometry,
+  aoiStoredGeometry: getAoiGeometry,
   precalculatedLayerSlug: selectPrecalculatedLayerSlug,
 });

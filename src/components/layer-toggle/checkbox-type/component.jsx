@@ -6,10 +6,9 @@ import LayerTools from 'components/layer-toggle/layers-tools';
 import styles from './styles.module.scss';
 
 const CheckboxType = ({
-  theme,
   option,
-  isChecked,
   onChange,
+  isChecked,
   onInfoClick,
   activeLayers,
   onOpacityClick,
@@ -20,17 +19,13 @@ const CheckboxType = ({
     <div 
       key={option.name}
       className={cx(
-        styles.container, {
-          [styles.checked]: isChecked,
-          [theme]: isChecked
-        }
+        styles.container
       )}
     >
       <div
         className={styles.checkboxOption}
       >
         <Checkbox
-          theme={theme}
           option={option}
           checked={isChecked}
           onChange={onChange}

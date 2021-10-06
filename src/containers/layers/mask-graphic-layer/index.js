@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { loadModules } from 'esri-loader';
+import { MASK_LAYER } from 'constants/layers-slugs';
 import { MASK_STYLES } from 'constants/graphic-styles';
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 
@@ -10,7 +11,7 @@ const MaskGraphicLayer = props => {
   // Create graphic layer to store the mask
   useEffect(() => {
     loadModules(["esri/layers/GraphicsLayer"]).then(([GraphicsLayer]) => {
-      const _graphicsLayer = createGraphicLayer(GraphicsLayer, [], 'MASK_LAYER');
+      const _graphicsLayer = createGraphicLayer(GraphicsLayer, [], MASK_LAYER);
       setGraphicsLayer(_graphicsLayer);
       view.map.layers.add(_graphicsLayer);
     })

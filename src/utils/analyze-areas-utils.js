@@ -1,6 +1,7 @@
 import sha1 from 'sha1';
 import { loadModules } from 'esri-loader';
 import _intersectionBy from 'lodash/intersectionBy';
+import { percentageFormat } from 'utils/data-formatting-utils';
 import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
 
 export function logGeometryArea(geometry) {
@@ -50,4 +51,20 @@ export function featureCollectionFromShape(input, view, onFeatureSetGenerated) {
           console.log('FEATURE COLLECTION', response)
         })
     })
+}
+
+export const getTotalPressures = (pressures) => {
+  if (!pressures) return null;
+  const total = Object.keys(pressures).reduce((acc, key) => {
+    return acc + parseFloat(pressures[key]);
+  }, 0);
+  return percentageFormat(total);
+}
+
+export const getMainPressure = (pressures) => {
+  if (!pressures) return null;
+  const sorted = Object.keys(pressures).sort(
+    (a, b) => parseFloat(pressures[b]) - parseFloat(pressures[a])
+  );
+  return sorted[0];
 }

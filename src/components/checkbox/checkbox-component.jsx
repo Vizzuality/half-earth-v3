@@ -5,12 +5,13 @@ import cx from 'classnames';
 
 import styles from './checkbox-styles.module.scss';
 
-const Checkbox = ({ option, onChange, checked, theme, className }) => {
+const Checkbox = ({ option, onChange, checked, theme, className, disabled }) => {
   return (
     <div key={option.value} className={cx(
       className,
+      {[theme]: checked},
       styles.checkboxWrapper,
-      { [theme]: checked }
+      {[styles.disabled]: disabled}
     )}>
       <input
         type="checkbox"

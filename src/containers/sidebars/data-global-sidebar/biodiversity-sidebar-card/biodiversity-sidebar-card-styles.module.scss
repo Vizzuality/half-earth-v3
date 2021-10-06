@@ -18,6 +18,7 @@
 .togglesContainer,
 .dropdownContainer {
   padding-top: $sidebar-vertical-flow;
+  color: $white;
 }
 
 .dropdownContainer {
@@ -29,4 +30,11 @@
     color: $white;
     padding-right: $sidebar-paddings;
   }
+}
+
+.togglesContainer {
+  // this way we expand the toggles to the edge of the sidebar
+  position: relative;
+  left: -$sidebar-paddings;
+  width: calc(100% + (2 * #{$sidebar-paddings}));
 }

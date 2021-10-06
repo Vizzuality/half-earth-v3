@@ -341,3 +341,30 @@ export const LAYERS_TOGGLE_CONFIG = {
     }
   }
 }
+
+export const AOI_BIODIVERSITY_TOGGLES = [
+  { 
+    name: 'All groups richness',
+    value: ALL_TAXA_RICHNESS,
+    id: ALL_TAXA_RICHNESS,
+    title: ALL_TAXA_RICHNESS,
+    slug: ALL_TAXA_RICHNESS,
+    metadataTitle: 'Protected areas'
+  },
+  { 
+    name: 'All groups rarity',
+    value: ALL_TAXA_RARITY,
+    id: ALL_TAXA_RARITY,
+    title: ALL_TAXA_RARITY,
+    slug: ALL_TAXA_RARITY,
+    metadataTitle: 'Protected areas'
+  },
+  { 
+    name: 'All groups priority',
+    value: ALL_TAXA_PRIORITY,
+    id: ALL_TAXA_PRIORITY,
+    title: ALL_TAXA_PRIORITY,
+    slug: ALL_TAXA_PRIORITY,
+    metadataTitle: 'Protected areas'
+  }
+]

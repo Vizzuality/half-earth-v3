@@ -1,0 +1,129 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+$sidebar-content-top: 180px;
+
+.headerCard {
+  @include backdropBlur();
+  position: fixed;
+  z-index: $bring-to-front;
+  top: $ui-left-top;
+  left: $site-gutter;
+  width: $sidebar-width;
+  padding: $sidebar-paddings;
+  border: $sidebar-border;
+}
+
+.container { 
+  @extend %verticalScrollbar;
+  @include backdropBlur();
+  position: absolute;
+  top: $sidebar-content-top;
+  left: $site-gutter;
+  display: flex;
+  flex-direction: column;
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
+  height: calc(100vh - #{$sidebar-content-top});
+  width: $sidebar-width;
+  padding: $site-gutter;
+  z-index: $bring-to-front;
+}
+
+.backButton {
+  position: absolute;
+  top: -$local-sidebar-top-margin;
+  left: calc(#{$local-sidebar-width}/2 - #{$rounded-button-size}/2);
+}
+
+.loading {
+  padding: $mobile-sidebar-side-paddings;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings;
+  }
+}
+
+.loadingText {
+  @extend %bodyText;
+  margin-bottom: $site-gutter;
+  color: $white;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: $site-gutter;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: baseline;
+}
+
+.areaName {
+  @extend %display2;
+  color: $white;
+  margin: 0;
+}
+
+.area {
+  @extend %annotation;
+  color: $grey-text;
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  button {
+    margin-left: 5px;
+  }
+}
+
+.contextualDataRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contextualIndicator {
+  display: flex;
+  align-items: center;
+  cursor: help;
+  span {
+    @extend %subtitle;
+    position: relative;
+    top: 2px;
+    color: $white;
+    margin-left: 5px;
+  }
+}
+
+.scrollableArea {
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    max-height: 66px;
+    border-radius: 3px;
+    background-color: #DBDBDB;
+    width: 30px;
+  }
+}
+
+.actionButton {
+  margin-left: $site-gutter;
+  margin-bottom: $site-gutter;
+}
+

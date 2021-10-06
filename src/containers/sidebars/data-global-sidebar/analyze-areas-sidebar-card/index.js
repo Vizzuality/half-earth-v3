@@ -10,13 +10,14 @@ import { useSketchWidget} from 'hooks/esri';
 import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
+import aoisGeometriesActions from 'redux_modules/aois-geometries';
 
-const actions = { ...urlActions, ...mapTooltipActions };
+const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions };
 
 
 
 const AnalyzeAreasContainer = (props) => {
-  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible } = props;
+  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   
@@ -29,8 +30,9 @@ const AnalyzeAreasContainer = (props) => {
 
   const postDrawCallback = (graphic) => {
     const { geometry } = graphic;
-    const aoi_hash = createHashFromGeometry(geometry);
-    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: geometry }});
+    const hash = createHashFromGeometry(geometry);
+    setAoiGeometry({ hash, geometry });
+    browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
   }
 
   const onFeatureSetGenerated = (response) => {
@@ -39,8 +41,9 @@ const AnalyzeAreasContainer = (props) => {
       ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
       ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
     }
-    const aoi_hash = createHashFromGeometry(geometry);
-    browsePage({type: AREA_OF_INTEREST, payload: { id: aoi_hash }, query: { aoi_geometry: geometry }});
+    const hash = createHashFromGeometry(geometry);
+    setAoiGeometry({ hash, geometry });
+    browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
   }
 
   const {

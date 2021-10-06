@@ -6,6 +6,8 @@ $circle-size: 15px;
 
 .radioInput {
   @extend %bodyText;
+  position: relative;
+  padding-left: calc(#{$circle-size} + 10px );
   display: flex;
   align-items: center;
   text-transform: capitalize;
@@ -13,12 +15,22 @@ $circle-size: 15px;
   height: 30px;
   cursor: pointer;
 
-  &:before {
+  &:after {
     content: "";
-    margin-right: 10px;
     height: $circle-size;
     width: $circle-size;
+    position: absolute;
+    left: 0;
     border: 1px solid $white;
+    border-radius: 50%;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: $circle-size;
+    width: $circle-size;
     border-radius: 50%;
   }
 }
@@ -32,10 +44,5 @@ $circle-size: 15px;
     cursor: pointer;
     // prevent the default radio button from taking up the space
     // display: none would screw up the keyboard navigation, so let's go for opacity
-  }
-
-  input[type="radio"]:checked + .radioInput::before {
-    background: $biodiversity-gradient-rotated;
-    border: 2px solid $white;
   }
 }

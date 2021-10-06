@@ -5,7 +5,7 @@
 .radioOption {
   @extend %subtitle;
   width: 100%;
-  color: $white;
+  color: inherit;
   cursor: pointer;
 }
 
@@ -15,8 +15,7 @@
 
 .container {
   display: flex;
-  width: $sidebar-width;
-  left: -20px;
+  width: 100%;
   padding: 0 20px;
   position: relative;
   justify-content: space-between;

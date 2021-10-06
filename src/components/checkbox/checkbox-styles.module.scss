@@ -2,7 +2,7 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-$checkbox-size: 15px;
+$checkbox-size: 14px;
 
 .checkboxWrapper {
   display: flex;
@@ -19,22 +19,35 @@ input[type="checkbox"] {
 .checkbox {
   display: flex;
   align-items: center;
+  position: relative;
+  padding-left: calc(#{$checkbox-size} + 10px );
   cursor: pointer;
   height: 30px;
   width: 100%;
 
-  &:before {
+  &:after {
     content: "";
-    margin-right: 16px;
     height: $checkbox-size;
     width: $checkbox-size;
+    position: absolute;
+    left: 0;
     border: 1px solid $white;
+    border-radius: 2px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: $checkbox-size;
+    width: $checkbox-size;
     border-radius: 2px;
   }
 }
 
 .label {
-  margin-right: 8px;
+  color: inherit;
+  margin-right: $site-gutter;
 }
 
 .icon {

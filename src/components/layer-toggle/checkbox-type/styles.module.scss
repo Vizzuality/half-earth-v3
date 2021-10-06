@@ -6,15 +6,10 @@ $checkbox-size: 15px;
 
 .container {
   display: flex;
-  width: $sidebar-width;
-  left: -20px;
+  width: 100%;
   padding: 0 20px;
   position: relative;
   justify-content: space-between;
-  &:hover,
-  &.checked {
-    background-color: $white-opacity;
-  }
 }
 
 .checkboxOption {
@@ -27,7 +22,7 @@ $checkbox-size: 15px;
 
 .labelStyles {
   @extend %bodyText;
-  color: $white;
+  color: inherit;
 }
 
 .toggle {

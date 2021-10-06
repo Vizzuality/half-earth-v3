@@ -1,0 +1,61 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container{
+  @extend %bodyText;
+  margin-bottom: $site-gutter;
+  .barTitle {
+    margin: 0;
+  }
+}
+.barWrapper {
+  display: flex;
+  position: relative;
+  padding-top: 5px;
+  justify-content: space-between;
+  align-items: center;
+  .bar {
+    position: relative;
+    width: 80%;
+    height: 16px;
+    border-radius: 2px;
+    background-color: $dark-opacity;
+  }
+
+  .value {
+    height: 100%;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+
+  .annotationBar {
+    position: absolute;
+    top: -2px;
+    width: 2px;
+    height: 20px;
+    background-color: $dark-text;
+  }
+  .annotationTitle {
+    @extend %annotation;
+    position: absolute;
+    top: 5px;
+    transform: translateX(-50%);
+  }
+  .percentage {
+    @extend %title;
+  }
+}
+
+.localRange {
+  .value {
+    background-color: rgba(255, 222, 0, 0.6);
+    border: 1px solid rgba(255, 222, 0, 1);
+  }
+}
+
+.globalRange {
+  .value {
+    background-color: rgba(52, 189, 146, 0.6);
+    border: 1px solid rgba(52, 189, 146, 1);
+  }
+}

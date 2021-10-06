@@ -21,7 +21,6 @@ const Container = (props) => {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
       const { title, subtitle, buttonText, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
-      console.log(attributes)
       setBatchTooltipData({
         isVisible: true,
         geometry,

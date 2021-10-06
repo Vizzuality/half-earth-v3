@@ -28,7 +28,7 @@ export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'commercial_fishing
 export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_human_pressures';
 //////
 export const GRAPHIC_LAYER = 'graphic_layer';
-export const COUNTRY_MASK_LAYER = 'mask-layer';
+export const MASK_LAYER = 'mask-layer';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
@@ -115,3 +115,11 @@ export const ADMIN_AREAS_VECTOR_TILE_LAYER = 'admin-areas-vector-tile-layer';
 export const WDPA_OECM_FEATURE_LAYER = 'wdpa-oecm-feature-layer';
 export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
 export const AOIS_HISTORIC_DEVELOPMENT = 'aois-historic-development';
+
+// AOIs lookup tables
+export const ELU_LOOKUP_TABLE = 'elu-lookup-table';
+export const WDPA_LOOKUP_TABLE = 'wdpa-lookup-table';
+export const AMPHIBIAN_LOOKUP = 'amphibians-lookup-table';
+export const BIRDS_LOOKUP = 'birds-lookup-table';
+export const MAMMALS_LOOKUP = 'mammals-lookup-table';
+export const REPTILES_LOOKUP = 'reptiles-lookup-table';

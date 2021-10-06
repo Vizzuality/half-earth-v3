@@ -6,22 +6,11 @@ import HalfEarthLogo from 'components/half-earth-logo';
 import styles from './styles.module.scss';
 import uiStyles from 'styles/ui.module.scss';
 
-const NationalReportCard = ({
-  aoiData,
-  geometry,
-  userConfig,
-  activeLayers,
-  sceneSettings,
-}) => (
+const AreaOfInterestPageComponent = () => (
   <>
     <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/>
-    <AreaOfInterestScene
-      geometry={geometry}
-      userConfig={userConfig}
-      activeLayers={activeLayers}
-      sceneSettings={sceneSettings}
-    />
+    <AreaOfInterestScene />
   </>
 );
 
-export default NationalReportCard;
+export default AreaOfInterestPageComponent;

@@ -7,7 +7,9 @@
   background-color: $white;
   border-radius: 6px;
   position: relative;
-  &.open {
+  border: 1px solid $dark-opacity;
+  &.open,
+  &:hover {
     background-color: $dark-opacity;
   }
   &.fullWidth {
@@ -83,6 +85,7 @@
   margin-top: 10px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
+  border: 1px solid $dark-opacity;
 
   &.fullWidth {
     width: 100%;

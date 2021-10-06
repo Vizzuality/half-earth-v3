@@ -2,6 +2,7 @@
 @import 'styles/ui.module';
 
 .esri-sketch {
+  --calcite-ui-foreground-1: red;
   background-color: $firefly;
   position: absolute;
   left: 50%;

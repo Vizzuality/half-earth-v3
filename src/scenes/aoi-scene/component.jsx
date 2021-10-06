@@ -2,6 +2,7 @@ import React from 'react';
 // Components
 import Scene from 'components/scene';
 import Widgets from 'containers/widgets';
+import AoiSidebar from 'containers/sidebars/aoi-sidebar';
 import LabelsLayer from 'containers/layers/labels-layer';
 import MaskGraphicLayer from 'containers/layers/mask-graphic-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
@@ -14,8 +15,10 @@ const AoiSceneComponent = ({
   geometry,
   onMapLoad,
   userConfig,
+  speciesData,
   activeLayers,
   sceneSettings,
+  contextualData,
 }) => (
   <Scene
     sceneName={'aoi-scene'}
@@ -37,7 +40,14 @@ const AoiSceneComponent = ({
       activeLayers={activeLayers}
     />
     <TerrainExaggerationLayer /> 
-    <LabelsLayer activeLayers={activeLayers} />
+    <LabelsLayer
+      activeLayers={activeLayers}
+    />
+    <AoiSidebar
+      speciesData={speciesData}
+      activeLayers={activeLayers}
+      contextualData={contextualData}
+    />
   </Scene>
 );
 
