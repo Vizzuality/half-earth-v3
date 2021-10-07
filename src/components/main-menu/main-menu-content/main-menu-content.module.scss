@@ -59,11 +59,31 @@
       margin-bottom: 70px;
     }
 
+    .menuButton {
+      color: $white;
+      position: relative;
+      padding: 0;
+
+      &:hover {
+        .menuItemImage {
+          opacity: 1;
+        }
+      }
+    }
+
     .menuItem {
       @extend %display1;
 
       font-weight: $font-weight-light;
       margin: 0 0 30px 0;
+    }
+
+    .menuItemImage {
+      position: absolute;
+      z-index: $under-back;
+      top: -15px;
+      opacity: 0;
+      transition: opacity .2s;
     }
 
     .greyItem {

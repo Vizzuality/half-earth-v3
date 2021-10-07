@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import cx from "classnames";
+import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import ShareModal from "components/share-modal";
 import { ReactComponent as CloseIcon } from "icons/menu-close.svg";
@@ -7,6 +8,10 @@ import { ReactComponent as TwitterIcon } from "icons/twitter.svg";
 import { ReactComponent as FacebookIcon } from "icons/facebook.svg";
 import { ReactComponent as InstagramIcon } from "icons/instagram.svg";
 import styles from "./main-menu-content.module.scss";
+import menuExploreImage from "images/menu-explore.png";
+import menuDiscoverImage from "images/menu-discover.png";
+import menuNRCImage from "images/menu-national-report-cards.png";
+import { DATA, NATIONAL_REPORT_CARD, FEATURED, ABOUT } from "router";
 
 const joinConversationSocialMedia = [
   {
@@ -27,9 +32,8 @@ const joinConversationSocialMedia = [
 ];
 
 const MainMenuContent = React.forwardRef(
-  ({ open, setMenuOpen, shareModalRef }, ref) => {
+  ({ open, setMenuOpen, shareModalRef, browsePage }, ref) => {
     const [isShareModalOpen, setShareModalOpen] = useState(false);
-
     return (
       <AnimatePresence>
         {open && (
@@ -58,27 +62,59 @@ const MainMenuContent = React.forwardRef(
             <div className={styles.menuListContainer}>
               <ul className={styles.menuList} role="menubar">
                 <li>
-                  <h2 className={styles.menuItem} role="menuitem">
-                    Explore data
-                  </h2>
-                </li>
-                <li>
-                  <h2 className={styles.menuItem} role="menuitem">
-                    Discover Stories
-                  </h2>
-                </li>
-                <li>
-                  <h2 className={styles.menuItem} role="menuitem">
-                    National Report Cards
-                  </h2>
-                </li>
-                <li>
-                  <h2
-                    className={cx(styles.menuItem, styles.greyItem)}
-                    role="menuitem"
+                  <button
+                    className={styles.menuButton}
+                    onClick={() => browsePage({ type: DATA })}
                   >
-                    About the map
-                  </h2>
+                    <img
+                      src={menuExploreImage}
+                      alt="explore data link"
+                      className={styles.menuItemImage}
+                    />
+                    <h2 className={styles.menuItem} role="menuitem">
+                      Explore data
+                    </h2>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={styles.menuButton}
+                    onClick={() => browsePage({ type: FEATURED })}
+                  >
+                    <img
+                      src={menuDiscoverImage}
+                      alt="explore data link"
+                      className={styles.menuItemImage}
+                    />
+                    <h2 className={styles.menuItem} role="menuitem">
+                      Discover Stories
+                    </h2>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={styles.menuButton}
+                    onClick={() => browsePage({ type: NATIONAL_REPORT_CARD })}
+                  >
+                    <img
+                      src={menuNRCImage}
+                      alt="explore data link"
+                      className={styles.menuItemImage}
+                    />
+                    <h2 className={styles.menuItem} role="menuitem">
+                      National Report Cards
+                    </h2>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={styles.menuButton}
+                    onClick={() => browsePage({ type: ABOUT })}
+                  >
+                    <h2 className={styles.menuItem} role="menuitem">
+                      About the map
+                    </h2>
+                  </button>
                 </li>
               </ul>
               <ul className={styles.menuActions} role="menubar">
@@ -126,5 +162,12 @@ const MainMenuContent = React.forwardRef(
     );
   }
 );
+
+MainMenuContent.propTypes = {
+  open: PropTypes.bool,
+  setMenuOpen: PropTypes.func.isRequired,
+  shareModalRef: PropTypes.ref,
+  browsePage: PropTypes.func.isRequired,
+};
 
 export default MainMenuContent;
