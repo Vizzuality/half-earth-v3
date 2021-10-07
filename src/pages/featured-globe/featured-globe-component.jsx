@@ -17,7 +17,6 @@ import MainMenu from 'components/main-menu';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import Slider from 'components/slider';
 import FeaturedMapsList from 'containers/sidebars/featured-maps-list';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
@@ -82,7 +81,6 @@ const DataGlobeComponent = ({
             isLandscapeMode={isLandscapeMode}
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
-          <Slider />
         </MobileOnly>
         <ArcgisLayerManager
           activeLayers={activeLayers}
