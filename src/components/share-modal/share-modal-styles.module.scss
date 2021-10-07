@@ -3,16 +3,14 @@
 @import 'styles/typography-extends';
 
 $tabsMarginBottom: 8px;
-$socialMediaIcon: 45px;
+$socialMediaIcon: 30px;
 
 .modal {
   width: 90% !important;
   max-width: 90% !important;
-  padding: 60px 32px !important;
   height: auto !important;
 
   @media #{$tablet-landscape} {
-    padding: 50px 60px !important;
     max-width: 620px !important;
     width: 600px !important;
   }
@@ -20,9 +18,17 @@ $socialMediaIcon: 45px;
 
 .modalContent {
   padding: 0 !important;
+}
+
+.modalContainer {
+  display: flex;
+  padding: 24px;
+
   @media #{$tablet-landscape} {
-    padding: 50px 60px !important;
+    max-width: 620px;
+    width: 600px;
   }
+
 }
 
 .closeBtn {
@@ -36,6 +42,10 @@ $socialMediaIcon: 45px;
     right: 35px !important;
     top: 35px !important;
   }
+}
+
+.shareContent {
+  flex: 1;
 }
 
 .copyContainer {
@@ -108,8 +118,6 @@ $socialMediaIcon: 45px;
 
 .title {
   @extend %headline;
-  text-align: center;
-  font-size: $font-size-xl;
   text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
   margin-bottom: 32px;
 
@@ -132,10 +140,6 @@ $socialMediaIcon: 45px;
   line-height: 20px;
   margin-right: 10px;
   cursor: pointer;
-
-  &:first-child {
-    margin-left: 10px;
-  }
 }
 
 .activeTab {
@@ -144,23 +148,23 @@ $socialMediaIcon: 45px;
     content: '';
     position: absolute;
     left: 0;
-    bottom: -10px; // ($tabsMarginBottom + 2) * -1
+    bottom: 0;
     width: 100%;
-    height: 4px;
+    height: 1px;
     background-color: $brand-color-main;
   }
 }
 
 .iconBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: $socialMediaIcon;
   width: $socialMediaIcon;
   padding: 0;
-  margin: 15px;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
+  margin-right: 15px;
+  background-color: $white-opacity;
+  border-radius: 50%;
 }
 
 .socialMediaContainer {

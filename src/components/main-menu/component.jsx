@@ -26,16 +26,15 @@ function useClickOutside(ref, callback, exceptionRef) {
 const MainMenu = ({ className }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const wrapperRef = useRef(null);
-  const buttonRef = useRef(null);
+  const shareModalRef = useRef(null);
 
-  useClickOutside(wrapperRef, () => setMenuOpen(false), buttonRef);
+  useClickOutside(wrapperRef, () => setMenuOpen(false), shareModalRef);
 
   return (
     <>
       <button
         className={styles.mainMenuButton}
         onClick={() => setMenuOpen(true)}
-        ref={buttonRef}
         id="main-menu-button"
         aria-haspopup="true"
         aria-controls="main-menu"
@@ -46,6 +45,7 @@ const MainMenu = ({ className }) => {
       </button>
       <MainMenuContent
         open={isMenuOpen}
+        shareModalRef={shareModalRef}
         ref={wrapperRef}
         setMenuOpen={setMenuOpen}
       />

@@ -76,6 +76,12 @@
       font-weight: $font-weight;
     }
 
+    .shareButton {
+      color: $white;
+      padding: 0;
+      margin: 0;
+    }
+
     .socialLinks {
       display: flex;
     }
