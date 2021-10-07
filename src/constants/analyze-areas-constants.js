@@ -76,3 +76,10 @@ export const IUCN_CATEGORIES = {
   DD: 'Data deficient',
   NE: 'Not evaluated',
 }
+
+export const PRECALCULATED_LAYERS_CONFIG = {
+  [ADMIN_AREAS_FEATURE_LAYER] : {
+    name: 'NAME_1',
+    subtitle: 'GID_0'
+  }
+}

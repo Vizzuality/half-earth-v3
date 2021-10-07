@@ -14,6 +14,7 @@ import {
   writeToForageItem
 } from 'utils/local-forage-utils';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
+import { PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
 import { 
   getEluData,
   getSpeciesData,
@@ -43,6 +44,7 @@ const Container = props => {
   const [taxaData, setTaxaData] = useState([])
   const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
+  const [areaName, setAreaName] = useState(null);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -68,12 +70,13 @@ const Container = props => {
       }).then((features) => {
         console.log(features)
         const { geometry, attributes } = features[0];
-        console.log(attributes.amphibians)
+        console.log(attributes)
         // const amphibians = JSON.parse(attributes.amphibians);
         // console.log(amphibians)
         setGeometry(geometry);
         const area = calculateGeometryArea(geometry, geometryEngine)
         setAreaData({area});
+        setAreaName({areaName: `${attributes[PRECALCULATED_LAYERS_CONFIG[precalculatedLayerSlug].name]}, (${attributes[PRECALCULATED_LAYERS_CONFIG[precalculatedLayerSlug].subtitle]})`});
       })
     }
   }, [precalculatedLayerSlug, geometryEngine])
@@ -124,12 +127,13 @@ const Container = props => {
     setContextualData({
       ...elu,
       ...area,
+      ...areaName,
       ...pressures,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,
     })
-  },[elu, area, population, pressures, percentageProtected, protectedAreasList]);
+  },[elu, area, areaName, population, pressures, percentageProtected, protectedAreasList]);
 
   useEffect(() => {
     setSpeciesData({
