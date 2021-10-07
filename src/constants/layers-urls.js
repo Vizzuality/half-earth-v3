@@ -73,7 +73,6 @@ import {
   EDUCATOR_AMBASSADORS_LAYER,
   SPECIES_LIST,
   FIREFLY_BASEMAP_LAYER,
-  ECOREGIONS_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
   ADMIN_AREAS_VECTOR_TILE_LAYER,
@@ -207,20 +206,26 @@ export const LAYERS_URLS = {
 
   [SPECIES_LIST]:
     'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer',
-  // AOIs precalculated layers
-  [ECOREGIONS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Ecoregions2017_20210825_simple/FeatureServer',
-  // [ADMIN_AREAS_FEATURE_LAYER]: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/World_Administrative_Divisions/FeatureServer/0',
-  [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
-  // [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify/FeatureServer/0',
-  [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
-
   // AOIs lookup tables
   [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
-  [AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/7d06855c35c84237abd653b93533ec76/rest/services/Amphibian_CRF_species_table_20211003/FeatureServer/0',
-  [BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/f5deccc52837454ba196a8f4c9162ffe/rest/services/Bird_CRF_species_table_20211003/FeatureServer/0',
-  [MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/a5469fd12d874550aac72c826f9f16fe/rest/services/Mammal_CRF_species_table/FeatureServer/0',
-  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/64e98c1f81fc41fda48f992709437b21/rest/services/Reptile_CRF_species_table/FeatureServer/0',
+  [AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/182fa83a03544cbd8bd88836d9dea895/rest/services/amphibians_merge_qa/FeatureServer/0',
+  [BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/4876d75b2ac94a068ec96c8f256e7e79/rest/services/birds_merge_qa/FeatureServer/0',
+  [MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/10063857c3d2447a8f149cd1b4554d3f/rest/services/mammals_merge_qa/FeatureServer/0',
+  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/ef12e99ccea24faca6d5597988c3fb82/rest/services/reptiles_merge_qa/FeatureServer/0',
+
+
+   // AOIs precalculated layers
+   [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
+   [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
+ 
+   // AOIs lookup tables
+  //  [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
+  //  [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
+  //  [AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/7d06855c35c84237abd653b93533ec76/rest/services/Amphibian_CRF_species_table_20211003/FeatureServer/0',
+  //  [BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/f5deccc52837454ba196a8f4c9162ffe/rest/services/Bird_CRF_species_table_20211003/FeatureServer/0',
+  //  [MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/a5469fd12d874550aac72c826f9f16fe/rest/services/Mammal_CRF_species_table/FeatureServer/0',
+  //  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/64e98c1f81fc41fda48f992709437b21/rest/services/Reptile_CRF_species_table/FeatureServer/0',
 
 
 

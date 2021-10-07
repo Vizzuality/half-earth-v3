@@ -1,5 +1,4 @@
 import {
-ECOREGIONS_FEATURE_LAYER,
 ADMIN_AREAS_FEATURE_LAYER,
 AOIS_HISTORIC_PRODUCTION,
 AOIS_HISTORIC_DEVELOPMENT,
@@ -22,18 +21,16 @@ export const AOI_LEGEND_CATEGORIES = [
 ]
 
 const SEARCH_SOURCES = {
-  ECOREGIONS: ECOREGIONS_FEATURE_LAYER,
   POLITICAL_BOUNDARIES: ADMIN_AREAS_FEATURE_LAYER,
   PROTECTED_AREAS: WDPA_OECM_FEATURE_LAYER
 }
 
-export const { ECOREGIONS, POLITICAL_BOUNDARIES, PROTECTED_AREAS } = SEARCH_SOURCES;
+export const { POLITICAL_BOUNDARIES, PROTECTED_AREAS } = SEARCH_SOURCES;
 
 export const DEFAULT_SOURCE = POLITICAL_BOUNDARIES;
 
 export const PRECALCULATED_AOI_OPTIONS = [
   {title: POLITICAL_BOUNDARIES, slug: POLITICAL_BOUNDARIES, label: 'Political boundaries'},
-  {title: ECOREGIONS, slug: ECOREGIONS, label: 'Ecoregions'},
   {title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas'},
 ]
 
@@ -62,7 +59,7 @@ export const SPECIES_FILTERS = [
   {slug: MAMMALS, label: 'mammals'},
   {slug: REPTILES, label: 'reptiles'},
   {slug: AMPHIBIANS, label: 'amphibians'},
-  {slug: 'smallestRange', label: 'smallest range species'},
+  {slug: 'concern', label: ' highest conservation concern'},
   {slug: 'flagship', label: 'flagship species'},
 ]
 
