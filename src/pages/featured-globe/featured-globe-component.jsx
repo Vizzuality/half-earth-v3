@@ -25,8 +25,6 @@ import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
-const About = loadable(() => import('components/about'));
-
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -34,7 +32,6 @@ const DataGlobeComponent = ({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
-  selectedSpecies,
   selectedSidebar,
   isLandscapeMode,
   selectedFeaturedPlace,
@@ -153,7 +150,6 @@ const DataGlobeComponent = ({
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
-      {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
   );
 }

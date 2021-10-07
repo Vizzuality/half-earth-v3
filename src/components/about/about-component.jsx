@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import AboutModal from "./about-modal";
 import { openAboutPageAnalyticsEvent } from "actions/google-analytics-actions";
 
-import styles from "./about-styles.module.scss";
-
 const actions = { openAboutPageAnalyticsEvent };
 
 const AboutComponent = ({
@@ -14,7 +12,6 @@ const AboutComponent = ({
   VIEW,
   openAboutPageAnalyticsEvent,
   buttonContentComponent,
-  overrideButtonStyles,
 }) => {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
@@ -27,15 +24,7 @@ const AboutComponent = ({
   const handleCloseAboutPage = () => setAboutPageOpened(false);
   return (
     <>
-      <button
-        className={cx(
-          {
-            [styles.aboutButton]: !overrideButtonStyles,
-          },
-          className
-        )}
-        onClick={handleOpenAboutPage}
-      >
+      <button className={className} onClick={handleOpenAboutPage}>
         {buttonContentComponent || "About the Half-Earth map"}
       </button>
       {isAboutPageOpened && (

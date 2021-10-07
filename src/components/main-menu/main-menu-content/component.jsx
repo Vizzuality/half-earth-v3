@@ -109,7 +109,6 @@ const MainMenuContent = React.forwardRef(
                 </li>
                 <li>
                   <About
-                    overrideButtonStyles
                     className={styles.menuButton}
                     buttonContentComponent={
                       <h2 className={styles.menuItem} role="menuitem">
