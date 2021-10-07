@@ -2,7 +2,7 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-$tabsMarginBottom: 8px;
+$tabsMarginBottom: 4px;
 $socialMediaIcon: 30px;
 
 .modal {
@@ -58,6 +58,10 @@ $socialMediaIcon: 30px;
   }
 }
 
+.copyIcon{
+  margin-right: 5px;
+}
+
 .coordinates {
   margin-bottom: 54px;
   font-size: $font-size-xs;
@@ -65,14 +69,14 @@ $socialMediaIcon: 30px;
 }
 
 .inputButton {
-  border: 1px solid $alto;
-  background-color: transparent;
-  color: $white;
+  border: 1px solid $white-opacity;
+  background-color: $white;
   padding: 10px;
   width: stretch;
   height: 40px;
-  border-radius: 2px;
+  border-radius: 6px;
   margin-bottom: 8px;
+  box-shadow: 0px 1px 2px 0px $black;
 
   &:focus {
     outline: none;
@@ -87,18 +91,22 @@ $socialMediaIcon: 30px;
 }
 
 .button {
-  border: 1px solid $alto !important;
+  background-color: $brand-color-main;
   height: 40px !important;
-  color: $white !important;
-  font-weight: bold !important;
-  text-transform: uppercase !important;
+  border-radius: 6px;
+
+  @media #{$tablet-landscape} {
+    border-radius: 0px 6px 6px 0px;
+  }
 }
 
 .copyButton {
-  letter-spacing: 2px !important;
   font-size: $font-size-xs !important;
   padding: 0 !important;
   width: 100% !important;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
 
   @media #{$tablet-landscape} {
     margin-left: -10px !important;
@@ -106,23 +114,13 @@ $socialMediaIcon: 30px;
   }
 }
 
-.copied {
-  background-color: $brand-color-main;
-  color: $black;
-  font-weight: bold;
-}
-
-.copiedText {
-  transform: translateY(2px); // font has some internal padding
-}
-
 .title {
   @extend %headline;
   text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 
   @media #{$tablet-landscape} {
-    margin-bottom: 50px;
+    margin-bottom: 24px;
   }
 }
 

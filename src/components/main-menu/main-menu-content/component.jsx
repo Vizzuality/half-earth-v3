@@ -3,6 +3,7 @@ import cx from "classnames";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import ShareModal from "components/share-modal";
+import About from "components/about";
 import { ReactComponent as CloseIcon } from "icons/menu-close.svg";
 import { ReactComponent as TwitterIcon } from "icons/twitter.svg";
 import { ReactComponent as FacebookIcon } from "icons/facebook.svg";
@@ -107,11 +108,15 @@ const MainMenuContent = React.forwardRef(
                   </button>
                 </li>
                 <li>
-                  <button className={styles.menuButton}>
-                    <h2 className={styles.menuItem} role="menuitem">
-                      About the map
-                    </h2>
-                  </button>
+                  <About
+                    overrideButtonStyles
+                    className={styles.menuButton}
+                    buttonContentComponent={
+                      <h2 className={styles.menuItem} role="menuitem">
+                        About the map
+                      </h2>
+                    }
+                  />
                 </li>
               </ul>
               <ul className={styles.menuActions} role="menubar">

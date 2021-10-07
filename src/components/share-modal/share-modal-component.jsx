@@ -4,6 +4,7 @@ import { Modal, Button } from "he-components";
 import cx from "classnames";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ReactComponent as ShareIcon } from "icons/share.svg";
+import { ReactComponent as CopyIcon } from "icons/copy.svg";
 
 import styles from "./share-modal-styles.module";
 
@@ -82,11 +83,8 @@ const ShareModalComponent = React.forwardRef(
                     }),
                   }}
                 >
-                  <span
-                    className={cx({ [styles.copiedText]: copied[activeTab] })}
-                  >
-                    {copied[activeTab] ? "copied!" : "copy"}
-                  </span>
+                  <CopyIcon className={styles.copyIcon} />
+                  {copied[activeTab] ? "Copied!" : "Copy"}
                 </Button>
               </CopyToClipboard>
             </div>

@@ -72,6 +72,8 @@
     }
 
     .menuItem {
+      position: relative;
+
       @extend %display1;
 
       font-weight: $font-weight-light;
@@ -96,6 +98,7 @@
       font-weight: $font-weight;
     }
 
+    .aboutButton,
     .shareButton {
       color: $white;
       padding: 0;
