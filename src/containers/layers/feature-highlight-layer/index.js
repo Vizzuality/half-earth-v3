@@ -43,7 +43,7 @@ const { view, featureLayerSlug, onFeatureClick } = props;
 
   const onClickHandler = features => {
     flyToGeometry(view, features);
-    drawGeometry(features, selectedCountryBorderGraphic);
+    // drawGeometry(features, selectedCountryBorderGraphic);
     onFeatureClick(features);
   }
 
