@@ -11,7 +11,7 @@ import styles from "./main-menu-content.module.scss";
 import menuExploreImage from "images/menu-explore.png";
 import menuDiscoverImage from "images/menu-discover.png";
 import menuNRCImage from "images/menu-national-report-cards.png";
-import { DATA, NATIONAL_REPORT_CARD, FEATURED, ABOUT } from "router";
+import { DATA, NATIONAL_REPORT_CARD, FEATURED } from "router";
 
 const joinConversationSocialMedia = [
   {
@@ -107,10 +107,7 @@ const MainMenuContent = React.forwardRef(
                   </button>
                 </li>
                 <li>
-                  <button
-                    className={styles.menuButton}
-                    onClick={() => browsePage({ type: ABOUT })}
-                  >
+                  <button className={styles.menuButton}>
                     <h2 className={styles.menuItem} role="menuitem">
                       About the map
                     </h2>
