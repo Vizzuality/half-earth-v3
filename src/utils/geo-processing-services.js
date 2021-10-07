@@ -1,5 +1,6 @@
 import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import orderBy from 'lodash/orderBy';
 import {
   ELU_LOOKUP_TABLE,
   WDPA_LOOKUP_TABLE,
@@ -161,49 +162,6 @@ export function getProtectedAreasListData(geometry) {
   })
 }
 
-export function getBiodiversityData(crfName) {
-  return (geometry) => {
-    return new Promise((resolve, reject) => {
-      getCrfData({ 
-        dataset: crfName,
-        aoiFeatureGeometry: geometry
-      }).then(({data}) => {
-        const crfSlices = data.value.features.reduce((acc, f) =>({
-          ...acc,
-          [f.attributes.SliceNumber]:{
-            sliceNumber: f.attributes.SliceNumber,
-            presencePercentage: f.attributes.percentage_presence
-          }
-        }), {});
-       const ids = data.value.features.map(f => f.attributes.SliceNumber);
-        EsriFeatureService.getFeatures({
-          url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
-          whereClause: `SliceNumber IN (${ids.toString()})`,
-        }).then((features) => {
-          const result = features
-            .map((f) => ({
-              category: crfName,
-              isFlagship: f.attributes.is_flagship,
-              sliceNumber: f.attributes.SliceNumber,
-              name: f.attributes.scientific_name,
-              globalProtectedArea: f.attributes.wdpa_km2,
-              globaldRangeArea: f.attributes.range_area_km2,
-              globalProtectedPercentage: f.attributes.percent_protected,
-              protectionTarget: f.attributes.conservation_target,
-              presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
-            }))
-            // .sort((a, b) => ((b.globalProtectedPercentage - b.protectionTarget) - (a.globalProtectedPercentage - a.protectionTarget)))
-            .sort((a, b) => (b.isFlagship - a.isFlagship))
-            .filter(f => f.name !== null)
-          resolve({[crfName]:result});
-        }).catch((error) => {
-          reject(error)
-        });
-      });
-    }) 
-  }
-}
-
 export function getSpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
     getCrfData({ 
@@ -232,11 +190,11 @@ export function getSpeciesData(crfName, geometry) {
             globaldRangeArea: f.attributes.range_area_km2,
             globalProtectedPercentage: f.attributes.percent_protected,
             protectionTarget: f.attributes.conservation_target,
+            conservationConcern: f.attributes.conservation_concern,
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
           }))
-          .sort((a, b) => (b.isFlagship - a.isFlagship))
           .filter(f => f.name !== null)
-        resolve(result);
+        resolve(orderBy(result, ['isFlagship', 'conservationConcern'], ['desc', 'desc']));
       }).catch((error) => {
         reject(error)
       });

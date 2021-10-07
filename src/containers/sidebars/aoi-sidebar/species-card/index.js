@@ -35,6 +35,9 @@ const SpeciesCardContainer = (props) => {
       case 'flagship':
         setSpeciesToDisplay(species.filter(sp => sp.isFlagship));
         break;
+      case 'concern':
+        setSpeciesToDisplay(species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40));
+        break;
       default:
         setSpeciesToDisplay(species.filter(sp => sp.category === selectedSpeciesFilter.slug));
         break;
