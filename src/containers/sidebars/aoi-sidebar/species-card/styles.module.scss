@@ -42,12 +42,22 @@
 }
 
 .speciesImageWrapper {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 20%;
   height: 320px;
   width: 100%;
   margin-top: $site-gutter;
   border-radius: 6px;
   background-repeat: no-repeat;
   background-size: cover;
+
+  .placeholderText {
+    @extend %title;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+  }
 }
 
 .sliderControls {

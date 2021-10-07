@@ -65,7 +65,7 @@ const Component = ({
                 backgroundPosition: imageBackgroundPosition
               }}
             >
-              {placeholderText && <span>{placeholderText}</span>}
+              {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
             </div>
             <div className={styles.sliderControls}>
               <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
