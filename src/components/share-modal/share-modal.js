@@ -29,9 +29,9 @@ const mapStateToProps = ({ location }) => ({
   shareSocialMedia
 });
 
-const ShareModalContainer = React.forwardRef((props, ref) => {
+const ShareModalContainer = (props) => {
   const { setShareModalOpen } = props;
   const handleClose = () => setShareModalOpen(false);
-  return <Component handleClose={handleClose} {...props} ref={ref} />;
-});
-export default connect(mapStateToProps, null, null, { forwardRef: true })(ShareModalContainer);
+  return <Component handleClose={handleClose} {...props} />;
+};
+export default connect(mapStateToProps, null)(ShareModalContainer);
