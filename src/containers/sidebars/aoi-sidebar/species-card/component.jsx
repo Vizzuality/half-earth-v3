@@ -16,86 +16,102 @@ import styles from './styles.module.scss';
 
 const Component = ({
   cardTitle,
+  searchTerm,
   speciesData,
   selectedSpecies,
   placeholderText,
   setSpeciesFilter,
+  loadedPercentage,
   speciesToDisplay,
+  handleSearchChange,
   selectedSpeciesFilter,
   individualSpeciesData,
   imageBackgroundPosition,
-  searchTerm,
-  handleSearchChange,
   handleNextSpeciesSelection,
   handlePreviousSpeciesSelection
-}) => (
-  <SidebarCardWrapper className={styles.cardWrapper}>
-    <div>
-      <p className={styles.title}>
-        {`This area is likely to have ${speciesData.species.length} `}
-        <span
-          className={styles.infoClue}
-          title="explanation about why only vertebrates"
-        >
-          vertebrate species
-        </span>
-      </p>
-      <Dropdown
-        stacked
-        width="full"
-        parentWidth="322px"
-        options={SPECIES_FILTERS}
-        selectedOption={selectedSpeciesFilter}
-        handleOptionSelection={setSpeciesFilter}
-      />
-      <SearchWithSuggestions
-        stacked
-        theme={'light'}
-        width="full"
-        parentWidth="322px"
-        onOptionSelection={(option) => console.log(option)}
-      />
-      {individualSpeciesData &&
-        <section className={styles.speciesDataContainer}>
-          <div>
-            <div
-              className={styles.speciesImageWrapper}
-              style={{
-                backgroundImage: `url(${individualSpeciesData.imageUrl})`,
-                backgroundPosition: imageBackgroundPosition
-              }}
-            >
-              {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
-            </div>
-            <div className={styles.sliderControls}>
-              <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
-              <div className={styles.speciesNames}>
-              <span className={styles.commonName}>{individualSpeciesData.commonname}</span>
-              <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
+}) => speciesData.species.length === 0 ? (
+<section className={styles.loaderCard}>
+  <p className={styles.loadedPercentage}>{`${loadedPercentage}%`}</p>
+  <div className={styles.loaderBarContainer}>
+    <div className={styles.loaderBarPercentage} style={{width: `${loadedPercentage}%`}}/>
+  </div>
+  <div className={styles.loaderTextContainer}>
+    <p>
+      Looking for species to watch here...
+    </p>
+    <p>
+      This could take up to 20 seconds.
+    </p>
+  </div>
+</section>
+  ) : (
+    <SidebarCardWrapper className={styles.cardWrapper}>
+      <div>
+        <p className={styles.title}>
+          {`This area is likely to have ${speciesData.species.length} `}
+          <span
+            className={styles.infoClue}
+            title="explanation about why only vertebrates"
+          >
+            vertebrate species
+          </span>
+        </p>
+        <Dropdown
+          stacked
+          width="full"
+          parentWidth="322px"
+          options={SPECIES_FILTERS}
+          selectedOption={selectedSpeciesFilter}
+          handleOptionSelection={setSpeciesFilter}
+        />
+        <SearchWithSuggestions
+          stacked
+          theme={'light'}
+          width="full"
+          parentWidth="322px"
+          onOptionSelection={(option) => console.log(option)}
+        />
+        {individualSpeciesData &&
+          <section className={styles.speciesDataContainer}>
+            <div>
+              <div
+                className={styles.speciesImageWrapper}
+                style={{
+                  backgroundImage: `url(${individualSpeciesData.imageUrl})`,
+                  backgroundPosition: imageBackgroundPosition
+                }}
+              >
+                {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
               </div>
-              <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection}/>
+              <div className={styles.sliderControls}>
+                <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
+                <div className={styles.speciesNames}>
+                <span className={styles.commonName}>{individualSpeciesData.commonname}</span>
+                <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
+                </div>
+                <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection}/>
+              </div>
             </div>
-          </div>
-          <div className={styles.globalRangeArea}>
-            <span>Global range area</span>
-            <p>{`${localeFormatting(individualSpeciesData.globaldRangeArea)} km`}<sup>2</sup></p>
-          </div>
-          <SpeciesBar
-            scale="local"
-            title="Range in this area" 
-            percentage={individualSpeciesData.presenceInArea}
-          />
-          <SpeciesBar
-            title="Global protected range" 
-            percentage={individualSpeciesData.globalProtectedPercentage}
-            barAnnotation={individualSpeciesData.protectionTarget}
-            barAnnotationTitle="Protection target"
-          />
-          <p>{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
-        </section>
-      }
-    </div>
-  </SidebarCardWrapper>
-);
+            <div className={styles.globalRangeArea}>
+              <span>Global range area</span>
+              <p>{`${localeFormatting(individualSpeciesData.globaldRangeArea)} km`}<sup>2</sup></p>
+            </div>
+            <SpeciesBar
+              scale="local"
+              title="Range in this area" 
+              percentage={individualSpeciesData.presenceInArea}
+            />
+            <SpeciesBar
+              title="Global protected range" 
+              percentage={individualSpeciesData.globalProtectedPercentage}
+              barAnnotation={individualSpeciesData.protectionTarget}
+              barAnnotationTitle="Protection target"
+            />
+            <p>{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
+          </section>
+        }
+      </div>
+    </SidebarCardWrapper>
+  );
 
 export default Component;

@@ -1,6 +1,52 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+
+
+.loaderCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 260px;
+  margin-top: $site-gutter;
+  padding: $sidebar-cards-padding;
+  background-color: $white-opacity;
+  border-radius: $card-border-radius;
+
+  .loadedPercentage {
+    @extend %display2;
+    color: $white;
+    text-align: center;
+  }
+
+  .loaderBarContainer {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: $white-opacity;
+    border-radius: $sidebar-border-radius;
+
+    .loaderBarPercentage {
+      position: absolute;
+      height: 100%;
+      background-color: $brand-color-main;
+      border-radius: $sidebar-border-radius;
+    }
+  }
+
+  .loaderTextContainer {
+    @extend %bodyText;
+    color: $white;
+    margin-top: $site-gutter;
+
+    p {
+      margin: 0;
+    }
+  }
+
+
+}
+
 .cardWrapper {
   margin-top: $site-gutter;
 }

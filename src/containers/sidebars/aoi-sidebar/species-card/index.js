@@ -10,6 +10,7 @@ const SpeciesCardContainer = (props) => {
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER); 
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0); 
   const [placeholderText, setPlaceholderText] = useState(null); 
+  const [loadedPercentage, setLoadedPercentage] = useState(30); 
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species); 
   const [imageBackgroundPosition, setImageBackgroundPosition] = useState('center'); 
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
@@ -91,6 +92,7 @@ const SpeciesCardContainer = (props) => {
     <Component
       placeholderText={placeholderText}
       selectedSpecies={selectedSpecies}
+      loadedPercentage={loadedPercentage}
       speciesToDisplay={speciesToDisplay}
       setSpeciesFilter={setSpeciesFilter}
       selectedSpeciesFilter={selectedSpeciesFilter}
