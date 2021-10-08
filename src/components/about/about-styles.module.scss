@@ -1,0 +1,69 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.aboutPage {
+  background-color: $dark-text;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  z-index: 11;
+}
+
+.navbar {
+  display: none;
+  color: $light-text;
+  justify-content: center;
+  align-items: flex-end;
+  height: 10%;
+
+  @media #{$tablet-portrait} {
+    display: flex;
+  }
+}
+
+.content {
+  @extend %verticalScrollbar;
+  height: 90%;
+  padding-top: 80px;
+  width: 100%;
+}
+
+.tabsSwitch {
+  align-items: baseline;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 620px;
+
+  button {
+    border-bottom: 4px solid transparent;
+    color: $light-text;
+    font-family: $font-family-1;
+    font-size: $font-size-xs;
+    font-weight: bold;
+    letter-spacing: 2px;
+    line-height: 20px;
+
+    &:not(:last-child) {
+      margin-right: 60px;
+    }
+  }
+
+  .active {
+    color: $brand-color-main;
+    border-color: $brand-color-main;
+    padding-bottom: 14px;
+  }
+
+  &::after {
+    @extend %spacer;
+
+    bottom: 1px;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+}

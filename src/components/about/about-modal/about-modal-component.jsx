@@ -6,6 +6,8 @@ import PartnersComponent from "../partners/partners";
 import MapInstructionsComponent from "../map-instructions/map-instructions-component";
 import { ABOUT_TABS } from "constants/ui-params";
 
+import styles from "../about-styles.module.scss";
+
 const tabsData = {
   [ABOUT_TABS.PARTNERS]: {
     slug: ABOUT_TABS.PARTNERS,
