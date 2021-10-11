@@ -59,7 +59,7 @@ const SpeciesCardContainer = (props) => {
   useEffect(() => {
     switch (selectedSpeciesFilter.slug) {
       case 'all':
-        setSpeciesToDisplay(species)
+        setSpeciesToDisplay(species.sort((a, b) => b.isFlagship - a.isFlagship))
         break;
       case 'flagship':
         setSpeciesToDisplay(species.filter(sp => sp.isFlagship));
@@ -68,7 +68,7 @@ const SpeciesCardContainer = (props) => {
         setSpeciesToDisplay(species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40));
         break;
       default:
-        setSpeciesToDisplay(species.filter(sp => sp.category === selectedSpeciesFilter.slug));
+        setSpeciesToDisplay(species.filter(sp => sp.category === selectedSpeciesFilter.slug).sort((a, b) => b.isFlagship - a.isFlagship));
         break;
     }
   }, [speciesData.species, selectedSpeciesFilter])
@@ -83,16 +83,15 @@ const SpeciesCardContainer = (props) => {
 
   useEffect(() => {
     if (selectedSpecies) {
-      MolService.getSpecies([speciesToDisplay[prevSpecies()].name, selectedSpecies.name, speciesToDisplay[nextSpecies()].name]).then((results) => {
+      MolService.getSpecies(selectedSpecies.name).then((results) => {
         if (results.length > 0) {
-          const [prev, main, next] = results;
           setIndividualSpeciesData({
             ...selectedSpecies,
-            commonname: main.commonname,
-            imageUrl: main.image ? main.image.url : getPlaceholderSpeciesImage(main.taxa),
-            iucnCategory: IUCN_CATEGORIES[main.redlist]
+            commonname: results[0].commonname,
+            imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
+            iucnCategory: IUCN_CATEGORIES[results[0].redlist]
           });
-          main.image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(main.taxa))
+          results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))
         } else {
           handleNextSpeciesSelection();
         }

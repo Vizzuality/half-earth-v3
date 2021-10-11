@@ -199,7 +199,7 @@ export function getSpeciesData(crfName, geometry) {
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
           }))
           .filter(f => f.name !== null)
-        resolve(orderBy(result, ['isFlagship', 'conservationConcern'], ['desc', 'desc']));
+        resolve(orderBy(result, ['presenceInArea', 'isFlagship'], ['desc', 'desc']));
       }).catch((error) => {
         reject(error)
       });
@@ -236,7 +236,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
           presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
         }))
         .filter(f => f.name !== null)
-      resolve(orderBy(result, ['isFlagship', 'conservationConcern'], ['desc', 'desc']));
+        resolve(orderBy(result, ['presenceInArea', 'isFlagship'], ['desc', 'desc']));
     }).catch((error) => {
       reject(error)
     });
