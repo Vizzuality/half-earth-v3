@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DEFAULT_SPECIES_FILTER, IUCN_CATEGORIES } from 'constants/analyze-areas-constants';
-import { getPlaceholderSpeciesImage } from 'utils/analyze-areas-utils';
+import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
+import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
 import MolService from 'services/mol';
 import Component from './component';
 
@@ -10,7 +11,9 @@ const SpeciesCardContainer = (props) => {
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER); 
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0); 
   const [placeholderText, setPlaceholderText] = useState(null); 
+  const [speciesFilters, setFilterWithCount] = useState(SPECIES_FILTERS); 
   const [loadedPercentage, setLoadedPercentage] = useState(30); 
+  const [loaderIntervalId, setLoaderIntervalId] = useState(null)
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species); 
   const [imageBackgroundPosition, setImageBackgroundPosition] = useState('center'); 
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
@@ -22,11 +25,36 @@ const SpeciesCardContainer = (props) => {
     setSelectedSpeciesIndex(0) :
     setSelectedSpeciesIndex(selectedSpeciesIndex + 1)
   }
+
   const handlePreviousSpeciesSelection = () => {
     selectedSpeciesIndex === 0 ?
     setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
     setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
   }
+
+  const nextSpecies = () => selectedSpeciesIndex === speciesToDisplay.length - 1 ? 0 : selectedSpeciesIndex + 1;
+  const prevSpecies = () => selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1;
+
+  useEffect(() => {
+    const filters = SPECIES_FILTERS.map(filter => {
+      let count;
+      switch (filter.slug) {
+        case 'all':
+          return filter
+        case 'flagship':
+          count = species.filter(sp => sp.isFlagship).length;
+          return { slug: filter.slug, label: `${filter.label} (${count})`}
+        case 'endangered':
+          count = species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40).length;
+          return { slug: filter.slug, label: `${filter.label} (${count})`}
+        default:
+          count = species.filter(sp => sp.category === filter.slug).length;
+          return { slug: filter.slug, label: `${filter.label} (${count})`}
+      }
+    })
+    setFilterWithCount(filters)
+
+  }, [speciesData.species])
 
   useEffect(() => {
     switch (selectedSpeciesFilter.slug) {
@@ -36,7 +64,7 @@ const SpeciesCardContainer = (props) => {
       case 'flagship':
         setSpeciesToDisplay(species.filter(sp => sp.isFlagship));
         break;
-      case 'concern':
+      case 'endangered':
         setSpeciesToDisplay(species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40));
         break;
       default:
@@ -46,7 +74,6 @@ const SpeciesCardContainer = (props) => {
   }, [speciesData.species, selectedSpeciesFilter])
 
   useEffect(() => {
-    console.log(selectedSpeciesIndex)
     setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex])
   }, [speciesToDisplay, selectedSpeciesIndex])
 
@@ -56,15 +83,16 @@ const SpeciesCardContainer = (props) => {
 
   useEffect(() => {
     if (selectedSpecies) {
-      MolService.getSpecies(selectedSpecies.name).then((results) => {
+      MolService.getSpecies([speciesToDisplay[prevSpecies()].name, selectedSpecies.name, speciesToDisplay[nextSpecies()].name]).then((results) => {
         if (results.length > 0) {
+          const [prev, main, next] = results;
           setIndividualSpeciesData({
             ...selectedSpecies,
-            commonname: results[0].commonname,
-            imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
-            iucnCategory: IUCN_CATEGORIES[results[0].redlist]
+            commonname: main.commonname,
+            imageUrl: main.image ? main.image.url : getPlaceholderSpeciesImage(main.taxa),
+            iucnCategory: IUCN_CATEGORIES[main.redlist]
           });
-          results[0].image ? setPlaceholderText(null) : setPlaceholderText(`Photo not available for this ${results[0].taxa.substring(0, results[0].taxa.length -1)}`)
+          main.image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(main.taxa))
         } else {
           handleNextSpeciesSelection();
         }
@@ -88,8 +116,10 @@ const SpeciesCardContainer = (props) => {
     }
   },[individualSpeciesData])
 
+
   return (
     <Component
+      speciesFilters={speciesFilters}
       placeholderText={placeholderText}
       selectedSpecies={selectedSpecies}
       loadedPercentage={loadedPercentage}

@@ -11,7 +11,6 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import {ReactComponent as ArrowLeftIcon} from 'icons/arrow_right.svg'
 import {ReactComponent as ArrowRightIcon} from 'icons/arrow_right.svg'
 
-import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
 import styles from './styles.module.scss';
 
 const Component = ({
@@ -19,6 +18,7 @@ const Component = ({
   searchTerm,
   speciesData,
   selectedSpecies,
+  speciesFilters,
   placeholderText,
   setSpeciesFilter,
   loadedPercentage,
@@ -60,17 +60,18 @@ const Component = ({
           stacked
           width="full"
           parentWidth="322px"
-          options={SPECIES_FILTERS}
+          options={speciesFilters}
           selectedOption={selectedSpeciesFilter}
           handleOptionSelection={setSpeciesFilter}
         />
-        <SearchWithSuggestions
+        {/* <SearchWithSuggestions
           stacked
           theme={'light'}
           width="full"
           parentWidth="322px"
+          options={speciesToDisplay}
           onOptionSelection={(option) => console.log(option)}
-        />
+        /> */}
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>
             <div>
@@ -99,15 +100,17 @@ const Component = ({
             <SpeciesBar
               scale="local"
               title="Range in this area" 
+              className={styles.speciesBarContainer}
               percentage={individualSpeciesData.presenceInArea}
             />
             <SpeciesBar
               title="Global protected range" 
+              className={styles.speciesBarContainer}
               percentage={individualSpeciesData.globalProtectedPercentage}
               barAnnotation={individualSpeciesData.protectionTarget}
               barAnnotationTitle="Protection target"
             />
-            <p>{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
+            <p className={styles.iucnStatus}>{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
           </section>
         }
       </div>

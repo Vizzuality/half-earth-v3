@@ -79,11 +79,11 @@ const LocalSceneSidebarComponent = ({
             <PopulationIcon />
             <span>{population}</span>
           </div>
-          <div className={styles.contextualIndicator} title="land cover">
+          <div className={styles.contextualIndicator} title={`land cover: ${landCover}` }>
             <LandCoverIcon />
             <span>{landCover}</span>
           </div>
-          <div className={styles.contextualIndicator}  title="climate regime">
+          <div className={styles.contextualIndicator}  title={`climate regime: ${climateRegime}` }>
             <ClimateRegimeIcon />
             <span>{climateRegime}</span>
           </div>

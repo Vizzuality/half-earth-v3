@@ -107,6 +107,10 @@ $sidebar-content-top: 180px;
     top: 2px;
     color: $white;
     margin-left: 5px;
+    max-width: 115px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 

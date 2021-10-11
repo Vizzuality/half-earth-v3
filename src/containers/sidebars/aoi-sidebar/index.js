@@ -28,7 +28,7 @@ const AoiSidebarContainer = (props) => {
 
   const handleSceneModeChange = () => browsePage({type: DATA})
 
-  return console.log(speciesData, contextualData) || (
+  return (
     <Component
       area={values.area}
       speciesData={speciesData}
