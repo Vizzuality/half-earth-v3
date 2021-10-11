@@ -122,3 +122,7 @@ export const AMPHIBIAN_LOOKUP = 'amphibians-lookup-table';
 export const BIRDS_LOOKUP = 'birds-lookup-table';
 export const MAMMALS_LOOKUP = 'mammals-lookup-table';
 export const REPTILES_LOOKUP = 'reptiles-lookup-table';
+export const PRECALCULATED_AMPHIBIAN_LOOKUP = 'PRECALCULATED_amphibians-lookup-table';
+export const PRECALCULATED_BIRDS_LOOKUP = 'PRECALCULATED_birds-lookup-table';
+export const PRECALCULATED_MAMMALS_LOOKUP = 'PRECALCULATED_mammals-lookup-table';
+export const PRECALCULATED_REPTILES_LOOKUP = 'PRECALCULATED_reptiles-lookup-table';

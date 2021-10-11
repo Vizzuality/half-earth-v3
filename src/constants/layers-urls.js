@@ -84,6 +84,10 @@ import {
   BIRDS_LOOKUP,
   MAMMALS_LOOKUP,
   REPTILES_LOOKUP,
+  PRECALCULATED_AMPHIBIAN_LOOKUP,
+  PRECALCULATED_BIRDS_LOOKUP,
+  PRECALCULATED_MAMMALS_LOOKUP,
+  PRECALCULATED_REPTILES_LOOKUP,
 } from 'constants/layers-slugs';
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
@@ -216,16 +220,17 @@ export const LAYERS_URLS = {
 
 
    // AOIs precalculated layers
-   [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
+   [ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4870a51b17f841c38793b3c0a3f053c9/rest/services/gadm1_precalculated/FeatureServer/0',
+  //  [ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
    [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
  
    // AOIs lookup tables
   //  [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   //  [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
-  //  [AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/7d06855c35c84237abd653b93533ec76/rest/services/Amphibian_CRF_species_table_20211003/FeatureServer/0',
-  //  [BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/f5deccc52837454ba196a8f4c9162ffe/rest/services/Bird_CRF_species_table_20211003/FeatureServer/0',
-  //  [MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/a5469fd12d874550aac72c826f9f16fe/rest/services/Mammal_CRF_species_table/FeatureServer/0',
-  //  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/64e98c1f81fc41fda48f992709437b21/rest/services/Reptile_CRF_species_table/FeatureServer/0',
+   [PRECALCULATED_AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/7d06855c35c84237abd653b93533ec76/rest/services/Amphibian_CRF_species_table_20211003/FeatureServer/0',
+   [PRECALCULATED_BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/f5deccc52837454ba196a8f4c9162ffe/rest/services/Bird_CRF_species_table_20211003/FeatureServer/0',
+   [PRECALCULATED_MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/a5469fd12d874550aac72c826f9f16fe/rest/services/Mammal_CRF_species_table/FeatureServer/0',
+   [PRECALCULATED_REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/64e98c1f81fc41fda48f992709437b21/rest/services/Reptile_CRF_species_table/FeatureServer/0',
 
 
 

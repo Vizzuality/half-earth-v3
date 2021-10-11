@@ -59,7 +59,7 @@ export const SPECIES_FILTERS = [
   {slug: MAMMALS, label: 'mammals'},
   {slug: REPTILES, label: 'reptiles'},
   {slug: AMPHIBIANS, label: 'amphibians'},
-  {slug: 'concern', label: ' highest conservation concern'},
+  {slug: 'endangered', label: 'endangered species'},
   {slug: 'flagship', label: 'flagship species'},
 ]
 
