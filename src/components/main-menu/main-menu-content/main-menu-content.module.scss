@@ -23,8 +23,8 @@
 
   .closeMenuButton {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: $site-gutter;
+    right: $site-gutter;
     display: flex;
     align-items: center;
 
