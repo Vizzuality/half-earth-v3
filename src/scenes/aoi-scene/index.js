@@ -14,7 +14,6 @@ import {
   writeToForageItem
 } from 'utils/local-forage-utils';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
-import { PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
 import { 
   getEluData,
   getSpeciesData,
@@ -23,6 +22,8 @@ import {
   getLandPressuresData,
   getProtectedAreasListData,
   getPercentageProtectedData,
+  getPrecalculatedSpeciesData,
+  getPrecalculatedContextualData,
 } from 'utils/geo-processing-services';
 import {
   BIRDS,
@@ -62,21 +63,18 @@ const Container = props => {
 
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
-      console.log('PRECALCULATED DATA', precalculatedLayerSlug)
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[precalculatedLayerSlug],
         whereClause: `MOL_ID = '${aoiId}'`,
         returnGeometry: true
       }).then((features) => {
-        console.log(features)
         const { geometry, attributes } = features[0];
-        console.log(attributes)
-        // const amphibians = JSON.parse(attributes.amphibians);
-        // console.log(amphibians)
         setGeometry(geometry);
-        const area = calculateGeometryArea(geometry, geometryEngine)
-        setAreaData({area});
-        setAreaName({areaName: `${attributes[PRECALCULATED_LAYERS_CONFIG[precalculatedLayerSlug].name]}, (${attributes[PRECALCULATED_LAYERS_CONFIG[precalculatedLayerSlug].subtitle]})`});
+        setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
+        getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
       })
     }
   }, [precalculatedLayerSlug, geometryEngine])

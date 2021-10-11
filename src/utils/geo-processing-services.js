@@ -15,7 +15,11 @@ import {
   ECOLOGICAL_LAND_UNITS,
   PROTECTED_AREA_PERCENTAGE,
   PROTECTED_AREAS_INSIDE_AOI,
+  PRECALCULATED_LOOKUP_TABLES,
 } from 'constants/geo-processing-services';
+
+
+import { PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
 
 
 export function getGeoProcessor(url) {
@@ -167,7 +171,8 @@ export function getSpeciesData(crfName, geometry) {
     getCrfData({ 
       dataset: crfName,
       aoiFeatureGeometry: geometry
-    }).then(({data}) => {
+    }).then((response) => {
+      const { data } = response;
       const crfSlices = data.value.features.reduce((acc, f) =>({
         ...acc,
         [f.attributes.SliceNumber]:{
@@ -201,6 +206,61 @@ export function getSpeciesData(crfName, geometry) {
     });
   })
 }
+
+export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
+  const data = JSON.parse(jsonSlices);
+  return new Promise((resolve, reject) => {
+    const crfSlices = data.reduce((acc, f) =>({
+      ...acc,
+      [f.SliceNumber]:{
+        sliceNumber: f.SliceNumber,
+        presencePercentage: f.percentage_presence
+      }
+    }), {});
+    const ids = data.map(f => f.SliceNumber);
+    EsriFeatureService.getFeatures({
+      url: LAYERS_URLS[PRECALCULATED_LOOKUP_TABLES[crfName]],
+      whereClause: `SliceNumber IN (${ids.toString()})`,
+    }).then((features) => {
+      const result = features
+        .map((f) => ({
+          category: crfName,
+          isFlagship: f.attributes.is_flagship,
+          sliceNumber: f.attributes.SliceNumber,
+          name: f.attributes.scientific_name,
+          globalProtectedArea: f.attributes.wdpa_km2,
+          globaldRangeArea: f.attributes.range_area_km2,
+          globalProtectedPercentage: f.attributes.percent_protected,
+          protectionTarget: f.attributes.conservation_target,
+          conservationConcern: f.attributes.conservation_concern,
+          presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
+        }))
+        .filter(f => f.name !== null)
+      resolve(orderBy(result, ['isFlagship', 'conservationConcern'], ['desc', 'desc']));
+    }).catch((error) => {
+      reject(error)
+    });
+  })
+}
+
+export const getPrecalculatedContextualData = (data, layerSlug) => ({
+  elu: {
+    climateRegime: data.climate_regime_majority,
+    landCover: data.land_cover_majority
+  },
+  area: data.AREA_KM2,
+  areaName: `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, 
+  (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})`,
+  pressures: {
+    'rangelands': data.percent_rangeland,
+    'rainfed agriculture': data.percent_rainfed,
+    'urban': data.percent_urban,
+    'irrigated agriculture': data.percent_irrigated,
+  },
+  population: data.population_sum,
+  // ...protectedAreasList,
+  protectionPercentage: data.percentage_protected,
+})
 
 export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {
