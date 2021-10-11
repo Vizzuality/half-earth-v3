@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
+import MainMenu from "components/main-menu";
 import AreaOfInterestScene from 'scenes/aoi-scene';
 import HalfEarthLogo from 'components/half-earth-logo';
 
@@ -12,6 +13,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const AreaOfInterestPageComponent = ({hasMetadata}) => (
   <>
     <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/>
+    <MainMenu />
     <AreaOfInterestScene />
     {hasMetadata && <InfoModal />}
   </>
