@@ -13,10 +13,10 @@ import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import HalfEarthLogo from 'components/half-earth-logo';
+import MainMenu from 'components/main-menu';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import Slider from 'components/slider';
 import FeaturedMapsList from 'containers/sidebars/featured-maps-list';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
@@ -25,8 +25,6 @@ import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
-const About = loadable(() => import('components/about'));
-
 
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
@@ -34,7 +32,6 @@ const DataGlobeComponent = ({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
-  selectedSpecies,
   selectedSidebar,
   isLandscapeMode,
   selectedFeaturedPlace,
@@ -60,7 +57,8 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
+      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/>
+      <MainMenu />
       <Scene
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
@@ -80,7 +78,6 @@ const DataGlobeComponent = ({
             isLandscapeMode={isLandscapeMode}
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
-          <Slider />
         </MobileOnly>
         <ArcgisLayerManager
           activeLayers={activeLayers}
@@ -153,7 +150,6 @@ const DataGlobeComponent = ({
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
-      {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
   );
 }

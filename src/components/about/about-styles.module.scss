@@ -1,28 +1,8 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
 
-.aboutButton {
-  color: $white;
-  position: absolute;
-  bottom: $site-gutter;
-  right: $site-gutter;
-  opacity: 0.7;
-  color: $alto;
-  font-family: $font-family-1;
-  font-size: $font-size-xxs;
-  font-weight: bold;
-  letter-spacing: $letter-spacing;
-  line-height: $line-height;
-  text-shadow: 0 0 2px 0 rgba(0,0,0,0.59);
-  text-transform: uppercase;
-
-  &:hover {
-    color: $white;
-  }
-}
-
 .aboutPage {
-  background-color: $dark-text;
+  background-color: $brand-color-secondary;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -88,3 +68,8 @@
   }
 }
 
+.closeButton {
+  position: fixed;
+  top: $site-gutter;
+  right: $site-gutter;
+}
