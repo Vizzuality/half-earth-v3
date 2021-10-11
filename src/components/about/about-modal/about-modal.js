@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import actions from 'redux_modules/page-texts/page-texts';
-import AboutComponent from  './about-component';
+import AboutModalComponent from  './about-modal-component';
 
 const VIEW = 'partners';
 
@@ -11,4 +11,4 @@ const mapStateToProps = ({ pageTexts }) => ({
   VIEW
 });
 
-export default connect(mapStateToProps, actions)(AboutComponent);
+export default connect(mapStateToProps, actions)(AboutModalComponent);

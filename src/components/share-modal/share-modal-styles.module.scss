@@ -2,17 +2,15 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-$tabsMarginBottom: 8px;
-$socialMediaIcon: 45px;
+$tabsMarginBottom: 4px;
+$socialMediaIcon: 30px;
 
 .modal {
   width: 90% !important;
   max-width: 90% !important;
-  padding: 60px 32px !important;
   height: auto !important;
 
   @media #{$tablet-landscape} {
-    padding: 50px 60px !important;
     max-width: 620px !important;
     width: 600px !important;
   }
@@ -20,22 +18,27 @@ $socialMediaIcon: 45px;
 
 .modalContent {
   padding: 0 !important;
+}
+
+.modalContainer {
+  display: flex;
+  padding: 24px;
+  background-color: $brand-color-secondary;
+
   @media #{$tablet-landscape} {
-    padding: 50px 60px !important;
+    max-width: 620px;
+    width: 600px;
   }
+
 }
 
 .closeBtn {
-  background-color: transparent !important;
-  height: 33px;
-  right: 24px !important;
-  top: 24px !important;
-  border: none !important;
+  // TODO: Remove button when we stop using half-earth-components
+  display: none;
+}
 
-  @media #{$tablet-landscape} {
-    right: 35px !important;
-    top: 35px !important;
-  }
+.shareContent {
+  flex: 1;
 }
 
 .copyContainer {
@@ -48,6 +51,10 @@ $socialMediaIcon: 45px;
   }
 }
 
+.copyIcon{
+  margin-right: 5px;
+}
+
 .coordinates {
   margin-bottom: 54px;
   font-size: $font-size-xs;
@@ -55,14 +62,14 @@ $socialMediaIcon: 45px;
 }
 
 .inputButton {
-  border: 1px solid $alto;
-  background-color: transparent;
-  color: $white;
+  border: 1px solid $white-opacity;
+  background-color: $white;
   padding: 10px;
   width: stretch;
   height: 40px;
-  border-radius: 2px;
+  border-radius: $card-border-radius;
   margin-bottom: 8px;
+  box-shadow: 0px 1px 2px 0px $black;
 
   &:focus {
     outline: none;
@@ -77,18 +84,22 @@ $socialMediaIcon: 45px;
 }
 
 .button {
-  border: 1px solid $alto !important;
+  background-color: $brand-color-main;
   height: 40px !important;
-  color: $white !important;
-  font-weight: bold !important;
-  text-transform: uppercase !important;
+  border-radius: 6px;
+
+  @media #{$tablet-landscape} {
+    border-radius: 0px 6px 6px 0px;
+  }
 }
 
 .copyButton {
-  letter-spacing: 2px !important;
   font-size: $font-size-xs !important;
   padding: 0 !important;
   width: 100% !important;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
 
   @media #{$tablet-landscape} {
     margin-left: -10px !important;
@@ -96,25 +107,13 @@ $socialMediaIcon: 45px;
   }
 }
 
-.copied {
-  background-color: $brand-color-main;
-  color: $black;
-  font-weight: bold;
-}
-
-.copiedText {
-  transform: translateY(2px); // font has some internal padding
-}
-
 .title {
   @extend %headline;
-  text-align: center;
-  font-size: $font-size-xl;
   text-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 
   @media #{$tablet-landscape} {
-    margin-bottom: 50px;
+    margin-bottom: 24px;
   }
 }
 
@@ -125,17 +124,16 @@ $socialMediaIcon: 45px;
 
 .tab {
   position: relative;
+  @extend %title;
   color: $white;
+  cursor: pointer;
+  position: relative;
+  margin-right: $site-gutter;
   font-size: $font-size-xs;
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height: 20px;
-  margin-right: 10px;
   cursor: pointer;
-
-  &:first-child {
-    margin-left: 10px;
-  }
 }
 
 .activeTab {
@@ -144,23 +142,23 @@ $socialMediaIcon: 45px;
     content: '';
     position: absolute;
     left: 0;
-    bottom: -10px; // ($tabsMarginBottom + 2) * -1
+    bottom: 0;
     width: 100%;
-    height: 4px;
+    height: 1px;
     background-color: $brand-color-main;
   }
 }
 
 .iconBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: $socialMediaIcon;
   width: $socialMediaIcon;
   padding: 0;
-  margin: 15px;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
+  margin-right: 15px;
+  background-color: $white-opacity;
+  border-radius: 50%;
 }
 
 .socialMediaContainer {

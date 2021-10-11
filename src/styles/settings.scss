@@ -109,12 +109,11 @@ $font-weight-bold: bold;
 
 $font-family-1: 'Inter', sans-serif;
 $font-family-1-light: 'Inter', sans-serif;
-     
 $font-family-serif: 'ivypresto-display', serif;
 $font-family-sans-serif: 'Inter', sans-serif;
 
 // Layout
-$site-gutter: 20px; 
+$site-gutter: 20px;
 $widget-button-size: 30px;
 $rounded-button-size: 42px;
 $he-project-logo-size: 25px;
@@ -166,9 +165,13 @@ $card-border-radius: 6px;
 $country-scene-chart-width: calc(90vw - #{$country-sidebar-width});
 
 //z indexes
+$max-z-index: 100001;
+$over-all: 20;
+$over-front: 15;
 $bring-to-front: 5;
 $default-z-index: 1;
 $send-to-back: 0;
+$under-back: -1;
 
 // Breakpoints
 $breakpoint-mobile-only: 37.4375rem; // 599px / 16px
