@@ -5,12 +5,14 @@ import styles from './styles.module.scss';
 
 const Component = ({
   title, 
+  className,
   percentage,
   barAnnotation,
   barAnnotationTitle,
   scale = 'global'
 }) => (
   <section className={cx(
+    className,
     styles.container,
     {[styles.globalRange]: scale === 'global',
     [styles.localRange]: scale === 'local',
