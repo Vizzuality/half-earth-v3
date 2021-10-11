@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import useEventListener from "hooks/use-event-listener";
-import { ReactComponent as CloseIcon } from "icons/close.svg";
+import { ReactComponent as CloseIcon } from "icons/menu-close.svg";
 import PartnersComponent from "../partners/partners";
 import MapInstructionsComponent from "../map-instructions/map-instructions-component";
 import { ABOUT_TABS } from "constants/ui-params";

@@ -2,7 +2,7 @@
 @import 'styles/ui.module';
 
 .aboutPage {
-  background-color: $dark-text;
+  background-color: $brand-color-secondary;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -66,4 +66,10 @@
     width: 100%;
     z-index: -1;
   }
+}
+
+.closeButton {
+  position: fixed;
+  top: $site-gutter;
+  right: $site-gutter;
 }

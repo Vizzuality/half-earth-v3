@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import cx from "classnames";
 import { connect } from "react-redux";
 import AboutModal from "./about-modal";
 import { openAboutPageAnalyticsEvent } from "actions/google-analytics-actions";
