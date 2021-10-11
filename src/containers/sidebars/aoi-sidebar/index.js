@@ -28,13 +28,14 @@ const AoiSidebarContainer = (props) => {
 
   const handleSceneModeChange = () => browsePage({type: DATA})
 
-  return console.log(speciesData, contextualData) || (
+  return (
     <Component
       area={values.area}
       speciesData={speciesData}
       landCover={values.landCover}
       population={values.population}
       contextualData={contextualData}
+      areaName={contextualData.areaName}
       climateRegime={values.climateRegime}
       handleSceneModeChange={handleSceneModeChange}
       {...props}

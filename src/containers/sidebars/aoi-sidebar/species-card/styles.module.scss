@@ -1,6 +1,56 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+
+@keyframes loading {
+  0% { width: 0%; }
+  10% { width: 7%; }
+  30% { width: 40%; }
+  72% { width: 65%; }
+  100% { width: 96%; }
+}
+
+.loaderCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 260px;
+  margin-top: $site-gutter;
+  padding: $sidebar-cards-padding;
+  background-color: $white-opacity;
+  border-radius: $card-border-radius;
+
+  .loaderBarContainer {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background-color: $white-opacity;
+    border-radius: $sidebar-border-radius;
+
+    .loaderBarPercentage {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: $brand-color-main;
+      border-radius: $sidebar-border-radius;
+      animation-duration: 35s;
+      animation-name: loading;
+    }
+  }
+
+  .loaderTextContainer {
+    @extend %bodyText;
+    color: $white;
+    margin-top: $site-gutter;
+
+    p {
+      margin: 0;
+    }
+  }
+
+}
+
+
 .cardWrapper {
   margin-top: $site-gutter;
 }
@@ -35,19 +85,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: $site-gutter;
   p {
     font-weight: 500;
     margin: 0 0 10px;
   }
 }
 
+.speciesBarContainer {
+  padding-bottom: $site-gutter;
+}
+
 .speciesImageWrapper {
-  height: 150px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 20%;
+  height: 320px;
   width: 100%;
   margin-top: $site-gutter;
   border-radius: 6px;
   background-repeat: no-repeat;
   background-size: cover;
+
+  .placeholderText {
+    @extend %title;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+  }
 }
 
 .sliderControls {
@@ -62,6 +127,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
+    width: 70%;
     .commonName {
       @extend %title;
     }
@@ -79,3 +145,7 @@
   }
 }
 
+.iucnStatus {
+  @extend %bodyText;
+  text-align: center;
+}

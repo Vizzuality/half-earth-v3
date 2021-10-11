@@ -76,7 +76,7 @@
 }
 
 .optionsList {
-  @extend %bodyText;
+  @extend %title;
   color: $dark-text;
   cursor: pointer;
   background-color: $white;

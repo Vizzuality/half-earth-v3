@@ -22,6 +22,9 @@ useEffect(() => {
     const _tooltip = new Popup({view});
     setTooltip(_tooltip);
   })
+  return function cleanUp() {
+    onCloseButtonClick()
+  }
 }, [])
 
 useEffect(() => {
@@ -34,6 +37,7 @@ useEffect(() => {
     view.popup.close();
   }
 }, [isVisible, tooltipPosition, tooltip])
+
 
   return (
     <div

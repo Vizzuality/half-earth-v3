@@ -24,6 +24,7 @@
   width: 30px;
   margin-right: 10px;
 }
+
 .featureNaming {
   display: flex;
   flex-direction: column;
@@ -48,6 +49,7 @@
 }
 
 .tooltipClose {
+  fill: $white;
   width: 15px;
   position: absolute;
   right: 10px;

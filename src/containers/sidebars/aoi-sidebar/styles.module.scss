@@ -72,6 +72,10 @@ $sidebar-content-top: 180px;
   @extend %display2;
   color: $white;
   margin: 0;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .area {
@@ -102,7 +106,11 @@ $sidebar-content-top: 180px;
     position: relative;
     top: 2px;
     color: $white;
-    margin-left: 5px;
+    margin: 0 5px;
+    max-width: 125px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 

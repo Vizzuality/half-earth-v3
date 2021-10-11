@@ -1,34 +1,9 @@
-// import React from 'react';
-// import Component from './component.jsx';
-// import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
-// import { layersConfig } from 'constants/mol-layers-configs';
-// import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-
-// const AoiSceneContainer = (props) => {
-//   const { activeLayers } = props;
-//   const handleMapLoad = (map, activeLayers) => {
-//     setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER]});
-//     activateLayersOnLoad(map, activeLayers, layersConfig);
-//   }
-
-//   return (
-//     <Component
-//       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-//       {...props}
-//     />
-//   )
-// }
-
-// export default AoiSceneContainer;
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import localforage from 'localforage';
 import { loadModules } from 'esri-loader';
 import mapStateToProps from './selectors';
+import EsriFeatureService from 'services/esri-feature-service';
 import * as urlActions from 'actions/url-actions';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
@@ -47,6 +22,8 @@ import {
   getLandPressuresData,
   getProtectedAreasListData,
   getPercentageProtectedData,
+  getPrecalculatedSpeciesData,
+  getPrecalculatedContextualData,
 } from 'utils/geo-processing-services';
 import {
   BIRDS,
@@ -56,6 +33,7 @@ import {
 } from 'constants/geo-processing-services';
 
 import Component from './component.jsx';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 const actions = {...urlActions, aoisGeometriesActions};
 
@@ -67,6 +45,7 @@ const Container = props => {
   const [taxaData, setTaxaData] = useState([])
   const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
+  const [areaName, setAreaName] = useState(null);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -82,20 +61,30 @@ const Container = props => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   if (precalculatedLayerSlug) {
-  //     console.log('PRECALCULATED DATA', precalculatedLayerSlug)
-  //   }
-  // }, [precalculatedLayerSlug])
+  useEffect(() => {
+    if (precalculatedLayerSlug && geometryEngine) {
+      EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[precalculatedLayerSlug],
+        whereClause: `MOL_ID = '${aoiId}'`,
+        returnGeometry: true
+      }).then((features) => {
+        const { geometry, attributes } = features[0];
+        setGeometry(geometry);
+        setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
+        getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+      })
+    }
+  }, [precalculatedLayerSlug, geometryEngine])
 
   
   useEffect(() => {
-    if (geometryEngine &&  jsonUtils) {
+    if (geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
         if (localStoredAoi) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
-          console.log('localStoredAoi', localStoredAoi)
-          console.log('species', {species})
           setSpeciesData({species});
           setContextualData({ ...rest })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
@@ -136,12 +125,13 @@ const Container = props => {
     setContextualData({
       ...elu,
       ...area,
+      ...areaName,
       ...pressures,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,
     })
-  },[elu, area, population, pressures, percentageProtected, protectedAreasList]);
+  },[elu, area, areaName, population, pressures, percentageProtected, protectedAreasList]);
 
   useEffect(() => {
     setSpeciesData({
@@ -154,10 +144,10 @@ const Container = props => {
 
 
   useEffect(() => {
-    if(speciesData.species.length > 0) {
+    if(speciesData.species.length > 0 && !precalculatedLayerSlug) {
       writeToForageItem(aoiId, {species: [...speciesData.species]});
     }
-  },[speciesData]);
+  },[speciesData, precalculatedLayerSlug]);
 
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });

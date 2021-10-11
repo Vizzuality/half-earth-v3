@@ -3,7 +3,6 @@
 
 .container{
   @extend %bodyText;
-  margin-bottom: $site-gutter;
   .barTitle {
     margin: 0;
   }

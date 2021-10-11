@@ -13,7 +13,7 @@ const actions = {...mapTooltipActions, ...urlActions };
 
 
 const Container = (props) => {
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, mapTooltipGeometry } = props;
+  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const handleHighlightLayerFeatureClick = (features) => {
@@ -35,7 +35,7 @@ const Container = (props) => {
   }
 
   const handleTooltipActionButtonClick = () => {
-    browsePage({type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug, aoi_geometry: mapTooltipGeometry }});
+    browsePage({type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug }});
   }
 
   useEffect(() => {

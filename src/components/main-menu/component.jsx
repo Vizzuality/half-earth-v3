@@ -17,7 +17,7 @@ const MainMenu = ({ className }) => {
         aria-expanded={isMenuOpen}
       >
         <div className={styles.menuTitle}>Menu</div>
-        <MenuIcon className={className} />
+        <MenuIcon className={styles.menuButton} />
       </button>
       <MainMenuContent open={isMenuOpen} setMenuOpen={setMenuOpen} />
     </>
