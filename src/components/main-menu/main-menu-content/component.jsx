@@ -109,7 +109,10 @@ const MainMenuContent = ({ open, setMenuOpen, browsePage }) => {
                 <About
                   className={styles.menuButton}
                   buttonContentComponent={
-                    <h2 className={styles.menuItem} role="menuitem">
+                    <h2
+                      className={cx(styles.menuItem, styles.greyItem)}
+                      role="menuitem"
+                    >
                       About the map
                     </h2>
                   }
