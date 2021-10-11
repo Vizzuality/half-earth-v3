@@ -1,29 +1,18 @@
 import React from 'react';
 import cx from 'classnames';
 import { localeFormatting } from 'utils/data-formatting-utils';
-import SpeciesModal from 'components/species-modal';
 import SpeciesBar from 'components/charts/species-bar';
-import SourceAnnotation from 'components/source-annotation';
 import Dropdown from 'components/dropdown';
-import SearchWithSuggestions from 'components/search-with-suggestions';
-import SearchInput from 'components/search-input';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-import {ReactComponent as ArrowLeftIcon} from 'icons/arrow_right.svg'
 import {ReactComponent as ArrowRightIcon} from 'icons/arrow_right.svg'
 
 import styles from './styles.module.scss';
 
 const Component = ({
-  cardTitle,
-  searchTerm,
   speciesData,
-  selectedSpecies,
   speciesFilters,
   placeholderText,
   setSpeciesFilter,
-  loadedPercentage,
-  speciesToDisplay,
-  handleSearchChange,
   selectedSpeciesFilter,
   individualSpeciesData,
   imageBackgroundPosition,
@@ -31,9 +20,8 @@ const Component = ({
   handlePreviousSpeciesSelection
 }) => speciesData.species.length === 0 ? (
 <section className={styles.loaderCard}>
-  <p className={styles.loadedPercentage}>{`${loadedPercentage}%`}</p>
   <div className={styles.loaderBarContainer}>
-    <div className={styles.loaderBarPercentage} style={{width: `${loadedPercentage}%`}}/>
+    <div className={styles.loaderBarPercentage}/>
   </div>
   <div className={styles.loaderTextContainer}>
     <p>
@@ -64,14 +52,6 @@ const Component = ({
           selectedOption={selectedSpeciesFilter}
           handleOptionSelection={setSpeciesFilter}
         />
-        {/* <SearchWithSuggestions
-          stacked
-          theme={'light'}
-          width="full"
-          parentWidth="322px"
-          options={speciesToDisplay}
-          onOptionSelection={(option) => console.log(option)}
-        /> */}
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>
             <div>

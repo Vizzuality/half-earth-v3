@@ -2,6 +2,13 @@
 @import 'styles/typography-extends';
 
 
+@keyframes loading {
+  0% { width: 0%; }
+  10% { width: 7%; }
+  30% { width: 40%; }
+  72% { width: 65%; }
+  100% { width: 96%; }
+}
 
 .loaderCard {
   display: flex;
@@ -13,12 +20,6 @@
   background-color: $white-opacity;
   border-radius: $card-border-radius;
 
-  .loadedPercentage {
-    @extend %display2;
-    color: $white;
-    text-align: center;
-  }
-
   .loaderBarContainer {
     position: relative;
     width: 100%;
@@ -29,8 +30,11 @@
     .loaderBarPercentage {
       position: absolute;
       height: 100%;
+      width: 100%;
       background-color: $brand-color-main;
       border-radius: $sidebar-border-radius;
+      animation-duration: 35s;
+      animation-name: loading;
     }
   }
 
@@ -44,8 +48,8 @@
     }
   }
 
-
 }
+
 
 .cardWrapper {
   margin-top: $site-gutter;

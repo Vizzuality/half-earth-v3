@@ -12,8 +12,6 @@ const SpeciesCardContainer = (props) => {
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0); 
   const [placeholderText, setPlaceholderText] = useState(null); 
   const [speciesFilters, setFilterWithCount] = useState(SPECIES_FILTERS); 
-  const [loadedPercentage, setLoadedPercentage] = useState(30); 
-  const [loaderIntervalId, setLoaderIntervalId] = useState(null)
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species); 
   const [imageBackgroundPosition, setImageBackgroundPosition] = useState('center'); 
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
@@ -31,10 +29,6 @@ const SpeciesCardContainer = (props) => {
     setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
     setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
   }
-
-  const nextSpecies = () => selectedSpeciesIndex === speciesToDisplay.length - 1 ? 0 : selectedSpeciesIndex + 1;
-  const prevSpecies = () => selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1;
-
   useEffect(() => {
     const filters = SPECIES_FILTERS.map(filter => {
       let count;
@@ -121,7 +115,6 @@ const SpeciesCardContainer = (props) => {
       speciesFilters={speciesFilters}
       placeholderText={placeholderText}
       selectedSpecies={selectedSpecies}
-      loadedPercentage={loadedPercentage}
       speciesToDisplay={speciesToDisplay}
       setSpeciesFilter={setSpeciesFilter}
       selectedSpeciesFilter={selectedSpeciesFilter}
