@@ -197,7 +197,7 @@ export const LAYERS_URLS = {
   
   //// Marine priority services, 55km
   [ALL_MARINE_VERTEBRATES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRall_55km/MapServer`,
-  [FISHES_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_marine_fish_prioritisation_TL/MapServer',
+  [FISHES_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRfish_55km/MapServer',
   [MARINE_MAMMALS_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRmammals_55km/MapServer',
 
   //// Marine vertebrates richness and rarity services
