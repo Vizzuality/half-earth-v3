@@ -47,6 +47,7 @@ import {
   AMPHIB_RICHNESS,
   FISHES_RARITY,
   FISHES_RICHNESS,
+  FISHES_PRIORITY,
   MAMMALS_PRIORITY,
   MAMMALS_RARITY,
   MAMMALS_RICHNESS,
@@ -66,7 +67,13 @@ import {
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
   EDUCATOR_AMBASSADORS_LAYER,
-  PLEDGES_LAYER
+  PLEDGES_LAYER,
+  ALL_MARINE_VERTEBRATES_PRIORITY,
+  ALL_MARINE_VERTEBRATES_RICHNESS,
+  ALL_MARINE_VERTEBRATES_RARITY,
+  MARINE_MAMMALS_PRIORITY,
+  MARINE_MAMMALS_RICHNESS,
+  MARINE_MAMMALS_RARITY
 } from 'constants/layers-slugs'
 
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
@@ -84,7 +91,7 @@ const LAYER_TYPES = {
   IMAGERY_LAYER: 'ImageryLayer'
 }
 
-export const DEFAULT_OPACITY = 0.6;
+export const DEFAULT_OPACITY = 0.8;
 export const BASEMAP_OPACITY = 1;
 
 export const LAYERS_CATEGORIES = {
@@ -97,7 +104,7 @@ export const biodiversityCategories = {
   [LAYER_VARIANTS.PRIORITY]: [
     {
       name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
+      description: 'Global, ~27 km cell size mapping of terrestrial species. ',
       subcategories: false,
       taxa: [
         {
@@ -126,12 +133,33 @@ export const biodiversityCategories = {
           layer:  REPTILES_PRIORITY
         }
       ]
-    }
+    },{
+      name: 'MARINE SPECIES',
+      description: 'Global, ~55 km cell size mapping of marine species. ',
+      subcategories: false,
+      taxa: [
+        {
+          value: 'all groups',
+          name: 'all marine vertebrates',
+          layer: ALL_MARINE_VERTEBRATES_PRIORITY
+        },
+        {
+          value: 'fishes',
+          name: 'fishes',
+          layer: FISHES_RICHNESS
+        },
+        {
+          value: 'marine mammals',
+          name: 'mammals',
+          layer: MARINE_MAMMALS_PRIORITY
+        }
+      ]
+    },
   ],
   [LAYER_VARIANTS.RICHNESS]: [
     {
       name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
+      description: 'Global, ~27 km cell size mapping of terrestrial species. ',
       subcategories: false,
       taxa: [
         {
@@ -177,9 +205,19 @@ export const biodiversityCategories = {
       subcategories: false,
       taxa: [
         {
+          value: 'all groups',
+          name: 'all marine vertebrates',
+          layer: ALL_MARINE_VERTEBRATES_RICHNESS
+        },
+        {
           value: 'fishes',
           name: 'fishes',
           layer: FISHES_RICHNESS
+        },
+        {
+          value: 'marine mammals',
+          name: 'mammals',
+          layer: MARINE_MAMMALS_RICHNESS
         }
       ]
     },
@@ -244,7 +282,7 @@ export const biodiversityCategories = {
   [LAYER_VARIANTS.RARITY]: [
     {
       name: 'TERRESTRIAL SPECIES',
-      description: 'Global, ~55 km cell size mapping of terrestrial species. ',
+      description: 'Global, ~27 km cell size mapping of terrestrial species. ',
       subcategories: false,
       taxa: [
         {
@@ -290,9 +328,19 @@ export const biodiversityCategories = {
       subcategories: false,
       taxa: [
         {
+          value: 'all groups',
+          name: 'all marine vertebrates',
+          layer: ALL_MARINE_VERTEBRATES_RARITY
+        },
+        {
           value: 'fishes',
           name: 'fishes',
           layer: FISHES_RARITY
+        },
+        {
+          value: 'marine mammals',
+          name: 'mammals',
+          layer: MARINE_MAMMALS_RARITY
         }
       ]
     },
@@ -700,6 +748,55 @@ export const layersConfig = {
     slug: FISHES_RICHNESS,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[FISHES_RICHNESS],
+    bbox: null
+  },
+  [FISHES_PRIORITY]: {
+    title: FISHES_PRIORITY,
+    slug: FISHES_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[FISHES_PRIORITY],
+    bbox: null
+  },
+  [ALL_MARINE_VERTEBRATES_PRIORITY]: {
+    title: ALL_MARINE_VERTEBRATES_PRIORITY,
+    slug: ALL_MARINE_VERTEBRATES_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_MARINE_VERTEBRATES_PRIORITY],
+    bbox: null
+  },
+  [ALL_MARINE_VERTEBRATES_RICHNESS]: {
+    title: ALL_MARINE_VERTEBRATES_RICHNESS,
+    slug: ALL_MARINE_VERTEBRATES_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_MARINE_VERTEBRATES_RICHNESS],
+    bbox: null
+  },
+  [ALL_MARINE_VERTEBRATES_RARITY]: {
+    title: ALL_MARINE_VERTEBRATES_RARITY,
+    slug: ALL_MARINE_VERTEBRATES_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[ALL_MARINE_VERTEBRATES_RARITY],
+    bbox: null
+  },
+  [MARINE_MAMMALS_PRIORITY]: {
+    title: MARINE_MAMMALS_PRIORITY,
+    slug: MARINE_MAMMALS_PRIORITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MARINE_MAMMALS_PRIORITY],
+    bbox: null
+  },
+  [MARINE_MAMMALS_RICHNESS]: {
+    title: MARINE_MAMMALS_RICHNESS,
+    slug: MARINE_MAMMALS_RICHNESS,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MARINE_MAMMALS_RICHNESS],
+    bbox: null
+  },
+  [MARINE_MAMMALS_RARITY]: {
+    title: MARINE_MAMMALS_RARITY,
+    slug: MARINE_MAMMALS_RARITY,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[MARINE_MAMMALS_RARITY],
     bbox: null
   },
   [AMPHIB_PRIORITY]: {
