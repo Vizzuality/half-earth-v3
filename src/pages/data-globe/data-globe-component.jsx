@@ -4,7 +4,6 @@ import loadable from '@loadable/component'
 // components
 import DataScene from 'scenes/data-scene';
 import TutorialModal from 'components/tutorial/tutorial-modal';
-import Switcher from 'components/switcher';
 import HalfEarthLogo from 'components/half-earth-logo';
 // constants
 import { useMobile } from 'constants/responsive';
@@ -62,7 +61,6 @@ const DataGlobeComponent = ({
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
-      {!useMobile() && <Switcher />}
       <TutorialModal />
       {hasMetadata && <InfoModal />}
       {!useMobile() && <About />}

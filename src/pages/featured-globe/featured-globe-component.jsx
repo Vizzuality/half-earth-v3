@@ -19,7 +19,6 @@ import HalfEarthLogo from 'components/half-earth-logo';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import Switcher from 'components/switcher';
 import Slider from 'components/slider';
 import FeaturedMapsList from 'components/featured-maps-list';
 import TutorialModal from 'components/tutorial/tutorial-modal';
@@ -71,7 +70,6 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      {!isMapsList && !isOnMobile && <Switcher />}
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
       <Scene
         sceneSettings={sceneSettings}

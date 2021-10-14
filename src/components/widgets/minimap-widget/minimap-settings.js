@@ -1,4 +1,5 @@
 export default {
+  //this allows to clip the globe
   alphaCompositingEnabled: true,
   environment: {
     atmosphereEnabled: false,
