@@ -73,21 +73,6 @@ import {
   EDUCATOR_AMBASSADORS_LAYER,
   SPECIES_LIST,
   FIREFLY_BASEMAP_LAYER,
-  WDPA_OECM_FEATURE_LAYER,
-  ADMIN_AREAS_FEATURE_LAYER,
-  ADMIN_AREAS_VECTOR_TILE_LAYER,
-  AOIS_HISTORIC_PRODUCTION,
-  AOIS_HISTORIC_DEVELOPMENT,
-  ELU_LOOKUP_TABLE,
-  WDPA_LOOKUP_TABLE,
-  AMPHIBIAN_LOOKUP,
-  BIRDS_LOOKUP,
-  MAMMALS_LOOKUP,
-  REPTILES_LOOKUP,
-  PRECALCULATED_AMPHIBIAN_LOOKUP,
-  PRECALCULATED_BIRDS_LOOKUP,
-  PRECALCULATED_MAMMALS_LOOKUP,
-  PRECALCULATED_REPTILES_LOOKUP,
 } from 'constants/layers-slugs';
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
@@ -102,7 +87,7 @@ export const LAYERS_URLS = {
   [FIREFLY_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:
-  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Priority_ranks_country_mercator/MapServer',
   [PLEDGES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]:
