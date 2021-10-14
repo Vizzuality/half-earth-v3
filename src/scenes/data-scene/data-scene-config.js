@@ -19,10 +19,11 @@ export default {
       { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
       { title: ALL_TAXA_PRIORITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
-    zoom: 1,
-    center: [16.9515536, 0.116959],
+    zoom: 3.5,
+    center: [-66.9515536, 0.116959],
     padding: {
-      bottom: 60
+      bottom: 60,
+      left: 200
     },
     isGlobeUpdating: false,
     environment: {
