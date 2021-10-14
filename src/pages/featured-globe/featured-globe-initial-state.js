@@ -15,10 +15,11 @@ export default {
       { title: PRIORITY_POLYGONS_GRAPHIC_LAYER },
       { title: FEATURED_PLACES_LAYER }
     ],
-    zoom: 1,
+    zoom: 3.5,
     center: [16.9515536, 0.116959],
     padding: {
-      bottom: 60
+      bottom: 60,
+      left: 200
     },
     isGlobeUpdating: false,
     environment: {

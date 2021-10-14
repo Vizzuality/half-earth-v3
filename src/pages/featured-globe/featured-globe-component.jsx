@@ -5,6 +5,7 @@ import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import Scene from 'components/scene';
 import Widgets from 'components/widgets';
 import LandscapeViewManager from 'components/landscape-view-manager';
+import MainMenu from 'components/main-menu';
 import GlobeEventsManager from 'components/globe-events-manager';
 import Legend from 'components/legend';
 import TerrainExaggerationLayer from 'components/terrain-exaggeration-layer';
@@ -71,6 +72,7 @@ const DataGlobeComponent = ({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
+      <MainMenu />
       <Scene
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
@@ -201,7 +203,6 @@ const DataGlobeComponent = ({
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
-      {!selectedFeaturedPlace && !isOnMobile && <About />}
     </>
   );
 }

@@ -89,16 +89,23 @@
 
     .greyItem {
       color: $grey-text;
+      text-transform: none;
+      text-align: right;
+      top: 0;
+      right: 0;
+      width: 100%;
     }
 
     .menuAction {
       @extend %subtitle;
 
       font-weight: $font-weight;
+      padding-bottom: $site-gutter;
     }
 
     .aboutButton,
     .shareButton {
+      @extend %subtitle;
       color: $white;
       padding: 0;
       margin: 0;

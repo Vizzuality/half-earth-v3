@@ -22,7 +22,6 @@ export default {
     zoom: 3.5,
     center: [-66.9515536, 0.116959],
     padding: {
-      bottom: 60,
       left: 200
     },
     isGlobeUpdating: false,
