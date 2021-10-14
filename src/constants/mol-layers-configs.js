@@ -72,6 +72,11 @@ import {
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
+
+import {
+  getLegendGradient
+} from 'utils/legend-utils';
+
 const LAYER_TYPES = {
   FEATURE_LAYER: 'FeatureLayer',
   TILE_LAYER: 'TileLayer',
@@ -832,45 +837,17 @@ export const layersConfig = {
   },
 }
 
-const getLegendGradient = (gradientSteps, lowValue, highValue) => {
-  const stepsLength = gradientSteps.length;
-  return gradientSteps.map((color, stepIndex) => ({
-    color,
-    value: getStepValue(stepsLength, stepIndex, lowValue, highValue)
-  }))
-}
-
-const getStepValue = (stepsLength, stepIndex, lowValue, highValue) => {
-  if (stepIndex === 0) {
-    return lowValue;
-  } else if (stepIndex === stepsLength -1) {
-    return highValue;
-  } else {
-    return '';
-  }
-}
-
 export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
-  '#0664F6',
-  '#2172DB',
-  '#3D80BF',
-  '#588EA4',
-  '#749C89',
-  '#8FAB6D',
-  '#ABB952',
-  '#C6C737',
-  '#E2D51B',
-  "#FDE300"
-]
-export const PRIORITY_PLACES_COLOUR_RAMP = [
-  '#47039F',
-  '#9C179E',
-  '#BD3786',
-  '#D8576B',
-  '#ED7953',
-  '#FA9E3B',
-  '#FDC926',
-  '#F0F921'
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(9, 0, 114, .25)',
+  'rgba(0, 133, 170, .6)',
+  'rgba(0, 133, 170, .6)',
+  'rgba(0, 226, 136, .8)',
+  'rgba(0, 226, 136, .8)',
+  'rgb(236, 255, 26)',
 ]
 
 export const legendConfigs = {
