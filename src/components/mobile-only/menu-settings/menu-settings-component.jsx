@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
-import { FOOTER_OPTIONS, SETTINGS_OPTIONS } from 'constants/mobile-only';
-import ShareModal from 'components/share-modal';
-import ShareModalButton from 'components/share-button';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
 
 
 import styles from './menu-settings-styles.module.scss';
 
 const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal }) => {
   const isSettingsOpen = activeOption === FOOTER_OPTIONS.SETTINGS;
-  const isHalfEarthModal = activeModal && activeModal === SETTINGS_OPTIONS.HALF_EARTH_MODAL;
   const Component = activeModal && options[activeModal].Component;
-  const [isShareModalOpen, setShareModalOpen] = useState(false);
   return (
     <>
       <div
@@ -33,19 +29,6 @@ const MenuSettings = ({ options, activeOption, textData, activeModal, closeModal
               <ArrowExpandIcon className={styles.icon} />
               <span className={styles.backButton}>BACK</span>
             </button>
-            {isHalfEarthModal && (
-              <>
-                <ShareModalButton
-                  variant="shortText"
-                  theme={{ shareButton: styles.shareButton }}
-                  setShareModalOpen={setShareModalOpen}
-                />
-                <ShareModal
-                  isOpen={isShareModalOpen}
-                  setShareModalOpen={setShareModalOpen}
-                />
-              </>
-            )}
           </div>
           <Component textData={textData} />
         </div>
