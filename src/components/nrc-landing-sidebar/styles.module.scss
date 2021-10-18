@@ -15,9 +15,8 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
   flex-direction: column;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
-  width: 430px;
+  width: 420px;
   padding: $site-gutter;
-  z-index: $bring-to-front;
 }
 
 .legendTitle,
