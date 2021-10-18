@@ -9,12 +9,13 @@ import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle, GRAPH
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 import { hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip } from 'utils/globe-events-utils';
 // ACTIONS
+import countryTooltipActions from 'redux_modules/country-tooltip';
 import * as urlActions from 'actions/url-actions';
 
-const actions = {...urlActions }
+const actions = {...urlActions, ...countryTooltipActions }
 
 const CountriesBordersLayerContainer = (props) => {
-const { view, changeGlobe, countryISO, isLandscapeMode } = props;
+const { view, setBatchTooltipData, countryISO, isLandscapeMode } = props;
 
 
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
@@ -40,7 +41,7 @@ const { view, changeGlobe, countryISO, isLandscapeMode } = props;
 
   const onClickHandler = bordersLayerFeatures => {
     flyToGeometry(view, bordersLayerFeatures);
-    toggleCountryTooltip(bordersLayerFeatures, changeGlobe, countryISO);
+    toggleCountryTooltip(bordersLayerFeatures, setBatchTooltipData);
     drawGeometry(bordersLayerFeatures, selectedCountryBorderGraphic);
   }
 

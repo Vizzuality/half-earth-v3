@@ -2,7 +2,7 @@ import {
   GRAPHIC_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
-  MERGED_WDPA_VECTOR_TILE_LAYER,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COUNTRY_MASK_LAYER,
   COUNTRY_PRIORITY_LAYER,
 } from 'constants/layers-slugs';
@@ -14,7 +14,7 @@ export default {
     { title: CITIES_LABELS_LAYER },
     { title: LANDSCAPE_FEATURES_LABELS_LAYER },
     { title: COUNTRY_PRIORITY_LAYER, opacity: 0.4 },
-    { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: 0.4 }
+    { title: PROTECTED_AREAS_VECTOR_TILE_LAYER, opacity: 0.4 }
   ],
   padding: {
     bottom: 60,

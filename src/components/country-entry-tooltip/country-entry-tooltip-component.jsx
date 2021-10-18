@@ -5,13 +5,16 @@ import styles from './country-entry-tooltip-styles.module.scss';
 
 const CountryEntryTooltipComponent = ({ 
   view,
-  countryName,
-  countryISO,
+  mapTooltipIsVisible,
+  mapTooltipContent,
+  tooltipContent,
   tooltipPosition,
   handleTooltipClose,
   onExploreCountryClick }) => {
 const tooltipref = useRef(null);
 const [tooltip, setTooltip] = useState(null);
+const { countryISO, countryName } = mapTooltipContent;
+const { spi, vertebrates, endemic, protection, protectionNeeded } = tooltipContent;
 
 // Create a new Popup to contain the tooltip
 useEffect(() => {
@@ -23,7 +26,7 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  if (tooltipPosition && tooltip && countryISO) {
+  if (tooltipPosition && tooltip && mapTooltipIsVisible) {
     view.popup.open({
       location: tooltipPosition,
       content: tooltipref.current
@@ -31,7 +34,7 @@ useEffect(() => {
   } else {
     view.popup.close()
   }
-}, [tooltipPosition, tooltip, countryISO])
+}, [tooltipPosition, tooltip, mapTooltipIsVisible])
 
   return tooltipPosition && tooltip ? (
     <div
@@ -40,24 +43,24 @@ useEffect(() => {
     >
       <section className={styles.tooltipSection}>
         <img className={styles.tooltipFlag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
-        <span className={styles.tooltipName}>Brazil</span>
+        <span className={styles.tooltipName}>{countryName}</span>
       </section>
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose}/>
       <section className={styles.spiInfo}>
-        <p className={styles.spi}>68.95</p>
+        <p className={styles.spi}>{spi}</p>
         <p className={styles.subtitle}>National species protection index</p>
       </section>
       <section className={styles.countryInfo}>
         <div className={styles.infoPill}>
-          <span className={styles.numeric}>414</span>
-          <span className={styles.text}>land vertebrate species of which 7 are endemic</span>
+          <span className={styles.numeric}>{vertebrates}</span>
+          <span className={styles.text}>land vertebrate species of which <span className={styles.endemic}>{`${endemic}`}</span>  are endemic</span>
         </div>
         <div className={styles.infoPill}>
-          <span className={styles.numeric}>18%</span>
+          <span className={styles.numeric}>{protection}%</span>
           <span className={styles.text}>land is protected</span>
         </div>
         <div className={styles.infoPill}>
-          <span className={styles.numeric}>34,16%</span>
+          <span className={styles.numeric}>{protectionNeeded}%</span>
           <span className={styles.text}>of additional land protection is needed</span>
         </div>
       </section>
@@ -65,7 +68,7 @@ useEffect(() => {
         className={styles.tooltipExplore}
         onClick={onExploreCountryClick}
       >
-        national report card
+        explore
       </button>
     </div>
   ) : null;
