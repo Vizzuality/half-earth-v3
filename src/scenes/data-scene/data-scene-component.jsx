@@ -7,17 +7,13 @@ import Scene from 'components/scene';
 import Legend from 'components/legend';
 import Widgets from 'components/widgets';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
-import CountryLabelsLayer from 'components/country-labels-layer';
-import CountriesBordersLayer from 'components/countries-borders-layer';
 import LandscapeViewManager from 'components/landscape-view-manager';
-import CountryEntryTooltip from 'components/country-entry-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import DataGlobalSidebar from 'components/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Slider from 'components/slider';
 // Constants
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
 import styles from './data-scene-styles.module.scss';
@@ -32,11 +28,9 @@ const ProtectedAreasTooltips = loadable(() => import('components/protected-areas
 const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
 
 const CountrySceneComponent = ({
-  sceneMode,
   onMapLoad,
   userConfig,
   countryISO,
-  countryName,
   openedModal,
   activeLayers,
   activeOption,
@@ -94,31 +88,13 @@ const CountrySceneComponent = ({
           isLandscapeMode={isLandscapeMode}
           countryISO={countryISO}
         />
-        <CountryLabelsLayer
-          activeLayers={activeLayers}
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          countryName={countryName}
-          sceneMode={sceneMode}
-        />
-        <CountriesBordersLayer
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
-        />
         <Legend
           isFullscreenActive={isFullscreenActive}
           activeLayers={activeLayers}
         />
         <Widgets
           activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
           openedModal={openedModal}
-        />
-        <CountryEntryTooltip
-          countryISO={countryISO}
-          countryName={countryName}
-          sceneMode={sceneMode}
         />
         <LabelsLayer activeLayers={activeLayers} />
         {isLandscapeMode && (

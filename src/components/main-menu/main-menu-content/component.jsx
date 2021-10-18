@@ -12,7 +12,7 @@ import styles from "./styles.module.scss";
 import menuExploreImage from "images/menu-explore.png";
 import menuDiscoverImage from "images/menu-discover.png";
 import menuNRCImage from "images/menu-national-report-cards.png";
-import { DATA, NATIONAL_REPORT_CARD, FEATURED } from "router";
+import { DATA, NATIONAL_REPORT_CARD_LANDING, FEATURED } from "router";
 
 const joinConversationSocialMedia = [
   {
@@ -93,7 +93,7 @@ const MainMenuContent = ({ open, setMenuOpen, browsePage }) => {
               <li>
                 <button
                   className={styles.menuButton}
-                  onClick={() => browsePage({ type: NATIONAL_REPORT_CARD })}
+                  onClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}
                 >
                   <img
                     src={menuNRCImage}
