@@ -3,6 +3,7 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   COUNTRIES_DATA_FEATURE_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  GLOBAL_SPI_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
@@ -96,6 +97,8 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',
   [COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer',
+  [GLOBAL_SPI_FEATURE_LAYER]:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
   [COUNTRIES_DATA_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',
   [LANDSCAPE_FEATURES_LABELS_LAYER]:

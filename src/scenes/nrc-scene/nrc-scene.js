@@ -23,18 +23,21 @@ const NrcSceneContainer = (props) => {
 
   // Get country borders
   useEffect(() => {
-    EsriFeatureService.getFeatures({
-      url: COUNTRIES_GEOMETRIES_SERVICE_URL,
-      whereClause: `GID_0 = '${countryISO}'`,
-      returnGeometry: true
-    }).then((features) => {
-      const { geometry } = features[0];
-      setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
-    }).catch(error => {
-      console.error('Inexistent country ISO code on the URL. Redirected to main page')
-      const { browsePage } = props;
-      browsePage({ type: DATA });
-    })
+    if (countryISO) {
+      console.log(countryISO)
+      EsriFeatureService.getFeatures({
+        url: COUNTRIES_GEOMETRIES_SERVICE_URL,
+        whereClause: `GID_0 = '${countryISO}'`,
+        returnGeometry: true
+      }).then((features) => {
+        const { geometry } = features[0];
+        setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
+      }).catch(error => {
+        console.error('Inexistent country ISO code on the URL. Redirected to main page')
+        const { browsePage } = props;
+        browsePage({ type: DATA });
+      })
+    }
   }, [countryISO])
 
   useEffect(() => {

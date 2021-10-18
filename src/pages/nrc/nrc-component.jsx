@@ -28,7 +28,7 @@ const NationalReportCard = ({
   handleGlobeUpdating,
   localSceneActiveTab,
   countryChallengesSelectedKey,
-}) => (
+}) => countryISO ? (
   <>
     <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/> 
     <LocalSceneSidebar
@@ -87,6 +87,8 @@ const NationalReportCard = ({
     )}
     {!useMobile() && <About className={styles.hideOnPrint} />}
   </>
-);
+): (
+  <div>LANDING</div>
+)
 
 export default NationalReportCard;
