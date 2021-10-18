@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
 
 import mapStateToProps from './country-challenges-chart-selectors';
-import { NATIONAL_REPORT_CARD } from 'router'
+import { NATIONAL_REPORT_CARD } from 'router';
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
@@ -35,7 +36,7 @@ const CountryChallengesChartContainer = (props) => {
 
   const handleBubbleClick = ({ countryISO }) => {
     const { browsePage } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, query: {ui: {localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.CHALLENGES}}});
   }
 
   const handleFilterSelection = (selectedFilter) => {
