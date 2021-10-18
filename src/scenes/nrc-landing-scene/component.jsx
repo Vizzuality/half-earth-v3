@@ -3,7 +3,7 @@ import React from 'react';
 import loadable from '@loadable/component'
 // Components
 import Scene from 'components/scene';
-import Legend from 'components/legend';
+import Sidebar from 'components/nrc-landing-sidebar';
 import Widgets from 'components/widgets';
 import ArcgisLayerManager from 'components/arcgis-layer-manager';
 import CountryLabelsLayer from 'components/country-labels-layer';
@@ -63,6 +63,7 @@ const NrcLandingComponent = ({
           countryName={countryName}
           sceneMode={sceneMode}
         />
+        <Sidebar />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>
     </>
