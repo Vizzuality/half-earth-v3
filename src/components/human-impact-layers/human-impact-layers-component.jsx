@@ -8,6 +8,8 @@ import { layerManagerToggle } from 'utils/layer-manager-utils';
 // Components
 import MultipleActiveLayers from 'components/multiple-active-layers';
 
+import styles from './styles.module.scss';
+
 
 const HumanImpactLayers = ({
   changeGlobe,
@@ -34,6 +36,7 @@ const HumanImpactLayers = ({
         options={humanPressuresMarine}
         alreadyChecked={alreadyCheckedMarinePressures}
         handleClick={toggleLayer}
+        theme={styles}
         title='Ocean use pressures'
         description='Human pressures causing habitat loss and accelerating species extinction.'
       />

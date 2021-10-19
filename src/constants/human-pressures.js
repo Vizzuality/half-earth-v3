@@ -63,18 +63,21 @@ export const PRESSURES_SLUGS = {
   artisanal:   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 }
 
+export const MARINE_PRESSURES = 'marine-pressures';
+export const LAND_PRESSURES = 'land-pressures';
+
 export const humanPressuresLandUse = [
-  { name: URBAN, value: PRESSURES_SLUGS.urban, slug: PRESSURES_SLUGS.urban },
-  { name: RAINFED, value: PRESSURES_SLUGS.rainfed, slug: PRESSURES_SLUGS.rainfed },
-  { name: IRRIGATED, value: PRESSURES_SLUGS.irrigated, slug: PRESSURES_SLUGS.irrigated },
-  { name: RANGELAND, value: PRESSURES_SLUGS.rangeland, slug: PRESSURES_SLUGS.rangeland }
+  { name: URBAN, value: PRESSURES_SLUGS.urban, slug: PRESSURES_SLUGS.urban, theme: LAND_PRESSURES },
+  { name: RAINFED, value: PRESSURES_SLUGS.rainfed, slug: PRESSURES_SLUGS.rainfed, theme: LAND_PRESSURES },
+  { name: IRRIGATED, value: PRESSURES_SLUGS.irrigated, slug: PRESSURES_SLUGS.irrigated, theme: LAND_PRESSURES },
+  { name: RANGELAND, value: PRESSURES_SLUGS.rangeland, slug: PRESSURES_SLUGS.rangeland, theme: LAND_PRESSURES }
 ];
 
 export const humanPressuresMarine = [
-  { name: LAND_DRIVERS, value: PRESSURES_SLUGS.land, slug: PRESSURES_SLUGS.land },
-  { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
-  { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
-  { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
+  { name: LAND_DRIVERS, value: PRESSURES_SLUGS.land, slug: PRESSURES_SLUGS.land, theme: MARINE_PRESSURES },
+  { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean, theme: MARINE_PRESSURES },
+  { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial, theme: MARINE_PRESSURES },
+  { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal, theme: MARINE_PRESSURES },
 ]
 
 export const humanPressuresLandscapeWidget = [
@@ -92,55 +95,6 @@ export const legendSingleRasterTitles = {
   [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: COMMERCIAL_FISHING,
   [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: ARTISANAL_FISHING,
 }
-
-// export const legendConfigs = {
-//   [MARINE_AND_LAND_HUMAN_PRESSURES]: {
-//     groupedLayer: true,
-//     type: "gradient",
-//     items: [
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[0],
-//         value: "low"
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[1],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[2],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[3],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[4],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[5],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[6],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[7],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[8],
-//         value: ""
-//       },
-//       {
-//         color: LAND_HUMAN_PRESSURES_COLOR_RAMP[9],
-//         value: "high"
-//       }
-//     ]
-//   }
-// }
 
 export const legendConfigs = {
   [MARINE_HUMAN_PRESSURES]: {
