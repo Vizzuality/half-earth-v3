@@ -1,7 +1,6 @@
 import {
   LAND_HUMAN_PRESSURES,
   MARINE_HUMAN_PRESSURES,
-  MARINE_AND_LAND_HUMAN_PRESSURES,
   URBAN_HUMAN_PRESSURES_TILE_LAYER,
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
@@ -96,17 +95,16 @@ export const legendSingleRasterTitles = {
   [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: ARTISANAL_FISHING,
 }
 
-export const legendConfigs = {
-  [MARINE_HUMAN_PRESSURES]: {
-    groupedLayer: true,
-    group: MARINE_HUMAN_PRESSURES,
-    type: "gradient",
-    items: getLegendGradient(MARINE_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
-  },
-  [LAND_HUMAN_PRESSURES]: {
-    groupedLayer: true,
-    group: LAND_HUMAN_PRESSURES,
-    type: "gradient",
-    items: getLegendGradient(LAND_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
-  },
+export const marinePressuresConfig = {
+  groupedLayer: true,
+  group: MARINE_HUMAN_PRESSURES,
+  type: "gradient",
+  items: getLegendGradient(MARINE_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
+}
+
+export const landPressuresConfig = {
+  groupedLayer: true,
+  group: LAND_HUMAN_PRESSURES,
+  type: "gradient",
+  items: getLegendGradient(LAND_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
 }

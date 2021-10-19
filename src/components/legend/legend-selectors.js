@@ -2,14 +2,15 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { uniqBy } from 'lodash';
 import { getConfig } from 'utils/user-config-utils';
 import { LEGEND_FREE_LAYERS, LAND_HUMAN_PRESURES_LAYERS, MARINE_HUMAN_PRESURES_LAYERS, COMMUNITY_PROTECTED_AREAS_LAYER_GROUP } from 'constants/layers-groups';
-import { PLEDGES_LAYER, LAND_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER,  } from 'constants/layers-slugs';
+import { PLEDGES_LAYER, LAND_HUMAN_PRESSURES, MARINE_HUMAN_PRESSURES, COMMUNITY_AREAS_VECTOR_TILE_LAYER,  } from 'constants/layers-slugs';
 import { legendConfigs, DEFAULT_OPACITY } from 'constants/mol-layers-configs';
-import { legendConfigs as humanPressureLegendConfigs, legendSingleRasterTitles } from 'constants/human-pressures';
+import { landPressuresConfig, marinePressuresConfig, legendSingleRasterTitles } from 'constants/human-pressures';
 import { legendConfigs as WDPALegendConfigs } from 'constants/protected-areas';
 import { LEGEND_TUTORIAL, LEGEND_DRAG_TUTORIAL } from 'constants/tutorial';
 
 const isLegendFreeLayer = layerId => LEGEND_FREE_LAYERS.some( l => l === layerId);
-const isHumanPressureLayer = layerId => [...LAND_HUMAN_PRESURES_LAYERS, ...MARINE_HUMAN_PRESURES_LAYERS].some( l => l === layerId);
+const isLandPressureLayer = layerId => LAND_HUMAN_PRESURES_LAYERS.some( l => l === layerId);
+const isMarinePressureLayer = layerId => MARINE_HUMAN_PRESURES_LAYERS.some( l => l === layerId);
 const isCommunityLayer = layerId => COMMUNITY_PROTECTED_AREAS_LAYER_GROUP.some( l => l === layerId);
 
 const getActiveLayers = (state, props) => props.activeLayers;
@@ -21,28 +22,36 @@ const getVisibleLayers = createSelector(getActiveLayers, activeLayers => {
 
 const getHumanPressuresDynamicTitle = createSelector(getVisibleLayers, visibleLayers => {
   if (!visibleLayers.length) return null;
-  const humanPresuresLayers = visibleLayers.filter(layer => isHumanPressureLayer(layer.title));
-  console.log(humanPresuresLayers)
+  const humanPresuresLayers = visibleLayers.filter(layer => isLandPressureLayer(layer.title));
   const titles = humanPresuresLayers.map(layer => legendSingleRasterTitles[layer.title]);
-  if (titles.length === 5) return 'All pressures';
-  if (titles.length > 2) return `human pressures (${titles.length})`; 
+  if (titles.length === 4) return 'All land use pressures';
+  if (titles.length > 2) return `land use pressures (${titles.length})`; 
   const hasAgricultureRasters = titles.some(title => title.toLowerCase().endsWith('agriculture'));
   if (hasAgricultureRasters) return joinAgricultureTitles(titles);
 
   return titles.join(' and ');
 })
 
-const getLegendConfigs = createSelector(
-  [getVisibleLayers, getHumanPressuresDynamicTitle],
-  (visibleLayers, humanPressuresDynamicTitle) => {
+const getMarinePressuresDynamicTitle = createSelector(getVisibleLayers, visibleLayers => {
   if (!visibleLayers.length) return null;
-  const layersAfterNormalization = mergeCommunityIntoOne(mergeHumanPressuresIntoOne(visibleLayers));
+  const marinePresuresLayers = visibleLayers.filter(layer => isMarinePressureLayer(layer.title));
+  const titles = marinePresuresLayers.map(layer => legendSingleRasterTitles[layer.title]);
+  if (titles.length === 4) return 'All marine use pressures';
+  if (titles.length > 2) return `marine use pressures (${titles.length})`;
+  return titles.join(' and ');
+})
+
+const getLegendConfigs = createSelector(
+  [getVisibleLayers, getHumanPressuresDynamicTitle, getMarinePressuresDynamicTitle],
+  (visibleLayers, humanPressuresDynamicTitle, marinePressuresDynamicTitle) => {
+  if (!visibleLayers.length) return null;
+  const layersAfterNormalization = mergeCommunityIntoOne(mergeMarinePressuresIntoOne(mergeHumanPressuresIntoOne(visibleLayers)));
     const configs = layersAfterNormalization.map(layer => {
-      console.log(layer)
     const sharedConfig = { layerId: layer.title, opacity: layer.opacity };
     if(legendConfigs[layer.title]) return { ...sharedConfig, ...legendConfigs[layer.title], molLogo: true }
-    if(humanPressureLegendConfigs[layer.title]) return { ...sharedConfig, ...humanPressureLegendConfigs[layer.title], title: humanPressuresDynamicTitle }
     if(WDPALegendConfigs[layer.title]) return { ...sharedConfig, ...WDPALegendConfigs[layer.title] }
+    if(layer.title === MARINE_HUMAN_PRESSURES) return { ...sharedConfig,...marinePressuresConfig, title: marinePressuresDynamicTitle }
+    if(layer.title === LAND_HUMAN_PRESSURES) return { ...sharedConfig, ...landPressuresConfig, title: humanPressuresDynamicTitle }
     if(layer.title === PLEDGES_LAYER) return { ...sharedConfig, title: 'Signed Pledges' }
     return sharedConfig;
   })
@@ -85,12 +94,24 @@ const setGroupedLayersOpacity = (layers, defaultOpacity) => {
 }
 
 const mergeHumanPressuresIntoOne = layers => {
-  const humanPressuresLayers = layers.filter(layer => isHumanPressureLayer(layer.title));
+  const humanPressuresLayers = layers.filter(layer => isLandPressureLayer(layer.title));
   if (!humanPressuresLayers.length) {
     return layers;
   } else {
     const opacity = setGroupedLayersOpacity(humanPressuresLayers, DEFAULT_OPACITY);
-    const normalizedLayers = layers.map(layer => isHumanPressureLayer(layer.title) ? { title: LAND_HUMAN_PRESSURES, opacity }: layer);
+    const normalizedLayers = layers.map(layer => isLandPressureLayer(layer.title) ? { title: LAND_HUMAN_PRESSURES, opacity }: layer);
+    const uniqNormalizedLayers = uniqBy(normalizedLayers, 'title');
+    return uniqNormalizedLayers;
+  }
+}
+
+const mergeMarinePressuresIntoOne = layers => {
+  const humanPressuresLayers = layers.filter(layer => isMarinePressureLayer(layer.title));
+  if (!humanPressuresLayers.length) {
+    return layers;
+  } else {
+    const opacity = setGroupedLayersOpacity(humanPressuresLayers, DEFAULT_OPACITY);
+    const normalizedLayers = layers.map(layer => isMarinePressureLayer(layer.title) ? { title: MARINE_HUMAN_PRESSURES, opacity }: layer);
     const uniqNormalizedLayers = uniqBy(normalizedLayers, 'title');
     return uniqNormalizedLayers;
   }
