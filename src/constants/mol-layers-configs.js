@@ -1009,44 +1009,7 @@ export const legendConfigs = {
   },
   [SA_PROTEA_RARITY]: {
     type: "gradient",
-    items: [
-    {
-    color: "#0664f6",
-    value: "low"
-    },
-    {
-    color: "#0572d6",
-    value: ""
-    },
-    {
-    color: "#0380b5",
-    value: ""
-    },
-    {
-    color: "#028e95",
-    value: ""
-    },
-    {
-    color: "#009c74",
-    value: ""
-    },
-    {
-    color: "#3fae57",
-    value: ""
-    },
-    {
-    color: "#7fc03a",
-    value: ""
-    },
-    {
-    color: "#bed11d",
-    value: ""
-    },
-    {
-    color: "#fde300",
-    value: "high"
-    }
-    ],
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Protea regional rarity"
   },
   [SA_PROTEA_RICHNESS]: {
@@ -1100,6 +1063,46 @@ export const legendConfigs = {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Fishes richness"
+  },
+  [FISHES_RARITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "Fishes rarity"
+  },
+  [ALL_MARINE_VERTEBRATES_RARITY]:{
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "All marine groups rarity"
+  },
+  [MARINE_MAMMALS_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "marine mammals priority"
+  },
+  [MARINE_MAMMALS_RICHNESS]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "marine mammals richness"
+  },
+  [MARINE_MAMMALS_RARITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "marine mammals rarity"
+  },
+  [FISHES_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "Fishes priority"
+  },
+  [ALL_MARINE_VERTEBRATES_PRIORITY]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "All marine groups priority"
+  },
+  [ALL_MARINE_VERTEBRATES_RICHNESS]: {
+    type: "gradient",
+    items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
+    title: "All marine groups priority"
   },
   [CONIFERS_RARITY]: {
     type: "gradient",
