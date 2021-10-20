@@ -147,7 +147,7 @@ export const biodiversityCategories = {
         {
           value: 'fishes',
           name: 'fishes',
-          layer: FISHES_RICHNESS
+          layer: FISHES_PRIORITY
         },
         {
           value: 'marine mammals',
