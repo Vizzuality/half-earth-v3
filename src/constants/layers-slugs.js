@@ -15,6 +15,8 @@ export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 export const GRID_LAYER = 'grid_layer';
 export const COUNTRY_PRIORITY_LAYER = 'country_priority_layer';
 // Terrestrial human pressures tiled layers.
+export const LAND_HUMAN_PRESSURES = 'land_human_pressures'
+export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures'
 export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures';
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
@@ -28,6 +30,7 @@ export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_h
 //////
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const COUNTRY_MASK_LAYER = 'mask-layer';
+export const GLOBAL_SPI_FEATURE_LAYER = 'spi-feature-layer';
 // Label layer to display features labels (marine, terrestrial and urban).
 // The scale in which they are displayed is set directly on the layer on ArcGIS online item.
 export const LABELS_LAYER_GROUP = 'labels_layer_group';
@@ -55,6 +58,7 @@ export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
 export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
+
 // South Africa layers
 export const SA_AMPHIB_RARITY = 'amphib-rarity-sa';
 export const SA_AMPHIB_RICHNESS = 'amphib-rich-sa';
@@ -75,11 +79,20 @@ export const SA_REPTILES_RICHNESS = 'reptiles-rich-sa';
 export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
+
+export const ALL_MARINE_VERTEBRATES_PRIORITY = 'all-marine-priority';
+export const ALL_MARINE_VERTEBRATES_RICHNESS = 'all-marine-richness';
+export const ALL_MARINE_VERTEBRATES_RARITY = 'all-marine-rarity';
+
+export const FISHES_PRIORITY = 'fishes-priority';
+export const FISHES_RARITY = 'fishes-rarity';
+export const FISHES_RICHNESS = 'fishes-rich';
+export const MARINE_MAMMALS_PRIORITY = 'marine-mammals-priority';
+export const MARINE_MAMMALS_RICHNESS = 'marine-mammals-richness';
+export const MARINE_MAMMALS_RARITY = 'marine-mammals-rarity';
 export const AMPHIB_RARITY = 'amphib-rarity';
 export const AMPHIB_RICHNESS = 'amphib-rich';
 export const AMPHIB_PRIORITY = 'amphib-priority';
-export const FISHES_RARITY = 'fishes-rarity';
-export const FISHES_RICHNESS = 'fishes-rich';
 export const MAMMALS_PRIORITY = 'mammals-priority';
 export const MAMMALS_RARITY = 'mammals-rare';
 export const MAMMALS_RICHNESS = 'mammals-rich';

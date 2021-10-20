@@ -2,14 +2,14 @@
 
 .overrideCheckbox-protected-areas {
   input[type="checkbox"]:checked + label::before {
-    background: $persimmon;
+    background: $protected-areas;
     border: 2px solid $white; 
   }
 }
 
 .overrideCheckbox-community-areas {
   input[type="checkbox"]:checked + label::before {
-    background: $saffron-mango;
+    background: $protected-areas;
     border: 2px solid $white; 
   }
 }

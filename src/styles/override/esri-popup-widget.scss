@@ -16,7 +16,8 @@
 .esri-popup__main-container {
   background-color: $firefly;
   color: $white;
-  max-width: 200px;
+  max-width: 285px;
+  max-height: 350px !important;
   border-radius: 2px;
 }
 

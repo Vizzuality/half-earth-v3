@@ -5,7 +5,8 @@ import mapStateToProps from './ranking-chart-selectors';
 import useDebounce from 'hooks/use-debounce';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import { NATIONAL_REPORT_CARD } from 'router'
+import { NATIONAL_REPORT_CARD } from 'router';
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 const actions = {...metadataActions, ...urlActions };
 
@@ -36,7 +37,7 @@ const RankingChartContainer = (props) => {
 
   const handleCountryClick = (countryISO) => {
     const { browsePage } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, query: {ui: {localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.RANKING}}});
   };
 
   const handleSearchChange = (event) => {

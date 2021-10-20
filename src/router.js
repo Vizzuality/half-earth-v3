@@ -3,8 +3,9 @@ import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
-export const NATIONAL_REPORT_CARD = 'location/NATIONAL_REPORT_CARD';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
+export const NATIONAL_REPORT_CARD = 'location/NATIONAL_REPORT_CARD';
+export const NATIONAL_REPORT_CARD_LANDING = 'location/NATIONAL_REPORT_CARD_LANDING';
 
 export const routes = {
   [DATA]: {
@@ -26,6 +27,10 @@ export const routes = {
   [NATIONAL_REPORT_CARD]: {
     path: '/nrc/:iso',
     page: 'nrc'
+  },
+  [NATIONAL_REPORT_CARD_LANDING]: {
+    path: '/nrc',
+    page: 'nrc-landing'
   },
   [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
 };

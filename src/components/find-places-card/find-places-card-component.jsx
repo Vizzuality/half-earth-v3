@@ -13,7 +13,7 @@ const FindPlacesCardComponent = ({
     onClick={handleOpenSearch}
   >
     <span className={styles.searchCardTitle}>Find places</span>
-    <span className={styles.searchSubtitle}>analyze countries, explore areas</span>
+    <span className={styles.searchSubtitle}>explore areas</span>
     { showCloseButton && (
       ReactDOM.createPortal(
         <button

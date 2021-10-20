@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.10.1",
+    "@popperjs/core": "^2.10.2",
     "airtable": "^0.8.1",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
@@ -25,6 +26,7 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.2",
     "react-markdown": "^4.3.1",
+    "react-popper": "^2.2.5",
     "react-query": "^3.16.1",
     "react-redux": "^6.0.1",
     "react-responsive": "^8.0.1",

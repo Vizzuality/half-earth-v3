@@ -127,7 +127,7 @@ $legend-width: 260px;
 
   @media #{$tablet-portrait} {
     position: absolute;
-    bottom: calc(#{$site-gutter} + #{$map-attribution-height});
+    bottom: $site-gutter;
     right: $site-gutter;
     width: $legend-width;
   }

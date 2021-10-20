@@ -1,0 +1,51 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.gradientWrapper {
+  height: 8px;
+  border-radius: 5px;
+  background-color: $brand-color-secondary;
+}
+
+.gradient {
+  display: flex;
+  height: 8px;
+  border-radius: 5px;
+  border: 1px solid $brand-color-secondary;
+}
+
+.gradientItem {
+  width: 100%;
+}
+
+.land-human-pressures {
+  background: $human-pressures-gradient;
+}
+
+.marine-human-pressures {
+  background: $marine-pressures-gradient;
+}
+
+.biodiversity {
+  background: $biodiversity-gradient-rotated;
+}
+
+.spi {
+  background: $spi-gradient;
+}
+
+.valuesWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+  &:last-child {
+    text-align: right;
+  }
+  span {
+    @extend %subtitle;
+    color: inherit;
+  }
+}

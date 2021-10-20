@@ -2,9 +2,7 @@ import {
   GRAPHIC_LAYER,
   ALL_TAXA_PRIORITY,
   CITIES_LABELS_LAYER,
-  COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
@@ -14,15 +12,13 @@ export default {
     activeLayers: [
       { title: GRAPHIC_LAYER },
       { title: CITIES_LABELS_LAYER },
-      { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
-      { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
       { title: ALL_TAXA_PRIORITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY }
     ],
-    zoom: 1,
-    center: [16.9515536, 0.116959],
+    zoom: 3.5,
+    center: [-66.9515536, 0.116959],
     padding: {
-      bottom: 60
+      left: 200
     },
     isGlobeUpdating: false,
     environment: {

@@ -4,14 +4,13 @@ import loadable from '@loadable/component'
 // components
 import DataScene from 'scenes/data-scene';
 import TutorialModal from 'components/tutorial/tutorial-modal';
-import Switcher from 'components/switcher';
 import HalfEarthLogo from 'components/half-earth-logo';
+import MainMenu from 'components/main-menu';
 // constants
 import { useMobile } from 'constants/responsive';
 //styles
 import uiStyles from 'styles/ui.module.scss';
 // Dynamic imports
-const About = loadable(() => import('components/about'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 
@@ -41,6 +40,7 @@ const DataGlobeComponent = ({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
+      <MainMenu />
       <DataScene
         sceneMode={sceneMode}
         userConfig={userConfig}
@@ -62,10 +62,8 @@ const DataGlobeComponent = ({
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
-      {!useMobile() && <Switcher />}
       <TutorialModal />
       {hasMetadata && <InfoModal />}
-      {!useMobile() && <About />}
     </>
   );
 }
