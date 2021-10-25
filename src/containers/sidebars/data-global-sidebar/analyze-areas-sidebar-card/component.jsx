@@ -64,7 +64,6 @@ const AnalyzeAreasCardComponent = ({
             <div className={styles.dropdownContainer}>
               <Dropdown
                 stacked
-                disabled
                 theme={'dark'}
                 width="full"
                 parentWidth="380px"
@@ -74,7 +73,6 @@ const AnalyzeAreasCardComponent = ({
               />
               <SearchLocation
                 stacked
-                // disabled
                 view={view}
                 theme={'dark'}
                 width="full"
