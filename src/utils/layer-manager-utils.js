@@ -115,7 +115,7 @@ export const bringLayerToBack = (layerTitle, map) => {
 
 
 export const createLayer = layerConfig => {
-  const { url, slug, type, opacity } = layerConfig;
+  const { url, slug, type, opacity, renderer } = layerConfig;
   const layerType = type || 'WebTileLayer';
   return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
     return new layer({
@@ -124,7 +124,8 @@ export const createLayer = layerConfig => {
       title: slug,
       id: slug,
       outFields: ["*"],
-      opacity: opacity || DEFAULT_OPACITY
+      opacity: opacity || DEFAULT_OPACITY,
+      renderer: renderer
     })
   });
 }

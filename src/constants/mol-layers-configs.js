@@ -79,6 +79,9 @@ import {
 } from 'constants/layers-slugs'
 
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { 
+  BORDERS_LAYERS_RENDERER
+} from 'constants/graphic-styles';
 
 import {
   getLegendGradient
@@ -120,6 +123,7 @@ export const layersConfig = {
     slug: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
+    renderer: BORDERS_LAYERS_RENDERER,
     bbox: null
   },
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: {
@@ -127,6 +131,7 @@ export const layersConfig = {
     slug: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
     type: LAYER_TYPES.FEATURE_LAYER,
     url: LAYERS_URLS[GADM_1_ADMIN_AREAS_FEATURE_LAYER],
+    renderer: BORDERS_LAYERS_RENDERER,
     bbox: null
   },
   [WDPA_OECM_FEATURE_LAYER]: {
