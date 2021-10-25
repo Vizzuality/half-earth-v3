@@ -99,6 +99,7 @@
     }
 
     &.selectedOption {
+      pointer-events: none;
       color: rgba($_temporary-dark-text, 0.5);
     }
   }
