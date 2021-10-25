@@ -123,6 +123,7 @@ export const createLayer = layerConfig => {
       urlTemplate: url,
       title: slug,
       id: slug,
+      outFields: ["*"],
       opacity: opacity || DEFAULT_OPACITY
     })
   });
@@ -140,7 +141,6 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
       const layerConfig = config[layerName];
       if (layerConfig) {
         const newLayer = await createLayer(layerConfig, map);
-        newLayer.outFields = ["*"];
         addLayerToMap(newLayer, map);
       }
     });
