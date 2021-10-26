@@ -5,6 +5,7 @@ import Button from 'components/button';
 import Dropdown from 'components/dropdown';
 import ShapeFileUploader from 'components/shape-file-uploader';
 import SearchLocation from 'components/search-location';
+import AoiHistoryModal from 'containers/modals/aoi-history-modal';
 import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
 import {ReactComponent as AoisDrawIcon} from "icons/aois_draw.svg";
 import {ReactComponent as AoisClickIcon} from "icons/aois_click.svg";
@@ -24,6 +25,8 @@ const AnalyzeAreasCardComponent = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+  const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
+  const handleAoiModalToggle = () => setAoiHistoryModalOpen(!isAoiHistoryModalOpen);
   
   return (
     <div className={cx(
@@ -86,6 +89,7 @@ const AnalyzeAreasCardComponent = ({
               label="Open your analyzed areas history"
               className={styles.areasHistoryButton}
               theme={styles.areasHistoryButton}
+              handleClick={handleAoiModalToggle}
             />
           </section>
         )}
@@ -107,10 +111,15 @@ const AnalyzeAreasCardComponent = ({
               Icon={AreasHistoryIcon}
               label="Open your analyzed areas history"
               className={styles.areasHistoryButton}
+              handleClick={handleAoiModalToggle}
             />
           </section>
         )}
       </div>
+      <AoiHistoryModal
+        isOpen={isAoiHistoryModalOpen}
+        handleClose={handleAoiModalToggle}
+      />
     </div>
   )
 
