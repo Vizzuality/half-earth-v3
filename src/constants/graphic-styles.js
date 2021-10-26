@@ -6,6 +6,17 @@ export const MASK_STYLES = {
   outlineWidth: 1,
 }
 
+export const BORDERS_OPACITY = 0.3;
+
+export const BORDERS_LAYERS_RENDERER = {
+  type: 'simple',
+  symbol: {
+    type: 'simple-line',
+    color: [216, 216, 216, BORDERS_OPACITY],
+    style: "solid"
+  }
+}
+
 export const COUNTRY_BORDER_STYLES = {
   fillColor: [15, 43, 59],
   fillOpacity: 0,

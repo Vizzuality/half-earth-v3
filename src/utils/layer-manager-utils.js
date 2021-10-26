@@ -115,7 +115,7 @@ export const bringLayerToBack = (layerTitle, map) => {
 
 
 export const createLayer = layerConfig => {
-  const { url, slug, type, opacity } = layerConfig;
+  const { url, slug, type, opacity, renderer } = layerConfig;
   const layerType = type || 'WebTileLayer';
   return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
     return new layer({
@@ -123,7 +123,9 @@ export const createLayer = layerConfig => {
       urlTemplate: url,
       title: slug,
       id: slug,
-      opacity: opacity || DEFAULT_OPACITY
+      outFields: ["*"],
+      opacity: opacity || DEFAULT_OPACITY,
+      renderer: renderer
     })
   });
 }
@@ -140,7 +142,6 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
       const layerConfig = config[layerName];
       if (layerConfig) {
         const newLayer = await createLayer(layerConfig, map);
-        newLayer.outFields = ["*"];
         addLayerToMap(newLayer, map);
       }
     });

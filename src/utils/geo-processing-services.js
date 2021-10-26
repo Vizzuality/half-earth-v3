@@ -249,8 +249,9 @@ export const getPrecalculatedContextualData = (data, layerSlug) => ({
     landCover: data.land_cover_majority
   },
   area: data.AREA_KM2,
-  areaName: `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, 
-  (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})`,
+  areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ? 
+    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})`:
+    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
   pressures: {
     'rangelands': data.percent_rangeland,
     'rainfed agriculture': data.percent_rainfed,

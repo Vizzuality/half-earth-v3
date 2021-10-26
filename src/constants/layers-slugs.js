@@ -109,7 +109,8 @@ export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
 // Species modal
 export const SPECIES_LIST = 'species-list';
 // AOIs precalculated layers
-export const ADMIN_AREAS_FEATURE_LAYER = 'admin-areas-feature-layer';
+export const GADM_0_ADMIN_AREAS_FEATURE_LAYER = 'gadm-0-admin-areas-feature-layer';
+export const GADM_1_ADMIN_AREAS_FEATURE_LAYER = 'gadm-1-admin-areas-feature-layer';
 export const ADMIN_AREAS_VECTOR_TILE_LAYER = 'admin-areas-vector-tile-layer';
 export const WDPA_OECM_FEATURE_LAYER = 'wdpa-oecm-feature-layer';
 export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
