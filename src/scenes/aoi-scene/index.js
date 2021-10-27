@@ -83,7 +83,7 @@ const Container = props => {
   useEffect(() => {
     if (geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
-        if (localStoredAoi) {
+        if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species});
           setContextualData({ ...rest })
