@@ -5,32 +5,42 @@ import { Modal } from "he-components";
 import styles from "./styles.module";
 
 
-const AoiHistoryModalComponent = ({ handleClose, isOpen }) => {
+const AoiHistoryModalComponent = ({
+  isOpen,
+  editAoiId,
+  handleClose,
+  handleAoiClick,
+  handleAoiDataStore,
+  handleAoiNameChange,
+  handleActivateAoiEdit,
+}) => {
 
-  const [isEditingName, setAoiToEdit] = useState(false);
   const [aoiHistory, setAoiHistory] = useState([]);
   const activeInputRef = useRef();
 
   useEffect(() => {
-    const _aoiHistory = [];
-    localforage.iterate((value, key) => {
-      _aoiHistory.push({
-        id: key,
-        name: value.name,
-        timestamp: value.timestamp
+    if (isOpen) {
+      const _aoiHistory = [];
+      localforage.iterate((value, key) => {
+        _aoiHistory.push({
+          id: key,
+          name: value.name,
+          timestamp: value.timestamp
+        })
+      }).then(() => {
+        console.log('setting history')
+        setAoiHistory(_aoiHistory.sort((a, b) => b.timestamp - a.timestamp))
+      }).catch((error) => {
+        console.error(error)
       })
-    }).then(() => {
-      setAoiHistory(_aoiHistory);
-    }).catch((error) => {
-      console.error(error)
-    })
-  }, [])
+    }
+  }, [isOpen, editAoiId])
 
   useEffect(() => {
-    if (isEditingName && activeInputRef.current) {
+    if (editAoiId && activeInputRef.current) {
       activeInputRef.current.focus();
     }
-  }, [isEditingName, activeInputRef])
+  }, [editAoiId, activeInputRef])
 
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
@@ -38,30 +48,35 @@ const AoiHistoryModalComponent = ({ handleClose, isOpen }) => {
         <h2 className={styles.title}>Your areas of interest history.</h2>
         <p className={styles.description}>These are the areas of interest you have created in the past. To delete them, clear the Cache of your browser.</p>
         <ul className={styles.aoiListContainer}>
-          {aoiHistory.map((aoi) => (
+          {aoiHistory.map(({
+            id,
+            name,
+            timestamp
+          }) => (
             <li 
-              key={aoi.id}
+              key={id}
               className={styles.aoiItemContainer}
             >
               <div
                 className={styles.data}
               >
-                {isEditingName === aoi.id ? 
+                {editAoiId === id ? 
                 <input
-                  id={aoi.id}
+                  id={id}
                   type="text"
                   ref={activeInputRef}
                   className={styles.nameInput}
+                  onChange={handleAoiNameChange}
                 /> :
                 <span
                   className={styles.aoiName}
-                  onClick={() => console.log('browse area')}
+                  onClick={() => handleAoiClick(id)}
                 >
-                  {aoi.name || 'custom super really long name'}
+                  {name || 'custom super really long name'}
                 </span>
                 }
                 <span className={styles.timestamp}>
-                  {isEditingName === aoi.id ? '' : (aoi.timestamp || '05/07/2021 14:54')}
+                  {editAoiId === id ? '' : (timestamp || '05/07/2021 14:54')}
                 </span>
               </div>
               <div
@@ -70,12 +85,12 @@ const AoiHistoryModalComponent = ({ handleClose, isOpen }) => {
                 <button
                   className={styles.item}
                   onClick={
-                    isEditingName === aoi.id ?
-                    () => setAoiToEdit (false) :
-                    () => setAoiToEdit(aoi.id)
+                    editAoiId === id ?
+                    () => handleAoiDataStore(id) :
+                    () => handleActivateAoiEdit(id)
                   }
                 >
-                  {isEditingName === aoi.id ? 'Store new name' : 'Edit name'}
+                  {editAoiId === id ? 'Store new name' : 'Edit name'}
                 </button>
               </div>
             </li>
