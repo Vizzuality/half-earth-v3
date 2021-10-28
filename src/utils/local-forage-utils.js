@@ -21,3 +21,22 @@ export function writeToForageItem(itemKey, newValues) {
       }
     })
 }
+
+export function getAoiHistory() {
+  return new Promise((resolve, reject) => {
+      const _aoiHistory = [];
+      localforage.iterate((value, key) => {
+        _aoiHistory.push({
+          id: key,
+          name: value.name,
+          timestamp: value.timestamp
+        })
+      }).then(() => {
+        resolve(_aoiHistory)
+      }).catch((error) => reject(error))
+  })
+}
+
+export function sortByDate(a, b) {
+  return b.timestamp - a.timestamp;
+}

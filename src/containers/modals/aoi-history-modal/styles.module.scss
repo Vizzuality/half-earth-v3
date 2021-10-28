@@ -87,10 +87,12 @@ $area-title-width: 230px;
       @extend %title;
       padding: 0 10px;
       background-color: $modal-light-background;
-      width: $area-title-width;
       border: none;
       color: $_temporary-dark-text;
       text-transform: none;
+      width: 345px;
+      border-radius: $card-border-radius;
+      height: 40px;
     }
 
     .aoiName {
@@ -104,10 +106,24 @@ $area-title-width: 230px;
   }
 
   .toolbar {
-    min-width: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 95px;
     .item {
-      @extend %bodyText;
       color: $white;
+      background-color: transparent;
+      &:hover {
+        background-color: $dark-opacity;
+      }
+    }
+    .saveButton {
+      color: $dark-text;
+      background-color: $brand-color-main;
+      &:hover {
+        background-color: $brand-color-main-hover;
+      }
     }
   }
 }
