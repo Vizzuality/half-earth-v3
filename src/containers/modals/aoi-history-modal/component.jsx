@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import localforage from 'localforage';
+import { timestampAoiFormatting } from 'utils/data-formatting-utils';
 import { Modal } from "he-components";
 
 import styles from "./styles.module";
@@ -76,7 +77,7 @@ const AoiHistoryModalComponent = ({
                 </span>
                 }
                 <span className={styles.timestamp}>
-                  {editAoiId === id ? '' : (timestamp || '05/07/2021 14:54')}
+                  {editAoiId === id ? '' : (timestampAoiFormatting(timestamp) || '05/07/2021 14:54')}
                 </span>
               </div>
               <div

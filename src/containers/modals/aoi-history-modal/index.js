@@ -22,14 +22,7 @@ const Container = (props) => {
   const handleAoiDataStore = (id) => {
     writeToForageItem(id, {
       name: updatedAoiName,
-      timestamp: Intl.DateTimeFormat('en-US', { 
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: 'numeric',
-        hour12: false
-      }).format(new Date())
+      timestamp: Date.now()
     })
     setEditAoiId(null);
   }
