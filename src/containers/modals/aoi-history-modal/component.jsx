@@ -5,6 +5,7 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as BinIcon } from 'icons/bin.svg';
 import { timestampAoiFormatting } from 'utils/data-formatting-utils';
+import { dropLocalDatabase } from 'utils/local-forage-utils';
 import { Modal } from "he-components";
 
 import styles from "./styles.module";
@@ -21,8 +22,6 @@ const AoiHistoryModalComponent = ({
   handleActivateAoiEdit,
   handleRemoveAoiFromLocal,
 }) => {
-
-  // const [aoiHistory, setAoiHistory] = useState([]);
   const activeInputRef = useRef();
 
   useEffect(() => {
@@ -49,7 +48,14 @@ const AoiHistoryModalComponent = ({
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h2 className={styles.title}>Your areas of interest history.</h2>
-        <p className={styles.description}>These are the areas of interest you have created in the past. To delete them, clear the Cache of your browser.</p>
+        <p className={styles.description}>These are the areas of interest you have created in the past.</p>
+        <Button 
+          Icon={BinIcon}
+          type="compound"
+          className={styles.deleteAllButton}
+          handleClick={dropLocalDatabase}
+          label="delete all areas"
+        />
         <ul className={styles.aoiListContainer}>
           {aoiHistory.map(({
             id,

@@ -127,3 +127,19 @@ $area-title-width: 230px;
     }
   }
 }
+
+.deleteAllButton {
+  // pointer-events: none;
+  background-color: transparent;
+  border-radius: $border-radius-desktop;
+  margin-top: $sidebar-paddings;
+  align-items: center;
+  width: 140px;
+  span {
+    @extend %bodyText;
+    text-transform: none !important;
+  }
+  &:hover {
+    background-color: $white-opacity;
+  }
+}
