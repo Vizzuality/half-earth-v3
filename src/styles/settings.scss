@@ -41,6 +41,7 @@ $french-rose: #EB588F;
 $space-background: #09141A;
 $brand-color-main: #18BAB4;
 $brand-color-secondary: $elephant;
+$brand-color-main-hover: darken($brand-color-main, 10);
 $brand-color-secondary-hover: lighten($elephant, 10);
 $dark-text: #222;
 $dark-text-hover: darken($dark-text, 30%);
