@@ -19,6 +19,7 @@ const AoiHistoryModalComponent = ({
   handleAoiDataStore,
   handleAoiNameChange,
   handleActivateAoiEdit,
+  handleRemoveAoiFromLocal,
 }) => {
 
   // const [aoiHistory, setAoiHistory] = useState([]);
@@ -102,8 +103,8 @@ const AoiHistoryModalComponent = ({
                     Icon={BinIcon}
                     type="icon-square"
                     className={styles.item}
-                    handleClick={() => console.log('share')}
-                    tooltipText="Share this area"
+                    handleClick={() => handleRemoveAoiFromLocal(id)}
+                    tooltipText="Delete this area from your local history"
                   />
                  </>
                 }

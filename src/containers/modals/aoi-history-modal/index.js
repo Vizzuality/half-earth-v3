@@ -48,6 +48,13 @@ const Container = (props) => {
     setEditAoiId(id)
   }
 
+  const handleRemoveAoiFromLocal = (id) => {
+    localforage.removeItem(id)
+      .then(() => {
+        getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
+      })
+  }
+
   return (
     <Component
       editAoiId={editAoiId}
@@ -57,6 +64,7 @@ const Container = (props) => {
       handleAoiDataStore={handleAoiDataStore}
       handleAoiNameChange={handleAoiNameChange}
       handleActivateAoiEdit={handleActivateAoiEdit}
+      handleRemoveAoiFromLocal={handleRemoveAoiFromLocal}
       {...props}
     />
   )
