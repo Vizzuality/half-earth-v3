@@ -8,7 +8,6 @@ import * as urlActions from 'actions/url-actions';
 
 import Partners from 'components/about/partners';
 import MapInstructions from 'components/about/map-instructions/map-instructions-component';
-import HalfEarthModal from 'components/half-earth-modal';
 import Component from './menu-settings-component';
 
 const actions = { ...urlActions };
@@ -32,14 +31,6 @@ const MenuSettingsContainer = props => {
   const { HALF_EARTH_MODAL, ABOUT_PARTNERS, ABOUT_INSTRUCTIONS } = SETTINGS_OPTIONS;
 
   const options = {
-    [HALF_EARTH_MODAL]: {
-      name: 'Monitoring progress towards the goal of half-earth',
-      Component: HalfEarthModal,
-      onClickHandler: () => {
-        setActiveModal(HALF_EARTH_MODAL);
-        changeUI({ openedModal: MODALS.HALF_EARTH });
-      }
-    },
     [ABOUT_PARTNERS]: {
       name: 'Partners',
       Component: Partners,
