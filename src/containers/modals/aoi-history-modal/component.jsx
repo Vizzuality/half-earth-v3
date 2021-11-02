@@ -24,7 +24,7 @@ const AoiHistoryModalComponent = ({
   handleAoiDataStore,
   handleAoiNameChange,
   handleActivateAoiEdit,
-  handleActivateAoiShare,
+  handleAoiShareToggle,
   handleRemoveAoiFromLocal,
   handleRemoveAllLocalAoiRecords,
 }) => {
@@ -110,7 +110,7 @@ const AoiHistoryModalComponent = ({
                       Icon={ShareIcon}
                       type="icon-square"
                       className={styles.item}
-                      handleClick={() => handleActivateAoiShare(id)}
+                      handleClick={() => handleAoiShareToggle(id)}
                       tooltipText="Share this area"
                     />
                     <Button 

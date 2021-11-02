@@ -61,16 +61,16 @@ $tabsMarginBottom: 4px;
 }
 
 .copyButton {
-  font-size: $font-size-xs !important;
-  padding: 0 !important;
-  width: 100% !important;
+  @extend %bodyText;
+  width: 100%;
   text-transform: capitalize;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   @media #{$tablet-landscape} {
-    margin-left: -10px !important;
-    width: 100px !important;
+    margin-left: -10px;
+    width: 100px ;
   }
 }
 

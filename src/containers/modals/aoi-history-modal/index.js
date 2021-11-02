@@ -50,8 +50,12 @@ const Container = (props) => {
     setEditAoiId(id)
   }
 
-  const handleActivateAoiShare = (id) => {
-    setShareAoiId(id)
+  const handleAoiShareToggle = (id) => {
+    if (id === shareAoiId) {
+      setShareAoiId(null)
+    } else {
+      setShareAoiId(id)
+    }
   }
 
   const handleRemoveAoiFromLocal = (id) => {
@@ -82,8 +86,8 @@ const Container = (props) => {
       handleModalClose={handleModalClose}
       handleAoiDataStore={handleAoiDataStore}
       handleAoiNameChange={handleAoiNameChange}
+      handleAoiShareToggle={handleAoiShareToggle}
       handleActivateAoiEdit={handleActivateAoiEdit}
-      handleActivateAoiShare={handleActivateAoiShare}
       handleRemoveAoiFromLocal={handleRemoveAoiFromLocal}
       handleRemoveAllLocalAoiRecords={handleRemoveAllLocalAoiRecords}
       {...props}

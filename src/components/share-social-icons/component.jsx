@@ -4,13 +4,13 @@ import { shareSocialMedia } from 'constants/social-media-constants';
 
 import styles from "./styles.module";
 
-const Component = ({ shareUrl }) => (
+const Component = ({ setShareUrl }) => (
   <div className={styles.socialMediaContainer}>
     {shareSocialMedia.map((socialMedia) => (
       <button
         onClick={() =>
           window.open(
-            `${socialMedia.sharePath}${encodeURIComponent(shareUrl)}`
+            `${socialMedia.sharePath}${encodeURIComponent(setShareUrl())}`
           )
         }
         className={styles.iconBackground}
@@ -23,11 +23,11 @@ const Component = ({ shareUrl }) => (
 );
 
 Component.propTypes = {
-  shareUrl: PropTypes.string,
+  setShareUrl: PropTypes.func,
 };
 
 Component.defaultProps = {
-  shareUrl: "",
+  setShareUrl: () => "",
 };
 
 export default Component;
