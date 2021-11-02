@@ -85,7 +85,6 @@ const Container = props => {
       localforage.getItem(aoiId).then((localStoredAoi) => {
         console.log(localStoredAoi)
         if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
-          console.log('getting from local storage')
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species});
           setContextualData({ ...rest })
@@ -99,7 +98,6 @@ const Container = props => {
               setSpeciesData(species);
               setContextualData({ ...rest })
             } else {
-              console.log('OTF >>>>>>')
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
               const jsonGeometry = aoiStoredGeometry.toJSON();
               setAreaData({area});

@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from "react";
+import cx from 'classnames';
 import Button from 'components/button';
+import ShareInput from 'components/share-input';
+import ShareSocialIcons from 'components/share-social-icons';
 
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
@@ -13,12 +16,15 @@ import styles from "./styles.module";
 const AoiHistoryModalComponent = ({
   isOpen,
   editAoiId,
+  shareAoiId,
   aoiHistory,
   handleAoiClick,
+  handleAoiShare,
   handleModalClose,
   handleAoiDataStore,
   handleAoiNameChange,
   handleActivateAoiEdit,
+  handleActivateAoiShare,
   handleRemoveAoiFromLocal,
   handleRemoveAllLocalAoiRecords,
 }) => {
@@ -44,7 +50,7 @@ const AoiHistoryModalComponent = ({
     </>
   )
 
-  return console.log(aoiHistory) || (
+  return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h2 className={styles.title}>Your areas of interest history.</h2>
@@ -66,57 +72,78 @@ const AoiHistoryModalComponent = ({
           }) => (
             <li 
               key={id}
-              className={styles.aoiItemContainer}
+              className={cx(
+                styles.aoiItemContainer,
+                {[styles.active]: editAoiId === id || shareAoiId === id}
+              )}
             >
               <div
-                className={styles.data}
+                className={styles.dataContainer}
               >
-                {editAoiId === id ? 
-                 <input
-                 id={id}
-                 type="text"
-                 ref={activeInputRef}
-                 className={styles.nameInput}
-                 onChange={handleAoiNameChange}
-               /> :
-                 <AoiInfoComponent id={id} name={name} timestamp={timestamp}/>
-                }
+
+                <div
+                  className={styles.data}
+                >
+                  {editAoiId === id ? 
+                  <input
+                  id={id}
+                  type="text"
+                  ref={activeInputRef}
+                  className={styles.nameInput}
+                  onChange={handleAoiNameChange}
+                /> :
+                  <AoiInfoComponent id={id} name={name} timestamp={timestamp}/>
+                  }
+                </div>
+                <div
+                  className={styles.toolbar}
+                >
+                  {editAoiId === id ? 
+                    <Button 
+                      type="rectangular"
+                      className={styles.saveButton}
+                      handleClick={() => handleAoiDataStore(id)}
+                      label="save"
+                    /> :
+                  <>
+                    <Button 
+                      Icon={ShareIcon}
+                      type="icon-square"
+                      className={styles.item}
+                      handleClick={() => handleActivateAoiShare(id)}
+                      tooltipText="Share this area"
+                    />
+                    <Button 
+                      Icon={EditIcon}
+                      type="icon-square"
+                      className={styles.item}
+                      handleClick={() => handleActivateAoiEdit(id)}
+                      tooltipText="Edit area information"
+                    />
+                    <Button 
+                      Icon={BinIcon}
+                      type="icon-square"
+                      className={styles.item}
+                      handleClick={() => handleRemoveAoiFromLocal(id)}
+                      tooltipText="Delete this area from your local history"
+                    />
+                  </>
+                  }
+                </div>
               </div>
-              <div
-                className={styles.toolbar}
-              >
-                {editAoiId === id ? 
-                  <Button 
-                    type="rectangular"
-                    className={styles.saveButton}
-                    handleClick={() => handleAoiDataStore(id)}
-                    label="save"
-                  /> :
-                 <>
-                  <Button 
-                    Icon={EditIcon}
-                    type="icon-square"
-                    className={styles.item}
-                    handleClick={() => handleActivateAoiEdit(id)}
-                    tooltipText="Draw a new area"
-                  />
-                  <Button 
-                    Icon={ShareIcon}
-                    type="icon-square"
-                    className={styles.item}
-                    handleClick={() => console.log('share')}
-                    tooltipText="Share this area"
-                  />
-                  <Button 
-                    Icon={BinIcon}
-                    type="icon-square"
-                    className={styles.item}
-                    handleClick={() => handleRemoveAoiFromLocal(id)}
-                    tooltipText="Delete this area from your local history"
-                  />
-                 </>
-                }
-              </div>
+              {shareAoiId === id &&
+              <>
+                <ShareInput
+                  shareUrl="URL/TO/SHARE"
+                  className={styles.shareInputLayout}
+                  onShareCallback={(id) => handleAoiShare(id)}
+                />
+                <ShareSocialIcons
+                  shareUrl="URL/TO/SHARE"
+                  className={styles.shareIconsLayout}
+                />
+              </>
+              }
             </li>
           ))}
         </ul>

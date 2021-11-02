@@ -11,6 +11,7 @@ const Container = (props) => {
   const { isOpen, handleClose, browsePage } = props;
   const [aoiHistory, setAoiHistory] = useState([]);
   const [editAoiId, setEditAoiId] = useState(null);
+  const [shareAoiId, setShareAoiId] = useState(null);
   const [updatedAoiName, setUpdatedAoiName] = useState(null);
 
   
@@ -31,6 +32,7 @@ const Container = (props) => {
 
   const handleModalClose = () => {
     setEditAoiId(null);
+    setShareAoiId(null)
     handleClose();
   }
 
@@ -48,6 +50,10 @@ const Container = (props) => {
     setEditAoiId(id)
   }
 
+  const handleActivateAoiShare = (id) => {
+    setShareAoiId(id)
+  }
+
   const handleRemoveAoiFromLocal = (id) => {
     localforage.removeItem(id)
       .then(() => {
@@ -59,15 +65,25 @@ const Container = (props) => {
     localforage.dropInstance().then(() => setAoiHistory([]))
   }
 
+  const handleAoiShare = (id) => {
+    localforage.getItem(id).then((storedValues) => { 
+      // TODO: store AOI on arcgis online
+      console.log(id, storedValues) 
+    })
+  }
+
   return (
     <Component
       editAoiId={editAoiId}
+      shareAoiId={shareAoiId}
       aoiHistory={aoiHistory}
       handleAoiClick={handleAoiClick}
+      handleAoiShare={handleAoiShare}
       handleModalClose={handleModalClose}
       handleAoiDataStore={handleAoiDataStore}
       handleAoiNameChange={handleAoiNameChange}
       handleActivateAoiEdit={handleActivateAoiEdit}
+      handleActivateAoiShare={handleActivateAoiShare}
       handleRemoveAoiFromLocal={handleRemoveAoiFromLocal}
       handleRemoveAllLocalAoiRecords={handleRemoveAllLocalAoiRecords}
       {...props}

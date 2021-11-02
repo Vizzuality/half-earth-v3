@@ -67,16 +67,22 @@ $area-title-width: 230px;
 
 .aoiItemContainer {
   display: flex;
-  flex-direction: row;
-  list-style: none;
+  flex-direction: column;
   position: relative;
   left: -$site-gutter;
   padding: 10px $site-gutter;
   width: calc(100% + (2 * #{$site-gutter}));
-  justify-content: space-between;
-  align-items: center;
-  &:hover {
+  &:hover,
+  &.active {
     background-color: $white-opacity;
+  }
+
+  .dataContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
   }
 
   .data {
@@ -129,7 +135,6 @@ $area-title-width: 230px;
 }
 
 .deleteAllButton {
-  // pointer-events: none;
   background-color: transparent;
   border-radius: $border-radius-desktop;
   margin-top: $sidebar-paddings;
@@ -142,4 +147,9 @@ $area-title-width: 230px;
   &:hover {
     background-color: $white-opacity;
   }
+}
+
+
+.shareInputLayout {
+  margin-top: $site-gutter;
 }
