@@ -45,7 +45,7 @@ const Container = props => {
   const [taxaData, setTaxaData] = useState([])
   const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
-  const [areaName, setAreaName] = useState('Custom area');
+  const [areaName] = useState({name: 'Custom area'});
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -103,9 +103,8 @@ const Container = props => {
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
               const jsonGeometry = aoiStoredGeometry.toJSON();
               setAreaData({area});
-              setAreaName({name: 'Custom area'});
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
-              writeToForageItem(aoiId, {jsonGeometry, area});
+              writeToForageItem(aoiId, {jsonGeometry, area, ...areaName, timestamp: Date.now()});
               fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
               fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
               fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));

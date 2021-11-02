@@ -36,26 +36,28 @@ const AoiHistoryModalComponent = ({
         className={styles.aoiName}
         onClick={() => handleAoiClick(id)}
       >
-        {name || 'custom super really long name'}
+        {name}
       </span>
       <span className={styles.timestamp}>
-        {editAoiId === id ? '' : (timestampAoiFormatting(timestamp) || '05/07/2021 14:54')}
+        {timestampAoiFormatting(timestamp)}
       </span>
     </>
   )
 
-  return (
+  return console.log(aoiHistory) || (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h2 className={styles.title}>Your areas of interest history.</h2>
         <p className={styles.description}>These are the areas of interest you have created in the past.</p>
-        <Button 
-          Icon={BinIcon}
-          type="compound"
-          className={styles.deleteAllButton}
-          handleClick={handleRemoveAllLocalAoiRecords}
-          label="delete all areas"
-        />
+        {aoiHistory.length > 0 &&
+          <Button 
+            Icon={BinIcon}
+            type="compound"
+            className={styles.deleteAllButton}
+            handleClick={handleRemoveAllLocalAoiRecords}
+            label="delete all areas"
+          />
+        }
         <ul className={styles.aoiListContainer}>
           {aoiHistory.map(({
             id,
