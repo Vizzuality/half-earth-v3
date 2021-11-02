@@ -1102,7 +1102,7 @@ export const legendConfigs = {
   [ALL_MARINE_VERTEBRATES_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "All marine groups priority"
+    title: "All marine groups richness"
   },
   [CONIFERS_RARITY]: {
     type: "gradient",
