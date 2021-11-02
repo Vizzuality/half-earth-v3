@@ -134,12 +134,12 @@ const AoiHistoryModalComponent = ({
               {shareAoiId === id &&
               <>
                 <ShareInput
-                  shareUrl="URL/TO/SHARE"
+                  setShareUrl={() => `${window.location.origin}/aoi/${id}`}
                   className={styles.shareInputLayout}
-                  onShareCallback={(id) => handleAoiShare(id)}
+                  onShareCallback={() => handleAoiShare(id)}
                 />
                 <ShareSocialIcons
-                  shareUrl="URL/TO/SHARE"
+                  setShareUrl={() => `${window.location.origin}/aoi/${id}`}
                   className={styles.shareIconsLayout}
                 />
               </>

@@ -5,35 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import ShareModal from "components/share-modal";
 import About from "components/about";
 import { ReactComponent as CloseIcon } from "icons/menu-close.svg";
-import { ReactComponent as TwitterIcon } from "icons/twitter.svg";
-import { ReactComponent as FacebookIcon } from "icons/facebook.svg";
-import { ReactComponent as InstagramIcon } from "icons/instagram.svg";
 import styles from "./main-menu-content.module.scss";
 import menuExploreImage from "images/menu-explore.png";
 import menuDiscoverImage from "images/menu-discover.png";
 import menuNRCImage from "images/menu-national-report-cards.png";
 import { DATA, NATIONAL_REPORT_CARD, FEATURED } from "router";
-
-const joinConversationSocialMedia = [
-  {
-    link: `https://www.facebook.com/halfearth/`,
-    icon: FacebookIcon,
-    alt: "Facebook",
-  },
-  {
-    link: `https://twitter.com/EOWilsonFndtn`,
-    icon: TwitterIcon,
-    alt: "Twitter",
-  },
-  {
-    link: `https://www.instagram.com/thehalfearthproject`,
-    icon: InstagramIcon,
-    alt: "Instagram",
-  },
-];
+import { joinConversationSocialMedia } from 'constants/social-media-constants';
 
 const MainMenuContent = ({ open, setMenuOpen, browsePage }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const toggleModal = () => setShareModalOpen(!isShareModalOpen)
   return (
     <AnimatePresence>
       {open && (
@@ -123,14 +104,14 @@ const MainMenuContent = ({ open, setMenuOpen, browsePage }) => {
               <li>
                 <h3 className={styles.menuAction} role="menuitem">
                   <button
-                    onClick={setShareModalOpen}
+                    onClick={toggleModal}
                     className={styles.shareButton}
                   >
                     SHARE THE HALF-EARTH MAP
                   </button>
                   <ShareModal
                     isOpen={isShareModalOpen}
-                    setShareModalOpen={setShareModalOpen}
+                    setShareModalOpen={toggleModal}
                   />
                 </h3>
               </li>
@@ -142,11 +123,14 @@ const MainMenuContent = ({ open, setMenuOpen, browsePage }) => {
                   JOIN THE CONVERSATION
                   <ul className={styles.socialLinks}>
                     {joinConversationSocialMedia.map((socialMedia) => (
-                      <li className={styles.socialLink}>
+                      <li 
+                        key={socialMedia.alt}
+                        className={styles.socialLink}
+                      >
                         <button
-                          onClick={() => window.open(socialMedia.link)}
+                          onClick={() => window.open(socialMedia.projectLink)}
                           className={styles.iconBackground}
-                          key={socialMedia.alt}
+                          
                         >
                           <socialMedia.icon />
                         </button>

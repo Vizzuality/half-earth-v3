@@ -9,7 +9,7 @@ import styles from "./styles.module";
 const LINK = "link";
 const EMBED = "embed";
 
-const ShareModalComponent = ({ shareUrl, className, onShareCallback }) => {
+const ShareModalComponent = ({ setShareUrl, className, onShareCallback }) => {
   const [activeTab, setActiveTab] = useState(LINK);
   const [sharePath, setSharePath] = useState(LINK);
   const [copied, setCopied] = useState({ [LINK]: false, [EMBED]: false });
@@ -17,8 +17,8 @@ const ShareModalComponent = ({ shareUrl, className, onShareCallback }) => {
   const isActiveTabLink = activeTab === LINK;
 
   useEffect(() => {
-    const iframe = `<iframe id="map-iframe" src="${shareUrl}" />`;
-    const urlCopy = activeTab === LINK ? shareUrl : iframe;
+    const iframe = `<iframe id="map-iframe" src="${setShareUrl()}" />`;
+    const urlCopy = activeTab === LINK ? setShareUrl() : iframe;
     setSharePath(urlCopy);
   }, [activeTab]);
 
@@ -89,11 +89,13 @@ const ShareModalComponent = ({ shareUrl, className, onShareCallback }) => {
 };
 
 ShareModalComponent.propTypes = {
-  shareUrl: PropTypes.string,
+  setShareUrl: PropTypes.func,
+  onShareCallback: PropTypes.func,
 };
 
 ShareModalComponent.defaultProps = {
-  shareUrl: "",
+  onShareCallback: () => {},
+  setShareUrl: () => {},
 };
 
 export default ShareModalComponent;
