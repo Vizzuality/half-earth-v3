@@ -10,16 +10,20 @@ export function fetchDataAndUpdateForageItem(itemKey, fetchGpDataFunction, geome
 }
 
 export function writeToForageItem(itemKey, newValues) {
+  return new Promise((resolve, reject) => {
     localforage.getItem(itemKey).then((storedValues) => {
       if (!storedValues) {
         localforage.setItem(itemKey, {...newValues})
+        resolve()
       } else {
         localforage.setItem(itemKey, {
           ...storedValues,
           ...newValues
         })
+        resolve()
       }
     })
+  })
 }
 
 export function getAoiHistory() {
@@ -35,6 +39,10 @@ export function getAoiHistory() {
         resolve(_aoiHistory)
       }).catch((error) => reject(error))
   })
+}
+
+export function dropLocalDatabase() {
+  localforage.dropInstance();
 }
 
 export function sortByDate(a, b) {

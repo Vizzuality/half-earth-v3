@@ -45,7 +45,7 @@ const Container = props => {
   const [taxaData, setTaxaData] = useState([])
   const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
-  const [areaName, setAreaName] = useState(null);
+  const [areaName, setAreaName] = useState('Custom area');
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -83,7 +83,9 @@ const Container = props => {
   useEffect(() => {
     if (geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
+        console.log(localStoredAoi)
         if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
+          console.log('getting from local storage')
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species});
           setContextualData({ ...rest })
@@ -97,9 +99,11 @@ const Container = props => {
               setSpeciesData(species);
               setContextualData({ ...rest })
             } else {
+              console.log('OTF >>>>>>')
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
               const jsonGeometry = aoiStoredGeometry.toJSON();
               setAreaData({area});
+              setAreaName({name: 'Custom area'});
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area});
               fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
