@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import localforage from 'localforage';
-import { getAoiHistory, sortByDate, writeToForageItem } from 'utils/local-forage-utils';
+import { getAoiHistory, sortByDate, writeToForageItem, dropLocalDatabase } from 'utils/local-forage-utils';
 import Component from './component';
 // ACTIONS
 import { AREA_OF_INTEREST } from 'router';
@@ -55,6 +55,10 @@ const Container = (props) => {
       })
   }
 
+  const handleRemoveAllLocalAoiRecords = () => {
+    localforage.dropInstance().then(() => setAoiHistory([]))
+  }
+
   return (
     <Component
       editAoiId={editAoiId}
@@ -65,6 +69,7 @@ const Container = (props) => {
       handleAoiNameChange={handleAoiNameChange}
       handleActivateAoiEdit={handleActivateAoiEdit}
       handleRemoveAoiFromLocal={handleRemoveAoiFromLocal}
+      handleRemoveAllLocalAoiRecords={handleRemoveAllLocalAoiRecords}
       {...props}
     />
   )

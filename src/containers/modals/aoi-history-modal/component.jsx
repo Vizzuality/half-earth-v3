@@ -5,7 +5,6 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as BinIcon } from 'icons/bin.svg';
 import { timestampAoiFormatting } from 'utils/data-formatting-utils';
-import { dropLocalDatabase } from 'utils/local-forage-utils';
 import { Modal } from "he-components";
 
 import styles from "./styles.module";
@@ -21,6 +20,7 @@ const AoiHistoryModalComponent = ({
   handleAoiNameChange,
   handleActivateAoiEdit,
   handleRemoveAoiFromLocal,
+  handleRemoveAllLocalAoiRecords,
 }) => {
   const activeInputRef = useRef();
 
@@ -53,7 +53,7 @@ const AoiHistoryModalComponent = ({
           Icon={BinIcon}
           type="compound"
           className={styles.deleteAllButton}
-          handleClick={dropLocalDatabase}
+          handleClick={handleRemoveAllLocalAoiRecords}
           label="delete all areas"
         />
         <ul className={styles.aoiListContainer}>

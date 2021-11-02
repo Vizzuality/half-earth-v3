@@ -41,10 +41,6 @@ export function getAoiHistory() {
   })
 }
 
-export function dropLocalDatabase() {
-  localforage.dropInstance();
-}
-
 export function sortByDate(a, b) {
   return b.timestamp - a.timestamp;
 }
