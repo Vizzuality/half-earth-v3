@@ -11,9 +11,12 @@ export const BORDERS_OPACITY = 0.3;
 export const BORDERS_LAYERS_RENDERER = {
   type: 'simple',
   symbol: {
-    type: 'simple-line',
-    color: [216, 216, 216, BORDERS_OPACITY],
-    style: "solid"
+    type: 'simple-fill',
+    color: [0, 0, 0, 0],
+    outline: {
+      color: [216, 216, 216, BORDERS_OPACITY],
+      width: '1px'
+    }
   }
 }
 

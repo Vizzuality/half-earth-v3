@@ -38,7 +38,7 @@ export function getCrfData({ dataset, aoiFeatureGeometry }) {
                  console.log('jobCompletion error', error)
                })
             }).catch(error => {
-              console.log('job submission' , error)
+              console.log('job submission error' , error)
             })
         })
       })

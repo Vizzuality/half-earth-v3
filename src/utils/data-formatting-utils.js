@@ -3,6 +3,19 @@ import * as d3 from 'd3';
 export const currencyFormatting = d3.format("$,.2f");
 export const localeFormatting = d3.format(",.0f");
 export const percentageFormat = d3.format(".2f");
+export const timestampAoiFormatting = (timestamp) => {
+  if (!timestamp) return null;
+  return (
+    Intl.DateTimeFormat('en-US', { 
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: 'numeric',
+    hour12: false
+  }).format(new Date(timestamp))
+  )
+}
 
 export const countryChallengesChartFormats = {
   Population2016: value => localeFormatting(value),

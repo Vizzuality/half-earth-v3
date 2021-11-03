@@ -1,0 +1,104 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+$tabsMarginBottom: 4px;
+
+.shareContent {
+  flex: 1;
+}
+
+.copyContainer {
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: column;
+
+  @media #{$tablet-landscape} {
+    flex-direction: row;
+  }
+}
+
+.copyIcon{
+  margin-right: 5px;
+}
+
+.coordinates {
+  margin-bottom: 54px;
+  font-size: $font-size-xs;
+  color: $brand-color-main;
+}
+
+.inputButton {
+  border: 1px solid $white-opacity;
+  background-color: $white;
+  padding: 10px;
+  width: stretch;
+  height: 40px;
+  border-radius: $card-border-radius;
+  margin-bottom: 8px;
+  box-shadow: 0px 1px 2px 0px $black;
+
+  &:focus {
+    outline: none;
+  }
+
+  @media #{$tablet-landscape} {
+    border-right-style: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+  }
+}
+
+.button {
+  background-color: $brand-color-main;
+  height: 40px !important;
+  border-radius: 6px;
+
+  @media #{$tablet-landscape} {
+    border-radius: 0px 6px 6px 0px;
+  }
+}
+
+.copyButton {
+  @extend %bodyText;
+  width: 100%;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media #{$tablet-landscape} {
+    margin-left: -10px;
+    width: 100px ;
+  }
+}
+
+
+.tabs {
+  display: flex;
+  margin-bottom: $tabsMarginBottom;
+}
+
+.tab {
+  @extend %title;
+  position: relative;
+  color: $white;
+  cursor: pointer;
+  position: relative;
+  margin-right: $site-gutter;
+  cursor: pointer;
+}
+
+.activeTab {
+  color: $brand-color-main;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $brand-color-main;
+  }
+}

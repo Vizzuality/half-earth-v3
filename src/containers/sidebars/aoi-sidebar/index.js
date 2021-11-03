@@ -35,7 +35,7 @@ const AoiSidebarContainer = (props) => {
       landCover={values.landCover}
       population={values.population}
       contextualData={contextualData}
-      areaName={contextualData.areaName}
+      areaName={contextualData.name}
       climateRegime={values.climateRegime}
       handleSceneModeChange={handleSceneModeChange}
       {...props}

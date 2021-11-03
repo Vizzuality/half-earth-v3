@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 
-import { Loading } from 'he-components';
-
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
@@ -28,7 +26,6 @@ const LocalSceneSidebarComponent = ({
   area,
   speciesData,
   contextualData,
-  areaName,
   className,
   landCover,
   population,
@@ -52,7 +49,7 @@ const LocalSceneSidebarComponent = ({
       <DummyBlurWorkaround />
       <div className={styles.topRow}>
         <div className={styles.nameWrapper}>
-          <p className={styles.areaName}>{areaName || 'Custom area'}</p>
+          <p className={styles.areaName}>{contextualData.name}</p>
           {area && <p className={styles.area}>{`${area} `}<span>km<sup>2</sup></span></p>}
         </div>
         <div className={styles.actionButtons}>
