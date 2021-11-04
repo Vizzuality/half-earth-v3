@@ -3,7 +3,6 @@ import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   AOIS_HISTORIC_PRODUCTION,
   AOIS_HISTORIC_DEVELOPMENT,
-  WDPA_OECM_FEATURE_LAYER
 } from 'constants/layers-slugs';
 
 import { BIRDS, AMPHIBIANS, MAMMALS, REPTILES } from 'constants/geo-processing-services';
@@ -24,7 +23,6 @@ export const AOI_LEGEND_CATEGORIES = [
 const SEARCH_SOURCES = {
   NATIONAL_BOUNDARIES: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   SUBNATIONAL_BOUNDARIES: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
-  // PROTECTED_AREAS: WDPA_OECM_FEATURE_LAYER
 }
 
 export const { NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS } = SEARCH_SOURCES;
@@ -34,10 +32,11 @@ export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 export const PRECALCULATED_AOI_OPTIONS = [
   {title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: 'National boundaries'},
   {title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: 'Subnational boundaries'},
-  // {title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas'},
 ]
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;
+
+const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 
 export const SIDEBAR_CARDS_CONFIG = {
   [BIODIVERSITY_SLUG]: {
@@ -47,15 +46,15 @@ export const SIDEBAR_CARDS_CONFIG = {
   },
   [PROTECTION_SLUG]: {
     title: 'What is already protected in this area?',
-    description: ({protectionPercentage}) => `Of the current area, __${percentageFormat(protectionPercentage)}% of land is under formal protection__, 
-    the majority of which are protected areas.`,
+    description: ({protectionPercentage}) => `Of the current area, __${percentageFormat(capPercentage(protectionPercentage))}% of land is under formal protection__.`,
     warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
     title: 'How are humans affecting this area?',
-    description: ({pressures}) => `Of the current area, __${getTotalPressures(pressures)}% is under human pressure__,
+    description: ({pressures}) => `Of the current area, __${getTotalPressures(capPercentage(pressures))}% is under human pressure__,
     the majority of which are pressures from ${getMainPressure(pressures)}.`,
     warning: null
+    
   },
 } 
 

@@ -113,6 +113,15 @@ const LocalSceneSidebarComponent = ({
           layers={humanPressuresLandUse}
           cardCategory={LAND_HUMAN_PRESSURES_SLUG}
         />
+        <section className={styles.completeDatabaseWrapper}>
+          <p>Do you have more information about this particular area?</p>
+          <a
+            className={styles.link}
+            href='https://mol.org/upload'
+          >
+            help us complete our database
+          </a>
+        </section>
         <ShareModal
           isOpen={isShareModalOpen}
           setShareModalOpen={setShareModalOpen}
