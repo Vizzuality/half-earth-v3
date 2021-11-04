@@ -26,6 +26,9 @@
   margin-bottom: $site-gutter;
   background-color: $white-opacity;
   border-radius: $border-radius-desktop;
+  &.active {
+    background-color: $warning;
+  }
 
   .info {
     position: relative;

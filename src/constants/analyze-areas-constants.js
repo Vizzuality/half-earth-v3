@@ -92,3 +92,5 @@ export const PRECALCULATED_LAYERS_CONFIG = {
     subtitle: 'GID_0'
   }
 }
+
+export const HIGHER_AREA_SIZE_LIMIT = 40000;
