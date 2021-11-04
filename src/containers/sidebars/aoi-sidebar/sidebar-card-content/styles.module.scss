@@ -21,4 +21,16 @@
 
 .description {
   @extend %bodyText;
+
+  p {
+    margin: 0;
+  }
+}
+.warningWrapper {
+  display: flex;
+  .warning {
+    min-width: $site-gutter;
+    margin-right: $paragraph-gutter;
+    fill: $warning;
+  }
 }
