@@ -28,9 +28,9 @@ const AnalyzeAreasContainer = (props) => {
     }
   }, [])
 
-  const postDrawCallback = (graphic, area) => {
+  const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
-      console.log('POSTDRAWCALLBACK AREA', area)
+      view.map.remove(layer);
     } else {
       const { geometry } = graphic;
       const hash = createHashFromGeometry(geometry);
