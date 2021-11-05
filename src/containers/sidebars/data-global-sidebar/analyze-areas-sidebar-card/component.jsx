@@ -9,12 +9,15 @@ import AoiHistoryModal from 'containers/modals/aoi-history-modal';
 import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
 import {ReactComponent as AoisDrawIcon} from "icons/aois_draw.svg";
 import {ReactComponent as AoisClickIcon} from "icons/aois_click.svg";
+import {ReactComponent as InfoIcon} from "icons/info.svg";
 import {ReactComponent as AreasHistoryIcon} from "icons/areas_history_icon.svg";
-import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
+import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
+import { localeFormatting } from 'utils/data-formatting-utils';
 import styles from './styles.module.scss';
 
 const AnalyzeAreasCardComponent = ({
   view,
+  geometryArea,
   selectedOption,
   handleDrawClick,
   isSketchToolActive,
@@ -95,6 +98,13 @@ const AnalyzeAreasCardComponent = ({
         )}
         {selectedAnalysisTab === 'draw' && (
           <section className={styles.sectionContainer}>
+            <div className={cx(
+              styles.sizeWarningContainer,
+              {[styles.active]: geometryArea > HIGHER_AREA_SIZE_LIMIT} 
+            )}>
+              <InfoIcon className={styles.info}/>
+              <span className={styles.warning}>Draw or upload a shape smaller than <b>{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}km<sup>2</sup></b>.</span>
+            </div>
             <span className={styles.label}>Draw on the map the area you want to analyze:</span>
             <Button
               type="rectangular"

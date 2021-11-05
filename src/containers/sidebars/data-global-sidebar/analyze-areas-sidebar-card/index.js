@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
-import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
+import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 // HOOKS
@@ -28,11 +28,15 @@ const AnalyzeAreasContainer = (props) => {
     }
   }, [])
 
-  const postDrawCallback = (graphic) => {
-    const { geometry } = graphic;
-    const hash = createHashFromGeometry(geometry);
-    setAoiGeometry({ hash, geometry });
-    browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+  const postDrawCallback = (layer, graphic, area) => {
+    if (area > HIGHER_AREA_SIZE_LIMIT) {
+      view.map.remove(layer);
+    } else {
+      const { geometry } = graphic;
+      const hash = createHashFromGeometry(geometry);
+      setAoiGeometry({ hash, geometry });
+      browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+    }
   }
 
   const onFeatureSetGenerated = (response) => {
@@ -88,12 +92,6 @@ const AnalyzeAreasContainer = (props) => {
       handleSketchToolDestroy()
     }
   }
-
-  useEffect(() => {
-    if (geometryArea) {
-      console.log(geometryArea)
-    }
-  }, [geometryArea])
 
   return (
     <Component

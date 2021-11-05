@@ -19,6 +19,30 @@
   padding-top: $sidebar-paddings;
 }
 
+.sizeWarningContainer {
+  display: flex;
+  align-items: center;
+  padding: $paragraph-gutter;
+  margin-bottom: $site-gutter;
+  background-color: $white-opacity;
+  border-radius: $border-radius-desktop;
+  &.active {
+    background-color: $warning;
+  }
+
+  .info {
+    position: relative;
+    top: 3px;
+    fill: $white;
+    margin-right: $paragraph-gutter;
+  }
+
+  .warning {
+    @extend %bodyText;
+    color: $white;
+  }
+}
+
 .separatorLabel,
 .label {
   @extend %bodyText;

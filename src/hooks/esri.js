@@ -171,7 +171,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
           }
         }
         else if (event.state === 'complete') {
-          postDrawCallback(event.graphic, calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine));
+          postDrawCallback(sketchLayer, event.graphic, calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine));
         }
       });
     }

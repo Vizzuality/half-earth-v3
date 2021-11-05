@@ -42,15 +42,19 @@ export const SIDEBAR_CARDS_CONFIG = {
   [BIODIVERSITY_SLUG]: {
     title: 'What is the biodiversity pattern in this area?',
     description: () => 'Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.',
+    warning: 'Biodiversity patterns not available for areas under __1,000 km2__.'
   },
   [PROTECTION_SLUG]: {
     title: 'What is already protected in this area?',
     description: ({protectionPercentage}) => `Of the current area, __${percentageFormat(capPercentage(protectionPercentage))}% of land is under formal protection__.`,
+    warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
     title: 'How are humans affecting this area?',
     description: ({pressures}) => `Of the current area, __${getTotalPressures(capPercentage(pressures))}% is under human pressure__,
-    the majority of which are pressures from ${getMainPressure(pressures)}.`
+    the majority of which are pressures from ${getMainPressure(pressures)}.`,
+    warning: null
+    
   },
 } 
 
@@ -87,3 +91,5 @@ export const PRECALCULATED_LAYERS_CONFIG = {
     subtitle: 'GID_0'
   }
 }
+
+export const HIGHER_AREA_SIZE_LIMIT = 40000;

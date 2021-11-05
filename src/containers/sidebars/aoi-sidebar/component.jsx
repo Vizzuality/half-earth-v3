@@ -95,6 +95,7 @@ const LocalSceneSidebarComponent = ({
           activeLayers={activeLayers}
           cardCategory={BIODIVERSITY_SLUG}
           layers={AOI_BIODIVERSITY_TOGGLES}
+          displayWarning={area < 10000}
         />
         <SidebarCard 
           map={map}
