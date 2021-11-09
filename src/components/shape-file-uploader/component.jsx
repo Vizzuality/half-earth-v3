@@ -6,11 +6,12 @@ import styles from './styles.module.scss';
 
 const  Component = ({
   view,
-  onFeatureSetGenerated
+  onChange,
+  onSuccess,
 }) => {
   const { getRootProps, getInputProps, rootRef} = useDropzone({
     onDrop: useCallback(() => {
-      featureCollectionFromShape(rootRef.current, view, onFeatureSetGenerated)
+      featureCollectionFromShape(rootRef.current, view, onSuccess)
     })
   });
 

@@ -21,6 +21,7 @@ const AnalyzeAreasContainer = (props) => {
   const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
+  const [isPromptModalOpen, setPromptModalOpen] = useState(false);
 
   
   useEffect(() => {
@@ -33,6 +34,7 @@ const AnalyzeAreasContainer = (props) => {
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
       view.map.remove(layer);
+      setPromptModalOpen(true);
     } else {
       const { geometry } = graphic;
       const hash = createHashFromGeometry(geometry);
@@ -41,7 +43,7 @@ const AnalyzeAreasContainer = (props) => {
     }
   }
 
-  const onFeatureSetGenerated = (response) => {
+  const onShapeUploadSuccess = (response) => {
     loadModules(["esri/geometry/Polygon", "esri/geometry/geometryEngine"])
     .then(([Polygon, geometryEngine]) => {
       const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
@@ -49,6 +51,7 @@ const AnalyzeAreasContainer = (props) => {
       if (area > HIGHER_AREA_SIZE_LIMIT) {
         // display tooltip??
         console.log('area too big')
+        setPromptModalOpen(true);
       } else {
         const geometryInstance = new Polygon(featureSetGeometry);
         const hash = createHashFromGeometry(geometryInstance);
@@ -94,6 +97,8 @@ const AnalyzeAreasContainer = (props) => {
   }
   
 
+  const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
+
   const handleDrawClick = () => {
     if (!sketchTool) {
       handleSketchToolActivation()
@@ -108,10 +113,12 @@ const AnalyzeAreasContainer = (props) => {
       selectedOption={selectedOption}
       isSketchToolActive={sketchTool}
       handleDrawClick={handleDrawClick}
+      isPromptModalOpen={isPromptModalOpen}
       selectedAnalysisTab={selectedAnalysisTab}
+      onShapeUploadSuccess={onShapeUploadSuccess}
       handleOptionSelection={handleOptionSelection}
-      onFeatureSetGenerated={onFeatureSetGenerated}
       handleAnalysisTabClick={handleAnalysisTabClick}
+      handlePromptModalToggle={handlePromptModalToggle}
       {...props}
     />
   );
