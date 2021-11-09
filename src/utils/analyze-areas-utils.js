@@ -36,14 +36,12 @@ export function createHashFromGeometry(geometry) {
 
 export function featureCollectionFromShape(input, view, onFeatureSetGenerated) {
   const generateRequestParams = { 
-    filetype: "shapefile", 
-    // file,
+    filetype: "shapefile",
     publishParameters: JSON.stringify({ 
-    targetSR: view.spatialReference 
+      targetSR: view.spatialReference 
     }), 
     f: "json" 
   };
-
   loadModules(["esri/request"])
     .then(([esriRequest]) => {
       esriRequest("https://www.arcgis.com/sharing/rest/content/features/generate", { 
@@ -53,7 +51,7 @@ export function featureCollectionFromShape(input, view, onFeatureSetGenerated) {
           responseType: "json" 
         }).then(function (response) {
           onFeatureSetGenerated(response)
-        })
+        }).catch((error) => console.log('SHAPEFILE UPLOADER ERROR', error))
     })
 }
 

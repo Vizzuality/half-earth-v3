@@ -48,6 +48,7 @@ const AnalyzeAreasContainer = (props) => {
       const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
       if (area > HIGHER_AREA_SIZE_LIMIT) {
         // display tooltip??
+        console.log('area too big')
       } else {
         const geometryInstance = new Polygon(featureSetGeometry);
         const hash = createHashFromGeometry(geometryInstance);
