@@ -10,13 +10,13 @@ const  Component = ({
   onFeatureSetGenerated
 }) => {
   const formRef = useRef();
-  const { getRootProps, getInputProps, rootRef, inputRef} = useDropzone({
-    onDrop: useCallback((files, error, event) => {
-      console.log('FROM DROPZONE')
-      console.log(rootRef)
-      featureCollectionFromShape(rootRef.current, view)
-    })
-  });
+  // const { getRootProps, getInputProps, rootRef, inputRef} = useDropzone({
+  //   onDrop: useCallback((files, error, event) => {
+  //     console.log('FROM DROPZONE')
+  //     console.log(rootRef)
+  //     featureCollectionFromShape(rootRef.current, view)
+  //   })
+  // });
 
   useEffect(() => {
     if (formRef.current) {
@@ -42,7 +42,7 @@ const  Component = ({
     <div className={styles.container}>
     
     
-    <form {...getRootProps({
+    {/* <form {...getRootProps({
         className: styles.shapeUploader,
         encType:"multipart/form-data",
         method: 'post',
@@ -63,15 +63,15 @@ const  Component = ({
         )} />
         <AddShapeIcon className={styles.uploadShapeButton}/>
         <span className={styles.label}>Add a shapefile from your computer</span>
-      </form> 
-    {/* <form encType="multipart/form-data" method="post" id="uploadForm" ref={formRef} className={styles.container}>
+      </form>  */}
+    <form encType="multipart/form-data" method="post" id="uploadForm" ref={formRef} className={styles.container}>
       <div>
         <label>
           <span className={styles.label}><strong>Upload shapefile .zip</strong></span>
           <input className={styles.uploadShapeButton} type="file" name="file" id="inFile" />
         </label>
       </div>
-    </form> */}
+    </form>
     </div>
   );
 }

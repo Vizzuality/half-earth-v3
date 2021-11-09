@@ -53,7 +53,6 @@ export function featureCollectionFromShape(input, view, onFeatureSetGenerated) {
           responseType: "json" 
         }).then(function (response) {
           onFeatureSetGenerated(response)
-          console.log('FEATURE COLLECTION', response)
         })
     })
 }

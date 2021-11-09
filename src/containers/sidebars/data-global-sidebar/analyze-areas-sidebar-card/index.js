@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
-import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
+import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 // HOOKS
 import { useSketchWidget} from 'hooks/esri';
@@ -11,6 +11,7 @@ import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import { loadModules } from 'esri-loader';
 
 const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions };
 
@@ -20,6 +21,7 @@ const AnalyzeAreasContainer = (props) => {
   const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
+
   
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
@@ -40,13 +42,19 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const onFeatureSetGenerated = (response) => {
-    const geometry = {
-      ...response.data.featureCollection.layers[0].featureSet.features[0].geometry,
-      ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
-    }
-    const hash = createHashFromGeometry(geometry);
-    setAoiGeometry({ hash, geometry });
-    browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+    loadModules(["esri/geometry/Polygon", "esri/geometry/geometryEngine"])
+    .then(([Polygon, geometryEngine]) => {
+      const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
+      const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
+      if (area > HIGHER_AREA_SIZE_LIMIT) {
+        // display tooltip??
+      } else {
+        const geometryInstance = new Polygon(featureSetGeometry);
+        const hash = createHashFromGeometry(geometryInstance);
+        setAoiGeometry({ hash, geometry: geometryInstance });
+        browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+      }
+    })
   }
 
   const {
