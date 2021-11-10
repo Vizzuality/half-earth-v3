@@ -22,6 +22,7 @@ const AnalyzeAreasCardComponent = ({
   selectedOption,
   handleDrawClick,
   isPromptModalOpen,
+  promptModalContent,
   isSketchToolActive,
   selectedAnalysisTab,
   onShapeUploadSuccess,
@@ -136,6 +137,8 @@ const AnalyzeAreasCardComponent = ({
       <PromptModal
         isOpen={isPromptModalOpen}
         handleClose={handlePromptModalToggle}
+        title={promptModalContent.title}
+        description={promptModalContent.description}
       />
     </div>
   )

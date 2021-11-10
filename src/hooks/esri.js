@@ -171,6 +171,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
           }
         }
         else if (event.state === 'complete') {
+          setGeometryArea(0);
           postDrawCallback(sketchLayer, event.graphic, calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine));
         }
       });

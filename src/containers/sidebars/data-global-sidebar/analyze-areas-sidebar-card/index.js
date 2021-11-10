@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
-import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
+import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 // HOOKS
@@ -22,6 +22,10 @@ const AnalyzeAreasContainer = (props) => {
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
+  const [promptModalContent, setPromptModalContent] = useState({
+    title: '',
+    description: ''
+  })
 
   
   useEffect(() => {
@@ -34,6 +38,10 @@ const AnalyzeAreasContainer = (props) => {
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
       view.map.remove(layer);
+      setPromptModalContent({
+        title: WARNING_MESSAGES.area.title,
+        description: WARNING_MESSAGES.area.description(area),
+      });
       setPromptModalOpen(true);
     } else {
       const { geometry } = graphic;
@@ -49,8 +57,10 @@ const AnalyzeAreasContainer = (props) => {
       const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
       const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
       if (area > HIGHER_AREA_SIZE_LIMIT) {
-        // display tooltip??
-        console.log('area too big')
+        setPromptModalContent({
+          title: WARNING_MESSAGES.area.title,
+          description: WARNING_MESSAGES.area.description(area),
+        });
         setPromptModalOpen(true);
       } else {
         const geometryInstance = new Polygon(featureSetGeometry);
@@ -114,6 +124,7 @@ const AnalyzeAreasContainer = (props) => {
       isSketchToolActive={sketchTool}
       handleDrawClick={handleDrawClick}
       isPromptModalOpen={isPromptModalOpen}
+      promptModalContent={promptModalContent}
       selectedAnalysisTab={selectedAnalysisTab}
       onShapeUploadSuccess={onShapeUploadSuccess}
       handleOptionSelection={handleOptionSelection}
