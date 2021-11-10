@@ -6,12 +6,12 @@ import styles from './styles.module.scss';
 
 const  Component = ({
   view,
-  onChange,
+  onError,
   onSuccess,
 }) => {
   const { getRootProps, getInputProps, rootRef} = useDropzone({
     onDrop: useCallback(() => {
-      featureCollectionFromShape(rootRef.current, view, onSuccess)
+      featureCollectionFromShape(rootRef.current, view, onSuccess, onError)
     })
   });
 
@@ -33,7 +33,7 @@ const  Component = ({
           className={styles.uploaderInput}
         />
         <AddShapeIcon className={styles.uploadShapeButton}/>
-        <span className={styles.label}>Add a shapefile from your computer</span>
+        <span className={styles.label}>Click to analyze your own shapefile</span>
       </form> 
     </div>
   );

@@ -102,10 +102,10 @@ export const WARNING_MESSAGES = {
   },
   400: {
     title: 'File too big',
-    description: 'File exceeds the max size allowed of 10MB. Please provide a smaller file to trigger the analysis.'
+    description: () => 'File exceeds the max size allowed of 10MB. Please provide a smaller file to trigger the analysis.'
   },
   500: {
     title: 'Server error',
-    description: 'An error ocurred during the file upload. Please try again'
+    description: () => 'An error ocurred during the file upload. Please try again'
   }
 }

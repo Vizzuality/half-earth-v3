@@ -71,6 +71,15 @@ const AnalyzeAreasContainer = (props) => {
     })
   }
 
+  const onShapeUploadError = (error) => {
+    console.log(error)
+    setPromptModalContent({
+      title: WARNING_MESSAGES[error.details.httpStatus].title,
+      description: WARNING_MESSAGES[error.details.httpStatus].description(),
+    });
+    setPromptModalOpen(true);
+  }
+
   const {
     sketchTool,
     geometryArea,
@@ -125,6 +134,7 @@ const AnalyzeAreasContainer = (props) => {
       handleDrawClick={handleDrawClick}
       isPromptModalOpen={isPromptModalOpen}
       promptModalContent={promptModalContent}
+      onShapeUploadError={onShapeUploadError}
       selectedAnalysisTab={selectedAnalysisTab}
       onShapeUploadSuccess={onShapeUploadSuccess}
       handleOptionSelection={handleOptionSelection}

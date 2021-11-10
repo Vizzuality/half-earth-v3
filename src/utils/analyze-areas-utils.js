@@ -34,7 +34,7 @@ export function createHashFromGeometry(geometry) {
   return sha1(flatRings.toString())
 }
 
-export function featureCollectionFromShape(input, view, onFeatureSetGenerated) {
+export function featureCollectionFromShape(input, view, onSucces, onError) {
   const generateRequestParams = { 
     filetype: "shapefile",
     publishParameters: JSON.stringify({ 
@@ -49,9 +49,9 @@ export function featureCollectionFromShape(input, view, onFeatureSetGenerated) {
           body: input,
           method: 'post',
           responseType: "json" 
-        }).then(function (response) {
-          onFeatureSetGenerated(response)
-        }).catch((error) => console.log('SHAPEFILE UPLOADER ERROR', error))
+        })
+        .then((response) => onSucces(response))
+        .catch((error) => onError( error))
     })
 }
 

@@ -24,6 +24,7 @@ const AnalyzeAreasCardComponent = ({
   isPromptModalOpen,
   promptModalContent,
   isSketchToolActive,
+  onShapeUploadError,
   selectedAnalysisTab,
   onShapeUploadSuccess,
   handleOptionSelection,
@@ -119,6 +120,7 @@ const AnalyzeAreasCardComponent = ({
             <ShapeFileUploader
               view={view}
               onSuccess={onShapeUploadSuccess}
+              onError={onShapeUploadError}
             />
             <Button 
               type="compound"
