@@ -6,6 +6,7 @@ import Dropdown from 'components/dropdown';
 import ShapeFileUploader from 'components/shape-file-uploader';
 import SearchLocation from 'components/search-location';
 import AoiHistoryModal from 'containers/modals/aoi-history-modal';
+import PromptModal from 'containers/modals/prompt-modal';
 import {ReactComponent as AnalyzeAreasIcon} from "icons/analyze_areas.svg";
 import {ReactComponent as AoisDrawIcon} from "icons/aois_draw.svg";
 import {ReactComponent as AoisClickIcon} from "icons/aois_click.svg";
@@ -20,11 +21,15 @@ const AnalyzeAreasCardComponent = ({
   geometryArea,
   selectedOption,
   handleDrawClick,
+  isPromptModalOpen,
+  promptModalContent,
   isSketchToolActive,
+  onShapeUploadError,
   selectedAnalysisTab,
+  onShapeUploadSuccess,
   handleOptionSelection,
-  onFeatureSetGenerated,
   handleAnalysisTabClick,
+  handlePromptModalToggle,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -114,7 +119,8 @@ const AnalyzeAreasCardComponent = ({
             <span className={styles.separatorLabel}>or</span>
             <ShapeFileUploader
               view={view}
-              onFeatureSetGenerated={onFeatureSetGenerated}
+              onSuccess={onShapeUploadSuccess}
+              onError={onShapeUploadError}
             />
             <Button 
               type="compound"
@@ -129,6 +135,12 @@ const AnalyzeAreasCardComponent = ({
       <AoiHistoryModal
         isOpen={isAoiHistoryModalOpen}
         handleClose={handleAoiModalToggle}
+      />
+      <PromptModal
+        isOpen={isPromptModalOpen}
+        handleClose={handlePromptModalToggle}
+        title={promptModalContent.title}
+        description={promptModalContent.description}
       />
     </div>
   )

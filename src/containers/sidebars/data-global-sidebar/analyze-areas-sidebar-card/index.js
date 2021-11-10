@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
-import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
-import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
+import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
+import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 // HOOKS
 import { useSketchWidget} from 'hooks/esri';
@@ -11,6 +11,7 @@ import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import { loadModules } from 'esri-loader';
 
 const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions };
 
@@ -20,6 +21,12 @@ const AnalyzeAreasContainer = (props) => {
   const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
+  const [isPromptModalOpen, setPromptModalOpen] = useState(false);
+  const [promptModalContent, setPromptModalContent] = useState({
+    title: '',
+    description: ''
+  })
+
   
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
@@ -31,6 +38,11 @@ const AnalyzeAreasContainer = (props) => {
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
       view.map.remove(layer);
+      setPromptModalContent({
+        title: WARNING_MESSAGES.area.title,
+        description: WARNING_MESSAGES.area.description(area),
+      });
+      setPromptModalOpen(true);
     } else {
       const { geometry } = graphic;
       const hash = createHashFromGeometry(geometry);
@@ -39,14 +51,33 @@ const AnalyzeAreasContainer = (props) => {
     }
   }
 
-  const onFeatureSetGenerated = (response) => {
-    const geometry = {
-      ...response.data.featureCollection.layers[0].featureSet.features[0].geometry,
-      ...response.data.featureCollection.layers[0].featureSet.layerDefinition,
-    }
-    const hash = createHashFromGeometry(geometry);
-    setAoiGeometry({ hash, geometry });
-    browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+  const onShapeUploadSuccess = (response) => {
+    loadModules(["esri/geometry/Polygon", "esri/geometry/geometryEngine"])
+    .then(([Polygon, geometryEngine]) => {
+      const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
+      const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
+      if (area > HIGHER_AREA_SIZE_LIMIT) {
+        setPromptModalContent({
+          title: WARNING_MESSAGES.area.title,
+          description: WARNING_MESSAGES.area.description(area),
+        });
+        setPromptModalOpen(true);
+      } else {
+        const geometryInstance = new Polygon(featureSetGeometry);
+        const hash = createHashFromGeometry(geometryInstance);
+        setAoiGeometry({ hash, geometry: geometryInstance });
+        browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+      }
+    })
+  }
+
+  const onShapeUploadError = (error) => {
+    console.log(error)
+    setPromptModalContent({
+      title: WARNING_MESSAGES[error.details.httpStatus].title,
+      description: WARNING_MESSAGES[error.details.httpStatus].description(),
+    });
+    setPromptModalOpen(true);
   }
 
   const {
@@ -85,6 +116,8 @@ const AnalyzeAreasContainer = (props) => {
   }
   
 
+  const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
+
   const handleDrawClick = () => {
     if (!sketchTool) {
       handleSketchToolActivation()
@@ -99,10 +132,14 @@ const AnalyzeAreasContainer = (props) => {
       selectedOption={selectedOption}
       isSketchToolActive={sketchTool}
       handleDrawClick={handleDrawClick}
+      isPromptModalOpen={isPromptModalOpen}
+      promptModalContent={promptModalContent}
+      onShapeUploadError={onShapeUploadError}
       selectedAnalysisTab={selectedAnalysisTab}
+      onShapeUploadSuccess={onShapeUploadSuccess}
       handleOptionSelection={handleOptionSelection}
-      onFeatureSetGenerated={onFeatureSetGenerated}
       handleAnalysisTabClick={handleAnalysisTabClick}
+      handlePromptModalToggle={handlePromptModalToggle}
       {...props}
     />
   );

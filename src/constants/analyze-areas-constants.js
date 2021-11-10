@@ -8,7 +8,7 @@ import {
 import { BIRDS, AMPHIBIANS, MAMMALS, REPTILES } from 'constants/geo-processing-services';
 
 import { getTotalPressures, getMainPressure} from 'utils/analyze-areas-utils';
-import { percentageFormat } from 'utils/data-formatting-utils';
+import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils';
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
@@ -93,3 +93,19 @@ export const PRECALCULATED_LAYERS_CONFIG = {
 }
 
 export const HIGHER_AREA_SIZE_LIMIT = 40000;
+
+export const WARNING_MESSAGES = {
+  area: {
+    title: 'Area size too big',
+    description: (size) => `The maximum size for an on the fly area analysis is 40,000km2.
+    The area that you'er trying to analyze has ${localeFormatting(size)} km2. Please provide an smaller area to trigger the analysis.` 
+  },
+  400: {
+    title: 'File too big',
+    description: () => 'File exceeds the max size allowed of 10MB. Please provide a smaller file to trigger the analysis.'
+  },
+  500: {
+    title: 'Server error',
+    description: () => 'An error ocurred during the file upload. Please try again'
+  }
+}
