@@ -63,12 +63,26 @@ export const shapeDrawTooBigAnalytics = () => analyticsActionCreator({
   label: 'Drawing too big'
 })
 
+export const aoiHistoryModalOpenAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.OPEN_HISTORY,
+  label
+})
+
+export const precomputedAoiAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.PRECOMPUTED_AOI,
+  label
+})
+
 export const aoiAnalyticsActions = {
   shapeUploadSuccessfulAnalytics,
   shapeUploadTooBigAnalytics,
   shapeUploadErrorAnalytics,
   shapeDrawSuccessfulAnalytics,
-  shapeDrawTooBigAnalytics
+  shapeDrawTooBigAnalytics,
+  aoiHistoryModalOpenAnalytics,
+  precomputedAoiAnalytics
 }
 
 const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
