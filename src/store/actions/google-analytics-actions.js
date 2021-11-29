@@ -33,16 +33,46 @@ export const layerToggleAnalytics = (label) => analyticsActionCreator({
   label
 })
 
+export const shapeUploadSuccessfulAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.UPLOAD_SHAPE,
+  label: 'Upload succesful'
+})
+
+export const shapeUploadTooBigAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.UPLOAD_SHAPE,
+  label: 'Shape too big'
+})
+
+export const shapeUploadErrorAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.UPLOAD_SHAPE,
+  label
+})
+
+export const shapeDrawSuccessfulAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.DRAW_SHAPE,
+  label: 'Drawing succesful'
+})
+
+export const shapeDrawTooBigAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.DRAW_SHAPE,
+  label: 'Drawing too big'
+})
+
+export const aoiAnalyticsActions = {
+  shapeUploadSuccessfulAnalytics,
+  shapeUploadTooBigAnalytics,
+  shapeUploadErrorAnalytics,
+  shapeDrawSuccessfulAnalytics,
+  shapeDrawTooBigAnalytics
+}
+
 const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
 
-
-export const layerToggleAnalyticsEvent = createAction('removeLayer', null, ({ slug }) => {
-  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.TOGGLE_LAYER, slug)
-});
-
-export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', null, ({ slug }) => {
-  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.CHANGE_OPACITY, slug)
-});
 
 export const openInfoModalAnalyticsEvent = createAction('openLayerInfoModal', null, ({ slug }) => {
   return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.OPEN_INFO, slug)
@@ -114,8 +144,6 @@ export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null,
 
 
 export default {
-  layerToggleAnalyticsEvent,
-  changeLayerOpacityAnalyticsEvent,
   openInfoModalAnalyticsEvent,
   openHalfEarthMeterAnalyticsEvent,
   openAboutPageAnalyticsEvent,

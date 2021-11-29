@@ -9,11 +9,12 @@ import { useSketchWidget} from 'hooks/esri';
 // ACTIONS
 import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
+import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import { loadModules } from 'esri-loader';
 
-const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions };
+const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions };
 
 
 
@@ -43,10 +44,12 @@ const AnalyzeAreasContainer = (props) => {
         description: WARNING_MESSAGES.area.description(area),
       });
       setPromptModalOpen(true);
+      props.shapeDrawTooBigAnalytics();
     } else {
       const { geometry } = graphic;
       const hash = createHashFromGeometry(geometry);
       setAoiGeometry({ hash, geometry });
+      props.shapeDrawSuccessfulAnalytics();
       browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
     }
   }
@@ -62,22 +65,24 @@ const AnalyzeAreasContainer = (props) => {
           description: WARNING_MESSAGES.area.description(area),
         });
         setPromptModalOpen(true);
+        props.shapeUploadTooBigAnalytics();
       } else {
         const geometryInstance = new Polygon(featureSetGeometry);
         const hash = createHashFromGeometry(geometryInstance);
         setAoiGeometry({ hash, geometry: geometryInstance });
+        props.shapeUploadSuccessfulAnalytics();
         browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
       }
     })
   }
 
   const onShapeUploadError = (error) => {
-    console.log(error)
     setPromptModalContent({
       title: WARNING_MESSAGES[error.details.httpStatus].title,
       description: WARNING_MESSAGES[error.details.httpStatus].description(),
     });
     setPromptModalOpen(true);
+    props.shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
   }
 
   const {
