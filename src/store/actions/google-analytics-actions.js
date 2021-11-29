@@ -27,6 +27,11 @@ export const changeTaxaAnalytics = (label) => analyticsActionCreator({
   label
 })
 
+export const layerToggleAnalytics = (label) => analyticsActionCreator({
+  category: EXPLORE_DATA,
+  action: ACTIONS.TOGGLE_LAYER,
+  label
+})
 
 const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
 

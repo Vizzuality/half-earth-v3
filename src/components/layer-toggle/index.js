@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux'
 import Component from './component';
 import metadataActions from 'redux_modules/metadata';
-import { openInfoModalAnalyticsEvent } from 'actions/google-analytics-actions';
+import { openInfoModalAnalyticsEvent, layerToggleAnalytics } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 
-const actions = { ...metadataActions, openInfoModalAnalyticsEvent };
+const actions = { ...metadataActions, openInfoModalAnalyticsEvent, layerToggleAnalytics };
 
 const Container = (props) => {
   const { map, activeLayers, option } = props;
@@ -36,6 +36,7 @@ const Container = (props) => {
   useEffect(() => {
     const _isChecked = activeLayers.some(layer => layer.title === option.value);
     setIsChecked(_isChecked);
+    if (_isChecked) { props.layerToggleAnalytics(option.value) }
   }, [activeLayers])
 
   return (
