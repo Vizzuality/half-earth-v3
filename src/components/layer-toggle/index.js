@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux'
 import Component from './component';
 import metadataActions from 'redux_modules/metadata';
-import { openInfoModalAnalyticsEvent, layerToggleAnalytics } from 'actions/google-analytics-actions';
+import { layerToggleAnalytics } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 
-const actions = { ...metadataActions, openInfoModalAnalyticsEvent, layerToggleAnalytics };
+const actions = { ...metadataActions, layerToggleAnalytics };
 
 const Container = (props) => {
   const { map, activeLayers, option } = props;
@@ -14,13 +14,12 @@ const Container = (props) => {
 
 
   const handleInfoClick = (option) => {
-    const { setModalMetadata, openInfoModalAnalyticsEvent } = props;
+    const { setModalMetadata } = props;
     setModalMetadata({
       slug: `${option.slug || option.value}`,
       title: `${option.metadataTitle || option.name} metadata`,
       isOpen: true
     });
-    openInfoModalAnalyticsEvent({ slug: `${option.slug}` });
   }
 
   const handleBringToBackClick = (e,layer) => {
