@@ -30,11 +30,17 @@ const AnalyzeAreasCardComponent = ({
   handleOptionSelection,
   handleAnalysisTabClick,
   handlePromptModalToggle,
+  aoiHistoryModalOpenAnalytics
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
-  const handleAoiModalToggle = () => setAoiHistoryModalOpen(!isAoiHistoryModalOpen);
+  const handleAoiModalToggle = () => {
+    if (!isAoiHistoryModalOpen) {
+      aoiHistoryModalOpenAnalytics();
+    }
+    setAoiHistoryModalOpen(!isAoiHistoryModalOpen);
+  }
   
   return (
     <div className={cx(
