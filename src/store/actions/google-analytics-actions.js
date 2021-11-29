@@ -1,7 +1,23 @@
-
+import { analyticsActionCreator } from 'utils/google-analytics-utils';
 import { createAction } from 'redux-tools';
 import { CATEGORIES, ACTIONS } from 'constants/google-analytics-constants';
-const createGtagEventStructure = (category, action, label = null) => ({ analytics: { category, action, label }})
+const { GENERAL_MENU, DISCOVER_STORIES, EXPLORE_DATA, AOI, NRC } = CATEGORIES;
+
+export const joinConversationAnalytics = (label) => analyticsActionCreator({
+  category: GENERAL_MENU,
+  action: ACTIONS.SOCIAL,
+  label
+})
+
+export const shareMapAnalytics = (label) => analyticsActionCreator({
+  category: GENERAL_MENU,
+  action: ACTIONS.SHARE,
+  label
+})
+
+
+const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
+
 
 export const layerToggleAnalyticsEvent = createAction('removeLayer', null, ({ slug }) => {
   return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.TOGGLE_LAYER, slug)
