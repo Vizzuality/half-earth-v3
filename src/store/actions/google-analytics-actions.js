@@ -15,6 +15,18 @@ export const shareMapAnalytics = (label) => analyticsActionCreator({
   label
 })
 
+export const readStoryAnalytics = (label) => analyticsActionCreator({
+  category: DISCOVER_STORIES,
+  action: ACTIONS.CLICK_ON_STORY,
+  label
+})
+
+export const changeTaxaAnalytics = (label) => analyticsActionCreator({
+  category: DISCOVER_STORIES,
+  action: ACTIONS.CHANGE_TAXA,
+  label
+})
+
 
 const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
 

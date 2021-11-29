@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
-import { ReactComponent as GoToIcon } from 'icons/go_to.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
@@ -20,7 +19,6 @@ const FeaturedPlaceCardComponent = ({
   handleAllMapsClick,
   handleNextPlaceClick,
   handlePrevPlaceClick,
-  handleLandscapeTrigger,
   activeOption,
   hotspotsNumbers
 }) => {
@@ -99,24 +97,12 @@ const FeaturedPlaceCardComponent = ({
                     src={featuredPlace.imageUrl}
                     className={styles.picture}
                     alt={featuredPlace.title}
-                    onClick={handleLandscapeTrigger}
                   />
                 )}
               </div>
-              {!isOnMobile && (
-                <button
-                  className={styles.landscapeTriggerButton}
-                  onClick={handleLandscapeTrigger}
-                >
-                  <GoToIcon className={styles.icon} />
-                  <span className={styles.landscapeTriggerText}>
-                    explore this area
-                  </span>
-                </button>
-              )}
               <div className={styles.contentContainer} ref={contentWrapper}>
                 {!isOnMobile && (
-                  <h2 className={styles.title} onClick={handleLandscapeTrigger} role="button">
+                  <h2 className={styles.title}>
                     {hotspotsNumbers && `${hotspotsNumbers.position}. `}
                     {featuredPlace.title}
                   </h2>
@@ -133,16 +119,6 @@ const FeaturedPlaceCardComponent = ({
             </>
           )}
         </section>
-        {isOnMobile && (
-          <div className={styles.exploreAreaButtonContainer}>
-            <button
-              onClick={handleLandscapeTrigger}
-              className={styles.exploreAreaButton}
-            >
-              Explore this area
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
