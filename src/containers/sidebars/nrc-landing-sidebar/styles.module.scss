@@ -1,0 +1,40 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/common-animations.module';
+
+$top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+
+.container {
+  @include backdropBlur();
+  position:absolute;
+  top: $top;
+  left: $site-gutter;
+  padding-bottom: $site-gutter;
+  display: flex;
+  flex-direction: column;
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
+  width: 420px;
+  padding: $site-gutter;
+}
+
+.legendTitle,
+.legend,
+.title,
+.body {
+  color: $white;
+  margin: 0 0 $site-gutter 0;
+}
+
+.title {
+  @extend %display1;
+}
+
+.body {
+  @extend %bodyText;
+}
+
+.legendTitle {
+  @extend %title;
+}
