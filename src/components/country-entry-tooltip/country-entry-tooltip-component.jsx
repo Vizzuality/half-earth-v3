@@ -5,6 +5,8 @@ import styles from './country-entry-tooltip-styles.module.scss';
 
 const CountryEntryTooltipComponent = ({ 
   view,
+  countryISO,
+  countryName,
   mapTooltipIsVisible,
   mapTooltipContent,
   tooltipContent,
@@ -13,7 +15,6 @@ const CountryEntryTooltipComponent = ({
   onExploreCountryClick }) => {
 const tooltipref = useRef(null);
 const [tooltip, setTooltip] = useState(null);
-const { countryISO, countryName } = mapTooltipContent;
 const { spi, vertebrates, endemic, protection, protectionNeeded } = tooltipContent;
 
 // Create a new Popup to contain the tooltip

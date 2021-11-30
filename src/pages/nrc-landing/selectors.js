@@ -31,7 +31,7 @@ const getListenersSetting = createSelector(selectListenersState, listenersUrlSta
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-export const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
+export const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor)
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);

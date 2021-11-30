@@ -14,22 +14,23 @@ import mapStateToProps from 'selectors/country-tooltip-selectors';
 const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...countryTooltipActions}
 
 const CountryEntryTooltipContainer = props => {
-  const { mapTooltipContent, mapTooltipIsVisible } = props;
-  const { countryISO } = mapTooltipContent;
+  const { mapTooltipIsVisible, countryISO } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [tooltipContent, setContent] = useState({});
 
   // Set country tooltip position
   useEffect(() => {
     if (countryISO) {
+      const { setTooltipIsVisible } = props;
+      console.log('ABOUT TO FETCH DATA')
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
         whereClause: `GID_0 = '${countryISO}'`,
         returnGeometry: true
       }).then((features) => {
-        console.log(features)
         const { geometry, attributes } = features[0];
         setTooltipPosition(geometry);
+        setTooltipIsVisible(true);
         setContent({
           spi: attributes.SPI,
           vertebrates: attributes.N_SPECIES,
@@ -48,9 +49,8 @@ const CountryEntryTooltipContainer = props => {
   }
 
   const handleExploreCountryClick = () => {
-    const { mapTooltipContent, setTooltipIsVisible, setTooltipContent, browsePage, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
-    const { countryISO } = mapTooltipContent;
-    setTooltipIsVisible(false);
+    const { mapTooltipContent, setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
+   setTooltipIsVisible(false);
     setTooltipContent({});
     exploreCountryFromTooltipAnalyticsEvent({countryName});
     browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});

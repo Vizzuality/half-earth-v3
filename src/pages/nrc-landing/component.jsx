@@ -9,6 +9,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCardLanding = ({
   countryISO,
+  countryName,
   userConfig,
   openedModal,
   hasMetadata,
@@ -22,6 +23,7 @@ const NationalReportCardLanding = ({
   <MainMenu />
   <NationalReportCardLandingScene
     countryISO={countryISO}
+    countryName={countryName}
     userConfig={userConfig}
     openedModal={openedModal}
     activeLayers={activeLayers}

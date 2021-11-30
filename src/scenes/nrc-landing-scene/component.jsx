@@ -61,7 +61,6 @@ const NrcLandingComponent = ({
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
-          sceneMode={sceneMode}
         />
         {/* <Sidebar /> */}
         <LabelsLayer activeLayers={activeLayers} />
