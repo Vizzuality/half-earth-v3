@@ -75,6 +75,12 @@ export const precomputedAoiAnalytics = (label) => analyticsActionCreator({
   label
 })
 
+export const shareAoiAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.SHARE_AOI,
+  label
+})
+
 export const aoiAnalyticsActions = {
   shapeUploadSuccessfulAnalytics,
   shapeUploadTooBigAnalytics,
@@ -82,7 +88,81 @@ export const aoiAnalyticsActions = {
   shapeDrawSuccessfulAnalytics,
   shapeDrawTooBigAnalytics,
   aoiHistoryModalOpenAnalytics,
-  precomputedAoiAnalytics
+  precomputedAoiAnalytics,
+  shareAoiAnalytics
+}
+
+export const clickCountryAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.CLICK_ON_COUNTRY,
+  label
+})
+
+export const enterNrcAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.ENTER_NRC,
+  label
+})
+
+export const searchCountryAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.SEARCH_COUNTRY,
+  label
+})
+
+export const openSpeciesListAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.SPECIES_LIST,
+  label
+})
+
+export const visitNrcChallengesAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.CHALLENGES,
+  label
+})
+
+export const visitNrcRankingAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.RANKING,
+  label
+})
+
+export const visitNrcOverviewAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.OVERVIEW,
+  label
+}) 
+
+export const downloadNrcPdfAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.DOWNLOAD_PDF,
+  label
+}) 
+
+export const checkSpiInfoAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.SPI_INFO,
+  label
+}) 
+
+export const checkRankingInfoAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.RANKING_INFO,
+  label
+}) 
+
+export const nrcAnalyticsActions = {
+  clickCountryAnalytics,
+  enterNrcAnalytics,
+  searchCountryAnalytics,
+  openSpeciesListAnalytics,
+  visitNrcChallengesAnalytics,
+  visitNrcRankingAnalytics,
+  visitNrcOverviewAnalytics,
+  downloadNrcPdfAnalytics,
+  checkSpiInfoAnalytics,
+  checkRankingInfoAnalytics
 }
 
 const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
