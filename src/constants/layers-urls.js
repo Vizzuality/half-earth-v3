@@ -3,6 +3,7 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   COUNTRIES_DATA_FEATURE_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  GLOBAL_SPI_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
@@ -100,6 +101,8 @@ export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUA
 export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0'; 
 
 export const LAYERS_URLS = {
+  [GLOBAL_SPI_FEATURE_LAYER]:
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]: 'https://utility.arcgis.com/usrsvcs/servers/5e66921fb50f475981b5ef66678f29f7/rest/services/aois_historic/FeatureServer/0',
   [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/aois_historic_6a796b684c874ef4bbe2f97b4857bf35/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:
