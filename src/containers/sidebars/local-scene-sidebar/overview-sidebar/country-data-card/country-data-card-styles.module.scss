@@ -83,7 +83,7 @@
 }
 
 .index {
-  @extend %headline;
+  @extend %display2;
 }
 
 .indexExplanation {
@@ -99,7 +99,7 @@
 
 
 .indexExplanationText {
-  @extend %title;
+  @extend %display2;
   margin: 0;
   color: $_temporary-dark-text;
 }
@@ -123,7 +123,7 @@
 }
 
 .baseNumber{
-  @extend %headline;
+  @extend %display2;
   color: $_temporary-dark-text;
   margin: 0 0 5px 0;
 }
