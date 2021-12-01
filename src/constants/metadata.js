@@ -51,7 +51,7 @@ export default {
   },
   [RANKING_CHART]: {
     slug: RANKING_CHART,
-    title: 'Species Protection Index Ranking'
+    title: 'Species Protection Index'
   },
   [MERGED_PROTECTION]: {
     slug: MERGED_PROTECTION,

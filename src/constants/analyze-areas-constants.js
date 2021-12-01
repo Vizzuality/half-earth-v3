@@ -92,12 +92,12 @@ export const PRECALCULATED_LAYERS_CONFIG = {
   }
 }
 
-export const HIGHER_AREA_SIZE_LIMIT = 40000;
+export const HIGHER_AREA_SIZE_LIMIT = 35000;
 
 export const WARNING_MESSAGES = {
   area: {
     title: 'Area size too big',
-    description: (size) => `The maximum size for an on the fly area analysis is 40,000km2.
+    description: (size) => `The maximum size for an on the fly area analysis is ${localeFormatting(HIGHER_AREA_SIZE_LIMIT)}km2.
     The area that you'er trying to analyze has ${localeFormatting(size)} km2. Please provide an smaller area to trigger the analysis.` 
   },
   400: {

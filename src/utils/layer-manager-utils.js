@@ -118,15 +118,18 @@ export const createLayer = layerConfig => {
   const { url, slug, type, opacity, renderer } = layerConfig;
   const layerType = type || 'WebTileLayer';
   return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
-    return new layer({
+    const newLAyer = new layer({
       url: url,
       urlTemplate: url,
       title: slug,
       id: slug,
       outFields: ["*"],
-      opacity: opacity || DEFAULT_OPACITY,
-      renderer: renderer
+      opacity: opacity || DEFAULT_OPACITY
     })
+
+    if (renderer) { newLAyer.renderer = renderer }
+    
+    return newLAyer
   });
 }
 export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) => {

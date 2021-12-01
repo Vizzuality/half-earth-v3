@@ -1,6 +1,7 @@
 import {
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+  GLOBAL_SPI_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   } from 'constants/layers-slugs';
 
@@ -27,5 +28,12 @@ export const SEARCH_SOURCES_CONFIG = {
     outFields: ["*"],
     searchFields: ["NAME"],
     suggestionTemplate: '{NAME}, {ISO3}'
-  }
+  },
+  [GLOBAL_SPI_FEATURE_LAYER]: {
+    url: LAYERS_URLS[GLOBAL_SPI_FEATURE_LAYER],
+    title: GLOBAL_SPI_FEATURE_LAYER,
+    outFields: ["*"],
+    searchFields: ["NAME_0"],
+    suggestionTemplate: '{NAME_0}'
+  },
 }

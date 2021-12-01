@@ -3,17 +3,17 @@ import Component from './local-species-card-component';
 import { connect } from 'react-redux';
 import { MODALS } from 'constants/ui-params';
 import * as urlActions from 'actions/url-actions';
-import { openSpeciesListAnalyticsEvent } from 'actions/google-analytics-actions';
+import { openSpeciesListAnalytics } from 'actions/google-analytics-actions';
 
-const actions = {...urlActions, openSpeciesListAnalyticsEvent };
+const actions = {...urlActions, openSpeciesListAnalytics };
 
 const LocalSpeciesCardContainer = (props) => {
 
   const toggleModal = () => {
-    const { openedModal, changeUI, openSpeciesListAnalyticsEvent } = props;
+    const { openedModal, changeUI, openSpeciesListAnalytics } = props;
     changeUI({ openedModal: !openedModal ? MODALS.SPECIES : null });
     if (!openedModal) {
-      openSpeciesListAnalyticsEvent()
+      openSpeciesListAnalytics()
     }
   }
 

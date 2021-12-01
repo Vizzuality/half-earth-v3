@@ -5,42 +5,60 @@ import EsriFeatureService from 'services/esri-feature-service';
 // Constants
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import * as urlActions from 'actions/url-actions';
-import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
+import { enterNrcAnalytics } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';
-import { NATIONAL_REPORT_CARD } from 'router'
-const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions}
+import { NATIONAL_REPORT_CARD } from 'router';
+
+import countryTooltipActions from 'redux_modules/country-tooltip';
+import mapStateToProps from 'selectors/country-tooltip-selectors';
+const actions = { enterNrcAnalytics, ...urlActions, ...countryTooltipActions}
 
 const CountryEntryTooltipContainer = props => {
-  const { countryTooltipDisplayFor } = props;
+  const { mapTooltipIsVisible, countryISO } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
+  const [tooltipContent, setContent] = useState({});
 
   // Set country tooltip position
   useEffect(() => {
-    if (countryTooltipDisplayFor) {
+    if (countryISO) {
+      const { setTooltipIsVisible } = props;
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
-        whereClause: `GID_0 = '${countryTooltipDisplayFor}'`,
+        whereClause: `GID_0 = '${countryISO}'`,
         returnGeometry: true
       }).then((features) => {
-        const { geometry } = features[0];
+        const { geometry, attributes } = features[0];
         setTooltipPosition(geometry);
+        setTooltipIsVisible(true);
+        setContent({
+          spi: attributes.SPI,
+          vertebrates: attributes.N_SPECIES,
+          endemic: attributes.total_endemic,
+          protection: attributes.prop_protected,
+          protectionNeeded: attributes.protection_needed
+        })
       })
     }
-  }, [countryTooltipDisplayFor])
+  }, [countryISO])
 
   const handleTooltipClose = () => {
-    const { changeGlobe } = props;
-    changeGlobe({countryTooltipDisplayFor: null})
+    const { setTooltipIsVisible, setTooltipContent } = props;
+    setTooltipIsVisible(false);
+    setTooltipContent({});
   }
 
   const handleExploreCountryClick = () => {
-    const { countryTooltipDisplayFor, browsePage, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
-    exploreCountryFromTooltipAnalyticsEvent({countryName});
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryTooltipDisplayFor }});
+    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics } = props;
+   setTooltipIsVisible(false);
+    setTooltipContent({});
+    enterNrcAnalytics(countryName);
+    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
   };
 
   return (
     <Component
+      mapTooltipIsVisible={mapTooltipIsVisible}
+      tooltipContent={tooltipContent}
       tooltipPosition={tooltipPosition}
       handleTooltipClose={handleTooltipClose}
       onExploreCountryClick={handleExploreCountryClick}
@@ -49,4 +67,4 @@ const CountryEntryTooltipContainer = props => {
   )
 }
 
-export default connect(null, actions)(CountryEntryTooltipContainer);
+export default connect(mapStateToProps, actions)(CountryEntryTooltipContainer);

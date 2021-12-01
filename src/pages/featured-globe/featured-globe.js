@@ -18,9 +18,10 @@ import Component from './featured-globe-component.jsx';
 
 import mapStateToProps from './featured-globe-selectors';
 import * as urlActions from 'actions/url-actions';
+import { readStoryAnalytics } from 'actions/google-analytics-actions';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
-const actions = { ...featuredMapsActions, ...urlActions}
+const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics }
 
 const featuredGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
@@ -29,7 +30,8 @@ const featuredGlobeContainer = props => {
 
   const handleMarkerClick = (viewPoint, view) => {
     if(!isFullscreenActive) {
-      setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI)
+      setSelectedFeaturedPlace(viewPoint, FEATURED_PLACES_LAYER, changeUI);
+      props.readStoryAnalytics();
       removeAvatarImage();
     }
   }

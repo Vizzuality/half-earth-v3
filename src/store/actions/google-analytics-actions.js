@@ -1,15 +1,165 @@
-
+import { analyticsActionCreator } from 'utils/google-analytics-utils';
 import { createAction } from 'redux-tools';
 import { CATEGORIES, ACTIONS } from 'constants/google-analytics-constants';
-const createGtagEventStructure = (category, action, label = null) => ({ analytics: { category, action, label }})
+const { GENERAL_MENU, DISCOVER_STORIES, EXPLORE_DATA, AOI, NRC } = CATEGORIES;
 
-export const layerToggleAnalyticsEvent = createAction('removeLayer', null, ({ slug }) => {
-  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.TOGGLE_LAYER, slug)
-});
+export const joinConversationAnalytics = (label) => analyticsActionCreator({
+  category: GENERAL_MENU,
+  action: ACTIONS.SOCIAL,
+  label
+})
 
-export const changeLayerOpacityAnalyticsEvent = createAction('changeOpacity', null, ({ slug }) => {
-  return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.CHANGE_OPACITY, slug)
-});
+export const shareMapAnalytics = (label) => analyticsActionCreator({
+  category: GENERAL_MENU,
+  action: ACTIONS.SHARE,
+  label
+})
+
+export const readStoryAnalytics = (label) => analyticsActionCreator({
+  category: DISCOVER_STORIES,
+  action: ACTIONS.CLICK_ON_STORY,
+  label
+})
+
+export const changeTaxaAnalytics = (label) => analyticsActionCreator({
+  category: DISCOVER_STORIES,
+  action: ACTIONS.CHANGE_TAXA,
+  label
+})
+
+export const layerToggleAnalytics = (label) => analyticsActionCreator({
+  category: EXPLORE_DATA,
+  action: ACTIONS.TOGGLE_LAYER,
+  label
+})
+
+export const shapeUploadSuccessfulAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.UPLOAD_SHAPE,
+  label: 'Upload succesful'
+})
+
+export const shapeUploadTooBigAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.UPLOAD_SHAPE,
+  label: 'Shape too big'
+})
+
+export const shapeUploadErrorAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.UPLOAD_SHAPE,
+  label
+})
+
+export const shapeDrawSuccessfulAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.DRAW_SHAPE,
+  label: 'Drawing succesful'
+})
+
+export const shapeDrawTooBigAnalytics = () => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.DRAW_SHAPE,
+  label: 'Drawing too big'
+})
+
+export const aoiHistoryModalOpenAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.OPEN_HISTORY,
+  label
+})
+
+export const precomputedAoiAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.PRECOMPUTED_AOI,
+  label
+})
+
+export const shareAoiAnalytics = (label) => analyticsActionCreator({
+  category: AOI,
+  action: ACTIONS.SHARE_AOI,
+  label
+})
+
+export const aoiAnalyticsActions = {
+  shapeUploadSuccessfulAnalytics,
+  shapeUploadTooBigAnalytics,
+  shapeUploadErrorAnalytics,
+  shapeDrawSuccessfulAnalytics,
+  shapeDrawTooBigAnalytics,
+  aoiHistoryModalOpenAnalytics,
+  precomputedAoiAnalytics,
+  shareAoiAnalytics
+}
+
+export const clickCountryAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.CLICK_ON_COUNTRY,
+  label
+})
+
+export const enterNrcAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.ENTER_NRC,
+  label
+})
+
+export const searchCountryAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.SEARCH_COUNTRY,
+  label
+})
+
+export const openSpeciesListAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.SPECIES_LIST,
+  label
+})
+
+export const visitNrcChallengesAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.CHALLENGES,
+  label
+})
+
+export const visitNrcRankingAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.RANKING,
+  label
+})
+
+export const visitNrcOverviewAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.OVERVIEW,
+  label
+}) 
+
+export const downloadNrcPdfAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.DOWNLOAD_PDF,
+  label
+}) 
+
+export const checkSpiInfoAnalytics = (label) => analyticsActionCreator({
+  category: NRC,
+  action: ACTIONS.SPI_INFO,
+  label
+}) 
+
+export const nrcAnalyticsActions = {
+  clickCountryAnalytics,
+  enterNrcAnalytics,
+  searchCountryAnalytics,
+  openSpeciesListAnalytics,
+  visitNrcChallengesAnalytics,
+  visitNrcRankingAnalytics,
+  visitNrcOverviewAnalytics,
+  downloadNrcPdfAnalytics,
+  checkSpiInfoAnalytics,
+}
+
+const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
+
 
 export const openInfoModalAnalyticsEvent = createAction('openLayerInfoModal', null, ({ slug }) => {
   return createGtagEventStructure(CATEGORIES.LAYER_INTERACTION, ACTIONS.OPEN_INFO, slug)
@@ -81,8 +231,6 @@ export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null,
 
 
 export default {
-  layerToggleAnalyticsEvent,
-  changeLayerOpacityAnalyticsEvent,
   openInfoModalAnalyticsEvent,
   openHalfEarthMeterAnalyticsEvent,
   openAboutPageAnalyticsEvent,

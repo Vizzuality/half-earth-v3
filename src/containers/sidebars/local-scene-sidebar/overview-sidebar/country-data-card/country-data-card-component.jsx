@@ -44,22 +44,19 @@ const CountryDataCardComponent = ({
             >
               <p className={styles.baseNumber}>{`${currentProtection}`}</p>
               <p className={styles.numberText}>% of land</p>
-              <p className={styles.numberText}>currently</p>
-              <p className={styles.numberText}>protected</p>
+              <p className={styles.numberText}>currently protected</p>
             </div>
             <div className={styles.indexBaseDataElement}>
               <p className={styles.baseNumber}>{`${vertebratesCount}`}</p>
               <p className={styles.numberText}>total land</p>
-              <p className={styles.numberText}>vertebrate</p>
-              <p className={styles.numberText}>species</p>
+              <p className={styles.numberText}>vertebrate species</p>
             </div>
             <div className={styles.indexBaseDataElement}>
               <p
                 className={styles.baseNumber}
               >{`${endemicVertebratesCount}`}</p>
               <p className={styles.numberText}>endemic land</p>
-              <p className={styles.numberText}>vertebrate</p>
-              <p className={styles.numberText}>species</p>
+              <p className={styles.numberText}>vertebrate species</p>
             </div>
           </div>
         </div>

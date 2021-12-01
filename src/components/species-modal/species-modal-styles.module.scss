@@ -36,6 +36,9 @@
   }
 
   .closeButton {
+    position: absolute;
+    top: $site-gutter;
+    right: $site-gutter;
     svg g {
       fill: $brand-color-secondary;
       stroke: $brand-color-secondary;

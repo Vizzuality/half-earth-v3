@@ -44,6 +44,7 @@ const LocalSpeciesCardComponent = ({
           strokeWidth={20}
           regularSliceR={100}
           explodingSliceR={130}
+          className={styles.chart}
         />
         <div className={styles.chartLegend}>
           <div className={styles.legendItem}>

@@ -8,6 +8,7 @@ const FeaturedGlobe = loadable(() => import("pages/featured-globe"));
 const DataGlobe = loadable(() => import("pages/data-globe"));
 const MapIframe = loadable(() => import("pages/map-iframe"));
 const NationalReportCard = loadable(() => import("pages/nrc"));
+const NationalReportCardLanding = loadable(() => import("pages/nrc-landing"));
 const AreaOfInterest = loadable(() => import("pages/aoi"));
 
 const mapStateToProps = ({ location }) => ({
@@ -22,6 +23,8 @@ const AppLayout = (props) => {
       return <FeaturedGlobe />;
     case "nrc":
       return <NationalReportCard />;
+    case "nrc-landing":
+      return <NationalReportCardLanding />;
     case "aoi":
       return <AreaOfInterest />;
     case "map-iframe":

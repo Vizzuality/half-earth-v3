@@ -46,8 +46,8 @@
 
 .flagWrapper {
   display: flex;
-  align-items: center;
-  margin-top: $site-gutter;
+  align-items: baseline;
+  margin-bottom: $site-gutter;
 }
 
 .flag {
@@ -58,16 +58,18 @@
 
 .nrcTitle {
   @extend %title;
+  margin: 0;
+  padding-left: $site-gutter;
+  padding-top: $site-gutter;
   color: $white;
-  margin-left: $paragraph-gutter;
-  padding-top: 5px;
 }
 
 .countryName {
   @extend %display2;
-  color: $white;
-  padding-left: $site-gutter;
   margin: 0;
+  padding-left: $site-gutter;
+  padding-top: $site-gutter;
+  color: $white;
 }
 
 .tabsContainer {

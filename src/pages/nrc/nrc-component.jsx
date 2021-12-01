@@ -36,6 +36,7 @@ const NationalReportCard = ({
     <MainMenu />
     <LocalSceneSidebar
       countryISO={countryISO}
+      countryName={countryName}
       openedModal={openedModal}
       activeLayers={activeLayers}
       className={cx(styles.sidebarContainer, styles.hideOnPrint)}

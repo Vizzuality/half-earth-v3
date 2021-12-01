@@ -32,9 +32,14 @@ const LocalSceneSidebarComponent = ({
   activeLayers,
   climateRegime,
   handlePrintReport,
+  shareAoiAnalytics,
   handleSceneModeChange,
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const handleShareModalOpen = () => {
+    shareAoiAnalytics();
+    setShareModalOpen(true);
+  }
 
   return (
     <>
@@ -62,7 +67,7 @@ const LocalSceneSidebarComponent = ({
           <Button 
             Icon={ShareIcon}
             type="icon-square"
-            handleClick={setShareModalOpen}
+            handleClick={handleShareModalOpen}
             tooltipText="Share this area"
           />
         </div>

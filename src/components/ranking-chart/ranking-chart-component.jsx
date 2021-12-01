@@ -30,7 +30,7 @@ const RankingChart = ({
 
   const tableRef = useRef();
   useEffect(() => {
-    const ROW_HEIGHT = 24;
+    const ROW_HEIGHT = 23;
     if (scrollIndex > -1 && tableRef.current) {
       tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
     }

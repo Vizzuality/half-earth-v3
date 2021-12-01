@@ -6,14 +6,15 @@ import Component from './data-scene-component';
 // ACTIONS
 import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
+import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 
-const actions = {...mapTooltipActions, ...urlActions };
+const actions = {...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 
 const Container = (props) => {
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent } = props;
+  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const handleHighlightLayerFeatureClick = (features) => {
@@ -35,6 +36,7 @@ const Container = (props) => {
   }
 
   const handleTooltipActionButtonClick = () => {
+    precomputedAoiAnalytics(mapTooltipContent.title);
     browsePage({type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug }});
   }
 

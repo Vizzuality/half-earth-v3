@@ -3,6 +3,10 @@ import React from 'react';
 import CountryDataCard from './country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
+import Button from 'components/button';
+import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+import styles from './styles.module.scss';
+
 const Component = ({
   SPI,
   mean,
@@ -24,6 +28,7 @@ const Component = ({
   speciesChartData,
   currentProtection,
   amphibiansEndemic,
+  handlePrintReport,
   countryDescription,
   countryDataLoading,
   priorityAreasSentence,
@@ -73,6 +78,14 @@ const Component = ({
           highlightedSpeciesSentence={highlightedSpeciesSentence}
           highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
         />
+        <Button 
+          type='compound'
+          Icon={DownloadIcon}
+          handleClick={handlePrintReport}
+          className={styles.actionButton}
+          label="download this info (pdf)"
+          tooltipText="Download national data report"
+        /> 
     </>
   )
 }

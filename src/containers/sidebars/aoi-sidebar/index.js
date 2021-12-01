@@ -4,9 +4,10 @@ import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils'
 import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
 import Component from './component';
 import * as urlActions from 'actions/url-actions';
+import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import { DATA } from 'router'
 
-const actions = {...urlActions}
+const actions = {...urlActions, ...aoiAnalyticsActions}
 
 const AoiSidebarContainer = (props) => {
   const { speciesData, contextualData, browsePage } = props;

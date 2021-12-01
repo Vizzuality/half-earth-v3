@@ -4,7 +4,6 @@ import { Loading } from 'he-components';
 
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
-import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 
 import Tabs from 'components/tabs';
 import Button from 'components/button';
@@ -30,7 +29,6 @@ const LocalSceneSidebarComponent = ({
   countryData,
   countryName,
   openedModal,
-  handlePrintReport,
   handleTabSelection,
   isFullscreenActive,
   localSceneActiveTab,
@@ -54,11 +52,11 @@ const LocalSceneSidebarComponent = ({
       />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
+        <span className={styles.nrcTitle}>National report card of</span>
         <div className={styles.flagWrapper}>
           <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
-          <span className={styles.nrcTitle}>National report card of</span>
+          {countryName && <p className={styles.countryName}>{countryName}</p>}
         </div>
-        {countryName && <p className={styles.countryName}>{countryName}</p>}
       </div>
       <Tabs
         tabs={LOCAL_SCENE_TABS}
@@ -89,14 +87,6 @@ const LocalSceneSidebarComponent = ({
               countryISO={countryISO}
             />
           }
-          <Button 
-            type='compound'
-            Icon={DownloadIcon}
-            handleClick={handlePrintReport}
-            className={styles.actionButton}
-            label="download this info (pdf)"
-            tooltipText="Download national data report"
-            />
           <Button 
             type='compound'
             Icon={ShareIcon}
