@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 
 .title {
-  @extend %title;
+  @extend %display2;
   margin: 0;
   color: $_temporary-dark-text;
   text-align: center;

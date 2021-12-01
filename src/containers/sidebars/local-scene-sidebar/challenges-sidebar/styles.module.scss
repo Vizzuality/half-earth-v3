@@ -10,7 +10,7 @@
   padding: 5px $sidebar-cards-padding;
   display: flex;
   flex-flow: column wrap;
-  height: 110px;
+  height: 140px;
   color: white;
 }
 .continent,
@@ -19,9 +19,9 @@
 }
 
 .continent {
+  display: flex;
+  align-items: center;
   margin-bottom: $paragraph-gutter;
-  width: 134px;
-  margin-right: $sidebar-cards-padding;
 }
 
 .legendContinent {

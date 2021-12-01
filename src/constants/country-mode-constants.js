@@ -14,8 +14,8 @@ export const CONTINENTS = [
   'Asia',
   'Europe',
   'North america',
+  'South america',
   'Oceania',
-  'South america'
 ];
 
 export const CONTINENT_COLORS = {

@@ -146,12 +146,6 @@ export const checkSpiInfoAnalytics = (label) => analyticsActionCreator({
   label
 }) 
 
-export const checkRankingInfoAnalytics = (label) => analyticsActionCreator({
-  category: NRC,
-  action: ACTIONS.RANKING_INFO,
-  label
-}) 
-
 export const nrcAnalyticsActions = {
   clickCountryAnalytics,
   enterNrcAnalytics,
@@ -162,7 +156,6 @@ export const nrcAnalyticsActions = {
   visitNrcOverviewAnalytics,
   downloadNrcPdfAnalytics,
   checkSpiInfoAnalytics,
-  checkRankingInfoAnalytics
 }
 
 const createGtagEventStructure = (category, action, label) => ({ analytics: { category, action, label }})
