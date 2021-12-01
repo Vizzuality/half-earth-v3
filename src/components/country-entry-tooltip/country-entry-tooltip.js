@@ -5,13 +5,13 @@ import EsriFeatureService from 'services/esri-feature-service';
 // Constants
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import * as urlActions from 'actions/url-actions';
-import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
+import { enterNrcAnalytics } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';
 import { NATIONAL_REPORT_CARD } from 'router';
 
 import countryTooltipActions from 'redux_modules/country-tooltip';
 import mapStateToProps from 'selectors/country-tooltip-selectors';
-const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...countryTooltipActions}
+const actions = { enterNrcAnalytics, ...urlActions, ...countryTooltipActions}
 
 const CountryEntryTooltipContainer = props => {
   const { mapTooltipIsVisible, countryISO } = props;
@@ -22,7 +22,6 @@ const CountryEntryTooltipContainer = props => {
   useEffect(() => {
     if (countryISO) {
       const { setTooltipIsVisible } = props;
-      console.log('ABOUT TO FETCH DATA')
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
         whereClause: `GID_0 = '${countryISO}'`,
@@ -49,10 +48,10 @@ const CountryEntryTooltipContainer = props => {
   }
 
   const handleExploreCountryClick = () => {
-    const { mapTooltipContent, setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, exploreCountryFromTooltipAnalyticsEvent } = props;
+    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics } = props;
    setTooltipIsVisible(false);
     setTooltipContent({});
-    exploreCountryFromTooltipAnalyticsEvent({countryName});
+    enterNrcAnalytics(countryName);
     browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
   };
 
