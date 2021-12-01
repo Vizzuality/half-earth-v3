@@ -6,10 +6,12 @@ import { visitNrcOverviewAnalytics } from 'actions/google-analytics-actions';
 const actions = { visitNrcOverviewAnalytics }
 
 const Container = (props) => {
+
     useEffect(() => {
       const { visitNrcOverviewAnalytics } = props;
       visitNrcOverviewAnalytics() 
     }, [])
+
     return <Component {...props}/>
 }
 
