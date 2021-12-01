@@ -7,6 +7,10 @@
 
 .chartContainer {
   position: relative;
+  .chart {
+    position: relative;
+    left: 35px;
+  }
 }
 
 .title {
@@ -14,6 +18,7 @@
   margin: 0;
   color: $_temporary-dark-text;
   text-align: center;
+  padding-bottom: $site-gutter;
 }
 
 .chartLegend {
@@ -26,9 +31,10 @@
   padding: 20px;
   border-radius: 77px;
   align-items: center;
+  justify-content: center;
   position: absolute;
-  top: 75px;
-  left: 55px;
+  top: 95px;
+  left: 90px;
 }
 
 .legendItem {
@@ -36,7 +42,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: $sidebar-paddings;
 }
 
 .speciesCount,
