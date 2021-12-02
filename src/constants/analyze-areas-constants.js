@@ -69,8 +69,6 @@ export const SPECIES_FILTERS = [
   {slug: MAMMALS, label: 'mammals'},
   {slug: REPTILES, label: 'reptiles'},
   {slug: AMPHIBIANS, label: 'amphibians'},
-  {slug: 'endangered', label: 'endangered species'},
-  {slug: 'flagship', label: 'flagship species'},
 ]
 
 export const DEFAULT_SPECIES_FILTER = {slug: 'all', label: 'vertebrates'};

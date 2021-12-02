@@ -35,12 +35,6 @@ const SpeciesCardContainer = (props) => {
       switch (filter.slug) {
         case 'all':
           return filter
-        case 'flagship':
-          count = species.filter(sp => sp.isFlagship).length;
-          return { slug: filter.slug, label: `${filter.label} (${count})`}
-        case 'endangered':
-          count = species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40).length;
-          return { slug: filter.slug, label: `${filter.label} (${count})`}
         default:
           count = species.filter(sp => sp.category === filter.slug).length;
           return { slug: filter.slug, label: `${filter.label} (${count})`}
