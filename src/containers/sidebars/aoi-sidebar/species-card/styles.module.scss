@@ -132,6 +132,10 @@
     width: 70%;
     .commonName {
       @extend %title;
+      color: $dark-text;
+      &:hover {
+        color: $dark-text-hover;
+      }
     }
     .scientificName {
       @extend %annotation;

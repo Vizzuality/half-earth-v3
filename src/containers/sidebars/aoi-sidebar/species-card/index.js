@@ -77,7 +77,8 @@ const SpeciesCardContainer = (props) => {
             ...selectedSpecies,
             commonname: results[0].commonname,
             imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
-            iucnCategory: IUCN_CATEGORIES[results[0].redlist]
+            iucnCategory: IUCN_CATEGORIES[results[0].redlist],
+            molLink: `https://mol.org/species/${selectedSpecies.name}`
           });
           results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))
         } else {

@@ -68,7 +68,14 @@ const Component = ({
               <div className={styles.sliderControls}>
                 <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
                 <div className={styles.speciesNames}>
-                <span className={styles.commonName}>{individualSpeciesData.commonname}</span>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.commonName}
+                  href={individualSpeciesData.molLink}
+                >
+                  {individualSpeciesData.commonname}
+                </a>
                 <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
                 <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection}/>
