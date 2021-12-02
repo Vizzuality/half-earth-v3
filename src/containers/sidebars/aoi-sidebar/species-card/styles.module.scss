@@ -76,6 +76,7 @@
 .infoClue {
   cursor: help;
   margin: 0;
+  display: block;
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-color: $dark-opacity;
@@ -154,4 +155,17 @@
 .iucnStatus {
   @extend %bodyText;
   text-align: center;
+}
+
+.warningContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+.icon {
+  min-width: 40px;
+  height: 25px;
+  stroke:none;
+  fill: $warning;
+  margin-right: 10px;
 }

@@ -5,11 +5,13 @@ import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
-import {ReactComponent as ArrowRightIcon} from 'icons/arrow_right.svg'
+import { ReactComponent as ArrowRightIcon } from 'icons/arrow_right.svg'
+import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 import styles from './styles.module.scss';
 
 const Component = ({
+  area,
   speciesData,
   speciesFilters,
   placeholderText,
@@ -38,12 +40,12 @@ const Component = ({
       <div>
         <p className={styles.title}>
           {SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].title(speciesData.species.length)}
-          <p
+          <span
             className={styles.infoClue}
             title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
           >
-            vertebrate species
-          </p>
+            terrestrial vertebrates
+          </span>
         </p>
         <Dropdown
           stacked
@@ -102,6 +104,12 @@ const Component = ({
           </section>
         }
       </div>
+      {area && area < 1000 && 
+        <div className={styles.warningContainer}>
+          <WarningIcon  className={styles.icon}/>
+          <span >{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
+        </div>
+      }
     </SidebarCardWrapper>
   );
 
