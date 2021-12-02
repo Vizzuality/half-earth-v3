@@ -14,6 +14,7 @@ export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';
 export const PROTECTION_SLUG = 'protected-areas';
+export const SPECIES_SLUG = 'species';
 
 export const AOI_LEGEND_CATEGORIES = [
   LAND_HUMAN_PRESSURES_SLUG,
@@ -39,6 +40,11 @@ export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTO
 const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 
 export const SIDEBAR_CARDS_CONFIG = {
+  [SPECIES_SLUG]: {
+    title: (speciesCount) => `This area is expected to have ${speciesCount} `,
+    hint: 'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.',
+    warning: 'Species summaries are less reliable for areas under 1,000 km2; only a portion of these species will be found here.'
+  },
   [BIODIVERSITY_SLUG]: {
     title: 'What is the biodiversity pattern in this area?',
     description: () => 'Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.',
@@ -54,7 +60,6 @@ export const SIDEBAR_CARDS_CONFIG = {
     description: ({pressures}) => `Of the current area, __${getTotalPressures(capPercentage(pressures))}% is under human pressure__,
     the majority of which are pressures from ${getMainPressure(pressures)}.`,
     warning: null
-    
   },
 } 
 

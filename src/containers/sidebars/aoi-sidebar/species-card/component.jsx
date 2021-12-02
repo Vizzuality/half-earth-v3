@@ -4,6 +4,7 @@ import { localeFormatting } from 'utils/data-formatting-utils';
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
 import {ReactComponent as ArrowRightIcon} from 'icons/arrow_right.svg'
 
 import styles from './styles.module.scss';
@@ -36,13 +37,13 @@ const Component = ({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
-          {`This area is likely to have ${speciesData.species.length} `}
-          <span
+          {SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].title(speciesData.species.length)}
+          <p
             className={styles.infoClue}
-            title="explanation about why only vertebrates"
+            title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
           >
             vertebrate species
-          </span>
+          </p>
         </p>
         <Dropdown
           stacked
