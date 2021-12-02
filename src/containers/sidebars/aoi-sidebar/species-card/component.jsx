@@ -28,7 +28,7 @@ const Component = ({
       Looking for species to watch here...
     </p>
     <p>
-      This could take up to 20 seconds.
+      This could take up to 30 seconds.
     </p>
   </div>
 </section>

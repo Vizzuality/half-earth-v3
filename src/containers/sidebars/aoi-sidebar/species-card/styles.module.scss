@@ -106,7 +106,8 @@
   margin-top: $site-gutter;
   border-radius: 6px;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-color: $dark-opacity;
 
   .placeholderText {
     @extend %title;
