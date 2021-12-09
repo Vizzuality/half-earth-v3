@@ -45,7 +45,7 @@ const Container = props => {
   const [taxaData, setTaxaData] = useState([])
   const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
-  const [areaName] = useState({name: 'Custom area'});
+  const [areaName] = useState({areaName: 'Custom area'});
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
