@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
@@ -61,7 +62,7 @@ export const SIDEBAR_CARDS_CONFIG = {
     the majority of which are pressures from ${getMainPressure(pressures)}.`,
     warning: null
   },
-} 
+}
 
 export const SPECIES_FILTERS = [
   {slug: 'all', label: 'vertebrates'},
@@ -100,8 +101,8 @@ export const HIGHER_AREA_SIZE_LIMIT = 35000;
 export const WARNING_MESSAGES = {
   area: {
     title: 'Area size too big',
-    description: (size) => `The maximum size for an on the fly area analysis is ${localeFormatting(HIGHER_AREA_SIZE_LIMIT)}km2.
-    The area that you'er trying to analyze has ${localeFormatting(size)} km2. Please provide an smaller area to trigger the analysis.` 
+    description: (size) => (<span>The maximum size for on the fly area analysis is {localeFormatting(HIGHER_AREA_SIZE_LIMIT)} km<sup>2</sup>.
+    The area that you are trying to analyze has {localeFormatting(size)} km<sup>2</sup>. Please select a smaller area to trigger the analysis.</span>)
   },
   400: {
     title: 'File too big',
