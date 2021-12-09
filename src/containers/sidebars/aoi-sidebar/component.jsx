@@ -24,14 +24,13 @@ import styles from './styles.module.scss';
 const LocalSceneSidebarComponent = ({
   map,
   area,
-  speciesData,
-  contextualData,
   className,
   landCover,
   population,
+  speciesData,
   activeLayers,
   climateRegime,
-  handlePrintReport,
+  contextualData,
   shareAoiAnalytics,
   handleSceneModeChange,
 }) => {
@@ -54,7 +53,7 @@ const LocalSceneSidebarComponent = ({
       <DummyBlurWorkaround />
       <div className={styles.topRow}>
         <div className={styles.nameWrapper}>
-          <p className={styles.areaName}>{contextualData.name}</p>
+          <p className={styles.areaName}>{contextualData.areaName}</p>
           {area && <p className={styles.area}>{`${area} `}<span>km<sup>2</sup></span></p>}
         </div>
         <div className={styles.actionButtons}>
@@ -96,27 +95,27 @@ const LocalSceneSidebarComponent = ({
         />
         <SidebarCard 
           map={map}
-          contextualData={contextualData}
           toggleType='radio'
           activeLayers={activeLayers}
+          contextualData={contextualData}
           cardCategory={BIODIVERSITY_SLUG}
           layers={AOI_BIODIVERSITY_TOGGLES}
           // displayWarning={area < 10000}
         />
         <SidebarCard 
           map={map}
-          contextualData={contextualData}
           layers={WDPALayers}
           toggleType='checkbox'
           activeLayers={activeLayers}
           cardCategory={PROTECTION_SLUG}
+          contextualData={contextualData}
         />
         <SidebarCard 
           map={map}
-          contextualData={contextualData}
           toggleType='checkbox'
           activeLayers={activeLayers}
           layers={humanPressuresLandUse}
+          contextualData={contextualData}
           cardCategory={LAND_HUMAN_PRESSURES_SLUG}
         />
         <section className={styles.completeDatabaseWrapper}>
