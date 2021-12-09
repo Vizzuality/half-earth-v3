@@ -103,11 +103,11 @@ const Container = props => {
               setAreaData({area});
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area, ...areaName, timestamp: Date.now()});
-              fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
-              fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
-              fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
-              fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
-              fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
+              // fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
+              // fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
+              // fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
+              // fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
+              // fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
               getSpeciesData(BIRDS, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(MAMMALS, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(REPTILES, aoiStoredGeometry).then(data => setTaxaData(data));
