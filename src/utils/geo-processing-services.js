@@ -15,7 +15,6 @@ import {
   ECOLOGICAL_LAND_UNITS,
   PROTECTED_AREA_PERCENTAGE,
   PROTECTED_AREAS_INSIDE_AOI,
-  PRECALCULATED_LOOKUP_TABLES,
 } from 'constants/geo-processing-services';
 
 
@@ -196,7 +195,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
     }), {});
     const ids = data.map(f => f.SliceNumber);
     EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[PRECALCULATED_LOOKUP_TABLES[crfName]],
+      url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
       whereClause: `SliceNumber IN (${ids.toString()})`,
     }).then((features) => {
       const result = features
