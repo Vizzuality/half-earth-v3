@@ -4,11 +4,14 @@ import { localeFormatting } from 'utils/data-formatting-utils';
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-import {ReactComponent as ArrowRightIcon} from 'icons/arrow_right.svg'
+import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
+import { ReactComponent as ArrowRightIcon } from 'icons/arrow_right.svg'
+import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 import styles from './styles.module.scss';
 
 const Component = ({
+  area,
   speciesData,
   speciesFilters,
   placeholderText,
@@ -28,7 +31,7 @@ const Component = ({
       Looking for species to watch here...
     </p>
     <p>
-      This could take up to 20 seconds.
+      This could take up to 30 seconds.
     </p>
   </div>
 </section>
@@ -36,12 +39,12 @@ const Component = ({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
-          {`This area is likely to have ${speciesData.species.length} `}
+          {SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].title(speciesData.species.length)}
           <span
             className={styles.infoClue}
-            title="explanation about why only vertebrates"
+            title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
           >
-            vertebrate species
+            terrestrial vertebrates
           </span>
         </p>
         <Dropdown
@@ -67,7 +70,14 @@ const Component = ({
               <div className={styles.sliderControls}>
                 <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
                 <div className={styles.speciesNames}>
-                <span className={styles.commonName}>{individualSpeciesData.commonname}</span>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.commonName}
+                  href={individualSpeciesData.molLink}
+                >
+                  {individualSpeciesData.commonname}
+                </a>
                 <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
                 <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection}/>
@@ -94,6 +104,12 @@ const Component = ({
           </section>
         }
       </div>
+      {area && area < 1000 && 
+        <div className={styles.warningContainer}>
+          <WarningIcon  className={styles.icon}/>
+          <span >{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
+        </div>
+      }
     </SidebarCardWrapper>
   );
 

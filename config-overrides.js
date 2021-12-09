@@ -11,7 +11,7 @@ module.exports = function override(config, env) {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       containers: path.resolve(__dirname, 'src/containers'),
-      scenes: path.resolve(__dirname, 'src/scenes'),
+      scenes: path.resolve(__dirname, 'src/containers/scenes'),
       layouts: path.resolve(__dirname, 'src/layouts'),
       pages: path.resolve(__dirname, 'src/pages'),
       icons: path.resolve(__dirname, 'src/assets/icons'),

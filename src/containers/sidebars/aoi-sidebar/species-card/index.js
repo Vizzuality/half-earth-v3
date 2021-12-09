@@ -35,12 +35,6 @@ const SpeciesCardContainer = (props) => {
       switch (filter.slug) {
         case 'all':
           return filter
-        case 'flagship':
-          count = species.filter(sp => sp.isFlagship).length;
-          return { slug: filter.slug, label: `${filter.label} (${count})`}
-        case 'endangered':
-          count = species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40).length;
-          return { slug: filter.slug, label: `${filter.label} (${count})`}
         default:
           count = species.filter(sp => sp.category === filter.slug).length;
           return { slug: filter.slug, label: `${filter.label} (${count})`}
@@ -83,7 +77,8 @@ const SpeciesCardContainer = (props) => {
             ...selectedSpecies,
             commonname: results[0].commonname,
             imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
-            iucnCategory: IUCN_CATEGORIES[results[0].redlist]
+            iucnCategory: IUCN_CATEGORIES[results[0].redlist],
+            molLink: `https://mol.org/species/${selectedSpecies.name}`
           });
           results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))
         } else {

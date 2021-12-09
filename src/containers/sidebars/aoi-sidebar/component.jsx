@@ -91,6 +91,7 @@ const LocalSceneSidebarComponent = ({
           </div>
         </div>
         <SpeciesCard
+          area={area}
           speciesData={speciesData}
         />
         <SidebarCard 
@@ -100,7 +101,7 @@ const LocalSceneSidebarComponent = ({
           activeLayers={activeLayers}
           cardCategory={BIODIVERSITY_SLUG}
           layers={AOI_BIODIVERSITY_TOGGLES}
-          displayWarning={area < 10000}
+          // displayWarning={area < 10000}
         />
         <SidebarCard 
           map={map}

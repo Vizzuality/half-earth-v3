@@ -19,11 +19,11 @@ const Component = ({ children, className, collapsable, onCardClose, isClosed,dar
       }
       <div className={cx(styles.container, className, {[styles.dark]: dark})}>
         {children && childrenArray.map(
-          (child, i) => (
+          (child, i) => child ? (
             <section key={i} className={styles.section}>
               {child}
             </section>
-          )
+          ) : null
         )}
       </div>
     </div>
