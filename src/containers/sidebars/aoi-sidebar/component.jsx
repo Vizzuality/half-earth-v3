@@ -44,7 +44,7 @@ const LocalSceneSidebarComponent = ({
   return (
     <>
     <section className={styles.headerCard}>
-      <Button 
+      <Button
         type='rounded'
         handleClick={handleSceneModeChange}
         Icon={CloseIcon}
@@ -58,13 +58,13 @@ const LocalSceneSidebarComponent = ({
           {area && <p className={styles.area}>{`${area} `}<span>km<sup>2</sup></span></p>}
         </div>
         <div className={styles.actionButtons}>
-          <Button 
+          <Button
             Icon={EditIcon}
             type="icon-square"
             handleClick={() => console.log('edit')}
             tooltipText="Draw a new area"
           />
-          <Button 
+          <Button
             Icon={ShareIcon}
             type="icon-square"
             handleClick={handleShareModalOpen}
@@ -94,7 +94,7 @@ const LocalSceneSidebarComponent = ({
           area={area}
           speciesData={speciesData}
         />
-        <SidebarCard 
+        <SidebarCard
           map={map}
           contextualData={contextualData}
           toggleType='radio'
@@ -103,7 +103,7 @@ const LocalSceneSidebarComponent = ({
           layers={AOI_BIODIVERSITY_TOGGLES}
           // displayWarning={area < 10000}
         />
-        <SidebarCard 
+        <SidebarCard
           map={map}
           contextualData={contextualData}
           layers={WDPALayers}
@@ -111,7 +111,7 @@ const LocalSceneSidebarComponent = ({
           activeLayers={activeLayers}
           cardCategory={PROTECTION_SLUG}
         />
-        <SidebarCard 
+        <SidebarCard
           map={map}
           contextualData={contextualData}
           toggleType='checkbox'
@@ -124,6 +124,8 @@ const LocalSceneSidebarComponent = ({
           <a
             className={styles.link}
             href='https://mol.org/upload'
+            target="_blank"
+            rel="noopener noreferrer"
           >
             help us complete our database
           </a>
