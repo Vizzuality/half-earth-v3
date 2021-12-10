@@ -20,22 +20,24 @@ const Component = ({
   individualSpeciesData,
   imageBackgroundPosition,
   handleNextSpeciesSelection,
-  handlePreviousSpeciesSelection
+  handlePreviousSpeciesSelection,
+  previousImage,
+  nextImage
 }) => speciesData.species.length === 0 ? (
-<section className={styles.loaderCard}>
-  <div className={styles.loaderBarContainer}>
-    <div className={styles.loaderBarPercentage}/>
-  </div>
-  <div className={styles.loaderTextContainer}>
-    <p>
-      Looking for species to watch here...
-    </p>
-    <p>
-      This could take up to 30 seconds.
-    </p>
-  </div>
-</section>
-  ) : (
+  <section className={styles.loaderCard}>
+    <div className={styles.loaderBarContainer}>
+      <div className={styles.loaderBarPercentage} />
+    </div>
+    <div className={styles.loaderTextContainer}>
+      <p>
+        Looking for species to watch here...
+      </p>
+      <p>
+        This could take up to 30 seconds.
+      </p>
+    </div>
+  </section>
+) : (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
@@ -58,29 +60,42 @@ const Component = ({
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>
             <div>
-              <div
-                className={styles.speciesImageWrapper}
-                style={{
-                  backgroundImage: `url(${individualSpeciesData.imageUrl})`,
-                  backgroundPosition: imageBackgroundPosition
-                }}
-              >
-                {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
+              <div className={styles.speciesCarousel}>
+                <div
+                  className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  style={{
+                    backgroundImage: `url(${previousImage})`,
+                  }}
+                />
+                <div
+                  className={`${styles.selectedSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  style={{
+                    backgroundImage: `url(${individualSpeciesData.imageUrl})`,
+                  }}
+                >
+                  {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
+                </div>
+                <div
+                  className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  style={{
+                    backgroundImage: `url(${nextImage})`,
+                  }}
+                />
               </div>
               <div className={styles.sliderControls}>
-                <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
+                <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection} />
                 <div className={styles.speciesNames}>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.commonName}
-                  href={individualSpeciesData.molLink}
-                >
-                  {individualSpeciesData.commonname}
-                </a>
-                <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.commonName}
+                    href={individualSpeciesData.molLink}
+                  >
+                    {individualSpeciesData.commonname}
+                  </a>
+                  <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
-                <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection}/>
+                <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection} />
               </div>
             </div>
             <div className={styles.globalRangeArea}>
@@ -107,7 +122,7 @@ const Component = ({
       </div>
       {area && area < 1000 &&
         <div className={styles.warningContainer}>
-          <WarningIcon  className={styles.icon}/>
+          <WarningIcon className={styles.icon} />
           <span >{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
         </div>
       }
