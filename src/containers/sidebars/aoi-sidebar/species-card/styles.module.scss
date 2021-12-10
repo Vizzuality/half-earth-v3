@@ -103,25 +103,28 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 150px;
+  height: 230px;
 
   .previousSpeciesImageWrapper {
     position: absolute;
     top: 0px;
-    left: -20px;
-    height: 130px;
+    left: -45px;
+    height: 170px;
+    margin-top: $site-gutter * 2;
   }
 
   .nextSpeciesImageWrapper {
     position: absolute;
     top: 0px;
-    right: -20px;
-    height: 130px;
+    right: -45px;
+    height: 170px;
+    margin-top: $site-gutter * 2;
   }
 
   .selectedSpeciesImageWrapper {
     position: absolute;
-    height: 151px;
+    margin-top: $site-gutter;
+    height: 210px;
     z-index: 1;
   }
 
@@ -130,10 +133,9 @@
     align-items: center;
     text-align: center;
     width: 100%;
-    margin-top: $site-gutter;
     border-radius: 6px;
     background-repeat: no-repeat;
-    // background-size: cover;?
+    // background-size: cover;
     background-position: center;
 
     .placeholderText {
