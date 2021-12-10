@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { localeFormatting } from 'utils/data-formatting-utils';
+import { localeFormatting, roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -84,27 +84,28 @@ const Component = ({
               </div>
             </div>
             <div className={styles.globalRangeArea}>
-              <span>Global range area</span>
-              <p>{`${localeFormatting(individualSpeciesData.globaldRangeArea)} km`}<sup>2</sup></p>
+              <span>Global habitat-suitable range</span>
+              <p>{`${roundGlobalRange(individualSpeciesData.globaldRangeArea)} km`}<sup>2</sup></p>
             </div>
             <SpeciesBar
-              scale="local"
-              title="Range in this area" 
-              className={styles.speciesBarContainer}
-              percentage={individualSpeciesData.presenceInArea}
-            />
-            <SpeciesBar
-              title="Global protected range" 
+              title="Portion of global range under protection"
               className={styles.speciesBarContainer}
               percentage={individualSpeciesData.globalProtectedPercentage}
               barAnnotation={individualSpeciesData.protectionTarget}
               barAnnotationTitle="Protection target"
             />
+            <SpeciesBar
+              scale="local"
+              title="Portion of global range in this area"
+              className={styles.speciesBarContainer}
+              percentage={individualSpeciesData.presenceInArea}
+              percentageLabel={roundRangeInArea(individualSpeciesData.presenceInArea)}
+            />
             <p className={styles.iucnStatus}>{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
           </section>
         }
       </div>
-      {area && area < 1000 && 
+      {area && area < 1000 &&
         <div className={styles.warningContainer}>
           <WarningIcon  className={styles.icon}/>
           <span >{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
