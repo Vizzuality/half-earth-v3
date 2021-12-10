@@ -45,14 +45,17 @@ export const BIODIVERSITY_CRFS_CONFIG = {
   uniqueFieldID: 'unique_id_field',
 }
 
+export const HEPORTAL_SERVICES_HOST = 'https://heportal.esri.com/server/rest/services/';
+export const HEPPORTAL_SERVICES_HOST = 'https://hepportal.arcgis.com/server/rest/services/';
+
 export const GEOPROCESSING_SERVICES_URLS = {
-  [BIRDS]: 'https://heportal.esri.com/server/rest/services/SampleBirdsProd/GPServer/SampleBirds',
-  [REPTILES]: 'https://heportal.esri.com/server/rest/services/SampleReptProd/GPServer/SampleRept',
-  [MAMMALS]: 'https://heportal.esri.com/server/rest/services/SampleMamProd/GPServer/SampleMam',
-  [AMPHIBIANS]: 'https://heportal.esri.com/server/rest/services/SampleAmphProd/GPServer/SampleAmphProd', 
-  [HUMAN_PRESSURES]: 'https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage',
-  [PROTECTED_AREA_PERCENTAGE]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean',
-  [PROTECTED_AREAS_INSIDE_AOI]: 'https://hepportal.arcgis.com/server/rest/services/clipSelect/GPServer/clipSelect',
-  [ECOLOGICAL_LAND_UNITS]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority',
-  [POPULATION]: 'https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum'
+  [BIRDS]: `${HEPORTAL_SERVICES_HOST}SampleBirdsProd/GPServer/SampleBirds`,
+  [REPTILES]: `${HEPORTAL_SERVICES_HOST}SampleReptProd/GPServer/SampleRept`,
+  [MAMMALS]: `${HEPORTAL_SERVICES_HOST}SampleMamProd/GPServer/SampleMam`,
+  [AMPHIBIANS]: `${HEPORTAL_SERVICES_HOST}SampleAmphProd/GPServer/SampleAmphProd`,
+  [HUMAN_PRESSURES]: `${HEPPORTAL_SERVICES_HOST}LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage`,
+  [PROTECTED_AREA_PERCENTAGE]: `${HEPPORTAL_SERVICES_HOST}ZsatMean/GPServer/ZsatMean`,
+  [PROTECTED_AREAS_INSIDE_AOI]: `${HEPPORTAL_SERVICES_HOST}clipSelect/GPServer/clipSelect`,
+  [ECOLOGICAL_LAND_UNITS]: `${HEPPORTAL_SERVICES_HOST}ZsatMajority/GPServer/ZsatMajority`,
+  [POPULATION]: `${HEPPORTAL_SERVICES_HOST}ZsatSum/GPServer/ZsatSum`
 }
