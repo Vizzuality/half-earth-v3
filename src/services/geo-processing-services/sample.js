@@ -1,4 +1,4 @@
-import { getGeoProcessor, createFeatureSet, getDefaultJsonFeatureSet, jobTimeProfiling } from 'utils/geo-processing-services';
+import { getGeoProcessor, setSpeciesJSONGeometryRings, addZcoordToRings, jobTimeProfiling } from 'utils/geo-processing-services';
 
 import {
   CRFS_CONFIG,
@@ -15,16 +15,10 @@ const {
 export function getCrfData({ dataset, aoiFeatureGeometry }) {
     return new Promise((resolve, reject) => {
       getGeoProcessor(GEOPROCESSING_SERVICES_URLS[dataset]).then(GP => {
-        fetch(`${GEOPROCESSING_SERVICES_URLS[dataset]}?f=pjson`).then(response => response.json()).then(async metadata => {
-          const defaultJsonFeatureSet = await getDefaultJsonFeatureSet(metadata, inputGeometryKey);
-          const defaultFeatureSet = await createFeatureSet(defaultJsonFeatureSet);
+        const JSONGeometry = aoiFeatureGeometry.toJSON();
             GP.submitJob({
               [inputRasterKey]: `${basePath}/${dataset}.crf`,
-              [inputGeometryKey]: defaultFeatureSet.set({
-                hasZ: defaultFeatureSet.hasZ,
-                geometryType: "polygon",
-                features: [{ geometry: aoiFeatureGeometry, attributes: { OBJECTID: 1 } }]
-              })
+              [inputGeometryKey]: setSpeciesJSONGeometryRings(addZcoordToRings(JSONGeometry.rings))
             }).then((jobInfo) => {
               const JOB_START = Date.now();
               const jobId = jobInfo.jobId;
@@ -40,7 +34,6 @@ export function getCrfData({ dataset, aoiFeatureGeometry }) {
             }).catch(error => {
               console.log('job submission error' , error)
             })
-        })
       })
     })
   }
