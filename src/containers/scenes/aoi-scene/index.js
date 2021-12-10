@@ -45,7 +45,6 @@ const Container = props => {
   const [taxaData, setTaxaData] = useState([])
   const [contextualData, setContextualData] = useState({})
   const [area, setAreaData] = useState(null);
-  const [areaName] = useState({areaName: 'Custom area'});
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
   const [pressures, setPressuresData] = useState(null);
@@ -83,7 +82,6 @@ const Container = props => {
   useEffect(() => {
     if (geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
-        console.log(localStoredAoi)
         if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species});
@@ -92,17 +90,17 @@ const Container = props => {
         } else {
             getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
-              console.log('data from arcgisonline', aoiData)
               const { geometry, species, ...rest } = aoiData;
               setGeometry(geometry);
               setSpeciesData(species);
               setContextualData({ ...rest })
             } else {
-              const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
+              const areaName = 'Custom area';
               const jsonGeometry = aoiStoredGeometry.toJSON();
-              setAreaData({area});
+              const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
+              setAreaData({area, areaName});
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
-              writeToForageItem(aoiId, {jsonGeometry, area, ...areaName, timestamp: Date.now()});
+              writeToForageItem(aoiId, {jsonGeometry, area, areaName, timestamp: Date.now()});
               fetchDataAndUpdateForageItem(aoiId, getEluData, aoiStoredGeometry).then(data => setEluData(data));
               fetchDataAndUpdateForageItem(aoiId, getPopulationData, aoiStoredGeometry).then(data => setPopulationData(data));
               fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
@@ -126,13 +124,12 @@ const Container = props => {
     setContextualData({
       ...elu,
       ...area,
-      ...areaName,
       ...pressures,
       ...population,
       ...protectedAreasList,
       ...percentageProtected,
     })
-  },[elu, area, areaName, population, pressures, percentageProtected, protectedAreasList]);
+  },[elu, area, population, pressures, percentageProtected, protectedAreasList]);
 
   useEffect(() => {
     setSpeciesData({
