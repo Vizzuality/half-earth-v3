@@ -88,143 +88,140 @@ import {
   REPTILES_LOOKUP,
 } from 'constants/layers-slugs';
 
-export const SERVICES9_REST_SERVICES_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/';
-export const UTILITY_ARCGIS_URL = 'https://utility.arcgis.com/usrsvcs/servers/';
-export const TILES_ARCGIS_IkktFdUAcY3WrH25_URL = 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/';
-
-export const GRID_URL = `${SERVICES9_REST_SERVICES_URL}gadm_grid_55k_dis/FeatureServer`;
-export const PLEDGES_LAYER_URL = `${SERVICES9_REST_SERVICES_URL}PledgeLocationsURL/FeatureServer`;
-export const METADATA_SERVICE_URL = `${SERVICES9_REST_SERVICES_URL}Metadata2/FeatureServer/0`;
-export const MONITORING_HE_GOAL_SERVICE_URL = `${SERVICES9_REST_SERVICES_URL}monitoringHEgoal/FeatureServer/0`;
-export const HIGHLIGHTED_COUNTRY_SPECIES_URL = `${UTILITY_ARCGIS_URL}aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0`;
-export const COUNTRIES_DATA_SERVICE_URL = `${SERVICES9_REST_SERVICES_URL}gadm_centroid/FeatureServer/0`;
-export const COUNTRIES_GEOMETRIES_SERVICE_URL = `${SERVICES9_REST_SERVICES_URL}gadm_generalised/FeatureServer/0`;
+export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
+export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer";
+export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Metadata2/FeatureServer/0';
+export const MONITORING_HE_GOAL_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/monitoringHEgoal/FeatureServer/0'
+export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsvcs/servers/aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0';
+export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer/0';
+export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0'; 
 
 export const LAYERS_URLS = {
-  [GLOBAL_SPI_FEATURE_LAYER]: `${SERVICES9_REST_SERVICES_URL}spi_data_spi_globe/FeatureServer`,
-  [AOIS_HISTORIC_PRODUCTION]: `${UTILITY_ARCGIS_URL}5e66921fb50f475981b5ef66678f29f7/rest/services/aois_historic/FeatureServer/0`,
-  [AOIS_HISTORIC_DEVELOPMENT]: `${SERVICES9_REST_SERVICES_URL}aois_historic_6a796b684c874ef4bbe2f97b4857bf35/FeatureServer/0`,
+  [GLOBAL_SPI_FEATURE_LAYER]:
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
+  [AOIS_HISTORIC_PRODUCTION]: 'https://utility.arcgis.com/usrsvcs/servers/5e66921fb50f475981b5ef66678f29f7/rest/services/aois_historic/FeatureServer/0',
+  [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/aois_historic_6a796b684c874ef4bbe2f97b4857bf35/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:
-    `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}nrc_prior_bioRamp_clip/MapServer`,
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
   [PLEDGES_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}PledgeLocationsURL/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}Educator_Ambassadors/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Educator_Ambassadors/FeatureServer',
   [COUNTRIES_LABELS_FEATURE_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}gadm_centroid/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',
   [COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}gadm_generalised/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer',
   [COUNTRIES_DATA_FEATURE_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}gadm_centroid/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer',
   [LANDSCAPE_FEATURES_LABELS_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}LandscapeUniqueRivers_gadm36/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers_gadm36/FeatureServer',
   [CITIES_LABELS_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}CityLabels/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/CityLabels/FeatureServer',
   [VIBRANT_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Vibrant/MapServer',
   [SATELLITE_BASEMAP_LAYER]:
     'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
   [PRIORITY_PLACES_POLYGONS]:
-    `${UTILITY_ARCGIS_URL}685d69cda038469f93dcfd96355abefc/rest/services/PriorPolygons/FeatureServer`,
+    'https://utility.arcgis.com/usrsvcs/servers/685d69cda038469f93dcfd96355abefc/rest/services/PriorPolygons/FeatureServer',
   [FEATURED_PLACES_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}Bioplaces/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Bioplaces/FeatureServer',
   [MERGED_WDPA_VECTOR_TILE_LAYER]:
-    `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer`,
-  [PROTECTED_AREAS_FEATURE_LAYER]: `${SERVICES9_REST_SERVICES_URL}Protected_Areas_MeriamNelson/FeatureServer`,
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
+  [PROTECTED_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/FeatureServer', 
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/VectorTileServer',
-  [COMMUNITY_AREAS_FEATURE_LAYER]: `${SERVICES9_REST_SERVICES_URL}Community_Based_MeriamNelson/FeatureServer`,
+  [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/FeatureServer', 
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
-    `${SERVICES9_REST_SERVICES_URL}marine_and_land_grid_55km_prot_prop/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',
   [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]:
-    `${SERVICES9_REST_SERVICES_URL}species_data_55km/FeatureServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/species_data_55km/FeatureServer',
   [GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE]:
-    `${SERVICES9_REST_SERVICES_URL}human_pressure_55km/FeatureServer`,
-  [URBAN_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}gHM_Urban_MerimNelson/MapServer`,
-  [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}gHM_Irrigated_MerimNelson/MapServer`,
-  [RAINFED_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}gHM_Rainfed_MerimNelson/MapServer`,
-  [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}gHM_Rangeland_MerimNelson/MapServer`,
-  [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Land_Based_Drivers_MeriamNelson_cont/MapServer`,
-  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Ocean_Based_Drivers_MeriamNelson_cont/MapServer`,
-  [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Commercial_Fishing_MeriamNelson_cont/MapServer`,
-  [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Artisanal_Fishing_MeriamNelson_cont/MapServer`,
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/human_pressure_55km/FeatureServer',
+  [URBAN_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Urban_MerimNelson/MapServer',
+  [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Irrigated_MerimNelson/MapServer',
+  [RAINFED_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rainfed_MerimNelson/MapServer',
+  [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/gHM_Rangeland_MerimNelson/MapServer',
+  [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Land_Based_Drivers_MeriamNelson_cont/MapServer',
+  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Ocean_Based_Drivers_MeriamNelson_cont/MapServer',
+  [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Commercial_Fishing_MeriamNelson_cont/MapServer',
+  [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Artisanal_Fishing_MeriamNelson_cont/MapServer',
   // REGIONAL 1km BIODIVERSITY
-  [SA_AMPHIB_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
-  [SA_AMPHIB_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
-  [SA_DRAGONFLIES_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Dragonflies_of_Southern_Africa/MapServer`,
-  [SA_DRAGONFLIES_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Dragonflies_of_Southern_Africa/MapServer`,
-  [SA_MAMMALS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Mammals_of_Southern_Africa/MapServer`,
-  [SA_MAMMALS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Mammals_of_Southern_Africa/MapServer`,
-  [SA_BIRDS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Birds_of_Southern_Africa/MapServer`,
-  [SA_BIRDS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Birds_of_Southern_Africa/MapServer`,
-  [SA_RESTIO_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Restio_of_Southern_Africa/MapServer`,
-  [SA_RESTIO_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Restio_of_Southern_Africa/MapServer`,
-  [SA_PROTEA_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Protea_of_Southern_Africa/MapServer`,
-  [SA_PROTEA_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Protea_of_Southern_Africa/MapServer`,
-  [SA_REPTILES_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Rarity_Patterns_for_Reptiles_of_Southern_Africa/MapServer`,
-  [SA_REPTILES_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Species_Richness_Patterns_for_Reptiles_of_Southern_Africa/MapServer`,
-  [HUMMINGBIRDS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Global_Species_Rarity_Patterns_for_Hummingbirds/MapServer`,
-  [HUMMINGBIRDS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}hummingbirds_binary_Aggregate_crf/MapServer`,
+  [SA_AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
+  [SA_AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Amphibians_of_Southern_Africa/MapServer`,
+  [SA_DRAGONFLIES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Dragonflies_of_Southern_Africa/MapServer`,
+  [SA_DRAGONFLIES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Dragonflies_of_Southern_Africa/MapServer`,
+  [SA_MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Mammals_of_Southern_Africa/MapServer`,
+  [SA_MAMMALS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Mammals_of_Southern_Africa/MapServer`,
+  [SA_BIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Birds_of_Southern_Africa/MapServer`,
+  [SA_BIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Birds_of_Southern_Africa/MapServer`,
+  [SA_RESTIO_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Restio_of_Southern_Africa/MapServer`,
+  [SA_RESTIO_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Restio_of_Southern_Africa/MapServer`,
+  [SA_PROTEA_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Protea_of_Southern_Africa/MapServer`,
+  [SA_PROTEA_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Protea_of_Southern_Africa/MapServer`,
+  [SA_REPTILES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Rarity_Patterns_for_Reptiles_of_Southern_Africa/MapServer`,
+  [SA_REPTILES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Species_Richness_Patterns_for_Reptiles_of_Southern_Africa/MapServer`,
+  [HUMMINGBIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Global_Species_Rarity_Patterns_for_Hummingbirds/MapServer`,
+  [HUMMINGBIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hummingbirds_binary_Aggregate_crf/MapServer`,
   // Global biodiversity services
   //// Terrestrial Priority services
-  [ALL_TAXA_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}PR_allTaxa_global_025/MapServer`,
-  [AMPHIB_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}PR_amphibians_global_025/MapServer`,
-  [MAMMALS_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}PR_mammals_global_025/MapServer`,
-  [BIRDS_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}PR_birds_global_025/MapServer`,
-  [REPTILES_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}PR_reptiles_global_025/MapServer`,
+  [ALL_TAXA_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_allTaxa_global_025/MapServer',
+  [AMPHIB_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_amphibians_global_025/MapServer`,
+  [MAMMALS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_mammals_global_025/MapServer`,
+  [BIRDS_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_birds_global_025/MapServer`,
+  [REPTILES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/PR_reptiles_global_025/MapServer`,
   //// Terrestrial vertebrates richness and rarity services
-  [AMPHIB_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_amphib/MapServer`,
-  [AMPHIB_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_amphibians/MapServer`,
-
-  [MAMMALS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_mammals/MapServer`,
-  [MAMMALS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_mammals/MapServer`,
-
-  [BIRDS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_birds/MapServer`,
-  [BIRDS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_birds/MapServer`,
-
-  [REPTILES_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_reptiles/MapServer`,
-  [REPTILES_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_reptiles/MapServer`,
+  [AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_amphib/MapServer`,
+  [AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_amphibians/MapServer`,
+  
+  [MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_mammals/MapServer`,
+  [MAMMALS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_mammals/MapServer`,
+  
+  [BIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_birds/MapServer`,
+  [BIRDS_RICHNESS]: ` https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_birds/MapServer`,
+  
+  [REPTILES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_reptiles/MapServer',
+  [REPTILES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_reptiles/MapServer',
 
   //// Plants richness and rarity services
-  [CACTI_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_cacti/MapServer`,
-  [CACTI_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_cacti/MapServer`,
-
-  [CONIFERS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_conifers/MapServer`,
-  [CONIFERS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_conifers/MapServer`,
-
+  [CACTI_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_cacti/MapServer`,
+  [CACTI_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_cacti/MapServer`,
+ 
+  [CONIFERS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_conifers/MapServer`,
+  [CONIFERS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_conifers/MapServer`,
+  
   //// All terrestrial richness and rarity services
-  [ALL_TAXA_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rarity_025d_all/MapServer`,
-  [ALL_TAXA_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}richness_025d_taxa/MapServer`,
-
+  [ALL_TAXA_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_all/MapServer',
+  [ALL_TAXA_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_taxa/MapServer',
+  
   //// Marine priority services, 55km
-  [ALL_MARINE_VERTEBRATES_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Marine_priority_PRall_55km/MapServer`,
-  [FISHES_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Marine_priority_PRfish_55km/MapServer`,
-  [MARINE_MAMMALS_PRIORITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}Marine_priority_PRmammals_55km/MapServer`,
+  [ALL_MARINE_VERTEBRATES_PRIORITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRall_55km/MapServer`,
+  [FISHES_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRfish_55km/MapServer',
+  [MARINE_MAMMALS_PRIORITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_priority_PRmammals_55km/MapServer',
 
   //// Marine vertebrates richness and rarity services
-  [ALL_MARINE_VERTEBRATES_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rich_marine_taxa_global55km/MapServer`,
-  [ALL_MARINE_VERTEBRATES_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rar_marine_taxa_global55km/MapServer`,
-  [MARINE_MAMMALS_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rich_marine_mammal_global55km/MapServer`,
-  [MARINE_MAMMALS_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rar_marine_mammal_global55km/MapServer`,
-  [FISHES_RARITY]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rar_marine_fish_global55km/MapServer`,
-  [FISHES_RICHNESS]: `${TILES_ARCGIS_IkktFdUAcY3WrH25_URL}rich_marine_fish_global55km/MapServer`,
+  [ALL_MARINE_VERTEBRATES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_taxa_global55km/MapServer',
+  [ALL_MARINE_VERTEBRATES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_taxa_global55km/MapServer',
+  [MARINE_MAMMALS_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_mammal_global55km/MapServer',
+  [MARINE_MAMMALS_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_mammal_global55km/MapServer',
+  [FISHES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_fish_global55km/MapServer`,
+  [FISHES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_fish_global55km/MapServer`,
 
   [SPECIES_LIST]:
-    `${UTILITY_ARCGIS_URL}04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer`,
+    'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer',
   // AOIs lookup tables
-  [ELU_LOOKUP_TABLE]: `${SERVICES9_REST_SERVICES_URL}ecosytem_categories_lookup/FeatureServer/0`,
-  [WDPA_LOOKUP_TABLE]: `${SERVICES9_REST_SERVICES_URL}WDPA_OECM_June2021_WDPAID_table/FeatureServer/0`,
-  [AMPHIBIAN_LOOKUP]: `${UTILITY_ARCGIS_URL}0e80ea09e22f4efaa242854a568d0b18/rest/services/Amphibian_CRF_species_table_service/FeatureServer/0`,
-  [BIRDS_LOOKUP]: `${UTILITY_ARCGIS_URL}d7a4020431dc4ce0b425f33d7cd344c8/rest/services/Bird_CRF_species_table_service/FeatureServer/0`,
-  [MAMMALS_LOOKUP]: `${UTILITY_ARCGIS_URL}bc206ff519234e4ab1e9dab1c8c1f601/rest/services/Mammal_CRF_species_table_service/FeatureServer/0`,
-  [REPTILES_LOOKUP]: `${UTILITY_ARCGIS_URL}aca551155cfc405dad543fd6eef94a76/rest/services/Reptile_CRF_species_table_service/FeatureServer/0`,
-  // AOIs precalculated layers
-  [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: `${UTILITY_ARCGIS_URL}ec84dbba085342e081dd44b5f94bc398/rest/services/all_precalc_gadm0/FeatureServer/0`,
-  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: `${UTILITY_ARCGIS_URL}4870a51b17f841c38793b3c0a3f053c9/rest/services/gadm1_precalculated/FeatureServer/0`,
-  //  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: `${SERVICES9_REST_SERVICES_URL}gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
-  [WDPA_OECM_FEATURE_LAYER]: `${SERVICES9_REST_SERVICES_URL}WDPA%20with%20OECMs%20June%202021/FeatureServer`,
-
-
+  [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
+  [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
+  [AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/0e80ea09e22f4efaa242854a568d0b18/rest/services/Amphibian_CRF_species_table_service/FeatureServer/0',
+  [BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/d7a4020431dc4ce0b425f33d7cd344c8/rest/services/Bird_CRF_species_table_service/FeatureServer/0',
+  [MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/bc206ff519234e4ab1e9dab1c8c1f601/rest/services/Mammal_CRF_species_table_service/FeatureServer/0',
+  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/aca551155cfc405dad543fd6eef94a76/rest/services/Reptile_CRF_species_table_service/FeatureServer/0',
+   // AOIs precalculated layers
+   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/ec84dbba085342e081dd44b5f94bc398/rest/services/all_precalc_gadm0/FeatureServer/0',
+   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4870a51b17f841c38793b3c0a3f053c9/rest/services/gadm1_precalculated/FeatureServer/0',
+  //  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
+   [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
+  
+  
 };
