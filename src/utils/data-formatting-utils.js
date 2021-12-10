@@ -18,7 +18,6 @@ export const timestampAoiFormatting = (timestamp) => {
 }
 
 export const roundGlobalRange = (value) => {
-  console.log('value', value);
   if (value < 500) {
     return '<500';
   } else if (value < 1000) {
