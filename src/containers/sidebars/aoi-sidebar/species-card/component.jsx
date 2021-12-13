@@ -63,6 +63,7 @@ const Component = ({
               <div className={styles.speciesCarousel}>
                 <div
                   className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  onClick={handlePreviousSpeciesSelection}
                   style={{
                     backgroundImage: `url(${previousImage})`,
                   }}
@@ -77,6 +78,7 @@ const Component = ({
                 </div>
                 <div
                   className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  onClick={handleNextSpeciesSelection}
                   style={{
                     backgroundImage: `url(${nextImage})`,
                   }}
