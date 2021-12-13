@@ -4,9 +4,10 @@ import { percentageFormat } from 'utils/data-formatting-utils';
 import styles from './styles.module.scss';
 
 const Component = ({
-  title, 
+  title,
   className,
   percentage,
+  percentageLabel,
   barAnnotation,
   barAnnotationTitle,
   scale = 'global'
@@ -24,7 +25,7 @@ const Component = ({
         {barAnnotation && <div className={styles.annotationBar} style={{left: `${barAnnotation}%`}}/>}
         {barAnnotationTitle && <p className={styles.annotationTitle} style={{left: `${barAnnotation}%`}}>{barAnnotationTitle}</p>}
       </div>
-      <span className={styles.percentage}>{`${percentageFormat(percentage)}%`}</span>
+      <span className={styles.percentage}>{percentageLabel ? percentageLabel : `${percentageFormat(percentage)}%`}</span>
     </div>
   </section>
 )

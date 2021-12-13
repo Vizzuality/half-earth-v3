@@ -15,7 +15,6 @@ import {
   ECOLOGICAL_LAND_UNITS,
   PROTECTED_AREA_PERCENTAGE,
   PROTECTED_AREAS_INSIDE_AOI,
-  PRECALCULATED_LOOKUP_TABLES,
 } from 'constants/geo-processing-services';
 
 
@@ -27,29 +26,6 @@ export function getGeoProcessor(url) {
     loadModules(["esri/tasks/Geoprocessor"]).then(([Geoprocessor]) => {
       resolve(new Geoprocessor({ url }));
     }).catch(error => reject(error))
-  });
-}
-
-export function createFeatureSet(defaultJsonFeatureSet) {
-  return new Promise((resolve, reject) => {
-    loadModules(["esri/rest/support/FeatureSet"]).then(([FeatureSet]) => {
-      resolve(FeatureSet.fromJSON(defaultJsonFeatureSet));
-    }).catch(error => reject(error))
-  });
-}
-
-export function getDefaultJsonFeatureSet(metadata, inputGeometryKey) {
-  return new Promise((resolve, reject) => {
-    try {
-      console.log(metadata)
-      if (metadata.error) {
-        reject(metadata.error)
-      }else {
-        resolve(metadata.parameters.find(p => p.name === inputGeometryKey).defaultValue)
-      }
-    } catch (error) {
-      reject(error)
-    }
   });
 }
 
@@ -65,7 +41,7 @@ export function getEluData(geometry) {
     getCrfData({ 
       dataset: ECOLOGICAL_LAND_UNITS,
       aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
+    }).then(({data}) => {
       const eluCode = data.value.features[0].attributes.MAJORITY;
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[ELU_LOOKUP_TABLE],
@@ -219,7 +195,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
     }), {});
     const ids = data.map(f => f.SliceNumber);
     EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[PRECALCULATED_LOOKUP_TABLES[crfName]],
+      url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
       whereClause: `SliceNumber IN (${ids.toString()})`,
     }).then((features) => {
       const result = features
@@ -273,3 +249,86 @@ export const getAoiFromDataBase = (id) => {
     }).catch(error => reject(error))
   })
 }
+
+export const addZcoordToRings = (rings) => rings[0].map(r => [...r, 0]);
+
+export const setSpeciesJSONGeometryRings = (rings) => ({
+  "displayFieldName" : "",
+  "hasZ" : true,
+  "fieldAliases" : {
+    "OBJECTID" : "OBJECTID",
+    "Name" : "Name",
+    "Text" : "Text",
+    "IntegerValue" : "Integer Value",
+    "DoubleValue" : "Double Value",
+    "DateTime" : "Date Time",
+    "Shape_Length" : "Shape_Length",
+    "Shape_Area" : "Shape_Area"
+  },
+  "geometryType" : "esriGeometryPolygon",
+  "spatialReference" : {
+    "wkid" : 102100,
+    "latestWkid" : 3857
+  },
+  "fields" : [
+    {
+      "name" : "OBJECTID",
+      "type" : "esriFieldTypeOID",
+      "alias" : "OBJECTID"
+    },
+    {
+      "name" : "Name",
+      "type" : "esriFieldTypeString",
+      "alias" : "Name",
+      "length" : 255
+    },
+    {
+      "name" : "Text",
+      "type" : "esriFieldTypeString",
+      "alias" : "Text",
+      "length" : 255
+    },
+    {
+      "name" : "IntegerValue",
+      "type" : "esriFieldTypeInteger",
+      "alias" : "Integer Value"
+    },
+    {
+      "name" : "DoubleValue",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Double Value"
+    },
+    {
+      "name" : "DateTime",
+      "type" : "esriFieldTypeDate",
+      "alias" : "Date Time",
+      "length" : 8
+    },
+    {
+      "name" : "Shape_Length",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Shape_Length"
+    },
+    {
+      "name" : "Shape_Area",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Shape_Area"
+    }
+  ],
+  "features" : [
+    {
+      "attributes" : {
+        "OBJECTID" : 1,
+        "Name" : null,
+        "Text" : null,
+        "IntegerValue" : null,
+        "DoubleValue" : null,
+        "DateTime" : null,
+      },
+      "geometry" : {
+        "hasZ" : true,
+        "rings" : [rings]
+      }
+    }
+  ]
+})

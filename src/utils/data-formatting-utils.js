@@ -6,7 +6,7 @@ export const percentageFormat = d3.format(".2f");
 export const timestampAoiFormatting = (timestamp) => {
   if (!timestamp) return null;
   return (
-    Intl.DateTimeFormat('en-US', { 
+    Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
@@ -15,6 +15,35 @@ export const timestampAoiFormatting = (timestamp) => {
     hour12: false
   }).format(new Date(timestamp))
   )
+}
+
+export const roundGlobalRange = (value) => {
+  if (value < 500) {
+    return '<500';
+  } else if (value < 1000) {
+    return '500-1,000';
+  } else if (value < 5000) {
+    return '1,000-5,000';
+  } else if (value < 10000) {
+    return '5,000-10,000';
+  } else if (value < 50000) {
+    return '10,000-50,000';
+  } else if (value < 100000) {
+    return '50,000-100,000';
+  } else if (value < 1000000) {
+    return '100,000 - 1 million';
+  } else {
+    return d3.format(".2s")(value).replace('M', ' million');
+  }
+}
+
+export const roundRangeInArea = (value) => {
+  const low = Math.floor(value / 5) * 5;
+  const high = Math.ceil(value / 5) * 5;
+  if (low < 5) {
+    return "<5%";
+  }
+  return `${low}-${high}%`;
 }
 
 export const countryChallengesChartFormats = {
