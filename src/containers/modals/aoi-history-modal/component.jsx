@@ -36,13 +36,13 @@ const AoiHistoryModalComponent = ({
     }
   }, [editAoiId, activeInputRef])
 
-  const AoiInfoComponent = ({id, name, timestamp}) => (
+  const AoiInfoComponent = ({id, areaName, timestamp}) => (
     <>
       <span
         className={styles.aoiName}
         onClick={() => handleAoiClick(id)}
       >
-        {name}
+        {areaName}
       </span>
       <span className={styles.timestamp}>
         {timestampAoiFormatting(timestamp)}
@@ -50,7 +50,7 @@ const AoiHistoryModalComponent = ({
     </>
   )
 
-  return (
+  return console.log(aoiHistory) || (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h2 className={styles.title}>Your areas of interest history.</h2>
@@ -67,7 +67,7 @@ const AoiHistoryModalComponent = ({
         <ul className={styles.aoiListContainer}>
           {aoiHistory.map(({
             id,
-            name,
+            areaName,
             timestamp
           }) => (
             <li 
@@ -92,7 +92,7 @@ const AoiHistoryModalComponent = ({
                   className={styles.nameInput}
                   onChange={handleAoiNameChange}
                 /> :
-                  <AoiInfoComponent id={id} name={name} timestamp={timestamp}/>
+                  <AoiInfoComponent id={id} areaName={areaName} timestamp={timestamp}/>
                   }
                 </div>
                 <div

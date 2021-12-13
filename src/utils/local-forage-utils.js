@@ -32,7 +32,7 @@ export function getAoiHistory() {
       localforage.iterate((value, key) => {
         _aoiHistory.push({
           id: key,
-          name: value.name,
+          areaName: value.areaName,
           timestamp: value.timestamp
         })
       }).then(() => {
