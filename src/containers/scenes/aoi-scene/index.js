@@ -10,18 +10,13 @@ import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import { layersConfig } from 'constants/mol-layers-configs';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import {
-  fetchDataAndUpdateForageItem,
   writeToForageItem
 } from 'utils/local-forage-utils';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { 
-  getEluData,
   getSpeciesData,
-  getPopulationData,
+  getContextData,
   getAoiFromDataBase, 
-  getLandPressuresData,
-  getProtectedAreasListData,
-  getPercentageProtectedData,
   getPrecalculatedSpeciesData,
   getPrecalculatedContextualData,
 } from 'utils/geo-processing-services';
@@ -40,18 +35,12 @@ const actions = {...urlActions, aoisGeometriesActions};
 const Container = props => {
   const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug } = props;
 
-  const [elu, setEluData] = useState(null);
-  const [speciesData, setSpeciesData] = useState({species: []})
   const [taxaData, setTaxaData] = useState([])
-  const [contextualData, setContextualData] = useState({})
-  const [area, setAreaData] = useState(null);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
-  const [pressures, setPressuresData] = useState(null);
-  const [population, setPopulationData] = useState(null);
+  const [contextualData, setContextualData] = useState({})
   const [geometryEngine, setGeometryEngine] = useState(null);
-  const [percentageProtected, setPercentageProtectedData] = useState(null);
-  const [protectedAreasList, setProtectedAreasListData] = useState(null);
+  const [speciesData, setSpeciesData] = useState({species: []})
 
   useEffect(() => {
     loadModules(["esri/geometry/geometryEngine", "esri/geometry/support/jsonUtils"]).then(([geometryEngine, jsonUtils]) => {
@@ -60,6 +49,7 @@ const Container = props => {
     })
   }, [])
 
+  // This is where we fetch the precalculated AOIs data
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
       EsriFeatureService.getFeatures({
@@ -80,14 +70,18 @@ const Container = props => {
 
   
   useEffect(() => {
-    if (geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
+    if (aoiId && geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
+        // If the AOI is not precalculated
+        // we first search on the AOIs history stored on the browser
         if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species});
           setContextualData({ ...rest })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
         } else {
+            // We then try to get the calculations from the 
+            // shared AOIs database on the servers
             getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
               const { geometry, species, ...rest } = aoiData;
@@ -95,13 +89,14 @@ const Container = props => {
               setSpeciesData(species);
               setContextualData({ ...rest })
             } else {
+              // An if we don't have it anywhere we just execute the GP services job
               const areaName = 'Custom area';
               const jsonGeometry = aoiStoredGeometry.toJSON();
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
-              setAreaData({area, areaName});
+              setContextualData({area, areaName});
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area, areaName, timestamp: Date.now()});
-              getPercentageProtectedData(aoiStoredGeometry);
+              getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, ...data }));
               getSpeciesData(BIRDS, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(MAMMALS, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(REPTILES, aoiStoredGeometry).then(data => setTaxaData(data));
@@ -115,17 +110,6 @@ const Container = props => {
     }
 
   }, [aoiId, geometryEngine, jsonUtils])
-
-  useEffect(() => {
-    setContextualData({
-      ...elu,
-      ...area,
-      ...pressures,
-      ...population,
-      ...protectedAreasList,
-      ...percentageProtected,
-    })
-  },[elu, area, population, pressures, percentageProtected, protectedAreasList]);
 
   useEffect(() => {
     setSpeciesData({
@@ -143,6 +127,11 @@ const Container = props => {
     }
   },[speciesData, precalculatedLayerSlug]);
 
+  useEffect(() => {
+    if(!precalculatedLayerSlug) {
+      writeToForageItem(aoiId, {...contextualData});
+    }
+  },[contextualData, precalculatedLayerSlug]);
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
