@@ -1,13 +1,24 @@
 import React from 'react';
-import cx from 'classnames';
-import { localeFormatting, roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
+
+// components
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
+
+// containers
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
+// utils
+import { localeFormatting, roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
+
+// constants
 import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
-import { ReactComponent as ArrowRightIcon } from 'icons/arrow_right.svg'
+
+// icons
+import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
+import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
+// styles
 import styles from './styles.module.scss';
 
 const Component = ({
@@ -85,7 +96,7 @@ const Component = ({
                 />
               </div>
               <div className={styles.sliderControls}>
-                <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection} />
+                <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />
                 <div className={styles.speciesNames}>
                   <a
                     target="_blank"
@@ -97,7 +108,7 @@ const Component = ({
                   </a>
                   <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
-                <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection} />
+                <ArrowIconRight className={styles.arrow_icon} onClick={handleNextSpeciesSelection} />
               </div>
             </div>
             <div className={styles.globalRangeArea}>
