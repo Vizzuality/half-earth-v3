@@ -168,7 +168,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
           presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
         }))
         .filter(f => f.name !== null)
-        resolve(orderBy(result, ['presenceInArea', 'isFlagship'], ['desc', 'desc']));
+        resolve(result);
     }).catch((error) => {
       reject(error)
     });

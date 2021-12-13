@@ -77,7 +77,7 @@ const Container = props => {
         // we first search on the AOIs history stored on the browser
         if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
-          setSpeciesData({species});
+          setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
           setContextualData({ ...rest })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
         } else {
