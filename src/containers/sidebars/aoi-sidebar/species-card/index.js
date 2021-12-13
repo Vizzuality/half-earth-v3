@@ -18,6 +18,7 @@ const SpeciesCardContainer = (props) => {
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null)
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
+  const showCarouselArrows = speciesData.species.length > 1;
 
 
   const handleNextSpeciesSelection = () => {
@@ -99,11 +100,28 @@ const SpeciesCardContainer = (props) => {
           .then((results) => {
             setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
           });
+
+      } else if (speciesToDisplay.length === 2) {
+        let previousSpeciesName, nextSpeciesName;
+
+        if (selectedSpeciesIndex === 0) {
+          nextSpeciesName = speciesToDisplay[1].name;
+        } else if (selectedSpeciesIndex === 1) {
+          nextSpeciesName = speciesToDisplay[0].name;
+        }
+
+        MolService.getSpecies(nextSpeciesName)
+          .then((results) => {
+            setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+          });
+        setPreviousImage(null);
+      } else {
+        setPreviousImage(null);
+        setNextImage(null);
       }
 
       MolService.getSpecies(selectedSpecies.name).then((results) => {
         if (results.length > 0) {
-          console.log('results', results);
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
@@ -133,7 +151,7 @@ const SpeciesCardContainer = (props) => {
       }
       img.src = individualSpeciesData.imageUrl;
     }
-  }, [individualSpeciesData])
+  }, [individualSpeciesData]);
 
   return (
     <Component
@@ -148,6 +166,7 @@ const SpeciesCardContainer = (props) => {
       imageBackgroundPosition={imageBackgroundPosition}
       handleNextSpeciesSelection={handleNextSpeciesSelection}
       handlePreviousSpeciesSelection={handlePreviousSpeciesSelection}
+      showCarouselArrows={showCarouselArrows}
       {...props}
     />
   )

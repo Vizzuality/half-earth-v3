@@ -33,7 +33,8 @@ const Component = ({
   handleNextSpeciesSelection,
   handlePreviousSpeciesSelection,
   previousImage,
-  nextImage
+  nextImage,
+  showCarouselArrows
 }) => speciesData.species.length === 0 ? (
   <section className={styles.loaderCard}>
     <div className={styles.loaderBarContainer}>
@@ -72,13 +73,15 @@ const Component = ({
           <section className={styles.speciesDataContainer}>
             <div>
               <div className={styles.speciesCarousel}>
-                <div
-                  className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
-                  onClick={handlePreviousSpeciesSelection}
-                  style={{
-                    backgroundImage: `url(${previousImage})`,
-                  }}
-                />
+                {previousImage && (
+                  <div
+                    className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                    onClick={handlePreviousSpeciesSelection}
+                    style={{
+                      backgroundImage: `url(${previousImage})`,
+                    }}
+                  />
+                )}
                 <div
                   className={`${styles.selectedSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
                   style={{
@@ -96,7 +99,7 @@ const Component = ({
                 />
               </div>
               <div className={styles.sliderControls}>
-                <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />
+                {showCarouselArrows && <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />}
                 <div className={styles.speciesNames}>
                   <a
                     target="_blank"
@@ -108,7 +111,7 @@ const Component = ({
                   </a>
                   <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
-                <ArrowIconRight className={styles.arrow_icon} onClick={handleNextSpeciesSelection} />
+                {showCarouselArrows && <ArrowIconRight className={styles.arrow_icon} onClick={handleNextSpeciesSelection} />}
               </div>
             </div>
             <div className={styles.globalRangeArea}>
