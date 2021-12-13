@@ -10,13 +10,14 @@ export const CRF_NAMES = {
   REPTILES: 'reptiles_equal_area_20211003',
   AMPHIBIANS: 'amphibians_equal_area_20211003',
   MAMMALS: 'mammals_equal_area_20211003',
-  ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
+  ECOLOGICAL_LAND_UNITS: 'ELU',
+  HUMAN_PRESSURES: 'land_encroachment',
   PROTECTED_AREA_PERCENTAGE: 'wdpa_oecm_zeros',
-  HUMAN_PRESSURES: 'land_encroachment'
 }
 
 export const CONTEXTUAL_DATA = 'contextual_data';
+export const WDPA_LIST = 'wdpa_list';
 
 export const CRF_DATA_CATEGORIES = {
   CONTEXT: 'context',
@@ -25,6 +26,12 @@ export const CRF_DATA_CATEGORIES = {
 
 export const { BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS, POPULATION, HUMAN_PRESSURES } = CRF_NAMES;
 
+export const CONTEXTUAL_DATA_TABLES = {
+  [WDPA_LIST]: 'output_table_wdpa',
+  [POPULATION]: 'output_table_population',
+  [HUMAN_PRESSURES]: 'output_table_encroachment',
+  [ECOLOGICAL_LAND_UNITS]:'output_table_elu_majority',
+}
 
 export const LOOKUP_TABLES = {
   [BIRDS]: BIRDS_LOOKUP,
@@ -49,10 +56,10 @@ export const CONTEXTUAL_DATA_SERVICE_CONFIG = {
     'crf_name_encroachment': `${CRFS_CONFIG.basePath}/${HUMAN_PRESSURES}.crf`
   },
   outputTablesKeys: [
-    'output_table_population',
-    'output_table_elu_majority',
-    'output_table_encroachment',
-    'output_table_wdpa'
+    CONTEXTUAL_DATA_TABLES[WDPA_LIST],
+    CONTEXTUAL_DATA_TABLES[POPULATION],
+    CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES],
+    CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS],
   ]
 }
 

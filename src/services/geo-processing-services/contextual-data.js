@@ -1,4 +1,4 @@
-import { getJobInfo, setSpeciesJSONGeometryRings, addZcoordToRings, jobTimeProfiling } from 'utils/geo-processing-services';
+import { getJobInfo, setSpeciesJSONGeometryRings, addZcoordToRings } from 'utils/geo-processing-services';
 
 import {
   CONTEXTUAL_DATA,
@@ -17,27 +17,27 @@ export function getCrfData(aoiFeatureGeometry) {
     const JSONGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(
       GEOPROCESSING_SERVICES_URLS[CONTEXTUAL_DATA],
-      {
+      { 
         ...inputRasterKeyPairs,
         [inputGeometryKey]: setSpeciesJSONGeometryRings(addZcoordToRings(JSONGeometry.rings))
       }
     ).then(jobInfo => {
-      const JOB_START = Date.now();
       const jobId = jobInfo.jobId;
-      jobInfo.waitForJobCompletion(jobId).then(() => {
-        outputTablesKeys.forEach((outputTable) => {
-          jobInfo.fetchResultData(outputTable).then((data) => {
-            console.log(outputTable,data)
-            jobTimeProfiling(jobInfo, JOB_START);
-            resolve({jobInfo,jobId,data})
-          })
-        })
+      jobInfo.waitForJobCompletion(jobId).then(async () => {
+        const promises = outputTablesKeys.map(
+          outputTable => jobInfo.fetchResultData(outputTable).then(data => ({[outputTable]: data}))
+        );
+        const dataArray = await Promise.all(promises);
+        const data = dataArray.reduce((acc, current) => ({
+          ...acc,
+          ...current
+        }), {})
+        resolve(data);
       }).catch(error => {
-        jobTimeProfiling(jobInfo, JOB_START);
-          console.log('jobCompletion error', error)
+        reject(error)
       })
     }).catch(error => {
-      console.log('job submission error' , error)
+      reject(error)
     })
   })
 }
