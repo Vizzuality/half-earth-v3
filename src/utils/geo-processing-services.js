@@ -1,6 +1,5 @@
 import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import orderBy from 'lodash/orderBy';
 import {
   ELU_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
@@ -118,8 +117,6 @@ export function getSpeciesData(crfName, geometry) {
         url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
         whereClause: `SliceNumber IN (${ids.toString()})`,
       }).then((features) => {
-        console.log(crfName)
-        console.log(features)
         const result = features
           .map((f) => ({
             category: crfName,
@@ -130,11 +127,11 @@ export function getSpeciesData(crfName, geometry) {
             globaldRangeArea: f.attributes.range_area_km2,
             globalProtectedPercentage: f.attributes.percent_protected,
             protectionTarget: f.attributes.conservation_target,
-            conservationConcern: f.attributes.conservation_concern,
+            conservationConcern: f.attributes.conservation_concern || 0,
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
           }))
           .filter(f => f.name !== null)
-        resolve(orderBy(result, ['has_image', 'isFlagship'], ['desc', 'desc']));
+        resolve(result);
       }).catch((error) => {
         reject(error)
       });

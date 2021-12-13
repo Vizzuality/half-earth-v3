@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import localforage from 'localforage';
+import orderBy from 'lodash/orderBy';
 import { loadModules } from 'esri-loader';
 import mapStateToProps from './selectors';
 import EsriFeatureService from 'services/esri-feature-service';
@@ -112,12 +113,8 @@ const Container = props => {
   }, [aoiId, geometryEngine, jsonUtils])
 
   useEffect(() => {
-    setSpeciesData({
-      species: [
-        ...speciesData.species,
-        ...taxaData
-      ]
-    })
+    const orderedSpecies = orderBy([...speciesData.species, ...taxaData], ['has_image', 'conservationConcern'], ['desc', 'desc']);
+    setSpeciesData({ species: orderedSpecies });
   },[taxaData])
 
 
