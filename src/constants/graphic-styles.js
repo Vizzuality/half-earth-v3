@@ -3,7 +3,7 @@ export const MASK_STYLES = {
   fillOpacity: 0.5,
   outlineColor: [147, 255, 95],
   outlineOpacity: 0.9,
-  outlineWidth: 1,
+  outlineWidth: 0,
 }
 
 export const BORDERS_OPACITY = 0.3;

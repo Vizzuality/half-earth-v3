@@ -38,7 +38,7 @@ const Container = (props) => {
 
   const handleAoiDataStore = (id) => {
     writeToForageItem(id, {
-      name: updatedAoiName,
+      areaName: updatedAoiName,
       timestamp: Date.now()
     }).then(() => {
       getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
