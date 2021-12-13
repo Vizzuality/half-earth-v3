@@ -8,13 +8,14 @@ import {
 import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/sample';
+import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
 import {
   POPULATION,
   LOOKUP_TABLES,
   HUMAN_PRESSURES,
   ECOLOGICAL_LAND_UNITS,
   PROTECTED_AREA_PERCENTAGE,
-  PROTECTED_AREAS_INSIDE_AOI,
+  // PROTECTED_AREAS_INSIDE_AOI,
 } from 'constants/geo-processing-services';
 
 
@@ -25,6 +26,16 @@ export function getGeoProcessor(url) {
   return new Promise((resolve, reject) => {
     loadModules(["esri/tasks/Geoprocessor"]).then(([Geoprocessor]) => {
       resolve(new Geoprocessor({ url }));
+    }).catch(error => reject(error))
+  });
+}
+
+
+export function getJobInfo(url, params) {
+  return new Promise((resolve, reject) => {
+    loadModules(["esri/rest/geoprocessor"]).then(async ([geoprocessor]) => {
+      const jobInfo = await geoprocessor.submitJob(url, params)
+      resolve(jobInfo);
     }).catch(error => reject(error))
   });
 }
@@ -100,47 +111,45 @@ export function getLandPressuresData(geometry) {
 
 export function getPercentageProtectedData(geometry) {
   return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: PROTECTED_AREA_PERCENTAGE,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const protectionPercentage = data.value.features[0].attributes.MEAN;
-      resolve({ protectionPercentage });
+    getContextualData(geometry).then(({data}) => {
+      console.log(data)
+      // const protectionPercentage = data.value.features[0].attributes.MEAN;
+      // resolve({ protectionPercentage });
     }).catch((error) => {
       console.error('PROTECTED_AREA_PERCENTAGECrfError', error)
     })
   })
 }
 
-export function getProtectedAreasListData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: PROTECTED_AREAS_INSIDE_AOI,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const wdpaIds = data.value.features.map(f => f.attributes.Value);
-      EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[WDPA_LOOKUP_TABLE],
-        whereClause: `WDPAID IN (${wdpaIds.toString()})`,
-      }).then((features) => {
-        const protectedAreasList = features.map(f => ({
-          name: f.attributes.NAME,
-          iso3: f.attributes.ISO3,
-          year: f.attributes.STATUS_YR,
-          governance: f.attributes.GOV_TYPE,
-          designation: f.attributes.DESIG_ENG,
-          iucnCategory: f.attributes.IUCN_CAT,
-          designationType: f.attributes.DESIG_TYPE,
-        }))
-        resolve({protectedAreasList})
-      }).catch((getFeaturesError) => {
-        console.error('getFeaturesError', getFeaturesError)
-      })
-    }).catch((error) => {
-      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
-    })
-  })
-}
+// export function getProtectedAreasListData(geometry) {
+//   return new Promise((resolve, reject) => {
+//     getCrfData({ 
+//       dataset: PROTECTED_AREAS_INSIDE_AOI,
+//       aoiFeatureGeometry: geometry
+//     }).then(({jobInfo, jobId, data}) => {
+//       const wdpaIds = data.value.features.map(f => f.attributes.Value);
+//       EsriFeatureService.getFeatures({
+//         url: LAYERS_URLS[WDPA_LOOKUP_TABLE],
+//         whereClause: `WDPAID IN (${wdpaIds.toString()})`,
+//       }).then((features) => {
+//         const protectedAreasList = features.map(f => ({
+//           name: f.attributes.NAME,
+//           iso3: f.attributes.ISO3,
+//           year: f.attributes.STATUS_YR,
+//           governance: f.attributes.GOV_TYPE,
+//           designation: f.attributes.DESIG_ENG,
+//           iucnCategory: f.attributes.IUCN_CAT,
+//           designationType: f.attributes.DESIG_TYPE,
+//         }))
+//         resolve({protectedAreasList})
+//       }).catch((getFeaturesError) => {
+//         console.error('getFeaturesError', getFeaturesError)
+//       })
+//     }).catch((error) => {
+//       console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+//     })
+//   })
+// }
 
 export function getSpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
@@ -161,10 +170,12 @@ export function getSpeciesData(crfName, geometry) {
         url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
         whereClause: `SliceNumber IN (${ids.toString()})`,
       }).then((features) => {
+        console.log(crfName)
+        console.log(features)
         const result = features
           .map((f) => ({
             category: crfName,
-            isFlagship: f.attributes.is_flagship,
+            has_image: f.attributes.has_image,
             sliceNumber: f.attributes.SliceNumber,
             name: f.attributes.scientific_name,
             globalProtectedArea: f.attributes.wdpa_km2,
@@ -175,7 +186,7 @@ export function getSpeciesData(crfName, geometry) {
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
           }))
           .filter(f => f.name !== null)
-        resolve(orderBy(result, ['presenceInArea', 'isFlagship'], ['desc', 'desc']));
+        resolve(orderBy(result, ['has_image', 'isFlagship'], ['desc', 'desc']));
       }).catch((error) => {
         reject(error)
       });
