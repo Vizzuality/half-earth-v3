@@ -108,6 +108,7 @@ const Container = props => {
               // fetchDataAndUpdateForageItem(aoiId, getLandPressuresData, aoiStoredGeometry).then(data => setPressuresData(data));
               // fetchDataAndUpdateForageItem(aoiId, getProtectedAreasListData, aoiStoredGeometry).then(data => setProtectedAreasListData(data));
               // fetchDataAndUpdateForageItem(aoiId, getPercentageProtectedData, aoiStoredGeometry).then(data => setPercentageProtectedData(data));
+              getPercentageProtectedData(aoiStoredGeometry);
               getSpeciesData(BIRDS, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(MAMMALS, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(REPTILES, aoiStoredGeometry).then(data => setTaxaData(data));
