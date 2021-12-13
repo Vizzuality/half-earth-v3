@@ -53,12 +53,12 @@ export const SIDEBAR_CARDS_CONFIG = {
   },
   [PROTECTION_SLUG]: {
     title: 'What is already protected in this area?',
-    description: ({protectionPercentage}) => `Of the current area, __${percentageFormat(capPercentage(protectionPercentage))}% of land is under formal protection__.`,
+    description: ({protectionPercentage}) => `Of the current area, __${Math.round(percentageFormat(capPercentage(protectionPercentage)))}% of land is under formal protection__.`,
     warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
     title: 'How are humans affecting this area?',
-    description: ({pressures}) => `Of the current area, __${getTotalPressures(capPercentage(pressures))}% is under human pressure__,
+    description: ({pressures}) => `Of the current area, __${Math.round(getTotalPressures(capPercentage(pressures)))}% is under human pressure__,
     the majority of which are pressures from ${getMainPressure(pressures)}.`,
     warning: null
   },
