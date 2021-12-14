@@ -23,7 +23,6 @@ const SpeciesCardContainer = (props) => {
 
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
-      // setPreviousImage(speciesData)
       setSelectedSpeciesIndex(0)
     } else {
       setSelectedSpeciesIndex(selectedSpeciesIndex + 1);
