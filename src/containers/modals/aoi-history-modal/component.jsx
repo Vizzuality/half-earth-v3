@@ -50,7 +50,7 @@ const AoiHistoryModalComponent = ({
     </>
   )
 
-  return console.log(aoiHistory) || (
+  return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h2 className={styles.title}>Your areas of interest history.</h2>

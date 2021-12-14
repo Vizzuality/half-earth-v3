@@ -1,74 +1,51 @@
 import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import orderBy from 'lodash/orderBy';
 import {
   ELU_LOOKUP_TABLE,
-  WDPA_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
 import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
-import { getCrfData } from 'services/geo-processing-services/sample';
+import { getCrfData } from 'services/geo-processing-services/biodiversity';
+import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
 import {
+  WDPA_LIST,
   POPULATION,
   LOOKUP_TABLES,
   HUMAN_PRESSURES,
   ECOLOGICAL_LAND_UNITS,
-  PROTECTED_AREA_PERCENTAGE,
-  PROTECTED_AREAS_INSIDE_AOI,
+  CONTEXTUAL_DATA_TABLES,
 } from 'constants/geo-processing-services';
 
 
 import { PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
 
-
-export function getGeoProcessor(url) {
+export function getJobInfo(url, params) {
   return new Promise((resolve, reject) => {
-    loadModules(["esri/tasks/Geoprocessor"]).then(([Geoprocessor]) => {
-      resolve(new Geoprocessor({ url }));
+    loadModules(["esri/rest/geoprocessor"]).then(async ([geoprocessor]) => {
+      const jobInfo = await geoprocessor.submitJob(url, params)
+      resolve(jobInfo);
     }).catch(error => reject(error))
   });
 }
 
-export function jobTimeProfiling(jobInfo, jobStart) {
+export function jobTimeProfiling(jobStart) {
   const jobStatusTime = Date.now();
-  // console.log(jobInfo.jobStatus);
   const miliseconds = Math.abs(jobStart - jobStatusTime);
   console.log('TIME ELLAPSED ', miliseconds/1000, ' SECONDS');
 }
 
-export function getEluData(geometry) {
+export function getEluData(data) {
+  const eluCode = data[CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS]].value.features[0].attributes.MAJORITY;
   return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: ECOLOGICAL_LAND_UNITS,
-      aoiFeatureGeometry: geometry
-    }).then(({data}) => {
-      const eluCode = data.value.features[0].attributes.MAJORITY;
-      EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[ELU_LOOKUP_TABLE],
-        whereClause: `elu_code = '${eluCode}'`,
-      }).then((features) => {
-        const eluData = features[0].attributes;
-        const {lc_type: landCover, cr_type: climateRegime } = eluData;
-        resolve({elu:{landCover, climateRegime}});
-      }).catch((getFeaturesError) => {
-        console.error('getFeaturesError', getFeaturesError)
-      })
-    }).catch((error) => {
-      console.error('error', error)
-    })
-  })
-}
-
-export function getPopulationData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: POPULATION,
-      aoiFeatureGeometry: geometry
-    }).then(({data}) => {
-      const population = data.value.features[0].attributes.SUM;
-      resolve({population});
-    }).catch((error) => {
-      reject(error)
+    EsriFeatureService.getFeatures({
+      url: LAYERS_URLS[ELU_LOOKUP_TABLE],
+      whereClause: `elu_code = '${eluCode}'`,
+    }).then((features) => {
+      const eluData = features[0].attributes;
+      const {lc_type: landCover, cr_type: climateRegime } = eluData;
+      resolve({landCover, climateRegime});
+    }).catch((getFeaturesError) => {
+      reject(getFeaturesError)
     })
   })
 }
@@ -80,64 +57,43 @@ const landPressuresLookup = {
   4: 'urban activities'
 }
 
-export function getLandPressuresData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: HUMAN_PRESSURES,
-      aoiFeatureGeometry: geometry
-    }).then(({data}) => {
-      if (!data.value.features.length > 0) resolve({});
-      const pressures = data.value.features.reduce((acc, value) => ({
-        ...acc,
-        [landPressuresLookup[value.attributes.SliceNumber]]: value.attributes.percentage_land_encroachment
-      }), {});
-      resolve({pressures});
-    }).catch((error) => {
-      reject(error);
-    })
-  })
+function getAreaPressures(data) {
+  if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) return {};
+  return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce((acc, value) => ({
+    ...acc,
+    [landPressuresLookup[value.attributes.SliceNumber]]: value.attributes.percentage_land_encroachment
+  }), {});
 }
 
-export function getPercentageProtectedData(geometry) {
-  return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: PROTECTED_AREA_PERCENTAGE,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const protectionPercentage = data.value.features[0].attributes.MEAN;
-      resolve({ protectionPercentage });
-    }).catch((error) => {
-      console.error('PROTECTED_AREA_PERCENTAGECrfError', error)
-    })
-  })
-}
+const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes.SUM;
 
-export function getProtectedAreasListData(geometry) {
+const getProtectedAreasList = (data) => (
+  data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map(f => ({
+    name: f.attributes.ORIG_NA,
+    iso3: f.attributes.ISO3,
+    year: f.attributes.STATUS_,
+    governance: f.attributes.GOV_TYP,
+    designation: f.attributes.DESIG_E,
+    iucnCategory: f.attributes.IUCN_CA,
+    designationType: f.attributes.DESIG_T,
+  }))
+)
+
+export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
-    getCrfData({ 
-      dataset: PROTECTED_AREAS_INSIDE_AOI,
-      aoiFeatureGeometry: geometry
-    }).then(({jobInfo, jobId, data}) => {
-      const wdpaIds = data.value.features.map(f => f.attributes.Value);
-      EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[WDPA_LOOKUP_TABLE],
-        whereClause: `WDPAID IN (${wdpaIds.toString()})`,
-      }).then((features) => {
-        const protectedAreasList = features.map(f => ({
-          name: f.attributes.NAME,
-          iso3: f.attributes.ISO3,
-          year: f.attributes.STATUS_YR,
-          governance: f.attributes.GOV_TYPE,
-          designation: f.attributes.DESIG_ENG,
-          iucnCategory: f.attributes.IUCN_CAT,
-          designationType: f.attributes.DESIG_TYPE,
-        }))
-        resolve({protectedAreasList})
-      }).catch((getFeaturesError) => {
-        console.error('getFeaturesError', getFeaturesError)
-      })
+    getContextualData(geometry).then(async data => {
+      const pressures = getAreaPressures(data);
+      const population = getAreaPopulation(data);
+      const elu = await getEluData(data);
+      const protectedAreasList = getProtectedAreasList(data);
+      resolve({
+        elu,
+        pressures,
+        population,
+        protectedAreasList
+      });
     }).catch((error) => {
-      console.error('PROTECTED_AREAS_INSIDE_AOICrfError', error)
+      reject(error)
     })
   })
 }
@@ -164,18 +120,18 @@ export function getSpeciesData(crfName, geometry) {
         const result = features
           .map((f) => ({
             category: crfName,
-            isFlagship: f.attributes.is_flagship,
+            has_image: f.attributes.has_image,
             sliceNumber: f.attributes.SliceNumber,
             name: f.attributes.scientific_name,
             globalProtectedArea: f.attributes.wdpa_km2,
             globaldRangeArea: f.attributes.range_area_km2,
             globalProtectedPercentage: f.attributes.percent_protected,
             protectionTarget: f.attributes.conservation_target,
-            conservationConcern: f.attributes.conservation_concern,
+            conservationConcern: f.attributes.conservation_concern || 0,
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
           }))
           .filter(f => f.name !== null)
-        resolve(orderBy(result, ['presenceInArea', 'isFlagship'], ['desc', 'desc']));
+        resolve(result);
       }).catch((error) => {
         reject(error)
       });
@@ -212,7 +168,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
           presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
         }))
         .filter(f => f.name !== null)
-        resolve(orderBy(result, ['presenceInArea', 'isFlagship'], ['desc', 'desc']));
+        resolve(result);
     }).catch((error) => {
       reject(error)
     });

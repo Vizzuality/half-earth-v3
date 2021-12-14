@@ -216,7 +216,7 @@ export const LAYERS_URLS = {
   [AMPHIBIAN_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/0e80ea09e22f4efaa242854a568d0b18/rest/services/Amphibian_CRF_species_table_service/FeatureServer/0',
   [BIRDS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/d7a4020431dc4ce0b425f33d7cd344c8/rest/services/Bird_CRF_species_table_service/FeatureServer/0',
   [MAMMALS_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/bc206ff519234e4ab1e9dab1c8c1f601/rest/services/Mammal_CRF_species_table_service/FeatureServer/0',
-  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/aca551155cfc405dad543fd6eef94a76/rest/services/Reptile_CRF_species_table_service/FeatureServer/0',
+  [REPTILES_LOOKUP]:'https://utility.arcgis.com/usrsvcs/servers/e2587fabd9a74981bd8e0d8cd24ca37a/rest/services/Reptile_CRF_species_table_service/FeatureServer/0',
    // AOIs precalculated layers
    [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/ec84dbba085342e081dd44b5f94bc398/rest/services/all_precalc_gadm0/FeatureServer/0',
    [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4870a51b17f841c38793b3c0a3f053c9/rest/services/gadm1_precalculated/FeatureServer/0',

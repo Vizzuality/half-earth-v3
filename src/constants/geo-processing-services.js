@@ -10,20 +10,28 @@ export const CRF_NAMES = {
   REPTILES: 'reptiles_equal_area_20211003',
   AMPHIBIANS: 'amphibians_equal_area_20211003',
   MAMMALS: 'mammals_equal_area_20211003',
-  ECOLOGICAL_LAND_UNITS: 'ELU',
   POPULATION: 'population2020',
+  ECOLOGICAL_LAND_UNITS: 'ELU',
+  HUMAN_PRESSURES: 'land_encroachment',
   PROTECTED_AREA_PERCENTAGE: 'wdpa_oecm_zeros',
-  PROTECTED_AREAS_INSIDE_AOI: 'WDPA_OECM',
-  HUMAN_PRESSURES: 'land_encroachment'
 }
+
+export const CONTEXTUAL_DATA = 'contextual_data';
+export const WDPA_LIST = 'wdpa_list';
 
 export const CRF_DATA_CATEGORIES = {
   CONTEXT: 'context',
   BIODIVERSITY: 'biodiversity'
 }
 
-export const { BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS, POPULATION, PROTECTED_AREA_PERCENTAGE, HUMAN_PRESSURES, PROTECTED_AREAS_INSIDE_AOI } = CRF_NAMES;
+export const { BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS, POPULATION, HUMAN_PRESSURES } = CRF_NAMES;
 
+export const CONTEXTUAL_DATA_TABLES = {
+  [WDPA_LIST]: 'output_table_wdpa',
+  [POPULATION]: 'output_table_population',
+  [HUMAN_PRESSURES]: 'output_table_encroachment',
+  [ECOLOGICAL_LAND_UNITS]:'output_table_elu_majority',
+}
 
 export const LOOKUP_TABLES = {
   [BIRDS]: BIRDS_LOOKUP,
@@ -40,6 +48,21 @@ export const CRFS_CONFIG = {
   basePath: '/cloudStores/HECloudstore_ds_vwkuvgmvcfqewwft'
 }
 
+export const CONTEXTUAL_DATA_SERVICE_CONFIG = {
+  inputGeometryKey: 'geometry',
+  inputRasterKeyPairs: {
+    'crf_name_population': `${CRFS_CONFIG.basePath}/${POPULATION}.crf`,
+    'crf_name_elu': `${CRFS_CONFIG.basePath}/${ECOLOGICAL_LAND_UNITS}.crf`,
+    'crf_name_encroachment': `${CRFS_CONFIG.basePath}/${HUMAN_PRESSURES}.crf`
+  },
+  outputTablesKeys: [
+    CONTEXTUAL_DATA_TABLES[WDPA_LIST],
+    CONTEXTUAL_DATA_TABLES[POPULATION],
+    CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES],
+    CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS],
+  ]
+}
+
 export const BIODIVERSITY_CRFS_CONFIG = {
   ...CRFS_CONFIG,
   uniqueFieldID: 'unique_id_field',
@@ -50,9 +73,5 @@ export const GEOPROCESSING_SERVICES_URLS = {
   [REPTILES]: 'https://heportal.esri.com/server/rest/services/SampleReptProd/GPServer/SampleRept',
   [MAMMALS]: 'https://heportal.esri.com/server/rest/services/SampleMamProd/GPServer/SampleMam',
   [AMPHIBIANS]: 'https://heportal.esri.com/server/rest/services/SampleAmphProd/GPServer/SampleAmphProd', 
-  [HUMAN_PRESSURES]: 'https://hepportal.arcgis.com/server/rest/services/LandEncroachmentPercentage/GPServer/LandEncroachmentPercentage',
-  [PROTECTED_AREA_PERCENTAGE]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMean/GPServer/ZsatMean',
-  [PROTECTED_AREAS_INSIDE_AOI]: 'https://hepportal.arcgis.com/server/rest/services/clipSelect/GPServer/clipSelect',
-  [ECOLOGICAL_LAND_UNITS]: 'https://hepportal.arcgis.com/server/rest/services/ZsatMajority/GPServer/ZsatMajority',
-  [POPULATION]: 'https://hepportal.arcgis.com/server/rest/services/ZsatSum/GPServer/ZsatSum'
+  [CONTEXTUAL_DATA]: 'https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd',
 }
