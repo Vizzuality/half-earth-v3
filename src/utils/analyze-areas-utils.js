@@ -18,10 +18,14 @@ export function logGeometryArea(geometry) {
     })
 }
 
+export function roundUpPercentage(value) {
+  return value > 0.5 ? Math.round(value) : '<1';
+}
+
 export function calculateGeometryArea(geometry, geometryEngine) {
   const SQ_KM_WKID = 109414;
   return geometryEngine.geodesicArea(geometry, SQ_KM_WKID)
-} 
+}
 
 export function getSelectedAnalysisLayer(activeLayers) {
   const intersectionArray = _intersectionBy(PRECALCULATED_AOI_OPTIONS, activeLayers, 'title');
@@ -35,20 +39,20 @@ export function createHashFromGeometry(geometry) {
 }
 
 export function featureCollectionFromShape(input, view, onSucces, onError) {
-  const generateRequestParams = { 
+  const generateRequestParams = {
     filetype: "shapefile",
-    publishParameters: JSON.stringify({ 
-      targetSR: view.spatialReference 
-    }), 
-    f: "json" 
+    publishParameters: JSON.stringify({
+      targetSR: view.spatialReference
+    }),
+    f: "json"
   };
   loadModules(["esri/request"])
     .then(([esriRequest]) => {
-      esriRequest("https://www.arcgis.com/sharing/rest/content/features/generate", { 
+      esriRequest("https://www.arcgis.com/sharing/rest/content/features/generate", {
           query: generateRequestParams,
           body: input,
           method: 'post',
-          responseType: "json" 
+          responseType: "json"
         })
         .then((response) => onSucces(response))
         .catch((error) => onError( error))
@@ -86,7 +90,7 @@ export const getPlaceholderSpeciesImage = (taxa) => {
     default:
       return mammalsPlaceholder
   }
-} 
+}
 
 export const getPlaceholderSpeciesText = (taxa) => {
   switch (taxa) {
@@ -97,4 +101,4 @@ export const getPlaceholderSpeciesText = (taxa) => {
     default:
       return `Photo not available for this ${taxa.substring(0, taxa.length -1)}`
   }
-} 
+}
