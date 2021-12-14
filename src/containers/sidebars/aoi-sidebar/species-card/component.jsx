@@ -1,13 +1,24 @@
 import React from 'react';
-import cx from 'classnames';
-import { localeFormatting, roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
+
+// components
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
+
+// containers
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
+// utils
+import { localeFormatting, roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
+
+// constants
 import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
-import { ReactComponent as ArrowRightIcon } from 'icons/arrow_right.svg'
+
+// icons
+import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
+import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
+// styles
 import styles from './styles.module.scss';
 
 const Component = ({
@@ -20,22 +31,25 @@ const Component = ({
   individualSpeciesData,
   imageBackgroundPosition,
   handleNextSpeciesSelection,
-  handlePreviousSpeciesSelection
+  handlePreviousSpeciesSelection,
+  previousImage,
+  nextImage,
+  showCarouselArrows
 }) => speciesData.species.length === 0 ? (
-<section className={styles.loaderCard}>
-  <div className={styles.loaderBarContainer}>
-    <div className={styles.loaderBarPercentage}/>
-  </div>
-  <div className={styles.loaderTextContainer}>
-    <p>
-      Looking for species to watch here...
-    </p>
-    <p>
-      This could take up to 30 seconds.
-    </p>
-  </div>
-</section>
-  ) : (
+  <section className={styles.loaderCard}>
+    <div className={styles.loaderBarContainer}>
+      <div className={styles.loaderBarPercentage} />
+    </div>
+    <div className={styles.loaderTextContainer}>
+      <p>
+        Looking for species to watch here...
+      </p>
+      <p>
+        This could take up to 30 seconds.
+      </p>
+    </div>
+  </section>
+) : (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
@@ -58,29 +72,46 @@ const Component = ({
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>
             <div>
-              <div
-                className={styles.speciesImageWrapper}
-                style={{
-                  backgroundImage: `url(${individualSpeciesData.imageUrl})`,
-                  backgroundPosition: imageBackgroundPosition
-                }}
-              >
-                {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
+              <div className={styles.speciesCarousel}>
+                {previousImage && (
+                  <div
+                    className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                    onClick={handlePreviousSpeciesSelection}
+                    style={{
+                      backgroundImage: `url(${previousImage})`,
+                    }}
+                  />
+                )}
+                <div
+                  className={`${styles.selectedSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  style={{
+                    backgroundImage: `url(${individualSpeciesData.imageUrl})`,
+                  }}
+                >
+                  {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
+                </div>
+                <div
+                  className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                  onClick={handleNextSpeciesSelection}
+                  style={{
+                    backgroundImage: `url(${nextImage})`,
+                  }}
+                />
               </div>
               <div className={styles.sliderControls}>
-                <ArrowRightIcon className={cx(styles.icon, styles.rotateLeft)} onClick={handlePreviousSpeciesSelection}/>
+                {showCarouselArrows && <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />}
                 <div className={styles.speciesNames}>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.commonName}
-                  href={individualSpeciesData.molLink}
-                >
-                  {individualSpeciesData.commonname}
-                </a>
-                <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.commonName}
+                    href={individualSpeciesData.molLink}
+                  >
+                    {individualSpeciesData.commonname}
+                  </a>
+                  <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
-                <ArrowRightIcon className={styles.icon} onClick={handleNextSpeciesSelection}/>
+                {showCarouselArrows && <ArrowIconRight className={styles.arrow_icon} onClick={handleNextSpeciesSelection} />}
               </div>
             </div>
             <div className={styles.globalRangeArea}>
@@ -107,7 +138,7 @@ const Component = ({
       </div>
       {area && area < 1000 &&
         <div className={styles.warningContainer}>
-          <WarningIcon  className={styles.icon}/>
+          <WarningIcon className={styles.icon} />
           <span >{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
         </div>
       }

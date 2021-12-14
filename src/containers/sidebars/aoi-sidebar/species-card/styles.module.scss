@@ -98,22 +98,53 @@
   padding-bottom: $site-gutter;
 }
 
-.speciesImageWrapper {
+
+.speciesCarousel {
+  position: relative;
   display: flex;
   align-items: center;
-  text-align: center;
-  padding: 20%;
-  height: 320px;
-  width: 100%;
-  margin-top: $site-gutter;
-  border-radius: 6px;
-  background-repeat: no-repeat;
-  background-size: contain;
+  height: 230px;
 
-  .placeholderText {
-    @extend %title;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
+  .previousSpeciesImageWrapper {
+    position: absolute;
+    top: 0px;
+    left: -45px;
+    height: 170px;
+    margin-top: $site-gutter * 2;
+    cursor: pointer;
+  }
+
+  .nextSpeciesImageWrapper {
+    position: absolute;
+    top: 0px;
+    right: -45px;
+    height: 170px;
+    margin-top: $site-gutter * 2;
+    cursor: pointer;
+  }
+
+  .selectedSpeciesImageWrapper {
+    position: absolute;
+    margin-top: $site-gutter;
+    height: 210px;
+    z-index: 1;
+  }
+
+  .speciesImageWrapper {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    border-radius: 6px;
+    background-repeat: no-repeat;
+    // background-size: cover;
+    background-position: center;
+
+    .placeholderText {
+      @extend %title;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
 }
 
@@ -142,12 +173,10 @@
       font-style: italic;
     }
   }
-  .icon {
+  .arrow_icon {
     fill: $dark-text;
     cursor: pointer;
-    &.rotateLeft {
-      transform: rotate(180deg);
-    }
+    height: 10px;
   }
 }
 
