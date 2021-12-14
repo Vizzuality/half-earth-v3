@@ -8,7 +8,7 @@ import Dropdown from 'components/dropdown';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
 // utils
-import { localeFormatting, roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
+import { roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
 
 // constants
 import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
@@ -29,7 +29,6 @@ const Component = ({
   setSpeciesFilter,
   selectedSpeciesFilter,
   individualSpeciesData,
-  imageBackgroundPosition,
   handleNextSpeciesSelection,
   handlePreviousSpeciesSelection,
   previousImage,

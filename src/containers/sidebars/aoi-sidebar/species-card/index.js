@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
+
+// constants
 import { DEFAULT_SPECIES_FILTER, IUCN_CATEGORIES } from 'constants/analyze-areas-constants';
-import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
 import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
+import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
+
+
+// utils
+import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
+
+// services
 import MolService from 'services/mol';
+
+// component
 import Component from './component';
+
 
 const SpeciesCardContainer = (props) => {
   const { speciesData } = props;
@@ -13,7 +24,6 @@ const SpeciesCardContainer = (props) => {
   const [placeholderText, setPlaceholderText] = useState(null);
   const [speciesFilters, setFilterWithCount] = useState(SPECIES_FILTERS);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
-  const [imageBackgroundPosition, setImageBackgroundPosition] = useState('center');
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null)
   const [previousImage, setPreviousImage] = useState(null);
@@ -23,7 +33,6 @@ const SpeciesCardContainer = (props) => {
 
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
-      // setPreviousImage(speciesData)
       setSelectedSpeciesIndex(0)
     } else {
       setSelectedSpeciesIndex(selectedSpeciesIndex + 1);
@@ -94,15 +103,23 @@ const SpeciesCardContainer = (props) => {
 
         MolService.getSpecies(previousSpeciesName)
           .then((results) => {
-            setPreviousImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+            if (results.length > 0) {
+              setPreviousImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+            } else {
+              setPreviousImage(DEFAULT_PLACEHOLDER_IMAGE);
+            }
           });
         MolService.getSpecies(nextSpeciesName)
           .then((results) => {
-            setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+            if (results.length > 0) {
+              setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+            } else  {
+              setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
+            }
           });
 
       } else if (speciesToDisplay.length === 2) {
-        let previousSpeciesName, nextSpeciesName;
+        let nextSpeciesName;
 
         if (selectedSpeciesIndex === 0) {
           nextSpeciesName = speciesToDisplay[1].name;
@@ -112,7 +129,11 @@ const SpeciesCardContainer = (props) => {
 
         MolService.getSpecies(nextSpeciesName)
           .then((results) => {
-            setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+            if (results.length > 0) {
+              setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+            } else {
+              setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
+            }
           });
         setPreviousImage(null);
       } else {
@@ -137,22 +158,6 @@ const SpeciesCardContainer = (props) => {
     }
   }, [selectedSpecies])
 
-  useEffect(() => {
-    if (individualSpeciesData) {
-      const img = new Image();
-      img.onload = () => {
-        const width = img.naturalWidth;
-        const height = img.naturalHeight;
-        if (width - height > 0) {
-          setImageBackgroundPosition('center')
-        } else {
-          setImageBackgroundPosition('50% 10%')
-        }
-      }
-      img.src = individualSpeciesData.imageUrl;
-    }
-  }, [individualSpeciesData]);
-
   return (
     <Component
       speciesFilters={speciesFilters}
@@ -163,7 +168,6 @@ const SpeciesCardContainer = (props) => {
       selectedSpeciesFilter={selectedSpeciesFilter}
       previousImage={previousImage}
       nextImage={nextImage}
-      imageBackgroundPosition={imageBackgroundPosition}
       handleNextSpeciesSelection={handleNextSpeciesSelection}
       handlePreviousSpeciesSelection={handlePreviousSpeciesSelection}
       showCarouselArrows={showCarouselArrows}
