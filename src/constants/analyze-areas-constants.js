@@ -44,7 +44,7 @@ export const SIDEBAR_CARDS_CONFIG = {
   [SPECIES_SLUG]: {
     title: (speciesCount) => `This area is expected to have ${speciesCount} `,
     hint: 'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.',
-    warning: 'Species summaries are less reliable for areas under 1,000 km2; only a portion of these species will be found here.'
+    warning: <span>Species summaries are less reliable for areas under 1,000 km<sup>2</sup>; only a portion of these species will be found here.</span>
   },
   [BIODIVERSITY_SLUG]: {
     title: 'What is the biodiversity pattern in this area?',
