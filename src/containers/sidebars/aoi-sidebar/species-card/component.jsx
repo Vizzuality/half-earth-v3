@@ -3,7 +3,6 @@ import React from 'react';
 // components
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
-import SearchInput from 'components/search-input';
 
 // containers
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -73,8 +72,9 @@ const Component = ({
           handleOptionSelection={setSpeciesFilter}
         />
         {/* Search dropdown */}
-        <SearchInput
-          placeholder="SEARCH SPECIES"
+        <Dropdown
+          searchMode
+          placeholderText="SEARCH SPECIES"
         />
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>

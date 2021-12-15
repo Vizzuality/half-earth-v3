@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import cx from 'classnames';
-import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
-import Proptypes from 'prop-types';
-import styles from './dropdown-styles.module.scss';
-
+import PropTypes from 'prop-types';
 import { usePopper } from 'react-popper';
 
+// icons
+import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
+import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 
+// styles
+import styles from './dropdown-styles.module.scss';
 
 const Component = ({
   width,
@@ -21,6 +23,10 @@ const Component = ({
   onOptionSelection,
   disabled,
   groups,
+  searchMode,
+  placeholderText,
+  handleSearchKeyPress,
+  handleSearchInputChange,
 }) => {
 
   const [referenceElement, setReferenceElement] = useState(null);
@@ -44,40 +50,48 @@ const Component = ({
 
     return groups
       ? groups.map((group) => (
-          <li className={cx(styles.group)} key={group}>
-            <ul className={styles.groupList}>
-              {renderOptions(group)}
-            </ul>
-          </li>
-        ))
+        <li className={cx(styles.group)} key={group}>
+          <ul className={styles.groupList}>
+            {renderOptions(group)}
+          </ul>
+        </li>
+      ))
       : renderOptions();
   }
 
-  return  (
+  return (
     <div className={cx(styles.dropdownContainer, {
-        [styles.stacked]: stacked,
-        [styles.open]: dropdownOpen,
-        [styles.fullWidth]: width === 'full',
-        [styles.dark]: theme === 'dark',
-        [styles.disabled]: disabled
-      })}
+      [styles.stacked]: stacked,
+      [styles.open]: dropdownOpen,
+      [styles.fullWidth]: width === 'full',
+      [styles.dark]: theme === 'dark',
+      [styles.disabled]: disabled
+    })}
     >
-      <div
-        className={cx(styles.toggleContainer, {
-          [styles.fullWidth]: width === 'full'
-        })}
-        onClick={onDropdownToggle}
-        ref={setReferenceElement}
-      >
-        <span className={styles.selectedOptionLabel}>
-          {selectedOption && selectedOption.label}
-        </span>
-        <IconArrow
-          className={cx(styles.arrowIcon, {
-            [styles.dropdownOpen]: dropdownOpen
+      {searchMode && (
+        <div className={styles.searchInput}>
+          <SearchIcon />
+          <input onKeyPress={handleSearchKeyPress} onChange={handleSearchInputChange} type="text" placeholder={placeholderText} />
+        </div>
+      )}
+      {!searchMode && (
+        <div
+          className={cx(styles.toggleContainer, {
+            [styles.fullWidth]: width === 'full'
           })}
-        />
-      </div>
+          onClick={onDropdownToggle}
+          ref={setReferenceElement}
+        >
+          <span className={styles.selectedOptionLabel}>
+            {selectedOption && selectedOption.label}
+          </span>
+          <IconArrow
+            className={cx(styles.arrowIcon, {
+              [styles.dropdownOpen]: dropdownOpen
+            })}
+          />
+        </div>
+      )}
       {dropdownOpen && (
         createPortal(
           <div
@@ -87,7 +101,7 @@ const Component = ({
           >
             <ul className={cx(styles.optionsList, {
               [styles.fullWidth]: width === 'full'
-            })} 
+            })}
               name="filters"
               id="filters">
               {renderFilters()}
@@ -103,23 +117,27 @@ const Component = ({
 export default Component;
 
 Component.propTypes = {
-  options: Proptypes.arrayOf(
-    Proptypes.shape({
-      label: Proptypes.string,
-      slug: Proptypes.string,
-      group: Proptypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      slug: PropTypes.string,
+      group: PropTypes.string,
     })
   ),
-  dropdownOpen: Proptypes.bool,
-  hasGroups: Proptypes.bool,
-  onDropdownToggle: Proptypes.func.isRequired,
-  selectedOption: Proptypes.shape(),
-  onOptionSelection: Proptypes.func.isRequired,
-  width: Proptypes.oneOf(['fluid', 'full']),
-  theme: Proptypes.oneOf(['light', 'dark'])
+  placeholderText: PropTypes.string,
+  dropdownOpen: PropTypes.bool,
+  hasGroups: PropTypes.bool,
+  onDropdownToggle: PropTypes.func.isRequired,
+  selectedOption: PropTypes.shape(),
+  onOptionSelection: PropTypes.func.isRequired,
+  width: PropTypes.oneOf(['fluid', 'full']),
+  theme: PropTypes.oneOf(['light', 'dark']),
+  searchMode: PropTypes.bool,
 };
 
 Component.defaultProps = {
   width: 'fluid',
-  theme: 'light'
+  theme: 'light',
+  placeholderText: 'SEARCH',
+  searchMode: false,
 }
