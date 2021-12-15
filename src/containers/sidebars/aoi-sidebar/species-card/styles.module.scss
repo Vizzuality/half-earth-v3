@@ -141,7 +141,6 @@
     background-position: center;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
     background-color: white;
-    transition: background-image 0.2s ease-in-out;
 
     .placeholderText {
       @extend %title;
