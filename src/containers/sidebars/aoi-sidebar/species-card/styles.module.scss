@@ -190,6 +190,7 @@
 .warningContainer {
   display: flex;
   align-items: flex-start;
+  @extend %annotation;
 }
 
 .icon {
