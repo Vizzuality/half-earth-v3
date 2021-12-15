@@ -42,7 +42,7 @@ const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 
 export const SIDEBAR_CARDS_CONFIG = {
   [SPECIES_SLUG]: {
-    title: (speciesCount) => `This area is expected to have ${speciesCount} `,
+    title: (speciesCount) => <span>This area is expected<br/>to have {speciesCount}</span>,
     hint: 'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.',
     warning: <span>Species summaries are less reliable for areas under 1,000 km<sup>2</sup>; only a portion of these species will be found here.</span>
   },
@@ -57,7 +57,7 @@ export const SIDEBAR_CARDS_CONFIG = {
     warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
-    title: 'How are humans affecting this area?',
+    title: 'How much do humans affect this area?',
     description: ({pressures}) => `Of the current area, __${roundUpPercentage(getTotalPressures(capPercentage(pressures)))}% is under human pressure__,
     the majority of which are pressures from ${getMainPressure(pressures)}.`,
     warning: null
