@@ -3,6 +3,7 @@ import React from 'react';
 // components
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
+import SearchInput from 'components/search-input';
 
 // containers
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -33,7 +34,10 @@ const Component = ({
   handlePreviousSpeciesSelection,
   previousImage,
   nextImage,
-  showCarouselArrows
+  showCarouselArrows,
+  selectedSearchOption,
+  setSearchOption,
+  searchOptions
 }) => speciesData.species.length === 0 ? (
   <section className={styles.loaderCard}>
     <div className={styles.loaderBarContainer}>
@@ -67,6 +71,10 @@ const Component = ({
           options={speciesFilters}
           selectedOption={selectedSpeciesFilter}
           handleOptionSelection={setSpeciesFilter}
+        />
+        {/* Search dropdown */}
+        <SearchInput
+          placeholder="SEARCH SPECIES"
         />
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>

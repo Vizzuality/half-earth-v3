@@ -19,6 +19,7 @@ import Component from './component';
 const SpeciesCardContainer = (props) => {
   const { speciesData } = props;
   const { species } = speciesData;
+  // Species dropdown
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER);
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
   const [placeholderText, setPlaceholderText] = useState(null);
@@ -26,8 +27,13 @@ const SpeciesCardContainer = (props) => {
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null)
+  // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
+  // Search dropdown
+  const [searchOptions, setSearchOptions] = useState([]);
+  const [selectedSearchOption, setSelectedSearchOption] = useState(null);
+
   const showCarouselArrows = speciesData.species.length > 1;
 
 
@@ -171,6 +177,9 @@ const SpeciesCardContainer = (props) => {
       handleNextSpeciesSelection={handleNextSpeciesSelection}
       handlePreviousSpeciesSelection={handlePreviousSpeciesSelection}
       showCarouselArrows={showCarouselArrows}
+      searchOptions={searchOptions}
+      selectedSearchOption={selectedSearchOption}
+      setSearchOptions={setSelectedSearchOption}
       {...props}
     />
   )
