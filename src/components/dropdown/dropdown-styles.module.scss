@@ -95,6 +95,8 @@
 }
 
 .optionsList {
+  max-height: 220px;
+  overflow: auto;
   @extend %title;
   color: $dark-text;
   cursor: pointer;

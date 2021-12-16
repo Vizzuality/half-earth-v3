@@ -42,13 +42,13 @@ const SpeciesCardContainer = (props) => {
   }
 
   const handleSearchOptionSelected = (option) => {
-    const index = speciesData.species.findIndex((elem) => elem.name === option.slug);
+    const index = speciesToDisplay.findIndex((elem) => elem.name === option.slug);
     setSelectedSearchOption(option);
     setSelectedSpeciesIndex(index);
   }
 
   const handleSpeciesSearch = (value) => {
-    const results = speciesData.species
+    const results = speciesToDisplay
       .filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0)
       .map((elem) => ({
         label: elem.name,
