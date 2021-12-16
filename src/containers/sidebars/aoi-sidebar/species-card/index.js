@@ -15,6 +15,7 @@ import MolService from 'services/mol';
 // component
 import Component from './component';
 
+const SEARCH_RESULTS_SLUG = 'search-results';
 
 const SpeciesCardContainer = (props) => {
   const { speciesData } = props;
@@ -44,8 +45,14 @@ const SpeciesCardContainer = (props) => {
   }
 
   const handleSearchOptionSelected = (option) => {
-    const index = speciesToDisplayBackUp.findIndex((elem) => elem.name === option.slug);
-    setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
+    if (option.slug === SEARCH_RESULTS_SLUG) {
+      const searchSpecies = speciesToDisplayBackUp
+        .filter((elem) => searchOptions.findIndex((so) => so.slug === elem.name) >= 0);
+      setSpeciesToDisplay(searchSpecies);
+    } else {
+      const index = speciesToDisplayBackUp.findIndex((elem) => elem.name === option.slug);
+      setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
+    }
     setSelectedSpeciesIndex(0);
     setSelectedSearchOption(option);
   }
@@ -65,7 +72,7 @@ const SpeciesCardContainer = (props) => {
       return 0;
     });
     if (resultsSorted.length > 0) {
-      setSearchOptions(resultsSorted);
+      setSearchOptions([{ slug: SEARCH_RESULTS_SLUG, label: `${value} (${resultsSorted.length})` },...resultsSorted]);
     } else {
       setSearchOptions([]);
     }
