@@ -72,7 +72,9 @@ const SpeciesCardContainer = (props) => {
       return 0;
     });
     if (resultsSorted.length > 0) {
-      setSearchOptions([{ slug: SEARCH_RESULTS_SLUG, label: `${value} (${resultsSorted.length})` },...resultsSorted]);
+      const summaryOption = { slug: SEARCH_RESULTS_SLUG, label: `${value} (${resultsSorted.length})` };
+      setSearchOptions([summaryOption, ...resultsSorted]);
+      handleSearchOptionSelected(summaryOption);
     } else {
       setSearchOptions([]);
     }
