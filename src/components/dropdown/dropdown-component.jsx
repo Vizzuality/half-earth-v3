@@ -32,6 +32,8 @@ const Component = ({
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
+  const showDropdown = !searchMode || (searchMode && options && options.length > 0);
+  const showSearchInput = searchMode && (!options || (options && options.length === 0));
   const renderFilters = () => {
     const renderOptions = (groupFilter) => {
       const filteredOptions = groupFilter ? options.filter(option => option.group === groupFilter) : options;
@@ -68,13 +70,13 @@ const Component = ({
       [styles.disabled]: disabled
     })}
     >
-      {searchMode && (
+      {showSearchInput && (
         <div className={styles.searchInput}>
           <SearchIcon />
           <input onKeyPress={handleSearchKeyPress} onChange={handleSearchInputChange} type="text" placeholder={placeholderText} />
         </div>
       )}
-      {!searchMode && (
+      {showDropdown && (
         <div
           className={cx(styles.toggleContainer, {
             [styles.fullWidth]: width === 'full'
@@ -130,6 +132,7 @@ Component.propTypes = {
   onDropdownToggle: PropTypes.func.isRequired,
   selectedOption: PropTypes.shape(),
   onOptionSelection: PropTypes.func.isRequired,
+  onSearch: PropTypes.func,
   width: PropTypes.oneOf(['fluid', 'full']),
   theme: PropTypes.oneOf(['light', 'dark']),
   searchMode: PropTypes.bool,

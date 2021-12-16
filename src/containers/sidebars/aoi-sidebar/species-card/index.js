@@ -37,6 +37,18 @@ const SpeciesCardContainer = (props) => {
   const showCarouselArrows = speciesData.species.length > 1;
 
 
+  const handleSpeciesSearch = (value) => {
+    const results = speciesData.species.filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0);
+    if (results.length > 0) {
+      results.map((result) => ({
+        label: result.name,
+        slug: result.name
+      }));
+    } else {
+      setSearchOptions([]);
+    }
+  }
+
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
       setSelectedSpeciesIndex(0)
@@ -180,6 +192,7 @@ const SpeciesCardContainer = (props) => {
       searchOptions={searchOptions}
       selectedSearchOption={selectedSearchOption}
       setSearchOptions={setSelectedSearchOption}
+      handleSpeciesSearch={handleSpeciesSearch}
       {...props}
     />
   )

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Component from './dropdown-component.jsx';
 
-const DropdownContainer = (props) => {
-  const { handleOptionSelection } = props;
+const DropdownContainer = ({
+  handleOptionSelection,
+  onSearch,
+  ...props
+}) => {
   const [dropdownOpen, setDropdownToggle] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
 
@@ -17,7 +20,7 @@ const DropdownContainer = (props) => {
 
   const handleSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
-      console.log('event', event);
+      onSearch(searchValue);
     }
   }
 
