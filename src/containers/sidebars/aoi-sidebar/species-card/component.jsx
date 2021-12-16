@@ -107,13 +107,15 @@ const Component = ({
                 >
                   {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
                 </div>
-                <div
-                  className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
-                  onClick={handleNextSpeciesSelection}
-                  style={{
-                    backgroundImage: `url(${nextImage})`,
-                  }}
-                />
+                {nextImage && (
+                  <div
+                    className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                    onClick={handleNextSpeciesSelection}
+                    style={{
+                      backgroundImage: `url(${nextImage})`,
+                    }}
+                  />
+                )}
               </div>
               <div className={styles.sliderControls}>
                 {showCarouselArrows && <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />}

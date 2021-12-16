@@ -39,8 +39,6 @@ const Component = ({
   const showSearchInput = searchMode && (!options || (options && options.length === 0));
   const showCloseButton = searchMode && options && options.length > 0;
 
-  console.log('options', options, 'showDropdown', showDropdown);
-
   const renderFilters = () => {
     const renderOptions = (groupFilter) => {
       const filteredOptions = groupFilter ? options.filter(option => option.group === groupFilter) : options;
