@@ -48,12 +48,19 @@ const SpeciesCardContainer = (props) => {
   }
 
   const handleSpeciesSearch = (value) => {
-    const results = speciesData.species.filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0);
-    if (results.length > 0) {
-      setSearchOptions(results.map((result) => ({
-        label: result.name,
-        slug: result.name
-      })));
+    const results = speciesData.species
+      .filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0)
+      .map((elem) => ({
+        label: elem.name,
+        slug: elem.name
+      }));
+    const resultsSorted = results.sort((a,b) => {
+      if (a.slug < b.slug) return -1;
+      if (a.slug > b.slug) return 1;
+      return 0;
+    });
+    if (resultsSorted.length > 0) {
+      setSearchOptions(resultsSorted);
     } else {
       setSearchOptions([]);
     }
