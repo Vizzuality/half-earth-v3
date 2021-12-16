@@ -45,7 +45,6 @@ const SpeciesCardContainer = (props) => {
 
   const handleSearchOptionSelected = (option) => {
     const index = speciesToDisplayBackUp.findIndex((elem) => elem.name === option.slug);
-    console.log('index', index, speciesToDisplayBackUp[index]);
     setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
     setSelectedSpeciesIndex(0);
     setSelectedSearchOption(option);
@@ -58,7 +57,9 @@ const SpeciesCardContainer = (props) => {
         label: elem.name,
         slug: elem.name
       }));
-    const resultsSorted = results.sort((a,b) => {
+    // Remove duplicates
+    const tempSet = new Set(results);
+    const resultsSorted = Array.from(tempSet).sort((a,b) => {
       if (a.slug < b.slug) return -1;
       if (a.slug > b.slug) return 1;
       return 0;
