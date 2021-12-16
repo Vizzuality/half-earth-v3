@@ -35,6 +35,7 @@ const Component = ({
   nextImage,
   showCarouselArrows,
   handleSpeciesSearch,
+  handleSearchOptionSelected,
   searchOptions,
 }) => speciesData.species.length === 0 ? (
   <section className={styles.loaderCard}>
@@ -73,9 +74,13 @@ const Component = ({
         {/* Search dropdown */}
         <Dropdown
           searchMode
+          stacked
+          width="full"
+          parentWidth="322px"
           placeholderText="SEARCH SPECIES"
           onSearch={handleSpeciesSearch}
           options={searchOptions}
+          handleOptionSelection={handleSearchOptionSelected}
         />
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>

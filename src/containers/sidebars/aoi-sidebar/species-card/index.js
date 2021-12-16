@@ -36,14 +36,18 @@ const SpeciesCardContainer = (props) => {
 
   const showCarouselArrows = speciesData.species.length > 1;
 
+  const handleSearchOptionSelected = (option) => {
+    const index = speciesData.species.findIndex((elem) => elem.name === option.slug);
+    setSelectedSpeciesIndex(index);
+  }
 
   const handleSpeciesSearch = (value) => {
     const results = speciesData.species.filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0);
     if (results.length > 0) {
-      results.map((result) => ({
+      setSearchOptions(results.map((result) => ({
         label: result.name,
         slug: result.name
-      }));
+      })));
     } else {
       setSearchOptions([]);
     }
@@ -174,7 +178,7 @@ const SpeciesCardContainer = (props) => {
         }
       })
     }
-  }, [selectedSpecies])
+  }, [selectedSpecies]);
 
   return (
     <Component
@@ -193,6 +197,7 @@ const SpeciesCardContainer = (props) => {
       selectedSearchOption={selectedSearchOption}
       setSearchOptions={setSelectedSearchOption}
       handleSpeciesSearch={handleSpeciesSearch}
+      handleSearchOptionSelected={handleSearchOptionSelected}
       {...props}
     />
   )

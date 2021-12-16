@@ -28,7 +28,6 @@ const Component = ({
   handleSearchKeyPress,
   handleSearchInputChange,
 }) => {
-
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
@@ -40,7 +39,7 @@ const Component = ({
       return filteredOptions.filter(option => option.group === groupFilter).map((option) => (
         <li
           className={cx(styles.option, {
-            [styles.selectedOption]: option.slug === selectedOption.slug,
+            [styles.selectedOption]: selectedOption && option.slug === selectedOption.slug,
           })}
           key={option.slug}
           onClick={() => onOptionSelection(option)}
