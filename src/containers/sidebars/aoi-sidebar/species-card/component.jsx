@@ -36,6 +36,8 @@ const Component = ({
   showCarouselArrows,
   handleSpeciesSearch,
   handleSearchOptionSelected,
+  handleCloseSearch,
+  selectedSearchOption,
   searchOptions,
 }) => speciesData.species.length === 0 ? (
   <section className={styles.loaderCard}>
@@ -80,7 +82,9 @@ const Component = ({
           placeholderText="SEARCH SPECIES"
           onSearch={handleSpeciesSearch}
           options={searchOptions}
+          selectedOption={selectedSearchOption}
           handleOptionSelection={handleSearchOptionSelected}
+          handleCloseSearch={handleCloseSearch}
         />
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>

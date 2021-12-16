@@ -3,11 +3,19 @@ import Component from './dropdown-component.jsx';
 
 const DropdownContainer = ({
   handleOptionSelection,
+  handleCloseSearch,
   onSearch,
   ...props
 }) => {
   const [dropdownOpen, setDropdownToggle] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
+
+  const onCloseSearch = () => {
+    if (handleCloseSearch) {
+      handleCloseSearch();
+    }
+    setDropdownToggle(false);
+  }
 
   const onOptionSelection = (selectedOption) => {
     handleOptionSelection(selectedOption)
@@ -35,6 +43,7 @@ const DropdownContainer = ({
       onOptionSelection={onOptionSelection}
       handleSearchKeyPress={handleSearchKeyPress}
       handleSearchInputChange={handleSearchInputChange}
+      onCloseSearch={onCloseSearch}
       {...props}
     />
   )

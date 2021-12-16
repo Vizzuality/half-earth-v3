@@ -31,6 +31,14 @@
   color: $dark-text;
 }
 
+.closeSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 100%;
+}
+
 .searchInput {
   display: flex;
   align-items: center;

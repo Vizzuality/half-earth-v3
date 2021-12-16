@@ -36,8 +36,14 @@ const SpeciesCardContainer = (props) => {
 
   const showCarouselArrows = speciesData.species.length > 1;
 
+  const handleCloseSearch = () => {
+    setSearchOptions([]);
+    setSelectedSearchOption(null);
+  }
+
   const handleSearchOptionSelected = (option) => {
     const index = speciesData.species.findIndex((elem) => elem.name === option.slug);
+    setSelectedSearchOption(option);
     setSelectedSpeciesIndex(index);
   }
 
@@ -198,6 +204,7 @@ const SpeciesCardContainer = (props) => {
       setSearchOptions={setSelectedSearchOption}
       handleSpeciesSearch={handleSpeciesSearch}
       handleSearchOptionSelected={handleSearchOptionSelected}
+      handleCloseSearch={handleCloseSearch}
       {...props}
     />
   )

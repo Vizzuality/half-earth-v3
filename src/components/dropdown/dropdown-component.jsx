@@ -3,10 +3,12 @@ import { createPortal } from 'react-dom';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { usePopper } from 'react-popper';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // icons
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 // styles
 import styles from './dropdown-styles.module.scss';
@@ -27,12 +29,18 @@ const Component = ({
   placeholderText,
   handleSearchKeyPress,
   handleSearchInputChange,
+  onCloseSearch
 }) => {
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
+
   const showDropdown = !searchMode || (searchMode && options && options.length > 0);
   const showSearchInput = searchMode && (!options || (options && options.length === 0));
+  const showCloseButton = searchMode && options && options.length > 0;
+
+  console.log('options', options, 'showDropdown', showDropdown);
+
   const renderFilters = () => {
     const renderOptions = (groupFilter) => {
       const filteredOptions = groupFilter ? options.filter(option => option.group === groupFilter) : options;
@@ -86,11 +94,25 @@ const Component = ({
           <span className={styles.selectedOptionLabel}>
             {selectedOption && selectedOption.label}
           </span>
-          <IconArrow
-            className={cx(styles.arrowIcon, {
-              [styles.dropdownOpen]: dropdownOpen
-            })}
-          />
+          {!showCloseButton && (
+            <IconArrow
+              className={cx(styles.arrowIcon, {
+                [styles.dropdownOpen]: dropdownOpen
+              })}
+            />
+          )}
+          {showCloseButton && (
+            <AnimatePresence>
+              <motion.div className={styles.closeSearch} whileHover={{
+                backgroundColor: '#7B878D',
+                fill: 'white'
+              }}>
+                <CloseIcon
+                  onClick={onCloseSearch}
+                />
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
       )}
       {dropdownOpen && (
