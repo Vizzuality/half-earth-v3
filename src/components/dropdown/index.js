@@ -10,7 +10,8 @@ const DropdownContainer = ({
   const [dropdownOpen, setDropdownToggle] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
 
-  const onCloseSearch = () => {
+  const onCloseSearch = (event) => {
+    event.stopPropagation();
     if (handleCloseSearch) {
       handleCloseSearch();
     }
