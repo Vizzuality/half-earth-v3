@@ -6,7 +6,6 @@ import LabelsLayer from 'containers/layers/labels-layer';
 import CountryMaskLayer from 'containers/layers/country-mask-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
-import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle } from 'constants/layers-slugs';
 import FeatureHighlightLayer from "containers/layers/feature-highlight-layer";
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
