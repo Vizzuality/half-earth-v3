@@ -25,11 +25,15 @@ const CountryChallengesChartComponent = ({
     <div className={className}>
       <div className={styles.headerContainer}>
         <span className={styles.chartTitle}>Filter countries</span>
-        <Dropdown
-          options={challengesFilterOptions}
-          selectedOption={selectedFilterOption}
-          handleOptionSelection={handleFilterSelection}
-        />
+        <div className={styles.dropdownWrapper}>
+          <Dropdown
+            width="full"
+            parentWidth="530px"
+            options={challengesFilterOptions}
+            selectedOption={selectedFilterOption}
+            handleOptionSelection={handleFilterSelection}
+          />
+        </div>
       </div>
       <ScatterPlot
         data={data}

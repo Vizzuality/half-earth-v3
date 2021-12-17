@@ -13,6 +13,10 @@
   display: flex;
 }
 
+.dropdownWrapper {
+  width: 410px;
+}
+
 .titleText {
   @extend %title;
   color: $grey-text;
