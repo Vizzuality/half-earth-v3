@@ -30,8 +30,11 @@ const DropdownContainer = ({
   const handleSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
       onSearch(searchValue);
-      setDropdownToggle(true);
     }
+  }
+
+  const handleSearchIconClick = () => {
+    onSearch(searchValue);
   }
 
   const handleSearchInputChange = (event) => {
@@ -45,6 +48,7 @@ const DropdownContainer = ({
       onOptionSelection={onOptionSelection}
       handleSearchKeyPress={handleSearchKeyPress}
       handleSearchInputChange={handleSearchInputChange}
+      handleSearchIconClick={handleSearchIconClick}
       onCloseSearch={onCloseSearch}
       {...props}
     />

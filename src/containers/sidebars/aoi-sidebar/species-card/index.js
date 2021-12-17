@@ -47,8 +47,8 @@ const SpeciesCardContainer = (props) => {
   const handleSearchOptionSelected = (option) => {
     if (option.slug === SEARCH_RESULTS_SLUG) {
       const searchSpecies = speciesToDisplayBackUp
-        .filter((elem) => searchOptions.findIndex((so) => so.slug === elem.name) >= 0);
-      setSpeciesToDisplay(searchSpecies);
+        .filter((elem) => searchOptions.findIndex((so) => (so.slug === elem.name)) >= 0);
+      setSpeciesToDisplay([...searchSpecies]);
     } else {
       const index = speciesToDisplayBackUp.findIndex((elem) => elem.name === option.slug);
       setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
@@ -74,7 +74,6 @@ const SpeciesCardContainer = (props) => {
     if (resultsSorted.length > 0) {
       const summaryOption = { slug: SEARCH_RESULTS_SLUG, label: `${value} (${resultsSorted.length})` };
       setSearchOptions([summaryOption, ...resultsSorted]);
-      handleSearchOptionSelected(summaryOption);
     } else {
       setSearchOptions([]);
     }
@@ -93,6 +92,13 @@ const SpeciesCardContainer = (props) => {
       setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
       setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
   }
+
+  useEffect(() => {
+    if (selectedSearchOption === null && searchOptions && searchOptions.length > 0) {
+      handleSearchOptionSelected(searchOptions[0]);
+    }
+  }, [searchOptions]);
+
   useEffect(() => {
     const filters = SPECIES_FILTERS.map(filter => {
       let count;
@@ -214,9 +220,6 @@ const SpeciesCardContainer = (props) => {
       })
     }
   }, [selectedSpecies]);
-
-
-  // console.log('speciesToDisplay', speciesToDisplay, 'selectedSpecies', selectedSpecies, 'selectedSpeciesIndex', selectedSpeciesIndex, 'individualSpeciesData', individualSpeciesData);
 
   return (
     <Component

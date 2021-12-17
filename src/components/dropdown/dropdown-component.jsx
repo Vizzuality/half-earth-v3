@@ -29,6 +29,7 @@ const Component = ({
   placeholderText,
   handleSearchKeyPress,
   handleSearchInputChange,
+  handleSearchIconClick,
   onCloseSearch
 }) => {
   const [referenceElement, setReferenceElement] = useState(null);
@@ -77,7 +78,7 @@ const Component = ({
     >
       {showSearchInput && (
         <div className={styles.searchInput}>
-          <SearchIcon />
+          <SearchIcon onClick={handleSearchIconClick} />
           <input onKeyPress={handleSearchKeyPress} onChange={handleSearchInputChange} type="text" placeholder={placeholderText} />
         </div>
       )}
