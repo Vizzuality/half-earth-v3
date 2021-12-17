@@ -31,6 +31,32 @@
   color: $dark-text;
 }
 
+.closeSearch {
+  position: absolute;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 100%;
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+
+  .searchIcon {
+    cursor: pointer;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    background: none;
+    margin-left: 10px;
+  }
+}
+
 .arrowIcon {
   margin-left: 10px;
   transform: rotate(90deg);
@@ -76,6 +102,8 @@
 }
 
 .optionsList {
+  max-height: 220px;
+  overflow: auto;
   @extend %title;
   color: $dark-text;
   cursor: pointer;
