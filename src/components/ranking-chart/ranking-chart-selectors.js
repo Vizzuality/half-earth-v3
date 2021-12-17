@@ -41,13 +41,13 @@ const getDataWithSPIOrder = createSelector([getRankingData], data => {
 const getSortedData = createSelector([getDataWithSPIOrder, getSortRankingCategory], (data, sortRankingCategory) => {
   // SPI sorting is the default order
   if(!sortRankingCategory || sortRankingCategory === RANKING_INDICATORS.spi) return data;
-  const sortRankingGroup = RANKING_INDICATOR_GROUPS[sortRankingCategory];
-  return sortBy(data, d => sortRankingGroup ? d[sortRankingGroup][sortRankingCategory] : d[sortRankingCategory]).reverse();
+  const sortRankingGroup = RANKING_INDICATOR_GROUPS[sortRankingCategory.slug];
+  return sortBy(data, d => sortRankingGroup ? d[sortRankingGroup][sortRankingCategory.slug] : d[sortRankingCategory]).reverse();
 });
 
 const getSelectedFilterOption = createSelector([getSortRankingCategory], (sortRankingCategory) => {
   if (!sortRankingCategory) return SORT_OPTIONS[0];
-  return SORT_OPTIONS.find(o => o.slug === sortRankingCategory) || SORT_OPTIONS[0];
+  return SORT_OPTIONS.find(o => o.slug === sortRankingCategory.slug) || SORT_OPTIONS[0];
 });
 
 const mapStateToProps = createStructuredSelector({
