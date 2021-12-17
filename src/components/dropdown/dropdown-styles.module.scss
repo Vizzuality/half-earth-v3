@@ -32,6 +32,8 @@
 }
 
 .closeSearch {
+  position: absolute;
+  right: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +44,11 @@
 .searchInput {
   display: flex;
   align-items: center;
+
+  .searchIcon {
+    cursor: pointer;
+  }
+
   input {
     width: 100%;
     border: none;

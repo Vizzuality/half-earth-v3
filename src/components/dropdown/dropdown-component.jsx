@@ -78,7 +78,7 @@ const Component = ({
     >
       {showSearchInput && (
         <div className={styles.searchInput}>
-          <SearchIcon onClick={handleSearchIconClick} />
+          <SearchIcon className={styles.searchIcon} onClick={handleSearchIconClick} />
           <input onKeyPress={handleSearchKeyPress} onChange={handleSearchInputChange} type="text" placeholder={placeholderText} />
         </div>
       )}
