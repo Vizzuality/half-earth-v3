@@ -7,10 +7,12 @@ import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 // components
 import SourceAnnotation from 'components/source-annotation';
 import LayerToggle from 'components/layer-toggle';
+import Button from 'components/button';
 
 // containers
 import Legend from 'containers/sidebars/sidebar-legend';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 
 // constants
 import { PROTECTION_SLUG, SIDEBAR_CARDS_CONFIG } from 'constants/analyze-areas-constants';
@@ -30,18 +32,30 @@ const Component = ({
   cardDescription,
   displayWarning,
   handleAllProtectedAreasClick,
-  percentageUnderPressure,
+  isProtectedAreasModalOpen,
+  handleProtectedAreasModalToggle,
 }) => (
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
       <p className={styles.title}>{cardTitle}</p>
-      {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer}/>}
+      {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer} />}
       <ReactMarkdown
         className={styles.description}
         source={cardDescription}
       />
       {cardCategory === PROTECTION_SLUG && (
-        <button className={styles.fullwidthButton} onClick={handleAllProtectedAreasClick}>ALL PROTECTED AREAS</button>
+        <div>
+          <Button
+            type="rectangular"
+            className={styles.fullwidthButton}
+            handleClick={handleAllProtectedAreasClick}
+            label="ALL PROTECTED AREAS"
+          />
+          <ProtectedAreasModal
+            isOpen={isProtectedAreasModalOpen}
+            handleModalClose={handleProtectedAreasModalToggle}
+          />
+        </div>
       )}
       <SourceAnnotation
         theme='dark'
@@ -51,13 +65,13 @@ const Component = ({
       />
     </div>
     {displayWarning ?
-    <div className={styles.warningWrapper}>
-      <WarningIcon className={styles.warning} />
-      <ReactMarkdown
-        className={styles.description}
-        source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
-      />
-    </div>:
+      <div className={styles.warningWrapper}>
+        <WarningIcon className={styles.warning} />
+        <ReactMarkdown
+          className={styles.description}
+          source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
+        />
+      </div> :
       <div className={styles.togglesContainer}>
         {layers.map(layer => (
           <LayerToggle

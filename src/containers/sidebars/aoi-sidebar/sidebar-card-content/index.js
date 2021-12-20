@@ -19,6 +19,7 @@ const Container = (props) => {
 
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
+  const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
   const { description, title } = SIDEBAR_CARDS_CONFIG[cardCategory];
 
   useEffect(() => {
@@ -45,7 +46,11 @@ const Container = (props) => {
   }
 
   const handleAllProtectedAreasClick = () => {
+    setProtectedAreasModalOpen(true);
+  }
 
+  const handleProtectedAreasModalToggle = () => {
+    setProtectedAreasModalOpen(!protectedAreasModalOpen);
   }
 
   return (
@@ -55,6 +60,8 @@ const Container = (props) => {
       hasLegend={AOI_LEGEND_CATEGORIES.some(c => c === cardCategory)}
       onChange={toggleType === 'radio' ? radioTypeToggle : checkboxTypeToggle}
       handleAllProtectedAreasClick={handleAllProtectedAreasClick}
+      handleProtectedAreasModalToggle={handleProtectedAreasModalToggle}
+      isProtectedAreasModalOpen={protectedAreasModalOpen}
       {...props}
     />
   )
