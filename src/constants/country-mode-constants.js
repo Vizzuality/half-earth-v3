@@ -30,6 +30,8 @@ export const CONTINENT_COLORS = {
 }
 
 export const FILTERS_DICTIONARY = {
+  filter_continent: 'by continent',
+  filter_neigh: 'by proximity',
   filter_Area: 'with similar area',
   filter_Population2016: 'with similar population size',
   filter_prop_protected: 'with similar proportion of protection',
@@ -39,12 +41,12 @@ export const FILTERS_DICTIONARY = {
   filter_total_endemic: 'with similar number of endemic species',
   filter_N_SPECIES: 'with similar number of vertebrate species',
   filter_SPI: 'with similar species Protection Index',
-  filter_neigh: 'by proximity',
-  filter_steward: 'with shared stewardship',
-  filter_continent: 'by continent'
+  filter_steward: 'with shared stewardship'
 };
 
 export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
+  {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent},
+  {slug: 'filter_neigh', label: FILTERS_DICTIONARY.filter_neigh},
   {slug: 'filter_Area', label: FILTERS_DICTIONARY.filter_Area},
   {slug: 'filter_Population2016', label: FILTERS_DICTIONARY.filter_Population2016},
   {slug: 'filter_prop_protected', label: FILTERS_DICTIONARY.filter_prop_protected},
@@ -54,9 +56,7 @@ export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'filter_total_endemic', label: FILTERS_DICTIONARY.filter_total_endemic},
   {slug: 'filter_N_SPECIES', label: FILTERS_DICTIONARY.filter_N_SPECIES},
   {slug: 'filter_SPI', label: FILTERS_DICTIONARY.filter_SPI},
-  {slug: 'filter_neigh', label: FILTERS_DICTIONARY.filter_neigh},
-  {slug: 'filter_steward', label: FILTERS_DICTIONARY.filter_steward},
-  {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent}
+  {slug: 'filter_steward', label: FILTERS_DICTIONARY.filter_steward}
 ]
 
 export const RANKING_INDICATORS = {

@@ -42,7 +42,7 @@ const CountryChallengesChartContainer = (props) => {
 
   const handleFilterSelection = (selectedFilter) => {
     const { changeUI } = props;
-    changeUI({countryChallengesSelectedFilter: selectedFilter});
+    changeUI({countryChallengesSelectedFilter: selectedFilter.slug});
   }
 
   return (

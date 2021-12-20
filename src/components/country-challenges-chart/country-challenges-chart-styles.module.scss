@@ -9,6 +9,10 @@ $xAxisContainerWidth: 330px;
   margin-bottom: 70px;
 }
 
+.dropdownWrapper {
+  width: 530px;
+}
+
 .chartTitle {
   @extend %headline;
   color: $alto;

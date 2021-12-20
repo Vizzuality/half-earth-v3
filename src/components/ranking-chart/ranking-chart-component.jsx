@@ -90,12 +90,16 @@ const RankingChart = ({
     <div className={className}>
       <div className={styles.chartTitleContainer}>
         <span className={styles.chartTitle}>Sort countries by</span>
-        <Dropdown
-          options={SORT_OPTIONS}
-          groups={SORT_GROUPS}
-          selectedOption={selectedFilterOption}
-          handleOptionSelection={handleFilterSelection}
-        />
+        <div className={styles.dropdownWrapper}>
+          <Dropdown
+            width="full"
+            parentWidth="410px"
+            options={SORT_OPTIONS}
+            groups={SORT_GROUPS}
+            selectedOption={selectedFilterOption}
+            handleOptionSelection={handleFilterSelection}
+          />
+        </div>
       </div>
       <div className={styles.header}>
         <SearchInput

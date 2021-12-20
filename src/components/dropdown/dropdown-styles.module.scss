@@ -8,10 +8,6 @@
   border-radius: 6px;
   position: relative;
   border: 1px solid $dark-opacity;
-  &.open,
-  &:hover {
-    background-color: $dark-opacity;
-  }
   &.fullWidth {
     width: 100%;
   }
@@ -110,7 +106,7 @@
   background-color: $white;
   list-style: none;
   padding: $sidebar-paddings 0;
-  margin-top: 10px;
+  margin-top: 6px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   border: 1px solid $dark-opacity;
