@@ -1,0 +1,17 @@
+@import 'styles/typography-extends';
+@import 'styles/settings';
+
+.protectedAreasTable {
+  width: 100%;
+  height: 100%;
+  @extend %bodyText;
+  border-collapse: collapse;
+
+  tr {
+    border-bottom: solid 1px $firefly;
+  }
+
+  .header {
+    background-color: $firefly;
+  }
+}
