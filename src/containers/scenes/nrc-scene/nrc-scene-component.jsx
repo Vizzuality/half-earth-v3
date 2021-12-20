@@ -6,7 +6,8 @@ import LabelsLayer from 'containers/layers/labels-layer';
 import CountryMaskLayer from 'containers/layers/country-mask-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
-import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
+import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle } from 'constants/layers-slugs';
+import FeatureHighlightLayer from "containers/layers/feature-highlight-layer";
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
@@ -27,6 +28,7 @@ const CountrySceneComponent = ({
   countryBorder,
   sceneSettings,
   isFullscreenActive,
+  handleCountryClick,
   countryTooltipDisplayFor,
 }) => (
   <Scene
@@ -44,9 +46,9 @@ const CountrySceneComponent = ({
       countryISO={countryISO}
       spatialReference={LOCAL_SPATIAL_REFERENCE}
     />
-    <CountriesBordersLayer
-      countryISO={countryISO}
-      spatialReference={LOCAL_SPATIAL_REFERENCE}
+    <FeatureHighlightLayer
+      featureLayerSlug={bordersLayerTitle}
+      onFeatureClick={handleCountryClick}
     />
     <CountryEntryTooltip
       countryTooltipDisplayFor={countryTooltipDisplayFor}
@@ -56,6 +58,7 @@ const CountrySceneComponent = ({
       activeLayers={activeLayers}
       countryISO={countryISO}
     />
+
     <TerrainExaggerationLayer />
     <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
     {isVisible && 
