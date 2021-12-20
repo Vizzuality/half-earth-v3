@@ -9,14 +9,14 @@ import metadataActions from 'redux_modules/metadata';
 const actions = {...metadataActions, ...urlActions};
 
 const Container = (props) => {
-  const { 
+  const {
     contextualData,
     toggleType,
     changeGlobe,
     activeLayers,
     cardCategory,
   } = props;
-  
+
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
   const { description, title } = SIDEBAR_CARDS_CONFIG[cardCategory];
@@ -40,18 +40,21 @@ const Container = (props) => {
     }
   }
 
-  
-
   const checkboxTypeToggle = (option) => {
     layerManagerToggle(option.value, activeLayers, changeGlobe);
   }
 
+  const handleAllProtectedAreasClick = () => {
+
+  }
+
   return (
-    <Component 
+    <Component
       cardTitle={title}
       cardDescription={cardDescription}
       hasLegend={AOI_LEGEND_CATEGORIES.some(c => c === cardCategory)}
       onChange={toggleType === 'radio' ? radioTypeToggle : checkboxTypeToggle}
+      handleAllProtectedAreasClick={handleAllProtectedAreasClick}
       {...props}
     />
   )

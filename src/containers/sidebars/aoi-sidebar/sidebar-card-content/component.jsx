@@ -1,11 +1,21 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
-import LayerToggle from 'components/layer-toggle';
+
+// icons
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
-import { SIDEBAR_CARDS_CONFIG } from 'constants/analyze-areas-constants';
-import Legend from 'containers/sidebars/sidebar-legend';
+
+// components
 import SourceAnnotation from 'components/source-annotation';
+import LayerToggle from 'components/layer-toggle';
+
+// containers
+import Legend from 'containers/sidebars/sidebar-legend';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
+// constants
+import { PROTECTION_SLUG, SIDEBAR_CARDS_CONFIG } from 'constants/analyze-areas-constants';
+
+// styles
 import styles from './styles.module.scss';
 
 const Component = ({
@@ -19,6 +29,7 @@ const Component = ({
   activeLayers,
   cardDescription,
   displayWarning,
+  handleAllProtectedAreasClick,
   percentageUnderPressure,
 }) => (
   <SidebarCardWrapper className={styles.cardWrapper}>
@@ -29,6 +40,9 @@ const Component = ({
         className={styles.description}
         source={cardDescription}
       />
+      {cardCategory === PROTECTION_SLUG && (
+        <button className={styles.fullwidthButton} onClick={handleAllProtectedAreasClick}>ALL PROTECTED AREAS</button>
+      )}
       <SourceAnnotation
         theme='dark'
         isJSX

@@ -12,7 +12,6 @@ const Component = ({
 }) => {
   const lastSource = sources && sources.length -1;
   const isMultiSource = sources && sources.length > 1;
-  console.log('isJSX', isJSX, 'metadataSources', metaDataSources);
   return (
     <section className={className}>
       {metaDataSources && (
