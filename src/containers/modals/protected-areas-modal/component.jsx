@@ -11,7 +11,7 @@ const ProtectedAreasModal = ({
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
-
+        <h1>Protected areas in </h1>
       </div>
     </Modal>
   );

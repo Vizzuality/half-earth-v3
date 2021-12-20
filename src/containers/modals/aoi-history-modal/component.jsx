@@ -12,7 +12,6 @@ import { Modal } from "he-components";
 
 import styles from "./styles.module";
 
-
 const AoiHistoryModalComponent = ({
   isOpen,
   editAoiId,
@@ -56,7 +55,7 @@ const AoiHistoryModalComponent = ({
         <h2 className={styles.title}>Your areas of interest history.</h2>
         <p className={styles.description}>These are the areas of interest you have created in the past.</p>
         {aoiHistory.length > 0 &&
-          <Button 
+          <Button
             Icon={BinIcon}
             type="compound"
             className={styles.deleteAllButton}
@@ -70,7 +69,7 @@ const AoiHistoryModalComponent = ({
             areaName,
             timestamp
           }) => (
-            <li 
+            <li
               key={id}
               className={cx(
                 styles.aoiItemContainer,
@@ -84,7 +83,7 @@ const AoiHistoryModalComponent = ({
                 <div
                   className={styles.data}
                 >
-                  {editAoiId === id ? 
+                  {editAoiId === id ?
                   <input
                   id={id}
                   type="text"
@@ -98,29 +97,29 @@ const AoiHistoryModalComponent = ({
                 <div
                   className={styles.toolbar}
                 >
-                  {editAoiId === id ? 
-                    <Button 
+                  {editAoiId === id ?
+                    <Button
                       type="rectangular"
                       className={styles.saveButton}
                       handleClick={() => handleAoiDataStore(id)}
                       label="save"
                     /> :
                   <>
-                    <Button 
+                    <Button
                       Icon={ShareIcon}
                       type="icon-square"
                       className={styles.item}
                       handleClick={() => handleAoiShareToggle(id)}
                       tooltipText="Share this area"
                     />
-                    <Button 
+                    <Button
                       Icon={EditIcon}
                       type="icon-square"
                       className={styles.item}
                       handleClick={() => handleActivateAoiEdit(id)}
                       tooltipText="Edit area information"
                     />
-                    <Button 
+                    <Button
                       Icon={BinIcon}
                       type="icon-square"
                       className={styles.item}
