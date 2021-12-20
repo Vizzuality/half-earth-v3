@@ -33,7 +33,12 @@ const Component = ({
   handlePreviousSpeciesSelection,
   previousImage,
   nextImage,
-  showCarouselArrows
+  showCarouselArrows,
+  handleSpeciesSearch,
+  handleSearchOptionSelected,
+  handleCloseSearch,
+  selectedSearchOption,
+  searchOptions,
 }) => speciesData.species.length === 0 ? (
   <section className={styles.loaderCard}>
     <div className={styles.loaderBarContainer}>
@@ -68,6 +73,19 @@ const Component = ({
           selectedOption={selectedSpeciesFilter}
           handleOptionSelection={setSpeciesFilter}
         />
+        {/* Search dropdown */}
+        <Dropdown
+          searchMode
+          stacked
+          width="full"
+          parentWidth="322px"
+          placeholderText="SEARCH SPECIES"
+          onSearch={handleSpeciesSearch}
+          options={searchOptions}
+          selectedOption={selectedSearchOption}
+          handleOptionSelection={handleSearchOptionSelected}
+          handleCloseSearch={handleCloseSearch}
+        />
         {individualSpeciesData &&
           <section className={styles.speciesDataContainer}>
             <div>
@@ -89,13 +107,15 @@ const Component = ({
                 >
                   {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
                 </div>
-                <div
-                  className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
-                  onClick={handleNextSpeciesSelection}
-                  style={{
-                    backgroundImage: `url(${nextImage})`,
-                  }}
-                />
+                {nextImage && (
+                  <div
+                    className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
+                    onClick={handleNextSpeciesSelection}
+                    style={{
+                      backgroundImage: `url(${nextImage})`,
+                    }}
+                  />
+                )}
               </div>
               <div className={styles.sliderControls}>
                 {showCarouselArrows && <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />}

@@ -25,23 +25,24 @@ const Component = ({
     <div>
       <p className={styles.title}>{cardTitle}</p>
       {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer}/>}
-      <ReactMarkdown 
+      <ReactMarkdown
         className={styles.description}
         source={cardDescription}
       />
       <SourceAnnotation
         theme='dark'
-        metaDataSources={' WDPA, OECM & RAISG.'}
+        isJSX
+        metaDataSources={<a href="http://protectedplanet.net/" target="_blank" rel="noopener noreferrer">World Database on Protected Areas.</a>}
         className={styles.sourceContainer}
       />
     </div>
-    {displayWarning ? 
+    {displayWarning ?
     <div className={styles.warningWrapper}>
       <WarningIcon className={styles.warning} />
-      <ReactMarkdown 
+      <ReactMarkdown
         className={styles.description}
         source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
-      /> 
+      />
     </div>:
       <div className={styles.togglesContainer}>
         {layers.map(layer => (

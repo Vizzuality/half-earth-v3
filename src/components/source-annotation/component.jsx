@@ -8,9 +8,11 @@ const Component = ({
   sources,
   className,
   metaDataSources,
+  isJSX = false,
 }) => {
   const lastSource = sources && sources.length -1;
   const isMultiSource = sources && sources.length > 1;
+  console.log('isJSX', isJSX, 'metadataSources', metaDataSources);
   return (
     <section className={className}>
       {metaDataSources && (
@@ -18,10 +20,13 @@ const Component = ({
           styles.metadataSource,
           {[styles.light]: theme === 'light'}
         )}>
-          <ReactMarkdown
-            renderers={{link: ({href, children}) => <a href={href} target="_blank" rel="noopener noreferrer">{children[0].props.children}</a>}}
-            children={`Source: ${metaDataSources}`}
-          />
+          {!isJSX && (
+            <ReactMarkdown
+              renderers={{link: ({href, children}) => <a href={href} target="_blank" rel="noopener noreferrer">{children[0].props.children}</a>}}
+              children={`Source: ${metaDataSources}`}
+            />
+          )}
+          {isJSX && <span>Source: {metaDataSources}</span>}
         </cite>
         )
       }
@@ -42,7 +47,7 @@ const Component = ({
         }
       </span>)}
     </section>
-    
+
   )
 }
 

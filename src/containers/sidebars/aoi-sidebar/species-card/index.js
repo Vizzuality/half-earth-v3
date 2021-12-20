@@ -15,21 +15,69 @@ import MolService from 'services/mol';
 // component
 import Component from './component';
 
+const SEARCH_RESULTS_SLUG = 'search-results';
 
 const SpeciesCardContainer = (props) => {
   const { speciesData } = props;
   const { species } = speciesData;
+  // Species dropdown
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER);
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
   const [placeholderText, setPlaceholderText] = useState(null);
   const [speciesFilters, setFilterWithCount] = useState(SPECIES_FILTERS);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
+  const [speciesToDisplayBackUp, setSpeciesToDisplayBackUp] = useState(species);
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null)
+  // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
-  const showCarouselArrows = speciesData.species.length > 1;
+  // Search dropdown
+  const [searchOptions, setSearchOptions] = useState([]);
+  const [selectedSearchOption, setSelectedSearchOption] = useState(null);
 
+  const showCarouselArrows = speciesToDisplay.length > 1;
+
+  const handleCloseSearch = () => {
+    setSearchOptions([]);
+    setSelectedSearchOption(null);
+    setSpeciesToDisplay([...speciesToDisplayBackUp]);
+  }
+
+  const handleSearchOptionSelected = (option) => {
+    if (option.slug === SEARCH_RESULTS_SLUG) {
+      const searchSpecies = speciesToDisplayBackUp
+        .filter((elem) => searchOptions.findIndex((so) => (so.slug === elem.name)) >= 0);
+      setSpeciesToDisplay([...searchSpecies]);
+    } else {
+      const index = speciesToDisplayBackUp.findIndex((elem) => elem.name === option.slug);
+      setSpeciesToDisplay([speciesToDisplayBackUp[index]]);
+    }
+    setSelectedSpeciesIndex(0);
+    setSelectedSearchOption(option);
+  }
+
+  const handleSpeciesSearch = (value) => {
+    const results = speciesToDisplay
+      .filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0)
+      .map((elem) => ({
+        label: elem.name,
+        slug: elem.name
+      }));
+    // Remove duplicates
+    const tempSet = new Set(results);
+    const resultsSorted = Array.from(tempSet).sort((a,b) => {
+      if (a.slug < b.slug) return -1;
+      if (a.slug > b.slug) return 1;
+      return 0;
+    });
+    if (resultsSorted.length > 0) {
+      const summaryOption = { slug: SEARCH_RESULTS_SLUG, label: `${value} (${resultsSorted.length})` };
+      setSearchOptions([summaryOption, ...resultsSorted]);
+    } else {
+      setSearchOptions([]);
+    }
+  }
 
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
@@ -44,6 +92,13 @@ const SpeciesCardContainer = (props) => {
       setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
       setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
   }
+
+  useEffect(() => {
+    if (selectedSearchOption === null && searchOptions && searchOptions.length > 0) {
+      handleSearchOptionSelected(searchOptions[0]);
+    }
+  }, [searchOptions]);
+
   useEffect(() => {
     const filters = SPECIES_FILTERS.map(filter => {
       let count;
@@ -62,16 +117,24 @@ const SpeciesCardContainer = (props) => {
   useEffect(() => {
     switch (selectedSpeciesFilter.slug) {
       case 'all':
-        setSpeciesToDisplay(species.sort((a, b) => b.isFlagship - a.isFlagship))
+        const allSorted = species.sort((a, b) => b.isFlagship - a.isFlagship);
+        setSpeciesToDisplay(allSorted);
+        setSpeciesToDisplayBackUp([...allSorted]);
         break;
       case 'flagship':
-        setSpeciesToDisplay(species.filter(sp => sp.isFlagship));
+        const flagshipSorted = species.filter(sp => sp.isFlagship);
+        setSpeciesToDisplay(flagshipSorted);
+        setSpeciesToDisplayBackUp([...flagshipSorted]);
         break;
       case 'endangered':
-        setSpeciesToDisplay(species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40));
+        const endangeredSorted = species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40);
+        setSpeciesToDisplay(endangeredSorted);
+        setSpeciesToDisplayBackUp([...endangeredSorted]);
         break;
       default:
-        setSpeciesToDisplay(species.filter(sp => sp.category === selectedSpeciesFilter.slug).sort((a, b) => b.isFlagship - a.isFlagship));
+        const speciesSorted = species.filter(sp => sp.category === selectedSpeciesFilter.slug).sort((a, b) => b.isFlagship - a.isFlagship);
+        setSpeciesToDisplay(speciesSorted);
+        setSpeciesToDisplayBackUp([...speciesSorted]);
         break;
     }
   }, [speciesData.species, selectedSpeciesFilter])
@@ -156,7 +219,7 @@ const SpeciesCardContainer = (props) => {
         }
       })
     }
-  }, [selectedSpecies])
+  }, [selectedSpecies]);
 
   return (
     <Component
@@ -171,6 +234,12 @@ const SpeciesCardContainer = (props) => {
       handleNextSpeciesSelection={handleNextSpeciesSelection}
       handlePreviousSpeciesSelection={handlePreviousSpeciesSelection}
       showCarouselArrows={showCarouselArrows}
+      searchOptions={searchOptions}
+      selectedSearchOption={selectedSearchOption}
+      setSearchOptions={setSelectedSearchOption}
+      handleSpeciesSearch={handleSpeciesSearch}
+      handleSearchOptionSelected={handleSearchOptionSelected}
+      handleCloseSearch={handleCloseSearch}
       {...props}
     />
   )
