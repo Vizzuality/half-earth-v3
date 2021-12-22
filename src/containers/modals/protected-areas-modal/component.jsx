@@ -10,13 +10,13 @@ import styles from "./styles.module";
 const ProtectedAreasModal = ({
   isOpen,
   handleModalClose,
+  data,
 }) => {
-
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h1>Protected areas in </h1>
-        <ProtectedAreasTable />
+        <ProtectedAreasTable data={data} />
       </div>
     </Modal>
   );
