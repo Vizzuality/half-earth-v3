@@ -49,7 +49,7 @@ const ProtectedAreasTable = ({ data }) => (
             {row.IUCN_CA}
           </td>
           <td>
-            {row.GID_0}
+            {row.NAME_0}
           </td>
           <td>
             {`${Math.round(row.AREA_KM)}km`}<sup>2</sup>
