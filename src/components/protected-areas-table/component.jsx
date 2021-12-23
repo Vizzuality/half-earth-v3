@@ -7,7 +7,7 @@ const ProtectedAreasTable = ({ data }) => (
   <table className={styles.protectedAreasTable}>
     <thead>
       <tr className={styles.header}>
-        <th>
+        <th className={styles.firstColumn}>
           NAME
         </th>
         <th>
@@ -25,7 +25,7 @@ const ProtectedAreasTable = ({ data }) => (
         <th>
           COUNTRY
         </th>
-        <th>
+        <th className={styles.lastColumn}>
           AREA (KM<sup>2</sup>)
         </th>
       </tr>
@@ -33,7 +33,7 @@ const ProtectedAreasTable = ({ data }) => (
     <tbody>
       {data && data.map((row, index) => (
         <tr key={`wdpa-row-${row.NAME}-${index}`}>
-          <td>
+          <td className={styles.firstColumn}>
             {row.NAME}
           </td>
           <td>
@@ -51,7 +51,7 @@ const ProtectedAreasTable = ({ data }) => (
           <td>
             {row.NAME_0}
           </td>
-          <td>
+          <td className={styles.lastColumn}>
             {`${Math.round(row.AREA_KM)}km`}<sup>2</sup>
           </td>
         </tr>

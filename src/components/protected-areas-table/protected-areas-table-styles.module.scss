@@ -11,9 +11,21 @@
   tr {
     border-bottom: solid 1px $firefly;
 
+    th, td {
+      text-align: left;
+    }
+
     td {
       max-width: 200px;
     }
+  }
+
+  .firstColumn {
+    padding-left: 10px;
+  }
+
+  .lastColumn {
+    padding-right: 10px;
   }
 
   .header {
