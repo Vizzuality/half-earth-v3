@@ -34,6 +34,7 @@ const Component = ({
   handleAllProtectedAreasClick,
   isProtectedAreasModalOpen,
   handleProtectedAreasModalToggle,
+  contextualData,
 }) => (
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
@@ -54,6 +55,7 @@ const Component = ({
           <ProtectedAreasModal
             isOpen={isProtectedAreasModalOpen}
             handleModalClose={handleProtectedAreasModalToggle}
+            contextualData={contextualData}
           />
         </div>
       )}

@@ -15,11 +15,12 @@ const ProtectedAreasModal = ({
   handleModalClose,
   handleSearchInputChange,
   data,
+  contextualData
 }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
-        <h1>Protected areas in </h1>
+        <h1>Protected areas in {contextualData.areaName}</h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
             <SearchIcon className={styles.searchIcon} />
