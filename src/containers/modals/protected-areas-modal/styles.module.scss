@@ -1,0 +1,41 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.modal {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100%;
+  background-color: $elephant;
+  color: $grey-text;
+}
+
+.closeBtn {
+  background-color: transparent;
+  border: none;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+  @extend %annotation;
+
+  .searchInput {
+    display: flex;
+    align-items: center;
+
+    input {
+      margin-left: 10px;
+      background: transparent;
+      border: none;
+      color: $grey-text;
+    }
+  }
+}
+
+.tableContainer {
+  overflow: auto;
+  max-height: calc(100vh - 200px);
+}

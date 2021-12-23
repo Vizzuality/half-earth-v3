@@ -26,6 +26,19 @@
     margin: 0;
   }
 }
+
+.fullwidthButton {
+  width: 100%;
+  color: $light-text;
+  background-color: $brand-color-secondary;
+  padding: 10px;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: $firefly;
+  }
+}
+
 .warningWrapper {
   display: flex;
   .warning {
