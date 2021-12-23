@@ -13,3 +13,23 @@
   background-color: transparent;
   border: none;
 }
+
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+  @extend %annotation;
+
+  .searchInput {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+  }
+}
+
+.tableContainer {
+  overflow: auto;
+  max-height: calc(100vh - 200px);
+}

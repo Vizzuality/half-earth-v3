@@ -22,7 +22,16 @@ const Container = (props) => {
       whereClause: `MOL_IDg = '${aoiId}'`,
       returnGeometry: false
     }).then((features) => {
-      setData(features.map((f) => f.attributes));
+      const tempData = features.map((f) => f.attributes);
+      tempData.sort((a, b) => {
+        if (a.NAME > b.NAME)
+          return 1;
+        else if (a.NAME < b.NAME)
+          return -1;
+        else
+          return 0;
+      });
+      setData(tempData);
     })
   }, [aoiId]);
 
