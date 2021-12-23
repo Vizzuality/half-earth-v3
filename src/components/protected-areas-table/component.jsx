@@ -31,8 +31,8 @@ const ProtectedAreasTable = ({ data }) => (
       </tr>
     </thead>
     <tbody>
-      {data.map((row) => (
-        <tr key={`wdpa-row-${row.NAME}`}>
+      {data && data.map((row, index) => (
+        <tr key={`wdpa-row-${row.NAME}-${index}`}>
           <td>
             {row.NAME}
           </td>

@@ -13,7 +13,6 @@ import styles from "./styles.module";
 const ProtectedAreasModal = ({
   isOpen,
   handleModalClose,
-  handleSearchIconClick,
   handleSearchInputChange,
   data,
 }) => {
@@ -23,10 +22,10 @@ const ProtectedAreasModal = ({
         <h1>Protected areas in </h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
-            <SearchIcon className={styles.searchIcon} onClick={handleSearchIconClick} />
+            <SearchIcon className={styles.searchIcon} />
             <input onChange={handleSearchInputChange} type="text" placeholder="SEARCH IN TABLE" />
           </div>
-          <div><strong>{data.length}</strong>{` PROTECTED AREAS`}</div>
+          <div><strong>{data && data.length}</strong>{` PROTECTED AREAS`}</div>
         </div>
         <div className={styles.tableContainer}>
           <ProtectedAreasTable data={data} />

@@ -7,6 +7,7 @@
   height: 100vh !important;
   max-width: 100%;
   background-color: $elephant;
+  color: $grey-text;
 }
 
 .closeBtn {
@@ -24,8 +25,13 @@
   .searchInput {
     display: flex;
     align-items: center;
-    background: transparent;
-    border: none;
+
+    input {
+      margin-left: 10px;
+      background: transparent;
+      border: none;
+      color: $grey-text;
+    }
   }
 }
 
