@@ -14,6 +14,7 @@ const ProtectedAreasModal = ({
   isOpen,
   handleModalClose,
   handleSearchInputChange,
+  handleSortChange,
   data,
   contextualData
 }) => {
@@ -29,7 +30,7 @@ const ProtectedAreasModal = ({
           <div><strong>{data && data.length}</strong>{` PROTECTED AREAS`}</div>
         </div>
         <div className={styles.tableContainer}>
-          <ProtectedAreasTable data={data} />
+          <ProtectedAreasTable data={data} handleSortChange={handleSortChange} />
         </div>
       </div>
     </Modal>

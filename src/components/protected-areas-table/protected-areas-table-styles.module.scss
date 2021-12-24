@@ -20,6 +20,26 @@
     }
   }
 
+  .headerColumnContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .arrowsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+
+    svg {
+      width: 8px;
+      cursor: pointer;
+
+      &:first-child {
+        margin-bottom: 1px;
+      }
+    }
+  }
+
   .firstColumn {
     padding-left: 10px;
   }
