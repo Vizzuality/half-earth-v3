@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Component from './component.jsx';
+
+// constants
 import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
+import { GADM_1_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+
+// utils
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
-// HOOKS
-import { useSketchWidget} from 'hooks/esri';
-// ACTIONS
+
+// hooks
+import { useSketchWidget } from 'hooks/esri';
+
+// actions
 import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import aoisActions from 'redux_modules/aois';
 import { loadModules } from 'esri-loader';
 
-const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions };
+import Component from './component.jsx';
 
-
+const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions };
 
 const AnalyzeAreasContainer = (props) => {
-  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry } = props;
+  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setSubnationalSelected } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
@@ -28,7 +35,7 @@ const AnalyzeAreasContainer = (props) => {
     description: ''
   })
 
-  
+
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
     if (activeOption) {
@@ -50,30 +57,30 @@ const AnalyzeAreasContainer = (props) => {
       const hash = createHashFromGeometry(geometry);
       setAoiGeometry({ hash, geometry });
       props.shapeDrawSuccessfulAnalytics();
-      browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
+      browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
     }
   }
 
   const onShapeUploadSuccess = (response) => {
     loadModules(["esri/geometry/Polygon", "esri/geometry/geometryEngine"])
-    .then(([Polygon, geometryEngine]) => {
-      const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
-      const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
-      if (area > HIGHER_AREA_SIZE_LIMIT) {
-        setPromptModalContent({
-          title: WARNING_MESSAGES.area.title,
-          description: WARNING_MESSAGES.area.description(area),
-        });
-        setPromptModalOpen(true);
-        props.shapeUploadTooBigAnalytics();
-      } else {
-        const geometryInstance = new Polygon(featureSetGeometry);
-        const hash = createHashFromGeometry(geometryInstance);
-        setAoiGeometry({ hash, geometry: geometryInstance });
-        props.shapeUploadSuccessfulAnalytics();
-        browsePage({type: AREA_OF_INTEREST, payload: { id: hash }});
-      }
-    })
+      .then(([Polygon, geometryEngine]) => {
+        const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
+        const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
+        if (area > HIGHER_AREA_SIZE_LIMIT) {
+          setPromptModalContent({
+            title: WARNING_MESSAGES.area.title,
+            description: WARNING_MESSAGES.area.description(area),
+          });
+          setPromptModalOpen(true);
+          props.shapeUploadTooBigAnalytics();
+        } else {
+          const geometryInstance = new Polygon(featureSetGeometry);
+          const hash = createHashFromGeometry(geometryInstance);
+          setAoiGeometry({ hash, geometry: geometryInstance });
+          props.shapeUploadSuccessfulAnalytics();
+          browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
+        }
+      })
   }
 
   const onShapeUploadError = (error) => {
@@ -101,7 +108,7 @@ const AnalyzeAreasContainer = (props) => {
       case 'click':
         setSelectedAnalysisTab('click');
         handleLayerToggle(selectedOption);
-        if (sketchTool) {handleSketchToolDestroy();}
+        if (sketchTool) { handleSketchToolDestroy(); }
         break;
       default:
         setSelectedAnalysisTab('click');
@@ -111,6 +118,7 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const handleOptionSelection = (option) => {
+    setSubnationalSelected(option.slug === GADM_1_ADMIN_AREAS_FEATURE_LAYER);
     handleLayerToggle(option);
     setSelectedOption(option);
     setTooltipIsVisible(false);
@@ -119,7 +127,7 @@ const AnalyzeAreasContainer = (props) => {
   const handleLayerToggle = (option) => {
     batchToggleLayers([selectedOption.slug, option.slug], activeLayers, changeGlobe)
   }
-  
+
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 

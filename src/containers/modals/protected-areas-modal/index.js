@@ -9,19 +9,29 @@ import useDebounce from 'hooks/use-debounce';
 
 // constants
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import {
+  GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
+} from 'constants/layers-slugs';
+
+// actions
+import aoisActions from 'redux_modules/aois';
 
 // local
 import mapStateToProps from './selectors';
 import Component from './component';
 
+const actions = { ...aoisActions };
+
 const Container = (props) => {
-  const { aoiId } = props;
+  const { aoiId, subnationalSelected } = props;
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(null);
   const [sorting, setSorting] = useState({ value: 'NAME', ascending: 'true' });
   const [filteredData, setFilteredData] = useState([]);
   const debouncedSearch = useDebounce(search, 400);
+
+  console.log('props', props);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -62,7 +72,8 @@ const Container = (props) => {
 
   useEffect(() => {
     EsriFeatureService.getFeatures({
-      url: LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER],
+      url: subnationalSelected ? LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER] :
+        LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER],
       whereClause: `MOL_IDg = '${aoiId}'`,
       returnGeometry: false
     }).then((features) => {
@@ -84,4 +95,4 @@ const Container = (props) => {
   )
 }
 
-export default connect(mapStateToProps, null)(Container);
+export default connect(mapStateToProps, actions)(Container);

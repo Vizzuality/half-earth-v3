@@ -17,6 +17,8 @@ const Container = (props) => {
     cardCategory,
   } = props;
 
+  console.log('propsAAA', props);
+
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
