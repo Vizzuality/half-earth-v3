@@ -33,8 +33,8 @@ const SearchLocationContainer = (props) => {
         content: {
           buttonText,
           id: attributes[id],
-          title: attributes[title],
-          subtitle: attributes[subtitle],
+          title: attributes[title] || attributes['NAME_0'],
+          subtitle: attributes[subtitle] || attributes['NAME_1'],
         }
       });
   }
@@ -65,7 +65,7 @@ const SearchLocationContainer = (props) => {
   }, [])
 
   const { updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick } = useSearchWidgetLogic(view, () => {}, searchWidgetConfig);
-  
+
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
     const { url, title, outFields, searchFields, suggestionTemplate } = config;
