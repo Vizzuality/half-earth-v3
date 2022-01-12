@@ -15,8 +15,8 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => (
           <div className={styles.headerColumnContainer}>
             <span>NAME</span>
             <div className={styles.arrowsContainer}>
-              <ArrowUp onClick={() => handleSortChange({ value: 'NAME', ascending: true })} />
-              <ArrowDown onClick={() => handleSortChange({ value: 'NAME', ascending: false })} />
+              <ArrowUp onClick={() => handleSortChange({ value: 'ORIG_NA', ascending: true })} />
+              <ArrowDown onClick={() => handleSortChange({ value: 'ORIG_NA', ascending: false })} />
             </div>
           </div>
         </th>
@@ -33,8 +33,8 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => (
           <div className={styles.headerColumnContainer}>
             <span>DESIGNATION</span>
             <div className={styles.arrowsContainer}>
-              <ArrowUp onClick={() => handleSortChange({ value: 'DESIG', ascending: true })} />
-              <ArrowDown onClick={() => handleSortChange({ value: 'DESIG', ascending: false })} />
+              <ArrowUp onClick={() => handleSortChange({ value: 'DESIG_E', ascending: true })} />
+              <ArrowDown onClick={() => handleSortChange({ value: 'DESIG_E', ascending: false })} />
             </div>
           </div>
         </th>
