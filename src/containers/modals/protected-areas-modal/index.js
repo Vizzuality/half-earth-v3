@@ -31,8 +31,6 @@ const Container = (props) => {
   const [filteredData, setFilteredData] = useState([]);
   const debouncedSearch = useDebounce(search, 400);
 
-  console.log('props', props);
-
   const handleSearch = (event) => {
     setSearch(event.target.value);
   }
@@ -78,7 +76,6 @@ const Container = (props) => {
       returnGeometry: false
     }).then((features) => {
       const tempData = features.map((f) => f.attributes);
-
       tempData.sort(sortFunction);
       setData(tempData);
       setFilteredData([...tempData]);
