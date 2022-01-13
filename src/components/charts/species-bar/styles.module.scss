@@ -38,6 +38,7 @@
     @extend %annotation;
     position: absolute;
     top: 5px;
+    width: 90px;
     transform: translateX(-50%);
   }
   .percentage {
