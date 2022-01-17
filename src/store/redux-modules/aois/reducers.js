@@ -1,12 +1,12 @@
 import * as actions from './actions';
 
-export const initialState = { subnationalSelected: false };
+export const initialState = { areaTypeSelected: false };
 
-const setSubnationalSelected = (state, { payload }) => ({
+const setAreaTypeSelected = (state, { payload }) => ({
   ...state,
-  subnationalSelected: payload
+  areaTypeSelected: payload
 });
 
 export default {
-  [actions.setSubnationalSelected]: setSubnationalSelected
+  [actions.setAreaTypeSelected]: setAreaTypeSelected
 };

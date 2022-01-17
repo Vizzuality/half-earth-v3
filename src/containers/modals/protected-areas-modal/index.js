@@ -13,6 +13,7 @@ import {
   GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
+import { NATIONAL_BOUNDARIES_TYPE, PROTECTED_AREAS_TYPE, SUBNATIONAL_BOUNDARIES_TYPE } from 'constants/aois';
 
 // actions
 import aoisActions from 'redux_modules/aois';
@@ -24,7 +25,7 @@ import Component from './component';
 const actions = { ...aoisActions };
 
 const Container = (props) => {
-  const { aoiId, subnationalSelected } = props;
+  const { aoiId, areaTypeSelected } = props;
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(null);
   const [sorting, setSorting] = useState({ value: 'NAME', ascending: 'true' });
@@ -69,9 +70,22 @@ const Container = (props) => {
   }, [sorting]);
 
   useEffect(() => {
+    let urlValue;
+    switch (areaTypeSelected) {
+      case NATIONAL_BOUNDARIES_TYPE:
+        urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
+        break;
+      case SUBNATIONAL_BOUNDARIES_TYPE:
+        urlValue = LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
+        break;
+      case PROTECTED_AREAS_TYPE:
+        urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]; // TO-DO: change this to the right URL
+        break;
+      default:
+        urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
+    }
     EsriFeatureService.getFeatures({
-      url: subnationalSelected ? LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER] :
-        LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER],
+      url: urlValue,
       whereClause: `MOL_IDg = '${aoiId}'`,
       returnGeometry: false
     }).then((features) => {
