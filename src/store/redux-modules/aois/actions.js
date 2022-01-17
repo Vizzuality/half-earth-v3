@@ -1,5 +1,5 @@
 import { createAction } from 'redux-tools';
 
-export const setSubnationalSelected = createAction(
-  'SET_SUBNATIONAL_SELECTED'
+export const setAreaTypeSelected = createAction(
+  'SET_AREA_TYPE_SELECTED'
 );

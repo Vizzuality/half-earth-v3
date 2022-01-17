@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 // constants
 import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
-import { GADM_1_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { NATIONAL_BOUNDARIES_TYPE, PROTECTED_AREAS_TYPE, SUBNATIONAL_BOUNDARIES_TYPE } from 'constants/aois.js';
 
 // utils
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
@@ -26,7 +27,7 @@ import Component from './component.jsx';
 const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions };
 
 const AnalyzeAreasContainer = (props) => {
-  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setSubnationalSelected } = props;
+  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
@@ -118,7 +119,17 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const handleOptionSelection = (option) => {
-    setSubnationalSelected(option.slug === GADM_1_ADMIN_AREAS_FEATURE_LAYER);
+    switch (option) {
+      case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
+        setAreaTypeSelected(SUBNATIONAL_BOUNDARIES_TYPE);
+        break;
+      case GADM_0_ADMIN_AREAS_FEATURE_LAYER:
+        setAreaTypeSelected(NATIONAL_BOUNDARIES_TYPE);
+        break;
+      case WDPA_OECM_FEATURE_LAYER:
+        setAreaTypeSelected(PROTECTED_AREAS_TYPE);
+        break;
+    }
     handleLayerToggle(option);
     setSelectedOption(option);
     setTooltipIsVisible(false);
