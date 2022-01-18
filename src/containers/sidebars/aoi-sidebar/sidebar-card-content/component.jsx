@@ -10,17 +10,20 @@ import LayerToggle from 'components/layer-toggle';
 import Button from 'components/button';
 
 // containers
-import Legend from 'containers/sidebars/sidebar-legend';
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 
 // constants
-import { PROTECTION_SLUG, SIDEBAR_CARDS_CONFIG } from 'constants/analyze-areas-constants';
+import {
+  PROTECTION_SLUG,
+  SIDEBAR_CARDS_CONFIG,
+} from 'constants/analyze-areas-constants';
 
 // styles
 import styles from './styles.module.scss';
 
-const Component = ({
+const SidebarCard = ({
   map,
   layers,
   onChange,
@@ -39,11 +42,14 @@ const Component = ({
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
       <p className={styles.title}>{cardTitle}</p>
-      {hasLegend && <Legend legendItem={cardCategory} className={styles.legendContainer} />}
-      <ReactMarkdown
-        className={styles.description}
-        source={cardDescription}
-      />
+      {hasLegend && (
+        <SidebarLegend
+          legendItem={cardCategory}
+          className={styles.legendContainer}
+          theme="light"
+        />
+      )}
+      <ReactMarkdown className={styles.description} source={cardDescription} />
       {cardCategory === PROTECTION_SLUG && (
         <div>
           <Button
@@ -60,25 +66,34 @@ const Component = ({
         </div>
       )}
       <SourceAnnotation
-        theme='dark'
+        theme="dark"
         isJSX
-        metaDataSources={<a href="http://protectedplanet.net/" target="_blank" rel="noopener noreferrer">World Database on Protected Areas.</a>}
+        metaDataSources={
+          <a
+            href="http://protectedplanet.net/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            World Database on Protected Areas.
+          </a>
+        }
         className={styles.sourceContainer}
       />
     </div>
-    {displayWarning ?
+    {displayWarning ? (
       <div className={styles.warningWrapper}>
         <WarningIcon className={styles.warning} />
         <ReactMarkdown
           className={styles.description}
           source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
         />
-      </div> :
+      </div>
+    ) : (
       <div className={styles.togglesContainer}>
-        {layers.map(layer => (
+        {layers.map((layer) => (
           <LayerToggle
             map={map}
-            variant='dark'
+            variant="dark"
             option={layer}
             key={layer.value}
             type={toggleType}
@@ -88,8 +103,8 @@ const Component = ({
           />
         ))}
       </div>
-    }
+    )}
   </SidebarCardWrapper>
-)
+);
 
-export default Component;
+export default SidebarCard;
