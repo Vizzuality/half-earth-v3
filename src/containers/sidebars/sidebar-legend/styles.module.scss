@@ -7,6 +7,14 @@
   background-color: $brand-color-secondary;
 }
 
+.valuesWrapper {
+  color: $white;
+
+  &.light {
+    color: $space-background;
+  }
+}
+
 .gradient {
   display: flex;
   height: 8px;
@@ -49,8 +57,3 @@
     color: inherit;
   }
 }
-  
-  
-  
-  
-    
