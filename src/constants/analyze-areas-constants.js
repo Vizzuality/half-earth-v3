@@ -65,14 +65,14 @@ export const SIDEBAR_CARDS_CONFIG = {
 }
 
 export const SPECIES_FILTERS = [
-  {slug: 'all', label: 'vertebrates'},
+  {slug: 'all', label: 'terrestrial vertebrates'},
   {slug: BIRDS, label: 'birds'},
   {slug: MAMMALS, label: 'mammals'},
   {slug: REPTILES, label: 'reptiles'},
   {slug: AMPHIBIANS, label: 'amphibians'},
 ]
 
-export const DEFAULT_SPECIES_FILTER = {slug: 'all', label: 'vertebrates'};
+export const DEFAULT_SPECIES_FILTER = {slug: 'all', label: 'terrestrial vertebrates'};
 
 export const IUCN_CATEGORIES = {
   EX: 'Extinct',
