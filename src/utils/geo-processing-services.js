@@ -100,7 +100,7 @@ export function getContextData(geometry) {
 
 export function getSpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
-    getCrfData({ 
+    getCrfData({
       dataset: crfName,
       aoiFeatureGeometry: geometry
     }).then((response) => {
@@ -158,6 +158,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
         .map((f) => ({
           category: crfName,
           isFlagship: f.attributes.is_flagship,
+          has_image: f.attributes.has_image,
           sliceNumber: f.attributes.SliceNumber,
           name: f.attributes.scientific_name,
           globalProtectedArea: f.attributes.wdpa_km2,
@@ -181,7 +182,7 @@ export const getPrecalculatedContextualData = (data, layerSlug) => ({
     landCover: data.land_cover_majority
   },
   area: data.AREA_KM2,
-  areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ? 
+  areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ?
     `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})`:
     `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
   pressures: {
