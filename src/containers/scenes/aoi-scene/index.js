@@ -14,10 +14,10 @@ import {
   writeToForageItem
 } from 'utils/local-forage-utils';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
-import { 
+import {
   getSpeciesData,
   getContextData,
-  getAoiFromDataBase, 
+  getAoiFromDataBase,
   getPrecalculatedSpeciesData,
   getPrecalculatedContextualData,
 } from 'utils/geo-processing-services';
@@ -69,7 +69,7 @@ const Container = props => {
     }
   }, [precalculatedLayerSlug, geometryEngine])
 
-  
+
   useEffect(() => {
     if (aoiId && geometryEngine &&  jsonUtils && !precalculatedLayerSlug) {
       localforage.getItem(aoiId).then((localStoredAoi) => {
@@ -81,13 +81,13 @@ const Container = props => {
           setContextualData({ ...rest })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
         } else {
-            // We then try to get the calculations from the 
+            // We then try to get the calculations from the
             // shared AOIs database on the servers
             getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
               const { geometry, species, ...rest } = aoiData;
               setGeometry(geometry);
-              setSpeciesData(species);
+              setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
               setContextualData({ ...rest })
             } else {
               // An if we don't have it anywhere we just execute the GP services job
@@ -103,7 +103,7 @@ const Container = props => {
               getSpeciesData(REPTILES, aoiStoredGeometry).then(data => setTaxaData(data));
               getSpeciesData(AMPHIBIANS, aoiStoredGeometry).then(data => setTaxaData(data));
             }
-          }) 
+          })
         }
       }).catch((error) => {
         console.error(error)
