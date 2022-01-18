@@ -101,16 +101,24 @@ const SpeciesCardContainer = (props) => {
 
   useEffect(() => {
     const filters = SPECIES_FILTERS.map(filter => {
-      let count;
       switch (filter.slug) {
         case 'all':
-          return filter
+          return { slug: filter.slug, label: `${filter.label} (${species.length})` };
         default:
-          count = species.filter(sp => sp.category === filter.slug).length;
+          const count = species.filter(sp => sp.category === filter.slug).length;
           return { slug: filter.slug, label: `${filter.label} (${count})` }
       }
     })
-    setFilterWithCount(filters)
+    setFilterWithCount(filters);
+
+    // update species count in selected filter
+    const tempLabel = SPECIES_FILTERS.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
+    setSpeciesFilter({
+      slug: selectedSpeciesFilter.slug,
+      label: (selectedSpeciesFilter.slug === 'all') ?
+         `${tempLabel} (${species.length})`
+         : `${tempLabel} (${species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
+    });
 
   }, [speciesData.species])
 
