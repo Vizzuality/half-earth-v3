@@ -33,7 +33,7 @@ const Component = ({
           {barAnnotation && <div className={styles.annotationBar} style={{ left: `${barAnnotation}%` }} />}
           {barAnnotationTitle && <p className={styles.annotationTitle} style={{ left: `${titlePosition}%` }}>{barAnnotationTitle}</p>}
         </div>
-        <span className={styles.percentage}>{percentageLabel ? percentageLabel : `${percentageFormat(percentage)}%`}</span>
+        <span className={styles.percentage}>{percentageLabel ? percentageLabel : `~${percentageFormat(percentage)}%`}</span>
       </div>
     </section>
   );
