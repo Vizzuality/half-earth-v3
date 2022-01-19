@@ -27,12 +27,14 @@ const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
   handleLayerToggle,
+  handleCloseCard,
   map,
   handleTabSelection,
   selectedResolution,
   setSelectedResolution,
   biodiversityLayerVariant,
   cardMetadata,
+  showCard,
 }) => {
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
@@ -77,11 +79,13 @@ const BiodiversitySidebarCardComponent = ({
           className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
         />
-        <div className={styles.cardContainer}>
-          <SidebarCardWrapper collapsable dark>
-            <SidebarCardContent title={title} description={description} />
-          </SidebarCardWrapper>
-        </div>
+        {showCard && (
+          <div className={styles.cardContainer}>
+            <SidebarCardWrapper collapsable dark onClose={handleCloseCard}>
+              <SidebarCardContent title={title} description={description} />
+            </SidebarCardWrapper>
+          </div>
+        )}
         <div className={styles.dropdownContainer}>
           <span className={styles.dropdownLabel}>Terrestrial species</span>
           <Dropdown

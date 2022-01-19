@@ -26,7 +26,7 @@ const BiodiversitySidebarCard = (props)  => {
     [RARITY] : {},
   })
 
-  
+  const [showCard, setShowCard] = useState(true);
 
   const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY)
   const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION)
@@ -47,7 +47,7 @@ const BiodiversitySidebarCard = (props)  => {
     const resolutionExists = (category) => LAYERS_RESOLUTION[biodiversityLayerVariant][category].some(res => res.slug === selectedResolution[category]);
     if (!resolutionExists(TERRESTRIAL)) {
       setSelectedResolution(DEFAULT_RESOLUTION);
-    } 
+    }
   }, [biodiversityLayerVariant]);
 
   useEffect(() => {
@@ -102,6 +102,10 @@ const BiodiversitySidebarCard = (props)  => {
     }
   }
 
+  const handleCloseCard = () => {
+    setShowCard(false);
+  }
+
   return (
     <Component
       handleLayerToggle={handleLayerToggle}
@@ -110,6 +114,8 @@ const BiodiversitySidebarCard = (props)  => {
       handleClearAndAddLayers={handleClearAndAddLayers}
       handleTabSelection={handleTabSelection}
       cardMetadata={cardMetadata[biodiversityLayerVariant]}
+      showCard={showCard}
+      handleCloseCard={handleCloseCard}
       {...props}
     />
   );
