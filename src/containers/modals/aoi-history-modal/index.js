@@ -14,8 +14,6 @@ const Container = (props) => {
   const [shareAoiId, setShareAoiId] = useState(null);
   const [updatedAoiName, setUpdatedAoiName] = useState(null);
 
-  
-
   useEffect(() => {
     if (isOpen) {
       getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
@@ -70,9 +68,9 @@ const Container = (props) => {
   }
 
   const handleAoiShare = (id) => {
-    localforage.getItem(id).then((storedValues) => { 
+    localforage.getItem(id).then((storedValues) => {
       // TODO: store AOI on arcgis online
-      console.log(id, storedValues) 
+      console.info(id, storedValues)
     })
   }
 
