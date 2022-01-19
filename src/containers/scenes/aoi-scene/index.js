@@ -88,13 +88,14 @@ const Container = props => {
               const { geometry, species, ...rest } = aoiData;
               setGeometry(geometry);
               setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
-              setContextualData({ ...rest })
+              setContextualData({ ...rest, isCustom: false })
             } else {
               // An if we don't have it anywhere we just execute the GP services job
               const areaName = 'Custom area';
-              const jsonGeometry = aoiStoredGeometry.toJSON();
+
+              const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
-              setContextualData({area, areaName});
+              setContextualData({area, areaName, isCustom: true });
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area, areaName, timestamp: Date.now()});
               getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, ...data }));
