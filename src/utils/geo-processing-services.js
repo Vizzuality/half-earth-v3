@@ -3,7 +3,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   ELU_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
-import { AOIS_HISTORIC  } from 'constants/analyze-areas-constants';
+import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/biodiversity';
 import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
@@ -31,7 +31,7 @@ export function getJobInfo(url, params) {
 export function jobTimeProfiling(jobStart) {
   const jobStatusTime = Date.now();
   const miliseconds = Math.abs(jobStart - jobStatusTime);
-  console.log('TIME ELLAPSED ', miliseconds/1000, ' SECONDS');
+  console.log('TIME ELLAPSED ', miliseconds / 1000, ' SECONDS');
 }
 
 export function getEluData(data) {
@@ -42,8 +42,8 @@ export function getEluData(data) {
       whereClause: `elu_code = '${eluCode}'`,
     }).then((features) => {
       const eluData = features[0].attributes;
-      const {lc_type: landCover, cr_type: climateRegime } = eluData;
-      resolve({landCover, climateRegime});
+      const { lc_type: landCover, cr_type: climateRegime } = eluData;
+      resolve({ landCover, climateRegime });
     }).catch((getFeaturesError) => {
       reject(getFeaturesError)
     })
@@ -105,9 +105,9 @@ export function getSpeciesData(crfName, geometry) {
       aoiFeatureGeometry: geometry
     }).then((response) => {
       const { data } = response;
-      const crfSlices = data.value.features.reduce((acc, f) =>({
+      const crfSlices = data.value.features.reduce((acc, f) => ({
         ...acc,
-        [f.attributes.SliceNumber]:{
+        [f.attributes.SliceNumber]: {
           sliceNumber: f.attributes.SliceNumber,
           presencePercentage: f.attributes.percentage_presence
         }
@@ -142,9 +142,9 @@ export function getSpeciesData(crfName, geometry) {
 export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   const data = JSON.parse(jsonSlices);
   return new Promise((resolve, reject) => {
-    const crfSlices = data.reduce((acc, f) =>({
+    const crfSlices = data.reduce((acc, f) => ({
       ...acc,
-      [f.SliceNumber]:{
+      [f.SliceNumber]: {
         sliceNumber: f.SliceNumber,
         presencePercentage: f.percentage_presence
       }
@@ -155,21 +155,33 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
       whereClause: `SliceNumber IN (${ids.toString()})`,
     }).then((features) => {
       const result = features
-        .map((f) => ({
-          category: crfName,
-          isFlagship: f.attributes.is_flagship,
-          has_image: f.attributes.has_image,
-          sliceNumber: f.attributes.SliceNumber,
-          name: f.attributes.scientific_name,
-          globalProtectedArea: f.attributes.wdpa_km2,
-          globaldRangeArea: f.attributes.range_area_km2,
-          globalProtectedPercentage: f.attributes.percent_protected,
-          protectionTarget: f.attributes.conservation_target,
-          conservationConcern: f.attributes.conservation_concern,
-          presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
-        }))
+        .map((f) => {
+          let newCommonName = null;
+          try {
+            const val = f.attributes.common_name_array;
+            if (val) {
+              newCommonName = JSON.parse(f.attributes.common_name_array.replaceAll(/\\/g, ''));
+            }
+          } catch (error) {
+            console.error('error parsing species', error, 'value', f.attributes.common_name_array)
+          }
+          return ({
+            category: crfName,
+            isFlagship: f.attributes.is_flagship,
+            has_image: f.attributes.has_image,
+            sliceNumber: f.attributes.SliceNumber,
+            name: f.attributes.scientific_name,
+            commonName: newCommonName,
+            globalProtectedArea: f.attributes.wdpa_km2,
+            globaldRangeArea: f.attributes.range_area_km2,
+            globalProtectedPercentage: f.attributes.percent_protected,
+            protectionTarget: f.attributes.conservation_target,
+            conservationConcern: f.attributes.conservation_concern,
+            presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
+          })
+        })
         .filter(f => f.name !== null)
-        resolve(result);
+      resolve(result);
     }).catch((error) => {
       reject(error)
     });
@@ -183,7 +195,7 @@ export const getPrecalculatedContextualData = (data, layerSlug) => ({
   },
   area: data.AREA_KM2,
   areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ?
-    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})`:
+    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})` :
     `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
   pressures: {
     'rangelands': data.percent_rangeland,
@@ -210,81 +222,81 @@ export const getAoiFromDataBase = (id) => {
 export const addZcoordToRings = (rings) => rings[0].map(r => [...r, 0]);
 
 export const setSpeciesJSONGeometryRings = (rings) => ({
-  "displayFieldName" : "",
-  "hasZ" : true,
-  "fieldAliases" : {
-    "OBJECTID" : "OBJECTID",
-    "Name" : "Name",
-    "Text" : "Text",
-    "IntegerValue" : "Integer Value",
-    "DoubleValue" : "Double Value",
-    "DateTime" : "Date Time",
-    "Shape_Length" : "Shape_Length",
-    "Shape_Area" : "Shape_Area"
+  "displayFieldName": "",
+  "hasZ": true,
+  "fieldAliases": {
+    "OBJECTID": "OBJECTID",
+    "Name": "Name",
+    "Text": "Text",
+    "IntegerValue": "Integer Value",
+    "DoubleValue": "Double Value",
+    "DateTime": "Date Time",
+    "Shape_Length": "Shape_Length",
+    "Shape_Area": "Shape_Area"
   },
-  "geometryType" : "esriGeometryPolygon",
-  "spatialReference" : {
-    "wkid" : 102100,
-    "latestWkid" : 3857
+  "geometryType": "esriGeometryPolygon",
+  "spatialReference": {
+    "wkid": 102100,
+    "latestWkid": 3857
   },
-  "fields" : [
+  "fields": [
     {
-      "name" : "OBJECTID",
-      "type" : "esriFieldTypeOID",
-      "alias" : "OBJECTID"
+      "name": "OBJECTID",
+      "type": "esriFieldTypeOID",
+      "alias": "OBJECTID"
     },
     {
-      "name" : "Name",
-      "type" : "esriFieldTypeString",
-      "alias" : "Name",
-      "length" : 255
+      "name": "Name",
+      "type": "esriFieldTypeString",
+      "alias": "Name",
+      "length": 255
     },
     {
-      "name" : "Text",
-      "type" : "esriFieldTypeString",
-      "alias" : "Text",
-      "length" : 255
+      "name": "Text",
+      "type": "esriFieldTypeString",
+      "alias": "Text",
+      "length": 255
     },
     {
-      "name" : "IntegerValue",
-      "type" : "esriFieldTypeInteger",
-      "alias" : "Integer Value"
+      "name": "IntegerValue",
+      "type": "esriFieldTypeInteger",
+      "alias": "Integer Value"
     },
     {
-      "name" : "DoubleValue",
-      "type" : "esriFieldTypeDouble",
-      "alias" : "Double Value"
+      "name": "DoubleValue",
+      "type": "esriFieldTypeDouble",
+      "alias": "Double Value"
     },
     {
-      "name" : "DateTime",
-      "type" : "esriFieldTypeDate",
-      "alias" : "Date Time",
-      "length" : 8
+      "name": "DateTime",
+      "type": "esriFieldTypeDate",
+      "alias": "Date Time",
+      "length": 8
     },
     {
-      "name" : "Shape_Length",
-      "type" : "esriFieldTypeDouble",
-      "alias" : "Shape_Length"
+      "name": "Shape_Length",
+      "type": "esriFieldTypeDouble",
+      "alias": "Shape_Length"
     },
     {
-      "name" : "Shape_Area",
-      "type" : "esriFieldTypeDouble",
-      "alias" : "Shape_Area"
+      "name": "Shape_Area",
+      "type": "esriFieldTypeDouble",
+      "alias": "Shape_Area"
     }
   ],
-  "features" : [
+  "features": [
     {
-      "attributes" : {
-        "OBJECTID" : 1,
-        "Name" : null,
-        "Text" : null,
-        "IntegerValue" : null,
-        "DoubleValue" : null,
-        "DateTime" : null,
+      "attributes": {
+        "OBJECTID": 1,
+        "Name": null,
+        "Text": null,
+        "IntegerValue": null,
+        "DoubleValue": null,
+        "DateTime": null,
       },
-      "geometry" : {
-        "hasZ" : true,
-        "rings" : [rings]
+      "geometry": {
+        "hasZ": true,
+        "rings": [rings]
       }
     }
   ]
