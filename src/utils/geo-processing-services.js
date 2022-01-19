@@ -31,7 +31,7 @@ export function getJobInfo(url, params) {
 export function jobTimeProfiling(jobStart) {
   const jobStatusTime = Date.now();
   const miliseconds = Math.abs(jobStart - jobStatusTime);
-  console.log('TIME ELLAPSED ', miliseconds / 1000, ' SECONDS');
+  console.info('TIME ELLAPSED ', miliseconds/1000, ' SECONDS');
 }
 
 export function getEluData(data) {

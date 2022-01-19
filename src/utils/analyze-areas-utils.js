@@ -14,7 +14,7 @@ export function logGeometryArea(geometry) {
     .then(([geometryEngine]) => {
       const SQ_KM_WKID = 109414;
       const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
-      console.log('AREA', area, 'KM2')
+      console.info('AREA', area, 'KM2')
     })
 }
 
