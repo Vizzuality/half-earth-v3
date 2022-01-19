@@ -20,14 +20,6 @@ export const BORDERS_LAYERS_RENDERER = {
   }
 }
 
-export const COUNTRY_BORDER_STYLES = {
-  fillColor: [15, 43, 59],
-  fillOpacity: 0,
-  outlineColor: [216, 216, 216],
-  outlineOpacity: 1,
-  outlineWidth: 1
-}
-
 export const GRID_CELL_STYLES = {
   fillColor: [147, 255, 95],
   fillOpacity: 0,
@@ -83,6 +75,6 @@ export const MINIMAP_BASE_LAYER_STYLES = {
           "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer",
         type: "vector"
       }
-    } 
+    }
   }
 };
