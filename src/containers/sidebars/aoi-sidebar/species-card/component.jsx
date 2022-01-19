@@ -118,7 +118,11 @@ const Component = ({
                 )}
               </div>
               <div className={styles.sliderControls}>
-                {showCarouselArrows && <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />}
+                {showCarouselArrows && (
+                  <div className={styles.arrow_icon_container}>
+                    <ArrowIconLeft className={styles.arrow_icon} onClick={handlePreviousSpeciesSelection} />
+                  </div>
+                )}
                 <div className={styles.speciesNames}>
                   <a
                     target="_blank"
@@ -130,7 +134,11 @@ const Component = ({
                   </a>
                   <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
                 </div>
-                {showCarouselArrows && <ArrowIconRight className={styles.arrow_icon} onClick={handleNextSpeciesSelection} />}
+                {showCarouselArrows && (
+                  <div className={styles.arrow_icon_container}>
+                    <ArrowIconRight className={styles.arrow_icon} onClick={handleNextSpeciesSelection} />
+                  </div>
+                )}
               </div>
             </div>
             <div className={styles.globalRangeArea}>

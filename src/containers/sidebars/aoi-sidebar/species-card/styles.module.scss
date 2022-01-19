@@ -175,10 +175,24 @@
       font-style: italic;
     }
   }
-  .arrow_icon {
-    fill: $dark-text;
-    cursor: pointer;
-    height: 10px;
+  .arrow_icon_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $grey-text-hover;
+    }
+
+    .arrow_icon {
+      fill: $dark-text;
+      cursor: pointer;
+      height: 10px;
+    }
   }
 }
 
