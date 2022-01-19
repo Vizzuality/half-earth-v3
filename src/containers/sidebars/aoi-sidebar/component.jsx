@@ -14,6 +14,8 @@ import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
+import { writeToForageItem } from 'utils/local-forage-utils';
+
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { WDPALayers } from 'constants/protected-areas';
 import { AOI_BIODIVERSITY_TOGGLES } from 'constants/biodiversity-layers-constants';
@@ -39,10 +41,22 @@ const LocalSceneSidebarComponent = ({
   handleSceneModeChange,
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [updatedAreaName, setUpdatedAreaName] = useState(false);
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
     setShareModalOpen(true);
   };
+
+  const saveName = () => {
+    setIsEditingName(false);
+    writeToForageItem(area, {
+      areaName: updatedAreaName,
+      timestamp: Date.now(),
+      ...contextualData,
+    });
+  };
+
   return (
     <>
       <section className={styles.headerCard}>
@@ -56,7 +70,19 @@ const LocalSceneSidebarComponent = ({
         <DummyBlurWorkaround />
         <div className={styles.topRow}>
           <div className={styles.nameWrapper}>
-            <p className={styles.areaName}>{contextualData.areaName}</p>
+            {isEditingName ? (
+              <input
+                autoFocus
+                type="text"
+                className={styles.areaNameEdit}
+                onChange={(e) => setUpdatedAreaName(e.target.value)}
+                placeholder="Type name"
+              />
+            ) : (
+              <p className={styles.areaName}>
+                {updatedAreaName || contextualData.areaName}
+              </p>
+            )}
             {area && (
               <p className={styles.area}>
                 {`${area} `}
@@ -66,22 +92,34 @@ const LocalSceneSidebarComponent = ({
               </p>
             )}
           </div>
-          <div className={styles.actionButtons}>
-            {contextualData.isCustom && (
+          {isEditingName ? (
+            <div className={styles.actionButtons}>
               <Button
-                Icon={EditIcon}
-                type="icon-square"
-                handleClick={() => console.log('edit')}
-                tooltipText="Edit the name of this area"
+                type="rectangular"
+                className={styles.saveButton}
+                handleClick={saveName}
+                tooltipText="Save the area name"
+                label="SAVE"
               />
-            )}
-            <Button
-              Icon={ShareIcon}
-              type="icon-square"
-              handleClick={handleShareModalOpen}
-              tooltipText="Share this area"
-            />
-          </div>
+            </div>
+          ) : (
+            <div className={styles.actionButtons}>
+              {contextualData.isCustom && (
+                <Button
+                  Icon={EditIcon}
+                  type="icon-square"
+                  handleClick={() => setIsEditingName(true)}
+                  tooltipText="Edit the name of this area"
+                />
+              )}
+              <Button
+                Icon={ShareIcon}
+                type="icon-square"
+                handleClick={handleShareModalOpen}
+                tooltipText="Share this area"
+              />
+            </div>
+          )}
         </div>
       </section>
       <div className={cx(styles.container, className)}>

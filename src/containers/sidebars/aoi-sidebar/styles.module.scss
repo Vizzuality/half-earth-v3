@@ -16,7 +16,7 @@ $sidebar-content-top: 180px;
   border: $sidebar-border;
 }
 
-.container { 
+.container {
   @extend %verticalScrollbar;
   @include backdropBlur();
   position: absolute;
@@ -76,6 +76,26 @@ $sidebar-content-top: 180px;
   max-width: 300px;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.saveButton {
+  height: 30px;
+  width: 60px;
+  color: $dark-text;
+  background-color: $brand-color-main;
+
+  &:hover {
+    background-color: $brand-color-main-hover;
+  }
+}
+
+.areaNameEdit {
+  @extend %display2;
+  background-color: transparent;
+  border-width: 0 0 2px 0;
+  color: $white;
+  margin: 0;
+  max-width: 300px;
 }
 
 .area {
