@@ -59,7 +59,14 @@ const SpeciesCardContainer = (props) => {
 
   const handleSpeciesSearch = (value) => {
     const results = speciesToDisplay
-      .filter((species) => species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0)
+      .filter((species) => {
+        const nameFound = species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0;
+        let commonNameFound = false;
+        if (species.commonName) {
+          commonNameFound = species.commonName.findIndex((cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0 ) >= 0;
+        }
+        return nameFound || commonNameFound;
+      })
       .map((elem) => ({
         label: elem.name,
         slug: elem.name
