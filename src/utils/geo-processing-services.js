@@ -188,15 +188,18 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   })
 }
 
+const getAreaName = (data, config) => {
+  if (!config) return null;
+  return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
+}
+
 export const getPrecalculatedContextualData = (data, layerSlug) => ({
   elu: {
     climateRegime: data.climate_regime_majority,
     landCover: data.land_cover_majority
   },
   area: data.AREA_KM2,
-  areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ?
-    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})` :
-    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
+  areaName: getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
   pressures: {
     'rangelands': data.percent_rangeland,
     'rainfed agriculture': data.percent_rainfed,
