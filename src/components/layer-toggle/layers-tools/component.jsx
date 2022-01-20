@@ -1,5 +1,8 @@
 import React from 'react';
 import LayerOpacityControl from 'components/layer-opacity-control';
+import { Tooltip } from 'react-tippy';
+
+// icons
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as BringToBackIcon } from 'icons/bring_to_back.svg';
 import { ReactComponent as BringToFrontIcon } from 'icons/bring_to_front.svg';
@@ -17,38 +20,59 @@ const Component = ({
 }) => (
   <div className={styles.toggle}>
     <span
-      title='movelayer to the front'
-      className ={styles.iconWrapper}
+      className={styles.iconWrapper}
       onClick={(e) => onBringToFrontClick(e, option.value)}
     >
-      <BringToFrontIcon
-        className={styles.icon}
-      />
+      <Tooltip
+        html={<div className={styles.tooltip}>Bring to front</div>}
+        animation="none"
+        position="top"
+      >
+        <BringToFrontIcon
+          className={styles.icon}
+        />
+      </Tooltip>
     </span>
     <span
-      title='movelayer to the back'
-      className ={styles.iconWrapper}
+      className={styles.iconWrapper}
       onClick={(e) => onBringToBackClick(e, option.value)}
     >
-      <BringToBackIcon
-        title='movelayer to the back'
-        className={styles.icon}
-      />
+      <Tooltip
+        html={<div className={styles.tooltip}>Send to back</div>}
+        animation="none"
+        position="top"
+      >
+        <BringToBackIcon
+          className={styles.icon}
+        />
+      </Tooltip>
     </span>
-    <LayerOpacityControl
-      layer={option}
-      changeGlobe={changeGlobe}
-      activeLayers={activeLayers}
-      initialOpacityValue={initialOpacityValue}
-    />
+    <Tooltip
+      html={<div className={styles.tooltip}>Change opacity</div>}
+      animation="none"
+      position="top"
+    >
+      <LayerOpacityControl
+        layer={option}
+        changeGlobe={changeGlobe}
+        activeLayers={activeLayers}
+        initialOpacityValue={initialOpacityValue}
+      />
+    </Tooltip>
     <span
-      title='show layer metadata'
-      className ={styles.iconWrapper}
+      className={styles.iconWrapper}
       onClick={() => onInfoClick(option)}
     >
-      <InfoIcon
-        className={styles.icon}
-      />
+      <Tooltip
+        html={<div className={styles.tooltip}>More info</div>}
+        animation="none"
+        position="top"
+      >
+        <InfoIcon
+          className={styles.icon}
+        />
+      </Tooltip>
+
     </span>
   </div>
 )
