@@ -61,9 +61,10 @@ const Container = props => {
         const { geometry, attributes } = features[0];
         setGeometry(geometry);
         setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
-        [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
-          getPrecalculatedSpeciesData(taxa, aoiStoredGeometry).then(data => setTaxaData(data));
-        });
+        getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
       })
     }
   }, [precalculatedLayerSlug, geometryEngine])
