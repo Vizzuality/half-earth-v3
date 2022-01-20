@@ -51,6 +51,7 @@ const AOISidebarComponent = ({
   const saveName = () => {
     setIsEditingName(false);
     writeToForageItem(contextualData.aoiId, {
+      ...contextualData,
       timestamp: Date.now(),
       areaName: updatedAreaName,
     });
