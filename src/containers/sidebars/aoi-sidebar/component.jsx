@@ -27,7 +27,7 @@ import {
 
 import styles from './styles.module.scss';
 
-const LocalSceneSidebarComponent = ({
+const AOISidebarComponent = ({
   map,
   area,
   className,
@@ -50,10 +50,9 @@ const LocalSceneSidebarComponent = ({
 
   const saveName = () => {
     setIsEditingName(false);
-    writeToForageItem(area, {
-      areaName: updatedAreaName,
+    writeToForageItem(contextualData.aoiId, {
       timestamp: Date.now(),
-      ...contextualData,
+      areaName: updatedAreaName,
     });
   };
 
@@ -109,7 +108,7 @@ const LocalSceneSidebarComponent = ({
                   Icon={EditIcon}
                   type="icon-square"
                   handleClick={() => setIsEditingName(true)}
-                  tooltipText="Edit the name of this area"
+                  tooltipText="Edit area name"
                 />
               )}
               <Button
@@ -189,4 +188,4 @@ const LocalSceneSidebarComponent = ({
   );
 };
 
-export default LocalSceneSidebarComponent;
+export default AOISidebarComponent;
