@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import orderBy from 'lodash/orderBy';
 
 // constants
 import { DEFAULT_SPECIES_FILTER, IUCN_CATEGORIES } from 'constants/analyze-areas-constants';
 import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
-
 
 // utils
 import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
@@ -132,7 +132,7 @@ const SpeciesCardContainer = (props) => {
   useEffect(() => {
     switch (selectedSpeciesFilter.slug) {
       case 'all':
-        const allSorted = species.sort((a, b) => b.isFlagship - a.isFlagship);
+        const allSorted = orderBy([...speciesData.species], ['has_image', 'conservationConcern'], ['desc', 'desc']);
         setSpeciesToDisplay(allSorted);
         setSpeciesToDisplayBackUp([...allSorted]);
         break;
@@ -147,7 +147,7 @@ const SpeciesCardContainer = (props) => {
         setSpeciesToDisplayBackUp([...endangeredSorted]);
         break;
       default:
-        const speciesSorted = species.filter(sp => sp.category === selectedSpeciesFilter.slug).sort((a, b) => b.isFlagship - a.isFlagship);
+        const speciesSorted = orderBy([...speciesData.species], ['has_image', 'conservationConcern'], ['desc', 'desc']);
         setSpeciesToDisplay(speciesSorted);
         setSpeciesToDisplayBackUp([...speciesSorted]);
         break;
