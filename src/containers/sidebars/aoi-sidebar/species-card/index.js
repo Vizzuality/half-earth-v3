@@ -147,7 +147,7 @@ const SpeciesCardContainer = (props) => {
         setSpeciesToDisplayBackUp([...endangeredSorted]);
         break;
       default:
-        const speciesSorted = orderBy([...speciesData.species], ['has_image', 'conservationConcern'], ['desc', 'desc']);
+        const speciesSorted = orderBy([...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)], ['has_image', 'conservationConcern'], ['desc', 'desc']);
         setSpeciesToDisplay(speciesSorted);
         setSpeciesToDisplayBackUp([...speciesSorted]);
         break;

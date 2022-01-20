@@ -89,10 +89,16 @@ const Container = (props) => {
       whereClause: `MOL_IDg = '${aoiId}'`,
       returnGeometry: false
     }).then((features) => {
-      const tempData = features.map((f) => f.attributes);
-      tempData.sort(sortFunction);
-      setData(tempData);
-      setFilteredData([...tempData]);
+      if (features) {
+        const tempData = features.map((f) => f.attributes);
+        tempData.sort(sortFunction);
+        setData(tempData);
+        setFilteredData([...tempData]);
+      } else {
+        setData([]);
+        setFilteredData([]);
+      }
+
     })
   }, [aoiId]);
 
