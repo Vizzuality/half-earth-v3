@@ -75,22 +75,25 @@ const Container = props => {
       localforage.getItem(aoiId).then((localStoredAoi) => {
         // If the AOI is not precalculated
         // we first search on the AOIs history stored on the browser
+        // STORED CUSTOM AOI
         if (localStoredAoi && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
-          setContextualData({ ...rest })
+          setContextualData({ ...rest, aoiId, isCustom: true  })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
         } else {
             // We then try to get the calculations from the
             // shared AOIs database on the servers
+            // PREGENERATED AOI
             getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
               const { geometry, species, ...rest } = aoiData;
               setGeometry(geometry);
               setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
-              setContextualData({ ...rest, isCustom: false })
+              setContextualData({ ...rest, aoiId, isCustom: false })
             } else {
-              // An if we don't have it anywhere we just execute the GP services job to create a new one
+              // And if we don't have it anywhere we just execute the GP services job to create one
+              // NEW CUSTOM AOI
               const areaName = 'Custom area';
 
               const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
@@ -98,7 +101,7 @@ const Container = props => {
               setContextualData({area, areaName, isCustom: true });
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, {jsonGeometry, area, areaName, timestamp: Date.now()});
-              getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, ...data }));
+              getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, aoiId, ...data }));
               [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
                 getSpeciesData(taxa, aoiStoredGeometry).then(data => setTaxaData(data));
               })
