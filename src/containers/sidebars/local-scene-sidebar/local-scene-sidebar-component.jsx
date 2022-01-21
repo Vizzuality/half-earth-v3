@@ -17,10 +17,10 @@ import RankingSidebar from './ranking-sidebar';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './local-scene-sidebar-styles.module.scss';
 
-import { 
+import {
   LOCAL_SCENE_TABS_SLUGS,
   LOCAL_SCENE_TABS,
-  LOCAL_SCENE_DEFAULT_TAB 
+  LOCAL_SCENE_DEFAULT_TAB,
 } from 'constants/ui-params';
 
 const LocalSceneSidebarComponent = ({
@@ -33,6 +33,8 @@ const LocalSceneSidebarComponent = ({
   isFullscreenActive,
   localSceneActiveTab,
   handleSceneModeChange,
+  map,
+  activeLayers,
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -40,11 +42,11 @@ const LocalSceneSidebarComponent = ({
   return (
     <div
       className={cx(styles.container, className, {
-        [animationStyles.leftHidden]: sidebarHidden
+        [animationStyles.leftHidden]: sidebarHidden,
       })}
     >
-      <Button 
-        type='rounded'
+      <Button
+        type="rounded"
         handleClick={handleSceneModeChange}
         Icon={CloseIcon}
         className={styles.backButton}
@@ -54,7 +56,11 @@ const LocalSceneSidebarComponent = ({
       <div className={styles.nameWrapper}>
         <span className={styles.nrcTitle}>National report card of</span>
         <div className={styles.flagWrapper}>
-          <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+          <img
+            className={styles.flag}
+            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            alt=""
+          />
           {countryName && <p className={styles.countryName}>{countryName}</p>}
         </div>
       </div>
@@ -66,44 +72,43 @@ const LocalSceneSidebarComponent = ({
       />
       {!countryData ? (
         <div className={styles.loading}>
-          <span className={styles.loadingText}>{`Loading country information...`}</span>
+          <span
+            className={styles.loadingText}
+          >{`Loading country information...`}</span>
           <Loading />
         </div>
       ) : (
         <div className={styles.scrollableArea}>
-          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && 
-            <OverviewSidebar 
+          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
+            <OverviewSidebar
               countryISO={countryISO}
               openedModal={openedModal}
+              map={map}
+              activeLayers={activeLayers}
             />
-          }
-          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && 
-            <ChallengesSidebar 
-              countryISO={countryISO}
-            />
-          }
-          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && 
-            <RankingSidebar 
-              countryISO={countryISO}
-            />
-          }
-          <Button 
-            type='compound'
+          )}
+          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
+            <ChallengesSidebar countryISO={countryISO} />
+          )}
+          {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
+            <RankingSidebar countryISO={countryISO} />
+          )}
+          <Button
+            type="compound"
             Icon={ShareIcon}
             handleClick={setShareModalOpen}
             className={styles.actionButton}
             label="share this info"
             tooltipText="Share the URL to this view"
           />
-            <ShareModal
-              isOpen={isShareModalOpen}
-              setShareModalOpen={setShareModalOpen}
-            />
+          <ShareModal
+            isOpen={isShareModalOpen}
+            setShareModalOpen={setShareModalOpen}
+          />
         </div>
       )}
     </div>
   );
-}
-
+};
 
 export default LocalSceneSidebarComponent;

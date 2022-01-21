@@ -14,7 +14,7 @@
     border: 1px solid $white;
   }
   input:checked + label::after {
-    border: 2px solid $white; 
+    border: 2px solid $white;
   }
 }
 
@@ -32,6 +32,24 @@
     border: 1px solid $dark-text;
   }
   input:checked + label::after {
-    border: 2px solid $dark-text; 
+    border: 2px solid $dark-text;
+  }
+}
+
+.lighter {
+  color: $dark-text;
+  background-color: transparent;
+
+  &.checked {
+    fill: $dark-text;
+    stroke: $dark-text;
+  }
+
+  label::after {
+    border: 1px solid $dark-text;
+  }
+
+  input:checked + label::after {
+    border: 2px solid $dark-text;
   }
 }

@@ -5,11 +5,11 @@ import mapStateToProps from 'containers/sidebars/local-scene-sidebar/local-scene
 import { visitNrcOverviewAnalytics, downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 const actions = { visitNrcOverviewAnalytics, downloadNrcPdfAnalytics }
 
-const Container = (props) => {
+const OverviewSidebar = (props) => {
 
     useEffect(() => {
       const { visitNrcOverviewAnalytics } = props;
-      visitNrcOverviewAnalytics() 
+      visitNrcOverviewAnalytics()
     }, [])
 
     const handlePrintReport = () => {
@@ -25,10 +25,10 @@ const Container = (props) => {
 
     return (
       <Component
-        handlePrintReport={handlePrintReport}  
+        handlePrintReport={handlePrintReport}
         {...props}
       />
     )
 }
 
-export default connect(mapStateToProps, actions)(Container);
+export default connect(mapStateToProps, actions)(OverviewSidebar);

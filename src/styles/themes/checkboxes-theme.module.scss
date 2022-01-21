@@ -32,3 +32,12 @@
     background: $brand-color-secondary;
   }
 }
+
+.additional-protection {
+  input:checked + label::after {
+    background: $biodiversity-gradient-rotated;
+  }
+  input:checked + label::before {
+    background: $brand-color-secondary;
+  }
+}

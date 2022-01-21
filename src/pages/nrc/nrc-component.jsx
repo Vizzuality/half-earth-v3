@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import loadable from '@loadable/component';
 
@@ -28,55 +28,62 @@ const NationalReportCard = ({
   localSceneActiveTab,
   countryTooltipDisplayFor,
   countryChallengesSelectedKey,
-}) => (
-  <>
-    <HalfEarthLogo
-      className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
-    />
-    <MainMenu />
-    <LocalSceneSidebar
-      countryISO={countryISO}
-      countryName={countryName}
-      openedModal={openedModal}
-      activeLayers={activeLayers}
-      className={cx(styles.sidebarContainer, styles.hideOnPrint)}
-      isFullscreenActive={isFullscreenActive}
-      handleGlobeUpdating={handleGlobeUpdating}
-      localSceneActiveTab={localSceneActiveTab}
-    />
-    <NationalReportCardScene
-      countryISO={countryISO}
-      userConfig={userConfig}
-      openedModal={openedModal}
-      countryName={countryName}
-      activeLayers={activeLayers}
-      sceneSettings={sceneSettings}
-      isFullscreenActive={isFullscreenActive}
-      countryTooltipDisplayFor={countryTooltipDisplayFor}
-      onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-      isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
-    />
-    {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
-      <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
-        <CountryChallengesChart
-          countryISO={countryISO}
-          className={styles.challengesChart}
-          localSceneActiveTab={localSceneActiveTab}
-          countryChallengesSelectedKey={countryChallengesSelectedKey}
-        />
-      </div>
-    )}
-    {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
-      <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
-        <RankingChart
-          countryISO={countryISO}
-          className={styles.rankingChart}
-          localSceneActiveTab={localSceneActiveTab}
-        />
-      </div>
-    )}
-    {hasMetadata && <InfoModal />}
-  </>
-);
+}) => {
+  const [map, setMap] = useState();
+  return (
+    <>
+      <HalfEarthLogo
+        className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
+      />
+      <MainMenu />
+      <LocalSceneSidebar
+        countryISO={countryISO}
+        countryName={countryName}
+        openedModal={openedModal}
+        map={map}
+        activeLayers={activeLayers}
+        className={cx(styles.sidebarContainer, styles.hideOnPrint)}
+        isFullscreenActive={isFullscreenActive}
+        handleGlobeUpdating={handleGlobeUpdating}
+        localSceneActiveTab={localSceneActiveTab}
+      />
+      <NationalReportCardScene
+        countryISO={countryISO}
+        userConfig={userConfig}
+        openedModal={openedModal}
+        countryName={countryName}
+        activeLayers={activeLayers}
+        sceneSettings={sceneSettings}
+        isFullscreenActive={isFullscreenActive}
+        countryTooltipDisplayFor={countryTooltipDisplayFor}
+        onMapLoad={(loadedMap) => {
+          setMap(loadedMap);
+          handleMapLoad(loadedMap, activeLayers);
+        }}
+        isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
+      />
+      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
+        <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
+          <CountryChallengesChart
+            countryISO={countryISO}
+            className={styles.challengesChart}
+            localSceneActiveTab={localSceneActiveTab}
+            countryChallengesSelectedKey={countryChallengesSelectedKey}
+          />
+        </div>
+      )}
+      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
+        <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
+          <RankingChart
+            countryISO={countryISO}
+            className={styles.rankingChart}
+            localSceneActiveTab={localSceneActiveTab}
+          />
+        </div>
+      )}
+      {hasMetadata && <InfoModal />}
+    </>
+  );
+};
 
 export default NationalReportCard;
