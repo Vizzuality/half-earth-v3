@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import localforage from 'localforage';
 import orderBy from 'lodash/orderBy';
 import { loadModules } from 'esri-loader';
-import mapStateToProps from './selectors';
 import EsriFeatureService from 'services/esri-feature-service';
-import * as urlActions from 'actions/url-actions';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+
+// actions
+import * as urlActions from 'actions/url-actions';
+
+// utils
 import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
-import { layersConfig } from 'constants/mol-layers-configs';
-import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import {
   writeToForageItem
 } from 'utils/local-forage-utils';
@@ -21,20 +22,28 @@ import {
   getPrecalculatedSpeciesData,
   getPrecalculatedContextualData,
 } from 'utils/geo-processing-services';
+
+// constants
 import {
   BIRDS,
   MAMMALS,
   REPTILES,
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
-
-import Component from './component.jsx';
+import { layersConfig } from 'constants/mol-layers-configs';
+import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { PROTECTED_AREAS_TYPE } from 'constants/aois';
+import { WDPA_OECM_FEATURE_DATA_LAYER } from 'constants/layers-slugs.js';
+
+// local
+import Component from './component.jsx';
+import mapStateToProps from './selectors';
 
 const actions = {...urlActions, aoisGeometriesActions};
 
 const Container = props => {
-  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug } = props;
+  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, areaTypeSelected } = props;
 
   const [taxaData, setTaxaData] = useState([])
   const [geometry, setGeometry] = useState(null);
@@ -60,11 +69,30 @@ const Container = props => {
       }).then((features) => {
         const { geometry, attributes } = features[0];
         setGeometry(geometry);
-        setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
-        getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
-        getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then(data => setTaxaData(data));
-        getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
-        getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+
+        if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
+          // Special case for WDPA areas
+          // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
+          EsriFeatureService.getFeatures({
+            url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
+            whereClause: `MOL_ID = '${attributes.MOL_ID}'`,
+            returnGeometry: false
+          }).then((results) => {
+            const { attributes } = results[0];
+
+            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
+            getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+            getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then(data => setTaxaData(data));
+            getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+            getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+          });
+        } else {
+          setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
+          getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+          getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then(data => setTaxaData(data));
+          getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+          getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+        }
       })
     }
   }, [precalculatedLayerSlug, geometryEngine])

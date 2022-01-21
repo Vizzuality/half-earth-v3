@@ -21,7 +21,7 @@ const MAP_TOOLTIP_CONFIG = {
     title: 'NAME',
     subtitle: '',
     buttonText: 'analyze area',
-    id: 'WDPAID'
+    id: 'MOL_ID'
   }
 }
 

@@ -188,25 +188,27 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   })
 }
 
-export const getPrecalculatedContextualData = (data, layerSlug) => ({
-  elu: {
-    climateRegime: data.climate_regime_majority,
-    landCover: data.land_cover_majority
-  },
-  area: data.AREA_KM2,
-  areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ?
-    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})` :
-    `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
-  pressures: {
-    'rangelands': data.percent_rangeland,
-    'rainfed agriculture': data.percent_rainfed,
-    'urban': data.percent_urban,
-    'irrigated agriculture': data.percent_irrigated,
-  },
-  population: data.population_sum,
-  // ...protectedAreasList,
-  protectionPercentage: data.percentage_protected,
-})
+export const getPrecalculatedContextualData = (data, layerSlug) => {
+  return ({
+    elu: {
+      climateRegime: data.climate_regime_majority,
+      landCover: data.land_cover_majority
+    },
+    area: data.AREA_KM2,
+    areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ?
+      `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})` :
+      `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
+    pressures: {
+      'rangelands': data.percent_rangeland,
+      'rainfed agriculture': data.percent_rainfed,
+      'urban': data.percent_urban,
+      'irrigated agriculture': data.percent_irrigated,
+    },
+    population: data.population_sum,
+    // ...protectedAreasList,
+    protectionPercentage: data.percentage_protected,
+  });
+}
 
 export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {
