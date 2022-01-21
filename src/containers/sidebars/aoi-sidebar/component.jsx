@@ -14,14 +14,20 @@ import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
+import { writeToForageItem } from 'utils/local-forage-utils';
+
 import { humanPressuresLandUse } from 'constants/human-pressures';
 import { WDPALayers } from 'constants/protected-areas';
 import { AOI_BIODIVERSITY_TOGGLES } from 'constants/biodiversity-layers-constants';
-import { LAND_HUMAN_PRESSURES_SLUG, BIODIVERSITY_SLUG, PROTECTION_SLUG } from 'constants/analyze-areas-constants';
+import {
+  LAND_HUMAN_PRESSURES_SLUG,
+  BIODIVERSITY_SLUG,
+  PROTECTION_SLUG,
+} from 'constants/analyze-areas-constants';
 
 import styles from './styles.module.scss';
 
-const LocalSceneSidebarComponent = ({
+const AOISidebarComponent = ({
   map,
   area,
   className,
@@ -35,67 +41,112 @@ const LocalSceneSidebarComponent = ({
   handleSceneModeChange,
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [updatedAreaName, setUpdatedAreaName] = useState(false);
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
     setShareModalOpen(true);
-  }
+  };
+
+  const saveName = () => {
+    setIsEditingName(false);
+    writeToForageItem(contextualData.aoiId, {
+      ...contextualData,
+      timestamp: Date.now(),
+      areaName: updatedAreaName,
+    });
+  };
 
   return (
     <>
-    <section className={styles.headerCard}>
-      <Button
-        type='rounded'
-        handleClick={handleSceneModeChange}
-        Icon={CloseIcon}
-        className={styles.backButton}
-        tooltipText="Go back to the globe"
-      />
-      <DummyBlurWorkaround />
-      <div className={styles.topRow}>
-        <div className={styles.nameWrapper}>
-          <p className={styles.areaName}>{contextualData.areaName}</p>
-          {area && <p className={styles.area}>{`${area} `}<span>km<sup>2</sup></span></p>}
+      <section className={styles.headerCard}>
+        <Button
+          type="rounded"
+          handleClick={handleSceneModeChange}
+          Icon={CloseIcon}
+          className={styles.backButton}
+          tooltipText="Go back to the globe"
+        />
+        <DummyBlurWorkaround />
+        <div className={styles.topRow}>
+          <div className={styles.nameWrapper}>
+            {isEditingName ? (
+              <input
+                autoFocus
+                type="text"
+                className={styles.areaNameEdit}
+                onChange={(e) => setUpdatedAreaName(e.target.value)}
+                placeholder="Type name"
+              />
+            ) : (
+              <p className={styles.areaName}>
+                {updatedAreaName || contextualData.areaName}
+              </p>
+            )}
+            {area && (
+              <p className={styles.area}>
+                {`${area} `}
+                <span>
+                  km<sup>2</sup>
+                </span>
+              </p>
+            )}
+          </div>
+          {isEditingName ? (
+            <div className={styles.actionButtons}>
+              <Button
+                type="rectangular"
+                className={styles.saveButton}
+                handleClick={saveName}
+                tooltipText="Save the area name"
+                label="SAVE"
+              />
+            </div>
+          ) : (
+            <div className={styles.actionButtons}>
+              {contextualData.isCustom && (
+                <Button
+                  Icon={EditIcon}
+                  type="icon-square"
+                  handleClick={() => setIsEditingName(true)}
+                  tooltipText="Edit area name"
+                />
+              )}
+              <Button
+                Icon={ShareIcon}
+                type="icon-square"
+                handleClick={handleShareModalOpen}
+                tooltipText="Share this area"
+              />
+            </div>
+          )}
         </div>
-        <div className={styles.actionButtons}>
-          <Button
-            Icon={EditIcon}
-            type="icon-square"
-            handleClick={() => console.log('edit')}
-            tooltipText="Draw a new area"
-          />
-          <Button
-            Icon={ShareIcon}
-            type="icon-square"
-            handleClick={handleShareModalOpen}
-            tooltipText="Share this area"
-          />
-        </div>
-      </div>
-    </section>
-      <div
-        className={cx(styles.container, className)}
-      >
+      </section>
+      <div className={cx(styles.container, className)}>
         <div className={styles.contextualDataRow}>
           <div className={styles.contextualIndicator} title="population">
             <PopulationIcon />
             <span>{population}</span>
           </div>
-          <div className={styles.contextualIndicator} title={`land cover: ${landCover}` }>
+          <div
+            className={styles.contextualIndicator}
+            title={`land cover: ${landCover}`}
+          >
             <LandCoverIcon />
             <span>{landCover}</span>
           </div>
-          <div className={styles.contextualIndicator}  title={`climate regime: ${climateRegime}` }>
+          <div
+            className={styles.contextualIndicator}
+            title={`climate regime: ${climateRegime}`}
+          >
             <ClimateRegimeIcon />
             <span>{climateRegime}</span>
           </div>
         </div>
-        <SpeciesCard
-          area={area}
-          speciesData={speciesData}
-        />
+        <SpeciesCard area={area} speciesData={speciesData} />
         <SidebarCard
           map={map}
-          toggleType='radio'
+          toggleType="radio"
           activeLayers={activeLayers}
           contextualData={contextualData}
           cardCategory={BIODIVERSITY_SLUG}
@@ -105,14 +156,14 @@ const LocalSceneSidebarComponent = ({
         <SidebarCard
           map={map}
           layers={WDPALayers}
-          toggleType='checkbox'
+          toggleType="checkbox"
           activeLayers={activeLayers}
           cardCategory={PROTECTION_SLUG}
           contextualData={contextualData}
         />
         <SidebarCard
           map={map}
-          toggleType='checkbox'
+          toggleType="checkbox"
           activeLayers={activeLayers}
           layers={humanPressuresLandUse}
           contextualData={contextualData}
@@ -122,7 +173,7 @@ const LocalSceneSidebarComponent = ({
           <p>Do you have more information about this particular area?</p>
           <a
             className={styles.link}
-            href='https://mol.org/upload'
+            href="https://mol.org/upload"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -136,7 +187,6 @@ const LocalSceneSidebarComponent = ({
       </div>
     </>
   );
-}
+};
 
-
-export default LocalSceneSidebarComponent;
+export default AOISidebarComponent;

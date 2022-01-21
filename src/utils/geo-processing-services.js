@@ -31,7 +31,7 @@ export function getJobInfo(url, params) {
 export function jobTimeProfiling(jobStart) {
   const jobStatusTime = Date.now();
   const miliseconds = Math.abs(jobStart - jobStatusTime);
-  console.log('TIME ELLAPSED ', miliseconds / 1000, ' SECONDS');
+  console.info('TIME ELLAPSED ', miliseconds/1000, ' SECONDS');
 }
 
 export function getEluData(data) {
@@ -188,27 +188,28 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   })
 }
 
-export const getPrecalculatedContextualData = (data, layerSlug) => {
-  return ({
-    elu: {
-      climateRegime: data.climate_regime_majority,
-      landCover: data.land_cover_majority
-    },
-    area: data.AREA_KM2,
-    areaName: PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle ?
-      `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}, (${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].subtitle]})` :
-      `${data[PRECALCULATED_LAYERS_CONFIG[layerSlug].name]}`,
-    pressures: {
-      'rangelands': data.percent_rangeland,
-      'rainfed agriculture': data.percent_rainfed,
-      'urban': data.percent_urban,
-      'irrigated agriculture': data.percent_irrigated,
-    },
-    population: data.population_sum,
-    // ...protectedAreasList,
-    protectionPercentage: data.percentage_protected,
-  });
+const getAreaName = (data, config) => {
+  if (!config) return null;
+  return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
 }
+
+export const getPrecalculatedContextualData = (data, layerSlug) => ({
+  elu: {
+    climateRegime: data.climate_regime_majority,
+    landCover: data.land_cover_majority
+  },
+  area: data.AREA_KM2,
+  areaName: getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
+  pressures: {
+    'rangelands': data.percent_rangeland,
+    'rainfed agriculture': data.percent_rainfed,
+    'urban': data.percent_urban,
+    'irrigated agriculture': data.percent_irrigated,
+  },
+  population: data.population_sum,
+  // ...protectedAreasList,
+  protectionPercentage: data.percentage_protected,
+})
 
 export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {

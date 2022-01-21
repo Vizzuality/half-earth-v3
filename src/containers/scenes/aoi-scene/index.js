@@ -103,33 +103,36 @@ const Container = props => {
       localforage.getItem(aoiId).then((localStoredAoi) => {
         // If the AOI is not precalculated
         // we first search on the AOIs history stored on the browser
-        if (localStoredAoi && localStoredAoi.species && localStoredAoi.jsonGeometry) {
+        // STORED CUSTOM AOI
+        if (localStoredAoi && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
-          setContextualData({ ...rest })
+          setContextualData({ ...rest, aoiId, isCustom: true  })
           setGeometry(jsonUtils.fromJSON(jsonGeometry));
         } else {
             // We then try to get the calculations from the
             // shared AOIs database on the servers
+            // PREGENERATED AOI
             getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
               const { geometry, species, ...rest } = aoiData;
               setGeometry(geometry);
               setSpeciesData({species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc'])});
-              setContextualData({ ...rest })
+              setContextualData({ ...rest, aoiId, isCustom: false })
             } else {
-              // An if we don't have it anywhere we just execute the GP services job
+              // And if we don't have it anywhere we just execute the GP services job to create one
+              // NEW CUSTOM AOI
               const areaName = 'Custom area';
-              const jsonGeometry = aoiStoredGeometry.toJSON();
+
+              const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
-              setContextualData({area, areaName});
+              setContextualData({area, areaName, isCustom: true, aoiId });
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
-              writeToForageItem(aoiId, {jsonGeometry, area, areaName, timestamp: Date.now()});
+              writeToForageItem(aoiId, { jsonGeometry, area, areaName, timestamp: Date.now() });
               getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, ...data }));
-              getSpeciesData(BIRDS, aoiStoredGeometry).then(data => setTaxaData(data));
-              getSpeciesData(MAMMALS, aoiStoredGeometry).then(data => setTaxaData(data));
-              getSpeciesData(REPTILES, aoiStoredGeometry).then(data => setTaxaData(data));
-              getSpeciesData(AMPHIBIANS, aoiStoredGeometry).then(data => setTaxaData(data));
+              [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
+                getSpeciesData(taxa, aoiStoredGeometry).then(data => setTaxaData(data));
+              })
             }
           })
         }
@@ -147,14 +150,14 @@ const Container = props => {
 
 
   useEffect(() => {
-    if(speciesData.species.length > 0 && !precalculatedLayerSlug) {
-      writeToForageItem(aoiId, {species: [...speciesData.species]});
+    if (speciesData.species && !precalculatedLayerSlug) {
+      writeToForageItem(aoiId, { species: [...speciesData.species] });
     }
   },[speciesData, precalculatedLayerSlug]);
 
   useEffect(() => {
-    if(!precalculatedLayerSlug) {
-      writeToForageItem(aoiId, {...contextualData});
+    if (!precalculatedLayerSlug) {
+      writeToForageItem(aoiId, { ...contextualData });
     }
   },[contextualData, precalculatedLayerSlug]);
 
