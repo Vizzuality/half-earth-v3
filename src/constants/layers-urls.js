@@ -75,6 +75,7 @@ import {
   SPECIES_LIST,
   FIREFLY_BASEMAP_LAYER,
   WDPA_OECM_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_DATA_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
@@ -227,6 +228,6 @@ export const LAYERS_URLS = {
   //  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
   //  [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
     [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_terrestrialmarine2021_simplified/FeatureServer/0',
-
+    [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/051ba1f3714748bfb4c725d29b938e20/rest/services/all_precalc_wdpa_no_geom/FeatureServer/0',
 
 };

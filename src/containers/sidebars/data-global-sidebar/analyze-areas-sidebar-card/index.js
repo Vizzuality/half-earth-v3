@@ -119,7 +119,7 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const handleOptionSelection = (option) => {
-    switch (option) {
+    switch (option.slug) {
       case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
         setAreaTypeSelected(SUBNATIONAL_BOUNDARIES_TYPE);
         break;
