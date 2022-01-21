@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { selectGlobeUrlState } from 'selectors/location-selectors';
-import { selectAoiId, getAoiGeometry } from 'selectors/aoi-selectors';
+import { selectAoiId, getAoiGeometry, selectAreaTypeSelected } from 'selectors/aoi-selectors';
 
 import aoiSceneConfig from './config';
 
@@ -20,6 +20,7 @@ const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globe
 
 
 export default createStructuredSelector({
+  areaTypeSelected: selectAreaTypeSelected,
   aoiId: selectAoiId,
   userConfig: selectUserConfig,
   activeLayers: getActiveLayers,

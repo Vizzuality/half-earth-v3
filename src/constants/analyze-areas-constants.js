@@ -96,7 +96,10 @@ export const PRECALCULATED_LAYERS_CONFIG = {
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER] : {
     name: 'NAME_1',
     subtitle: 'GID_0'
-  }
+  },
+  [WDPA_OECM_FEATURE_LAYER] : {
+    name: 'NAME',
+  },
 }
 
 export const HIGHER_AREA_SIZE_LIMIT = 35000;

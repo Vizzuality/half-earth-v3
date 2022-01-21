@@ -116,6 +116,7 @@ export const GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-1-admin-areas-w
 export const GADM_1_ADMIN_AREAS_FEATURE_LAYER = 'gadm-1-admin-areas-feature-layer';
 export const ADMIN_AREAS_VECTOR_TILE_LAYER = 'admin-areas-vector-tile-layer';
 export const WDPA_OECM_FEATURE_LAYER = 'wdpa-oecm-feature-layer';
+export const WDPA_OECM_FEATURE_DATA_LAYER = 'wdpa-oecm-feature-data-layer';
 export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
 export const AOIS_HISTORIC_DEVELOPMENT = 'aois-historic-development';
 
