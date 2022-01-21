@@ -14,24 +14,6 @@ import {
   ADDITIONAL_PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
 
-export const NRC_TOGGLES = {
-  [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
-    name: 'Protected areas',
-    value: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-    id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-    title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-    metadataTitle: 'Protected areas',
-  },
-  [COUNTRY_PRIORITY_LAYER]: {
-    name: 'Additional protection',
-    value: COUNTRY_PRIORITY_LAYER,
-    id: COUNTRY_PRIORITY_LAYER,
-    title: COUNTRY_PRIORITY_LAYER,
-    slug: COUNTRY_PRIORITY_LAYER,
-  },
-};
-
 const LocalPriorityCardComponent = (props) => {
   const {
     hasPriority,
@@ -45,40 +27,60 @@ const LocalPriorityCardComponent = (props) => {
     handleLayerToggle,
   } = props;
 
+  const NRC_TOGGLES = {
+    [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
+      name: `Protected areas : ${currentProtection}%`,
+      value: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      metadataTitle: 'Protected areas',
+    },
+    [COUNTRY_PRIORITY_LAYER]: {
+      name: `Additional protection: ${protectionNeeded}%`,
+      value: COUNTRY_PRIORITY_LAYER,
+      id: COUNTRY_PRIORITY_LAYER,
+      title: COUNTRY_PRIORITY_LAYER,
+      slug: COUNTRY_PRIORITY_LAYER,
+    },
+  };
+
   return (
     <div className={styles.cardContainer}>
-      <SidebarCardWrapper>
+      <SidebarCardWrapper
+        className={styles.wrapper}
+        sectionClassName={styles.section}
+      >
         <SidebarCardContent
-          title={`The current protection: ${currentProtection}%`}
+          title="What is already protected?"
           description="The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature"
-          legendType={'basic'}
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
+
         <LayerToggle
           map={map}
           type="checkbox"
           option={NRC_TOGGLES[PROTECTED_AREAS_VECTOR_TILE_LAYER]}
-          variant="lighter"
-          title={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+          variant="dark"
           key={PROTECTED_AREAS_VECTOR_TILE_LAYER}
           activeLayers={activeLayers}
           onChange={handleLayerToggle}
           toggleCategory={PROTECTION_SLUG}
         />
+      </SidebarCardWrapper>
+      <SidebarCardWrapper sectionClassName={styles.section}>
         <SidebarCardContent
-          title={`Additional protection needed: ${protectionNeeded}%`}
+          title="How much additional protection is needed?"
           description={priorityAreasSentence}
           legendType={hasPriority && 'gradient'}
-          highValueLabel={'high priority'}
-          lowValueLabel={'low priority'}
+          legendGradientSlug={COUNTRY_PRIORITY_LAYER}
           metaDataSources={priorityMetadata && priorityMetadata.source}
         />
         <LayerToggle
           map={map}
           type="checkbox"
           option={NRC_TOGGLES[COUNTRY_PRIORITY_LAYER]}
-          variant="lighter"
-          title={COUNTRY_PRIORITY_LAYER}
+          variant="dark"
           key={COUNTRY_PRIORITY_LAYER}
           activeLayers={activeLayers}
           onChange={handleLayerToggle}
