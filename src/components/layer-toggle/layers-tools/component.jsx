@@ -9,7 +9,7 @@ import { ReactComponent as BringToFrontIcon } from 'icons/bring_to_front.svg';
 
 import styles from './styles.module.scss';
 
-const Component = ({
+const LayersTools = ({
   option,
   onInfoClick,
   changeGlobe,
@@ -28,9 +28,7 @@ const Component = ({
         animation="none"
         position="top"
       >
-        <BringToFrontIcon
-          className={styles.icon}
-        />
+        <BringToFrontIcon className={styles.icon} />
       </Tooltip>
     </span>
     <span
@@ -42,9 +40,7 @@ const Component = ({
         animation="none"
         position="top"
       >
-        <BringToBackIcon
-          className={styles.icon}
-        />
+        <BringToBackIcon className={styles.icon} />
       </Tooltip>
     </span>
     <Tooltip
@@ -59,22 +55,16 @@ const Component = ({
         initialOpacityValue={initialOpacityValue}
       />
     </Tooltip>
-    <span
-      className={styles.iconWrapper}
-      onClick={() => onInfoClick(option)}
-    >
+    <span className={styles.iconWrapper} onClick={() => onInfoClick(option)}>
       <Tooltip
         html={<div className={styles.tooltip}>More info</div>}
         animation="none"
         position="top"
       >
-        <InfoIcon
-          className={styles.icon}
-        />
+        <InfoIcon className={styles.icon} />
       </Tooltip>
-
     </span>
   </div>
-)
+);
 
-export default Component;
+export default LayersTools;
