@@ -42,9 +42,8 @@ import {
   CONIFERS_RARITY,
   CONIFERS_RICHNESS,
   HUMMINGBIRDS_RARITY,
-  HUMMINGBIRDS_RICHNESS
+  HUMMINGBIRDS_RICHNESS,
 } from 'constants/layers-slugs'
-
 
 export const LAYER_VARIANTS = {
   PRIORITY: 'priority',
@@ -83,7 +82,7 @@ export const LAYERS_RESOLUTION = {
   },
 }
 
-export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST'}; 
+export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST'};
 
 export const LAYERS_TOGGLE_CONFIG = {
   [PRIORITY]: {
@@ -343,7 +342,7 @@ export const LAYERS_TOGGLE_CONFIG = {
 }
 
 export const AOI_BIODIVERSITY_TOGGLES = [
-  { 
+  {
     name: 'All groups richness',
     value: ALL_TAXA_RICHNESS,
     id: ALL_TAXA_RICHNESS,
@@ -351,7 +350,7 @@ export const AOI_BIODIVERSITY_TOGGLES = [
     slug: ALL_TAXA_RICHNESS,
     metadataTitle: 'Protected areas'
   },
-  { 
+  {
     name: 'All groups rarity',
     value: ALL_TAXA_RARITY,
     id: ALL_TAXA_RARITY,
@@ -359,7 +358,7 @@ export const AOI_BIODIVERSITY_TOGGLES = [
     slug: ALL_TAXA_RARITY,
     metadataTitle: 'Protected areas'
   },
-  { 
+  {
     name: 'All groups priority',
     value: ALL_TAXA_PRIORITY,
     id: ALL_TAXA_PRIORITY,
