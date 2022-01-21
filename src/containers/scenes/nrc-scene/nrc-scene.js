@@ -43,7 +43,13 @@ const NrcSceneContainer = (props) => {
   }, [countryISO])
 
   const handleCountryClick = (results) => {
-    const { graphic } = results[0];
+    const { graphic } = results[0] || {};
+    if (!graphic) return;
+
+    // TODO: Dont reload again if its the same country. Now the countryISO is not changing
+    // const { attributes: { GID_0 } } = graphic;
+    // if (GID_0 === countryISO) return;
+
     const { browsePage } = props;
     browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view:  LOCAL_SCENE_TABS_SLUGS.OVERVIEW }});
   };

@@ -98,10 +98,10 @@ const Container = props => {
 
               const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
-              setContextualData({area, areaName, isCustom: true });
+              setContextualData({area, areaName, isCustom: true, aoiId });
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
-              writeToForageItem(aoiId, {jsonGeometry, area, areaName, timestamp: Date.now()});
-              getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, aoiId, ...data }));
+              writeToForageItem(aoiId, { jsonGeometry, area, areaName, timestamp: Date.now() });
+              getContextData(aoiStoredGeometry).then(data => setContextualData({ area, areaName, ...data }));
               [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
                 getSpeciesData(taxa, aoiStoredGeometry).then(data => setTaxaData(data));
               })

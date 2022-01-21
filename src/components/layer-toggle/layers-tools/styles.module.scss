@@ -18,6 +18,14 @@
   @extend %icon;
 }
 
+.tooltip {
+  @extend %annotation;
+  padding: 1px 4px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  background-color: $white;
+}
+
 .iconWrapper {
   cursor: pointer;
   height: 25px;

@@ -226,7 +226,7 @@ export const LAYERS_URLS = {
    [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4870a51b17f841c38793b3c0a3f053c9/rest/services/gadm1_precalculated/FeatureServer/0',
   //  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
   //  [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
-    [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_all_simplified/FeatureServer/0',
+    [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_terrestrialmarine2021_simplified/FeatureServer/0',
 
 
 };
