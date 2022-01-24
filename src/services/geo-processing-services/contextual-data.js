@@ -17,7 +17,7 @@ export function getCrfData(aoiFeatureGeometry) {
     const JSONGeometry = aoiFeatureGeometry.toJSON();
     getJobInfo(
       GEOPROCESSING_SERVICES_URLS[CONTEXTUAL_DATA],
-      { 
+      {
         ...inputRasterKeyPairs,
         [inputGeometryKey]: setSpeciesJSONGeometryRings(addZcoordToRings(JSONGeometry.rings))
       }

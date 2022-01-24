@@ -13,7 +13,12 @@ import {
   GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
-import { NATIONAL_BOUNDARIES_TYPE, PROTECTED_AREAS_TYPE, SUBNATIONAL_BOUNDARIES_TYPE } from 'constants/aois';
+import {
+  NATIONAL_BOUNDARIES_TYPE,
+  PROTECTED_AREAS_TYPE,
+  SUBNATIONAL_BOUNDARIES_TYPE,
+  CUSTOM_AOI_TYPE,
+} from 'constants/aois';
 
 // actions
 import aoisActions from 'redux_modules/aois';
@@ -70,6 +75,7 @@ const Container = (props) => {
   }, [sorting]);
 
   useEffect(() => {
+    console.log('aoiId changed!', aoiId, 'areaTypeSelected', areaTypeSelected);
     let urlValue;
     switch (areaTypeSelected) {
       case NATIONAL_BOUNDARIES_TYPE:
@@ -81,25 +87,30 @@ const Container = (props) => {
       case PROTECTED_AREAS_TYPE:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]; // TO-DO: change this to the right URL
         break;
+      case CUSTOM_AOI_TYPE:
+        console.log('hey!');
+        urlValue = '';
+        break;
       default:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
     }
-    EsriFeatureService.getFeatures({
-      url: urlValue,
-      whereClause: `MOL_IDg = '${aoiId}'`,
-      returnGeometry: false
-    }).then((features) => {
-      if (features) {
-        const tempData = features.map((f) => f.attributes);
-        tempData.sort(sortFunction);
-        setData(tempData);
-        setFilteredData([...tempData]);
-      } else {
-        setData([]);
-        setFilteredData([]);
-      }
-
-    })
+    if (aoiId) {
+      EsriFeatureService.getFeatures({
+        url: urlValue,
+        whereClause: `MOL_IDg = '${aoiId}'`,
+        returnGeometry: false
+      }).then((features) => {
+        if (features) {
+          const tempData = features.map((f) => f.attributes);
+          tempData.sort(sortFunction);
+          setData(tempData);
+          setFilteredData([...tempData]);
+        } else {
+          setData([]);
+          setFilteredData([]);
+        }
+      });
+    }
   }, [aoiId]);
 
   return (
