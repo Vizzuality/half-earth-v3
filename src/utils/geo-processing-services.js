@@ -86,6 +86,7 @@ export function getContextData(geometry) {
       const population = getAreaPopulation(data);
       const elu = await getEluData(data);
       const protectedAreasList = getProtectedAreasList(data);
+      console.log('data', data);
       resolve({
         elu,
         pressures,

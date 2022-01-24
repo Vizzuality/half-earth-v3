@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 // constants
 import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
 import { GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
-import { NATIONAL_BOUNDARIES_TYPE, PROTECTED_AREAS_TYPE, SUBNATIONAL_BOUNDARIES_TYPE } from 'constants/aois.js';
+import {
+  NATIONAL_BOUNDARIES_TYPE,
+  PROTECTED_AREAS_TYPE,
+  SUBNATIONAL_BOUNDARIES_TYPE,
+  CUSTOM_AOI_TYPE,
+} from 'constants/aois.js';
 
 // utils
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
@@ -108,6 +113,7 @@ const AnalyzeAreasContainer = (props) => {
         break;
       case 'click':
         setSelectedAnalysisTab('click');
+        setAreaTypeSelected(CUSTOM_AOI_TYPE);
         handleLayerToggle(selectedOption);
         if (sketchTool) { handleSketchToolDestroy(); }
         break;
