@@ -193,7 +193,7 @@ const getAreaName = (data, config) => {
   return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
 }
 
-export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false) => ({
+export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false) => ({
   elu: {
     climateRegime: data.climate_regime_majority,
     landCover: data.land_cover_majority
@@ -209,6 +209,7 @@ export const getPrecalculatedContextualData = (data, layerSlug, includeProtected
   population: data.population_sum,
   ...(includeProtectedAreasList && { ...data.protectedAreasList }),
   protectionPercentage: data.percentage_protected,
+  ...(includeAllData && { ...data }),
 })
 
 export const getAoiFromDataBase = (id) => {

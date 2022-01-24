@@ -79,8 +79,7 @@ const Container = props => {
             returnGeometry: false
           }).then((results) => {
             const { attributes } = results[0];
-
-            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
+            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true, true))
             getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
             getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
               // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)

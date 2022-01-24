@@ -83,9 +83,6 @@ const Container = (props) => {
       case SUBNATIONAL_BOUNDARIES_TYPE:
         urlValue = LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
         break;
-      case PROTECTED_AREAS_TYPE:
-        urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]; // TO-DO: change this to the right URL
-        break;
       default:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
     }
@@ -96,6 +93,20 @@ const Container = (props) => {
         setData(protectedAreas);
         setFilteredData([...protectedAreas]);
       }
+    }
+    else if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
+    // --------------- PROTECTED AREA SPECIAL CASE --------------
+     const areaValue = {
+       DESIG: contextualData.DESIG_E,
+       DESIG_T: contextualData.DESIG_T,
+       AREA_KM: contextualData.AREA_KM,
+       IUCN_CA: contextualData.IUCN_CA,
+       NAME: contextualData.NAME,
+       NAME_0: contextualData.ISO_3,
+       GOV_TYP: contextualData.GOV_TYP,
+     }
+     setData([areaValue]);
+     setFilteredData([areaValue]);
     } else if (aoiId) {
     // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
