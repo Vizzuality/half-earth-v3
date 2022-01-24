@@ -33,7 +33,7 @@ import {
 import { layersConfig } from 'constants/mol-layers-configs';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { PROTECTED_AREAS_TYPE } from 'constants/aois';
+import { PROTECTED_AREAS_TYPE, CUSTOM_AOI_TYPE } from 'constants/aois';
 import { WDPA_OECM_FEATURE_DATA_LAYER } from 'constants/layers-slugs.js';
 
 // local
@@ -50,7 +50,7 @@ const Container = props => {
   const [jsonUtils, setJsonUtils] = useState(null);
   const [contextualData, setContextualData] = useState({})
   const [geometryEngine, setGeometryEngine] = useState(null);
-  const [speciesData, setSpeciesData] = useState({ species: [] })
+  const [speciesData, setSpeciesData] = useState({ species: [] });
 
   useEffect(() => {
     loadModules(["esri/geometry/geometryEngine", "esri/geometry/support/jsonUtils"]).then(([geometryEngine, jsonUtils]) => {
@@ -90,7 +90,11 @@ const Container = props => {
             getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
           });
         } else {
-          setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug))
+          if (areaTypeSelected === CUSTOM_AOI_TYPE) {
+            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true));
+          } else {
+            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
+          }
           getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
           getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
             // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
@@ -116,7 +120,6 @@ const Container = props => {
           setSpeciesData({ species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc']) });
           setContextualData({ ...rest, aoiId, isCustom: true });
           getContextData(geometry).then((data) => {
-            console.log('data', data, 'geometry', geometry);
             setContextualData(data);
           });
           setGeometry(geometry);

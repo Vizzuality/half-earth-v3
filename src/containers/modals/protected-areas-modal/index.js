@@ -30,7 +30,7 @@ import Component from './component';
 const actions = { ...aoisActions };
 
 const Container = (props) => {
-  const { aoiId, areaTypeSelected } = props;
+  const { aoiId, areaTypeSelected, contextualData } = props;
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(null);
   const [sorting, setSorting] = useState({ value: 'NAME', ascending: 'true' });
@@ -75,7 +75,6 @@ const Container = (props) => {
   }, [sorting]);
 
   useEffect(() => {
-    console.log('aoiId changed!', aoiId, 'areaTypeSelected', areaTypeSelected);
     let urlValue;
     switch (areaTypeSelected) {
       case NATIONAL_BOUNDARIES_TYPE:
@@ -87,14 +86,18 @@ const Container = (props) => {
       case PROTECTED_AREAS_TYPE:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]; // TO-DO: change this to the right URL
         break;
-      case CUSTOM_AOI_TYPE:
-        console.log('hey!');
-        urlValue = '';
-        break;
       default:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
     }
-    if (aoiId) {
+    // ---------------- CUSTOM AOIS SPECIAL CASE -----------------
+    if (areaTypeSelected === CUSTOM_AOI_TYPE) {
+      const protectedAreas = contextualData.protectedAreasList;
+      if (protectedAreas) {
+        setData(protectedAreas);
+        setFilteredData([...protectedAreas]);
+      }
+    } else if (aoiId) {
+    // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
         url: urlValue,
         whereClause: `MOL_IDg = '${aoiId}'`,
@@ -111,7 +114,8 @@ const Container = (props) => {
         }
       });
     }
-  }, [aoiId]);
+
+  }, [aoiId, contextualData]);
 
   return (
     <Component

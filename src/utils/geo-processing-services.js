@@ -31,7 +31,7 @@ export function getJobInfo(url, params) {
 export function jobTimeProfiling(jobStart) {
   const jobStatusTime = Date.now();
   const miliseconds = Math.abs(jobStart - jobStatusTime);
-  console.info('TIME ELLAPSED ', miliseconds/1000, ' SECONDS');
+  console.info('TIME ELLAPSED ', miliseconds / 1000, ' SECONDS');
 }
 
 export function getEluData(data) {
@@ -69,13 +69,13 @@ const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]].val
 
 const getProtectedAreasList = (data) => (
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map(f => ({
-    name: f.attributes.ORIG_NA,
-    iso3: f.attributes.ISO3,
-    year: f.attributes.STATUS_,
-    governance: f.attributes.GOV_TYP,
-    designation: f.attributes.DESIG_E,
-    iucnCategory: f.attributes.IUCN_CA,
-    designationType: f.attributes.DESIG_T,
+    NAME: f.attributes.ORIG_NA,
+    NAME_0: f.attributes.ISO3,
+    AREA_KM: f.attributes.AREA_KM,
+    GOV_TYP: f.attributes.GOV_TYP,
+    DESIG: f.attributes.DESIG_E,
+    IUCN_CA: f.attributes.IUCN_CA,
+    DESIG_T: f.attributes.DESIG_T,
   }))
 )
 
@@ -85,8 +85,8 @@ export function getContextData(geometry) {
       const pressures = getAreaPressures(data);
       const population = getAreaPopulation(data);
       const elu = await getEluData(data);
+      console.log('data',data);
       const protectedAreasList = getProtectedAreasList(data);
-      console.log('data', data);
       resolve({
         elu,
         pressures,
@@ -194,7 +194,7 @@ const getAreaName = (data, config) => {
   return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
 }
 
-export const getPrecalculatedContextualData = (data, layerSlug) => ({
+export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false) => ({
   elu: {
     climateRegime: data.climate_regime_majority,
     landCover: data.land_cover_majority
@@ -208,7 +208,7 @@ export const getPrecalculatedContextualData = (data, layerSlug) => ({
     'irrigated agriculture': data.percent_irrigated,
   },
   population: data.population_sum,
-  // ...protectedAreasList,
+  ...(includeProtectedAreasList && { ...data.protectedAreasList }),
   protectionPercentage: data.percentage_protected,
 })
 

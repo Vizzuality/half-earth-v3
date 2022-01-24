@@ -108,12 +108,12 @@ const AnalyzeAreasContainer = (props) => {
   const handleAnalysisTabClick = (selectedTab) => {
     switch (selectedTab) {
       case 'draw':
+        setAreaTypeSelected(CUSTOM_AOI_TYPE);
         setSelectedAnalysisTab('draw');
         handleLayerToggle(selectedOption);
         break;
       case 'click':
         setSelectedAnalysisTab('click');
-        setAreaTypeSelected(CUSTOM_AOI_TYPE);
         handleLayerToggle(selectedOption);
         if (sketchTool) { handleSketchToolDestroy(); }
         break;
