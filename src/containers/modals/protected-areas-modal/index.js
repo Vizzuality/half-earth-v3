@@ -102,7 +102,7 @@ const Container = (props) => {
        AREA_KM: contextualData.AREA_KM,
        IUCN_CA: contextualData.IUCN_CA,
        NAME: contextualData.NAME,
-       NAME_0: contextualData.ISO_3,
+       NAME_0: contextualData.ISO3,
        GOV_TYP: contextualData.GOV_TYP,
      }
      setData([areaValue]);
