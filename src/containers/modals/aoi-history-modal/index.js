@@ -13,10 +13,14 @@ const Container = (props) => {
   const [editAoiId, setEditAoiId] = useState(null);
   const [shareAoiId, setShareAoiId] = useState(null);
   const [updatedAoiName, setUpdatedAoiName] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
-      getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
+      getAoiHistory().then((aois) => {
+        setAoiHistory(aois.sort(sortByDate));
+        setLoading(false);
+      });
     }
   }, [isOpen])
 
@@ -88,6 +92,7 @@ const Container = (props) => {
       handleActivateAoiEdit={handleActivateAoiEdit}
       handleRemoveAoiFromLocal={handleRemoveAoiFromLocal}
       handleRemoveAllLocalAoiRecords={handleRemoveAllLocalAoiRecords}
+      loading={loading}
       {...props}
     />
   )

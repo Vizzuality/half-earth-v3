@@ -35,6 +35,7 @@ const Container = (props) => {
   const [search, setSearch] = useState(null);
   const [sorting, setSorting] = useState({ value: 'NAME', ascending: 'true' });
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const debouncedSearch = useDebounce(search, 400);
 
   const handleSearch = (event) => {
@@ -92,6 +93,7 @@ const Container = (props) => {
       if (protectedAreas) {
         setData(protectedAreas);
         setFilteredData([...protectedAreas]);
+        setLoading(false);
       }
     }
     else if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
@@ -107,6 +109,7 @@ const Container = (props) => {
      }
      setData([areaValue]);
      setFilteredData([areaValue]);
+     setLoading(false);
     } else if (aoiId) {
     // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
@@ -123,6 +126,7 @@ const Container = (props) => {
           setData([]);
           setFilteredData([]);
         }
+        setLoading(false);
       });
     }
 
@@ -133,6 +137,7 @@ const Container = (props) => {
       data={filteredData}
       handleSearchInputChange={handleSearch}
       handleSortChange={handleSortChange}
+      loading={loading}
       {...props}
     />
   )

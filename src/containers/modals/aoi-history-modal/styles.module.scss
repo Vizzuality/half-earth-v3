@@ -25,6 +25,8 @@ $area-title-width: 230px;
 .modalContainer {
   @extend %verticalScrollbar;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   padding: $site-gutter;
   background-color: $brand-color-secondary;

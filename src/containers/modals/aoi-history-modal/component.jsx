@@ -1,16 +1,26 @@
 import React, { useEffect, useRef } from "react";
 import cx from 'classnames';
+import loadable from "@loadable/component";
+import { Modal } from "he-components";
+
+// components
 import Button from 'components/button';
 import ShareInput from 'components/share-input';
 import ShareSocialIcons from 'components/share-social-icons';
 
+// icons
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as BinIcon } from 'icons/bin.svg';
-import { timestampAoiFormatting } from 'utils/data-formatting-utils';
-import { Modal } from "he-components";
 
+// utils
+import { timestampAoiFormatting } from 'utils/data-formatting-utils';
+
+// styles
 import styles from "./styles.module";
+
+// Dynamic imports
+const Spinner = loadable(() => import("components/spinner"));
 
 const AoiHistoryModalComponent = ({
   isOpen,
@@ -26,6 +36,7 @@ const AoiHistoryModalComponent = ({
   handleAoiShareToggle,
   handleRemoveAoiFromLocal,
   handleRemoveAllLocalAoiRecords,
+  loading,
 }) => {
   const activeInputRef = useRef();
 
@@ -52,6 +63,7 @@ const AoiHistoryModalComponent = ({
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
+        {loading && <Spinner floating />}
         <h2 className={styles.title}>Your areas of interest history.</h2>
         <p className={styles.description}>These are the areas of interest you have created in the past.</p>
         {aoiHistory.length > 0 &&
