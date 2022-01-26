@@ -3,26 +3,23 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import styles from './styles.module.scss';
 
-import
-metadataConfig, {
-  RANKING_CHART,
-} from 'constants/metadata';
+import metadataConfig, { RANKING_CHART } from 'constants/metadata';
 
 import {
   RANKING_COLORS,
   RANKING_LEGEND,
   RANKING_GROUPS_SLUGS,
-} from "constants/country-mode-constants";
+} from 'constants/country-mode-constants';
 import metadataService from 'services/metadata-service';
 
 const Component = () => {
   const [metadata, setMetadata] = useState(null);
 
   useEffect(() => {
-    const md = metadataConfig[RANKING_CHART]
-    metadataService.getMetadata(md.slug).then( data => {
+    const md = metadataConfig[RANKING_CHART];
+    metadataService.getMetadata(md.slug).then((data) => {
       setMetadata(data);
-    })
+    });
   }, []);
 
   const LegendBlock = ({ legendItems }) => (
@@ -63,6 +60,6 @@ const Component = () => {
       </div>
     </>
   );
-}
+};
 
 export default Component;

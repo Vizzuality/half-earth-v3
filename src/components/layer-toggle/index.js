@@ -8,7 +8,7 @@ import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 
 const actions = { ...metadataActions, layerToggleAnalytics };
 
-const Container = (props) => {
+const LayerToggle = (props) => {
   const { map, activeLayers, option } = props;
   const [isChecked, setIsChecked] = useState(false)
 
@@ -49,4 +49,4 @@ const Container = (props) => {
   )
 }
 
-export default connect(null, actions)(Container);
+export default connect(null, actions)(LayerToggle);

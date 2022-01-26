@@ -32,7 +32,7 @@ const NrcSceneContainer = (props) => {
       const { geometry } = features[0];
       setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
     }).catch(error => {
-      console.error('Inexistent country ISO code on the URL. Redirected to main page')
+      console.error('Inexistent country ISO code on the URL. Redirected to main page', error)
       const { browsePage } = props;
       browsePage({ type: DATA });
     })

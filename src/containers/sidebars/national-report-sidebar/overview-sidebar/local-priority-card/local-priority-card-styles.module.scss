@@ -5,3 +5,13 @@
   padding: $sidebar-paddings;
   min-height: 595px;
 }
+
+.wrapper {
+  margin-bottom: 10px;
+}
+
+.section {
+  &:last-child {
+    padding: 25px 0;
+  }
+}

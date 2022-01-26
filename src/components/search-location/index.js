@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import Component from './component.jsx';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
+import { setCountryTooltip } from 'utils/globe-events-utils';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
-const actions = {...mapTooltipActions };
+const actions = { ...mapTooltipActions, ...urlActions };
 
 const SearchLocationContainer = (props) => {
-  const { view, searchSourceLayerSlug } = props;
+  const { view, searchSourceLayerSlug, changeGlobe } = props;
   const [searchResults, setSearchResults] = useState(false);
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
@@ -26,18 +28,24 @@ const SearchLocationContainer = (props) => {
   const browseSelectedFeature = ({result}) => {
     const { setBatchTooltipData } = props;
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
-      const { title, subtitle, buttonText, id } = tooltipConfig;
-      const { geometry, attributes } = result.feature;
-      setBatchTooltipData({
-        isVisible: true,
-        geometry,
-        content: {
-          buttonText,
-          id: attributes[id],
-          title: attributes[title] || attributes['NAME_0'],
-          subtitle: attributes[subtitle] || attributes['NAME_1'],
-        }
-      });
+
+    const { title, subtitle, buttonText, id, iso } = tooltipConfig;
+    const { geometry, attributes } = result.feature;
+    setBatchTooltipData({
+      isVisible: true,
+      geometry,
+      content: {
+        buttonText,
+        id: attributes[id],
+        title: attributes[title] || attributes['NAME_0'],
+        subtitle: attributes[subtitle] || attributes['NAME_1'],
+      }
+    });
+
+    // National Report Card search
+    if (iso) {
+      setCountryTooltip({ countryIso: attributes[iso], countryName: attributes[title], changeGlobe });
+    }
   }
 
   const getSearchResults = (e) => {

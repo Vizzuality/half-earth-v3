@@ -7,10 +7,10 @@ import Component from './component';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...mapTooltipActions}
 
-const CountryEntryTooltipContainer = props => {
+const MapTooltipContainer = props => {
   const { mapTooltipGeometry, mapTooltipContent, mapTooltipIsVisible, setBatchTooltipData, handleExploreClick } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
-  
+
   // Set country tooltip position
   useEffect(() => {
     if (mapTooltipGeometry) {
@@ -43,4 +43,4 @@ const CountryEntryTooltipContainer = props => {
   )
 }
 
-export default connect(mapStateToProps, actions)(CountryEntryTooltipContainer);
+export default connect(mapStateToProps, actions)(MapTooltipContainer);

@@ -9,9 +9,9 @@ import { enterNrcAnalytics } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';
 import { NATIONAL_REPORT_CARD } from 'router';
 
-import countryTooltipActions from 'redux_modules/country-tooltip';
-import mapStateToProps from 'selectors/country-tooltip-selectors';
-const actions = { enterNrcAnalytics, ...urlActions, ...countryTooltipActions}
+import mapTooltipActions from 'redux_modules/map-tooltip';
+import mapStateToProps from 'selectors/map-tooltip-selectors';
+const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions}
 
 const CountryEntryTooltipContainer = props => {
   const { mapTooltipIsVisible, countryISO } = props;

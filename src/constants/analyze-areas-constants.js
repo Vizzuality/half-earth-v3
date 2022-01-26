@@ -18,6 +18,8 @@ export const BIODIVERSITY_SLUG = 'biodiversity';
 export const PROTECTION_SLUG = 'protected-areas';
 export const SPECIES_SLUG = 'species';
 
+export const ADDITIONAL_PROTECTION_SLUG = 'additional-protection';
+
 export const AOI_LEGEND_CATEGORIES = [
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG

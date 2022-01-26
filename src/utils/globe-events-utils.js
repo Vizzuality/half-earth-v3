@@ -76,7 +76,11 @@ export const flyToGeometry = (view, layerFeatures) => {
   }
 }
 
-export const toggleCountryTooltip = (layerFeatures, changeGlobe, countryISO) => {
+export const setCountryTooltip = ({ countryIso, countryName, changeGlobe }) => {
+  changeGlobe({countryTooltipDisplayFor: countryIso, countryName });
+};
+
+export const toggleCountryTooltip = ({ layerFeatures, changeGlobe, countryISO }) => {
   if (layerFeatures && layerFeatures.length) {
     changeGlobe({countryTooltipDisplayFor: null});
     const { graphic } = layerFeatures[0];

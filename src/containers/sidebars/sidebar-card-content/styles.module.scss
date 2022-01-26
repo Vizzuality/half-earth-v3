@@ -10,8 +10,7 @@
   padding-bottom: $sidebar-cards-padding;
 }
 
-.datasetWrapper,
-.descriptionWrapper {
+.datasetWrapper {
   display: flex;
 }
 
@@ -29,28 +28,9 @@
 }
 
 .gradientLegend {
-  & :first-child {
-    padding-bottom: $paragraph-gutter;
-  }
   .description {
-    padding: $paragraph-gutter;
+    padding: $paragraph-gutter 0;
   }
-  & :last-child {
-    padding-top: $paragraph-gutter;
-  }
-}
-
-.legendTag {
-  @extend %subtitle;
-  display: block;
-  color: $_temporary-dark-text;
-}
-
-.gradient {
-  min-width: 6px;
-  flex-basis: 1rem;
-  border-radius: 3px;
-  background: $biodiversity-gradient;
 }
 
 .description {
