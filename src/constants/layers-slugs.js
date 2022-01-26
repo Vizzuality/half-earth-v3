@@ -21,6 +21,7 @@ export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
 export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
+export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
 // Marine human pressures tiled layers.
 export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_land_drivers_human_pressures';
 export const MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_ocean_drivers_human_pressures';

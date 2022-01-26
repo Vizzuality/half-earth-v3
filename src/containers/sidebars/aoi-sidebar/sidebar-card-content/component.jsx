@@ -38,6 +38,7 @@ const SidebarCard = ({
   isProtectedAreasModalOpen,
   handleProtectedAreasModalToggle,
   contextualData,
+  metadata,
 }) => (
   <SidebarCardWrapper className={styles.cardWrapper}>
     <div>
@@ -67,16 +68,7 @@ const SidebarCard = ({
       )}
       <SourceAnnotation
         theme="dark"
-        isJSX
-        metaDataSources={
-          <a
-            href="http://protectedplanet.net/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            World Database on Protected Areas.
-          </a>
-        }
+        metaDataSources={metadata && metadata.source}
         className={styles.sourceContainer}
       />
     </div>

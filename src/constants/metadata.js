@@ -35,7 +35,9 @@ import {
   COUNTRY_PRIORITY_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  MARINE_AND_LAND_HUMAN_PRESSURES
+  MARINE_AND_LAND_HUMAN_PRESSURES,
+  ALL_TAXA_PRIORITY,
+  MERGED_LAND_HUMAN_PRESSURES
  } from 'constants/layers-slugs';
 
  export const SPECIES_PROTECTION_INDEX = 'spi-def';
@@ -43,8 +45,20 @@ import {
  export const RANKING_CHART = 'spi-ranking';
  export const MERGED_PROTECTION = MERGED_WDPA_VECTOR_TILE_LAYER;
  export const COUNTRY_PRIORITY = COUNTRY_PRIORITY_LAYER;
- 
+ export {
+   ALL_TAXA_PRIORITY,
+   MERGED_LAND_HUMAN_PRESSURES,
+ } from 'constants/layers-slugs';
+
 export default {
+  [ALL_TAXA_PRIORITY]: {
+    slug: ALL_TAXA_PRIORITY,
+    title: 'Biodiversity pattern'
+  },
+  [MERGED_LAND_HUMAN_PRESSURES]: {
+    slug: MERGED_LAND_HUMAN_PRESSURES,
+    title: 'Human modifications'
+  },
   [CHALLENGES_CHART]: {
     slug: CHALLENGES_CHART,
     title: 'What are the challenges for a country?'
