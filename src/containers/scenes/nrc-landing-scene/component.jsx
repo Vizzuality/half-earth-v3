@@ -1,9 +1,9 @@
 // Dependencies
 import React from 'react';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
 // Components
 import Scene from 'components/scene';
-import Sidebar from 'containers/sidebars/nrc-landing-sidebar';
+import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
@@ -15,7 +15,7 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const NrcLandingComponent = ({
   sceneMode,
@@ -54,19 +54,16 @@ const NrcLandingComponent = ({
           isLandscapeMode={isLandscapeMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <Widgets
-          activeLayers={activeLayers}
-          openedModal={openedModal}
-        />
+        <Widgets activeLayers={activeLayers} openedModal={openedModal} />
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
         />
-        <Sidebar />
+        <NRCLandingSidebar />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>
     </>
   );
-}
+};
 
 export default NrcLandingComponent;

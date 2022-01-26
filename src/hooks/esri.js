@@ -30,7 +30,7 @@ export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
 
 export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget] = useState(null);
-  const { searchSources, postSearchCallback, searchResultsCallback} = searchWidgetConfig || {};
+  const { searchSources, postSearchCallback, searchResultsCallback } = searchWidgetConfig || {};
   const [esriConstructors, setEsriConstructors] = useState();
 
   useEffect(() => {
@@ -41,8 +41,9 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
   },[])
 
   const handleOpenSearch = (ref) => {
-    const {Search, FeatureLayer, Locator} = esriConstructors;
-    if(searchWidget === null) {
+    const { Search, FeatureLayer, Locator } = esriConstructors;
+    if (!esriConstructors) return null;
+    if (searchWidget === null) {
       const sWidget = new Search({
         view: view,
         locationEnabled: true, // do not show the Use current location box when clicking in the input field
@@ -79,18 +80,11 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
   }
 
   useEffect(() => {
-    if(searchWidget) {
+    if (searchWidget && searchWidgetConfig) {
       searchWidget.on('suggest-complete', searchResultsCallback);
       searchWidget.on('select-result', postSearchCallback);
     }
   }, [searchWidget]);
-
-  useEffect(() => {
-    if(searchWidget) {
-      searchWidget.on('suggest-complete', searchResultsCallback);
-      searchWidget.on('select-result', postSearchCallback);
-    }
-  }, [searchWidgetConfig]);
 
   return {
     updateSources,
@@ -103,8 +97,8 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
 }
 
 export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
-  const [sketchTool, setSketchTool ] = useState(null);
-  const [sketchLayer, setSketchLayer ] = useState(null);
+  const [sketchTool, setSketchTool] = useState(null);
+  const [sketchLayer, setSketchLayer] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
   const [Constructors, setConstructors] = useState(null);
   const [geometryArea, setGeometryArea] = useState(0);
@@ -118,7 +112,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
     })
   }, [])
 
-  
+
   const handleSketchToolActivation = () => {
     loadModules(["esri/widgets/Sketch",  "esri/widgets/Sketch/SketchViewModel","esri/layers/GraphicsLayer"]).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
       const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
@@ -137,7 +131,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
         //   view: view,
         //   layer:_sketchLayer,
         //   polygonSymbol: {
-        //     type: "simple-fill", 
+        //     type: "simple-fill",
         //     color: [147, 255, 95, 0.2]
         //   }
         // })

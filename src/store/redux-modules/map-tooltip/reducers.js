@@ -11,7 +11,7 @@ function setTooltipIsVisible(state, { payload }) {
 function setTooltipFeatureGeometry(state, { payload }) {
   return { ...state, geometry: payload };
 }
-function setBatchTooltipData(state, { payload: { isVisible, content, geometry} }) {
+function setBatchTooltipData(state, { payload: { isVisible, content, geometry } }) {
   return { isVisible, content, geometry };
 }
 

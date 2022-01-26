@@ -40,7 +40,7 @@ const { view, changeGlobe, countryISO, isLandscapeMode } = props;
 
   const onClickHandler = bordersLayerFeatures => {
     flyToGeometry(view, bordersLayerFeatures);
-    toggleCountryTooltip(bordersLayerFeatures, changeGlobe, countryISO);
+    toggleCountryTooltip({ layerFeatures: bordersLayerFeatures, changeGlobe, countryISO });
     drawGeometry(bordersLayerFeatures, selectedCountryBorderGraphic);
   }
 
