@@ -5,6 +5,8 @@ import { AOI_LEGEND_CATEGORIES, SIDEBAR_CARDS_CONFIG } from 'constants/analyze-a
 import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
+import metadataConfig from 'constants/metadata';
+import metadataService from 'services/metadata-service';
 
 const actions = {...metadataActions, ...urlActions};
 
@@ -15,12 +17,21 @@ const Container = (props) => {
     changeGlobe,
     activeLayers,
     cardCategory,
+    metadataSlug
   } = props;
 
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
   const { description, title } = SIDEBAR_CARDS_CONFIG[cardCategory];
+  const [metadata, setMetadata] = useState(null);
+
+  useEffect(() => {
+    const md = metadataConfig[metadataSlug]
+    metadataService.getMetadata(md.slug).then( data => {
+      setMetadata(data);
+    })
+  }, []);
 
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
@@ -52,7 +63,6 @@ const Container = (props) => {
   const handleProtectedAreasModalToggle = () => {
     setProtectedAreasModalOpen(!protectedAreasModalOpen);
   }
-
   return (
     <Component
       cardTitle={title}
@@ -62,6 +72,7 @@ const Container = (props) => {
       handleAllProtectedAreasClick={handleAllProtectedAreasClick}
       handleProtectedAreasModalToggle={handleProtectedAreasModalToggle}
       isProtectedAreasModalOpen={protectedAreasModalOpen}
+      metadata={metadata}
       {...props}
     />
   )

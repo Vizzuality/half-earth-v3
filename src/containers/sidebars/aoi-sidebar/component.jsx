@@ -24,7 +24,11 @@ import {
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
-
+import {
+  MERGED_PROTECTION,
+  MERGED_LAND_HUMAN_PRESSURES,
+  ALL_TAXA_PRIORITY,
+} from 'constants/metadata';
 import styles from './styles.module.scss';
 
 const AOISidebarComponent = ({
@@ -151,6 +155,7 @@ const AOISidebarComponent = ({
           contextualData={contextualData}
           cardCategory={BIODIVERSITY_SLUG}
           layers={AOI_BIODIVERSITY_TOGGLES}
+          metadataSlug={ALL_TAXA_PRIORITY}
           // displayWarning={area < 10000}
         />
         <SidebarCard
@@ -160,6 +165,7 @@ const AOISidebarComponent = ({
           activeLayers={activeLayers}
           cardCategory={PROTECTION_SLUG}
           contextualData={contextualData}
+          metadataSlug={MERGED_PROTECTION}
         />
         <SidebarCard
           map={map}
@@ -168,6 +174,7 @@ const AOISidebarComponent = ({
           layers={humanPressuresLandUse}
           contextualData={contextualData}
           cardCategory={LAND_HUMAN_PRESSURES_SLUG}
+          metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
         />
         <section className={styles.completeDatabaseWrapper}>
           <p>Do you have more information about this particular area?</p>
