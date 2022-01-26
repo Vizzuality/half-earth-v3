@@ -18,6 +18,7 @@ export const CRF_NAMES = {
 
 export const CONTEXTUAL_DATA = 'contextual_data';
 export const WDPA_LIST = 'wdpa_list';
+export const WDPA_PERCENTAGE = 'wdpa_percentage';
 
 export const CRF_DATA_CATEGORIES = {
   CONTEXT: 'context',
@@ -28,6 +29,7 @@ export const { BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS, POPU
 
 export const CONTEXTUAL_DATA_TABLES = {
   [WDPA_LIST]: 'output_table_wdpa',
+  [WDPA_PERCENTAGE]:'output_table_wdpa_percentage',
   [POPULATION]: 'output_table_population',
   [HUMAN_PRESSURES]: 'output_table_encroachment',
   [ECOLOGICAL_LAND_UNITS]:'output_table_elu_majority',
@@ -58,6 +60,7 @@ export const CONTEXTUAL_DATA_SERVICE_CONFIG = {
   },
   outputTablesKeys: [
     CONTEXTUAL_DATA_TABLES[WDPA_LIST],
+    CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE],
     CONTEXTUAL_DATA_TABLES[POPULATION],
     CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES],
     CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS],

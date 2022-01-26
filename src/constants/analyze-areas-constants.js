@@ -45,6 +45,7 @@ export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTO
 
 const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 
+// Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
 export const SIDEBAR_CARDS_CONFIG = {
   [SPECIES_SLUG]: {
     title: (speciesCount) => <span>This area is expected<br/>to have {speciesCount}</span>,
@@ -58,7 +59,7 @@ export const SIDEBAR_CARDS_CONFIG = {
   },
   [PROTECTION_SLUG]: {
     title: 'What is already protected in this area?',
-    description: ({protectionPercentage}) => `Of the current area, __${roundUpPercentage(percentageFormat(capPercentage(protectionPercentage)))}% of land is under formal protection__.`,
+    description: ({ protectionPercentage, percentage }) => (protectionPercentage || percentage) ? `Of the current area, __${roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || (percentage && percentage * 100))))}% of land is under formal protection__.` : '',
     warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {

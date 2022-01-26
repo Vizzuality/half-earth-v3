@@ -9,6 +9,7 @@ import { getCrfData } from 'services/geo-processing-services/biodiversity';
 import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
 import {
   WDPA_LIST,
+  WDPA_PERCENTAGE,
   POPULATION,
   LOOKUP_TABLES,
   HUMAN_PRESSURES,
@@ -79,6 +80,8 @@ const getProtectedAreasList = (data) => (
   }))
 )
 
+const getPercentage = (data) => data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0] && data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0].attributes.percentage_protected;
+
 export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
     getContextualData(geometry).then(async data => {
@@ -86,11 +89,13 @@ export function getContextData(geometry) {
       const population = getAreaPopulation(data);
       const elu = await getEluData(data);
       const protectedAreasList = getProtectedAreasList(data);
+      const percentage = getPercentage(data);
       resolve({
         elu,
         pressures,
         population,
-        protectedAreasList
+        protectedAreasList,
+        percentage
       });
     }).catch((error) => {
       reject(error)
