@@ -35,10 +35,14 @@ export const { NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS } = 
 
 export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 
+const { REACT_APP_VERCEL_ENV } = process.env;
+
+console.log('testing REACT_APP_VERCEL_ENV', REACT_APP_VERCEL_ENV);
+
 export const PRECALCULATED_AOI_OPTIONS = [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: 'National boundaries' },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: 'Subnational boundaries' },
-  { title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas' }
+  ...(REACT_APP_VERCEL_ENV !== 'production') ? [{ title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas' }] : []
 ]
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;
