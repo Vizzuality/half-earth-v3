@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { useWatchUtils } from 'hooks/esri';
 import Component from './national-report-pdf-component';
 import { connect } from 'react-redux';
-import mapStateToProps from 'containers/sidebars/local-scene-sidebar/local-scene-sidebar-selectors';
+import mapStateToProps from 'containers/sidebars/national-report-sidebar/national-report-sidebar-selectors';
 
 const NationalReportPdfContainer = (props) => {
   let watchHandle;

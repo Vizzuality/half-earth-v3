@@ -6,7 +6,7 @@ import RankingChart from 'components/ranking-chart';
 import NationalReportCardScene from 'scenes/nrc-scene';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
-import LocalSceneSidebar from 'containers/sidebars/local-scene-sidebar';
+import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
 import CountryChallengesChart from 'components/country-challenges-chart';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
@@ -36,7 +36,7 @@ const NationalReportCard = ({
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
       <MainMenu />
-      <LocalSceneSidebar
+      <NationalReportSidebar
         countryISO={countryISO}
         countryName={countryName}
         openedModal={openedModal}

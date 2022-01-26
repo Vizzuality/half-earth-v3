@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Component from './component.jsx';
 import { connect } from 'react-redux';
-import mapStateToProps from 'containers/sidebars/local-scene-sidebar/local-scene-sidebar-selectors';
+import mapStateToProps from 'containers/sidebars/national-report-sidebar/national-report-sidebar-selectors';
 import { visitNrcOverviewAnalytics, downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 const actions = { visitNrcOverviewAnalytics, downloadNrcPdfAnalytics }
 

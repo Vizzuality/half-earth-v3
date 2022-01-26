@@ -15,7 +15,7 @@ import ChallengesSidebar from './challenges-sidebar';
 import RankingSidebar from './ranking-sidebar';
 
 import animationStyles from 'styles/common-animations.module.scss';
-import styles from './local-scene-sidebar-styles.module.scss';
+import styles from './national-report-sidebar-styles.module.scss';
 
 import {
   LOCAL_SCENE_TABS_SLUGS,
@@ -23,7 +23,7 @@ import {
   LOCAL_SCENE_DEFAULT_TAB,
 } from 'constants/ui-params';
 
-const LocalSceneSidebarComponent = ({
+const NationalReportSidebarComponent = ({
   className,
   countryISO,
   countryData,
@@ -111,4 +111,4 @@ const LocalSceneSidebarComponent = ({
   );
 };
 
-export default LocalSceneSidebarComponent;
+export default NationalReportSidebarComponent;

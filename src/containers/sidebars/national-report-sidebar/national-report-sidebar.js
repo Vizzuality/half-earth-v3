@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import mapStateToProps from './local-scene-sidebar-selectors';
-import Component from './local-scene-sidebar-component';
+import mapStateToProps from './national-report-sidebar-selectors';
+import Component from './national-report-sidebar-component';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import countryDataActions from 'redux_modules/country-data';
@@ -9,7 +9,7 @@ import { NATIONAL_REPORT_CARD_LANDING, NATIONAL_REPORT_CARD } from 'router'
 
 const actions = { ...urlActions, ...countryDataActions, ...metadataActions };
 
-const LocalSceneSidebarContainer = (props) => {
+const NationalReportSidebarContainer = (props) => {
   const {
     browsePage,
     handlePrintReport,
@@ -35,4 +35,4 @@ const LocalSceneSidebarContainer = (props) => {
 }
 
 
-export default connect(mapStateToProps, actions)(LocalSceneSidebarContainer);
+export default connect(mapStateToProps, actions)(NationalReportSidebarContainer);
