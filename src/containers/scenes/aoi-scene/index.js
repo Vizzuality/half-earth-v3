@@ -117,9 +117,13 @@ const Container = props => {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           const geometry = jsonUtils.fromJSON(jsonGeometry);
           setSpeciesData({ species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc']) });
-          setContextualData({ ...rest, aoiId, isCustom: true });
+          const contextualData = { ...rest, aoiId, isCustom: true };
+
+          // Set data before fetch just to show name and available info
+          setContextualData(contextualData);
+
           getContextData(geometry).then((data) => {
-            setContextualData(data);
+            setContextualData({ ...contextualData, ...data });
           });
           setGeometry(geometry);
         } else {
@@ -138,11 +142,13 @@ const Container = props => {
               const areaName = 'Custom area';
               const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
               const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
+
               setContextualData({ area, areaName, isCustom: true, aoiId });
               setGeometry(jsonUtils.fromJSON(jsonGeometry));
               writeToForageItem(aoiId, { jsonGeometry, area, areaName, timestamp: Date.now() });
 
               getContextData(aoiStoredGeometry).then((data) => {
+
                 setContextualData({ area, areaName, ...data });
               });
 

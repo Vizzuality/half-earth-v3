@@ -80,7 +80,7 @@ const getProtectedAreasList = (data) => (
   }))
 )
 
-const getPercentage = (data) => data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0].attributes.percentage_protected;
+const getPercentage = (data) => data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0] && data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0].attributes.percentage_protected;
 
 export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
