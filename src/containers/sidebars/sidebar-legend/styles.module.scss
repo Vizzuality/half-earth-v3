@@ -1,6 +1,10 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.container {
+  margin-bottom: 5px;
+}
+
 .gradientWrapper {
   height: 8px;
   border-radius: 5px;
