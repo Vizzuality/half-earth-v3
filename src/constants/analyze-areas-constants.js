@@ -37,7 +37,7 @@ export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 
 const { REACT_APP_VERCEL_ENV } = process.env;
 
-console.log('testing REACT_APP_VERCEL_ENV', REACT_APP_VERCEL_ENV);
+console.log('testing REACT_APP_VERCEL_ENV',process.env, REACT_APP_VERCEL_ENV);
 
 export const PRECALCULATED_AOI_OPTIONS = [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: 'National boundaries' },
