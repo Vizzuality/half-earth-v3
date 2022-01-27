@@ -43,6 +43,10 @@ export const roundRangeInArea = (value) => {
   if (low < 5) {
     return "<5%";
   }
+  if (low === 100) {
+    return "100%";
+  }
+
   return `${low}-${high}%`;
 }
 
