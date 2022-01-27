@@ -42,6 +42,29 @@ export const LOOKUP_TABLES = {
   [AMPHIBIANS]: AMPHIBIAN_LOOKUP,
 }
 
+
+
+const LAND_PRESSURES_LABELS =  {
+  irrigated: 'irrigated agriculture',
+  rainfed: 'rainfed agriculture',
+  rangelands: 'rangelands',
+  urban: 'urban activities'
+}
+
+export const LAND_PRESSURES_LABELS_SLUGS =  {
+  [LAND_PRESSURES_LABELS.irrigated]: 'percent_irrigated',
+  [LAND_PRESSURES_LABELS.rainfed]: 'percent_rainfed',
+  [LAND_PRESSURES_LABELS.rangelands]: 'percent_rangeland',
+  [LAND_PRESSURES_LABELS.urban]: 'percent_urban'
+}
+
+export const LAND_PRESSURES_LOOKUP = [
+  LAND_PRESSURES_LABELS.irrigated,
+  LAND_PRESSURES_LABELS.rainfed,
+  LAND_PRESSURES_LABELS.rangelands,
+  LAND_PRESSURES_LABELS.urban
+]
+
 export const CRFS_CONFIG = {
   inputRasterKey: 'crf_name',
   inputGeometryKey: 'geometry',
