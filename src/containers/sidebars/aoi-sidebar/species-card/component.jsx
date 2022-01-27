@@ -8,10 +8,16 @@ import Dropdown from 'components/dropdown';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
 // utils
-import { roundRangeInArea, roundGlobalRange } from 'utils/data-formatting-utils';
+import {
+  roundRangeInArea,
+  roundGlobalRange,
+} from 'utils/data-formatting-utils';
 
 // constants
-import { SIDEBAR_CARDS_CONFIG, SPECIES_SLUG } from 'constants/analyze-areas-constants';
+import {
+  SIDEBAR_CARDS_CONFIG,
+  SPECIES_SLUG,
+} from 'constants/analyze-areas-constants';
 
 // icons
 import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
@@ -20,6 +26,8 @@ import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 // styles
 import styles from './styles.module.scss';
+
+const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
 const Component = ({
   area,
@@ -39,21 +47,18 @@ const Component = ({
   handleCloseSearch,
   selectedSearchOption,
   searchOptions,
-}) => speciesData.species.length === 0 ? (
-  <section className={styles.loaderCard}>
-    <div className={styles.loaderBarContainer}>
-      <div className={styles.loaderBarPercentage} />
-    </div>
-    <div className={styles.loaderTextContainer}>
-      <p>
-        Looking for species to watch here...
-      </p>
-      <p>
-        This could take up to 30 seconds.
-      </p>
-    </div>
-  </section>
-) : (
+}) =>
+  speciesData.species.length === 0 ? (
+    <section className={styles.loaderCard}>
+      <div className={styles.loaderBarContainer}>
+        <div className={styles.loaderBarPercentage} />
+      </div>
+      <div className={styles.loaderTextContainer}>
+        <p>Looking for species to watch here...</p>
+        <p>This could take up to 30 seconds.</p>
+      </div>
+    </section>
+  ) : (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
@@ -86,7 +91,7 @@ const Component = ({
           handleOptionSelection={handleSearchOptionSelected}
           handleCloseSearch={handleCloseSearch}
         />
-        {individualSpeciesData &&
+        {individualSpeciesData && (
           <section className={styles.speciesDataContainer}>
             <div>
               <div className={styles.speciesCarousel}>
@@ -105,7 +110,11 @@ const Component = ({
                     backgroundImage: `url(${individualSpeciesData.imageUrl})`,
                   }}
                 >
-                  {placeholderText && <span className={styles.placeholderText}>{placeholderText}</span>}
+                  {placeholderText && (
+                    <span className={styles.placeholderText}>
+                      {placeholderText}
+                    </span>
+                  )}
                 </div>
                 {nextImage && (
                   <div
@@ -119,8 +128,11 @@ const Component = ({
               </div>
               <div className={styles.sliderControls}>
                 {showCarouselArrows && (
-                  <div className={styles.arrow_icon_container}  onClick={handlePreviousSpeciesSelection}>
-                    <ArrowIconLeft className={styles.arrow_icon}/>
+                  <div
+                    className={styles.arrow_icon_container}
+                    onClick={handlePreviousSpeciesSelection}
+                  >
+                    <ArrowIconLeft className={styles.arrow_icon} />
                   </div>
                 )}
                 <div className={styles.speciesNames}>
@@ -132,18 +144,28 @@ const Component = ({
                   >
                     {individualSpeciesData.commonname}
                   </a>
-                  <span className={styles.scientificName}>{individualSpeciesData.name}  </span>
+                  <span className={styles.scientificName}>
+                    {individualSpeciesData.name}{' '}
+                  </span>
                 </div>
                 {showCarouselArrows && (
-                  <div className={styles.arrow_icon_container}  onClick={handleNextSpeciesSelection}>
-                    <ArrowIconRight className={styles.arrow_icon}/>
+                  <div
+                    className={styles.arrow_icon_container}
+                    onClick={handleNextSpeciesSelection}
+                  >
+                    <ArrowIconRight className={styles.arrow_icon} />
                   </div>
                 )}
               </div>
             </div>
             <div className={styles.globalRangeArea}>
               <span>Global habitat-suitable range</span>
-              <p>{`${roundGlobalRange(individualSpeciesData.globaldRangeArea)} km`}<sup>2</sup></p>
+              <p>
+                {`${roundGlobalRange(
+                  individualSpeciesData.globaldRangeArea
+                )} km`}
+                <sup>2</sup>
+              </p>
             </div>
             <SpeciesBar
               title="Portion of global range under protection"
@@ -156,19 +178,23 @@ const Component = ({
               scale="local"
               title="Portion of global range in this area"
               className={styles.speciesBarContainer}
-              percentage={individualSpeciesData.presenceInArea}
-              percentageLabel={roundRangeInArea(individualSpeciesData.presenceInArea)}
+              percentage={capPercentage(individualSpeciesData.presenceInArea)}
+              percentageLabel={roundRangeInArea(
+                capPercentage(individualSpeciesData.presenceInArea)
+              )}
             />
-            <p className={styles.iucnStatus}>{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
+            <p
+              className={styles.iucnStatus}
+            >{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
           </section>
-        }
+        )}
       </div>
-      {area && area < 1000 &&
+      {area && area < 1000 && (
         <div className={styles.warningContainer}>
           <WarningIcon className={styles.icon} />
-          <span >{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
+          <span>{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
         </div>
-      }
+      )}
     </SidebarCardWrapper>
   );
 
