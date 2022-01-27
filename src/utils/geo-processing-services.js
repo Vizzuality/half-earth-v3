@@ -15,6 +15,8 @@ import {
   HUMAN_PRESSURES,
   ECOLOGICAL_LAND_UNITS,
   CONTEXTUAL_DATA_TABLES,
+  LAND_PRESSURES_LOOKUP,
+  LAND_PRESSURES_LABELS_SLUGS
 } from 'constants/geo-processing-services';
 
 
@@ -51,13 +53,13 @@ export function getEluData(data) {
   })
 }
 
-const landPressuresLookup = {
-  1: 'irrigated agriculture',
-  2: 'rainfed agriculture',
-  3: 'rangelands',
-  4: 'urban activities'
-}
-
+const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce(
+  (acc, current, i) => {
+    acc[i + 1] = current;
+    return acc;
+  }, {}
+);
+console.log('land', landPressuresLookup)
 function getAreaPressures(data) {
   if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) return {};
   return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce((acc, value) => ({
@@ -198,24 +200,27 @@ const getAreaName = (data, config) => {
   return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
 }
 
-export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false) => ({
-  elu: {
-    climateRegime: data.climate_regime_majority,
-    landCover: data.land_cover_majority
-  },
-  area: data.AREA_KM2,
-  areaName: getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
-  pressures: {
-    'rangelands': data.percent_rangeland,
-    'rainfed agriculture': data.percent_rainfed,
-    'urban': data.percent_urban,
-    'irrigated agriculture': data.percent_irrigated,
-  },
-  population: data.population_sum,
-  ...(includeProtectedAreasList && { ...data.protectedAreasList }),
-  protectionPercentage: data.percentage_protected,
-  ...(includeAllData && { ...data }),
-})
+export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false) => {
+
+  const pressures = {};
+  Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach(key => {
+    pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
+  });
+
+  return ({
+    elu: {
+      climateRegime: data.climate_regime_majority,
+      landCover: data.land_cover_majority
+    },
+    area: data.AREA_KM2,
+    areaName: getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
+    pressures,
+    population: data.population_sum,
+    ...(includeProtectedAreasList && { ...data.protectedAreasList }),
+    protectionPercentage: data.percentage_protected,
+    ...(includeAllData && { ...data }),
+  })
+};
 
 export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {
