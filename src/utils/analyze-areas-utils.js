@@ -61,9 +61,10 @@ export function featureCollectionFromShape(input, view, onSucces, onError) {
 
 export const getTotalPressures = (pressures) => {
   if (!pressures) return null;
-  const total = Object.keys(pressures).reduce((acc, key) => {
+  let total = Object.keys(pressures).reduce((acc, key) => {
     return pressures[key] ? acc + parseFloat(pressures[key]) : acc;
   }, 0);
+  total = (total > 100) ? 100 : total;
   return percentageFormat(total);
 }
 

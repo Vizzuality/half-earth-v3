@@ -66,8 +66,8 @@ export const SIDEBAR_CARDS_CONFIG = {
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
     title: 'How much do humans affect this area?',
-    description: ({pressures}) => `Of the current area, __${roundUpPercentage(getTotalPressures(capPercentage(pressures)))}% is under human pressure__,
-    the majority of which are pressures from ${getMainPressure(pressures)}.`,
+    description: ({ pressures }) => pressures ? `Of the current area, __${roundUpPercentage(getTotalPressures(pressures))}% is under human pressure__,
+    the majority of which are pressures from ${getMainPressure(pressures)}.` : '',
     warning: null
   },
 }
