@@ -88,25 +88,157 @@ These steps take into account that the Model (made with Model Builder) is done.
 4. From the History, right click on the ran model and share as a web tool (make sure you are logged into the Portal, look at the top right, otherwise the option won't appear).
 ![](/public/GP_publish_Share_As.png)
 
-5. In the General Panel: name the model as ModelName`Prod`, add the model to the Production folder, click on Copy all data.
+5. In the **General Panel**: 
+   1. Name the model as ModelName`Prod`
+   2. Add the model to the Production folder
+   3. Click on `Copy all data`
+   4. Click on `Share with Everyone`
 ![](/public/GP_publish_General.png)
-1. In the Configuration panel increase the maximum number to 100000 records. **This is very important** to avoid not returning a response to the front end. change the message level to `Info` (this will give more details in case of an error)
+1. In the **Configuration panel**:
+   1. Change the `Message level` to `Info` (this will give more details in case of an error). 
+   2. Increase the `Maximum number of records returned by server` to 100000. **This is very important** to avoid not returning a response to the front end. 
 ![](/public/GP_publish_Configuration.png)
-7. In the Content panel configure the tool properties (click on the pencil on the right)
-    - Set the polygon to `User defined value`
+7. In the **Content panel** configure the tool properties (click on the pencil on the right)
+    - Set the geometry to `User defined value`
 ![](/public/GP_publish_Content_geometry.png)
-    - Set the crf as `choice list`, make sure only the subset crf is selected. _This is so only the minimum amount of data is copied, but also so there aren't several elements in the choice list._
+    - Set the crf as `Choice list`, make sure only the subset crf is selected by clicking on `Only use default layers`. _This is so only the minimum amount of data is copied, but also so there aren't several elements in the choice list._
 ![](/public/GP_publish_Content_crf.png)
     - Add the description to the different parameters
-1.  Analyse before publishing to check which parameters or info is missing on the description of the tool. Sometimes analyse has to be run a couple of times without having to change anything between analyses. There will always be a warning message syaing that the data will be copied to the Portal, that is expected and ok.
+1.  Analyse before publishing to check which parameters or info is missing on the description of the tool. Sometimes analyse has to be run a couple of times without having to change anything between analyses. There will always be a warning message saying that the data will be copied to the Portal, that is expected and ok.
 2.  Click on `Publish` 🚀
 
 ### The Url to the geoprocessing service
-Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web. The feel and look of the portal is identical to ArcGIS online. Protect the tool from deletion and update to public the sharing options in the settings. Then, in the overview, on the bottom right you will find the url of the service. Click to View the tool in a new window. 
+Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web (You can also log in directly to the Portal with your credentials). The feel and look of the portal is identical to ArcGIS online. Protect the tool from deletion and update to Public the sharing options in the settings. Then, in the Overview panel, on the bottom right you will find the url of the service. Click to View the tool in a new window. 
 
 ![](/public/tool-url.png)
 
-Click on the Task. The new url is the one that the front end must use. The url should look like this: `https://heportal.esri.com/server/rest/services/<Tool name>/GPServer/<task name>`.
+Click on `Tasks`. The url that appears in the search bar is the one that the front end must use. The url should look like this: `https://heportal.esri.com/server/rest/services/<Tool name>/GPServer/<task name>`.
+
+### Test Geoprocessing Services from the Portal
+Log in to the production portal (https://heportal.esri.com/portal/home) with the required credentials
+https://heportal.esri.com/portal/home/
+Go to Content, production folder, choose a GP service
+Click on Service URL
+Go to bottom of page and click on 'Submit Job'
+ geometry ned to have a specific format, that can be obtained by doing Feature to JSon in ArcGIS pro and exported.
+ (Add picture)
+ Subsitute json in geomtry box
+
+ {
+  "displayFieldName" : "",
+  "hasZ" : true,
+  "fieldAliases" : {
+    "OBJECTID" : "OBJECTID",
+    "Name" : "Name",
+    "Text" : "Text",
+    "IntegerValue" : "Integer Value",
+    "DoubleValue" : "Double Value",
+    "DateTime" : "Date Time",
+    "Shape_Length" : "Shape_Length",
+    "Shape_Area" : "Shape_Area"
+  },
+  "geometryType" : "esriGeometryPolygon",
+  "spatialReference" : {
+    "wkid" : 102100,
+    "latestWkid" : 3857
+  },
+  "fields" : [
+    {
+      "name" : "OBJECTID",
+      "type" : "esriFieldTypeOID",
+      "alias" : "OBJECTID"
+    },
+    {
+      "name" : "Name",
+      "type" : "esriFieldTypeString",
+      "alias" : "Name",
+      "length" : 255
+    },
+    {
+      "name" : "Text",
+      "type" : "esriFieldTypeString",
+      "alias" : "Text",
+      "length" : 255
+    },
+    {
+      "name" : "IntegerValue",
+      "type" : "esriFieldTypeInteger",
+      "alias" : "Integer Value"
+    },
+    {
+      "name" : "DoubleValue",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Double Value"
+    },
+    {
+      "name" : "DateTime",
+      "type" : "esriFieldTypeDate",
+      "alias" : "Date Time",
+      "length" : 8
+    },
+    {
+      "name" : "Shape_Length",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Shape_Length"
+    },
+    {
+      "name" : "Shape_Area",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Shape_Area"
+    }
+  ],
+  "features" : [
+    {
+      "attributes" : {
+        "OBJECTID" : 1,
+        "Name" : null,
+        "Text" : null,
+        "IntegerValue" : null,
+        "DoubleValue" : null,
+        "DateTime" : null,
+        "Shape_Length" : 231978.71016606738,
+        "Shape_Area" : 3338690868.7937865
+      },
+      "geometry" : {
+        "hasZ" : true,
+        "rings" : [
+          [
+            [
+              -818493.72899999842,
+              5383774.996100001,
+              0
+            ],
+            [
+              -755549.04740000144,
+              5382225.2217999995,
+              0
+            ],
+            [
+              -756854.20630000159,
+              5329215.6889000013,
+              0
+            ],
+            [
+              -819798.88789999858,
+              5330765.4632999972,
+              0
+            ],
+            [
+              -818493.72899999842,
+              5383774.996100001,
+              0
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
+(Susbstitute crfs if needed)
+Submit Job (POST)
+Check Job details to see reuslts
+
+
 
 
 ## Particularities of certain tools within the Model Builder working with CRFs
@@ -218,3 +350,4 @@ return val
 ArcGIS online allows to run jupyter notebooks. There are different kinds, some cost credits, but for small tasks they are included. Users need to be provided the permissions to use the Notebooks. Once a notebook is saved as an item in the organisation it is possible to schedule tasks. Check [ESRI's documentation](https://doc.arcgis.com/en/arcgis-online/create-maps/prepare-a-notebook-for-automated-execution.htm) on how to schedule tasks.
 ## Cleaning the historic AOIs service
 [The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`. 
+

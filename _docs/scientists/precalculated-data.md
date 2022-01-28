@@ -85,6 +85,7 @@ Current precalculated services
 
 
 # Precalculated data 20 Places for HE Future
+Project in ArcGIS pro: Places_HE_Future
 - Access to data from AGOL and download into ArcGIS Pro as a shapefile (the [current layer](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291) is not final and will most probably change, but the processing steps will be the same) 
 - Add a numeric field named `MOL_ID` using the Calculate Field tool gives a unique number to each geometry, starting from 1 to n features. Make sure the type is set to `Long`.
 - For Biodiversity data:
@@ -92,8 +93,15 @@ Current precalculated services
   - Run Sample the same way as with the Precalculateed AOIs
   - Run Table to Table to keep only the values > 0
   - Run Table to Table to export a csv
-- For Contextual 
+- For Contextual data
+- Load Contextual Data Layers model
+- Load from Azure connection:
+- ELU.crf
+- land_encroachment.crf
+- population.crf
+- WDPA_Terrestrial_CEA_June2021.crf
 
+WDPA_Mercator (only terrestrial) Add Database, Projects, ArcGIS, Projects, Contextual precalculations.gdb
 
 Porcentage presence (WIP)
 
