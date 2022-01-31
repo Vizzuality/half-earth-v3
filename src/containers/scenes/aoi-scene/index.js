@@ -7,6 +7,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 
 // actions
+import aoisActions from 'redux_modules/aois';
 import * as urlActions from 'actions/url-actions';
 
 // utils
@@ -33,17 +34,17 @@ import {
 import { layersConfig } from 'constants/mol-layers-configs';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { PROTECTED_AREAS_TYPE, CUSTOM_AOI_TYPE } from 'constants/aois';
+import { NATIONAL_BOUNDARIES_TYPE, SUBNATIONAL_BOUNDARIES_TYPE, PROTECTED_AREAS_TYPE, CUSTOM_AOI_TYPE } from 'constants/aois';
 import { WDPA_OECM_FEATURE_DATA_LAYER } from 'constants/layers-slugs.js';
 
 // local
 import Component from './component.jsx';
 import mapStateToProps from './selectors';
 
-const actions = { ...urlActions, aoisGeometriesActions };
+const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 
 const Container = props => {
-  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, areaTypeSelected } = props;
+  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected } = props;
 
   const [taxaData, setTaxaData] = useState([])
   const [geometry, setGeometry] = useState(null);
@@ -51,6 +52,17 @@ const Container = props => {
   const [contextualData, setContextualData] = useState({})
   const [geometryEngine, setGeometryEngine] = useState(null);
   const [speciesData, setSpeciesData] = useState({ species: [] });
+
+  const setAreaType = (attributes) => {
+    let areaType = PROTECTED_AREAS_TYPE;
+    if (attributes.GID_1) {
+      areaType = SUBNATIONAL_BOUNDARIES_TYPE;
+    } else if (attributes.GID_0) {
+      areaType = NATIONAL_BOUNDARIES_TYPE;
+    }
+    setAreaTypeSelected(areaType);
+    return areaType;
+  }
 
   useEffect(() => {
     loadModules(["esri/geometry/geometryEngine", "esri/geometry/support/jsonUtils"]).then(([geometryEngine, jsonUtils]) => {
@@ -69,8 +81,8 @@ const Container = props => {
       }).then((features) => {
         const { geometry, attributes } = features[0];
         setGeometry(geometry);
-
-        if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
+        const areaType = setAreaType(attributes);
+        if (areaType === PROTECTED_AREAS_TYPE) {
           // Special case for WDPA areas
           // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
           EsriFeatureService.getFeatures({
@@ -88,20 +100,18 @@ const Container = props => {
             getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
             getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
           });
+        } else if (areaType === CUSTOM_AOI_TYPE) {
+          setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true));
         } else {
-          if (areaTypeSelected === CUSTOM_AOI_TYPE) {
-            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true));
-          } else {
-            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
-          }
-          getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
-          getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
-            // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-            setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
-          });
-          getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
-          getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+          setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
         }
+        getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
+          // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
+          setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
+        });
+        getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+        getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
       })
     }
   }, [precalculatedLayerSlug, geometryEngine])
@@ -109,10 +119,11 @@ const Container = props => {
 
   useEffect(() => {
     if (aoiId && geometryEngine && jsonUtils && !precalculatedLayerSlug) {
+      setAreaTypeSelected(CUSTOM_AOI_TYPE);
       localforage.getItem(aoiId).then((localStoredAoi) => {
         // If the AOI is not precalculated
         // we first search on the AOIs history stored on the browser
-        // STORED CUSTOM AOI
+        // STORED LOCALLY CUSTOM AOI
         if (localStoredAoi && localStoredAoi.jsonGeometry) {
           const { jsonGeometry, species, ...rest } = localStoredAoi;
           const geometry = jsonUtils.fromJSON(jsonGeometry);
@@ -129,7 +140,7 @@ const Container = props => {
         } else {
           // We then try to get the calculations from the
           // shared AOIs database on the servers
-          // PREGENERATED AOI
+          // STORED REMOTELY ON DB CUSTOM AOI
           getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData) {
               const { geometry, species, ...rest } = aoiData;
@@ -148,7 +159,6 @@ const Container = props => {
               writeToForageItem(aoiId, { jsonGeometry, area, areaName, timestamp: Date.now() });
 
               getContextData(aoiStoredGeometry).then((data) => {
-
                 setContextualData({ area, areaName, ...data });
               });
 

@@ -71,7 +71,7 @@ const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]].val
 const getProtectedAreasList = (data) => (
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map(f => ({
     NAME: f.attributes.ORIG_NA,
-    NAME_0: f.attributes.ISO3,
+    NAME_0: f.attributes.NAME_0,
     AREA_KM: f.attributes.AREA_KM,
     GOV_TYP: f.attributes.GOV_TYP,
     DESIG: f.attributes.DESIG_E,
