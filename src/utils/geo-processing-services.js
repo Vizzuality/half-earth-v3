@@ -59,7 +59,6 @@ const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce(
     return acc;
   }, {}
 );
-console.log('land', landPressuresLookup)
 function getAreaPressures(data) {
   if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) return {};
   return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce((acc, value) => ({

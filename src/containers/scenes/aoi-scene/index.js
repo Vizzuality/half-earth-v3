@@ -83,8 +83,6 @@ const Container = props => {
         const { geometry, attributes } = features[0];
         setGeometry(geometry);
 
-        const areaType = setAreaType(attributes);
-
         const setProtectedAreasType = () => {
           // Special case for WDPA areas
           // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
@@ -96,10 +94,6 @@ const Container = props => {
             const { attributes: protectedAreaAttributes } = results[0];
             setContextualData(getPrecalculatedContextualData(protectedAreaAttributes, precalculatedLayerSlug, true, true))
           });
-        }
-
-        const setCustomAOIType = () => {
-          setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true));
         }
 
         const setNationalOrSubnationalType = () => {
@@ -116,10 +110,9 @@ const Container = props => {
           getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
         };
 
-        if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
+        const areaType = setAreaType(attributes);
+        if (areaType === PROTECTED_AREAS_TYPE) {
           setProtectedAreasType();
-        } else if (areaTypeSelected === CUSTOM_AOI_TYPE) {
-          setCustomAOIType();
         } else {
           setNationalOrSubnationalType();
         }
@@ -153,7 +146,7 @@ const Container = props => {
         setStoredArea(forageStoredArea);
 
         getContextData(aoiStoredGeometry).then((data) => {
-          setContextualData({ area, areaName, ...data });
+          setContextualData({ area, areaName, ...data, isCustom: true });
         });
 
         [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
@@ -185,6 +178,8 @@ const Container = props => {
 
         setContextualData(contextualData);
       }
+
+      setAreaTypeSelected(CUSTOM_AOI_TYPE);
 
       localforage.getItem(aoiId).then((localStoredAoi) => {
         if (localStoredAoi && localStoredAoi.jsonGeometry) {
@@ -220,7 +215,6 @@ const Container = props => {
       } : {
         ...storedArea,
         ...contextualData
-
       }
 
       writeToForageItem(aoiId, updatedStoredArea);
