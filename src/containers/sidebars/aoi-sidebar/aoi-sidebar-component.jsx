@@ -43,6 +43,7 @@ const AOISidebarComponent = ({
   contextualData,
   shareAoiAnalytics,
   handleSceneModeChange,
+  saveAreaAfterShare,
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -51,7 +52,6 @@ const AOISidebarComponent = ({
     shareAoiAnalytics();
     setShareModalOpen(true);
   };
-
   const saveName = () => {
     setIsEditingName(false);
     writeToForageItem(contextualData.aoiId, {
@@ -190,6 +190,7 @@ const AOISidebarComponent = ({
         <ShareModal
           isOpen={isShareModalOpen}
           setShareModalOpen={setShareModalOpen}
+          onShareCallback={saveAreaAfterShare}
         />
       </div>
     </>

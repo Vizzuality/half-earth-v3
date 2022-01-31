@@ -37,6 +37,7 @@ const AoiSceneComponent = ({
         speciesData={speciesData}
         activeLayers={activeLayers}
         contextualData={contextualData}
+        geometry={geometry}
       />
     </Scene>
   );

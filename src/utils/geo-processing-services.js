@@ -233,6 +233,20 @@ export const getAoiFromDataBase = (id) => {
   })
 }
 
+export const postAoiToDataBase = (geometry, attributes) => {
+  return new Promise((resolve, reject) => {
+    EsriFeatureService.addFeature({
+      url: LAYERS_URLS[AOIS_HISTORIC],
+      features: {
+        geometry,
+        attributes
+      },
+    }).then((features) => {
+      resolve(features)
+    }).catch(error => reject(error))
+  })
+}
+
 export const addZcoordToRings = (rings) => rings[0].map(r => [...r, 0]);
 
 export const setSpeciesJSONGeometryRings = (rings) => ({

@@ -1,6 +1,7 @@
 import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { addFeatures } from "@esri/arcgis-rest-feature-layer";
 
 function getFeatures({ url, whereClause = "", outFields = ["*"], returnGeometry = false, outSpatialReference = LOCAL_SPATIAL_REFERENCE, geometry = null }) {
   return new Promise((resolve, reject) => {
@@ -34,7 +35,15 @@ function getLayer({slug, outFields= ["*"]}) {
   });
 }
 
+function addFeature({ url, features }) {
+  return addFeatures({
+    url,
+    features
+  })
+}
+
 export default {
   getFeatures,
-  getLayer
+  getLayer,
+  addFeature
 }
