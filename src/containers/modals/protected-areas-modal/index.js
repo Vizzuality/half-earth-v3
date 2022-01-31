@@ -77,6 +77,7 @@ const Container = (props) => {
 
   useEffect(() => {
     let urlValue;
+
     switch (areaTypeSelected) {
       case NATIONAL_BOUNDARIES_TYPE:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
@@ -97,14 +98,14 @@ const Container = (props) => {
       }
     }
     else if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
-    // --------------- PROTECTED AREA SPECIAL CASE --------------
-     const areaValue = {
-       DESIG: contextualData.DESIG_E,
-       DESIG_T: contextualData.DESIG_T,
-       AREA_KM: contextualData.AREA_KM,
-       IUCN_CA: contextualData.IUCN_CA,
-       NAME: contextualData.NAME,
-       NAME_0: contextualData.ISO3,
+      // --------------- PROTECTED AREA SPECIAL CASE --------------
+      const areaValue = {
+        DESIG: contextualData.DESIG_E,
+        DESIG_T: contextualData.DESIG_T,
+        AREA_KM: contextualData.AREA_KM,
+        IUCN_CA: contextualData.IUCN_CA,
+        NAME: contextualData.NAME,
+        NAME_0: contextualData.ISO3,
        GOV_TYP: contextualData.GOV_TYP,
      }
      setData([areaValue]);
