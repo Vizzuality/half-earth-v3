@@ -116,7 +116,7 @@ export function getSpeciesData(crfName, geometry) {
         ...acc,
         [f.attributes.SliceNumber]: {
           sliceNumber: f.attributes.SliceNumber,
-          presencePercentage: f.attributes.percentage_presence
+          presencePercentage: f.attributes.per_global
         }
       }), {});
       const ids = data.value.features.map(f => f.attributes.SliceNumber);
@@ -153,7 +153,7 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
       ...acc,
       [f.SliceNumber]: {
         sliceNumber: f.SliceNumber,
-        presencePercentage: f.percentage_presence
+        presencePercentage: f.per_global
       }
     }), {});
     const ids = data.map(f => f.SliceNumber);
