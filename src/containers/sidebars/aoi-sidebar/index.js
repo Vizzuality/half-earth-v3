@@ -12,6 +12,7 @@ const actions = {...urlActions, ...aoiAnalyticsActions}
 
 const AoiSidebarContainer = (props) => {
   const { speciesData, contextualData, browsePage, geometry } = props;
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues ] = useState({})
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
@@ -29,30 +30,23 @@ const AoiSidebarContainer = (props) => {
     }
   }, [contextualData]);
 
+  useEffect(()=> {
+    if (isShareModalOpen) {
+      saveAreaToDB();
+    }
+  }, [isShareModalOpen])
 
   const handleSceneModeChange = () => browsePage({type: DATA})
-
-  const saveAreaAfterShare = () => {
+  const stringifiedFields = ['elu', 'pressures', 'protectedAreasList', 'species'];
+  const saveAreaToDB = () => {
     const attributes = {
-      area: contextualData.area,
-      //
-      population_sum: 0,
-      land_cover_majority: 0,
-      climate_regime_majority: 0,
-      number_of_mammals: 0,
-      number_of_amphibians: 0,
-      number_of_birds: 0,
-      number_of_reptiles: 0,
-      percentage_protected: 0,
-      mammals_list: 0,
-      amphibians_list: 0,
-      birds_list: 0,
-      reptiles_list: 0,
-      half_earth_goal: 100,
-      name: JSON.stringify(contextualData),
-      hash_id: contextualData.aoiId,
-      geometry: geometry.extent,
-      QueriedDate: Date.now(),
+      ...contextualData,
+      ...stringifiedFields.map(key => (
+        {[key]: JSON.stringify(contextualData[key])}
+      )),
+      per_global: contextualData.percentage,
+      per_aoi: contextualData.percentageAoi,
+      time_stamp: Date.now()
     }
     postAoiToDataBase(geometry, attributes, speciesData)
   };
@@ -66,7 +60,8 @@ const AoiSidebarContainer = (props) => {
       contextualData={contextualData}
       climateRegime={values.climateRegime}
       handleSceneModeChange={handleSceneModeChange}
-      saveAreaAfterShare={saveAreaAfterShare}
+      isShareModalOpen={isShareModalOpen}
+      setShareModalOpen={setShareModalOpen}
       {...props}
     />
   )

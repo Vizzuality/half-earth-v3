@@ -43,9 +43,9 @@ const AOISidebarComponent = ({
   contextualData,
   shareAoiAnalytics,
   handleSceneModeChange,
-  saveAreaAfterShare,
+  isShareModalOpen,
+  setShareModalOpen,
 }) => {
-  const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
   const handleShareModalOpen = () => {
@@ -190,7 +190,6 @@ const AOISidebarComponent = ({
         <ShareModal
           isOpen={isShareModalOpen}
           setShareModalOpen={setShareModalOpen}
-          onShareCallback={saveAreaAfterShare}
         />
       </div>
     </>

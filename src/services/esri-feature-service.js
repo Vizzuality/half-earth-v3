@@ -1,7 +1,7 @@
-import { loadModules } from 'esri-loader';
 import { LAYERS_URLS } from 'constants/layers-urls';
+import { loadModules } from 'esri-loader';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-import { addFeatures } from "@esri/arcgis-rest-feature-layer";
+import { addFeatures, queryFeatures, applyEdits } from "@esri/arcgis-rest-feature-layer";
 
 function getFeatures({ url, whereClause = "", outFields = ["*"], returnGeometry = false, outSpatialReference = LOCAL_SPATIAL_REFERENCE, geometry = null }) {
   return new Promise((resolve, reject) => {
@@ -36,9 +36,30 @@ function getLayer({slug, outFields= ["*"]}) {
 }
 
 function addFeature({ url, features }) {
-  return addFeatures({
+  return queryFeatures({
     url,
-    features
+    where: `aoiId = '${features.attributes.aoiId}'`
+  }).then((feat) => {
+    const existingFeature = feat.features && feat.features[0];
+    if (existingFeature) {
+      // Only update if the name is different
+      if (existingFeature.attributes.name !== features.attributes.name) {
+        return applyEdits({
+          url,
+          updates: [{
+            attributes: {
+              OBJECTID: existingFeature.attributes.OBJECTID,
+              name: features.attributes.name,
+            }
+          }]
+        }).catch(error => console.error('e', error));
+      }
+    } else {
+      return addFeatures({
+        url,
+        features
+      }).catch(error => console.error('e', error));
+    }
   })
 }
 
