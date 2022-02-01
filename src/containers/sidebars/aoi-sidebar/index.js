@@ -15,7 +15,7 @@ const AoiSidebarContainer = (props) => {
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
       // Custom AOIs rely on percentage instead of protectionPercentage
-      const percentage = contextualData.protectionPercentage || (contextualData.percentage * 100);
+      const percentage = contextualData.protectionPercentage || contextualData.percentage;
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
         area: localeFormatting(contextualData.area),
@@ -23,7 +23,7 @@ const AoiSidebarContainer = (props) => {
         population: contextualData.population && localeFormatting(contextualData.population),
         mainPressure: contextualData.pressures && getMainPressure(contextualData.pressures),
         totalPressures: contextualData.pressures && getTotalPressures(contextualData.pressures),
-        protectionPercentage: (contextualData.protectionPercentage || contextualData.percentage) && percentageFormat(percentage),
+        protectionPercentage: percentage && percentageFormat(percentage),
       })
     }
   }, [contextualData]);
