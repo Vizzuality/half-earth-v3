@@ -100,5 +100,5 @@ export const GEOPROCESSING_SERVICES_URLS = {
   [REPTILES]: 'https://heportal.esri.com/server/rest/services/SampleReptProd20220131/GPServer/SampleReptProdRange',
   [MAMMALS]: 'https://heportal.esri.com/server/rest/services/SampleMamProd20220131/GPServer/SampleMamProdRange',
   [AMPHIBIANS]: 'https://heportal.esri.com/server/rest/services/SampleAmphProd20220131/GPServer/SampleAmphProdRange',
-  [CONTEXTUAL_DATA]: 'https://heportal.esri.com/server/rest/services/ContextualLayers20220131Prod/GPServer/ContextualLayersProd',
+  [CONTEXTUAL_DATA]: 'https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd',
 }
