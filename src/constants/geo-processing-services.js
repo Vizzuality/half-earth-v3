@@ -96,9 +96,9 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 }
 
 export const GEOPROCESSING_SERVICES_URLS = {
-  [BIRDS]: 'https://heportal.esri.com/server/rest/services/SampleBirdsProd/GPServer/SampleBirds',
-  [REPTILES]: 'https://heportal.esri.com/server/rest/services/SampleReptProd/GPServer/SampleRept',
-  [MAMMALS]: 'https://heportal.esri.com/server/rest/services/SampleMamProd/GPServer/SampleMam',
-  [AMPHIBIANS]: 'https://heportal.esri.com/server/rest/services/SampleAmphProd/GPServer/SampleAmphProd',
-  [CONTEXTUAL_DATA]: 'https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd',
+  [BIRDS]: 'https://heportal.esri.com/server/rest/services/SampleBirdsProd20220131/GPServer/SampleBirdsProdRange',
+  [REPTILES]: 'https://heportal.esri.com/server/rest/services/SampleReptProd20220131/GPServer/SampleReptProdRange',
+  [MAMMALS]: 'https://heportal.esri.com/server/rest/services/SampleMamProd20220131/GPServer/SampleMamProdRange',
+  [AMPHIBIANS]: 'https://heportal.esri.com/server/rest/services/SampleAmphProd20220131/GPServer/SampleAmphProdRange',
+  [CONTEXTUAL_DATA]: 'https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd',
 }

@@ -61,7 +61,7 @@ export const SIDEBAR_CARDS_CONFIG = {
   },
   [PROTECTION_SLUG]: {
     title: 'What is already protected in this area?',
-    description: ({ protectionPercentage, percentage }) => `Of the current area, __${(protectionPercentage || percentage) ? roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || (percentage && percentage * 100)))) : '0'}% of land is under formal protection__.`,
+    description: ({ protectionPercentage, percentage }) => `Of the current area, __${(protectionPercentage || percentage) ? roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || percentage))) : '0'}% of land is under formal protection__.`,
     warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
