@@ -41,13 +41,16 @@ const AoiSidebarContainer = (props) => {
   const saveAreaToDB = () => {
     const attributes = {
       ...contextualData,
-      ...stringifiedFields.map(key => (
-        {[key]: JSON.stringify(contextualData[key])}
-      )),
+      ...stringifiedFields.reduce((acc, key) => {
+        acc[key] = JSON.stringify(contextualData[key]);
+        return acc;
+      }, {}),
+      species: JSON.stringify(speciesData),
       per_global: contextualData.percentage,
-      per_aoi: contextualData.percentageAoi,
-      time_stamp: Date.now()
+      // per_aoi: 0, Not used yet
+      time_stamp: 0 // TODO: Use Date.now()
     }
+
     postAoiToDataBase(geometry, attributes, speciesData)
   };
 

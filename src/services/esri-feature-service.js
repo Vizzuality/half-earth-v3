@@ -25,7 +25,6 @@ function getFeatures({ url, whereClause = "", outFields = ["*"], returnGeometry 
   })
 }
 
-
 function getLayer({slug, outFields= ["*"]}) {
   return loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
     return new FeatureLayer({
@@ -43,13 +42,13 @@ function addFeature({ url, features }) {
     const existingFeature = feat.features && feat.features[0];
     if (existingFeature) {
       // Only update if the name is different
-      if (existingFeature.attributes.name !== features.attributes.name) {
+      if (existingFeature.attributes.areaName !== features.attributes.areaName) {
         return applyEdits({
           url,
           updates: [{
             attributes: {
               OBJECTID: existingFeature.attributes.OBJECTID,
-              name: features.attributes.name,
+              areaName: features.attributes.areaName,
             }
           }]
         }).catch(error => console.error('e', error));

@@ -225,7 +225,7 @@ export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[AOIS_HISTORIC],
-      whereClause: `hash_id = '${id}'`
+      whereClause: `aoiId = '${id}'`
     }).then((features) => {
       resolve(features)
     }).catch(error => reject(error))

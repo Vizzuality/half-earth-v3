@@ -192,6 +192,9 @@ const Container = props => {
               // If we don't have it anywhere we just execute the GP services job to create one
               createNewCustomAOI()
             }
+          }).catch(error => {
+            console.error('Could not retrieve AOI', error);
+            createNewCustomAOI()
           })
         }
       }).catch((error) => {
