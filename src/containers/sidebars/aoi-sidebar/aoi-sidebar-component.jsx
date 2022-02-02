@@ -49,10 +49,12 @@ const AOISidebarComponent = ({
 }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
+
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
     setShareModalOpen(true);
   };
+
   const saveName = () => {
     setIsEditingName(false);
     writeToForageItem(contextualData.aoiId, {

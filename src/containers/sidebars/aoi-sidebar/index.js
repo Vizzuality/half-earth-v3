@@ -32,7 +32,7 @@ const AoiSidebarContainer = (props) => {
   }, [contextualData]);
 
   useEffect(()=> {
-    if (isShareModalOpen) {
+    if (isShareModalOpen && contextualData.isCustom) {
       saveAreaToDB();
     }
   }, [isShareModalOpen])
