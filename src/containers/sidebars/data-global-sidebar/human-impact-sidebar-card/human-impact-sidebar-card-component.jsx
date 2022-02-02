@@ -10,6 +10,10 @@ import {
   MARINE_HUMAN_PRESSURES_SLUG,
 } from 'constants/analyze-areas-constants';
 import {
+  LAND_HUMAN_PRESSURES,
+  MARINE_HUMAN_PRESSURES,
+} from 'constants/layers-slugs';
+import {
   humanPressuresLandUse,
   humanPressuresMarine,
   TEXTS,
@@ -30,6 +34,12 @@ const HumanImpactSidebarCardComponent = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+  const activeLayersTitles = activeLayers.map((l) => l.title);
+  const areAllSelected = (layers) =>
+    layers.every((l) => activeLayersTitles.includes(l.value));
+  const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
+  const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
+
   return (
     <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
       <CategoryBox
@@ -60,11 +70,26 @@ const HumanImpactSidebarCardComponent = ({
               type="checkbox"
               key={layer.value}
               activeLayers={activeLayers}
-              toggleCategory={LAND_HUMAN_PRESSURES_SLUG}
+              themeCategorySlug={LAND_HUMAN_PRESSURES_SLUG}
               theme={checkboxTheme.landPressures}
-              onChange={handleLayerToggle}
+              onChange={(option) =>
+                handleLayerToggle(option, LAND_HUMAN_PRESSURES)
+              }
             />
           ))}
+          <button
+            className={styles.allButton}
+            onClick={() =>
+              handleLayerToggle(
+                {
+                  layer: allHumanPressuresSelected ? 'none' : 'all',
+                },
+                LAND_HUMAN_PRESSURES
+              )
+            }
+          >
+            {allHumanPressuresSelected ? 'Unselect all' : 'Select all'}
+          </button>
         </div>
         <hr className={hrTheme.dark} />
         <span className={styles.layersTitle}>{TEXTS.marineLayersTitle}</span>
@@ -81,11 +106,26 @@ const HumanImpactSidebarCardComponent = ({
               variant="light"
               type="checkbox"
               activeLayers={activeLayers}
-              toggleCategory={MARINE_HUMAN_PRESSURES_SLUG}
+              themeCategorySlug={MARINE_HUMAN_PRESSURES_SLUG}
               theme={checkboxTheme.marinePressures}
-              onChange={handleLayerToggle}
+              onChange={(option) =>
+                handleLayerToggle(option, MARINE_HUMAN_PRESSURES)
+              }
             />
           ))}
+          <button
+            className={styles.allButton}
+            onClick={() =>
+              handleLayerToggle(
+                {
+                  layer: allMarinePressuresSelected ? 'none' : 'all',
+                },
+                MARINE_HUMAN_PRESSURES
+              )
+            }
+          >
+            {allMarinePressuresSelected ? 'Unselect all' : 'Select all'}
+          </button>
         </div>
         <SourceAnnotation
           theme="light"
