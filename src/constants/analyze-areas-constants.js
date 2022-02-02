@@ -36,7 +36,7 @@ export const { NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS } = 
 export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 
 const { REACT_APP_FEATURE_PA_AOI } = process.env;
-
+console.log('REACT_APP_FEATURE_PA_AOI', REACT_APP_FEATURE_PA_AOI)
 export const PRECALCULATED_AOI_OPTIONS = [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: 'National boundaries' },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: 'Subnational boundaries' },
