@@ -43,10 +43,13 @@ const AOISidebarComponent = ({
   contextualData,
   shareAoiAnalytics,
   handleSceneModeChange,
+  isShareModalOpen,
+  setShareModalOpen,
+  dataLoaded,
 }) => {
-  const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
+
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
     setShareModalOpen(true);
@@ -116,12 +119,15 @@ const AOISidebarComponent = ({
                   tooltipText="Edit area name"
                 />
               )}
-              <Button
-                Icon={ShareIcon}
-                type="icon-square"
-                handleClick={handleShareModalOpen}
-                tooltipText="Share this area"
-              />
+              {dataLoaded && (
+                <Button
+                  Icon={ShareIcon}
+                  type="icon-square"
+                  handleClick={handleShareModalOpen}
+                  tooltipText="Share this area"
+                  disabled
+                />
+              )}
             </div>
           )}
         </div>

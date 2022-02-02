@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils';
 import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
-import Component from './component';
+import Component from './aoi-sidebar-component';
 import * as urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import { DATA } from 'router'
+import { postAoiToDataBase } from 'utils/geo-processing-services';
+import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 
 const actions = {...urlActions, ...aoiAnalyticsActions}
 
 const AoiSidebarContainer = (props) => {
-  const { speciesData, contextualData, browsePage } = props;
+  const { speciesData, contextualData, browsePage, geometry } = props;
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues ] = useState({})
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
@@ -28,8 +31,27 @@ const AoiSidebarContainer = (props) => {
     }
   }, [contextualData]);
 
+  useEffect(()=> {
+    if (isShareModalOpen && contextualData.isCustom) {
+      saveAreaToDB();
+    }
+  }, [isShareModalOpen])
 
   const handleSceneModeChange = () => browsePage({type: DATA})
+  const saveAreaToDB = () => {
+    const attributes = {
+      ...contextualData,
+      ...STRINGIFIED_ATTRIBUTES.reduce((acc, key) => {
+        acc[key] = JSON.stringify(contextualData[key]);
+        return acc;
+      }, {}),
+      species: JSON.stringify(speciesData.species),
+      per_global: contextualData.percentage,
+      // per_aoi: 0, Not used yet
+      time_stamp: Date.now()
+    }
+    postAoiToDataBase(geometry, attributes, speciesData)
+  };
 
   return (
     <Component
@@ -40,6 +62,8 @@ const AoiSidebarContainer = (props) => {
       contextualData={contextualData}
       climateRegime={values.climateRegime}
       handleSceneModeChange={handleSceneModeChange}
+      isShareModalOpen={isShareModalOpen}
+      setShareModalOpen={setShareModalOpen}
       {...props}
     />
   )

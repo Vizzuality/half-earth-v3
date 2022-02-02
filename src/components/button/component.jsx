@@ -3,34 +3,30 @@ import cx from 'classnames';
 
 import styles from './styles.module.scss';
 
-
 const Component = ({
   type,
   Icon,
   label,
   active,
-	className,
+  className,
   handleClick,
-  tooltipText
+  tooltipText,
 }) => (
-  <button 
+  <button
     onClick={handleClick}
     title={tooltipText}
-		className={cx(
-      className,
-      {
-        [styles.rectangular]: type === 'rectangular',
-        [styles.iconSquare]: type === 'icon-square',
-        [styles.rounded]: type === 'rounded',
-        [styles.compound]: type === 'compound',
-        [styles.square]: type === 'square',
-        [styles.active]: active,
-      }
-    )}
+    className={cx(className, {
+      [styles.rectangular]: type === 'rectangular',
+      [styles.iconSquare]: type === 'icon-square',
+      [styles.rounded]: type === 'rounded',
+      [styles.compound]: type === 'compound',
+      [styles.square]: type === 'square',
+      [styles.active]: active,
+    })}
   >
-    {Icon && <Icon className={styles.icon}/>}
+    {Icon && <Icon className={styles.icon} />}
     {label && <span className={styles.label}>{label}</span>}
   </button>
-)
+);
 
 export default Component;

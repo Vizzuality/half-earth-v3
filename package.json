@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@esri/arcgis-rest-feature-layer": "^3.4.3",
+    "@esri/arcgis-rest-request": "^3.4.3",
     "@loadable/component": "^5.10.1",
     "@tippyjs/react": "^4.2.5",
     "airtable": "^0.8.1",

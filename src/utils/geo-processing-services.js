@@ -59,7 +59,6 @@ const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce(
     return acc;
   }, {}
 );
-console.log('land', landPressuresLookup)
 function getAreaPressures(data) {
   if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) return {};
   return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce((acc, value) => ({
@@ -226,7 +225,22 @@ export const getAoiFromDataBase = (id) => {
   return new Promise((resolve, reject) => {
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[AOIS_HISTORIC],
-      whereClause: `hash_id = '${id}'`
+      returnGeometry: true,
+      whereClause: `aoiId = '${id}'`
+    }).then((features) => {
+      resolve(features)
+    }).catch(error => reject(error))
+  })
+}
+
+export const postAoiToDataBase = (geometry, attributes) => {
+  return new Promise((resolve, reject) => {
+    EsriFeatureService.addFeature({
+      url: LAYERS_URLS[AOIS_HISTORIC],
+      features: {
+        geometry,
+        attributes
+      },
     }).then((features) => {
       resolve(features)
     }).catch(error => reject(error))

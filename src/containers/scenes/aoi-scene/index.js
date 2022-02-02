@@ -5,6 +5,8 @@ import orderBy from 'lodash/orderBy';
 import { loadModules } from 'esri-loader';
 import EsriFeatureService from 'services/esri-feature-service';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
+import isEmpty from 'lodash/isEmpty';
 
 // actions
 import aoisActions from 'redux_modules/aois';
@@ -52,6 +54,8 @@ const Container = props => {
   const [contextualData, setContextualData] = useState({})
   const [geometryEngine, setGeometryEngine] = useState(null);
   const [speciesData, setSpeciesData] = useState({ species: [] });
+  const [storedArea, setStoredArea] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
   const setAreaType = (attributes) => {
     let areaType = PROTECTED_AREAS_TYPE;
@@ -71,9 +75,9 @@ const Container = props => {
     })
   }, [])
 
-  // This is where we fetch the precalculated AOIs data
+  // PRECALCULATED AOIs
   useEffect(() => {
-    if (precalculatedLayerSlug && geometryEngine) {
+    const setPrecalculatedAOIs = () => {
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[precalculatedLayerSlug],
         whereClause: `MOL_ID = '${aoiId}'`,
@@ -81,8 +85,8 @@ const Container = props => {
       }).then((features) => {
         const { geometry, attributes } = features[0];
         setGeometry(geometry);
-        const areaType = setAreaType(attributes);
-        if (areaType === PROTECTED_AREAS_TYPE) {
+
+        const setProtectedAreasType = () => {
           // Special case for WDPA areas
           // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
           EsriFeatureService.getFeatures({
@@ -90,96 +94,123 @@ const Container = props => {
             whereClause: `MOL_ID = '${attributes.MOL_ID}'`,
             returnGeometry: false
           }).then((results) => {
-            const { attributes } = results[0];
-            setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true, true))
-            getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
-            getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
-              // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-              setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
-            });
-            getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
-            getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+            const { attributes: protectedAreaAttributes } = results[0];
+            setContextualData(getPrecalculatedContextualData(protectedAreaAttributes, precalculatedLayerSlug, true, true))
           });
-        } else if (areaType === CUSTOM_AOI_TYPE) {
-          setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug, true));
-        } else {
+        }
+
+        const setNationalOrSubnationalType = () => {
           setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
         }
-        getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
-        getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
-          // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-          setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
-        });
-        getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
-        getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+
+        const setPrecalculatedSpeciesData = () => {
+          getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+          getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
+            // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
+            setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
+          });
+          getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+          getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+        };
+
+        const areaType = setAreaType(attributes);
+        if (areaType === PROTECTED_AREAS_TYPE) {
+          setProtectedAreasType();
+        } else {
+          setNationalOrSubnationalType();
+        }
+
+        // Common to all area types
+        setPrecalculatedSpeciesData();
       })
+    }
+
+    if (precalculatedLayerSlug && geometryEngine) {
+      setPrecalculatedAOIs();
     }
   }, [precalculatedLayerSlug, geometryEngine])
 
-
+  // NOT PRECALCULATED AOIs
   useEffect(() => {
     if (aoiId && geometryEngine && jsonUtils && !precalculatedLayerSlug) {
-      setAreaTypeSelected(CUSTOM_AOI_TYPE);
-      localforage.getItem(aoiId).then((localStoredAoi) => {
-        // If the AOI is not precalculated
-        // we first search on the AOIs history stored on the browser
-        // STORED LOCALLY CUSTOM AOI
-        if (localStoredAoi && localStoredAoi.jsonGeometry) {
-          const { jsonGeometry, species, ...rest } = localStoredAoi;
-          const geometry = jsonUtils.fromJSON(jsonGeometry);
-          setSpeciesData({ species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc']) });
-          const contextualData = { ...rest, aoiId, isCustom: true };
 
-          // Set data before fetch just to show name and available info
-          setContextualData(contextualData);
+      const createNewCustomAOI = () => {
+        const areaName = 'Custom area';
+        const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
+        const contextualData = { area, areaName, isCustom: true, aoiId }
+        // Set data before fetch just to show name and available info
+        setContextualData(contextualData);
 
-          getContextData(geometry).then((data) => {
-            setContextualData({ ...contextualData, ...data });
-          });
-          setGeometry(geometry);
-        } else {
-          // We then try to get the calculations from the
-          // shared AOIs database on the servers
-          // STORED REMOTELY ON DB CUSTOM AOI
-          getAoiFromDataBase(aoiId).then((aoiData) => {
-            if (aoiData) {
-              const { geometry, species, ...rest } = aoiData;
-              setGeometry(geometry);
-              setSpeciesData({ species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc']) });
-              setContextualData({ ...rest, aoiId, isCustom: false })
-            } else {
-              // And if we don't have it anywhere we just execute the GP services job to create one
-              // NEW CUSTOM AOI
-              const areaName = 'Custom area';
-              const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
-              const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
+        const jsonGeometry = aoiStoredGeometry && aoiStoredGeometry.toJSON();
+        setGeometry(jsonUtils.fromJSON(jsonGeometry));
 
-              setContextualData({ area, areaName, isCustom: true, aoiId });
-              setGeometry(jsonUtils.fromJSON(jsonGeometry));
-              writeToForageItem(aoiId, { jsonGeometry, area, areaName, timestamp: Date.now() });
+        const forageStoredArea = { ...contextualData, jsonGeometry, timestamp: Date.now() };
+        writeToForageItem(aoiId, forageStoredArea);
+        setStoredArea(forageStoredArea);
 
-              getContextData(aoiStoredGeometry).then((data) => {
-                setContextualData({ area, areaName, ...data });
-              });
+        getContextData(aoiStoredGeometry).then((data) => {
+          setContextualData({ area, areaName, ...data, isCustom: true });
+        });
 
-              [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
-                getSpeciesData(taxa, aoiStoredGeometry).then((data) => {
-                  let dataWithoutWhales = data;
-                  // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-                  if (taxa === MAMMALS) {
-                    dataWithoutWhales = dataWithoutWhales.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955);
-                  }
-                  setTaxaData(dataWithoutWhales);
-                });
-              })
+        [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
+          getSpeciesData(taxa, aoiStoredGeometry).then((data) => {
+            let dataWithoutWhales = data;
+            // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
+            if (taxa === MAMMALS) {
+              dataWithoutWhales = dataWithoutWhales.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955);
             }
+            setTaxaData(dataWithoutWhales);
+          });
+        })
+      }
+
+      const recoverAOIFromDB = (aoiData) => {
+        const { geometry, attributes: { species, ...otherAttributes } } = aoiData;
+        setGeometry(geometry);
+        setSpeciesData({ species: JSON.parse(species) });
+        setContextualData({ ...otherAttributes,
+          ...STRINGIFIED_ATTRIBUTES.reduce((acc, key) => {
+            acc[key] = JSON.parse(otherAttributes[key]);
+            return acc;
+          }, {}),
+          percentage: otherAttributes.per_global,
+          isCustom: true
+        })
+      }
+
+      const recoverAOIfromLocal = (localStoredAoi) => {
+        const { jsonGeometry, species, ...rest } = localStoredAoi;
+        const geometry = jsonUtils.fromJSON(jsonGeometry);
+        setGeometry(geometry);
+        setSpeciesData({ species });
+        const contextualData = { ...rest,
+          aoiId, isCustom: true };
+
+        setContextualData(contextualData);
+      }
+
+      setAreaTypeSelected(CUSTOM_AOI_TYPE);
+
+      localforage.getItem(aoiId).then((localStoredAoi) => {
+        if (localStoredAoi && localStoredAoi.jsonGeometry) {
+          recoverAOIfromLocal(localStoredAoi)
+        } else {
+
+          getAoiFromDataBase(aoiId).then((aoiData) => {
+            if (aoiData && aoiData[0]) {
+              recoverAOIFromDB(aoiData[0])
+            } else {
+              // If we don't have it anywhere we just execute the GP services job to create one
+              createNewCustomAOI()
+            }
+          }).catch(error => {
+            console.error('Could not retrieve AOI', error);
           })
         }
       }).catch((error) => {
         console.error(error)
       })
     }
-
   }, [aoiId, geometryEngine, jsonUtils])
 
   useEffect(() => {
@@ -189,16 +220,26 @@ const Container = props => {
 
 
   useEffect(() => {
-    if (speciesData.species && !precalculatedLayerSlug) {
-      writeToForageItem(aoiId, { species: [...speciesData.species] });
-    }
-  }, [speciesData, precalculatedLayerSlug]);
+    const hasAllData = speciesData && contextualData && !isEmpty(contextualData);
 
-  useEffect(() => {
-    if (!precalculatedLayerSlug) {
-      writeToForageItem(aoiId, { ...contextualData });
+    if (!precalculatedLayerSlug && hasAllData) {
+      const updatedStoredArea = (speciesData.species && speciesData.species.length > 0) ? {
+        ...storedArea,
+        species: [...speciesData.species],
+        ...contextualData
+      } : {
+        ...storedArea,
+        ...contextualData
+      }
+      writeToForageItem(aoiId, updatedStoredArea);
+      setStoredArea(updatedStoredArea, storedArea);
     }
-  }, [contextualData, precalculatedLayerSlug]);
+
+    if (hasAllData) {
+      setLoaded(true);
+    }
+
+  }, [speciesData, precalculatedLayerSlug, contextualData]);
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
@@ -213,6 +254,7 @@ const Container = props => {
       contextualData={contextualData}
       handleGlobeUpdating={handleGlobeUpdating}
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+      dataLoaded={loaded}
       {...props}
     />
   )

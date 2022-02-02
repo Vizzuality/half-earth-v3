@@ -103,7 +103,7 @@ export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]: 'https://utility.arcgis.com/usrsvcs/servers/5e66921fb50f475981b5ef66678f29f7/rest/services/aois_historic/FeatureServer/0',
-  [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/aois_historic_6a796b684c874ef4bbe2f97b4857bf35/FeatureServer/0',
+  [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:
