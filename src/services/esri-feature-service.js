@@ -43,6 +43,7 @@ function addFeature({ url, features }) {
     if (existingFeature) {
       // Only update if the name is different
       if (existingFeature.attributes.areaName !== features.attributes.areaName) {
+        // The name edit is not working right now on the table (probably an online config problem)
         return applyEdits({
           url,
           updates: [{

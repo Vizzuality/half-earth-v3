@@ -5,6 +5,8 @@ import orderBy from 'lodash/orderBy';
 import { loadModules } from 'esri-loader';
 import EsriFeatureService from 'services/esri-feature-service';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
+import isEmpty from 'lodash/isEmpty';
 
 // actions
 import aoisActions from 'redux_modules/aois';
@@ -53,6 +55,7 @@ const Container = props => {
   const [geometryEngine, setGeometryEngine] = useState(null);
   const [speciesData, setSpeciesData] = useState({ species: [] });
   const [storedArea, setStoredArea] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
   const setAreaType = (attributes) => {
     let areaType = PROTECTED_AREAS_TYPE;
@@ -162,10 +165,17 @@ const Container = props => {
       }
 
       const recoverAOIFromDB = (aoiData) => {
-        const { geometry, species, ...rest } = aoiData;
+        const { geometry, attributes: { species, ...otherAttributes } } = aoiData;
         setGeometry(geometry);
-        setSpeciesData({ species: orderBy(species, ['has_image', 'conservationConcern'], ['desc', 'desc']) });
-        setContextualData({ ...rest, aoiId, isCustom: false })
+        setSpeciesData({ species: JSON.parse(species) });
+        setContextualData({ ...otherAttributes,
+          ...STRINGIFIED_ATTRIBUTES.reduce((acc, key) => {
+            acc[key] = JSON.parse(otherAttributes[key]);
+            return acc;
+          }, {}),
+          percentage: otherAttributes.per_global,
+          isCustom: true
+        })
       }
 
       const recoverAOIfromLocal = (localStoredAoi) => {
@@ -173,8 +183,8 @@ const Container = props => {
         const geometry = jsonUtils.fromJSON(jsonGeometry);
         setGeometry(geometry);
         setSpeciesData({ species });
-
-        const contextualData = { ...rest, aoiId, isCustom: true };
+        const contextualData = { ...rest,
+          aoiId, isCustom: true };
 
         setContextualData(contextualData);
       }
@@ -185,16 +195,16 @@ const Container = props => {
         if (localStoredAoi && localStoredAoi.jsonGeometry) {
           recoverAOIfromLocal(localStoredAoi)
         } else {
+
           getAoiFromDataBase(aoiId).then((aoiData) => {
-            if (aoiData) {
-              recoverAOIFromDB(aoiData)
+            if (aoiData && aoiData[0]) {
+              recoverAOIFromDB(aoiData[0])
             } else {
               // If we don't have it anywhere we just execute the GP services job to create one
               createNewCustomAOI()
             }
           }).catch(error => {
             console.error('Could not retrieve AOI', error);
-            createNewCustomAOI()
           })
         }
       }).catch((error) => {
@@ -210,7 +220,9 @@ const Container = props => {
 
 
   useEffect(() => {
-    if (!precalculatedLayerSlug) {
+    const hasAllData = speciesData && contextualData && !isEmpty(contextualData);
+
+    if (!precalculatedLayerSlug && hasAllData) {
       const updatedStoredArea = (speciesData.species && speciesData.species.length > 0) ? {
         ...storedArea,
         species: [...speciesData.species],
@@ -219,10 +231,14 @@ const Container = props => {
         ...storedArea,
         ...contextualData
       }
-
       writeToForageItem(aoiId, updatedStoredArea);
       setStoredArea(updatedStoredArea, storedArea);
     }
+
+    if (hasAllData) {
+      setLoaded(true);
+    }
+
   }, [speciesData, precalculatedLayerSlug, contextualData]);
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
@@ -238,6 +254,7 @@ const Container = props => {
       contextualData={contextualData}
       handleGlobeUpdating={handleGlobeUpdating}
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+      dataLoaded={loaded}
       {...props}
     />
   )

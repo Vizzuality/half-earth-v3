@@ -7,6 +7,7 @@ import * as urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import { DATA } from 'router'
 import { postAoiToDataBase } from 'utils/geo-processing-services';
+import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 
 const actions = {...urlActions, ...aoiAnalyticsActions}
 
@@ -37,20 +38,18 @@ const AoiSidebarContainer = (props) => {
   }, [isShareModalOpen])
 
   const handleSceneModeChange = () => browsePage({type: DATA})
-  const stringifiedFields = ['elu', 'pressures', 'protectedAreasList', 'species'];
   const saveAreaToDB = () => {
     const attributes = {
       ...contextualData,
-      ...stringifiedFields.reduce((acc, key) => {
+      ...STRINGIFIED_ATTRIBUTES.reduce((acc, key) => {
         acc[key] = JSON.stringify(contextualData[key]);
         return acc;
       }, {}),
-      species: JSON.stringify(speciesData),
+      species: JSON.stringify(speciesData.species),
       per_global: contextualData.percentage,
       // per_aoi: 0, Not used yet
-      time_stamp: 0 // TODO: Use Date.now()
+      time_stamp: Date.now()
     }
-
     postAoiToDataBase(geometry, attributes, speciesData)
   };
 
