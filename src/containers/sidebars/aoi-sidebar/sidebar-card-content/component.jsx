@@ -90,7 +90,7 @@ const SidebarCard = ({
             key={layer.value}
             type={toggleType}
             onChange={onChange}
-            toggleCategory={cardCategory}
+            themeCategorySlug={cardCategory}
             activeLayers={activeLayers}
           />
         ))}

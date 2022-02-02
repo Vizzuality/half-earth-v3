@@ -14,57 +14,55 @@ const LayerToggleComponent = ({
   onChange,
   isChecked,
   activeLayers,
-  toggleCategory,
+  themeCategorySlug,
   handleInfoClick,
   handleOpacityClick,
   handleBringToBackClick,
   handleBringToFrontClick,
 }) => {
-    return type === 'radio' ? (
-      <div 
-        className={cx(
-          styles.wrapper,
-          {[styles[variant]]:variant,
-          [theme[toggleCategory]]: toggleCategory,
-          [styles.checked]: isChecked}
-        )}
-      >
-        <RadioTypeToggle 
-          theme={theme}
-          title={title}
-          option={option}
-          onChange={onChange}
-          isChecked={isChecked}
-          activeLayers={activeLayers}
-          onInfoClick={handleInfoClick}
-          onOpacityClick={handleOpacityClick}
-          onBringToBackClick={handleBringToBackClick}
-          onBringToFrontClick={handleBringToFrontClick}
-        />
-      </div>
-    ) : (
-      <div 
-        className={cx(
-          styles.wrapper,
-          {[styles[variant]]:variant,
-          [theme[toggleCategory]]: toggleCategory,
-          [styles.checked]: isChecked}
-        )}
-      >
-        <CheckboxTypeToggle 
-          theme={theme}
-          title={title}
-          option={option}
-          onChange={onChange}
-          isChecked={isChecked}
-          activeLayers={activeLayers}
-          onInfoClick={handleInfoClick}
-          onOpacityClick={handleOpacityClick}
-          onBringToBackClick={handleBringToBackClick}
-          onBringToFrontClick={handleBringToFrontClick}
-        />
-      </div>
-    )
-}
+  return type === 'radio' ? (
+    <div
+      className={cx(styles.wrapper, {
+        [styles[variant]]: variant,
+        [theme[themeCategorySlug]]: themeCategorySlug,
+        [styles.checked]: isChecked,
+      })}
+    >
+      <RadioTypeToggle
+        theme={theme}
+        title={title}
+        option={option}
+        onChange={onChange}
+        isChecked={isChecked}
+        activeLayers={activeLayers}
+        onInfoClick={handleInfoClick}
+        onOpacityClick={handleOpacityClick}
+        onBringToBackClick={handleBringToBackClick}
+        onBringToFrontClick={handleBringToFrontClick}
+      />
+    </div>
+  ) : (
+    <div
+      className={cx(styles.wrapper, {
+        [styles[variant]]: variant,
+        [theme[themeCategorySlug]]: themeCategorySlug,
+        [styles.checked]: isChecked,
+      })}
+    >
+      <CheckboxTypeToggle
+        theme={theme}
+        title={title}
+        option={option}
+        onChange={onChange}
+        isChecked={isChecked}
+        activeLayers={activeLayers}
+        onInfoClick={handleInfoClick}
+        onOpacityClick={handleOpacityClick}
+        onBringToBackClick={handleBringToBackClick}
+        onBringToFrontClick={handleBringToFrontClick}
+      />
+    </div>
+  );
+};
 
 export default LayerToggleComponent;

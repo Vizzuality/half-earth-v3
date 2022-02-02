@@ -18,7 +18,7 @@
 
 .description {
   @extend %bodyText;
-  color: $white; 
+  color: $white;
 }
 
 .legendContainer,
@@ -26,6 +26,14 @@
 .togglesContainer,
 .dropdownContainer {
   padding-top: $sidebar-vertical-flow;
+}
+
+.allButton {
+  @extend %bodyText;
+  color: $white;
+  text-decoration: underline;
+  text-underline-offset: 1.5px;
+  padding: 8px 20px 0;
 }
 
 .togglesContainer {

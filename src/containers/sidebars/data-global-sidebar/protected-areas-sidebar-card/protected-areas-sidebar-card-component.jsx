@@ -18,7 +18,7 @@ const ProtectedAreasSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
 }) => {
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   return (
     <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
@@ -33,30 +33,30 @@ const ProtectedAreasSidebarCardComponent = ({
         className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
       >
         <span className={styles.description}>{TEXTS.description}</span>
-        <hr className={hrTheme.dark}/>
+        <hr className={hrTheme.dark} />
         <span className={styles.layersTitle}>{TEXTS.layersTitle}</span>
         <div className={styles.togglesContainer}>
-          {WDPALayers.map(layer => (
+          {WDPALayers.map((layer) => (
             <LayerToggle
               map={map}
               option={layer}
-              type='checkbox'
-              variant='light'
+              type="checkbox"
+              variant="light"
               key={layer.value}
               activeLayers={activeLayers}
               onChange={handleLayerToggle}
-              toggleCategory={PROTECTION_SLUG}
+              themeCategorySlug={PROTECTION_SLUG}
             />
           ))}
         </div>
         <SourceAnnotation
-          theme='light'
+          theme="light"
           metaDataSources={source}
           className={styles.sourceContainer}
         />
       </div>
     </div>
   );
-}
+};
 
 export default ProtectedAreasSidebarCardComponent;
