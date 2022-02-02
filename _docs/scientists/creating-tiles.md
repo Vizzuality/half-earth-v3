@@ -11,7 +11,7 @@ Tiles are used when an interaction is not necessary. It is key to get the colour
 ### Publishing tiles from ArcGIS Pro
 1. Create a project and open the layer you want to create the tiles from. By default the new map will have the [3857 projection](https://epsg.io/3857) and a default basemap with that projection appears. 
 2. Tweak the symbols, make sure they are exactly what they should be, if something is off the whole tile service will have to be republished.
-2. In the 'Contents' panel select the layer you want to publish as a tile service. Right click on the layer and select `Sharing`, then `Web layer` and `Publish Web Layer` . You can also access from the top menu following the path `Share > Web Layer > Publish Web Layer`. 
+2. In the 'Contents' panel select the layer you want to publish as a tile service. Right click on the layer and select `Sharing`, then `Web layer` and `Publish Web Layer` . You can also access from the top menu following the path `Share > Web Layer > Publish Web Layer`. Make sure you are logged in to ArcGIS Online and not to the Prodution portal.
 3. The Sharing panel opens and the description fields appear to be filled. 
     - This is the information that is going to describe the item in ArcGIS Online
     - For **Layer Type**, select `Tile` if you are tiling raster files or feature layers with many features
@@ -64,6 +64,8 @@ The process of dividing the Global Human Modification raster in 4 anthrome raste
 The priority layer has two values (Living Atlas link): 
 1. the rank of priority of an area, ranging from 1 to 100 and 
 1. the percentage of area needed by a cell. 
+
+(NOTE Feb 2022: The style used to export the tiles for the marine priority layer of NRC was the Biodiversity ramp. The Style kit was downloaded from the project [folder](https://drive.google.com/drive/folders/11JCwr9toaGieBPn9AK2OmIQrNybup22B) and applied as `Strech`. Using Classify and manual breaks did not same the same as what in currently the platform)
 
 In the app the layer is shown as the "putative protected area network". The process to create the layer is shown in [this notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Classification_of_raster_putatitve_pa_by_country.ipynb). 
 
