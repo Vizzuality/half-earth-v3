@@ -25,8 +25,10 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES];
-    metadataService.getMetadata(md.slug).then( data => {
-      setMetadataSource(data.source);
+    metadataService.getMetadata(md.slug).then(data => {
+      if (data) {
+        setMetadataSource(data.source);
+      }
     })
   }, []);
 
