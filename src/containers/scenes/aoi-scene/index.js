@@ -6,7 +6,6 @@ import { loadModules } from 'esri-loader';
 import EsriFeatureService from 'services/esri-feature-service';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
-import isEmpty from 'lodash/isEmpty';
 
 // actions
 import aoisActions from 'redux_modules/aois';
@@ -137,7 +136,7 @@ const Container = props => {
       const createNewCustomAOI = () => {
         const areaName = 'Custom area';
         const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
-        const contextualData = { area, areaName, isCustom: true, aoiId }
+        const contextualData = { area, areaName, aoiId, isCustom: true }
         // Set data before fetch just to show name and available info
         setContextualData(contextualData);
 
@@ -149,7 +148,7 @@ const Container = props => {
         setStoredArea(forageStoredArea);
 
         getContextData(aoiStoredGeometry).then((data) => {
-          setContextualData({ area, areaName, ...data, isCustom: true });
+          setContextualData({ ...data, ...contextualData });
         });
 
         [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
@@ -220,7 +219,7 @@ const Container = props => {
 
 
   useEffect(() => {
-    const hasAllData = speciesData && contextualData && !isEmpty(contextualData);
+    const hasAllData = speciesData && contextualData && contextualData.protectedAreasList;
 
     if (!precalculatedLayerSlug && hasAllData) {
       const updatedStoredArea = (speciesData.species && speciesData.species.length > 0) ? {

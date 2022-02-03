@@ -6,10 +6,10 @@ import { addFeatures, queryFeatures, applyEdits } from "@esri/arcgis-rest-featur
 function getFeatures({ url, whereClause = "", outFields = ["*"], returnGeometry = false, outSpatialReference = LOCAL_SPATIAL_REFERENCE, geometry = null }) {
   return new Promise((resolve, reject) => {
     loadModules(["esri/tasks/QueryTask", "esri/rest/support/Query"]).then(([QueryTask, Query]) => {
-      var queryTask = new QueryTask({
+      const queryTask = new QueryTask({
         url
       });
-      var query = new Query();
+      const query = new Query();
       query.outFields = outFields;
       query.where = whereClause;
       if (geometry) { query.geometry = geometry }
