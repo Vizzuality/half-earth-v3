@@ -79,9 +79,9 @@ export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
 
-export const ALL_MARINE_VERTEBRATES_PRIORITY = 'all-marine-priority';
-export const ALL_MARINE_VERTEBRATES_RICHNESS = 'all-marine-richness';
-export const ALL_MARINE_VERTEBRATES_RARITY = 'all-marine-rarity';
+export const ALL_MARINE_VERTEBRATES_PRIORITY = 'all-marine-vertebrates-priority';
+export const ALL_MARINE_VERTEBRATES_RICHNESS = 'all-marine-vertebrates-richness';
+export const ALL_MARINE_VERTEBRATES_RARITY = 'all-marine-vertebrates-rarity';
 
 export const FISHES_PRIORITY = 'fishes-priority';
 export const FISHES_RARITY = 'fishes-rarity';
