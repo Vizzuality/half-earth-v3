@@ -12,14 +12,14 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[CHALLENGES_CHART]
-    metadataService.getMetadata(md.slug).then( data => {
+    metadataService.getMetadata(md.slug).then(data => {
       setMetadata(data);
     })
   }, []);
 
   useEffect(() => {
     const { visitNrcChallengesAnalytics } = props;
-    visitNrcChallengesAnalytics() 
+    visitNrcChallengesAnalytics()
   }, [])
 
 

@@ -8,7 +8,6 @@ export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, cate
   const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
   const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersIds);
   const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
-
   let updatedLayers = activeLayers;
   if (layersToRemove.length) {
     updatedLayers = activeLayers.filter((layer) => {
@@ -128,7 +127,7 @@ export const createLayer = layerConfig => {
     })
 
     if (renderer) { newLAyer.renderer = renderer }
-    
+
     return newLAyer
   });
 }

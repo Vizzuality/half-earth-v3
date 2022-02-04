@@ -23,14 +23,14 @@ const LocalPriorityCardContainer = props => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION]
-    metadataService.getMetadata(md.slug).then( data => {
+    metadataService.getMetadata(md.slug).then(data => {
       setProtectionsMetadata(data);
     })
   }, []);
 
   useEffect(() => {
     const md = metadataConfig[COUNTRY_PRIORITY]
-    metadataService.getMetadata(md.slug).then( data => {
+    metadataService.getMetadata(md.slug).then(data => {
       setPriorityMetadata(data);
     })
   }, []);

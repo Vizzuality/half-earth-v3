@@ -85,28 +85,168 @@ These steps take into account that the Model (made with Model Builder) is done.
 ![](/public/subset-crf.png)
 
 3. Run the model using the polygon and the subset crf as a geoprocessing tool (By clicking on the Model inside the Toolbox directly). Select `90%` for parallel processing.
-4. From the History, right click on the ran model and share as a web tool (make sure you are logged into the Portal, look at the top right, otherwise the option won't appear).
+4. From the History, right click on the model that has just been run and `Share as a Web tool` (make sure you are logged into the Production Portal, look at the top right, otherwise the option won't appear).
 ![](/public/GP_publish_Share_As.png)
 
-5. In the General Panel: name the model as ModelName`Prod`, add the model to the Production folder, click on Copy all data.
+5. In the **General Panel**: 
+   1. Name the model as ModelName`Prod`
+   2. Add the model to the Production folder
+   3. Click on `Copy all data`
+   4. Click on `Share with Everyone`
 ![](/public/GP_publish_General.png)
-1. In the Configuration panel increase the maximum number to 100000 records. **This is very important** to avoid not returning a response to the front end. change the message level to `Info` (this will give more details in case of an error)
+1. In the **Configuration panel**:
+   1. Change the `Message level` to `Info` (this will give more details in case of an error). 
+   2. Increase the `Maximum number of records returned by server` to 100000. **This is very important** to avoid not returning a response to the front end. 
 ![](/public/GP_publish_Configuration.png)
-7. In the Content panel configure the tool properties (click on the pencil on the right)
-    - Set the polygon to `User defined value`
+7. In the **Content panel** configure the tool properties (click on the pencil on the right)
+    - Set the geometry to `User defined value`
 ![](/public/GP_publish_Content_geometry.png)
-    - Set the crf as `choice list`, make sure only the subset crf is selected. _This is so only the minimum amount of data is copied, but also so there aren't several elements in the choice list._
+    - Set the crf as `Choice list`, make sure only the subset crf is selected by clicking on `Only use default layers`. _This is so only the minimum amount of data is copied, but also so there aren't several elements in the choice list._
 ![](/public/GP_publish_Content_crf.png)
     - Add the description to the different parameters
-1.  Analyse before publishing to check which parameters or info is missing on the description of the tool. Sometimes analyse has to be run a couple of times without having to change anything between analyses. There will always be a warning message syaing that the data will be copied to the Portal, that is expected and ok.
-2.  Click on `Publish` 🚀
+8. Unclick the option: `Add optional output Feature Service Parameter`(we are not using this).
+9.  Analyse before publishing to check which parameters or info is missing on the description of the tool. Sometimes analyse has to be run a couple of times without having to change anything between analyses. There will always be a warning message saying that the data will be copied to the Portal, that is expected and ok.
+10.  Click on `Publish` 🚀
 
 ### The Url to the geoprocessing service
-Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web. The feel and look of the portal is identical to ArcGIS online. Protect the tool from deletion and update to public the sharing options in the settings. Then, in the overview, on the bottom right you will find the url of the service. Click to View the tool in a new window. 
+Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web (You can also log in directly to the Portal with your credentials, go to Content and find the tool you want to check). The "look and feel"" of the portal is identical to ArcGIS online. Protect the tool from deletion and update to Public the sharing options in the settings. Then, in the Overview panel, on the bottom right you will find the url of the service. Click to View the tool in a new window. 
 
 ![](/public/tool-url.png)
 
-Click on the Task. The new url is the one that the front end must use. The url should look like this: `https://heportal.esri.com/server/rest/services/<Tool name>/GPServer/<task name>`.
+On this new window click on `Tasks`. The url that appears in the search bar is the one that the front end must use. The url should look like this: `https://heportal.esri.com/server/rest/services/<Tool name>/GPServer/<task name>`.
+
+Another way to get the URL is to click on the tool, and on the Overview panel Under Tools click on `Service URL`, this will take you directly to the Tasks View and you have the URL on the top.
+
+### Test Geoprocessing Services from the Portal
+In order to check that the GP service is working correctly before passing the URL to the FE, we can simulate the call that the FE would make in the ArcGIS REST API.
+* Log in to the Production Portal (https://heportal.esri.com/portal/home) with the required credentials
+* Go to Content > Production folder > choose a GP service
+* Click on Service URL
+![](/public/GP_test_url.png)
+* Go to bottom of page and click on `Submit Job`
+* Depending on the GP service, you will have to provide information to a different number of boxes, but for sure you will have to provide a `geometry` and at least one path to a crf (the Biodiversity GP services only require the input of the taxa crf, while the Contextual data GP services will need the input of more crfs). The default values that appear in the boxes represent the data that was used to publish the service, aka they are a very small subset of the data and if you test with a geometry that is outside of that area you will get an error.
+![](/public/GP_test_Submit_default.png)
+  - **geometry**: the geometry needs to have a very specific format. The structure passed is a json that can be obtained by using the tool `Features To Json` in ArcGIS Pro: make sure the output path is set outside of the gdb so it can be accessed easily, and tick the boxes for `Formatted JSON` and `Include Z values`
+![](/public/GP_test_FeaturesToJson.png) 
+This is an example of the geometry you need to add to the box:
+```json
+ {
+  "displayFieldName" : "",
+  "hasZ" : true,
+  "fieldAliases" : {
+    "OBJECTID" : "OBJECTID",
+    "Name" : "Name",
+    "Text" : "Text",
+    "IntegerValue" : "Integer Value",
+    "DoubleValue" : "Double Value",
+    "DateTime" : "Date Time",
+    "Shape_Length" : "Shape_Length",
+    "Shape_Area" : "Shape_Area"
+  },
+  "geometryType" : "esriGeometryPolygon",
+  "spatialReference" : {
+    "wkid" : 102100,
+    "latestWkid" : 3857
+  },
+  "fields" : [
+    {
+      "name" : "OBJECTID",
+      "type" : "esriFieldTypeOID",
+      "alias" : "OBJECTID"
+    },
+    {
+      "name" : "Name",
+      "type" : "esriFieldTypeString",
+      "alias" : "Name",
+      "length" : 255
+    },
+    {
+      "name" : "Text",
+      "type" : "esriFieldTypeString",
+      "alias" : "Text",
+      "length" : 255
+    },
+    {
+      "name" : "IntegerValue",
+      "type" : "esriFieldTypeInteger",
+      "alias" : "Integer Value"
+    },
+    {
+      "name" : "DoubleValue",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Double Value"
+    },
+    {
+      "name" : "DateTime",
+      "type" : "esriFieldTypeDate",
+      "alias" : "Date Time",
+      "length" : 8
+    },
+    {
+      "name" : "Shape_Length",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Shape_Length"
+    },
+    {
+      "name" : "Shape_Area",
+      "type" : "esriFieldTypeDouble",
+      "alias" : "Shape_Area"
+    }
+  ],
+  "features" : [
+    {
+      "attributes" : {
+        "OBJECTID" : 1,
+        "Name" : null,
+        "Text" : null,
+        "IntegerValue" : null,
+        "DoubleValue" : null,
+        "DateTime" : null,
+        "Shape_Length" : 231978.71016606738,
+        "Shape_Area" : 3338690868.7937865
+      },
+      "geometry" : {
+        "hasZ" : true,
+        "rings" : [
+          [
+            [
+              -818493.72899999842,
+              5383774.996100001,
+              0
+            ],
+            [
+              -755549.04740000144,
+              5382225.2217999995,
+              0
+            ],
+            [
+              -756854.20630000159,
+              5329215.6889000013,
+              0
+            ],
+            [
+              -819798.88789999858,
+              5330765.4632999972,
+              0
+            ],
+            [
+              -818493.72899999842,
+              5383774.996100001,
+              0
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
+```
+- **crfs**: Substitute with the name of the final crf with the complete path to the Azure bucket
+
+* Click on `Submit Job (POST)`. Then, click on `Check Job details` to see how the processing is going.
+![](/public/GP_test_CheckDetails.png)
+* Click several times on until the processing is done and you see the output tables. You can click on those tables to see the results as a JSON.
+![](/public/GP_test_output.png)
 
 
 ## Particularities of certain tools within the Model Builder working with CRFs
@@ -184,16 +324,16 @@ The process of creation of the tables consist on getting the slice number and ma
 
 | **Front end element** | **Crf name** |**Crf variable**| **Gp service** | **Output to use** | **Field to use from response** | **AGOL table to use** | **AGOL field to use** |
 |--|--|--|--|--|--|
-| population | population2020.crf |_none_| [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd)|output_table_population|`SUM` | _none_   | _none_ |
-| climate_regime | ELU.crf|_none_| [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd)|output_table_elu_majority |`MAJORITY` | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `cr_type` contains the name of the type of climate regime |
-| land_cover | ELU.crf|_none_| [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd)|output_table_elu_majority |`MAJORITY` | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
-| human_encroachment | land_encroachment.crf |_none_| [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd)|output_table_encroachment| `SliceNumber` has the code of the type of human activity. `percentage_land_encroachment`|[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
-| Protection_percentage | wdpa_oecm_zeros.crf | _none_|  [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd) |`!!!check table!!!`| `!!!check field!!!` |_none_  |_none_ |
-| WDPA list | WDPA_Terrestrial_CEA_June2021.crf | _none_|  [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd) |output_table_wdpa| `!!!check field!!!` |[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer) non whitelisted yet|`WDPA_PID` |
-| mammal_data | mammals_equal_area_20211003.crf | `presence` |[GP SampleMamProd](https://heportal.esri.com/server/rest/services/SampleMamProd/GPServer/SampleMam) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/10063857c3d2447a8f149cd1b4554d3f/rest/services/mammals_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
-| amphibian_data | amphibians_equal_area_20211003.crf |`amphibians`| [GP SampleAmphProd](https://heportal.esri.com/server/rest/services/SampleAmphProd/GPServer/SampleAmphProd) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/182fa83a03544cbd8bd88836d9dea895/rest/services/amphibians_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship` |
-| bird_data | birds_equal_area_20211003.crf | `birds`|[GP SampleBirdsProd](https://heportal.esri.com/server/rest/services/SampleBirdsProd/GPServer/SampleBirds ) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/4876d75b2ac94a068ec96c8f256e7e79/rest/services/birds_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship`  |
-| reptile_data | reptiles_equal_area_20211003.crf | `reptiles`|[GP SampleReptProd](https://heportal.esri.com/server/rest/services/SampleReptProd/GPServer/SampleRept ) | Get length of the array. `SliceNumber` has the code of the species. `Percentage_presence` has the value of percent. |[agol link](https://utility.arcgis.com/usrsvcs/servers/ef12e99ccea24faca6d5597988c3fb82/rest/services/reptiles_merge_qa/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`is_flagship`  |
+| population | population2020.crf |_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_population|`SUM` | _none_   | _none_ |
+| climate_regime | ELU.crf|_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_elu_majority |`MAJORITY` | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `cr_type` contains the name of the type of climate regime |
+| land_cover | ELU.crf|_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_elu_majority |`MAJORITY` | [agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/ecosytem_categories_lookup/FeatureServer) | `lc_type` contains the name of the type of land cover |
+| human_encroachment | land_encroachment.crf |_none_| [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd)|output_table_encroachment| `SliceNumber` has the code of the type of human activity, `percentage_land_encroachment` gives percentage of each type|[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/land_encroachment_lookup/FeatureServer)|`SliceNumber` to join and then `Name`|
+| Protection_percentage | WDPA_Terrestrial_CEA_June2021.crf | _none_|  [GP ContextualLayersProd20220131](https://heportal.esri.com/server/rest/services/ContextualLayersProd/GPServer/ContextualLayersProd) |output_table_wdpa_percentage| percentage_protected |_none_  |_none_ |
+| WDPA list | _none_ | _none_|  [GP ContextualLayersProd](https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd) |output_table_wdpa| `ORIG_NA,DESIG_T,IUCN_CA,GOV_TYP,AREA_KM,NAME_0` |[agol link](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer) non whitelisted yet|`WDPA_PID` |
+| mammal_data | mammals_equal_area_20211003.crf | `presence` |[GP SampleMamProd20220131](https://heportal.esri.com/server/rest/services/SampleMamProd20220131/GPServer/SampleMamProdRange) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=84d3c71caf97479d85f620a4ee217d68)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/bc206ff519234e4ab1e9dab1c8c1f601/rest/services/Mammal_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
+| amphibian_data | amphibians_equal_area_20211003.crf |`amphibians`| [GP SampleAmphProd20220131](https://heportal.esri.com/server/rest/services/SampleAmphProd20220131/GPServer/SampleAmphProdRange) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=a641a4cd269345dea93b8bcb1cb66676)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/0e80ea09e22f4efaa242854a568d0b18/rest/services/Amphibian_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
+| bird_data | birds_equal_area_20211003.crf | `birds`|[GP SampleBirdsProd20220131](https://heportal.esri.com/server/rest/services/SampleBirdsProd20220131/GPServer/SampleBirdsProdRange ) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=4d8698734b654bb9bb7a61d9af314c76)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/d7a4020431dc4ce0b425f33d7cd344c8/rest/services/Bird_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
+| reptile_data | reptiles_equal_area_20211003.crf | `reptiles`|[GP SampleReptProd20220131](https://heportal.esri.com/server/rest/services/SampleReptProd20220131/GPServer/SampleReptProdRange ) | output_table| `SliceNumber` has the code of the species; `per_global` shows the area relative to the global species range; `per_aoi` shows the % area present inside the aoi. |[FS lookup table](https://eowilson.maps.arcgis.com/home/item.html?id=81c72a2a5ee6413699960b4c4bd9540f)[Whitelisted table](https://utility.arcgis.com/usrsvcs/servers/e2587fabd9a74981bd8e0d8cd24ca37a/rest/services/Reptile_CRF_species_table_service/FeatureServer)| `SliceNumber`,  `scientific_name`, `percent_protected`,`conservation_target`,`has_image`,`common_name` |
 
 
 ### Source of data
@@ -214,7 +354,11 @@ return val
 ```
 
 # Historic of AOIs and its maintenance
+
+The AOIs created by users can be shared with an url. When the urls is created, the data is also sent to an AGOL table where the data is stored. When the recepient uses the url, the same data will be displayed without having to call the GP service. Currently, this is the [Service being tested](https://eowilson.maps.arcgis.com/home/item.html?id=26aca70f8b8247aea489decdee1fe537), but there are previous versions in the folder #2 aois ([aoi-historic](https://eowilson.maps.arcgis.com/home/item.html?id=62059a44e8dc4b1abb2d704cae91eb77) and [aoi-historic-dev](https://eowilson.maps.arcgis.com/home/item.html?id=ac362edf17cb4c90a15507511e2b9444))
+
 ## Notebooks in ArcGIS online
 ArcGIS online allows to run jupyter notebooks. There are different kinds, some cost credits, but for small tasks they are included. Users need to be provided the permissions to use the Notebooks. Once a notebook is saved as an item in the organisation it is possible to schedule tasks. Check [ESRI's documentation](https://doc.arcgis.com/en/arcgis-online/create-maps/prepare-a-notebook-for-automated-execution.htm) on how to schedule tasks.
 ## Cleaning the historic AOIs service
+
 [The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`. 

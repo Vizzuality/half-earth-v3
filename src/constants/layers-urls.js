@@ -93,7 +93,7 @@ import {
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
 export const PLEDGES_LAYER_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer";
-export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_dev/FeatureServer/0';
+export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_prod/FeatureServer/0';
 export const MONITORING_HE_GOAL_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/monitoringHEgoal/FeatureServer/0'
 export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsvcs/servers/aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0';
 export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer/0';
@@ -102,8 +102,8 @@ export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/Ik
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
-  [AOIS_HISTORIC_PRODUCTION]: 'https://utility.arcgis.com/usrsvcs/servers/5e66921fb50f475981b5ef66678f29f7/rest/services/aois_historic/FeatureServer/0',
-  [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/aois_historic_6a796b684c874ef4bbe2f97b4857bf35/FeatureServer/0',
+  [AOIS_HISTORIC_PRODUCTION]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois_prod/FeatureServer/0',
+  [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:

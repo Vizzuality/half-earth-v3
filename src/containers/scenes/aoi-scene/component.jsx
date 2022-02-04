@@ -19,6 +19,7 @@ const AoiSceneComponent = ({
   activeLayers,
   sceneSettings,
   contextualData,
+  dataLoaded,
 }) => {
   return (
     <Scene
@@ -37,6 +38,8 @@ const AoiSceneComponent = ({
         speciesData={speciesData}
         activeLayers={activeLayers}
         contextualData={contextualData}
+        geometry={geometry}
+        dataLoaded={dataLoaded}
       />
     </Scene>
   );

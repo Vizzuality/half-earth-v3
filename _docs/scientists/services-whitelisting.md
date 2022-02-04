@@ -16,10 +16,11 @@ Map of Life is the data provider of the biodiversity data. Some layers are hoste
 
 The logic is as follows:
 1. Publish a first service, 
-2. Use the URL of the service to create the second service as an "Item from the web". Here you have to enter your credentials and select:
+2. Use the URL of the service to create the second service as an "Item from the web". (Go to `Content`, `New Item`, `URL`)
+3. Add the URL in the box provided and you have to enter your credentials by selecting:
 - [x] Store credentials with service item. Do not prompt for authentication option
-3. In the settings tab of the second service, go to `Limit Usage`. Add all the urls that should be whitelisted.  
-4. change the settings of the second service to Everyone. **The limit access has priority over the share with everyone.**
+3. In the settings tab of the second service, go to `Limit Usage`. Add all the urls that should be whitelisted (Check alternative with notebook below). The urls are stored in the slack channel #half-earth-dev and they appear by clicking on the blue lightning bolt -shortcuts- and then on 'whitelisted urls'
+4. Change the settings of the second service to Everyone. **The limit access has priority over the share with everyone.**
 
 ## Avoiding repeating the copy pasting of all the URLs ([Notebook with example](https://github.com/Vizzuality/he-scratchfolder/blob/master/update_whitelisted_urls.ipynb){:target="_blank"})
 Once the second service is created, it is possible to move to use code to update all the urls. You will find `properties.json` stored in the slack channel #half-earth-dev, and they appear by clicking on the blue lightning bolt -shortcuts- and then on 'whitelisted urls'. The structure of the json is as follows:

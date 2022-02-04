@@ -115,7 +115,7 @@ const BiodiversitySidebarCardComponent = ({
               key={layer.value}
               activeLayers={activeLayers}
               onChange={handleLayerToggle}
-              toggleCategory={BIODIVERSITY_SLUG}
+              themeCategorySlug={BIODIVERSITY_SLUG}
             />
           ))}
         </div>
@@ -151,7 +151,7 @@ const BiodiversitySidebarCardComponent = ({
                   key={layer.value}
                   activeLayers={activeLayers}
                   onChange={handleLayerToggle}
-                  toggleCategory={BIODIVERSITY_SLUG}
+                  themeCategorySlug={BIODIVERSITY_SLUG}
                 />
               ))}
             </div>

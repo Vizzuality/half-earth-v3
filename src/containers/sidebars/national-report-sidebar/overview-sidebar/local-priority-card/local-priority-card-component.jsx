@@ -65,7 +65,7 @@ const LocalPriorityCardComponent = (props) => {
           key={PROTECTED_AREAS_VECTOR_TILE_LAYER}
           activeLayers={activeLayers}
           onChange={handleLayerToggle}
-          toggleCategory={PROTECTION_SLUG}
+          themeCategorySlug={PROTECTION_SLUG}
         />
       </SidebarCardWrapper>
       <SidebarCardWrapper sectionClassName={styles.section}>
@@ -84,7 +84,7 @@ const LocalPriorityCardComponent = (props) => {
           key={COUNTRY_PRIORITY_LAYER}
           activeLayers={activeLayers}
           onChange={handleLayerToggle}
-          toggleCategory={ADDITIONAL_PROTECTION_SLUG}
+          themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
         />
       </SidebarCardWrapper>
     </div>
