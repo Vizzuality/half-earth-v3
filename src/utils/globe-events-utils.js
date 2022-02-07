@@ -76,6 +76,15 @@ export const flyToGeometry = (view, layerFeatures) => {
   }
 }
 
+export const flyToCentroid = (view, geometry, zoom) => {
+  if (geometry && geometry.centroid) {
+    view.goTo({
+      target: geometry.centroid,
+      zoom
+    })
+  }
+}
+
 export const setCountryTooltip = ({ countryIso, countryName, changeGlobe }) => {
   changeGlobe({countryTooltipDisplayFor: countryIso, countryName });
 };

@@ -5,7 +5,7 @@ import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
 import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
-import { setCountryTooltip } from 'utils/globe-events-utils';
+import { setCountryTooltip, flyToCentroid } from 'utils/globe-events-utils';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
 const actions = { ...mapTooltipActions, ...urlActions };
@@ -41,6 +41,8 @@ const SearchLocationContainer = (props) => {
         subtitle: attributes[subtitle] || attributes['NAME_1'],
       }
     });
+
+    flyToCentroid(view, geometry)
 
     // National Report Card search
     if (iso) {
