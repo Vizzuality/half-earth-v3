@@ -125,6 +125,7 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const handleOptionSelection = (option) => {
+    // eslint-disable-next-line default-case
     switch (option.slug) {
       case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
         setAreaTypeSelected(SUBNATIONAL_BOUNDARIES_TYPE);

@@ -2,6 +2,7 @@ import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
+import { flyToCentroid } from 'utils/globe-events-utils';
 
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
@@ -50,7 +51,8 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
         popupEnabled: false, // hide location popup
         resultGraphicEnabled: false, // hide location pin
         sources: searchSources(FeatureLayer, Locator),
-        includeDefaultSources: false
+        includeDefaultSources: false,
+        goToOverride: () => {} // Go to will be done on the callback
       });
       setSearchWidget(sWidget);
     }

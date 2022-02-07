@@ -18,7 +18,8 @@ const MenuFooterContainer = props => {
   const { view, isSidebarOpen, isLandscapeMode, activeOption, selectedSidebar, selectedFeaturedMap, featured = false } = props;
   const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
     view,
-    searchTermsAnalyticsEvent
+    searchTermsAnalyticsEvent,
+    // TODO : Add config to search widget to make i work
   );
 
   const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
@@ -27,7 +28,7 @@ const MenuFooterContainer = props => {
   const resetActiveOption = () => props.changeUI({ activeOption: '' });
   const resetFeaturedMap = () => { if (selectedFeaturedMap) props.changeUI({ selectedFeaturedMap: '' }); }
   const setActiveOption = (option) => props.changeUI({ activeOption: option })
-  
+
   const toggleFeaturedMapsList = () => {
     const activeSidebar =  selectedSidebar && activeOption === FOOTER_OPTIONS.ADD_LAYER;
     props.changeUI({ selectedSidebar: activeSidebar ? '' : FEATURED_MAPS_LIST_SIDEBAR});
@@ -44,7 +45,7 @@ const MenuFooterContainer = props => {
   }
 
   useEffect(() => {
-    if (isLandscapeMode) { 
+    if (isLandscapeMode) {
       resetActiveOption();
       handleSidebarClose();
       handleCloseSearch();
@@ -86,7 +87,7 @@ const MenuFooterContainer = props => {
     }
   ]
 
-  return <Component options={options} {...props} />; 
+  return <Component options={options} {...props} />;
 }
 
 export default connect(null, actions)(MenuFooterContainer);
