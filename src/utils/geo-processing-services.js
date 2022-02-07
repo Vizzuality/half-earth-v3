@@ -104,6 +104,19 @@ export function getContextData(geometry) {
   })
 }
 
+const parseCommonName = (f) => {
+  let commonName = null;
+  try {
+    const val = f.attributes.common_name_array;
+    if (val) {
+      commonName = JSON.parse(f.attributes.common_name_array.replaceAll(/\\/g, ''));
+    }
+  } catch (error) {
+    console.error('error parsing species', error, 'value', f.attributes.common_name_array)
+  }
+  return commonName;
+}
+
 export function getSpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
     getCrfData({
@@ -127,8 +140,10 @@ export function getSpeciesData(crfName, geometry) {
           .map((f) => ({
             category: crfName,
             has_image: f.attributes.has_image,
+            isFlagship: f.attributes.is_flagship,
             sliceNumber: f.attributes.SliceNumber,
             name: f.attributes.scientific_name,
+            commonName: parseCommonName(f),
             globalProtectedArea: f.attributes.wdpa_km2,
             globaldRangeArea: f.attributes.range_area_km2,
             globalProtectedPercentage: f.attributes.percent_protected,
@@ -161,31 +176,20 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
       whereClause: `SliceNumber IN (${ids.toString()})`,
     }).then((features) => {
       const result = features
-        .map((f) => {
-          let newCommonName = null;
-          try {
-            const val = f.attributes.common_name_array;
-            if (val) {
-              newCommonName = JSON.parse(f.attributes.common_name_array.replaceAll(/\\/g, ''));
-            }
-          } catch (error) {
-            console.error('error parsing species', error, 'value', f.attributes.common_name_array)
-          }
-          return ({
+        .map((f) => ({
             category: crfName,
             isFlagship: f.attributes.is_flagship,
             has_image: f.attributes.has_image,
             sliceNumber: f.attributes.SliceNumber,
             name: f.attributes.scientific_name,
-            commonName: newCommonName,
+            commonName: parseCommonName(f),
             globalProtectedArea: f.attributes.wdpa_km2,
             globaldRangeArea: f.attributes.range_area_km2,
             globalProtectedPercentage: f.attributes.percent_protected,
             protectionTarget: f.attributes.conservation_target,
             conservationConcern: f.attributes.conservation_concern,
             presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage
-          })
-        })
+        }))
         .filter(f => f.name !== null)
       resolve(result);
     }).catch((error) => {
