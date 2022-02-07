@@ -7,7 +7,7 @@ import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { GRAPHIC_LAYER } from 'constants/layers-slugs';
 // UTILS
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
-import { hitResults, setCursor, drawGeometry, flyToGeometry } from 'utils/globe-events-utils';
+import { hitResults, setCursor, drawGeometry, flyToCentroid } from 'utils/globe-events-utils';
 // ACTIONS
 import * as urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
@@ -42,7 +42,10 @@ const { view, featureLayerSlug, onFeatureClick } = props;
   }, [featureLayerSlug])
 
   const onClickHandler = features => {
-    flyToGeometry(view, features);
+    if(features && features[0]) {
+      const { graphic: { geometry } } = features[0];
+      flyToCentroid(view, geometry, 4);
+    }
     // drawGeometry(features, selectedCountryBorderGraphic);
     onFeatureClick(features);
   }

@@ -42,7 +42,7 @@ const SearchLocationContainer = (props) => {
       }
     });
 
-    flyToCentroid(view, geometry)
+    flyToCentroid(view, geometry, 4)
 
     // National Report Card search
     if (iso) {
