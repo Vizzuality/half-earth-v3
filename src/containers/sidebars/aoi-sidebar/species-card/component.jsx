@@ -142,7 +142,8 @@ const Component = ({
                     className={styles.commonName}
                     href={individualSpeciesData.molLink}
                   >
-                    {individualSpeciesData.commonname}
+                    {individualSpeciesData.commonname ||
+                      individualSpeciesData.name}
                   </a>
                   <span className={styles.scientificName}>
                     {individualSpeciesData.name}{' '}
