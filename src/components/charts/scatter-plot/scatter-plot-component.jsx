@@ -1,32 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from 'framer-motion';
 import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import cx from 'classnames';
 
 import styles from './scatter-plot-styles.module.scss';
 
-const TickLines = ({tickLine, bubble, countryChallengesSelectedKey, chartScale}) => {
+const TickLines = ({
+  tickLine,
+  bubble,
+  countryChallengesSelectedKey,
+  chartScale,
+}) => {
   if (!tickLine || tickLine !== bubble.iso) return null;
   return (
     <g>
       <line
-        x1={chartScale.xScale(
-          bubble.xAxisValues[countryChallengesSelectedKey]
-        )}
+        x1={chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey])}
         y1={chartScale.yScale(bubble.yAxisValue)}
-        x2={chartScale.xScale(
-          bubble.xAxisValues[countryChallengesSelectedKey]
-        )}
+        x2={chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey])}
         y2="100%"
         strokeWidth="1"
         stroke="#ffffff"
         strokeDasharray="2 3"
       />
       <line
-        x2={chartScale.xScale(
-          bubble.xAxisValues[countryChallengesSelectedKey]
-        )}
+        x2={chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey])}
         y1={chartScale.yScale(bubble.yAxisValue)}
         x1="0"
         y2={chartScale.yScale(bubble.yAxisValue)}
@@ -35,8 +34,8 @@ const TickLines = ({tickLine, bubble, countryChallengesSelectedKey, chartScale})
         strokeDasharray="2 3"
       />
     </g>
-  )
-}
+  );
+};
 
 const ScatterPlot = ({
   data,
@@ -59,36 +58,43 @@ const ScatterPlot = ({
   const getX = (e, ref) => e.clientX - ref.current.getBoundingClientRect().left;
   const getY = (e, ref) => e.clientY - ref.current.getBoundingClientRect().top;
 
-  const minXValue = (data, selectedKey) => d3.min(data, (d) => d.xAxisValues[selectedKey])
-  const maxXValue = (data, selectedKey) => d3.max(data, (d) => d.xAxisValues[selectedKey])
-  const formatFunction = countryChallengesChartFormats[countryChallengesSelectedKey];
+  const minXValue = (data, selectedKey) =>
+    d3.min(data, (d) => d.xAxisValues[selectedKey]);
+  const maxXValue = (data, selectedKey) =>
+    d3.max(data, (d) => d.xAxisValues[selectedKey]);
+  const formatFunction =
+    countryChallengesChartFormats[countryChallengesSelectedKey];
 
   const calculateScale = () => {
     if (data && chartSurfaceRef.current) {
-      const xScale = d3.scaleLinear()
-      .domain([minXValue(data, countryChallengesSelectedKey), maxXValue(data, countryChallengesSelectedKey)])
-      .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
-      const yScale = d3.scaleLinear()
-      .domain([0, 100])
-      .range([chartSurfaceRef.current.offsetHeight - padding, padding]);
+      const xScale = d3
+        .scaleLinear()
+        .domain([
+          minXValue(data, countryChallengesSelectedKey),
+          maxXValue(data, countryChallengesSelectedKey),
+        ])
+        .range([padding, chartSurfaceRef.current.offsetWidth - padding]);
+      const yScale = d3
+        .scaleLinear()
+        .domain([0, 100])
+        .range([chartSurfaceRef.current.offsetHeight - padding, padding]);
 
-      setChartScale({ xScale, yScale })
+      setChartScale({ xScale, yScale });
     }
-  }
+  };
 
   useEffect(() => {
     calculateScale();
-    window.addEventListener('resize', 
-    () => {
+    window.addEventListener('resize', () => {
       calculateScale();
     });
-  }, [data, countryChallengesSelectedKey, chartSurfaceRef.current])
+  }, [data, countryChallengesSelectedKey, chartSurfaceRef.current]);
 
   const animationTransitionConfig = {
-    type: "spring",
+    type: 'spring',
     damping: 20,
-    stiffness: 200
-  }
+    stiffness: 200,
+  };
 
   return (
     <>
@@ -102,12 +108,15 @@ const ScatterPlot = ({
           >
             {chartScale &&
               data.map((bubble) => (
-                <g key={bubble.iso} onClick={() =>
-                  onBubbleClick({
-                    countryISO: bubble.iso,
-                    countryName: bubble.name,
-                  })
-                }>
+                <g
+                  key={bubble.iso}
+                  onClick={() =>
+                    onBubbleClick({
+                      countryISO: bubble.iso,
+                      countryName: bubble.name,
+                    })
+                  }
+                >
                   <TickLines
                     tickLine={tickLine}
                     bubble={bubble}
@@ -115,24 +124,32 @@ const ScatterPlot = ({
                     chartScale={chartScale}
                   />
                   <AnimatePresence>
-                  {bubble.iso === countryISO &&
-                    <motion.circle
-                    key={`${bubble.iso}-aura`}
-                    transition={animationTransitionConfig}
-                    className={cx(
-                      {[styles.animatedBubble]: bubble.iso === countryISO}
-                      )}
-                      animate={{ cx: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) }}
-                      exit={{ cx: 0 }}
-                      cy={chartScale.yScale(bubble.yAxisValue)}
-                      r={bubble.size}
-                      fill={bubble.color}
+                    {bubble.iso === countryISO && (
+                      <motion.circle
+                        key={`${bubble.iso}-aura`}
+                        transition={animationTransitionConfig}
+                        className={cx({
+                          [styles.animatedBubble]: bubble.iso === countryISO,
+                        })}
+                        animate={{
+                          cx: chartScale.xScale(
+                            bubble.xAxisValues[countryChallengesSelectedKey]
+                          ),
+                        }}
+                        exit={{ cx: 0 }}
+                        cy={chartScale.yScale(bubble.yAxisValue)}
+                        r={bubble.size}
+                        fill={bubble.color}
                       />
-                  }
+                    )}
                     <motion.circle
                       key={bubble.iso}
                       transition={animationTransitionConfig}
-                      animate={{ cx: chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) }}
+                      animate={{
+                        cx: chartScale.xScale(
+                          bubble.xAxisValues[countryChallengesSelectedKey]
+                        ),
+                      }}
                       exit={{ cx: 0 }}
                       cy={chartScale.yScale(bubble.yAxisValue)}
                       r={bubble.size}
@@ -146,21 +163,26 @@ const ScatterPlot = ({
                     height={bubble.size * 2}
                     key={bubble.iso}
                     y={chartScale.yScale(bubble.yAxisValue) - bubble.size}
-                    x={chartScale.xScale(bubble.xAxisValues[countryChallengesSelectedKey]) - bubble.size}
+                    x={
+                      chartScale.xScale(
+                        bubble.xAxisValues[countryChallengesSelectedKey]
+                      ) - bubble.size
+                    }
                     requiredExtensions="http://www.w3.org/1999/xhtml"
                     onMouseEnter={(e) => {
                       setTooltipState({
-                        x:getX(e, chartSurfaceRef),
-                        y:getY(e, chartSurfaceRef),
+                        x: getX(e, chartSurfaceRef),
+                        y: getY(e, chartSurfaceRef),
                         name: bubble.name,
                         continent: bubble.continent,
-                        color: bubble.color
-                      })
+                        color: bubble.color,
+                      });
                       setTickLine(bubble.iso);
-                      setXAxisValue(bubble.xAxisValues[countryChallengesSelectedKey]);
+                      setXAxisValue(
+                        bubble.xAxisValues[countryChallengesSelectedKey]
+                      );
                       setYAxisValue(bubble.yAxisValue);
-                    }
-                    }
+                    }}
                     onMouseLeave={() => {
                       setTooltipState(null);
                       setTickLine(null);
@@ -169,11 +191,7 @@ const ScatterPlot = ({
                     }}
                   >
                     <div className={styles.bubbleTextContainer}>
-                      <span
-                        className={styles.bubbleText}
-                      >
-                        {bubble.iso}
-                      </span>
+                      <span className={styles.bubbleText}>{bubble.iso}</span>
                     </div>
                   </foreignObject>
                 </g>
@@ -188,34 +206,28 @@ const ScatterPlot = ({
                 </span>
               ))}
           </div>
-          {yAxisValue &&
+          {yAxisValue && (
             <span
-              className={cx(
-                styles.tickValue,
-                styles.yAxis,
-              )}
+              className={cx(styles.tickValue, styles.yAxis)}
               style={{
-                position: "absolute",
+                position: 'absolute',
                 top: `${chartScale.yScale(yAxisValue)}px`,
               }}
             >
               {yAxisValue}
             </span>
-          }
-          {xAxisValue &&
+          )}
+          {xAxisValue && (
             <span
-              className={cx(
-                styles.tickValue,
-                styles.xAxis,
-              )}
+              className={cx(styles.tickValue, styles.xAxis)}
               style={{
-                position: "absolute",
+                position: 'absolute',
                 left: `${chartScale.xScale(xAxisValue)}px`,
               }}
             >
               {formatFunction(xAxisValue)}
             </span>
-          }
+          )}
           <div className={styles.xAxisTicksContainer}>
             {xAxisTicks &&
               xAxisTicks.map((tick, index) => (
@@ -229,7 +241,7 @@ const ScatterPlot = ({
           <div
             className={styles.tooltip}
             style={{
-              position: "absolute",
+              position: 'absolute',
               left: `${tooltipState.x + tooltipOffset}px`,
               top: `${tooltipState.y + tooltipOffset}px`,
             }}
@@ -248,6 +260,6 @@ const ScatterPlot = ({
       </div>
     </>
   );
-}
+};
 
 export default ScatterPlot;
