@@ -163,18 +163,23 @@
     align-items: center;
     justify-content: start;
     width: 70%;
+
     .commonName {
       @extend %title;
       color: $dark-text;
+      text-align: center;
+
       &:hover {
         color: $dark-text-hover;
       }
     }
+
     .scientificName {
       @extend %annotation;
       font-style: italic;
     }
   }
+
   .arrow_icon_container {
     display: flex;
     justify-content: center;
