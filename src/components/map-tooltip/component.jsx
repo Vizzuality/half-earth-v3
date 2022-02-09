@@ -3,6 +3,7 @@ import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import styles from './styles.module.scss';
+import { useMobile } from 'constants/responsive';
 
 const MapTooltipComponent = ({
   img,
@@ -46,7 +47,10 @@ const MapTooltipComponent = ({
   return (
     <div
       ref={tooltipref}
-      className={cx(styles.tooltipContainer, { [styles.isVisible]: isVisible })}
+      className={cx(styles.tooltipContainer, {
+        [styles.isVisible]: isVisible,
+        [styles.isMobile]: useMobile(),
+      })}
     >
       {content && (
         <>
