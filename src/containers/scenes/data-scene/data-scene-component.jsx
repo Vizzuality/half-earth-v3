@@ -1,26 +1,26 @@
 // Dependencies
-import React from "react";
-import cx from "classnames";
-import loadable from "@loadable/component";
+import React, { useMemo } from 'react';
+import cx from 'classnames';
+import loadable from '@loadable/component';
 // Components
-import Scene from "components/scene";
-import Widgets from "containers/widgets";
-import ArcgisLayerManager from "containers/managers/arcgis-layer-manager";
-import CountryLabelsLayer from "containers/layers/country-labels-layer";
-import FeatureHighlightLayer from "containers/layers/feature-highlight-layer";
-import MapTooltip from "components/map-tooltip";
-import MenuFooter from "components/mobile-only/menu-footer";
-import DataGlobalSidebar from "containers/sidebars/data-global-sidebar";
-import MenuSettings from "components/mobile-only/menu-settings";
+import Scene from 'components/scene';
+import Widgets from 'containers/widgets';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import MapTooltip from 'components/map-tooltip';
+import MenuFooter from 'components/mobile-only/menu-footer';
+import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
+import MenuSettings from 'components/mobile-only/menu-settings';
 // Constants
-import { MobileOnly, useMobile } from "constants/responsive";
+import { MobileOnly, useMobile } from 'constants/responsive';
 
-import styles from "./data-scene-styles.module.scss";
-import animationStyles from "styles/common-animations.module.scss";
+import styles from './data-scene-styles.module.scss';
+import animationStyles from 'styles/common-animations.module.scss';
 
 // Dynamic imports
-const Spinner = loadable(() => import("components/spinner"));
-const LabelsLayer = loadable(() => import("containers/layers/labels-layer"));
+const Spinner = loadable(() => import('components/spinner'));
+const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -47,13 +47,18 @@ const CountrySceneComponent = ({
   handleTooltipActionButtonClick,
   handleHighlightLayerFeatureClick,
 }) => {
-  const sidebarHidden = isLandscapeMode || isFullscreenActive || useMobile();
+  const isMobile = useMobile();
+  const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
+  const updatedSceneSettings = useMemo(
+    () => ({ ...sceneSettings, padding: { left: 0 } }),
+    [isMobile]
+  );
   return (
     <>
       <Scene
         onMapLoad={onMapLoad}
-        sceneName={"data-scene"}
-        sceneSettings={sceneSettings}
+        sceneName={'data-scene'}
+        sceneSettings={updatedSceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       >
         <ArcgisLayerManager

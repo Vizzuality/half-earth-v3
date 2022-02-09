@@ -1,38 +1,103 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import * as actions from 'actions/url-actions';
+import urlActions from 'actions/url-actions';
+import mapTooltipActions from 'redux_modules/map-tooltip';
+
 import { useSearchWidgetLogic } from 'hooks/esri';
 import { searchTermsAnalyticsEvent } from 'actions/google-analytics-actions';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import { flyToCentroid } from 'utils/globe-events-utils';
 
 // icons
 import { ReactComponent as SearchIcon } from 'icons/searchMobile.svg';
-import { ReactComponent as AddLayerIcon } from 'icons/addLayer.svg';
-import { ReactComponent as SelectMapIcon } from 'icons/selectMap.svg';
+// import { ReactComponent as AddLayerIcon } from 'icons/addLayer.svg';
+// import { ReactComponent as SelectMapIcon } from 'icons/selectMap.svg';
 import { ReactComponent as SettingsIcon } from 'icons/settings.svg';
-import { ReactComponent as LegendIcon } from 'icons/legend.svg';
+// import { ReactComponent as LegendIcon } from 'icons/legend.svg';
+
+import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+import {
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+} from 'constants/layers-slugs';
+import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
+
 
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isSidebarOpen, isLandscapeMode, activeOption, selectedSidebar, selectedFeaturedMap, featured = false } = props;
-  const { handleOpenSearch, handleCloseSearch, searchWidget } = useSearchWidgetLogic(
+  const { view, isSidebarOpen, isLandscapeMode, activeOption,
+    // selectedSidebar, selectedFeaturedMap, featured = false
+  } = props;
+  const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
+  const [searchResults, setSearchResults] = useState();
+
+
+  const browseSelectedFeature = ({ result }) => {
+    const { setBatchTooltipData } = props;
+    const tooltipConfig = MAP_TOOLTIP_CONFIG[GADM_0_ADMIN_AREAS_FEATURE_LAYER];
+
+    const { title, subtitle, buttonText, id } = tooltipConfig;
+    const { geometry, attributes } = result.feature;
+    setBatchTooltipData({
+      isVisible: true,
+      geometry,
+      content: {
+        buttonText,
+        id: attributes[id],
+        title: attributes[title] || attributes['NAME_0'],
+        subtitle: attributes[subtitle] || attributes['NAME_1'],
+      }
+    });
+    flyToCentroid(view, geometry, 4)
+  }
+
+  const getSearchResults = (e) => {
+    const { results } = e;
+    console.log('r', results)
+    setSearchResults(results[0].results);
+    if (results[0].results.length === 0) {
+      setIsSearchResultsVisible(false);
+    } else if (!isSearchResultVisible) {
+      setIsSearchResultsVisible(true);
+    }
+  }
+
+  // TODO: Select which area slug we want to search for. Maybe with a dropdown?
+
+  const config = SEARCH_SOURCES_CONFIG[GADM_0_ADMIN_AREAS_FEATURE_LAYER];
+  const { url, title, outFields, searchFields, suggestionTemplate } = config;
+  const searchWidgetConfig = {
+    searchResultsCallback: getSearchResults,
+    postSearchCallback: browseSelectedFeature,
+    searchSources: (FeatureLayer) => {
+      return [{
+        outFields,
+        searchFields,
+        suggestionTemplate,
+        layer: new FeatureLayer({ url, title, outFields }),
+      }]
+    }
+  };
+
+  const { handleOpenSearch, handleCloseSearch, handleSearchInputChange, handleSearchSuggestionClick, searchWidget } = useSearchWidgetLogic(
     view,
     searchTermsAnalyticsEvent,
-    // TODO : Add config to search widget to make i work
+    searchWidgetConfig
   );
 
-  const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
 
   const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
   const resetActiveOption = () => props.changeUI({ activeOption: '' });
-  const resetFeaturedMap = () => { if (selectedFeaturedMap) props.changeUI({ selectedFeaturedMap: '' }); }
   const setActiveOption = (option) => props.changeUI({ activeOption: option })
 
-  const toggleFeaturedMapsList = () => {
-    const activeSidebar =  selectedSidebar && activeOption === FOOTER_OPTIONS.ADD_LAYER;
-    props.changeUI({ selectedSidebar: activeSidebar ? '' : FEATURED_MAPS_LIST_SIDEBAR});
-  }
+  // const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
+
+  // const resetFeaturedMap = () => { if (selectedFeaturedMap) props.changeUI({ selectedFeaturedMap: '' }); }
+
+  // const toggleFeaturedMapsList = () => {
+  //   const activeSidebar =  selectedSidebar && activeOption === FOOTER_OPTIONS.ADD_LAYER;
+  //   props.changeUI({ selectedSidebar: activeSidebar ? '' : FEATURED_MAPS_LIST_SIDEBAR});
+  // }
 
   useEffect(() => {
     if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
@@ -42,6 +107,11 @@ const MenuFooterContainer = props => {
   const handleSearchToggle = () => {
     if (!searchWidget) { handleOpenSearch() }
     else { handleCloseSearch() }
+  }
+
+  const onOptionSelection = (option) => {
+    handleSearchSuggestionClick(option)
+    setIsSearchResultsVisible(false);
   }
 
   useEffect(() => {
@@ -57,6 +127,7 @@ const MenuFooterContainer = props => {
     else setActiveOption(option);
   }
 
+  // TODO: Add layer and legend options again
   const options = [
     {
       icon: SearchIcon,
@@ -64,21 +135,21 @@ const MenuFooterContainer = props => {
       key: FOOTER_OPTIONS.SEARCH,
       onClickHandler: () => { handler(FOOTER_OPTIONS.SEARCH); handleSearchToggle(); }
     },
-    {
-      icon: featured ? SelectMapIcon : AddLayerIcon,
-      name: featured ? 'SELECT MAP' : 'ADD LAYER',
-      key: FOOTER_OPTIONS.ADD_LAYER,
-      onClickHandler: () => {
-        if (featured) { resetFeaturedMap(); toggleFeaturedMapsList(); }
-        handler(FOOTER_OPTIONS.ADD_LAYER)
-      }
-    },
-    {
-      icon: LegendIcon,
-      name: 'Legend',
-      key: FOOTER_OPTIONS.LEGEND,
-      onClickHandler: () => handler(FOOTER_OPTIONS.LEGEND)
-    },
+    // {
+    //   icon: featured ? SelectMapIcon : AddLayerIcon,
+    //   name: featured ? 'SELECT MAP' : 'ADD LAYER',
+    //   key: FOOTER_OPTIONS.ADD_LAYER,
+    //   onClickHandler: () => {
+    //     if (featured) { resetFeaturedMap(); toggleFeaturedMapsList(); }
+    //     handler(FOOTER_OPTIONS.ADD_LAYER)
+    //   }
+    // },
+    // {
+    //   icon: LegendIcon,
+    //   name: 'Legend',
+    //   key: FOOTER_OPTIONS.LEGEND,
+    //   onClickHandler: () => handler(FOOTER_OPTIONS.LEGEND)
+    // },
     {
       icon: SettingsIcon,
       name: 'More',
@@ -87,7 +158,14 @@ const MenuFooterContainer = props => {
     }
   ]
 
-  return <Component options={options} {...props} />;
+  return <Component
+    options={options}
+    handleSearchInputChange={handleSearchInputChange}
+    isSearchResultVisible={isSearchResultVisible}
+    searchResults={searchResults}
+    onOptionSelection={onOptionSelection}
+    {...props}
+  />;
 }
 
-export default connect(null, actions)(MenuFooterContainer);
+export default connect(null, { ...urlActions, ...mapTooltipActions })(MenuFooterContainer);
