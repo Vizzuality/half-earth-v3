@@ -48,3 +48,30 @@
     display: block;
   }
 }
+
+.input {
+  @extend %subtitle;
+}
+
+.optionsList {
+  @extend %bodyText;
+  color: $dark-text;
+  cursor: pointer;
+  background-color: $white;
+  list-style: none;
+  margin: 0 0 20px 0;
+  padding: $sidebar-paddings 0;
+  border-radius: 6px;
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  .option {
+    padding: 5px $sidebar-paddings;
+
+    &:hover {
+      background-color: $dark-opacity;
+    }
+  }
+}
