@@ -53,7 +53,6 @@ const MenuFooterContainer = props => {
 
   const getSearchResults = (e) => {
     const { results } = e;
-    console.log('r', results)
     setSearchResults(results[0].results);
     if (results[0].results.length === 0) {
       setIsSearchResultsVisible(false);

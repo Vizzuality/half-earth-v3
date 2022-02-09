@@ -38,7 +38,6 @@ const Container = (props) => {
       [LAND_HUMAN_PRESSURES]: 'Human pressures',
       [MARINE_HUMAN_PRESSURES]: 'Marine use pressures',
     }
-    console.log(category, LEGEND_GROUPED_LAYERS_GROUPS, activeLayers, CATEGORY_NAMES[category])
     const categoryName = CATEGORY_NAMES[category];
     if (option.layer === 'none') {
       const allHumanPressuresLayerTitles = activeLayers.map(l => (l.category === categoryName) ? l.title : null).filter(Boolean);
