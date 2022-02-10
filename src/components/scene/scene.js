@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import Component from './scene-component';
 import { loadModules } from 'esri-loader';
@@ -19,12 +19,18 @@ const SceneContainer = (props) => {
     setSceneView,
     loaderOptions,
     sceneSettings,
-    urlParamsUpdateDisabled
+    urlParamsUpdateDisabled,
+    initialRotation
   } = props;
 
   const [map, setMap] = useState(null);
   const [view, setView] = useState(null);
+  const [rotationActive, setRotationActive] = useState(false);
+  const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
+
+  const rotationKey = useMemo(() => initialRotation && `${sceneName}HasRotated`, []);
+  const hasSceneRotated = useMemo(() => localStorage.getItem(rotationKey), []);
 
   useEffect(() => {
     loadModules([
@@ -73,7 +79,7 @@ const SceneContainer = (props) => {
   // Update location in URL
   useEffect(() => {
     let watchHandle;
-    if (view && view.center && !urlParamsUpdateDisabled) {
+    if (view && view.center && !urlParamsUpdateDisabled && !rotationActive) {
       loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
         watchHandle = watchUtils.whenTrue(view, "stationary", function() {
           const { longitude, latitude } = view.center;
@@ -85,7 +91,43 @@ const SceneContainer = (props) => {
     return function cleanUp() {
       watchHandle && watchHandle.remove()
     }
-  }, [view]);
+  }, [view, rotationActive]);
+
+  // Start rotation when loaded
+  useEffect(() => {
+    let watchHandle;
+    if (initialRotation && !hasSceneRotated && view) {
+      loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
+        watchHandle = watchUtils.whenFalseOnce(view, "updating", () => {
+          setRotationActive(true);
+        });
+      })
+    }
+
+    return function cleanUp() {
+      watchHandle && watchHandle.remove()
+    }
+  }, [view, initialRotation, hasSceneRotated]);
+
+  // Rotate globe once on start
+  useEffect(() => {
+    const ROTATION_SPEED = 2.5;
+    const rotate = () => {
+      const camera = view.camera.clone();
+      camera.position.longitude -= ROTATION_SPEED;
+      view.goTo(camera, { animate: false })
+      .then(() => {
+        setAnimationRotatedDegrees(animationRotatedDegrees + ROTATION_SPEED)
+      });
+    }
+
+    if ((view && view.interacting) || animationRotatedDegrees > 360) {
+      setRotationActive(false);
+      localStorage.setItem(rotationKey, true);
+    } else if (rotationActive && view && view.camera) {
+      requestAnimationFrame(rotate);
+    }
+  }, [view, view && view.camera, rotationActive, animationRotatedDegrees])
 
   return (
     <Component
