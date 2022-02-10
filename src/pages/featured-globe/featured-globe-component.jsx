@@ -1,5 +1,5 @@
 import React from 'react';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
 import Scene from 'components/scene';
@@ -24,9 +24,11 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
+const FeaturedPlaceCard = loadable(() =>
+  import('containers/sidebars/featured-place-card')
+);
 
-const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const DataGlobeComponent = ({
   sceneSettings,
@@ -49,7 +51,7 @@ const DataGlobeComponent = ({
   mouseMoveCallbacksArray,
   activeOption,
   openedModal,
-  userConfig
+  userConfig,
 }) => {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = useMobile();
@@ -57,9 +59,10 @@ const DataGlobeComponent = ({
 
   return (
     <>
-      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/>
+      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
       <MainMenu />
       <Scene
+        sceneName="featured-scene"
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
@@ -67,6 +70,7 @@ const DataGlobeComponent = ({
           (isMapsList || isFeaturedPlaceCard) && !isOnMobile
         }
         urlParamsUpdateDisabled
+        initialRotation
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -152,6 +156,6 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
     </>
   );
-}
+};
 
 export default DataGlobeComponent;

@@ -60,6 +60,7 @@ const CountrySceneComponent = ({
         sceneName={'data-scene'}
         sceneSettings={updatedSceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+        initialRotation
       >
         <ArcgisLayerManager
           userConfig={userConfig}
