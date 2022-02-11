@@ -78,6 +78,7 @@ const SpeciesCardContainer = (props) => {
       if (a.slug > b.slug) return 1;
       return 0;
     });
+
     if (resultsSorted.length > 0) {
       const summaryOption = { slug: SEARCH_RESULTS_SLUG, label: `${value} (${resultsSorted.length})` };
       setSearchOptions([summaryOption, ...resultsSorted]);
@@ -130,28 +131,15 @@ const SpeciesCardContainer = (props) => {
   }, [speciesData.species])
 
   useEffect(() => {
-    switch (selectedSpeciesFilter.slug) {
-      case 'all':
-        const allSorted = orderBy([...speciesData.species], ['has_image', 'conservationConcern'], ['desc', 'desc']);
-        setSpeciesToDisplay(allSorted);
-        setSpeciesToDisplayBackUp([...allSorted]);
-        break;
-      case 'flagship':
-        const flagshipSorted = species.filter(sp => sp.isFlagship);
-        setSpeciesToDisplay(flagshipSorted);
-        setSpeciesToDisplayBackUp([...flagshipSorted]);
-        break;
-      case 'endangered':
-        const endangeredSorted = species.sort((a, b) => (b.conservationConcern - a.conservationConcern)).slice(0, 40);
-        setSpeciesToDisplay(endangeredSorted);
-        setSpeciesToDisplayBackUp([...endangeredSorted]);
-        break;
-      default:
-        const speciesSorted = orderBy([...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)], ['has_image', 'conservationConcern'], ['desc', 'desc']);
-        setSpeciesToDisplay(speciesSorted);
-        setSpeciesToDisplayBackUp([...speciesSorted]);
-        break;
-    }
+    const sortSpecies = (s) => orderBy(s, ['has_image', 'conservationConcern'], ['desc', 'desc']);
+    const speciesSorted = sortSpecies(
+      (selectedSpeciesFilter.slug === 'all') ?
+        [...speciesData.species] :
+        [...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)]
+      );
+
+    setSpeciesToDisplay(speciesSorted);
+    setSpeciesToDisplayBackUp([...speciesSorted]);
   }, [speciesData.species, selectedSpeciesFilter])
 
   useEffect(() => {
