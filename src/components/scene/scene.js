@@ -98,7 +98,7 @@ const SceneContainer = (props) => {
     let watchHandle;
     if (initialRotation && !hasSceneRotated && view) {
       loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-        watchHandle = watchUtils.whenFalseOnce(view, "updating", () => {
+        watchHandle = watchUtils.when(view, "camera", () => {
           setRotationActive(true);
         });
       })
@@ -111,7 +111,7 @@ const SceneContainer = (props) => {
 
   // Rotate globe once on start
   useEffect(() => {
-    const ROTATION_SPEED = 2.5;
+    const ROTATION_SPEED = 1;
     const rotate = () => {
       const camera = view.camera.clone();
       camera.position.longitude -= ROTATION_SPEED;
@@ -124,10 +124,10 @@ const SceneContainer = (props) => {
     if ((view && view.interacting) || animationRotatedDegrees > 360) {
       setRotationActive(false);
       localStorage.setItem(rotationKey, true);
-    } else if (rotationActive && view && view.camera) {
+    } else if (rotationActive) {
       requestAnimationFrame(rotate);
     }
-  }, [view, view && view.camera, rotationActive, animationRotatedDegrees])
+  }, [view, rotationActive, animationRotatedDegrees])
 
   return (
     <Component
