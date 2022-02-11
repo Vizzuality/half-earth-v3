@@ -50,7 +50,7 @@ const CountrySceneComponent = ({
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
-    () => ({ ...sceneSettings, padding: { left: 0 } }),
+    () => ({ ...sceneSettings, ...(isMobile && { padding: { left: 0 } }) }),
     [isMobile]
   );
   return (
