@@ -133,6 +133,7 @@ const SceneContainer = (props) => {
       loadState={loadState}
       map={map}
       view={view}
+      handleSceneClick={() => setRotationActive(false)}
       {...props}
     />
     {initialRotation && rotationActive &&

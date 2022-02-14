@@ -13,27 +13,38 @@ const SceneComponent = ({
   className,
   spinner = true,
   interactionsDisabled = false,
+  handleSceneClick,
 }) => {
-
   if (loadState === 'loading') {
     return (
-    <>
-      <div id={`scene-container-${sceneName || sceneId}`} className={styles.sceneContainer} style={{width:'0%', height:'0%'}} />
-      <Spinner spinnerWithOverlay initialLoading display={spinner}/>
-    </>
-    )
+      <>
+        <div
+          id={`scene-container-${sceneName || sceneId}`}
+          className={styles.sceneContainer}
+          style={{ width: '0%', height: '0%' }}
+        />
+        <Spinner spinnerWithOverlay initialLoading display={spinner} />
+      </>
+    );
   } else if (loadState === 'loaded') {
     return (
-      <div className={cx(styles.sceneWrapper, className)} style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}>
+      <div
+        className={cx(styles.sceneWrapper, className)}
+        style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}
+        onClick={handleSceneClick}
+      >
         <div id={`scene-container-${sceneName || sceneId}`}>
           {React.Children.map(children || null, (child, i) => {
-            return child && <child.type key={i} map={map} view={view} {...child.props}/>;
+            return (
+              child && (
+                <child.type key={i} map={map} view={view} {...child.props} />
+              )
+            );
           })}
         </div>
       </div>
-    )
+    );
   }
-
-}
+};
 
 export default SceneComponent;
