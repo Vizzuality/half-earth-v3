@@ -36,6 +36,7 @@ const NrcLandingComponent = ({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
+        initialRotation
       >
         <ArcgisLayerManager
           activeLayers={activeLayers}
