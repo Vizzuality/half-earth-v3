@@ -6,7 +6,7 @@ import {
     LANDSCAPE_FEATURES_LABELS_LAYER,
     COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   } from 'constants/layers-slugs';
-  
+
   export default {
     globe: {
       activeLayers: [
@@ -17,11 +17,11 @@ import {
         { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
         { title: GLOBAL_SPI_FEATURE_LAYER }
       ],
-      zoom: 3.5,
-      center: [-66.9515536, 0.116959],
+      zoom: 3.8,
       padding: {
-        left: 200
+        left: 300
       },
+      center: [-66.9515536, 0.116959],
       isGlobeUpdating: false,
       environment: {
         atmosphereEnabled: false,

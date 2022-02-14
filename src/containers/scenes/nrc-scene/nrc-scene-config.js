@@ -24,8 +24,9 @@ export default {
     { title: PROTECTED_AREAS_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY },
     { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY }
   ],
+  zoom: 3.8,
+  center: [16.9515536, 0.116959],
   padding: {
-    bottom: 60,
     left: 300
   },
   isGlobeUpdating: false,
