@@ -105,16 +105,7 @@ export function getContextData(geometry) {
 }
 
 const parseCommonName = (f) => {
-  let commonName = null;
-  try {
-    const val = f.attributes.common_name_array;
-    if (val) {
-      commonName = JSON.parse(f.attributes.common_name_array.replaceAll(/\\/g, ''));
-    }
-  } catch (error) {
-    console.error('error parsing species', error, 'value', f.attributes.common_name_array)
-  }
-  return commonName;
+  return f.attributes.common_name && f.attributes.common_name.split(',');
 }
 
 export function getSpeciesData(crfName, geometry) {
