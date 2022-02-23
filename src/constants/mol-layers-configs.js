@@ -76,11 +76,10 @@ import {
   PLEDGES_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
-  ADMIN_AREAS_VECTOR_TILE_LAYER
 } from 'constants/layers-slugs'
 
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { 
+import {
   BORDERS_LAYERS_RENDERER
 } from 'constants/graphic-styles';
 
@@ -248,13 +247,6 @@ export const layersConfig = {
     slug: MERGED_WDPA_VECTOR_TILE_LAYER,
     type: LAYER_TYPES.VECTOR_TILE_LAYER,
     url: LAYERS_URLS[MERGED_WDPA_VECTOR_TILE_LAYER],
-    bbox: null
-  },
-  [ADMIN_AREAS_VECTOR_TILE_LAYER]: {
-    title: ADMIN_AREAS_VECTOR_TILE_LAYER,
-    slug: ADMIN_AREAS_VECTOR_TILE_LAYER,
-    type: LAYER_TYPES.VECTOR_TILE_LAYER,
-    url: LAYERS_URLS[ADMIN_AREAS_VECTOR_TILE_LAYER],
     bbox: null
   },
   [COMMUNITY_AREAS_FEATURE_LAYER]: {
