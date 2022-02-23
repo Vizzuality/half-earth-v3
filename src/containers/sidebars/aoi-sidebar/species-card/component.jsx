@@ -67,7 +67,7 @@ const Component = ({
             className={styles.infoClue}
             title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
           >
-            terrestrial vertebrates
+            land terrestrial vertebrates
           </span>
         </p>
         <Dropdown
