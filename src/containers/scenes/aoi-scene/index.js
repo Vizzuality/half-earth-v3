@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import localforage from 'localforage';
 import orderBy from 'lodash/orderBy';
+import isEmpty from 'lodash/isEmpty';
 import { loadModules } from 'esri-loader';
 import EsriFeatureService from 'services/esri-feature-service';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
@@ -219,8 +220,7 @@ const Container = props => {
 
 
   useEffect(() => {
-    const hasAllData = speciesData && contextualData && contextualData.protectedAreasList;
-
+    const hasAllData = speciesData && contextualData && !isEmpty(contextualData) && (!contextualData.isCustom || contextualData.protectedAreasList);
     if (!precalculatedLayerSlug && hasAllData) {
       const updatedStoredArea = (speciesData.species && speciesData.species.length > 0) ? {
         ...storedArea,
