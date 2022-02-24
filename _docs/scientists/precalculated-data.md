@@ -14,7 +14,7 @@ Dropdown menu:
 
 ![](/public/precalc_dropdown.png)
 
-Contextual data: 
+Contextual data:
 
 ![](/public/precalc_contextual.png)
 
@@ -32,8 +32,8 @@ All the services for the precalculated data are in AGOL in folder `#6 precalcula
    2. [GADM1 FS protected areas](https://eowilson.maps.arcgis.com/home/item.html?id=48b13c6a7ca04cdeb31609da392aae9d)
 3. ## Protected Areas
    1. [WDPA FS precalculated data](https://eowilson.maps.arcgis.com/home/item.html?id=00520b68c2af41d39a3dfec82a27ebf6)
-   2. [WDPA FS geometries](https://eowilson.maps.arcgis.com/home/item.html?id=a032522cc9024af99c15429d56a23de6)  
-   
+   2. [WDPA FS geometries](https://eowilson.maps.arcgis.com/home/item.html?id=a032522cc9024af99c15429d56a23de6)
+
 \* The WDPAs are a special case where the data and the geometries are separate in different tables. This is because the WDPA layer is so big it would take too long to load. Even now just the simplified geometries are very heavy and we are in the process of finding solutions to fix this.
 1. ## Places for Half Earth Future
    1. Not available yet
@@ -86,10 +86,10 @@ This is the summary of steps (explained in more detail below):
 1. Table of precalculated data:
 - Precalculate Biodiversity data
 - Precalculate Contextual data
-- Merge in python ([notebook for AOI](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_AOI_tables.ipynb), [notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/master/Places_HE_Future.ipynb))
+- Merge in python ([notebook for AOI](https://github.com/Vizzuality/he-scratchfolder/blob/main/Precalculated_AOI_tables.ipynb), [notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb))
 
 1. Table of protected areas by country
-- Create Protected Areas table ([notebook for PA table](https://github.com/Vizzuality/he-scratchfolder/blob/master/WDPA_gadm1.ipynb))
+- Create Protected Areas table ([notebook for PA table](https://github.com/Vizzuality/he-scratchfolder/blob/main/WDPA_gadm1.ipynb))
 
 
 ## Steps to process Biodiversity precalculated data:
@@ -97,7 +97,7 @@ There are example projects in Viz2 VM where the steps can be followed in the his
 
 
  1. **Sample**: Use the Sample tool with the feature layer (geometry) against a crf. Process as multidimensional, use `MOL_ID` as unique identifier and use the statistic `SUM`
-![](/public/precalc_sample.png) 
+![](/public/precalc_sample.png)
 
 2. **Table to Table**: Keep only the values where the species field is above 0
 ![](/public/precalc_table_to_table.png)
@@ -111,7 +111,7 @@ There are example projects in Viz2 VM where the steps can be followed in the his
 ![](/public/precalc_export_csv.png)
 
 ## Steps to process Contextual precalculated data:
-In this case we are using models created with Model Builder to process the data. The models are available in the ArcGIS Pro Project `Contextual_precalculations`. The models used can be accessed from the Catalog panel, Toolboxes > Contextual_precalculations.tbx. The idea is the same, we need to input 2 parameters (a feature layer and a crf) and do Zonal Stats to get the summary values of each crf inside each geometry. The field `MOL_ID` identifies each unique geometry. Once we have the output tables of each type of data, we export them as csvs and process them in [python](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_AOI_tables.ipynb).  
+In this case we are using models created with Model Builder to process the data. The models are available in the ArcGIS Pro Project `Contextual_precalculations`. The models used can be accessed from the Catalog panel, Toolboxes > Contextual_precalculations.tbx. The idea is the same, we need to input 2 parameters (a feature layer and a crf) and do Zonal Stats to get the summary values of each crf inside each geometry. The field `MOL_ID` identifies each unique geometry. Once we have the output tables of each type of data, we export them as csvs and process them in [python](https://github.com/Vizzuality/he-scratchfolder/blob/main/Precalculated_AOI_tables.ipynb).
 
 
 **NOTE** In this version, each type of data has been run with a separate Model, but the general model develoed for on the fly calculations `ContextualLayersProdRange` could be used in future iterations.
@@ -129,7 +129,7 @@ Each precalculated area has a table that shows all the protected areas present i
 
 ## Steps to process Precalculated data 20 Places for HE Future
 Project in ArcGIS Pro: `Places_HE_Future`
-- Access the data from AGOL and download into ArcGIS Pro as a shapefile (the [current layer](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291) is not final and will most probably change, but the processing steps will be the same) 
+- Access the data from AGOL and download into ArcGIS Pro as a shapefile (the [current layer](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291) is not final and will most probably change, but the processing steps will be the same)
 - Add a numeric field named `MOL_ID`. Using the Calculate Field tool give a unique number to each geometry, starting from 1 to n features. Make sure the type is set to `Long`.
 - For Biodiversity data:
   - Add the taxa crf to the Current Map from the Catalog (the Azure connection should be added previously as explained above in the section `Biodiversity CRFs`)

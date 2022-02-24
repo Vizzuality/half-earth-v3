@@ -21,13 +21,12 @@ Now, you should be able to see the new fields added to the AGOL table.
 ## Upload hosted table
 There are two different ways to upload a table into ArcGIS Online:
 1. Directly in AGOL:
-* in *Content* tab select *New item* (upper left corner) and  upload the new table (in .csv format). 
+* in *Content* tab select *New item* (upper left corner) and  upload the new table (in .csv format).
 * choose to add your table as a hosted feature layer or table if you want it to be published. With second option (add the .csv only) the table can be shared and downloaded but it cannot be used as a service
 * select the fields you want to add or keep all of them
-* in the dropdown menu set location as *None* 
+* in the dropdown menu set location as *None*
 * select a name that is not already in use in AGOL
 * once the table has been published, set sharing level as *public*
 2. Using AGOL API with Python:
 * for this option it will be necessary to have an *.env* file with credentials (username and password) to connect to AGOL
 * at the end of [this notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/WDPA_gadm1.ipynb) there is an example of how to publish a feature layer using Python. The function `publishCSVasFS` allow us to publish both tables and feature layers, just make sure you set the argument `table` as 'yes' if you want to publish a .csv, or as 'no' if you are publishing a feature layer. You can also decide in which folder within AGOL you want to save the new table with the argument `aol_folder_name`, and change the sharing level.
-
