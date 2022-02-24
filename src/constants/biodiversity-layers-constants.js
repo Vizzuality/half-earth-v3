@@ -298,7 +298,7 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: SA_MAMMALS_RARITY
         },
         {
-          value: 'sa_birds',
+          value: SA_BIRDS_RARITY,
           name: 'birds',
           layer: SA_BIRDS_RARITY
         },
