@@ -14,7 +14,7 @@ permalink: /_docs/science/nrc-services
 `Gadm_centroid` is a service of points and contains the data shown on the side bar of the national report cards. This is the service that has to be updated when a new SPI is calculated.
 
 ## Rescaled Priority layer
-Within a country the priority layer has been rescaled so the highest value within a country takes the highest colour in the colour ramp. The rescaled values have been done using R and arcpy. The process is described in [this notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Classification_of_raster_putatitve_pa_by_country.ipynb). 
+Within a country the priority layer has been rescaled so the highest value within a country takes the highest colour in the colour ramp. The rescaled values have been done using R and arcpy. The process is described in [this notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Classification_of_raster_putatitve_pa_by_country.ipynb).
 
 
 ## Derived data of the National Report Cards.

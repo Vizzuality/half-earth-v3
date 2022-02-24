@@ -12,7 +12,7 @@ permalink: /_docs/science/aois-crfs
 - [Creating a model with Model Builder](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"}: at the bottom of this document a description of creating a geoprocessing service with Model Builder.
 
 **IMPORTANT NOTE**
-This documentation has been written using the ArcGIS Pro version `2.8.3` and the ArcGIS Enterprise Portal version `10.9 (Release May 2021)`. 
+This documentation has been written using the ArcGIS Pro version `2.8.3` and the ArcGIS Enterprise Portal version `10.9 (Release May 2021)`.
 
 # Creating a crf
 Check the document of [CRF creation and storage](https://docs.google.com/document/d/1H6VaYnBHhPD3mDfCVnfwh6t22tPFffmjyej1OAjgddk/edit){:target="_blank"} for detailed steps. Before starting, make sure you are NOT building pyramids. This can add hours to the processing. Your Pro may be set to do this automatically. You can turn it off in Options (Access by clicking on the `Project` tab in the top left corner). If you don't want to make the change through the Options, you can simply make sure that you unclick the `Build pyramids` option when running a geoprocessing service.
@@ -27,16 +27,16 @@ The summary of geoprocessing steps followed are:
 * **Build multidimensional Info** (Add Dimension and Variable information)
 * **Table to table** (Optional) (Create a lookup table to match the unique id and the raster name)
 * **Copy raster** (Create the crf with all the previous information, this is the long step)
-  
+
 ([This notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/arcpyNotebooks/Create_crf.ipynb) has the sequence of geoprocessing commands in python.)
 
 Things to be aware of:
 * The projection of the rasters and the crf should match. Set the projection in the `Environments` tab of the first step `Create mosaic dataset`(You can use one of the rasters as input of the Coordinate System. By default ArcGIS Pro uses Pseudo Mercator 3857)
 * This is a multidimensional processing operation. Set the `Parallel processing` option to 90% in the `Environments` tab every time
-* The most critical step is `Build multidimensional info`, this is because it has to be clear what are the `variables` and what are the `dimensions`. After creating a new field in the attribute table of the Mosaic dataset, use the following input as guide. This example is how the encroachment datacube has been created. 
+* The most critical step is `Build multidimensional info`, this is because it has to be clear what are the `variables` and what are the `dimensions`. After creating a new field in the attribute table of the Mosaic dataset, use the following input as guide. This example is how the encroachment datacube has been created.
 
 ##### 1. The geoprocessing parameters
-**IMPORTANT NOTE:** Be aware that when you check the ran geoprocess in the history, automatically, the information in `Variable Field` changes to the new `Variable` field. Always check the python snippet to see what has been done.  
+**IMPORTANT NOTE:** Be aware that when you check the ran geoprocess in the history, automatically, the information in `Variable Field` changes to the new `Variable` field. Always check the python snippet to see what has been done.
 ```Python
 arcpy.md.BuildMultidimensionalInfo("land_encroachment", "Variable_new", "SliceNumber # #", "ghm # #")
 ```
@@ -63,40 +63,40 @@ A Webtool is a geoprocessing tool that lives in the ArcGIS Enterprise Portal and
 The first step is to create a Model locally in ArcGIS Pro, and then publish it to the Portal.
 
 ## Create a Model in ArcGIS Pro
-In the Catalogue, create a new model (Model Builder) in the project's Toolbox. 
+In the Catalogue, create a new model (Model Builder) in the project's Toolbox.
 ![](/public/new-model.png)
 
 Once the model is ready, indicate which ovals are Parameters by right clicking on them (a small `P` appears). Set their names so they are legible by the Front End, inside model builder rename the parameters (right click on the ovals). Currently we are using: `geometry`, `crf_name` and `output_table`.
 
-Use `calculate value` as much as possible (this is a Model Builder Utility tool), Python is quicker than adding extra geoprocessing tools. 
+Use `calculate value` as much as possible (this is a Model Builder Utility tool), Python is quicker than adding extra geoprocessing tools.
 
 ![](/public/model-builder-utilities.png)
 
-Since we are using Multidimensional cubes, it is key to set up the `Parallel processing` to `90%` in any of the geoprocessing tools added to the model. 
+Since we are using Multidimensional cubes, it is key to set up the `Parallel processing` to `90%` in any of the geoprocessing tools added to the model.
 
 **IMPORTANT NOTE:** Take into account the input and output coordinate reference systems. In this case, we are providing a Pseudo Mercator input (the geometry) and we are using it against an Equal Area projection (the crf). The geoprocessing tools automatically serve the output in the raster projection, without us having to manually add a re-projection step to change the crs of the geometry. However, it is a good practice to make explicit the CRS in the `Environments` tab of each of the geoprocessing tools.
 
 ## How to publish a geoprocessing service
-These steps take into account that the Model (made with Model Builder) is done. 
+These steps take into account that the Model (made with Model Builder) is done.
 
-1. Create a small polygon using the Sample tool (click on the pencil that shows up on the left of `Input location raster or features` and create a small polygon in an area of interest). In the Table of contents right click on the new polygon and click on `Zoom to Layer` to show only the polygon. 
+1. Create a small polygon using the Sample tool (click on the pencil that shows up on the left of `Input location raster or features` and create a small polygon in an area of interest). In the Table of contents right click on the new polygon and click on `Zoom to Layer` to show only the polygon.
 2. Create a small subset of the crf using `Subset Multidimensional raster`, set the environment setting of `extent` to "current Display". _This is so a very small portion of the crf is copied in the portal. So, the smaller the extent, the better, but make sure it is larger than the extent to the polygon used for testing._
-   
+
 ![](/public/subset-crf.png)
 
 3. Run the model using the polygon and the subset crf as a geoprocessing tool (By clicking on the Model inside the Toolbox directly). Select `90%` for parallel processing.
 4. From the History, right click on the model that has just been run and `Share as a Web tool` (make sure you are logged into the Production Portal, look at the top right, otherwise the option won't appear).
 ![](/public/GP_publish_Share_As.png)
 
-5. In the **General Panel**: 
+5. In the **General Panel**:
    1. Name the model as ModelName`Prod`
    2. Add the model to the Production folder
    3. Click on `Copy all data`
    4. Click on `Share with Everyone`
 ![](/public/GP_publish_General.png)
 1. In the **Configuration panel**:
-   1. Change the `Message level` to `Info` (this will give more details in case of an error). 
-   2. Increase the `Maximum number of records returned by server` to 100000. **This is very important** to avoid not returning a response to the front end. 
+   1. Change the `Message level` to `Info` (this will give more details in case of an error).
+   2. Increase the `Maximum number of records returned by server` to 100000. **This is very important** to avoid not returning a response to the front end.
 ![](/public/GP_publish_Configuration.png)
 7. In the **Content panel** configure the tool properties (click on the pencil on the right)
     - Set the geometry to `User defined value`
@@ -109,7 +109,7 @@ These steps take into account that the Model (made with Model Builder) is done.
 10.  Click on `Publish` 🚀
 
 ### The Url to the geoprocessing service
-Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web (You can also log in directly to the Portal with your credentials, go to Content and find the tool you want to check). The "look and feel"" of the portal is identical to ArcGIS online. Protect the tool from deletion and update to Public the sharing options in the settings. Then, in the Overview panel, on the bottom right you will find the url of the service. Click to View the tool in a new window. 
+Once you have succeeded with the publication of a webtool, it appears in the `Portal` section of the Catalogue Panel. When hovering over the tool the url to the item in the Portal appears. Follow the url and it takes you to the Portal in the Web (You can also log in directly to the Portal with your credentials, go to Content and find the tool you want to check). The "look and feel"" of the portal is identical to ArcGIS online. Protect the tool from deletion and update to Public the sharing options in the settings. Then, in the Overview panel, on the bottom right you will find the url of the service. Click to View the tool in a new window.
 
 ![](/public/tool-url.png)
 
@@ -127,7 +127,7 @@ In order to check that the GP service is working correctly before passing the UR
 * Depending on the GP service, you will have to provide information to a different number of boxes, but for sure you will have to provide a `geometry` and at least one path to a crf (the Biodiversity GP services only require the input of the taxa crf, while the Contextual data GP services will need the input of more crfs). The default values that appear in the boxes represent the data that was used to publish the service, aka they are a very small subset of the data and if you test with a geometry that is outside of that area you will get an error.
 ![](/public/GP_test_Submit_default.png)
   - **geometry**: the geometry needs to have a very specific format. The structure passed is a json that can be obtained by using the tool `Features To Json` in ArcGIS Pro: make sure the output path is set outside of the gdb so it can be accessed easily, and tick the boxes for `Formatted JSON` and `Include Z values`
-![](/public/GP_test_FeaturesToJson.png) 
+![](/public/GP_test_FeaturesToJson.png)
 This is an example of the geometry you need to add to the box:
 ```json
  {
@@ -251,18 +251,18 @@ This is an example of the geometry you need to add to the box:
 
 ## Particularities of certain tools within the Model Builder working with CRFs
 **IMPORTANT NOTE**
-This documentation has been written using the ArcGIS Pro version `2.6.4` and the Portal version `10.8.1`. 
+This documentation has been written using the ArcGIS Pro version `2.6.4` and the Portal version `10.8.1`.
 ### `Sample`
-This is a super powerful tool. Its power lays on the fact that it is the first tool developed to deal with multidimensional data. Our testing showed that the time of processing increases as the area of interest increases. To use it in the portal server it was necessary to provide a new field to the polygon that had an integer. 
+This is a super powerful tool. Its power lays on the fact that it is the first tool developed to deal with multidimensional data. Our testing showed that the time of processing increases as the area of interest increases. To use it in the portal server it was necessary to provide a new field to the polygon that had an integer.
 
 ![](/public/unique_field.png)
 
 ### `Zonal Statistics as Table`
-Our testing showed that the time of processing increased as the number of slices increased, not the area of interest. 
+Our testing showed that the time of processing increased as the number of slices increased, not the area of interest.
 
 ### Rasterizing a polygon and getting the area (`Polygon to Raster`)
 When rasterizing a polygon for the purpose of calculating proportions it is key that the cell size is the same as the input crf. In this case, opposite to `Sample`, the field that worked well was `OBJECTID`. In the ArcGIS Pro version we were working, the raster created did not have an attribute table. Within Model Builder we got the number of pixels using `Calculate Value` and the following Python codeblock:
-`getAreaRaster(r"%custom_raster%")` 
+`getAreaRaster(r"%custom_raster%")`
 **It is key to use the right double quotes.**
 ```Python
 import arcpy
@@ -270,9 +270,9 @@ import numpy
 def getAreaRaster(rst):
     arr = arcpy.da.TableToNumPyArray(rst, "COUNT")
     a,= arr.tolist()[0]
-    return a 
+    return a
 ```
-`%custom_raster%` refers to the output from `Polygon to Raster`. The `%` uses ESRI's in-line variable scripting. 
+`%custom_raster%` refers to the output from `Polygon to Raster`. The `%` uses ESRI's in-line variable scripting.
 
 ### Filtering a table using SQL
 To obtain only the necessary rows, we have used `Table Select`. This tool uses an SQL expression that is built using `Calculate value` and python codeblock.
@@ -288,13 +288,13 @@ def getTopRows(table, prop = 0.2 ):
     sort_arr = np.sort(arr, order = "COUNT",)[0:n]
     arr_lit = sort_arr['SliceNumber'].tolist()
     arr_int = map(int, arr_lit)
-    res = ', '.join(map(str, arr_int))  
+    res = ', '.join(map(str, arr_int))
     out = f"SliceNumber IN ({res})"
     return out
 ```
 
 #### Example 2: Getting only the rows with presence
-This might be unecessary if used in `Select Table`. `Select Table` allows for a `WHERE` query. 
+This might be unecessary if used in `Select Table`. `Select Table` allows for a `WHERE` query.
 
 `getPresentSpecies(r"%table_in%")`
 ```Python
@@ -305,15 +305,15 @@ def getPresentSpecies(table):
     out_arr = arr[arr["presence"]>0]
     arr_lit = out_arr["SliceNumber"].tolist()
     arr_int = map(int, arr_lit)
-    res = ', '.join(map(str, arr_int))  
+    res = ', '.join(map(str, arr_int))
     out = f"SliceNumber IN ({res})"
     return out
 ```
 
 # About the limit of records returned
-If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`. 
+If you forget to set a high limit for the records returned, the front end might inform of this limit. In the object `w` returned, check `value.exceededTransferLimit`.
 
-# Current geoprocessing services in use 
+# Current geoprocessing services in use
 
 ## Models from Model Builder as Python code
 The process inside the Geoprocessing service can be found in the `he-scratchfolder` [repo](https://github.com/Vizzuality/he-scratchfolder/tree/master/ModelBuilderGPs).
@@ -342,9 +342,9 @@ World Terrestrial Ecosystem - [Living Atlas](https://eowilson.maps.arcgis.com/ho
 
 ## Querying the AGOL tables
 For those Geoprocessing services that require to query information from a table in ArcGIS Online, Arcade can be used to return the information ([more about Arcade in this docs](/_docs/science/arcade)).
-The [`Filter`](https://developers.arcgis.com/arcade/function-reference/data_functions/#filter) function accepts an SQL expression and a layer. 
+The [`Filter`](https://developers.arcgis.com/arcade/function-reference/data_functions/#filter) function accepts an SQL expression and a layer.
 
-The structure of the SQL expression is composed of the name of the field to query (in our case `SliceNumber`), then the condition `IN` and between parenthesis all the ids of species returned by the geoprocessing service. 
+The structure of the SQL expression is composed of the name of the field to query (in our case `SliceNumber`), then the condition `IN` and between parenthesis all the ids of species returned by the geoprocessing service.
 
 ``` javascript
 var lay = $layer
@@ -361,4 +361,4 @@ The AOIs created by users can be shared with an url. When the urls is created, t
 ArcGIS online allows to run jupyter notebooks. There are different kinds, some cost credits, but for small tasks they are included. Users need to be provided the permissions to use the Notebooks. Once a notebook is saved as an item in the organisation it is possible to schedule tasks. Check [ESRI's documentation](https://doc.arcgis.com/en/arcgis-online/create-maps/prepare-a-notebook-for-automated-execution.htm) on how to schedule tasks.
 ## Cleaning the historic AOIs service
 
-[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`. 
+[The notebook](https://eowilson.maps.arcgis.com/home/item.html?id=fa923e5d0ddd48779327fdeffc395d53#overview) saved in the organisation is ready to be activated and start the cleaning every first of the month. A version for reference can be found in the [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Clean_AOI_historic_service.ipynb). The important variable to check is the limit number of features that the service shoud have: `feature_limit`.
