@@ -1,10 +1,8 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
 import Scene from 'components/scene';
 import Widgets from 'containers/widgets';
-import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import Spinner from 'components/spinner';
@@ -91,10 +89,6 @@ const DataGlobeComponent = ({
         <GlobeEventsManager
           clickCallbacksArray={clickCallbacksArray}
           mouseMoveCallbacksArray={mouseMoveCallbacksArray}
-        />
-        <LandscapeViewManager
-          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
-          isLandscapeMode={isLandscapeMode}
         />
         <FeaturedPlaceViewManager
           selectedFeaturedPlace={selectedFeaturedPlace}

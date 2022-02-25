@@ -19,7 +19,6 @@
     "localforage": "^1.10.0",
     "lodash-es": "4.17.14",
     "node-sass": "^4.11.0",
-    "post-robot": "8.0.28",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
     "rc-slider": "^9.7.2",
