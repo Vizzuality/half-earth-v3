@@ -70,7 +70,6 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,
-  isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,

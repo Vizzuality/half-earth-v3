@@ -12,7 +12,6 @@ import styles from './featured-place-card-styles.module';
 
 const FeaturedPlaceCardComponent = ({
   selectedFeaturedPlace,
-  isLandscapeMode,
   isFullscreenActive,
   featuredMap,
   featuredPlace,
@@ -20,11 +19,10 @@ const FeaturedPlaceCardComponent = ({
   handleNextPlaceClick,
   handlePrevPlaceClick,
   activeOption,
-  hotspotsNumbers
+  hotspotsNumbers,
 }) => {
   const isOnMobile = useMobile();
-  const isOnScreen =
-    selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
+  const isOnScreen = selectedFeaturedPlace && !isFullscreenActive;
   const visibleOnMobile =
     isOnMobile &&
     activeOption === FOOTER_OPTIONS.ADD_LAYER &&

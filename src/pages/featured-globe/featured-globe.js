@@ -9,9 +9,6 @@ import {
   VIBRANT_BASEMAP_LAYER,
   SATELLITE_BASEMAP_LAYER
 } from 'constants/layers-slugs';
-import {
-  FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
-} from 'constants/layers-groups';
 import { useMobile } from 'constants/responsive';
 
 import Component from './featured-globe-component.jsx';
@@ -76,14 +73,6 @@ const featuredGlobeContainer = props => {
     handleMarkerHover
   ]
 
-  const showLayersOnlyOnLandscape = ({ layer, isVisible }) => {
-    const isLandscapeOnlyLayer = FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS.includes(layer.title);
-    // Hide human_pressures_layer where they are not in landscape mode
-    if(isLandscapeOnlyLayer) {
-      layer.visible = props.isLandscapeMode && isVisible;
-    }
-  }
-
   const setVibrantLayerMaxScale = ({ layer }) => {
     if (layer.title === VIBRANT_BASEMAP_LAYER) {
       layer.maxScale = 250000.0
@@ -97,7 +86,7 @@ const featuredGlobeContainer = props => {
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
       onMapLoad={(map) => handleMapLoad(map, activeLayers, userConfig)}
-      customFunctions={[showLayersOnlyOnLandscape, setVibrantLayerMaxScale]}
+      customFunctions={[setVibrantLayerMaxScale]}
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}
       isFeaturedPlaceCard={isFeaturedPlaceCard}
