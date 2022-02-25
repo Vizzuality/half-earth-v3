@@ -26,7 +26,6 @@ const NrcLandingComponent = ({
   openedModal,
   activeLayers,
   sceneSettings,
-  isLandscapeMode,
   isGlobeUpdating,
 }) => {
   return (
@@ -46,13 +45,11 @@ const NrcLandingComponent = ({
         <CountryLabelsLayer
           activeLayers={activeLayers}
           countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
           countryName={countryName}
           sceneMode={sceneMode}
         />
         <CountriesBordersLayer
           countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
         <Widgets activeLayers={activeLayers} openedModal={openedModal} />

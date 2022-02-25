@@ -14,7 +14,7 @@ import * as urlActions from 'actions/url-actions';
 const actions = {...urlActions }
 
 const CountriesBordersLayerContainer = (props) => {
-const { view, changeGlobe, countryISO, isLandscapeMode } = props;
+const { view, changeGlobe, countryISO } = props;
 
 
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
@@ -67,17 +67,17 @@ const onLabelEvent = (event) => {
 
   useEffect(() => {
     let eventHandler;
-    if (selectedCountryBorderGraphic && !isLandscapeMode) {
+    if (selectedCountryBorderGraphic) {
       eventHandler = view.on("click", onLabelEvent);
     }
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
-  }, [countryISO, selectedCountryBorderGraphic, isLandscapeMode])
+  }, [countryISO, selectedCountryBorderGraphic])
 
   useEffect(() => {
     let eventHandler;
-    if (hoveredCountryBorderGraphic && !isLandscapeMode) {
+    if (hoveredCountryBorderGraphic) {
       eventHandler = view.on("pointer-move",
         debounce(onLabelEvent, 35, {leading: true, trailing: true})
       );
@@ -85,7 +85,7 @@ const onLabelEvent = (event) => {
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
-  }, [hoveredCountryBorderGraphic, isLandscapeMode])
+  }, [hoveredCountryBorderGraphic])
 
 
   return null;

@@ -82,15 +82,6 @@ export const LABELS_LAYERS = [
 
 export const BOUNDARIES_LAYERS = [COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER];
 
-export const FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS = [
-  URBAN_HUMAN_PRESSURES_TILE_LAYER,
-  IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
-  RAINFED_HUMAN_PRESSURES_TILE_LAYER,
-  RANGELAND_HUMAN_PRESSURES_TILE_LAYER,
-  COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  PROTECTED_AREAS_VECTOR_TILE_LAYER,
-]
-
 // When interacting with legend control (opacity, remove, move item)
 // this layers need to act as a single one and the interactions will be batched
 export const LEGEND_GROUPED_LAYERS_GROUPS = {

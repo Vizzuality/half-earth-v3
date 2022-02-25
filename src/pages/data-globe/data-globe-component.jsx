@@ -1,14 +1,14 @@
 // dependencies
-import React from "react";
-import loadable from "@loadable/component";
+import React from 'react';
+import loadable from '@loadable/component';
 // components
-import DataScene from "scenes/data-scene";
-import HalfEarthLogo from "components/half-earth-logo";
-import MainMenu from "components/main-menu";
+import DataScene from 'scenes/data-scene';
+import HalfEarthLogo from 'components/half-earth-logo';
+import MainMenu from 'components/main-menu';
 //styles
-import uiStyles from "styles/ui.module.scss";
+import uiStyles from 'styles/ui.module.scss';
 // Dynamic imports
-const InfoModal = loadable(() => import("components/modal-metadata"));
+const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const DataGlobeComponent = ({
   sceneMode,
@@ -23,7 +23,6 @@ const DataGlobeComponent = ({
   sceneSettings,
   isSidebarOpen,
   activeCategory,
-  isLandscapeMode,
   isGlobeUpdating,
   selectedSpecies,
   isFullscreenActive,
@@ -51,7 +50,6 @@ const DataGlobeComponent = ({
         countedActiveLayers={countedActiveLayers}
         activeCategory={activeCategory}
         selectedSpecies={selectedSpecies}
-        isLandscapeMode={isLandscapeMode}
         isGlobeUpdating={isGlobeUpdating}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}

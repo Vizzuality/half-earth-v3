@@ -1,10 +1,8 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
 import Scene from 'components/scene';
 import Widgets from 'containers/widgets';
-import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import Spinner from 'components/spinner';
@@ -35,7 +33,6 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   selectedFeaturedMap,
   selectedSidebar,
-  isLandscapeMode,
   selectedFeaturedPlace,
   isGlobeUpdating,
   isMapsList,
@@ -53,7 +50,7 @@ const DataGlobeComponent = ({
   openedModal,
   userConfig,
 }) => {
-  const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
+  const isFeaturedPlaceCard = selectedFeaturedPlace;
   const isOnMobile = useMobile();
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
@@ -79,7 +76,6 @@ const DataGlobeComponent = ({
             selectedSidebar={selectedSidebar}
             selectedFeaturedMap={selectedFeaturedMap}
             activeOption={activeOption}
-            isLandscapeMode={isLandscapeMode}
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
         </MobileOnly>
@@ -92,13 +88,8 @@ const DataGlobeComponent = ({
           clickCallbacksArray={clickCallbacksArray}
           mouseMoveCallbacksArray={mouseMoveCallbacksArray}
         />
-        <LandscapeViewManager
-          zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
-          isLandscapeMode={isLandscapeMode}
-        />
         <FeaturedPlaceViewManager
           selectedFeaturedPlace={selectedFeaturedPlace}
-          isLandscapeMode={isLandscapeMode}
         />
         <Widgets
           activeLayers={activeLayers}
@@ -114,7 +105,6 @@ const DataGlobeComponent = ({
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
-            isLandscapeMode={isLandscapeMode}
             selectedFeaturedPlace={selectedFeaturedPlace}
             spinGlobe={spinGlobe}
             handle={spinGlobeHandle}
@@ -123,7 +113,6 @@ const DataGlobeComponent = ({
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
-          isLandscapeMode={isLandscapeMode}
           handleLayerToggle={handleLayerToggle}
         />
         <FeaturedTaxaSelector
@@ -131,13 +120,11 @@ const DataGlobeComponent = ({
           isMapsList={isMapsList}
           selectedFeaturedMap={selectedFeaturedMap}
           isFullscreenActive={isFullscreenActive}
-          isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
           activeOption={activeOption}
         />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
-          isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
@@ -150,7 +137,6 @@ const DataGlobeComponent = ({
         selectedFeaturedPlace={selectedFeaturedPlace}
         isFullscreenActive={isFullscreenActive}
         activeOption={activeOption}
-        isLandscapeMode={isLandscapeMode}
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}
