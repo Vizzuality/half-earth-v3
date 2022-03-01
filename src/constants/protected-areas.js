@@ -36,7 +36,7 @@ export const conserveNextLayers = [
     id: HALF_EARTH_FUTURE_VECTOR_TILE_LAYER,
     title: HALF_EARTH_FUTURE_VECTOR_TILE_LAYER,
     slug: HALF_EARTH_FUTURE_VECTOR_TILE_LAYER,
-    metadataTitle: 'Protected areas'
+    metadataTitle: 'Places for Half-Earth future'
   }
 ];
 
