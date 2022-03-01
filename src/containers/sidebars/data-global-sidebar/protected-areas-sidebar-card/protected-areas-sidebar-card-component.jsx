@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { WDPALayers, TEXTS } from 'constants/protected-areas';
+import {
+  WDPALayers,
+  conserveNextLayers,
+  TEXTS,
+} from 'constants/protected-areas';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
@@ -8,7 +12,10 @@ import SourceAnnotation from 'components/source-annotation';
 import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 import ExistingProtectionThumbnail from 'images/existing-protection.png';
-import { PROTECTION_SLUG } from 'constants/analyze-areas-constants';
+import {
+  PROTECTION_SLUG,
+  FUTURE_PLACES_SLUG,
+} from 'constants/analyze-areas-constants';
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
 const ProtectedAreasSidebarCardComponent = ({
@@ -46,6 +53,22 @@ const ProtectedAreasSidebarCardComponent = ({
               activeLayers={activeLayers}
               onChange={handleLayerToggle}
               themeCategorySlug={PROTECTION_SLUG}
+            />
+          ))}
+        </div>
+        <hr className={hrTheme.dark} />
+        <span className={styles.layersTitle}>Where to conserve next</span>
+        <div className={styles.togglesContainer}>
+          {conserveNextLayers.map((layer) => (
+            <LayerToggle
+              map={map}
+              option={layer}
+              type="checkbox"
+              variant="light"
+              key={layer.value}
+              activeLayers={activeLayers}
+              onChange={handleLayerToggle}
+              themeCategorySlug={FUTURE_PLACES_SLUG}
             />
           ))}
         </div>

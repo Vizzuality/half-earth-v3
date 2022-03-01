@@ -41,3 +41,10 @@
     background: $brand-color-secondary;
   }
 }
+
+
+.future-places {
+  input:checked + label::after {
+    background: $future-places;
+  }
+}
