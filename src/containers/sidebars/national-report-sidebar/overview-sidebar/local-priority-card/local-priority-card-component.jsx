@@ -8,10 +8,12 @@ import styles from './local-priority-card-styles.module.scss';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COUNTRY_PRIORITY_LAYER,
+  HALF_EARTH_FUTURE_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 import {
   PROTECTION_SLUG,
   ADDITIONAL_PROTECTION_SLUG,
+  FUTURE_PLACES_SLUG,
 } from 'constants/analyze-areas-constants';
 
 const LocalPriorityCardComponent = (props) => {
@@ -19,12 +21,14 @@ const LocalPriorityCardComponent = (props) => {
     hasPriority,
     protectionNeeded,
     priorityMetadata,
+    futurePlacesMetadata,
     currentProtection,
     protectionMetadata,
     priorityAreasSentence,
     map,
     activeLayers,
     handleLayerToggle,
+    countryName,
   } = props;
 
   const NRC_TOGGLES = {
@@ -42,6 +46,13 @@ const LocalPriorityCardComponent = (props) => {
       id: COUNTRY_PRIORITY_LAYER,
       title: COUNTRY_PRIORITY_LAYER,
       slug: COUNTRY_PRIORITY_LAYER,
+    },
+    [HALF_EARTH_FUTURE_FEATURE_LAYER]: {
+      name: `Places of Half-Earth future`,
+      value: HALF_EARTH_FUTURE_FEATURE_LAYER,
+      id: HALF_EARTH_FUTURE_FEATURE_LAYER,
+      title: HALF_EARTH_FUTURE_FEATURE_LAYER,
+      slug: HALF_EARTH_FUTURE_FEATURE_LAYER,
     },
   };
 
@@ -68,7 +79,10 @@ const LocalPriorityCardComponent = (props) => {
           themeCategorySlug={PROTECTION_SLUG}
         />
       </SidebarCardWrapper>
-      <SidebarCardWrapper sectionClassName={styles.section}>
+      <SidebarCardWrapper
+        className={styles.wrapper}
+        sectionClassName={styles.section}
+      >
         <SidebarCardContent
           title="How much additional protection is needed?"
           description={priorityAreasSentence}
@@ -85,6 +99,23 @@ const LocalPriorityCardComponent = (props) => {
           activeLayers={activeLayers}
           onChange={handleLayerToggle}
           themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
+        />
+      </SidebarCardWrapper>
+      <SidebarCardWrapper sectionClassName={styles.section}>
+        <SidebarCardContent
+          title={`Where to protect next in ${countryName}?`}
+          description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
+          metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
+        />
+        <LayerToggle
+          map={map}
+          type="checkbox"
+          option={NRC_TOGGLES[HALF_EARTH_FUTURE_FEATURE_LAYER]}
+          variant="dark"
+          key={HALF_EARTH_FUTURE_FEATURE_LAYER}
+          activeLayers={activeLayers}
+          onChange={handleLayerToggle}
+          themeCategorySlug={FUTURE_PLACES_SLUG}
         />
       </SidebarCardWrapper>
     </div>
