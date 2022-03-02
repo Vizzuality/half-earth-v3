@@ -37,17 +37,20 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   MARINE_AND_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
-  MERGED_LAND_HUMAN_PRESSURES
+  MERGED_LAND_HUMAN_PRESSURES,
+  HALF_EARTH_FUTURE_TILE_LAYER
  } from 'constants/layers-slugs';
 
- export const SPECIES_PROTECTION_INDEX = 'spi-def';
- export const CHALLENGES_CHART = 'challenges-plot';
- export const RANKING_CHART = 'spi-ranking';
- export const MERGED_PROTECTION = MERGED_WDPA_VECTOR_TILE_LAYER;
- export const COUNTRY_PRIORITY = COUNTRY_PRIORITY_LAYER;
- export {
-   ALL_TAXA_PRIORITY,
-   MERGED_LAND_HUMAN_PRESSURES,
+export const SPECIES_PROTECTION_INDEX = 'spi-def';
+export const CHALLENGES_CHART = 'challenges-plot';
+export const RANKING_CHART = 'spi-ranking';
+export const MERGED_PROTECTION = MERGED_WDPA_VECTOR_TILE_LAYER;
+export const COUNTRY_PRIORITY = COUNTRY_PRIORITY_LAYER;
+
+export {
+  ALL_TAXA_PRIORITY,
+  MERGED_LAND_HUMAN_PRESSURES,
+  HALF_EARTH_FUTURE_TILE_LAYER,
  } from 'constants/layers-slugs';
 
 export default {
@@ -220,5 +223,9 @@ export default {
   [MARINE_AND_LAND_HUMAN_PRESSURES]: {
     slug: MARINE_AND_LAND_HUMAN_PRESSURES,
     title: 'Marine and land human pressures'
+  },
+  [HALF_EARTH_FUTURE_TILE_LAYER]: {
+    slug: HALF_EARTH_FUTURE_TILE_LAYER,
+    title: 'Places for Half-Earth future'
   }
 };

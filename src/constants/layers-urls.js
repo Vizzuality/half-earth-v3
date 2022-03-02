@@ -15,7 +15,7 @@ import {
   COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   HALF_EARTH_FUTURE_FEATURE_LAYER,
-  HALF_EARTH_FUTURE_VECTOR_TILE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER,
   GRID_CELLS_PROTECTED_AREAS_PERCENTAGE,
   GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER,
   GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE,
@@ -137,7 +137,7 @@ export const LAYERS_URLS = {
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/VectorTileServer',
   [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/FeatureServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
-  [HALF_EARTH_FUTURE_VECTOR_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/21888759592f4272bfc641a23509ffc3/rest/services/top_places_precalculated/FeatureServer',
+  [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/21888759592f4272bfc641a23509ffc3/rest/services/top_places_precalculated/FeatureServer/0',
   [HALF_EARTH_FUTURE_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_20places/FeatureServer/0',
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',

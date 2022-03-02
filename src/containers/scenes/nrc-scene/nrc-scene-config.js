@@ -8,6 +8,7 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 
 import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js'
@@ -22,6 +23,7 @@ export default {
     { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
     { title: COUNTRY_PRIORITY_LAYER, opacity: DEFAULT_OPACITY },
     { title: PROTECTED_AREAS_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY },
+    { title: HALF_EARTH_FUTURE_TILE_LAYER, opacity: DEFAULT_OPACITY },
     { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY }
   ],
   zoom: 3.8,

@@ -7,14 +7,15 @@ import * as urlActions from 'actions/url-actions';
 
 import metadataConfig, {
   MERGED_PROTECTION,
-  COUNTRY_PRIORITY
+  COUNTRY_PRIORITY,
+  HALF_EARTH_FUTURE_TILE_LAYER
 } from 'constants/metadata';
 import metadataService from 'services/metadata-service';
 
 const LocalPriorityCardContainer = props => {
-
   const [priorityMetadata, setPriorityMetadata] = useState(null);
   const [protectionMetadata, setProtectionsMetadata] = useState(null);
+  const [futurePlacesMetadata, setFuturePlacesMetadata] = useState(null);
 
   const handleLayerToggle = (option) => {
     const { changeGlobe, activeLayers } = props;
@@ -35,10 +36,18 @@ const LocalPriorityCardContainer = props => {
     })
   }, []);
 
+  useEffect(() => {
+    const md = metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER]
+    metadataService.getMetadata(md.slug).then(data => {
+      setFuturePlacesMetadata(data);
+    })
+  }, []);
+
   return (
   <Component
     priorityMetadata={priorityMetadata}
     protectionMetadata={protectionMetadata}
+    futurePlacesMetadata={futurePlacesMetadata}
     handleLayerToggle={handleLayerToggle}
     {...props}
   />
