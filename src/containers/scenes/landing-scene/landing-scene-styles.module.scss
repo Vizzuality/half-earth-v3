@@ -1,0 +1,14 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+
+.sidebarContainer {
+  @extend %verticalScrollbar;
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  height: calc(100vh - #{$nav-bar-height});
+  width: calc(#{$sidebar-width} + 30px);
+  top: $nav-bar-height;
+  left: $site-gutter;
+  padding-bottom: $site-gutter;
+}
