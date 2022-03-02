@@ -2,7 +2,7 @@
 import React from 'react';
 import loadable from '@loadable/component';
 
-import LandingScene from 'scenes/data-scene';
+import LandingScene from 'scenes/landing-scene';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
 
