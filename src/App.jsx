@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import 'he-components/dist/main.css';
 // Dynamic imports
+const Landing = loadable(() => import('pages/landing'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
 const NationalReportCard = loadable(() => import('pages/nrc'));
@@ -18,6 +19,8 @@ const AppLayout = (props) => {
   const { route } = props;
   const { page } = route;
   switch (page) {
+    case 'data-globe':
+      return <DataGlobe />;
     case 'featured-globe':
       return <FeaturedGlobe />;
     case 'nrc':
@@ -27,7 +30,7 @@ const AppLayout = (props) => {
     case 'aoi':
       return <AreaOfInterest />;
     default:
-      return <DataGlobe />;
+      return <Landing />;
   }
 };
 
