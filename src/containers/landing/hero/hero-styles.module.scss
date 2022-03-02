@@ -1,0 +1,29 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  width: 100vw;
+
+  .subtitle {
+    @extend %title;
+    color: $robins-egg-blue;
+  }
+
+  .title {
+    @extend %display1;
+    color: $white;
+    font-weight: 200;
+    margin-bottom: 0;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .ctoText {
+    @extend %title;
+    color: $white;
+    margin-top: 61px;
+  }
+}
+   
+
