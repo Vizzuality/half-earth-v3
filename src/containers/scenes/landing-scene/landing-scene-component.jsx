@@ -6,6 +6,7 @@ import Scene from 'components/scene';
 import MenuFooter from 'components/mobile-only/menu-footer';
 
 import MenuSettings from 'components/mobile-only/menu-settings';
+
 import Hero from 'containers/landing/hero';
 
 // Constants

@@ -22,7 +22,13 @@
   .ctoText {
     @extend %title;
     color: $white;
-    margin-top: 61px;
+    margin: 61px 0 40px 0;
+  }
+
+  .audioCards {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 32px;
   }
 }
    
