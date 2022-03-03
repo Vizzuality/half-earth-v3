@@ -7,7 +7,7 @@ const rewireReactHotLoader = require('react-app-rewire-hot-loader')
 module.exports = function override(config, env) {
   config.resolve = {
     extensions: ['.js', '.jsx', '.scss'],
-    plugins: [ new DirectoryNamedWebpackPlugin() ],
+    plugins: [new DirectoryNamedWebpackPlugin()],
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       containers: path.resolve(__dirname, 'src/containers'),
@@ -30,6 +30,7 @@ module.exports = function override(config, env) {
       sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
       hooks: path.resolve(__dirname, 'src/hooks'),
       images: path.resolve(__dirname, 'src/assets/images'),
+      gifs: path.resolve(__dirname, 'src/assets/gifs'),
       'store-middleware': path.resolve(__dirname, 'src/store/store-middleware')
     }
   }

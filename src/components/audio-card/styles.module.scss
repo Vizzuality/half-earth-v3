@@ -8,20 +8,39 @@
   max-width: 383px;
   padding: 0;
 
+  :hover > & {
+    border: 2px solid $brand-color-main;
+  }
+
   .numberContainer {
     align-content: center;
+    border-right: 1px solid $elephant;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 138px;
-    padding: 0 40px;
-    border-right: 1px solid $elephant;
+    height: 138px;
+    width: 275px;
+
+    :hover > & {
+      border-right: 2px solid $brand-color-main;
+    }
 
     p {
       @extend %display1;
       color: $white;
       font-size: 32px;
+
+      :hover > & {
+        display: none;
+      }
+    }
+
+    .gif {
+      display: none;
       margin: 0;
+      object-fit: cover;
+      width: 115px;
+      height: 138px;
     }
   }
 
@@ -46,6 +65,8 @@
       margin: 0;
     }
   }
+}
 
- 
+.container:hover .gif {
+  display: block;
 }
