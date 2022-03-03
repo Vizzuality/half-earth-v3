@@ -34,13 +34,13 @@ export default {
       },
       alphaCompositingEnabled: false
     },
-    // viewingMode: 'global',
-    // constraints: {
-    //   altitude: {
-    //     max: 35512548,
-    //     min: 10000
-    //   }
-    // },
+    viewingMode: 'global',
+    constraints: {
+      altitude: {
+        max: 35512548,
+        min: 10000
+      }
+    },
     ui: {
       components: []
     },
