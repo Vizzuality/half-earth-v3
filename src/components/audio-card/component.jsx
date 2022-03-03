@@ -7,10 +7,11 @@ import { ReactComponent as VolumeControl } from 'icons/volume-control.svg';
 
 const Component = ({
   className,
-  title,
-  number,
-  gif,
   description,
+  duration,
+  gif,
+  number,
+  title,
   handleClick,
 }) => (
   <button
@@ -28,7 +29,7 @@ const Component = ({
     </div>
 
     <div className={styles.volumeContainer}>
-      <p>4-7 min</p>
+      <p>{duration}min</p>
       <VolumeControl className={styles.volumeIcon} />
     </div>
 
