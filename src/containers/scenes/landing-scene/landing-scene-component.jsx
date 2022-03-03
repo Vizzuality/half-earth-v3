@@ -28,7 +28,7 @@ const LandingSceneComponent = ({
   console.log({ sceneSettings })
 
   const updatedSceneSettings = useMemo(
-    () => ({ ...sceneSettings, ...({ padding: { left: isMobile ? 0 : 300, top: 1200 } }) }),
+    () => ({ ...sceneSettings, ...({ padding: { left: isMobile ? 0 : 0, top: 1200 } }) }),
     [isMobile]
   );
 

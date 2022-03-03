@@ -4,7 +4,7 @@ import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
-import dataSceneConfig from 'scenes/data-scene/data-scene-config';
+import dataSceneConfig from 'scenes/landing-scene/landing-scene-config';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
