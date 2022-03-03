@@ -8,6 +8,7 @@
   outline: 1px solid $elephant;
   padding: 0;
   position: relative;
+  transition: 0.4s;
 
   .numberContainer {
     align-content: center;
@@ -26,14 +27,11 @@
 
     .gif {
       display: none;
-      margin: 0;
-      object-fit: cover;
-      width: 112px;
-      height: 138px;
     }
   }
 
   .content {
+    border-left: 1px solid transparent;
     color: $white;
     display: flex;
     flex-direction: column;
@@ -78,22 +76,27 @@
 }
 
 .container:hover {
-  outline: 2px solid $brand-color-main;
+  box-shadow: 0 0 0 2px $brand-color-main;
+  outline: none;
 
   .gif {
     display: block;
+    height: 139px;
+    margin: 0;
+    object-fit: cover;
+    width: 110px;
   }
 
   .number {
     display: none;
   }
 
-  .numberContainer  {
-    border-right: 2px solid $brand-color-main;
+  .content {
+    border-left: none;
   }
 
-  .content {
-    padding: 0 21px;
+  .numberContainer  {
+    border-right: 2px solid $brand-color-main;
   }
 
   .volumeContainer {
