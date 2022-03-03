@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Components
 import Scene from 'components/scene';
@@ -25,21 +25,13 @@ const LandingSceneComponent = ({
 }) => {
   const isMobile = useMobile();
 
-  const updatedSceneSettings = {
-    "center": [16.9515536, 0.116959],
-    "environment": {
-      "alphaCompositingEnabled": false,
-      "atmosphereEnabled": false,
-      "background": {
-        "color": [0, 10, 16],
-      },
-      "type": "color",
-    },
-    "isGlobeUpdating": false,
-    "padding": { top: 1250, left: isMobile ? 0 : 250 },
-    "ui": { components: Array(0) },
+  console.log({ sceneSettings })
 
-  }
+  const updatedSceneSettings = useMemo(
+    () => ({ ...sceneSettings, ...({ padding: { left: isMobile ? 0 : 300, top: 1200 } }) }),
+    [isMobile]
+  );
+
   return (
     <Scene
       sceneName={'landing-scene'}
