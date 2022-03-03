@@ -6,6 +6,8 @@ import styles from './styles.module.scss';
 const Component = ({
   className,
   title,
+  number,
+  gif,
   description,
   handleClick,
 }) => (
@@ -14,7 +16,8 @@ const Component = ({
     className={cx(className, styles.container)}
   >
     <div className={styles.numberContainer}>
-      <p>01.</p>
+      <p>{number}.</p>
+      <img className={styles.gif} src={gif} alt={title} />
     </div>
     <div className={styles.content}>
       <p className={styles.title}>{title}</p>
