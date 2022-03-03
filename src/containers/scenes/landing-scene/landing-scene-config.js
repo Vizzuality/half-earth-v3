@@ -22,24 +22,25 @@ export default {
     zoom: 3.8,
     center: [16.9515536, 0.116959],
     padding: {
-      left: 300
+      left: 250,
+      top: 1250,
     },
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,
       background: {
         type: "color",
-        color: [0,10,16]
+        color: [0, 10, 16]
       },
-      alphaCompositingEnabled: true
+      alphaCompositingEnabled: false
     },
-    viewingMode: 'global',
-    constraints: {
-      altitude: {
-        max: 35512548,
-        min: 10000
-      }
-    },
+    // viewingMode: 'global',
+    // constraints: {
+    //   altitude: {
+    //     max: 35512548,
+    //     min: 10000
+    //   }
+    // },
     ui: {
       components: []
     },
