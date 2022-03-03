@@ -2,15 +2,12 @@
 @import 'styles/typography-extends';
 
 .container {
-  border: 1px solid $elephant;
   display: flex;
   min-height: 138px;
   max-width: 383px;
+  outline: 1px solid $elephant;
   padding: 0;
-
-  :hover > & {
-    border: 2px solid $brand-color-main;
-  }
+  position: relative;
 
   .numberContainer {
     align-content: center;
@@ -19,27 +16,19 @@
     flex-direction: column;
     justify-content: center;
     height: 138px;
-    width: 275px;
-
-    :hover > & {
-      border-right: 2px solid $brand-color-main;
-    }
+    width: 262px;
 
     p {
       @extend %display1;
       color: $white;
       font-size: 32px;
-
-      :hover > & {
-        display: none;
-      }
     }
 
     .gif {
       display: none;
       margin: 0;
       object-fit: cover;
-      width: 115px;
+      width: 112px;
       height: 138px;
     }
   }
@@ -50,8 +39,9 @@
     flex-direction: column;
     height: 100%;
     justify-content: center;
-    padding: 0 24px;
+    padding: 0 25px;
     text-align: left;
+
 
     .title {
       @extend %headline;
@@ -65,8 +55,49 @@
       margin: 0;
     }
   }
+
+  .volumeContainer {
+    align-items: center;
+    display: none;
+    flex-direction: row;
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    
+    .volumeIcon {
+      height: 16px;
+      width: 16px;
+    }
+
+    p {
+      @extend %annotation;
+      color: $white;
+      margin: 0 8px 0 0;
+    }
+  }
 }
 
-.container:hover .gif {
-  display: block;
+.container:hover {
+  outline: 2px solid $brand-color-main;
+
+  .gif {
+    display: block;
+  }
+
+  .number {
+    display: none;
+  }
+
+  .numberContainer  {
+    border-right: 2px solid $brand-color-main;
+  }
+
+  .content {
+    padding: 0 21px;
+  }
+
+  .volumeContainer {
+    display: flex;
+  }
 }
+
