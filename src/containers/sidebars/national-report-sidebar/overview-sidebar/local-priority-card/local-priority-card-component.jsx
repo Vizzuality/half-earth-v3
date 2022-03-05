@@ -8,7 +8,7 @@ import styles from './local-priority-card-styles.module.scss';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COUNTRY_PRIORITY_LAYER,
-  HALF_EARTH_FUTURE_FEATURE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 import {
   PROTECTION_SLUG,
@@ -47,12 +47,12 @@ const LocalPriorityCardComponent = (props) => {
       title: COUNTRY_PRIORITY_LAYER,
       slug: COUNTRY_PRIORITY_LAYER,
     },
-    [HALF_EARTH_FUTURE_FEATURE_LAYER]: {
+    [HALF_EARTH_FUTURE_TILE_LAYER]: {
       name: `Places of Half-Earth future`,
-      value: HALF_EARTH_FUTURE_FEATURE_LAYER,
-      id: HALF_EARTH_FUTURE_FEATURE_LAYER,
-      title: HALF_EARTH_FUTURE_FEATURE_LAYER,
-      slug: HALF_EARTH_FUTURE_FEATURE_LAYER,
+      value: HALF_EARTH_FUTURE_TILE_LAYER,
+      id: HALF_EARTH_FUTURE_TILE_LAYER,
+      title: HALF_EARTH_FUTURE_TILE_LAYER,
+      slug: HALF_EARTH_FUTURE_TILE_LAYER,
     },
   };
 
@@ -110,9 +110,9 @@ const LocalPriorityCardComponent = (props) => {
         <LayerToggle
           map={map}
           type="checkbox"
-          option={NRC_TOGGLES[HALF_EARTH_FUTURE_FEATURE_LAYER]}
+          option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
           variant="dark"
-          key={HALF_EARTH_FUTURE_FEATURE_LAYER}
+          key={HALF_EARTH_FUTURE_TILE_LAYER}
           activeLayers={activeLayers}
           onChange={handleLayerToggle}
           themeCategorySlug={FUTURE_PLACES_SLUG}

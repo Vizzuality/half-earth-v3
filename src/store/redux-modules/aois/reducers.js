@@ -1,7 +1,7 @@
-import { NATIONAL_BOUNDARIES_TYPE } from 'constants/aois';
+import { AREA_TYPES } from 'constants/aois';
 import * as actions from './actions';
 
-export const initialState = { areaTypeSelected: NATIONAL_BOUNDARIES_TYPE };
+export const initialState = { areaTypeSelected: AREA_TYPES.national };
 
 const setAreaTypeSelected = (state, { payload }) => ({
   ...state,

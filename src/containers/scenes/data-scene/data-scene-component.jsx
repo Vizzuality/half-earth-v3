@@ -95,7 +95,7 @@ const CountrySceneComponent = ({
         />
         {selectedAnalysisLayer && (
           <FeatureHighlightLayer
-            featureLayerSlug={selectedAnalysisLayer.slug}
+            featureLayerSlugs={selectedAnalysisLayer.slug}
             onFeatureClick={handleHighlightLayerFeatureClick}
           />
         )}

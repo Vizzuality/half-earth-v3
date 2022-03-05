@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Component from './nrc-scene-component';
 // Services
@@ -21,6 +21,8 @@ const NrcSceneContainer = (props) => {
     setCountryBorderReady,
     visitCountryReportCardAnalyticsEvent
   } = props;
+
+  const [tooltipInfo, setTooltipInfo] = useState(null);
 
   // Get country borders
   useEffect(() => {
@@ -45,18 +47,25 @@ const NrcSceneContainer = (props) => {
   const handleCountryClick = (results) => {
     const { graphic } = results[0] || {};
     if (!graphic) return;
-
-    // TODO: Dont reload again if its the same country. Now the countryISO is not changing
-    // const { attributes: { GID_0 } } = graphic;
-    // if (GID_0 === countryISO) return;
-
-    const { browsePage } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view:  LOCAL_SCENE_TABS_SLUGS.OVERVIEW }});
+    // TODO: Find a better way to discern the AOIs
+    const isAOI = graphic.attributes.AREA_KM2;
+    if (isAOI) {
+      const { attributes, geometry } = graphic;
+      setTooltipInfo({ attributes, geometry });
+    } else {
+      // TODO: Dont reload again if its the same country. Now the countryISO is not changing
+      // const { attributes: { GID_0 } } = graphic;
+      // if (GID_0 === countryISO) return;
+      const { browsePage } = props;
+      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW }});
+    }
   };
 
   return (
     <Component
       handleCountryClick={handleCountryClick}
+      aoiTooltipInfo={tooltipInfo}
+      setTooltipInfo={setTooltipInfo}
       {...props}
     />
   )

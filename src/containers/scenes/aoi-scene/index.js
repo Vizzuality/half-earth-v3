@@ -22,8 +22,8 @@ import {
   getSpeciesData,
   getContextData,
   getAoiFromDataBase,
-  getPrecalculatedSpeciesData,
   getPrecalculatedContextualData,
+  setPrecalculatedSpeciesData,
 } from 'utils/geo-processing-services';
 
 // constants
@@ -36,8 +36,8 @@ import {
 import { layersConfig } from 'constants/mol-layers-configs';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { NATIONAL_BOUNDARIES_TYPE, SUBNATIONAL_BOUNDARIES_TYPE, PROTECTED_AREAS_TYPE, CUSTOM_AOI_TYPE } from 'constants/aois';
-import { WDPA_OECM_FEATURE_DATA_LAYER } from 'constants/layers-slugs.js';
+import { AREA_TYPES } from 'constants/aois';
+import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs.js';
 
 // local
 import Component from './component.jsx';
@@ -45,8 +45,9 @@ import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 
-const Container = props => {
-  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected } = props;
+// Protected areas are fetched on protected areas modal except for PA type AOIs
+const AOIScene = props => {
+  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected, areaTypeSelected, objectId } = props;
 
   const [taxaData, setTaxaData] = useState([])
   const [geometry, setGeometry] = useState(null);
@@ -58,11 +59,11 @@ const Container = props => {
   const [loaded, setLoaded] = useState(false);
 
   const setAreaType = (attributes) => {
-    let areaType = PROTECTED_AREAS_TYPE;
+    let areaType = AREA_TYPES.protected;
     if (attributes.GID_1) {
-      areaType = SUBNATIONAL_BOUNDARIES_TYPE;
+      areaType = AREA_TYPES.subnational;
     } else if (attributes.GID_0) {
-      areaType = NATIONAL_BOUNDARIES_TYPE;
+      areaType = AREA_TYPES.national;
     }
     setAreaTypeSelected(areaType);
     return areaType;
@@ -103,25 +104,15 @@ const Container = props => {
           setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
         }
 
-        const setPrecalculatedSpeciesData = () => {
-          getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
-          getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
-            // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-            setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
-          });
-          getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
-          getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
-        };
-
         const areaType = setAreaType(attributes);
-        if (areaType === PROTECTED_AREAS_TYPE) {
+        if (areaType === AREA_TYPES.protected) {
           setProtectedAreasType();
         } else {
           setNationalOrSubnationalType();
         }
 
         // Common to all area types
-        setPrecalculatedSpeciesData();
+        setPrecalculatedSpeciesData(attributes, setTaxaData);
       })
     }
 
@@ -189,13 +180,28 @@ const Container = props => {
         setContextualData(contextualData);
       }
 
-      setAreaTypeSelected(CUSTOM_AOI_TYPE);
+      const setFuturePlace = () => {
+        EsriFeatureService.getFeatures({
+          url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
+          whereClause: `OBJECTID = '${objectId}'`,
+          returnGeometry: true
+        }).then((results) => {
+          const { attributes, geometry } = results[0];
+          setPrecalculatedSpeciesData(attributes, setTaxaData);
+          setGeometry(geometry);
+          const areaName = `Priority place ${attributes.cluster}`;
+          setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId }, null, true, true, areaName))
+        });
+      }
 
       localforage.getItem(aoiId).then((localStoredAoi) => {
-        if (localStoredAoi && localStoredAoi.jsonGeometry) {
+        if (areaTypeSelected === AREA_TYPES.futurePlaces) {
+          setFuturePlace()
+          // TODO: store future place on local and retrieve it
+        }  else if (localStoredAoi && localStoredAoi.jsonGeometry) {
+          setAreaTypeSelected(AREA_TYPES.custom);
           recoverAOIfromLocal(localStoredAoi)
         } else {
-
           getAoiFromDataBase(aoiId).then((aoiData) => {
             if (aoiData && aoiData[0]) {
               recoverAOIFromDB(aoiData[0])
@@ -260,4 +266,4 @@ const Container = props => {
 }
 
 
-export default connect(mapStateToProps, actions)(Container);
+export default connect(mapStateToProps, actions)(AOIScene);
