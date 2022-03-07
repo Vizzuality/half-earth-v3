@@ -22,7 +22,7 @@ const AoiEntryTooltipContainer = props => {
   }
 
   const handleExploreAOIClick = () => {
-    const { browsePage } = props;
+    const { browsePage, changeGlobe } = props;
     const { attributes, geometry } = tooltipInfo;
     const { AREA_KM2, MOL_ID } = attributes;
     setTooltipInfo(null);
@@ -43,12 +43,8 @@ const AoiEntryTooltipContainer = props => {
     setAoiGeometry({ aoiId, geometry });
     writeToForageItem(aoiId, contextualData);
 
-    browsePage(
-      { type: AREA_OF_INTEREST,
-        payload: { id: aoiId },
-        query: { areaType: AREA_TYPES.futurePlaces, OBJECTID: attributes.OBJECTID }
-      }
-    );
+    browsePage({ type: AREA_OF_INTEREST, payload: { id: aoiId }});
+    changeGlobe({ areaType: AREA_TYPES.futurePlaces, OBJECTID: attributes.OBJECTID })
   };
 
   return (

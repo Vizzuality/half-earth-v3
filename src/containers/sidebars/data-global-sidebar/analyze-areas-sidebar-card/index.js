@@ -23,11 +23,12 @@ import aoisActions from 'redux_modules/aois';
 import { loadModules } from 'esri-loader';
 
 import Component from './component.jsx';
+import mapStateToProps from './analyze-areas-sidebar-card-selectors.js';
 
 const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions };
 
 const AnalyzeAreasContainer = (props) => {
-  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected } = props;
+  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected, areaTypeSelected } = props;
   const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
@@ -59,6 +60,7 @@ const AnalyzeAreasContainer = (props) => {
       setAoiGeometry({ hash, geometry });
       props.shapeDrawSuccessfulAnalytics();
       browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
+      changeGlobe({ areaTypeSelected })
     }
   }
 
@@ -80,6 +82,7 @@ const AnalyzeAreasContainer = (props) => {
           setAoiGeometry({ hash, geometry: geometryInstance });
           props.shapeUploadSuccessfulAnalytics();
           browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
+          changeGlobe({ areaTypeSelected })
         }
       })
   }
@@ -171,4 +174,4 @@ const AnalyzeAreasContainer = (props) => {
   );
 }
 
-export default connect(null, actions)(AnalyzeAreasContainer);
+export default connect(mapStateToProps, actions)(AnalyzeAreasContainer);

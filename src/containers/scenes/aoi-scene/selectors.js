@@ -6,7 +6,6 @@ import aoiSceneConfig from './config';
 
 const selectUserConfig = ({ userConfig }) => userConfig || null;
 const selectPrecalculatedLayerSlug = ({location}) => location.query && location.query.precalculatedLayer;
-const selectLocationObjectId = ({ location }) => location.query && location.query.OBJECTID;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
@@ -15,6 +14,8 @@ const getGlobeSettings = createSelector([selectGlobeUrlState],
     ...globeUrlState
   }
 })
+
+const selectLocationObjectId = createSelector(getGlobeSettings, globeSettings => console.log('ss', globeSettings) || globeSettings.OBJECTID);
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating);
