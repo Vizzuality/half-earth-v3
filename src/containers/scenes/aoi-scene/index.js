@@ -92,18 +92,22 @@ const AOIScene = props => {
         const setProtectedAreasType = () => {
           // Special case for WDPA areas
           // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
+
+          // TODO: Can we get also the geometry from the WDPA_OECM_FEATURE_DATA_LAYER layer?
           EsriFeatureService.getFeatures({
             url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
-            whereClause: `MOL_ID = '${attributes.MOL_ID}'`,
+            whereClause: `MOL_ID = '${aoiId}'`,
             returnGeometry: false
           }).then((results) => {
             const { attributes: protectedAreaAttributes } = results[0];
             setContextualData(getPrecalculatedContextualData(protectedAreaAttributes, precalculatedLayerSlug, true, true))
+            setPrecalculatedSpeciesData(protectedAreaAttributes, setTaxaData);
           });
         }
 
         const setNationalOrSubnationalType = () => {
           setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
+          setPrecalculatedSpeciesData(attributes, setTaxaData);
         }
 
         const areaType = setAreaType(attributes);
@@ -112,9 +116,6 @@ const AOIScene = props => {
         } else {
           setNationalOrSubnationalType();
         }
-
-        // Common to all area types
-        setPrecalculatedSpeciesData(attributes, setTaxaData);
       })
     }
 
