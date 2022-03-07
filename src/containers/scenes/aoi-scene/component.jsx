@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 // Components
 import Scene from 'components/scene';
 import Widgets from 'containers/widgets';
@@ -11,6 +11,7 @@ import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-lay
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+import { AREA_TYPES } from 'constants/aois';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -26,7 +27,15 @@ const AoiSceneComponent = ({
   handleFuturePlaceClick,
   tooltipInfo,
   setTooltipInfo,
+  areaTypeSelected,
 }) => {
+  const updatedActiveLayers = useMemo(
+    () =>
+      areaTypeSelected === AREA_TYPES.futurePlaces
+        ? activeLayers
+        : activeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER),
+    [activeLayers, areaTypeSelected]
+  );
   return (
     <Scene
       sceneName={'aoi-scene'}
@@ -34,19 +43,22 @@ const AoiSceneComponent = ({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
-      <ArcgisLayerManager userConfig={userConfig} activeLayers={activeLayers} />
+      <ArcgisLayerManager
+        userConfig={userConfig}
+        activeLayers={updatedActiveLayers}
+      />
       <MaskAndOutlineGraphicLayer geometry={geometry} />
       <FeatureHighlightLayer
         featureLayerSlugs={[HALF_EARTH_FUTURE_TILE_LAYER]}
         onFeatureClick={handleFuturePlaceClick}
       />
       <LocalSceneViewManager localGeometry={geometry} />
-      <Widgets activeLayers={activeLayers} />
+      <Widgets activeLayers={updatedActiveLayers} />
       <TerrainExaggerationLayer />
-      <LabelsLayer activeLayers={activeLayers} />
+      <LabelsLayer activeLayers={updatedActiveLayers} />
       <AoiSidebar
         speciesData={speciesData}
-        activeLayers={activeLayers}
+        activeLayers={updatedActiveLayers}
         contextualData={contextualData}
         geometry={geometry}
         dataLoaded={dataLoaded}
