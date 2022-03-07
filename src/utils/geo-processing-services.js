@@ -156,7 +156,6 @@ export function getSpeciesData(crfName, geometry) {
 
 const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   const data = JSON.parse(jsonSlices);
-  if (!data) return;
   return new Promise((resolve, reject) => {
     const crfSlices = data.reduce((acc, f) => ({
       ...acc,
