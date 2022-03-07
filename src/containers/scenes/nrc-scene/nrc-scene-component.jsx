@@ -32,7 +32,7 @@ const CountrySceneComponent = ({
   countryBorder,
   sceneSettings,
   isFullscreenActive,
-  handleCountryClick,
+  handleAreaClick,
   countryTooltipDisplayFor,
   aoiTooltipInfo,
   setTooltipInfo,
@@ -51,7 +51,7 @@ const CountrySceneComponent = ({
     />
     <FeatureHighlightLayer
       featureLayerSlugs={[bordersLayerTitle, HALF_EARTH_FUTURE_TILE_LAYER]}
-      onFeatureClick={handleCountryClick}
+      onFeatureClick={handleAreaClick}
     />
     <CountryEntryTooltip
       countryTooltipDisplayFor={countryTooltipDisplayFor}

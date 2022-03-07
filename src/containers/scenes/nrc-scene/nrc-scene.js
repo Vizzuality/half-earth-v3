@@ -44,7 +44,7 @@ const NrcSceneContainer = (props) => {
     visitCountryReportCardAnalyticsEvent(countryISO);
   }, [countryISO])
 
-  const handleCountryClick = (results) => {
+  const handleAreaClick = (results) => {
     const { graphic } = results[0] || {};
     if (!graphic) return;
     // TODO: Find a better way to discern the AOIs
@@ -63,7 +63,7 @@ const NrcSceneContainer = (props) => {
 
   return (
     <Component
-      handleCountryClick={handleCountryClick}
+      handleAreaClick={handleAreaClick}
       aoiTooltipInfo={tooltipInfo}
       setTooltipInfo={setTooltipInfo}
       {...props}

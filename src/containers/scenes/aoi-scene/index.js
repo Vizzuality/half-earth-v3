@@ -58,6 +58,8 @@ const AOIScene = props => {
   const [storedArea, setStoredArea] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
+  const [tooltipInfo, setTooltipInfo] = useState(null);
+
   const setAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
     if (attributes.GID_1) {
@@ -252,14 +254,24 @@ const AOIScene = props => {
     activateLayersOnLoad(map, activeLayers, layersConfig);
   }
 
+  const handleFuturePlaceClick = (results) => {
+    const { graphic } = results[0] || {};
+    if (!graphic) return;
+    const { attributes, geometry } = graphic;
+    setTooltipInfo({ attributes, geometry });
+  };
+
   return (
     <Component
       geometry={geometry}
       speciesData={speciesData}
       contextualData={contextualData}
       handleGlobeUpdating={handleGlobeUpdating}
+      handleFuturePlaceClick={handleFuturePlaceClick}
       onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       dataLoaded={loaded}
+      tooltipInfo={tooltipInfo}
+      setTooltipInfo={setTooltipInfo}
       {...props}
     />
   )

@@ -8,6 +8,9 @@ import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graph
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
+import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import AOIEntryTooltip from 'components/aoi-entry-tooltip';
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -20,6 +23,9 @@ const AoiSceneComponent = ({
   sceneSettings,
   contextualData,
   dataLoaded,
+  handleFuturePlaceClick,
+  tooltipInfo,
+  setTooltipInfo,
 }) => {
   return (
     <Scene
@@ -30,6 +36,10 @@ const AoiSceneComponent = ({
     >
       <ArcgisLayerManager userConfig={userConfig} activeLayers={activeLayers} />
       <MaskAndOutlineGraphicLayer geometry={geometry} />
+      <FeatureHighlightLayer
+        featureLayerSlugs={[HALF_EARTH_FUTURE_TILE_LAYER]}
+        onFeatureClick={handleFuturePlaceClick}
+      />
       <LocalSceneViewManager localGeometry={geometry} />
       <Widgets activeLayers={activeLayers} />
       <TerrainExaggerationLayer />
@@ -40,6 +50,10 @@ const AoiSceneComponent = ({
         contextualData={contextualData}
         geometry={geometry}
         dataLoaded={dataLoaded}
+      />
+      <AOIEntryTooltip
+        tooltipInfo={tooltipInfo}
+        setTooltipInfo={setTooltipInfo}
       />
     </Scene>
   );
