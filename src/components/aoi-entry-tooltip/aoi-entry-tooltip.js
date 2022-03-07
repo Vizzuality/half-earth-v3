@@ -4,47 +4,31 @@ import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import Component from './aoi-entry-tooltip-component';
 import { AREA_OF_INTEREST } from 'router';
-import { writeToForageItem } from 'utils/local-forage-utils';
 import { AREA_TYPES } from 'constants/aois';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 import aoisActions from 'redux_modules/aois';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
-
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions, ...mapTooltipActions}
 
 const AoiEntryTooltipContainer = props => {
-  const { mapTooltipIsVisible, setTooltipInfo, tooltipInfo, setAreaTypeSelected, setAoiGeometry } = props;
+  const { mapTooltipIsVisible, setTooltipInfo, tooltipInfo, setAreaTypeSelected } = props;
 
   const handleTooltipClose = () => {
     setTooltipInfo(null);
   }
 
   const handleExploreAOIClick = () => {
-    const { browsePage, changeGlobe } = props;
+    const { browsePage } = props;
     const { attributes, geometry } = tooltipInfo;
-    const { AREA_KM2, MOL_ID } = attributes;
     setTooltipInfo(null);
-
     // TODO: Add analytics
-
-    const areaName = `Priority area ${MOL_ID}`;
     const aoiId = createHashFromGeometry(geometry);
-
-    const contextualData = {
-      areaName, aoiId, areaType: AREA_TYPES.futurePlaces, area: AREA_KM2, jsonGeometry: JSON.stringify(geometry), ...attributes, timestamp: Date.now(),
-      birds: JSON.stringify(attributes.birds),
-      mammals: JSON.stringify(attributes.mammals),
-      amphibians: JSON.stringify(attributes.amphibians),
-      reptiles: JSON.stringify(attributes.reptiles),
-    };
     setAreaTypeSelected(AREA_TYPES.futurePlaces)
-    setAoiGeometry({ aoiId, geometry });
-    writeToForageItem(aoiId, contextualData);
 
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: aoiId }});
-    changeGlobe({ areaType: AREA_TYPES.futurePlaces, OBJECTID: attributes.OBJECTID })
+    browsePage({ type: AREA_OF_INTEREST, payload: { id: aoiId }, query: { precalculatedLayer: HALF_EARTH_FUTURE_TILE_LAYER, OBJECTID: attributes.OBJECTID }});
   };
 
   return (

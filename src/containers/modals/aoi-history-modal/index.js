@@ -25,7 +25,7 @@ const Container = (props) => {
   }, [isOpen])
 
   const handleAoiClick = (id) => {
-    browsePage({type: AREA_OF_INTEREST, payload: { id }});
+    browsePage({ type: AREA_OF_INTEREST, payload: { id }});
   }
 
   const handleAoiNameChange = (e) => {

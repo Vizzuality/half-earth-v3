@@ -119,10 +119,31 @@ const AOIScene = props => {
       })
     }
 
-    if (precalculatedLayerSlug && geometryEngine) {
-      setPrecalculatedAOIs();
+    // PRECALCULATED FUTURE PLACES
+    const setFuturePlace = () => {
+      changeGlobe({ areaType: AREA_TYPES.futurePlaces })
+
+      EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
+        whereClause: `OBJECTID = '${objectId}'`,
+        returnGeometry: true
+      }).then((results) => {
+        const { attributes, geometry } = results[0];
+        setPrecalculatedSpeciesData(attributes, setTaxaData);
+        setGeometry(geometry);
+        const areaName = `Priority place ${attributes.cluster}`;
+        setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId }, null, true, true, areaName))
+      });
     }
-  }, [precalculatedLayerSlug, geometryEngine])
+
+    if (precalculatedLayerSlug && geometryEngine) {
+      if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
+        setFuturePlace()
+      }  else {
+        setPrecalculatedAOIs();
+      }
+    }
+  }, [precalculatedLayerSlug, geometryEngine, objectId])
 
   // NOT PRECALCULATED AOIs
   useEffect(() => {
@@ -183,25 +204,8 @@ const AOIScene = props => {
         setContextualData(contextualData);
       }
 
-      const setFuturePlace = () => {
-        EsriFeatureService.getFeatures({
-          url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
-          whereClause: `OBJECTID = '${objectId}'`,
-          returnGeometry: true
-        }).then((results) => {
-          const { attributes, geometry } = results[0];
-          setPrecalculatedSpeciesData(attributes, setTaxaData);
-          setGeometry(geometry);
-          const areaName = `Priority place ${attributes.cluster}`;
-          setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId }, null, true, true, areaName))
-        });
-      }
-
       localforage.getItem(aoiId).then((localStoredAoi) => {
-        if (areaTypeSelected === AREA_TYPES.futurePlaces) {
-          setFuturePlace()
-          // TODO: store future place on local and retrieve it
-        }  else if (localStoredAoi && localStoredAoi.jsonGeometry) {
+        if (localStoredAoi && localStoredAoi.jsonGeometry) {
           setAreaTypeSelected(AREA_TYPES.custom);
           recoverAOIfromLocal(localStoredAoi)
         } else {
