@@ -5,7 +5,7 @@ import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 
 
-const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, isFullscreenActive, selectedTaxa }) => {
+const FeaturedMapLayer = ({ map, view, selectedFeaturedMap,  isLandscapeMode, isFullscreenActive, selectedTaxa }) => {
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
 
@@ -34,14 +34,13 @@ const FeaturedMapLayer = ({ map, view, selectedFeaturedMap, isFullscreenActive, 
         featuredPlacesLayerView.filter = filter;
       })
     }
-  }, [featuredPlacesLayerView, selectedFeaturedMap, selectedTaxa])
+  }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa])
 
-  // TOOO: Maybe remove
   useEffect(() => {
-    if (featuredPlacesLayerView) {
-      featuredPlacesLayerView.visible = true;
+    if(featuredPlacesLayerView) {
+      featuredPlacesLayerView.visible = !isLandscapeMode;
     }
-  }, [isFullscreenActive])
+  }, [isLandscapeMode, isFullscreenActive])
 
   return null;
 }

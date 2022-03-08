@@ -23,6 +23,7 @@ const getUiSettings = createSelector(selectUiUrlState, uiUrlState => {
 })
 
 // GLOBE
+const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView);
 const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
 
 // UI
@@ -35,7 +36,6 @@ const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettin
 const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
 const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
 const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
-// TODO: Should we remove this?
 const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
 
@@ -46,6 +46,7 @@ export default createStructuredSelector({
   sceneLayers: getFeaturedGlobeLayers,
   userConfig: selectUserConfig,
   activeLayers: getActiveLayers,
+  isLandscapeMode: getLandscapeMode,
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
   selectedFeaturedMap: getSelectedFeaturedMap,
