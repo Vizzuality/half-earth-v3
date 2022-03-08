@@ -2,7 +2,6 @@ import { loadModules } from 'esri-loader';
 import { useState, useEffect } from 'react';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
-import { flyToCentroid } from 'utils/globe-events-utils';
 
 // Load watchUtils module to follow esri map changes
 export const useWatchUtils = () => {
