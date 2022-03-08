@@ -36,6 +36,7 @@ const DataSceneComponent = ({
   sceneSettings,
   isSidebarOpen,
   activeCategory,
+  isLandscapeMode,
   isGlobeUpdating,
   isFullscreenActive,
   handleGlobeUpdating,
@@ -47,7 +48,7 @@ const DataSceneComponent = ({
   handleHighlightLayerFeatureClick,
 }) => {
   const isMobile = useMobile();
-  const sidebarHidden = isFullscreenActive || isMobile;
+  const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
     () => ({ ...sceneSettings, ...(isMobile && { padding: { left: 0 } }) }),
     [isMobile]
@@ -71,6 +72,7 @@ const DataSceneComponent = ({
           activeOption={activeOption}
           isSidebarOpen={isSidebarOpen}
           activeCategory={activeCategory}
+          isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
           countedActiveLayers={countedActiveLayers}
           handleGlobeUpdating={handleGlobeUpdating}
@@ -84,6 +86,7 @@ const DataSceneComponent = ({
           <MenuFooter
             activeOption={activeOption}
             isSidebarOpen={isSidebarOpen}
+            isLandscapeMode={isLandscapeMode}
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
         </MobileOnly>
@@ -92,6 +95,7 @@ const DataSceneComponent = ({
           countryISO={countryISO}
           countryName={countryName}
           activeLayers={activeLayers}
+          isLandscapeMode={isLandscapeMode}
         />
         {selectedAnalysisLayer && (
           <FeatureHighlightLayer

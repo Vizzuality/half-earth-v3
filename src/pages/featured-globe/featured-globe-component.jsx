@@ -33,6 +33,7 @@ const DataGlobeComponent = ({
   isFullscreenActive,
   selectedFeaturedMap,
   selectedSidebar,
+  isLandscapeMode,
   selectedFeaturedPlace,
   isGlobeUpdating,
   isMapsList,
@@ -50,7 +51,7 @@ const DataGlobeComponent = ({
   openedModal,
   userConfig,
 }) => {
-  const isFeaturedPlaceCard = selectedFeaturedPlace;
+  const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = useMobile();
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
@@ -76,6 +77,7 @@ const DataGlobeComponent = ({
             selectedSidebar={selectedSidebar}
             selectedFeaturedMap={selectedFeaturedMap}
             activeOption={activeOption}
+            isLandscapeMode={isLandscapeMode}
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
         </MobileOnly>
@@ -90,6 +92,7 @@ const DataGlobeComponent = ({
         />
         <FeaturedPlaceViewManager
           selectedFeaturedPlace={selectedFeaturedPlace}
+          isLandscapeMode={isLandscapeMode}
         />
         <Widgets
           activeLayers={activeLayers}
@@ -105,6 +108,7 @@ const DataGlobeComponent = ({
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
+            isLandscapeMode={isLandscapeMode}
             selectedFeaturedPlace={selectedFeaturedPlace}
             spinGlobe={spinGlobe}
             handle={spinGlobeHandle}
@@ -113,6 +117,7 @@ const DataGlobeComponent = ({
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
+          isLandscapeMode={isLandscapeMode}
           handleLayerToggle={handleLayerToggle}
         />
         <FeaturedTaxaSelector
@@ -120,11 +125,13 @@ const DataGlobeComponent = ({
           isMapsList={isMapsList}
           selectedFeaturedMap={selectedFeaturedMap}
           isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
           activeOption={activeOption}
         />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
+          isLandscapeMode={isLandscapeMode}
           selectedFeaturedPlace={selectedFeaturedPlace}
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
@@ -137,6 +144,7 @@ const DataGlobeComponent = ({
         selectedFeaturedPlace={selectedFeaturedPlace}
         isFullscreenActive={isFullscreenActive}
         activeOption={activeOption}
+        isLandscapeMode={isLandscapeMode}
         handle={spinGlobeHandle}
       />
       {hasMetadata && <InfoModal />}

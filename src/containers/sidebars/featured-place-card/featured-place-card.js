@@ -8,7 +8,7 @@ import mapStateToProps from './featured-place-card-selectors';
 import * as actions from 'actions/url-actions';
 
 const FeaturedPlaceCardContainer = props => {
-  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, featuredMapPlaces } = props;
+  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode, featuredMapPlaces } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
@@ -36,7 +36,7 @@ const FeaturedPlaceCardContainer = props => {
 
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
-    if (featuredPlacesLayer) {
+    if (featuredPlacesLayer && !isLandscapeMode) {
       const queryParams = featuredPlacesLayer.createQuery();
       queryParams.where = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then(function(results){

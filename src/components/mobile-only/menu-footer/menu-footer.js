@@ -25,7 +25,7 @@ import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import Component from './menu-footer-component';
 
 const MenuFooterContainer = props => {
-  const { view, isSidebarOpen, activeOption,
+  const { view, isSidebarOpen, isLandscapeMode, activeOption,
     // selectedSidebar, selectedFeaturedMap, featured = false
   } = props;
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
@@ -112,6 +112,14 @@ const MenuFooterContainer = props => {
     handleSearchSuggestionClick(option)
     setIsSearchResultsVisible(false);
   }
+
+  useEffect(() => {
+    if (isLandscapeMode) {
+      resetActiveOption();
+      handleSidebarClose();
+      handleCloseSearch();
+    }
+  }, [isLandscapeMode])
 
   const handler = (option) => {
     if (activeOption === option) resetActiveOption();
