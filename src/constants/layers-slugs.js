@@ -7,8 +7,10 @@ export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_la
 export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
 export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species';
 export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human_pressures_percentage';
+
+// Future places layers
 export const HALF_EARTH_FUTURE_TILE_LAYER = 'WDPA_20_vector_tile_places';
-export const HALF_EARTH_FUTURE_FEATURE_LAYER = 'WDPA_20_feature_places';
+export const HALF_EARTH_FUTURE_WDPA_LAYER = 'WDPA_20_feature_places';
 
 // Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';

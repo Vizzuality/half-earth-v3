@@ -24,7 +24,7 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const CountrySceneComponent = ({
+const DataSceneComponent = ({
   sceneMode,
   onMapLoad,
   userConfig,
@@ -95,7 +95,7 @@ const CountrySceneComponent = ({
         />
         {selectedAnalysisLayer && (
           <FeatureHighlightLayer
-            featureLayerSlug={selectedAnalysisLayer.slug}
+            featureLayerSlugs={selectedAnalysisLayer.slug}
             onFeatureClick={handleHighlightLayerFeatureClick}
           />
         )}
@@ -111,4 +111,4 @@ const CountrySceneComponent = ({
   );
 };
 
-export default CountrySceneComponent;
+export default DataSceneComponent;

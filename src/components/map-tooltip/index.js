@@ -8,7 +8,7 @@ import mapStateToProps from 'selectors/map-tooltip-selectors';
 const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...mapTooltipActions}
 
 const MapTooltipContainer = props => {
-  const { mapTooltipGeometry, mapTooltipContent, mapTooltipIsVisible, setBatchTooltipData, handleExploreClick } = props;
+  const { mapTooltipGeometry, mapTooltipContent, mapTooltipIsVisible, setBatchTooltipData } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
 
   // Set country tooltip position
@@ -26,18 +26,12 @@ const MapTooltipContainer = props => {
     })
   }
 
-  const handleActionButtonClick = () => {
-    handleExploreClick(mapTooltipGeometry);
-    // does this always triggers a browse page action??
-  };
-
   return (
     <Component
       content={mapTooltipContent}
       isVisible={mapTooltipIsVisible}
       tooltipPosition={tooltipPosition}
       onCloseButtonClick={handleCloseButtonClick}
-      onActionButtonClick={handleActionButtonClick}
       {...props}
     />
   )
