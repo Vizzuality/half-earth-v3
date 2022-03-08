@@ -90,7 +90,7 @@ export const legendConfigs = {
 
 
 export const TEXTS = {
-  categoryTitle: 'Existing protection',
+  categoryTitle: 'Protection',
   layersTitle: 'Conservation areas',
   description: 'Global protections clasified according to their management objectives.'
 }

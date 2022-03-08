@@ -42,7 +42,7 @@ const AOISidebarComponent = ({
   climateRegime,
   contextualData,
   shareAoiAnalytics,
-  handleSceneModeChange,
+  handleClose,
   isShareModalOpen,
   setShareModalOpen,
   dataLoaded,
@@ -68,7 +68,7 @@ const AOISidebarComponent = ({
       <section className={styles.headerCard}>
         <Button
           type="rounded"
-          handleClick={handleSceneModeChange}
+          handleClick={handleClose}
           Icon={CloseIcon}
           className={styles.backButton}
           tooltipText="Go back to the globe"

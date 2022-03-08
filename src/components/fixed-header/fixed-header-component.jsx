@@ -10,9 +10,16 @@ import { useMobile } from 'constants/responsive';
 
 const BACK = 'BACK';
 
-const differentFixedHeaderHeights = ['Existing protection', 'Human pressures'];
+const differentFixedHeaderHeights = ['Protection', 'Human pressures'];
 
-const FixedHeader = ({ closeSidebar, title, autoHeight, toggleCollapsedLandscapeSidebar, isLandscapeSidebarCollapsed, noBackClick = false }) => {
+const FixedHeader = ({
+  closeSidebar,
+  title,
+  autoHeight,
+  toggleCollapsedLandscapeSidebar,
+  isLandscapeSidebarCollapsed,
+  noBackClick = false,
+}) => {
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
   const isOnMobile = useMobile();
@@ -55,7 +62,8 @@ const FixedHeader = ({ closeSidebar, title, autoHeight, toggleCollapsedLandscape
         {flipToggleSwitch && (
           <div
             className={cx(styles.flipToggleSwitchIcon, {
-              [styles.collapsedFlipToggleSwitchIcon]: isLandscapeSidebarCollapsed
+              [styles.collapsedFlipToggleSwitchIcon]:
+                isLandscapeSidebarCollapsed,
             })}
           />
         )}
@@ -65,17 +73,16 @@ const FixedHeader = ({ closeSidebar, title, autoHeight, toggleCollapsedLandscape
   );
 };
 
-
 FixedHeader.propTypes = {
   closeSidebar: PropTypes.func,
   title: PropTypes.string,
-  autoHeight: PropTypes.bool
+  autoHeight: PropTypes.bool,
 };
 
 FixedHeader.defaultProps = {
   closeSidebar: () => {},
   title: '',
-  autoHeight: false
+  autoHeight: false,
 };
 
 export default FixedHeader;

@@ -101,7 +101,7 @@ export const BASEMAP_OPACITY = 1;
 
 export const LAYERS_CATEGORIES = {
   BIODIVERSITY: 'Biodiversity',
-  PROTECTION: 'Existing protection',
+  PROTECTION: 'Protection',
   LAND_PRESSURES: 'Human pressures'
 }
 

@@ -32,7 +32,7 @@ const NationalReportSidebarComponent = ({
   handleTabSelection,
   isFullscreenActive,
   localSceneActiveTab,
-  handleSceneModeChange,
+  handleClose,
   map,
   activeLayers,
 }) => {
@@ -47,7 +47,7 @@ const NationalReportSidebarComponent = ({
     >
       <Button
         type="rounded"
-        handleClick={handleSceneModeChange}
+        handleClick={handleClose}
         Icon={CloseIcon}
         className={styles.backButton}
         tooltipText="Go back to the globe"

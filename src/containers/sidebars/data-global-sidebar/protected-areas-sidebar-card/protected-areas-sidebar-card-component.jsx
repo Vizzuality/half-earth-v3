@@ -11,7 +11,7 @@ import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-import ExistingProtectionThumbnail from 'images/existing-protection.png';
+import ProtectionThumbnail from 'images/existing-protection.png';
 import {
   PROTECTION_SLUG,
   FUTURE_PLACES_SLUG,
@@ -30,7 +30,7 @@ const ProtectedAreasSidebarCardComponent = ({
   return (
     <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
       <CategoryBox
-        image={ExistingProtectionThumbnail}
+        image={ProtectionThumbnail}
         title={TEXTS.categoryTitle}
         counter={countedActiveLayers[protectedAreas]}
         handleBoxClick={handleBoxClick}

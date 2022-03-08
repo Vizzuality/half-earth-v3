@@ -57,7 +57,7 @@ const getCountedActiveLayers = createSelector(
 
     return {
       'Biodiversity': biodiversityLayers,
-      'Existing protection': protectionLayers,
+      'Protection': protectionLayers,
       'Human pressures': landHumanPressureLayers
     };
   }
