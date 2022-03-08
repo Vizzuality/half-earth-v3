@@ -25,7 +25,8 @@ import {
 } from 'constants/geo-processing-services';
 
 // PRECALCULATED FUTURE PLACES
-const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe }) => {
+const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData }) => {
+  setSpeciesData({ species: [] }); // First reset species data
   changeGlobe({ areaType: AREA_TYPES.futurePlaces })
 
   EsriFeatureService.getFeatures({
@@ -42,9 +43,9 @@ const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTa
 }
 
 // PRECALCULATED AOIs
-export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setAreaType, changeGlobe }) => {
+export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe }) => {
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
-    return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe });
+    return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe });
   }
 
   EsriFeatureService.getFeatures({

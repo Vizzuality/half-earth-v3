@@ -60,7 +60,7 @@ const AOIScene = props => {
   // Get PRECALCULATED AOIs
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
-      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setAreaType, changeGlobe });
+      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe });
     }
   }, [precalculatedLayerSlug, geometryEngine, objectId])
 
