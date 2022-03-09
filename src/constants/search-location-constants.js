@@ -41,7 +41,7 @@ export const SEARCH_SOURCES_CONFIG = {
     url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
     title: HALF_EARTH_FUTURE_TILE_LAYER,
     outFields: ["*"],
-    searchFields: ["NAME_0"],
-    suggestionTemplate: '{NAME_0}'
+    searchFields: ["MOL_ID", "NAME_0"],
+    suggestionTemplate: 'Priority area {MOL_ID}, {NAME_0}'
   },
 }
