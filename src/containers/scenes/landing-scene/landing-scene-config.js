@@ -1,13 +1,9 @@
 import {
-  GRAPHIC_LAYER,
   ALL_TAXA_PRIORITY,
-  CITIES_LABELS_LAYER,
-  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
-  COUNTRIES_LABELS_FEATURE_LAYER,
-  LANDSCAPE_FEATURES_LABELS_LAYER,
+  CITIES_LABELS_LAYER, COUNTRIES_LABELS_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, GRAPHIC_LAYER, LANDSCAPE_FEATURES_LABELS_LAYER
 } from 'constants/layers-slugs';
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
 
 export default {
   globe: {
@@ -24,7 +20,9 @@ export default {
     padding: {
       left: 250,
       top: 1250,
+
     },
+
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,
