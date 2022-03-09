@@ -44,7 +44,7 @@ export const PRECALCULATED_AOI_OPTIONS = [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: 'National boundaries' },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: 'Subnational boundaries' },
   ...(REACT_APP_FEATURE_PA_AOI === 'true') ? [{ title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas' }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: 'Future places' }
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: 'Places for Half-Earth future' }
 ]
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;

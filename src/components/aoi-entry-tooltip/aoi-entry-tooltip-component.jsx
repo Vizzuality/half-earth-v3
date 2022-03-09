@@ -74,7 +74,9 @@ const AOIEntryTooltipComponent = ({
         <span className={styles.tooltipName}>Priority area {MOL_ID}</span>
       </section>
       <section className={styles.areaSection}>
-        <p className={styles.area}>{format(',.3f')(AREA_KM2)} km2</p>
+        <p className={styles.area}>
+          {format(',.3f')(AREA_KM2)} km<sup>2</sup>
+        </p>
       </section>
       <button
         className={styles.tooltipExplore}
