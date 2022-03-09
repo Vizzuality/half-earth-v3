@@ -2,12 +2,12 @@
 @import 'styles/typography-extends';
 
 .container {
-  height: 250px;
+  height: 200px;
   padding: 0;
   position: relative;
   width: 100%;
 
-  img {
+  .image {
     object-fit: contain;
     position: absolute;
     left: 0;
@@ -19,18 +19,26 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 55px;
+    padding: 0 40px 20px 40px;
     text-align: center;
 
     .title {
       @extend %display2;
       font-size: 24px;
+      margin: 0;
     }
 
     .description {
       @extend %bodyText;
- 
       margin: 0;
     }
   }
+}
+
+.imageCenter {
+  top: 85px;
+}
+
+.contentCenter {
+  margin-bottom: 200px;
 }
