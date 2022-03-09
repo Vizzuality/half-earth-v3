@@ -19,10 +19,8 @@ export default {
     center: [16.9515536, 0.116959],
     padding: {
       left: 250,
-      top: 1250,
-
+      top: 1650,
     },
-
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,
