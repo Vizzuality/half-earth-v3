@@ -11,7 +11,10 @@ import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 import React, { useMemo } from 'react';
+import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from "router";
 import styles from './landing-scene-styles.module.scss';
+
+
 
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
@@ -21,6 +24,7 @@ const LandingSceneComponent = ({
   activeOption,
   sceneSettings,
   isSidebarOpen,
+  browsePage,
 }) => {
   const isMobile = useMobile();
 
@@ -52,17 +56,20 @@ const LandingSceneComponent = ({
             title="Discover stories"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
             globeImage={globeDiscover}
+            handleClick={() => browsePage({ type: FEATURED })}
           />
           <Globe
             title="Explore Data"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
             globeImage={globeExplore}
             center
+            handleClick={() => browsePage({ type: DATA })}
           />
           <Globe
             title="National Report Cards"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
             globeImage={globeNRC}
+            handleClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}
           />
         </div>
       </div>
