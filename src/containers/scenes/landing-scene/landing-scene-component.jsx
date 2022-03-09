@@ -14,7 +14,7 @@ import React, { useMemo } from 'react';
 import styles from './landing-scene-styles.module.scss';
 
 
-// const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const LandingSceneComponent = ({
   openedModal,
@@ -29,13 +29,11 @@ const LandingSceneComponent = ({
     [isMobile]
   );
 
-  console.log({ updatedSceneSettings });
-
   return (
     <Scene
       sceneName={'landing-scene'}
       sceneSettings={updatedSceneSettings}
-    // loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+      loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
 
       <MobileOnly>

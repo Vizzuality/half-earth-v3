@@ -35,6 +35,16 @@
     display: inline-flex;
     flex-wrap: wrap;
     gap: 32px;
+
+    .audioCard {
+      display: inline-flex;
+    }
+  }
+
+  .or {
+    @extend %title;
+    color: $white;
+    text-align: center;
   }
 }
    
