@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import cx from 'classnames';
 import loadable from '@loadable/component';
-
-import RankingChart from 'components/ranking-chart';
-import NationalReportCardScene from 'scenes/nrc-scene';
+import cx from 'classnames';
+import CountryChallengesChart from 'components/country-challenges-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
-import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
-import CountryChallengesChart from 'components/country-challenges-chart';
-
+import RankingChart from 'components/ranking-chart';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
-import styles from './nrc-styles.module.scss';
+import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
+import React, { useState } from 'react';
+import NationalReportCardScene from 'scenes/nrc-scene';
 import uiStyles from 'styles/ui.module.scss';
+import styles from './nrc-styles.module.scss';
+
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCard = ({

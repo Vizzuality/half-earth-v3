@@ -1,8 +1,8 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import SearchLocation from 'components/search-location';
 import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+import React from 'react';
+import styles from './styles.module.scss';
 
 const NRCLandingSidebar = ({ view }) => (
   <div className={styles.container}>

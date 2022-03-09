@@ -38,6 +38,7 @@ export default {
   },
   ui: {
     onBoardingType: null,
+    onBoardingStep: 0,
     selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'priorPlaces',
     selectedTaxa: 'all',

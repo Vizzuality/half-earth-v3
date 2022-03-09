@@ -5,17 +5,17 @@ import { motion } from 'framer-motion';
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import React from 'react';
+import { FEATURED, NATIONAL_REPORT_CARD_LANDING } from "router";
 // Components
 import AudioCard from './audio-card';
 // styles
 import styles from './hero-styles.module.scss';
 
 
-
-
 const HeroComponent = ({
   className,
-  changeUI
+  changeUI,
+  browsePage,
 }) => {
 
   return (
@@ -71,7 +71,10 @@ const HeroComponent = ({
           gif={AUDIO_CARD_1_GIF}
           title='Priority places'
           description='Understand where the suggested priority places should happen for vertebrates.'
-          handleClick={() => changeUI({ onBoardingType: 'priority places', onBoardingStep: 0 })}
+          handleClick={() => {
+            browsePage({ type: FEATURED })
+            changeUI({ onBoardingType: 'priority-places', onBoardingStep: 0 })
+          }}
 
         />
         <AudioCard
@@ -79,7 +82,10 @@ const HeroComponent = ({
           duration={'4-7'}
           gif={AUDIO_CARD_2_GIF} title='National Report cards'
           description='Analyze national and other areas of interest. Download reports to share with others.'
-          handleClick={() => changeUI({ onBoardingType: 'priority places', onBoardingStep: 0 })}
+          handleClick={() => {
+            browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
+            changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 0 })
+          }}
         />
       </motion.div>
 
