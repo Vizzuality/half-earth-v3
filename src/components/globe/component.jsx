@@ -63,7 +63,7 @@ const Globe = ({
         src={globeImage}
         initial={false}
         animate={{
-          y: isHovered ? -30 : 0,
+          y: isHovered && center ? -10 : isHovered && !center ? -30 : 0,
         }}
         transition={{
           duration: 0.4,
