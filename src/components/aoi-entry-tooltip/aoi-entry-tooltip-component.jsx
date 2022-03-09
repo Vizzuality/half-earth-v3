@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { loadModules } from 'esri-loader';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import styles from './aoi-entry-tooltip-styles.module.scss';
 import { format } from 'd3-format';
 import cx from 'classnames';
@@ -70,6 +71,7 @@ const AOIEntryTooltipComponent = ({
         [styles.tooltipVisible]: tooltip && tooltipContent,
       })}
     >
+      <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose} />
       <section className={styles.tooltipSection}>
         <span className={styles.tooltipName}>Priority area {MOL_ID}</span>
       </section>
