@@ -1,10 +1,10 @@
 // Components
-import Globe from 'components/globe';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
+import Globe from 'containers/landing/globe';
 import Hero from 'containers/landing/hero';
 import { motion } from 'framer-motion';
 import globeDiscover from 'images/globe-discover.png';
@@ -45,8 +45,8 @@ const LandingSceneComponent = ({
         />
         <MenuSettings activeOption={activeOption} openedModal={openedModal} />
       </MobileOnly>
-      <div className={styles.sceneContainer}>
 
+      <div className={styles.sceneContainer}>
         <Hero />
 
         <motion.div

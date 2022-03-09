@@ -1,12 +1,12 @@
 // dependencies
 import cx from 'classnames';
-// Components
-import AudioCard from 'components/audio-card';
 import { motion } from 'framer-motion';
 // assets
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import React from 'react';
+// Components
+import AudioCard from './audio-card';
 // styles
 import styles from './hero-styles.module.scss';
 
