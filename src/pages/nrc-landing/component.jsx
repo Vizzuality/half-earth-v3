@@ -1,10 +1,10 @@
-import React from 'react';
-import loadable from '@loadable/component'
-import NationalReportCardLandingScene from 'scenes/nrc-landing-scene';
+import loadable from '@loadable/component';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
-
+import React from 'react';
+import NationalReportCardLandingScene from 'scenes/nrc-landing-scene';
 import uiStyles from 'styles/ui.module.scss';
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCardLanding = ({
@@ -17,22 +17,28 @@ const NationalReportCardLanding = ({
   sceneSettings,
   handleMapLoad,
   isFullscreenActive,
-}) => (
-  <>
-  <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft}/> 
-  <MainMenu />
-  <NationalReportCardLandingScene
-    countryISO={countryISO}
-    countryName={countryName}
-    userConfig={userConfig}
-    openedModal={openedModal}
-    activeLayers={activeLayers}
-    sceneSettings={sceneSettings}
-    isFullscreenActive={isFullscreenActive}
-    onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-  />
-  {hasMetadata && <InfoModal />}
-</>
-)
+  onBoardingType,
+  onBoardingStep,
+}) => {
+  console.log({ onBoardingType, onBoardingStep });
+
+  return (
+    <>
+      <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
+      <MainMenu />
+      <NationalReportCardLandingScene
+        countryISO={countryISO}
+        countryName={countryName}
+        userConfig={userConfig}
+        openedModal={openedModal}
+        activeLayers={activeLayers}
+        sceneSettings={sceneSettings}
+        isFullscreenActive={isFullscreenActive}
+        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+      />
+      {hasMetadata && <InfoModal />}
+    </>
+  )
+};
 
 export default NationalReportCardLanding;
