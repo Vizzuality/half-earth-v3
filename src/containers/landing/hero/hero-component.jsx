@@ -11,8 +11,11 @@ import React from 'react';
 import styles from './hero-styles.module.scss';
 
 
+
+
 const HeroComponent = ({
   className,
+  changeUI
 }) => {
 
   return (
@@ -62,8 +65,22 @@ const HeroComponent = ({
           delay: 0.15,
         }}
       >
-        <AudioCard number='01' duration={'4-7'} gif={AUDIO_CARD_1_GIF} title='Priority places' description='Understand where the suggested priority places should happen for vertebrates.' />
-        <AudioCard number='02' duration={'4-7'} gif={AUDIO_CARD_2_GIF} title='National Report cards' description='Analyze national and other areas of interest. Download reports to share with others.' />
+        <AudioCard
+          number='01'
+          duration={'4-7'}
+          gif={AUDIO_CARD_1_GIF}
+          title='Priority places'
+          description='Understand where the suggested priority places should happen for vertebrates.'
+          handleClick={() => changeUI({ onBoardingType: 'priority places', onBoardingStep: 0 })}
+
+        />
+        <AudioCard
+          number='02'
+          duration={'4-7'}
+          gif={AUDIO_CARD_2_GIF} title='National Report cards'
+          description='Analyze national and other areas of interest. Download reports to share with others.'
+          handleClick={() => changeUI({ onBoardingType: 'priority places', onBoardingStep: 0 })}
+        />
       </motion.div>
 
       <p className={styles.or}> OR </p>

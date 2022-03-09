@@ -1,9 +1,6 @@
 import {
-  GRAPHIC_LAYER,
-  LANDSCAPE_FEATURES_LABELS_LAYER,
-  CITIES_LABELS_LAYER,
-  PRIORITY_POLYGONS_GRAPHIC_LAYER,
-  FEATURED_PLACES_LAYER
+  CITIES_LABELS_LAYER, FEATURED_PLACES_LAYER, GRAPHIC_LAYER,
+  LANDSCAPE_FEATURES_LABELS_LAYER, PRIORITY_POLYGONS_GRAPHIC_LAYER
 } from 'constants/layers-slugs';
 
 export default {
@@ -40,6 +37,7 @@ export default {
     }
   },
   ui: {
+    onBoardingType: null,
     selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'priorPlaces',
     selectedTaxa: 'all',

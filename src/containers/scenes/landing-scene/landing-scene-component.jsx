@@ -1,4 +1,3 @@
-// Dependencies
 // Components
 import Globe from 'components/globe';
 import MenuFooter from 'components/mobile-only/menu-footer';
