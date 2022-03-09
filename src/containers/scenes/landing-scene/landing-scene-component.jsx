@@ -7,14 +7,13 @@ import Scene from 'components/scene';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
 import Hero from 'containers/landing/hero';
+import { motion } from 'framer-motion';
 import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 import React, { useMemo } from 'react';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from "router";
 import styles from './landing-scene-styles.module.scss';
-
-
 
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
@@ -29,7 +28,7 @@ const LandingSceneComponent = ({
   const isMobile = useMobile();
 
   const updatedSceneSettings = useMemo(
-    () => ({ ...sceneSettings, ...({ padding: { left: isMobile ? 0 : 0, top: 1200 } }) }),
+    () => ({ ...sceneSettings, ...({ padding: { left: isMobile ? 0 : 0, top: 1400 } }) }),
     [isMobile]
   );
 
@@ -51,7 +50,14 @@ const LandingSceneComponent = ({
 
         <Hero />
 
-        <div className={styles.globesContainer}>
+        <motion.div
+          className={styles.globesContainer}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.8,
+          }}
+        >
           <Globe
             title="Discover stories"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
@@ -71,7 +77,7 @@ const LandingSceneComponent = ({
             globeImage={globeNRC}
             handleClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}
           />
-        </div>
+        </motion.div>
       </div>
 
     </Scene>
