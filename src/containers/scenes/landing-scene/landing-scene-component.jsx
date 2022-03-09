@@ -1,18 +1,18 @@
 // Dependencies
-import React, { useMemo } from 'react';
-
 // Components
-import Scene from 'components/scene';
+import Globe from 'components/globe';
 import MenuFooter from 'components/mobile-only/menu-footer';
-
 import MenuSettings from 'components/mobile-only/menu-settings';
-
-import Hero from 'containers/landing/hero';
-
+import Scene from 'components/scene';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
-
+import Hero from 'containers/landing/hero';
+import globeDiscover from 'images/globe-discover.png';
+import globeExplore from 'images/globe-explore.png';
+import globeNRC from 'images/globe-NRC.png';
+import React, { useMemo } from 'react';
 import styles from './landing-scene-styles.module.scss';
+
 
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
@@ -24,8 +24,6 @@ const LandingSceneComponent = ({
   isSidebarOpen,
 }) => {
   const isMobile = useMobile();
-
-  console.log({ sceneSettings })
 
   const updatedSceneSettings = useMemo(
     () => ({ ...sceneSettings, ...({ padding: { left: isMobile ? 0 : 0, top: 1200 } }) }),
@@ -46,8 +44,28 @@ const LandingSceneComponent = ({
         />
         <MenuSettings activeOption={activeOption} openedModal={openedModal} />
       </MobileOnly>
+      <div className={styles.sceneContainer}>
 
-      <Hero className={styles.sidebarContainer} />
+        <Hero />
+
+        <div className={styles.globesContainer}>
+          <Globe
+            title="Discover stories"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
+            globeImage={globeDiscover}
+          />
+          <Globe
+            title="Explore Data"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
+            globeImage={globeExplore}
+          />
+          <Globe
+            title="National Report Cards"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
+            globeImage={globeNRC}
+          />
+        </div>
+      </div>
 
     </Scene>
   );

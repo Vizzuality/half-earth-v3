@@ -1,0 +1,36 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  height: 250px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+
+  img {
+    object-fit: contain;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+
+  .content {
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 55px;
+    text-align: center;
+
+    .title {
+      @extend %display2;
+      font-size: 24px;
+    }
+
+    .description {
+      @extend %bodyText;
+ 
+      margin: 0;
+    }
+  }
+}
