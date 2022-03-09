@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-const selectFeaturedMaps = ({ featuredMapsList }) => featuredMapsList.data || null;
+const selectFeaturedMaps = ({ featuredMapsList }) => (featuredMapsList && featuredMapsList.data) || null;
 
 const getFeaturedMapsList = createSelector(
   selectFeaturedMaps,
