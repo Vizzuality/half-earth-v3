@@ -1,9 +1,11 @@
 // dependencies
+import Modal from 'containers/modals/onboarding-modal';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import migalaSound from 'sounds/migala.mp3';
 import styles from './sound-btn-styles.module.scss';
+
 
 
 const SoundButtonComponent = () => {
@@ -17,11 +19,11 @@ const SoundButtonComponent = () => {
   return (
     <div className={styles.soundContainer}>
       <button
-        style={{ backgroundColor: 'white' }}
         className={styles.closeButton}
         onClick={() => setPlaying(false)}
       >
         x
+        <p>QUIT</p>
       </button>
       <button className={styles.soundBtn}>
 
@@ -42,7 +44,12 @@ const SoundButtonComponent = () => {
         <PlayIcon />
 
       </button>
-
+      <Modal
+        isOpen={!playing}
+        // handleClose={handlePromptModalToggle}
+        title='What would you like to do next?'
+        description='You just finished the audio tour you can either go on a new tour or explore the HE map on your own.'
+      />
     </div >
   )
 }
