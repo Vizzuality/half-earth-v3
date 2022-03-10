@@ -7,6 +7,8 @@ import Widgets from 'containers/widgets';
 import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import LabelsLayer from 'containers/layers/labels-layer';
+import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 import Spinner from 'components/spinner';
 import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
@@ -23,10 +25,14 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 
 import uiStyles from 'styles/ui.module.scss';
 
+const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() =>
   import('containers/sidebars/featured-place-card')
+);
+const ProtectedAreasTooltips = loadable(() =>
+  import('components/protected-areas-tooltips')
 );
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
@@ -156,6 +162,17 @@ const DataGlobeComponent = ({
             isFullscreenActive={isFullscreenActive}
             handleGlobeUpdating={handleGlobeUpdating}
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          />
+        )}
+        {isLandscapeMode && (
+          <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
+        )}
+        {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3} />}
+        {isLandscapeMode && <LabelsLayer activeLayers={activeLayers} />}
+        {isLandscapeMode && (
+          <ProtectedAreasTooltips
+            activeLayers={activeLayers}
+            isLandscapeMode={isLandscapeMode}
           />
         )}
       </Scene>
