@@ -3,13 +3,32 @@
 @import 'styles/typography-extends';
 
 .soundContainer {
-  align-items: center;
+  align-items: end;
   bottom: 0;
   right: 0;
   display: flex;
-  flex-direction: column;
   padding: 0 18px 18px 0;
   position: absolute;
+
+  .rightColumn {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .scriptBox {
+    align-items: center;
+    background-color: $white;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    margin: 0 12px 13px 0;
+    width: 32px;
+  }
  
   .closeButton {
     align-items: center;

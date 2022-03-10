@@ -33,9 +33,8 @@ const DataGlobeComponent = ({
   countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed,
   onBoardingType,
-  onBoardingStep,
 }) => {
-  console.log({ onBoardingType, onBoardingStep });
+
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
@@ -60,6 +59,7 @@ const DataGlobeComponent = ({
         handleGlobeUpdating={handleGlobeUpdating}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+        onBoardingType={onBoardingType}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
       {hasMetadata && <InfoModal />}

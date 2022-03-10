@@ -1,6 +1,8 @@
 
 import Modal from 'containers/modals/onboarding-modal';
 import { motion } from 'framer-motion';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import { ReactComponent as DotsIcon } from 'icons/dots.svg';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -29,72 +31,77 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
 
   return (
     <div className={styles.soundContainer}>
-      <button
-        className={styles.closeButton}
-        onClick={handleFinishOnBoarding}
-      >
-        x
-        <p>QUIT</p>
-      </button>
-      <button className={styles.soundBtn}>
+      <div className={styles.scriptBox}>
+        <DotsIcon />
+      </div>
+      <div className={styles.rightColumn}>
+        <button
+          className={styles.closeButton}
+          onClick={handleFinishOnBoarding}
+        >
+          <CloseIcon />
+          <p>QUIT</p>
+        </button>
+        <button className={styles.soundBtn}>
 
-        <ReactPlayer
-          url={[{ src: migalaSound, type: 'audio/mp3' }]}
-          controls
-          playing={playing}
-          wrapper={"audio"}
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-          config={{
-            file: {
-              attributes: { preload: "auto" },
-              forceAudio: true,
-            },
-          }}
-        />
+          <ReactPlayer
+            url={[{ src: migalaSound, type: 'audio/mp3' }]}
+            controls
+            playing={playing}
+            wrapper={"audio"}
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+            config={{
+              file: {
+                attributes: { preload: "auto" },
+                forceAudio: true,
+              },
+            }}
+          />
 
-        {!playing && (
-          <PlayIcon />
-        )}
+          {!playing && (
+            <PlayIcon />
+          )}
 
-        {playing && (
-          <div
-            className={styles.audioBars}
-          >
-            <motion.div
-              className={styles.audioBar}
-              animate={{
-                scaleY: [1, 3, 1, 1, 3, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-            />
-            <motion.div
-              className={styles.audioBar}
-              animate={{
-                scaleY: [3, 1, 3, 1, 1, 3],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-            />
-            <motion.div
-              className={styles.audioBar}
-              animate={{
-                scaleY: [1, 3, 1, 1, 3, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-            />
-          </div>
-        )}
+          {playing && (
+            <div
+              className={styles.audioBars}
+            >
+              <motion.div
+                className={styles.audioBar}
+                animate={{
+                  scaleY: [1, 3, 1, 1, 3, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                }}
+              />
+              <motion.div
+                className={styles.audioBar}
+                animate={{
+                  scaleY: [3, 1, 3, 1, 1, 3],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                }}
+              />
+              <motion.div
+                className={styles.audioBar}
+                animate={{
+                  scaleY: [1, 3, 1, 1, 3, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                }}
+              />
+            </div>
+          )}
 
-      </button>
+        </button>
+      </div>
       <Modal
         isOpen={finishModal}
         title='What would you like to do next?'
