@@ -4,15 +4,13 @@
 
 .soundContainer {
   align-items: center;
-  border: 1px solid red;
   bottom: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   padding: 0 18px 18px 0;
   position: absolute;
-  width: 100px;
-
+ 
   .closeButton {
     align-items: center;
     background-color: $white;
@@ -40,13 +38,11 @@
     }
   }
 
-  .soundContainer
-
   .soundBtn {
     align-items: center;
     border-radius: 50px;
     display: flex;
-    border: 3px solid $dark-text;
+    border: 3px solid $dark-text !important;
     height: 70px;
     justify-content: center;
     padding-right: 2px;

@@ -2,7 +2,7 @@ import { Modal } from 'he-components';
 import React from 'react';
 import styles from './styles.module';
 
-const OnBoardingModalComponent = ({
+export const OnBoardingModalComponent = ({
   isOpen,
   title,
   description,

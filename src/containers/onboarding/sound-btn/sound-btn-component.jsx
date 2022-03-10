@@ -1,12 +1,12 @@
 // dependencies
-import Modal from 'containers/modals/onboarding-modal';
+// import Modal from 'containers/modals/onboarding-modal';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { LANDING } from 'router';
 import migalaSound from 'sounds/migala.mp3';
+import Modal from '../../modals/onboarding-modal';
 import styles from './sound-btn-styles.module.scss';
-
 
 
 const SoundButtonComponent = ({ browsePage, changeUI }) => {
@@ -25,7 +25,6 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
   const handleFinishOnBoarding = () => {
     setPlaying(false);
     setFinishModal(true);
-
   };
 
   return (
@@ -58,7 +57,6 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
       </button>
       <Modal
         isOpen={finishModal}
-        // handleClose={handlePromptModalToggle}
         title='What would you like to do next?'
         description='You just finished the audio tour you can either go on a new tour or explore the HE map on your own.'
         handleBack={() => browsePage({ type: LANDING })}

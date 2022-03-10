@@ -32,9 +32,7 @@ const NrcLandingComponent = ({
   isLandscapeMode,
   isGlobeUpdating,
   onBoardingType,
-  onBoardingStep,
 }) => {
-  console.log({ onBoardingType, onBoardingStep });
   return (
     <>
       <Scene
