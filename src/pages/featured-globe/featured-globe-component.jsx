@@ -23,6 +23,7 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 
 import uiStyles from 'styles/ui.module.scss';
 
+const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() =>
   import('containers/sidebars/featured-place-card')
@@ -34,16 +35,19 @@ const DataGlobeComponent = ({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
+  selectedSpecies,
   selectedSidebar,
   isLandscapeMode,
   selectedFeaturedPlace,
   isGlobeUpdating,
   isMapsList,
+  isLandscapeSidebarCollapsed,
   hasMetadata,
   activeLayers,
   selectedTaxa,
   onMapLoad,
   handleLayerToggle,
+  handleGlobeUpdating,
   spinGlobeHandle,
   spinGlobe,
   customFunctions,
@@ -143,6 +147,17 @@ const DataGlobeComponent = ({
           selectedTaxa={selectedTaxa}
           activeOption={activeOption}
         />
+        {isLandscapeMode && (
+          <LandscapeSidebar
+            activeLayers={activeLayers}
+            activeOption={activeOption}
+            selectedSpecies={selectedSpecies}
+            isLandscapeMode={isLandscapeMode}
+            isFullscreenActive={isFullscreenActive}
+            handleGlobeUpdating={handleGlobeUpdating}
+            isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          />
+        )}
       </Scene>
       <FeaturedMapsList
         selectedSidebar={selectedSidebar}
