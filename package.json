@@ -52,6 +52,7 @@
     "reselect": "^4.0.0",
     "sha1": "^1.1.1",
     "swr": "^0.3.2",
+    "use-sound": "^4.0.1",
     "vega-lib": "^4.4.0",
     "workbox-build": "^4.3.1"
   },

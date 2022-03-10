@@ -31,6 +31,7 @@ module.exports = function override(config, env) {
       hooks: path.resolve(__dirname, 'src/hooks'),
       images: path.resolve(__dirname, 'src/assets/images'),
       gifs: path.resolve(__dirname, 'src/assets/gifs'),
+      sounds: path.resolve(__dirname, 'src/assets/sounds'),
       'store-middleware': path.resolve(__dirname, 'src/store/store-middleware')
     }
   }

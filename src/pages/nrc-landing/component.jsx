@@ -5,6 +5,8 @@ import React from 'react';
 import NationalReportCardLandingScene from 'scenes/nrc-landing-scene';
 import uiStyles from 'styles/ui.module.scss';
 
+
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCardLanding = ({
@@ -20,8 +22,6 @@ const NationalReportCardLanding = ({
   onBoardingType,
   onBoardingStep,
 }) => {
-  console.log({ onBoardingType, onBoardingStep });
-
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
@@ -35,7 +35,10 @@ const NationalReportCardLanding = ({
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+        onBoardingType={onBoardingType}
+        onBoardingStep={onBoardingStep}
       />
+
       {hasMetadata && <InfoModal />}
     </>
   )
