@@ -74,7 +74,7 @@ const AnalyzeAreasCardComponent = ({
         </div>
         {selectedAnalysisTab === 'click' && (
           <section className={styles.sectionContainer}>
-            <span className={styles.label}>Analyze an area by searching:</span>
+            <span className={styles.label}>Choose your area of interest</span>
             <div className={styles.dropdownContainer}>
               <Dropdown
                 stacked

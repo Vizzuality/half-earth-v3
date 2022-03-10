@@ -7,6 +7,7 @@ import {
 
 export const PROTECTED_AREAS_COLOR = '#008604';
 export const FUTURE_PLACES_COLOR = '#FF9C32';
+export const COMMUNITY_AREAS_COLOR = '#FCC44A';
 export const NOT_UNDER_CONSERVATION_COLOR = '#6C828F';
 export const WDPALayers = [
   {
