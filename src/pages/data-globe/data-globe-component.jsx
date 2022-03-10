@@ -1,10 +1,10 @@
 // dependencies
-import React from "react";
 import loadable from "@loadable/component";
-// components
-import DataScene from "scenes/data-scene";
 import HalfEarthLogo from "components/half-earth-logo";
 import MainMenu from "components/main-menu";
+import React from "react";
+// components
+import DataScene from "scenes/data-scene";
 //styles
 import uiStyles from "styles/ui.module.scss";
 // Dynamic imports
@@ -32,7 +32,10 @@ const DataGlobeComponent = ({
   isBiodiversityActive,
   countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed,
+  onBoardingType,
+  onBoardingStep,
 }) => {
+  console.log({ onBoardingType, onBoardingStep });
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />

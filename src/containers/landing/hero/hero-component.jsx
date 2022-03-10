@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import React from 'react';
-import { FEATURED, NATIONAL_REPORT_CARD_LANDING } from "router";
+import { DATA, NATIONAL_REPORT_CARD_LANDING } from "router";
 // Components
 import AudioCard from './audio-card';
 // styles
@@ -72,7 +72,7 @@ const HeroComponent = ({
           title='Priority places'
           description='Understand where the suggested priority places should happen for vertebrates.'
           handleClick={() => {
-            browsePage({ type: FEATURED })
+            browsePage({ type: DATA })
             changeUI({ onBoardingType: 'priority-places', onBoardingStep: 0 })
           }}
 
