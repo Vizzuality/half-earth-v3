@@ -48,5 +48,19 @@
     padding-right: 2px;
     width: 70px;
   }
+
+  .audioBars {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 11px;
+    width: 100%;
+
+    .audioBar {
+      background-color: $brand-color-main;
+      border-radius: 2.5px;
+      height: 8px;
+      width: 8px;
+    }
+  }
 }
 

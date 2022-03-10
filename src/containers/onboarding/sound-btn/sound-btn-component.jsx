@@ -1,11 +1,11 @@
-// dependencies
-// import Modal from 'containers/modals/onboarding-modal';
+
+import Modal from 'containers/modals/onboarding-modal';
+import { motion } from 'framer-motion';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { LANDING } from 'router';
 import migalaSound from 'sounds/migala.mp3';
-import Modal from '../../modals/onboarding-modal';
 import styles from './sound-btn-styles.module.scss';
 
 
@@ -52,7 +52,47 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
             },
           }}
         />
-        <PlayIcon />
+
+        {!playing && (
+          <PlayIcon />
+        )}
+
+        {playing && (
+          <div
+            className={styles.audioBars}
+          >
+            <motion.div
+              className={styles.audioBar}
+              animate={{
+                scaleY: [1, 3, 1, 1, 3, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+            />
+            <motion.div
+              className={styles.audioBar}
+              animate={{
+                scaleY: [3, 1, 3, 1, 1, 3],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+            />
+            <motion.div
+              className={styles.audioBar}
+              animate={{
+                scaleY: [1, 3, 1, 1, 3, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+            />
+          </div>
+        )}
 
       </button>
       <Modal

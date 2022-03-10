@@ -53,7 +53,7 @@ const Globe = ({
           }}
           transition={{
             duration: 0.4,
-            opacity: { duration: 0.8 }
+            delay: 0.2,
           }}
           className={styles.description}>{description}
         </motion.p>
@@ -67,6 +67,7 @@ const Globe = ({
         }}
         transition={{
           duration: 0.4,
+
         }}
         className={cx({
           [styles.image]: true,
