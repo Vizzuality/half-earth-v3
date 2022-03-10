@@ -19,7 +19,7 @@ export default {
     center: [16.9515536, 0.116959],
     padding: {
       left: 250,
-      top: 1650,
+      top: 1450,
     },
     isGlobeUpdating: false,
     environment: {

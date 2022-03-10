@@ -23,8 +23,8 @@ const HeroComponent = ({
 
       <motion.h3
         className={styles.subtitle}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0.5, x: 250 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{
           duration: 0.5,
         }}
@@ -34,11 +34,11 @@ const HeroComponent = ({
 
       <motion.h1
         className={styles.title}
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.5,
-          delay: 0.15,
+          delay: 0.5,
         }}
       >
         Explore where species conservation <br /> activities are needed the most
@@ -46,50 +46,60 @@ const HeroComponent = ({
 
       <motion.p
         className={styles.ctoText}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{
           duration: 0.5,
-          delay: 0.15,
+          delay: 1.5,
         }}
       >
         SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT
       </motion.p>
 
-      <motion.div
-        className={styles.audioCards}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
-          delay: 0.15,
-        }}
-      >
-        <AudioCard
-          number='01'
-          duration={'4-7'}
-          gif={AUDIO_CARD_1_GIF}
-          title='Priority places'
-          description='Understand where the suggested priority places should happen for vertebrates.'
-          handleClick={() => {
-            browsePage({ type: DATA })
-            changeUI({ onBoardingType: 'priority-places', onBoardingStep: 0 })
+      <div className={styles.audioCards}>
+        <motion.div
+          className={styles.audioCard}
+          initial={{ opacity: 0, x: -100, y: -30 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{
+            duration: 1,
+            delay: 1.5,
           }}
+        >
+          <AudioCard
+            number='01'
+            duration={'4-7'}
+            gif={AUDIO_CARD_1_GIF}
+            title='Priority places'
+            description='Understand where the suggested priority places should happen for vertebrates.'
+            handleClick={() => {
+              browsePage({ type: DATA })
+              changeUI({ onBoardingType: 'priority-places', onBoardingStep: 0 })
+            }}
 
-        />
-        <AudioCard
-          number='02'
-          duration={'4-7'}
-          gif={AUDIO_CARD_2_GIF} title='National Report cards'
-          description='Analyze national and other areas of interest. Download reports to share with others.'
-          handleClick={() => {
-            browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
-            changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 0 })
+          />
+        </motion.div>
+        <motion.div
+          className={styles.audioCard}
+          initial={{ opacity: 0, x: 100, y: -30 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{
+            duration: 1,
+            delay: 1.5,
           }}
-        />
-      </motion.div>
-
-      <p className={styles.or}> OR </p>
+        >
+          <AudioCard
+            number='02'
+            duration={'4-7'}
+            gif={AUDIO_CARD_2_GIF} title='National Report cards'
+            description='Analyze national and other areas of interest. Download reports to share with others.'
+            handleClick={() => {
+              browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
+              changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 0 })
+            }}
+          />
+        </motion.div>
+      </div>
     </div>
   )
 }

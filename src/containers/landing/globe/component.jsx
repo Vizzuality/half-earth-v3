@@ -16,7 +16,7 @@ const Globe = ({
   const [isHovered, setHovered] = useState(false)
 
   return (
-    <motion.button
+    <button
       onClick={handleClick}
       className={cx({
         className: !!className,
@@ -73,7 +73,7 @@ const Globe = ({
           [styles.imageCenter]: center,
         })}
       />
-    </motion.button >
+    </button >
   )
 };
 

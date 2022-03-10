@@ -23,13 +23,11 @@ $area-title-width: 230px;
 }
 
 .modalContainer {
-  @extend %verticalScrollbar;
   display: flex;
   align-items: left;
   flex-direction: column;
   padding: 24px;
   background-color: $brand-color-secondary;
-  // overflow-y: scroll;
   @media #{$tablet-landscape} {
     max-width: $max-width;
     width: $max-width;

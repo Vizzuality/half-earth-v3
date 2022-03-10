@@ -19,4 +19,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
   }
+
+  .or {
+    @extend %title;
+    color: $white;
+    text-align: center;
+  }
 }

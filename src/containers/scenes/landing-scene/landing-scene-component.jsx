@@ -48,15 +48,27 @@ const LandingSceneComponent = ({
 
       <div className={styles.sceneContainer}>
         <Hero />
-
+        <motion.p
+          className={styles.or}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 2,
+          }}
+        >
+          OR
+        </motion.p>
         <motion.div
           className={styles.globesContainer}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.8,
+            delay: 2,
           }}
         >
+
           <Globe
             title="Discover stories"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
