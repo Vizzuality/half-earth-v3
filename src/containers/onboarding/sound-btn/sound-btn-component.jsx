@@ -3,24 +3,36 @@ import Modal from 'containers/modals/onboarding-modal';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
+import { LANDING } from 'router';
 import migalaSound from 'sounds/migala.mp3';
 import styles from './sound-btn-styles.module.scss';
 
 
 
-const SoundButtonComponent = () => {
-  const [playing, setPlaying] = useState(false)
+const SoundButtonComponent = ({ browsePage, changeUI }) => {
+  const [playing, setPlaying] = useState(false);
+  const [finishModal, setFinishModal] = useState(false)
 
   useEffect(() => {
     setPlaying(true);
   }, [])
 
+  const handleSwitchMode = () => {
+    setFinishModal(false);
+    changeUI({ onBoardingType: null, onBoardingStep: 0 });
+  };
+
+  const handleFinishOnBoarding = () => {
+    setPlaying(false);
+    setFinishModal(true);
+
+  };
 
   return (
     <div className={styles.soundContainer}>
       <button
         className={styles.closeButton}
-        onClick={() => setPlaying(false)}
+        onClick={handleFinishOnBoarding}
       >
         x
         <p>QUIT</p>
@@ -45,10 +57,12 @@ const SoundButtonComponent = () => {
 
       </button>
       <Modal
-        isOpen={!playing}
+        isOpen={finishModal}
         // handleClose={handlePromptModalToggle}
         title='What would you like to do next?'
         description='You just finished the audio tour you can either go on a new tour or explore the HE map on your own.'
+        handleBack={() => browsePage({ type: LANDING })}
+        handleClose={handleSwitchMode}
       />
     </div >
   )

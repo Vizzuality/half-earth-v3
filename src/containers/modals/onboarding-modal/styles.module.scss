@@ -30,6 +30,7 @@ $area-title-width: 230px;
   padding: 24px;
   background-color: $brand-color-secondary;
   overflow-y: scroll;
+    box-shadow: none !important;
   @media #{$tablet-landscape} {
     max-width: $max-width;
     width: $max-width;

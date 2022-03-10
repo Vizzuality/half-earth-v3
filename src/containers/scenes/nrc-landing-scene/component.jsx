@@ -45,7 +45,9 @@ const NrcLandingComponent = ({
         initialRotation
       >
 
-        <SoundButton />
+        {onBoardingType && (
+          <SoundButton />
+        )}
 
         <ArcgisLayerManager
           activeLayers={activeLayers}

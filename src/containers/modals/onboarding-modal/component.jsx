@@ -6,21 +6,29 @@ const OnBoardingModalComponent = ({
   isOpen,
   title,
   description,
-  handleModalClose,
+  handleBack,
+  handleClose,
 }) => {
-
   return (
-    <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
+    <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.modalContainer}>
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>
           {description}
         </p>
         <div className={styles.buttons}>
-          <button className={styles.backBtn}>
+          <button
+            className={styles.backBtn}
+            onClick={handleBack}
+            type="button"
+          >
             Back home
           </button>
-          <button className={styles.exploreBtn}>
+          <button
+            className={styles.exploreBtn}
+            onClick={handleClose}
+            type="button"
+          >
             Explore
           </button>
         </div>
