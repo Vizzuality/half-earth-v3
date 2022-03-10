@@ -29,8 +29,7 @@ $area-title-width: 230px;
   flex-direction: column;
   padding: 24px;
   background-color: $brand-color-secondary;
-  overflow-y: scroll;
-    box-shadow: none !important;
+  // overflow-y: scroll;
   @media #{$tablet-landscape} {
     max-width: $max-width;
     width: $max-width;
