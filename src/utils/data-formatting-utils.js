@@ -1,8 +1,8 @@
-import * as d3 from 'd3';
+import { format } from 'd3-format';
 
-export const currencyFormatting = d3.format("$,.2f");
-export const localeFormatting = d3.format(",.0f");
-export const percentageFormat = d3.format(".0f");
+export const currencyFormatting = format("$,.2f");
+export const localeFormatting = format(",.0f");
+export const percentageFormat = format(".0f");
 export const timestampAoiFormatting = (timestamp) => {
   if (!timestamp) return null;
   return (
@@ -33,7 +33,7 @@ export const roundGlobalRange = (value) => {
   } else if (value < 1000000) {
     return '100,000 - 1 million';
   } else {
-    return d3.format(".2s")(value).replace('M', ' million');
+    return format(".2s")(value).replace('M', ' million');
   }
 }
 

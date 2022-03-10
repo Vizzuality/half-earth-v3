@@ -33,7 +33,6 @@ export default {
       },
       alphaCompositingEnabled: true
     },
-    viewingMode: 'global',
     constraints: {
       altitude: {
         max: 35512548,

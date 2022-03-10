@@ -7,9 +7,11 @@ import 'he-components/dist/main.css';
 const Landing = loadable(() => import('pages/landing'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
+const MapIframe = loadable(() => import('pages/map-iframe'));
 const NationalReportCard = loadable(() => import('pages/nrc'));
 const NationalReportCardLanding = loadable(() => import('pages/nrc-landing'));
 const AreaOfInterest = loadable(() => import('pages/aoi'));
+const Landing = loadable(() => import('pages/landing'));
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],
@@ -29,6 +31,8 @@ const AppLayout = (props) => {
       return <NationalReportCardLanding />;
     case 'aoi':
       return <AreaOfInterest />;
+    case 'map-iframe':
+      return <MapIframe />;
     default:
       return <Landing />;
   }

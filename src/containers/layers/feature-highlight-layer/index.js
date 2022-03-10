@@ -15,7 +15,7 @@ import mapTooltipActions from 'redux_modules/map-tooltip';
 const actions = {...urlActions, ...mapTooltipActions };
 
 const FeatureHighlightLayerContainer = (props) => {
-const { view, featureLayerSlug, onFeatureClick } = props;
+const { view, featureLayerSlugs, onFeatureClick } = props;
 
 
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
@@ -39,7 +39,7 @@ const { view, featureLayerSlug, onFeatureClick } = props;
       if (selectedCountryBorderGraphic) selectedCountryBorderGraphic.geometry = null;
       if (hoveredCountryBorderGraphic) hoveredCountryBorderGraphic.geometry = null;
     }
-  }, [featureLayerSlug])
+  }, [featureLayerSlugs])
 
   const onClickHandler = features => {
     if(features && features[0]) {
@@ -57,8 +57,8 @@ const { view, featureLayerSlug, onFeatureClick } = props;
 
 const onLabelEvent = (event) => {
   event.stopPropagation();
-  view.hitTest(event).then( viewPoint => {
-    const features = hitResults(viewPoint, featureLayerSlug);
+  view.hitTest(event).then(viewPoint => {
+    const features = hitResults(viewPoint, featureLayerSlugs);
     switch (event.type) {
       case 'pointer-move':
         onHoverHandler(features);
@@ -79,7 +79,7 @@ const onLabelEvent = (event) => {
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
-  }, [featureLayerSlug, selectedCountryBorderGraphic])
+  }, [featureLayerSlugs, selectedCountryBorderGraphic])
 
   useEffect(() => {
     let eventHandler;
@@ -91,7 +91,7 @@ const onLabelEvent = (event) => {
     return function cleanUp() {
       eventHandler && eventHandler.remove();
     }
-  }, [featureLayerSlug, hoveredCountryBorderGraphic])
+  }, [featureLayerSlugs, hoveredCountryBorderGraphic])
 
 
   return null;

@@ -8,6 +8,7 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 
 import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js'

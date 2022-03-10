@@ -5,8 +5,13 @@ const markerDefaultStyles = 'overflow: hidden; border-radius: 20px; position: ab
 
 export const hitResults = (viewPoint, layerTitle) => {
   if (!viewPoint.results.length) return null;
-  return viewPoint.results.filter((result) => result.graphic.layer.title === layerTitle)
-}
+  const isLayerArray = Array.isArray(layerTitle);
+  return viewPoint.results.filter((result) => (
+    isLayerArray ?
+      layerTitle.includes(result.graphic.layer.title) :
+      result.graphic.layer.title === layerTitle
+  ));
+};
 
 export const setCursor = (layerFeatures) => {
   if (layerFeatures && layerFeatures.length) {

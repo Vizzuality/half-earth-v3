@@ -57,7 +57,7 @@ const getCountedActiveLayers = createSelector(
 
     return {
       'Biodiversity': biodiversityLayers,
-      'Existing protection': protectionLayers,
+      'Protection': protectionLayers,
       'Human pressures': landHumanPressureLayers
     };
   }
@@ -70,6 +70,7 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,
+  isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,

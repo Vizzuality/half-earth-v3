@@ -3,7 +3,8 @@ import {
   GRAPHIC_LAYER,
   CITIES_LABELS_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
-  PROTECTED_AREAS_VECTOR_TILE_LAYER
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER
 } from 'constants/layers-slugs';
 
 
@@ -14,6 +15,7 @@ export default {
     { title: CITIES_LABELS_LAYER },
     { title: LANDSCAPE_FEATURES_LABELS_LAYER },
     { title: PROTECTED_AREAS_VECTOR_TILE_LAYER },
+    { title: HALF_EARTH_FUTURE_TILE_LAYER },
   ],
   padding: {
     bottom: 60,

@@ -5,6 +5,7 @@ import {
   AOIS_HISTORIC_PRODUCTION,
   AOIS_HISTORIC_DEVELOPMENT,
   WDPA_OECM_FEATURE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER
 } from 'constants/layers-slugs';
 
 import { BIRDS, AMPHIBIANS, MAMMALS, REPTILES } from 'constants/geo-processing-services';
@@ -17,6 +18,7 @@ export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';
 export const PROTECTION_SLUG = 'protected-areas';
 export const SPECIES_SLUG = 'species';
+export const FUTURE_PLACES_SLUG = 'future-places';
 
 export const ADDITIONAL_PROTECTION_SLUG = 'additional-protection';
 
@@ -29,9 +31,10 @@ const SEARCH_SOURCES = {
   NATIONAL_BOUNDARIES: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   SUBNATIONAL_BOUNDARIES: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   PROTECTED_AREAS: WDPA_OECM_FEATURE_LAYER,
+  FUTURE_PLACES: HALF_EARTH_FUTURE_TILE_LAYER
 }
 
-export const { NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS } = SEARCH_SOURCES;
+export const { NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS, FUTURE_PLACES } = SEARCH_SOURCES;
 
 export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 
@@ -40,7 +43,8 @@ const { REACT_APP_FEATURE_PA_AOI } = process.env;
 export const PRECALCULATED_AOI_OPTIONS = [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: 'National boundaries' },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: 'Subnational boundaries' },
-  ...(REACT_APP_FEATURE_PA_AOI === 'true') ? [{ title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas' }] : []
+  ...(REACT_APP_FEATURE_PA_AOI === 'true') ? [{ title: PROTECTED_AREAS, slug: PROTECTED_AREAS, label: 'Protected areas' }] : [],
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: 'Places for Half-Earth future' }
 ]
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;

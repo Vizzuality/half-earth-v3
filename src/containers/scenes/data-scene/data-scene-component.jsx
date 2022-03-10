@@ -24,7 +24,7 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const CountrySceneComponent = ({
+const DataSceneComponent = ({
   sceneMode,
   onMapLoad,
   userConfig,
@@ -36,6 +36,7 @@ const CountrySceneComponent = ({
   sceneSettings,
   isSidebarOpen,
   activeCategory,
+  isLandscapeMode,
   isGlobeUpdating,
   isFullscreenActive,
   handleGlobeUpdating,
@@ -47,7 +48,7 @@ const CountrySceneComponent = ({
   handleHighlightLayerFeatureClick,
 }) => {
   const isMobile = useMobile();
-  const sidebarHidden = isFullscreenActive || isMobile;
+  const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
     () => ({ ...sceneSettings, ...(isMobile && { padding: { left: 0 } }) }),
     [isMobile]
@@ -71,6 +72,7 @@ const CountrySceneComponent = ({
           activeOption={activeOption}
           isSidebarOpen={isSidebarOpen}
           activeCategory={activeCategory}
+          isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
           countedActiveLayers={countedActiveLayers}
           handleGlobeUpdating={handleGlobeUpdating}
@@ -84,6 +86,7 @@ const CountrySceneComponent = ({
           <MenuFooter
             activeOption={activeOption}
             isSidebarOpen={isSidebarOpen}
+            isLandscapeMode={isLandscapeMode}
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
         </MobileOnly>
@@ -92,10 +95,11 @@ const CountrySceneComponent = ({
           countryISO={countryISO}
           countryName={countryName}
           activeLayers={activeLayers}
+          isLandscapeMode={isLandscapeMode}
         />
         {selectedAnalysisLayer && (
           <FeatureHighlightLayer
-            featureLayerSlug={selectedAnalysisLayer.slug}
+            featureLayerSlugs={selectedAnalysisLayer.slug}
             onFeatureClick={handleHighlightLayerFeatureClick}
           />
         )}
@@ -111,4 +115,4 @@ const CountrySceneComponent = ({
   );
 };
 
-export default CountrySceneComponent;
+export default DataSceneComponent;
