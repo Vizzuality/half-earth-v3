@@ -19,9 +19,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 40px 20px 40px;
     text-align: center;
+    padding: 0;
 
+    @media #{$tablet-landscape} {
+      padding: 0 40px;
+    }
     .title {
       @extend %display2;
       font-size: 24px;
@@ -31,14 +34,21 @@
     .description {
       @extend %bodyText;
       margin: 0;
+      z-index: $default-z-index;
+      font-size: 12px;
+
+      @media #{$tablet-landscape} {
+        font-size: 14px;
+      }
     }
   }
 }
 
 .imageCenter {
-  top: 80px;
+  top: 120px;
 }
 
+
 .contentCenter {
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 }
