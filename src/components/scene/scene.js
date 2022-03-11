@@ -81,7 +81,7 @@ const SceneContainer = (props) => {
       loadModules(["esri/views/SceneView"], loaderOptions)
         .then(([SceneView]) => {
           const _view = new SceneView({
-            map: map,
+            map,
             container: `scene-container-${sceneName || sceneId}`,
             ...sceneSettings
           });
