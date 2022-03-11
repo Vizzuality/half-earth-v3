@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
 
-
 const Globe = ({
   className,
   description,
@@ -13,7 +12,7 @@ const Globe = ({
   center,
   handleClick,
 }) => {
-  const [isHovered, setHovered] = useState(false)
+  const [isHovered, setHovered] = useState(false);
 
   return (
     <button
@@ -35,7 +34,7 @@ const Globe = ({
         <motion.p
           initial={false}
           animate={{
-            y: isHovered ? -30 : 0,
+            y: isHovered ? -45 : 0,
           }}
           transition={{
             duration: 0.4,
@@ -47,15 +46,17 @@ const Globe = ({
         <motion.p
           initial={false}
           animate={{
-            display: isHovered ? 'block' : 'none',
             opacity: isHovered ? 1 : 0,
-            y: isHovered ? -15 : 0,
+            y: isHovered ? -35 : 0,
+            height: isHovered ? 'initial' : 10,
           }}
           transition={{
             duration: 0.4,
             delay: 0.2,
           }}
-          className={styles.description}>{description}
+          className={styles.description}
+        >
+          {description}
         </motion.p>
       </div>
       <motion.img
@@ -67,15 +68,14 @@ const Globe = ({
         }}
         transition={{
           duration: 0.4,
-
         }}
         className={cx({
           [styles.image]: true,
           [styles.imageCenter]: center,
         })}
       />
-    </button >
-  )
+    </button>
+  );
 };
 
 Globe.propTypes = {

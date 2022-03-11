@@ -10,19 +10,30 @@
   height: calc(100vh - #{$nav-bar-height});
   position: absolute;
   top: $nav-bar-height;
+  overflow: auto;
+
+  @media #{$tablet-landscape} {
+    overflow: hidden;
+    font-size: 45px;
+  }
 
   .globesContainer {
-    align-content: end; 
+    align-content: end;
     margin: auto 0 0 0;
-    padding: 0 150px;
+    padding: 0 15px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
+
+    @media #{$tablet-landscape} {
+      padding: 0 45px;
+    }
   }
 
   .or {
     @extend %title;
     color: $white;
     text-align: center;
+    margin: 0 40px;
   }
 }

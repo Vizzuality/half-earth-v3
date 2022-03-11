@@ -5,8 +5,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-top: 70px;
   width: 100vw;
+  margin-top: 30px;
+
+  @media #{$tablet-landscape} {
+    margin-top: 70px;
+  }
 
   .subtitle {
     @extend %title;
@@ -21,19 +25,30 @@
     margin-bottom: 0;
     margin-top: 6px;
     text-align: center;
+    font-size: 35px;
+    padding: 0 10px;
+
+    @media #{$tablet-landscape} {
+      font-size: 45px;
+    }
   }
 
   .ctoText {
     @extend %title;
     color: $white;
-    margin: 61px 0 40px 0;
     text-align: center;
+    margin: 20px 10px;
+
+    @media #{$tablet-landscape} {
+      margin: 61px 0 40px 0;
+    }
   }
 
   .audioCards {
     align-self: center;
     display: inline-flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 32px;
 
     .audioCard {
@@ -41,4 +56,3 @@
     }
   }
 }
-   
