@@ -1,0 +1,44 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  width: 100vw;
+
+  .subtitle {
+    @extend %title;
+    color: $robins-egg-blue;
+    text-align: center;
+  }
+
+  .title {
+    @extend %display1;
+    color: $white;
+    font-weight: 200;
+    margin-bottom: 0;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .ctoText {
+    @extend %title;
+    color: $white;
+    margin: 61px 0 40px 0;
+    text-align: center;
+  }
+
+  .audioCards {
+    align-self: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 32px;
+
+    .audioCard {
+      display: flex;
+    }
+  }
+}
+   
