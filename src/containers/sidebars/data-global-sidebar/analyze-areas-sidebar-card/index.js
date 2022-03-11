@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // constants
 import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
-import { GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER } from 'constants/layers-slugs';
+import { GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { AREA_TYPES } from 'constants/aois.js';
 
 // utils
@@ -134,8 +134,14 @@ const AnalyzeAreasContainer = (props) => {
       case WDPA_OECM_FEATURE_LAYER:
         setAreaTypeSelected(AREA_TYPES.custom);
         break;
+      case HALF_EARTH_FUTURE_TILE_LAYER:
+        setAreaTypeSelected(AREA_TYPES.futurePlaces);
+        break;
     }
-    handleLayerToggle(option);
+    const layerIsAlreadyActive = activeLayers.some(l => l.title === option.slug);
+    if (!layerIsAlreadyActive) {
+      handleLayerToggle(option);
+    }
     setSelectedOption(option);
     setTooltipIsVisible(false);
   }
