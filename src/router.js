@@ -45,7 +45,6 @@ export const routes = {
   [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: REACT_APP_FEATURE_ONBOARDING === 'true' ? LANDING : DATA })) }
 };
 
-console.log('r', routes)
 const options = {
   querySerializer: {
     parse: decodeUrlForState,

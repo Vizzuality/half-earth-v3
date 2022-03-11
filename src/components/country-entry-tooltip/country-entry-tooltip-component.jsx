@@ -32,7 +32,7 @@ const CountryEntryTooltipComponent = ({
         location: tooltipPosition,
         content: tooltipref.current,
       });
-      console.log(view.popup);
+
       view.popup.reposition();
       if (view.camera) {
         const camera = view.camera.clone();
