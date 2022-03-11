@@ -38,8 +38,8 @@
     height: 20px;
     justify-content: center;
     margin-bottom: 8px;
-    width: 20px;
-    transition: 0.4;
+    transition-duration: 0.4s;
+       width: 20px;
 
     &:hover {
       width: 50px;
