@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
 import { GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { AREA_TYPES } from 'constants/aois.js';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 // utils
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
@@ -138,7 +139,6 @@ const AnalyzeAreasContainer = (props) => {
         setAreaTypeSelected(AREA_TYPES.futurePlaces);
         break;
     }
-
     handleLayerToggle(option.slug);
     setSelectedOption(option);
     setTooltipIsVisible(false);
@@ -156,8 +156,8 @@ const AnalyzeAreasContainer = (props) => {
       // Don't remove future layer it if its active and it was selected
       return (selectedOption.slug === HALF_EARTH_FUTURE_TILE_LAYER) ? [currentSelectedOption] : [selectedOption.slug, currentSelectedOption] ;
     };
-
-    batchToggleLayers(getLayersToToggle(), activeLayers, changeGlobe);
+    const category = currentSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER ? LAYERS_CATEGORIES.PROTECTION : undefined;
+    batchToggleLayers(getLayersToToggle(), activeLayers, changeGlobe, category);
   }
 
 

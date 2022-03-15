@@ -27,6 +27,7 @@ const ProtectedAreasSidebarCardComponent = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+
   return (
     <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
       <CategoryBox
