@@ -138,16 +138,26 @@ const AnalyzeAreasContainer = (props) => {
         setAreaTypeSelected(AREA_TYPES.futurePlaces);
         break;
     }
-    const layerIsAlreadyActive = activeLayers.some(l => l.title === option.slug);
-    if (!layerIsAlreadyActive) {
-      handleLayerToggle(option);
-    }
+
+    handleLayerToggle(option.slug);
     setSelectedOption(option);
     setTooltipIsVisible(false);
   }
 
-  const handleLayerToggle = (option) => {
-    batchToggleLayers([selectedOption.slug, option.slug], activeLayers, changeGlobe)
+  const handleLayerToggle = (currentSelectedOption) => {
+    // Future places layer will be activated if we select it at some point and never toggled unless we do it from the protection checkbox
+
+    const getLayersToToggle = () => {
+      const futureLayerIsActive = activeLayers.some(l => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
+      // Don't remove future layer it if its active and we select it
+      if (currentSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER && futureLayerIsActive) {
+        return [selectedOption.slug];
+      }
+      // Don't remove future layer it if its active and it was selected
+      return (selectedOption.slug === HALF_EARTH_FUTURE_TILE_LAYER) ? [currentSelectedOption] : [selectedOption.slug, currentSelectedOption] ;
+    };
+
+    batchToggleLayers(getLayersToToggle(), activeLayers, changeGlobe);
   }
 
 
