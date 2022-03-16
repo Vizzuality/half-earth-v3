@@ -29,7 +29,7 @@
     margin: 0 12px 13px 0;
     width: 32px;
   }
- 
+
   .closeButton {
     align-items: center;
     background-color: $white;
@@ -58,10 +58,11 @@
   }
 
   .soundBtn {
+    position: relative;
     align-items: center;
     border-radius: 50px;
     display: flex;
-    border: 3px solid $dark-text !important;
+    border: 3px solid transparent;
     height: 70px;
     justify-content: center;
     padding-right: 2px;
@@ -82,4 +83,3 @@
     }
   }
 }
-
