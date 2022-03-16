@@ -16,6 +16,7 @@ import {
   PROTECTION_SLUG,
   FUTURE_PLACES_SLUG,
 } from 'constants/analyze-areas-constants';
+
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
 const ProtectedAreasSidebarCardComponent = ({

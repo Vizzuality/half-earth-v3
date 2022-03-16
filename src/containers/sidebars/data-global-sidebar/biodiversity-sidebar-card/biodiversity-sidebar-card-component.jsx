@@ -1,16 +1,24 @@
+// Dependencies
 import React, { useState } from 'react';
-import SourceAnnotation from 'components/source-annotation';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import Tabs from 'components/tabs';
+
+// Components
 import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
+import LayerToggle from 'components/layer-toggle';
+import SourceAnnotation from 'components/source-annotation';
+import Tabs from 'components/tabs';
+
+
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
-import LayerToggle from 'components/layer-toggle';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
+import Tooltip from 'containers/onboarding/tooltip';
+
+// Constants
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   LAYERS_TOGGLE_CONFIG,
   LAYERS_RESOLUTION,
@@ -18,10 +26,14 @@ import {
   MARINE,
   RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
+
+// Styles
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 
+
 import BiodiversityThumbnail from 'images/biodiversity.png';
+
 
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
@@ -35,7 +47,11 @@ const BiodiversitySidebarCardComponent = ({
   biodiversityLayerVariant,
   cardMetadata,
   showCard,
+  onBoardingStep,
+  waitingInteraction
 }) => {
+  console.log({ onBoardingStep, waitingInteraction });
+
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -163,6 +179,9 @@ const BiodiversitySidebarCardComponent = ({
           metaDataSources={source}
         />
       </div>
+
+      <Tooltip />
+
     </div>
   );
 };
