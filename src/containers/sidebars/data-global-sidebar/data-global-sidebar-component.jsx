@@ -1,12 +1,12 @@
 // dependencies
 import React from 'react';
 import cx from 'classnames';
+
 // components
 import BiodiversitySidebarCard from './biodiversity-sidebar-card';
 import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import HumanImpactSidebarCard from './human-impact-sidebar-card';
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
-import Tooltip from 'containers/onboarding/tooltip';
 
 // styles
 import styles from './data-global-sidebar-styles.module.scss';
@@ -22,7 +22,7 @@ const DataGlobalSidebarComponent = ({
   onBoardingStep,
   waitingInteraction,
 }) => {
-  console.log({ waitingInteraction, onBoardingStep })
+
   return (
     <div className={cx(styles.container, className)}>
       <AnalyzeAreasSidebarCard
@@ -36,8 +36,9 @@ const DataGlobalSidebarComponent = ({
         activeCategory={activeCategory}
         className={styles.biodiversitySidebarCard}
         countedActiveLayers={countedActiveLayers}
+        onBoardingStep={onBoardingStep}
+        waitingInteraction={waitingInteraction}
       />
-      <Tooltip />
       <ProtectedAreasSidebarCard
         map={map}
         activeLayers={activeLayers}

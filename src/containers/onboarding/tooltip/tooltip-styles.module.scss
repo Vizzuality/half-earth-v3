@@ -8,9 +8,10 @@
     justify-content: space-between;
     height: 38px;
     position: absolute;
-    top: 0;
     width: 170px;
-    z-index: 2;
+    right: -100px;
+    top: 40px;
+    z-index: 100002;
 }
 
 .tooltip {
@@ -30,7 +31,6 @@
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent; 
     border-right: 5px solid $white; 
-  
     top: 0;
     left: -5px;
   }
