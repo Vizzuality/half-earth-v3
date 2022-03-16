@@ -32,6 +32,8 @@ const NrcLandingComponent = ({
   isLandscapeMode,
   isGlobeUpdating,
   onBoardingType,
+  onBoardingStep,
+  waitingInteraction
 }) => {
   return (
     <>

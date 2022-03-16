@@ -33,6 +33,8 @@ const DataGlobeComponent = ({
   countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed,
   onBoardingType,
+  onBoardingStep,
+  waitingInteraction,
 }) => {
 
   return (
@@ -60,6 +62,8 @@ const DataGlobeComponent = ({
         countryTooltipDisplayFor={countryTooltipDisplayFor}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onBoardingType={onBoardingType}
+        onBoardingStep={onBoardingStep}
+        waitingInteraction={waitingInteraction}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
       {hasMetadata && <InfoModal />}

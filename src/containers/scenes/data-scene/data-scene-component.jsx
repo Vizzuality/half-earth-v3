@@ -52,7 +52,10 @@ const DataSceneComponent = ({
   handleTooltipActionButtonClick,
   handleHighlightLayerFeatureClick,
   onBoardingType,
+  onBoardingStep,
+  waitingInteraction
 }) => {
+  console.log({ waitingInteraction, onBoardingStep })
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
@@ -89,6 +92,8 @@ const DataSceneComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
           isBiodiversityActive={isBiodiversityActive}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
+          onBoardingStep={onBoardingStep}
+          waitingInteraction={waitingInteraction}
           className={cx(styles.sidebarContainer, {
             [animationStyles.leftHidden]: sidebarHidden,
           })}

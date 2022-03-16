@@ -21,6 +21,7 @@ const NationalReportCardLanding = ({
   isFullscreenActive,
   onBoardingType,
   onBoardingStep,
+  waitingInteraction,
 }) => {
   return (
     <>
@@ -37,6 +38,7 @@ const NationalReportCardLanding = ({
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
         onBoardingType={onBoardingType}
         onBoardingStep={onBoardingStep}
+        waitingInteraction={waitingInteraction}
       />
 
       {hasMetadata && <InfoModal />}
