@@ -1,24 +1,27 @@
 // Dependencies
+import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
+
+// Components
+import Scene from 'components/scene';
 import MapTooltip from 'components/map-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
-// Components
-import Scene from 'components/scene';
-// Constants
-import { MobileOnly, useMobile } from 'constants/responsive';
+
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SoundButton from 'containers/onboarding/sound-btn';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 import Widgets from 'containers/widgets';
-import React, { useMemo } from 'react';
+
+// Constants
+import { MobileOnly, useMobile } from 'constants/responsive';
+
+// Styles
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './data-scene-styles.module.scss';
-
-
 
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));

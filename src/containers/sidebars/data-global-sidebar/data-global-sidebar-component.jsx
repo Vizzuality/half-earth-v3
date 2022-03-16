@@ -6,6 +6,8 @@ import BiodiversitySidebarCard from './biodiversity-sidebar-card';
 import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import HumanImpactSidebarCard from './human-impact-sidebar-card';
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
+import Tooltip from 'containers/onboarding/tooltip';
+
 // styles
 import styles from './data-global-sidebar-styles.module.scss';
 
@@ -33,6 +35,7 @@ const DataGlobalSidebarComponent = ({
         className={styles.biodiversitySidebarCard}
         countedActiveLayers={countedActiveLayers}
       />
+      <Tooltip />
       <ProtectedAreasSidebarCard
         map={map}
         activeLayers={activeLayers}
