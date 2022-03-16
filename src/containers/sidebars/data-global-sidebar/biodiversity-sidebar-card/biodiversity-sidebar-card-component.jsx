@@ -1,6 +1,7 @@
 // Dependencies
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 // Components
 import Dropdown from 'components/dropdown';
@@ -69,8 +70,20 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
+  const animateCard = waitingInteraction && onBoardingStep === 0;
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <motion.div
+      className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
+
+      animate={{
+        outline: animateCard ? '5px solid #00BDB5' : 'none',
+        opacity: animateCard ? 1 : 0
+      }}
+      transition={{
+        duration: 1,
+        repeat: Infinity,
+      }}
+    >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
@@ -182,7 +195,7 @@ const BiodiversitySidebarCardComponent = ({
 
       <Tooltip />
 
-    </div>
+    </motion.div>
   );
 };
 
