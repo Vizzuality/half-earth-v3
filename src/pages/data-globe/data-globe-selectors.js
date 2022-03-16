@@ -64,6 +64,7 @@ const getCountedActiveLayers = createSelector(
 );
 export const getOnBoardingType = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingType);
 export const getOnBoardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingStep);
+export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
 
 
 export default createStructuredSelector({
@@ -93,4 +94,5 @@ export default createStructuredSelector({
   userConfig: selectUserConfig,
   onBoardingType: getOnBoardingType,
   onBoardingStep: getOnBoardingStep,
+  waitingInteraction: getOnWaitingInteraction,
 });

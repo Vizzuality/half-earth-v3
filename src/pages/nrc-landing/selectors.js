@@ -38,6 +38,7 @@ export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => 
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
 export const getOnBoardingType = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingType);
 export const getOnBoardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingStep);
+export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -53,4 +54,5 @@ export default createStructuredSelector({
   userConfig: selectUserConfig,
   onBoardingType: getOnBoardingType,
   onBoardingStep: getOnBoardingStep,
+  waitingInteraction: getOnWaitingInteraction,
 });
