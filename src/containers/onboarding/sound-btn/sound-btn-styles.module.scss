@@ -55,7 +55,7 @@
       width: 50px;
 
       p {
-        @extend %annotation;
+        @extend %title;
         display: block;
         margin-left: 2px;
       }
