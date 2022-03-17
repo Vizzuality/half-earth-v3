@@ -11,29 +11,31 @@ const CategoryBox = ({
   handleBoxClick,
   counter,
   isOpen,
-}) => (
-  <>
-    <div className={styles.box} onClick={handleBoxClick}>
-      <div className={styles.categoryContainer}>
-        {counter > 0 && (
-          <div className={cx(styles.counter, { [styles.openBox]: isOpen })}>
-            <span className={styles.counterText}>{counter}</span>
+}) => {
+  return (
+    <>
+      <div className={styles.box} onClick={handleBoxClick}>
+        <div className={styles.categoryContainer}>
+          {counter > 0 && (
+            <div className={cx(styles.counter, { [styles.openBox]: isOpen })}>
+              <span className={styles.counterText}>{counter}</span>
+            </div>
+          )}
+          {image && (
+            <img src={image} alt={title} className={styles.categoryThumbnail} />
+          )}
+          {Icon && <Icon className={styles.categoryThumbnail} />}
+          <div className={styles.titleContainer}>
+            <p className={styles.category}>{title}</p>
           </div>
-        )}
-        {image && (
-          <img src={image} alt={title} className={styles.categoryThumbnail} />
-        )}
-        {Icon && <Icon className={styles.categoryThumbnail} />}
-        <div className={styles.titleContainer}>
-          <p className={styles.category}>{title}</p>
-        </div>
-        <div className={cx(styles.icon, { [styles.openBox]: isOpen })}>
-          <ArrowExpandIcon />
+          <div className={cx(styles.icon, { [styles.openBox]: isOpen })}>
+            <ArrowExpandIcon />
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  )
+};
 
 CategoryBox.propTypes = {
   title: PropTypes.string,

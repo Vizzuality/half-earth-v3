@@ -29,6 +29,7 @@ const AnalyzeAreasCardComponent = ({
   isSketchToolActive,
   onShapeUploadError,
   selectedAnalysisTab,
+  className,
   onShapeUploadSuccess,
   handleOptionSelection,
   handleAnalysisTabClick,
@@ -46,7 +47,7 @@ const AnalyzeAreasCardComponent = ({
   };
 
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <div className={cx(styles.sidebarCardContainer, className, { [styles.open]: isOpen })}>
       <CategoryBox
         title="Analyze areas"
         Icon={AnalyzeAreasIcon}
