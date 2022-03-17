@@ -33,6 +33,7 @@ import BiodiversityThumbnail from 'images/biodiversity.png';
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
+  className,
   handleLayerToggle,
   handleCloseCard,
   map,
@@ -65,7 +66,7 @@ const BiodiversitySidebarCardComponent = ({
   const thisStep = onBoardingStep === 1;
   return (
     <motion.div
-      className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
+      className={cx(styles.sidebarCardContainer, className, { [styles.open]: isOpen })}
       animate={{
         outline: waitingInteraction && thisStep ? '5px solid #00BDB5' : 'none',
       }}
@@ -77,7 +78,7 @@ const BiodiversitySidebarCardComponent = ({
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
-        counter={waitingInteraction && thisStep && countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
+        counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />

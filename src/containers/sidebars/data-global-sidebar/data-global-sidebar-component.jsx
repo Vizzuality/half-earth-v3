@@ -22,22 +22,27 @@ const DataGlobalSidebarComponent = ({
   onBoardingStep,
   waitingInteraction,
 }) => {
-
+  console.log({ onBoardingStep, waitingInteraction })
   return (
     <div className={cx(styles.container, className)}>
       <AnalyzeAreasSidebarCard
         view={view}
         activeLayers={activeLayers}
+        className={cx({
+          [styles.pointerBlocked]: waitingInteraction,
+        })}
       />
       <BiodiversitySidebarCard
         map={map}
         view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
-        className={styles.biodiversitySidebarCard}
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
         waitingInteraction={waitingInteraction}
+        className={cx({
+          [styles.pointerBlocked]: waitingInteraction && onBoardingStep !== 1
+        })}
       />
       <ProtectedAreasSidebarCard
         map={map}
@@ -47,6 +52,9 @@ const DataGlobalSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
         waitingInteraction={waitingInteraction}
+        className={cx({
+          [styles.pointerBlocked]: waitingInteraction && onBoardingStep !== 2
+        })}
       />
       <HumanImpactSidebarCard
         map={map}
@@ -56,6 +64,9 @@ const DataGlobalSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
         waitingInteraction={waitingInteraction}
+        className={cx({
+          [styles.pointerBlocked]: waitingInteraction && onBoardingStep !== 3
+        })}
       />
     </div>
   )

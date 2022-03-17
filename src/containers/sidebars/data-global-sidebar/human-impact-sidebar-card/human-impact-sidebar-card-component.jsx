@@ -36,6 +36,7 @@ const HumanImpactSidebarCardComponent = ({
   map,
   source,
   activeLayers,
+  className,
   handleLayerToggle,
   countedActiveLayers,
   onBoardingStep,
@@ -53,7 +54,7 @@ const HumanImpactSidebarCardComponent = ({
   const thisStep = onBoardingStep === 3;
   return (
     <motion.div
-      className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
+      className={cx(styles.sidebarCardContainer, className, { [styles.open]: isOpen })}
       animate={{
         outline: waitingInteraction && thisStep ? '5px solid #00BDB5' : 'none',
       }}
