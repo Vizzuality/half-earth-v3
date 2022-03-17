@@ -88,9 +88,14 @@ const SoundButtonComponent = ({
     Object.values(SCRIPTS[onBoardingType])[onBoardingStep];
   const file = files[onBoardingType][onBoardingStep];
 
+  const handleBack = () => {
+    browsePage({ type: LANDING });
+    changeUI({ onBoardingType: null, onBoardingStep: 0, waitingInteraction: false });
+  }
+
   const handleSwitchMode = () => {
     setFinishModal(false);
-    changeUI({ onBoardingType: null, onBoardingStep: 0 });
+    changeUI({ onBoardingType: null, onBoardingStep: 0, waitingInteraction: false });
   };
 
   const handleFinishOnBoarding = () => {
@@ -236,9 +241,9 @@ const SoundButtonComponent = ({
       </div>
       <Modal
         isOpen={finishModal}
-        title="What would you like to do next?"
-        description="You just finished the audio tour you can either go on a new tour or explore the HE map on your own."
-        handleBack={() => browsePage({ type: LANDING })}
+        title='What would you like to do next?'
+        description='You just finished the audio tour you can either go on a new tour or explore the HE map on your own.'
+        handleBack={handleBack}
         handleClose={handleSwitchMode}
         onRequestClose={handleSwitchMode}
       />

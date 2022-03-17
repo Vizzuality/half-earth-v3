@@ -1,12 +1,14 @@
+// Dependencies
+import React from 'react';
+import cx from 'classnames';
 import loadable from '@loadable/component';
+// Components
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
-import React from 'react';
 import NationalReportCardLandingScene from 'scenes/nrc-landing-scene';
+// Styles
 import uiStyles from 'styles/ui.module.scss';
-
-
-
+// Dynamic imports
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCardLanding = ({
@@ -26,7 +28,12 @@ const NationalReportCardLanding = ({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu />
+      <MainMenu
+        className={cx({
+          [uiStyles.pointerBlocked]: waitingInteraction,
+        })}
+        waitingInteraction={waitingInteraction}
+      />
       <NationalReportCardLandingScene
         countryISO={countryISO}
         countryName={countryName}
