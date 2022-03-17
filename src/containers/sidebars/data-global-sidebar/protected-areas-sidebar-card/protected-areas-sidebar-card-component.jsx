@@ -1,21 +1,26 @@
+// Dependencies
 import React, { useState } from 'react';
 import cx from 'classnames';
+// Components
+import CategoryBox from 'components/category-box';
+import LayerToggle from 'components/layer-toggle';
+import SourceAnnotation from 'components/source-annotation';
+// Constants
 import {
   WDPALayers,
   conserveNextLayers,
   TEXTS,
 } from 'constants/protected-areas';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import CategoryBox from 'components/category-box';
-import LayerToggle from 'components/layer-toggle';
-import SourceAnnotation from 'components/source-annotation';
-import styles from './protected-areas-sidebar-card-styles.module.scss';
-import hrTheme from 'styles/themes/hr-theme.module.scss';
-import ProtectionThumbnail from 'images/existing-protection.png';
 import {
   PROTECTION_SLUG,
   FUTURE_PLACES_SLUG,
 } from 'constants/analyze-areas-constants';
+// Styles
+import styles from './protected-areas-sidebar-card-styles.module.scss';
+import hrTheme from 'styles/themes/hr-theme.module.scss';
+// Assets
+import ProtectionThumbnail from 'images/existing-protection.png';
 
 const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
