@@ -1,10 +1,13 @@
+// Dependencies
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+// components
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
-import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import SourceAnnotation from 'components/source-annotation';
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+// Constants
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   MARINE_HUMAN_PRESSURES_SLUG,
@@ -18,11 +21,13 @@ import {
   humanPressuresMarine,
   TEXTS,
 } from 'constants/human-pressures';
+// Styles
 import styles from './human-impact-sidebar-card-styles.module.scss';
-import HumanPressuresThumbnail from 'images/human-pressures.png';
-
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
+// Assets
+import HumanPressuresThumbnail from 'images/human-pressures.png';
+
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
 const HumanImpactSidebarCardComponent = ({

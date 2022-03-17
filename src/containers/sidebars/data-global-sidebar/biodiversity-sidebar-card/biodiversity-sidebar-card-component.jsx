@@ -2,20 +2,16 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-
 // Components
 import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import Tabs from 'components/tabs';
-
-
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import Tooltip from 'containers/onboarding/tooltip';
-
 // Constants
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
@@ -27,12 +23,10 @@ import {
   MARINE,
   RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
-
 // Styles
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-
-
+// Assets
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
 
@@ -51,8 +45,6 @@ const BiodiversitySidebarCardComponent = ({
   onBoardingStep,
   waitingInteraction
 }) => {
-  console.log({ onBoardingStep, waitingInteraction });
-
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -70,17 +62,17 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const animateCard = waitingInteraction && onBoardingStep === 0;
+  const stepCard = waitingInteraction && onBoardingStep === 0; // CHANGE TO 1
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
 
       animate={{
-        outline: animateCard ? '5px solid #00BDB5' : 'none',
-        opacity: animateCard ? 1 : 0
+        outline: stepCard ? '5px solid #00BDB5' : 'none',
+        opacity: stepCard ? 1 : 0
       }}
       transition={{
-        duration: 1,
+        duration: 1.75,
         repeat: Infinity,
       }}
     >
@@ -192,8 +184,9 @@ const BiodiversitySidebarCardComponent = ({
           metaDataSources={source}
         />
       </div>
-
-      <Tooltip />
+      {stepCard && (
+        <Tooltip />
+      )}
 
     </motion.div>
   );
