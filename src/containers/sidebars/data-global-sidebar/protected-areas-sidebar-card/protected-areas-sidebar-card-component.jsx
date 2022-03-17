@@ -1,10 +1,12 @@
 // Dependencies
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 // Components
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
+import Tooltip from 'containers/onboarding/tooltip';
 // Constants
 import {
   WDPALayers,
@@ -30,12 +32,24 @@ const ProtectedAreasSidebarCardComponent = ({
   activeLayers,
   handleLayerToggle,
   countedActiveLayers,
+  onBoardingStep,
+  waitingInteraction
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
+  const thisStep = onBoardingStep === 2;
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <motion.div
+      className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
+      animate={{
+        outline: waitingInteraction && thisStep ? '5px solid #00BDB5' : 'none',
+      }}
+      transition={{
+        duration: 1.75,
+        repeat: Infinity,
+      }}
+    >
       <CategoryBox
         image={ProtectionThumbnail}
         title={TEXTS.categoryTitle}
@@ -85,7 +99,12 @@ const ProtectedAreasSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-    </div>
+
+      {waitingInteraction && thisStep && (
+        <Tooltip />
+      )}
+
+    </motion.div>
   );
 };
 

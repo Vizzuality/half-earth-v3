@@ -1,11 +1,13 @@
 // Dependencies
 import React, { useState } from 'react';
 import cx from 'classnames';
-// components
+import { motion } from 'framer-motion';
+// Components
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
+import Tooltip from 'containers/onboarding/tooltip';
 // Constants
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
@@ -36,7 +38,10 @@ const HumanImpactSidebarCardComponent = ({
   activeLayers,
   handleLayerToggle,
   countedActiveLayers,
+  onBoardingStep,
+  waitingInteraction
 }) => {
+
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
@@ -45,8 +50,18 @@ const HumanImpactSidebarCardComponent = ({
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
 
+  const thisStep = onBoardingStep === 3;
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <motion.div
+      className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
+      animate={{
+        outline: waitingInteraction && thisStep ? '5px solid #00BDB5' : 'none',
+      }}
+      transition={{
+        duration: 1.75,
+        repeat: Infinity,
+      }}
+    >
       <CategoryBox
         title={TEXTS.categoryTitle}
         image={HumanPressuresThumbnail}
@@ -138,7 +153,12 @@ const HumanImpactSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-    </div>
+
+      {waitingInteraction && thisStep && (
+        <Tooltip />
+      )}
+
+    </motion.div>
   );
 };
 

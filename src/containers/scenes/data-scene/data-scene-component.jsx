@@ -55,7 +55,6 @@ const DataSceneComponent = ({
   onBoardingStep,
   waitingInteraction
 }) => {
-  console.log({ waitingInteraction, onBoardingStep })
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(

@@ -45,6 +45,8 @@ const DataGlobalSidebarComponent = ({
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
+        onBoardingStep={onBoardingStep}
+        waitingInteraction={waitingInteraction}
       />
       <HumanImpactSidebarCard
         map={map}
@@ -52,6 +54,8 @@ const DataGlobalSidebarComponent = ({
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
+        onBoardingStep={onBoardingStep}
+        waitingInteraction={waitingInteraction}
       />
     </div>
   )
