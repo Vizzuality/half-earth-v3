@@ -62,7 +62,7 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const thisStep = onBoardingStep === 0; // CHANGE TO 1
+  const thisStep = onBoardingStep === 1;
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}
@@ -77,7 +77,7 @@ const BiodiversitySidebarCardComponent = ({
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
-        counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
+        counter={waitingInteraction && thisStep && countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
