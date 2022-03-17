@@ -19,9 +19,14 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
     setPlaying(true);
   }, [])
 
+  const handleBack = () => {
+    browsePage({ type: LANDING });
+    changeUI({ onBoardingType: null, onBoardingStep: 0, waitingInteraction: false });
+  }
+
   const handleSwitchMode = () => {
     setFinishModal(false);
-    changeUI({ onBoardingType: null, onBoardingStep: 0 });
+    changeUI({ onBoardingType: null, onBoardingStep: 0, waitingInteraction: false });
   };
 
   const handleFinishOnBoarding = () => {
@@ -106,7 +111,7 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
         isOpen={finishModal}
         title='What would you like to do next?'
         description='You just finished the audio tour you can either go on a new tour or explore the HE map on your own.'
-        handleBack={() => browsePage({ type: LANDING })}
+        handleBack={handleBack}
         handleClose={handleSwitchMode}
       />
     </div >

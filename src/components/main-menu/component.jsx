@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { ReactComponent as MenuIcon } from "icons/menu.svg";
-import styles from "./main-menu.module.scss";
+import cx from 'classnames';
 import MainMenuContent from "./main-menu-content";
+import styles from "./main-menu.module.scss";
+import { ReactComponent as MenuIcon } from "icons/menu.svg";
 
-const MainMenu = ({ className }) => {
+const MainMenu = ({ className, waitingInteraction }) => {
+  console.log({ waitingInteraction })
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
       <button
-        className={styles.mainMenuButton}
+        className={cx(className, styles.mainMenuButton)}
         onClick={() => setMenuOpen(true)}
         id="main-menu-button"
         aria-haspopup="true"

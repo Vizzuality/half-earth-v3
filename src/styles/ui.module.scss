@@ -79,3 +79,7 @@ $scrollbar-width: 4px;
   height: $icon-size;
   width: $icon-size;
 }
+
+.pointerBlocked {
+  pointer-events: none;
+}

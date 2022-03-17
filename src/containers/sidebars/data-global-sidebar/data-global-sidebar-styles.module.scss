@@ -14,7 +14,3 @@
   left: -$sidebar-paddings;
   width: calc(100% + (2 * #{$sidebar-paddings}));
 }
-
-.pointerBlocked {
-  pointer-events: none;
-}
