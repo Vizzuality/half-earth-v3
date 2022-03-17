@@ -5,6 +5,7 @@
 
 .sidebarCardContainer {
   @extend .sharedSidebarCardContainer;
+  position: relative;
 }
 
 .layersTogglesContainer{
