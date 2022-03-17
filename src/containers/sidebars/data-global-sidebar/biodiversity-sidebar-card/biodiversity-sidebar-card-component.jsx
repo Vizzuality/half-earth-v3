@@ -63,12 +63,12 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const thisStep = onBoardingStep === 1;
+  const currentStep = onBoardingStep === 1;
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, { [styles.open]: isOpen })}
       animate={{
-        outline: waitingInteraction && thisStep ? '5px solid #00BDB5' : 'none',
+        outline: waitingInteraction && currentStep ? '5px solid #00BDB5' : 'none',
       }}
       transition={{
         duration: 1.75,
@@ -184,7 +184,7 @@ const BiodiversitySidebarCardComponent = ({
         />
       </div>
 
-      {waitingInteraction && thisStep && (
+      {waitingInteraction && currentStep && (
         <Tooltip />
       )}
 
