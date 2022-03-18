@@ -28,9 +28,6 @@ const DataGlobalSidebarComponent = ({
         activeLayers={activeLayers}
         view={view}
         waitingInteraction={waitingInteraction}
-        className={cx({
-          [styles.pointerBlocked]: waitingInteraction,
-        })}
       />
       <BiodiversitySidebarCard
         map={map}
@@ -40,9 +37,6 @@ const DataGlobalSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
         waitingInteraction={waitingInteraction}
-        className={cx({
-          [styles.pointerBlocked]: waitingInteraction && onBoardingStep !== 1
-        })}
       />
       <ProtectedAreasSidebarCard
         map={map}
@@ -52,9 +46,6 @@ const DataGlobalSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
         waitingInteraction={waitingInteraction}
-        className={cx({
-          [styles.pointerBlocked]: waitingInteraction && onBoardingStep !== 2
-        })}
       />
       <HumanImpactSidebarCard
         map={map}
@@ -64,9 +55,6 @@ const DataGlobalSidebarComponent = ({
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
         waitingInteraction={waitingInteraction}
-        className={cx({
-          [styles.pointerBlocked]: waitingInteraction && onBoardingStep !== 3
-        })}
       />
     </div>
   )
