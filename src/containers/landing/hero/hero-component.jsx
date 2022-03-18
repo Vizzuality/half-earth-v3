@@ -74,7 +74,7 @@ const HeroComponent = ({
             description='Understand where the suggested priority places should happen for vertebrates.'
             handleClick={() => {
               browsePage({ type: DATA })
-              changeUI({ onBoardingType: 'priority-places', onBoardingStep: 2, waitingInteraction: true })
+              changeUI({ onBoardingType: 'priority-places', onBoardingStep: 3, waitingInteraction: true })
             }}
 
           />

@@ -35,6 +35,7 @@ const AnalyzeAreasCardComponent = ({
   handleAnalysisTabClick,
   handlePromptModalToggle,
   aoiHistoryModalOpenAnalytics,
+  waitingInteraction
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -47,7 +48,11 @@ const AnalyzeAreasCardComponent = ({
   };
 
   return (
-    <div className={cx(styles.sidebarCardContainer, className, { [styles.open]: isOpen })}>
+    <div className={cx(styles.sidebarCardContainer, className, {
+      [styles.open]: isOpen,
+      [styles.onBoardingOverlay]: waitingInteraction,
+    })}
+    >
       <CategoryBox
         title="Analyze areas"
         Icon={AnalyzeAreasIcon}
