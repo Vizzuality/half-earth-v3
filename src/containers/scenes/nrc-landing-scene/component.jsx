@@ -66,7 +66,11 @@ const NrcLandingComponent = ({
           isLandscapeMode={isLandscapeMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <Widgets activeLayers={activeLayers} openedModal={openedModal} />
+        <Widgets
+          activeLayers={activeLayers}
+          openedModal={openedModal}
+          waitingInteraction={waitingInteraction}
+        />
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}

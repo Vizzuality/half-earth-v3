@@ -50,7 +50,7 @@ const SoundButtonComponent = ({ browsePage, changeUI }) => {
         <button className={styles.soundBtn}>
 
           <ReactPlayer
-            url={[{ src: migalaSound, type: 'audio/mp3' }]}
+            // url={[{ src: migalaSound, type: 'audio/mp3' }]}
             controls
             playing={playing}
             wrapper={"audio"}
