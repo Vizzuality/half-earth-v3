@@ -5,7 +5,6 @@ import styles from "./main-menu.module.scss";
 import { ReactComponent as MenuIcon } from "icons/menu.svg";
 
 const MainMenu = ({ className, waitingInteraction }) => {
-  console.log({ waitingInteraction })
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (

@@ -80,10 +80,7 @@ $scrollbar-width: 4px;
   width: $icon-size;
 }
 
-.pointerBlocked {
-  pointer-events: none;
-}
-
 .onBoardingOverlay {
   opacity: 0.4;
+  pointer-events: none;
 }

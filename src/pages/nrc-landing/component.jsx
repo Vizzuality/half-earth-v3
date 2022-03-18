@@ -1,6 +1,5 @@
 // Dependencies
 import React from 'react';
-import cx from 'classnames';
 import loadable from '@loadable/component';
 // Components
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -28,12 +27,7 @@ const NationalReportCardLanding = ({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu
-        className={cx({
-          [uiStyles.pointerBlocked]: waitingInteraction,
-        })}
-        waitingInteraction={waitingInteraction}
-      />
+      <MainMenu waitingInteraction={waitingInteraction} />
       <NationalReportCardLandingScene
         countryISO={countryISO}
         countryName={countryName}
