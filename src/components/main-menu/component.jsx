@@ -11,7 +11,7 @@ const MainMenu = ({ className, waitingInteraction }) => {
   return (
     <>
       <button
-        className={cx(className, styles.mainMenuButton)}
+        className={cx(className, styles.mainMenuButton, { [styles.onBoardingOverlay]: waitingInteraction })}
         onClick={() => setMenuOpen(true)}
         id="main-menu-button"
         aria-haspopup="true"

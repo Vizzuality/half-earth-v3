@@ -66,7 +66,10 @@ const BiodiversitySidebarCardComponent = ({
   const currentStep = onBoardingStep === 1;
   return (
     <motion.div
-      className={cx(styles.sidebarCardContainer, className, { [styles.open]: isOpen })}
+      className={cx(styles.sidebarCardContainer, className, {
+        [styles.open]: isOpen,
+        [styles.onBoardingOverlay]: waitingInteraction && !currentStep,
+      })}
       animate={{
         outline: waitingInteraction && currentStep ? '5px solid #00BDB5' : 'none',
       }}

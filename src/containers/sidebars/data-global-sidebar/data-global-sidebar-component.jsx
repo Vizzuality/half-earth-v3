@@ -22,12 +22,12 @@ const DataGlobalSidebarComponent = ({
   onBoardingStep,
   waitingInteraction,
 }) => {
-  console.log({ onBoardingStep, waitingInteraction })
   return (
     <div className={cx(styles.container, className)}>
       <AnalyzeAreasSidebarCard
-        view={view}
         activeLayers={activeLayers}
+        view={view}
+        waitingInteraction={waitingInteraction}
         className={cx({
           [styles.pointerBlocked]: waitingInteraction,
         })}
