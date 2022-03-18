@@ -18,16 +18,26 @@
   }
 
   .scriptBox {
-    align-items: center;
+    @extend %bodyText;
+
+    align-items: start;
     background-color: $white;
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     display: flex;
-    height: 24px;
     justify-content: center;
     margin: 0 12px 13px 0;
-    width: 32px;
+    height: 110px;
+    width: 300px;
+    padding: 10px 16px 16px;
+
+    &.waiting {
+      align-items: center;
+      height: 24px;
+      width: 32px;
+      padding: 0;
+    }
   }
 
   .closeButton {
