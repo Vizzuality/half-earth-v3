@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
+
 import { ReactComponent as ZoomInIcon } from 'icons/zoomIn.svg';
 import { ReactComponent as ZoomOutIcon } from 'icons/zoomOut.svg';
 
