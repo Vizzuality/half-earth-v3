@@ -23,7 +23,7 @@ const WidgetsComponent = ({
   const hiddenWidget = hidden || isOnMobile;
   return (
     <div className={cx({ [uiStyles.onBoardingOverlay]: waitingInteraction })}>
-      {!hideZoom && (
+      {!hideZoom && !waitingInteraction && (
         <ZoomWidget
           map={map}
           view={view}

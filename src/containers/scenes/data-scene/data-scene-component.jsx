@@ -61,6 +61,7 @@ const DataSceneComponent = ({
     () => ({ ...sceneSettings, ...(isMobile && { padding: { left: 0 } }) }),
     [isMobile]
   );
+
   return (
     <>
       <Scene

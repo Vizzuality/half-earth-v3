@@ -18,4 +18,5 @@ const ZoomWidgetComponent = ({ zoomWidget }) => (
   </div>
 );
 
+
 export default ZoomWidgetComponent;
