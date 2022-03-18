@@ -5,7 +5,6 @@ import cx from 'classnames';
 import styles from './styles.module.scss';
 import { ReactComponent as VolumeControl } from 'icons/volume-control.svg';
 
-
 const AudioCard = ({
   className,
   description,
@@ -15,10 +14,7 @@ const AudioCard = ({
   title,
   handleClick,
 }) => (
-  <button
-    onClick={handleClick}
-    className={cx(className, styles.container)}
-  >
+  <button onClick={handleClick} className={cx(className, styles.container)}>
     <div className={styles.numberContainer}>
       <p className={styles.number}>{number}.</p>
       <img className={styles.gif} src={gif} alt={title} />
@@ -33,7 +29,6 @@ const AudioCard = ({
       <p>{duration}min</p>
       <VolumeControl className={styles.volumeIcon} />
     </div>
-
   </button>
 );
 
@@ -42,7 +37,7 @@ AudioCard.propTypes = {
   description: PropTypes.string,
   duration: PropTypes.string,
   gif: PropTypes.string,
-  number: PropTypes.number,
+  number: PropTypes.string,
   title: PropTypes.string,
   handleClick: PropTypes.func,
 };

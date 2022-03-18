@@ -16,7 +16,7 @@
 // Mainly cards and section titles
 %display2 {
   font-family: $font-family-serif;
-  font-size: 32px;        
+  font-size: 32px;
   font-weight: 200;
   line-height: 36px;
   letter-spacing: 1px;
@@ -73,7 +73,7 @@
 // Datasets, Geodescriber
 %bodyText {
   font-family: $font-family-sans-serif;
-  font-size: 14px;
+  font-size: $font-size-sm;
   font-weight: 300;
   line-height: 22px;
   letter-spacing: 0px;
