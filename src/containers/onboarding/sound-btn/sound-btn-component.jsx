@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as DotsIcon } from 'icons/dots.svg';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
+import { ReactComponent as MuteIcon } from 'icons/mute.svg';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
@@ -66,14 +67,20 @@ const SoundButtonComponent = ({
   waitingInteraction,
 }) => {
   const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(false);
 
   // We always need a previous user click on the page. We show a message if this hasn't happened (eg. reload)
   // https://developer.chrome.com/blog/autoplay/#webaudio
   // https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/
   const [waitingStartAudioClick, setWaitingStartAudioClick] = useState(false);
+  const [freeToPlay, setFreeToPlay] = useState(false);
 
   const [finishModal, setFinishModal] = useState(false);
   const [textMark, setTextMark] = useState(0);
+
+  const toggleMuted = () => {
+    setMuted(!muted);
+  };
 
   const script =
     onBoardingType &&
@@ -130,7 +137,17 @@ const SoundButtonComponent = ({
     if (!waitingInteraction && waitingStartAudioClick) {
       return 'Hit play when you are ready to start';
     }
-    return waitingInteraction ? <DotsIcon /> : text;
+    return waitingInteraction ? (
+      <DotsIcon />
+    ) : (
+      <div className={styles.textContainer}>
+        <MuteIcon
+          className={cx(styles.muteIcon, { [styles.muted]: muted })}
+          onClick={toggleMuted}
+        />
+        {text}
+      </div>
+    );
   };
 
   return (
@@ -149,13 +166,14 @@ const SoundButtonComponent = ({
         </button>
         <button className={styles.soundBtn}>
           <ReactPlayer
-            key={file}
+            key={`${file}#t=${startTime},${endTime}`}
             url={[
               {
                 src: `${file}#t=${startTime},${endTime}`,
                 type: 'audio/wav',
               },
             ]}
+            volume={muted || !freeToPlay ? 0 : 1}
             playing={playing}
             wrapper={'audio'}
             onPlay={() => setPlaying(true)}
@@ -163,11 +181,16 @@ const SoundButtonComponent = ({
               handleEndOfStep();
             }}
             onProgress={({ playedSeconds }) => {
-              // Only happens in this case. See waitingStartAudioClick hook comment
-              const notPlayingWaitingForUserClick = playedSeconds === 0;
-              if (notPlayingWaitingForUserClick) {
-                setPlaying(false);
-                setWaitingStartAudioClick(true);
+              if (!freeToPlay) {
+                // Only happens in this case. See waitingStartAudioClick hook comment
+                const notPlayingBecauseWaitingForUserClick =
+                  playedSeconds === 0;
+                if (notPlayingBecauseWaitingForUserClick) {
+                  setPlaying(false);
+                  setWaitingStartAudioClick(true);
+                } else {
+                  setFreeToPlay(true);
+                }
               }
 
               if (
@@ -187,6 +210,8 @@ const SoundButtonComponent = ({
               file: {
                 attributes: { preload: 'auto' },
                 forceAudio: true,
+                autoPlay: true,
+                muted: true,
               },
             }}
           />
@@ -194,6 +219,7 @@ const SoundButtonComponent = ({
             <PlayIcon
               onClick={() => {
                 setWaitingStartAudioClick(false);
+                setFreeToPlay(true);
                 setPlaying(true);
               }}
             />

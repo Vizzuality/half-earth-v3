@@ -92,4 +92,27 @@
       width: 8px;
     }
   }
+
+  .textContainer {
+    position: relative;
+    padding-right: 15px;
+
+    .muteIcon {
+      position: absolute;
+      right: 0;
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+
+      :global .soundMuteIcon {
+        fill: $white;
+      }
+
+      &.muted {
+        :global .soundMuteIcon {
+          fill: $blue;
+        }
+      }
+    }
+  }
 }
