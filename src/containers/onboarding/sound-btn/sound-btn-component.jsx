@@ -66,6 +66,12 @@ const SoundButtonComponent = ({
   waitingInteraction,
 }) => {
   const [playing, setPlaying] = useState(true);
+
+  // We always need a previous user click on the page. We show a message if this hasn't happened (eg. reload)
+  // https://developer.chrome.com/blog/autoplay/#webaudio
+  // https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/
+  const [waitingForUserClick, setWaitingForUserClick] = useState(false);
+
   const [finishModal, setFinishModal] = useState(false);
   const [textMark, setTextMark] = useState(0);
 
@@ -120,6 +126,13 @@ const SoundButtonComponent = ({
   const stepsNumber =
     SCRIPTS[onBoardingType] && Object.keys(SCRIPTS[onBoardingType]).length;
 
+  const renderTooltipText = () => {
+    if (waitingForUserClick) {
+      return 'Hit play when you are ready to start';
+    }
+    return waitingInteraction ? <DotsIcon /> : text;
+  };
+
   return (
     <div className={styles.soundContainer}>
       <div
@@ -127,7 +140,7 @@ const SoundButtonComponent = ({
           [styles.waiting]: waitingInteraction,
         })}
       >
-        {waitingInteraction ? <DotsIcon /> : text}
+        {renderTooltipText()}
       </div>
       <div className={styles.rightColumn}>
         <button className={styles.closeButton} onClick={handleFinishOnBoarding}>
@@ -150,6 +163,13 @@ const SoundButtonComponent = ({
               handleEndOfStep();
             }}
             onProgress={({ playedSeconds }) => {
+              // Only happens in this case. See waitingForUserClick hook comment
+              const notPlayingWaitingForUserClick = playedSeconds === 0;
+              if (notPlayingWaitingForUserClick) {
+                setPlaying(false);
+                setWaitingForUserClick(true);
+              }
+
               if (
                 script[textMark] &&
                 playedSeconds > script[textMark].endTime
@@ -170,7 +190,7 @@ const SoundButtonComponent = ({
               },
             }}
           />
-          {playing ? (
+          {playing && !waitingForUserClick ? (
             <>
               <StepsArcs
                 numberOfArcs={stepsNumber}
@@ -179,7 +199,12 @@ const SoundButtonComponent = ({
               {renderAudioBars()}
             </>
           ) : (
-            <PlayIcon />
+            <PlayIcon
+              onClick={() => {
+                setWaitingForUserClick(false);
+                setPlaying(true);
+              }}
+            />
           )}
         </button>
       </div>
