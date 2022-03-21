@@ -2,7 +2,6 @@
 import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
-
 // Components
 import Scene from 'components/scene';
 import MapTooltip from 'components/map-tooltip';
@@ -14,15 +13,13 @@ import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SoundButton from 'containers/onboarding/sound-btn';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
+import Tooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
-
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
-
 // Styles
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './data-scene-styles.module.scss';
-
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -80,7 +77,9 @@ const DataSceneComponent = ({
           userConfig={userConfig}
           activeLayers={activeLayers}
         />
+
         {isGlobeUpdating && <Spinner floating />}
+
         <DataGlobalSidebar
           activeLayers={activeLayers}
           activeOption={activeOption}
@@ -98,6 +97,13 @@ const DataSceneComponent = ({
             [animationStyles.leftHidden]: sidebarHidden,
           })}
         />
+
+        {onBoardingStep && (
+          <div>
+            <Tooltip />
+          </div>
+        )}
+
         <MobileOnly>
           <MenuFooter
             activeOption={activeOption}

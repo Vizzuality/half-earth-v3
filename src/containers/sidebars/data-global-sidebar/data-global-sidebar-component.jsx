@@ -27,7 +27,7 @@ const DataGlobalSidebarComponent = ({
       <AnalyzeAreasSidebarCard
         activeLayers={activeLayers}
         view={view}
-        waitingInteraction={waitingInteraction}
+        onBoardingStep={onBoardingStep}
       />
       <BiodiversitySidebarCard
         map={map}

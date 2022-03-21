@@ -90,12 +90,12 @@ const SoundButtonComponent = ({
 
   const handleBack = () => {
     browsePage({ type: LANDING });
-    changeUI({ onBoardingType: null, onBoardingStep: 0, waitingInteraction: false });
+    changeUI({ onBoardingType: null, onBoardingStep: null, waitingInteraction: false });
   }
 
   const handleSwitchMode = () => {
     setFinishModal(false);
-    changeUI({ onBoardingType: null, onBoardingStep: 0, waitingInteraction: false });
+    changeUI({ onBoardingType: null, onBoardingStep: null, waitingInteraction: false });
   };
 
   const handleFinishOnBoarding = () => {

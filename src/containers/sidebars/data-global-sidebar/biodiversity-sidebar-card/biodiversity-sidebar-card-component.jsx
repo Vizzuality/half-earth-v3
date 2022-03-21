@@ -11,7 +11,6 @@ import Tabs from 'components/tabs';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
-import Tooltip from 'containers/onboarding/tooltip';
 // Constants
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
@@ -44,7 +43,6 @@ const BiodiversitySidebarCardComponent = ({
   cardMetadata,
   showCard,
   onBoardingStep,
-  waitingInteraction
 }) => {
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
@@ -68,10 +66,10 @@ const BiodiversitySidebarCardComponent = ({
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: waitingInteraction && !currentStep,
+        [styles.onBoardingOverlay]: !currentStep,
       })}
       animate={{
-        outline: waitingInteraction && currentStep ? '5px solid #00BDB5' : 'none',
+        outline: currentStep ? '5px solid #00BDB5' : 'none',
       }}
       transition={{
         duration: 1.75,
@@ -186,10 +184,6 @@ const BiodiversitySidebarCardComponent = ({
           metaDataSources={source}
         />
       </div>
-
-      {waitingInteraction && currentStep && (
-        <Tooltip />
-      )}
 
     </motion.div>
   );

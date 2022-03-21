@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
-import Tooltip from 'containers/onboarding/tooltip';
 // Constants
 import {
   WDPALayers,
@@ -103,10 +102,6 @@ const ProtectedAreasSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-
-      {waitingInteraction && currentStep && (
-        <Tooltip />
-      )}
 
     </motion.div>
   );

@@ -7,7 +7,6 @@ import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
-import Tooltip from 'containers/onboarding/tooltip';
 // Constants
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
@@ -40,7 +39,6 @@ const HumanImpactSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
   onBoardingStep,
-  waitingInteraction
 }) => {
 
   const [isOpen, setOpen] = useState(false);
@@ -56,10 +54,10 @@ const HumanImpactSidebarCardComponent = ({
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: waitingInteraction && !currentStep,
+        [styles.onBoardingOverlay]: !currentStep,
       })}
       animate={{
-        outline: waitingInteraction && currentStep ? '5px solid #00BDB5' : 'none',
+        outline: currentStep ? '5px solid #00BDB5' : 'none',
       }}
       transition={{
         duration: 1.75,
@@ -157,10 +155,6 @@ const HumanImpactSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-
-      {waitingInteraction && currentStep && (
-        <Tooltip />
-      )}
 
     </motion.div>
   );
