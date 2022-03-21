@@ -119,7 +119,7 @@ const SoundButtonComponent = ({
     }
 
     changeUI({
-      onBoardingStep: onBoardingStep + 1,
+      // onBoardingStep: onBoardingStep + 1,
       waitingInteraction: true,
     });
   };
