@@ -70,7 +70,7 @@ const SoundButtonComponent = ({
   // We always need a previous user click on the page. We show a message if this hasn't happened (eg. reload)
   // https://developer.chrome.com/blog/autoplay/#webaudio
   // https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/
-  const [waitingForUserClick, setWaitingForUserClick] = useState(false);
+  const [waitingStartAudioClick, setWaitingStartAudioClick] = useState(false);
 
   const [finishModal, setFinishModal] = useState(false);
   const [textMark, setTextMark] = useState(0);
@@ -127,7 +127,7 @@ const SoundButtonComponent = ({
     SCRIPTS[onBoardingType] && Object.keys(SCRIPTS[onBoardingType]).length;
 
   const renderTooltipText = () => {
-    if (waitingForUserClick) {
+    if (!waitingInteraction && waitingStartAudioClick) {
       return 'Hit play when you are ready to start';
     }
     return waitingInteraction ? <DotsIcon /> : text;
@@ -163,11 +163,11 @@ const SoundButtonComponent = ({
               handleEndOfStep();
             }}
             onProgress={({ playedSeconds }) => {
-              // Only happens in this case. See waitingForUserClick hook comment
+              // Only happens in this case. See waitingStartAudioClick hook comment
               const notPlayingWaitingForUserClick = playedSeconds === 0;
               if (notPlayingWaitingForUserClick) {
                 setPlaying(false);
-                setWaitingForUserClick(true);
+                setWaitingStartAudioClick(true);
               }
 
               if (
@@ -190,7 +190,14 @@ const SoundButtonComponent = ({
               },
             }}
           />
-          {playing && !waitingForUserClick ? (
+          {waitingStartAudioClick && !waitingInteraction ? (
+            <PlayIcon
+              onClick={() => {
+                setWaitingStartAudioClick(false);
+                setPlaying(true);
+              }}
+            />
+          ) : (
             <>
               <StepsArcs
                 numberOfArcs={stepsNumber}
@@ -198,13 +205,6 @@ const SoundButtonComponent = ({
               />
               {renderAudioBars()}
             </>
-          ) : (
-            <PlayIcon
-              onClick={() => {
-                setWaitingForUserClick(false);
-                setPlaying(true);
-              }}
-            />
           )}
         </button>
       </div>
