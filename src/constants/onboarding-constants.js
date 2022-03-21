@@ -1,10 +1,10 @@
 export const SCRIPTS = {
   'priority-places': {
       intro: [
-        { startTime: 0, endTime: 12.8, text: 'Species are disappearing at an alarming rate. Human activities are one of the most significant drivers of habitat degradation and other threats to' },
-        { startTime: 12.8, endTime: 25.2, text: 'biodiversity. The Half-Earth Project Map shows global patterns of biodiversity, human impact, and existing protected areas. These data layers are essential to' },
-        { startTime: 25.2, endTime: 37.3, text: 'identify areas where conservation efforts are needed the most to preserve global biodiversity. Let’s have a look at its potential by exploring the Amazon, an' },
-        { startTime: 37.3, endTime: 42.2, text: 'area of incredible biodiversity under great threat.' }
+        { startTime: 0, endTime: 12.5, text: 'Species are disappearing at an alarming rate. Human activities are one of the most significant drivers of habitat degradation and other threats' },
+        { startTime: 12.5, endTime: 25.2, text: 'to biodiversity. The Half-Earth Project Map shows global patterns of biodiversity, human impact, and existing protected areas. These data' },
+        { startTime: 25.2, endTime: 37.3, text: 'layers are essential to identify areas where conservation efforts are needed the most to preserve global biodiversity. Let’s have a look at its' },
+        { startTime: 37.3, endTime: 42.2, text: 'potential by exploring the Amazon, an area of incredible biodiversity under great threat.' }
       ],
      priority: [
         { startTime: 0, endTime: 12.8, text: 'The priority layer identifies the minimum amount of land needed to provide a sufficient amount of habitat for all species represented on the map. In this ranking of priority places, yellow areas correspond to those with higher priority for conservation, as they contribute to safeguarding habitats protecting the most species. Blue tones refer to areas of lower priority values. Areas with no color have not been identified as a part of the global network needed for comprehensive biodiversity protection, but may still contain places of unique and irreplaceable value to biodiversity. In the Amazon, priority areas, like these in the Andes, correspond to the thick yellow stripe on the Western part of the continent, as well as a significant area throughout the Amazon River Basin. Note that our priority models are a starting point of identifying high-impact conservation protection. By changing parameters on the map, different conservation factors shift outcomes. In addition, other parameters involving various socio-economic factors must play a role in specific conservation efforts ultimately undertaken.' },
