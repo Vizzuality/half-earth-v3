@@ -1,0 +1,17 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.stepsCircle {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+
+  .stepsArc {
+    stroke: $dark-text;
+
+    &.active {
+      stroke: $brand-color-main;
+    }
+  }
+}

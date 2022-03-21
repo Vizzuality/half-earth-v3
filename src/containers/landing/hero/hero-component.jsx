@@ -5,22 +5,15 @@ import { motion } from 'framer-motion';
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import React from 'react';
-import { DATA, NATIONAL_REPORT_CARD_LANDING } from "router";
+import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
 // Components
 import AudioCard from './audio-card';
 // styles
 import styles from './hero-styles.module.scss';
 
-
-const HeroComponent = ({
-  className,
-  changeUI,
-  browsePage,
-}) => {
-
+const HeroComponent = ({ className, changeUI, browsePage }) => {
   return (
     <div className={cx(styles.container, className)}>
-
       <motion.h3
         className={styles.subtitle}
         initial={{ opacity: 0.5, x: 250 }}
@@ -67,16 +60,18 @@ const HeroComponent = ({
           }}
         >
           <AudioCard
-            number='01'
+            number="01"
             duration={'4-7'}
             gif={AUDIO_CARD_1_GIF}
-            title='Priority places'
-            description='Understand where the suggested priority places should happen for vertebrates.'
+            title="Priority places"
+            description="Understand where the suggested priority places should happen for vertebrates."
             handleClick={() => {
-              browsePage({ type: DATA })
-              changeUI({ onBoardingType: 'priority-places', onBoardingStep: 0 })
+              browsePage({ type: DATA });
+              changeUI({
+                onBoardingType: 'priority-places',
+                onBoardingStep: 0,
+              });
             }}
-
           />
         </motion.div>
         <motion.div
@@ -89,19 +84,23 @@ const HeroComponent = ({
           }}
         >
           <AudioCard
-            number='02'
+            number="02"
             duration={'4-7'}
-            gif={AUDIO_CARD_2_GIF} title='National Report cards'
-            description='Analyze national and other areas of interest. Download reports to share with others.'
+            gif={AUDIO_CARD_2_GIF}
+            title="National Report cards"
+            description="Analyze national and other areas of interest. Download reports to share with others."
             handleClick={() => {
-              browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
-              changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 0 })
+              browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
+              changeUI({
+                onBoardingType: 'national-report-cards',
+                onBoardingStep: 0,
+              });
             }}
           />
         </motion.div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default HeroComponent;

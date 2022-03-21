@@ -18,18 +18,28 @@
   }
 
   .scriptBox {
-    align-items: center;
+    @extend %bodyText;
+
+    align-items: start;
     background-color: $white;
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     display: flex;
-    height: 24px;
     justify-content: center;
     margin: 0 12px 13px 0;
-    width: 32px;
+    height: 110px;
+    width: 300px;
+    padding: 10px 16px 16px;
+
+    &.waiting {
+      align-items: center;
+      height: 24px;
+      width: 32px;
+      padding: 0;
+    }
   }
- 
+
   .closeButton {
     align-items: center;
     background-color: $white;
@@ -58,10 +68,11 @@
   }
 
   .soundBtn {
+    position: relative;
     align-items: center;
     border-radius: 50px;
     display: flex;
-    border: 3px solid $dark-text !important;
+    border: 3px solid transparent;
     height: 70px;
     justify-content: center;
     padding-right: 2px;
@@ -81,5 +92,27 @@
       width: 8px;
     }
   }
-}
 
+  .textContainer {
+    position: relative;
+    padding-right: 15px;
+
+    .muteIcon {
+      position: absolute;
+      right: 0;
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+
+      :global .soundMuteIcon {
+        fill: $white;
+      }
+
+      &.muted {
+        :global .soundMuteIcon {
+          fill: $blue;
+        }
+      }
+    }
+  }
+}
