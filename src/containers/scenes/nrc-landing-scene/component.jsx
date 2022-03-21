@@ -33,7 +33,6 @@ const NrcLandingComponent = ({
   isGlobeUpdating,
   onBoardingType,
   onBoardingStep,
-  waitingInteraction
 }) => {
   return (
     <>
@@ -69,7 +68,7 @@ const NrcLandingComponent = ({
         <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
-          waitingInteraction={waitingInteraction}
+          onBoardingStep={onBoardingStep}
         />
         <CountryEntryTooltip
           countryISO={countryISO}

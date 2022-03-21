@@ -17,13 +17,13 @@ const WidgetsComponent = ({
   openedModal = null,
   isNotMapsList = true,
   hidden = false,
-  waitingInteraction,
+  onBoardingStep,
 }) => {
   const isOnMobile = useMobile();
   const hiddenWidget = hidden || isOnMobile;
   return (
-    <div className={cx({ [uiStyles.onBoardingOverlay]: waitingInteraction })}>
-      {!hideZoom && !waitingInteraction && (
+    <div className={cx({ [uiStyles.onBoardingOverlay]: typeof onBoardingStep === 'number' })}>
+      {!hideZoom && onBoardingStep === null && (
         <ZoomWidget
           map={map}
           view={view}

@@ -43,10 +43,10 @@ const ProtectedAreasSidebarCardComponent = ({
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: waitingInteraction && !currentStep,
+        [styles.onBoardingOverlay]: !currentStep || onBoardingStep === null,
       })}
       animate={{
-        outline: waitingInteraction && currentStep ? '5px solid #00BDB5' : 'none',
+        outline: currentStep ? '5px solid #00BDB5' : 'none',
       }}
       transition={{
         duration: 1.75,

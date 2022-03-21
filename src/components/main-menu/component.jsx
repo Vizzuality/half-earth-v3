@@ -4,13 +4,15 @@ import MainMenuContent from "./main-menu-content";
 import styles from "./main-menu.module.scss";
 import { ReactComponent as MenuIcon } from "icons/menu.svg";
 
-const MainMenu = ({ className, waitingInteraction }) => {
+const MainMenu = ({ className, onBoardingStep }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
       <button
-        className={cx(className, styles.mainMenuButton, { [styles.onBoardingOverlay]: waitingInteraction })}
+        className={cx(className, styles.mainMenuButton, {
+          [styles.onBoardingOverlay]: typeof onBoardingStep === 'number'
+        })}
         onClick={() => setMenuOpen(true)}
         id="main-menu-button"
         aria-haspopup="true"

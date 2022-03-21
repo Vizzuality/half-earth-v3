@@ -54,7 +54,7 @@ const HumanImpactSidebarCardComponent = ({
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !currentStep,
+        [styles.onBoardingOverlay]: !currentStep || onBoardingStep === null,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',

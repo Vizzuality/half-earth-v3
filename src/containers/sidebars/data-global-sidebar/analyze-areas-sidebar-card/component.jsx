@@ -50,7 +50,7 @@ const AnalyzeAreasCardComponent = ({
   return (
     <div className={cx(styles.sidebarCardContainer, className, {
       [styles.open]: isOpen,
-      [styles.onBoardingOverlay]: onBoardingStep,
+      [styles.onBoardingOverlay]: typeof onBoardingStep === 'number',
     })}
     >
       <CategoryBox

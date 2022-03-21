@@ -139,7 +139,7 @@ const DataSceneComponent = ({
           openedModal={openedModal}
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
-          waitingInteraction={waitingInteraction}
+          onBoardingStep={onBoardingStep}
         />
         <MapTooltip onActionButtonClick={handleTooltipActionButtonClick} />
         <LabelsLayer activeLayers={activeLayers} />
