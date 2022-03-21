@@ -59,6 +59,13 @@ const DataSceneComponent = ({
     [isMobile]
   );
 
+  const TOOLTIP_PLACEMENT = useMemo(() => {
+    if (onBoardingStep === 0) return '222px';
+    if (onBoardingStep === 1) return '352px';
+    if (onBoardingStep === 2) return '480px';
+    return null;
+  }, []);
+
   return (
     <>
       <Scene
@@ -98,11 +105,14 @@ const DataSceneComponent = ({
           })}
         />
 
-        {onBoardingStep && (
-          <div>
+        {typeof onBoardingStep === 'number' && (
+          <div
+            className={styles.tooltipPlacement}
+            style={{ top: TOOLTIP_PLACEMENT }}>
             <Tooltip />
           </div>
         )}
+
 
         <MobileOnly>
           <MenuFooter

@@ -13,3 +13,10 @@
   padding-bottom: $site-gutter;
   padding-left: 5px;
 }
+
+.tooltipPlacement {
+  position: absolute;
+  left: 470px;
+  top: 222px;
+  z-index: $over-all;  
+}

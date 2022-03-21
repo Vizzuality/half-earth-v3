@@ -61,7 +61,7 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const currentStep = onBoardingStep === 1;
+  const currentStep = onBoardingStep === 0;
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
