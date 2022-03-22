@@ -1,4 +1,5 @@
 // Dependencies
+import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Components
@@ -11,9 +12,9 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SoundButton from 'containers/onboarding/sound-btn';
 import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
-import React from 'react';
-
-
+import Tooltip from 'containers/onboarding/tooltip';
+// Styles
+import styles from './nrc-landing-scene-styles.module.scss';
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -34,6 +35,21 @@ const NrcLandingComponent = ({
   onBoardingType,
   onBoardingStep,
 }) => {
+  const TOOLTIP_PLACEMENT = useMemo(() => {
+    if (onBoardingStep === 1) return {
+      display: 'none'
+    };
+    if (onBoardingStep === 2) return { // CARD
+      left: '460px',
+      top: '300px',
+    };
+    if (onBoardingStep === 3) return { // SEARCHER + MAP
+      left: '435px',
+      top: '565px',
+    };
+    return null;
+  }, []);
+
   return (
     <>
       <Scene
@@ -43,9 +59,16 @@ const NrcLandingComponent = ({
         onMapLoad={onMapLoad}
         initialRotation
       >
-
         {onBoardingType && (
           <SoundButton />
+        )}
+
+        {typeof onBoardingStep === 'number' && (
+          <div
+            className={styles.tooltipPlacement}
+            style={TOOLTIP_PLACEMENT}>
+            <Tooltip />
+          </div>
         )}
 
         <ArcgisLayerManager
@@ -73,6 +96,7 @@ const NrcLandingComponent = ({
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
+          onBoardingStep={onBoardingStep}
         />
         <NRCLandingSidebar />
         <LabelsLayer activeLayers={activeLayers} />

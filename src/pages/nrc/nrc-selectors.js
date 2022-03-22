@@ -10,24 +10,24 @@ const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (bi
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 const selectUserConfig = ({ userConfig }) => userConfig || null;
-const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
-const selectActiveView = ({location}) => location.payload.view || NRC_UI_DEFAULTS.view;
+const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+const selectActiveView = ({ location }) => location.payload.view || NRC_UI_DEFAULTS.view;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
-  return {
-    ...nrcSceneConfig,
-    ...globeUrlState
-  }
-})
+    return {
+      ...nrcSceneConfig,
+      ...globeUrlState
+    }
+  })
 
 const getUiSettings = createSelector([selectUiUrlState],
   (uiUrlState) => {
-  return {
-    ...NRC_UI_DEFAULTS,
-    ...uiUrlState
-  }
-})
+    return {
+      ...NRC_UI_DEFAULTS,
+      ...uiUrlState
+    }
+  })
 
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
@@ -38,7 +38,9 @@ const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
-
+export const getOnBoardingType = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingType);
+export const getOnBoardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingStep);
+export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
@@ -55,4 +57,7 @@ export default createStructuredSelector({
   localSceneActiveTab: selectActiveView,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
+  onBoardingType: getOnBoardingType,
+  onBoardingStep: getOnBoardingStep,
+  waitingInteraction: getOnWaitingInteraction,
 });

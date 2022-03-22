@@ -36,6 +36,8 @@ const CountrySceneComponent = ({
   countryTooltipDisplayFor,
   aoiTooltipInfo,
   setTooltipInfo,
+  onBoardingType,
+  onBoardingStep,
 }) => (
   <Scene
     sceneName={'nrc-scene'}

@@ -28,6 +28,9 @@ const NationalReportCard = ({
   localSceneActiveTab,
   countryTooltipDisplayFor,
   countryChallengesSelectedKey,
+  onBoardingType,
+  onBoardingStep,
+  waitingInteraction,
 }) => {
   const [map, setMap] = useState();
   return (
@@ -35,7 +38,7 @@ const NationalReportCard = ({
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <MainMenu />
+      <MainMenu onBoardingStep={onBoardingStep} />
       <NationalReportSidebar
         countryISO={countryISO}
         countryName={countryName}
@@ -56,6 +59,9 @@ const NationalReportCard = ({
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
+        onBoardingType={onBoardingType}
+        onBoardingStep={onBoardingStep}
+        waitingInteraction={waitingInteraction}
         onMapLoad={(loadedMap) => {
           setMap(loadedMap);
           handleMapLoad(loadedMap, activeLayers);
