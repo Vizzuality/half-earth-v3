@@ -40,7 +40,6 @@ const HumanImpactSidebarCardComponent = ({
   countedActiveLayers,
   onBoardingStep,
 }) => {
-
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
@@ -54,7 +53,7 @@ const HumanImpactSidebarCardComponent = ({
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !currentStep || onBoardingStep === null,
+        [styles.onBoardingOverlay]: !currentStep && typeof onBoardingStep === 'number',
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',
