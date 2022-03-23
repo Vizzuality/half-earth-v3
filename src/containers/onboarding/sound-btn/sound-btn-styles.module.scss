@@ -49,7 +49,7 @@
     justify-content: center;
     margin-bottom: 8px;
     transition-duration: 0.4s;
-       width: 20px;
+    width: 20px;
 
     &:hover {
       width: 50px;
@@ -84,6 +84,7 @@
     justify-content: space-between;
     padding: 0 11px;
     width: 100%;
+    z-index: $default-z-index;
 
     .audioBar {
       background-color: $brand-color-main;
@@ -93,26 +94,37 @@
     }
   }
 
+  .pauseButton {
+    display: block;
+    cursor: pointer;
+    z-index: $default-z-index;
+  }
+
+  .playButton {
+    z-index: $default-z-index;
+  }
+
+  .pauseIcon {
+    margin-left: 6px;
+  }
+
+  .playIcon {
+    margin-left: 10px;
+  }
+
   .textContainer {
     position: relative;
     padding-right: 15px;
 
-    .muteIcon {
+    .muteButton {
+      z-index: $default-z-index;
       position: absolute;
-      right: 0;
+      right: -10px;
+    }
+
+    .muteIcon {
       height: 24px;
       width: 24px;
-      cursor: pointer;
-
-      :global .soundMuteIcon {
-        fill: $white;
-      }
-
-      &.muted {
-        :global .soundMuteIcon {
-          fill: $blue;
-        }
-      }
     }
   }
 }
