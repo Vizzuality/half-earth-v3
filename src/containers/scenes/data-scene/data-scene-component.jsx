@@ -85,7 +85,7 @@ const DataSceneComponent = ({
       top: '482px',
     };
     return null;
-  }, []);
+  }, [onBoardingStep]);
 
   return (
     <>
@@ -129,7 +129,8 @@ const DataSceneComponent = ({
         {typeof onBoardingStep === 'number' && (
           <div
             className={styles.tooltipPlacement}
-            style={TOOLTIP_PLACEMENT}>
+            style={TOOLTIP_PLACEMENT}
+          >
             <Tooltip />
           </div>
         )}

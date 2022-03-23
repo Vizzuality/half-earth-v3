@@ -53,6 +53,8 @@ const BiodiversitySidebarCardComponent = ({
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
+
+  console.log({ onBoardingStep })
   useEffect(() => {
     secondOrThirdStep && setOpen(true);
   }, [onBoardingStep]);
@@ -77,13 +79,13 @@ const BiodiversitySidebarCardComponent = ({
         [styles.onBoardingOverlay]: !nonOverlaySteps && typeof onBoardingStep === 'number',
       })}
       animate={{
-        outline: firstStep ? '5px solid #00BDB5' : 'none',
+        outline: firstStep && '5px solid #00BDB5',
       }}
       transition={{
         duration: 1.75,
         repeat: Infinity,
       }}
-      onClick={() => changeUI({ onBoardingStep: 1 })}
+      onClick={() => changeUI({ onBoardingStep: 1, waitingInteraction: false })}
     >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
