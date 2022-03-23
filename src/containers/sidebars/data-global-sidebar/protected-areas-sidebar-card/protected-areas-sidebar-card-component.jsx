@@ -33,7 +33,6 @@ const ProtectedAreasSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
   onBoardingStep,
-  waitingInteraction
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);

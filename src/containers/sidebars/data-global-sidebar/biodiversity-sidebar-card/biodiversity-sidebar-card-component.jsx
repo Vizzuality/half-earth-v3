@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -43,14 +43,18 @@ const BiodiversitySidebarCardComponent = ({
   cardMetadata,
   showCard,
   onBoardingStep,
+  changeUI,
 }) => {
   const firstStep = onBoardingStep === 1;
-  const secondStep = onBoardingStep === 2 || 3;
-  const initialOpen = secondStep ? true : false;
+  const secondOrThirdStep = (onBoardingStep === 2) || (onBoardingStep === 3);
 
   const { title, description, source } = cardMetadata || {};
-  const [isOpen, setOpen] = useState(initialOpen);
+  const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
+
+  useEffect(() => {
+    secondOrThirdStep && setOpen(true);
+  }, [onBoardingStep]);
 
   const layerTogglesToDisplay = (category) => {
     const resolutionsForSelectedCategory =
@@ -79,6 +83,7 @@ const BiodiversitySidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
+      onClick={() => changeUI({ onBoardingStep: 3 })}
     >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}

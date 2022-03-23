@@ -50,7 +50,7 @@ const DataSceneComponent = ({
   handleHighlightLayerFeatureClick,
   onBoardingType,
   onBoardingStep,
-  waitingInteraction
+  waitingInteraction,
 }) => {
   console.log({ onBoardingStep });
   const isMobile = useMobile();
