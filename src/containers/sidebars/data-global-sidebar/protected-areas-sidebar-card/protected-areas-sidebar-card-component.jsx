@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -33,11 +33,16 @@ const ProtectedAreasSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
   onBoardingStep,
+  changeUI,
 }) => {
+  const currentStep = onBoardingStep === 3;
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
-  const currentStep = onBoardingStep === 3;
+  useEffect(() => {
+    currentStep ? setOpen(true) : setOpen(false);
+  }, [onBoardingStep]);
+
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
@@ -51,6 +56,7 @@ const ProtectedAreasSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
+      onClick={() => changeUI({ onBoardingStep: 4, waitingInteraction: false })}
     >
       <CategoryBox
         image={ProtectionThumbnail}

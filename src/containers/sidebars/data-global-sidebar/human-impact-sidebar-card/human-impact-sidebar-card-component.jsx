@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -39,7 +39,9 @@ const HumanImpactSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
   onBoardingStep,
+  changeUI
 }) => {
+  const currentStep = onBoardingStep === 4;
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
@@ -48,7 +50,10 @@ const HumanImpactSidebarCardComponent = ({
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
 
-  const currentStep = onBoardingStep === 4;
+  useEffect(() => {
+    currentStep ? setOpen(true) : setOpen(false);
+  }, [onBoardingStep]);
+
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
@@ -62,6 +67,7 @@ const HumanImpactSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
+      onClick={() => changeUI({ onBoardingStep: 5, waitingInteraction: false })}
     >
       <CategoryBox
         title={TEXTS.categoryTitle}

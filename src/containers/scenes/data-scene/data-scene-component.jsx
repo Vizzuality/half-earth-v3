@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
 // Components
@@ -58,10 +58,6 @@ const DataSceneComponent = ({
     () => ({ ...sceneSettings, ...(isMobile && { padding: { left: 0 } }) }),
     [isMobile]
   );
-
-  useEffect(() => {
-    console.log({ onBoardingStep })
-  }, [onBoardingStep]);
 
   const TOOLTIP_PLACEMENT = useMemo(() => {
     if (onBoardingStep === 0) return { // Biodiversity card

@@ -47,16 +47,15 @@ const BiodiversitySidebarCardComponent = ({
 }) => {
   const firstStep = onBoardingStep === 0;
   const nonOverlaySteps = (onBoardingStep === 0) || (onBoardingStep === 1) || (onBoardingStep === 2);
-  const secondOrThirdStep = (onBoardingStep === 1) || (onBoardingStep === 2);
+  const openCardSteps = (onBoardingStep === 1) || (onBoardingStep === 2);
 
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
-
   console.log({ onBoardingStep })
   useEffect(() => {
-    secondOrThirdStep && setOpen(true);
+    openCardSteps ? setOpen(true) : setOpen(false);
   }, [onBoardingStep]);
 
   const layerTogglesToDisplay = (category) => {
