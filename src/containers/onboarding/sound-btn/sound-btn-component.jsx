@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as DotsIcon } from 'icons/dots.svg';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
+import { ReactComponent as PauseIcon } from 'icons/pause.svg';
 import { ReactComponent as MuteIcon } from 'icons/mute.svg';
+import { ReactComponent as MutedIcon } from 'icons/muted.svg';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
 import { LANDING } from 'router';
 import priorityPlaces01 from 'sounds/priority-places-1.wav';
 import priorityPlaces02 from 'sounds/priority-places-2.wav';
@@ -14,6 +15,7 @@ import priorityPlaces03 from 'sounds/priority-places-3.wav';
 import { SCRIPTS } from 'constants/onboarding-constants';
 import StepsArcs from '../step-arcs';
 import styles from './sound-btn-styles.module.scss';
+import AudioPlayer from './audio-player';
 
 const files = {
   'priority-places': [priorityPlaces01, priorityPlaces02, priorityPlaces03],
@@ -24,40 +26,79 @@ const files = {
   ],
 };
 
-const renderAudioBars = () => (
-  <div className={styles.audioBars}>
-    <motion.div
-      className={styles.audioBar}
-      animate={{
-        scaleY: [1, 3, 1, 1, 3, 1],
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-      }}
-    />
-    <motion.div
-      className={styles.audioBar}
-      animate={{
-        scaleY: [3, 1, 3, 1, 1, 3],
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-      }}
-    />
-    <motion.div
-      className={styles.audioBar}
-      animate={{
-        scaleY: [1, 3, 1, 1, 3, 1],
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-      }}
-    />
-  </div>
-);
+const ButtonIcon = ({
+  waitingStartAudioClick,
+  waitingInteraction,
+  handlePlay,
+  playing,
+  setPlaying,
+  setPauseIcon,
+  stepsNumber,
+  onBoardingStep,
+  pauseIcon,
+}) => {
+  const renderAudioBars = () => (
+    <div className={styles.audioBars} onMouseEnter={() => setPauseIcon(true)}>
+      <motion.div
+        className={styles.audioBar}
+        animate={{
+          scaleY: [1, 3, 1, 1, 3, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+        }}
+      />
+      <motion.div
+        className={styles.audioBar}
+        animate={{
+          scaleY: [3, 1, 3, 1, 1, 3],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+        }}
+      />
+      <motion.div
+        className={styles.audioBar}
+        animate={{
+          scaleY: [1, 3, 1, 1, 3, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+        }}
+      />
+    </div>
+  );
+
+  return (
+    <>
+      <StepsArcs numberOfArcs={stepsNumber} currentStep={onBoardingStep} />
+      {!waitingInteraction && (waitingStartAudioClick || !playing) ? (
+        <button onClick={handlePlay} className={styles.playButton}>
+          <PlayIcon className={styles.playIcon} />
+        </button>
+      ) : (
+        <>
+          {pauseIcon ? (
+            <button
+              className={styles.pauseButton}
+              onMouseLeave={() => setPauseIcon(false)}
+              onClick={() => {
+                setPlaying(false);
+              }}
+            >
+              <PauseIcon className={styles.pauseIcon} />
+            </button>
+          ) : (
+            renderAudioBars()
+          )}
+        </>
+      )}
+    </>
+  );
+};
 
 const SoundButtonComponent = ({
   browsePage,
@@ -69,17 +110,26 @@ const SoundButtonComponent = ({
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(false);
 
-  // We always need a previous user click on the page. We show a message if this hasn't happened (eg. reload)
+  // There is no autoplay on chrome and firefos. We always need a previous user click on the page.
+  // We show a message if this hasn't happened (eg. reload)
   // https://developer.chrome.com/blog/autoplay/#webaudio
   // https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/
   const [waitingStartAudioClick, setWaitingStartAudioClick] = useState(false);
   const [freeToPlay, setFreeToPlay] = useState(false);
+
+  const [pauseIcon, setPauseIcon] = useState(false);
 
   const [finishModal, setFinishModal] = useState(false);
   const [textMark, setTextMark] = useState(0);
 
   const toggleMuted = () => {
     setMuted(!muted);
+  };
+
+  const handlePlay = () => {
+    setWaitingStartAudioClick(false);
+    setFreeToPlay(true);
+    setPlaying(true);
   };
 
   const script =
@@ -141,10 +191,13 @@ const SoundButtonComponent = ({
       <DotsIcon />
     ) : (
       <div className={styles.textContainer}>
-        <MuteIcon
-          className={cx(styles.muteIcon, { [styles.muted]: muted })}
-          onClick={toggleMuted}
-        />
+        <button className={styles.muteButton} onClick={toggleMuted}>
+          {muted ? (
+            <MutedIcon className={styles.muteIcon} />
+          ) : (
+            <MuteIcon className={styles.muteIcon} />
+          )}
+        </button>
         {text}
       </div>
     );
@@ -164,75 +217,38 @@ const SoundButtonComponent = ({
           <CloseIcon />
           <p>QUIT</p>
         </button>
-        <button className={styles.soundBtn}>
-          <ReactPlayer
-            key={`${file}#t=${startTime},${endTime}`}
-            url={[
-              {
-                src: `${file}#t=${startTime},${endTime}`,
-                type: 'audio/wav',
-              },
-            ]}
-            volume={muted || !freeToPlay ? 0 : 1}
-            playing={playing}
-            wrapper={'audio'}
-            onPlay={() => setPlaying(true)}
-            onEnded={() => {
-              handleEndOfStep();
-            }}
-            onProgress={({ playedSeconds }) => {
-              if (!freeToPlay) {
-                // Only happens in this case. See waitingStartAudioClick hook comment
-                const notPlayingBecauseWaitingForUserClick =
-                  playedSeconds === 0;
-                if (notPlayingBecauseWaitingForUserClick) {
-                  setPlaying(false);
-                  setWaitingStartAudioClick(true);
-                } else {
-                  setFreeToPlay(true);
-                }
-              }
-
-              if (
-                script[textMark] &&
-                playedSeconds > script[textMark].endTime
-              ) {
-                const hasNoMoreTextMarks = !script[textMark + 1];
-                if (hasNoMoreTextMarks) {
-                  handleEndOfStep();
-                } else {
-                  setTextMark(textMark + 1);
-                }
-              }
-            }}
-            progressInterval={50}
-            config={{
-              file: {
-                attributes: { preload: 'auto' },
-                forceAudio: true,
-                autoPlay: true,
-                muted: true,
-              },
+        <div className={styles.soundBtn}>
+          <AudioPlayer
+            {...{
+              file,
+              startTime,
+              endTime,
+              muted,
+              freeToPlay,
+              playing,
+              setPlaying,
+              handleEndOfStep,
+              setWaitingStartAudioClick,
+              setFreeToPlay,
+              script,
+              textMark,
+              setTextMark,
             }}
           />
-          {waitingStartAudioClick && !waitingInteraction ? (
-            <PlayIcon
-              onClick={() => {
-                setWaitingStartAudioClick(false);
-                setFreeToPlay(true);
-                setPlaying(true);
-              }}
-            />
-          ) : (
-            <>
-              <StepsArcs
-                numberOfArcs={stepsNumber}
-                currentStep={onBoardingStep}
-              />
-              {renderAudioBars()}
-            </>
-          )}
-        </button>
+          <ButtonIcon
+            {...{
+              waitingStartAudioClick,
+              waitingInteraction,
+              handlePlay,
+              playing,
+              setPlaying,
+              setPauseIcon,
+              stepsNumber,
+              onBoardingStep,
+              pauseIcon,
+            }}
+          />
+        </div>
       </div>
       <Modal
         isOpen={finishModal}
