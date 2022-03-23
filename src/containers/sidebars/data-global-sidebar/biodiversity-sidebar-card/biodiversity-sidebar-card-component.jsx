@@ -44,8 +44,12 @@ const BiodiversitySidebarCardComponent = ({
   showCard,
   onBoardingStep,
 }) => {
+  const firstStep = onBoardingStep === 1;
+  const secondStep = onBoardingStep === 2 || 3;
+  const initialOpen = secondStep ? true : false;
+
   const { title, description, source } = cardMetadata || {};
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(initialOpen);
   const handleBoxClick = () => setOpen(!isOpen);
 
   const layerTogglesToDisplay = (category) => {
@@ -61,16 +65,15 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const currentStep = onBoardingStep === 0;
 
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !currentStep && typeof onBoardingStep === 'number',
+        [styles.onBoardingOverlay]: !firstStep && typeof onBoardingStep === 'number',
       })}
       animate={{
-        outline: currentStep ? '5px solid #00BDB5' : 'none',
+        outline: firstStep ? '5px solid #00BDB5' : 'none',
       }}
       transition={{
         duration: 1.75,

@@ -52,6 +52,7 @@ const DataSceneComponent = ({
   onBoardingStep,
   waitingInteraction
 }) => {
+  console.log({ onBoardingStep });
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
@@ -60,9 +61,26 @@ const DataSceneComponent = ({
   );
 
   const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 0) return '222px';
-    if (onBoardingStep === 1) return '352px';
-    if (onBoardingStep === 2) return '480px';
+    if (onBoardingStep === 1) return { // Biodiversity card
+      left: '470px',
+      top: '222px',
+    };
+    if (onBoardingStep === 2) return { // Richness
+      left: '308px',
+      top: '378px',
+    };
+    if (onBoardingStep === 3) return { // Rarity
+      left: '438px',
+      top: '378px',
+    };
+    if (onBoardingStep === 4) return { // Protection
+      left: '470px',
+      top: '354px',
+    };
+    if (onBoardingStep === 5) return { // Human Pressures
+      left: '470px',
+      top: '482px',
+    };
     return null;
   }, []);
 
@@ -108,7 +126,7 @@ const DataSceneComponent = ({
         {typeof onBoardingStep === 'number' && (
           <div
             className={styles.tooltipPlacement}
-            style={{ top: TOOLTIP_PLACEMENT }}>
+            style={TOOLTIP_PLACEMENT}>
             <Tooltip />
           </div>
         )}

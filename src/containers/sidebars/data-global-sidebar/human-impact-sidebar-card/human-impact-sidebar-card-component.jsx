@@ -48,7 +48,7 @@ const HumanImpactSidebarCardComponent = ({
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
 
-  const currentStep = onBoardingStep === 2;
+  const currentStep = onBoardingStep === 5;
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {

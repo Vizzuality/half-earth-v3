@@ -38,7 +38,7 @@ const ProtectedAreasSidebarCardComponent = ({
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
-  const currentStep = onBoardingStep === 1;
+  const currentStep = onBoardingStep === 4;
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {

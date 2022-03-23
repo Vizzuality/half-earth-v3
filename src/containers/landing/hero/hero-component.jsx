@@ -67,7 +67,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
             description="Understand where the suggested priority places should happen for vertebrates."
             handleClick={() => {
               browsePage({ type: DATA })
-              changeUI({ onBoardingType: 'priority-places', onBoardingStep: 2 })
+              changeUI({ onBoardingType: 'priority-places', onBoardingStep: 1 })
             }}
           />
         </motion.div>
@@ -88,7 +88,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
             description="Analyze national and other areas of interest. Download reports to share with others."
             handleClick={() => {
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
-              changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 3 })
+              changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 1 })
             }}
           />
         </motion.div>
