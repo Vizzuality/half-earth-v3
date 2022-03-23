@@ -45,8 +45,9 @@ const BiodiversitySidebarCardComponent = ({
   onBoardingStep,
   changeUI,
 }) => {
-  const firstStep = onBoardingStep === 1;
-  const secondOrThirdStep = (onBoardingStep === 2) || (onBoardingStep === 3);
+  const firstStep = onBoardingStep === 0;
+  const nonOverlaySteps = (onBoardingStep === 0) || (onBoardingStep === 1) || (onBoardingStep === 2);
+  const secondOrThirdStep = (onBoardingStep === 1) || (onBoardingStep === 2);
 
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
@@ -69,12 +70,11 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !firstStep && typeof onBoardingStep === 'number',
+        [styles.onBoardingOverlay]: !nonOverlaySteps && typeof onBoardingStep === 'number',
       })}
       animate={{
         outline: firstStep ? '5px solid #00BDB5' : 'none',
@@ -83,7 +83,7 @@ const BiodiversitySidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      onClick={() => changeUI({ onBoardingStep: 3 })}
+      onClick={() => changeUI({ onBoardingStep: 1 })}
     >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
@@ -108,6 +108,7 @@ const BiodiversitySidebarCardComponent = ({
           onClick={handleTabSelection}
           className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
+          onBoardingStep={onBoardingStep}
         />
         {showCard && (
           <div className={styles.cardContainer}>

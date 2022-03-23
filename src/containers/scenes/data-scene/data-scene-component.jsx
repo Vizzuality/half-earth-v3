@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
 // Components
@@ -52,7 +52,6 @@ const DataSceneComponent = ({
   onBoardingStep,
   waitingInteraction,
 }) => {
-  console.log({ onBoardingStep });
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
@@ -60,24 +59,28 @@ const DataSceneComponent = ({
     [isMobile]
   );
 
+  useEffect(() => {
+    console.log({ onBoardingStep })
+  }, [onBoardingStep]);
+
   const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 1) return { // Biodiversity card
+    if (onBoardingStep === 0) return { // Biodiversity card
       left: '470px',
       top: '222px',
     };
-    if (onBoardingStep === 2) return { // Richness
+    if (onBoardingStep === 1) return { // Richness
       left: '308px',
       top: '378px',
     };
-    if (onBoardingStep === 3) return { // Rarity
+    if (onBoardingStep === 2) return { // Rarity
       left: '438px',
       top: '378px',
     };
-    if (onBoardingStep === 4) return { // Protection
+    if (onBoardingStep === 3) return { // Protection
       left: '470px',
       top: '354px',
     };
-    if (onBoardingStep === 5) return { // Human Pressures
+    if (onBoardingStep === 4) return { // Human Pressures
       left: '470px',
       top: '482px',
     };
