@@ -6,6 +6,7 @@
   position: absolute;
   top: -4px;
   left: -4px;
+  z-index: $send-to-back;
 
   .stepsArc {
     stroke: $dark-text;
