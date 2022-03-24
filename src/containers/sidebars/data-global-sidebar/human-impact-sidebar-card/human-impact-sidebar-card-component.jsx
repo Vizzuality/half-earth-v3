@@ -38,6 +38,7 @@ const HumanImpactSidebarCardComponent = ({
   className,
   handleLayerToggle,
   countedActiveLayers,
+  onBoardingType,
   onBoardingStep,
   changeUI
 }) => {
@@ -67,7 +68,7 @@ const HumanImpactSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      onClick={() => changeUI({ onBoardingStep: 5, waitingInteraction: false })}
+      {... (onBoardingType && { onClick: () => changeUI({ onBoardingStep: 5, waitingInteraction: false }) })}
     >
       <CategoryBox
         title={TEXTS.categoryTitle}

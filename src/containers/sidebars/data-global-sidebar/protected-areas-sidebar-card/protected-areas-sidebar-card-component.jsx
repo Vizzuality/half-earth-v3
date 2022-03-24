@@ -33,6 +33,7 @@ const ProtectedAreasSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
   onBoardingStep,
+  onBoardingType,
   changeUI,
 }) => {
   const currentStep = onBoardingStep === 3;
@@ -56,7 +57,7 @@ const ProtectedAreasSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      onClick={() => changeUI({ onBoardingStep: 4, waitingInteraction: false })}
+      {... (onBoardingType && { onClick: () => changeUI({ onBoardingStep: 4, waitingInteraction: false }) })}
     >
       <CategoryBox
         image={ProtectionThumbnail}

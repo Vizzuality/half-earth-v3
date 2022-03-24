@@ -148,6 +148,8 @@ const SoundButtonComponent = ({
     changeUI({ onBoardingType: null, onBoardingStep: null, waitingInteraction: false });
   };
 
+  console.log({ onBoardingType, onBoardingStep, waitingInteraction });
+
   const handleFinishOnBoarding = () => {
     setPlaying(false);
     setFinishModal(true);
