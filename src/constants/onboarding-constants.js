@@ -61,5 +61,20 @@ export const SCRIPTS = {
       { startTime: 12.8, endTime: 14, text: `Conserving species in countries with a high number of rare species involves more effort and highly customized networks of protected places. For this reason, most biodiversity hotspots have relatively lower SPI scores when compared to countries with less biodiversity richness and rarity. In light of this, it’s important to also consider approaches for sharing the costs of saving biodiversity within nations that benefit the entire world. In the long run, conserving biodiversity pays a net economic benefit. ` },
       { startTime: 14, endTime: 24, text: `To explore further, choose a country or territory you’re interested in by clicking on the map, or typing its name in the search bar. The report card will appear, along with some comparison tool options.` }
     ],
+    nrc: [
+      { startTime: 0, endTime: 12.8, text: `Each National Report Card provides a brief summary of the conservation efforts carried out in the selected country. The score at the top shows the national SPI score.` },
+      { startTime: 12.8, endTime: 14, text: `You can view the number of rare species in the country, the percentage of land and waterways currently protected, and the proportion of additional protection required to meet national conservation goals as defined by the SPI. ` },
+      { startTime: 14, endTime: 24, text: `At this time, the national SPI values are only calculated for vertebrate species, because high-quality, high-resolution data is only available for approximately 40,000 such species.` },
+      { startTime: 24, endTime: 37, text: `The Half-Earth Project aims to provide the most complete picture of the Earth's biodiversity as the advancement of species discovery and documentation allows. Data on plant groups and some insect groups are being prepared for future release. Click on “Explore” to enter the National Report Card.` }
+    ],
+    overview: [
+      { startTime: 0, endTime: 12.8, text: `The first section of the National Report Cards describes the current conservation status of the nation. On the map, you can see 2 layers, one showing locations of currently protected areas, and the other highlighting one possible configuration of where new conservation areas could be added in the country in pursuit of the Half-Earth goal. ` },
+      { startTime: 12.8, endTime: 14, text: `Lighter colors correspond to areas that would contribute more to the conservation of species habitat, while darker shades represent locations with lower priority for conservation. Areas that are not colored harbor important species, but do not achieve species richness and rarity levels that denote a high conservation priority score.` },
+      { startTime: 14, endTime: 24, text: `In some cases the map may be colored gray, light yellow or green because the area has adequate protection. If you scroll down on the left-side panel you can find more information about these layers.` },
+      { startTime: 24, endTime: 37, text: `You can also find photos of representative species of concern and more information about the key species present in the country, as well as get an overview of the species distribution by taxonomic group. Now, click on the "Challenges" tab.` }
+    ],
+    challenges: [],
+    ranking: [],
+    closure: [],
   }
 }

@@ -1,9 +1,13 @@
+// Dependencies
 import React, { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
 import cx from 'classnames';
-import { ReactComponent as IconSearch } from 'icons/search.svg';
+import { motion } from 'framer-motion';
 import Proptypes from 'prop-types';
+// Assets
+import { ReactComponent as IconSearch } from 'icons/search.svg';
+// Styles
 import styles from './styles.module.scss';
 
 const Component = ({
@@ -17,19 +21,32 @@ const Component = ({
   onOptionSelection,
   handleInputChange,
   isSearchResultVisible,
+  onBoardingStep,
+  changeUI,
 }) => {
+  const currentStep = onBoardingStep === 2;
+
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
 
-  return  (
-    <div className={cx(styles.inputContainer, {
-      [styles.stacked]: stacked,
+  return (
+    <motion.div
+      className={cx(styles.inputContainer, {
+        [styles.stacked]: stacked,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
       })}
-    > 
+      animate={{
+        outline: currentStep ? '5px solid #00BDB5' : 'none',
+      }}
+      transition={{
+        duration: 1.75,
+        repeat: Infinity,
+      }}
+      {... (typeof onBoardingStep === 'number' && { onClick: () => changeUI({ onBoardingStep: 3, waitingInteraction: false }) })}
+    >
       <input
         type="text"
         placeholder={'search'}
@@ -38,7 +55,7 @@ const Component = ({
         onClick={handleOpenSearch}
         onChange={handleInputChange}
       />
-      {<IconSearch className={styles.placeholderIcon}/>}
+      {<IconSearch className={styles.placeholderIcon} />}
       {isSearchResultVisible && (
         createPortal(
           <div
@@ -47,14 +64,14 @@ const Component = ({
             {...attributes.popper}
           >
             <ul className={cx(styles.optionsList, {
-                [styles.fullWidth]: width === 'full'
-              })} 
+              [styles.fullWidth]: width === 'full'
+            })}
             >
               {searchResults.map(option => (
                 <li
                   className={styles.option}
                   key={option.key}
-                  onClick={() => {onOptionSelection(option)}}
+                  onClick={() => { onOptionSelection(option) }}
                 >
                   {option.text}
                 </li>
@@ -64,7 +81,7 @@ const Component = ({
           document.getElementById('root')
         )
       )}
-    </div>
+    </motion.div>
   );
 }
 

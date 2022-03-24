@@ -49,8 +49,6 @@ const BiodiversitySidebarCardComponent = ({
   const nonOverlaySteps = (onBoardingStep === 0) || (onBoardingStep === 1) || (onBoardingStep === 2);
   const openCardSteps = (onBoardingStep === 1) || (onBoardingStep === 2);
 
-  console.log({ onBoardingStep });
-
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);

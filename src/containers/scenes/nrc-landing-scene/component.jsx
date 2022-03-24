@@ -36,14 +36,14 @@ const NrcLandingComponent = ({
   onBoardingStep,
 }) => {
   const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 1) return {
+    if (onBoardingStep === 0) return {
       display: 'none'
     };
-    if (onBoardingStep === 2) return { // CARD
+    if (onBoardingStep === 1) return { // CARD
       left: '460px',
       top: '300px',
     };
-    if (onBoardingStep === 3) return { // SEARCHER + MAP
+    if (onBoardingStep === 2) return { // SEARCHER + MAP
       left: '435px',
       top: '565px',
     };
@@ -98,7 +98,9 @@ const NrcLandingComponent = ({
           countryName={countryName}
           onBoardingStep={onBoardingStep}
         />
-        <NRCLandingSidebar />
+        <NRCLandingSidebar
+          onBoardingStep={onBoardingStep}
+        />
         <LabelsLayer activeLayers={activeLayers} />
 
       </Scene>
