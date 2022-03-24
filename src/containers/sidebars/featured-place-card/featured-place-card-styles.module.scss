@@ -150,8 +150,6 @@ $card-content-max-height: 220px;
     margin: 0;
     margin-bottom: 12px;
     grid-area: title;
-    text-decoration: underline;
-    cursor: pointer;
 
     @media #{$tablet-portrait} {
       margin-bottom: 0;
@@ -188,7 +186,6 @@ $card-content-max-height: 220px;
     object-fit: cover;
     margin-right: 0;
     margin-bottom: 22px;
-    cursor: pointer;
     width: 100%;
   }
 
