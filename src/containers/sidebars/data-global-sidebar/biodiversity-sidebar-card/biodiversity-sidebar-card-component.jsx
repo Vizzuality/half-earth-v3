@@ -42,7 +42,6 @@ const BiodiversitySidebarCardComponent = ({
   biodiversityLayerVariant,
   cardMetadata,
   showCard,
-  onBoardingType,
   onBoardingStep,
   changeUI,
 }) => {
@@ -50,7 +49,8 @@ const BiodiversitySidebarCardComponent = ({
   const nonOverlaySteps = (onBoardingStep === 0) || (onBoardingStep === 1) || (onBoardingStep === 2);
   const openCardSteps = (onBoardingStep === 1) || (onBoardingStep === 2);
 
-  console.log({ onBoardingStep, onBoardingType })
+  console.log({ onBoardingStep });
+
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -85,7 +85,7 @@ const BiodiversitySidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (onBoardingType && { onClick: () => changeUI({ onBoardingStep: 1, waitingInteraction: false }) })}
+      {... (typeof onBoardingStep === 'number' && { onClick: () => changeUI({ onBoardingStep: 1, waitingInteraction: false }) })}
     >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
