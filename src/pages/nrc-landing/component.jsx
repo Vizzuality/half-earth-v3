@@ -27,7 +27,7 @@ const NationalReportCardLanding = ({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu onBoardingStep={onBoardingStep} />
+      <MainMenu onBoardingStep={onBoardingStep} onBoardingType={onBoardingType} />
       <NationalReportCardLandingScene
         countryISO={countryISO}
         countryName={countryName}

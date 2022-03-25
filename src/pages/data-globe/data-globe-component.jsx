@@ -40,7 +40,7 @@ const DataGlobeComponent = ({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu onBoardingStep={onBoardingStep} />
+      <MainMenu onBoardingStep={onBoardingStep} onBoardingType={onBoardingType} />
       <DataScene
         sceneMode={sceneMode}
         userConfig={userConfig}

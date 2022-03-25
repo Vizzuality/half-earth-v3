@@ -68,7 +68,7 @@ const HumanImpactSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (onBoardingType && { onClick: () => changeUI({ onBoardingStep: 5, waitingInteraction: false }) })}
+      {... (onBoardingType && { onClick: () => changeUI({ onBoardingStep: 5, waitingInteraction: false, onBoardingType: 'priority-places' }) })}
     >
       <CategoryBox
         title={TEXTS.categoryTitle}
