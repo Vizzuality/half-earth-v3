@@ -36,6 +36,8 @@ const ButtonIcon = ({
   stepsNumber,
   onBoardingStep,
   pauseIcon,
+  setPausedTime,
+  playedSeconds,
 }) => {
   const renderAudioBars = () => (
     <div className={styles.audioBars} onMouseEnter={() => setPauseIcon(true)}>
@@ -87,6 +89,7 @@ const ButtonIcon = ({
               onMouseLeave={() => setPauseIcon(false)}
               onClick={() => {
                 setPlaying(false);
+                setPausedTime(playedSeconds);
               }}
             >
               <PauseIcon className={styles.pauseIcon} />
@@ -108,6 +111,8 @@ const SoundButtonComponent = ({
   waitingInteraction,
 }) => {
   const [playing, setPlaying] = useState(true);
+  const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [pausedTime, setPausedTime] = useState(0);
   const [muted, setMuted] = useState(false);
 
   // There is no autoplay on chrome and firefos. We always need a previous user click on the page.
@@ -124,6 +129,7 @@ const SoundButtonComponent = ({
 
   const toggleMuted = () => {
     setMuted(!muted);
+    setPausedTime(playedSeconds);
   };
 
   const handlePlay = () => {
@@ -221,7 +227,6 @@ const SoundButtonComponent = ({
           <AudioPlayer
             {...{
               file,
-              startTime,
               endTime,
               muted,
               freeToPlay,
@@ -233,7 +238,11 @@ const SoundButtonComponent = ({
               script,
               textMark,
               setTextMark,
+              setPlayedSeconds,
+              setPausedTime,
+              pausedTime,
             }}
+            startTime={pausedTime || startTime}
           />
           <ButtonIcon
             {...{
@@ -246,6 +255,8 @@ const SoundButtonComponent = ({
               stepsNumber,
               onBoardingStep,
               pauseIcon,
+              setPausedTime,
+              playedSeconds,
             }}
           />
         </div>
