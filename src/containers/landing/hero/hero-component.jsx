@@ -88,7 +88,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
             description="Analyze national and other areas of interest. Download reports to share with others."
             handleClick={() => {
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
-              changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 2 })
+              changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 4 })
             }}
           />
         </motion.div>

@@ -1,11 +1,9 @@
 // Dependencies
 import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
-import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Components
+import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
-// Constants
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
@@ -13,6 +11,8 @@ import SoundButton from 'containers/onboarding/sound-btn';
 import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
 import Tooltip from 'containers/onboarding/tooltip';
+// Constants
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 // Styles
 import styles from './nrc-landing-scene-styles.module.scss';
 // Dynamic imports
@@ -93,11 +93,13 @@ const NrcLandingComponent = ({
           openedModal={openedModal}
           onBoardingStep={onBoardingStep}
         />
+
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
           onBoardingStep={onBoardingStep}
         />
+
         <NRCLandingSidebar
           onBoardingStep={onBoardingStep}
         />
