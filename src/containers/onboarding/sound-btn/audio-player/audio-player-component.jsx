@@ -15,6 +15,7 @@ const AudioPlayer = ({
   script,
   textMark,
   setTextMark,
+  setPlayedSeconds,
 }) => (
   <ReactPlayer
     url={[`${file}#t=${startTime},${endTime}`]}
@@ -45,6 +46,8 @@ const AudioPlayer = ({
           setTextMark(textMark + 1);
         }
       }
+
+      setPlayedSeconds(playedSeconds);
     }}
     progressInterval={50}
     config={{
