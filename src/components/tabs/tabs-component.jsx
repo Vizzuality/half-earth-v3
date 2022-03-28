@@ -12,21 +12,26 @@ const getSelectedTabIndex = (tabs, defaultTabSlug) => {
   return selectedTabIndex > -1 ? selectedTabIndex : 0;
 }
 
-const Tabs = ({ tabs, onClick, defaultTabSlug, className, onBoardingStep }) => {
-
+const Tabs = ({ tabs, onClick, defaultTabSlug, className, onBoardingStep, onBoardingType }) => {
+  console.log({ onBoardingType })
   return (
     <div className={cx(styles.tabs, className)}>
       <ul className={styles.tabList} role="tablist">
         {tabs.map((tab, i) => {
           const { slug, title } = tab;
           const tabSlug = slug || title;
+          console.log({ tabSlug })
 
-          const richnessOnBoardingStep = tabSlug === 'richness' && onBoardingStep === 1;
-          const rarityOnBoardingTab = tabSlug === 'rarity' && onBoardingStep === 2;
+          const richnessOnBoardingStep = tabSlug === 'richness' && onBoardingType === 'priority-places' && onBoardingStep === 1;
+          const rarityOnBoardingTab = tabSlug === 'rarity' && onBoardingType === 'priority-places' && onBoardingStep === 2;
+          const challengesOnBoardingTab = tabSlug === 'challenges' && onBoardingType === 'national-report-cards' && onBoardingStep === 4;
+          const rankingOnBoardingTab = tabSlug === 'ranking' && onBoardingType === 'national-report-cards' && onBoardingStep === 4;
 
           const slugOnBoardingStep = useMemo(() => {
             if (richnessOnBoardingStep) return 2
             if (rarityOnBoardingTab) return 3
+            if (challengesOnBoardingTab) return 4
+            if (rankingOnBoardingTab) return 5
             return null
           }, [onBoardingStep])
 
@@ -37,7 +42,7 @@ const Tabs = ({ tabs, onClick, defaultTabSlug, className, onBoardingStep }) => {
                 role="tab"
                 aria-selected={slug === defaultTabSlug}
                 animate={{
-                  outline: richnessOnBoardingStep || rarityOnBoardingTab ? '5px solid #00BDB5' : 'none',
+                  outline: richnessOnBoardingStep || rarityOnBoardingTab || challengesOnBoardingTab || rankingOnBoardingTab ? '5px solid #00BDB5' : 'none',
                 }}
                 transition={{
                   duration: 1.75,

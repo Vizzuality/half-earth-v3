@@ -42,6 +42,7 @@ const BiodiversitySidebarCardComponent = ({
   cardMetadata,
   showCard,
   onBoardingStep,
+  onBoardingType,
   changeUI,
 }) => {
   const firstStep = onBoardingStep === 0;
@@ -108,6 +109,7 @@ const BiodiversitySidebarCardComponent = ({
           className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
           onBoardingStep={onBoardingStep}
+          onBoardingType={onBoardingType}
         />
         {showCard && (
           <div className={styles.cardContainer}>

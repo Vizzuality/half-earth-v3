@@ -35,6 +35,8 @@ const NationalReportSidebarComponent = ({
   handleClose,
   map,
   activeLayers,
+  onBoardingStep,
+  onBoardingType,
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -69,6 +71,8 @@ const NationalReportSidebarComponent = ({
         onClick={handleTabSelection}
         className={styles.tabsContainer}
         defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
+        onBoardingStep={onBoardingStep}
+        onBoardingType={onBoardingType}
       />
       {!countryData ? (
         <div className={styles.loading}>

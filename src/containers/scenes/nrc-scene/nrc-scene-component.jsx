@@ -1,10 +1,11 @@
 // Dependencies
-import React from 'react';
+import React, { useMemo } from 'react';
 // Components
 import Scene from 'components/scene';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
+import Tooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
 import LabelsLayer from 'containers/layers/labels-layer';
 import CountryMaskLayer from 'containers/layers/country-mask-layer';
@@ -19,6 +20,8 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+// Styles
+import styles from './nrc-scene-styles.module.scss';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -40,6 +43,17 @@ const CountrySceneComponent = ({
   onBoardingType,
   onBoardingStep,
 }) => {
+  const TOOLTIP_PLACEMENT = useMemo(() => {
+    if (onBoardingStep === 4) return { // CHALLENGES TAB
+      left: '310px',
+      top: '207px',
+    };
+    if (onBoardingStep === 5) return { // RANKING TAB
+      left: '440px',
+      top: '207px',
+    };
+    return null;
+  }, [onBoardingStep, onBoardingType]);
 
   return (
     <Scene
@@ -48,6 +62,13 @@ const CountrySceneComponent = ({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
+      {typeof onBoardingStep === 'number' && (
+        <div
+          className={styles.tooltipPlacement}
+          style={TOOLTIP_PLACEMENT}>
+          <Tooltip />
+        </div>
+      )}
       <LocalSceneViewManager localGeometry={countryBorder} />
       <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
       <CountryMaskLayer

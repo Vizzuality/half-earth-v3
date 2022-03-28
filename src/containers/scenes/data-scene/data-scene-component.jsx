@@ -131,7 +131,6 @@ const DataSceneComponent = ({
           </div>
         )}
 
-
         <MobileOnly>
           <MenuFooter
             activeOption={activeOption}
