@@ -48,7 +48,7 @@ const NrcLandingComponent = ({
       top: '565px',
     };
     return null;
-  }, []);
+  }, [onBoardingStep]);
 
   return (
     <>

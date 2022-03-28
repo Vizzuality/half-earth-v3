@@ -33,6 +33,9 @@ const NationalReportCard = ({
   waitingInteraction,
 }) => {
   const [map, setMap] = useState();
+  console.log(onBoardingType,
+    onBoardingStep,
+    waitingInteraction);
   return (
     <>
       <HalfEarthLogo

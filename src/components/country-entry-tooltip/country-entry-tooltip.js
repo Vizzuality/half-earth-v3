@@ -11,10 +11,10 @@ import { NATIONAL_REPORT_CARD } from 'router';
 
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions}
+const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions }
 
 const CountryEntryTooltipContainer = props => {
-  const { mapTooltipIsVisible, countryISO } = props;
+  const { mapTooltipIsVisible, countryISO, changeUI } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [tooltipContent, setContent] = useState({});
 
@@ -49,10 +49,11 @@ const CountryEntryTooltipContainer = props => {
 
   const handleExploreCountryClick = () => {
     const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics } = props;
-   setTooltipIsVisible(false);
+    setTooltipIsVisible(false);
     setTooltipContent({});
     enterNrcAnalytics(countryName);
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, });
+    changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 4 })
   };
 
   return (

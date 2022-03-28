@@ -28,7 +28,6 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 // Assets
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
-
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,

@@ -45,7 +45,12 @@ const Component = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (typeof onBoardingStep === 'number' && { onClick: () => changeUI({ onBoardingStep: 3, waitingInteraction: false }) })}
+      {... (typeof onBoardingStep === 'number' && {
+        onClick: (e) => {
+          e.stopPropagation();
+          changeUI({ onBoardingStep: 3, waitingInteraction: false })
+        }
+      })}
     >
       <input
         type="text"

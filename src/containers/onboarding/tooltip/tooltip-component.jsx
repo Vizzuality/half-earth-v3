@@ -5,7 +5,6 @@ import cx from 'classnames';
 import styles from './tooltip-styles.module.scss';
 
 const TooltipComponent = ({ placement = 'left' }) => {
-  console.log({ placement })
   return (
     <div className={cx({
       [styles.tooltipContainer]: true,

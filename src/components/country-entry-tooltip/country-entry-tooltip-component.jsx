@@ -1,6 +1,7 @@
 // Dependencies
 import React, { useEffect, useState, useRef } from 'react';
 import { loadModules } from 'esri-loader';
+import { motion } from 'framer-motion';
 // Components
 import Tooltip from 'containers/onboarding/tooltip';
 // Assets
@@ -17,11 +18,19 @@ const CountryEntryTooltipComponent = ({
   tooltipPosition,
   handleTooltipClose,
   onExploreCountryClick,
+  onBoardingStep,
 }) => {
+  const currentStep = onBoardingStep === 3;
   const tooltipref = useRef(null);
+  const exploreBtnRef = useRef(null);
   const [tooltip, setTooltip] = useState(null);
+  const [tooltipPositionObj, setTooltipPositionObj] = useState({});
   const { spi, vertebrates, endemic, protection, protectionNeeded } =
     tooltipContent;
+
+  useEffect(() => {
+    if (exploreBtnRef && exploreBtnRef.current) setTooltipPositionObj(exploreBtnRef.current.getBoundingClientRect());
+  }, [exploreBtnRef.current, countryISO])
 
   // Create a new Popup to contain the tooltip
   useEffect(() => {
@@ -50,12 +59,7 @@ const CountryEntryTooltipComponent = ({
   }, [tooltipPosition, tooltip, mapTooltipIsVisible]);
 
   return tooltipPosition && tooltip ? (
-    <div ref={el => {
-      if (!el) return;
-
-      console.log(el.getBoundingClientRect())
-    }}>
-
+    <>
       <div ref={tooltipref} className={styles.tooltipContainer}>
         <section className={styles.tooltipSection}>
           <img
@@ -89,14 +93,35 @@ const CountryEntryTooltipComponent = ({
             </span>
           </div>
         </section>
-        <button className={styles.tooltipExplore} onClick={onExploreCountryClick}>
-          explore
-        </button>
+        <motion.div
+          animate={{
+            outline: currentStep && '3px solid #00BDB5',
+          }}
+          transition={{
+            duration: 1.75,
+            repeat: Infinity,
+          }}
+        >
+          <button
+            ref={exploreBtnRef}
+            className={styles.tooltipExplore}
+            onClick={onExploreCountryClick}
+          >
+            explore
+          </button>
+        </motion.div>
       </div>
-      <div className={{ position: 'absolute', left: 0 }}>
-        <Tooltip />
-      </div>
-    </div >
+
+      {typeof onBoardingStep === 'number' && tooltipPositionObj && (
+        <div
+          className={styles.tooltipPlacement}
+          style={{ right: tooltipPositionObj.right, bottom: tooltipPositionObj.bottom }}>
+          <Tooltip />
+        </div>
+      )}
+    </>
+
+
   ) : null;
 };
 
