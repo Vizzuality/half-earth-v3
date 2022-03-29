@@ -43,7 +43,7 @@ const NationalReportCard = ({
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <MainMenu onBoardingStep={onBoardingStep} />
+      <MainMenu nBoardingStep={onBoardingStep} onBoardingType={onBoardingType} />
       <NationalReportSidebar
         countryISO={countryISO}
         countryName={countryName}

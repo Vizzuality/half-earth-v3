@@ -43,6 +43,7 @@ const CountrySceneComponent = ({
   setTooltipInfo,
   onBoardingType,
   onBoardingStep,
+  countryData,
 }) => {
 
   const TOOLTIP_PLACEMENT = useMemo(() => {
@@ -68,7 +69,8 @@ const CountrySceneComponent = ({
         <SoundButton />
       )}
 
-      {typeof onBoardingStep === 'number' && (
+      {/* solo mostrar cuando haya countryData */}
+      {typeof onBoardingStep === 'number' && countryData && (
         <div
           className={styles.tooltipPlacement}
           style={TOOLTIP_PLACEMENT}>

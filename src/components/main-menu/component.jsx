@@ -9,7 +9,8 @@ import { ReactComponent as MenuIcon } from "icons/menu.svg";
 const MainMenu = ({ className, onBoardingStep, onBoardingType }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const onBoardingOverlayMenu = (typeof onBoardingStep === 'number') && (onBoardingStep !== 5) && (onBoardingType === 'priority-places');
+  const onBoardingOverlayMenu = ((typeof onBoardingStep === 'number') && (onBoardingStep !== 5) && (onBoardingType === 'priority-places')) ||
+    ((typeof onBoardingStep === 'number') && (onBoardingStep !== 6) && (onBoardingType === 'national-report-cards'));
 
   return (
     <>
