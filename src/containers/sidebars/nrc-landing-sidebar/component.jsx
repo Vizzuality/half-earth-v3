@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react';
 import { motion } from 'framer-motion';
+import cx from 'classnames';
 // Components
 import SearchLocation from 'components/search-location';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
@@ -13,7 +14,10 @@ const NRCLandingSidebar = ({ changeUI, onBoardingStep, view }) => {
   const currentStep = onBoardingStep === 1;
   return (
     <motion.div
-      className={styles.container}
+      className={cx({
+        [styles.container]: true,
+        [styles.onBoardingMode]: currentStep,
+      })}
       animate={{
         outline: currentStep && '5px solid #00BDB5',
       }}
