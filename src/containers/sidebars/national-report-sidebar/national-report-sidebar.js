@@ -15,7 +15,7 @@ const NationalReportSidebarContainer = (props) => {
     handlePrintReport,
   } = props;
 
-  const handleSceneModeChange = () => {
+  const handleClose = () => {
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
   }
 
@@ -28,7 +28,7 @@ const NationalReportSidebarContainer = (props) => {
     <Component
       handlePrintReport={handlePrintReport}
       handleTabSelection={handleTabSelection}
-      handleSceneModeChange={handleSceneModeChange}
+      handleClose={handleClose}
       {...props}
     />
   )

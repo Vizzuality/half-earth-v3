@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import Component from './scene-component';
 import { loadModules } from 'esri-loader';
@@ -9,7 +9,7 @@ import sceneActions from 'redux_modules/scene';
 const actions = { ...urlActions, ...sceneActions };
 
 const InitialRotation = (props) => {
-  const { rotationKey, setRotationActive,  view, animationRotatedDegrees, setAnimationRotatedDegrees } = props;
+  const { rotationKey, setRotationActive, view, animationRotatedDegrees, setAnimationRotatedDegrees } = props;
 
   // Rotate globe once on start
   useEffect(() => {
@@ -22,9 +22,9 @@ const InitialRotation = (props) => {
         const camera = view.camera.clone();
         camera.position.longitude -= ROTATION_SPEED;
         view.goTo(camera, { animate: false })
-        .then(() => {
-          setAnimationRotatedDegrees(animationRotatedDegrees + ROTATION_SPEED)
-        });
+          .then(() => {
+            setAnimationRotatedDegrees(animationRotatedDegrees + ROTATION_SPEED)
+          });
       }
     }
 
@@ -81,7 +81,7 @@ const SceneContainer = (props) => {
       loadModules(["esri/views/SceneView"], loaderOptions)
         .then(([SceneView]) => {
           const _view = new SceneView({
-            map: map,
+            map,
             container: `scene-container-${sceneName || sceneId}`,
             ...sceneSettings
           });
@@ -91,7 +91,7 @@ const SceneContainer = (props) => {
           console.error(err);
         });
     }
-  },[map])
+  }, [map])
 
   useEffect(() => {
     if (map && view) {
@@ -107,7 +107,7 @@ const SceneContainer = (props) => {
     let watchHandle;
     if (view && view.center && !urlParamsUpdateDisabled && !rotationActive) {
       loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
-        watchHandle = watchUtils.whenTrue(view, "stationary", function() {
+        watchHandle = watchUtils.whenTrue(view, "stationary", function () {
           const { longitude, latitude } = view.center;
           changeGlobe({ center: [longitude, latitude], zoom: view.zoom });
         });
@@ -129,22 +129,22 @@ const SceneContainer = (props) => {
 
   return (
     <>
-    <Component
-      loadState={loadState}
-      map={map}
-      view={view}
-      handleSceneClick={() => setRotationActive(false)}
-      {...props}
-    />
-    {initialRotation && rotationActive &&
-      <InitialRotation
-        rotationKey={rotationKey}
-        setRotationActive={setRotationActive}
+      <Component
+        loadState={loadState}
+        map={map}
         view={view}
-        animationRotatedDegrees={animationRotatedDegrees}
-        setAnimationRotatedDegrees={setAnimationRotatedDegrees}
+        handleSceneClick={() => setRotationActive(false)}
+        {...props}
       />
-    }
+      {initialRotation && rotationActive &&
+        <InitialRotation
+          rotationKey={rotationKey}
+          setRotationActive={setRotationActive}
+          view={view}
+          animationRotatedDegrees={animationRotatedDegrees}
+          setAnimationRotatedDegrees={setAnimationRotatedDegrees}
+        />
+      }
     </>
   )
 }

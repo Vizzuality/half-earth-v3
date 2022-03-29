@@ -3,6 +3,9 @@ import intersection from 'lodash/intersection';
 import { loadModules } from 'esri-loader';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
 
+// LEGAGY
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+
 // Toggles all the layers passed as ids on the first parameter
 export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, category) => {
   const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
@@ -196,4 +199,27 @@ export const flyToLayerExtent = (bbox, view) => {
         }
       });
   })
+}
+
+// LEGACY
+
+
+export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback, category) => {
+  const activeLayersNamesArray = activeLayers ? activeLayers.map(l => l.title) : [];
+  const areActive = activeLayers && intersection(layerNamesArray, activeLayersNamesArray).length > 0;
+  if (areActive) {
+    const updatedLayers = layerNamesArray.reduce((acc, title) => {
+      removeLayerAnalyticsEvent({ slug: title });
+      return [...acc.filter(l => l.title !== title)];
+    }, activeLayers);
+    callback({activeLayers: updatedLayers });
+  } else {
+    const layersToAdd = layerNamesArray.map(title => {
+      addLayerAnalyticsEvent({ slug: title });
+      return { title, category, opacity: DEFAULT_OPACITY }
+    });
+    activeLayers
+      ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
+      : callback({ activeLayers: layersToAdd });
+  }
 }

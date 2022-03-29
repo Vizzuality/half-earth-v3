@@ -1,0 +1,76 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+$max-width: 520px;
+$area-title-width: 230px;
+
+.modal {
+  width: 90% !important;
+  max-width: 90% !important;
+  height: auto !important;
+  max-height: 100vh !important;
+
+  @media #{$tablet-landscape} {
+    max-width: $max-width !important;
+    width: $max-width !important;
+    max-height: 400px !important;
+  }
+}
+
+.modalContent {
+  padding: 0 !important;
+}
+
+.modalContainer {
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  padding: 24px;
+  background-color: $brand-color-secondary;
+  @media #{$tablet-landscape} {
+    max-width: $max-width;
+    width: $max-width;
+  }
+}
+
+.closeBtn {
+  display: none !important;
+}
+
+.title {
+  @extend %headline;
+  color: $white;
+  margin: 0;
+  text-align: left;
+}
+
+.description {
+  @extend %bodyText;
+  color: $grey-text;
+  margin: 0;
+}
+
+.buttons {
+  align-self: end;
+  margin-top: 17px;
+
+  .backBtn {
+    @extend %title;
+    background-color: $white;
+    color: $dark-text;
+    height: 38px;
+    margin-right: 12px;
+    padding: 0 25px;
+  }
+  
+  .exploreBtn {
+    @extend %title;
+    background-color: $brand-color-main;
+    color: $white;
+    height: 38px;
+    padding: 0 17px;
+    text-transform: uppercase;
+  }
+}
+

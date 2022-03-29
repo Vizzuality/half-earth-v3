@@ -1,6 +1,7 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
+export const LANDING = 'location/';
 export const DATA = 'location/DATA';
 export const FEATURED = 'location/FEATURED';
 export const NATIONAL_REPORT_CARD = 'location/NATIONAL_REPORT_CARD';
@@ -8,7 +9,15 @@ export const NATIONAL_REPORT_CARD_LANDING = 'location/NATIONAL_REPORT_CARD_LANDI
 export const AREA_OF_INTEREST = 'location/AREA_OF_INTEREST';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
 
+const { REACT_APP_FEATURE_ONBOARDING } = process.env;
+
 export const routes = {
+  ...(REACT_APP_FEATURE_ONBOARDING === 'true' ?
+    { [LANDING]: {
+      path: '/',
+      page: 'landing'
+    }}
+    : {}),
   [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe'
@@ -33,7 +42,7 @@ export const routes = {
     path: '/aoi/:id?',
     page: 'aoi'
   },
-  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: DATA })) }
+  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: REACT_APP_FEATURE_ONBOARDING === 'true' ? LANDING : DATA })) }
 };
 
 const options = {

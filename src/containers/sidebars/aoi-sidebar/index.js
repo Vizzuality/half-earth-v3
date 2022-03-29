@@ -5,14 +5,14 @@ import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
 import Component from './aoi-sidebar-component';
 import * as urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
-import { DATA } from 'router'
 import { postAoiToDataBase } from 'utils/geo-processing-services';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
+import { back } from 'redux-first-router';
 
 const actions = {...urlActions, ...aoiAnalyticsActions}
 
 const AoiSidebarContainer = (props) => {
-  const { speciesData, contextualData, browsePage, geometry } = props;
+  const { speciesData, contextualData, geometry } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues ] = useState({})
   useEffect(() => {
@@ -37,7 +37,6 @@ const AoiSidebarContainer = (props) => {
     }
   }, [isShareModalOpen])
 
-  const handleSceneModeChange = () => browsePage({type: DATA})
   const saveAreaToDB = () => {
     const attributes = {
       ...contextualData,
@@ -61,7 +60,7 @@ const AoiSidebarContainer = (props) => {
       population={values.population}
       contextualData={contextualData}
       climateRegime={values.climateRegime}
-      handleSceneModeChange={handleSceneModeChange}
+      handleClose={back}
       isShareModalOpen={isShareModalOpen}
       setShareModalOpen={setShareModalOpen}
       {...props}

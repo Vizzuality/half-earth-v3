@@ -1,0 +1,130 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.soundContainer {
+  align-items: end;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  padding: 0 18px 18px 0;
+  position: absolute;
+
+  .rightColumn {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .scriptBox {
+    @extend %bodyText;
+
+    align-items: start;
+    background-color: $white;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: center;
+    margin: 0 12px 13px 0;
+    height: 110px;
+    width: 300px;
+    padding: 10px 16px 16px;
+
+    &.waiting {
+      align-items: center;
+      height: 24px;
+      width: 32px;
+      padding: 0;
+    }
+  }
+
+  .closeButton {
+    align-items: center;
+    background-color: $white;
+    border-radius: 50px;
+    display: flex;
+    height: 20px;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition-duration: 0.4s;
+    width: 20px;
+
+    &:hover {
+      width: 50px;
+
+      p {
+        @extend %annotation;
+        display: block;
+        margin-left: 2px;
+      }
+    }
+
+    p {
+      color: $black;
+      display: none;
+    }
+  }
+
+  .soundBtn {
+    position: relative;
+    align-items: center;
+    border-radius: 50px;
+    display: flex;
+    border: 3px solid transparent;
+    height: 70px;
+    justify-content: center;
+    padding-right: 2px;
+    width: 70px;
+  }
+
+  .audioBars {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 11px;
+    width: 100%;
+    z-index: $default-z-index;
+
+    .audioBar {
+      background-color: $brand-color-main;
+      border-radius: 2.5px;
+      height: 8px;
+      width: 8px;
+    }
+  }
+
+  .pauseButton {
+    display: block;
+    cursor: pointer;
+    z-index: $default-z-index;
+  }
+
+  .playButton {
+    z-index: $default-z-index;
+  }
+
+  .pauseIcon {
+    margin-left: 6px;
+  }
+
+  .playIcon {
+    margin-left: 10px;
+  }
+
+  .textContainer {
+    position: relative;
+    padding-right: 15px;
+
+    .muteButton {
+      z-index: $default-z-index;
+      position: absolute;
+      right: -10px;
+    }
+
+    .muteIcon {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

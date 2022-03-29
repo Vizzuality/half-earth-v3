@@ -6,7 +6,11 @@ import LabelsLayer from 'containers/layers/labels-layer';
 import CountryMaskLayer from 'containers/layers/country-mask-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
-import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle } from 'constants/layers-slugs';
+import AOIEntryTooltip from 'components/aoi-entry-tooltip';
+import {
+  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle,
+  HALF_EARTH_FUTURE_TILE_LAYER,
+} from 'constants/layers-slugs';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
@@ -28,8 +32,10 @@ const CountrySceneComponent = ({
   countryBorder,
   sceneSettings,
   isFullscreenActive,
-  handleCountryClick,
+  handleAreaClick,
   countryTooltipDisplayFor,
+  aoiTooltipInfo,
+  setTooltipInfo,
 }) => (
   <Scene
     sceneName={'nrc-scene'}
@@ -44,12 +50,16 @@ const CountrySceneComponent = ({
       spatialReference={LOCAL_SPATIAL_REFERENCE}
     />
     <FeatureHighlightLayer
-      featureLayerSlug={bordersLayerTitle}
-      onFeatureClick={handleCountryClick}
+      featureLayerSlugs={[bordersLayerTitle, HALF_EARTH_FUTURE_TILE_LAYER]}
+      onFeatureClick={handleAreaClick}
     />
     <CountryEntryTooltip
       countryTooltipDisplayFor={countryTooltipDisplayFor}
       countryName={countryName}
+    />
+    <AOIEntryTooltip
+      tooltipInfo={aoiTooltipInfo}
+      setTooltipInfo={setTooltipInfo}
     />
     <CountryLabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
 

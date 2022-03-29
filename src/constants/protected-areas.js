@@ -1,13 +1,16 @@
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  MERGED_WDPA_VECTOR_TILE_LAYER
+  MERGED_WDPA_VECTOR_TILE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER
 } from 'constants/layers-slugs';
 
 export const PROTECTED_AREAS_COLOR = '#008604';
+export const FUTURE_PLACES_COLOR = '#FF9C32';
+export const COMMUNITY_AREAS_COLOR = '#FCC44A';
 export const NOT_UNDER_CONSERVATION_COLOR = '#6C828F';
 export const WDPALayers = [
-  { 
+  {
     name: 'Protected areas',
     value: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
@@ -25,7 +28,18 @@ export const WDPALayers = [
     metadataTitle: 'Community-based protected areas'
 
   }
-]
+];
+
+export const conserveNextLayers = [
+  {
+    name: 'Places for Half-Earth future',
+    value: HALF_EARTH_FUTURE_TILE_LAYER,
+    id: HALF_EARTH_FUTURE_TILE_LAYER,
+    title: HALF_EARTH_FUTURE_TILE_LAYER,
+    slug: HALF_EARTH_FUTURE_TILE_LAYER,
+    metadataTitle: 'Places for Half-Earth future'
+  }
+];
 
 export const legendConfigs = {
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: {
@@ -51,6 +65,17 @@ export const legendConfigs = {
     title: "Protected areas",
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER
   },
+  [HALF_EARTH_FUTURE_TILE_LAYER]: {
+    type: "basic",
+    items: [
+      {
+        name: "Places for Half-Earth Future",
+        color: FUTURE_PLACES_COLOR
+      }
+    ],
+    title: "Places for Half-Earth Future",
+    slug: HALF_EARTH_FUTURE_TILE_LAYER
+  },
   [MERGED_WDPA_VECTOR_TILE_LAYER]: {
     type: "basic",
     items: [
@@ -66,7 +91,7 @@ export const legendConfigs = {
 
 
 export const TEXTS = {
-  categoryTitle: 'Existing protection',
+  categoryTitle: 'Protection',
   layersTitle: 'Conservation areas',
   description: 'Global protections clasified according to their management objectives.'
 }

@@ -16,9 +16,12 @@ import {
   ECOLOGICAL_LAND_UNITS,
   CONTEXTUAL_DATA_TABLES,
   LAND_PRESSURES_LOOKUP,
-  LAND_PRESSURES_LABELS_SLUGS
+  LAND_PRESSURES_LABELS_SLUGS,
+  BIRDS,
+  MAMMALS,
+  REPTILES,
+  AMPHIBIANS,
 } from 'constants/geo-processing-services';
-
 
 import { PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
 
@@ -151,7 +154,7 @@ export function getSpeciesData(crfName, geometry) {
   })
 }
 
-export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
+const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   const data = JSON.parse(jsonSlices);
   return new Promise((resolve, reject) => {
     const crfSlices = data.reduce((acc, f) => ({
@@ -189,12 +192,22 @@ export const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   })
 }
 
+export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
+  getPrecalculatedSpeciesData(BIRDS, attributes.birds).then(data => setTaxaData(data));
+  getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
+    // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
+    setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
+  });
+  getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then(data => setTaxaData(data));
+  getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
+};
+
 const getAreaName = (data, config) => {
   if (!config) return null;
   return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
 }
 
-export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false) => {
+export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false, areaName) => {
 
   const pressures = {};
   Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach(key => {
@@ -207,7 +220,7 @@ export const getPrecalculatedContextualData = (data, layerSlug, includeProtected
       landCover: data.land_cover_majority
     },
     area: data.AREA_KM2,
-    areaName: getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
+    areaName: areaName || getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
     pressures,
     population: data.population_sum,
     ...(includeProtectedAreasList && { ...data.protectedAreasList }),

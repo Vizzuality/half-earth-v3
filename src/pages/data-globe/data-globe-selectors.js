@@ -1,10 +1,10 @@
-import { createSelector, createStructuredSelector } from 'reselect';
-import { isEmpty } from 'lodash';
-import { getDataGlobeLayers } from 'selectors/layers-selectors';
-import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-
+import { isEmpty } from 'lodash';
+import { createSelector, createStructuredSelector } from 'reselect';
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
+import { getDataGlobeLayers } from 'selectors/layers-selectors';
+import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'selectors/location-selectors';
+
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
@@ -13,19 +13,19 @@ const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState,
   (globeUrlState) => {
-  return {
-    ...dataSceneConfig.globe,
-    ...globeUrlState
-  }
-})
+    return {
+      ...dataSceneConfig.globe,
+      ...globeUrlState
+    }
+  })
 
 const getUiSettings = createSelector(selectUiUrlState,
   (uiUrlState) => {
-  return {
-    ...dataSceneConfig.ui,
-    ...uiUrlState
-  }
-})
+    return {
+      ...dataSceneConfig.ui,
+      ...uiUrlState
+    }
+  })
 
 const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
   return listenersUrlState ? listenersUrlState : false;
@@ -57,11 +57,13 @@ const getCountedActiveLayers = createSelector(
 
     return {
       'Biodiversity': biodiversityLayers,
-      'Existing protection': protectionLayers,
+      'Protection': protectionLayers,
       'Human pressures': landHumanPressureLayers
     };
   }
 );
+export const getOnBoardingType = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingType);
+export const getOnBoardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingStep);
 
 
 export default createStructuredSelector({
@@ -88,5 +90,7 @@ export default createStructuredSelector({
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
   countedActiveLayers: getCountedActiveLayers,
-  userConfig: selectUserConfig
+  userConfig: selectUserConfig,
+  onBoardingType: getOnBoardingType,
+  onBoardingStep: getOnBoardingStep,
 });
