@@ -43,6 +43,7 @@ const CountrySceneComponent = ({
   onBoardingType,
   onBoardingStep,
 }) => {
+
   const TOOLTIP_PLACEMENT = useMemo(() => {
     if (onBoardingStep === 4) return { // CHALLENGES TAB
       left: '310px',

@@ -19,9 +19,10 @@ const NationalReportSidebarContainer = (props) => {
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
   }
 
-  const handleTabSelection = slug => {
-    const { browsePage, countryISO } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  slug }});
+  const handleTabSelection = (slug, slugOnBoardingStep, waitingInteraction = false) => {
+    const { browsePage, countryISO, changeUI } = props;
+    changeUI({ onBoardingStep: slugOnBoardingStep, waitingInteraction });
+    !slugOnBoardingStep && browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: slug } });
   };
 
   return (

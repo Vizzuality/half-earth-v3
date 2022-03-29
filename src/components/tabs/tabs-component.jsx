@@ -13,25 +13,24 @@ const getSelectedTabIndex = (tabs, defaultTabSlug) => {
 }
 
 const Tabs = ({ tabs, onClick, defaultTabSlug, className, onBoardingStep, onBoardingType }) => {
-  console.log({ onBoardingType })
+
   return (
     <div className={cx(styles.tabs, className)}>
       <ul className={styles.tabList} role="tablist">
         {tabs.map((tab, i) => {
           const { slug, title } = tab;
           const tabSlug = slug || title;
-          console.log({ tabSlug })
 
           const richnessOnBoardingStep = tabSlug === 'richness' && onBoardingType === 'priority-places' && onBoardingStep === 1;
           const rarityOnBoardingTab = tabSlug === 'rarity' && onBoardingType === 'priority-places' && onBoardingStep === 2;
           const challengesOnBoardingTab = tabSlug === 'challenges' && onBoardingType === 'national-report-cards' && onBoardingStep === 4;
-          const rankingOnBoardingTab = tabSlug === 'ranking' && onBoardingType === 'national-report-cards' && onBoardingStep === 4;
+          const rankingOnBoardingTab = tabSlug === 'ranking' && onBoardingType === 'national-report-cards' && onBoardingStep === 5;
 
           const slugOnBoardingStep = useMemo(() => {
             if (richnessOnBoardingStep) return 2
             if (rarityOnBoardingTab) return 3
-            if (challengesOnBoardingTab) return 4
-            if (rankingOnBoardingTab) return 5
+            if (challengesOnBoardingTab) return 5
+            if (rankingOnBoardingTab) return 6
             return null
           }, [onBoardingStep])
 
