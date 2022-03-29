@@ -13,6 +13,7 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import SoundButton from 'containers/onboarding/sound-btn';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 // Constants
 import {
@@ -63,6 +64,10 @@ const CountrySceneComponent = ({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
+      {onBoardingType && (
+        <SoundButton />
+      )}
+
       {typeof onBoardingStep === 'number' && (
         <div
           className={styles.tooltipPlacement}
