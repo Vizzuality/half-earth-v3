@@ -64,5 +64,11 @@ ENTER_COUNTRY: 'Visit a country card',
 FIND_PLACES_SEARCH: 'Search term from find places',
 CHANGE_NRC_VIEW: 'Change NRC view',
 OPEN_SPECIES_LIST: 'Open All Species list'
+}
 
+export const VIEW_MODE = {
+  GLOBE: 'Global view',
+  LANDSCAPE: 'Landscape view',
+  LEGEND: 'Legend',
+  NRC: 'National Report Cards'
 }

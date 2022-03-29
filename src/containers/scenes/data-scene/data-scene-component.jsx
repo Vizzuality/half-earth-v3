@@ -1,22 +1,24 @@
 // Dependencies
-import React, { useMemo } from 'react';
-import cx from 'classnames';
 import loadable from '@loadable/component';
-// Components
-import Scene from 'components/scene';
-import Widgets from 'containers/widgets';
-import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import CountryLabelsLayer from 'containers/layers/country-labels-layer';
-import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import cx from 'classnames';
 import MapTooltip from 'components/map-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
-import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 import MenuSettings from 'components/mobile-only/menu-settings';
+// Components
+import Scene from 'components/scene';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
-
-import styles from './data-scene-styles.module.scss';
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import SoundButton from 'containers/onboarding/sound-btn';
+import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
+import Widgets from 'containers/widgets';
+import React, { useMemo } from 'react';
 import animationStyles from 'styles/common-animations.module.scss';
+import styles from './data-scene-styles.module.scss';
+
+
 
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
@@ -24,7 +26,7 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const CountrySceneComponent = ({
+const DataSceneComponent = ({
   sceneMode,
   onMapLoad,
   userConfig,
@@ -46,6 +48,7 @@ const CountrySceneComponent = ({
   isLandscapeSidebarCollapsed,
   handleTooltipActionButtonClick,
   handleHighlightLayerFeatureClick,
+  onBoardingType,
 }) => {
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
@@ -62,6 +65,11 @@ const CountrySceneComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         initialRotation
       >
+
+        {onBoardingType && (
+          <SoundButton />
+        )}
+
         <ArcgisLayerManager
           userConfig={userConfig}
           activeLayers={activeLayers}
@@ -99,7 +107,7 @@ const CountrySceneComponent = ({
         />
         {selectedAnalysisLayer && (
           <FeatureHighlightLayer
-            featureLayerSlug={selectedAnalysisLayer.slug}
+            featureLayerSlugs={selectedAnalysisLayer.slug}
             onFeatureClick={handleHighlightLayerFeatureClick}
           />
         )}
@@ -115,4 +123,4 @@ const CountrySceneComponent = ({
   );
 };
 
-export default CountrySceneComponent;
+export default DataSceneComponent;

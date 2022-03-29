@@ -1,7 +1,13 @@
 import { analyticsActionCreator } from 'utils/google-analytics-utils';
 import { createAction } from 'redux-tools';
 import { CATEGORIES, ACTIONS } from 'constants/google-analytics-constants';
+import { VIEW_MODE } from 'constants/google-analytics-constants';
 const { GENERAL_MENU, DISCOVER_STORIES, EXPLORE_DATA, AOI, NRC } = CATEGORIES;
+
+export const addLayerAnalyticsEvent = createAction('addLayer', null, ({ slug, query }) => {
+  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
+  return { analytics: [ viewMode, 'Add layer', `${slug}` ] };
+});
 
 export const joinConversationAnalytics = (label) => analyticsActionCreator({
   category: GENERAL_MENU,
@@ -132,19 +138,19 @@ export const visitNrcOverviewAnalytics = (label) => analyticsActionCreator({
   category: NRC,
   action: ACTIONS.OVERVIEW,
   label
-}) 
+})
 
 export const downloadNrcPdfAnalytics = (label) => analyticsActionCreator({
   category: NRC,
   action: ACTIONS.DOWNLOAD_PDF,
   label
-}) 
+})
 
 export const checkSpiInfoAnalytics = (label) => analyticsActionCreator({
   category: NRC,
   action: ACTIONS.SPI_INFO,
   label
-}) 
+})
 
 export const nrcAnalyticsActions = {
   clickCountryAnalytics,
@@ -229,6 +235,12 @@ export const changeMapSceneAnalyticsEvent = createAction('changeMapScene', null,
   return createGtagEventStructure(CATEGORIES.NAVIGATION, ACTIONS.CHANGE_SCENE, scene)
 });
 
+// LEGACY
+
+export const removeLayerAnalyticsEvent = createAction('removeLayer', null, ({ slug, query }) => {
+  const viewMode = query && (query.viewMode || VIEW_MODE.GLOBE);
+  return { analytics: [ viewMode, 'Remove layer', `${slug}` ] };
+});
 
 export default {
   openInfoModalAnalyticsEvent,

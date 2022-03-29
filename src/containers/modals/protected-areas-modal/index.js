@@ -12,12 +12,10 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
+  HALF_EARTH_FUTURE_WDPA_LAYER,
 } from 'constants/layers-slugs';
 import {
-  NATIONAL_BOUNDARIES_TYPE,
-  PROTECTED_AREAS_TYPE,
-  SUBNATIONAL_BOUNDARIES_TYPE,
-  CUSTOM_AOI_TYPE,
+  AREA_TYPES
 } from 'constants/aois';
 
 // actions
@@ -77,19 +75,21 @@ const Container = (props) => {
 
   useEffect(() => {
     let urlValue;
-
     switch (areaTypeSelected) {
-      case NATIONAL_BOUNDARIES_TYPE:
+      case [AREA_TYPES.national]:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
         break;
-      case SUBNATIONAL_BOUNDARIES_TYPE:
+      case [AREA_TYPES.subnational]:
         urlValue = LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
+        break;
+      case [AREA_TYPES.futurePlaces]:
+        urlValue = LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER];
         break;
       default:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
     }
     // ---------------- CUSTOM AOIS SPECIAL CASE -----------------
-    if (areaTypeSelected === CUSTOM_AOI_TYPE) {
+    if (areaTypeSelected === AREA_TYPES.custom) {
       const protectedAreas = contextualData.protectedAreasList;
       if (protectedAreas) {
         setData(protectedAreas);
@@ -97,7 +97,26 @@ const Container = (props) => {
         setLoading(false);
       }
     }
-    else if (areaTypeSelected === PROTECTED_AREAS_TYPE) {
+    else if (areaTypeSelected === AREA_TYPES.futurePlaces) {
+      // --------------- FUTURE PLACES SPECIAL CASE --------------
+      EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
+        whereClause: `places = '${contextualData.cluster}'`,
+        returnGeometry: false
+      }).then((results) => {
+        if (results) {
+          const tempData = results.map((f) => f.attributes);
+          tempData.sort(sortFunction);
+          setData(tempData);
+          setFilteredData([...tempData]);
+        } else {
+          setData([]);
+          setFilteredData([]);
+        }
+        setLoading(false);
+      });
+    }
+    else if (areaTypeSelected === AREA_TYPES.protected) {
       // --------------- PROTECTED AREA SPECIAL CASE --------------
       const areaValue = {
         DESIG: contextualData.DESIG_E,

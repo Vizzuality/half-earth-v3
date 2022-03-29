@@ -1,0 +1,124 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  @include backdropBlur();
+  border-radius: $border-radius-desktop;
+  margin-top: $widgetsTopMargin;
+  height: 400px;
+}
+
+.title {
+  margin: 0;
+  color: $white;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 20px;
+  padding: $mobile-sidebar-side-paddings $mobile-sidebar-side-paddings 0;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings $sidebar-paddings 0;
+  }
+}
+
+.text {
+  color: $alto;
+  line-height: 16px;
+  font-size: 12px;
+  margin-bottom: 24px;
+  padding: 0 $mobile-sidebar-side-paddings;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
+}
+
+.hint {
+  color: $white;
+  line-height: 14px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  padding: $mobile-sidebar-side-paddings $mobile-sidebar-side-paddings 0;
+  user-select: none;
+
+  @media #{$tablet-portrait} {
+    padding: $sidebar-paddings $sidebar-paddings 0;
+  }
+}
+
+.barContainer {
+  align-items: center;
+  display: flex;
+  height: 32px;
+  margin: 38px $mobile-sidebar-side-paddings $mobile-sidebar-side-paddings;
+  position: relative;
+  width: 240px;
+
+  @media #{$tablet-portrait} {
+    margin: 38px $sidebar-paddings $sidebar-paddings;
+  }
+}
+
+.pressureFreeBar {
+  background-color: $slate-gray;
+  height: 22px;
+  flex: 1;
+
+  &:before {
+    content: '';
+    background: $white;
+    display: block;
+    height: 32px;
+    transform: translate(-2px, -5px);
+    width: 2px;
+  }
+}
+
+.selectedPressureBar {
+  background-color: $human-pressure-low;
+  border: 2px solid $white;
+  border-radius: 1px;
+  height: 100%;
+  position: absolute;
+  transition: width 2s;
+}
+
+.selectedPressureLabel {
+  @extend  %bodyText;
+  color: $white;
+  position: absolute;
+  top: -22px;
+  left: 50%;
+}
+
+.nonSelectedPressureBar {
+  background-color: $human-pressure-low;
+  height: 22px;
+}
+
+.pressureFreeLabel {
+  @extend  %bodyText;
+  color: $white;
+  padding: 0 $mobile-sidebar-side-paddings;
+  position: relative;
+  margin: 8px 0 15px;
+  width: max-content;
+
+  @media #{$tablet-portrait} {
+    padding: 0 $sidebar-paddings;
+  }
+
+  &:after {
+    content: '';
+    background: $slate-gray;
+    border-radius: 50%;
+    display: block;
+    height: 10px;
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    width: 10px;
+  }
+}

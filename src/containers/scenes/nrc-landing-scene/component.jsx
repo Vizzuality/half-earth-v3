@@ -1,16 +1,19 @@
 // Dependencies
-import React from 'react';
 import loadable from '@loadable/component';
+import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Components
 import Scene from 'components/scene';
-import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
-import Widgets from 'containers/widgets';
-import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import CountryLabelsLayer from 'containers/layers/country-labels-layer';
-import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
-import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Constants
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import SoundButton from 'containers/onboarding/sound-btn';
+import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
+import Widgets from 'containers/widgets';
+import React from 'react';
+
+
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -28,6 +31,7 @@ const NrcLandingComponent = ({
   sceneSettings,
   isLandscapeMode,
   isGlobeUpdating,
+  onBoardingType,
 }) => {
   return (
     <>
@@ -38,6 +42,11 @@ const NrcLandingComponent = ({
         onMapLoad={onMapLoad}
         initialRotation
       >
+
+        {onBoardingType && (
+          <SoundButton />
+        )}
+
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
@@ -62,6 +71,7 @@ const NrcLandingComponent = ({
         />
         <NRCLandingSidebar />
         <LabelsLayer activeLayers={activeLayers} />
+
       </Scene>
     </>
   );

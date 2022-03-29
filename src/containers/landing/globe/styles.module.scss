@@ -1,0 +1,54 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  height: 200px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+
+  .image {
+    object-fit: contain;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+
+  .content {
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+
+    @media #{$tablet-landscape} {
+      padding: 0 40px;
+    }
+    .title {
+      @extend %display2;
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .description {
+      @extend %bodyText;
+      margin: 0;
+      z-index: $default-z-index;
+      font-size: 12px;
+
+      @media #{$tablet-landscape} {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.imageCenter {
+  top: 120px;
+}
+
+
+.contentCenter {
+  margin-bottom: 40px;
+}

@@ -1,15 +1,15 @@
-import React from "react";
-import cx from "classnames";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
-import ShareModal from "components/share-modal";
-import About from "components/about";
-import { ReactComponent as CloseIcon } from "icons/menu-close.svg";
-import styles from "./main-menu-content.module.scss";
-import menuExploreImage from "images/menu-explore.png";
-import menuDiscoverImage from "images/menu-discover.png";
-import menuNRCImage from "images/menu-national-report-cards.png";
-import { DATA, NATIONAL_REPORT_CARD_LANDING, FEATURED } from "router";
+import React from 'react';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+import ShareModal from 'components/share-modal';
+import About from 'components/about';
+import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
+import styles from './main-menu-content.module.scss';
+import menuExploreImage from 'images/menu-explore.png';
+import menuDiscoverImage from 'images/menu-discover.png';
+import menuNRCImage from 'images/menu-national-report-cards.png';
+import { DATA, NATIONAL_REPORT_CARD_LANDING, FEATURED } from 'router';
 import { joinConversationSocialMedia } from 'constants/social-media-constants';
 
 const MainMenuContent = ({
@@ -19,7 +19,7 @@ const MainMenuContent = ({
   setMenuOpen,
   handleShareClick,
   isShareModalOpen,
-  handleJoinConversationClick
+  handleJoinConversationClick,
 }) => (
   <AnimatePresence>
     {open && (
@@ -28,7 +28,7 @@ const MainMenuContent = ({
         exit={{ x: 690 }}
         animate={{ x: 0 }}
         transition={{
-          easing: "easeOut",
+          easing: 'easeOut',
           duration: 0.4,
         }}
         role="navigation"
@@ -68,7 +68,7 @@ const MainMenuContent = ({
               >
                 <img
                   src={menuDiscoverImage}
-                  alt="explore data link"
+                  alt="discover stories link"
                   className={styles.menuItemImage}
                 />
                 <h2 className={styles.menuItem} role="menuitem">
@@ -79,11 +79,13 @@ const MainMenuContent = ({
             <li>
               <button
                 className={styles.menuButton}
-                onClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}
+                onClick={() =>
+                  browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
+                }
               >
                 <img
                   src={menuNRCImage}
-                  alt="explore data link"
+                  alt="National Report Card link"
                   className={styles.menuItemImage}
                 />
                 <h2 className={styles.menuItem} role="menuitem">
@@ -128,14 +130,10 @@ const MainMenuContent = ({
                 JOIN THE CONVERSATION
                 <ul className={styles.socialLinks}>
                   {joinConversationSocialMedia.map((socialMedia) => (
-                    <li 
-                      key={socialMedia.alt}
-                      className={styles.socialLink}
-                    >
+                    <li key={socialMedia.alt} className={styles.socialLink}>
                       <button
                         onClick={() => handleJoinConversationClick(socialMedia)}
                         className={styles.iconBackground}
-                        
                       >
                         <socialMedia.icon />
                       </button>

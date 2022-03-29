@@ -50,10 +50,12 @@
   height: 100%;
   width: 150px;
   height: 20px;
+
   .slider {
     position: relative;
     width: 150px;
   }
+
   .track {
     position: absolute;
     height: 3px;
@@ -68,4 +70,3 @@
 .sliderValue {
   padding-left: 15px;
 }
-
