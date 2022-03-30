@@ -116,6 +116,7 @@ const DataSceneComponent = ({
           isBiodiversityActive={isBiodiversityActive}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           onBoardingStep={onBoardingStep}
+          onBoardingType={onBoardingType}
           waitingInteraction={waitingInteraction}
           className={cx(styles.sidebarContainer, {
             [animationStyles.leftHidden]: sidebarHidden,

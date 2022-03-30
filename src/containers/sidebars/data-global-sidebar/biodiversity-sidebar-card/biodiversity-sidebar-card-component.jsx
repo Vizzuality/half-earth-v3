@@ -45,6 +45,7 @@ const BiodiversitySidebarCardComponent = ({
   onBoardingType,
   changeUI,
 }) => {
+
   const firstStep = onBoardingStep === 0;
   const nonOverlaySteps = (onBoardingStep === 0) || (onBoardingStep === 1) || (onBoardingStep === 2);
   const openCardSteps = (onBoardingStep === 1) || (onBoardingStep === 2);

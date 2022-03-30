@@ -20,8 +20,10 @@ const DataGlobalSidebarComponent = ({
   countedActiveLayers,
   handleGlobeUpdating,
   onBoardingStep,
+  onBoardingType,
   waitingInteraction,
 }) => {
+  console.log('--->', onBoardingType);
   return (
     <div className={cx(styles.container, className)}>
       <AnalyzeAreasSidebarCard
@@ -36,6 +38,7 @@ const DataGlobalSidebarComponent = ({
         activeCategory={activeCategory}
         countedActiveLayers={countedActiveLayers}
         onBoardingStep={onBoardingStep}
+        onBoardingType={onBoardingType}
         waitingInteraction={waitingInteraction}
       />
       <ProtectedAreasSidebarCard

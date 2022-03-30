@@ -28,6 +28,7 @@ const Component = ({
 
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
+  const [countryValue, setCountryValue] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
 
   return (
@@ -45,7 +46,7 @@ const Component = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (typeof onBoardingStep === 'number' && {
+      {... (typeof onBoardingStep === 'number' && countryValue && {
         onClick: (e) => {
           e.stopPropagation();
           changeUI({ onBoardingStep: 3, waitingInteraction: false })
@@ -76,7 +77,10 @@ const Component = ({
                 <li
                   className={styles.option}
                   key={option.key}
-                  onClick={() => { onOptionSelection(option) }}
+                  onClick={() => {
+                    onOptionSelection(option);
+                    setCountryValue({ option });
+                  }}
                 >
                   {option.text}
                 </li>

@@ -110,6 +110,8 @@ const SoundButtonComponent = ({
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(false);
 
+  console.log({ onBoardingStep })
+
   // There is no autoplay on chrome and firefos. We always need a previous user click on the page.
   // We show a message if this hasn't happened (eg. reload)
   // https://developer.chrome.com/blog/autoplay/#webaudio

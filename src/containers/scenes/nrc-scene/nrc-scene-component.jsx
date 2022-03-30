@@ -69,7 +69,7 @@ const CountrySceneComponent = ({
         <SoundButton />
       )}
 
-      {/* solo mostrar cuando haya countryData */}
+
       {typeof onBoardingStep === 'number' && countryData && (
         <div
           className={styles.tooltipPlacement}
