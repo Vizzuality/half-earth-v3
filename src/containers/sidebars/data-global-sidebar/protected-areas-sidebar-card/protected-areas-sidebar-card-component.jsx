@@ -67,7 +67,10 @@ const ProtectedAreasSidebarCardComponent = ({
         isOpen={isOpen}
       />
       <div
-        className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
+        className={cx(styles.layersTogglesContainer, {
+          [styles.open]: isOpen,
+          [styles.onBoardingMode]: currentStep,
+        })}
       >
         <span className={styles.description}>{TEXTS.description}</span>
         <hr className={hrTheme.dark} />

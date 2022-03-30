@@ -77,8 +77,7 @@ const DataSceneComponent = ({
       top: '354px',
     };
     if (onBoardingStep === 4) return { // Human Pressures
-      left: '470px',
-      top: '482px',
+      display: 'none'
     };
     return null;
   }, [onBoardingStep]);

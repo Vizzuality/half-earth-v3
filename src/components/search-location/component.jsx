@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
 import cx from 'classnames';
@@ -31,6 +31,15 @@ const Component = ({
   const [countryValue, setCountryValue] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
 
+  const onNextOnBoardingStep = useCallback((e) => {
+    e.stopPropagation();
+    if (currentStep && countryValue) {
+      changeUI({ onBoardingStep: 3, waitingInteraction: false });
+    }
+    return null;
+
+  }, [countryValue])
+
   return (
     <motion.div
       className={cx(styles.inputContainer, {
@@ -47,12 +56,7 @@ const Component = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (typeof onBoardingStep === 'number' && countryValue && {
-        onClick: (e) => {
-          e.stopPropagation();
-          changeUI({ onBoardingStep: 3, waitingInteraction: false })
-        }
-      })}
+      onClick={(e) => onNextOnBoardingStep(e)}
     >
       <input
         type="text"
@@ -63,35 +67,37 @@ const Component = ({
         onChange={handleInputChange}
       />
       {<IconSearch className={styles.placeholderIcon} />}
-      {isSearchResultVisible && (
-        createPortal(
-          <div
-            ref={setPopperElement}
-            style={{ ...popperStyles.popper, width: parentWidth }}
-            {...attributes.popper}
-          >
-            <ul className={cx(styles.optionsList, {
-              [styles.fullWidth]: width === 'full'
-            })}
+      {
+        isSearchResultVisible && (
+          createPortal(
+            <div
+              ref={setPopperElement}
+              style={{ ...popperStyles.popper, width: parentWidth }}
+              {...attributes.popper}
             >
-              {searchResults.map(option => (
-                <li
-                  className={styles.option}
-                  key={option.key}
-                  onClick={() => {
-                    onOptionSelection(option);
-                    setCountryValue({ option });
-                  }}
-                >
-                  {option.text}
-                </li>
-              ))}
-            </ul>
-          </div>,
-          document.getElementById('root')
+              <ul className={cx(styles.optionsList, {
+                [styles.fullWidth]: width === 'full'
+              })}
+              >
+                {searchResults.map(option => (
+                  <li
+                    className={styles.option}
+                    key={option.key}
+                    onClick={() => {
+                      onOptionSelection(option);
+                      setCountryValue({ option });
+                    }}
+                  >
+                    {option.text}
+                  </li>
+                ))}
+              </ul>
+            </div>,
+            document.getElementById('root')
+          )
         )
-      )}
-    </motion.div>
+      }
+    </motion.div >
   );
 }
 

@@ -38,7 +38,6 @@ const HumanImpactSidebarCardComponent = ({
   className,
   handleLayerToggle,
   countedActiveLayers,
-  onBoardingType,
   onBoardingStep,
   changeUI
 }) => {
@@ -60,6 +59,7 @@ const HumanImpactSidebarCardComponent = ({
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
         [styles.onBoardingOverlay]: !currentStep && typeof onBoardingStep === 'number',
+        [styles.onBoardingMode]: currentStep,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',

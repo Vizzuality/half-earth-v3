@@ -45,7 +45,7 @@ const NrcLandingComponent = ({
     };
     if (onBoardingStep === 2) return { // SEARCHER + MAP
       left: '435px',
-      top: '565px',
+      top: '542px',
     };
     return null;
   }, [onBoardingStep]);
@@ -63,13 +63,11 @@ const NrcLandingComponent = ({
           <SoundButton />
         )}
 
-        {typeof onBoardingStep === 'number' && (
-          <div
-            className={styles.tooltipPlacement}
-            style={TOOLTIP_PLACEMENT}>
-            <Tooltip />
-          </div>
-        )}
+        <div
+          className={styles.tooltipPlacement}
+          style={TOOLTIP_PLACEMENT}>
+          <Tooltip />
+        </div>
 
         <ArcgisLayerManager
           activeLayers={activeLayers}

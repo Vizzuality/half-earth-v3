@@ -97,7 +97,10 @@ const BiodiversitySidebarCardComponent = ({
         className={cx(
           styles.layersTogglesContainer,
           styles[`${biodiversityLayerVariant}Tab`],
-          { [styles.open]: isOpen }
+          {
+            [styles.open]: isOpen,
+            [styles.onBoardingMode]: firstStep,
+          }
         )}
       >
         <SidebarLegend
