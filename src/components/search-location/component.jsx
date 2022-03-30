@@ -38,6 +38,7 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
+        [styles.onBoardingOverlay]: !currentStep,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',

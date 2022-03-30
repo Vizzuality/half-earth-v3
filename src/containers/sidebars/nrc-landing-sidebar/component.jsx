@@ -19,7 +19,7 @@ const NRCLandingSidebar = ({ changeUI, onBoardingStep, view }) => {
         [styles.onBoardingMode]: currentStep,
       })}
       animate={{
-        outline: currentStep && '5px solid #00BDB5',
+        outline: currentStep ? '5px solid #00BDB5' : 'none',
       }}
       transition={{
         duration: 1.75,
@@ -29,7 +29,7 @@ const NRCLandingSidebar = ({ changeUI, onBoardingStep, view }) => {
     >
       <p className={styles.title}>National Report Cards</p>
       <p className={styles.body}>
-        The Species Protection Index reflects the average amount of area-based
+        rotection Index reflects the average amount of area-based
         conservation targets met across all endemic species within a given country
         in a given year, weighted by a country's stewardship. Strategic and
         targeted protection of species habitat will generally result in a

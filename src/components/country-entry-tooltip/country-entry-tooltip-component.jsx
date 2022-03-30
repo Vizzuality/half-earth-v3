@@ -24,13 +24,9 @@ const CountryEntryTooltipComponent = ({
   const tooltipref = useRef(null);
   const exploreBtnRef = useRef(null);
   const [tooltip, setTooltip] = useState(null);
-  const [tooltipPositionObj, setTooltipPositionObj] = useState({});
+  const [tooltipScreenPosition, setTooltipScreenPosition] = useState({});
   const { spi, vertebrates, endemic, protection, protectionNeeded } =
     tooltipContent;
-
-  useEffect(() => {
-    if (exploreBtnRef && exploreBtnRef.current) setTooltipPositionObj(exploreBtnRef.current.getBoundingClientRect());
-  }, [exploreBtnRef.current, countryISO])
 
   // Create a new Popup to contain the tooltip
   useEffect(() => {
@@ -51,7 +47,11 @@ const CountryEntryTooltipComponent = ({
       if (view.camera) {
         const camera = view.camera.clone();
         camera.position.latitude += 5;
-        view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' });
+        view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' })
+          .then(() => {
+            const popupElement = document.getElementsByClassName('esri-popup')[0];
+            if (popupElement) setTooltipScreenPosition(popupElement.getBoundingClientRect());
+          });
       }
     } else {
       view.popup.close();
@@ -95,7 +95,7 @@ const CountryEntryTooltipComponent = ({
         </section>
         <motion.div
           animate={{
-            outline: currentStep && '3px solid #00BDB5',
+            outline: currentStep ? '3px solid #00BDB5' : 'none',
           }}
           transition={{
             duration: 1.75,
@@ -112,10 +112,10 @@ const CountryEntryTooltipComponent = ({
         </motion.div>
       </div>
 
-      {typeof onBoardingStep === 'number' && tooltipPositionObj && (
+      {typeof onBoardingStep === 'number' && tooltipScreenPosition && (
         <div
           className={styles.tooltipPlacement}
-          style={{ right: tooltipPositionObj.right, bottom: tooltipPositionObj.bottom }}>
+          style={{ top: tooltipScreenPosition.y + (tooltipScreenPosition.height - 55), left: tooltipScreenPosition.x + ((tooltipScreenPosition.width / 2) + 75) }}>
           <Tooltip />
         </div>
       )}
