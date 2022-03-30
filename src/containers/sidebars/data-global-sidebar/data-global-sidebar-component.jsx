@@ -23,7 +23,6 @@ const DataGlobalSidebarComponent = ({
   onBoardingType,
   waitingInteraction,
 }) => {
-  console.log('--->', onBoardingType);
   return (
     <div className={cx(styles.container, className)}>
       <AnalyzeAreasSidebarCard
