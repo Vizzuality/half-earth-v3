@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -22,6 +22,8 @@ import {
   MARINE,
   RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
+// Hooks
+import { useTooltipRef } from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -71,18 +73,10 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const onboardingRef = useRef();
-  useEffect(() => {
-    if (onboardingRef.current) {
-      console.log('lala', onboardingRef.current.getBoundingClientRect());
-      const { top, width, left } =
-        onboardingRef.current.getBoundingClientRect();
-      changeUI({
-        onboardingTooltipTop: top,
-        onboardingTooltipLeft: left + width,
-      });
-    }
-  }, [onboardingRef]);
+  const onboardingRef = useTooltipRef({
+    changeUI,
+    isActive: onboardingStep === 0,
+  });
 
   return (
     <motion.div

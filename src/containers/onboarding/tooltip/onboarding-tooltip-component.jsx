@@ -8,12 +8,18 @@ const OnboardingTooltipComponent = ({
   tooltipPlacement,
   className,
   onboardingStep,
+  tooltipTop,
+  tooltipLeft,
 }) => {
   if (typeof onboardingStep !== 'number') return null;
   return (
     <div
       className={cx(styles.tooltipPlacement, className)}
-      style={tooltipPlacement}
+      style={
+        tooltipPlacement
+          ? tooltipPlacement
+          : { top: tooltipTop, left: tooltipLeft }
+      }
     >
       <div
         className={cx({
