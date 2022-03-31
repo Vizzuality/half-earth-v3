@@ -24,7 +24,7 @@ const NationalReportCardLanding = ({
   onBoardingStep,
   waitingInteraction,
 }) => {
-  console.log({ onBoardingType, onBoardingStep, waitingInteraction })
+
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />

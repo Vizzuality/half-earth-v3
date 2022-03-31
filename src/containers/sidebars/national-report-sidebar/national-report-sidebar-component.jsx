@@ -38,6 +38,7 @@ const NationalReportSidebarComponent = ({
   onBoardingStep,
   onBoardingType,
 }) => {
+
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 

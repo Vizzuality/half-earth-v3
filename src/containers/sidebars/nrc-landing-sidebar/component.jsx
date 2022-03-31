@@ -16,7 +16,6 @@ const NRCLandingSidebar = ({ changeUI, onBoardingStep, view }) => {
     <motion.div
       className={cx({
         [styles.container]: true,
-        [styles.onBoardingMode]: currentStep,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',
@@ -25,11 +24,11 @@ const NRCLandingSidebar = ({ changeUI, onBoardingStep, view }) => {
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (typeof onBoardingStep === 'number' && { onClick: () => changeUI({ onBoardingStep: 2, waitingInteraction: false }) })}
+      {... (currentStep && { onClick: () => changeUI({ onBoardingStep: 2, waitingInteraction: false }) })}
     >
       <p className={styles.title}>National Report Cards</p>
       <p className={styles.body}>
-        rotection Index reflects the average amount of area-based
+        Protection Index reflects the average amount of area-based
         conservation targets met across all endemic species within a given country
         in a given year, weighted by a country's stewardship. Strategic and
         targeted protection of species habitat will generally result in a
@@ -40,15 +39,19 @@ const NRCLandingSidebar = ({ changeUI, onBoardingStep, view }) => {
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
-      <SearchLocation
-        view={view}
-        theme="dark"
-        width="full"
-        parentWidth="380px"
-        placeholder="search countries"
-        searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
-        onBoardingStep={onBoardingStep}
-      />
+      <div className={cx({
+        [styles.onBoardingMode]: currentStep,
+      })}>
+        <SearchLocation
+          view={view}
+          theme="dark"
+          width="full"
+          parentWidth="380px"
+          placeholder="search countries"
+          searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
+          onBoardingStep={onBoardingStep}
+        />
+      </div>
     </motion.div>
   )
 }
