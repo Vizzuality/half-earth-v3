@@ -21,24 +21,29 @@ const Component = ({
   onOptionSelection,
   handleInputChange,
   isSearchResultVisible,
-  onBoardingStep,
+  onboardingStep,
   changeUI,
 }) => {
-  const currentStep = onBoardingStep === 2;
+  const currentStep = onboardingStep === 2;
 
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const [countryValue, setCountryValue] = useState(null);
-  const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
+  const { styles: popperStyles, attributes } = usePopper(
+    referenceElement,
+    popperElement
+  );
 
-  const onNextOnBoardingStep = useCallback((e) => {
-    e.stopPropagation();
-    if (currentStep && countryValue) {
-      changeUI({ onBoardingStep: 3, waitingInteraction: false });
-    }
-    return null;
-
-  }, [countryValue])
+  const onNextonboardingStep = useCallback(
+    (e) => {
+      e.stopPropagation();
+      if (currentStep && countryValue) {
+        changeUI({ onboardingStep: 3, waitingInteraction: false });
+      }
+      return null;
+    },
+    [countryValue]
+  );
 
   return (
     <motion.div
@@ -47,7 +52,7 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
-        [styles.onBoardingOverlay]: !currentStep,
+        [styles.onboardingOverlay]: !currentStep,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',
@@ -56,7 +61,7 @@ const Component = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      onClick={(e) => onNextOnBoardingStep(e)}
+      onClick={(e) => onNextonboardingStep(e)}
     >
       <input
         type="text"
@@ -67,39 +72,37 @@ const Component = ({
         onChange={handleInputChange}
       />
       {<IconSearch className={styles.placeholderIcon} />}
-      {
-        isSearchResultVisible && (
-          createPortal(
-            <div
-              ref={setPopperElement}
-              style={{ ...popperStyles.popper, width: parentWidth }}
-              {...attributes.popper}
-            >
-              <ul className={cx(styles.optionsList, {
-                [styles.fullWidth]: width === 'full'
+      {isSearchResultVisible &&
+        createPortal(
+          <div
+            ref={setPopperElement}
+            style={{ ...popperStyles.popper, width: parentWidth }}
+            {...attributes.popper}
+          >
+            <ul
+              className={cx(styles.optionsList, {
+                [styles.fullWidth]: width === 'full',
               })}
-              >
-                {searchResults.map(option => (
-                  <li
-                    className={styles.option}
-                    key={option.key}
-                    onClick={() => {
-                      onOptionSelection(option);
-                      setCountryValue({ option });
-                    }}
-                  >
-                    {option.text}
-                  </li>
-                ))}
-              </ul>
-            </div>,
-            document.getElementById('root')
-          )
-        )
-      }
-    </motion.div >
+            >
+              {searchResults.map((option) => (
+                <li
+                  className={styles.option}
+                  key={option.key}
+                  onClick={() => {
+                    onOptionSelection(option);
+                    setCountryValue({ option });
+                  }}
+                >
+                  {option.text}
+                </li>
+              ))}
+            </ul>
+          </div>,
+          document.getElementById('root')
+        )}
+    </motion.div>
   );
-}
+};
 
 export default Component;
 
@@ -116,10 +119,10 @@ Component.propTypes = {
   selectedOption: Proptypes.shape(),
   onOptionSelection: Proptypes.func.isRequired,
   width: Proptypes.oneOf(['fluid', 'full']),
-  theme: Proptypes.oneOf(['light', 'dark'])
+  theme: Proptypes.oneOf(['light', 'dark']),
 };
 
 Component.defaultProps = {
   width: 'fluid',
-  theme: 'light'
-}
+  theme: 'light',
+};

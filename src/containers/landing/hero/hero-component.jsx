@@ -68,8 +68,8 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
             handleClick={() => {
               browsePage({ type: DATA });
               changeUI({
-                onBoardingType: 'priority-places',
-                onBoardingStep: 0,
+                onboardingType: 'priority-places',
+                onboardingStep: 0,
               });
             }}
           />
@@ -92,8 +92,8 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
             handleClick={() => {
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
               changeUI({
-                onBoardingType: 'national-report-cards',
-                onBoardingStep: 0,
+                onboardingType: 'national-report-cards',
+                onboardingStep: 0,
               });
             }}
           />

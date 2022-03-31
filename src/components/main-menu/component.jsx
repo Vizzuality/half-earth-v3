@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import cx from 'classnames';
 
-import MainMenuContent from "./main-menu-content";
-import styles from "./main-menu.module.scss";
+import MainMenuContent from './main-menu-content';
+import styles from './main-menu.module.scss';
 
-import { ReactComponent as MenuIcon } from "icons/menu.svg";
+import { ReactComponent as MenuIcon } from 'icons/menu.svg';
 
-const MainMenu = ({ className, onBoardingStep, onBoardingType }) => {
+const MainMenu = ({ className, onboardingStep, onboardingType }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const onBoardingOverlayMenu = ((typeof onBoardingStep === 'number') && (onBoardingStep !== 5) && (onBoardingType === 'priority-places')) ||
-    ((typeof onBoardingStep === 'number') && (onBoardingStep !== 6) && (onBoardingType === 'national-report-cards'));
+  const onboardingOverlayMenu =
+    (typeof onboardingStep === 'number' &&
+      onboardingStep !== 5 &&
+      onboardingType === 'priority-places') ||
+    (typeof onboardingStep === 'number' &&
+      onboardingStep !== 6 &&
+      onboardingType === 'national-report-cards');
 
   return (
     <>
       <button
         className={cx(className, styles.mainMenuButton, {
-          [styles.onBoardingOverlay]: onBoardingOverlayMenu,
+          [styles.onboardingOverlay]: onboardingOverlayMenu,
         })}
         onClick={() => setMenuOpen(true)}
         id="main-menu-button"

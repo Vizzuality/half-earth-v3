@@ -20,15 +20,17 @@ const NationalReportCardLanding = ({
   sceneSettings,
   handleMapLoad,
   isFullscreenActive,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
   waitingInteraction,
 }) => {
-
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu onBoardingStep={onBoardingStep} onBoardingType={onBoardingType} />
+      <MainMenu
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+      />
       <NationalReportCardLandingScene
         countryISO={countryISO}
         countryName={countryName}
@@ -38,14 +40,14 @@ const NationalReportCardLanding = ({
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
-        onBoardingType={onBoardingType}
-        onBoardingStep={onBoardingStep}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
       />
 
       {hasMetadata && <InfoModal />}
     </>
-  )
+  );
 };
 
 export default NationalReportCardLanding;

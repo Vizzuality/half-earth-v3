@@ -19,8 +19,8 @@ const DataGlobalSidebarComponent = ({
   activeCategory,
   countedActiveLayers,
   handleGlobeUpdating,
-  onBoardingStep,
-  onBoardingType,
+  onboardingStep,
+  onboardingType,
   waitingInteraction,
 }) => {
   return (
@@ -28,7 +28,7 @@ const DataGlobalSidebarComponent = ({
       <AnalyzeAreasSidebarCard
         activeLayers={activeLayers}
         view={view}
-        onBoardingStep={onBoardingStep}
+        onboardingStep={onboardingStep}
       />
       <BiodiversitySidebarCard
         map={map}
@@ -36,8 +36,8 @@ const DataGlobalSidebarComponent = ({
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         countedActiveLayers={countedActiveLayers}
-        onBoardingStep={onBoardingStep}
-        onBoardingType={onBoardingType}
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
       />
       <ProtectedAreasSidebarCard
@@ -46,7 +46,7 @@ const DataGlobalSidebarComponent = ({
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
-        onBoardingStep={onBoardingStep}
+        onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
       />
       <HumanImpactSidebarCard
@@ -55,11 +55,11 @@ const DataGlobalSidebarComponent = ({
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
-        onBoardingStep={onBoardingStep}
+        onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
       />
     </div>
-  )
-}
+  );
+};
 
 export default DataGlobalSidebarComponent;

@@ -35,7 +35,7 @@ const AnalyzeAreasCardComponent = ({
   handleAnalysisTabClick,
   handlePromptModalToggle,
   aoiHistoryModalOpenAnalytics,
-  onBoardingStep
+  onboardingStep,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -48,10 +48,11 @@ const AnalyzeAreasCardComponent = ({
   };
 
   return (
-    <div className={cx(styles.sidebarCardContainer, className, {
-      [styles.open]: isOpen,
-      [styles.onBoardingOverlay]: typeof onBoardingStep === 'number',
-    })}
+    <div
+      className={cx(styles.sidebarCardContainer, className, {
+        [styles.open]: isOpen,
+        [styles.onboardingOverlay]: typeof onboardingStep === 'number',
+      })}
     >
       <CategoryBox
         title="Analyze areas"

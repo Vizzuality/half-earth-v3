@@ -62,8 +62,8 @@ const getCountedActiveLayers = createSelector(
     };
   }
 );
-export const getOnBoardingType = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingType);
-export const getOnBoardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingStep);
+export const getOnboardingType = createSelector(getUiSettings, uiSettings => uiSettings.onboardingType);
+export const getOnboardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onboardingStep);
 export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
 
 
@@ -92,7 +92,7 @@ export default createStructuredSelector({
   localSceneFilters: getLocalSceneFilters,
   countedActiveLayers: getCountedActiveLayers,
   userConfig: selectUserConfig,
-  onBoardingType: getOnBoardingType,
-  onBoardingStep: getOnBoardingStep,
+  onboardingType: getOnboardingType,
+  onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
 });

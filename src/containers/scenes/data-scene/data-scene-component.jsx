@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
 // Components
@@ -13,7 +13,7 @@ import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SoundButton from 'containers/onboarding/sound-btn';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
-import Tooltip from 'containers/onboarding/tooltip';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
@@ -48,8 +48,8 @@ const DataSceneComponent = ({
   isLandscapeSidebarCollapsed,
   handleTooltipActionButtonClick,
   handleHighlightLayerFeatureClick,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
   waitingInteraction,
 }) => {
   const isMobile = useMobile();
@@ -59,38 +59,38 @@ const DataSceneComponent = ({
     [isMobile]
   );
 
-  const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 0)
+  const tooltipPlacement = useMemo(() => {
+    if (onboardingStep === 0)
       return {
         // Biodiversity card
         left: '470px',
         top: '222px',
       };
-    if (onBoardingStep === 1)
+    if (onboardingStep === 1)
       return {
         // Richness
         left: '308px',
         top: '378px',
       };
-    if (onBoardingStep === 2)
+    if (onboardingStep === 2)
       return {
         // Rarity
         left: '438px',
         top: '378px',
       };
-    if (onBoardingStep === 3)
+    if (onboardingStep === 3)
       return {
         // Protection
         left: '470px',
         top: '354px',
       };
-    if (onBoardingStep === 4)
+    if (onboardingStep === 4)
       return {
         // Human Pressures
         display: 'none',
       };
     return null;
-  }, [onBoardingStep]);
+  }, [onboardingStep]);
 
   return (
     <>
@@ -100,9 +100,9 @@ const DataSceneComponent = ({
         sceneSettings={updatedSceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         initialRotation
-        disabled={!!onBoardingType}
+        disabled={!!onboardingType}
       >
-        {!!onBoardingType && <SoundButton />}
+        {!!onboardingType && <SoundButton />}
 
         <ArcgisLayerManager
           userConfig={userConfig}
@@ -122,20 +122,15 @@ const DataSceneComponent = ({
           handleGlobeUpdating={handleGlobeUpdating}
           isBiodiversityActive={isBiodiversityActive}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-          onBoardingStep={onBoardingStep}
-          onBoardingType={onBoardingType}
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
           waitingInteraction={waitingInteraction}
           className={cx(styles.sidebarContainer, {
             [animationStyles.leftHidden]: sidebarHidden,
           })}
         />
 
-        {typeof onBoardingStep === 'number' && (
-          <div className={styles.tooltipPlacement} style={TOOLTIP_PLACEMENT}>
-            <Tooltip />
-          </div>
-        )}
-
+        <OnboardingTooltip tooltipPlacement={tooltipPlacement} />
         <MobileOnly>
           <MenuFooter
             activeOption={activeOption}
@@ -161,7 +156,7 @@ const DataSceneComponent = ({
           openedModal={openedModal}
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
-          onBoardingStep={onBoardingStep}
+          onboardingStep={onboardingStep}
         />
         <MapTooltip onActionButtonClick={handleTooltipActionButtonClick} />
         <LabelsLayer activeLayers={activeLayers} />

@@ -1,6 +1,6 @@
 import * as actions from 'actions/url-actions';
 import { connect } from 'react-redux';
-import Tooltip from './tooltip-component';
+import OnboardingTooltip from './onboarding-tooltip-component';
+import mapStateToProps from '../onboarding-selectors';
 
-
-export default connect(null, actions)(Tooltip);
+export default connect(mapStateToProps, actions)(OnboardingTooltip);

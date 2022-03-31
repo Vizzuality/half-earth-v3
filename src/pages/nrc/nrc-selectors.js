@@ -38,8 +38,8 @@ const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
-export const getOnBoardingType = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingType);
-export const getOnBoardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onBoardingStep);
+export const getOnboardingType = createSelector(getUiSettings, uiSettings => uiSettings.onboardingType);
+export const getOnboardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onboardingStep);
 export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
 
 export default createStructuredSelector({
@@ -57,7 +57,7 @@ export default createStructuredSelector({
   localSceneActiveTab: selectActiveView,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
-  onBoardingType: getOnBoardingType,
-  onBoardingStep: getOnBoardingStep,
+  onboardingType: getOnboardingType,
+  onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
 });

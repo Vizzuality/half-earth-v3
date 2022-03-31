@@ -38,10 +38,10 @@ const HumanImpactSidebarCardComponent = ({
   className,
   handleLayerToggle,
   countedActiveLayers,
-  onBoardingStep,
-  changeUI
+  onboardingStep,
+  changeUI,
 }) => {
-  const currentStep = onBoardingStep === 4;
+  const currentStep = onboardingStep === 4;
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
@@ -52,14 +52,15 @@ const HumanImpactSidebarCardComponent = ({
 
   useEffect(() => {
     currentStep ? setOpen(true) : setOpen(false);
-  }, [onBoardingStep]);
+  }, [onboardingStep]);
 
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !currentStep && typeof onBoardingStep === 'number',
-        [styles.onBoardingMode]: currentStep,
+        [styles.onboardingOverlay]:
+          !currentStep && typeof onboardingStep === 'number',
+        [styles.onboardingMode]: currentStep,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',
@@ -68,7 +69,10 @@ const HumanImpactSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (currentStep && { onClick: () => changeUI({ onBoardingStep: 5, waitingInteraction: false }) })}
+      {...(currentStep && {
+        onClick: () =>
+          changeUI({ onboardingStep: 5, waitingInteraction: false }),
+      })}
     >
       <CategoryBox
         title={TEXTS.categoryTitle}
@@ -161,7 +165,6 @@ const HumanImpactSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-
     </motion.div>
   );
 };

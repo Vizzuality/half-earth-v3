@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
 // Components
-import Tooltip from 'containers/onboarding/tooltip';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 // Assets
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 // Styles
@@ -18,9 +18,9 @@ const CountryEntryTooltipComponent = ({
   tooltipPosition,
   handleTooltipClose,
   onExploreCountryClick,
-  onBoardingStep,
+  onboardingStep,
 }) => {
-  const currentStep = onBoardingStep === 3;
+  const currentStep = onboardingStep === 3;
   const tooltipref = useRef(null);
   const exploreBtnRef = useRef(null);
   const [tooltip, setTooltip] = useState(null);
@@ -47,11 +47,11 @@ const CountryEntryTooltipComponent = ({
       if (view.camera) {
         const camera = view.camera.clone();
         camera.position.latitude += 5;
-        view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' })
-          .then(() => {
-            const popupElement = document.getElementsByClassName('esri-popup')[0];
-            if (popupElement) setTooltipScreenPosition(popupElement.getBoundingClientRect());
-          });
+        view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' }).then(() => {
+          const popupElement = document.getElementsByClassName('esri-popup')[0];
+          if (popupElement)
+            setTooltipScreenPosition(popupElement.getBoundingClientRect());
+        });
       }
     } else {
       view.popup.close();
@@ -69,7 +69,10 @@ const CountryEntryTooltipComponent = ({
           />
           <span className={styles.tooltipName}>{countryName}</span>
         </section>
-        <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose} />
+        <CloseIcon
+          className={styles.tooltipClose}
+          onClick={handleTooltipClose}
+        />
         <section className={styles.spiInfo}>
           <p className={styles.spi}>{spi}</p>
           <p className={styles.subtitle}>National species protection index</p>
@@ -112,16 +115,17 @@ const CountryEntryTooltipComponent = ({
         </motion.div>
       </div>
 
-      {typeof onBoardingStep === 'number' && tooltipScreenPosition && (
-        <div
+      {tooltipScreenPosition && (
+        <OnboardingTooltip
           className={styles.tooltipPlacement}
-          style={{ top: tooltipScreenPosition.y + (tooltipScreenPosition.height - 55), left: tooltipScreenPosition.x + ((tooltipScreenPosition.width / 2) + 75) }}>
-          <Tooltip />
-        </div>
+          tooltipPlacement={{
+            top: tooltipScreenPosition.y + (tooltipScreenPosition.height - 55),
+            left:
+              tooltipScreenPosition.x + (tooltipScreenPosition.width / 2 + 75),
+          }}
+        />
       )}
     </>
-
-
   ) : null;
 };
 

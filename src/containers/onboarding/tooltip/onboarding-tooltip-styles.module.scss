@@ -2,6 +2,10 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+.tooltipPlacement {
+  position: absolute;
+}
+
 .tooltipContainer {
     align-items: center;;
     display: flex;
@@ -26,19 +30,19 @@
 }
 
 .arrow {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     top: 0;
     border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent; 
+    border-bottom: 5px solid transparent;
 }
 
 .arrowLeft {
-    border-right: 5px solid $white; 
+    border-right: 5px solid $white;
     left: -5px;
 }
 
 .arrowRight {
-    border-left: 5px solid $white; 
+    border-left: 5px solid $white;
     right: -5px;
 }

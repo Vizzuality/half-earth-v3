@@ -15,7 +15,6 @@ import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 import uiStyles from 'styles/ui.module.scss';
 import styles from './nrc-styles.module.scss';
 
-
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCard = ({
@@ -32,8 +31,8 @@ const NationalReportCard = ({
   localSceneActiveTab,
   countryTooltipDisplayFor,
   countryChallengesSelectedKey,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
   waitingInteraction,
 }) => {
   const [map, setMap] = useState();
@@ -43,7 +42,10 @@ const NationalReportCard = ({
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <MainMenu nBoardingStep={onBoardingStep} onBoardingType={onBoardingType} />
+      <MainMenu
+        nBoardingStep={onboardingStep}
+        onboardingType={onboardingType}
+      />
       <NationalReportSidebar
         countryISO={countryISO}
         countryName={countryName}
@@ -54,8 +56,8 @@ const NationalReportCard = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
-        onBoardingType={onBoardingType}
-        onBoardingStep={onBoardingStep}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
       />
       <NationalReportCardScene
         countryISO={countryISO}
@@ -66,8 +68,8 @@ const NationalReportCard = ({
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
-        onBoardingType={onBoardingType}
-        onBoardingStep={onBoardingStep}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
         onMapLoad={(loadedMap) => {
           setMap(loadedMap);
           handleMapLoad(loadedMap, activeLayers);

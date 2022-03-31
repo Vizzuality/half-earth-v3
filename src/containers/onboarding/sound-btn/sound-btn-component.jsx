@@ -34,7 +34,7 @@ const ButtonIcon = ({
   setPlaying,
   setPauseIcon,
   stepsNumber,
-  onBoardingStep,
+  onboardingStep,
   pauseIcon,
 }) => {
   const renderAudioBars = () => (
@@ -74,7 +74,7 @@ const ButtonIcon = ({
 
   return (
     <>
-      <StepsArcs numberOfArcs={stepsNumber} currentStep={onBoardingStep} />
+      <StepsArcs numberOfArcs={stepsNumber} currentStep={onboardingStep} />
       {!waitingInteraction && (waitingStartAudioClick || !playing) ? (
         <button onClick={handlePlay} className={styles.playButton}>
           <PlayIcon className={styles.playIcon} />
@@ -103,8 +103,8 @@ const ButtonIcon = ({
 const SoundButtonComponent = ({
   browsePage,
   changeUI,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
   waitingInteraction,
 }) => {
   const [playing, setPlaying] = useState(true);
@@ -133,19 +133,27 @@ const SoundButtonComponent = ({
   };
 
   const script =
-    onBoardingType &&
-    SCRIPTS[onBoardingType] &&
-    Object.values(SCRIPTS[onBoardingType])[onBoardingStep];
-  const file = files[onBoardingType][onBoardingStep];
+    onboardingType &&
+    SCRIPTS[onboardingType] &&
+    Object.values(SCRIPTS[onboardingType])[onboardingStep];
+  const file = files[onboardingType][onboardingStep];
 
   const handleBack = () => {
     browsePage({ type: LANDING });
-    changeUI({ onBoardingType: null, onBoardingStep: null, waitingInteraction: false });
-  }
+    changeUI({
+      onboardingType: null,
+      onboardingStep: null,
+      waitingInteraction: false,
+    });
+  };
 
   const handleSwitchMode = () => {
     setFinishModal(false);
-    changeUI({ onBoardingType: null, onBoardingStep: null, waitingInteraction: false });
+    changeUI({
+      onboardingType: null,
+      onboardingStep: null,
+      waitingInteraction: false,
+    });
   };
 
   const handleFinishOnBoarding = () => {
@@ -154,22 +162,22 @@ const SoundButtonComponent = ({
   };
 
   const handleEndOfStep = () => {
-    if (!Object.keys(SCRIPTS[onBoardingType])[onBoardingStep + 1]) {
+    if (!Object.keys(SCRIPTS[onboardingType])[onboardingStep + 1]) {
       return handleFinishOnBoarding();
     }
 
     setTextMark(0);
 
     const isIntroStep =
-      Object.keys(SCRIPTS[onBoardingType])[onBoardingStep] === 'intro';
+      Object.keys(SCRIPTS[onboardingType])[onboardingStep] === 'intro';
     if (isIntroStep) {
       return changeUI({
-        onBoardingStep: onBoardingStep + 1,
+        onboardingStep: onboardingStep + 1,
       });
     }
 
     changeUI({
-      // onBoardingStep: onBoardingStep + 1,
+      // onboardingStep: onboardingStep + 1,
       waitingInteraction: true,
     });
   };
@@ -178,7 +186,7 @@ const SoundButtonComponent = ({
     setPlaying(!waitingInteraction);
   }, [waitingInteraction]);
 
-  if (playing && onBoardingType && SCRIPTS[onBoardingType] && !script) {
+  if (playing && onboardingType && SCRIPTS[onboardingType] && !script) {
     handleFinishOnBoarding();
   }
 
@@ -186,7 +194,7 @@ const SoundButtonComponent = ({
   const endTime = script && script[textMark] && script[textMark].endTime;
   const text = script && script[textMark] && script[textMark].text;
   const stepsNumber =
-    SCRIPTS[onBoardingType] && Object.keys(SCRIPTS[onBoardingType]).length;
+    SCRIPTS[onboardingType] && Object.keys(SCRIPTS[onboardingType]).length;
 
   const renderTooltipText = () => {
     if (!waitingInteraction && waitingStartAudioClick) {
@@ -249,7 +257,7 @@ const SoundButtonComponent = ({
               setPlaying,
               setPauseIcon,
               stepsNumber,
-              onBoardingStep,
+              onboardingStep,
               pauseIcon,
             }}
           />
@@ -257,8 +265,8 @@ const SoundButtonComponent = ({
       </div>
       <Modal
         isOpen={finishModal}
-        title='What would you like to do next?'
-        description='You just finished the audio tour you can either go on a new tour or explore the HE map on your own.'
+        title="What would you like to do next?"
+        description="You just finished the audio tour you can either go on a new tour or explore the HE map on your own."
         handleBack={handleBack}
         handleClose={handleSwitchMode}
         onRequestClose={handleSwitchMode}

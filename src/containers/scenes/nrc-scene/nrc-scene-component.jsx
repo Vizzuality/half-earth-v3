@@ -5,7 +5,7 @@ import Scene from 'components/scene';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
-import Tooltip from 'containers/onboarding/tooltip';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
 import LabelsLayer from 'containers/layers/labels-layer';
 import CountryMaskLayer from 'containers/layers/country-mask-layer';
@@ -41,22 +41,25 @@ const CountrySceneComponent = ({
   countryTooltipDisplayFor,
   aoiTooltipInfo,
   setTooltipInfo,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
   countryData,
 }) => {
-
-  const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 4) return { // CHALLENGES TAB
-      left: '310px',
-      top: '207px',
-    };
-    if (onBoardingStep === 5) return { // RANKING TAB
-      left: '440px',
-      top: '207px',
-    };
+  const tooltipPlacement = useMemo(() => {
+    if (onboardingStep === 4)
+      return {
+        // CHALLENGES TAB
+        left: '310px',
+        top: '207px',
+      };
+    if (onboardingStep === 5)
+      return {
+        // RANKING TAB
+        left: '440px',
+        top: '207px',
+      };
     return null;
-  }, [onBoardingStep, onBoardingType]);
+  }, [onboardingStep, onboardingType]);
 
   return (
     <Scene
@@ -65,18 +68,9 @@ const CountrySceneComponent = ({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
-      {onBoardingType && (
-        <SoundButton />
-      )}
+      {onboardingType && <SoundButton />}
 
-
-      {typeof onBoardingStep === 'number' && countryData && (
-        <div
-          className={styles.tooltipPlacement}
-          style={TOOLTIP_PLACEMENT}>
-          <Tooltip />
-        </div>
-      )}
+      {countryData && <OnboardingTooltip tooltipPlacement={tooltipPlacement} />}
       <LocalSceneViewManager localGeometry={countryBorder} />
       <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
       <CountryMaskLayer
@@ -108,7 +102,7 @@ const CountrySceneComponent = ({
       )}
       <PdfNationalReport onMapLoad={onMapLoad} countryISO={countryISO} />
     </Scene>
-  )
+  );
 };
 
 export default CountrySceneComponent;

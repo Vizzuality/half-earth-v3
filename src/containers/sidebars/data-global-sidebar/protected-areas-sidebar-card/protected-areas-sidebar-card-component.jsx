@@ -32,23 +32,24 @@ const ProtectedAreasSidebarCardComponent = ({
   className,
   handleLayerToggle,
   countedActiveLayers,
-  onBoardingStep,
-  onBoardingType,
+  onboardingStep,
+  onboardingType,
   changeUI,
 }) => {
-  const currentStep = onBoardingStep === 3;
+  const currentStep = onboardingStep === 3;
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
   useEffect(() => {
     currentStep ? setOpen(true) : setOpen(false);
-  }, [onBoardingStep]);
+  }, [onboardingStep]);
 
   return (
     <motion.div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !currentStep && typeof onBoardingStep === 'number',
+        [styles.onboardingOverlay]:
+          !currentStep && typeof onboardingStep === 'number',
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',
@@ -57,7 +58,10 @@ const ProtectedAreasSidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (currentStep && { onClick: () => changeUI({ onBoardingStep: 4, waitingInteraction: false }) })}
+      {...(currentStep && {
+        onClick: () =>
+          changeUI({ onboardingStep: 4, waitingInteraction: false }),
+      })}
     >
       <CategoryBox
         image={ProtectionThumbnail}
@@ -69,7 +73,7 @@ const ProtectedAreasSidebarCardComponent = ({
       <div
         className={cx(styles.layersTogglesContainer, {
           [styles.open]: isOpen,
-          [styles.onBoardingMode]: currentStep,
+          [styles.onboardingMode]: currentStep,
         })}
       >
         <span className={styles.description}>{TEXTS.description}</span>
@@ -111,7 +115,6 @@ const ProtectedAreasSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-
     </motion.div>
   );
 };

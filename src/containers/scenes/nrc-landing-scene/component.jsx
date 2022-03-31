@@ -10,7 +10,7 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SoundButton from 'containers/onboarding/sound-btn';
 import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
-import Tooltip from 'containers/onboarding/tooltip';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 // Constants
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 // Styles
@@ -32,21 +32,21 @@ const NrcLandingComponent = ({
   sceneSettings,
   isLandscapeMode,
   isGlobeUpdating,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
 }) => {
-  const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 0)
+  const tooltipPlacement = useMemo(() => {
+    if (onboardingStep === 0)
       return {
         display: 'none',
       };
-    if (onBoardingStep === 1)
+    if (onboardingStep === 1)
       return {
         // CARD
         left: '460px',
         top: '300px',
       };
-    if (onBoardingStep === 2)
+    if (onboardingStep === 2)
       return {
         // SEARCHER + MAP
         left: '435px',
@@ -55,7 +55,7 @@ const NrcLandingComponent = ({
     return {
       display: 'none',
     };
-  }, [onBoardingStep]);
+  }, [onboardingStep]);
 
   return (
     <>
@@ -65,14 +65,13 @@ const NrcLandingComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         initialRotation
-        disabled={!!onBoardingType && onBoardingStep !== 2}
+        disabled={!!onboardingType && onboardingStep !== 2}
       >
-        {onBoardingType && <SoundButton />}
-
-        <div className={styles.tooltipPlacement} style={TOOLTIP_PLACEMENT}>
-          <Tooltip />
-        </div>
-
+        {onboardingType && <SoundButton />}
+        <OnboardingTooltip
+          clasName={styles.onboardingTooltip}
+          tooltipPlacement={tooltipPlacement}
+        />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
@@ -93,16 +92,16 @@ const NrcLandingComponent = ({
         <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
-          onBoardingStep={onBoardingStep}
+          onboardingStep={onboardingStep}
         />
 
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
-          onBoardingStep={onBoardingStep}
+          onboardingStep={onboardingStep}
         />
 
-        <NRCLandingSidebar onBoardingStep={onBoardingStep} />
+        <NRCLandingSidebar onboardingStep={onboardingStep} />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>
     </>

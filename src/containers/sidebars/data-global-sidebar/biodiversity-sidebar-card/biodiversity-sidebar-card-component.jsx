@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -41,14 +41,14 @@ const BiodiversitySidebarCardComponent = ({
   biodiversityLayerVariant,
   cardMetadata,
   showCard,
-  onBoardingStep,
-  onBoardingType,
+  onboardingStep,
+  onboardingType,
   changeUI,
 }) => {
-
-  const firstStep = onBoardingStep === 0;
-  const nonOverlaySteps = (onBoardingStep === 0) || (onBoardingStep === 1) || (onBoardingStep === 2);
-  const openCardSteps = (onBoardingStep === 1) || (onBoardingStep === 2);
+  const firstStep = onboardingStep === 0;
+  const nonOverlaySteps =
+    onboardingStep === 0 || onboardingStep === 1 || onboardingStep === 2;
+  const openCardSteps = onboardingStep === 1 || onboardingStep === 2;
 
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
@@ -56,7 +56,7 @@ const BiodiversitySidebarCardComponent = ({
 
   useEffect(() => {
     openCardSteps ? setOpen(true) : setOpen(false);
-  }, [onBoardingStep]);
+  }, [onboardingStep]);
 
   const layerTogglesToDisplay = (category) => {
     const resolutionsForSelectedCategory =
@@ -71,11 +71,26 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
+  const onboardingRef = useRef();
+  useEffect(() => {
+    if (onboardingRef.current) {
+      console.log('lala', onboardingRef.current.getBoundingClientRect());
+      const { top, width, left } =
+        onboardingRef.current.getBoundingClientRect();
+      changeUI({
+        onboardingTooltipTop: top,
+        onboardingTooltipLeft: left + width,
+      });
+    }
+  }, [onboardingRef]);
+
   return (
     <motion.div
+      ref={onboardingRef}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onBoardingOverlay]: !nonOverlaySteps && typeof onBoardingStep === 'number',
+        [styles.onboardingOverlay]:
+          !nonOverlaySteps && typeof onboardingStep === 'number',
       })}
       animate={{
         outline: firstStep && '5px solid #00BDB5',
@@ -84,7 +99,10 @@ const BiodiversitySidebarCardComponent = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      {... (typeof onBoardingStep === 'number' && { onClick: () => changeUI({ onBoardingStep: 1, waitingInteraction: false }) })}
+      {...(typeof onboardingStep === 'number' && {
+        onClick: () =>
+          changeUI({ onboardingStep: 1, waitingInteraction: false }),
+      })}
     >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
@@ -99,7 +117,7 @@ const BiodiversitySidebarCardComponent = ({
           styles[`${biodiversityLayerVariant}Tab`],
           {
             [styles.open]: isOpen,
-            [styles.onBoardingMode]: firstStep,
+            [styles.onboardingMode]: firstStep,
           }
         )}
       >
@@ -112,8 +130,8 @@ const BiodiversitySidebarCardComponent = ({
           onClick={handleTabSelection}
           className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
-          onBoardingStep={onBoardingStep}
-          onBoardingType={onBoardingType}
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
         />
         {showCard && (
           <div className={styles.cardContainer}>
@@ -199,7 +217,6 @@ const BiodiversitySidebarCardComponent = ({
           metaDataSources={source}
         />
       </div>
-
     </motion.div>
   );
 };

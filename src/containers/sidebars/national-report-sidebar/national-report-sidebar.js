@@ -19,10 +19,10 @@ const NationalReportSidebarContainer = (props) => {
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
   }
 
-  const handleTabSelection = (slug, slugOnBoardingStep, waitingInteraction = false) => {
+  const handleTabSelection = (slug, slugonboardingStep, waitingInteraction = false) => {
     const { browsePage, countryISO, changeUI } = props;
-    changeUI({ onBoardingStep: slugOnBoardingStep, waitingInteraction });
-    !slugOnBoardingStep && browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: slug } });
+    changeUI({ onboardingStep: slugonboardingStep, waitingInteraction });
+    !slugonboardingStep && browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: slug } });
   };
 
   return (

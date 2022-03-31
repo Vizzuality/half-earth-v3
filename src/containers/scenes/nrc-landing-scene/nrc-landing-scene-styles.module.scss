@@ -2,8 +2,8 @@
 @import 'styles/settings';
 @import 'styles/common-animations.module';
 
-.tooltipPlacement {
+.onboardingTooltip {
   position: absolute;
   top: 222px;
-  z-index: $over-all;  
+  z-index: $over-all;
 }

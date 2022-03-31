@@ -48,12 +48,12 @@ const CountryEntryTooltipContainer = props => {
   }
 
   const handleExploreCountryClick = () => {
-    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics, onBoardingStep } = props;
+    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics, onboardingStep } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
     enterNrcAnalytics(countryName);
     browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, });
-    onBoardingStep && changeUI({ onBoardingType: 'national-report-cards', onBoardingStep: 4 })
+    onboardingStep && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 4 })
   };
 
   return (
