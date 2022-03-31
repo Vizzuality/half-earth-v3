@@ -48,7 +48,7 @@ const LocalPriorityCardComponent = (props) => {
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [HALF_EARTH_FUTURE_TILE_LAYER]: {
-      name: `Places of Half-Earth future`,
+      name: `Places for a Half-Earth Future`,
       value: HALF_EARTH_FUTURE_TILE_LAYER,
       id: HALF_EARTH_FUTURE_TILE_LAYER,
       title: HALF_EARTH_FUTURE_TILE_LAYER,

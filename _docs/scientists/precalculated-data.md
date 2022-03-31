@@ -8,7 +8,7 @@ permalink: /_docs/science/precalculated-data
 # Precalculated data AOIs
 The precalculated refers to the summary data that results from crossing a geometry with several data sources to obtain information in that area for biodiversity and other contextual layers. It uses the same steps than the AOIs, the only difference is that they are run beforehand and the data is stored in AGOL, instead of being run on the fly inside the platform. The main reason is that the size of the geometries is too big to be run in a timely way on the fly.
 
-The precalculated data appears as part of the `Areas of Interest` (as a dropdown menu where the user can select to see data from National Boundaries, Subnational Boundaries or Protected Areas) and is also used to show the data of the `Places for Half Earth Future`.
+The precalculated data appears as part of the `Areas of Interest` (as a dropdown menu where the user can select to see data from National Boundaries, Subnational Boundaries or Protected Areas) and is also used to show the data of the `Places for a Half-Earth Future`.
 
 Dropdown menu:
 
@@ -57,7 +57,7 @@ These tables have a unique field names `MOL_ID` that will be used throughout the
 * [**Terrestrial WDPA raw**](https://eowilson.maps.arcgis.com/home/item.html?id=ba1e71b5d83548808ee02d1108221cae)
 * [**Terrestrial + Marine WDPA raw**](https://eowilson.maps.arcgis.com/home/item.html?id=17659b62323646b8ae622680dab49952)
 * [**Terrestrial + Marine WDPA simplified**](https://eowilson.maps.arcgis.com/home/item.html?id=1a617eaeaf77458cb569f683366e3920)
-* [**Places for HE future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
+* [**Places for a Half-Earth Future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
 * [**Terrestrial WDPA raster Equal Area**](https://eowilson.maps.arcgis.com/home/item.html?id=d7d548156ff24c7e98096b37c5401ecf)
 
 
@@ -130,7 +130,7 @@ Each precalculated area has a table that shows all the protected areas present i
 ![](/public/precalc_All_protected_areas.png)
 
 
-### **Steps to process Precalculated data 20 Places for HE Future:**
+### **Steps to process Precalculated data 20 Places for a Half-Earth Future:**
 Project in ArcGIS Pro: `Places_HE_Future`
 1. Access the data from AGOL and download into ArcGIS Pro as a shapefile (the [current layer](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291) is not final and will most probably change, but the processing steps will be the same)
 2. Convert shapefile to geojson with the tool Feature to json. This will allow uploading the file in AGOL as a geojson instead of a shapefile (shapefiles have character limitations that will truncate the string it'll be create later)
@@ -151,7 +151,7 @@ Project in ArcGIS Pro: `Places_HE_Future`
   - Add the WDPA_Mercator layer (only terrestrial) (in the Catalog panel, Add to Database: ArcGIS > Projects > Contextual precalculations.gdb and select the layer `WDPA_Mercator`)
 6. Format and merge data in python ([notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)). Export file as geojson and upload it in AGOL.
 7. For Protected Areas data
-   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
+   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for a Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
    - Create a csv with only the relevant fields (exclude geometry) using the Table to Table tool.
    - Upload the table in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=ec40de8083304b279d416685a5b98209). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.
 
