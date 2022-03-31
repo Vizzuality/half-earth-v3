@@ -14,6 +14,7 @@ const SceneComponent = ({
   spinner = true,
   interactionsDisabled = false,
   handleSceneClick,
+  disabled,
 }) => {
   if (loadState === 'loading') {
     return (
@@ -29,10 +30,13 @@ const SceneComponent = ({
   } else if (loadState === 'loaded') {
     return (
       <div
-        className={cx(styles.sceneWrapper, className)}
+        className={cx(styles.sceneWrapper, className, {
+          [styles.disabled]: disabled,
+        })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}
         onClick={handleSceneClick}
       >
+        {disabled && <div className={styles.veil} />}
         <div id={`scene-container-${sceneName || sceneId}`}>
           {React.Children.map(children || null, (child, i) => {
             return (

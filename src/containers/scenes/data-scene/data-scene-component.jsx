@@ -60,25 +60,35 @@ const DataSceneComponent = ({
   );
 
   const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 0) return { // Biodiversity card
-      left: '470px',
-      top: '222px',
-    };
-    if (onBoardingStep === 1) return { // Richness
-      left: '308px',
-      top: '378px',
-    };
-    if (onBoardingStep === 2) return { // Rarity
-      left: '438px',
-      top: '378px',
-    };
-    if (onBoardingStep === 3) return { // Protection
-      left: '470px',
-      top: '354px',
-    };
-    if (onBoardingStep === 4) return { // Human Pressures
-      display: 'none'
-    };
+    if (onBoardingStep === 0)
+      return {
+        // Biodiversity card
+        left: '470px',
+        top: '222px',
+      };
+    if (onBoardingStep === 1)
+      return {
+        // Richness
+        left: '308px',
+        top: '378px',
+      };
+    if (onBoardingStep === 2)
+      return {
+        // Rarity
+        left: '438px',
+        top: '378px',
+      };
+    if (onBoardingStep === 3)
+      return {
+        // Protection
+        left: '470px',
+        top: '354px',
+      };
+    if (onBoardingStep === 4)
+      return {
+        // Human Pressures
+        display: 'none',
+      };
     return null;
   }, [onBoardingStep]);
 
@@ -90,11 +100,9 @@ const DataSceneComponent = ({
         sceneSettings={updatedSceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         initialRotation
+        disabled={!!onBoardingType}
       >
-
-        {onBoardingType && (
-          <SoundButton />
-        )}
+        {!!onBoardingType && <SoundButton />}
 
         <ArcgisLayerManager
           userConfig={userConfig}
@@ -123,10 +131,7 @@ const DataSceneComponent = ({
         />
 
         {typeof onBoardingStep === 'number' && (
-          <div
-            className={styles.tooltipPlacement}
-            style={TOOLTIP_PLACEMENT}
-          >
+          <div className={styles.tooltipPlacement} style={TOOLTIP_PLACEMENT}>
             <Tooltip />
           </div>
         )}

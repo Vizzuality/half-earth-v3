@@ -36,19 +36,24 @@ const NrcLandingComponent = ({
   onBoardingStep,
 }) => {
   const TOOLTIP_PLACEMENT = useMemo(() => {
-    if (onBoardingStep === 0) return {
-      display: 'none'
-    };
-    if (onBoardingStep === 1) return { // CARD
-      left: '460px',
-      top: '300px',
-    };
-    if (onBoardingStep === 2) return { // SEARCHER + MAP
-      left: '435px',
-      top: '542px',
-    };
+    if (onBoardingStep === 0)
+      return {
+        display: 'none',
+      };
+    if (onBoardingStep === 1)
+      return {
+        // CARD
+        left: '460px',
+        top: '300px',
+      };
+    if (onBoardingStep === 2)
+      return {
+        // SEARCHER + MAP
+        left: '435px',
+        top: '542px',
+      };
     return {
-      display: 'none'
+      display: 'none',
     };
   }, [onBoardingStep]);
 
@@ -60,14 +65,11 @@ const NrcLandingComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         initialRotation
+        disabled={!!onBoardingType && onBoardingStep !== 2}
       >
-        {onBoardingType && (
-          <SoundButton />
-        )}
+        {onBoardingType && <SoundButton />}
 
-        <div
-          className={styles.tooltipPlacement}
-          style={TOOLTIP_PLACEMENT}>
+        <div className={styles.tooltipPlacement} style={TOOLTIP_PLACEMENT}>
           <Tooltip />
         </div>
 
@@ -100,11 +102,8 @@ const NrcLandingComponent = ({
           onBoardingStep={onBoardingStep}
         />
 
-        <NRCLandingSidebar
-          onBoardingStep={onBoardingStep}
-        />
+        <NRCLandingSidebar onBoardingStep={onBoardingStep} />
         <LabelsLayer activeLayers={activeLayers} />
-
       </Scene>
     </>
   );
