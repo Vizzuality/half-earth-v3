@@ -32,12 +32,12 @@ export const WDPALayers = [
 
 export const conserveNextLayers = [
   {
-    name: 'Places for Half-Earth future',
+    name: 'Places for a Half-Earth Future',
     value: HALF_EARTH_FUTURE_TILE_LAYER,
     id: HALF_EARTH_FUTURE_TILE_LAYER,
     title: HALF_EARTH_FUTURE_TILE_LAYER,
     slug: HALF_EARTH_FUTURE_TILE_LAYER,
-    metadataTitle: 'Places for Half-Earth future'
+    metadataTitle: 'Places for a Half-Earth Future'
   }
 ];
 
@@ -69,11 +69,11 @@ export const legendConfigs = {
     type: "basic",
     items: [
       {
-        name: "Places for Half-Earth Future",
+        name: "Places for a Half-Earth Future",
         color: FUTURE_PLACES_COLOR
       }
     ],
-    title: "Places for Half-Earth Future",
+    title: "Places for a Half-Earth Future",
     slug: HALF_EARTH_FUTURE_TILE_LAYER
   },
   [MERGED_WDPA_VECTOR_TILE_LAYER]: {

@@ -226,6 +226,6 @@ export default {
   },
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     slug: HALF_EARTH_FUTURE_TILE_LAYER,
-    title: 'Places for Half-Earth future'
+    title: 'Places for a Half-Earth Future'
   }
 };
