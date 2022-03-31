@@ -56,6 +56,7 @@ const DataGlobalSidebarComponent = ({
         handleGlobeUpdating={handleGlobeUpdating}
         countedActiveLayers={countedActiveLayers}
         onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
       />
     </div>

@@ -21,6 +21,7 @@ const Tabs = ({
   className,
   onboardingStep,
   onboardingType,
+  tabButtonsRef,
 }) => {
   return (
     <div className={cx(styles.tabs, className)}>
@@ -57,6 +58,7 @@ const Tabs = ({
           return (
             <li role="presentation" key={`tab-${tabSlug}`}>
               <motion.div
+                ref={(ref) => (tabButtonsRef.current[tabSlug] = ref)}
                 className={styles.tab}
                 role="tab"
                 aria-selected={slug === defaultTabSlug}

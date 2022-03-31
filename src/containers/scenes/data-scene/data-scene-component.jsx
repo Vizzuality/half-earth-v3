@@ -59,39 +59,6 @@ const DataSceneComponent = ({
     [isMobile]
   );
 
-  const tooltipPlacement = useMemo(() => {
-    if (onboardingStep === 0)
-      return {
-        // Biodiversity card
-        left: '470px',
-        top: '222px',
-      };
-    if (onboardingStep === 1)
-      return {
-        // Richness
-        left: '308px',
-        top: '378px',
-      };
-    if (onboardingStep === 2)
-      return {
-        // Rarity
-        left: '438px',
-        top: '378px',
-      };
-    if (onboardingStep === 3)
-      return {
-        // Protection
-        left: '470px',
-        top: '354px',
-      };
-    if (onboardingStep === 4)
-      return {
-        // Human Pressures
-        display: 'none',
-      };
-    return null;
-  }, [onboardingStep]);
-
   return (
     <>
       <Scene
@@ -130,7 +97,7 @@ const DataSceneComponent = ({
           })}
         />
 
-        <OnboardingTooltip tooltipPlacement={tooltipPlacement} />
+        <OnboardingTooltip />
         <MobileOnly>
           <MenuFooter
             activeOption={activeOption}

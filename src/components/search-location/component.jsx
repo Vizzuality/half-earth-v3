@@ -23,6 +23,7 @@ const Component = ({
   isSearchResultVisible,
   onboardingStep,
   changeUI,
+  reference,
 }) => {
   const currentStep = onboardingStep === 2;
 
@@ -47,6 +48,7 @@ const Component = ({
 
   return (
     <motion.div
+      ref={reference}
       className={cx(styles.inputContainer, {
         [styles.stacked]: stacked,
         [styles.fullWidth]: width === 'full',
@@ -120,6 +122,7 @@ Component.propTypes = {
   onOptionSelection: Proptypes.func.isRequired,
   width: Proptypes.oneOf(['fluid', 'full']),
   theme: Proptypes.oneOf(['light', 'dark']),
+  reference: Proptypes.node,
 };
 
 Component.defaultProps = {

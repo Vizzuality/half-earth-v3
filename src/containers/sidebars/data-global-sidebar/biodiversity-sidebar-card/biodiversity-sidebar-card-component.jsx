@@ -23,7 +23,7 @@ import {
   RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
 // Hooks
-import { useTooltipRef } from 'containers/onboarding/onboarding-hooks';
+import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -73,14 +73,15 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
-  const onboardingRef = useTooltipRef({
+  const tooltipRefs = useTooltipRefs({
     changeUI,
-    isActive: onboardingStep === 0,
+    onboardingType,
+    onboardingStep,
   });
 
   return (
     <motion.div
-      ref={onboardingRef}
+      ref={(ref) => (tooltipRefs.current.biodiversity = ref)}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
         [styles.onboardingOverlay]:
@@ -126,6 +127,7 @@ const BiodiversitySidebarCardComponent = ({
           defaultTabSlug={biodiversityLayerVariant}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
+          tabButtonsRef={tooltipRefs}
         />
         {showCard && (
           <div className={styles.cardContainer}>

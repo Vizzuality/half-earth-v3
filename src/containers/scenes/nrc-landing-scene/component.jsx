@@ -35,28 +35,6 @@ const NrcLandingComponent = ({
   onboardingType,
   onboardingStep,
 }) => {
-  const tooltipPlacement = useMemo(() => {
-    if (onboardingStep === 0)
-      return {
-        display: 'none',
-      };
-    if (onboardingStep === 1)
-      return {
-        // CARD
-        left: '460px',
-        top: '300px',
-      };
-    if (onboardingStep === 2)
-      return {
-        // SEARCHER + MAP
-        left: '435px',
-        top: '542px',
-      };
-    return {
-      display: 'none',
-    };
-  }, [onboardingStep]);
-
   return (
     <>
       <Scene
@@ -68,10 +46,7 @@ const NrcLandingComponent = ({
         disabled={!!onboardingType && onboardingStep !== 2}
       >
         {onboardingType && <SoundButton />}
-        <OnboardingTooltip
-          clasName={styles.onboardingTooltip}
-          tooltipPlacement={tooltipPlacement}
-        />
+        <OnboardingTooltip clasName={styles.onboardingTooltip} />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
@@ -94,13 +69,11 @@ const NrcLandingComponent = ({
           openedModal={openedModal}
           onboardingStep={onboardingStep}
         />
-
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
           onboardingStep={onboardingStep}
         />
-
         <NRCLandingSidebar onboardingStep={onboardingStep} />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>

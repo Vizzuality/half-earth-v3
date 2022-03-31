@@ -17,6 +17,8 @@ import {
   PROTECTION_SLUG,
   FUTURE_PLACES_SLUG,
 } from 'constants/analyze-areas-constants';
+// Hooks
+import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -44,8 +46,17 @@ const ProtectedAreasSidebarCardComponent = ({
     currentStep ? setOpen(true) : setOpen(false);
   }, [onboardingStep]);
 
+  const tooltipRefs = useTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
+
   return (
     <motion.div
+      ref={(ref) => {
+        tooltipRefs.current.protection = ref;
+      }}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
         [styles.onboardingOverlay]:

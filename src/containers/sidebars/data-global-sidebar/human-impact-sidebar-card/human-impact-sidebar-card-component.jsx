@@ -22,6 +22,8 @@ import {
   humanPressuresMarine,
   TEXTS,
 } from 'constants/human-pressures';
+// Hooks
+import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './human-impact-sidebar-card-styles.module.scss';
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
@@ -39,6 +41,7 @@ const HumanImpactSidebarCardComponent = ({
   handleLayerToggle,
   countedActiveLayers,
   onboardingStep,
+  onboardingType,
   changeUI,
 }) => {
   const currentStep = onboardingStep === 4;
@@ -54,8 +57,17 @@ const HumanImpactSidebarCardComponent = ({
     currentStep ? setOpen(true) : setOpen(false);
   }, [onboardingStep]);
 
+  const tooltipRefs = useTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
+
   return (
     <motion.div
+      ref={(ref) => {
+        tooltipRefs.current.humanPressures = ref;
+      }}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
         [styles.onboardingOverlay]:

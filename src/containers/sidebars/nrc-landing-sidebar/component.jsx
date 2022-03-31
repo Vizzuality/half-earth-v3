@@ -7,13 +7,28 @@ import SearchLocation from 'components/search-location';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
 import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
+// Hooks
+import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './styles.module.scss';
 
-const NRCLandingSidebar = ({ changeUI, onboardingStep, view }) => {
+const NRCLandingSidebar = ({
+  changeUI,
+  onboardingStep,
+  onboardingType,
+  view,
+}) => {
   const currentStep = onboardingStep === 1;
+  const tooltipRefs = useTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
   return (
     <motion.div
+      ref={(ref) => {
+        tooltipRefs.current.nrcLandingSidebar = ref;
+      }}
       className={cx({
         [styles.container]: true,
       })}
@@ -48,6 +63,9 @@ const NRCLandingSidebar = ({ changeUI, onboardingStep, view }) => {
         })}
       >
         <SearchLocation
+          reference={(ref) => {
+            tooltipRefs.current.nrcLandingSearch = ref;
+          }}
           view={view}
           theme="dark"
           width="full"
