@@ -29,21 +29,19 @@ const Component = ({
 
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
-  const [countryValue, setCountryValue] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
     popperElement
   );
 
   const onNextonboardingStep = useCallback(
-    (e) => {
-      e.stopPropagation();
-      if (currentStep && countryValue) {
+    (countryValue) => {
+      if (countryValue) {
         changeUI({ onboardingStep: 3, waitingInteraction: false });
       }
       return null;
     },
-    [countryValue]
+    []
   );
 
   return (
@@ -63,7 +61,6 @@ const Component = ({
         duration: 1.75,
         repeat: Infinity,
       }}
-      onClick={(e) => onNextonboardingStep(e)}
     >
       <input
         type="text"
@@ -72,7 +69,9 @@ const Component = ({
         ref={setReferenceElement}
         onClick={handleOpenSearch}
         onChange={handleInputChange}
+
       />
+
       {<IconSearch className={styles.placeholderIcon} />}
       {isSearchResultVisible &&
         createPortal(
@@ -92,7 +91,7 @@ const Component = ({
                   key={option.key}
                   onClick={() => {
                     onOptionSelection(option);
-                    setCountryValue({ option });
+                    onNextonboardingStep(option);
                   }}
                 >
                   {option.text}

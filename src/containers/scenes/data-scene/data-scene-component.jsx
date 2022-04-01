@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
 // Components

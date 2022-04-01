@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useMemo } from 'react';
+import React from 'react';
 import loadable from '@loadable/component';
 // Components
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -46,7 +46,7 @@ const NrcLandingComponent = ({
         disabled={!!onboardingType && onboardingStep !== 2}
       >
         {onboardingType && <SoundButton />}
-        <OnboardingTooltip clasName={styles.onboardingTooltip} />
+        <OnboardingTooltip className={styles.onboardingTooltip} />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
