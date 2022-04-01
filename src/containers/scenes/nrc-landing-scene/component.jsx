@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react';
+import React, { useMemo } from 'react';
 import loadable from '@loadable/component';
 // Components
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -35,6 +35,21 @@ const NrcLandingComponent = ({
   onboardingType,
   onboardingStep,
 }) => {
+  const tooltipPlacement = useMemo(() => {
+    if (onboardingStep === 1)
+      return {
+        // NATIONAL REPORT CARD
+        left: '444px',
+        top: '56px',
+      };
+    if (onboardingStep === 2)
+      return {
+        // SEARCHER
+        left: '422px',
+        top: '543px',
+      };
+    return null;
+  }, [onboardingStep, onboardingType]);
   return (
     <>
       <Scene
@@ -46,7 +61,7 @@ const NrcLandingComponent = ({
         disabled={!!onboardingType && onboardingStep !== 2}
       >
         {onboardingType && <SoundButton />}
-        <OnboardingTooltip className={styles.onboardingTooltip} />
+        <OnboardingTooltip className={styles.onboardingTooltip} tooltipPlacement={tooltipPlacement} />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}

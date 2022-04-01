@@ -21,8 +21,6 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-// Styles
-import styles from './nrc-scene-styles.module.scss';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
