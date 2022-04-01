@@ -93,7 +93,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
               changeUI({
                 onboardingType: 'national-report-cards',
-                onboardingStep: 1,
+                onboardingStep: 0,
               });
             }}
           />
