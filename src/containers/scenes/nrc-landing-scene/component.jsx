@@ -89,7 +89,9 @@ const NrcLandingComponent = ({
           countryName={countryName}
           onboardingStep={onboardingStep}
         />
-        <NRCLandingSidebar onboardingStep={onboardingStep} />
+        <NRCLandingSidebar
+          onboardingStep={onboardingStep}
+        />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>
     </>

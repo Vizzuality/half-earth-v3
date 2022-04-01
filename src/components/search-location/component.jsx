@@ -34,9 +34,11 @@ const Component = ({
     popperElement
   );
 
+
   const onNextonboardingStep = useCallback(
     (countryValue) => {
-      if (countryValue) {
+
+      if (countryValue && onboardingStep !== null) {
         changeUI({ onboardingStep: 3, waitingInteraction: false });
       }
       return null;
@@ -52,7 +54,7 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
-        [styles.onboardingOverlay]: !currentStep,
+        [styles.onboardingOverlay]: !currentStep && typeof onboardingStep === 'number',
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',

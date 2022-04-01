@@ -24,6 +24,7 @@ const NRCLandingSidebar = ({
     onboardingType,
     onboardingStep,
   });
+
   return (
     <motion.div
       ref={(ref) => {
