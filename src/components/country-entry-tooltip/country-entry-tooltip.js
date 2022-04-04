@@ -28,15 +28,17 @@ const CountryEntryTooltipContainer = props => {
         returnGeometry: true
       }).then((features) => {
         const { geometry, attributes } = features[0];
-        setTooltipPosition(geometry);
-        setTooltipIsVisible(true);
-        setContent({
-          spi: attributes.SPI,
-          vertebrates: attributes.N_SPECIES,
-          endemic: attributes.total_endemic,
-          protection: attributes.prop_protected,
-          protectionNeeded: attributes.protection_needed
-        })
+        if (geometry) {
+          setTooltipPosition(geometry);
+          setTooltipIsVisible(true);
+          setContent({
+            spi: attributes.SPI,
+            vertebrates: attributes.N_SPECIES,
+            endemic: attributes.total_endemic,
+            protection: attributes.prop_protected,
+            protectionNeeded: attributes.protection_needed
+          });
+        }
       })
     }
   }, [countryISO])

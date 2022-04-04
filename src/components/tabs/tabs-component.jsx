@@ -58,7 +58,11 @@ const Tabs = ({
           return (
             <li role="presentation" key={`tab-${tabSlug}`}>
               <motion.div
-                ref={(ref) => (tabButtonsRef.current[tabSlug] = ref)}
+                ref={(ref) => {
+                  if (tabButtonsRef && tabButtonsRef.current) {
+                    tabButtonsRef.current[tabSlug] = ref;
+                  }
+                }}
                 className={styles.tab}
                 role="tab"
                 aria-selected={slug === defaultTabSlug}
