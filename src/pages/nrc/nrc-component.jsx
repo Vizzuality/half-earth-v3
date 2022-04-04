@@ -33,7 +33,6 @@ const NationalReportCard = ({
   countryChallengesSelectedKey,
   onboardingType,
   onboardingStep,
-  waitingInteraction,
 }) => {
   const [map, setMap] = useState();
 

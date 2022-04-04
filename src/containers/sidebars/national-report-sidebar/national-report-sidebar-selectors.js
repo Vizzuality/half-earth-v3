@@ -153,7 +153,6 @@ const mapStateToProps = createStructuredSelector({
   amphibians: getTaxa('amphibians'),
   scene: selectScene,
   indexStatement: getIndexStatement,
-  // openedModal: getModalOpen,
   countryDescription: getDescription,
   protectionNeeded: getProtectionNeeded,
   speciesChartData: getSpeciesChartData,

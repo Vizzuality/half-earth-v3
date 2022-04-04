@@ -4,6 +4,7 @@
 
 .tooltipPlacement {
   position: absolute;
+  z-index: $over-all;
 }
 
 .tooltipContainer {

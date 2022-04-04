@@ -31,6 +31,7 @@
     height: 110px;
     width: 300px;
     padding: 10px 16px 16px;
+    z-index: $default-z-index;
 
     &.waiting {
       align-items: center;
@@ -50,6 +51,7 @@
     margin-bottom: 8px;
     transition-duration: 0.4s;
     width: 20px;
+    z-index: $default-z-index;
 
     &:hover {
       width: 50px;
@@ -115,6 +117,7 @@
   .textContainer {
     position: relative;
     padding-right: 15px;
+    z-index: $default-z-index;
 
     .muteButton {
       z-index: $default-z-index;
