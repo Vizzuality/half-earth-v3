@@ -117,7 +117,6 @@ const CountryEntryTooltipComponent = ({
 
       {tooltipScreenPosition && (
         <OnboardingTooltip
-          className={styles.tooltipPlacement}
           tooltipPlacement={{
             top: tooltipScreenPosition.y + (tooltipScreenPosition.height - 55),
             left:
