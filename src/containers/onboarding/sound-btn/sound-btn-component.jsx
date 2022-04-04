@@ -23,6 +23,10 @@ const files = {
     priorityPlaces01,
     priorityPlaces02,
     priorityPlaces03,
+    priorityPlaces03,
+    priorityPlaces03,
+    priorityPlaces03,
+    priorityPlaces03,
   ],
 };
 
