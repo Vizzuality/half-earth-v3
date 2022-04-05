@@ -12,6 +12,7 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
       onboardingType === 'national-report-cards' && onboardingStep === 1,
     nrcLandingSearch:
       onboardingType === 'national-report-cards' && onboardingStep === 2,
+    nrcLandingButton: false, // This tooltip wil be positioned on the country-entry-tooltip-component
     challenges:
       onboardingType === 'national-report-cards' && onboardingStep === 4,
     ranking: onboardingType === 'national-report-cards' && onboardingStep === 5,

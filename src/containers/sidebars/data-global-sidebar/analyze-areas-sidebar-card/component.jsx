@@ -51,7 +51,7 @@ const AnalyzeAreasCardComponent = ({
     <div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onboardingOverlay]: typeof onboardingStep === 'number',
+        [styles.onboardingOverlay]: onboardingStep === 2,
       })}
     >
       <CategoryBox

@@ -35,21 +35,6 @@ const NrcLandingComponent = ({
   onboardingType,
   onboardingStep,
 }) => {
-  const tooltipPlacement = useMemo(() => {
-    if (onboardingStep === 1)
-      return {
-        // NATIONAL REPORT CARD
-        left: '444px',
-        top: '56px',
-      };
-    if (onboardingStep === 2)
-      return {
-        // SEARCHER
-        left: '422px',
-        top: '543px',
-      };
-    return null;
-  }, [onboardingStep, onboardingType]);
   return (
     <>
       <Scene
@@ -58,10 +43,12 @@ const NrcLandingComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         initialRotation
-        disabled={!!onboardingType && onboardingStep !== 2}
+        disabled={
+          !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
+        }
       >
         {onboardingType && <SoundButton />}
-        <OnboardingTooltip className={styles.onboardingTooltip} tooltipPlacement={tooltipPlacement} />
+        <OnboardingTooltip className={styles.onboardingTooltip} />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
@@ -91,6 +78,7 @@ const NrcLandingComponent = ({
         />
         <NRCLandingSidebar
           onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
         />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>

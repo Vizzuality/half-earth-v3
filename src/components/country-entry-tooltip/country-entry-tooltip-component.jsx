@@ -19,10 +19,11 @@ const CountryEntryTooltipComponent = ({
   handleTooltipClose,
   onExploreCountryClick,
   onboardingStep,
+  changeUI,
 }) => {
   const currentStep = onboardingStep === 3;
   const tooltipref = useRef(null);
-  const exploreBtnRef = useRef(null);
+  const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
   const [tooltipScreenPosition, setTooltipScreenPosition] = useState({});
   const { spi, vertebrates, endemic, protection, protectionNeeded } =
@@ -49,8 +50,17 @@ const CountryEntryTooltipComponent = ({
         camera.position.latitude += 5;
         view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' }).then(() => {
           const popupElement = document.getElementsByClassName('esri-popup')[0];
-          if (popupElement)
+          if (popupElement) {
             setTooltipScreenPosition(popupElement.getBoundingClientRect());
+            if (onboardingStep === 3 && onboardingButtonReference.current) {
+              const { y, x, width } =
+                onboardingButtonReference.current.getBoundingClientRect();
+              changeUI({
+                onboardingTooltipTop: y,
+                onboardingTooltipLeft: x + width + 10,
+              });
+            }
+          }
         });
       }
     } else {
@@ -106,7 +116,7 @@ const CountryEntryTooltipComponent = ({
           }}
         >
           <button
-            ref={exploreBtnRef}
+            ref={onboardingButtonReference}
             className={styles.tooltipExplore}
             onClick={onExploreCountryClick}
           >
@@ -115,15 +125,7 @@ const CountryEntryTooltipComponent = ({
         </motion.div>
       </div>
 
-      {tooltipScreenPosition && (
-        <OnboardingTooltip
-          tooltipPlacement={{
-            top: tooltipScreenPosition.y + (tooltipScreenPosition.height - 55),
-            left:
-              tooltipScreenPosition.x + (tooltipScreenPosition.width / 2 + 75),
-          }}
-        />
-      )}
+      {tooltipScreenPosition && <OnboardingTooltip />}
     </>
   ) : null;
 };

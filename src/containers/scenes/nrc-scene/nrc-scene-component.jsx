@@ -40,35 +40,18 @@ const CountrySceneComponent = ({
   aoiTooltipInfo,
   setTooltipInfo,
   onboardingType,
-  onboardingStep,
   countryData,
 }) => {
-  const tooltipPlacement = useMemo(() => {
-    if (onboardingStep === 4)
-      return {
-        // CHALLENGES TAB
-        left: '310px',
-        top: '207px',
-      };
-    if (onboardingStep === 5)
-      return {
-        // RANKING TAB
-        left: '440px',
-        top: '207px',
-      };
-    return null;
-  }, [onboardingStep, onboardingType]);
-
   return (
     <Scene
       sceneName={'nrc-scene'}
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
+      disabled={!!onboardingType}
     >
       {onboardingType && <SoundButton />}
-
-      {countryData && <OnboardingTooltip tooltipPlacement={tooltipPlacement} />}
+      {countryData && <OnboardingTooltip />}
       <LocalSceneViewManager localGeometry={countryBorder} />
       <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
       <CountryMaskLayer

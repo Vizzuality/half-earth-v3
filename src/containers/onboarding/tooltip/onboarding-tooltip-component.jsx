@@ -5,21 +5,18 @@ import styles from './onboarding-tooltip-styles.module.scss';
 
 const OnboardingTooltipComponent = ({
   placement = 'left',
-  tooltipPlacement,
   className,
   onboardingStep,
   tooltipTop,
   tooltipLeft,
 }) => {
-  if (typeof onboardingStep !== 'number') return null;
+  if (typeof onboardingStep !== 'number' || !tooltipTop) {
+    return null;
+  }
   return (
     <div
       className={cx(styles.tooltipPlacement, className)}
-      style={
-        tooltipPlacement
-          ? tooltipPlacement
-          : { top: tooltipTop, left: tooltipLeft }
-      }
+      style={{ top: tooltipTop, left: tooltipLeft }}
     >
       <div
         className={cx({

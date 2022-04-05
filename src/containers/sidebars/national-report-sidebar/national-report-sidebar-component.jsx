@@ -17,6 +17,9 @@ import RankingSidebar from './ranking-sidebar';
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './national-report-sidebar-styles.module.scss';
 
+// Hooks
+import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
+
 import {
   LOCAL_SCENE_TABS_SLUGS,
   LOCAL_SCENE_TABS,
@@ -37,9 +40,16 @@ const NationalReportSidebarComponent = ({
   activeLayers,
   onboardingStep,
   onboardingType,
+  changeUI,
 }) => {
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+
+  const tooltipRefs = useTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
 
   return (
     <div
@@ -73,6 +83,7 @@ const NationalReportSidebarComponent = ({
         defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
+        tabButtonsRef={countryName && tooltipRefs}
       />
       {!countryData ? (
         <div className={styles.loading}>

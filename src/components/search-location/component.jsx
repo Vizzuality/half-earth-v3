@@ -34,17 +34,12 @@ const Component = ({
     popperElement
   );
 
-
-  const onNextonboardingStep = useCallback(
-    (countryValue) => {
-
-      if (countryValue && onboardingStep !== null) {
-        changeUI({ onboardingStep: 3, waitingInteraction: false });
-      }
-      return null;
-    },
-    []
-  );
+  const onNextonboardingStep = useCallback((countryValue) => {
+    if (countryValue && onboardingStep !== null) {
+      changeUI({ onboardingStep: 3, waitingInteraction: false });
+    }
+    return null;
+  }, []);
 
   return (
     <motion.div
@@ -54,7 +49,7 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
-        [styles.onboardingOverlay]: !currentStep && typeof onboardingStep === 'number',
+        [styles.onboardingOverlay]: !currentStep,
       })}
       animate={{
         outline: currentStep ? '5px solid #00BDB5' : 'none',
@@ -71,7 +66,6 @@ const Component = ({
         ref={setReferenceElement}
         onClick={handleOpenSearch}
         onChange={handleInputChange}
-
       />
 
       {<IconSearch className={styles.placeholderIcon} />}
