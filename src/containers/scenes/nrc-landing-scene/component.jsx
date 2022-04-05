@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useMemo } from 'react';
+import React from 'react';
 import loadable from '@loadable/component';
 // Components
 import CountryEntryTooltip from 'components/country-entry-tooltip';
