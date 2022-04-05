@@ -2,8 +2,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
-// Components
-import OnboardingTooltip from 'containers/onboarding/tooltip';
 // Assets
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 // Styles
@@ -25,7 +23,6 @@ const CountryEntryTooltipComponent = ({
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
-  const [tooltipScreenPosition, setTooltipScreenPosition] = useState({});
   const { spi, vertebrates, endemic, protection, protectionNeeded } =
     tooltipContent;
 
@@ -49,17 +46,13 @@ const CountryEntryTooltipComponent = ({
         const camera = view.camera.clone();
         camera.position.latitude += 5;
         view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' }).then(() => {
-          const popupElement = document.getElementsByClassName('esri-popup')[0];
-          if (popupElement) {
-            setTooltipScreenPosition(popupElement.getBoundingClientRect());
-            if (onboardingStep === 3 && onboardingButtonReference.current) {
-              const { y, x, width } =
-                onboardingButtonReference.current.getBoundingClientRect();
-              changeUI({
-                onboardingTooltipTop: y,
-                onboardingTooltipLeft: x + width + 10,
-              });
-            }
+          if (onboardingStep === 3 && onboardingButtonReference.current) {
+            const { y, x, width } =
+              onboardingButtonReference.current.getBoundingClientRect();
+            changeUI({
+              onboardingTooltipTop: y,
+              onboardingTooltipLeft: x + width + 10,
+            });
           }
         });
       }
@@ -124,8 +117,6 @@ const CountryEntryTooltipComponent = ({
           </button>
         </motion.div>
       </div>
-
-      {tooltipScreenPosition && <OnboardingTooltip />}
     </>
   ) : null;
 };
