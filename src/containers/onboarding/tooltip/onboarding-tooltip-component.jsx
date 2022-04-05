@@ -9,8 +9,13 @@ const OnboardingTooltipComponent = ({
   onboardingStep,
   tooltipTop,
   tooltipLeft,
+  waitingInteraction,
 }) => {
-  if (typeof onboardingStep !== 'number' || !tooltipTop) {
+  if (
+    !waitingInteraction ||
+    typeof onboardingStep !== 'number' ||
+    !tooltipTop
+  ) {
     return null;
   }
   return (
