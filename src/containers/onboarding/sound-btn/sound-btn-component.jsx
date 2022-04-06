@@ -9,24 +9,44 @@ import { ReactComponent as MutedIcon } from 'icons/muted.svg';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { LANDING } from 'router';
-import priorityPlaces01 from 'sounds/priority-places-1.wav';
-import priorityPlaces02 from 'sounds/priority-places-2.wav';
-import priorityPlaces03 from 'sounds/priority-places-3.wav';
-import { SCRIPTS } from 'constants/onboarding-constants';
+import priorityPlaces01 from 'sounds/tour1-track1-intro.mp3';
+import priorityPlaces02 from 'sounds/tour1-track2-priority.mp3';
+import priorityPlaces03 from 'sounds/tour1-track3-richness.mp3';
+import priorityPlaces04 from 'sounds/tour1-track4-rarity.mp3';
+import priorityPlaces05 from 'sounds/tour1-track5-protection.mp3';
+import priorityPlaces06 from 'sounds/tour1-track6-human-pressures.mp3';
+import priorityPlaces07 from 'sounds/tour1-track7-closure.mp3';
+import nationalReportCards01 from 'sounds/tour2-track1-intro.mp3';
+import nationalReportCards02 from 'sounds/tour2-track2-spi.mp3';
+import nationalReportCards03 from 'sounds/tour2-track3-nrc.mp3';
+import nationalReportCards04 from 'sounds/tour2-track4-overview.mp3';
+import nationalReportCards05 from 'sounds/tour2-track5-challenges.mp3';
+import nationalReportCards06 from 'sounds/tour2-track6-ranking.mp3';
+import nationalReportCards07 from 'sounds/tour2-track7-closure.mp3';
+
+import { SCRIPTS, NO_INTERACTION_STEPS } from 'constants/onboarding-constants';
 import StepsArcs from '../step-arcs';
 import styles from './sound-btn-styles.module.scss';
 import AudioPlayer from './audio-player';
 
 const files = {
-  'priority-places': [priorityPlaces01, priorityPlaces02, priorityPlaces03],
-  'national-report-cards': [
+  'priority-places': [
     priorityPlaces01,
     priorityPlaces02,
     priorityPlaces03,
-    priorityPlaces03,
-    priorityPlaces03,
-    priorityPlaces03,
-    priorityPlaces03,
+    priorityPlaces04,
+    priorityPlaces05,
+    priorityPlaces06,
+    priorityPlaces07,
+  ],
+  'national-report-cards': [
+    nationalReportCards01,
+    nationalReportCards02,
+    nationalReportCards03,
+    nationalReportCards04,
+    nationalReportCards05,
+    nationalReportCards06,
+    nationalReportCards07,
   ],
 };
 
@@ -172,18 +192,16 @@ const SoundButtonComponent = ({
 
     setTextMark(0);
 
-    const isIntroStep =
-      Object.keys(SCRIPTS[onboardingType])[onboardingStep] === 'intro';
-    if (isIntroStep) {
+    const dontWaitStep = NO_INTERACTION_STEPS[onboardingType].includes(
+      Object.keys(SCRIPTS[onboardingType])[onboardingStep]
+    );
+    if (dontWaitStep) {
       return changeUI({
         onboardingStep: onboardingStep + 1,
       });
     }
 
-    changeUI({
-      // onboardingStep: onboardingStep + 1,
-      waitingInteraction: true,
-    });
+    changeUI({ waitingInteraction: true });
   };
 
   useEffect(() => {
