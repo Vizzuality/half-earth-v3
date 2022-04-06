@@ -1,10 +1,11 @@
 // Dependencies
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Styles
 import styles from './tabs-styles.module.scss';
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 const getSelectedTabIndex = (tabs, defaultTabSlug) => {
   const selectedTab = tabs.find(
@@ -19,8 +20,9 @@ const Tabs = ({
   onClick,
   defaultTabSlug,
   className,
-  onboardingStep,
   onboardingType,
+  onboardingStep,
+  waitingInteraction,
   tabButtonsRef,
 }) => {
   return (
@@ -29,31 +31,14 @@ const Tabs = ({
         {tabs.map((tab, i) => {
           const { slug, title } = tab;
           const tabSlug = slug || title;
-
-          const richnessonboardingStep =
-            tabSlug === 'richness' &&
-            onboardingType === 'priority-places' &&
-            onboardingStep === 1;
-          const rarityOnBoardingTab =
-            tabSlug === 'rarity' &&
-            onboardingType === 'priority-places' &&
-            onboardingStep === 2;
-          const challengesOnBoardingTab =
-            tabSlug === 'challenges' &&
-            onboardingType === 'national-report-cards' &&
-            onboardingStep === 4;
-          const rankingOnBoardingTab =
-            tabSlug === 'ranking' &&
-            onboardingType === 'national-report-cards' &&
-            onboardingStep === 5;
-
-          const slugonboardingStep = useMemo(() => {
-            if (richnessonboardingStep) return 2;
-            if (rarityOnBoardingTab) return 3;
-            if (challengesOnBoardingTab) return 5;
-            if (rankingOnBoardingTab) return 6;
-            return null;
-          }, [onboardingStep]);
+          const { overlay: onboardingOverlay } = getOnboardingProps({
+            section: 'tabs',
+            slug: tabSlug,
+            styles,
+            onboardingType,
+            onboardingStep,
+            waitingInteraction,
+          });
 
           return (
             <li role="presentation" key={`tab-${tabSlug}`}>
@@ -66,23 +51,11 @@ const Tabs = ({
                 className={styles.tab}
                 role="tab"
                 aria-selected={slug === defaultTabSlug}
-                animate={{
-                  outline:
-                    richnessonboardingStep ||
-                    rarityOnBoardingTab ||
-                    challengesOnBoardingTab ||
-                    rankingOnBoardingTab
-                      ? '5px solid #00BDB5'
-                      : 'none',
-                }}
-                transition={{
-                  duration: 1.75,
-                  repeat: Infinity,
-                }}
+                {...onboardingOverlay}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  onClick(tabSlug, slugonboardingStep);
+                  onClick(tabSlug);
                 }}
               >
                 <div

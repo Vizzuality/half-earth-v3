@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -18,7 +18,11 @@ import {
   FUTURE_PLACES_SLUG,
 } from 'constants/analyze-areas-constants';
 // Hooks
-import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+  useOpenSection,
+} from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -36,20 +40,34 @@ const ProtectedAreasSidebarCardComponent = ({
   countedActiveLayers,
   onboardingStep,
   onboardingType,
+  waitingInteraction,
   changeUI,
 }) => {
-  const currentStep = onboardingStep === 3;
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
-
-  useEffect(() => {
-    currentStep ? setOpen(true) : setOpen(false);
-  }, [onboardingStep]);
 
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
+  });
+  useOpenSection({
+    section: 'protection',
+    setOpen,
+    onboardingStep,
+    waitingInteraction,
+  });
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+    className: onboardingClassName,
+  } = getOnboardingProps({
+    section: 'protection',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
   });
 
   return (
@@ -59,20 +77,10 @@ const ProtectedAreasSidebarCardComponent = ({
       }}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onboardingOverlay]:
-          !currentStep && typeof onboardingStep === 'number',
+        ...onboardingClassName,
       })}
-      animate={{
-        outline: currentStep ? '5px solid #00BDB5' : 'none',
-      }}
-      transition={{
-        duration: 1.75,
-        repeat: Infinity,
-      }}
-      {...(currentStep && {
-        onClick: () =>
-          changeUI({ onboardingStep: 4, waitingInteraction: false }),
-      })}
+      {...onboardingOverlay}
+      {...onboardingOnClick}
     >
       <CategoryBox
         image={ProtectionThumbnail}
@@ -84,7 +92,7 @@ const ProtectedAreasSidebarCardComponent = ({
       <div
         className={cx(styles.layersTogglesContainer, {
           [styles.open]: isOpen,
-          [styles.onboardingMode]: currentStep,
+          [styles.onboardingMode]: onboardingStep === 3,
         })}
       >
         <span className={styles.description}>{TEXTS.description}</span>

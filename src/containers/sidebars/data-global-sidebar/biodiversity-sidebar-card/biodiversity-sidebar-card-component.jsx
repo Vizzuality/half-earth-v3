@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -23,7 +23,11 @@ import {
   RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
 // Hooks
-import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+  useOpenSection,
+} from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -46,20 +50,19 @@ const BiodiversitySidebarCardComponent = ({
   onboardingStep,
   onboardingType,
   changeUI,
+  waitingInteraction,
 }) => {
   const firstStep = onboardingStep === 0;
-  const nonOverlaySteps =
-    onboardingStep === 0 || onboardingStep === 1 || onboardingStep === 2;
-  const openCardSteps = onboardingStep === 1 || onboardingStep === 2;
-
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
-  useEffect(() => {
-    openCardSteps ? setOpen(true) : setOpen(false);
-  }, [onboardingStep]);
-
+  useOpenSection({
+    section: 'priority',
+    setOpen,
+    onboardingStep,
+    waitingInteraction,
+  });
   const layerTogglesToDisplay = (category) => {
     const resolutionsForSelectedCategory =
       LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][category];
@@ -79,25 +82,27 @@ const BiodiversitySidebarCardComponent = ({
     onboardingStep,
   });
 
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+    className: onboardingClassName,
+  } = getOnboardingProps({
+    section: 'biodiversity',
+    styles,
+    changeUI,
+    onboardingStep,
+    waitingInteraction,
+  });
+
   return (
     <motion.div
       ref={(ref) => (tooltipRefs.current.biodiversity = ref)}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onboardingOverlay]:
-          !nonOverlaySteps && typeof onboardingStep === 'number',
+        ...onboardingClassName,
       })}
-      animate={{
-        outline: firstStep && '5px solid #00BDB5',
-      }}
-      transition={{
-        duration: 1.75,
-        repeat: Infinity,
-      }}
-      {...(typeof onboardingStep === 'number' && {
-        onClick: () =>
-          changeUI({ onboardingStep: 1, waitingInteraction: false }),
-      })}
+      {...onboardingOverlay}
+      {...onboardingOnClick}
     >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
@@ -127,6 +132,7 @@ const BiodiversitySidebarCardComponent = ({
           defaultTabSlug={biodiversityLayerVariant}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
           tabButtonsRef={tooltipRefs}
         />
         {showCard && (

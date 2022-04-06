@@ -73,8 +73,12 @@ const BiodiversitySidebarCard = (props) => {
 
   }, [biodiversityLayerVariant])
 
-  const handleTabSelection = (slug, slugonboardingStep, waitingInteraction = false) => {
-    changeUI({ biodiversityLayerVariant: slug, onboardingStep: slugonboardingStep, waitingInteraction });
+  const handleTabSelection = (slug) => {
+    const { onboardingStep, onboardingType } = props;
+    changeUI({
+      biodiversityLayerVariant: slug,
+      onboardingStep: onboardingStep && (onboardingStep + 1),
+      waitingInteraction: onboardingType && false});
   }
 
   const handleClearAndAddLayers = (bioLayerIds, layerIds) => {

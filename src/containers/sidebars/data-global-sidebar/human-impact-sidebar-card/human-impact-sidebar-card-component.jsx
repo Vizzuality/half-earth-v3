@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 // Components
@@ -23,7 +23,11 @@ import {
   TEXTS,
 } from 'constants/human-pressures';
 // Hooks
-import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+  useOpenSection,
+} from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './human-impact-sidebar-card-styles.module.scss';
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
@@ -42,9 +46,9 @@ const HumanImpactSidebarCardComponent = ({
   countedActiveLayers,
   onboardingStep,
   onboardingType,
+  waitingInteraction,
   changeUI,
 }) => {
-  const currentStep = onboardingStep === 4;
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
@@ -53,38 +57,44 @@ const HumanImpactSidebarCardComponent = ({
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
 
-  useEffect(() => {
-    currentStep ? setOpen(true) : setOpen(false);
-  }, [onboardingStep]);
-
+  // Onboarding
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
   });
+  useOpenSection({
+    section: 'humanPressures',
+    setOpen,
+    onboardingStep,
+    waitingInteraction,
+  });
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+    className: onboardingClassName,
+  } = getOnboardingProps({
+    section: 'humanPressures',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
 
   return (
     <motion.div
       ref={(ref) => {
-        tooltipRefs.current.humanPressures = ref;
+        if (!isOpen) {
+          tooltipRefs.current.humanPressures = ref;
+        }
       }}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onboardingOverlay]:
-          !currentStep && typeof onboardingStep === 'number',
-        [styles.onboardingMode]: currentStep,
+        ...onboardingClassName,
       })}
-      animate={{
-        outline: currentStep ? '5px solid #00BDB5' : 'none',
-      }}
-      transition={{
-        duration: 1.75,
-        repeat: Infinity,
-      }}
-      {...(currentStep && {
-        onClick: () =>
-          changeUI({ onboardingStep: 5, waitingInteraction: false }),
-      })}
+      {...onboardingOverlay}
+      {...onboardingOnClick}
     >
       <CategoryBox
         title={TEXTS.categoryTitle}

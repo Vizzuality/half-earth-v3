@@ -40,6 +40,7 @@ const NationalReportSidebarComponent = ({
   activeLayers,
   onboardingStep,
   onboardingType,
+  waitingInteraction,
   changeUI,
 }) => {
   const sidebarHidden = isFullscreenActive;
@@ -83,6 +84,7 @@ const NationalReportSidebarComponent = ({
         defaultTabSlug={localSceneActiveTab || LOCAL_SCENE_DEFAULT_TAB}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
+        waitingInteraction={waitingInteraction}
         tabButtonsRef={countryName && tooltipRefs}
       />
       {!countryData ? (

@@ -22,7 +22,9 @@ const NationalReportSidebarContainer = (props) => {
   const handleTabSelection = (slug) => {
     const { browsePage, countryISO, changeUI, onboardingType, onboardingStep } = props;
     browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: slug } });
-    changeUI({ onboardingStep: onboardingStep + 1, onboardingType, waitingInteraction: false });
+    if (onboardingType) {
+      changeUI({ onboardingStep: onboardingStep + 1, onboardingType, waitingInteraction: false });
+    }
   };
 
   return (
