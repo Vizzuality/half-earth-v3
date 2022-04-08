@@ -9,6 +9,7 @@ import Proptypes from 'prop-types';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
 // Styles
 import styles from './styles.module.scss';
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 const Component = ({
   width,
@@ -21,7 +22,9 @@ const Component = ({
   onOptionSelection,
   handleInputChange,
   isSearchResultVisible,
+  onboardingType,
   onboardingStep,
+  waitingInteraction,
   changeUI,
   reference,
 }) => {
@@ -41,6 +44,21 @@ const Component = ({
     return null;
   }, []);
 
+  const { overlay: onboardingOverlay, className: onboardingClassName } =
+    getOnboardingProps({
+      section: 'searchNRC',
+      styles,
+      changeUI,
+      onboardingType,
+      onboardingStep,
+      waitingInteraction,
+    });
+  console.log(
+    onboardingOverlay,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction
+  );
   return (
     <motion.div
       ref={reference}
@@ -49,15 +67,10 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
+        ...onboardingClassName,
         [styles.onboardingOverlay]: !currentStep,
       })}
-      animate={{
-        outline: currentStep ? '5px solid #00BDB5' : 'none',
-      }}
-      transition={{
-        duration: 1.75,
-        repeat: Infinity,
-      }}
+      {...onboardingOverlay}
     >
       <input
         type="text"

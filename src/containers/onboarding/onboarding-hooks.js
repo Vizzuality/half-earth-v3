@@ -149,6 +149,18 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
             changeUI({ onboardingStep: 4, waitingInteraction: false }),
         },
       },
+      searchNRC: {
+        overlay: {
+         animate: {
+            outline:
+              onboardingStep === 2 && '5px solid #00BDB5',
+          },
+          transition: {
+            duration: 1.75,
+            repeat: Infinity,
+          }
+        }
+      },
       tabs: {
         overlay: {
          animate: {
@@ -168,3 +180,7 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
       }
     }[section];
   };
+
+export const getTooltipText = (onboardingType, onboardingStep) => (
+  onboardingType === 'national-report-cards' && onboardingStep === 2 ? 'Type here to continue' : 'Click here to continue.'
+);

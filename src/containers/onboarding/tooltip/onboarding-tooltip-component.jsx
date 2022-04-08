@@ -1,11 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
-
+import { getTooltipText } from 'containers/onboarding/onboarding-hooks';
 import styles from './onboarding-tooltip-styles.module.scss';
 
 const OnboardingTooltipComponent = ({
   placement = 'left',
   className,
+  onboardingType,
   onboardingStep,
   tooltipTop,
   tooltipLeft,
@@ -37,7 +38,7 @@ const OnboardingTooltipComponent = ({
           })}
         />
         <div id="onboarding" className={styles.tooltip}>
-          Click here to continue.
+          {getTooltipText(onboardingType, onboardingStep)}
         </div>
       </div>
     </div>

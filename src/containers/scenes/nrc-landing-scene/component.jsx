@@ -34,6 +34,7 @@ const NrcLandingComponent = ({
   isGlobeUpdating,
   onboardingType,
   onboardingStep,
+  waitingInteraction,
 }) => {
   return (
     <>
@@ -79,6 +80,7 @@ const NrcLandingComponent = ({
         <NRCLandingSidebar
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
         />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>

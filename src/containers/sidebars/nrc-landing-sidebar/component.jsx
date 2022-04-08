@@ -17,12 +17,14 @@ const NRCLandingSidebar = ({
   onboardingStep,
   onboardingType,
   view,
+  waitingInteraction,
 }) => {
   const currentStep = onboardingStep === 1;
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
+    waitingInteraction,
   });
 
   return (
@@ -74,6 +76,8 @@ const NRCLandingSidebar = ({
           placeholder="search countries"
           searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
           onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
         />
       </div>
     </motion.div>
