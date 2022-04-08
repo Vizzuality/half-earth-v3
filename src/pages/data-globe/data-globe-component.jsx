@@ -1,14 +1,14 @@
-// dependencies
-import loadable from "@loadable/component";
-import HalfEarthLogo from "components/half-earth-logo";
-import MainMenu from "components/main-menu";
-import React from "react";
-// components
-import DataScene from "scenes/data-scene";
-//styles
-import uiStyles from "styles/ui.module.scss";
+// Dependencies
+import React from 'react';
+import loadable from '@loadable/component';
+// Components
+import HalfEarthLogo from 'components/half-earth-logo';
+import MainMenu from 'components/main-menu';
+import DataScene from 'scenes/data-scene';
+// Styles
+import uiStyles from 'styles/ui.module.scss';
 // Dynamic imports
-const InfoModal = loadable(() => import("components/modal-metadata"));
+const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const DataGlobeComponent = ({
   sceneMode,
@@ -32,13 +32,17 @@ const DataGlobeComponent = ({
   isBiodiversityActive,
   countryTooltipDisplayFor,
   isLandscapeSidebarCollapsed,
-  onBoardingType,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
 }) => {
-
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu />
+      <MainMenu
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+      />
       <DataScene
         sceneMode={sceneMode}
         userConfig={userConfig}
@@ -59,7 +63,9 @@ const DataGlobeComponent = ({
         handleGlobeUpdating={handleGlobeUpdating}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
         isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
-        onBoardingType={onBoardingType}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
+        waitingInteraction={waitingInteraction}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
       {hasMetadata && <InfoModal />}

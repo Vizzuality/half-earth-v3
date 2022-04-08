@@ -38,3 +38,7 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
 .legendTitle {
   @extend %title;
 }
+
+.onboardingMode {
+  cursor: pointer;
+}

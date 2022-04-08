@@ -1,16 +1,20 @@
+// Dependencies
 import React, { useState } from 'react';
-import SourceAnnotation from 'components/source-annotation';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-import Tabs from 'components/tabs';
+import { motion } from 'framer-motion';
+// Components
 import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
+import LayerToggle from 'components/layer-toggle';
+import SourceAnnotation from 'components/source-annotation';
+import Tabs from 'components/tabs';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
-import LayerToggle from 'components/layer-toggle';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
+// Constants
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   LAYERS_TOGGLE_CONFIG,
   LAYERS_RESOLUTION,
@@ -18,14 +22,22 @@ import {
   MARINE,
   RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
+// Hooks
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+  useOpenSection,
+} from 'containers/onboarding/onboarding-hooks';
+// Styles
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-
+// Assets
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
 const BiodiversitySidebarCardComponent = ({
   activeLayers,
   countedActiveLayers,
+  className,
   handleLayerToggle,
   handleCloseCard,
   map,
@@ -35,11 +47,22 @@ const BiodiversitySidebarCardComponent = ({
   biodiversityLayerVariant,
   cardMetadata,
   showCard,
+  onboardingStep,
+  onboardingType,
+  changeUI,
+  waitingInteraction,
 }) => {
+  const firstStep = onboardingStep === 0;
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
+  useOpenSection({
+    section: 'priority',
+    setOpen,
+    onboardingStep,
+    waitingInteraction,
+  });
   const layerTogglesToDisplay = (category) => {
     const resolutionsForSelectedCategory =
       LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][category];
@@ -53,8 +76,34 @@ const BiodiversitySidebarCardComponent = ({
     }
   };
 
+  const tooltipRefs = useTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
+
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+    className: onboardingClassName,
+  } = getOnboardingProps({
+    section: 'biodiversity',
+    styles,
+    changeUI,
+    onboardingStep,
+    waitingInteraction,
+  });
+
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <motion.div
+      ref={(ref) => (tooltipRefs.current.biodiversity = ref)}
+      className={cx(styles.sidebarCardContainer, className, {
+        [styles.open]: isOpen,
+        ...onboardingClassName,
+      })}
+      {...onboardingOverlay}
+      {...onboardingOnClick}
+    >
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
@@ -66,7 +115,10 @@ const BiodiversitySidebarCardComponent = ({
         className={cx(
           styles.layersTogglesContainer,
           styles[`${biodiversityLayerVariant}Tab`],
-          { [styles.open]: isOpen }
+          {
+            [styles.open]: isOpen,
+            [styles.onboardingMode]: firstStep,
+          }
         )}
       >
         <SidebarLegend
@@ -78,6 +130,10 @@ const BiodiversitySidebarCardComponent = ({
           onClick={handleTabSelection}
           className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
+          tabButtonsRef={tooltipRefs}
         />
         {showCard && (
           <div className={styles.cardContainer}>
@@ -163,7 +219,7 @@ const BiodiversitySidebarCardComponent = ({
           metaDataSources={source}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

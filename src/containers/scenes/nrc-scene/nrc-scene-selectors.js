@@ -1,4 +1,4 @@
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
@@ -11,8 +11,19 @@ const getCountryBorder = ({ countriesGeometries }, { countryISO }) => {
   return countriesGeometries.data[countryISO].borderGraphic;
 }
 
+const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+
+const getCountryData = createSelector(
+  [selectCountriesData, selectCountryIso],
+  (countriesData, countryIso) => {
+    if (!countryIso || !countriesData) return null;
+    return (countriesData && countriesData[countryIso]) || null;
+  }
+)
+
 export default createStructuredSelector({
   countriesData: selectCountriesData,
   countryBorder: getCountryBorder,
-  userConfig: selectUserConfig
+  userConfig: selectUserConfig,
+  countryData: getCountryData,
 })

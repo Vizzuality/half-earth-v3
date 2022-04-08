@@ -1,16 +1,19 @@
+// Dependencies
+import React, { useState } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
+// Components
 import CountryChallengesChart from 'components/country-challenges-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
 import RankingChart from 'components/ranking-chart';
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
-import React, { useState } from 'react';
 import NationalReportCardScene from 'scenes/nrc-scene';
+// Constants
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+// Styles
 import uiStyles from 'styles/ui.module.scss';
 import styles from './nrc-styles.module.scss';
-
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
@@ -28,14 +31,20 @@ const NationalReportCard = ({
   localSceneActiveTab,
   countryTooltipDisplayFor,
   countryChallengesSelectedKey,
+  onboardingType,
+  onboardingStep,
 }) => {
   const [map, setMap] = useState();
+
   return (
     <>
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <MainMenu />
+      <MainMenu
+        nBoardingStep={onboardingStep}
+        onboardingType={onboardingType}
+      />
       <NationalReportSidebar
         countryISO={countryISO}
         countryName={countryName}
@@ -46,6 +55,8 @@ const NationalReportCard = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
       />
       <NationalReportCardScene
         countryISO={countryISO}
@@ -56,6 +67,8 @@ const NationalReportCard = ({
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
         onMapLoad={(loadedMap) => {
           setMap(loadedMap);
           handleMapLoad(loadedMap, activeLayers);

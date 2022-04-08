@@ -1,19 +1,20 @@
 // Dependencies
+import React from 'react';
 import loadable from '@loadable/component';
-import CountryEntryTooltip from 'components/country-entry-tooltip';
 // Components
+import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
-// Constants
-import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import SoundButton from 'containers/onboarding/sound-btn';
 import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
-import React from 'react';
-
-
+import OnboardingTooltip from 'containers/onboarding/tooltip';
+// Constants
+import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+// Styles
+import styles from './nrc-landing-scene-styles.module.scss';
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -31,7 +32,9 @@ const NrcLandingComponent = ({
   sceneSettings,
   isLandscapeMode,
   isGlobeUpdating,
-  onBoardingType,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
 }) => {
   return (
     <>
@@ -41,12 +44,12 @@ const NrcLandingComponent = ({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         initialRotation
+        disabled={
+          !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
+        }
       >
-
-        {onBoardingType && (
-          <SoundButton />
-        )}
-
+        {onboardingType && <SoundButton />}
+        <OnboardingTooltip className={styles.onboardingTooltip} />
         <ArcgisLayerManager
           activeLayers={activeLayers}
           userConfig={userConfig}
@@ -64,14 +67,22 @@ const NrcLandingComponent = ({
           isLandscapeMode={isLandscapeMode}
           spatialReference={LOCAL_SPATIAL_REFERENCE}
         />
-        <Widgets activeLayers={activeLayers} openedModal={openedModal} />
+        <Widgets
+          activeLayers={activeLayers}
+          openedModal={openedModal}
+          onboardingStep={onboardingStep}
+        />
         <CountryEntryTooltip
           countryISO={countryISO}
           countryName={countryName}
+          onboardingStep={onboardingStep}
         />
-        <NRCLandingSidebar />
+        <NRCLandingSidebar
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
+        />
         <LabelsLayer activeLayers={activeLayers} />
-
       </Scene>
     </>
   );

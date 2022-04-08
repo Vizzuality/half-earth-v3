@@ -29,8 +29,9 @@
     justify-content: center;
     margin: 0 12px 13px 0;
     height: 110px;
-    width: 300px;
+    width: 310px;
     padding: 10px 16px 16px;
+    z-index: $default-z-index;
 
     &.waiting {
       align-items: center;
@@ -50,12 +51,13 @@
     margin-bottom: 8px;
     transition-duration: 0.4s;
     width: 20px;
+    z-index: $default-z-index;
 
     &:hover {
       width: 50px;
 
       p {
-        @extend %annotation;
+        @extend %title;
         display: block;
         margin-left: 2px;
       }
@@ -114,7 +116,8 @@
 
   .textContainer {
     position: relative;
-    padding-right: 15px;
+    padding-right: 23px;
+    z-index: $default-z-index;
 
     .muteButton {
       z-index: $default-z-index;

@@ -79,3 +79,12 @@ $scrollbar-width: 4px;
   height: $icon-size;
   width: $icon-size;
 }
+
+.onboardingOverlay {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.onboardingMode {
+  pointer-events: none;
+}

@@ -77,7 +77,7 @@
     &:last-child() {
       padding: 0;
     }
-    
+
     .numeric {
       @extend %title;
       flex-grow: 1;

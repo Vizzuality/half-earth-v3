@@ -11,10 +11,10 @@ import { NATIONAL_REPORT_CARD } from 'router';
 
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions}
+const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions }
 
 const CountryEntryTooltipContainer = props => {
-  const { mapTooltipIsVisible, countryISO } = props;
+  const { mapTooltipIsVisible, countryISO, changeUI } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [tooltipContent, setContent] = useState({});
 
@@ -28,15 +28,17 @@ const CountryEntryTooltipContainer = props => {
         returnGeometry: true
       }).then((features) => {
         const { geometry, attributes } = features[0];
-        setTooltipPosition(geometry);
-        setTooltipIsVisible(true);
-        setContent({
-          spi: attributes.SPI,
-          vertebrates: attributes.N_SPECIES,
-          endemic: attributes.total_endemic,
-          protection: attributes.prop_protected,
-          protectionNeeded: attributes.protection_needed
-        })
+        if (geometry) {
+          setTooltipPosition(geometry);
+          setTooltipIsVisible(true);
+          setContent({
+            spi: attributes.SPI,
+            vertebrates: attributes.N_SPECIES,
+            endemic: attributes.total_endemic,
+            protection: attributes.prop_protected,
+            protectionNeeded: attributes.protection_needed
+          });
+        }
       })
     }
   }, [countryISO])
@@ -48,11 +50,12 @@ const CountryEntryTooltipContainer = props => {
   }
 
   const handleExploreCountryClick = () => {
-    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics } = props;
-   setTooltipIsVisible(false);
+    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics, onboardingStep } = props;
+    setTooltipIsVisible(false);
     setTooltipContent({});
     enterNrcAnalytics(countryName);
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }});
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, });
+    onboardingStep && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 4 })
   };
 
   return (

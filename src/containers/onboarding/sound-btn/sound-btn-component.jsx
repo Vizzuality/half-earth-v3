@@ -9,20 +9,44 @@ import { ReactComponent as MutedIcon } from 'icons/muted.svg';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { LANDING } from 'router';
-import priorityPlaces01 from 'sounds/priority-places-1.wav';
-import priorityPlaces02 from 'sounds/priority-places-2.wav';
-import priorityPlaces03 from 'sounds/priority-places-3.wav';
-import { SCRIPTS } from 'constants/onboarding-constants';
+import priorityPlaces01 from 'sounds/tour1-track1-intro.mp3';
+import priorityPlaces02 from 'sounds/tour1-track2-priority.mp3';
+import priorityPlaces03 from 'sounds/tour1-track3-richness.mp3';
+import priorityPlaces04 from 'sounds/tour1-track4-rarity.mp3';
+import priorityPlaces05 from 'sounds/tour1-track5-protection.mp3';
+import priorityPlaces06 from 'sounds/tour1-track6-human-pressures.mp3';
+import priorityPlaces07 from 'sounds/tour1-track7-closure.mp3';
+import nationalReportCards01 from 'sounds/tour2-track1-intro.mp3';
+import nationalReportCards02 from 'sounds/tour2-track2-spi.mp3';
+import nationalReportCards03 from 'sounds/tour2-track3-nrc.mp3';
+import nationalReportCards04 from 'sounds/tour2-track4-overview.mp3';
+import nationalReportCards05 from 'sounds/tour2-track5-challenges.mp3';
+import nationalReportCards06 from 'sounds/tour2-track6-ranking.mp3';
+import nationalReportCards07 from 'sounds/tour2-track7-closure.mp3';
+
+import { SCRIPTS, NO_INTERACTION_STEPS } from 'constants/onboarding-constants';
 import StepsArcs from '../step-arcs';
 import styles from './sound-btn-styles.module.scss';
 import AudioPlayer from './audio-player';
 
 const files = {
-  'priority-places': [priorityPlaces01, priorityPlaces02, priorityPlaces03],
-  'national-report-cards': [
+  'priority-places': [
     priorityPlaces01,
     priorityPlaces02,
     priorityPlaces03,
+    priorityPlaces04,
+    priorityPlaces05,
+    priorityPlaces06,
+    priorityPlaces07,
+  ],
+  'national-report-cards': [
+    nationalReportCards01,
+    nationalReportCards02,
+    nationalReportCards03,
+    nationalReportCards04,
+    nationalReportCards05,
+    nationalReportCards06,
+    nationalReportCards07,
   ],
 };
 
@@ -34,7 +58,7 @@ const ButtonIcon = ({
   setPlaying,
   setPauseIcon,
   stepsNumber,
-  onBoardingStep,
+  onboardingStep,
   pauseIcon,
   setPausedTime,
   playedSeconds,
@@ -76,7 +100,7 @@ const ButtonIcon = ({
 
   return (
     <>
-      <StepsArcs numberOfArcs={stepsNumber} currentStep={onBoardingStep} />
+      <StepsArcs numberOfArcs={stepsNumber} currentStep={onboardingStep} />
       {!waitingInteraction && (waitingStartAudioClick || !playing) ? (
         <button onClick={handlePlay} className={styles.playButton}>
           <PlayIcon className={styles.playIcon} />
@@ -106,8 +130,8 @@ const ButtonIcon = ({
 const SoundButtonComponent = ({
   browsePage,
   changeUI,
-  onBoardingType,
-  onBoardingStep,
+  onboardingType,
+  onboardingStep,
   waitingInteraction,
 }) => {
   const [playing, setPlaying] = useState(true);
@@ -139,14 +163,27 @@ const SoundButtonComponent = ({
   };
 
   const script =
-    onBoardingType &&
-    SCRIPTS[onBoardingType] &&
-    Object.values(SCRIPTS[onBoardingType])[onBoardingStep];
-  const file = files[onBoardingType][onBoardingStep];
+    onboardingType &&
+    SCRIPTS[onboardingType] &&
+    Object.values(SCRIPTS[onboardingType])[onboardingStep];
+  const file = files[onboardingType][onboardingStep];
+
+  const handleBack = () => {
+    browsePage({ type: LANDING });
+    changeUI({
+      onboardingType: null,
+      onboardingStep: null,
+      waitingInteraction: false,
+    });
+  };
 
   const handleSwitchMode = () => {
     setFinishModal(false);
-    changeUI({ onBoardingType: null, onBoardingStep: 0 });
+    changeUI({
+      onboardingType: null,
+      onboardingStep: null,
+      waitingInteraction: false,
+    });
   };
 
   const handleFinishOnBoarding = () => {
@@ -155,31 +192,29 @@ const SoundButtonComponent = ({
   };
 
   const handleEndOfStep = () => {
-    if (!Object.keys(SCRIPTS[onBoardingType])[onBoardingStep + 1]) {
+    if (!Object.keys(SCRIPTS[onboardingType])[onboardingStep + 1]) {
       return handleFinishOnBoarding();
     }
 
     setTextMark(0);
 
-    const isIntroStep =
-      Object.keys(SCRIPTS[onBoardingType])[onBoardingStep] === 'intro';
-    if (isIntroStep) {
+    const dontWaitStep = NO_INTERACTION_STEPS[onboardingType].includes(
+      Object.keys(SCRIPTS[onboardingType])[onboardingStep]
+    );
+    if (dontWaitStep) {
       return changeUI({
-        onBoardingStep: onBoardingStep + 1,
+        onboardingStep: onboardingStep + 1,
       });
     }
 
-    changeUI({
-      onBoardingStep: onBoardingStep + 1,
-      waitingInteraction: true,
-    });
+    changeUI({ waitingInteraction: true });
   };
 
   useEffect(() => {
     setPlaying(!waitingInteraction);
   }, [waitingInteraction]);
 
-  if (playing && onBoardingType && SCRIPTS[onBoardingType] && !script) {
+  if (playing && onboardingType && SCRIPTS[onboardingType] && !script) {
     handleFinishOnBoarding();
   }
 
@@ -187,7 +222,7 @@ const SoundButtonComponent = ({
   const endTime = script && script[textMark] && script[textMark].endTime;
   const text = script && script[textMark] && script[textMark].text;
   const stepsNumber =
-    SCRIPTS[onBoardingType] && Object.keys(SCRIPTS[onBoardingType]).length;
+    SCRIPTS[onboardingType] && Object.keys(SCRIPTS[onboardingType]).length;
 
   const renderTooltipText = () => {
     if (!waitingInteraction && waitingStartAudioClick) {
@@ -253,7 +288,7 @@ const SoundButtonComponent = ({
               setPlaying,
               setPauseIcon,
               stepsNumber,
-              onBoardingStep,
+              onboardingStep,
               pauseIcon,
               setPausedTime,
               playedSeconds,
@@ -265,7 +300,7 @@ const SoundButtonComponent = ({
         isOpen={finishModal}
         title="What would you like to do next?"
         description="You just finished the audio tour you can either go on a new tour or explore the HE map on your own."
-        handleBack={() => browsePage({ type: LANDING })}
+        handleBack={handleBack}
         handleClose={handleSwitchMode}
         onRequestClose={handleSwitchMode}
       />
