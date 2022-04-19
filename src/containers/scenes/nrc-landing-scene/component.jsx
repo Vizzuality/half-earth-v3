@@ -36,6 +36,7 @@ const NrcLandingComponent = ({
   onboardingStep,
   waitingInteraction,
 }) => {
+
   return (
     <>
       <Scene
@@ -76,6 +77,8 @@ const NrcLandingComponent = ({
           countryISO={countryISO}
           countryName={countryName}
           onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
         />
         <NRCLandingSidebar
           onboardingStep={onboardingStep}

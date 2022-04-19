@@ -94,6 +94,7 @@ const BiodiversitySidebarCardComponent = ({
     waitingInteraction,
   });
 
+
   return (
     <motion.div
       ref={(ref) => (tooltipRefs.current.biodiversity = ref)}
