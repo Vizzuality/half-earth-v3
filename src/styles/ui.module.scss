@@ -88,3 +88,7 @@ $scrollbar-width: 4px;
 .onboardingMode {
   pointer-events: none;
 }
+
+.allowClick {
+  pointer-events: auto;
+}

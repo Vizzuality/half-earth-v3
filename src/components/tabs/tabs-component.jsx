@@ -31,15 +31,15 @@ const Tabs = ({
         {tabs.map((tab, i) => {
           const { slug, title } = tab;
           const tabSlug = slug || title;
-          const { overlay: onboardingOverlay } = getOnboardingProps({
-            section: 'tabs',
-            slug: tabSlug,
-            styles,
-            onboardingType,
-            onboardingStep,
-            waitingInteraction,
-          });
-
+          const { overlay: onboardingOverlay, className: onboardingClassname } =
+            getOnboardingProps({
+              section: 'tabs',
+              slug: tabSlug,
+              styles,
+              onboardingType,
+              onboardingStep,
+              waitingInteraction,
+            });
           return (
             <li role="presentation" key={`tab-${tabSlug}`}>
               <motion.div
@@ -48,7 +48,7 @@ const Tabs = ({
                     tabButtonsRef.current[tabSlug] = ref;
                   }
                 }}
-                className={styles.tab}
+                className={cx(styles.tab, onboardingClassname)}
                 role="tab"
                 aria-selected={slug === defaultTabSlug}
                 {...onboardingOverlay}
