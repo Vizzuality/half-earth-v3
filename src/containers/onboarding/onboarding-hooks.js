@@ -68,7 +68,7 @@ export const useOpenSection = ({ section, setOpen, onboardingStep, waitingIntera
 }
 
 export const getOnboardingProps = ({ section, slug, styles, changeUI, onboardingStep, onboardingType, waitingInteraction }) => {
-
+  console.log({ section, slug, styles, changeUI, onboardingStep, onboardingType, waitingInteraction })
   if (!section || typeof onboardingStep !== 'number' || !waitingInteraction) {
     return {};
   }

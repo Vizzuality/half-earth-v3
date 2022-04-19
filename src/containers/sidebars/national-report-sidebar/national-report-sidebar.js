@@ -16,7 +16,9 @@ const NationalReportSidebarContainer = (props) => {
   } = props;
 
   const handleClose = () => {
+    const { changeUI } = props;
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
+    changeUI({ onboardingType: 'national-report-cards', onboardingStep: 6, waitingInteraction: false });
   }
 
   const handleTabSelection = (slug) => {

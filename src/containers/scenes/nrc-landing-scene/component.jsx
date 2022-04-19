@@ -36,6 +36,7 @@ const NrcLandingComponent = ({
   onboardingStep,
   waitingInteraction,
 }) => {
+
   return (
     <>
       <Scene
