@@ -8,7 +8,7 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
 import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 // Hooks
-import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
+import { useTooltipRefs, getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 // Styles
 import styles from './styles.module.scss';
 
@@ -19,10 +19,20 @@ const NRCLandingSidebar = ({
   view,
   waitingInteraction,
 }) => {
-  const currentStep = onboardingStep === 1;
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
+
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+  } = getOnboardingProps({
+    section: 'nrcLandingSidebar',
+    styles,
+    changeUI,
     onboardingStep,
     waitingInteraction,
   });
@@ -35,17 +45,8 @@ const NRCLandingSidebar = ({
       className={cx({
         [styles.container]: true,
       })}
-      animate={{
-        outline: currentStep ? '5px solid #00BDB5' : 'none',
-      }}
-      transition={{
-        duration: 1.75,
-        repeat: Infinity,
-      }}
-      {...(currentStep && {
-        onClick: () =>
-          changeUI({ onboardingStep: 2, waitingInteraction: false }),
-      })}
+      {...onboardingOverlay}
+      {...onboardingOnClick}
     >
       <p className={styles.title}>National Report Cards</p>
       <p className={styles.body}>
@@ -60,26 +61,20 @@ const NRCLandingSidebar = ({
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
-      <div
-        className={cx({
-          [styles.onboardingMode]: currentStep,
-        })}
-      >
-        <SearchLocation
-          reference={(ref) => {
-            tooltipRefs.current.nrcLandingSearch = ref;
-          }}
-          view={view}
-          theme="dark"
-          width="full"
-          parentWidth="380px"
-          placeholder="search countries"
-          searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-          waitingInteraction={waitingInteraction}
-        />
-      </div>
+      <SearchLocation
+        reference={(ref) => {
+          tooltipRefs.current.nrcLandingSearch = ref;
+        }}
+        view={view}
+        theme="dark"
+        width="full"
+        parentWidth="380px"
+        placeholder="search countries"
+        searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+        waitingInteraction={waitingInteraction}
+      />
     </motion.div>
   );
 };

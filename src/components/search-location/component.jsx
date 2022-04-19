@@ -28,7 +28,6 @@ const Component = ({
   changeUI,
   reference,
 }) => {
-  const currentStep = onboardingStep === 2;
 
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
@@ -38,13 +37,15 @@ const Component = ({
   );
 
   const onNextonboardingStep = useCallback((countryValue) => {
+
     if (countryValue && onboardingStep !== null) {
-      changeUI({ onboardingStep: 3, waitingInteraction: false });
+      console.log('entro', countryValue);
+      changeUI({ onboardingStep: 2, waitingInteraction: false });
     }
     return null;
   }, []);
 
-  const { overlay: onboardingOverlay, className: onboardingClassName } =
+  const { overlay: onboardingOverlay } =
     getOnboardingProps({
       section: 'searchNRC',
       styles,
@@ -53,12 +54,6 @@ const Component = ({
       onboardingStep,
       waitingInteraction,
     });
-  console.log(
-    onboardingOverlay,
-    onboardingType,
-    onboardingStep,
-    waitingInteraction
-  );
   return (
     <motion.div
       ref={reference}
@@ -67,8 +62,6 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
-        ...onboardingClassName,
-        [styles.onboardingOverlay]: !currentStep,
       })}
       {...onboardingOverlay}
     >

@@ -55,7 +55,7 @@ const CountryEntryTooltipContainer = props => {
     setTooltipContent({});
     enterNrcAnalytics(countryName);
     browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, });
-    onboardingStep && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 4 })
+    onboardingStep && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 3 })
   };
 
   return (

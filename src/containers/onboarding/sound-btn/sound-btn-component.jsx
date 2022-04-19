@@ -206,7 +206,6 @@ const SoundButtonComponent = ({
         onboardingStep: onboardingStep + 1,
       });
     }
-
     changeUI({ waitingInteraction: true });
   };
 

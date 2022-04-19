@@ -19,7 +19,7 @@ const CountryEntryTooltipComponent = ({
   onboardingStep,
   changeUI,
 }) => {
-  const currentStep = onboardingStep === 3;
+  const currentStep = onboardingStep === 2;
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
@@ -46,7 +46,7 @@ const CountryEntryTooltipComponent = ({
         const camera = view.camera.clone();
         camera.position.latitude += 5;
         view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' }).then(() => {
-          if (onboardingStep === 3 && onboardingButtonReference.current) {
+          if (onboardingStep === 2 && onboardingButtonReference.current) {
             const { y, x, width } =
               onboardingButtonReference.current.getBoundingClientRect();
             changeUI({
