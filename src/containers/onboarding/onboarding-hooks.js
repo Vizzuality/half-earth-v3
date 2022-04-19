@@ -84,11 +84,11 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
   const challengesOnBoardingTab =
     slug === 'challenges' &&
     onboardingType === 'national-report-cards' &&
-    onboardingStep === 4;
+    onboardingStep === 3;
   const rankingOnBoardingTab =
     slug === 'ranking' &&
     onboardingType === 'national-report-cards' &&
-    onboardingStep === 5;
+    onboardingStep === 4;
 
   return {
     biodiversity: {
@@ -178,11 +178,11 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
         }
       }
     },
-    challenges: {
+    exploreNRC: {
       overlay: {
         animate: {
           outline:
-            onboardingStep === 3 && '5px solid #00BDB5',
+            onboardingStep === 2 && '5px solid #00BDB5',
         },
         transition: {
           duration: 1.75,

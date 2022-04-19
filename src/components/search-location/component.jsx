@@ -37,9 +37,7 @@ const Component = ({
   );
 
   const onNextonboardingStep = useCallback((countryValue) => {
-
     if (countryValue && onboardingStep !== null) {
-      console.log('entro', countryValue);
       changeUI({ onboardingStep: 2, waitingInteraction: false });
     }
     return null;

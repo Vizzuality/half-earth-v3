@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 // Styles
 import styles from './country-entry-tooltip-styles.module.scss';
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 const CountryEntryTooltipComponent = ({
   view,
@@ -18,8 +19,10 @@ const CountryEntryTooltipComponent = ({
   onExploreCountryClick,
   onboardingStep,
   changeUI,
+  onboardingType,
+  waitingInteraction,
 }) => {
-  const currentStep = onboardingStep === 2;
+
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
@@ -61,6 +64,15 @@ const CountryEntryTooltipComponent = ({
     }
   }, [tooltipPosition, tooltip, mapTooltipIsVisible]);
 
+  const { overlay: onboardingOverlay } =
+    getOnboardingProps({
+      section: 'exploreNRC',
+      styles,
+      changeUI,
+      onboardingType,
+      onboardingStep,
+      waitingInteraction,
+    });
   return tooltipPosition && tooltip ? (
     <>
       <div ref={tooltipref} className={styles.tooltipContainer}>
@@ -100,13 +112,7 @@ const CountryEntryTooltipComponent = ({
           </div>
         </section>
         <motion.div
-          animate={{
-            outline: currentStep ? '3px solid #00BDB5' : 'none',
-          }}
-          transition={{
-            duration: 1.75,
-            repeat: Infinity,
-          }}
+          {...onboardingOverlay}
         >
           <button
             ref={onboardingButtonReference}
