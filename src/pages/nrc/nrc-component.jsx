@@ -78,7 +78,11 @@ const NationalReportCard = ({
         isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
       />
       {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
-        <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
+        <div
+          className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+            [uiStyles.onboardingMode]: !!onboardingType,
+          })}
+        >
           <CountryChallengesChart
             countryISO={countryISO}
             className={styles.challengesChart}
@@ -88,7 +92,11 @@ const NationalReportCard = ({
         </div>
       )}
       {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
-        <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
+        <div
+          className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+            [uiStyles.onboardingMode]: !!onboardingType,
+          })}
+        >
           <RankingChart
             countryISO={countryISO}
             className={styles.rankingChart}

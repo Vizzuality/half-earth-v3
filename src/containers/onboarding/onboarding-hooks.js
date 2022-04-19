@@ -189,13 +189,12 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
     closure: {
       overlay: {
         animate: {
-          outline:
-            onboardingStep === 5 && '5px solid #00BDB5',
+          outline: getOutline(5),
         },
-        transition: {
-          duration: 1.75,
-          repeat: Infinity,
-        }
+        transition
+      },
+      className: {
+        [uiStyles.allowClick]: onboardingStep === 5,
       }
     },
     tabs: {

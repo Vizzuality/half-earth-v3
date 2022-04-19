@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { getOnboardingType } from 'containers/onboarding/onboarding-selectors';
 
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
@@ -26,4 +27,5 @@ export default createStructuredSelector({
   countryBorder: getCountryBorder,
   userConfig: selectUserConfig,
   countryData: getCountryData,
+  onboardingType: getOnboardingType
 })

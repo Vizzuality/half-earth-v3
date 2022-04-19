@@ -17,6 +17,7 @@ import ChallengesSidebar from './challenges-sidebar';
 import RankingSidebar from './ranking-sidebar';
 
 import animationStyles from 'styles/common-animations.module.scss';
+import uiStyles from 'styles/ui.module.scss';
 import styles from './national-report-sidebar-styles.module.scss';
 
 // Hooks
@@ -54,18 +55,20 @@ const NationalReportSidebarComponent = ({
     onboardingStep,
   });
 
-  const { overlay: onboardingOverlay } = getOnboardingProps({
-    section: 'closure',
-    styles,
-    changeUI,
-    onboardingType,
-    onboardingStep,
-    waitingInteraction,
-  });
+  const { overlay: onboardingOverlay, className: onboardingClassName } =
+    getOnboardingProps({
+      section: 'closure',
+      styles,
+      changeUI,
+      onboardingType,
+      onboardingStep,
+      waitingInteraction,
+    });
   return (
     <div
       className={cx(styles.container, className, {
         [animationStyles.leftHidden]: sidebarHidden,
+        [uiStyles.onboardingMode]: !!onboardingType,
       })}
     >
       <Button
@@ -75,7 +78,7 @@ const NationalReportSidebarComponent = ({
         type="rounded"
         handleClick={handleClose}
         Icon={CloseIcon}
-        className={styles.backButton}
+        className={cx(styles.backButton, onboardingClassName)}
         tooltipText="Go back to the globe"
         onboardingOverlay={onboardingOverlay}
       />
