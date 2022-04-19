@@ -33,6 +33,7 @@ const NationalReportCard = ({
   countryChallengesSelectedKey,
   onboardingType,
   onboardingStep,
+  waitingInteraction,
 }) => {
   const [map, setMap] = useState();
 
@@ -57,6 +58,7 @@ const NationalReportCard = ({
         localSceneActiveTab={localSceneActiveTab}
         onboardingType={onboardingType}
         onboardingStep={onboardingStep}
+        waitingInteraction={waitingInteraction}
       />
       <NationalReportCardScene
         countryISO={countryISO}

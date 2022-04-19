@@ -194,12 +194,11 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
       overlay: {
         animate: {
           outline:
-            richnessonboardingStep ||
+            (richnessonboardingStep ||
               rarityOnBoardingTab ||
               challengesOnBoardingTab ||
-              rankingOnBoardingTab
-              ? '5px solid #00BDB5'
-              : 'none',
+              rankingOnBoardingTab)
+            && '5px solid #00BDB5',
         },
         transition: {
           duration: 1.75,

@@ -95,7 +95,7 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
   tabs: [],
-  onClick: () => {},
+  onClick: () => { },
 };
 
 export default Tabs;
