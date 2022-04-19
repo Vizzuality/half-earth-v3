@@ -13,11 +13,11 @@ const Component = ({
   handleClick,
   tooltipText,
   onboardingOverlay,
-  ref,
+  reference,
 }) => (
   <motion.button
     {...onboardingOverlay}
-    ref={ref}
+    ref={reference}
     onClick={handleClick}
     title={tooltipText}
     className={cx(className, {

@@ -54,16 +54,14 @@ const NationalReportSidebarComponent = ({
     onboardingStep,
   });
 
-  const { overlay: onboardingOverlay } =
-    getOnboardingProps({
-      section: 'closure',
-      styles,
-      changeUI,
-      onboardingType,
-      onboardingStep,
-      waitingInteraction,
-    });
-
+  const { overlay: onboardingOverlay } = getOnboardingProps({
+    section: 'closure',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
   return (
     <div
       className={cx(styles.container, className, {
@@ -71,7 +69,9 @@ const NationalReportSidebarComponent = ({
       })}
     >
       <Button
-        ref={tooltipRefs}
+        reference={(ref) => {
+          tooltipRefs.current.closure = ref;
+        }}
         type="rounded"
         handleClick={handleClose}
         Icon={CloseIcon}
