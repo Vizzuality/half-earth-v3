@@ -7,7 +7,7 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
     richness: onboardingType === 'priority-places' && onboardingStep === 1,
     rarity: onboardingType === 'priority-places' && onboardingStep === 2,
     protection: onboardingType === 'priority-places' && onboardingStep === 3,
-    humanPressures:  onboardingType === 'priority-places' && onboardingStep === 4,
+    humanPressures: onboardingType === 'priority-places' && onboardingStep === 4,
     nrcLandingSidebar:
       onboardingType === 'national-report-cards' && onboardingStep === 0,
     nrcLandingSearch:
@@ -16,6 +16,7 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
     challenges:
       onboardingType === 'national-report-cards' && onboardingStep === 3,
     ranking: onboardingType === 'national-report-cards' && onboardingStep === 4,
+    closure: onboardingType === 'national-report-cards' && onboardingStep === 5,
   };
   const activeSlug = useMemo(() => {
     let activeKey = null;
@@ -29,7 +30,6 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
 
     return activeKey;
   }, [onboardingType, onboardingStep]);
-console.log({ activeSlug })
   const onboardingRefs = useRef({});
 
   useEffect(() => {
@@ -69,9 +69,10 @@ export const useOpenSection = ({ section, setOpen, onboardingStep, waitingIntera
 }
 
 export const getOnboardingProps = ({ section, slug, styles, changeUI, onboardingStep, onboardingType, waitingInteraction }) => {
-    if (!section || typeof onboardingStep !== 'number' || !waitingInteraction) {
-      return {};
-    }
+
+  if (!section || typeof onboardingStep !== 'number' || !waitingInteraction) {
+    return {};
+  }
 
   const richnessonboardingStep =
     slug === 'richness' &&
@@ -102,105 +103,117 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
 
   const getOutline = (animatedOnboardingStep) => onboardingStep === animatedOnboardingStep && outline
   return {
-      biodiversity: {
-        overlay: {
-          animate: {
-            outline: getOutline(0),
-          },
-          transition,
+    biodiversity: {
+      overlay: {
+        animate: {
+          outline: getOutline(0),
         },
-        className: {
-          [styles.onboardingOverlay]: !(
-            onboardingStep === 0 ||
-            onboardingStep === 1 ||
-            onboardingStep === 2
-          ),
-          [uiStyles.allowClick]: onboardingStep === 0,
-        },
-        onClick: {
-          onClick: () =>
-            changeUI({ onboardingStep: 1, waitingInteraction: false }),
-        },
+        transition,
       },
+      className: {
+        [styles.onboardingOverlay]: !(
+          onboardingStep === 0 ||
+          onboardingStep === 1 ||
+          onboardingStep === 2
+        ),
+        [uiStyles.allowClick]: onboardingStep === 0,
+      },
+      onClick: {
+        onClick: () =>
+          changeUI({ onboardingStep: 1, waitingInteraction: false }),
+      },
+    },
 
-      humanPressures: {
-        overlay: {
-          animate: {
-            outline: getOutline(4),
-          },
-          transition,
+    humanPressures: {
+      overlay: {
+        animate: {
+          outline: getOutline(4),
         },
-        className: {
-          [styles.onboardingOverlay]: !onboardingStep === 4,
-          [uiStyles.allowClick]: onboardingStep === 4,
-        },
-        onClick: onboardingStep === 4 && {
-          onClick: () =>
-            changeUI({ onboardingStep: 5, waitingInteraction: false }),
-        },
+        transition,
       },
-      protection: {
-        overlay: {
-          animate: {
-            outline: getOutline(3),
-          },
-          transition,
-        },
-        className: {
-          [styles.onboardingOverlay]:
-            !onboardingStep === 4,
-          [styles.onboardingMode]: onboardingStep === 4,
-          [uiStyles.allowClick]: onboardingStep === 3,
-        },
-        onClick: onboardingStep === 3 && {
-          onClick: () =>
-            changeUI({ onboardingStep: 4, waitingInteraction: false }),
-        },
+      className: {
+        [styles.onboardingOverlay]: !onboardingStep === 4,
+        [uiStyles.allowClick]: onboardingStep === 4,
       },
-      nrcLandingSidebar: {
-        overlay: {
-          animate: {
-            outline: getOutline(0),
-          },
-          transition
-        },
-        onClick: {
-          onClick: () =>
-            onboardingStep === 0 && changeUI({ onboardingStep: 1, waitingInteraction: false }),
-        },
+      onClick: onboardingStep === 4 && {
+        onClick: () =>
+          changeUI({ onboardingStep: 5, waitingInteraction: false }),
       },
-      searchNRC: {
-        overlay: {
-         animate: {
-            outline: getOutline(1),
-          },
-          transition,
-        }
-      },
-      exploreNRC: {
-        overlay: {
-          animate: {
-            outline:getOutline(2),
-          },
-          transition
-        }
-      },
-      tabs: {
-        overlay: {
-         animate: {
-            outline:
-              isTabActiveStep
-                ? outline
-                : 'none',
-          },
-          transition,
+    },
+    protection: {
+      overlay: {
+        animate: {
+          outline: getOutline(3),
         },
-        className: {
-          [uiStyles.allowClick]: isTabActiveStep,
+        transition,
+      },
+      className: {
+        [styles.onboardingOverlay]:
+          !onboardingStep === 4,
+        [styles.onboardingMode]: onboardingStep === 4,
+        [uiStyles.allowClick]: onboardingStep === 3,
+      },
+      onClick: onboardingStep === 3 && {
+        onClick: () =>
+          changeUI({ onboardingStep: 4, waitingInteraction: false }),
+      },
+    },
+    nrcLandingSidebar: {
+      overlay: {
+        animate: {
+          outline: getOutline(0),
         },
+        transition
+      },
+      onClick: {
+        onClick: () =>
+          onboardingStep === 0 && changeUI({ onboardingStep: 1, waitingInteraction: false }),
+      },
+    },
+    searchNRC: {
+      overlay: {
+        animate: {
+          outline: getOutline(1),
+        },
+        transition,
       }
-    }[section];
-  };
+    },
+    exploreNRC: {
+      overlay: {
+        animate: {
+          outline: getOutline(2),
+        },
+        transition
+      }
+    },
+    closure: {
+      overlay: {
+        animate: {
+          outline:
+            onboardingStep === 5 && '5px solid #00BDB5',
+        },
+        transition: {
+          duration: 1.75,
+          repeat: Infinity,
+        }
+      }
+    },
+    tabs: {
+      overlay: {
+        animate: {
+          outline:
+            isTabActiveStep
+              ? outline
+              : 'none',
+        },
+        transition,
+      },
+      className: {
+        [uiStyles.allowClick]: isTabActiveStep,
+      },
+    }
+  }[section];
+};
 
 export const getTooltipText = (onboardingType, onboardingStep) => (
   onboardingType === 'national-report-cards' && onboardingStep === 1 ? 'Type here to continue' : 'Click here to continue.'

@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
@@ -11,8 +12,12 @@ const Component = ({
   className,
   handleClick,
   tooltipText,
+  onboardingOverlay,
+  ref,
 }) => (
-  <button
+  <motion.button
+    {...onboardingOverlay}
+    ref={ref}
     onClick={handleClick}
     title={tooltipText}
     className={cx(className, {
@@ -26,7 +31,7 @@ const Component = ({
   >
     {Icon && <Icon className={styles.icon} />}
     {label && <span className={styles.label}>{label}</span>}
-  </button>
+  </motion.button>
 );
 
 export default Component;

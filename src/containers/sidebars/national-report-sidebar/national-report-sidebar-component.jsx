@@ -5,6 +5,8 @@ import { Loading } from 'he-components';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
+
 import Tabs from 'components/tabs';
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
@@ -52,6 +54,16 @@ const NationalReportSidebarComponent = ({
     onboardingStep,
   });
 
+  const { overlay: onboardingOverlay } =
+    getOnboardingProps({
+      section: 'closure',
+      styles,
+      changeUI,
+      onboardingType,
+      onboardingStep,
+      waitingInteraction,
+    });
+
   return (
     <div
       className={cx(styles.container, className, {
@@ -59,11 +71,13 @@ const NationalReportSidebarComponent = ({
       })}
     >
       <Button
+        ref={tooltipRefs}
         type="rounded"
         handleClick={handleClose}
         Icon={CloseIcon}
         className={styles.backButton}
         tooltipText="Go back to the globe"
+        onboardingOverlay={onboardingOverlay}
       />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
