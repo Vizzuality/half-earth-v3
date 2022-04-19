@@ -17,7 +17,6 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
       onboardingType === 'national-report-cards' && onboardingStep === 3,
     ranking: onboardingType === 'national-report-cards' && onboardingStep === 4,
   };
-
   const activeSlug = useMemo(() => {
     let activeKey = null;
     Object.entries(activeConditions).some(([key, value]) => {
@@ -27,9 +26,10 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
       }
       return false;
     });
+
     return activeKey;
   }, [onboardingType, onboardingStep]);
-
+console.log({ activeSlug })
   const onboardingRefs = useRef({});
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
       return {};
     }
 
-      const richnessonboardingStep =
+  const richnessonboardingStep =
     slug === 'richness' &&
     onboardingType === 'priority-places' &&
     onboardingStep === 1;
@@ -99,6 +99,7 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
     duration: 1.75,
     repeat: Infinity,
   };
+
   const getOutline = (animatedOnboardingStep) => onboardingStep === animatedOnboardingStep && outline
   return {
       biodiversity: {

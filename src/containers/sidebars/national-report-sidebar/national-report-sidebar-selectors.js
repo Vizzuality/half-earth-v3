@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { random } from 'lodash';
+import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -167,7 +168,8 @@ const mapStateToProps = createStructuredSelector({
   endemicVertebratesSentence: getEndemicSpeciesSentence,
   endemicVertebratesCount: getNumberOfEndemicVertebrates,
   highlightedSpeciesSentence: getHighlightedSpeciesSentence,
-  highlightedSpeciesRandomNumber: getHighlightedSpeciesRandomNumber
+  highlightedSpeciesRandomNumber: getHighlightedSpeciesRandomNumber,
+  waitingInteraction: getOnWaitingInteraction
 })
 
 export default mapStateToProps;
