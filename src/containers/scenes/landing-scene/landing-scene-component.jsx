@@ -1,11 +1,8 @@
 import React from 'react';
 
 // Components
-import MenuFooter from 'components/mobile-only/menu-footer';
-import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 // Constants
-import { MobileOnly } from 'constants/responsive';
 import Globe from 'containers/landing/globe';
 import Hero from 'containers/landing/hero';
 import { motion } from 'framer-motion';
@@ -21,10 +18,7 @@ import styles from './landing-scene-styles.module.scss';
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const LandingSceneComponent = ({
-  openedModal,
-  activeOption,
   sceneSettings,
-  isSidebarOpen,
   browsePage,
 }) => {
   const isMobile = useMobile();
@@ -34,10 +28,6 @@ const LandingSceneComponent = ({
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
-      <MobileOnly>
-        <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} />
-        <MenuSettings activeOption={activeOption} openedModal={openedModal} />
-      </MobileOnly>
 
       <div className={styles.sceneContainer}>
         <Hero />

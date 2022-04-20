@@ -12,20 +12,14 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const LandingComponent = ({
   hasMetadata,
-  openedModal,
-  activeOption,
   sceneSettings,
-  isSidebarOpen,
 }) => {
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
       <MainMenu />
       <LandingScene
-        openedModal={openedModal}
-        activeOption={activeOption}
         sceneSettings={sceneSettings}
-        isSidebarOpen={isSidebarOpen}
       />
       {hasMetadata && <InfoModal />}
     </>
