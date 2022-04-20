@@ -3,7 +3,7 @@ import 'he-components/dist/main.css';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { useMobile } from 'constants/responsive';
+
 // Dynamic imports
 const Landing = loadable(() => import('pages/landing'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
@@ -18,7 +18,6 @@ const mapStateToProps = ({ location }) => ({
 });
 
 const AppLayout = (props) => {
-  const isOnMobile = useMobile();
   const { route } = props;
   const { page } = route;
   switch (page) {
@@ -35,7 +34,7 @@ const AppLayout = (props) => {
     case 'map-iframe':
       return <MapIframe />;
     default:
-      return isOnMobile ? <DataGlobe /> : <Landing />;
+      return <Landing />;
   }
 };
 

@@ -69,7 +69,7 @@ const DataSceneComponent = ({
         initialRotation
         disabled={!!onboardingType}
       >
-        {!!onboardingType && !isMobile && <SoundButton />}
+        {!!onboardingType && <SoundButton />}
 
         <ArcgisLayerManager
           userConfig={userConfig}

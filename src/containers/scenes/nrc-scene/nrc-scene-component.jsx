@@ -16,7 +16,6 @@ import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import SoundButton from 'containers/onboarding/sound-btn';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 // Constants
-import { useMobile } from 'constants/responsive';
 import {
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle,
   HALF_EARTH_FUTURE_TILE_LAYER,
@@ -43,7 +42,6 @@ const CountrySceneComponent = ({
   onboardingType,
   countryData,
 }) => {
-  const isOnMobile = useMobile();
   return (
     <Scene
       sceneName={'nrc-scene'}
@@ -52,7 +50,7 @@ const CountrySceneComponent = ({
       onMapLoad={onMapLoad}
       disabled={!!onboardingType}
     >
-      {onboardingType && !isOnMobile && <SoundButton />}
+      {onboardingType && <SoundButton />}
       {countryData && <OnboardingTooltip />}
       <LocalSceneViewManager localGeometry={countryBorder} />
       <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />

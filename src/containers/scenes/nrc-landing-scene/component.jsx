@@ -12,7 +12,6 @@ import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 // Constants
-import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 // Styles
 import styles from './nrc-landing-scene-styles.module.scss';
@@ -37,7 +36,6 @@ const NrcLandingComponent = ({
   onboardingStep,
   waitingInteraction,
 }) => {
-  const isOnMobile = useMobile();
   return (
     <>
       <Scene
@@ -50,7 +48,7 @@ const NrcLandingComponent = ({
           !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
         }
       >
-        {onboardingType && !isOnMobile && <SoundButton />}
+        {onboardingType && <SoundButton />}
         <OnboardingTooltip className={styles.onboardingTooltip} />
         <ArcgisLayerManager
           activeLayers={activeLayers}

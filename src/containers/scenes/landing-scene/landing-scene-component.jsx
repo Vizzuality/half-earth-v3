@@ -13,6 +13,9 @@ import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+// Constants
+import { useMobile } from 'constants/responsive';
+// Styles
 import styles from './landing-scene-styles.module.scss';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
@@ -24,6 +27,7 @@ const LandingSceneComponent = ({
   isSidebarOpen,
   browsePage,
 }) => {
+  const isMobile = useMobile();
   return (
     <Scene
       sceneName={'landing-scene'}
@@ -46,7 +50,7 @@ const LandingSceneComponent = ({
             delay: 2,
           }}
         >
-          OR
+          {!isMobile && 'OR'}
         </motion.p>
         <motion.div
           className={styles.globesContainer}
