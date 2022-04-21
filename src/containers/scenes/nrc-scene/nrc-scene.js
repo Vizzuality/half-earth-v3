@@ -26,12 +26,11 @@ const NrcSceneContainer = (props) => {
 
   const [chartData, setChartData] = useState(null);
   const layerSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG;
-  const isoSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG ? 'iso_ter1' : 'GID_0';
   useEffect(() => {
     if (countryISO) {
       EsriFeatureService.getFeatures({
         url: layerSlug === NRC_MARINE_SPI_DATA_LAYER_SLUG ? NRC_MARINE_SPI_DATA_LAYER : NRC_TERRESTRIAL_SPI_DATA_LAYER,
-        whereClause: `${isoSlug} = '${countryISO}'`,
+        whereClause: `GID_0 = '${countryISO}'`,
         returnGeometry: false
       }).then(data => {
         if (data && data.length > 0) {
