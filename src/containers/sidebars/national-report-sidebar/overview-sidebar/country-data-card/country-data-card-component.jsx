@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'classnames';
 import DonutChart from 'components/charts/donut-chart';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
@@ -37,40 +36,29 @@ const CountryDataCardComponent = ({
       <section className={styles.indexWidget}>
         <div className={styles.indexExplanation}>
           <p className={styles.indexExplanationText}>National Species Protection Index</p>
-          <DonutChart
-            colors={["#0088FE", "#00C49F"]}
-            data={[
-              { name: "Group A", value: 400 },
-              { name: "Group B", value: 300 }
-            ]}
-            height={200}
-            innerRadius={60}
-            outerRadius={70}
-            width={250}
-          />
+          <div className={styles.donutContainer}>
 
-          <div className={styles.indexBaseNumbersWrapper}>
-            <div
-              className={cx(
-                styles.indexBaseDataElement,
-                styles.protectionNumber
-              )}
-            >
-              <p className={styles.baseNumber}>{`${currentProtection}`}</p>
-              <p className={styles.numberText}>% of land</p>
-              <p className={styles.numberText}>currently protected</p>
-            </div>
-            <div className={styles.indexBaseDataElement}>
-              <p className={styles.baseNumber}>{`${vertebratesCount}`}</p>
-              <p className={styles.numberText}>total land</p>
-              <p className={styles.numberText}>vertebrate species</p>
-            </div>
-            <div className={styles.indexBaseDataElement}>
-              <p
-                className={styles.baseNumber}
-              >{`${endemicVertebratesCount}`}</p>
-              <p className={styles.numberText}>endemic land</p>
-              <p className={styles.numberText}>vertebrate species</p>
+            <DonutChart
+              chartXPosition={45}
+              chartYPosition={55}
+              colors={["#E9E9E9", "#A24033"]}
+              data={[
+                { name: "Group A", value: 400 },
+                { name: "Group B", value: 300 }
+              ]}
+              height={130}
+              innerRadius={'75%'}
+              legendXPosition={50}
+              legendYPosition={50}
+              outerRadius={'90%'}
+              width={120}
+            />
+            <div>
+              <p className={styles.hintText}>
+                The Land SPI is calculated based on the <b>protected land ({currentProtection}%),</b>
+                the <b>total of vertebrate species ({vertebratesCount})</b> and the amount of which
+                of these are <b>endemic ({endemicVertebratesCount}).</b>
+              </p>
             </div>
           </div>
         </div>

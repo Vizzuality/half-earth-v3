@@ -2,10 +2,14 @@ import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
 const DonutChart = ({
+  chartXPosition,
+  chartYPosition,
   colors,
   data,
   height,
   innerRadius,
+  legendXPosition,
+  legendYPosition,
   outerRadius,
   width
 }) => {
@@ -13,22 +17,40 @@ const DonutChart = ({
     <PieChart width={width} height={height}>
       <Pie
         data={data}
-        cx={100}
-        cy={100}
+        cx={chartXPosition}
+        cy={chartYPosition}
         innerRadius={innerRadius}
         outerRadius={outerRadius}
-        fill="#8884d8"
+        fill="#E9E9E9"
         dataKey="value"
+        cornerRadius={10}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
         ))}
 
       </Pie>
-      <text x={100} y={200} textAnchor="middle" dominantBaseline="middle">
-        55%
+
+      <text
+        font-size="32"
+        x={legendXPosition}
+        y={legendYPosition}
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        45
       </text>
-    </PieChart>
+      <text
+        font-size="12"
+        x={legendXPosition}
+        y={legendYPosition}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        textLength={60}>
+        LAND SPI
+      </text>
+
+    </PieChart >
   );
 }
 

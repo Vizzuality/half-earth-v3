@@ -97,43 +97,11 @@
   padding: $site-gutter;
 }
 
-
 .indexExplanationText {
   @extend %display2;
   margin: 0;
   color: $_temporary-dark-text;
   text-align: center;
-}
-
-.indexBaseNumbersWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.indexBaseDataElement {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: $sidebar-paddings;
-}
-
-.protectionNumber {
-  width: 51%;
-}
-
-.baseNumber {
-  @extend %display2;
-  color: $_temporary-dark-text;
-  margin: 0 0 5px 0;
-}
-
-.numberText {
-  @extend %subtitle;
-  color: $_temporary-dark-text;
-  text-transform: uppercase;
-  margin: 0;
 }
 
 .hint {
@@ -163,4 +131,9 @@
     @extend %bodyText;
     margin: 0 0 10px;
   }
+}
+
+.donutContainer {
+  display: flex;
+  align-items: center;
 }
