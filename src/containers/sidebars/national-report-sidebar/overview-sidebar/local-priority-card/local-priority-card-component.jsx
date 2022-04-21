@@ -67,17 +67,18 @@ const LocalPriorityCardComponent = (props) => {
           description="The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature"
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
-
-        <LayerToggle
-          map={map}
-          type="checkbox"
-          option={NRC_TOGGLES[PROTECTED_AREAS_VECTOR_TILE_LAYER]}
-          variant="dark"
-          key={PROTECTED_AREAS_VECTOR_TILE_LAYER}
-          activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={PROTECTION_SLUG}
-        />
+        <div className={styles.toggleContainer}>
+          <LayerToggle
+            map={map}
+            type="checkbox"
+            option={NRC_TOGGLES[PROTECTED_AREAS_VECTOR_TILE_LAYER]}
+            variant="dark"
+            key={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+            activeLayers={activeLayers}
+            onChange={handleLayerToggle}
+            themeCategorySlug={PROTECTION_SLUG}
+          />
+        </div>
       </SidebarCardWrapper>
       <SidebarCardWrapper
         className={styles.wrapper}
@@ -90,16 +91,18 @@ const LocalPriorityCardComponent = (props) => {
           legendGradientSlug={COUNTRY_PRIORITY_LAYER}
           metaDataSources={priorityMetadata && priorityMetadata.source}
         />
-        <LayerToggle
-          map={map}
-          type="checkbox"
-          option={NRC_TOGGLES[COUNTRY_PRIORITY_LAYER]}
-          variant="dark"
-          key={COUNTRY_PRIORITY_LAYER}
-          activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
-        />
+        <div className={styles.toggleContainer}>
+          <LayerToggle
+            map={map}
+            type="checkbox"
+            option={NRC_TOGGLES[COUNTRY_PRIORITY_LAYER]}
+            variant="dark"
+            key={COUNTRY_PRIORITY_LAYER}
+            activeLayers={activeLayers}
+            onChange={handleLayerToggle}
+            themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
+          />
+        </div>
       </SidebarCardWrapper>
       <SidebarCardWrapper sectionClassName={styles.section}>
         <SidebarCardContent
@@ -107,16 +110,18 @@ const LocalPriorityCardComponent = (props) => {
           description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
-        <LayerToggle
-          map={map}
-          type="checkbox"
-          option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
-          variant="dark"
-          key={HALF_EARTH_FUTURE_TILE_LAYER}
-          activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={FUTURE_PLACES_SLUG}
-        />
+        <div className={styles.toggleContainer}>
+          <LayerToggle
+            map={map}
+            type="checkbox"
+            option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
+            variant="dark"
+            key={HALF_EARTH_FUTURE_TILE_LAYER}
+            activeLayers={activeLayers}
+            onChange={handleLayerToggle}
+            themeCategorySlug={FUTURE_PLACES_SLUG}
+          />
+        </div>
       </SidebarCardWrapper>
     </div>
   );

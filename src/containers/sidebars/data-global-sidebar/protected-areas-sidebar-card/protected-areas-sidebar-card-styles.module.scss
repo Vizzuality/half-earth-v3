@@ -9,7 +9,7 @@
   position: relative;
 }
 
-.layersTogglesContainer{
+.layersTogglesContainer {
   @extend .sharedLayersTogglesContainer;
 }
 
@@ -20,7 +20,7 @@
 
 .description {
   @extend %bodyText;
-  color: $white; 
+  color: $white;
 }
 
 .legendContainer,
@@ -34,5 +34,6 @@
   // this way we expand the toggles to the edge of the sidebar
   position: relative;
   left: -$sidebar-paddings;
+  margin: 0 20px;
   width: calc(100% + (2 * #{$sidebar-paddings}));
 }
