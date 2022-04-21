@@ -9,20 +9,23 @@ import LayerToggle from 'components/layer-toggle';
 import SearchLocation from 'components/search-location';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
-import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
+import { GLOBAL_SPI_FEATURE_LAYER, NRC_LANDING_LAYERS_SLUG } from 'constants/layers-slugs';
 import { NRCLandingLayers } from 'constants/nrc-landing';
+
 // Styles
 import styles from './styles.module.scss';
 
 const NRCLandingSidebar = ({
   activeLayers,
   changeUI,
+  handleLayerToggle,
+  map,
   onboardingStep,
   onboardingType,
   view,
   waitingInteraction,
 }) => {
-  console.log({ activeLayers });
+
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
@@ -68,14 +71,14 @@ const NRCLandingSidebar = ({
 
       {NRCLandingLayers.map((layer) => (
         <LayerToggle
-          // map={map}
+          map={map}
           option={layer}
           type="checkbox"
           variant="light"
-          // key={layer.value}
+          key={layer.value}
           activeLayers={activeLayers}
-        // onChange={handleLayerToggle}
-        // themeCategorySlug={PROTECTION_SLUG}
+          onChange={handleLayerToggle}
+          themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
         />
       ))}
 
