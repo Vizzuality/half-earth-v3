@@ -17,26 +17,13 @@ const DonutChart = ({
 }) => {
   return (
     <PieChart width={width} height={height}>
-      {/* Background pie added to avoid corner radius on total value */}
-      <Pie
-        data={[
-          { name: "Rest", value: 100 }
-        ]}
-        cx={chartXPosition}
-        cy={chartYPosition}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        stroke="none"
-      >
-        <Cell fill={"#E9E9E9"} />
-      </Pie>
       <Pie
         data={data}
         cx={chartXPosition}
         cy={chartYPosition}
         innerRadius={innerRadius}
         outerRadius={outerRadius}
-        stroke="none"
+        fill="#E9E9E9"
         dataKey="value"
         cornerRadius={10}
       >

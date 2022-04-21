@@ -23,8 +23,8 @@ const CountryDataCardComponent = ({
               chartYPosition={60}
               colors={["#A24033", "#E9E9E9"]}
               data={[
-                { name: "Group A", value: SPI },
-                { name: "Group B", value: 100 - SPI }
+                { name: "SPI Ter", value: SPI },
+                { name: "Rest", value: 100 - SPI }
               ]}
               height={130}
               innerRadius={'80%'}
@@ -49,8 +49,8 @@ const CountryDataCardComponent = ({
               chartYPosition={60}
               colors={["#FFC01C", "#E9E9E9"]}
               data={[
-                { name: "Group A", value: SPI_mar },
-                { name: "Group B", value: 100 - SPI_mar }
+                { name: "SPI Marine", value: SPI_mar },
+                { name: "Rest", value: 100 - SPI_mar }
               ]}
               height={130}
               innerRadius={'80%'}
