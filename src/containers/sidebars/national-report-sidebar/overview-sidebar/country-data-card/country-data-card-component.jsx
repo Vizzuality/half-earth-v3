@@ -8,11 +8,13 @@ const CountryDataCardComponent = ({
   indexStatement,
   vertebratesCount,
   handleInfoClick,
-  // countryData,
+  countryData,
   currentProtection,
   countryDescription,
   endemicVertebratesCount
 }) => {
+  console.log({ countryData })
+  const { prop_protected_mar, nspecies_mar, SPI_mar, total_endemic_mar } = countryData;
   return (
     <div className={styles.container}>
       <section className={styles.indexOverview}>
@@ -37,13 +39,12 @@ const CountryDataCardComponent = ({
         <div className={styles.indexExplanation}>
           <p className={styles.indexExplanationText}>National Species Protection Index</p>
           <div className={styles.donutContainer}>
-
             <DonutChart
               chartXPosition={45}
               chartYPosition={55}
               colors={["#E9E9E9", "#A24033"]}
               data={[
-                { name: "Group A", value: 400 },
+                { name: "Group A", value: SPI_mar },
                 { name: "Group B", value: 300 }
               ]}
               height={130}
@@ -58,6 +59,30 @@ const CountryDataCardComponent = ({
                 The Land SPI is calculated based on the <b>protected land ({currentProtection}%),</b>
                 the <b>total of vertebrate species ({vertebratesCount})</b> and the amount of which
                 of these are <b>endemic ({endemicVertebratesCount}).</b>
+              </p>
+            </div>
+          </div>
+          <div className={styles.donutContainer}>
+            <DonutChart
+              chartXPosition={45}
+              chartYPosition={55}
+              colors={["#E9E9E9", "#FFC01C"]}
+              data={[
+                { name: "Group A", value: 900 },
+                { name: "Group B", value: 100 }
+              ]}
+              height={130}
+              innerRadius={'75%'}
+              legendXPosition={50}
+              legendYPosition={50}
+              outerRadius={'90%'}
+              width={120}
+            />
+            <div>
+              <p className={styles.hintText}>
+                The Marine SPI is based on the  <b>protected marine areas ({prop_protected_mar}%),</b>
+                the <b>total of marine mammals and fishes ({nspecies_mar})</b> species and the
+                amount of which of these are <b>endemic ({total_endemic_mar}).</b>
               </p>
             </div>
           </div>
