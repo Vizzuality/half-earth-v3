@@ -18,9 +18,9 @@ export const getCountryData = createSelector(
     if (!countriesData) return null;
     const countryData = countriesData[iso];
     return {
-      iso: countryData.GID,
+      iso: countryData.GID_0,
       name: countryData.NAME_0,
-      speciesNumber: countryData.nspecies
+      speciesNumber: countryData.nspecies_ter
     };
   }
 );

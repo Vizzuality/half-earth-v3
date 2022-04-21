@@ -51,13 +51,13 @@ export const roundRangeInArea = (value) => {
 }
 
 export const countryChallengesChartFormats = {
-  Population2016: value => localeFormatting(value),
+  Pop2020: value => localeFormatting(value),
   GNI_PPP: value => `${currencyFormatting(value)} B`,
-  prop_hm_very_high: value => `${percentageFormat(value)}%`,
-  prop_protected: value => `${percentageFormat(value)}%`,
-  protection_needed: value => `${percentageFormat(value)}%`,
-  total_endemic: value => localeFormatting(value),
-  N_SPECIES: value => localeFormatting(value),
+  hm_vh_ter: value => `${percentageFormat(value)}%`,
+  prop_protected_ter: value => `${percentageFormat(value)}%`,
+  protection_needed_ter: value => `${percentageFormat(value)}%`,
+  total_endemic_ter: value => localeFormatting(value),
+  nspecies_ter: value => localeFormatting(value),
 }
 
 export const countryChallengesSizes = (area) => {

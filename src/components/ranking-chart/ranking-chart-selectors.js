@@ -11,23 +11,23 @@ const getRankingData = createSelector([selectCountriesData], countriesData => {
   return Object.keys(countriesData).map((iso) => {
     const d = countriesData[iso];
     return {
-      [RANKING_INDICATORS.spi]: d.SPI,
-      [RANKING_INDICATORS.speciesRichness]: d.nspecies, // Just for sorting
+      [RANKING_INDICATORS.spi]: d.SPI_ter,
+      [RANKING_INDICATORS.speciesRichness]: d.nspecies_ter, // Just for sorting
       name: d.NAME_0,
       iso,
       [RANKING_GROUPS_SLUGS.species]: {
-        [RANKING_INDICATORS.nonEndemic]: 100 - (100 * d.total_endemic / d.nspecies),
-        [RANKING_INDICATORS.endemic]: (100 * d.total_endemic / d.nspecies)
+        [RANKING_INDICATORS.nonEndemic]: 100 - (100 * d.total_endemic_ter / d.nspecies_ter),
+        [RANKING_INDICATORS.endemic]: (100 * d.total_endemic_ter / d.nspecies_ter)
       },
       [RANKING_GROUPS_SLUGS.humanModification]: {
-        [RANKING_INDICATORS.veryHigh]: d.prop_hm_very_high,
-        [RANKING_INDICATORS.totalMinusVeryHigh]: 100 - d.prop_hm_very_high - d.prop_hm_0,
-        [RANKING_INDICATORS.noModification]: d.prop_hm_0
+        [RANKING_INDICATORS.veryHigh]: d.hm_vh_ter,
+        [RANKING_INDICATORS.totalMinusVeryHigh]: d.hm_ter,
+        [RANKING_INDICATORS.noModification]: d.hm_no_ter
       },
       [RANKING_GROUPS_SLUGS.protection]: {
-        [RANKING_INDICATORS.protected]: d.prop_protected,
-        [RANKING_INDICATORS.protectionNeeded]: d.protection_needed,
-        [RANKING_INDICATORS.protectionNotNeeded]: 100 - d.protection_needed - d.prop_protected
+        [RANKING_INDICATORS.protected]: d.prop_protected_ter,
+        [RANKING_INDICATORS.protectionNeeded]: d.protection_needed_ter,
+        [RANKING_INDICATORS.protectionNotNeeded]: 100 - d.protection_needed_ter - d.prop_protected_ter
       }
     };
   });

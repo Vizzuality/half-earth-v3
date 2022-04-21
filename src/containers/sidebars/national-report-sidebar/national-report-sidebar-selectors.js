@@ -52,32 +52,32 @@ const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority]
 
 const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.SPI;
+  return countryData.SPI_ter;
 })
 
 const getCurrentProtection = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.prop_protected));
+  return Math.round(parseFloat(countryData.prop_protected_ter));
 })
 
 const getProtectionNeeded = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.protection_needed));
+  return Math.round(parseFloat(countryData.protection_needed_ter));
 })
 
 const getSPIMean = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.spi_mean));
+  return Math.round(parseFloat(countryData.Global_SPI_ter));
 })
 
 const getNumberOfVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.N_SPECIES.toLocaleString('en');
+  return countryData.nspecies_ter.toLocaleString('en');
 })
 
 const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.total_endemic.toLocaleString('en');
+  return countryData.total_endemic_ter.toLocaleString('en');
 })
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
