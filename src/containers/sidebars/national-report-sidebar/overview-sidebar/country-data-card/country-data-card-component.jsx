@@ -14,6 +14,54 @@ const CountryDataCardComponent = ({
   endemicVertebratesCount
 }) => {
   const { prop_protected_mar, nspecies_mar, SPI_mar, total_endemic_mar } = countryData;
+  const mockData = [
+    {
+      year: "1980",
+      species: [40, 30],
+      areas: [20, 10]
+    },
+    {
+      year: "1985",
+      species: [75, 10],
+      areas: [30, 10]
+    },
+    {
+      year: "1990",
+      species: [50, 40],
+      areas: [20, 10]
+    },
+    {
+      year: "1995",
+      species: [55, 50],
+      areas: [20, 10]
+    },
+    {
+      year: "2000",
+      species: [45, 35],
+      areas: [20, 20]
+    },
+    {
+      year: "2005",
+      species: [55, 35],
+      areas: [40, 10]
+    },
+    {
+      year: "2010",
+      species: [70, 60],
+      areas: [30, 10]
+    },
+    {
+      year: "2015",
+      species: [55, 55],
+      areas: [60, 40]
+    },
+    {
+      year: "2020",
+      species: [100, 60],
+      areas: [70, 50]
+    }
+  ];
+
   return (
     <div className={styles.container}>
       <section className={styles.indexWidget}>
@@ -72,7 +120,13 @@ const CountryDataCardComponent = ({
             </div>
           </div>
 
-          <AreaChart />
+          <AreaChart
+            area1={{ key: "species", stroke: "#8884d8" }}
+            area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4 }}
+            data={mockData}
+            height={200}
+            width={'100%'}
+          />
 
         </div>
         <div className={styles.hint}>
