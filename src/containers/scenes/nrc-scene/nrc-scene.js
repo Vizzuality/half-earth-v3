@@ -4,14 +4,15 @@ import Component from './nrc-scene-component';
 // Services
 import EsriFeatureService from 'services/esri-feature-service';
 // Constants
-import { COUNTRIES_GEOMETRIES_SERVICE_URL } from 'constants/layers-urls';
+import { COUNTRIES_GEOMETRIES_SERVICE_URL, NRC_TERRESTRIAL_SPI_DATA_LAYER, NRC_MARINE_SPI_DATA_LAYER } from 'constants/layers-urls';
+import { NRC_MARINE_SPI_DATA_LAYER as NRC_MARINE_SPI_DATA_LAYER_SLUG } from 'constants/layers-slugs';
+
 import { LOCAL_SCENE_TABS_SLUGS } from "constants/ui-params";
 // Actions
 import countriesGeometriesActions from 'redux_modules/countries-geometries';
 import * as urlActions from 'actions/url-actions';
 import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DATA, NATIONAL_REPORT_CARD } from 'router'
-
 import mapStateToProps from './nrc-scene-selectors';
 const actions = {...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
 
@@ -21,8 +22,26 @@ const NrcSceneContainer = (props) => {
     setCountryBorderReady,
     visitCountryReportCardAnalyticsEvent
   } = props;
-
   const [tooltipInfo, setTooltipInfo] = useState(null);
+
+  const [chartData, setChartData] = useState(null);
+  const layerSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG;
+  const isoSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG ? 'iso_ter1' : 'GID_0';
+  useEffect(() => {
+    if (countryISO) {
+      EsriFeatureService.getFeatures({
+        url: layerSlug === NRC_MARINE_SPI_DATA_LAYER_SLUG ? NRC_MARINE_SPI_DATA_LAYER : NRC_TERRESTRIAL_SPI_DATA_LAYER,
+        whereClause: `${isoSlug} = '${countryISO}'`,
+        returnGeometry: false
+      }).then(data => {
+        if (data && data.length > 0) {
+          setChartData(data.map(r => r.attributes));
+        }
+      });
+    }
+  }, [countryISO, layerSlug]);
+
+  console.info('chartData', chartData)
 
   // Get country borders
   useEffect(() => {
