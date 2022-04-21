@@ -1,4 +1,6 @@
 import React from 'react';
+import AreaChart from 'components/charts/area-chart';
+
 import DonutChart from 'components/charts/donut-chart';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
@@ -69,6 +71,9 @@ const CountryDataCardComponent = ({
               </p>
             </div>
           </div>
+
+          <AreaChart />
+
         </div>
         <div className={styles.hint}>
           <BulbIcon />
