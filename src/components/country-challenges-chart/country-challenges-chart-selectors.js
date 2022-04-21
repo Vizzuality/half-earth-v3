@@ -23,17 +23,17 @@ const getScatterplotRawData = createSelector(
         name: country.NAME_0,
         color: CONTINENT_COLORS[country.continent] || '#fff',
         iso: country.GID_0,
-        size: countryChallengesSizes(country.AREA_KM2),
+        size: countryChallengesSizes(country.Area_Country),
         xAxisValues: {
-          Population2016: country.Population2016,
+          Pop2020: country.Pop2020,
           GNI_PPP: country.GNI_PPP,
-          prop_hm_very_high: country.prop_hm_very_high,
-          prop_protected: country.prop_protected,
-          protection_needed: country.protection_needed,
-          total_endemic: country.total_endemic,
-          N_SPECIES: country.N_SPECIES
+          hm_vh_ter: country.hm_vh_ter,
+          prop_protected_ter: country.prop_protected_ter,
+          protection_needed_ter: country.protection_needed_ter,
+          total_endemic_ter: country.total_endemic_ter,
+          nspecies_ter: country.nspecies_ter
         },
-        yAxisValue: country.SPI
+        yAxisValue: country.SPI_ter
       }
         }).sort((a, b) => (b.size - a.size))
   }
@@ -54,7 +54,7 @@ const getSelectedCountryRelations = createSelector(
   [selectCountriesData, selectCountryIso],
   (countriesData, selectedCountryIso) => {
     if (!countriesData || !selectedCountryIso) return null;
-    return JSON.parse(countriesData[selectedCountryIso].filter_similar)
+    return JSON.parse(countriesData[selectedCountryIso].filter_similar_ter)
   }
 )
 
@@ -84,11 +84,11 @@ const getChallengesFilterOptions = createSelector(
   (keys) => {
     if (!keys) return [];
     const indicatorDependantOptions = [
-      'filter_Population2016',
-      'filter_prop_hm_very_high',
+      'filter_Pop2020',
+      'filter_hm_vh_ter',
       'filter_GNI_PPP',
-      'filter_total_endemic',
-      'filter_N_SPECIES'
+      'filter_total_endemic_ter',
+      'filter_nspecies_ter'
     ];
 
     return CHALLENGES_RELATED_FILTERS_OPTIONS.filter((option) => {

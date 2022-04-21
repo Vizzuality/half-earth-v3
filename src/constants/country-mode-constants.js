@@ -1,10 +1,10 @@
 export const INDICATOR_LABELS = {
-  'N_SPECIES': 'Number of vertebrate species',
-  'total_endemic': 'Number of endemic vertebrate species',
-  'prop_protected': 'Proportion of land protected',
-  'protection_needed': 'Additional land protection needed',
-  'prop_hm_very_high': 'Proportion of very high human modification',
-  'Population2016': 'Population (2016)',
+  'nspecies_ter': 'Number of vertebrate species',
+  'total_endemic_ter': 'Number of endemic vertebrate species',
+  'prop_protected_ter': 'Proportion of land protected',
+  'protection_needed_ter': 'Additional land protection needed',
+  'hm_vh_ter': 'Proportion of very high human modification',
+  'Pop2020': 'Population (2020)',
   'GNI_PPP': 'Gross National Income (GNI)',
 };
 
@@ -32,30 +32,30 @@ export const CONTINENT_COLORS = {
 export const FILTERS_DICTIONARY = {
   filter_continent: 'by continent',
   filter_neigh: 'by proximity',
-  filter_Area: 'with similar area',
-  filter_Population2016: 'with similar population size',
-  filter_prop_protected: 'with similar proportion of protection',
-  filter_prop_hm_very_high: 'with similar proportion of very high human encroachment',
-  filter_protection_needed: 'with similar proportion of protection needed',
+  filter_Area_Country: 'with similar area',
+  filter_Pop2020: 'with similar population size',
+  filter_prop_protected_ter: 'with similar proportion of protection',
+  filter_hm_vh_ter: 'with similar proportion of very high human encroachment',
+  filter_protection_needed_ter: 'with similar proportion of protection needed',
   filter_GNI_PPP: 'with similar Gross National Income',
-  filter_total_endemic: 'with similar number of endemic species',
-  filter_N_SPECIES: 'with similar number of vertebrate species',
-  filter_SPI: 'with similar species Protection Index',
+  filter_total_endemic_ter: 'with similar number of endemic species',
+  filter_nspecies_ter: 'with similar number of vertebrate species',
+  filter_SPI_ter: 'with similar species Protection Index',
   filter_steward: 'with shared stewardship'
 };
 
 export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent},
   {slug: 'filter_neigh', label: FILTERS_DICTIONARY.filter_neigh},
-  {slug: 'filter_Area', label: FILTERS_DICTIONARY.filter_Area},
-  {slug: 'filter_Population2016', label: FILTERS_DICTIONARY.filter_Population2016},
-  {slug: 'filter_prop_protected', label: FILTERS_DICTIONARY.filter_prop_protected},
-  {slug: 'filter_prop_hm_very_high', label: FILTERS_DICTIONARY.filter_prop_hm_very_high},
-  {slug: 'filter_protection_needed', label: FILTERS_DICTIONARY.filter_protection_needed},
+  {slug: 'filter_Area_Country', label: FILTERS_DICTIONARY.filter_Area_Country},
+  {slug: 'filter_Pop2020', label: FILTERS_DICTIONARY.filter_Pop2020},
+  {slug: 'filter_prop_protected_ter', label: FILTERS_DICTIONARY.filter_prop_protected_ter},
+  {slug: 'filter_hm_vh_ter', label: FILTERS_DICTIONARY.filter_hm_vh_ter},
+  {slug: 'filter_protection_needed_ter', label: FILTERS_DICTIONARY.filter_protection_needed_ter},
   {slug: 'filter_GNI_PPP', label: FILTERS_DICTIONARY.filter_GNI_PPP},
-  {slug: 'filter_total_endemic', label: FILTERS_DICTIONARY.filter_total_endemic},
-  {slug: 'filter_N_SPECIES', label: FILTERS_DICTIONARY.filter_N_SPECIES},
-  {slug: 'filter_SPI', label: FILTERS_DICTIONARY.filter_SPI},
+  {slug: 'filter_total_endemic_ter', label: FILTERS_DICTIONARY.filter_total_endemic_ter},
+  {slug: 'filter_nspecies_ter', label: FILTERS_DICTIONARY.filter_nspecies_ter},
+  {slug: 'filter_SPI_ter', label: FILTERS_DICTIONARY.filter_SPI_ter},
   {slug: 'filter_steward', label: FILTERS_DICTIONARY.filter_steward}
 ]
 

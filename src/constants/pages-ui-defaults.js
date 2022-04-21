@@ -8,7 +8,7 @@ export const NRC_UI_DEFAULTS = {
   countryChallengesSelectedFilter: 'filter_steward',
   view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
   localSceneActiveTab: LOCAL_SCENE_TABS_SLUGS.OVERVIEW,
-  countryChallengesSelectedKey: 'N_SPECIES',
+  countryChallengesSelectedKey: 'nspecies_ter',
   biodiversityLayerVariant: BIODIVERSITY_DEFAULT_TAB,
   speciesModalSearch: null,
   speciesModalSort: null,
