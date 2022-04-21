@@ -1,11 +1,8 @@
 import React from 'react';
 
 // Components
-import MenuFooter from 'components/mobile-only/menu-footer';
-import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 // Constants
-import { MobileOnly } from 'constants/responsive';
 import Globe from 'containers/landing/globe';
 import Hero from 'containers/landing/hero';
 import { motion } from 'framer-motion';
@@ -13,27 +10,24 @@ import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+// Constants
+import { useMobile } from 'constants/responsive';
+// Styles
 import styles from './landing-scene-styles.module.scss';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const LandingSceneComponent = ({
-  openedModal,
-  activeOption,
   sceneSettings,
-  isSidebarOpen,
   browsePage,
 }) => {
+  const isMobile = useMobile();
   return (
     <Scene
       sceneName={'landing-scene'}
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
-      <MobileOnly>
-        <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} />
-        <MenuSettings activeOption={activeOption} openedModal={openedModal} />
-      </MobileOnly>
 
       <div className={styles.sceneContainer}>
         <Hero />
@@ -46,7 +40,7 @@ const LandingSceneComponent = ({
             delay: 2,
           }}
         >
-          OR
+          {!isMobile && 'OR'}
         </motion.p>
         <motion.div
           className={styles.globesContainer}

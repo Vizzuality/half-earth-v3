@@ -3,6 +3,7 @@ import 'he-components/dist/main.css';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
+
 // Dynamic imports
 const Landing = loadable(() => import('pages/landing'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));

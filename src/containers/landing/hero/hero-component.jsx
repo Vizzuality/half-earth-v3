@@ -8,10 +8,13 @@ import React from 'react';
 import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
 // Components
 import AudioCard from './audio-card';
+// Constants
+import { useMobile } from 'constants/responsive';
 // styles
 import styles from './hero-styles.module.scss';
 
 const HeroComponent = ({ className, changeUI, browsePage }) => {
+  const isMobile = useMobile();
   return (
     <div className={cx(styles.container, className)}>
       <motion.h3
@@ -46,59 +49,61 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           delay: 1.5,
         }}
       >
-        SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT
+        {!isMobile && 'SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT'}
       </motion.p>
 
-      <div className={styles.audioCards}>
-        <motion.div
-          className={styles.audioCard}
-          initial={{ opacity: 0, x: -100, y: -30 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{
-            duration: 1,
-            delay: 1.5,
-          }}
-        >
-          <AudioCard
-            number="01"
-            duration={'4-7'}
-            gif={AUDIO_CARD_1_GIF}
-            title="Priority places"
-            description="Understand where the suggested priority places should happen for vertebrates."
-            handleClick={() => {
-              browsePage({ type: DATA });
-              changeUI({
-                onboardingType: 'priority-places',
-                onboardingStep: 0,
-              });
+      {!isMobile && (
+        <div className={styles.audioCards}>
+          <motion.div
+            className={styles.audioCard}
+            initial={{ opacity: 0, x: -100, y: -30 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{
+              duration: 1,
+              delay: 1.5,
             }}
-          />
-        </motion.div>
-        <motion.div
-          className={styles.audioCard}
-          initial={{ opacity: 0, x: 100, y: -30 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{
-            duration: 1,
-            delay: 1.5,
-          }}
-        >
-          <AudioCard
-            number="02"
-            duration={'4-7'}
-            gif={AUDIO_CARD_2_GIF}
-            title="National Report cards"
-            description="Analyze national and other areas of interest. Download reports to share with others."
-            handleClick={() => {
-              browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
-              changeUI({
-                onboardingType: 'national-report-cards',
-                onboardingStep: 0,
-              });
+          >
+            <AudioCard
+              number="01"
+              duration={'4-7'}
+              gif={AUDIO_CARD_1_GIF}
+              title="Priority places"
+              description="Understand where the suggested priority places should happen for vertebrates."
+              handleClick={() => {
+                browsePage({ type: DATA });
+                changeUI({
+                  onboardingType: 'priority-places',
+                  onboardingStep: 0,
+                });
+              }}
+            />
+          </motion.div>
+          <motion.div
+            className={styles.audioCard}
+            initial={{ opacity: 0, x: 100, y: -30 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{
+              duration: 1,
+              delay: 1.5,
             }}
-          />
-        </motion.div>
-      </div>
+          >
+            <AudioCard
+              number="02"
+              duration={'4-7'}
+              gif={AUDIO_CARD_2_GIF}
+              title="National Report cards"
+              description="Analyze national and other areas of interest. Download reports to share with others."
+              handleClick={() => {
+                browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
+                changeUI({
+                  onboardingType: 'national-report-cards',
+                  onboardingStep: 0,
+                });
+              }}
+            />
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
