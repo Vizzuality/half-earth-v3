@@ -69,18 +69,20 @@ const NRCLandingSidebar = ({
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
 
-      {NRCLandingLayers.map((layer) => (
-        <LayerToggle
-          map={map}
-          option={layer}
-          type="checkbox"
-          variant="light"
-          key={layer.value}
-          activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
-        />
-      ))}
+      <div className={styles.toggleContainer}>
+        {NRCLandingLayers.map((layer) => (
+          <LayerToggle
+            map={map}
+            option={layer}
+            type="checkbox"
+            variant="light"
+            key={layer.value}
+            activeLayers={activeLayers}
+            onChange={handleLayerToggle}
+            themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
+          />
+        ))}
+      </div>
 
       <SearchLocation
         reference={(ref) => {
