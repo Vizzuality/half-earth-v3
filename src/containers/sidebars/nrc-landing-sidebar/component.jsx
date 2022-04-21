@@ -2,23 +2,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import cx from 'classnames';
+// Hooks
+import { useTooltipRefs, getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 // Components
+import LayerToggle from 'components/layer-toggle';
 import SearchLocation from 'components/search-location';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
 import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
-// Hooks
-import { useTooltipRefs, getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
+import { NRCLandingLayers } from 'constants/nrc-landing';
 // Styles
 import styles from './styles.module.scss';
 
 const NRCLandingSidebar = ({
+  activeLayers,
   changeUI,
   onboardingStep,
   onboardingType,
   view,
   waitingInteraction,
 }) => {
+  console.log({ activeLayers });
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
@@ -61,6 +65,20 @@ const NRCLandingSidebar = ({
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
+
+      {NRCLandingLayers.map((layer) => (
+        <LayerToggle
+          // map={map}
+          option={layer}
+          type="checkbox"
+          variant="light"
+          // key={layer.value}
+          activeLayers={activeLayers}
+        // onChange={handleLayerToggle}
+        // themeCategorySlug={PROTECTION_SLUG}
+        />
+      ))}
+
       <SearchLocation
         reference={(ref) => {
           tooltipRefs.current.nrcLandingSearch = ref;

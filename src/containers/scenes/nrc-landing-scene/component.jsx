@@ -81,6 +81,7 @@ const NrcLandingComponent = ({
           waitingInteraction={waitingInteraction}
         />
         <NRCLandingSidebar
+          activeLayers={activeLayers}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
           waitingInteraction={waitingInteraction}
