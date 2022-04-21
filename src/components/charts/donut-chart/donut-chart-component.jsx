@@ -10,6 +10,8 @@ const DonutChart = ({
   innerRadius,
   legendXPosition,
   legendYPosition,
+  legendValue,
+  legendText,
   outerRadius,
   width
 }) => {
@@ -32,22 +34,26 @@ const DonutChart = ({
       </Pie>
 
       <text
+        font-family='ivypresto-display'
         font-size="32"
+        font-weight={400}
         x={legendXPosition}
         y={legendYPosition}
         textAnchor="middle"
         dominantBaseline="middle"
       >
-        45
+        {legendValue.toFixed()}
       </text>
       <text
+        font-family='Inter'
         font-size="12"
+        font-weight={300}
         x={legendXPosition}
-        y={legendYPosition}
+        y={legendYPosition + 25}
         textAnchor="middle"
         dominantBaseline="middle"
-        textLength={60}>
-        LAND SPI
+      >
+        {legendText}
       </text>
 
     </PieChart >

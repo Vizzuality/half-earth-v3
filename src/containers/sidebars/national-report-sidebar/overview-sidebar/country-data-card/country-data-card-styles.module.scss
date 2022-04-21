@@ -14,7 +14,6 @@
   margin-bottom: $cards-bottom-margin;
 }
 
-.indexOverview,
 .indexWidget {
   display: flex;
   flex-direction: column;
@@ -22,64 +21,9 @@
   padding: 0 $sidebar-paddings;
 }
 
-.overviewText {
-  @extend %subtitle;
-  text-decoration: underline;
-  color: $white;
-  text-align: left;
-  padding: 0 0 $sidebar-paddings;
-}
-
 .indexStatement {
   @extend %subtitle;
   padding-bottom: $sidebar-paddings;
-}
-
-.overviewTextWrapper {
-  display: flex;
-  align-items: center;
-}
-
-.indexWrapper {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: $sidebar-paddings;
-}
-
-.indexBar {
-  position: relative;
-  height: 22px;
-  width: 70%;
-  background-color: $white;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-
-  .progressMark {
-    position: relative;
-    border: 1px solid $white;
-    height: 30px;
-    transition: all .3s ease;
-  }
-
-  .meanMark {
-    position: absolute;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 6px solid $white;
-    bottom: -6px;
-  }
-
-  .improvementArea {
-    position: relative;
-    height: 22px;
-    background-color: rgba($_temporary-dark-text, 0.9);
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    transition: all .3s ease;
-  }
 }
 
 .index {
@@ -99,7 +43,7 @@
 
 .indexExplanationText {
   @extend %display2;
-  margin: 0;
+  margin: 0 0 15px 0;
   color: $_temporary-dark-text;
   text-align: center;
 }
@@ -136,4 +80,10 @@
 .donutContainer {
   display: flex;
   align-items: center;
+}
+
+.legendText {
+  @extend %bodyText;
+  color: $_temporary-dark-text;
+  margin: 0;
 }

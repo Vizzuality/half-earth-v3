@@ -5,57 +5,38 @@ import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
 const CountryDataCardComponent = ({
   SPI,
-  indexStatement,
   vertebratesCount,
-  handleInfoClick,
   countryData,
   currentProtection,
   countryDescription,
   endemicVertebratesCount
 }) => {
-  console.log({ countryData })
   const { prop_protected_mar, nspecies_mar, SPI_mar, total_endemic_mar } = countryData;
   return (
     <div className={styles.container}>
-      <section className={styles.indexOverview}>
-        <div className={styles.overviewTextWrapper}>
-          <button onClick={handleInfoClick} className={styles.overviewText}>
-            The national species protection index:
-          </button>
-        </div>
-        <div className={styles.indexWrapper}>
-          <div className={styles.indexBar}>
-            <div className={styles.progressMark} style={{ left: `${SPI}%` }} />
-            <div
-              className={styles.improvementArea}
-              style={{ left: `${SPI}%`, width: `${100 - SPI}%` }}
-            />
-          </div>
-          <div className={styles.index}>{`${SPI}`}</div>
-        </div>
-        <p className={styles.indexStatement}>{indexStatement}</p>
-      </section>
       <section className={styles.indexWidget}>
         <div className={styles.indexExplanation}>
           <p className={styles.indexExplanationText}>National Species Protection Index</p>
           <div className={styles.donutContainer}>
             <DonutChart
-              chartXPosition={45}
-              chartYPosition={55}
-              colors={["#E9E9E9", "#A24033"]}
+              chartXPosition={48}
+              chartYPosition={60}
+              colors={["#A24033", "#E9E9E9"]}
               data={[
-                { name: "Group A", value: SPI_mar },
-                { name: "Group B", value: 300 }
+                { name: "Group A", value: SPI },
+                { name: "Group B", value: 100 - SPI }
               ]}
               height={130}
-              innerRadius={'75%'}
-              legendXPosition={50}
-              legendYPosition={50}
-              outerRadius={'90%'}
+              innerRadius={'80%'}
+              legendXPosition={53}
+              legendYPosition={58}
+              legendValue={SPI}
+              legendText='LAND SPI'
+              outerRadius={'95%'}
               width={120}
             />
             <div>
-              <p className={styles.hintText}>
+              <p className={styles.legendText}>
                 The Land SPI is calculated based on the <b>protected land ({currentProtection}%),</b>
                 the <b>total of vertebrate species ({vertebratesCount})</b> and the amount of which
                 of these are <b>endemic ({endemicVertebratesCount}).</b>
@@ -64,22 +45,24 @@ const CountryDataCardComponent = ({
           </div>
           <div className={styles.donutContainer}>
             <DonutChart
-              chartXPosition={45}
-              chartYPosition={55}
-              colors={["#E9E9E9", "#FFC01C"]}
+              chartXPosition={48}
+              chartYPosition={60}
+              colors={["#FFC01C", "#E9E9E9"]}
               data={[
-                { name: "Group A", value: 900 },
-                { name: "Group B", value: 100 }
+                { name: "Group A", value: SPI_mar },
+                { name: "Group B", value: 100 - SPI_mar }
               ]}
               height={130}
-              innerRadius={'75%'}
-              legendXPosition={50}
-              legendYPosition={50}
-              outerRadius={'90%'}
+              innerRadius={'80%'}
+              legendXPosition={53}
+              legendYPosition={58}
+              legendValue={SPI_mar}
+              legendText='MARINE SPI'
+              outerRadius={'95%'}
               width={120}
             />
             <div>
-              <p className={styles.hintText}>
+              <p className={styles.legendText}>
                 The Marine SPI is based on the  <b>protected marine areas ({prop_protected_mar}%),</b>
                 the <b>total of marine mammals and fishes ({nspecies_mar})</b> species and the
                 amount of which of these are <b>endemic ({total_endemic_mar}).</b>
