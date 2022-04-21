@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import DonutChart from 'components/charts/donut-chart';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
@@ -8,6 +9,7 @@ const CountryDataCardComponent = ({
   indexStatement,
   vertebratesCount,
   handleInfoClick,
+  // countryData,
   currentProtection,
   countryDescription,
   endemicVertebratesCount
@@ -34,7 +36,19 @@ const CountryDataCardComponent = ({
       </section>
       <section className={styles.indexWidget}>
         <div className={styles.indexExplanation}>
-          <p className={styles.indexExplanationText}>This index is based on:</p>
+          <p className={styles.indexExplanationText}>National Species Protection Index</p>
+          <DonutChart
+            colors={["#0088FE", "#00C49F"]}
+            data={[
+              { name: "Group A", value: 400 },
+              { name: "Group B", value: 300 }
+            ]}
+            height={200}
+            innerRadius={60}
+            outerRadius={70}
+            width={250}
+          />
+
           <div className={styles.indexBaseNumbersWrapper}>
             <div
               className={cx(

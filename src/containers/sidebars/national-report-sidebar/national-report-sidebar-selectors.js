@@ -9,8 +9,8 @@ const SPECIES_COLOR = {
   reptiles: '#3AA8EE'
 }
 
-const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
-const selectScene = ({scene}) => scene;
+const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+const selectScene = ({ scene }) => scene;
 const selectCountriesData = ({ countryData }) => countryData && countryData.data;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 const getCountryData = createSelector(
@@ -39,12 +39,12 @@ const getHasPriority = createSelector(getCountryData, countryData => {
 const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority], (countryData, hasPriority) => {
   if (!countryData) return null;
   return hasPriority ?
-  `The brightly colored map layer presents one possible configuration
+    `The brightly colored map layer presents one possible configuration
   of the additional areas needed to achieve the Half-Earth goal of
   comprehensive terrestrial biodiversity conservation. Higher values
   indicate locations within ${countryData.NAME_0} that contribute more to the
   conservation of species habitat.` :
-  `Our global model of comprehensive terrestrial vertebrate biodiversity
+    `Our global model of comprehensive terrestrial vertebrate biodiversity
   conservation did not identify any areas in ${countryData.NAME_0} in need of additional protection.
   Further expansion of ${countryData.NAME_0}'s protected areas will nonetheless promote resilience towards global biodiversity loss,
   and can contribute to creating a global conservation network with more equity between countries.` ;
@@ -95,12 +95,12 @@ const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, country
 })
 
 const getIndexStatement = createSelector(
-  [getSpeciesProtectionIndex,getSPIMean],
+  [getSpeciesProtectionIndex, getSPIMean],
   (SPI, SPIMean) => {
-  if (!SPI || !SPIMean) return null;
-  const comparation = SPI >=SPIMean ? 'higher' : 'lower';
-  return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average national SPI: ${SPIMean} `
-})
+    if (!SPI || !SPIMean) return null;
+    const comparation = SPI >= SPIMean ? 'higher' : 'lower';
+    return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average national SPI: ${SPIMean} `
+  })
 
 const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
   if (!endemicVertebrates) return null;
@@ -118,28 +118,28 @@ const getEndemicSpecies = (taxa) => createSelector(getCountryData, countryData =
 const getSpeciesChartData = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
 
-const {
-  birds,
-  mammals,
-  reptiles,
-  amphibians,
-  endemic_birds,
-  endemic_reptiles,
-  endemic_mammals,
-  endemic_amphibians
-} = countryData;
+  const {
+    birds,
+    mammals,
+    reptiles,
+    amphibians,
+    endemic_birds,
+    endemic_reptiles,
+    endemic_mammals,
+    endemic_amphibians
+  } = countryData;
 
 
-const chartData = [
-  {name: 'endemic amphibians', value: endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: true},
-  {name: 'amphibians', value: amphibians - endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: false},
-  {name: 'endemic birds', value: endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: true},
-  {name: 'birds', value: birds - endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: false},
-  {name: 'endemic mammals', value: endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: true},
-  {name: 'mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false},
-  {name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true},
-  {name: 'reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false},
-]
+  const chartData = [
+    { name: 'endemic amphibians', value: endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: true },
+    { name: 'amphibians', value: amphibians - endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: false },
+    { name: 'endemic birds', value: endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: true },
+    { name: 'birds', value: birds - endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: false },
+    { name: 'endemic mammals', value: endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: true },
+    { name: 'mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false },
+    { name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true },
+    { name: 'reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false },
+  ]
   return chartData
 })
 

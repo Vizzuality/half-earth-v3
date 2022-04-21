@@ -30,7 +30,7 @@
   padding: 0 0 $sidebar-paddings;
 }
 
-.indexStatement{
+.indexStatement {
   @extend %subtitle;
   padding-bottom: $sidebar-paddings;
 }
@@ -102,6 +102,7 @@
   @extend %display2;
   margin: 0;
   color: $_temporary-dark-text;
+  text-align: center;
 }
 
 .indexBaseNumbersWrapper {
@@ -122,7 +123,7 @@
   width: 51%;
 }
 
-.baseNumber{
+.baseNumber {
   @extend %display2;
   color: $_temporary-dark-text;
   margin: 0 0 5px 0;
@@ -156,7 +157,8 @@
 }
 
 .descriptionWrapper {
-  padding:  $sidebar-paddings  $sidebar-paddings 0px;
+  padding: $sidebar-paddings $sidebar-paddings 0px;
+
   p {
     @extend %bodyText;
     margin: 0 0 10px;

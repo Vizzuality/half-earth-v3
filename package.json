@@ -42,6 +42,7 @@
     "react-tooltip": "^3.10.0",
     "react-universal-component": "^4.0.0",
     "react-virtuoso": "^0.20.0",
+    "recharts": "^2.1.9",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-first-router": "0.0.9-rudy",

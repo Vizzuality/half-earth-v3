@@ -84,7 +84,7 @@ const LocalSpeciesCardComponent = ({
             {`${reptiles} reptiles (${reptilesEndemic} endemic)`}
           </p>
         </div>
-        <Button 
+        <Button
           type='compound'
           handleClick={toggleModal}
           label="See all vertebrates"
