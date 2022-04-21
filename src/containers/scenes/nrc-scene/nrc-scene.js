@@ -16,6 +16,8 @@ import { DATA, NATIONAL_REPORT_CARD } from 'router'
 import mapStateToProps from './nrc-scene-selectors';
 const actions = {...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
 
+const { REACT_APP_FEATURE_MARINE } = process.env;
+
 const NrcSceneContainer = (props) => {
   const {
     countryISO,
@@ -27,7 +29,7 @@ const NrcSceneContainer = (props) => {
   const [chartData, setChartData] = useState(null);
   const layerSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG;
   useEffect(() => {
-    if (countryISO) {
+    if (REACT_APP_FEATURE_MARINE && countryISO) {
       EsriFeatureService.getFeatures({
         url: layerSlug === NRC_MARINE_SPI_DATA_LAYER_SLUG ? NRC_MARINE_SPI_DATA_LAYER : NRC_TERRESTRIAL_SPI_DATA_LAYER,
         whereClause: `GID_0 = '${countryISO}'`,
