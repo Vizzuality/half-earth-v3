@@ -16,6 +16,7 @@ const OverviewSidebarComponent = ({
   mammals,
   reptiles,
   amphibians,
+  chartData,
   countryISO,
   countryName,
   countryData,
@@ -44,6 +45,7 @@ const OverviewSidebarComponent = ({
       <CountryDataCard
         SPI={SPI}
         mean={mean}
+        chartData={chartData}
         countryISO={countryISO}
         countryName={countryName}
         countryData={countryData}

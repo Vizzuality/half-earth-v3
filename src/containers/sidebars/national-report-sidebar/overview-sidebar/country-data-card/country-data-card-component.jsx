@@ -6,6 +6,7 @@ import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
 const CountryDataCardComponent = ({
+  areaChartData,
   SPI,
   vertebratesCount,
   countryData,
@@ -15,6 +16,7 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
+  console.log({ areaChartData })
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
   const { prop_protected_mar, nspecies_mar, SPI_mar, total_endemic_mar } = countryData;
@@ -252,7 +254,7 @@ const CountryDataCardComponent = ({
               <div className={styles.areaChartContainer}>
                 <p className={styles.areaChartYAxisLegend}>Species Protection Index</p>
                 <AreaChart
-                  area1={{ key: "species", stroke: "#000000", strokeWidth: 0.5 }}
+                  area1={{ key: "species", stroke: "#000000", fill: ["#FFBF00", "#A74815", "#821213", "#371033", "#250F3B", "#1D1135", "#060B2B"], fillOpacity: 0.4, strokeWidth: 0.5 }}
                   area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4, strokeWidth: 1 }}
                   data={activeTab === 'land' ? mockLandData : mockMarineData}
                   height={200}

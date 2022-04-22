@@ -61,11 +61,9 @@ const NrcContainer = props => {
     }
   }, [countryISO, layerSlug]);
 
-  console.info('chartData on NRC', chartData)
-
-
   return (
     <NrcComponent
+      chartData={chartData}
       handleMapLoad={handleMapLoad}
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}

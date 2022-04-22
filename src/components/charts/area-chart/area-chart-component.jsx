@@ -32,17 +32,19 @@ const AreaChartComponent = ({
             bottom: 0
           }}
         >
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="20%" stopColor="#FFBF00" stopOpacity={0.4} />
-              <stop offset="35%" stopColor="#A74815" stopOpacity={0.4} />
-              <stop offset="45%" stopColor="#821213" stopOpacity={0.4} />
-              <stop offset="55%" stopColor="#371033" stopOpacity={0.4} />
-              <stop offset="65%" stopColor="#250F3B" stopOpacity={0.4} />
-              <stop offset="75%" stopColor="#1D1135" stopOpacity={0.4} />
-              <stop offset="90%" stopColor="#060B2B" stopOpacity={0.4} />
-            </linearGradient>
-          </defs>
+          {area1 && (
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="20%" stopColor={area1.fill[0]} stopOpacity={area1.fillOpacity} />
+                <stop offset="35%" stopColor={area1.fill[1]} stopOpacity={area1.fillOpacity} />
+                <stop offset="45%" stopColor={area1.fill[2]} stopOpacity={area1.fillOpacity} />
+                <stop offset="55%" stopColor={area1.fill[3]} stopOpacity={area1.fillOpacity} />
+                <stop offset="65%" stopColor={area1.fill[4]} stopOpacity={area1.fillOpacity} />
+                <stop offset="75%" stopColor={area1.fill[5]} stopOpacity={area1.fillOpacity} />
+                <stop offset="90%" stopColor={area1.fill[6]} stopOpacity={area1.fillOpacity} />
+              </linearGradient>
+            </defs>
+          )}
           <ReferenceLine y={100} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
           <ReferenceLine y={75} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
           <ReferenceLine y={50} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
