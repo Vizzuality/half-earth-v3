@@ -12,9 +12,6 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
-  console.log({ areaChartData })
-
-
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
   const {
@@ -27,110 +24,16 @@ const CountryDataCardComponent = ({
     vertebratesCount
   } = countryData;
 
-  const mockLandData = [
-    {
-      year: "1980",
-      species: [40, 0],
-      areas: [20, 10]
-    },
-    {
-      year: "1985",
-      species: [75, 10],
-      areas: [30, 10]
-    },
-    {
-      year: "1990",
-      species: [50, 40],
-      areas: [20, 10]
-    },
-    {
-      year: "1995",
-      species: [55, 50],
-      areas: [20, 10]
-    },
-    {
-      year: "2000",
-      species: [45, 35],
-      areas: [20, 20]
-    },
-    {
-      year: "2005",
-      species: [55, 35],
-      areas: [40, 10]
-    },
-    {
-      year: "2010",
-      species: [70, 60],
-      areas: [30, 10]
-    },
-    {
-      year: "2015",
-      species: [55, 55],
-      areas: [60, 40]
-    },
-    {
-      year: "2020",
-      species: [100, 60],
-      areas: [70, 50]
-    }
-  ];
-
-  const mockMarineData = [
-    {
-      year: "1980",
-      species: [20, 0],
-      areas: [30, 20]
-    },
-    {
-      year: "1985",
-      species: [79, 50],
-      areas: [40, 20]
-    },
-    {
-      year: "1990",
-      species: [50, 40],
-      areas: [20, 10]
-    },
-    {
-      year: "1995",
-      species: [59, 51],
-      areas: [25, 15]
-    },
-    {
-      year: "2000",
-      species: [65, 55],
-      areas: [60, 50]
-    },
-    {
-      year: "2005",
-      species: [80, 65],
-      areas: [40, 10]
-    },
-    {
-      year: "2010",
-      species: [70, 60],
-      areas: [30, 10]
-    },
-    {
-      year: "2015",
-      species: [55, 55],
-      areas: [60, 50]
-    },
-    {
-      year: "2020",
-      species: [70, 60],
-      areas: [80, 50]
-    }
-  ];
+  const { land, marine } = areaChartData;
 
   const tabsData = {
     "land": {
       text: "Land",
-      data: mockLandData,
+      data: land,
     },
     "marine": {
       text: "Marine",
-      data: mockMarineData,
+      data: marine,
     },
   };
 
@@ -261,9 +164,9 @@ const CountryDataCardComponent = ({
               <div className={styles.areaChartContainer}>
                 <p className={styles.areaChartYAxisLegend}>Species Protection Index</p>
                 <AreaChart
-                  area1={{ key: "species", stroke: "#000000", fill: ["#FFBF00", "#A74815", "#821213", "#371033", "#250F3B", "#1D1135", "#060B2B"], fillOpacity: 0.4, strokeWidth: 0.5 }}
-                  area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4, strokeWidth: 1 }}
-                  data={activeTab === 'land' ? mockLandData : mockMarineData}
+                  area1={{ key: "spi", stroke: "#000000", fill: ["#FFBF00", "#A74815", "#821213", "#371033", "#250F3B", "#1D1135", "#060B2B"], fillOpacity: 0.4, strokeWidth: 0.5 }}
+                  area2={{ key: "protected", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4, strokeWidth: 1 }}
+                  data={tabsData[activeTab].data}
                   height={200}
                   width={'100%'}
                 />

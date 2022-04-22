@@ -45,10 +45,10 @@ const AreaChartComponent = ({
               </linearGradient>
             </defs>
           )}
-          <ReferenceLine y={100} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
-          <ReferenceLine y={75} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
           <ReferenceLine y={50} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
-          <ReferenceLine y={25} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
+          <ReferenceLine y={35} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
+          <ReferenceLine y={20} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
+          <ReferenceLine y={5} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
           <XAxis dataKey="year" fontSize={9} tickLine={false} strokeWidth={0.5} />
           <YAxis axisLine={false} fontSize={9} tickLine={false} />
           {tooltip && (
