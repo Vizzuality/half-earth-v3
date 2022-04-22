@@ -14,6 +14,7 @@
   margin-bottom: $cards-bottom-margin;
 }
 
+.indexOverview,
 .indexWidget {
   display: flex;
   flex-direction: column;
@@ -86,4 +87,91 @@
   @extend %bodyText;
   color: $_temporary-dark-text;
   margin: 0;
+}
+
+// styles used only when REACT_APP_FEATURE_MARINE is false
+.indexBaseNumbersWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.indexBaseDataElement {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $sidebar-paddings;
+}
+
+.protectionNumber {
+  width: 51%;
+}
+
+.baseNumber {
+  @extend %display2;
+  color: $_temporary-dark-text;
+  margin: 0 0 5px 0;
+}
+
+.numberText {
+  @extend %subtitle;
+  color: $_temporary-dark-text;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.overviewText {
+  @extend %subtitle;
+  text-decoration: underline;
+  color: $white;
+  text-align: left;
+  padding: 0 0 $sidebar-paddings;
+}
+
+.overviewTextWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.indexWrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: $sidebar-paddings;
+}
+
+.indexBar {
+  position: relative;
+  height: 22px;
+  width: 70%;
+  background-color: $white;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  .progressMark {
+    position: relative;
+    border: 1px solid $white;
+    height: 30px;
+    transition: all .3s ease;
+  }
+
+  .meanMark {
+    position: absolute;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid $white;
+    bottom: -6px;
+  }
+
+  .improvementArea {
+    position: relative;
+    height: 22px;
+    background-color: rgba($_temporary-dark-text, 0.9);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    transition: all .3s ease;
+  }
 }
