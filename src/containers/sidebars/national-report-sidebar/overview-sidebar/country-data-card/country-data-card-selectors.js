@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-
 const areaChartData = ({ chartData }) => chartData;
 
 const getAreaChartData = createSelector(

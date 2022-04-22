@@ -64,6 +64,7 @@ const NrcContainer = props => {
   return (
     <NrcComponent
       chartData={chartData}
+      // cambiar slug para ter/mar
       handleMapLoad={handleMapLoad}
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
