@@ -41,7 +41,10 @@ const CountrySceneComponent = ({
   setTooltipInfo,
   onboardingType,
   countryData,
+  chartData,
 }) => {
+
+  console.info('chartData on NRC Scene', chartData)
   return (
     <Scene
       sceneName={'nrc-scene'}

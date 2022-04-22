@@ -14,7 +14,7 @@ import * as urlActions from 'actions/url-actions';
 import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DATA, NATIONAL_REPORT_CARD } from 'router'
 import mapStateToProps from './nrc-scene-selectors';
-const actions = {...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
+const actions = { ...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
 
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
@@ -41,8 +41,6 @@ const NrcSceneContainer = (props) => {
       });
     }
   }, [countryISO, layerSlug]);
-
-  console.info('chartData', chartData)
 
   // Get country borders
   useEffect(() => {
@@ -77,7 +75,7 @@ const NrcSceneContainer = (props) => {
       // const { attributes: { GID_0 } } = graphic;
       // if (GID_0 === countryISO) return;
       const { browsePage } = props;
-      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW }});
+      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW } });
     }
   };
 
@@ -86,6 +84,8 @@ const NrcSceneContainer = (props) => {
       handleAreaClick={handleAreaClick}
       aoiTooltipInfo={tooltipInfo}
       setTooltipInfo={setTooltipInfo}
+      chartData={chartData}
+      // cambiar slug
       {...props}
     />
   )

@@ -21,7 +21,7 @@ const CountryDataCardComponent = ({
   const mockLandData = [
     {
       year: "1980",
-      species: [40, 30],
+      species: [40, 0],
       areas: [20, 10]
     },
     {
@@ -249,16 +249,27 @@ const CountryDataCardComponent = ({
                 </div>
               </div>
 
-              <div style={{ position: 'relative', width: '100%' }}>
-                <p style={{ color: 'gray', fontSize: '8px', left: -45, position: 'absolute', top: 50, transform: 'rotate(270deg)' }}>Species Protection Index</p>
+              <div className={styles.areaChartContainer}>
+                <p className={styles.areaChartYAxisLegend}>Species Protection Index</p>
                 <AreaChart
-                  area1={{ key: "species", stroke: "#8884d8" }}
-                  area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4 }}
+                  area1={{ key: "species", stroke: "#000000", strokeWidth: 0.5 }}
+                  area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4, strokeWidth: 1 }}
                   data={activeTab === 'land' ? mockLandData : mockMarineData}
                   height={200}
                   width={'100%'}
                 />
               </div>
+              <div className={styles.areaLegend}>
+                <div className={styles.areaLegendGroup}>
+                  <div className={styles.area1BoxLegend} />
+                  <p className={styles.areaChartLegendText}>SPI</p>
+                </div>
+                <div className={styles.areaLegendGroup}>
+                  <div className={styles.area2BoxLegend} />
+                  <p className={styles.areaChartLegendText}>Protected areas (%)</p>
+                </div>
+              </div>
+              <p className={styles.areaChartLegendText}>Source: Map Of Life, (Yale University).</p>
             </>
           )}
 
