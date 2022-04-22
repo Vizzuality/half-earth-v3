@@ -7,14 +7,13 @@ import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
 const CountryDataCardComponent = ({
   areaChartData,
-  chartData,
   countryData,
   countryDescription,
   handleInfoClick,
   indexStatement,
 }) => {
   console.log({ areaChartData })
-  console.log({ chartData })
+
 
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;

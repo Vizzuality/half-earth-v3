@@ -10,7 +10,6 @@ import EsriFeatureService from 'services/esri-feature-service';
 // Constants
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { NRC_TERRESTRIAL_SPI_DATA_LAYER, NRC_MARINE_SPI_DATA_LAYER } from 'constants/layers-urls';
-import { NRC_MARINE_SPI_DATA_LAYER as NRC_MARINE_SPI_DATA_LAYER_SLUG } from 'constants/layers-slugs';
 // Actions
 import countryDataActions from 'redux_modules/country-data';
 import * as urlActions from 'actions/url-actions';
@@ -44,27 +43,37 @@ const NrcContainer = props => {
     activateLayersOnLoad(map, activeLayers, layersConfig);
   }
 
-  const [chartData, setChartData] = useState(null);
-  const layerSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG;
-  const isoSlug = NRC_MARINE_SPI_DATA_LAYER_SLUG ? 'iso_ter1' : 'GID_0';
+  const [chartLandData, setChartLandData] = useState(null);
+  const [chartMarineData, setChartMarineData] = useState(null);
   useEffect(() => {
     if (countryISO) {
+
+
       EsriFeatureService.getFeatures({
-        url: layerSlug === NRC_MARINE_SPI_DATA_LAYER_SLUG ? NRC_MARINE_SPI_DATA_LAYER : NRC_TERRESTRIAL_SPI_DATA_LAYER,
-        whereClause: `${isoSlug} = '${countryISO}'`,
+        url: NRC_TERRESTRIAL_SPI_DATA_LAYER,
+        whereClause: `GID_0 = '${countryISO}'`,
         returnGeometry: false
       }).then(data => {
         if (data && data.length > 0) {
-          setChartData(data.map(r => r.attributes));
+          setChartLandData(data.map(r => r.attributes));
         }
       });
+      EsriFeatureService.getFeatures({
+        url: NRC_MARINE_SPI_DATA_LAYER,
+        whereClause: `GID_0 = '${countryISO}'`,
+        returnGeometry: false
+      }).then(data => {
+        if (data && data.length > 0) {
+          setChartMarineData(data.map(r => r.attributes));
+        }
+      });
+
     }
-  }, [countryISO, layerSlug]);
+  }, [countryISO]);
 
   return (
     <NrcComponent
-      chartData={chartData}
-      // cambiar slug para ter/mar
+      chartData={{ land: chartLandData, marine: chartMarineData }}
       handleMapLoad={handleMapLoad}
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
