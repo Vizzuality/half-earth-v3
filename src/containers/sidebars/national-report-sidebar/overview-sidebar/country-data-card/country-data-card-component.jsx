@@ -234,10 +234,13 @@ const CountryDataCardComponent = ({
               <div className={styles.switchAreaChart}>
                 <p className={styles.switchAreaChartText}>Evolution of SPI</p>
                 <div>
-                  {Object.keys(tabsData).map((key, index) => (
+                  {Object.keys(tabsData).map((key) => (
                     <button
                       key={key}
-                      className={key === activeTab ? styles.switchAreaChartActiveButton : styles.switchAreaChartButton}
+                      className={cx({
+                        [styles.switchAreaChartButton]: true,
+                        [styles.switchAreaChartActiveButton]: activeTab === key
+                      })}
                       onClick={() => setActiveTab(key)}
                     >
                       {tabsData[key].text}
@@ -246,13 +249,16 @@ const CountryDataCardComponent = ({
                 </div>
               </div>
 
-              <AreaChart
-                area1={{ key: "species", stroke: "#8884d8" }}
-                area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4 }}
-                data={activeTab === 'land' ? mockLandData : mockMarineData}
-                height={200}
-                width={'100%'}
-              />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <p style={{ color: 'gray', fontSize: '8px', left: -45, position: 'absolute', top: 50, transform: 'rotate(270deg)' }}>Species Protection Index</p>
+                <AreaChart
+                  area1={{ key: "species", stroke: "#8884d8" }}
+                  area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4 }}
+                  data={activeTab === 'land' ? mockLandData : mockMarineData}
+                  height={200}
+                  width={'100%'}
+                />
+              </div>
             </>
           )}
 

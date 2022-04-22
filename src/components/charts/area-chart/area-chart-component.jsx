@@ -15,6 +15,7 @@ const AreaChartComponent = ({
   data,
   strokeDasharray = 3,
   gridStrokeColor = '#A0AFB8',
+  tooltip = false,
   height,
   width,
 }) => {
@@ -48,7 +49,9 @@ const AreaChartComponent = ({
           <ReferenceLine y={25} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
           <XAxis dataKey="year" fontSize={9} tickLine={false} strokeWidth={0.5} />
           <YAxis axisLine={false} fontSize={9} tickLine={false} />
-          <Tooltip />
+          {tooltip && (
+            <Tooltip />
+          )}
           <Area
             type="monotone"
             dataKey={area1.key}

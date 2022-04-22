@@ -95,6 +95,7 @@
   color: $_temporary-dark-text;
   display: flex;
   justify-content: space-between;
+  margin: 15px 0 5px 2px;
   width: 100%;
 
   .switchAreaChartText {
@@ -102,13 +103,19 @@
   }
 
   .switchAreaChartButton {
-    border: 1px solid $_temporary-dark-text;
+    @extend %subtitle;
+    border: 1px solid #E9E9E9;
+    color: $_temporary-dark-text;
+    height: 30px;
+    text-transform: capitalize;
     opacity: 0.4;
+    width: 80px;
   }
 
   .switchAreaChartActiveButton {
+    @extend %subtitle;
     background-color: #E9E9E9;
-    color: $_temporary-dark-text;
+    opacity: 1;
   }
 }
 
