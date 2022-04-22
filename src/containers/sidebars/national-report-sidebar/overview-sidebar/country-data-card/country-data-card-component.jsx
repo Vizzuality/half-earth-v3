@@ -7,19 +7,27 @@ import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
 const CountryDataCardComponent = ({
   areaChartData,
-  SPI,
-  vertebratesCount,
+  chartData,
   countryData,
-  currentProtection,
   countryDescription,
-  endemicVertebratesCount,
   handleInfoClick,
   indexStatement,
 }) => {
   console.log({ areaChartData })
+  console.log({ chartData })
+
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
-  const { prop_protected_mar, nspecies_mar, SPI_mar, total_endemic_mar } = countryData;
+  const {
+    nspecies_mar,
+    prop_protected_mar,
+    prop_protected_ter,
+    SPI_ter, SPI_mar,
+    total_endemic_mar,
+    total_endemic_ter,
+    vertebratesCount
+  } = countryData;
+
   const mockLandData = [
     {
       year: "1980",
@@ -138,13 +146,13 @@ const CountryDataCardComponent = ({
           </div>
           <div className={styles.indexWrapper}>
             <div className={styles.indexBar}>
-              <div className={styles.progressMark} style={{ left: `${SPI}%` }} />
+              <div className={styles.progressMark} style={{ left: `${SPI_ter}%` }} />
               <div
                 className={styles.improvementArea}
-                style={{ left: `${SPI}%`, width: `${100 - SPI}%` }}
+                style={{ left: `${SPI_ter}%`, width: `${100 - SPI_ter}%` }}
               />
             </div>
-            <div className={styles.index}>{`${SPI}`}</div>
+            <div className={styles.index}>{`${SPI_ter}`}</div>
           </div>
           <p className={styles.indexStatement}>{indexStatement}</p>
         </section>
@@ -160,7 +168,7 @@ const CountryDataCardComponent = ({
                   styles.protectionNumber
                 )}
               >
-                <p className={styles.baseNumber}>{`${currentProtection}`}</p>
+                <p className={styles.baseNumber}>{`${prop_protected_ter.toFixed()}`}</p>
                 <p className={styles.numberText}>% of land</p>
                 <p className={styles.numberText}>currently protected</p>
               </div>
@@ -172,7 +180,7 @@ const CountryDataCardComponent = ({
               <div className={styles.indexBaseDataElement}>
                 <p
                   className={styles.baseNumber}
-                >{`${endemicVertebratesCount}`}</p>
+                >{`${total_endemic_ter}`}</p>
                 <p className={styles.numberText}>endemic land</p>
                 <p className={styles.numberText}>vertebrate species</p>
               </div>
@@ -186,23 +194,23 @@ const CountryDataCardComponent = ({
                   chartYPosition={60}
                   colors={["#A24033", "#E9E9E9"]}
                   data={[
-                    { name: "SPI Ter", value: SPI },
-                    { name: "Rest", value: 100 - SPI }
+                    { name: "SPI Ter", value: SPI_ter },
+                    { name: "Rest", value: 100 - SPI_ter }
                   ]}
                   height={130}
                   innerRadius={'80%'}
                   legendXPosition={53}
                   legendYPosition={58}
-                  legendValue={SPI}
+                  legendValue={SPI_ter}
                   legendText='LAND SPI'
                   outerRadius={'95%'}
                   width={120}
                 />
                 <div>
                   <p className={styles.legendText}>
-                    The Land SPI is calculated based on the <b>protected land ({currentProtection}%),</b>
+                    The Land SPI is calculated based on the <b>protected land ({prop_protected_ter.toFixed()}%),</b>
                     the <b>total of vertebrate species ({vertebratesCount})</b> and the amount of which
-                    of these are <b>endemic ({endemicVertebratesCount}).</b>
+                    of these are <b>endemic ({total_endemic_ter}).</b>
                   </p>
                 </div>
               </div>
@@ -226,7 +234,7 @@ const CountryDataCardComponent = ({
                 />
                 <div>
                   <p className={styles.legendText}>
-                    The Marine SPI is based on the  <b>protected marine areas ({prop_protected_mar}%),</b>
+                    The Marine SPI is based on the  <b>protected marine areas ({prop_protected_mar.toFixed()}%),</b>
                     the <b>total of marine mammals and fishes ({nspecies_mar})</b> species and the
                     amount of which of these are <b>endemic ({total_endemic_mar}).</b>
                   </p>
