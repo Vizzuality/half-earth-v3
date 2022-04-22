@@ -89,6 +89,29 @@
   margin: 0;
 }
 
+.switchAreaChart {
+  @extend %subtitle;
+  align-items: center;
+  color: $_temporary-dark-text;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .switchAreaChartText {
+    text-transform: uppercase;
+  }
+
+  .switchAreaChartButton {
+    border: 1px solid $_temporary-dark-text;
+    opacity: 0.4;
+  }
+
+  .switchAreaChartActiveButton {
+    background-color: #E9E9E9;
+    color: $_temporary-dark-text;
+  }
+}
+
 // styles used only when REACT_APP_FEATURE_MARINE is false
 .indexBaseNumbersWrapper {
   display: flex;

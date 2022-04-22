@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
@@ -15,9 +15,10 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
+  const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
   const { prop_protected_mar, nspecies_mar, SPI_mar, total_endemic_mar } = countryData;
-  const mockData = [
+  const mockLandData = [
     {
       year: "1980",
       species: [40, 30],
@@ -64,7 +65,65 @@ const CountryDataCardComponent = ({
       areas: [70, 50]
     }
   ];
-  console.log({ REACT_APP_FEATURE_MARINE })
+
+  const mockMarineData = [
+    {
+      year: "1980",
+      species: [20, 0],
+      areas: [30, 20]
+    },
+    {
+      year: "1985",
+      species: [79, 50],
+      areas: [40, 20]
+    },
+    {
+      year: "1990",
+      species: [50, 40],
+      areas: [20, 10]
+    },
+    {
+      year: "1995",
+      species: [59, 51],
+      areas: [25, 15]
+    },
+    {
+      year: "2000",
+      species: [65, 55],
+      areas: [60, 50]
+    },
+    {
+      year: "2005",
+      species: [80, 65],
+      areas: [40, 10]
+    },
+    {
+      year: "2010",
+      species: [70, 60],
+      areas: [30, 10]
+    },
+    {
+      year: "2015",
+      species: [55, 55],
+      areas: [60, 50]
+    },
+    {
+      year: "2020",
+      species: [70, 60],
+      areas: [80, 50]
+    }
+  ];
+
+  const tabsData = {
+    "land": {
+      text: "Land",
+      data: mockLandData,
+    },
+    "marine": {
+      text: "Marine",
+      data: mockMarineData,
+    },
+  };
 
   return (
     <div className={styles.container}>
@@ -172,10 +231,25 @@ const CountryDataCardComponent = ({
                 </div>
               </div>
 
+              <div className={styles.switchAreaChart}>
+                <p className={styles.switchAreaChartText}>Evolution of SPI</p>
+                <div>
+                  {Object.keys(tabsData).map((key, index) => (
+                    <button
+                      key={key}
+                      className={key === activeTab ? styles.switchAreaChartActiveButton : styles.switchAreaChartButton}
+                      onClick={() => setActiveTab(key)}
+                    >
+                      {tabsData[key].text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <AreaChart
                 area1={{ key: "species", stroke: "#8884d8" }}
                 area2={{ key: "areas", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4 }}
-                data={mockData}
+                data={activeTab === 'land' ? mockLandData : mockMarineData}
                 height={200}
                 width={'100%'}
               />
@@ -193,11 +267,11 @@ const CountryDataCardComponent = ({
             taxonomic groups.
           </p>
         </div>
-      </section>
+      </section >
       <section className={styles.descriptionWrapper}>
         <p>{`${countryDescription}`}</p>
       </section>
-    </div>
+    </div >
   );
 }
 
