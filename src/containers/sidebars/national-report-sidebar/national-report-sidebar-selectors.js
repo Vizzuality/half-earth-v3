@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { random } from 'lodash';
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 const SPECIES_COLOR = {
   birds: '#34BD92',
@@ -52,32 +53,32 @@ const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority]
 
 const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.SPI_ter;
+  return countryData[COUNTRY_ATTRIBUTES.SPI_ter];
 })
 
 const getCurrentProtection = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.prop_protected_ter));
+  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.prop_protected_ter]));
 })
 
 const getProtectionNeeded = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.protection_needed_ter));
+  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.protection_needed_ter]));
 })
 
 const getSPIMean = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.Global_SPI_ter));
+  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.Global_SPI_ter]));
 })
 
 const getNumberOfVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.nspecies_ter.toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.nspecies_ter].toLocaleString('en');
 })
 
 const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.total_endemic_ter.toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter].toLocaleString('en');
 })
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
