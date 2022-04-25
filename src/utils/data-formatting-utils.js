@@ -1,4 +1,5 @@
 import { format } from 'd3-format';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 export const currencyFormatting = format("$,.2f");
 export const localeFormatting = format(",.0f");
@@ -51,13 +52,13 @@ export const roundRangeInArea = (value) => {
 }
 
 export const countryChallengesChartFormats = {
-  Pop2020: value => localeFormatting(value),
+  [COUNTRY_ATTRIBUTES.Pop2020]: value => localeFormatting(value),
   GNI_PPP: value => `${currencyFormatting(value)} B`,
-  hm_vh_ter: value => `${percentageFormat(value)}%`,
-  prop_protected_ter: value => `${percentageFormat(value)}%`,
-  protection_needed_ter: value => `${percentageFormat(value)}%`,
-  total_endemic_ter: value => localeFormatting(value),
-  nspecies_ter: value => localeFormatting(value),
+  [COUNTRY_ATTRIBUTES.hm_vh_ter]: value => `${percentageFormat(value)}%`,
+  [COUNTRY_ATTRIBUTES.prop_protected_ter]: value => `${percentageFormat(value)}%`,
+  [COUNTRY_ATTRIBUTES.protection_needed_ter]: value => `${percentageFormat(value)}%`,
+  [COUNTRY_ATTRIBUTES.total_endemic_ter]: value => localeFormatting(value),
+  [COUNTRY_ATTRIBUTES.nspecies_ter]: value => localeFormatting(value),
 }
 
 export const countryChallengesSizes = (area) => {

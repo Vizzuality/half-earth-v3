@@ -1,10 +1,12 @@
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+
 export const INDICATOR_LABELS = {
-  'nspecies_ter': 'Number of vertebrate species',
-  'total_endemic_ter': 'Number of endemic vertebrate species',
-  'prop_protected_ter': 'Proportion of land protected',
-  'protection_needed_ter': 'Additional land protection needed',
-  'hm_vh_ter': 'Proportion of very high human modification',
-  'Pop2020': 'Population (2020)',
+  [COUNTRY_ATTRIBUTES.nspecies_ter]: 'Number of vertebrate species',
+  [COUNTRY_ATTRIBUTES.total_endemic_ter]: 'Number of endemic vertebrate species',
+  [COUNTRY_ATTRIBUTES.prop_protected_ter]: 'Proportion of land protected',
+  [COUNTRY_ATTRIBUTES.protection_needed_ter]: 'Additional land protection needed',
+  [COUNTRY_ATTRIBUTES.hm_vh_ter]: 'Proportion of very high human modification',
+  [COUNTRY_ATTRIBUTES.Pop2020]: `Population (${COUNTRY_ATTRIBUTES['2020']})`,
   'GNI_PPP': 'Gross National Income (GNI)',
 };
 
@@ -32,30 +34,30 @@ export const CONTINENT_COLORS = {
 export const FILTERS_DICTIONARY = {
   filter_continent: 'by continent',
   filter_neigh: 'by proximity',
-  filter_Area_Country: 'with similar area',
-  filter_Pop2020: 'with similar population size',
-  filter_prop_protected_ter: 'with similar proportion of protection',
-  filter_hm_vh_ter: 'with similar proportion of very high human encroachment',
-  filter_protection_needed_ter: 'with similar proportion of protection needed',
+  [`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]: 'with similar area',
+  [`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]: 'with similar population size',
+  [`filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`]: 'with similar proportion of protection',
+  [`filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`]: 'with similar proportion of very high human encroachment',
+  [`filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`]: 'with similar proportion of protection needed',
   filter_GNI_PPP: 'with similar Gross National Income',
-  filter_total_endemic_ter: 'with similar number of endemic species',
-  filter_nspecies_ter: 'with similar number of vertebrate species',
-  filter_SPI_ter: 'with similar species Protection Index',
+  [`filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`]: 'with similar number of endemic species',
+  [`filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`]: 'with similar number of vertebrate species',
+  [`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]: 'with similar species Protection Index',
   filter_steward: 'with shared stewardship'
 };
 
 export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
   {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent},
   {slug: 'filter_neigh', label: FILTERS_DICTIONARY.filter_neigh},
-  {slug: 'filter_Area_Country', label: FILTERS_DICTIONARY.filter_Area_Country},
-  {slug: 'filter_Pop2020', label: FILTERS_DICTIONARY.filter_Pop2020},
-  {slug: 'filter_prop_protected_ter', label: FILTERS_DICTIONARY.filter_prop_protected_ter},
-  {slug: 'filter_hm_vh_ter', label: FILTERS_DICTIONARY.filter_hm_vh_ter},
-  {slug: 'filter_protection_needed_ter', label: FILTERS_DICTIONARY.filter_protection_needed_ter},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.Area_Country}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.Pop2020}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`]},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`]},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`]},
   {slug: 'filter_GNI_PPP', label: FILTERS_DICTIONARY.filter_GNI_PPP},
-  {slug: 'filter_total_endemic_ter', label: FILTERS_DICTIONARY.filter_total_endemic_ter},
-  {slug: 'filter_nspecies_ter', label: FILTERS_DICTIONARY.filter_nspecies_ter},
-  {slug: 'filter_SPI_ter', label: FILTERS_DICTIONARY.filter_SPI_ter},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`]},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`]},
+  {slug: `filter_${COUNTRY_ATTRIBUTES.SPI_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]},
   {slug: 'filter_steward', label: FILTERS_DICTIONARY.filter_steward}
 ]
 
