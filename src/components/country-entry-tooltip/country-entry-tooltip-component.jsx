@@ -1,5 +1,6 @@
 // Dependencies
 import React, { useEffect, useState, useRef } from 'react';
+import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
 // Assets
@@ -22,11 +23,23 @@ const CountryEntryTooltipComponent = ({
   onboardingType,
   waitingInteraction,
 }) => {
-
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
-  const { spi, vertebrates, endemic, protection, protectionNeeded } =
+  const [activeTab, setActiveTab] = useState('land');
+
+  const {
+    spiLand,
+    spiMar,
+    landVertebrates,
+    marVertebrates,
+    endemicLand,
+    endemicMar,
+    protectionLand,
+    protectionMar,
+    protectionNeededLand,
+    protectionNeededMar
+  } =
     tooltipContent;
 
   // Create a new Popup to contain the tooltip
@@ -73,41 +86,72 @@ const CountryEntryTooltipComponent = ({
       onboardingStep,
       waitingInteraction,
     });
+
+  const tabsData = {
+    "land": {
+      text: "Land",
+    },
+    "marine": {
+      text: "Marine",
+    },
+  };
+
+  const landTab = activeTab === 'land';
+
   return tooltipPosition && tooltip ? (
     <>
       <div ref={tooltipref} className={styles.tooltipContainer}>
         <section className={styles.tooltipSection}>
-          <img
-            className={styles.tooltipFlag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-            alt=""
-          />
-          <span className={styles.tooltipName}>{countryName}</span>
+          <div>
+            <img
+              className={styles.tooltipFlag}
+              src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+              alt=""
+            />
+            <span className={styles.tooltipName}>{countryName}</span>
+          </div>
+          <div>
+            {Object.keys(tabsData).map((key) => (
+              <button
+                key={key}
+                className={cx({
+                  [styles.switchDataButton]: true,
+                  [styles.switchDataActiveButton]: activeTab === key
+                })}
+                onClick={() => setActiveTab(key)}
+              >
+                {tabsData[key].text}
+              </button>
+            ))}
+          </div>
         </section>
         <CloseIcon
           className={styles.tooltipClose}
           onClick={handleTooltipClose}
         />
         <section className={styles.spiInfo}>
-          <p className={styles.spi}>{spi}</p>
+          <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
           <p className={styles.subtitle}>National species protection index</p>
         </section>
         <section className={styles.countryInfo}>
           <div className={styles.infoPill}>
-            <span className={styles.numeric}>{vertebrates}</span>
+            <span className={styles.numeric}>{landTab ? landVertebrates : marVertebrates}</span>
             <span className={styles.text}>
-              land vertebrate species of which{' '}
-              <span className={styles.endemic}>{`${endemic}`}</span> are endemic
+              {`${landTab ? 'land' : 'marine'} vertebrate species of which`}
+              {' '}
+              <span className={styles.endemic}>{landTab ? endemicLand : endemicMar}</span> are endemic
             </span>
           </div>
           <div className={styles.infoPill}>
-            <span className={styles.numeric}>{protection}%</span>
-            <span className={styles.text}>land is protected</span>
+            <span className={styles.numeric}>{landTab ? protectionLand : protectionMar}%</span>
+            <span className={styles.text}>
+              {`${landTab ? 'land' : 'marine'} is protected`}
+            </span>
           </div>
           <div className={styles.infoPill}>
-            <span className={styles.numeric}>{protectionNeeded}%</span>
+            <span className={styles.numeric}>{landTab ? protectionNeededLand : protectionNeededMar}%</span>
             <span className={styles.text}>
-              of additional land protection is needed
+              {`of additional ${landTab ? 'land' : 'marine'} protection is needed`}
             </span>
           </div>
         </section>
@@ -119,7 +163,7 @@ const CountryEntryTooltipComponent = ({
             className={styles.tooltipExplore}
             onClick={onExploreCountryClick}
           >
-            explore
+            national report card
           </button>
         </motion.div>
       </div>
