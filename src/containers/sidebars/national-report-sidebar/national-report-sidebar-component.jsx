@@ -30,6 +30,7 @@ import {
 } from 'constants/ui-params';
 
 const NationalReportSidebarComponent = ({
+  chartData,
   className,
   countryISO,
   countryData,
@@ -115,6 +116,7 @@ const NationalReportSidebarComponent = ({
         <div className={styles.scrollableArea}>
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW && (
             <OverviewSidebar
+              chartData={chartData}
               countryISO={countryISO}
               openedModal={openedModal}
               map={map}

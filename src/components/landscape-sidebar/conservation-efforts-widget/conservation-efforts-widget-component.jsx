@@ -32,7 +32,6 @@ const ConservationEffortsWidget = ({
   loading,
 }) => {
   const noData = !loading && !rawData;
-
   return (
     <>
       <div

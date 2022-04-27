@@ -19,6 +19,7 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCard = ({
   countryISO,
+  chartData,
   userConfig,
   openedModal,
   countryName,
@@ -47,6 +48,7 @@ const NationalReportCard = ({
         onboardingType={onboardingType}
       />
       <NationalReportSidebar
+        chartData={chartData}
         countryISO={countryISO}
         countryName={countryName}
         openedModal={openedModal}
@@ -61,6 +63,7 @@ const NationalReportCard = ({
         waitingInteraction={waitingInteraction}
       />
       <NationalReportCardScene
+        chartData={chartData}
         countryISO={countryISO}
         userConfig={userConfig}
         openedModal={openedModal}
