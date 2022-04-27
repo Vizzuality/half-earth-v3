@@ -13,10 +13,12 @@ const { REACT_APP_FEATURE_ONBOARDING } = process.env;
 
 export const routes = {
   ...(REACT_APP_FEATURE_ONBOARDING === 'true' ?
-    { [LANDING]: {
-      path: '/',
-      page: 'landing'
-    }}
+    {
+      [LANDING]: {
+        path: '/',
+        page: 'landing'
+      }
+    }
     : {}),
   [DATA]: {
     path: '/dataGlobe',
@@ -51,5 +53,7 @@ const options = {
     stringify: encodeStateForUrl
   },
 }
+
+
 
 export default connectRoutes(routes, options);

@@ -5,15 +5,14 @@ import Component from './nrc-scene-component';
 import EsriFeatureService from 'services/esri-feature-service';
 // Constants
 import { COUNTRIES_GEOMETRIES_SERVICE_URL } from 'constants/layers-urls';
-import { LOCAL_SCENE_TABS_SLUGS } from "constants/ui-params";
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 // Actions
 import countriesGeometriesActions from 'redux_modules/countries-geometries';
 import * as urlActions from 'actions/url-actions';
 import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-actions';
 import { DATA, NATIONAL_REPORT_CARD } from 'router'
-
 import mapStateToProps from './nrc-scene-selectors';
-const actions = {...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
+const actions = { ...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
 
 const NrcSceneContainer = (props) => {
   const {
@@ -21,7 +20,6 @@ const NrcSceneContainer = (props) => {
     setCountryBorderReady,
     visitCountryReportCardAnalyticsEvent
   } = props;
-
   const [tooltipInfo, setTooltipInfo] = useState(null);
 
   // Get country borders
@@ -57,7 +55,7 @@ const NrcSceneContainer = (props) => {
       // const { attributes: { GID_0 } } = graphic;
       // if (GID_0 === countryISO) return;
       const { browsePage } = props;
-      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW }});
+      browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: graphic.attributes.GID_0, view: LOCAL_SCENE_TABS_SLUGS.OVERVIEW } });
     }
   };
 

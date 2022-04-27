@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useMemo } from 'react';
+import React from 'react';
 // Components
 import Scene from 'components/scene';
 import CountryEntryTooltip from 'components/country-entry-tooltip';

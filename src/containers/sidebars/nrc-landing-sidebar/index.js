@@ -15,8 +15,6 @@ const Container = (props) => {
     activeLayers,
   } = props;
 
-  console.log({ changeGlobe, activeLayers })
-
   const [selectedLayers, setSelectedLayers] = useState([]);
   const [protectionMetadataSource, setProtectionsMetadataSource] = useState(null);
 

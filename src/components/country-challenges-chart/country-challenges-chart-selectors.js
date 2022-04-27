@@ -7,6 +7,7 @@ import {
   INDICATOR_LABELS,
   CHALLENGES_RELATED_FILTERS_OPTIONS,
 } from 'constants/country-mode-constants';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
@@ -23,17 +24,17 @@ const getScatterplotRawData = createSelector(
         name: country.NAME_0,
         color: CONTINENT_COLORS[country.continent] || '#fff',
         iso: country.GID_0,
-        size: countryChallengesSizes(country.AREA_KM2),
+        size: countryChallengesSizes(country[COUNTRY_ATTRIBUTES.Area_Country]),
         xAxisValues: {
-          Population2016: country.Population2016,
+          [COUNTRY_ATTRIBUTES.Pop2020]: country[COUNTRY_ATTRIBUTES.Pop2020],
           GNI_PPP: country.GNI_PPP,
-          prop_hm_very_high: country.prop_hm_very_high,
-          prop_protected: country.prop_protected,
-          protection_needed: country.protection_needed,
-          total_endemic: country.total_endemic,
-          N_SPECIES: country.N_SPECIES
+          [COUNTRY_ATTRIBUTES.hm_vh_ter]: country[COUNTRY_ATTRIBUTES.hm_vh_ter],
+          [COUNTRY_ATTRIBUTES.prop_protected_ter]: country[COUNTRY_ATTRIBUTES.prop_protected_ter],
+          [COUNTRY_ATTRIBUTES.protection_needed_ter]: country[COUNTRY_ATTRIBUTES.protection_needed_ter],
+          [COUNTRY_ATTRIBUTES.total_endemic_ter]: country[COUNTRY_ATTRIBUTES.total_endemic_ter],
+          [COUNTRY_ATTRIBUTES.nspecies_ter]: country[COUNTRY_ATTRIBUTES.nspecies_ter]
         },
-        yAxisValue: country.SPI
+        yAxisValue: country[COUNTRY_ATTRIBUTES.SPI_ter]
       }
         }).sort((a, b) => (b.size - a.size))
   }
@@ -54,7 +55,7 @@ const getSelectedCountryRelations = createSelector(
   [selectCountriesData, selectCountryIso],
   (countriesData, selectedCountryIso) => {
     if (!countriesData || !selectedCountryIso) return null;
-    return JSON.parse(countriesData[selectedCountryIso].filter_similar)
+    return JSON.parse(countriesData[selectedCountryIso][`filter_${COUNTRY_ATTRIBUTES.similar_ter}`])
   }
 )
 
@@ -84,11 +85,11 @@ const getChallengesFilterOptions = createSelector(
   (keys) => {
     if (!keys) return [];
     const indicatorDependantOptions = [
-      'filter_Population2016',
-      'filter_prop_hm_very_high',
+      `filter_${COUNTRY_ATTRIBUTES.Pop2020}`,
+      `filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`,
       'filter_GNI_PPP',
-      'filter_total_endemic',
-      'filter_N_SPECIES'
+      `filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`,
+      `filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`
     ];
 
     return CHALLENGES_RELATED_FILTERS_OPTIONS.filter((option) => {

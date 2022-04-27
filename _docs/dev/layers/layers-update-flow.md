@@ -9,11 +9,11 @@ permalink: /_docs/dev/layers/add-update
 
 # Layers update flow.
 
-Adding layers to the project is just a matter of following some steps to create the proper entry in the `layersConfig` object. This config will be consumed by the code that will take care of creating and adding the layers to the globe (that is the `createLayer` and `addLayerToMap` functions on `utils/layer-manager-utils`).  
-In order to add a layer to the config we need to create some `constants` that will build up the needed data structure.  
+Adding layers to the project is just a matter of following some steps to create the proper entry in the `layersConfig` object. This config will be consumed by the code that will take care of creating and adding the layers to the globe (that is the `createLayer` and `addLayerToMap` functions on `utils/layer-manager-utils`).
+In order to add a layer to the config we need to create some `constants` that will build up the needed data structure.
 Lets explain the steps with an example on how we would add a layer with fishes priority data 🐟 🐠
 
-- Create a new layer slug on the `constants/layers-slugs` for the layer to be added. This `slug` needs to be shared with the science team people of the project in order to add layer metadata to the metadata service.  
+- Create a new layer slug on the `constants/layers-slugs` for the layer to be added. This `slug` needs to be shared with the science team people of the project in order to add layer metadata to the metadata service.
 
     ```js
     export const FISHES_PRIORITY = 'fishes-priority';
@@ -28,8 +28,8 @@ Lets explain the steps with an example on how we would add a layer with fishes p
       [FISHES_PRIORITY]: 'https://tiles.arcgis.com/tiles/arcgis/rest/services/Global_marine_fish_prioritisation_TL/MapServer'
     }
     ```
-- First of all we need to know if the type of layer we want to add is already present on the `LAYER_TYPES` constant on the `constants/layers-config` file.  
-Find [in this link](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html){:target="_blank"} the list of the available layer types on the ArcGIS js API.  
+- First of all we need to know if the type of layer we want to add is already present on the `LAYER_TYPES` constant on the `constants/mol-layers-config` file.
+Find [in this link](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html){:target="_blank"} the list of the available layer types on the ArcGIS js API.
 These are the layer types we are currently using in the platform:
     ```js
     const LAYER_TYPES = {
@@ -38,7 +38,7 @@ These are the layer types we are currently using in the platform:
       VECTOR_TILE_LAYER: 'VectorTileLayer'
     }
     ```
-- Now we are ready to add the layer to the `layerConfig` on `constants/layers-config`. We first need to `import` the layer slug and layers urls to then create the entry for the layer on the config object. 
+- Now we are ready to add the layer to the `layerConfig` on `constants/mol-layers-config`. We first need to `import` the layer slug and layers urls to then create the entry for the layer on the config object.
     ```js
     import {
       FISHES_PRIORITY

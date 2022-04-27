@@ -15,7 +15,12 @@ const OverviewSidebarComponent = ({
   birds,
   mammals,
   reptiles,
+  fishes,
+  fishesEndemic,
+  mammalsMar,
+  mammalsMarEndemic,
   amphibians,
+  chartData,
   countryISO,
   countryName,
   countryData,
@@ -44,6 +49,7 @@ const OverviewSidebarComponent = ({
       <CountryDataCard
         SPI={SPI}
         mean={mean}
+        chartData={chartData}
         countryISO={countryISO}
         countryName={countryName}
         countryData={countryData}
@@ -68,6 +74,10 @@ const OverviewSidebarComponent = ({
         birds={birds}
         mammals={mammals}
         reptiles={reptiles}
+        fishes={fishes}
+        fishesEndemic={fishesEndemic}
+        mammalsMar={mammalsMar}
+        mammalsMarEndemic={mammalsMarEndemic}
         amphibians={amphibians}
         countryISO={countryISO}
         countryName={countryName}

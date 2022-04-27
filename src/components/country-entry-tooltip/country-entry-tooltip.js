@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
 // Constants
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+
 import * as urlActions from 'actions/url-actions';
 import { enterNrcAnalytics } from 'actions/google-analytics-actions';
 import Component from './country-entry-tooltip-component';
@@ -32,11 +34,11 @@ const CountryEntryTooltipContainer = props => {
           setTooltipPosition(geometry);
           setTooltipIsVisible(true);
           setContent({
-            spi: attributes.SPI,
-            vertebrates: attributes.N_SPECIES,
-            endemic: attributes.total_endemic,
-            protection: attributes.prop_protected,
-            protectionNeeded: attributes.protection_needed
+            spi: attributes.SPI_ter,
+            vertebrates: attributes[COUNTRY_ATTRIBUTES.nspecies_ter],
+            endemic: attributes[COUNTRY_ATTRIBUTES.total_endemic_ter],
+            protection: attributes[COUNTRY_ATTRIBUTES.prop_protected_ter],
+            protectionNeeded: attributes[COUNTRY_ATTRIBUTES.protection_needed_ter]
           });
         }
       })

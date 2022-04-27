@@ -3,6 +3,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   ELU_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/biodiversity';
@@ -70,7 +71,7 @@ function getAreaPressures(data) {
   }), {});
 }
 
-const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes.SUM;
+const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes[COUNTRY_ATTRIBUTES.Pop2020_SUM];
 
 const getProtectedAreasList = (data) => (
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map(f => ({
