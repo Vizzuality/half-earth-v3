@@ -46,6 +46,7 @@ export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_h
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const MASK_LAYER = 'mask-layer';
 export const GLOBAL_SPI_FEATURE_LAYER = 'spi-feature-layer';
+export const MARINE_SPI_FEATURE_LAYER = 'marine-spi-feature-layer';
 ///
 
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'nrc-spi-terrestrial';
