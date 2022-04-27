@@ -109,7 +109,7 @@ export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvc
 export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/f0493450b8b64a79b30acbd0f42c246c/rest/services/Marine_SPI_NRCs_20220323/FeatureServer/0';
 
 export const LAYERS_URLS = {
-  [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_global_spi_terrestrial/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
+  [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_20220426/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois_prod/FeatureServer/0',
   [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:

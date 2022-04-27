@@ -28,7 +28,6 @@ const Component = ({
   changeUI,
   reference,
 }) => {
-
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
