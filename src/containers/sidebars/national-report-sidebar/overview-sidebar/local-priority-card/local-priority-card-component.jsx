@@ -9,7 +9,7 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COUNTRY_PRIORITY_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
-  TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
   LAND_COUNTRY_PRIORITY_LAYER,
   MARINE_COUNTRY_PRIORITY_LAYER,
@@ -47,11 +47,11 @@ const LocalPriorityCardComponent = (props) => {
       slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
       metadataTitle: 'Protected areas',
     },
-    [TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
+    [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: {
       name: `Land protected areas : ${currentProtection}%`,
-      value: TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER,
-      id: TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER,
-      title: TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      value: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
+      id: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
+      title: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
       slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
       metadataTitle: 'Land protected areas',
     },
@@ -109,11 +109,9 @@ const LocalPriorityCardComponent = (props) => {
             <LayerToggle
               map={map}
               type="checkbox"
-              option={
-                NRC_TOGGLES[TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER]
-              }
+              option={NRC_TOGGLES[TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]}
               variant="dark"
-              key={TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER}
+              key={TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER}
               activeLayers={activeLayers}
               onChange={handleLayerToggle}
               themeCategorySlug={PROTECTION_SLUG}
