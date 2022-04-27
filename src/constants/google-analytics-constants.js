@@ -21,7 +21,6 @@ export const ACTIONS = {
   OPEN_HISTORY: 'Open AOI history',
   PRECOMPUTED_AOI: 'Selects predefined geometry',
   SEARCH_SPECIES: 'Select species in search',
-  TOGGLE_LAYER: 'Toggle layer',
   SHARE_AOI: 'Share AOI',
   // NRC
   CLICK_ON_COUNTRY: 'Click on Country (open map tooltip)',
