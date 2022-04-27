@@ -2,6 +2,10 @@
 export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged-protected';
 export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
+
+export const TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER = 'terrestrial_protected_areas_vector_tile_layer';
+export const MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER = 'marine_protected_areas_vector_tile_layer';
+
 export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
 export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
@@ -12,12 +16,17 @@ export const RAISIG_AREAS_VECTOR_TILE_LAYER = 'RAISIG_areas_vector_tile_layer';
 // Future places layers
 export const HALF_EARTH_FUTURE_TILE_LAYER = 'WDPA_20_vector_tile_places';
 export const HALF_EARTH_FUTURE_WDPA_LAYER = 'WDPA_20_feature_places';
+export const HALF_EARTH_FUTURE_METADATA_SLUG = 'places-future';
 
 // Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';
 export const COUNTRY_PRIORITY_LAYER = 'country_priority_layer';
+
+export const LAND_COUNTRY_PRIORITY_LAYER = 'land_country_priority_layer';
+export const MARINE_COUNTRY_PRIORITY_LAYER = 'marine_country_priority_layer';
+
 // Terrestrial human pressures tiled layers.
 export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures'
 export const LAND_HUMAN_PRESSURES = 'land_human_pressures'
@@ -138,3 +147,5 @@ export const AMPHIBIAN_LOOKUP = 'amphibians-lookup-table';
 export const BIRDS_LOOKUP = 'birds-lookup-table';
 export const MAMMALS_LOOKUP = 'mammals-lookup-table';
 export const REPTILES_LOOKUP = 'reptiles-lookup-table';
+
+export const EEZ_MARINE_BORDERS = 'eez-marine-borders';

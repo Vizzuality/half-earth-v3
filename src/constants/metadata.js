@@ -33,12 +33,17 @@ import {
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   COUNTRY_PRIORITY_LAYER,
+  LAND_COUNTRY_PRIORITY_LAYER,
+  MARINE_COUNTRY_PRIORITY_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   MARINE_AND_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
   MERGED_LAND_HUMAN_PRESSURES,
-  HALF_EARTH_FUTURE_TILE_LAYER
+  HALF_EARTH_FUTURE_METADATA_SLUG,
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER
  } from 'constants/layers-slugs';
 
 export const SPECIES_PROTECTION_INDEX = 'spi-def';
@@ -212,6 +217,14 @@ export default {
     slug: COUNTRY_PRIORITY_LAYER,
     title: 'Protection needed'
   },
+  [LAND_COUNTRY_PRIORITY_LAYER]: {
+    slug: COUNTRY_PRIORITY_LAYER,
+    title: 'Land protection needed'
+  },
+  [MARINE_COUNTRY_PRIORITY_LAYER]: {
+    slug: COUNTRY_PRIORITY_LAYER,
+    title: 'Marine protection needed'
+  },
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: {
     slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     title: 'Community-based protected areas'
@@ -220,12 +233,20 @@ export default {
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     title: 'Protected areas'
   },
+  [TERRESTRIAL_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
+    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+    title: 'Terrestrial protected areas'
+  },
+  [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
+    slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
+    title: 'Marine protected areas'
+  },
   [MARINE_AND_LAND_HUMAN_PRESSURES]: {
     slug: MARINE_AND_LAND_HUMAN_PRESSURES,
     title: 'Marine and land human pressures'
   },
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
-    slug: HALF_EARTH_FUTURE_TILE_LAYER,
+    slug: HALF_EARTH_FUTURE_METADATA_SLUG,
     title: 'Places for a Half-Earth Future'
   }
 };
