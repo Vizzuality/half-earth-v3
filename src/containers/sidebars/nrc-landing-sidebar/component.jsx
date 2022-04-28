@@ -25,7 +25,6 @@ const NRCLandingSidebar = ({
   view,
   waitingInteraction,
 }) => {
-
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
@@ -68,7 +67,6 @@ const NRCLandingSidebar = ({
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
-      {console.log({ activeLayers })}
       <div className={styles.toggleContainer}>
         {NRCLandingLayers.map((layer) => (
           <LayerToggle

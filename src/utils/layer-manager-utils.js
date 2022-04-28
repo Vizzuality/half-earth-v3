@@ -1,7 +1,7 @@
 import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import intersection from 'lodash/intersection';
 import { loadModules } from 'esri-loader';
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig} from 'constants/mol-layers-configs';
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
 
 // LEGAGY
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
@@ -32,21 +32,21 @@ export const layerManagerToggle = (layerTitle, activeLayers, callback, category)
   const isActive = activeLayers && activeLayers.some(l => l.title === title);
   if (isActive) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
-    callback({activeLayers: updatedLayers });
+    callback({ activeLayers: updatedLayers });
   } else if (category === LAYERS_CATEGORIES.LAND_PRESSURES) {
     const groupLayer = activeLayers.find(l => l.category === LAYERS_CATEGORIES.LAND_PRESSURES);
     const groupOpacity = groupLayer && groupLayer.opacity;
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: groupOpacity || DEFAULT_OPACITY }].concat(activeLayers) })
-      : callback({ activeLayers: [ { title, category, opacity: groupOpacity || DEFAULT_OPACITY }] });
+      : callback({ activeLayers: [{ title, category, opacity: groupOpacity || DEFAULT_OPACITY }] });
   } else {
     activeLayers
       ? callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
-      : callback({ activeLayers: [ { title, category, opacity: DEFAULT_OPACITY }] });
+      : callback({ activeLayers: [{ title, category, opacity: DEFAULT_OPACITY }] });
   }
 };
 
-export const addLayerToActiveLayers =  (
+export const addLayerToActiveLayers = (
   slug,
   activeLayers,
   callback,
@@ -81,27 +81,27 @@ export const layerManagerVisibility = (layerTitle, visible, activeLayers, callba
   if (isActive && visible) return;
   if (isActive && !visible) {
     const updatedLayers = activeLayers.filter(l => l.title !== title);
-    callback({activeLayers: updatedLayers });
+    callback({ activeLayers: updatedLayers });
   } else {
     activeLayers
       ? callback({ activeLayers: [{ title, opacity: DEFAULT_OPACITY }].concat(activeLayers) })
-      : callback({ activeLayers: [ { title, opacity: DEFAULT_OPACITY }] });
+      : callback({ activeLayers: [{ title, opacity: DEFAULT_OPACITY }] });
   }
 };
 
 export const batchSetLayerManagerOpacity = (layerNamesArray, opacity, activeLayers, callback) => {
   const setOpacity = (layer) => layerNamesArray.includes(layer.title) ? { ...layer, opacity } : layer;
-  callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
+  callback({ activeLayers: [...activeLayers.map(setOpacity)] });
 };
 
 export const layerManagerOpacity = (layerTitle, opacity, activeLayers, callback) => {
   const setOpacity = (layer) => layer.title === layerTitle ? { ...layer, opacity } : layer;
-  callback({ activeLayers: [ ...activeLayers.map(setOpacity) ]});
+  callback({ activeLayers: [...activeLayers.map(setOpacity)] });
 };
 
 export const layerManagerOrder = (legendLayers, activeLayers, callback) => {
   const updatedLayers = activeLayers.filter(({ title }) => LEGEND_FREE_LAYERS.some(layer => layer === title));
-  legendLayers.forEach((d) => { updatedLayers.push(activeLayers.find(({ title }) => d === title )) });
+  legendLayers.forEach((d) => { updatedLayers.push(activeLayers.find(({ title }) => d === title)) });
   callback({ activeLayers: updatedLayers });
 };
 
@@ -143,13 +143,13 @@ export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.t
 
 export const activateLayersOnLoad = (map, activeLayers, config) => {
   const activeLayerIDs = activeLayers.map(({ title }) => title);
-    activeLayerIDs.forEach(async layerName => {
-      const layerConfig = config[layerName];
-      if (layerConfig) {
-        const newLayer = await createLayer(layerConfig, map);
-        addLayerToMap(newLayer, map);
-      }
-    });
+  activeLayerIDs.forEach(async layerName => {
+    const layerConfig = config[layerName];
+    if (layerConfig) {
+      const newLayer = await createLayer(layerConfig, map);
+      addLayerToMap(newLayer, map);
+    }
+  });
 }
 
 const handleLayerCreation = async (layerConfig, map) => {
@@ -168,7 +168,7 @@ export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
   }
 }
 
-export const setBasemap = async ({map, surfaceColor, layersArray}) => {
+export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
   map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(layersArray.map(async layer => await createLayer(layersConfig[layer])));
   loadModules(["esri/Basemap"]).then(([Basemap]) => {
@@ -191,8 +191,8 @@ export const flyToLayerExtent = (bbox, view) => {
     const target = new Extent({
       xmin, xmax, ymin, ymax
     })
-    view.goTo({target})
-      .catch(function(error) {
+    view.goTo({ target })
+      .catch(function (error) {
         // Avoid displaying console errors when transition is aborted by user interacions
         if (error.name !== "AbortError") {
           console.error(error);
@@ -212,7 +212,7 @@ export const batchLayerManagerToggle = (layerNamesArray, activeLayers, callback,
       removeLayerAnalyticsEvent({ slug: title });
       return [...acc.filter(l => l.title !== title)];
     }, activeLayers);
-    callback({activeLayers: updatedLayers });
+    callback({ activeLayers: updatedLayers });
   } else {
     const layersToAdd = layerNamesArray.map(title => {
       addLayerAnalyticsEvent({ slug: title });
