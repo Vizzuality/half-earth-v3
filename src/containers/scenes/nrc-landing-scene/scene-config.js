@@ -1,14 +1,14 @@
 import {
     GRAPHIC_LAYER,
     GLOBAL_SPI_FEATURE_LAYER,
-    // MARINE_SPI_FEATURE_LAYER,
+    MARINE_SPI_FEATURE_LAYER,
     CITIES_LABELS_LAYER,
     COUNTRIES_LABELS_FEATURE_LAYER,
     LANDSCAPE_FEATURES_LABELS_LAYER,
     COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   } from 'constants/layers-slugs';
 
-  // const { REACT_APP_FEATURE_MARINE } = process.env;
+  const { REACT_APP_FEATURE_MARINE } = process.env;
 
   export default {
     globe: {
@@ -19,7 +19,7 @@ import {
         { title: LANDSCAPE_FEATURES_LABELS_LAYER },
         { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
         { title: GLOBAL_SPI_FEATURE_LAYER },
-        // ...(REACT_APP_FEATURE_MARINE ? [{ title: MARINE_SPI_FEATURE_LAYER }] : [])
+        ...(REACT_APP_FEATURE_MARINE ? [{ title: MARINE_SPI_FEATURE_LAYER }] : [])
       ],
       zoom: 3.8,
       padding: {
