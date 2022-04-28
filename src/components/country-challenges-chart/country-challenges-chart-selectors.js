@@ -1,11 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
-import { getCountryChallengesSelectedFilter } from 'pages/nrc/nrc-selectors';
+import { getCountryChallengesSelectedFilter, getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import {
   INDICATOR_LABELS,
   CHALLENGES_RELATED_FILTERS_OPTIONS,
+  LAND_MARINE_OPTIONS
 } from 'constants/country-mode-constants';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
@@ -99,9 +100,16 @@ const getChallengesFilterOptions = createSelector(
   }
 );
 
+const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
+
 const getSelectedFilterOption = createSelector(
   getCountryChallengesSelectedFilter,
   selectedFilter => CHALLENGES_RELATED_FILTERS_OPTIONS.find(option => option.slug === selectedFilter)
+);
+
+const getSelectedLandMarineOption = createSelector(
+  getLandMarineSelected,
+  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection) || LAND_MARINE_OPTIONS.find(option => option.slug === 'land')
 );
 
 
@@ -134,7 +142,9 @@ const mapStateToProps = createStructuredSelector({
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
   selectedFilterOption: getSelectedFilterOption,
-  challengesFilterOptions: getChallengesFilterOptions
+  selectedLandMarineOption: getSelectedLandMarineOption,
+  challengesFilterOptions: getChallengesFilterOptions,
+  landMarineOptions: getLandMarineOptions
 });
 
 export default mapStateToProps;

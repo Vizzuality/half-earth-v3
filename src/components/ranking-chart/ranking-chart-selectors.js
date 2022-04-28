@@ -3,6 +3,8 @@ import sortBy from 'lodash/sortBy';
 import get from 'lodash/get';
 import { SORT_OPTIONS, RANKING_INDICATORS, RANKING_GROUPS_SLUGS, RANKING_INDICATOR_GROUPS } from 'constants/country-mode-constants';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { LAND_MARINE_OPTIONS } from 'constants/country-mode-constants';
+import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getSortRankingCategory = ({ location }) => (location && get(location, 'query.ui.sortRankingCategory')) || null;
@@ -53,9 +55,18 @@ const getSelectedFilterOption = createSelector([getSortRankingCategory], (sortRa
   return SORT_OPTIONS.find(o => o.slug === sortRankingCategory.slug) || SORT_OPTIONS[0];
 });
 
+const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
+
+const getSelectedLandMarineOption = createSelector(
+  getLandMarineSelected,
+  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection) || LAND_MARINE_OPTIONS.find(option => option.slug === 'land')
+);
+
 const mapStateToProps = createStructuredSelector({
   data: getSortedData,
   selectedFilterOption: getSelectedFilterOption,
+  selectedLandMarineOption: getSelectedLandMarineOption,
+  landMarineOptions: getLandMarineOptions
 });
 
 export default mapStateToProps;

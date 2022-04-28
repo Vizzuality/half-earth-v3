@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
 import SearchInput from 'components/search-input';
-import Dropdown from "components/dropdown";
+import Dropdown from 'components/dropdown';
 import styles from './ranking-chart-styles.module.scss';
 import {
   SORT_GROUPS,
@@ -12,7 +12,9 @@ import {
   RANKING_LEGEND,
   SORT_GROUPS_SLUGS,
   RANKING_HEADER_LABELS,
-} from "constants/country-mode-constants";
+} from 'constants/country-mode-constants';
+
+const { REACT_APP_FEATURE_MARINE } = process.env;
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
 const RankingChart = ({
@@ -25,6 +27,9 @@ const RankingChart = ({
   handleCountryClick,
   scrollIndex,
   searchTerm,
+  landMarineOptions,
+  selectedLandMarineOption,
+  handleLandMarineSelection,
 }) => {
   const [hasScrolled, changeHasScrolled] = useState(false);
 
@@ -89,17 +94,47 @@ const RankingChart = ({
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        <span className={styles.chartTitle}>Sort countries by</span>
-        <div className={styles.dropdownWrapper}>
-          <Dropdown
-            width="full"
-            parentWidth="410px"
-            options={SORT_OPTIONS}
-            groups={SORT_GROUPS}
-            selectedOption={selectedFilterOption}
-            handleOptionSelection={handleFilterSelection}
-          />
-        </div>
+        {REACT_APP_FEATURE_MARINE ? (
+          <>
+            <span className={styles.chartTitle}>Show</span>
+            <div className={styles.landMarineDropdownWrapper}>
+              <Dropdown
+                width="full"
+                parentWidth="130px"
+                options={landMarineOptions}
+                selectedOption={selectedLandMarineOption}
+                handleOptionSelection={handleLandMarineSelection}
+              />
+            </div>
+            <span className={cx(styles.chartTitle, styles.filterTitle)}>
+              sort countries
+            </span>
+            <div className={styles.dropdownWrapper}>
+              <Dropdown
+                width="full"
+                parentWidth="410px"
+                options={SORT_OPTIONS}
+                groups={SORT_GROUPS}
+                selectedOption={selectedFilterOption}
+                handleOptionSelection={handleFilterSelection}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <span className={styles.chartTitle}>Sort countries by</span>
+            <div className={styles.dropdownWrapper}>
+              <Dropdown
+                width="full"
+                parentWidth="410px"
+                options={SORT_OPTIONS}
+                groups={SORT_GROUPS}
+                selectedOption={selectedFilterOption}
+                handleOptionSelection={handleFilterSelection}
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className={styles.header}>
         <SearchInput
@@ -113,11 +148,14 @@ const RankingChart = ({
           <div
             key={category}
             className={cx(styles.headerItem, {
-              [styles.spiHeader]: category === 'spi'
+              [styles.spiHeader]: category === 'spi',
             })}
           >
-            {RANKING_HEADER_LABELS[category].split(" ").map(word => (
-              <p key={word} className={styles.titleText}>{`${word.toUpperCase()}`}</p>
+            {RANKING_HEADER_LABELS[category].split(' ').map((word) => (
+              <p
+                key={word}
+                className={styles.titleText}
+              >{`${word.toUpperCase()}`}</p>
             ))}
           </div>
         ))}
@@ -132,10 +170,12 @@ const RankingChart = ({
         >
           <div className={styles.table}>
             {data.map((d, i) => (
-              <div className={cx(styles.row, {
-                [styles.selectedCountry]: countryISO === d.iso,
-              }
-              )} key={d.name}>
+              <div
+                className={cx(styles.row, {
+                  [styles.selectedCountry]: countryISO === d.iso,
+                })}
+                key={d.name}
+              >
                 <button
                   className={styles.spiCountryButton}
                   onClick={() => handleCountryClick(d.iso, d.name)}
@@ -157,7 +197,18 @@ const RankingChart = ({
                     {d.name}
                   </span>
                 </button>
-                {categories.map((category) => category === 'spi' ? <span key={category} className={cx(styles.titleText, styles.spiIndex)}>{d[category]}</span> : renderBar(category, d))}
+                {categories.map((category) =>
+                  category === 'spi' ? (
+                    <span
+                      key={category}
+                      className={cx(styles.titleText, styles.spiIndex)}
+                    >
+                      {d[category]}
+                    </span>
+                  ) : (
+                    renderBar(category, d)
+                  )
+                )}
               </div>
             ))}
           </div>

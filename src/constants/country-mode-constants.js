@@ -163,3 +163,14 @@ export const SORT_OPTIONS = [
     group: SORT_GROUPS_SLUGS.protection,
   },
 ];
+
+export const LAND_MARINE_OPTIONS = [
+  {
+    label: 'LAND SPI',
+    slug: 'land',
+  },
+  {
+    label: 'MARINE SPI',
+    slug: 'marine',
+  },
+];

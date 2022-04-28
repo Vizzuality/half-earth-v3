@@ -44,11 +44,18 @@ const RankingChartContainer = (props) => {
     const { value } = event.target;
     setSearchTerm(value);
   };
+
+  const handleLandMarineSelection = (selectedFilter) => {
+    const { changeUI } = props;
+    changeUI({ landMarineSelection: selectedFilter.slug });
+  }
+
   return (
     <Component
       handleCountryClick={handleCountryClick}
       handleSearchChange={handleSearchChange}
       handleFilterSelection={handleFilterSelection}
+      handleLandMarineSelection={handleLandMarineSelection}
       scrollIndex={scrollIndex}
       searchTerm={searchTerm}
       {...props}

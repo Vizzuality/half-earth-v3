@@ -44,12 +44,18 @@ const CountryChallengesChartContainer = (props) => {
     changeUI({countryChallengesSelectedFilter: selectedFilter.slug});
   }
 
+  const handleLandMarineSelection = (selectedFilter) => {
+    const { changeUI } = props;
+    changeUI({landMarineSelection: selectedFilter.slug});
+  }
+
   return (
   <Component
     handleBubbleClick={handleBubbleClick}
     handleFilterSelection={handleFilterSelection}
     handleSelectNextIndicator={handleSelectNextIndicator}
     handleSelectPreviousIndicator={handleSelectPreviousIndicator}
+    handleLandMarineSelection={handleLandMarineSelection}
     {...props}
   />
   )
