@@ -45,14 +45,6 @@ export default {
     ui: {
       components: []
     },
-    alphaCompositingEnabled: true
-  },
-  viewingMode: 'global',
-  constraints: {
-    altitude: {
-      max: 35512548,
-      min: 10000
-    }
   },
   ui: {
     isSidebarOpen: false,
