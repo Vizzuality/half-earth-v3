@@ -1,50 +1,66 @@
 @import 'styles/settings';
 
 .land-human-pressures {
-  input:checked + label::after {
+  input:checked+label::after {
     background: $human-pressures-gradient;
   }
-  input:checked + label::before {
+
+  input:checked+label::before {
     background: $brand-color-secondary;
   }
 }
 
 .marine-human-pressures {
-  input:checked + label::after {
+  input:checked+label::after {
     background: $marine-pressures-gradient;
   }
-  input:checked + label::before {
+
+  input:checked+label::before {
     background: $brand-color-secondary;
   }
 }
 
 .protected-areas {
-  input:checked + label::after {
+  input:checked+label::after {
     background: $protected-areas;
   }
 }
 
 .biodiversity {
-  input:checked + label::after {
+  input:checked+label::after {
     background: $biodiversity-gradient-rotated;
   }
-  input:checked + label::before {
+
+  input:checked+label::before {
     background: $brand-color-secondary;
   }
 }
 
 .additional-protection {
-  input:checked + label::after {
+  input:checked+label::after {
     background: $biodiversity-gradient-rotated;
   }
-  input:checked + label::before {
+
+  input:checked+label::before {
     background: $brand-color-secondary;
   }
 }
 
 
 .future-places {
-  input:checked + label::after {
+  input:checked+label::after {
     background: $future-places;
   }
+}
+
+
+.nrc-landing-layers {
+  input:checked+label::after {
+    background: $spi-gradient;
+  }
+
+  input:checked+label::before {
+    background: $brand-color-secondary;
+  }
+
 }

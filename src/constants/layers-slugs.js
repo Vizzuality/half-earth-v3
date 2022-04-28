@@ -151,7 +151,5 @@ export const MAMMALS_LOOKUP = 'mammals-lookup-table';
 export const REPTILES_LOOKUP = 'reptiles-lookup-table';
 
 // NRC Landing Layers
-export const LAND_SPI_VECTOR_TILE_LAYER = 'land_spi_vector_tile_layer';
-export const MARINE_SPI_VECTOR_TILE_LAYER = 'marine_spi_vector_tile_layer';
-export const NRC_LANDING_LAYERS_SLUG = 'narc-landing-layers';
+export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
 export const EEZ_MARINE_BORDERS = 'eez-marine-borders';
