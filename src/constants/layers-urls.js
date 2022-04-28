@@ -1,9 +1,12 @@
 import {
   COUNTRY_PRIORITY_LAYER,
+  LAND_COUNTRY_PRIORITY_LAYER,
+  MARINE_COUNTRY_PRIORITY_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   COUNTRIES_DATA_FEATURE_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   GLOBAL_SPI_FEATURE_LAYER,
+  MARINE_SPI_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   CITIES_LABELS_LAYER,
   VIBRANT_BASEMAP_LAYER,
@@ -12,6 +15,8 @@ import {
   MERGED_WDPA_VECTOR_TILE_LAYER,
   PROTECTED_AREAS_FEATURE_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   HALF_EARTH_FUTURE_WDPA_LAYER,
@@ -75,6 +80,7 @@ import {
   PLEDGES_LAYER,
   EDUCATOR_AMBASSADORS_LAYER,
   SPECIES_LIST,
+  MARINE_SPECIES_LIST,
   FIREFLY_BASEMAP_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   WDPA_OECM_FEATURE_DATA_LAYER,
@@ -95,7 +101,7 @@ import {
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
 const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_20220420/FeatureServer' :
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_20220426/FeatureServer' :
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer';
 
 
@@ -103,19 +109,25 @@ export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/re
 export const METADATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_prod/FeatureServer/0';
 export const MONITORING_HE_GOAL_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/monitoringHEgoal/FeatureServer/0'
 export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsvcs/servers/aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0';
-export const COUNTRIES_DATA_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_20220426/FeatureServer/0';
+export const COUNTRIES_DATA_SERVICE_URL = `${COUNTRIES_DATA_URL}/0`;
 export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0';
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/0c379c259996454fadfc96886deda07d/rest/services/Terrestrial_SPI_NRCs_20220107/FeatureServer/0';
 export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/f0493450b8b64a79b30acbd0f42c246c/rest/services/Marine_SPI_NRCs_20220323/FeatureServer/0';
+export const EEZ_MARINE_BORDERS = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/EEZ_boundaries_simplified/FeatureServer';
 
 export const LAYERS_URLS = {
-  [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_20220426/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
+  [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_global_countries_SPI/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
+  [MARINE_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/EEZ_global_SPI_simplified/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois_prod/FeatureServer/0',
   [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois/FeatureServer/0',
   [FIREFLY_BASEMAP_LAYER]:
     'https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/HalfEarthFirefly/MapServer',
   [COUNTRY_PRIORITY_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
+  [LAND_COUNTRY_PRIORITY_LAYER]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
+  [MARINE_COUNTRY_PRIORITY_LAYER]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
   [PLEDGES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]:
@@ -136,10 +148,15 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/685d69cda038469f93dcfd96355abefc/rest/services/PriorPolygons/FeatureServer',
   [FEATURED_PLACES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Bioplaces/FeatureServer',
-  [MERGED_WDPA_VECTOR_TILE_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
-  [PROTECTED_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/FeatureServer',
+
+  // Protected areas WDPA
+
+  [MERGED_WDPA_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
+  [PROTECTED_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/FeatureServer', // Only used on feature map
   [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/VectorTileServer',
+  [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_NRC_tiles/MapServer',
+  [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Marine_NRC_tiles/MapServer',
+
   [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/FeatureServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
   [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/b90850994e574a2cab153c7e679399f6/rest/services/top_places_precalculated_20220307/FeatureServer/0',
@@ -218,9 +235,13 @@ export const LAYERS_URLS = {
   [MARINE_MAMMALS_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_mammal_global55km/MapServer',
   [FISHES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_fish_global55km/MapServer`,
   [FISHES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_fish_global55km/MapServer`,
+  // Vertebrate species modal
 
   [SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/04986e0b667c4ad29539683d6ba2314f/rest/services/NRC_species_data_20200817_formatted/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/5df959008b444568836d12a3ba215a90/rest/services/NRC_marine_species_data_20220323/FeatureServer',
+  [MARINE_SPECIES_LIST]:
+    'https://utility.arcgis.com/usrsvcs/servers/5df959008b444568836d12a3ba215a90/rest/services/NRC_marine_species_data_20220323/FeatureServer',
+
   // AOIs lookup tables
   [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
