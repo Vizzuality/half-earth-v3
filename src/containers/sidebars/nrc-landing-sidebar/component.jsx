@@ -67,7 +67,7 @@ const NRCLandingSidebar = ({
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
-      <div className={styles.toggleContainer}>
+      <div className={styles.togglesContainer}>
         {NRCLandingLayers.map((layer) => (
           <LayerToggle
             map={map}

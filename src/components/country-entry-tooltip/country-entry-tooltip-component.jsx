@@ -163,7 +163,7 @@ const CountryEntryTooltipComponent = ({
             className={styles.tooltipExplore}
             onClick={onExploreCountryClick}
           >
-            national report card
+            explore
           </button>
         </motion.div>
       </div>

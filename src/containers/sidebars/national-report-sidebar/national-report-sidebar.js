@@ -13,12 +13,15 @@ const NationalReportSidebarContainer = (props) => {
   const {
     browsePage,
     handlePrintReport,
+    onboardingType,
   } = props;
+
+  console.log({ onboardingType });
 
   const handleClose = () => {
     const { changeUI } = props;
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
-    changeUI({ onboardingType: 'national-report-cards', onboardingStep: 6, waitingInteraction: false });
+    if (onboardingType) changeUI({ onboardingType: 'national-report-cards', onboardingStep: 6, waitingInteraction: false });
   }
 
   const handleTabSelection = (slug) => {

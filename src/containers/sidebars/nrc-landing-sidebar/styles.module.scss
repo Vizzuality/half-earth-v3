@@ -43,6 +43,11 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
   cursor: pointer;
 }
 
-.toggleContainer {
+.togglesContainer {
   padding-bottom: 20px;
+  // this way we expand the toggles to the edge of the sidebar
+  position: relative;
+  left: -$sidebar-paddings;
+  width: calc(100% + (2 * #{$sidebar-paddings}));
+
 }
