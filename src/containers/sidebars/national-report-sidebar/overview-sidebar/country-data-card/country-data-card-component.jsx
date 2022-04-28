@@ -14,14 +14,16 @@ const CountryDataCardComponent = ({
 }) => {
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
+
   const {
     nspecies_mar,
+    nspecies_ter,
     prop_protected_mar,
     prop_protected_ter,
-    SPI_ter, SPI_mar,
+    SPI_ter,
+    SPI_mar,
     total_endemic_mar,
     total_endemic_ter,
-    vertebratesCount
   } = countryData;
 
   const { land, marine } = areaChartData;
@@ -75,7 +77,7 @@ const CountryDataCardComponent = ({
                 <p className={styles.numberText}>currently protected</p>
               </div>
               <div className={styles.indexBaseDataElement}>
-                <p className={styles.baseNumber}>{`${vertebratesCount}`}</p>
+                <p className={styles.baseNumber}>{`${nspecies_ter}`}</p>
                 <p className={styles.numberText}>total land</p>
                 <p className={styles.numberText}>vertebrate species</p>
               </div>
@@ -111,7 +113,7 @@ const CountryDataCardComponent = ({
                 <div>
                   <p className={styles.legendText}>
                     The Land SPI is calculated based on the <b>protected land ({prop_protected_ter.toFixed()}%),</b>
-                    the <b>total of vertebrate species ({vertebratesCount})</b> and the amount of which
+                    the <b>total of vertebrate species ({nspecies_ter})</b> and the amount of which
                     of these are <b>endemic ({total_endemic_ter}).</b>
                   </p>
                 </div>

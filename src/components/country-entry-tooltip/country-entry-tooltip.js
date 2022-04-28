@@ -30,15 +30,21 @@ const CountryEntryTooltipContainer = props => {
         returnGeometry: true
       }).then((features) => {
         const { geometry, attributes } = features[0];
+
         if (geometry) {
           setTooltipPosition(geometry);
           setTooltipIsVisible(true);
           setContent({
-            spi: attributes.SPI_ter,
-            vertebrates: attributes[COUNTRY_ATTRIBUTES.nspecies_ter],
-            endemic: attributes[COUNTRY_ATTRIBUTES.total_endemic_ter],
-            protection: attributes[COUNTRY_ATTRIBUTES.prop_protected_ter],
-            protectionNeeded: attributes[COUNTRY_ATTRIBUTES.protection_needed_ter]
+            spiLand: attributes.SPI_ter,
+            spiMar: attributes.SPI_mar,
+            landVertebrates: attributes[COUNTRY_ATTRIBUTES.nspecies_ter],
+            marVertebrates: attributes.nspecies_mar,
+            endemicLand: attributes[COUNTRY_ATTRIBUTES.total_endemic_ter],
+            endemicMar: attributes.total_endemic_mar,
+            protectionLand: attributes[COUNTRY_ATTRIBUTES.prop_protected_ter],
+            protectionMar: attributes.prop_protected_mar,
+            protectionNeededLand: attributes[COUNTRY_ATTRIBUTES.protection_needed_ter],
+            protectionNeededMar: attributes.protection_needed_mar
           });
         }
       })

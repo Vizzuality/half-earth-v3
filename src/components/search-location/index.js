@@ -22,10 +22,10 @@ const SearchLocationContainer = (props) => {
     } else {
       setIsSearchResultsVisible(false);
     }
-  },[searchResults])
+  }, [searchResults])
 
 
-  const browseSelectedFeature = ({result}) => {
+  const browseSelectedFeature = ({ result }) => {
     const { setBatchTooltipData } = props;
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
 
@@ -61,21 +61,21 @@ const SearchLocationContainer = (props) => {
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
     const { url, title, outFields, searchFields, suggestionTemplate } = config;
-      setSearchWidgetConfig({
-        searchResultsCallback: getSearchResults,
-        postSearchCallback: browseSelectedFeature,
-        searchSources: (FeatureLayer) => {
-          return [{
-            outFields,
-            searchFields,
-            suggestionTemplate,
-            layer: new FeatureLayer({ url, title, outFields }),
-          }]
-        }
-      })
+    setSearchWidgetConfig({
+      searchResultsCallback: getSearchResults,
+      postSearchCallback: browseSelectedFeature,
+      searchSources: (FeatureLayer) => {
+        return [{
+          outFields,
+          searchFields,
+          suggestionTemplate,
+          layer: new FeatureLayer({ url, title, outFields }),
+        }]
+      }
+    })
   }, [searchSourceLayerSlug])
 
-  const { updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick } = useSearchWidgetLogic(view, () => {}, searchWidgetConfig);
+  const { updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig);
 
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
