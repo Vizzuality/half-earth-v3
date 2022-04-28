@@ -1,5 +1,7 @@
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   MERGED_WDPA_VECTOR_TILE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER
@@ -64,6 +66,28 @@ export const legendConfigs = {
     ],
     title: "Protected areas",
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER
+  },
+  [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: {
+    type: "basic",
+    items: [
+      {
+        name: "Land protected Areas",
+        color: PROTECTED_AREAS_COLOR
+      }
+    ],
+    title: "Land protected areas",
+    slug: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER
+  },
+  [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
+    type: "basic",
+    items: [
+      {
+        name: "Marine protected areas",
+        color: PROTECTED_AREAS_COLOR
+      }
+    ],
+    title: "Marine protected areas",
+    slug: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER
   },
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     type: "basic",

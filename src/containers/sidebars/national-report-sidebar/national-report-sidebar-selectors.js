@@ -4,10 +4,12 @@ import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-select
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 const SPECIES_COLOR = {
-  birds: '#34BD92',
-  mammals: '#92EB58',
-  amphibians: '#9873EF',
-  reptiles: '#3AA8EE'
+  amphibians: '#34BD92',
+  birds: '#FCC44A',
+  mammals: '#8B62E9',
+  mammals_mar: '#3AA8EE',
+  fishes: '#38E5DB',
+  reptiles: '#92EB57',
 }
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
@@ -84,7 +86,7 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return `Here are some example species of significant conservation interest for each taxonomic group.
-   These species are either endemic to ${countryData.NAME_0} or have small range sizes`;
+   These land species are either endemic to ${countryData.NAME_0} or have small range sizes`;
 })
 
 
@@ -122,14 +124,17 @@ const getSpeciesChartData = createSelector(getCountryData, countryData => {
   const {
     birds,
     mammals,
+    mammals_mar,
+    fishes_mar,
     reptiles,
     amphibians,
     endemic_birds,
     endemic_reptiles,
     endemic_mammals,
-    endemic_amphibians
+    endemic_mammals_mar,
+    endemic_fishes_mar,
+    endemic_amphibians,
   } = countryData;
-
 
   const chartData = [
     { name: 'endemic amphibians', value: endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: true },
@@ -138,6 +143,10 @@ const getSpeciesChartData = createSelector(getCountryData, countryData => {
     { name: 'birds', value: birds - endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: false },
     { name: 'endemic mammals', value: endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: true },
     { name: 'mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false },
+    { name: 'endemic mammals mar', value: endemic_mammals_mar, color: SPECIES_COLOR['mammals_mar'], explodedSlice: true },
+    { name: 'mammals mar', value: mammals_mar - endemic_mammals_mar, color: SPECIES_COLOR['mammals_mar'], explodedSlice: false },
+    { name: 'endemic fishes mar', value: endemic_fishes_mar, color:SPECIES_COLOR['fishes'], explodedSlice: true },
+    { name: 'fishes mar', value: fishes_mar - endemic_fishes_mar, color: SPECIES_COLOR['fishes'], explodedSlice: false },
     { name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true },
     { name: 'reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false },
   ]
@@ -153,6 +162,10 @@ const mapStateToProps = createStructuredSelector({
   countryName: getCountryName,
   SPI: getSpeciesProtectionIndex,
   amphibians: getTaxa('amphibians'),
+  fishes: getTaxa('fishes_mar'),
+  fishesEndemic: getEndemicSpecies('fishes_mar'),
+  mammalsMar: getTaxa('mammals_mar'),
+  mammalsMarEndemic: getEndemicSpecies('mammals_mar'),
   scene: selectScene,
   indexStatement: getIndexStatement,
   countryDescription: getDescription,
