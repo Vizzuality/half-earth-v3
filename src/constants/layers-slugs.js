@@ -150,4 +150,6 @@ export const BIRDS_LOOKUP = 'birds-lookup-table';
 export const MAMMALS_LOOKUP = 'mammals-lookup-table';
 export const REPTILES_LOOKUP = 'reptiles-lookup-table';
 
+// NRC Landing Layers
+export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
 export const EEZ_MARINE_BORDERS = 'eez-marine-borders';

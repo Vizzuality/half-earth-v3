@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react';
+import React, { useState } from 'react';
 import loadable from '@loadable/component';
 // Components
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -24,7 +24,7 @@ const NationalReportCardLanding = ({
   onboardingStep,
   waitingInteraction,
 }) => {
-
+  const [map, setMap] = useState();
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
@@ -33,6 +33,7 @@ const NationalReportCardLanding = ({
         onboardingType={onboardingType}
       />
       <NationalReportCardLandingScene
+        map={map}
         countryISO={countryISO}
         countryName={countryName}
         userConfig={userConfig}
@@ -40,7 +41,10 @@ const NationalReportCardLanding = ({
         activeLayers={activeLayers}
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
-        onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+        onMapLoad={(loadedMap) => {
+          setMap(loadedMap);
+          handleMapLoad(loadedMap, activeLayers)
+        }}
         onboardingType={onboardingType}
         onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}

@@ -35,7 +35,6 @@ const LocalPriorityCardComponent = (props) => {
     handleLayerToggle,
     countryName,
   } = props;
-  console.log('a', activeLayers);
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const NRC_TOGGLES = {
@@ -104,6 +103,7 @@ const LocalPriorityCardComponent = (props) => {
           description="The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature"
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
+
         {REACT_APP_FEATURE_MARINE ? (
           <>
             <LayerToggle
@@ -138,8 +138,9 @@ const LocalPriorityCardComponent = (props) => {
             onChange={handleLayerToggle}
             themeCategorySlug={PROTECTION_SLUG}
           />
+
         )}
-      </SidebarCardWrapper>
+      </SidebarCardWrapper >
       <SidebarCardWrapper
         className={styles.wrapper}
         sectionClassName={styles.section}
@@ -186,25 +187,27 @@ const LocalPriorityCardComponent = (props) => {
             themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
           />
         )}
-      </SidebarCardWrapper>
+      </SidebarCardWrapper >
       <SidebarCardWrapper sectionClassName={styles.section}>
         <SidebarCardContent
           title={`Where to protect next in ${countryName}?`}
           description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
-        <LayerToggle
-          map={map}
-          type="checkbox"
-          option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
-          variant="dark"
-          key={HALF_EARTH_FUTURE_TILE_LAYER}
-          activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={FUTURE_PLACES_SLUG}
-        />
+        <div className={styles.toggleContainer}>
+          <LayerToggle
+            map={map}
+            type="checkbox"
+            option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
+            variant="dark"
+            key={HALF_EARTH_FUTURE_TILE_LAYER}
+            activeLayers={activeLayers}
+            onChange={handleLayerToggle}
+            themeCategorySlug={FUTURE_PLACES_SLUG}
+          />
+        </div>
       </SidebarCardWrapper>
-    </div>
+    </div >
   );
 };
 

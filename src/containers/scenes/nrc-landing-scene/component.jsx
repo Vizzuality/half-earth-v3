@@ -22,6 +22,7 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const NrcLandingComponent = ({
+  map,
   sceneMode,
   onMapLoad,
   userConfig,
@@ -80,6 +81,8 @@ const NrcLandingComponent = ({
           waitingInteraction={waitingInteraction}
         />
         <NRCLandingSidebar
+          activeLayers={activeLayers}
+          map={map}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
           waitingInteraction={waitingInteraction}

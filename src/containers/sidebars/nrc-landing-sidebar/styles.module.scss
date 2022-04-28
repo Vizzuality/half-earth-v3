@@ -7,7 +7,7 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
 
 .container {
   @include backdropBlur();
-  position:absolute;
+  position: absolute;
   top: $top;
   left: $site-gutter;
   padding-bottom: $site-gutter;
@@ -41,4 +41,8 @@ $top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
 
 .onboardingMode {
   cursor: pointer;
+}
+
+.toggleContainer {
+  padding-bottom: 20px;
 }
