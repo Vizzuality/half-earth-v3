@@ -131,7 +131,7 @@ export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
 // Species modal
 export const SPECIES_LIST = 'species-list';
-export const MARINE_SPECIES_LIST = 'species-list';
+export const MARINE_SPECIES_LIST = 'marine-species-list';
 // AOIs precalculated layers
 export const GADM_0_ADMIN_AREAS_FEATURE_LAYER = 'gadm-0-admin-areas-feature-layer';
 export const GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-0-admin-areas-with-wdpas-feature-layer';

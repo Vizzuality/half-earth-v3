@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import useEventListener from 'hooks/use-event-listener';
@@ -8,10 +8,13 @@ import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 import { Virtuoso } from 'react-virtuoso';
 import { Loading } from 'he-components';
 import HeaderItem from 'components/header-item';
+import Tabs from 'components/tabs';
 import useWindowSize from 'hooks/use-window-size';
 import ExpandedInfo from './expanded-info';
 import styles from './species-modal-styles.module.scss';
 import capitalize from 'lodash/capitalize';
+import { VERTEBRATE_TABS, SPECIES_GROUP_STYLE_CLASS_DICTIONARY } from './species-modal-constants';
+
 
 const SpeciesModalComponent = ({
   handleModalClose,
@@ -20,8 +23,10 @@ const SpeciesModalComponent = ({
   sortCategory,
   handleSortClick,
   handleSearchChange,
+  handleVertebrateChange,
   speciesList,
-  searchTerm
+  searchTerm,
+  vertebrateType
 }) => {
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
@@ -38,6 +43,7 @@ const SpeciesModalComponent = ({
     setExpandedRow(index === expandedRow ? null : index);
   };
 
+
   const renderRow = (index) => {
     const {
       species,
@@ -49,7 +55,7 @@ const SpeciesModalComponent = ({
     const isOpened = expandedRow === index;
     return (
       <div className={styles.tableRowContainer}>
-        <div className={cx(styles.groupColor, styles[speciesgroup])} />
+        <div className={cx(styles.groupColor, styles[SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup])} />
         <div className={styles.tableRow}>
           <button
             className={styles.expandButton}
@@ -95,16 +101,20 @@ const SpeciesModalComponent = ({
   ];
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
-  const speciesNumber = () => {
-    if (!speciesList) return countryData.speciesNumber;
-    return speciesList.length < countryData.speciesNumber
-      ? `${speciesList.length} of ${countryData.speciesNumber}`
-      : speciesList.length;
-  }
+  const summaryText = useMemo(() => {
+    const speciesNumber = countryData[vertebrateType === VERTEBRATE_TABS[0].slug ? 'landSpeciesTotal' : 'marineSpeciesTotal'];
+
+    // the list has been filtered
+    if (speciesList.length < speciesNumber) {
+      return `${speciesList.length} of ${speciesNumber} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'} vertebrate species`
+    }
+    return `${speciesNumber} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'} vertebrate species`;
+  }, [countryData, vertebrateType, speciesList]);
+
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
-        <h1 className={styles.title}>{countryData.name}</h1>
+        <h1 className={styles.title}>Vertebrates in {countryData.name}</h1>
         <section className={styles.section}>
           <div className={styles.search}>
             <SearchIcon className={styles.searchIcon} />
@@ -117,8 +127,13 @@ const SpeciesModalComponent = ({
             />
           </div>
           <div className={styles.summary}>
-            {speciesNumber()} LAND
-            VERTEBRATE SPECIES
+            <Tabs
+              tabs={VERTEBRATE_TABS}
+              onClick={handleVertebrateChange}
+              className={styles.speciesTab}
+              defaultTabSlug={vertebrateType}
+            />
+            <span className={styles.speciesTabTitle}>{summaryText}</span>
           </div>
         </section>
         <div>

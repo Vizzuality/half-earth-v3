@@ -60,14 +60,11 @@ const ExpandedInfo = (props) => {
           href={`https://mol.org/species/${scientificname}`}
           title={`${speciesName} MoL link`}
           alt={`${speciesName} MoL link`}
-          rel="noopener"
-          // eslint-disable-next-line react/jsx-no-target-blank
           target="_blank"
+          rel="noopener noreferrer"
           className={styles.link}
         >
-          <Button theme={buttonTheme} className={styles.button}>
-            View more on Map of Life
-          </Button>
+          View more on Map of Life
         </a>
       </div>
     </div>

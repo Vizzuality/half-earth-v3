@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import usePrevious from 'hooks/use-previous';
+import React, { useEffect, useState, useCallback } from 'react';
+// import usePrevious from 'hooks/use-previous';
 import { useFeatureLayer } from 'hooks/esri';
-import { SPECIES_LIST } from 'constants/layers-slugs';
+import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 import { SORT } from 'components/header-item';
 import Component from './species-modal-component';
 import { connect } from 'react-redux';
@@ -12,6 +12,8 @@ import {
   getSortedSpeciesList
 } from './species-modal-selectors';
 import * as urlActions from 'actions/url-actions';
+
+import { VERTEBRATE_TABS } from './species-modal-constants';
 
 const actions = { ...urlActions };
 
@@ -24,13 +26,19 @@ const mapStateToProps = (state) => ({
 
 const SpeciesModalContainer = (props) => {
   const { changeUI, countryData, speciesModalSort, state } = props;
-  const layer = useFeatureLayer({ layerSlug: SPECIES_LIST });
 
-  const [speciesList, setSpeciesList] = useState(null);
+  const [vertebrateType, setVertebrateType] = useState(VERTEBRATE_TABS[0].slug);
+  const [speciesList, setSpeciesList] = useState([]);
 
-  const previousCountryData = usePrevious(countryData);
+  const landLayer = useFeatureLayer({ layerSlug:  SPECIES_LIST });
+  const marineLayer = useFeatureLayer({ layerSlug:  MARINE_SPECIES_LIST });
+
+  // const previousCountryData = usePrevious(countryData);
   useEffect(() => {
-    if (layer && countryData.iso && (!speciesList || (countryData.iso !== previousCountryData.iso))) {
+    const layer = vertebrateType === 'land' ? landLayer : marineLayer;
+    if (layer && countryData.iso
+      // && (countryData.iso !== previousCountryData.iso)
+      ) {
       const getFeatures = async () => {
         const query = await layer.createQuery();
         query.where = `iso3 = '${countryData.iso}'`;
@@ -44,7 +52,7 @@ const SpeciesModalContainer = (props) => {
 
       getFeatures(countryData.iso);
     }
-  }, [layer, countryData.iso]);
+  }, [landLayer, marineLayer, countryData.iso, vertebrateType]);
 
   const handleSearch = (event) => {
     const { value } = event.target;
@@ -62,6 +70,8 @@ const SpeciesModalContainer = (props) => {
     changeUI({ speciesModalSort: `${category}-${sortDirection}` });
   };
 
+  const handleVertebrateChange = useCallback((tabSlug) => { setVertebrateType(tabSlug)}, []);
+
   return (
     <Component
       {...props}
@@ -69,6 +79,8 @@ const SpeciesModalContainer = (props) => {
       handleSearchChange={handleSearch}
       speciesList={getSortedSpeciesList({ ...state, speciesList })}
       sortCategory={speciesModalSort}
+      handleVertebrateChange={handleVertebrateChange}
+      vertebrateType={vertebrateType}
     />
   );
 }
