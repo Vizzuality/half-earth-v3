@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-// import usePrevious from 'hooks/use-previous';
 import { useFeatureLayer } from 'hooks/esri';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 import { SORT } from 'components/header-item';
@@ -33,16 +32,14 @@ const SpeciesModalContainer = (props) => {
   const landLayer = useFeatureLayer({ layerSlug:  SPECIES_LIST });
   const marineLayer = useFeatureLayer({ layerSlug:  MARINE_SPECIES_LIST });
 
-  // const previousCountryData = usePrevious(countryData);
   useEffect(() => {
     const layer = vertebrateType === 'land' ? landLayer : marineLayer;
     if (layer && countryData.iso
-      // && (countryData.iso !== previousCountryData.iso)
       ) {
       const getFeatures = async () => {
         const query = await layer.createQuery();
         query.where = `iso3 = '${countryData.iso}'`;
-        query.maxRecordCountFactor = '5000';
+        query.maxRecordCountFactor = '10000';
         const results = await layer.queryFeatures(query);
         const { features } = results;
         if (features) {

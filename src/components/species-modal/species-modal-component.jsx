@@ -127,12 +127,14 @@ const SpeciesModalComponent = ({
             />
           </div>
           <div className={styles.summary}>
-            <Tabs
-              tabs={VERTEBRATE_TABS}
-              onClick={handleVertebrateChange}
-              className={styles.speciesTab}
-              defaultTabSlug={vertebrateType}
-            />
+            {process.env.REACT_APP_FEATURE_MARINE === "true" && (
+              <Tabs
+                tabs={VERTEBRATE_TABS}
+                onClick={handleVertebrateChange}
+                className={styles.speciesTab}
+                defaultTabSlug={vertebrateType}
+              />
+            )}
             <span className={styles.speciesTabTitle}>{summaryText}</span>
           </div>
         </section>
