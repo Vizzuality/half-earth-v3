@@ -20,6 +20,8 @@ export const COUNTRY_ATTRIBUTES = REACT_APP_FEATURE_MARINE ?
   Pop2020_SUM: 'Pop2020',
   GID_0: 'GID_0',
   similar_ter: 'similar_ter',
+  prop_hm_very_high_ter: 'prop_hm_very_high_ter',
+  prop_hm_0_ter: 'prop_hm_0_ter'
 } : {
   nspecies_richness_ter: 'nspecies', // For species-modal-selectors and ranking-chart-selectors
   nspecies_ter: 'N_SPECIES',
@@ -37,4 +39,6 @@ export const COUNTRY_ATTRIBUTES = REACT_APP_FEATURE_MARINE ?
   Global_SPI_ter: '',
   Pop2020_SUM: 'SUM',
   similar_ter: 'similar',
+  prop_hm_very_high_ter: 'prop_hm_very_high',
+  prop_hm_0_ter: 'prop_hm_0_ter',
 };

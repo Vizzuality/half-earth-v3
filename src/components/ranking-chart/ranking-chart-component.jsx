@@ -84,7 +84,7 @@ const RankingChart = ({
           {Object.keys(d[name]).map((k) => (
             <span
               className={cx(styles.bar, styles[k])}
-              style={{ width: `${d[name][k]}%` }}
+              style={{ width: `${d[name][k] || '0'}%` }}
               key={`tooltip-${k}`}
             />
           ))}

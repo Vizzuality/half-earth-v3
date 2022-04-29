@@ -35,7 +35,6 @@ const LocalPriorityCardComponent = (props) => {
     handleLayerToggle,
     countryName,
   } = props;
-  console.log('a', activeLayers);
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const NRC_TOGGLES = {

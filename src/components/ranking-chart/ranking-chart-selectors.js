@@ -2,8 +2,7 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import get from 'lodash/get';
 import { SORT_OPTIONS, RANKING_INDICATORS, RANKING_GROUPS_SLUGS, RANKING_INDICATOR_GROUPS } from 'constants/country-mode-constants';
-import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
-import { LAND_MARINE_OPTIONS } from 'constants/country-mode-constants';
+import { LAND_MARINE_OPTIONS, LAND_MARINE_COUNTRY_ATTRIBUTES } from 'constants/country-mode-constants';
 import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
@@ -11,28 +10,29 @@ const getSortRankingCategory = ({ location }) => (location && get(location, 'que
 
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
-const getRankingData = createSelector([selectCountriesData], countriesData => {
+const getRankingData = createSelector([selectCountriesData, getLandMarineSelected], (countriesData, landMarineSelection) => {
   if(!countriesData) return null;
+  const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
   return Object.keys(countriesData).map((iso) => {
     const d = countriesData[iso];
     return {
-      [RANKING_INDICATORS.spi]: d[COUNTRY_ATTRIBUTES.SPI_ter],
-      [RANKING_INDICATORS.speciesRichness]: d[COUNTRY_ATTRIBUTES.nspecies_richness_ter], // Just for sorting
+      [RANKING_INDICATORS.spi]: d[attributes.SPI],
+      [RANKING_INDICATORS.speciesRichness]: d[attributes.nspecies_richness], // Just for sorting
       name: d.NAME_0,
       iso,
       [RANKING_GROUPS_SLUGS.species]: {
-        [RANKING_INDICATORS.nonEndemic]: 100 - (100 * d[COUNTRY_ATTRIBUTES.total_endemic_ter] / d[COUNTRY_ATTRIBUTES.nspecies_richness_ter]),
-        [RANKING_INDICATORS.endemic]: (100 * d[COUNTRY_ATTRIBUTES.total_endemic_ter] / d[COUNTRY_ATTRIBUTES.nspecies_richness_ter])
+        [RANKING_INDICATORS.nonEndemic]: 100 - (100 * d[attributes.total_endemic] / d[attributes.nspecies_richness]),
+        [RANKING_INDICATORS.endemic]: (100 * d[attributes.total_endemic] / d[attributes.nspecies_richness])
       },
       [RANKING_GROUPS_SLUGS.humanModification]: {
-        [RANKING_INDICATORS.veryHigh]: d[COUNTRY_ATTRIBUTES.hm_vh_ter],
-        [RANKING_INDICATORS.totalMinusVeryHigh]: REACT_APP_FEATURE_MARINE ? d[COUNTRY_ATTRIBUTES.hm_ter] : 100 - d.prop_hm_very_high - d.prop_hm_0,
-        [RANKING_INDICATORS.noModification]: d[COUNTRY_ATTRIBUTES.hm_no_ter]
+        [RANKING_INDICATORS.veryHigh]: d[attributes.hm_vh],
+        [RANKING_INDICATORS.totalMinusVeryHigh]: REACT_APP_FEATURE_MARINE ? d[attributes.hm] : 100 - d[attributes.prop_hm_very_high] - d[attributes.prop_hm_0],
+        [RANKING_INDICATORS.noModification]: d[attributes.hm_no]
       },
       [RANKING_GROUPS_SLUGS.protection]: {
-        [RANKING_INDICATORS.protected]: d[COUNTRY_ATTRIBUTES.prop_protected_ter],
-        [RANKING_INDICATORS.protectionNeeded]: d[COUNTRY_ATTRIBUTES.protection_needed_ter],
-        [RANKING_INDICATORS.protectionNotNeeded]: 100 - d[COUNTRY_ATTRIBUTES.protection_needed_ter] - d[COUNTRY_ATTRIBUTES.prop_protected_ter]
+        [RANKING_INDICATORS.protected]: d[attributes.prop_protected],
+        [RANKING_INDICATORS.protectionNeeded]: d[attributes.protection_needed],
+        [RANKING_INDICATORS.protectionNotNeeded]: 100 - d[attributes.protection_needed] - d[attributes.prop_protected]
       }
     };
   });
@@ -59,7 +59,7 @@ const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
 
 const getSelectedLandMarineOption = createSelector(
   getLandMarineSelected,
-  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection) || LAND_MARINE_OPTIONS.find(option => option.slug === 'land')
+  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection)
 );
 
 const mapStateToProps = createStructuredSelector({

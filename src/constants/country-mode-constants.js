@@ -174,3 +174,34 @@ export const LAND_MARINE_OPTIONS = [
     slug: 'marine',
   },
 ];
+
+export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
+  land: {
+    hm_vh: COUNTRY_ATTRIBUTES.hm_vh_ter,
+    hm: COUNTRY_ATTRIBUTES.hm_ter,
+    prop_protected: COUNTRY_ATTRIBUTES.prop_protected_ter,
+    prop_hm_0: COUNTRY_ATTRIBUTES.prop_hm_0_ter,
+    prop_hm_very_high: COUNTRY_ATTRIBUTES.prop_hm_very_high_ter,
+    protection_needed: COUNTRY_ATTRIBUTES.protection_needed_ter,
+    total_endemic: COUNTRY_ATTRIBUTES.total_endemic_ter,
+    nspecies: COUNTRY_ATTRIBUTES.nspecies_ter,
+    SPI: COUNTRY_ATTRIBUTES.SPI_ter,
+    similar: COUNTRY_ATTRIBUTES.similar_ter,
+    nspecies_richness: COUNTRY_ATTRIBUTES.nspecies_richness_ter,
+    hm_no: COUNTRY_ATTRIBUTES.hm_no_ter
+  },
+  marine: {
+    hm_vh: 'hm_vh_mar',
+    hm: 'hm_mar',
+    prop_protected: 'prop_protected_mar',
+    prop_hm_very_high: 'prop_hm_very_high_mar',
+    prop_hm_0: 'prop_hm_0_mar',
+    protection_needed: 'protection_needed_mar',
+    total_endemic: 'total_endemic_mar',
+    nspecies: 'nspecies_mar',
+    SPI: 'SPI_mar',
+    similar: 'similar_mar',
+    nspecies_richness: 'nspecies_mar',
+    hm_no: 'hm_no_mar'
+  }
+}

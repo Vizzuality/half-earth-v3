@@ -37,7 +37,7 @@ const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSett
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
-export const getLandMarineSelected = createSelector(getUiSettings, uiSettings => uiSettings.landMarineSelection);
+export const getLandMarineSelected = createSelector(getUiSettings, uiSettings => uiSettings.landMarineSelection || 'land');
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 export const getOnboardingType = createSelector(getUiSettings, uiSettings => uiSettings.onboardingType);
 export const getOnboardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onboardingStep);
