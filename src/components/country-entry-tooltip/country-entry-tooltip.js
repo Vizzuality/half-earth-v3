@@ -34,7 +34,7 @@ const CountryEntryTooltipContainer = props => {
           setTooltipPosition(geometry);
           setTooltipIsVisible(true);
           setContent({
-            spiLand: attributes.SPI_ter,
+            spiLand: attributes[COUNTRY_ATTRIBUTES.SPI_ter],
             spiMar: attributes.SPI_mar,
             landVertebrates: attributes[COUNTRY_ATTRIBUTES.nspecies_ter],
             marVertebrates: attributes.nspecies_mar,
