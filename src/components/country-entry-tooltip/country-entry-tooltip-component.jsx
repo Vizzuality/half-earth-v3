@@ -23,6 +23,8 @@ const CountryEntryTooltipComponent = ({
   onboardingType,
   waitingInteraction,
 }) => {
+  const { REACT_APP_FEATURE_MARINE } = process.env;
+
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
@@ -110,27 +112,30 @@ const CountryEntryTooltipComponent = ({
             />
             <span className={styles.tooltipName}>{countryName}</span>
           </div>
-          <div>
-            {Object.keys(tabsData).map((key) => (
-              <button
-                key={key}
-                className={cx({
-                  [styles.switchDataButton]: true,
-                  [styles.switchDataActiveButton]: activeTab === key
-                })}
-                onClick={() => setActiveTab(key)}
-              >
-                {tabsData[key].text}
-              </button>
-            ))}
-          </div>
+          {REACT_APP_FEATURE_MARINE && (
+            <div>
+              {Object.keys(tabsData).map((key) => (
+                <button
+                  key={key}
+                  className={cx({
+                    [styles.switchDataButton]: true,
+                    [styles.switchDataActiveButton]: activeTab === key
+                  })}
+                  onClick={() => setActiveTab(key)}
+                >
+                  {tabsData[key].text}
+                </button>
+              ))}
+            </div>
+          )}
         </section>
         <CloseIcon
           className={styles.tooltipClose}
           onClick={handleTooltipClose}
         />
         <section className={styles.spiInfo}>
-          <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
+          {REACT_APP_FEATURE_MARINE && <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>}
+          {!REACT_APP_FEATURE_MARINE && <p className={styles.spi}>{spiLand}</p>}
           <p className={styles.subtitle}>National species protection index</p>
         </section>
         <section className={styles.countryInfo}>
