@@ -55,7 +55,7 @@ const DonutChart = ({
         textAnchor="middle"
         dominantBaseline="middle"
       >
-        {legendValue.toFixed()}
+        {legendValue && legendValue.toFixed()}
       </text>
       <text
         font-family='Inter'

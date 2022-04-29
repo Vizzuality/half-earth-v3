@@ -5,19 +5,19 @@ import {
 
 export const NRCLandingLayers = [
   {
-    name: 'Land SPI (Global average: 45)', // TO DO:
+    name: 'Land',
     value: GLOBAL_SPI_FEATURE_LAYER,
     id: GLOBAL_SPI_FEATURE_LAYER,
     title: GLOBAL_SPI_FEATURE_LAYER,
-    slug: GLOBAL_SPI_FEATURE_LAYER, // TO DO: cambiar a slug específico de metadata
+    slug: GLOBAL_SPI_FEATURE_LAYER, //TODO: change specific slug for metadata
     metadataTitle: 'Land SPI'
   },
   {
-    name: 'Marine SPI (Global average: 32)', // TO DO:
+    name: 'Marine',
     value: MARINE_SPI_FEATURE_LAYER,
     id: MARINE_SPI_FEATURE_LAYER,
     title: MARINE_SPI_FEATURE_LAYER,
-    slug: MARINE_SPI_FEATURE_LAYER, // TO DO: cambiar a slug específico de metadata
+    slug: MARINE_SPI_FEATURE_LAYER, //TODO: change specific slug for metadata
     metadataTitle: 'Marine SPI'
   }
 ];

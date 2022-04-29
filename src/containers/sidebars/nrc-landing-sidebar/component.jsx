@@ -19,12 +19,17 @@ const NRCLandingSidebar = ({
   activeLayers,
   changeUI,
   handleLayerToggle,
+  globalAverage,
   map,
   onboardingStep,
   onboardingType,
   view,
   waitingInteraction,
 }) => {
+
+  const { landAverage, marineAverage } = globalAverage;
+  const averageLoaded = !!landAverage && !!marineAverage;
+
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
@@ -42,7 +47,6 @@ const NRCLandingSidebar = ({
     onboardingStep,
     waitingInteraction,
   });
-
   return (
     <motion.div
       ref={(ref) => {
@@ -67,20 +71,28 @@ const NRCLandingSidebar = ({
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
-      <div className={styles.togglesContainer}>
-        {NRCLandingLayers.map((layer) => (
-          <LayerToggle
-            map={map}
-            option={layer}
-            type="checkbox"
-            variant="light"
-            key={layer.value}
-            activeLayers={activeLayers}
-            onChange={handleLayerToggle}
-            themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
-          />
-        ))}
-      </div>
+      {averageLoaded && (
+        <div className={styles.togglesContainer}>
+          {NRCLandingLayers.map((layer) => {
+            const { name } = layer;
+            const nameUpadated = (name && name === 'Land') ? `Land SPI (Global average: ${landAverage})` : (name && name === 'Marine') ? `Marine SPI (Global average: ${marineAverage})` : 0;
+            const layerUpdated = { ...layer, name: nameUpadated };
+            return (
+              <LayerToggle
+                map={map}
+                option={layerUpdated}
+                type="checkbox"
+                variant="light"
+                key={layer.value}
+                activeLayers={activeLayers}
+                onChange={handleLayerToggle}
+                themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
+              />
+            )
+          }
+          )}
+        </div>
+      )}
 
       <SearchLocation
         reference={(ref) => {

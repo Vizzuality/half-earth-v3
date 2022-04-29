@@ -72,8 +72,8 @@ const CountryDataCardComponent = ({
                   styles.protectionNumber
                 )}
               >
-                <p className={styles.baseNumber}>{`${prop_protected_ter.toFixed()}`}</p>
-                <p className={styles.numberText}>% of land</p>
+                <p className={styles.baseNumber}>{`${prop_protected_ter && prop_protected_ter.toFixed()}%`}</p>
+                <p className={styles.numberText}>of land</p>
                 <p className={styles.numberText}>currently protected</p>
               </div>
               <div className={styles.indexBaseDataElement}>
@@ -112,7 +112,7 @@ const CountryDataCardComponent = ({
                 />
                 <div>
                   <p className={styles.legendText}>
-                    The Land SPI is calculated based on the <b>protected land ({prop_protected_ter.toFixed()}%),</b>
+                    The Land SPI is calculated based on the <b>protected land ({`${prop_protected_ter && prop_protected_ter.toFixed()}%`}),</b>
                     the <b>total of vertebrate species ({nspecies_ter})</b> and the amount of which
                     of these are <b>endemic ({total_endemic_ter}).</b>
                   </p>
@@ -138,7 +138,7 @@ const CountryDataCardComponent = ({
                 />
                 <div>
                   <p className={styles.legendText}>
-                    The Marine SPI is based on the  <b>protected marine areas ({prop_protected_mar.toFixed()}%),</b>
+                    The Marine SPI is based on the  <b>protected marine areas ({`${prop_protected_mar && prop_protected_mar.toFixed()}%`}),</b>
                     the <b>total of marine mammals and fishes ({nspecies_mar})</b> species and the
                     amount of which of these are <b>endemic ({total_endemic_mar}).</b>
                   </p>
