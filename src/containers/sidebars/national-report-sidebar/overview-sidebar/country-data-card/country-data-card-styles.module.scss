@@ -87,6 +87,27 @@
   @extend %bodyText;
   color: $_temporary-dark-text;
   margin: 0;
+
+  .legendTextUnderline {
+    text-decoration: underline;
+    text-decoration-color: $grey-text;
+    text-underline-offset: 2px;
+    text-decoration-style: dotted;
+  }
+}
+
+.legendTextTooltip {
+  @extend %bodyText;
+  background-color: $white;
+  box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
+  font-size: 12px;
+  padding: 16px;
+  width: 280px;
+
+  h4,
+  p {
+    margin: 0
+  }
 }
 
 .switchAreaChart {
