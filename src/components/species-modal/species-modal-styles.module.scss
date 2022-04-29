@@ -11,7 +11,7 @@
   z-index: 11;
 
   @media #{$tablet-portrait} {
-    background-color: $modal-light-background;
+    background-color: $elephant;
     height: 100vh;
     overflow-y: unset;
     position: absolute;
@@ -25,20 +25,17 @@
   }
 
   .title {
-    @extend %headline;
-  }
-
-  .summary,
-  .search {
-    font-family: $font-family-1;
-    font-size: $font-size-xs;
-    margin-bottom: 25px;
+    margin: 0;
+    font-family: $font-family-serif;
+    color: $white;
+    font-weight: 100;
   }
 
   .closeButton {
     position: absolute;
     top: $site-gutter;
     right: $site-gutter;
+    fill: $white;
     svg g {
       fill: $brand-color-secondary;
       stroke: $brand-color-secondary;
@@ -55,12 +52,33 @@
   .section {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 25px;
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end
+  }
+
+  .speciesTab {
+    width: 210px;
+  }
+
+  .speciesTabTitle {
+    display: inline-block;
+    margin-top: 15px;
+    font-family: $font-family-1;
+    font-size: $font-size-xxs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    color: $white;
   }
 
   .tableHeaderContainer {
     min-height: 60px;
     padding: 15px 74px 15px 40px;
-    background-color: $white;
+    background-color: $firefly;
     padding-top: 30px;
     border-radius: 5px 5px 0 0;
     margin-bottom: 2px;
@@ -70,38 +88,28 @@
     display: flex;
   }
 
-  .tableHeaderItem {
-    color: $_temporary-light-text;
-    @extend %subtitle;
-    text-align: left;
-    width: 20%;
-    padding-right: 60px;
-
-  }
-
-  .arrowUp {
-    top: -3px;
-  }
-
 
   .tableRowContainer {
     display: flex;
     position: relative;
     min-height: 50px;
     width: 100%;
-    background-color: $white;
-    border: solid $alto;
-    border-width: 2px 0;
+    border: 1px solid $firefly;
   }
 
   .tableRow {
     display: flex;
     flex-direction: column;
     width: 100%;
+    background-color: $elephant;
+
+    > button {
+      padding: 0;
+    }
   }
 
   .arrowIcon {
-    fill: $_temporary-dark-text;
+    fill: $white;
     transform: rotate(90deg);
 
     &.isOpened {
@@ -109,6 +117,10 @@
     }
 
     transition: transform 0.2s ease;
+
+    > path {
+      fill: inherit;
+    }
   }
 
   .mainInfo {
@@ -121,7 +133,7 @@
     color: $_temporary-dark-text;
 
     &.isOpened, &:hover {
-      background-color: $athens-gray;
+      background-color: $firefly;
     }
   }
 
@@ -138,8 +150,10 @@
   }
 
   .tableItem {
-    width: 20%;
+    flex: 1 1 0;
     text-align: left;
+    color: $white;
+    padding: 0 25px 0 0;
 
     &.bold {
       font-family: $font-family-1;
@@ -156,17 +170,25 @@
     justify-content: center;
   }
 
+  .search {
+    display: flex;
+    align-items: center;
+  }
+
   .searchInput {
-    @extend %title;
-    background-color: $modal-light-background;
+    background-color: transparent;
     min-width: 300px;
     border: none;
     margin-left: 1em;
-    color: $_temporary-dark-text;
+    color: $white;
+    &::placeholder {
+      color: $accent-grey;
+      text-transform: uppercase;
+    }
   }
 
   .searchIcon {
-    transform: translate(0, 9px) scale(0.5);
+    fill: $accent-grey;
 
     g {
       stroke: $_temporary-dark-text;
@@ -175,14 +197,17 @@
 
   .groupColor {
     position: absolute;
-    width: 6px;
+    width: 3px;
     top: 0;
     left: 0;
     height: 100%;
-    border-left: 2px solid $alto;
 
     &.mammals {
       background-color: $mammals-color;
+    }
+
+    &.mar-mammals {
+      background-color: $mar-mammals-color;
     }
 
     &.amphibians {
@@ -195,6 +220,10 @@
 
     &.birds {
       background-color: $birds-color;
+    }
+
+    &.fishes {
+      background-color: $fishes-color;
     }
   }
 }
