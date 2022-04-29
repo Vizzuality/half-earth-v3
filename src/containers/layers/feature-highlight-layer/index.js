@@ -46,11 +46,10 @@ const { view, featureLayerSlugs, onFeatureClick } = props;
       const { graphic: { geometry } } = features[0];
       flyToCentroid(view, geometry, 4);
     }
-    // drawGeometry(features, selectedCountryBorderGraphic);
     onFeatureClick(features);
   }
 
-  const onHoverHandler = features => {
+  const onHoverHandler = (features) => {
     setCursor(features);
     drawGeometry(features, hoveredCountryBorderGraphic);
   }
@@ -92,7 +91,6 @@ const onLabelEvent = (event) => {
       eventHandler && eventHandler.remove();
     }
   }, [featureLayerSlugs, hoveredCountryBorderGraphic])
-
 
   return null;
 }

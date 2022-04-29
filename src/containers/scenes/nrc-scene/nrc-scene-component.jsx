@@ -1,5 +1,6 @@
 // Dependencies
 import React from 'react';
+
 // Components
 import Scene from 'components/scene';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -17,12 +18,14 @@ import SoundButton from 'containers/onboarding/sound-btn';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 // Constants
 import {
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle,
+  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
+  EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION, REACT_APP_FEATURE_MARINE } =
+  process.env;
 
 const CountrySceneComponent = ({
   onMapLoad,
@@ -59,7 +62,12 @@ const CountrySceneComponent = ({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
       <FeatureHighlightLayer
-        featureLayerSlugs={[bordersLayerTitle, HALF_EARTH_FUTURE_TILE_LAYER]}
+        featureLayerSlugs={[
+          ...(REACT_APP_FEATURE_MARINE
+            ? [EEZ_MARINE_BORDERS]
+            : [COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]),
+          HALF_EARTH_FUTURE_TILE_LAYER,
+        ]}
         onFeatureClick={handleAreaClick}
       />
       <CountryEntryTooltip

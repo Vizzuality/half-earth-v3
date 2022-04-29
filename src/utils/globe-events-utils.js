@@ -64,14 +64,12 @@ export const setSelectedFeaturedPlace = (viewPoint, featuredPlacesLayerTitle, ch
 }
 
 export const drawGeometry = (layerFeatures, graphic) => {
-  if (layerFeatures && layerFeatures.length) {
-    if (!graphic.geometry) {
-      graphic.geometry = layerFeatures[0].graphic.geometry;
-    } else if(graphic.geometry.centroid.x !== layerFeatures[0].graphic.geometry.centroid.x) {
-      graphic.geometry = layerFeatures[0].graphic.geometry;
-    }
-  } else {
+  if(!layerFeatures || !layerFeatures.length) {
     graphic.geometry = null;
+    return;
+  }
+  if (!graphic.geometry || (graphic.geometry.centroid.x !== layerFeatures[0].graphic.geometry.centroid.x)) {
+    graphic.geometry = layerFeatures[0].graphic.geometry;
   }
 }
 
