@@ -46,7 +46,7 @@ const NrcSceneContainer = (props) => {
     const { graphic } = results[0] || {};
     if (!graphic) return;
     // TODO: Find a better way to discern the AOIs
-    const isAOI = graphic.attributes.AREA_KM2;
+    const isAOI = graphic.attributes && graphic.attributes.AREA_KM2;
     if (isAOI) {
       const { attributes, geometry } = graphic;
       setTooltipInfo({ attributes, geometry });
