@@ -27,9 +27,8 @@ const NRCLandingSidebar = ({
   waitingInteraction,
 }) => {
 
-  const { land, marine } = globalAverage;
-  const formatedLandAverage = land && land.toFixed();
-  const formatedMarineAverage = marine && marine.toFixed();
+  const { landAverage, marineAverage } = globalAverage;
+
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
@@ -47,7 +46,6 @@ const NRCLandingSidebar = ({
     onboardingStep,
     waitingInteraction,
   });
-  console.log({ land, marine })
   return (
     <motion.div
       ref={(ref) => {
@@ -75,7 +73,7 @@ const NRCLandingSidebar = ({
       <div className={styles.togglesContainer}>
         {NRCLandingLayers.map((layer) => {
           const { name } = layer;
-          const nameUpadated = (name && name === 'Land') ? `Land SPI (Global average: ${formatedLandAverage})` : `Marine SPI (Global average: ${formatedMarineAverage})`;
+          const nameUpadated = (name && name === 'Land') ? `Land SPI (Global average: ${landAverage})` : (name && name === 'Marine') ? `Marine SPI (Global average: ${marineAverage})` : 0;
           const layerUpdated = { ...layer, name: nameUpadated };
           return (
             <LayerToggle
@@ -91,7 +89,6 @@ const NRCLandingSidebar = ({
           )
         }
         )}
-        return
       </div>
 
       <SearchLocation
