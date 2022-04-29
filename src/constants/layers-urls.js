@@ -128,7 +128,7 @@ export const LAYERS_URLS = {
   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
   [MARINE_COUNTRY_PRIORITY_LAYER]:
   'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
-  [EEZ_MARINE_BORDERS]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/eez_countries_simplified_Merge_Dissolve/FeatureServer',
+  [EEZ_MARINE_BORDERS]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/countries_eez_boundaries/FeatureServer',
   [PLEDGES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]:
