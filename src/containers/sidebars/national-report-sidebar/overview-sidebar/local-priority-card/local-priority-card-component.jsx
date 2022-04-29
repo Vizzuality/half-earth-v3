@@ -138,9 +138,8 @@ const LocalPriorityCardComponent = (props) => {
             onChange={handleLayerToggle}
             themeCategorySlug={PROTECTION_SLUG}
           />
-
         )}
-      </SidebarCardWrapper >
+      </SidebarCardWrapper>
       <SidebarCardWrapper
         className={styles.wrapper}
         sectionClassName={styles.section}
@@ -187,7 +186,7 @@ const LocalPriorityCardComponent = (props) => {
             themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
           />
         )}
-      </SidebarCardWrapper >
+      </SidebarCardWrapper>
       <SidebarCardWrapper sectionClassName={styles.section}>
         <SidebarCardContent
           title={`Where to protect next in ${countryName}?`}
@@ -207,7 +206,7 @@ const LocalPriorityCardComponent = (props) => {
           />
         </div>
       </SidebarCardWrapper>
-    </div >
+    </div>
   );
 };
 

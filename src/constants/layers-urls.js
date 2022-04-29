@@ -95,7 +95,8 @@ import {
   AMPHIBIAN_LOOKUP,
   BIRDS_LOOKUP,
   MAMMALS_LOOKUP,
-  REPTILES_LOOKUP
+  REPTILES_LOOKUP,
+  EEZ_MARINE_BORDERS
 } from 'constants/layers-slugs';
 
 const { REACT_APP_FEATURE_MARINE } = process.env;
@@ -113,7 +114,6 @@ export const COUNTRIES_DATA_SERVICE_URL = `${COUNTRIES_DATA_URL}/0`;
 export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0';
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/0c379c259996454fadfc96886deda07d/rest/services/Terrestrial_SPI_NRCs_20220107/FeatureServer/0';
 export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/f0493450b8b64a79b30acbd0f42c246c/rest/services/Marine_SPI_NRCs_20220323/FeatureServer/0';
-export const EEZ_MARINE_BORDERS = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/EEZ_boundaries_simplified/FeatureServer';
 
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_global_countries_SPI/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
@@ -126,8 +126,8 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
   [LAND_COUNTRY_PRIORITY_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
-  [MARINE_COUNTRY_PRIORITY_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
+  [MARINE_COUNTRY_PRIORITY_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
+  [EEZ_MARINE_BORDERS]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/eez_countries_Dissolve/FeatureServer/0',
   [PLEDGES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]:
