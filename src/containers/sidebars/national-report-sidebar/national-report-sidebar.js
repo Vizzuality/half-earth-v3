@@ -16,8 +16,6 @@ const NationalReportSidebarContainer = (props) => {
     onboardingType,
   } = props;
 
-  console.log({ onboardingType });
-
   const handleClose = () => {
     const { changeUI } = props;
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });

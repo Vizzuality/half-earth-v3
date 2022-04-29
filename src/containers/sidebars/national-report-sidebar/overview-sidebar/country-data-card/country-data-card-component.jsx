@@ -16,12 +16,16 @@ const CountryDataCardComponent = ({
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const {
+    nspecies,
     nspecies_mar,
     nspecies_ter,
+    prop_protected,
     prop_protected_mar,
     prop_protected_ter,
+    SPI,
     SPI_ter,
     SPI_mar,
+    total_endemic,
     total_endemic_mar,
     total_endemic_ter,
   } = countryData;
@@ -50,13 +54,14 @@ const CountryDataCardComponent = ({
           </div>
           <div className={styles.indexWrapper}>
             <div className={styles.indexBar}>
-              <div className={styles.progressMark} style={{ left: `${SPI_ter}%` }} />
+
+              <div className={styles.progressMark} style={{ left: `${SPI}%` }} />
               <div
                 className={styles.improvementArea}
-                style={{ left: `${SPI_ter}%`, width: `${100 - SPI_ter}%` }}
+                style={{ left: `${SPI}%`, width: `${100 - SPI}%` }}
               />
             </div>
-            <div className={styles.index}>{`${SPI_ter}`}</div>
+            <div className={styles.index}>{`${SPI}`}</div>
           </div>
           <p className={styles.indexStatement}>{indexStatement}</p>
         </section>
@@ -72,19 +77,19 @@ const CountryDataCardComponent = ({
                   styles.protectionNumber
                 )}
               >
-                <p className={styles.baseNumber}>{`${prop_protected_ter && prop_protected_ter.toFixed()}%`}</p>
+                <p className={styles.baseNumber}>{prop_protected}%</p>
                 <p className={styles.numberText}>of land</p>
                 <p className={styles.numberText}>currently protected</p>
               </div>
               <div className={styles.indexBaseDataElement}>
-                <p className={styles.baseNumber}>{`${nspecies_ter}`}</p>
+                <p className={styles.baseNumber}>{nspecies}</p>
                 <p className={styles.numberText}>total land</p>
                 <p className={styles.numberText}>vertebrate species</p>
               </div>
               <div className={styles.indexBaseDataElement}>
                 <p
                   className={styles.baseNumber}
-                >{`${total_endemic_ter}`}</p>
+                >{`${total_endemic}`}</p>
                 <p className={styles.numberText}>endemic land</p>
                 <p className={styles.numberText}>vertebrate species</p>
               </div>
