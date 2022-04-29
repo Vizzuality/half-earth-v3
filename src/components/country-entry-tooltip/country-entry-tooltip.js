@@ -30,7 +30,6 @@ const CountryEntryTooltipContainer = props => {
         returnGeometry: true
       }).then((features) => {
         const { geometry, attributes } = features[0];
-
         if (geometry) {
           setTooltipPosition(geometry);
           setTooltipIsVisible(true);

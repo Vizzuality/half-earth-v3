@@ -19,12 +19,17 @@ const NRCLandingSidebar = ({
   activeLayers,
   changeUI,
   handleLayerToggle,
+  globalAverage,
   map,
   onboardingStep,
   onboardingType,
   view,
   waitingInteraction,
 }) => {
+
+  const { land, marine } = globalAverage;
+  const formatedLandAverage = land && land.toFixed();
+  const formatedMarineAverage = marine && marine.toFixed();
   const tooltipRefs = useTooltipRefs({
     changeUI,
     onboardingType,
@@ -42,7 +47,7 @@ const NRCLandingSidebar = ({
     onboardingStep,
     waitingInteraction,
   });
-
+  console.log({ land, marine })
   return (
     <motion.div
       ref={(ref) => {
@@ -68,18 +73,25 @@ const NRCLandingSidebar = ({
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
       <div className={styles.togglesContainer}>
-        {NRCLandingLayers.map((layer) => (
-          <LayerToggle
-            map={map}
-            option={layer}
-            type="checkbox"
-            variant="light"
-            key={layer.value}
-            activeLayers={activeLayers}
-            onChange={handleLayerToggle}
-            themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
-          />
-        ))}
+        {NRCLandingLayers.map((layer) => {
+          const { name } = layer;
+          const nameUpadated = (name && name === 'Land') ? `Land SPI (Global average: ${formatedLandAverage})` : `Marine SPI (Global average: ${formatedMarineAverage})`;
+          const layerUpdated = { ...layer, name: nameUpadated };
+          return (
+            <LayerToggle
+              map={map}
+              option={layerUpdated}
+              type="checkbox"
+              variant="light"
+              key={layer.value}
+              activeLayers={activeLayers}
+              onChange={handleLayerToggle}
+              themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
+            />
+          )
+        }
+        )}
+        return
       </div>
 
       <SearchLocation

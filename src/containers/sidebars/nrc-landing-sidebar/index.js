@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import EsriFeatureService from 'services/esri-feature-service';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import Component from './component';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
 import metadataService from 'services/metadata-service';
@@ -17,6 +19,7 @@ const Container = (props) => {
 
   const [selectedLayers, setSelectedLayers] = useState([]);
   const [protectionMetadataSource, setProtectionsMetadataSource] = useState(null);
+  const [globalAverage, setGlobalAverage] = useState({});
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
@@ -26,6 +29,21 @@ const Container = (props) => {
       }
     })
   }, []);
+
+  // Set global average data
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url: COUNTRIES_DATA_SERVICE_URL,
+      returnGeometry: true
+    }).then((features) => {
+      const { attributes } = features[0];
+
+      setGlobalAverage({
+        land: attributes.Global_SPI_ter,
+        marine: attributes.Global_SPI_mar,
+      });
+    })
+  }, [])
 
   const handleLayerToggle = (option) => {
     if (option.layer === 'all') {
@@ -40,6 +58,7 @@ const Container = (props) => {
 
   return (
     <Component
+      globalAverage={globalAverage}
       selectedLayers={selectedLayers}
       handleLayerToggle={handleLayerToggle}
       source={protectionMetadataSource}
