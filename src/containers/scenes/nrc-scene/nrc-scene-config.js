@@ -12,6 +12,7 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  EEZ_MARINE_BORDERS
 } from 'constants/layers-slugs';
 
 import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js'
@@ -25,6 +26,12 @@ export default {
     { title: COUNTRIES_LABELS_FEATURE_LAYER },
     { title: LANDSCAPE_FEATURES_LABELS_LAYER },
     { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
+    ...(REACT_APP_FEATURE_MARINE ?
+      [
+        { title: EEZ_MARINE_BORDERS, opacity: DEFAULT_OPACITY },
+      ]
+      : []
+    ),
     ...(REACT_APP_FEATURE_MARINE ?
       [
         { title: LAND_COUNTRY_PRIORITY_LAYER, opacity: DEFAULT_OPACITY },

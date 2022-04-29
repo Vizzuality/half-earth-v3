@@ -125,9 +125,10 @@ export const LAYERS_URLS = {
   [COUNTRY_PRIORITY_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
   [LAND_COUNTRY_PRIORITY_LAYER]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
-  [MARINE_COUNTRY_PRIORITY_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
-  [EEZ_MARINE_BORDERS]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/eez_countries_Dissolve/FeatureServer/0',
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
+  [MARINE_COUNTRY_PRIORITY_LAYER]:
+  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
+  [EEZ_MARINE_BORDERS]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/eez_countries_simplified_Merge_Dissolve/FeatureServer',
   [PLEDGES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',
   [EDUCATOR_AMBASSADORS_LAYER]:
