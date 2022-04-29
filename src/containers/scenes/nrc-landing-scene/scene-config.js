@@ -7,6 +7,7 @@ import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
   COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
+import { BASEMAP_OPACITY } from 'constants/mol-layers-configs';
 
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
@@ -18,8 +19,8 @@ export default {
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER },
-      { title: GLOBAL_SPI_FEATURE_LAYER },
-      ...(REACT_APP_FEATURE_MARINE ? [{ title: MARINE_SPI_FEATURE_LAYER }] : [])
+      { title: GLOBAL_SPI_FEATURE_LAYER, opacity: BASEMAP_OPACITY  },
+      ...(REACT_APP_FEATURE_MARINE ? [{ title: MARINE_SPI_FEATURE_LAYER, opacity: BASEMAP_OPACITY }] : [])
     ],
     zoom: 3.8,
     padding: {
