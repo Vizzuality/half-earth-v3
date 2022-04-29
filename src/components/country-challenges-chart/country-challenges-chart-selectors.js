@@ -1,11 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
-import { getCountryChallengesSelectedFilter } from 'pages/nrc/nrc-selectors';
+import { getCountryChallengesSelectedFilter, getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import {
   INDICATOR_LABELS,
   CHALLENGES_RELATED_FILTERS_OPTIONS,
+  LAND_MARINE_OPTIONS,
+  LAND_MARINE_COUNTRY_ATTRIBUTES
 } from 'constants/country-mode-constants';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
@@ -14,9 +16,12 @@ const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const getCountryChallengesSelectedKey = (state, props) => props && props.countryChallengesSelectedKey;
 
 const getScatterplotRawData = createSelector(
-  [selectCountriesData],
-  countriesData => {
+  [selectCountriesData, getLandMarineSelected],
+  (countriesData, landMarineSelection) => {
     if (!countriesData) return null;
+    const landMarine = landMarineSelection || 'land';
+    const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarine];
+
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
       return {
@@ -28,13 +33,13 @@ const getScatterplotRawData = createSelector(
         xAxisValues: {
           [COUNTRY_ATTRIBUTES.Pop2020]: country[COUNTRY_ATTRIBUTES.Pop2020],
           GNI_PPP: country.GNI_PPP,
-          [COUNTRY_ATTRIBUTES.hm_vh_ter]: country[COUNTRY_ATTRIBUTES.hm_vh_ter],
-          [COUNTRY_ATTRIBUTES.prop_protected_ter]: country[COUNTRY_ATTRIBUTES.prop_protected_ter],
-          [COUNTRY_ATTRIBUTES.protection_needed_ter]: country[COUNTRY_ATTRIBUTES.protection_needed_ter],
-          [COUNTRY_ATTRIBUTES.total_endemic_ter]: country[COUNTRY_ATTRIBUTES.total_endemic_ter],
-          [COUNTRY_ATTRIBUTES.nspecies_ter]: country[COUNTRY_ATTRIBUTES.nspecies_ter]
+          [COUNTRY_ATTRIBUTES.hm_vh_ter]: country[attributes.hm_vh],
+          [COUNTRY_ATTRIBUTES.prop_protected_ter]: country[attributes.prop_protected],
+          [COUNTRY_ATTRIBUTES.protection_needed_ter]: country[attributes.protection_needed],
+          [COUNTRY_ATTRIBUTES.total_endemic_ter]: country[attributes.total_endemic],
+          [COUNTRY_ATTRIBUTES.nspecies_ter]: country[attributes.nspecies]
         },
-        yAxisValue: country[COUNTRY_ATTRIBUTES.SPI_ter]
+        yAxisValue: country[attributes.SPI]
       }
         }).sort((a, b) => (b.size - a.size))
   }
@@ -52,10 +57,10 @@ const getXAxisKeys = createSelector(
 });
 
 const getSelectedCountryRelations = createSelector(
-  [selectCountriesData, selectCountryIso],
-  (countriesData, selectedCountryIso) => {
+  [selectCountriesData, selectCountryIso, getLandMarineSelected],
+  (countriesData, selectedCountryIso, landMarineSelection) => {
     if (!countriesData || !selectedCountryIso) return null;
-    return JSON.parse(countriesData[selectedCountryIso][`filter_${COUNTRY_ATTRIBUTES.similar_ter}`])
+    return JSON.parse(countriesData[selectedCountryIso][`filter_${LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection].similar}`])
   }
 )
 
@@ -99,9 +104,16 @@ const getChallengesFilterOptions = createSelector(
   }
 );
 
+const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
+
 const getSelectedFilterOption = createSelector(
   getCountryChallengesSelectedFilter,
   selectedFilter => CHALLENGES_RELATED_FILTERS_OPTIONS.find(option => option.slug === selectedFilter)
+);
+
+const getSelectedLandMarineOption = createSelector(
+  getLandMarineSelected,
+  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection)
 );
 
 
@@ -134,7 +146,9 @@ const mapStateToProps = createStructuredSelector({
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
   selectedFilterOption: getSelectedFilterOption,
-  challengesFilterOptions: getChallengesFilterOptions
+  selectedLandMarineOption: getSelectedLandMarineOption,
+  challengesFilterOptions: getChallengesFilterOptions,
+  landMarineOptions: getLandMarineOptions
 });
 
 export default mapStateToProps;
