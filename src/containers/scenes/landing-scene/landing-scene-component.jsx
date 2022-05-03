@@ -17,10 +17,7 @@ import styles from './landing-scene-styles.module.scss';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const LandingSceneComponent = ({
-  sceneSettings,
-  browsePage,
-}) => {
+const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
   const isMobile = useMobile();
   return (
     <Scene
@@ -28,7 +25,6 @@ const LandingSceneComponent = ({
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
-
       <div className={styles.sceneContainer}>
         <Hero />
         <motion.p
@@ -53,20 +49,20 @@ const LandingSceneComponent = ({
         >
           <Globe
             title="Discover stories"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
+            description="Learn about important places of great biodiversity, and how their protection can contribute to preserving global biodiversity."
             globeImage={globeDiscover}
             handleClick={() => browsePage({ type: FEATURED })}
           />
           <Globe
             title="Explore Data"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
+            description="Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity."
             globeImage={globeExplore}
             center
             handleClick={() => browsePage({ type: DATA })}
           />
           <Globe
             title="National Report Cards"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet, est eget lobortis lobortis, ex ex volutpat ligula."
+            description="Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species."
             globeImage={globeNRC}
             handleClick={() =>
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
