@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import sortBy from 'lodash/sortBy';
 
 const getChartData = (state, { chartData }) => chartData;
 
@@ -11,8 +12,9 @@ const parseData = (data) => {
       protected: [parseInt(i.percentprotected_high), parseInt(i.percentprotected_low)],
     }
   });
-  return parsedData;
-}
+  return sortBy(parsedData, ['year']);
+};
+
 const getAreaChartData = createSelector(
   [getChartData],
   (chartData) => {
@@ -22,7 +24,7 @@ const getAreaChartData = createSelector(
     const parsedMarineData = parseData(marine);
     return { land: parsedLandData, marine: parsedMarineData };
   }
-)
+);
 
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
