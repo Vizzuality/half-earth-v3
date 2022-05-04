@@ -10,24 +10,24 @@ const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (bi
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
 const selectUserConfig = ({ userConfig }) => userConfig || null;
-const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
-const selectActiveView = ({location}) => location.payload.view || NRC_UI_DEFAULTS.view;
+const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+const selectActiveView = ({ location }) => location.payload.view || NRC_UI_DEFAULTS.view;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
   (globeUrlState) => {
-  return {
-    ...nrcSceneConfig,
-    ...globeUrlState
-  }
-})
+    return {
+      ...nrcSceneConfig,
+      ...globeUrlState
+    }
+  })
 
 const getUiSettings = createSelector([selectUiUrlState],
   (uiUrlState) => {
-  return {
-    ...NRC_UI_DEFAULTS,
-    ...uiUrlState
-  }
-})
+    return {
+      ...NRC_UI_DEFAULTS,
+      ...uiUrlState
+    }
+  })
 
 
 export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers);
@@ -37,8 +37,11 @@ const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSett
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
+export const getLandMarineSelected = createSelector(getUiSettings, uiSettings => uiSettings.landMarineSelection || 'land');
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
-
+export const getOnboardingType = createSelector(getUiSettings, uiSettings => uiSettings.onboardingType);
+export const getOnboardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onboardingStep);
+export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
@@ -55,4 +58,7 @@ export default createStructuredSelector({
   localSceneActiveTab: selectActiveView,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
+  onboardingType: getOnboardingType,
+  onboardingStep: getOnboardingStep,
+  waitingInteraction: getOnWaitingInteraction,
 });

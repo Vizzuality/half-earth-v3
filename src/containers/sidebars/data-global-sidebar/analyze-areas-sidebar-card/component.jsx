@@ -29,11 +29,13 @@ const AnalyzeAreasCardComponent = ({
   isSketchToolActive,
   onShapeUploadError,
   selectedAnalysisTab,
+  className,
   onShapeUploadSuccess,
   handleOptionSelection,
   handleAnalysisTabClick,
   handlePromptModalToggle,
   aoiHistoryModalOpenAnalytics,
+  onboardingStep,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -46,7 +48,12 @@ const AnalyzeAreasCardComponent = ({
   };
 
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <div
+      className={cx(styles.sidebarCardContainer, className, {
+        [styles.open]: isOpen,
+        [styles.onboardingOverlay]: onboardingStep === 2,
+      })}
+    >
       <CategoryBox
         title="Analyze areas"
         Icon={AnalyzeAreasIcon}

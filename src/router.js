@@ -12,12 +12,10 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 const { REACT_APP_FEATURE_ONBOARDING } = process.env;
 
 export const routes = {
-  ...(REACT_APP_FEATURE_ONBOARDING === 'true' ?
-    { [LANDING]: {
+  [LANDING]: {
       path: '/',
       page: 'landing'
-    }}
-    : {}),
+  },
   [DATA]: {
     path: '/dataGlobe',
     page: 'data-globe'

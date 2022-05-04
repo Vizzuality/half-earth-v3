@@ -40,6 +40,7 @@
   font-size: $font-size-sm;
   flex: 1;
   text-align: left;
+  color: $white;
 
   // To add ellipsis after 4 lines
   display: -webkit-box;
@@ -51,5 +52,8 @@
 }
 
 .link {
-  text-decoration: none;
+  font-family: $font-family-1;
+  color: $brand-color-main;
+  text-transform: uppercase;
+  text-underline-position: from-font;
 }

@@ -14,7 +14,30 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  margin: 10px 0 2px 0;
   width: 100%;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  .switchDataButton {
+    @extend %subtitle;
+    border: 1px solid #E9E9E9;
+    color: #E9E9E9;
+    font-size: 10px;
+    height: 25px;
+    text-transform: capitalize;
+    width: 50px;
+  }
+
+  .switchDataActiveButton {
+    @extend %subtitle;
+    background-color: #E9E9E9;
+    color: $_temporary-dark-text;
+  }
 }
 
 .tooltipFlag {
@@ -34,6 +57,7 @@
   height: 30px;
   padding: 5px 20px;
   border-radius: 2px;
+
   &:hover {
     background-color: $brand-color-main;
   }
@@ -51,13 +75,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .spi {
     @extend %display1;
+    font-size: 32px;
     margin: 0;
-    padding-bottom: 10px;
+    padding-bottom: 4px;
   }
+
   .subtitle {
     @extend %subtitle;
+    font-size: 10px;
     letter-spacing: 1.2px;
     margin: 0;
     padding-bottom: 10px;
@@ -71,13 +99,15 @@
   padding: $site-gutter;
   border-radius: 6px;
   margin-bottom: 10px;
+
   .infoPill {
     display: flex;
     padding-bottom: $site-gutter;
+
     &:last-child() {
       padding: 0;
     }
-    
+
     .numeric {
       @extend %title;
       flex-grow: 1;

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import loadable from '@loadable/component';
 
@@ -10,23 +9,12 @@ import uiStyles from 'styles/ui.module.scss';
 // Dynamic imports
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const LandingComponent = ({
-  hasMetadata,
-  openedModal,
-  activeOption,
-  sceneSettings,
-  isSidebarOpen,
-}) => {
+const LandingComponent = ({ hasMetadata, sceneSettings }) => {
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
       <MainMenu />
-      <LandingScene
-        openedModal={openedModal}
-        activeOption={activeOption}
-        sceneSettings={sceneSettings}
-        isSidebarOpen={isSidebarOpen}
-      />
+      <LandingScene sceneSettings={sceneSettings} />
       {hasMetadata && <InfoModal />}
     </>
   );

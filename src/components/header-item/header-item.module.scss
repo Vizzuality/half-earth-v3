@@ -1,22 +1,31 @@
 @import 'styles/settings';
 @import 'styles/mixins';
+@import 'styles/typography-extends';
 
 .headerItem {
+  @extend %subtitle;
   display: flex;
-  padding-right: 20px;
-  align-items: flex-end;
-  align-self: flex-end;
+  align-items: center;
+  flex: 1 1 0;
+  color: $white;
+  text-align: left;
+  font-weight: 500;
+  padding: 0 25px 0 10px;
+
+  &:first-child {
+    padding-left: 0;
+  }
 }
 
 .sortArrows {
   display: inline-block;
   position: relative;
-  margin-left: 5px;
+  transform: translate(5px, -2px);
 
   .arrowUp {
     @include caret($_temporary-light-text, 'up');
     position: absolute;
-    top: -1px;
+    top: 5px;
     &.highlightedSort::after {
       border-top-color: $white;
     }
@@ -25,31 +34,7 @@
   .arrowDown {
     @include caret($_temporary-light-text, 'down');
     position: absolute;
-    top: -26px;
-    &.highlightedSort::after {
-      border-bottom-color: $white;
-    }
-  }
-}
-
-
-.sortArrows {
-  display: inline-block;
-  position: relative;
-  margin-left: 5px;
-
-  .arrowUp {
-    @include caret($_temporary-light-text, 'up');
-    position: absolute;
-    &.highlightedSort::after {
-      border-top-color: $white;
-    }
-  }
-
-  .arrowDown {
-    @include caret($_temporary-light-text, 'down');
-    position: absolute;
-    top: -26px;
+    bottom: 0;
     &.highlightedSort::after {
       border-bottom-color: $white;
     }

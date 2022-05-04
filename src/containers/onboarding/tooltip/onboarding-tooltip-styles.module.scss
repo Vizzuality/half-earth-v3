@@ -1,0 +1,49 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.tooltipPlacement {
+  position: absolute;
+  z-index: $over-all;
+}
+
+.tooltipContainer {
+    align-items: center;;
+    display: flex;
+    justify-content: space-between;
+    height: 38px;
+    width: 170px;
+}
+
+.tooltipContainerReverse {
+    flex-direction: row-reverse;
+}
+
+.tooltip {
+    @extend %annotation;
+    align-items: center;
+    background-color: $white;
+    border-radius: 2px;
+    display: flex;
+    height: 38px;
+    justify-content: center;
+    width: 165px;
+}
+
+.arrow {
+    width: 0;
+    height: 0;
+    top: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+
+.arrowLeft {
+    border-right: 5px solid $white;
+    left: -5px;
+}
+
+.arrowRight {
+    border-left: 5px solid $white;
+    right: -5px;
+}

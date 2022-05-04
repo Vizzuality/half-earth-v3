@@ -2,32 +2,37 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import get from 'lodash/get';
 import { SORT_OPTIONS, RANKING_INDICATORS, RANKING_GROUPS_SLUGS, RANKING_INDICATOR_GROUPS } from 'constants/country-mode-constants';
+import { LAND_MARINE_OPTIONS, LAND_MARINE_COUNTRY_ATTRIBUTES } from 'constants/country-mode-constants';
+import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getSortRankingCategory = ({ location }) => (location && get(location, 'query.ui.sortRankingCategory')) || null;
 
-const getRankingData = createSelector([selectCountriesData], countriesData => {
+const { REACT_APP_FEATURE_MARINE } = process.env;
+
+const getRankingData = createSelector([selectCountriesData, getLandMarineSelected], (countriesData, landMarineSelection) => {
   if(!countriesData) return null;
+  const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
   return Object.keys(countriesData).map((iso) => {
     const d = countriesData[iso];
     return {
-      [RANKING_INDICATORS.spi]: d.SPI,
-      [RANKING_INDICATORS.speciesRichness]: d.nspecies, // Just for sorting
+      [RANKING_INDICATORS.spi]: d[attributes.SPI],
+      [RANKING_INDICATORS.speciesRichness]: d[attributes.nspecies_richness], // Just for sorting
       name: d.NAME_0,
       iso,
       [RANKING_GROUPS_SLUGS.species]: {
-        [RANKING_INDICATORS.nonEndemic]: 100 - (100 * d.total_endemic / d.nspecies),
-        [RANKING_INDICATORS.endemic]: (100 * d.total_endemic / d.nspecies)
+        [RANKING_INDICATORS.nonEndemic]: 100 - (100 * d[attributes.total_endemic] / d[attributes.nspecies_richness]),
+        [RANKING_INDICATORS.endemic]: (100 * d[attributes.total_endemic] / d[attributes.nspecies_richness])
       },
       [RANKING_GROUPS_SLUGS.humanModification]: {
-        [RANKING_INDICATORS.veryHigh]: d.prop_hm_very_high,
-        [RANKING_INDICATORS.totalMinusVeryHigh]: 100 - d.prop_hm_very_high - d.prop_hm_0,
-        [RANKING_INDICATORS.noModification]: d.prop_hm_0
+        [RANKING_INDICATORS.veryHigh]: d[attributes.hm_vh],
+        [RANKING_INDICATORS.totalMinusVeryHigh]: REACT_APP_FEATURE_MARINE ? d[attributes.hm] : 100 - d[attributes.prop_hm_very_high] - d[attributes.prop_hm_0],
+        [RANKING_INDICATORS.noModification]: d[attributes.hm_no]
       },
       [RANKING_GROUPS_SLUGS.protection]: {
-        [RANKING_INDICATORS.protected]: d.prop_protected,
-        [RANKING_INDICATORS.protectionNeeded]: d.protection_needed,
-        [RANKING_INDICATORS.protectionNotNeeded]: 100 - d.protection_needed - d.prop_protected
+        [RANKING_INDICATORS.protected]: d[attributes.prop_protected],
+        [RANKING_INDICATORS.protectionNeeded]: d[attributes.protection_needed],
+        [RANKING_INDICATORS.protectionNotNeeded]: 100 - d[attributes.protection_needed] - d[attributes.prop_protected]
       }
     };
   });
@@ -50,9 +55,18 @@ const getSelectedFilterOption = createSelector([getSortRankingCategory], (sortRa
   return SORT_OPTIONS.find(o => o.slug === sortRankingCategory.slug) || SORT_OPTIONS[0];
 });
 
+const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
+
+const getSelectedLandMarineOption = createSelector(
+  getLandMarineSelected,
+  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection)
+);
+
 const mapStateToProps = createStructuredSelector({
   data: getSortedData,
   selectedFilterOption: getSelectedFilterOption,
+  selectedLandMarineOption: getSelectedLandMarineOption,
+  landMarineOptions: getLandMarineOptions
 });
 
 export default mapStateToProps;

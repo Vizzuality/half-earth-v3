@@ -16,6 +16,7 @@ const AudioPlayer = ({
   textMark,
   setTextMark,
   setPlayedSeconds,
+  setPausedTime,
 }) => (
   <ReactPlayer
     url={[`${file}#t=${startTime},${endTime}`]}
@@ -37,12 +38,14 @@ const AudioPlayer = ({
           setFreeToPlay(true);
         }
       }
-
+      // cuando se pausa y se reanuda despues de acabar el audio empieza otra vez desde reanudado
       if (script[textMark] && playedSeconds > script[textMark].endTime) {
         const hasNoMoreTextMarks = !script[textMark + 1];
         if (hasNoMoreTextMarks) {
           handleEndOfStep();
         } else {
+          // Set the paused time to the beggining of the text so it doesn't repeat from the pause again
+          setPausedTime(playedSeconds);
           setTextMark(textMark + 1);
         }
       }

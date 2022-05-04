@@ -13,15 +13,21 @@ const NationalReportSidebarContainer = (props) => {
   const {
     browsePage,
     handlePrintReport,
+    onboardingType,
   } = props;
 
   const handleClose = () => {
+    const { changeUI } = props;
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
+    if (onboardingType) changeUI({ onboardingType: 'national-report-cards', onboardingStep: 6, waitingInteraction: false });
   }
 
-  const handleTabSelection = slug => {
-    const { browsePage, countryISO } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  slug }});
+  const handleTabSelection = (slug) => {
+    const { browsePage, countryISO, changeUI, onboardingType, onboardingStep } = props;
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: slug } });
+    if (onboardingType) {
+      changeUI({ onboardingStep: onboardingStep + 1, onboardingType, waitingInteraction: false });
+    }
   };
 
   return (

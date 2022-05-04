@@ -14,13 +14,14 @@ const CheckboxType = ({
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
- }) => {
+}) => {
+
   return (
-    <div 
+    <div
       key={option.name}
-      className={cx(
-        styles.container
-      )}
+      className={cx({
+        [styles.container]: true,
+      })}
     >
       <div
         className={styles.checkboxOption}
@@ -33,7 +34,7 @@ const CheckboxType = ({
         />
       </div>
       {isChecked && (
-        <LayerTools 
+        <LayerTools
           option={option}
           onInfoClick={onInfoClick}
           activeLayers={activeLayers}
@@ -43,6 +44,7 @@ const CheckboxType = ({
         />
       )}
     </div>
-  )}
+  )
+}
 
 export default CheckboxType;

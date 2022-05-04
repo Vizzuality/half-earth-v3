@@ -6,11 +6,20 @@
   @extend %headline;
   color: $grey-text;
   margin-right: 1rem;
+
+  &.filterTitle {
+    margin-left: 1rem;
+  }
 }
 
 .chartTitleContainer {
   margin-bottom: 3rem;
   display: flex;
+  align-items: center;
+}
+
+.landMarineDropdownWrapper {
+  width: 130px;
 }
 
 .dropdownWrapper {
@@ -82,8 +91,6 @@ $scroll-bar-width: 7px;
 .spiCountry {
   width: 25%;
   cursor: pointer;
-
-  
 }
 
 .spiCountryButton {

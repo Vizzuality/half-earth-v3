@@ -37,8 +37,8 @@ export default {
     }
   },
   ui: {
-    onBoardingType: null,
-    onBoardingStep: 0,
+    onboardingType: null,
+    onboardingStep: 0,
     selectedSidebar: 'featuredMapCard',
     selectedFeaturedMap: 'priorPlaces',
     selectedTaxa: 'all',

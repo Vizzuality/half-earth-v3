@@ -37,11 +37,45 @@
   left: 90px;
 }
 
-.legendItem {
-  @extend %subtitle;
+.chartLegendItem {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+.chartLegendItemNameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @extend %subtitle;
+}
+
+.legendList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0;
+  margin: -10px 0 0;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  flex-basis: calc(50% - 10px);
+  margin-top: 10px;
+}
+
+.legendNameContainer {
+  display: flex;
+  flex-direction: column;
+  font-family: $font-family-1;
+  font-size: $font-size-xs;
+}
+
+.speciesName {
+  font-weight: $font-weight-bold;
 }
 
 .speciesCount,
@@ -58,37 +92,46 @@
 .birdsIcon,
 .mammalsIcon,
 .reptilesIcon,
-.amphibiansIcon {
+.amphibiansIcon,
+.fishesIcon,
+.marMammalsIcon {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   width: 25px;
   height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   border-radius: 13px;
   margin-right: 10px;
-}
-
-.birdsIcon {
-  background-color: $birds-color;
-}
-
-.mammalsIcon {
-  background-color: $mammals-color;
-}
-
-.reptilesIcon {
-  background-color: $reptiles-color;
 }
 
 .amphibiansIcon {
   background-color: $amphibians-color;
 }
 
-.speciesLegend {
-  margin-bottom: 25px;
+.reptilesIcon {
+  background-color: $reptiles-color;
+}
+
+.mammalsIcon {
+  background-color: $mammals-color;
+}
+
+.marMammalsIcon {
+  background-color: $mar-mammals-color;
+}
+
+.birdsIcon {
+  background-color: $birds-color;
+}
+
+.fishesIcon {
+  background-color: $fishes-color;
 }
 
 .actionButton {
   width: 100%;
   justify-content: center;
+  margin: 25px 0 0;
 }

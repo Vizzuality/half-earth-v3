@@ -1,15 +1,19 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { random } from 'lodash';
+import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 const SPECIES_COLOR = {
-  birds: '#34BD92',
-  mammals: '#92EB58',
-  amphibians: '#9873EF',
-  reptiles: '#3AA8EE'
+  amphibians: '#34BD92',
+  birds: '#FCC44A',
+  mammals: '#8B62E9',
+  mammals_mar: '#3AA8EE',
+  fishes: '#38E5DB',
+  reptiles: '#92EB57',
 }
 
-const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
-const selectScene = ({scene}) => scene;
+const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+const selectScene = ({ scene }) => scene;
 const selectCountriesData = ({ countryData }) => countryData && countryData.data;
 const selectCountryDataLoading = ({ countryData }) => (countryData && countryData.loading) || null;
 const getCountryData = createSelector(
@@ -38,12 +42,12 @@ const getHasPriority = createSelector(getCountryData, countryData => {
 const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority], (countryData, hasPriority) => {
   if (!countryData) return null;
   return hasPriority ?
-  `The brightly colored map layer presents one possible configuration
+    `The brightly colored map layer presents one possible configuration
   of the additional areas needed to achieve the Half-Earth goal of
   comprehensive terrestrial biodiversity conservation. Higher values
   indicate locations within ${countryData.NAME_0} that contribute more to the
   conservation of species habitat.` :
-  `Our global model of comprehensive terrestrial vertebrate biodiversity
+    `Our global model of comprehensive terrestrial vertebrate biodiversity
   conservation did not identify any areas in ${countryData.NAME_0} in need of additional protection.
   Further expansion of ${countryData.NAME_0}'s protected areas will nonetheless promote resilience towards global biodiversity loss,
   and can contribute to creating a global conservation network with more equity between countries.` ;
@@ -51,38 +55,38 @@ const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority]
 
 const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.SPI;
+  return countryData[COUNTRY_ATTRIBUTES.SPI_ter];
 })
 
 const getCurrentProtection = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.prop_protected));
+  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.prop_protected_ter]));
 })
 
 const getProtectionNeeded = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.protection_needed));
+  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.protection_needed_ter]));
 })
 
 const getSPIMean = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return Math.round(parseFloat(countryData.spi_mean));
+  return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.Global_SPI_ter]));
 })
 
 const getNumberOfVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.N_SPECIES.toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.nspecies_ter].toLocaleString('en');
 })
 
 const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData.total_endemic.toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter].toLocaleString('en');
 })
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return `Here are some example species of significant conservation interest for each taxonomic group.
-   These species are either endemic to ${countryData.NAME_0} or have small range sizes`;
+   These land species are either endemic to ${countryData.NAME_0} or have small range sizes`;
 })
 
 
@@ -94,12 +98,12 @@ const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, country
 })
 
 const getIndexStatement = createSelector(
-  [getSpeciesProtectionIndex,getSPIMean],
+  [getSpeciesProtectionIndex, getSPIMean],
   (SPI, SPIMean) => {
-  if (!SPI || !SPIMean) return null;
-  const comparation = SPI >=SPIMean ? 'higher' : 'lower';
-  return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average national SPI: ${SPIMean} `
-})
+    if (!SPI || !SPIMean) return null;
+    const comparation = SPI >= SPIMean ? 'higher' : 'lower';
+    return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average national SPI: ${SPIMean} `
+  })
 
 const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
   if (!endemicVertebrates) return null;
@@ -117,28 +121,35 @@ const getEndemicSpecies = (taxa) => createSelector(getCountryData, countryData =
 const getSpeciesChartData = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
 
-const {
-  birds,
-  mammals,
-  reptiles,
-  amphibians,
-  endemic_birds,
-  endemic_reptiles,
-  endemic_mammals,
-  endemic_amphibians
-} = countryData;
+  const {
+    birds,
+    mammals,
+    mammals_mar,
+    fishes_mar,
+    reptiles,
+    amphibians,
+    endemic_birds,
+    endemic_reptiles,
+    endemic_mammals,
+    endemic_mammals_mar,
+    endemic_fishes_mar,
+    endemic_amphibians,
+  } = countryData;
 
-
-const chartData = [
-  {name: 'endemic amphibians', value: endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: true},
-  {name: 'amphibians', value: amphibians - endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: false},
-  {name: 'endemic birds', value: endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: true},
-  {name: 'birds', value: birds - endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: false},
-  {name: 'endemic mammals', value: endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: true},
-  {name: 'mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false},
-  {name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true},
-  {name: 'reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false},
-]
+  const chartData = [
+    { name: 'endemic amphibians', value: endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: true },
+    { name: 'amphibians', value: amphibians - endemic_amphibians, color: SPECIES_COLOR['amphibians'], explodedSlice: false },
+    { name: 'endemic birds', value: endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: true },
+    { name: 'birds', value: birds - endemic_birds, color: SPECIES_COLOR['birds'], explodedSlice: false },
+    { name: 'endemic mammals', value: endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: true },
+    { name: 'mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false },
+    { name: 'endemic mammals mar', value: endemic_mammals_mar, color: SPECIES_COLOR['mammals_mar'], explodedSlice: true },
+    { name: 'mammals mar', value: mammals_mar - endemic_mammals_mar, color: SPECIES_COLOR['mammals_mar'], explodedSlice: false },
+    { name: 'endemic fishes mar', value: endemic_fishes_mar, color:SPECIES_COLOR['fishes'], explodedSlice: true },
+    { name: 'fishes mar', value: fishes_mar - endemic_fishes_mar, color: SPECIES_COLOR['fishes'], explodedSlice: false },
+    { name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true },
+    { name: 'reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false },
+  ]
   return chartData
 })
 
@@ -151,9 +162,12 @@ const mapStateToProps = createStructuredSelector({
   countryName: getCountryName,
   SPI: getSpeciesProtectionIndex,
   amphibians: getTaxa('amphibians'),
+  fishes: getTaxa('fishes_mar'),
+  fishesEndemic: getEndemicSpecies('fishes_mar'),
+  mammalsMar: getTaxa('mammals_mar'),
+  mammalsMarEndemic: getEndemicSpecies('mammals_mar'),
   scene: selectScene,
   indexStatement: getIndexStatement,
-  // openedModal: getModalOpen,
   countryDescription: getDescription,
   protectionNeeded: getProtectionNeeded,
   speciesChartData: getSpeciesChartData,
@@ -168,7 +182,8 @@ const mapStateToProps = createStructuredSelector({
   endemicVertebratesSentence: getEndemicSpeciesSentence,
   endemicVertebratesCount: getNumberOfEndemicVertebrates,
   highlightedSpeciesSentence: getHighlightedSpeciesSentence,
-  highlightedSpeciesRandomNumber: getHighlightedSpeciesRandomNumber
+  highlightedSpeciesRandomNumber: getHighlightedSpeciesRandomNumber,
+  waitingInteraction: getOnWaitingInteraction
 })
 
 export default mapStateToProps;
