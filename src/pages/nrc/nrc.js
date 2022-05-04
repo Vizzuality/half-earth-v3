@@ -47,8 +47,6 @@ const NrcContainer = props => {
   const [chartMarineData, setChartMarineData] = useState(null);
   useEffect(() => {
     if (countryISO) {
-
-
       EsriFeatureService.getFeatures({
         url: NRC_TERRESTRIAL_SPI_DATA_LAYER,
         whereClause: `GID_0 = '${countryISO}'`,
