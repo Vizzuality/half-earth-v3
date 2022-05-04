@@ -17,6 +17,7 @@ import OnboardingTooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
+import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 // Styles
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './data-scene-styles.module.scss';
@@ -55,8 +56,15 @@ const DataSceneComponent = ({
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const updatedSceneSettings = useMemo(
-    () => ({ ...sceneSettings, ...(isMobile && { padding: { left: 0 } }) }),
-    [isMobile]
+    () => ({
+      ...sceneSettings,
+      center:
+        onboardingType === 'priority-places'
+          ? ONBOARDING_TYPE_CENTER['priority-places']
+          : sceneSettings.center,
+      ...(isMobile && { padding: { left: 0 } }),
+    }),
+    [isMobile, onboardingType]
   );
 
   return (
@@ -70,6 +78,7 @@ const DataSceneComponent = ({
         disabled={!!onboardingType}
       >
         {!!onboardingType && <SoundButton />}
+        <OnboardingTooltip />
 
         <ArcgisLayerManager
           userConfig={userConfig}
@@ -96,8 +105,6 @@ const DataSceneComponent = ({
             [animationStyles.leftHidden]: sidebarHidden,
           })}
         />
-
-        <OnboardingTooltip />
         <MobileOnly>
           <MenuFooter
             activeOption={activeOption}

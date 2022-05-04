@@ -9,7 +9,12 @@
   z-index: $default-z-index;
 
   .stepsArc {
+    cursor: pointer;
     stroke: $dark-text;
+
+    &:hover {
+      stroke-width: 6px;
+    }
 
     &.active {
       stroke: $brand-color-main;

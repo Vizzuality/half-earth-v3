@@ -62,6 +62,7 @@ const ButtonIcon = ({
   pauseIcon,
   setPausedTime,
   playedSeconds,
+  changeUI,
 }) => {
   const renderAudioBars = () => (
     <div className={styles.audioBars} onMouseEnter={() => setPauseIcon(true)}>
@@ -100,7 +101,16 @@ const ButtonIcon = ({
 
   return (
     <>
-      <StepsArcs numberOfArcs={stepsNumber} currentStep={onboardingStep} />
+      <StepsArcs
+        numberOfArcs={stepsNumber}
+        currentStep={onboardingStep}
+        handleClick={(e, i) => {
+          changeUI({
+            onboardingStep: i,
+            waitingInteraction: false,
+          });
+        }}
+      />
       {!waitingInteraction && (waitingStartAudioClick || !playing) ? (
         <button onClick={handlePlay} className={styles.playButton}>
           <PlayIcon className={styles.playIcon} />
@@ -201,11 +211,13 @@ const SoundButtonComponent = ({
     const dontWaitStep = NO_INTERACTION_STEPS[onboardingType].includes(
       Object.keys(SCRIPTS[onboardingType])[onboardingStep]
     );
+
     if (dontWaitStep) {
       return changeUI({
         onboardingStep: onboardingStep + 1,
       });
     }
+
     changeUI({ waitingInteraction: true });
   };
 
@@ -291,6 +303,7 @@ const SoundButtonComponent = ({
               pauseIcon,
               setPausedTime,
               playedSeconds,
+              changeUI,
             }}
           />
         </div>

@@ -8,7 +8,7 @@ const getWaitingInteraction = createSelector(selectUiUrlState, uiSettings => uiS
 const mapStateToProps = createStructuredSelector({
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
-  waitingInteraction: getWaitingInteraction
+  waitingInteraction: getWaitingInteraction,
 });
 
 export default mapStateToProps;

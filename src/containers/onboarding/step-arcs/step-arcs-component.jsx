@@ -7,6 +7,7 @@ const StepsArcs = ({
   currentStep,
   radius = 33,
   strokeWidth = 3,
+  handleClick,
 }) => {
   const polarToCartesian = (centerX, centerY, radius, angleInDegrees) => {
     const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
@@ -53,6 +54,9 @@ const StepsArcs = ({
     <svg className={styles.stepsCircle}>
       {arcsArray.map((arcStartEnd, i) => (
         <path
+          role="button"
+          aria-pressed={currentStep === i}
+          onClick={(e) => handleClick(e, i)}
           key={`$arc-${i}`}
           className={cx(styles.stepsArc, {
             [styles.active]: currentStep >= i,

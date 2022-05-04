@@ -3,6 +3,10 @@ export const NO_INTERACTION_STEPS = {
   'national-report-cards': []
 };
 
+export const ONBOARDING_TYPE_CENTER = {
+  'priority-places': [-51.9, -14.2]
+};
+
 export const SCRIPTS = {
   'priority-places': {
     intro: [
