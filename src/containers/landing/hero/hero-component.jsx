@@ -49,7 +49,8 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           delay: 1.5,
         }}
       >
-        {!isMobile && 'SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT'}
+        {!isMobile &&
+          'SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT'}
       </motion.p>
 
       {!isMobile && (
@@ -65,7 +66,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           >
             <AudioCard
               number="01"
-              duration={'4-7'}
+              duration={'7-8'}
               gif={AUDIO_CARD_1_GIF}
               title="Priority places"
               description="Understand where the suggested priority places should happen for vertebrates."
@@ -89,7 +90,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           >
             <AudioCard
               number="02"
-              duration={'4-7'}
+              duration={'10'}
               gif={AUDIO_CARD_2_GIF}
               title="National Report cards"
               description="Analyze national and other areas of interest. Download reports to share with others."
