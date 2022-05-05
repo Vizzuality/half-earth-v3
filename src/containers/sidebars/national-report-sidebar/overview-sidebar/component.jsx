@@ -62,6 +62,7 @@ const OverviewSidebarComponent = ({
         endemicVertebratesCount={endemicVertebratesCount}
       />
       <LocalPriorityCard
+        countryData={countryData}
         countryName={countryName}
         hasPriority={hasPriority}
         protectionNeeded={protectionNeeded}
@@ -71,6 +72,7 @@ const OverviewSidebarComponent = ({
         activeLayers={activeLayers}
       />
       <LocalSpeciesCard
+        countryData={countryData}
         birds={birds}
         mammals={mammals}
         reptiles={reptiles}

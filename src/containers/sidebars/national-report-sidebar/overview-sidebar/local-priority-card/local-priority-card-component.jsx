@@ -34,7 +34,15 @@ const LocalPriorityCardComponent = (props) => {
     activeLayers,
     handleLayerToggle,
     countryName,
+    countryData,
   } = props;
+
+  const {
+    Marine,
+  } = countryData;
+
+  const coastal = Marine === 'True' ? true : false;
+
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const NRC_TOGGLES = {
@@ -117,6 +125,7 @@ const LocalPriorityCardComponent = (props) => {
               themeCategorySlug={PROTECTION_SLUG}
             />
             <LayerToggle
+              disabled={!coastal}
               map={map}
               type="checkbox"
               option={NRC_TOGGLES[MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]}

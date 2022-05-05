@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 const CheckboxType = ({
   option,
   onChange,
+  disabled,
   isChecked,
   onInfoClick,
   activeLayers,
@@ -27,13 +28,14 @@ const CheckboxType = ({
         className={styles.checkboxOption}
       >
         <Checkbox
+          disabled={disabled}
           option={option}
-          checked={isChecked}
+          checked={!disabled && isChecked}
           onChange={onChange}
           className={styles.labelStyles}
         />
       </div>
-      {isChecked && (
+      {isChecked && !disabled && (
         <LayerTools
           option={option}
           onInfoClick={onInfoClick}

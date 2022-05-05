@@ -13,13 +13,9 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
-  console.log({ countryData })
-  const [activeTab, setActiveTab] = useState('land');
-  const { REACT_APP_FEATURE_MARINE } = process.env;
 
-  const coastal = countryData.Marine === 'True' ? true : false;
   const {
-
+    Marine,
     nspecies,
     nspecies_mar,
     nspecies_ter,
@@ -34,7 +30,12 @@ const CountryDataCardComponent = ({
     total_endemic_ter,
   } = countryData;
 
+  const coastal = Marine === 'True' ? true : false;
+
   const { land, marine } = areaChartData;
+
+  const [activeTab, setActiveTab] = useState('land');
+  const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const tabsData = {
     "land": {
