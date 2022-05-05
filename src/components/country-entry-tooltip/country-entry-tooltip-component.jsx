@@ -31,6 +31,7 @@ const CountryEntryTooltipComponent = ({
   const [activeTab, setActiveTab] = useState('land');
 
   const {
+    coastal,
     spiLand,
     spiMar,
     landVertebrates,
@@ -117,6 +118,7 @@ const CountryEntryTooltipComponent = ({
               {Object.keys(tabsData).map((key) => (
                 <button
                   key={key}
+                  disabled={!coastal}
                   className={cx({
                     [styles.switchDataButton]: true,
                     [styles.switchDataActiveButton]: activeTab === key

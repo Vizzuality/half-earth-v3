@@ -13,6 +13,7 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
+  console.log({ countryData })
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
