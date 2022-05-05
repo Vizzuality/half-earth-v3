@@ -28,6 +28,7 @@ const SpeciesModalComponent = ({
   searchTerm,
   vertebrateType
 }) => {
+  console.log({ countryData })
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {
@@ -129,6 +130,7 @@ const SpeciesModalComponent = ({
           <div className={styles.summary}>
             {process.env.REACT_APP_FEATURE_MARINE === "true" && (
               <Tabs
+                disabled={!countryData.coastal}
                 tabs={VERTEBRATE_TABS}
                 onClick={handleVertebrateChange}
                 className={styles.speciesTab}

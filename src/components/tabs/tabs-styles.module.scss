@@ -41,9 +41,13 @@
     cursor: pointer;
 
     &[aria-selected="true"] {
-    background-color: $brand-color-main;
+      background-color: $brand-color-main;
       color: $black;
     }
+  }
+
+  .disabled {
+    pointer-events: none;
   }
 
   .title {

@@ -106,8 +106,8 @@ const LocalSpeciesCardComponent = ({
               <MarMammalsIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${mammalsMar} mammals (sea)`}</span>
-              <span>{`${mammalsMarEndemic} endemic`}</span>
+              <span className={styles.speciesName}>{`${mammalsMar ? mammalsMar : 0} mammals (sea)`}</span>
+              <span>{`${mammalsMarEndemic ? mammalsMarEndemic : 0} endemic`}</span>
             </div>
           </li>
           {/* birds */}

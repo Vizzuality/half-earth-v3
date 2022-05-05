@@ -173,6 +173,7 @@ const LocalPriorityCardComponent = (props) => {
               themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
             />
             <LayerToggle
+              disabled={!coastal}
               map={map}
               type="checkbox"
               option={NRC_TOGGLES[MARINE_COUNTRY_PRIORITY_LAYER]}

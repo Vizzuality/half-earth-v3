@@ -72,7 +72,6 @@ const OverviewSidebarComponent = ({
         activeLayers={activeLayers}
       />
       <LocalSpeciesCard
-        countryData={countryData}
         birds={birds}
         mammals={mammals}
         reptiles={reptiles}
