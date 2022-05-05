@@ -17,7 +17,9 @@ const CountryDataCardComponent = ({
   const [activeTab, setActiveTab] = useState('land');
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
+  const coastal = countryData.Marine === 'True' ? true : false;
   const {
+
     nspecies,
     nspecies_mar,
     nspecies_ter,
@@ -143,50 +145,52 @@ const CountryDataCardComponent = ({
                   </p>
                 </div>
               </div>
-              <div className={styles.donutContainer}>
-                <DonutChart
-                  chartXPosition={48}
-                  chartYPosition={60}
-                  colors={["#FFC01C", "#E9E9E9"]}
-                  data={[
-                    { name: "SPI Marine", value: SPI_mar },
-                    { name: "Rest", value: 100 - SPI_mar }
-                  ]}
-                  height={130}
-                  innerRadius={'80%'}
-                  legendXPosition={53}
-                  legendYPosition={58}
-                  legendValue={SPI_mar}
-                  legendText='MARINE SPI'
-                  outerRadius={'95%'}
-                  width={120}
-                />
-                <div>
-                  <p className={styles.legendText}>
-                    The Marine SPI is based on the  <b>protected marine areas ({`${prop_protected_mar && prop_protected_mar.toFixed()}%`}),</b>
-                    the <b>total of
-                      {' '}
-                      <Tooltip
-                        animation="fade"
-                        arrow
-                        position="top"
-                        html={<div className={styles.legendTextTooltip}>
-                          <h4>Why only land and marine vertebrates?</h4>
-                          <p>
-                            Terrestrial and marine vertebrates represent the species groups with the most comprehensive
-                            coverage of distribution data. The Half-Earth Project is actively engaging in research to expand coverage of other
-                            taxonomic groups.
-                          </p>
-                        </div>}
-                      >
-                        <span className={styles.legendTextUnderline}>marine mammals</span>
-                      </Tooltip>
-                      {' '}
-                      and fishes ({nspecies_mar})</b> species and the
-                    amount of which of these are <b>endemic ({total_endemic_mar}).</b>
-                  </p>
+              {coastal && (
+                <div className={styles.donutContainer}>
+                  <DonutChart
+                    chartXPosition={48}
+                    chartYPosition={60}
+                    colors={["#FFC01C", "#E9E9E9"]}
+                    data={[
+                      { name: "SPI Marine", value: SPI_mar },
+                      { name: "Rest", value: 100 - SPI_mar }
+                    ]}
+                    height={130}
+                    innerRadius={'80%'}
+                    legendXPosition={53}
+                    legendYPosition={58}
+                    legendValue={SPI_mar}
+                    legendText='MARINE SPI'
+                    outerRadius={'95%'}
+                    width={120}
+                  />
+                  <div>
+                    <p className={styles.legendText}>
+                      The Marine SPI is based on the  <b>protected marine areas ({`${prop_protected_mar && prop_protected_mar.toFixed()}%`}),</b>
+                      the <b>total of
+                        {' '}
+                        <Tooltip
+                          animation="fade"
+                          arrow
+                          position="top"
+                          html={<div className={styles.legendTextTooltip}>
+                            <h4>Why only land and marine vertebrates?</h4>
+                            <p>
+                              Terrestrial and marine vertebrates represent the species groups with the most comprehensive
+                              coverage of distribution data. The Half-Earth Project is actively engaging in research to expand coverage of other
+                              taxonomic groups.
+                            </p>
+                          </div>}
+                        >
+                          <span className={styles.legendTextUnderline}>marine mammals</span>
+                        </Tooltip>
+                        {' '}
+                        and fishes ({nspecies_mar})</b> species and the
+                      amount of which of these are <b>endemic ({total_endemic_mar}).</b>
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className={styles.switchAreaChart}>
                 <p className={styles.switchAreaChartText}>Evolution of SPI</p>
@@ -194,6 +198,7 @@ const CountryDataCardComponent = ({
                   {Object.keys(tabsData).map((key) => (
                     <button
                       key={key}
+                      disabled={!coastal}
                       className={cx({
                         [styles.switchAreaChartButton]: true,
                         [styles.switchAreaChartActiveButton]: activeTab === key
