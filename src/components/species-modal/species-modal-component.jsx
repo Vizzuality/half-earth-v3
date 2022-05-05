@@ -28,7 +28,6 @@ const SpeciesModalComponent = ({
   searchTerm,
   vertebrateType
 }) => {
-  console.log({ countryData })
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {

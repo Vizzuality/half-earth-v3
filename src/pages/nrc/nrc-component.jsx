@@ -38,6 +38,9 @@ const NationalReportCard = ({
 }) => {
   const [map, setMap] = useState();
 
+  const { marine } = chartData;
+  const coastal = marine ? true : false;
+
   return (
     <>
       <HalfEarthLogo
@@ -87,6 +90,7 @@ const NationalReportCard = ({
           })}
         >
           <CountryChallengesChart
+            coastal={coastal}
             countryISO={countryISO}
             className={styles.challengesChart}
             localSceneActiveTab={localSceneActiveTab}

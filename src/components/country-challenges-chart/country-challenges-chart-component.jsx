@@ -12,6 +12,7 @@ const { REACT_APP_FEATURE_MARINE } = process.env;
 
 const CountryChallengesChartComponent = ({
   data,
+  coastal,
   className,
   countryISO,
   xAxisTicks,
@@ -35,6 +36,7 @@ const CountryChallengesChartComponent = ({
             <span className={styles.chartTitle}>Show</span>
             <div className={styles.landMarineDropdownWrapper}>
               <Dropdown
+                disabled={!coastal}
                 parentWidth="130px"
                 options={landMarineOptions}
                 selectedOption={selectedLandMarineOption}

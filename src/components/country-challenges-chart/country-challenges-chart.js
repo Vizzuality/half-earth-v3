@@ -10,7 +10,7 @@ import metadataActions from 'redux_modules/metadata';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
-const actions = {...metadataActions, ...urlActions };
+const actions = { ...metadataActions, ...urlActions };
 
 const CountryChallengesChartContainer = (props) => {
 
@@ -36,28 +36,28 @@ const CountryChallengesChartContainer = (props) => {
 
   const handleBubbleClick = ({ countryISO }) => {
     const { browsePage, selectedFilterOption } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES }, query: { ui: { countryChallengesSelectedFilter: selectedFilterOption.slug }}});
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES }, query: { ui: { countryChallengesSelectedFilter: selectedFilterOption.slug } } });
   }
 
   const handleFilterSelection = (selectedFilter) => {
     const { changeUI } = props;
-    changeUI({countryChallengesSelectedFilter: selectedFilter.slug});
+    changeUI({ countryChallengesSelectedFilter: selectedFilter.slug });
   }
 
   const handleLandMarineSelection = (selectedFilter) => {
     const { changeUI } = props;
-    changeUI({landMarineSelection: selectedFilter.slug});
+    changeUI({ landMarineSelection: selectedFilter.slug });
   }
 
   return (
-  <Component
-    handleBubbleClick={handleBubbleClick}
-    handleFilterSelection={handleFilterSelection}
-    handleSelectNextIndicator={handleSelectNextIndicator}
-    handleSelectPreviousIndicator={handleSelectPreviousIndicator}
-    handleLandMarineSelection={handleLandMarineSelection}
-    {...props}
-  />
+    <Component
+      handleBubbleClick={handleBubbleClick}
+      handleFilterSelection={handleFilterSelection}
+      handleSelectNextIndicator={handleSelectNextIndicator}
+      handleSelectPreviousIndicator={handleSelectPreviousIndicator}
+      handleLandMarineSelection={handleLandMarineSelection}
+      {...props}
+    />
   )
 }
 
