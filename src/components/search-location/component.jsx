@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+// Dependencies
+import React, { useCallback, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
 import cx from 'classnames';
-import { ReactComponent as IconSearch } from 'icons/search.svg';
+import { motion } from 'framer-motion';
 import Proptypes from 'prop-types';
+// Assets
+import { ReactComponent as IconSearch } from 'icons/search.svg';
+// Styles
 import styles from './styles.module.scss';
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 const Component = ({
   width,
@@ -17,19 +22,46 @@ const Component = ({
   onOptionSelection,
   handleInputChange,
   isSearchResultVisible,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
+  changeUI,
+  reference,
 }) => {
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
-  const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement);
+  const { styles: popperStyles, attributes } = usePopper(
+    referenceElement,
+    popperElement
+  );
 
-  return  (
-    <div className={cx(styles.inputContainer, {
-      [styles.stacked]: stacked,
+  const onNextonboardingStep = useCallback((countryValue) => {
+    if (countryValue && onboardingStep !== null) {
+      changeUI({ onboardingStep: 2, waitingInteraction: false });
+    }
+    return null;
+  }, []);
+
+  const { overlay: onboardingOverlay } =
+    getOnboardingProps({
+      section: 'searchNRC',
+      styles,
+      changeUI,
+      onboardingType,
+      onboardingStep,
+      waitingInteraction,
+    });
+  return (
+    <motion.div
+      ref={reference}
+      className={cx(styles.inputContainer, {
+        [styles.stacked]: stacked,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
       })}
-    > 
+      {...onboardingOverlay}
+    >
       <input
         type="text"
         placeholder={'search'}
@@ -38,23 +70,28 @@ const Component = ({
         onClick={handleOpenSearch}
         onChange={handleInputChange}
       />
-      {<IconSearch className={styles.placeholderIcon}/>}
-      {isSearchResultVisible && (
+
+      {<IconSearch className={styles.placeholderIcon} />}
+      {isSearchResultVisible &&
         createPortal(
           <div
             ref={setPopperElement}
             style={{ ...popperStyles.popper, width: parentWidth }}
             {...attributes.popper}
           >
-            <ul className={cx(styles.optionsList, {
-                [styles.fullWidth]: width === 'full'
-              })} 
+            <ul
+              className={cx(styles.optionsList, {
+                [styles.fullWidth]: width === 'full',
+              })}
             >
-              {searchResults.map(option => (
+              {searchResults.map((option) => (
                 <li
                   className={styles.option}
                   key={option.key}
-                  onClick={() => {onOptionSelection(option)}}
+                  onClick={() => {
+                    onOptionSelection(option);
+                    onNextonboardingStep(option);
+                  }}
                 >
                   {option.text}
                 </li>
@@ -62,11 +99,10 @@ const Component = ({
             </ul>
           </div>,
           document.getElementById('root')
-        )
-      )}
-    </div>
+        )}
+    </motion.div>
   );
-}
+};
 
 export default Component;
 
@@ -83,10 +119,11 @@ Component.propTypes = {
   selectedOption: Proptypes.shape(),
   onOptionSelection: Proptypes.func.isRequired,
   width: Proptypes.oneOf(['fluid', 'full']),
-  theme: Proptypes.oneOf(['light', 'dark'])
+  theme: Proptypes.oneOf(['light', 'dark']),
+  reference: Proptypes.node,
 };
 
 Component.defaultProps = {
   width: 'fluid',
-  theme: 'light'
-}
+  theme: 'light',
+};

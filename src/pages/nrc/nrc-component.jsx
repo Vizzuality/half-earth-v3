@@ -1,21 +1,25 @@
+// Dependencies
+import React, { useState } from 'react';
 import loadable from '@loadable/component';
 import cx from 'classnames';
+// Components
 import CountryChallengesChart from 'components/country-challenges-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
 import RankingChart from 'components/ranking-chart';
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
-import React, { useState } from 'react';
 import NationalReportCardScene from 'scenes/nrc-scene';
+// Constants
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+// Styles
 import uiStyles from 'styles/ui.module.scss';
 import styles from './nrc-styles.module.scss';
-
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const NationalReportCard = ({
   countryISO,
+  chartData,
   userConfig,
   openedModal,
   countryName,
@@ -28,15 +32,23 @@ const NationalReportCard = ({
   localSceneActiveTab,
   countryTooltipDisplayFor,
   countryChallengesSelectedKey,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
 }) => {
   const [map, setMap] = useState();
+
   return (
     <>
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <MainMenu />
+      <MainMenu
+        nBoardingStep={onboardingStep}
+        onboardingType={onboardingType}
+      />
       <NationalReportSidebar
+        chartData={chartData}
         countryISO={countryISO}
         countryName={countryName}
         openedModal={openedModal}
@@ -46,8 +58,12 @@ const NationalReportCard = ({
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         localSceneActiveTab={localSceneActiveTab}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
+        waitingInteraction={waitingInteraction}
       />
       <NationalReportCardScene
+        chartData={chartData}
         countryISO={countryISO}
         userConfig={userConfig}
         openedModal={openedModal}
@@ -56,6 +72,8 @@ const NationalReportCard = ({
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
         onMapLoad={(loadedMap) => {
           setMap(loadedMap);
           handleMapLoad(loadedMap, activeLayers);
@@ -63,7 +81,11 @@ const NationalReportCard = ({
         isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
       />
       {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
-        <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
+        <div
+          className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+            [uiStyles.onboardingMode]: !!onboardingType,
+          })}
+        >
           <CountryChallengesChart
             countryISO={countryISO}
             className={styles.challengesChart}
@@ -73,7 +95,11 @@ const NationalReportCard = ({
         </div>
       )}
       {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
-        <div className={cx(styles.hideOnPrint, styles.challengesViewContainer)}>
+        <div
+          className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+            [uiStyles.onboardingMode]: !!onboardingType,
+          })}
+        >
           <RankingChart
             countryISO={countryISO}
             className={styles.rankingChart}

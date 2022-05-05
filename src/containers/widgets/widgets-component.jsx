@@ -1,9 +1,13 @@
 import React from 'react';
+import cx from 'classnames';
 // WIDGETS
 import ZoomWidget from 'containers/widgets/zoom-widget';
 import MinimapWidget from 'containers/widgets/minimap-widget';
 
 import { useMobile } from 'constants/responsive';
+
+// Styles
+import uiStyles from 'styles/ui.module.scss';
 
 const WidgetsComponent = ({
   map,
@@ -13,12 +17,17 @@ const WidgetsComponent = ({
   openedModal = null,
   isNotMapsList = true,
   hidden = false,
+  onboardingStep,
 }) => {
   const isOnMobile = useMobile();
   const hiddenWidget = hidden || isOnMobile;
   return (
-    <>
-      {!hideZoom && (
+    <div
+      className={cx({
+        [uiStyles.onboardingOverlay]: typeof onboardingStep === 'number',
+      })}
+    >
+      {!hideZoom && onboardingStep === null && (
         <ZoomWidget
           map={map}
           view={view}
@@ -34,7 +43,7 @@ const WidgetsComponent = ({
           openedModal={openedModal}
         />
       )}
-    </>
+    </div>
   );
 };
 

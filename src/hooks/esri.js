@@ -41,8 +41,8 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
   },[])
 
   const handleOpenSearch = (ref) => {
-    const { Search, FeatureLayer, Locator } = esriConstructors;
     if (!esriConstructors) return null;
+    const { Search, FeatureLayer, Locator } = esriConstructors;
     if (searchWidget === null) {
       const sWidget = new Search({
         view: view,

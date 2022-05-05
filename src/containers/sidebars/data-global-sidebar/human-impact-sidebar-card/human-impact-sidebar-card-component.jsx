@@ -1,10 +1,14 @@
+// Dependencies
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { motion } from 'framer-motion';
+// Components
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
-import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import SourceAnnotation from 'components/source-annotation';
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+// Constants
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   MARINE_HUMAN_PRESSURES_SLUG,
@@ -18,19 +22,32 @@ import {
   humanPressuresMarine,
   TEXTS,
 } from 'constants/human-pressures';
+// Hooks
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+  useOpenSection,
+} from 'containers/onboarding/onboarding-hooks';
+// Styles
 import styles from './human-impact-sidebar-card-styles.module.scss';
-import HumanPressuresThumbnail from 'images/human-pressures.png';
-
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
+// Assets
+import HumanPressuresThumbnail from 'images/human-pressures.png';
+
 const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
 
 const HumanImpactSidebarCardComponent = ({
   map,
   source,
   activeLayers,
+  className,
   handleLayerToggle,
   countedActiveLayers,
+  onboardingStep,
+  onboardingType,
+  waitingInteraction,
+  changeUI,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -40,8 +57,45 @@ const HumanImpactSidebarCardComponent = ({
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
 
+  // Onboarding
+  const tooltipRefs = useTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
+  useOpenSection({
+    section: 'humanPressures',
+    setOpen,
+    onboardingStep,
+    waitingInteraction,
+  });
+  const {
+    overlay: onboardingOverlay,
+    onClick: onboardingOnClick,
+    className: onboardingClassName,
+  } = getOnboardingProps({
+    section: 'humanPressures',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
+
   return (
-    <div className={cx(styles.sidebarCardContainer, { [styles.open]: isOpen })}>
+    <motion.div
+      ref={(ref) => {
+        if (!isOpen) {
+          tooltipRefs.current.humanPressures = ref;
+        }
+      }}
+      className={cx(styles.sidebarCardContainer, className, {
+        [styles.open]: isOpen,
+        ...onboardingClassName,
+      })}
+      {...onboardingOverlay}
+      {...onboardingOnClick}
+    >
       <CategoryBox
         title={TEXTS.categoryTitle}
         image={HumanPressuresThumbnail}
@@ -133,7 +187,7 @@ const HumanImpactSidebarCardComponent = ({
           className={styles.sourceContainer}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

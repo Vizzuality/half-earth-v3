@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import { SORT } from 'components/header-item';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import sortBy from 'lodash/sortBy';
+
 const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
 
 export const getSearchTerm = ({ location }) =>
@@ -17,10 +19,12 @@ export const getCountryData = createSelector(
   (countriesData, iso) => {
     if (!countriesData) return null;
     const countryData = countriesData[iso];
+
     return {
-      iso: countryData.GID,
+      iso: countryData.GID_0,
       name: countryData.NAME_0,
-      speciesNumber: countryData.nspecies
+      landSpeciesTotal: countryData[COUNTRY_ATTRIBUTES.nspecies_richness_ter],
+      marineSpeciesTotal: countryData['nspecies_mar'],
     };
   }
 );

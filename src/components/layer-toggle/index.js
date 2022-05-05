@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import Component from './component';
 import metadataActions from 'redux_modules/metadata';
 import { layerToggleAnalytics } from 'actions/google-analytics-actions';
@@ -12,7 +12,6 @@ const LayerToggle = (props) => {
   const { map, activeLayers, option } = props;
   const [isChecked, setIsChecked] = useState(false)
 
-
   const handleInfoClick = (option) => {
     const { setModalMetadata } = props;
     setModalMetadata({
@@ -22,12 +21,12 @@ const LayerToggle = (props) => {
     });
   }
 
-  const handleBringToBackClick = (e,layer) => {
+  const handleBringToBackClick = (e, layer) => {
     e.stopPropagation();
     bringLayerToBack(layer, map);
   }
 
-  const handleBringToFrontClick = (e,layer) => {
+  const handleBringToFrontClick = (e, layer) => {
     e.stopPropagation();
     bringLayerToFront(layer, map);
   }
