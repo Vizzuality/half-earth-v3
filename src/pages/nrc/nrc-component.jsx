@@ -105,6 +105,7 @@ const NationalReportCard = ({
           })}
         >
           <RankingChart
+            coastal={coastal}
             countryISO={countryISO}
             className={styles.rankingChart}
             localSceneActiveTab={localSceneActiveTab}
