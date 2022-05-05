@@ -48,6 +48,7 @@ const LayerToggleComponent = ({
         [styles[variant]]: variant,
         [theme[themeCategorySlug]]: themeCategorySlug,
         [styles.checked]: isChecked && !disabled,
+        [styles.disabled]: disabled,
       })}
     >
       <CheckboxTypeToggle
