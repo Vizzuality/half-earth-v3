@@ -5,7 +5,8 @@ import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/dat
 import * as d3 from 'd3';
 import {
   INDICATOR_LABELS,
-  CHALLENGES_RELATED_FILTERS_OPTIONS,
+  getChallengesRelatedFilterOptions,
+  LAND_MARINE,
   LAND_MARINE_OPTIONS,
   LAND_MARINE_COUNTRY_ATTRIBUTES
 } from 'constants/country-mode-constants';
@@ -15,12 +16,25 @@ const selectCountriesData = ({ countryData }) => (countryData && countryData.dat
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const getCountryChallengesSelectedKey = (state, props) => props && props.countryChallengesSelectedKey;
 
+const getSelectedFilterSlug = createSelector([getCountryChallengesSelectedFilter, getLandMarineSelected], (selectedFilter, landMarineSelection) => {
+  const options = getChallengesRelatedFilterOptions(landMarineSelection);
+
+  // GNI_PPP is not available for marine
+  if (selectedFilter === 'filter_GNI_PPP' && landMarineSelection === LAND_MARINE.marine) {
+    return options[0].slug;
+  }
+
+  if (options.some(o => o.slug === selectedFilter)) return selectedFilter;
+
+  const neutralFilterName = selectedFilter.replace('filter_', '').replace('_mar', '').replace('_ter', '');
+  return `filter_${LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection][neutralFilterName]}`;
+});
+
 const getScatterplotRawData = createSelector(
   [selectCountriesData, getLandMarineSelected],
   (countriesData, landMarineSelection) => {
     if (!countriesData) return null;
-    const landMarine = landMarineSelection || 'land';
-    const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarine];
+    const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
 
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
@@ -67,7 +81,7 @@ const getSelectedCountryRelations = createSelector(
 const getFilteredData = createSelector(
   [
     getScatterplotRawData,
-    getCountryChallengesSelectedFilter,
+    getSelectedFilterSlug,
     getSelectedCountryRelations,
     getCountryChallengesSelectedKey
   ],
@@ -85,19 +99,23 @@ const getFilteredData = createSelector(
   }
 );
 
-const getChallengesFilterOptions = createSelector(
-  [getXAxisKeys],
-  (keys) => {
+const getChallengesFilterOptions = createSelector([getLandMarineSelected], getChallengesRelatedFilterOptions);
+
+const getChallengesDependantFilterOptions = createSelector(
+  [getXAxisKeys, getLandMarineSelected, getChallengesFilterOptions],
+  (keys, landMarineSelection, challengesFilterOptions) => {
     if (!keys) return [];
+    const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
     const indicatorDependantOptions = [
       `filter_${COUNTRY_ATTRIBUTES.Pop2020}`,
-      `filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`,
+      `filter_${attributes.hm_vh}`,
       'filter_GNI_PPP',
-      `filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`,
-      `filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`
+      `filter_${attributes.total_endemic}`,
+      `filter_${attributes.nspecies}`
     ];
-
-    return CHALLENGES_RELATED_FILTERS_OPTIONS.filter((option) => {
+    return challengesFilterOptions.filter((option) => {
+      // GNI_PPP is not available for marine
+      if (landMarineSelection === LAND_MARINE.marine && option.slug === 'filter_GNI_PPP') return false;
       if (!indicatorDependantOptions.includes(option.slug)) return true;
       return keys.some(key => option.slug.endsWith(key));
     });
@@ -107,8 +125,8 @@ const getChallengesFilterOptions = createSelector(
 const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
 
 const getSelectedFilterOption = createSelector(
-  getCountryChallengesSelectedFilter,
-  selectedFilter => CHALLENGES_RELATED_FILTERS_OPTIONS.find(option => option.slug === selectedFilter)
+  [getSelectedFilterSlug, getChallengesFilterOptions],
+  (selectedFilter, challengesFilterOptions) => challengesFilterOptions.find(option => option.slug === selectedFilter)
 );
 
 const getSelectedLandMarineOption = createSelector(
@@ -147,7 +165,7 @@ const mapStateToProps = createStructuredSelector({
   yAxisTicks: getYAxisTicks,
   selectedFilterOption: getSelectedFilterOption,
   selectedLandMarineOption: getSelectedLandMarineOption,
-  challengesFilterOptions: getChallengesFilterOptions,
+  challengesFilterOptions: getChallengesDependantFilterOptions,
   landMarineOptions: getLandMarineOptions
 });
 
