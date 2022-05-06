@@ -85,8 +85,8 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return `Here are some example species of significant conservation interest for each taxonomic group.
-   These land species are either endemic to ${countryData.NAME_0} or have small range sizes`;
+  return `Here are some examples of land species of significant conservation interest for each taxonomic group.
+  These species are either endemic to ${countryData.NAME_0} or have small range sizes.`;
 })
 
 
