@@ -38,7 +38,6 @@ const AnalyzeAreasContainer = (props) => {
     description: ''
   })
 
-
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
     if (activeOption) {
@@ -109,11 +108,11 @@ const AnalyzeAreasContainer = (props) => {
       case 'draw':
         setAreaTypeSelected(AREA_TYPES.custom);
         setSelectedAnalysisTab('draw');
-        handleLayerToggle(selectedOption);
+        handleLayerToggle(PRECALCULATED_AOI_OPTIONS[0]);
         break;
       case 'click':
         setSelectedAnalysisTab('click');
-        handleLayerToggle(selectedOption);
+        handleLayerToggle(PRECALCULATED_AOI_OPTIONS[0]);
         if (sketchTool) { handleSketchToolDestroy(); }
         break;
       default:
@@ -146,6 +145,7 @@ const AnalyzeAreasContainer = (props) => {
 
   const handleLayerToggle = (currentSelectedOption) => {
     // Future places layer will be activated if we select it at some point and never toggled unless we do it from the protection checkbox
+    console.log({ currentSelectedOption })
 
     const getLayersToToggle = () => {
       const futureLayerIsActive = activeLayers.some(l => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
@@ -154,9 +154,10 @@ const AnalyzeAreasContainer = (props) => {
         return [selectedOption.slug];
       }
       // Don't remove future layer it if its active and it was selected
-      return (selectedOption.slug === HALF_EARTH_FUTURE_TILE_LAYER) ? [currentSelectedOption] : [selectedOption.slug, currentSelectedOption] ;
+      return (selectedOption.slug === HALF_EARTH_FUTURE_TILE_LAYER) ? [currentSelectedOption] : [selectedOption.slug, currentSelectedOption];
     };
     const category = currentSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER ? LAYERS_CATEGORIES.PROTECTION : undefined;
+
     batchToggleLayers(getLayersToToggle(), activeLayers, changeGlobe, category);
   }
 
