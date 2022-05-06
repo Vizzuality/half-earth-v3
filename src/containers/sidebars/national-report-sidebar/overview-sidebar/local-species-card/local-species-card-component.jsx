@@ -76,8 +76,8 @@ const LocalSpeciesCardComponent = ({
               <AmphibiansIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${amphibians} amphibians`}</span>
-              <span>{`${amphibiansEndemic} endemic`}</span>
+              <span className={styles.speciesName}>{`${amphibians || 0} amphibians`}</span>
+              <span>{`${amphibiansEndemic || 0} endemic`}</span>
             </div>
           </li>
           {/* reptiles */}
@@ -86,8 +86,8 @@ const LocalSpeciesCardComponent = ({
               <ReptilesIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${reptiles} reptiles`}</span>
-              <span>{`${reptilesEndemic} endemic`}</span>
+              <span className={styles.speciesName}>{`${reptiles || 0} reptiles`}</span>
+              <span>{`${reptilesEndemic || 0} endemic`}</span>
             </div>
           </li>
           {/* mammals (land) */}
@@ -96,8 +96,8 @@ const LocalSpeciesCardComponent = ({
               <MammalsIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${mammals} mammals (land)`}</span>
-              <span>{`${mammalsEndemic} endemic`}</span>
+              <span className={styles.speciesName}>{`${mammals || 0} mammals (land)`}</span>
+              <span>{`${mammalsEndemic || 0} endemic`}</span>
             </div>
           </li>
           {/* mammals (sea) */}
@@ -106,8 +106,8 @@ const LocalSpeciesCardComponent = ({
               <MarMammalsIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${mammalsMar ? mammalsMar : 0} mammals (sea)`}</span>
-              <span>{`${mammalsMarEndemic ? mammalsMarEndemic : 0} endemic`}</span>
+              <span className={styles.speciesName}>{`${mammalsMar || 0} mammals (sea)`}</span>
+              <span>{`${mammalsMarEndemic || 0} endemic`}</span>
             </div>
           </li>
           {/* birds */}
@@ -116,8 +116,8 @@ const LocalSpeciesCardComponent = ({
               <BirdsIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${birds} birds`}</span>
-              <span>{`${birdsEndemic} endemic`}</span>
+              <span className={styles.speciesName}>{`${birds || 0} birds`}</span>
+              <span>{`${birdsEndemic || 0} endemic`}</span>
             </div>
           </li>
           {/* fishes */}
@@ -126,8 +126,8 @@ const LocalSpeciesCardComponent = ({
               <FishesIcon />
             </span>
             <div className={styles.legendNameContainer}>
-              <span className={styles.speciesName}>{`${fishes} fishes`}</span>
-              <span>{`${fishesEndemic} endemic`}</span>
+              <span className={styles.speciesName}>{`${fishes || 0} fishes`}</span>
+              <span>{`${fishesEndemic || 0} endemic`}</span>
             </div>
           </li>
         </ul>
