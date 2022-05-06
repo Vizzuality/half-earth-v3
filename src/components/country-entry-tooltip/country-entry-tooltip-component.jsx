@@ -8,6 +8,7 @@ import { ReactComponent as CloseIcon } from 'icons/close.svg';
 // Styles
 import styles from './country-entry-tooltip-styles.module.scss';
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
+import { LAND_MARINE } from 'constants/country-mode-constants';
 
 const CountryEntryTooltipComponent = ({
   view,
@@ -40,9 +41,8 @@ const CountryEntryTooltipComponent = ({
     protectionLand,
     protectionMar,
     protectionNeededLand,
-    protectionNeededMar
-  } =
-    tooltipContent;
+    protectionNeededMar,
+  } = tooltipContent;
 
   // Create a new Popup to contain the tooltip
   useEffect(() => {
@@ -79,26 +79,25 @@ const CountryEntryTooltipComponent = ({
     }
   }, [tooltipPosition, tooltip, mapTooltipIsVisible]);
 
-  const { overlay: onboardingOverlay } =
-    getOnboardingProps({
-      section: 'exploreNRC',
-      styles,
-      changeUI,
-      onboardingType,
-      onboardingStep,
-      waitingInteraction,
-    });
+  const { overlay: onboardingOverlay } = getOnboardingProps({
+    section: 'exploreNRC',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
 
   const tabsData = {
-    "land": {
-      text: "Land",
+    land: {
+      text: 'Land',
     },
-    "marine": {
-      text: "Marine",
+    marine: {
+      text: 'Marine',
     },
   };
 
-  const landTab = activeTab === 'land';
+  const landTab = activeTab === LAND_MARINE.land;
 
   return tooltipPosition && tooltip ? (
     <>
@@ -119,7 +118,7 @@ const CountryEntryTooltipComponent = ({
                   key={key}
                   className={cx({
                     [styles.switchDataButton]: true,
-                    [styles.switchDataActiveButton]: activeTab === key
+                    [styles.switchDataActiveButton]: activeTab === key,
                   })}
                   onClick={() => setActiveTab(key)}
                 >
@@ -134,35 +133,49 @@ const CountryEntryTooltipComponent = ({
           onClick={handleTooltipClose}
         />
         <section className={styles.spiInfo}>
-          {REACT_APP_FEATURE_MARINE && <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>}
+          {REACT_APP_FEATURE_MARINE && (
+            <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
+          )}
           {!REACT_APP_FEATURE_MARINE && <p className={styles.spi}>{spiLand}</p>}
           <p className={styles.subtitle}>National species protection index</p>
         </section>
         <section className={styles.countryInfo}>
           <div className={styles.infoPill}>
-            <span className={styles.numeric}>{landTab ? landVertebrates : marVertebrates}</span>
+            <span className={styles.numeric}>
+              {landTab ? landVertebrates : marVertebrates}
+            </span>
             <span className={styles.text}>
-              {`${landTab ? 'land' : 'marine'} vertebrate species of which`}
-              {' '}
-              <span className={styles.endemic}>{landTab ? endemicLand : endemicMar}</span> are endemic
+              {`${
+                landTab ? LAND_MARINE.land : LAND_MARINE.marine
+              } vertebrate species of which`}{' '}
+              <span className={styles.endemic}>
+                {landTab ? endemicLand : endemicMar}
+              </span>{' '}
+              are endemic
             </span>
           </div>
           <div className={styles.infoPill}>
-            <span className={styles.numeric}>{landTab ? protectionLand : protectionMar}%</span>
+            <span className={styles.numeric}>
+              {landTab ? protectionLand : protectionMar}%
+            </span>
             <span className={styles.text}>
-              {`${landTab ? 'land' : 'marine'} is protected`}
+              {`${
+                landTab ? LAND_MARINE.land : LAND_MARINE.marine
+              } is protected`}
             </span>
           </div>
           <div className={styles.infoPill}>
-            <span className={styles.numeric}>{landTab ? protectionNeededLand : protectionNeededMar}%</span>
+            <span className={styles.numeric}>
+              {landTab ? protectionNeededLand : protectionNeededMar}%
+            </span>
             <span className={styles.text}>
-              {`of additional ${landTab ? 'land' : 'marine'} protection is needed`}
+              {`of additional ${
+                landTab ? LAND_MARINE.land : LAND_MARINE.marine
+              } protection is needed`}
             </span>
           </div>
         </section>
-        <motion.div
-          {...onboardingOverlay}
-        >
+        <motion.div {...onboardingOverlay}>
           <button
             ref={onboardingButtonReference}
             className={styles.tooltipExplore}
