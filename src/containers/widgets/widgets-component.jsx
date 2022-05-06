@@ -27,7 +27,7 @@ const WidgetsComponent = ({
         [uiStyles.onboardingOverlay]: typeof onboardingStep === 'number',
       })}
     >
-      {!hideZoom && onboardingStep === null && (
+      {!hideZoom && (onboardingStep === null || onboardingStep === undefined) && (
         <ZoomWidget
           map={map}
           view={view}
