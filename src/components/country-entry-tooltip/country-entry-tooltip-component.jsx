@@ -98,6 +98,7 @@ const CountryEntryTooltipComponent = ({
       text: "Marine",
     },
   };
+  console.log({ activeTab })
 
   const landTab = activeTab === 'land';
 
@@ -133,7 +134,10 @@ const CountryEntryTooltipComponent = ({
         </section>
         <CloseIcon
           className={styles.tooltipClose}
-          onClick={handleTooltipClose}
+          onClick={() => {
+            handleTooltipClose();
+            setActiveTab('land');
+          }}
         />
         <section className={styles.spiInfo}>
           {REACT_APP_FEATURE_MARINE && <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>}
