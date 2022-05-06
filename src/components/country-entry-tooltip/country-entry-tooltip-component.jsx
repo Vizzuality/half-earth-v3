@@ -98,7 +98,6 @@ const CountryEntryTooltipComponent = ({
       text: "Marine",
     },
   };
-  console.log({ activeTab })
 
   const landTab = activeTab === 'land';
 
