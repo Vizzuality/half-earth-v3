@@ -40,7 +40,7 @@ export const ACTIONS = {
   /// OLDIESSSSSSS
 
 // LAYER_INTERACTION
-TOGGLE_LAYER: 'toggle layer',
+// TOGGLE_LAYER: 'toggle layer',
 ADD_LAYER: 'add layer',
 REMOVE_LAYER: 'remove layer',
 CHANGE_OPACITY: 'Change layer opacity',

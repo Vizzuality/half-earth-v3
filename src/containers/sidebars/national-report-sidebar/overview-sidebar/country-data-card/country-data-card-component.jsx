@@ -5,6 +5,7 @@ import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
+import { LAND_MARINE } from 'constants/country-mode-constants';
 
 const CountryDataCardComponent = ({
   areaChartData,
@@ -13,6 +14,8 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
+  const [activeTab, setActiveTab] = useState(LAND_MARINE.land);
+  const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const {
     Marine,
@@ -34,16 +37,13 @@ const CountryDataCardComponent = ({
 
   const { land, marine } = areaChartData;
 
-  const [activeTab, setActiveTab] = useState('land');
-  const { REACT_APP_FEATURE_MARINE } = process.env;
-
   const tabsData = {
-    "land": {
-      text: "Land",
+    land: {
+      text: 'Land',
       data: land,
     },
-    "marine": {
-      text: "Marine",
+    marine: {
+      text: 'Marine',
       data: marine,
     },
   };
@@ -59,8 +59,10 @@ const CountryDataCardComponent = ({
           </div>
           <div className={styles.indexWrapper}>
             <div className={styles.indexBar}>
-
-              <div className={styles.progressMark} style={{ left: `${SPI}%` }} />
+              <div
+                className={styles.progressMark}
+                style={{ left: `${SPI}%` }}
+              />
               <div
                 className={styles.improvementArea}
                 style={{ left: `${SPI}%`, width: `${100 - SPI}%` }}
@@ -73,7 +75,11 @@ const CountryDataCardComponent = ({
       )}
       <section className={styles.indexWidget}>
         <div className={styles.indexExplanation}>
-          <p className={styles.indexExplanationText}>{REACT_APP_FEATURE_MARINE ? 'National Species Protection Index' : 'This index is based on:'}</p>
+          <p className={styles.indexExplanationText}>
+            {REACT_APP_FEATURE_MARINE
+              ? 'National Species Protection Index'
+              : 'This index is based on:'}
+          </p>
           {!REACT_APP_FEATURE_MARINE && (
             <div className={styles.indexBaseNumbersWrapper}>
               <div
@@ -92,9 +98,7 @@ const CountryDataCardComponent = ({
                 <p className={styles.numberText}>vertebrate species</p>
               </div>
               <div className={styles.indexBaseDataElement}>
-                <p
-                  className={styles.baseNumber}
-                >{`${total_endemic}`}</p>
+                <p className={styles.baseNumber}>{`${total_endemic}`}</p>
                 <p className={styles.numberText}>endemic land</p>
                 <p className={styles.numberText}>vertebrate species</p>
               </div>
@@ -106,43 +110,56 @@ const CountryDataCardComponent = ({
                 <DonutChart
                   chartXPosition={48}
                   chartYPosition={60}
-                  colors={["#A24033", "#E9E9E9"]}
+                  colors={['#A24033', '#E9E9E9']}
                   data={[
-                    { name: "SPI Ter", value: SPI_ter },
-                    { name: "Rest", value: 100 - SPI_ter }
+                    { name: 'SPI Ter', value: SPI_ter },
+                    { name: 'Rest', value: 100 - SPI_ter },
                   ]}
                   height={130}
                   innerRadius={'80%'}
                   legendXPosition={53}
                   legendYPosition={58}
                   legendValue={SPI_ter}
-                  legendText='LAND SPI'
+                  legendText="LAND SPI"
                   outerRadius={'95%'}
                   width={120}
                 />
                 <div>
                   <p className={styles.legendText}>
-                    The Land SPI is calculated based on the <b>protected land ({`${prop_protected_ter && prop_protected_ter.toFixed()}%`}),</b>
-                    the <b>total of
-                      {' '}
+                    The Land SPI is calculated based on the{' '}
+                    <b>
+                      protected land (
+                      {`${prop_protected_ter && prop_protected_ter.toFixed()}%`}
+                      ),
+                    </b>
+                    the{' '}
+                    <b>
+                      total of{' '}
                       <Tooltip
                         animation="fade"
                         arrow
                         position="top"
-                        html={<div className={styles.legendTextTooltip}>
-                          <h4>Why only land and marine vertebrates?</h4>
-                          <p>
-                            Terrestrial and marine vertebrates represent the species groups with the most comprehensive
-                            coverage of distribution data. The Half-Earth Project is actively engaging in research to expand coverage of other
-                            taxonomic groups.
-                          </p>
-                        </div>}
+                        html={
+                          <div className={styles.legendTextTooltip}>
+                            <h4>Why only land and marine vertebrates?</h4>
+                            <p>
+                              Terrestrial and marine vertebrates represent the
+                              species groups with the most comprehensive
+                              coverage of distribution data. The Half-Earth
+                              Project is actively engaging in research to expand
+                              coverage of other taxonomic groups.
+                            </p>
+                          </div>
+                        }
                       >
-                        <span className={styles.legendTextUnderline}>vertebrate species</span>
-                      </Tooltip>
-                      {' '}
-                      ({nspecies_ter})</b> and the amount of which
-                    of these are <b>endemic ({total_endemic_ter}).</b>
+                        <span className={styles.legendTextUnderline}>
+                          vertebrate species
+                        </span>
+                      </Tooltip>{' '}
+                      ({nspecies_ter})
+                    </b>{' '}
+                    and the amount of which of these are{' '}
+                    <b>endemic ({total_endemic_ter}).</b>
                   </p>
                 </div>
               </div>
@@ -202,7 +219,7 @@ const CountryDataCardComponent = ({
                       disabled={!coastal}
                       className={cx({
                         [styles.switchAreaChartButton]: true,
-                        [styles.switchAreaChartActiveButton]: activeTab === key
+                        [styles.switchAreaChartActiveButton]: activeTab === key,
                       })}
                       onClick={() => setActiveTab(key)}
                     >
@@ -213,10 +230,32 @@ const CountryDataCardComponent = ({
               </div>
 
               <div className={styles.areaChartContainer}>
-                <p className={styles.areaChartYAxisLegend}>Species Protection Index</p>
+                <p className={styles.areaChartYAxisLegend}>
+                  Species Protection Index
+                </p>
                 <AreaChart
-                  area1={{ key: "spi", stroke: "#000000", fill: ["#FFBF00", "#A74815", "#821213", "#371033", "#250F3B", "#1D1135", "#060B2B"], fillOpacity: 0.4, strokeWidth: 0.5 }}
-                  area2={{ key: "protected", stroke: "#008f39", fill: "#008f39", fillOpacity: 0.4, strokeWidth: 1 }}
+                  area1={{
+                    key: 'spi',
+                    stroke: '#000000',
+                    fill: [
+                      '#FFBF00',
+                      '#A74815',
+                      '#821213',
+                      '#371033',
+                      '#250F3B',
+                      '#1D1135',
+                      '#060B2B',
+                    ],
+                    fillOpacity: 0.4,
+                    strokeWidth: 0.5,
+                  }}
+                  area2={{
+                    key: 'protected',
+                    stroke: '#008f39',
+                    fill: '#008f39',
+                    fillOpacity: 0.4,
+                    strokeWidth: 1,
+                  }}
                   data={tabsData[activeTab].data}
                   height={200}
                   width={'100%'}
@@ -229,13 +268,16 @@ const CountryDataCardComponent = ({
                 </div>
                 <div className={styles.areaLegendGroup}>
                   <div className={styles.area2BoxLegend} />
-                  <p className={styles.areaChartLegendText}>Protected areas (%)</p>
+                  <p className={styles.areaChartLegendText}>
+                    Protected areas (%)
+                  </p>
                 </div>
               </div>
-              <p className={styles.areaChartLegendText}>Source: Map Of Life, (Yale University).</p>
+              <p className={styles.areaChartLegendText}>
+                Source: Map Of Life, (Yale University).
+              </p>
             </>
           )}
-
         </div>
         <div className={styles.hint}>
           <BulbIcon />
@@ -253,6 +295,6 @@ const CountryDataCardComponent = ({
       </section>
     </div >
   );
-}
+};
 
 export default CountryDataCardComponent;

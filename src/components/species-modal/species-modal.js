@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useFeatureLayer } from 'hooks/esri';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
+import { LAND_MARINE } from 'constants/country-mode-constants';
 import { SORT } from 'components/header-item';
 import Component from './species-modal-component';
 import { connect } from 'react-redux';
@@ -11,7 +12,6 @@ import {
   getSortedSpeciesList
 } from './species-modal-selectors';
 import * as urlActions from 'actions/url-actions';
-
 import { VERTEBRATE_TABS } from './species-modal-constants';
 
 const actions = { ...urlActions };
@@ -33,7 +33,7 @@ const SpeciesModalContainer = (props) => {
   const marineLayer = useFeatureLayer({ layerSlug:  MARINE_SPECIES_LIST });
 
   useEffect(() => {
-    const layer = vertebrateType === 'land' ? landLayer : marineLayer;
+    const layer = vertebrateType === LAND_MARINE.land ? landLayer : marineLayer;
     if (layer && countryData.iso
       ) {
       const getFeatures = async () => {

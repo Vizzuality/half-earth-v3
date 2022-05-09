@@ -69,14 +69,14 @@ const AnalyzeAreasCardComponent = ({
             label="Click on the map"
             Icon={AoisClickIcon}
             active={selectedAnalysisTab === 'click'}
-            handleClick={() => handleAnalysisTabClick('click')}
+            handleClick={() => selectedAnalysisTab !== 'click' && handleAnalysisTabClick('click')}
           />
           <Button
             type="square"
             label="Draw or upload a shape"
             Icon={AoisDrawIcon}
             active={selectedAnalysisTab === 'draw'}
-            handleClick={() => handleAnalysisTabClick('draw')}
+            handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
           />
         </div>
         {selectedAnalysisTab === 'click' && (
