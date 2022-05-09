@@ -88,10 +88,18 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const onShapeUploadError = (error) => {
-    setPromptModalContent({
-      title: WARNING_MESSAGES[error.details.httpStatus].title,
-      description: WARNING_MESSAGES[error.details.httpStatus].description(),
-    });
+    if (error.message === "Invalid file format.") {
+      setPromptModalContent({
+        title: WARNING_MESSAGES.file.title,
+        description: WARNING_MESSAGES.file.description(),
+      });
+    }
+    if (error.message !== "Invalid file format.") {
+      setPromptModalContent({
+        title: WARNING_MESSAGES[error.details.httpStatus].title,
+        description: WARNING_MESSAGES[error.details.httpStatus].description(),
+      });
+    }
     setPromptModalOpen(true);
     props.shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
   }
