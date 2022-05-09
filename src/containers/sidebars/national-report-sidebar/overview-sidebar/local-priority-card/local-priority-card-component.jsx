@@ -25,9 +25,11 @@ const LocalPriorityCardComponent = (props) => {
   const {
     hasPriority,
     protectionNeeded,
+    marineProtectionNeeded,
     priorityMetadata,
     futurePlacesMetadata,
     currentProtection,
+    currentMarineProtection,
     protectionMetadata,
     priorityAreasSentence,
     map,
@@ -55,7 +57,7 @@ const LocalPriorityCardComponent = (props) => {
       metadataTitle: 'Land protected areas',
     },
     [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
-      name: `Marine protected areas : ${currentProtection}%`,
+      name: `Marine protected areas : ${currentMarineProtection}%`,
       value: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       id: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       title: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
@@ -77,7 +79,7 @@ const LocalPriorityCardComponent = (props) => {
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [MARINE_COUNTRY_PRIORITY_LAYER]: {
-      name: `Marine protection needed: ${protectionNeeded}%`,
+      name: `Marine protection needed: ${marineProtectionNeeded}%`,
       value: MARINE_COUNTRY_PRIORITY_LAYER,
       id: MARINE_COUNTRY_PRIORITY_LAYER,
       title: MARINE_COUNTRY_PRIORITY_LAYER,

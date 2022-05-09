@@ -58,14 +58,24 @@ const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => 
   return countryData[COUNTRY_ATTRIBUTES.SPI_ter];
 })
 
-const getCurrentProtection = createSelector(getCountryData, countryData => {
+export const getCurrentProtection = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.prop_protected_ter]));
 })
 
-const getProtectionNeeded = createSelector(getCountryData, countryData => {
+export const getCurrentMarineProtection = createSelector(getCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.prop_protected_mar));
+})
+
+export const getProtectionNeeded = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.protection_needed_ter]));
+})
+
+export const getMarineProtectionNeeded = createSelector(getCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.protection_needed_mar));
 })
 
 const getSPIMean = createSelector(getCountryData, countryData => {
