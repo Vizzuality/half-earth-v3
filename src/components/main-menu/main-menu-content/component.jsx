@@ -114,7 +114,7 @@ const MainMenuContent = ({
                   onClick={handleShareClick}
                   className={styles.shareButton}
                 >
-                  SHARE THE HALF-EARTH MAP
+                  SHARE THE HALF-EARTH PROJECT MAP
                 </button>
                 <ShareModal
                   isOpen={isShareModalOpen}
