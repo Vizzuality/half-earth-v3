@@ -64,8 +64,7 @@ const OverviewSidebarComponent = ({
       <LocalPriorityCard
         countryName={countryName}
         hasPriority={hasPriority}
-        protectionNeeded={protectionNeeded}
-        currentProtection={currentProtection}
+        countryData={countryData}
         priorityAreasSentence={priorityAreasSentence}
         map={map}
         activeLayers={activeLayers}

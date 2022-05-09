@@ -11,6 +11,7 @@ import metadataConfig, {
   HALF_EARTH_FUTURE_TILE_LAYER
 } from 'constants/metadata';
 import metadataService from 'services/metadata-service';
+import mapStateToProps from './local-priority-card-selectors';
 
 const LocalPriorityCardContainer = props => {
   const [priorityMetadata, setPriorityMetadata] = useState(null);
@@ -54,4 +55,4 @@ const LocalPriorityCardContainer = props => {
   )
 }
 
-export default connect(null, { ...metadataActions, ...urlActions })(LocalPriorityCardContainer);
+export default connect(mapStateToProps, { ...metadataActions, ...urlActions })(LocalPriorityCardContainer);
