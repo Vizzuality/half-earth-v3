@@ -145,7 +145,6 @@ const AnalyzeAreasContainer = (props) => {
 
   const handleLayerToggle = (currentSelectedOption) => {
     // Future places layer will be activated if we select it at some point and never toggled unless we do it from the protection checkbox
-    console.log({ currentSelectedOption })
 
     const getLayersToToggle = () => {
       const futureLayerIsActive = activeLayers.some(l => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
