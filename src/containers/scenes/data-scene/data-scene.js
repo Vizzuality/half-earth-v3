@@ -12,16 +12,20 @@ import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 
-const actions = {...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
+const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 
 const Container = (props) => {
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
+  const { activeLayers, setBatchTooltipData, sceneSettings, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
+  const { zoom } = sceneSettings;
+  console.log({ zoom });
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const handleHighlightLayerFeatureClick = (features) => {
+
     if (features && features.length && selectedAnalysisLayer) {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
+
       const { title, subtitle, buttonText, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
 
@@ -54,6 +58,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
+    console.log({ activeOption })
     setSelectedAnalysisLayer(activeOption);
   }, [activeLayers])
 

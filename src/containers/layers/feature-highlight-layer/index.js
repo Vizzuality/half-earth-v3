@@ -12,10 +12,10 @@ import { hitResults, setCursor, drawGeometry, flyToCentroid } from 'utils/globe-
 import * as urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
-const actions = {...urlActions, ...mapTooltipActions };
+const actions = { ...urlActions, ...mapTooltipActions };
 
 const FeatureHighlightLayerContainer = (props) => {
-const { view, featureLayerSlugs, onFeatureClick } = props;
+  const { view, featureLayerSlugs, onFeatureClick } = props;
 
 
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
@@ -25,7 +25,7 @@ const { view, featureLayerSlugs, onFeatureClick } = props;
   //Create the graphics layer on mount
   useEffect(() => {
     if (!graphicsLayer) {
-      loadModules(["esri/Graphic","esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
+      loadModules(["esri/Graphic", "esri/layers/GraphicsLayer"]).then(([Graphic, GraphicsLayer]) => {
         const _selectedCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
         const _hoveredCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
         const _graphicsLayer = createGraphicLayer(GraphicsLayer, [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic], GRAPHIC_LAYER);
@@ -42,9 +42,9 @@ const { view, featureLayerSlugs, onFeatureClick } = props;
   }, [featureLayerSlugs])
 
   const onClickHandler = features => {
-    if(features && features[0]) {
+    if (features && features[0]) {
       const { graphic: { geometry } } = features[0];
-      flyToCentroid(view, geometry, 4);
+      flyToCentroid(view, geometry);
     }
     onFeatureClick(features);
   }
@@ -54,21 +54,21 @@ const { view, featureLayerSlugs, onFeatureClick } = props;
     drawGeometry(features, hoveredCountryBorderGraphic);
   }
 
-const onLabelEvent = (event) => {
-  event.stopPropagation();
-  view.hitTest(event).then(viewPoint => {
-    const features = hitResults(viewPoint, featureLayerSlugs);
-    switch (event.type) {
-      case 'pointer-move':
-        onHoverHandler(features);
-        break;
-      case 'click':
-        onClickHandler(features);
-        break;
-      default: return;
-    }
-  })
-}
+  const onLabelEvent = (event) => {
+    event.stopPropagation();
+    view.hitTest(event).then(viewPoint => {
+      const features = hitResults(viewPoint, featureLayerSlugs);
+      switch (event.type) {
+        case 'pointer-move':
+          onHoverHandler(features);
+          break;
+        case 'click':
+          onClickHandler(features);
+          break;
+        default: return;
+      }
+    })
+  }
 
   useEffect(() => {
     let eventHandler;
@@ -84,7 +84,7 @@ const onLabelEvent = (event) => {
     let eventHandler;
     if (hoveredCountryBorderGraphic) {
       eventHandler = view.on("pointer-move",
-        debounce(onLabelEvent, 35, {leading: true, trailing: true})
+        debounce(onLabelEvent, 35, { leading: true, trailing: true })
       );
     }
     return function cleanUp() {

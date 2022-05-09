@@ -5,7 +5,7 @@ import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytic
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import Component from './component';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...mapTooltipActions}
+const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...mapTooltipActions }
 
 const MapTooltipContainer = props => {
   const { mapTooltipGeometry, mapTooltipContent, mapTooltipIsVisible, setBatchTooltipData } = props;
