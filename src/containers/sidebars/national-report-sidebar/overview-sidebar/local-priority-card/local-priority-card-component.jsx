@@ -36,7 +36,15 @@ const LocalPriorityCardComponent = (props) => {
     activeLayers,
     handleLayerToggle,
     countryName,
+    countryData,
   } = props;
+
+  const {
+    Marine,
+  } = countryData;
+
+  const coastal = Marine === 'True' ? true : false;
+
   const { REACT_APP_FEATURE_MARINE } = process.env;
 
   const NRC_TOGGLES = {
@@ -118,16 +126,18 @@ const LocalPriorityCardComponent = (props) => {
               onChange={handleLayerToggle}
               themeCategorySlug={PROTECTION_SLUG}
             />
-            <LayerToggle
-              map={map}
-              type="checkbox"
-              option={NRC_TOGGLES[MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]}
-              variant="dark"
-              key={MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER}
-              activeLayers={activeLayers}
-              onChange={handleLayerToggle}
-              themeCategorySlug={PROTECTION_SLUG}
-            />
+            {coastal && (
+              <LayerToggle
+                map={map}
+                type="checkbox"
+                option={NRC_TOGGLES[MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]}
+                variant="dark"
+                key={MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                activeLayers={activeLayers}
+                onChange={handleLayerToggle}
+                themeCategorySlug={PROTECTION_SLUG}
+              />
+            )}
           </>
         ) : (
           <LayerToggle
@@ -165,16 +175,18 @@ const LocalPriorityCardComponent = (props) => {
               onChange={handleLayerToggle}
               themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
             />
-            <LayerToggle
-              map={map}
-              type="checkbox"
-              option={NRC_TOGGLES[MARINE_COUNTRY_PRIORITY_LAYER]}
-              variant="dark"
-              key={MARINE_COUNTRY_PRIORITY_LAYER}
-              activeLayers={activeLayers}
-              onChange={handleLayerToggle}
-              themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
-            />
+            {coastal && (
+              <LayerToggle
+                map={map}
+                type="checkbox"
+                option={NRC_TOGGLES[MARINE_COUNTRY_PRIORITY_LAYER]}
+                variant="dark"
+                key={MARINE_COUNTRY_PRIORITY_LAYER}
+                activeLayers={activeLayers}
+                onChange={handleLayerToggle}
+                themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
+              />
+            )}
           </>
         ) : (
           <LayerToggle

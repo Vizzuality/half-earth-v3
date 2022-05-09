@@ -62,6 +62,7 @@ const OverviewSidebarComponent = ({
         endemicVertebratesCount={endemicVertebratesCount}
       />
       <LocalPriorityCard
+        countryData={countryData}
         countryName={countryName}
         hasPriority={hasPriority}
         countryData={countryData}

@@ -102,7 +102,7 @@ import {
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
 const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_20220426/FeatureServer' :
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_All_20220504/FeatureServer' :
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer';
 
 
@@ -125,9 +125,9 @@ export const LAYERS_URLS = {
   [COUNTRY_PRIORITY_LAYER]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
   [LAND_COUNTRY_PRIORITY_LAYER]:
-  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip/MapServer',
   [MARINE_COUNTRY_PRIORITY_LAYER]:
-  'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/nrc_prior_bioRamp_clip_marine3/MapServer',
   [EEZ_MARINE_BORDERS]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Country_boundaries_with_EEZ/FeatureServer',
   [PLEDGES_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/PledgeLocationsURL/FeatureServer',

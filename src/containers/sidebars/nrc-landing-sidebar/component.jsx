@@ -28,7 +28,7 @@ const NRCLandingSidebar = ({
 }) => {
 
   const { landAverage, marineAverage } = globalAverage;
-  const averageLoaded = !!landAverage && !!marineAverage;
+  const averageLoaded = landAverage !== undefined || marineAverage !== undefined;
 
   const tooltipRefs = useTooltipRefs({
     changeUI,

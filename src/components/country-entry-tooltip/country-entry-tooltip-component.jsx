@@ -32,6 +32,7 @@ const CountryEntryTooltipComponent = ({
   const [activeTab, setActiveTab] = useState('land');
 
   const {
+    coastal,
     spiLand,
     spiMar,
     landVertebrates,
@@ -116,6 +117,7 @@ const CountryEntryTooltipComponent = ({
               {Object.keys(tabsData).map((key) => (
                 <button
                   key={key}
+                  disabled={!coastal}
                   className={cx({
                     [styles.switchDataButton]: true,
                     [styles.switchDataActiveButton]: activeTab === key,
@@ -130,7 +132,10 @@ const CountryEntryTooltipComponent = ({
         </section>
         <CloseIcon
           className={styles.tooltipClose}
-          onClick={handleTooltipClose}
+          onClick={() => {
+            handleTooltipClose();
+            setActiveTab('land');
+          }}
         />
         <section className={styles.spiInfo}>
           {REACT_APP_FEATURE_MARINE && (

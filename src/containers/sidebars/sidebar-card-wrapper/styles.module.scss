@@ -1,7 +1,8 @@
 @import 'styles/settings';
 
 .wrapper {
-  position: relative ;
+  position: relative;
+
   .closeButton {
     position: absolute;
     right: 10px;
@@ -10,7 +11,7 @@
     fill: $dark-text;
     z-index: $bring-to-front;
   }
-  
+
   &.closed {
     display: none;
   }
@@ -18,12 +19,13 @@
 
 .container {
   display: flex;
-  position: relative ;
+  position: relative;
   flex-direction: column;
   width: 100%;
   min-height: inherit;
   border-radius: $card-border-radius;
   color: $dark-text;
+
   > :not(:last-child)::after {
     content: '';
     position: relative;
@@ -32,6 +34,7 @@
     margin: 0 auto;
     border-bottom: 1px dotted $dark-text;
   }
+
   .section {
     padding: $sidebar-cards-padding;
     border-radius: $card-border-radius;
@@ -41,6 +44,7 @@
 
 .dark {
   color: $dark-text;
+
   .section {
     background-color: $accent-grey;
   }

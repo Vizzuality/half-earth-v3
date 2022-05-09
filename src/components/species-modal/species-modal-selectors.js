@@ -4,10 +4,10 @@ import { SORT } from 'components/header-item';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import sortBy from 'lodash/sortBy';
 
-const selectCountryIso = ({location}) => location.payload.iso.toUpperCase();
+const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 
 export const getSearchTerm = ({ location }) =>
-(location && get(location, 'query.ui.speciesModalSearch')) || null;
+  (location && get(location, 'query.ui.speciesModalSearch')) || null;
 export const getSpeciesModalSort = ({ location }) =>
   (location && get(location, 'query.ui.speciesModalSort')) || null;
 
@@ -23,6 +23,7 @@ export const getCountryData = createSelector(
     return {
       iso: countryData.GID_0,
       name: countryData.NAME_0,
+      coastal: countryData.Marine === 'True' ? true : false,
       landSpeciesTotal: countryData[COUNTRY_ATTRIBUTES.nspecies_richness_ter],
       marineSpeciesTotal: countryData['nspecies_mar'],
     };

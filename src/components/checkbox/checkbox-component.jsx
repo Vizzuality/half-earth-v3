@@ -9,11 +9,12 @@ const Checkbox = ({ option, onChange, checked, theme, className, disabled }) => 
   return (
     <div key={option.value} className={cx(
       className,
-      {[theme]: checked},
+      { [theme]: checked },
       styles.checkboxWrapper,
-      {[styles.disabled]: disabled}
+      { [styles.disabled]: disabled }
     )}>
       <input
+        disabled={disabled}
         type="checkbox"
         value={option.value}
         name={option.name}
@@ -26,7 +27,8 @@ const Checkbox = ({ option, onChange, checked, theme, className, disabled }) => 
         {option.rightDot && !checked && <span className={styles.rightDot} style={{ background: option.rightDot }} />}
       </label>
     </div>
-  )}
+  )
+}
 
 export default Checkbox;
 
@@ -39,7 +41,7 @@ Checkbox.propTypes = {
 
 Checkbox.defaultProps = {
   options: [],
-  onChange: () => {},
+  onChange: () => { },
   checked: false,
   theme: ''
 };

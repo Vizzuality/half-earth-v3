@@ -2,36 +2,44 @@
 
 .light {
   color: $white;
+
   &.checked {
     fill: $white;
     stroke: $white;
   }
+
   &:hover,
   &.checked {
     background-color: $white-opacity;
   }
+
   label::after {
     border: 1px solid $white;
   }
-  input:checked + label::after {
+
+  input:checked+label::after {
     border: 2px solid $white;
   }
 }
 
 .dark {
   color: $dark-text;
+
   &.checked {
     fill: $dark-text;
     stroke: $dark-text;
   }
+
   &:hover,
   &.checked {
     background-color: $dark-opacity;
   }
+
   label::after {
     border: 1px solid $dark-text;
   }
-  input:checked + label::after {
+
+  input:checked+label::after {
     border: 2px solid $dark-text;
   }
 }
@@ -48,7 +56,13 @@
     border: 1px solid $dark-text;
   }
 
-  input:checked + label::after {
+  input:checked+label::after {
     border: 2px solid $dark-text;
+  }
+}
+
+.disabled {
+  &:hover {
+    background-color: $white-opacity;
   }
 }
