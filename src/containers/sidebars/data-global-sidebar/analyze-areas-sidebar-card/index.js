@@ -88,7 +88,6 @@ const AnalyzeAreasContainer = (props) => {
   }
 
   const onShapeUploadError = (error) => {
-    console.log('error.message', error.message);
     if (error.message === "Invalid file format.") {
       setPromptModalContent({
         title: WARNING_MESSAGES.file.title,
