@@ -97,15 +97,23 @@ const NationalReportSidebarComponent = ({
             />
             {countryName && <p className={styles.countryName}>{countryName}</p>}
           </div>
-          {localSceneActiveTab === 'overview' && (
+          <div className={styles.actionButtons}>
             <Button
               type="icon-square"
-              Icon={DownloadIcon}
-              handleClick={handlePrintReport}
+              Icon={ShareIcon}
               className={styles.actionButton}
-              tooltipText="Download national data report"
+              handleClick={setShareModalOpen}
+              tooltipText="Share the URL to this view"
             />
-          )}
+            {localSceneActiveTab === 'overview' && (
+              <Button
+                type="icon-square"
+                Icon={DownloadIcon}
+                handleClick={handlePrintReport}
+                tooltipText="Download national data report"
+              />
+            )}
+          </div>
         </div>
       </div>
       <Tabs
@@ -142,14 +150,6 @@ const NationalReportSidebarComponent = ({
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
             <RankingSidebar countryISO={countryISO} />
           )}
-          <Button
-            type="compound"
-            Icon={ShareIcon}
-            handleClick={setShareModalOpen}
-            className={styles.actionButton}
-            label="share this info"
-            tooltipText="Share the URL to this view"
-          />
           <ShareModal
             isOpen={isShareModalOpen}
             setShareModalOpen={setShareModalOpen}

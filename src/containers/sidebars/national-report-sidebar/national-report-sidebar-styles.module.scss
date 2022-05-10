@@ -96,4 +96,13 @@
   justify-content: space-between;
   padding: $site-gutter;
   width: 100%;
+
+  .actionButtons {
+    align-items: center;
+    display: flex;
+
+    .actionButton {
+      margin-right: $site-gutter;
+    }
+  }
 }
