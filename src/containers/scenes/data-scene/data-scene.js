@@ -16,9 +16,7 @@ const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 
 const Container = (props) => {
-  const { activeLayers, setBatchTooltipData, sceneSettings, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
-  const { zoom } = sceneSettings;
-  console.log({ zoom });
+  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const handleHighlightLayerFeatureClick = (features) => {
@@ -58,7 +56,6 @@ const Container = (props) => {
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
-    console.log({ activeOption })
     setSelectedAnalysisLayer(activeOption);
   }, [activeLayers])
 
