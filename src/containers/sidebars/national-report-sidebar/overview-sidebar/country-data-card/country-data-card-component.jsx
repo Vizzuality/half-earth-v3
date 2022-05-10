@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { Tooltip } from 'react-tippy';
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
 import styles from './country-data-card-styles.module.scss';
+import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 
 const CountryDataCardComponent = ({
@@ -133,29 +133,7 @@ const CountryDataCardComponent = ({
                     </b>
                     the{' '}
                     <b>
-                      total of{' '}
-                      <Tooltip
-                        animation="fade"
-                        arrow
-                        position="top"
-                        html={
-                          <div className={styles.legendTextTooltip}>
-                            <h4>Why only land and marine vertebrates?</h4>
-                            <p>
-                              Terrestrial and marine vertebrates represent the
-                              species groups with the most comprehensive
-                              coverage of distribution data. The Half-Earth
-                              Project is actively engaging in research to expand
-                              coverage of other taxonomic groups.
-                            </p>
-                          </div>
-                        }
-                      >
-                        <span className={styles.legendTextUnderline}>
-                          vertebrate species
-                        </span>
-                      </Tooltip>{' '}
-                      ({nspecies_ter})
+                      total of ({nspecies_ter})
                     </b>{' '}
                     and the amount of which of these are{' '}
                     <b>endemic ({total_endemic_ter}).</b>
@@ -184,25 +162,7 @@ const CountryDataCardComponent = ({
                   <div>
                     <p className={styles.legendText}>
                       The Marine SPI is based on the  <b>protected marine areas ({`${prop_protected_mar && prop_protected_mar.toFixed()}%`}),</b>
-                      the <b>total of
-                        {' '}
-                        <Tooltip
-                          animation="fade"
-                          arrow
-                          position="top"
-                          html={<div className={styles.legendTextTooltip}>
-                            <h4>Why only land and marine vertebrates?</h4>
-                            <p>
-                              Terrestrial and marine vertebrates represent the species groups with the most comprehensive
-                              coverage of distribution data. The Half-Earth Project is actively engaging in research to expand coverage of other
-                              taxonomic groups.
-                            </p>
-                          </div>}
-                        >
-                          <span className={styles.legendTextUnderline}>marine mammals</span>
-                        </Tooltip>
-                        {' '}
-                        and fishes ({nspecies_mar})</b> species and the
+                      the <b>total of and fishes ({nspecies_mar})</b> species and the
                       amount of which of these are <b>endemic ({total_endemic_mar}).</b>
                     </p>
                   </div>
@@ -277,6 +237,16 @@ const CountryDataCardComponent = ({
               </p>
             </>
           )}
+        </div>
+        <div className={styles.hint}>
+          <BulbIcon />
+          <p className={styles.hintTitle}>Why only land vertebrates?</p>
+          <p className={styles.hintText}>
+            Terrestrial vertebrates represent the species groups with the most
+            comprehensive coverage of distribution data. The Half-Earth Project
+            is actively engaging in research to expand coverage of other
+            taxonomic groups.
+          </p>
         </div>
       </section >
       <section className={styles.descriptionWrapper}>
