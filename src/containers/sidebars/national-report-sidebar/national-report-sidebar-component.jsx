@@ -4,6 +4,7 @@ import { Loading } from 'he-components';
 
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
+import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
@@ -37,6 +38,7 @@ const NationalReportSidebarComponent = ({
   countryName,
   openedModal,
   handleTabSelection,
+  handlePrintReport,
   isFullscreenActive,
   localSceneActiveTab,
   handleClose,
@@ -86,13 +88,24 @@ const NationalReportSidebarComponent = ({
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
         <span className={styles.nrcTitle}>National report card of</span>
-        <div className={styles.flagWrapper}>
-          <img
-            className={styles.flag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-            alt=""
-          />
-          {countryName && <p className={styles.countryName}>{countryName}</p>}
+        <div className={styles.cardHeader}>
+          <div className={styles.flagWrapper}>
+            <img
+              className={styles.flag}
+              src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+              alt=""
+            />
+            {countryName && <p className={styles.countryName}>{countryName}</p>}
+          </div>
+          {localSceneActiveTab === 'overview' && (
+            <Button
+              type="icon-square"
+              Icon={DownloadIcon}
+              handleClick={handlePrintReport}
+              className={styles.actionButton}
+              tooltipText="Download national data report"
+            />
+          )}
         </div>
       </div>
       <Tabs

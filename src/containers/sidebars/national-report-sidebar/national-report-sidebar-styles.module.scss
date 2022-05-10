@@ -46,13 +46,11 @@
 
 .flagWrapper {
   display: flex;
-  align-items: baseline;
-  margin-bottom: $site-gutter;
+  align-items: center;
 }
 
 .flag {
   width: 30px;
-  margin-left: $site-gutter;
   position: relative;
 }
 
@@ -68,7 +66,6 @@
   @extend %display2;
   margin: 0;
   padding-left: $site-gutter;
-  padding-top: $site-gutter;
   color: $white;
 }
 
@@ -93,8 +90,10 @@
   }
 }
 
-.actionButton {
-  margin-left: $site-gutter;
-  margin-bottom: $site-gutter;
+.cardHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: $site-gutter;
+  width: 100%;
 }
-
