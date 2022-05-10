@@ -4,7 +4,6 @@ import { Tooltip } from 'react-tippy';
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
 import styles from './country-data-card-styles.module.scss';
-import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 
 const CountryDataCardComponent = ({
@@ -278,16 +277,6 @@ const CountryDataCardComponent = ({
               </p>
             </>
           )}
-        </div>
-        <div className={styles.hint}>
-          <BulbIcon />
-          <p className={styles.hintTitle}>Why only land vertebrates?</p>
-          <p className={styles.hintText}>
-            Terrestrial vertebrates represent the species groups with the most
-            comprehensive coverage of distribution data. The Half-Earth Project
-            is actively engaging in research to expand coverage of other
-            taxonomic groups.
-          </p>
         </div>
       </section >
       <section className={styles.descriptionWrapper}>

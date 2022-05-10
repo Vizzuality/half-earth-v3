@@ -49,26 +49,6 @@
   text-align: center;
 }
 
-.hint {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $sidebar-paddings;
-  background-color: $accent-grey;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-
-.hintTitle {
-  @extend %title;
-  color: $_temporary-dark-text;
-}
-
-.hintText {
-  @extend %bodyText;
-  color: $_temporary-dark-text;
-}
-
 .descriptionWrapper {
   padding: $sidebar-paddings $sidebar-paddings 0px;
 
