@@ -45,7 +45,7 @@ export const setAvatarImage = (view, layerFeatures, selectedFeaturedMap, feature
     const featureMapPlace = featuredMapPlaces.data[selectedFeaturedMap][slug];
     const imageUrl = featureMapPlace && featureMapPlace.imageUrl;
     loadModules(["esri/geometry/Point"]).then(([Point]) => {
-      const point = new Point({latitude, longitude});
+      const point = new Point({ latitude, longitude });
       const screenCoords = view.toScreen(point);
       marker.setAttribute("style", `${markerDefaultStyles} left: ${screenCoords.x}px; top: ${screenCoords.y}px; transform: translate(-20px, -20px); display: block; border: 1px solid white; background-image: url(${imageUrl})`)
     })
@@ -64,7 +64,7 @@ export const setSelectedFeaturedPlace = (viewPoint, featuredPlacesLayerTitle, ch
 }
 
 export const drawGeometry = (layerFeatures, graphic) => {
-  if(!layerFeatures || !layerFeatures.length) {
+  if (!layerFeatures || !layerFeatures.length) {
     graphic.geometry = null;
     return;
   }
@@ -83,24 +83,24 @@ export const flyToCentroid = (view, geometry, zoom) => {
   if (geometry && geometry.centroid) {
     view.goTo({
       target: geometry.centroid,
-      zoom
+      ...zoom && { zoom },
     })
   }
 }
 
 export const setCountryTooltip = ({ countryIso, countryName, changeGlobe }) => {
-  changeGlobe({countryTooltipDisplayFor: countryIso, countryName });
+  changeGlobe({ countryTooltipDisplayFor: countryIso, countryName });
 };
 
 export const toggleCountryTooltip = ({ layerFeatures, changeGlobe, countryISO }) => {
   if (layerFeatures && layerFeatures.length) {
-    changeGlobe({countryTooltipDisplayFor: null});
+    changeGlobe({ countryTooltipDisplayFor: null });
     const { graphic } = layerFeatures[0];
     const { attributes } = graphic;
     if (!countryISO || countryISO !== attributes.GID_0) {
-      changeGlobe({countryTooltipDisplayFor: attributes.GID_0, countryName: attributes.NAME_0});
+      changeGlobe({ countryTooltipDisplayFor: attributes.GID_0, countryName: attributes.NAME_0 });
     }
   } else if (countryISO) {
-    changeGlobe({countryTooltipDisplayFor: null});
+    changeGlobe({ countryTooltipDisplayFor: null });
   }
 }
