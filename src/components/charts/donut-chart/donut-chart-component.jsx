@@ -39,6 +39,7 @@ const DonutChart = ({
         stroke="none"
         dataKey="value"
         cornerRadius={10}
+        startAngle={90}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
