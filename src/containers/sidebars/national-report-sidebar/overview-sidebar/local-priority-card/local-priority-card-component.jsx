@@ -25,17 +25,25 @@ const LocalPriorityCardComponent = (props) => {
   const {
     hasPriority,
     protectionNeeded,
+    marineProtectionNeeded,
     priorityMetadata,
     futurePlacesMetadata,
     currentProtection,
+    currentMarineProtection,
     protectionMetadata,
     priorityAreasSentence,
     map,
     activeLayers,
     handleLayerToggle,
     countryName,
+    countryData,
   } = props;
+
   const { REACT_APP_FEATURE_MARINE } = process.env;
+
+  const { Marine } = countryData;
+
+  const coastal = Marine === 'True' ? true : false;
 
   const NRC_TOGGLES = {
     [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
@@ -55,7 +63,7 @@ const LocalPriorityCardComponent = (props) => {
       metadataTitle: 'Land protected areas',
     },
     [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
-      name: `Marine protected areas : ${currentProtection}%`,
+      name: `Marine protected areas : ${currentMarineProtection}%`,
       value: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       id: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       title: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
@@ -77,7 +85,7 @@ const LocalPriorityCardComponent = (props) => {
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [MARINE_COUNTRY_PRIORITY_LAYER]: {
-      name: `Marine protection needed: ${protectionNeeded}%`,
+      name: `Marine protection needed: ${marineProtectionNeeded}%`,
       value: MARINE_COUNTRY_PRIORITY_LAYER,
       id: MARINE_COUNTRY_PRIORITY_LAYER,
       title: MARINE_COUNTRY_PRIORITY_LAYER,
@@ -116,16 +124,18 @@ const LocalPriorityCardComponent = (props) => {
               onChange={handleLayerToggle}
               themeCategorySlug={PROTECTION_SLUG}
             />
-            <LayerToggle
-              map={map}
-              type="checkbox"
-              option={NRC_TOGGLES[MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]}
-              variant="dark"
-              key={MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER}
-              activeLayers={activeLayers}
-              onChange={handleLayerToggle}
-              themeCategorySlug={PROTECTION_SLUG}
-            />
+            {coastal && (
+              <LayerToggle
+                map={map}
+                type="checkbox"
+                option={NRC_TOGGLES[MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]}
+                variant="dark"
+                key={MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER}
+                activeLayers={activeLayers}
+                onChange={handleLayerToggle}
+                themeCategorySlug={PROTECTION_SLUG}
+              />
+            )}
           </>
         ) : (
           <LayerToggle
@@ -163,16 +173,18 @@ const LocalPriorityCardComponent = (props) => {
               onChange={handleLayerToggle}
               themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
             />
-            <LayerToggle
-              map={map}
-              type="checkbox"
-              option={NRC_TOGGLES[MARINE_COUNTRY_PRIORITY_LAYER]}
-              variant="dark"
-              key={MARINE_COUNTRY_PRIORITY_LAYER}
-              activeLayers={activeLayers}
-              onChange={handleLayerToggle}
-              themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
-            />
+            {coastal && (
+              <LayerToggle
+                map={map}
+                type="checkbox"
+                option={NRC_TOGGLES[MARINE_COUNTRY_PRIORITY_LAYER]}
+                variant="dark"
+                key={MARINE_COUNTRY_PRIORITY_LAYER}
+                activeLayers={activeLayers}
+                onChange={handleLayerToggle}
+                themeCategorySlug={ADDITIONAL_PROTECTION_SLUG}
+              />
+            )}
           </>
         ) : (
           <LayerToggle
@@ -205,23 +217,6 @@ const LocalPriorityCardComponent = (props) => {
             themeCategorySlug={FUTURE_PLACES_SLUG}
           />
         </div>
-      </SidebarCardWrapper>
-      <SidebarCardWrapper sectionClassName={styles.section}>
-        <SidebarCardContent
-          title={`Where to protect next in ${countryName}?`}
-          description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
-          metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
-        />
-        <LayerToggle
-          map={map}
-          type="checkbox"
-          option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
-          variant="dark"
-          key={HALF_EARTH_FUTURE_TILE_LAYER}
-          activeLayers={activeLayers}
-          onChange={handleLayerToggle}
-          themeCategorySlug={FUTURE_PLACES_SLUG}
-        />
       </SidebarCardWrapper>
     </div>
   );

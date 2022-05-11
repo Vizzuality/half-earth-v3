@@ -12,7 +12,7 @@ import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 
-const actions = {...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
+const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 
 const Container = (props) => {
@@ -20,8 +20,10 @@ const Container = (props) => {
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const handleHighlightLayerFeatureClick = (features) => {
+
     if (features && features.length && selectedAnalysisLayer) {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
+
       const { title, subtitle, buttonText, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
 

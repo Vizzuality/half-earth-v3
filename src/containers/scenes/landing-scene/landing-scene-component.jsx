@@ -54,7 +54,7 @@ const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
             handleClick={() => browsePage({ type: FEATURED })}
           />
           <Globe
-            title="Explore Data"
+            title="Explore data"
             description="Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity."
             globeImage={globeExplore}
             center

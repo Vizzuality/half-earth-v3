@@ -31,6 +31,10 @@
     height: 25px;
     text-transform: capitalize;
     width: 50px;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   .switchDataActiveButton {

@@ -37,29 +37,69 @@ export const FILTERS_DICTIONARY = {
   [`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]: 'with similar area',
   [`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]: 'with similar population size',
   [`filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`]: 'with similar proportion of protection',
+  filter_prop_protected_mar: 'with similar proportion of protection',
   [`filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`]: 'with similar proportion of very high human encroachment',
+  filter_hm_vh_mar: 'with similar proportion of very high human encroachment',
   [`filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`]: 'with similar proportion of protection needed',
+  filter_protection_needed_mar: 'with similar proportion of protection needed',
   filter_GNI_PPP: 'with similar Gross National Income',
   [`filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`]: 'with similar number of endemic species',
+  filter_total_endemic_mar: 'with similar number of endemic species',
   [`filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`]: 'with similar number of vertebrate species',
+  filter_nspecies_mar: 'with similar number of vertebrate species',
   [`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]: 'with similar species Protection Index',
+  filter_SPI_mar: 'with similar species Protection Index',
   filter_steward: 'with shared stewardship'
 };
 
-export const CHALLENGES_RELATED_FILTERS_OPTIONS = [
-  {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent},
-  {slug: 'filter_neigh', label: FILTERS_DICTIONARY.filter_neigh},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.Area_Country}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.Pop2020}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`]},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`]},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`]},
-  {slug: 'filter_GNI_PPP', label: FILTERS_DICTIONARY.filter_GNI_PPP},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`]},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`]},
-  {slug: `filter_${COUNTRY_ATTRIBUTES.SPI_ter}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]},
-  {slug: 'filter_steward', label: FILTERS_DICTIONARY.filter_steward}
-]
+export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
+  land: {
+    hm_vh: COUNTRY_ATTRIBUTES.hm_vh_ter,
+    hm: COUNTRY_ATTRIBUTES.hm_ter,
+    prop_protected: COUNTRY_ATTRIBUTES.prop_protected_ter,
+    prop_hm_0: COUNTRY_ATTRIBUTES.prop_hm_0_ter,
+    prop_hm_very_high: COUNTRY_ATTRIBUTES.prop_hm_very_high_ter,
+    protection_needed: COUNTRY_ATTRIBUTES.protection_needed_ter,
+    total_endemic: COUNTRY_ATTRIBUTES.total_endemic_ter,
+    nspecies: COUNTRY_ATTRIBUTES.nspecies_ter,
+    SPI: COUNTRY_ATTRIBUTES.SPI_ter,
+    similar: COUNTRY_ATTRIBUTES.similar_ter,
+    nspecies_richness: COUNTRY_ATTRIBUTES.nspecies_richness_ter,
+    hm_no: COUNTRY_ATTRIBUTES.hm_no_ter
+  },
+  marine: {
+    hm_vh: 'hm_vh_mar',
+    hm: 'hm_mar',
+    prop_protected: 'prop_protected_mar',
+    prop_hm_very_high: 'prop_hm_very_high_mar',
+    prop_hm_0: 'prop_hm_0_mar',
+    protection_needed: 'protection_needed_mar',
+    total_endemic: 'total_endemic_mar',
+    nspecies: 'nspecies_mar',
+    SPI: 'SPI_mar',
+    similar: 'similar_mar',
+    nspecies_richness: 'nspecies_mar',
+    hm_no: 'hm_no_mar'
+  }
+};
+
+export const getChallengesRelatedFilterOptions = (landMarineSelection) => {
+  const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
+  return [
+    {slug: 'filter_continent', label: FILTERS_DICTIONARY.filter_continent},
+    {slug: 'filter_neigh', label: FILTERS_DICTIONARY.filter_neigh},
+    {slug: `filter_${COUNTRY_ATTRIBUTES.Area_Country}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]},
+    {slug: `filter_${COUNTRY_ATTRIBUTES.Pop2020}`, label: FILTERS_DICTIONARY[`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]},
+    {slug: `filter_${attributes.prop_protected}`, label: FILTERS_DICTIONARY[`filter_${attributes.prop_protected}`]},
+    {slug: `filter_${attributes.hm_vh}`, label: FILTERS_DICTIONARY[`filter_${attributes.hm_vh}`]},
+    {slug: `filter_${attributes.protection_needed}`, label: FILTERS_DICTIONARY[`filter_${attributes.protection_needed}`]},
+    {slug: 'filter_GNI_PPP', label: FILTERS_DICTIONARY.filter_GNI_PPP},
+    {slug: `filter_${attributes.total_endemic}`, label: FILTERS_DICTIONARY[`filter_${attributes.total_endemic}`]},
+    {slug: `filter_${attributes.nspecies}`, label: FILTERS_DICTIONARY[`filter_${attributes.nspecies}`]},
+    {slug: `filter_${attributes.SPI}`, label: FILTERS_DICTIONARY[`filter_${attributes.SPI}`]},
+    {slug: 'filter_steward', label: FILTERS_DICTIONARY.filter_steward}
+  ];
+};
 
 export const RANKING_INDICATORS = {
   spi: 'spi',
@@ -164,44 +204,18 @@ export const SORT_OPTIONS = [
   },
 ];
 
+export const LAND_MARINE = {
+  land: 'land',
+  marine: 'marine',
+};
+
 export const LAND_MARINE_OPTIONS = [
   {
     label: 'LAND SPI',
-    slug: 'land',
+    slug: LAND_MARINE.land,
   },
   {
     label: 'MARINE SPI',
-    slug: 'marine',
+    slug: LAND_MARINE.marine,
   },
 ];
-
-export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
-  land: {
-    hm_vh: COUNTRY_ATTRIBUTES.hm_vh_ter,
-    hm: COUNTRY_ATTRIBUTES.hm_ter,
-    prop_protected: COUNTRY_ATTRIBUTES.prop_protected_ter,
-    prop_hm_0: COUNTRY_ATTRIBUTES.prop_hm_0_ter,
-    prop_hm_very_high: COUNTRY_ATTRIBUTES.prop_hm_very_high_ter,
-    protection_needed: COUNTRY_ATTRIBUTES.protection_needed_ter,
-    total_endemic: COUNTRY_ATTRIBUTES.total_endemic_ter,
-    nspecies: COUNTRY_ATTRIBUTES.nspecies_ter,
-    SPI: COUNTRY_ATTRIBUTES.SPI_ter,
-    similar: COUNTRY_ATTRIBUTES.similar_ter,
-    nspecies_richness: COUNTRY_ATTRIBUTES.nspecies_richness_ter,
-    hm_no: COUNTRY_ATTRIBUTES.hm_no_ter
-  },
-  marine: {
-    hm_vh: 'hm_vh_mar',
-    hm: 'hm_mar',
-    prop_protected: 'prop_protected_mar',
-    prop_hm_very_high: 'prop_hm_very_high_mar',
-    prop_hm_0: 'prop_hm_0_mar',
-    protection_needed: 'protection_needed_mar',
-    total_endemic: 'total_endemic_mar',
-    nspecies: 'nspecies_mar',
-    SPI: 'SPI_mar',
-    similar: 'similar_mar',
-    nspecies_richness: 'nspecies_mar',
-    hm_no: 'hm_no_mar'
-  }
-}

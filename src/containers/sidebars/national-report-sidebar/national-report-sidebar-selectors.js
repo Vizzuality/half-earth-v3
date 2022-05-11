@@ -58,14 +58,24 @@ const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => 
   return countryData[COUNTRY_ATTRIBUTES.SPI_ter];
 })
 
-const getCurrentProtection = createSelector(getCountryData, countryData => {
+export const getCurrentProtection = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.prop_protected_ter]));
 })
 
-const getProtectionNeeded = createSelector(getCountryData, countryData => {
+export const getCurrentMarineProtection = createSelector(getCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.prop_protected_mar));
+})
+
+export const getProtectionNeeded = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
   return Math.round(parseFloat(countryData[COUNTRY_ATTRIBUTES.protection_needed_ter]));
+})
+
+export const getMarineProtectionNeeded = createSelector(getCountryData, countryData => {
+  if (!countryData) return null;
+  return Math.round(parseFloat(countryData.protection_needed_mar));
 })
 
 const getSPIMean = createSelector(getCountryData, countryData => {
@@ -85,10 +95,9 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return `Here are some example species of significant conservation interest for each taxonomic group.
-   These land species are either endemic to ${countryData.NAME_0} or have small range sizes`;
+  return ` Here are some examples of land species of significant conservation interest for each taxonomic group.
+  These species are either endemic to ${countryData.NAME_0} or have small range sizes.`;
 })
-
 
 const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
@@ -145,7 +154,7 @@ const getSpeciesChartData = createSelector(getCountryData, countryData => {
     { name: 'mammals', value: mammals - endemic_mammals, color: SPECIES_COLOR['mammals'], explodedSlice: false },
     { name: 'endemic mammals mar', value: endemic_mammals_mar, color: SPECIES_COLOR['mammals_mar'], explodedSlice: true },
     { name: 'mammals mar', value: mammals_mar - endemic_mammals_mar, color: SPECIES_COLOR['mammals_mar'], explodedSlice: false },
-    { name: 'endemic fishes mar', value: endemic_fishes_mar, color:SPECIES_COLOR['fishes'], explodedSlice: true },
+    { name: 'endemic fishes mar', value: endemic_fishes_mar, color: SPECIES_COLOR['fishes'], explodedSlice: true },
     { name: 'fishes mar', value: fishes_mar - endemic_fishes_mar, color: SPECIES_COLOR['fishes'], explodedSlice: false },
     { name: 'endemic reptiles', value: endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: true },
     { name: 'reptiles', value: reptiles - endemic_reptiles, color: SPECIES_COLOR['reptiles'], explodedSlice: false },

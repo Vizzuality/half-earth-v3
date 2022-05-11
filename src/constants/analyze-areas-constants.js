@@ -54,7 +54,7 @@ const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 // Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
 export const SIDEBAR_CARDS_CONFIG = {
   [SPECIES_SLUG]: {
-    title: (speciesCount) => <span>This area has<br/>up to {speciesCount}</span>,
+    title: (speciesCount) => <span>This area has<br />up to {speciesCount}</span>,
     hint: 'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.',
     warning: <span>Species summaries are less reliable for areas under 1,000 km<sup>2</sup>; only a portion of these species will be found here.</span>
   },
@@ -77,14 +77,14 @@ export const SIDEBAR_CARDS_CONFIG = {
 }
 
 export const SPECIES_FILTERS = [
-  {slug: 'all', label: 'all terrestrial vertebrates'},
-  {slug: BIRDS, label: 'birds'},
-  {slug: MAMMALS, label: 'mammals'},
-  {slug: REPTILES, label: 'reptiles'},
-  {slug: AMPHIBIANS, label: 'amphibians'},
+  { slug: 'all', label: 'all terrestrial vertebrates' },
+  { slug: BIRDS, label: 'birds' },
+  { slug: MAMMALS, label: 'mammals' },
+  { slug: REPTILES, label: 'reptiles' },
+  { slug: AMPHIBIANS, label: 'amphibians' },
 ]
 
-export const DEFAULT_SPECIES_FILTER = {slug: 'all', label: 'all terrestrial vertebrates'};
+export const DEFAULT_SPECIES_FILTER = { slug: 'all', label: 'all terrestrial vertebrates' };
 
 export const IUCN_CATEGORIES = {
   EX: 'Extinct',
@@ -99,14 +99,14 @@ export const IUCN_CATEGORIES = {
 }
 
 export const PRECALCULATED_LAYERS_CONFIG = {
-  [GADM_0_ADMIN_AREAS_FEATURE_LAYER] : {
+  [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     name: 'NAME_0',
   },
-  [GADM_1_ADMIN_AREAS_FEATURE_LAYER] : {
+  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: {
     name: 'NAME_1',
     subtitle: 'GID_0'
   },
-  [WDPA_OECM_FEATURE_LAYER] : {
+  [WDPA_OECM_FEATURE_LAYER]: {
     name: 'NAME',
   },
 }
@@ -117,7 +117,11 @@ export const WARNING_MESSAGES = {
   area: {
     title: 'Area size too big',
     description: (size) => (<span>The maximum size for on the fly area analysis is {localeFormatting(HIGHER_AREA_SIZE_LIMIT)} km<sup>2</sup>.
-    The area that you are trying to analyze has {localeFormatting(size)} km<sup>2</sup>. Please select a smaller area to trigger the analysis.</span>)
+      The area that you are trying to analyze has {localeFormatting(size)} km<sup>2</sup>. Please select a smaller area to trigger the analysis.</span>)
+  },
+  file: {
+    title: 'Something went wrong with your upload',
+    description: () => 'Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.'
   },
   400: {
     title: 'File too big',

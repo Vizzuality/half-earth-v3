@@ -11,6 +11,7 @@ const LayerToggleComponent = ({
   title,
   option,
   variant,
+  disabled,
   onChange,
   isChecked,
   activeLayers,
@@ -46,10 +47,12 @@ const LayerToggleComponent = ({
       className={cx(styles.wrapper, {
         [styles[variant]]: variant,
         [theme[themeCategorySlug]]: themeCategorySlug,
-        [styles.checked]: isChecked,
+        [styles.checked]: isChecked && !disabled,
+        [styles.disabled]: disabled,
       })}
     >
       <CheckboxTypeToggle
+        disabled={disabled}
         theme={theme}
         title={title}
         option={option}

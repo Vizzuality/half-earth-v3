@@ -9,12 +9,10 @@ export const NATIONAL_REPORT_CARD_LANDING = 'location/NATIONAL_REPORT_CARD_LANDI
 export const AREA_OF_INTEREST = 'location/AREA_OF_INTEREST';
 export const MAP_IFRAME = 'location/MAP_IFRAME';
 
-const { REACT_APP_FEATURE_ONBOARDING } = process.env;
-
 export const routes = {
   [LANDING]: {
-      path: '/',
-      page: 'landing'
+    path: '/',
+    page: 'landing'
   },
   [DATA]: {
     path: '/dataGlobe',
@@ -40,7 +38,7 @@ export const routes = {
     path: '/aoi/:id?',
     page: 'aoi'
   },
-  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: REACT_APP_FEATURE_ONBOARDING === 'true' ? LANDING : DATA })) }
+  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: LANDING })) }
 };
 
 const options = {
@@ -49,5 +47,7 @@ const options = {
     stringify: encodeStateForUrl
   },
 }
+
+
 
 export default connectRoutes(routes, options);

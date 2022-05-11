@@ -19,6 +19,7 @@ const { REACT_APP_FEATURE_MARINE } = process.env;
 const categories = Object.keys(SORT_GROUPS_SLUGS);
 const RankingChart = ({
   data,
+  coastal,
   className,
   countryISO,
   handleFilterSelection,
@@ -99,6 +100,7 @@ const RankingChart = ({
             <span className={styles.chartTitle}>Show</span>
             <div className={styles.landMarineDropdownWrapper}>
               <Dropdown
+                disabled={!coastal}
                 width="full"
                 parentWidth="130px"
                 options={landMarineOptions}

@@ -13,8 +13,10 @@ import useWindowSize from 'hooks/use-window-size';
 import ExpandedInfo from './expanded-info';
 import styles from './species-modal-styles.module.scss';
 import capitalize from 'lodash/capitalize';
-import { VERTEBRATE_TABS, SPECIES_GROUP_STYLE_CLASS_DICTIONARY } from './species-modal-constants';
-
+import {
+  VERTEBRATE_TABS,
+  SPECIES_GROUP_STYLE_CLASS_DICTIONARY,
+} from './species-modal-constants';
 
 const SpeciesModalComponent = ({
   handleModalClose,
@@ -26,7 +28,7 @@ const SpeciesModalComponent = ({
   handleVertebrateChange,
   speciesList,
   searchTerm,
-  vertebrateType
+  vertebrateType,
 }) => {
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
@@ -43,19 +45,20 @@ const SpeciesModalComponent = ({
     setExpandedRow(index === expandedRow ? null : index);
   };
 
-
   const renderRow = (index) => {
-    const {
-      species,
-      speciesgroup,
-      NSPS,
-      percentprotected,
-      stewardship
-    } = speciesList[index];
+    const { species, speciesgroup, NSPS, percentprotected, stewardship } =
+      speciesList[index];
     const isOpened = expandedRow === index;
     return (
       <div className={styles.tableRowContainer}>
-        <div className={cx(styles.groupColor, styles[SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup])} />
+        <div
+          className={cx(
+            styles.groupColor,
+            styles[
+              SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup
+            ]
+          )}
+        />
         <div className={styles.tableRow}>
           <button
             className={styles.expandButton}
@@ -65,19 +68,21 @@ const SpeciesModalComponent = ({
               className={cx(styles.mainInfo, { [styles.isOpened]: isOpened })}
             >
               <div className={styles.tableItem}>{capitalize(speciesgroup)}</div>
-              <div className={cx(styles.tableItem, styles.bold, styles.italic)}>{species}</div>
+              <div className={cx(styles.tableItem, styles.bold, styles.italic)}>
+                {species}
+              </div>
               <div className={styles.tableItem}>{percentprotected}</div>
               <div className={styles.tableItem}>{NSPS}</div>
               <div
                 className={cx(styles.tableItem, {
-                  [styles.bold]: stewardship === 1
+                  [styles.bold]: stewardship === 1,
                 })}
               >
                 {stewardship === 1 ? 'Endemic' : `${stewardship} countries`}
               </div>
               <ArrowIcon
                 className={cx(styles.arrowIcon, {
-                  [styles.isOpened]: isOpened
+                  [styles.isOpened]: isOpened,
                 })}
               />
             </div>
@@ -97,18 +102,27 @@ const SpeciesModalComponent = ({
     'Species',
     'Range within country protected',
     'Species protection score',
-    'Stewardship'
+    'Stewardship',
   ];
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
   const summaryText = useMemo(() => {
-    const speciesNumber = countryData[vertebrateType === VERTEBRATE_TABS[0].slug ? 'landSpeciesTotal' : 'marineSpeciesTotal'];
+    const speciesNumber =
+      countryData[
+        vertebrateType === VERTEBRATE_TABS[0].slug
+          ? 'landSpeciesTotal'
+          : 'marineSpeciesTotal'
+      ];
 
     // the list has been filtered
     if (speciesList.length < speciesNumber) {
-      return `${speciesList.length} of ${speciesNumber} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'} vertebrate species`
+      return `${speciesList.length} of ${speciesNumber} ${
+        vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
+      } vertebrate species`;
     }
-    return `${speciesNumber} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'} vertebrate species`;
+    return `${speciesNumber} ${
+      vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
+    } vertebrate species`;
   }, [countryData, vertebrateType, speciesList]);
 
   const renderSpeciesModal = (
@@ -127,8 +141,9 @@ const SpeciesModalComponent = ({
             />
           </div>
           <div className={styles.summary}>
-            {process.env.REACT_APP_FEATURE_MARINE === "true" && (
+            {process.env.REACT_APP_FEATURE_MARINE === 'true' && (
               <Tabs
+                disabled={!countryData.coastal}
                 tabs={VERTEBRATE_TABS}
                 onClick={handleVertebrateChange}
                 className={styles.speciesTab}
@@ -144,7 +159,10 @@ const SpeciesModalComponent = ({
               {headers.map((title) => (
                 <HeaderItem
                   title={title}
-                  theme={{ headerItem: styles.tableHeaderItem, arrowUp: styles.arrowUp }}
+                  theme={{
+                    headerItem: styles.tableHeaderItem,
+                    arrowUp: styles.arrowUp,
+                  }}
                   key={title}
                   isSortSelected={
                     sortCategory &&

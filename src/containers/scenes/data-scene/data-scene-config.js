@@ -29,7 +29,7 @@ export default {
       atmosphereEnabled: false,
       background: {
         type: "color",
-        color: [0,10,16]
+        color: [0, 10, 16]
       },
       alphaCompositingEnabled: true
     },

@@ -1,5 +1,5 @@
-import React from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import React from 'react';
+import { PieChart, Pie, Cell } from 'recharts';
 
 const DonutChart = ({
   chartXPosition,
@@ -13,22 +13,20 @@ const DonutChart = ({
   legendValue,
   legendText,
   outerRadius,
-  width
+  width,
 }) => {
   return (
     <PieChart width={width} height={height}>
       {/* Background pie added to avoid corner radius on total value */}
       <Pie
-        data={[
-          { name: "Rest", value: 100 }
-        ]}
+        data={[{ name: 'Rest', value: 100 }]}
         cx={chartXPosition}
         cy={chartYPosition}
         innerRadius={innerRadius}
         outerRadius={outerRadius}
         stroke="none"
       >
-        <Cell fill={"#E9E9E9"} />
+        <Cell fill={'#E9E9E9'} />
       </Pie>
       <Pie
         data={data}
@@ -39,15 +37,15 @@ const DonutChart = ({
         stroke="none"
         dataKey="value"
         cornerRadius={10}
+        startAngle={90}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
         ))}
-
       </Pie>
 
       <text
-        font-family='ivypresto-display'
+        font-family="ivypresto-display"
         font-size="32"
         font-weight={400}
         x={legendXPosition}
@@ -58,7 +56,7 @@ const DonutChart = ({
         {legendValue && legendValue.toFixed()}
       </text>
       <text
-        font-family='Inter'
+        font-family="Inter"
         font-size="12"
         font-weight={300}
         x={legendXPosition}
@@ -68,10 +66,8 @@ const DonutChart = ({
       >
         {legendText}
       </text>
-
-    </PieChart >
+    </PieChart>
   );
-}
-
+};
 
 export default DonutChart;

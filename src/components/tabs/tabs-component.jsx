@@ -18,6 +18,7 @@ const getSelectedTabIndex = (tabs, defaultTabSlug) => {
 const Tabs = ({
   tabs,
   onClick,
+  disabled,
   defaultTabSlug,
   className,
   onboardingType,
@@ -48,7 +49,9 @@ const Tabs = ({
                     tabButtonsRef.current[tabSlug] = ref;
                   }
                 }}
-                className={cx(styles.tab, onboardingClassname)}
+                className={cx(styles.tab, onboardingClassname, {
+                  [styles.disabled]: disabled,
+                })}
                 role="tab"
                 aria-selected={slug === defaultTabSlug}
                 {...onboardingOverlay}
@@ -95,7 +98,7 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
   tabs: [],
-  onClick: () => { },
+  onClick: () => {},
 };
 
 export default Tabs;

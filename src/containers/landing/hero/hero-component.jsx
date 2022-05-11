@@ -25,7 +25,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           duration: 0.5,
         }}
       >
-        Welcome to HALF EARTH MAP
+        Welcome to the Half-Earth Project® Map
       </motion.h3>
 
       <motion.h1

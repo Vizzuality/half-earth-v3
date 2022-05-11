@@ -4,6 +4,9 @@ import { Loading } from 'he-components';
 
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
+import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
@@ -37,6 +40,7 @@ const NationalReportSidebarComponent = ({
   countryName,
   openedModal,
   handleTabSelection,
+  handlePrintReport,
   isFullscreenActive,
   localSceneActiveTab,
   handleClose,
@@ -86,13 +90,32 @@ const NationalReportSidebarComponent = ({
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
         <span className={styles.nrcTitle}>National report card of</span>
-        <div className={styles.flagWrapper}>
-          <img
-            className={styles.flag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-            alt=""
-          />
-          {countryName && <p className={styles.countryName}>{countryName}</p>}
+        <div className={styles.cardHeader}>
+          <div className={styles.flagWrapper}>
+            <img
+              className={styles.flag}
+              src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+              alt=""
+            />
+            {countryName && <p className={styles.countryName}>{countryName}</p>}
+          </div>
+          <div className={styles.actionButtons}>
+            <Button
+              type="icon-square"
+              Icon={ShareIcon}
+              className={styles.actionButton}
+              handleClick={setShareModalOpen}
+              tooltipText="Share the URL to this view"
+            />
+            {localSceneActiveTab === 'overview' && (
+              <Button
+                type="icon-square"
+                Icon={DownloadIcon}
+                handleClick={handlePrintReport}
+                tooltipText="Download national data report"
+              />
+            )}
+          </div>
         </div>
       </div>
       <Tabs
@@ -129,14 +152,6 @@ const NationalReportSidebarComponent = ({
           {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
             <RankingSidebar countryISO={countryISO} />
           )}
-          <Button
-            type="compound"
-            Icon={ShareIcon}
-            handleClick={setShareModalOpen}
-            className={styles.actionButton}
-            label="share this info"
-            tooltipText="Share the URL to this view"
-          />
           <ShareModal
             isOpen={isShareModalOpen}
             setShareModalOpen={setShareModalOpen}

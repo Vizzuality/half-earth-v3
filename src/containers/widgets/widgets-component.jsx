@@ -27,14 +27,15 @@ const WidgetsComponent = ({
         [uiStyles.onboardingOverlay]: typeof onboardingStep === 'number',
       })}
     >
-      {!hideZoom && onboardingStep === null && (
-        <ZoomWidget
-          map={map}
-          view={view}
-          isNotMapsList={isNotMapsList}
-          hidden={hiddenWidget}
-        />
-      )}
+      {!hideZoom &&
+        (onboardingStep === null || onboardingStep === undefined) && (
+          <ZoomWidget
+            map={map}
+            view={view}
+            isNotMapsList={isNotMapsList}
+            hidden={hiddenWidget}
+          />
+        )}
       {!hideMiniMap && (
         <MinimapWidget
           map={map}

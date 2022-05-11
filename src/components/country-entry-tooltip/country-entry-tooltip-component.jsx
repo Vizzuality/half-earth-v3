@@ -8,6 +8,7 @@ import { ReactComponent as CloseIcon } from 'icons/close.svg';
 // Styles
 import styles from './country-entry-tooltip-styles.module.scss';
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
+import { LAND_MARINE } from 'constants/country-mode-constants';
 
 const CountryEntryTooltipComponent = ({
   view,
@@ -31,6 +32,7 @@ const CountryEntryTooltipComponent = ({
   const [activeTab, setActiveTab] = useState('land');
 
   const {
+    coastal,
     spiLand,
     spiMar,
     landVertebrates,
@@ -96,7 +98,7 @@ const CountryEntryTooltipComponent = ({
     },
   };
 
-  const landTab = activeTab === 'land';
+  const landTab = activeTab === LAND_MARINE.land;
 
   return tooltipPosition && tooltip ? (
     <>
@@ -115,6 +117,7 @@ const CountryEntryTooltipComponent = ({
               {Object.keys(tabsData).map((key) => (
                 <button
                   key={key}
+                  disabled={!coastal}
                   className={cx({
                     [styles.switchDataButton]: true,
                     [styles.switchDataActiveButton]: activeTab === key,
@@ -129,7 +132,10 @@ const CountryEntryTooltipComponent = ({
         </section>
         <CloseIcon
           className={styles.tooltipClose}
-          onClick={handleTooltipClose}
+          onClick={() => {
+            handleTooltipClose();
+            setActiveTab('land');
+          }}
         />
         <section className={styles.spiInfo}>
           {REACT_APP_FEATURE_MARINE && (
@@ -144,7 +150,9 @@ const CountryEntryTooltipComponent = ({
               {landTab ? landVertebrates : marVertebrates}
             </span>
             <span className={styles.text}>
-              {`${landTab ? 'land' : 'marine'} vertebrate species of which`}{' '}
+              {`${
+                landTab ? LAND_MARINE.land : LAND_MARINE.marine
+              } vertebrate species of which`}{' '}
               <span className={styles.endemic}>
                 {landTab ? endemicLand : endemicMar}
               </span>{' '}
@@ -156,7 +164,9 @@ const CountryEntryTooltipComponent = ({
               {landTab ? protectionLand : protectionMar}%
             </span>
             <span className={styles.text}>
-              {`${landTab ? 'land' : 'marine'} is protected`}
+              {`${
+                landTab ? LAND_MARINE.land : LAND_MARINE.marine
+              } is protected`}
             </span>
           </div>
           <div className={styles.infoPill}>
@@ -165,7 +175,7 @@ const CountryEntryTooltipComponent = ({
             </span>
             <span className={styles.text}>
               {`of additional ${
-                landTab ? 'land' : 'marine'
+                landTab ? LAND_MARINE.land : LAND_MARINE.marine
               } protection is needed`}
             </span>
           </div>

@@ -5,6 +5,7 @@ import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-select
 
 import nrcSceneConfig from 'scenes/nrc-scene/nrc-scene-config';
 import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
+import { LAND_MARINE } from 'constants/country-mode-constants';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
@@ -37,7 +38,7 @@ const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSett
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
-export const getLandMarineSelected = createSelector(getUiSettings, uiSettings => uiSettings.landMarineSelection || 'land');
+export const getLandMarineSelected = createSelector(getUiSettings, uiSettings => uiSettings.landMarineSelection || LAND_MARINE.land);
 const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
 export const getOnboardingType = createSelector(getUiSettings, uiSettings => uiSettings.onboardingType);
 export const getOnboardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onboardingStep);
