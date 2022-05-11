@@ -3,9 +3,6 @@ import React from 'react';
 import CountryDataCard from './country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
-import Button from 'components/button';
-import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import styles from './styles.module.scss';
 
 const OverviewSidebarComponent = ({
   map,
@@ -35,7 +32,6 @@ const OverviewSidebarComponent = ({
   speciesChartData,
   currentProtection,
   amphibiansEndemic,
-  handlePrintReport,
   countryDescription,
   countryDataLoading,
   priorityAreasSentence,
@@ -65,7 +61,6 @@ const OverviewSidebarComponent = ({
         countryData={countryData}
         countryName={countryName}
         hasPriority={hasPriority}
-        countryData={countryData}
         priorityAreasSentence={priorityAreasSentence}
         map={map}
         activeLayers={activeLayers}
@@ -92,14 +87,6 @@ const OverviewSidebarComponent = ({
         endemicVertebratesSentence={endemicVertebratesSentence}
         highlightedSpeciesSentence={highlightedSpeciesSentence}
         highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
-      />
-      <Button
-        type="compound"
-        Icon={DownloadIcon}
-        handleClick={handlePrintReport}
-        className={styles.actionButton}
-        label="download this info (pdf)"
-        tooltipText="Download national data report"
       />
     </>
   );
