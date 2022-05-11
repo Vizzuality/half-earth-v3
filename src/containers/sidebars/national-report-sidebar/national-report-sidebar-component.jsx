@@ -8,8 +8,6 @@ import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
-import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
-
 import Tabs from 'components/tabs';
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
