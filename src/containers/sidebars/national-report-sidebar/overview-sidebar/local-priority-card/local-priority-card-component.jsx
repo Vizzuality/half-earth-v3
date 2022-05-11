@@ -39,9 +39,7 @@ const LocalPriorityCardComponent = (props) => {
     countryData,
   } = props;
 
-  const {
-    Marine,
-  } = countryData;
+  const { Marine } = countryData;
 
   const coastal = Marine === 'True' ? true : false;
 
@@ -207,18 +205,16 @@ const LocalPriorityCardComponent = (props) => {
           description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
-        <div className={styles.toggleContainer}>
-          <LayerToggle
-            map={map}
-            type="checkbox"
-            option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
-            variant="dark"
-            key={HALF_EARTH_FUTURE_TILE_LAYER}
-            activeLayers={activeLayers}
-            onChange={handleLayerToggle}
-            themeCategorySlug={FUTURE_PLACES_SLUG}
-          />
-        </div>
+        <LayerToggle
+          map={map}
+          type="checkbox"
+          option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}
+          variant="dark"
+          key={HALF_EARTH_FUTURE_TILE_LAYER}
+          activeLayers={activeLayers}
+          onChange={handleLayerToggle}
+          themeCategorySlug={FUTURE_PLACES_SLUG}
+        />
       </SidebarCardWrapper>
     </div>
   );
