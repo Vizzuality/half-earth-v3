@@ -240,9 +240,9 @@ const CountryDataCardComponent = ({
         </div>
         <div className={styles.hint}>
           <BulbIcon />
-          <p className={styles.hintTitle}>Why only land vertebrates?</p>
+          <p className={styles.hintTitle}>Why only land and marine vertebrates?</p>
           <p className={styles.hintText}>
-            Terrestrial vertebrates represent the species groups with the most
+            Terrestrial and marine vertebrates vertebrates represent the species groups with the most
             comprehensive coverage of distribution data. The Half-Earth Project
             is actively engaging in research to expand coverage of other
             taxonomic groups.
