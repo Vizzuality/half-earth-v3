@@ -42,7 +42,7 @@ const DonutChart = ({
         dataKey="value"
         cornerRadius={10}
         startAngle={90}
-        isAnimationActive={false}
+        endAngle={-90}
       >
 
         {data.map((entry, index) => (
