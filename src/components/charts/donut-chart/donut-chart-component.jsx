@@ -15,6 +15,7 @@ const DonutChart = ({
   outerRadius,
   width
 }) => {
+
   return (
     <PieChart width={width} height={height}>
       {/* Background pie added to avoid corner radius on total value */}
@@ -27,6 +28,7 @@ const DonutChart = ({
         innerRadius={innerRadius}
         outerRadius={outerRadius}
         stroke="none"
+        isAnimationActive={false}
       >
         <Cell fill={"#E9E9E9"} />
       </Pie>
@@ -40,13 +42,14 @@ const DonutChart = ({
         dataKey="value"
         cornerRadius={10}
         startAngle={90}
+        endAngle={-90}
       >
+
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
         ))}
 
       </Pie>
-
       <text
         font-family='ivypresto-display'
         font-size="32"
@@ -69,8 +72,7 @@ const DonutChart = ({
       >
         {legendText}
       </text>
-
-    </PieChart >
+    </PieChart>
   );
 }
 
