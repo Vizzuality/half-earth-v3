@@ -35,8 +35,8 @@
 .counter {
   @extend %subtitle;
   position: absolute;
-  top: calc(50% - #{$counter-size/2});
-  right: calc(-#{$counter-size/2});
+  top: calc(50% - #{calc($counter-size/2)});
+  right: calc(-#{calc($counter-size/2)});
   display: flex;
   justify-content: center;
   align-items: center;

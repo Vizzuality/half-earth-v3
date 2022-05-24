@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { Loading, Button } from 'he-components';
+import { Loading } from 'he-components';
 import styles from './expanded-info-styles.module.scss';
-import buttonTheme from 'styles/themes/button-theme.module.scss';
 
 const ExpandedInfo = (props) => {
   const { data, error, speciesName } = props;
   if (error) {
-    return <div>Failed to load</div>
+    return <div>Failed to load</div>;
   }
 
   if (!data || !data[0]) {
@@ -69,6 +68,6 @@ const ExpandedInfo = (props) => {
       </div>
     </div>
   );
-}
+};
 
 export default ExpandedInfo;
