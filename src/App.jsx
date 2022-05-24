@@ -1,6 +1,7 @@
 import loadable from '@loadable/component';
 import 'he-components/dist/main.css';
 import React, { Component } from 'react';
+import { tx } from '@transifex/native';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 
@@ -16,6 +17,7 @@ const AreaOfInterest = loadable(() => import('pages/aoi'));
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],
 });
+const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
 
 const AppLayout = (props) => {
   const { route } = props;
@@ -40,6 +42,10 @@ const AppLayout = (props) => {
 
 class App extends Component {
   render() {
+    tx.init({
+      token: REACT_APP_TRANSIFEX_TOKEN,
+    });
+
     return (
       <div
         className="App"

@@ -6,6 +6,7 @@ import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import React from 'react';
 import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
+import { T } from '@transifex/react';
 // Components
 import AudioCard from './audio-card';
 // Constants
@@ -25,7 +26,7 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           duration: 0.5,
         }}
       >
-        Welcome to the Half-Earth Project® Map
+        <T _str="Welcome to the Half-Earth Project® Map" />
       </motion.h3>
 
       <motion.h1

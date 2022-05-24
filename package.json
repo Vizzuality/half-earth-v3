@@ -7,6 +7,9 @@
     "@esri/arcgis-rest-request": "^3.4.3",
     "@loadable/component": "^5.10.1",
     "@tippyjs/react": "^4.2.5",
+    "@transifex/cli": "^4.1.0",
+    "@transifex/native": "^4.1.0",
+    "@transifex/react": "^4.1.0",
     "airtable": "^0.8.1",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
@@ -61,10 +64,12 @@
     "start": "react-app-rewired start",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "build-service-worker": "node ./src/service-worker-build.js",
-    "build": "react-app-rewired build && npm run build-service-worker && npm run clean-cra-sw",
+    "build": "react-app-rewired build && npm run build-service-worker && npm run clean-cra-sw && npm run transifex:push",
     "cypress:open": "cypress open",
     "docs:serve": "bundle exec jekyll serve",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "transifex:push": "dotenv cross-var ./node_modules/.bin/txjs-cli push src/ --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
+    "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%"
   },
   "eslintConfig": {
     "extends": "react-app"
