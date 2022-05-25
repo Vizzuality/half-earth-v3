@@ -131,12 +131,8 @@ const CountryDataCardComponent = ({
                       {`${prop_protected_ter && prop_protected_ter.toFixed()}%`}
                       ),
                     </b>
-                    the{' '}
-                    <b>
-                      total of ({nspecies_ter})
-                    </b>{' '}
-                    and the amount of which of these are{' '}
-                    <b>endemic ({total_endemic_ter}).</b>
+                    the <b>total of ({nspecies_ter})</b> and the amount of which
+                    of these are <b>endemic ({total_endemic_ter}).</b>
                   </p>
                 </div>
               </div>
@@ -145,32 +141,39 @@ const CountryDataCardComponent = ({
                   <DonutChart
                     chartXPosition={48}
                     chartYPosition={60}
-                    colors={["#FFC01C", "#E9E9E9"]}
+                    colors={['#FFC01C', '#E9E9E9']}
                     data={[
-                      { name: "SPI Marine", value: SPI_mar },
-                      { name: "Rest", value: 100 - SPI_mar }
+                      { name: 'SPI Marine', value: SPI_mar },
+                      { name: 'Rest', value: 100 - SPI_mar },
                     ]}
                     height={130}
                     innerRadius={'80%'}
                     legendXPosition={53}
                     legendYPosition={58}
                     legendValue={SPI_mar}
-                    legendText='MARINE SPI'
+                    legendText="MARINE SPI"
                     outerRadius={'95%'}
                     width={120}
                   />
                   <div>
                     <p className={styles.legendText}>
-                      The Marine SPI is based on the  <b>protected marine areas ({`${prop_protected_mar && prop_protected_mar.toFixed()}%`}),</b>
-                      the <b>total of and fishes ({nspecies_mar})</b> species and the
-                      amount of which of these are <b>endemic ({total_endemic_mar}).</b>
+                      The Marine SPI is based on the{' '}
+                      <b>
+                        protected marine areas (
+                        {`${
+                          prop_protected_mar && prop_protected_mar.toFixed()
+                        }%`}
+                        ),
+                      </b>
+                      the <b>total of and fishes ({nspecies_mar})</b> species
+                      and the amount of which of these are{' '}
+                      <b>endemic ({total_endemic_mar}).</b>
                     </p>
                   </div>
                 </div>
               )}
-
               <div className={styles.switchAreaChart}>
-                <p className={styles.switchAreaChartText}>Evolution of SPI</p>
+                <p className={styles.switchAreaChartText}>Trend of SPI</p>
                 <div>
                   {Object.keys(tabsData).map((key) => (
                     <button
@@ -240,19 +243,21 @@ const CountryDataCardComponent = ({
         </div>
         <div className={styles.hint}>
           <BulbIcon />
-          <p className={styles.hintTitle}>Why only land and marine vertebrates?</p>
+          <p className={styles.hintTitle}>
+            Why only land and marine vertebrates?
+          </p>
           <p className={styles.hintText}>
-            Terrestrial and marine vertebrates vertebrates represent the species groups with the most
-            comprehensive coverage of distribution data. The Half-Earth Project
-            is actively engaging in research to expand coverage of other
-            taxonomic groups.
+            Terrestrial and marine vertebrates vertebrates represent the species
+            groups with the most comprehensive coverage of distribution data.
+            The Half-Earth Project is actively engaging in research to expand
+            coverage of other taxonomic groups.
           </p>
         </div>
-      </section >
+      </section>
       <section className={styles.descriptionWrapper}>
         <p>{`${countryDescription}`}</p>
       </section>
-    </div >
+    </div>
   );
 };
 
