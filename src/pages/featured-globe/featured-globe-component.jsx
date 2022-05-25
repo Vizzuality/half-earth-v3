@@ -19,7 +19,6 @@ import MainMenu from 'components/main-menu';
 
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import FeaturedMapsList from 'containers/sidebars/featured-maps-list';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 
@@ -176,15 +175,6 @@ const DataGlobeComponent = ({
           />
         )}
       </Scene>
-      <FeaturedMapsList
-        selectedSidebar={selectedSidebar}
-        selectedFeaturedMap={selectedFeaturedMap}
-        selectedFeaturedPlace={selectedFeaturedPlace}
-        isFullscreenActive={isFullscreenActive}
-        activeOption={activeOption}
-        isLandscapeMode={isLandscapeMode}
-        handle={spinGlobeHandle}
-      />
       {hasMetadata && <InfoModal />}
     </>
   );

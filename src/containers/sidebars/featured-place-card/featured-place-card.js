@@ -47,10 +47,6 @@ const FeaturedPlaceCardContainer = props => {
     }
   }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa])
 
-  const handleAllMapsClick = () => {
-    view.goTo({ tilt: 0, zoom: 1 });
-    changeUI({ selectedFeaturedPlace: null });
-  }
   const handleNextPlaceClick = place => {
     const index = featuredPlacesList.indexOf(place);
     const nextPlaceIndex = (index + 1) < featuredPlacesList.length ? index + 1 : 0;
@@ -79,7 +75,6 @@ const FeaturedPlaceCardContainer = props => {
       featuredMap={featuredMap}
       featuredPlace={featuredPlace}
       featuredPlacesList={featuredPlacesList}
-      handleAllMapsClick={handleAllMapsClick}
       handleNextPlaceClick={handleNextPlaceClick}
       handlePrevPlaceClick={handlePrevPlaceClick}
       handleLandscapeTrigger={handleLandscapeTrigger}

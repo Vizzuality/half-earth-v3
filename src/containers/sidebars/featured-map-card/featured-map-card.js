@@ -13,13 +13,11 @@ const FeaturedMapCardContainer = props => {
   useEffect(() => {
     setFeaturedMapPlaces(selectedFeaturedMap)
   }, [selectedFeaturedMap])
-  
+
   const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
-  const handleAllMapsClick = () => props.changeUI({ selectedSidebar: 'featuredMapsList' });
   return (
     <Component
       featuredMap={featuredMap}
-      handleAllMapsClick={handleAllMapsClick}
       {...props }
     />
   )
