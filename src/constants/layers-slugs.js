@@ -126,6 +126,12 @@ export const CONIFERS_RICHNESS = 'conifers-rich';
 export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
+
+export const ANTS_RICHNESS = 'ants-richness';
+export const BUTTERFLIES_RICHNESS = 'butterflies-richness';
+export const ODONATES_RICHNESS = 'odonates-richness';
+export const SAPINDALES_RICHNESS = 'sapindales-richness';
+
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';

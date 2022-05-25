@@ -27,6 +27,10 @@ import {
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
   REPTILES_RICHNESS,
+  ANTS_RICHNESS,
+  BUTTERFLIES_RICHNESS,
+  ODONATES_RICHNESS,
+  SAPINDALES_RICHNESS,
   REPTILES_RARITY,
   BIRDS_RARITY,
   BIRDS_RICHNESS,
@@ -192,6 +196,22 @@ export default {
   [REPTILES_RICHNESS]: {
     slug: REPTILES_RICHNESS,
     title: 'Reptile richness'
+  },
+  [ANTS_RICHNESS]: {
+    slug: ANTS_RICHNESS,
+    title: 'Ants richness'
+  },
+  [BUTTERFLIES_RICHNESS]: {
+    slug: BUTTERFLIES_RICHNESS,
+    title: 'Butterflies richness'
+  },
+  [ODONATES_RICHNESS]: {
+    slug: ODONATES_RICHNESS,
+    title: 'Odonates richness'
+  },
+  [SAPINDALES_RICHNESS]: {
+    slug: SAPINDALES_RICHNESS,
+    title: 'Sapindales richness'
   },
   [REPTILES_RARITY]: {
     slug: REPTILES_RARITY,
