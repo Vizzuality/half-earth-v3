@@ -40,7 +40,7 @@ export default {
     onboardingType: null,
     onboardingStep: 0,
     selectedSidebar: 'featuredMapCard',
-    selectedFeaturedMap: 'priorPlaces',
+    selectedFeaturedMap: 'bestPlaces',
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false,

@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
-import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
 import { useMobile } from 'constants/responsive';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
-import Button from 'components/button';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 import styles from './featured-place-card-styles.module';
@@ -16,11 +14,10 @@ const FeaturedPlaceCardComponent = ({
   isFullscreenActive,
   featuredMap,
   featuredPlace,
-  handleAllMapsClick,
   handleNextPlaceClick,
   handlePrevPlaceClick,
   activeOption,
-  hotspotsNumbers
+  hotspotsNumbers,
 }) => {
   const isOnMobile = useMobile();
   const isOnScreen =
@@ -50,13 +47,6 @@ const FeaturedPlaceCardComponent = ({
         )}
       >
         <section className={styles.cardGrid}>
-          <Button
-            type="rounded"
-            handleClick={handleAllMapsClick}
-            Icon={CloseIcon}
-            className={styles.backButton}
-            tooltipText="Go back to all maps"
-          />
           <div className={styles.breadcrumb}>
             {hotspotsNumbers &&
               `${hotspotsNumbers.position} / ${hotspotsNumbers.size} Hotspots`}
