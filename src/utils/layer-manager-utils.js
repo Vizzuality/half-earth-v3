@@ -119,8 +119,9 @@ export const bringLayerToBack = (layerTitle, map) => {
 export const createLayer = layerConfig => {
   const { url, slug, type, opacity, renderer } = layerConfig;
   const layerType = type || 'WebTileLayer';
+
   return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
-    const newLAyer = new layer({
+    const newLayer = new layer({
       url: url,
       urlTemplate: url,
       title: slug,
@@ -129,9 +130,9 @@ export const createLayer = layerConfig => {
       opacity: opacity || DEFAULT_OPACITY
     })
 
-    if (renderer) { newLAyer.renderer = renderer }
+    if (renderer) { newLayer.renderer = renderer }
 
-    return newLAyer
+    return newLayer
   });
 }
 export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) => {
@@ -141,21 +142,34 @@ export const addLayerToMap = (mapLayer, map) => new Promise((resolve, reject) =>
 export const findLayerInMap = (layerTitle, map) => map.layers.items.find(l => l.title === layerTitle);
 export const isLayerInMap = (layerConfig, map) => map.layers.items.some(l => l.title === layerConfig.slug);
 
+const createAndAddLayer = async (layerConfig, map) => {
+  const isUrlArray = Array.isArray(layerConfig.url);
+
+  if (isUrlArray) {
+    const promises = layerConfig.url.map((url) => createLayer({ ...layerConfig, url }, map));
+    const newLayers = await Promise.all(promises);
+    newLayers.forEach(newLayer => {
+      addLayerToMap(newLayer, map);
+    });
+  } else {
+    const newLayer = await createLayer(layerConfig, map);
+    addLayerToMap(newLayer, map);
+  }
+}
+
 export const activateLayersOnLoad = (map, activeLayers, config) => {
   const activeLayerIDs = activeLayers.map(({ title }) => title);
   activeLayerIDs.forEach(async layerName => {
     const layerConfig = config[layerName];
     if (layerConfig) {
-      const newLayer = await createLayer(layerConfig, map);
-      addLayerToMap(newLayer, map);
+      createAndAddLayer(layerConfig, map);
     }
   });
 }
 
 const handleLayerCreation = async (layerConfig, map) => {
   if (layerConfig && !isLayerInMap(layerConfig, map)) {
-    const newLayer = await createLayer(layerConfig);
-    addLayerToMap(newLayer, map).then(layer => layer);
+    createAndAddLayer(layerConfig, map);
   }
 }
 

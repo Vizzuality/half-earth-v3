@@ -13,6 +13,7 @@ import {
   GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   HALF_EARTH_FUTURE_WDPA_LAYER,
+  SPECIFIC_REGIONS_WDPA_LAYER,
 } from 'constants/layers-slugs';
 import {
   AREA_TYPES
@@ -85,6 +86,9 @@ const Container = (props) => {
       case [AREA_TYPES.futurePlaces]:
         urlValue = LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER];
         break;
+      case [AREA_TYPES.specificRegions]:
+        urlValue = LAYERS_URLS[SPECIFIC_REGIONS_WDPA_LAYER];
+        break;
       default:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
     }
@@ -102,6 +106,26 @@ const Container = (props) => {
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
         whereClause: `places = '${contextualData.cluster}'`,
+        returnGeometry: false
+      }).then((results) => {
+        if (results) {
+          const tempData = results.map((f) => f.attributes);
+          tempData.sort(sortFunction);
+          setData(tempData);
+          setFilteredData([...tempData]);
+        } else {
+          setData([]);
+          setFilteredData([]);
+        }
+        setLoading(false);
+      });
+    }
+    else if (areaTypeSelected === AREA_TYPES.specificRegions) {
+      // --------------- SPECIFIC REGIONS SPECIAL CASE --------------
+      const region = contextualData.aoiId && contextualData.aoiId.replace('region-', '');
+      EsriFeatureService.getFeatures({
+        url: LAYERS_URLS[SPECIFIC_REGIONS_WDPA_LAYER],
+        whereClause: `region = '${region}'`,
         returnGeometry: false
       }).then((results) => {
         if (results) {
@@ -134,7 +158,7 @@ const Container = (props) => {
     // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
         url: urlValue,
-        whereClause: `MOL_IDg = '${aoiId}'`,
+        whereClause: `MOL_ID = '${aoiId}'`,
         returnGeometry: false
       }).then((features) => {
         if (features) {

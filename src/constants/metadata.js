@@ -46,6 +46,7 @@ import {
   MERGED_LAND_HUMAN_PRESSURES,
   HALF_EARTH_FUTURE_METADATA_SLUG,
   HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
   TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER
  } from 'constants/layers-slugs';
@@ -268,5 +269,9 @@ export default {
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     slug: HALF_EARTH_FUTURE_METADATA_SLUG,
     title: 'Places for a Half-Earth Future'
-  }
+  },
+  [SPECIFIC_REGIONS_TILE_LAYER]: {
+    slug: SPECIFIC_REGIONS_TILE_LAYER,
+    title: 'Specific regions'
+  },
 };

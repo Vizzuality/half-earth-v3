@@ -3,7 +3,8 @@ import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   GLOBAL_SPI_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
-  HALF_EARTH_FUTURE_TILE_LAYER
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER
   } from 'constants/layers-slugs';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
@@ -43,5 +44,12 @@ export const SEARCH_SOURCES_CONFIG = {
     outFields: ["*"],
     searchFields: ["MOL_ID", "NAME_0"],
     suggestionTemplate: 'Priority area {MOL_ID}, {NAME_0}'
+  },
+  [SPECIFIC_REGIONS_TILE_LAYER]: {
+    url: LAYERS_URLS[SPECIFIC_REGIONS_TILE_LAYER],
+    title: SPECIFIC_REGIONS_TILE_LAYER,
+    outFields: ["*"],
+    searchFields: ["NAME"],
+    suggestionTemplate: '{NAME}'
   },
 }
