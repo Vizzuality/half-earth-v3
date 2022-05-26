@@ -18,6 +18,10 @@ export const HALF_EARTH_FUTURE_TILE_LAYER = 'WDPA_20_vector_tile_places';
 export const HALF_EARTH_FUTURE_WDPA_LAYER = 'WDPA_20_feature_places';
 export const HALF_EARTH_FUTURE_METADATA_SLUG = 'places-future';
 
+// Specific regions layers
+export const SPECIFIC_REGIONS_TILE_LAYER = 'specific-regions-tile';
+export const SPECIFIC_REGIONS_WDPA_LAYER = 'specific-regions-wdpa-tile';
+
 // Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
@@ -126,6 +130,12 @@ export const CONIFERS_RICHNESS = 'conifers-rich';
 export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
+
+export const ANTS_RICHNESS = 'ants-richness';
+export const BUTTERFLIES_RICHNESS = 'butterflies-richness';
+export const ODONATES_RICHNESS = 'odonates-richness';
+export const SAPINDALES_RICHNESS = 'sapindales-richness';
+
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';

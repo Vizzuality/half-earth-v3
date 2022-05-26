@@ -17,7 +17,6 @@ const actions = { ...urlActions, ...mapTooltipActions };
 const FeatureHighlightLayerContainer = (props) => {
   const { view, featureLayerSlugs, onFeatureClick } = props;
 
-
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
   const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] = useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);

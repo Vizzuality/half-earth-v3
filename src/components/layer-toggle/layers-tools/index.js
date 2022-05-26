@@ -10,13 +10,15 @@ const Container = (props) => {
 
   useEffect(() => {
     const layer = activeLayers.find(layer => layer.title === option.value);
-    setInitialOpacityValue(parseFloat(layer.opacity))
+    if (layer) {
+      setInitialOpacityValue(parseFloat(layer.opacity))
+    }
   }, [])
   return (
-    <Component 
+    <Component
       initialOpacityValue={initialOpacityValue}
       {...props}
-    /> 
+    />
   )
 }
 

@@ -3,7 +3,8 @@ import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   GLOBAL_SPI_FEATURE_LAYER,
-  HALF_EARTH_FUTURE_TILE_LAYER
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER
 } from 'constants/layers-slugs';
 
 
@@ -34,6 +35,12 @@ const MAP_TOOLTIP_CONFIG = {
   },
   [HALF_EARTH_FUTURE_TILE_LAYER] : {
     title: 'cluster', // Overriten on function
+    subtitle: 'NAME_0',
+    buttonText: 'analyze area',
+    id: 'MOL_ID' // Overriten on function
+  },
+  [SPECIFIC_REGIONS_TILE_LAYER] : {
+    title: 'NAME',
     subtitle: 'NAME_0',
     buttonText: 'analyze area',
     id: 'MOL_ID' // Overriten on function

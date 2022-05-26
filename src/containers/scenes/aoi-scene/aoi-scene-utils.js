@@ -6,7 +6,7 @@ import {
   getPrecalculatedContextualData,
   setPrecalculatedSpeciesData,
 } from 'utils/geo-processing-services';
-import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs.js';
+import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs.js';
 import localforage from 'localforage';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
@@ -42,25 +42,49 @@ const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTa
   });
 }
 
+// PRECALCULATED SPECIFIC REGIONS
+const setSpecificRegion = ({ aoiId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData }) => {
+  setSpeciesData({ species: [] }); // First reset species data
+  changeGlobe({ areaType: AREA_TYPES.specificRegions })
+  const region = aoiId.replace('region-', '');
+
+  EsriFeatureService.getFeatures({
+    url: LAYERS_URLS[SPECIFIC_REGIONS_TILE_LAYER],
+    whereClause: `region = '${region}'`,
+    returnGeometry: true
+  }).then((results) => {
+    const { attributes, geometry } = results[0];
+    const { NAME } = attributes;
+    setPrecalculatedSpeciesData(attributes, setTaxaData);
+    setGeometry(geometry);
+    setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName: NAME, aoiId }, null, true, true, NAME))
+  });
+}
+
 // PRECALCULATED AOIs
 export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe }) => {
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
     return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe });
   }
 
+  if (areaTypeSelected === AREA_TYPES.specificRegions || precalculatedLayerSlug === SPECIFIC_REGIONS_TILE_LAYER) {
+    return setSpecificRegion({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe });
+  }
+
+  // WDPA have an url array instead of a single url
+  const url = Array.isArray(LAYERS_URLS[precalculatedLayerSlug]) ? LAYERS_URLS[precalculatedLayerSlug][0] : LAYERS_URLS[precalculatedLayerSlug];
+
   EsriFeatureService.getFeatures({
-    url: LAYERS_URLS[precalculatedLayerSlug],
+    url,
     whereClause: `MOL_ID = '${aoiId}'`,
     returnGeometry: true
   }).then((features) => {
     const { geometry, attributes } = features[0];
     setGeometry(geometry);
-
     const setProtectedAreasType = () => {
       // Special case for WDPA areas
       // call to WDPA_OECM_FEATURE_DATA_LAYER with MOL_ID as parameter
 
-      // TODO: Can we get also the geometry from the WDPA_OECM_FEATURE_DATA_LAYER layer?
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
         whereClause: `MOL_ID = '${aoiId}'`,

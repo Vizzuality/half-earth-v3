@@ -27,6 +27,10 @@ import {
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
   REPTILES_RICHNESS,
+  ANTS_RICHNESS,
+  BUTTERFLIES_RICHNESS,
+  ODONATES_RICHNESS,
+  SAPINDALES_RICHNESS,
   REPTILES_RARITY,
   BIRDS_RARITY,
   BIRDS_RICHNESS,
@@ -42,6 +46,7 @@ import {
   MERGED_LAND_HUMAN_PRESSURES,
   HALF_EARTH_FUTURE_METADATA_SLUG,
   HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
   TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER
  } from 'constants/layers-slugs';
@@ -193,6 +198,22 @@ export default {
     slug: REPTILES_RICHNESS,
     title: 'Reptile richness'
   },
+  [ANTS_RICHNESS]: {
+    slug: ANTS_RICHNESS,
+    title: 'Ants richness'
+  },
+  [BUTTERFLIES_RICHNESS]: {
+    slug: BUTTERFLIES_RICHNESS,
+    title: 'Butterflies richness'
+  },
+  [ODONATES_RICHNESS]: {
+    slug: ODONATES_RICHNESS,
+    title: 'Odonates richness'
+  },
+  [SAPINDALES_RICHNESS]: {
+    slug: SAPINDALES_RICHNESS,
+    title: 'Sapindales richness'
+  },
   [REPTILES_RARITY]: {
     slug: REPTILES_RARITY,
     title: 'Reptile rarity'
@@ -248,5 +269,9 @@ export default {
   [HALF_EARTH_FUTURE_TILE_LAYER]: {
     slug: HALF_EARTH_FUTURE_METADATA_SLUG,
     title: 'Places for a Half-Earth Future'
-  }
+  },
+  [SPECIFIC_REGIONS_TILE_LAYER]: {
+    slug: SPECIFIC_REGIONS_TILE_LAYER,
+    title: 'Specific regions'
+  },
 };

@@ -3,7 +3,7 @@
 @import 'styles/typography-extends';
 
 .soundContainer {
-  align-items: end;
+  align-items: flex-end;
   bottom: 0;
   right: 0;
   display: flex;
@@ -20,7 +20,7 @@
   .scriptBox {
     @extend %bodyText;
 
-    align-items: start;
+    align-items: flex-sstart;
     background-color: $white;
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;

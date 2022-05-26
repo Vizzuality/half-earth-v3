@@ -9,7 +9,7 @@ import urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
@@ -27,12 +27,16 @@ const Container = (props) => {
       const { title, subtitle, buttonText, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
 
-      let futurePlacesId;
-      let futurePlacesTitle;
+      let customId;
+      let customTitle;
       if (selectedAnalysisLayer.slug === HALF_EARTH_FUTURE_TILE_LAYER) {
         // Calculate sha-1 id for future places
-        futurePlacesId = createHashFromGeometry(geometry);
-        futurePlacesTitle = `Priority place ${attributes.cluster}`;
+        customId = createHashFromGeometry(geometry);
+        customTitle = `Priority place ${attributes.cluster}`;
+      }
+      if (selectedAnalysisLayer.slug === SPECIFIC_REGIONS_TILE_LAYER) {
+        // Calculate sha-1 id for specific regions
+        customId = `region-${attributes.region}`;
       }
 
       setBatchTooltipData({
@@ -40,8 +44,8 @@ const Container = (props) => {
         geometry,
         content: {
           buttonText,
-          id: futurePlacesId || attributes[id],
-          title: futurePlacesTitle || attributes[title],
+          id: customId || attributes[id],
+          title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID // Only for feature places
         }

@@ -28,6 +28,10 @@ import {
   BIRDS_PRIORITY,
   BIRDS_RARITY,
   BIRDS_RICHNESS,
+  ANTS_RICHNESS,
+  BUTTERFLIES_RICHNESS,
+  ODONATES_RICHNESS,
+  SAPINDALES_RICHNESS,
   ALL_TAXA_RARITY,
   ALL_TAXA_RICHNESS,
   ALL_TAXA_PRIORITY,
@@ -64,6 +68,7 @@ export const RESOLUTIONS = {
   LOWEST: {label: '~55km2 resolution', slug: 'LOWEST'},
   LOW: {label: '~27km2 resolution', slug: 'LOW'},
   HIGH: {label: '~1km2 resolution', slug: 'HIGH'},
+  COUNTRY: {label: 'Country resolution', slug: 'COUNTRY'},
 }
 
 
@@ -73,7 +78,7 @@ export const LAYERS_RESOLUTION = {
     [MARINE]: [RESOLUTIONS.LOWEST]
   },
   [RICHNESS]: {
-    [TERRESTRIAL]: [RESOLUTIONS.LOW, RESOLUTIONS.HIGH],
+    [TERRESTRIAL]: [RESOLUTIONS.LOW, RESOLUTIONS.HIGH, RESOLUTIONS.COUNTRY],
     [MARINE]: [RESOLUTIONS.LOWEST]
   },
   [RARITY]: {
@@ -214,6 +219,28 @@ export const LAYERS_TOGGLE_CONFIG = {
           value: SA_REPTILES_RICHNESS,
           name: 'reptiles',
           layer: SA_REPTILES_RICHNESS
+        },
+      ],
+      'COUNTRY': [
+        {
+          value: ANTS_RICHNESS,
+          name: 'ants',
+          layer: ANTS_RICHNESS
+        },
+        {
+          value: BUTTERFLIES_RICHNESS,
+          name: 'butterflies',
+          layer: BUTTERFLIES_RICHNESS
+        },
+        {
+          value: ODONATES_RICHNESS,
+          name: 'odonates',
+          layer: ODONATES_RICHNESS
+        },
+        {
+          value: SAPINDALES_RICHNESS,
+          name: 'sapindales',
+          layer: SAPINDALES_RICHNESS
         },
       ]
     },

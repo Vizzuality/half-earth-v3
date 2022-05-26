@@ -21,6 +21,8 @@ import {
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   HALF_EARTH_FUTURE_WDPA_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
+  SPECIFIC_REGIONS_WDPA_LAYER,
   GRID_CELLS_PROTECTED_AREAS_PERCENTAGE,
   GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER,
   GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE,
@@ -77,6 +79,10 @@ import {
   REPTILES_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
+  ANTS_RICHNESS,
+  BUTTERFLIES_RICHNESS,
+  ODONATES_RICHNESS,
+  SAPINDALES_RICHNESS,
   PLEDGES_LAYER,
   EDUCATOR_AMBASSADORS_LAYER,
   SPECIES_LIST,
@@ -160,8 +166,6 @@ export const LAYERS_URLS = {
 
   [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/FeatureServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
-  [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/b90850994e574a2cab153c7e679399f6/rest/services/top_places_precalculated_20220307/FeatureServer/0',
-  [HALF_EARTH_FUTURE_WDPA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_20places/FeatureServer/0',
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',
   [GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER]:
@@ -213,6 +217,13 @@ export const LAYERS_URLS = {
   [REPTILES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_reptiles/MapServer',
   [REPTILES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_reptiles/MapServer',
 
+  //// Terrestrial richness and rarity country level services
+
+  [ANTS_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Country_checklists_ants/MapServer',
+  [BUTTERFLIES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Country_checklists_butterflies/MapServer',
+  [ODONATES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Country_checklists_odonates/MapServer',
+  [SAPINDALES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Country_checklists_sapindales/MapServer',
+
   //// Plants richness and rarity services
   [CACTI_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_cacti/MapServer`,
   [CACTI_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_cacti/MapServer`,
@@ -236,8 +247,8 @@ export const LAYERS_URLS = {
   [MARINE_MAMMALS_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_mammal_global55km/MapServer',
   [FISHES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rar_marine_fish_global55km/MapServer`,
   [FISHES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rich_marine_fish_global55km/MapServer`,
-  // Vertebrate species modal
 
+  // Vertebrate species modal
   [SPECIES_LIST]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_species_data_20200817_updated2/FeatureServer',
   [MARINE_SPECIES_LIST]:
@@ -255,8 +266,14 @@ export const LAYERS_URLS = {
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/329a41aec90249c2ba5d6330f43f9390/rest/services/gadm1_precalculated_range_area/FeatureServer/0',
-  //  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm36_level1_Simplify_precalculated_crfs/FeatureServer/0',
-  //  [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA%20with%20OECMs%20June%202021/FeatureServer',
-  [WDPA_OECM_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_terrestrialmarine2021_simplified_v2/FeatureServer/0',
-  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/051ba1f3714748bfb4c725d29b938e20/rest/services/all_precalc_wdpa_no_geom/FeatureServer/0',
+  [WDPA_OECM_FEATURE_LAYER]: [
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification1/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification2_90/FeatureServer/0',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification3/FeatureServer/0'
+  ],
+  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_precal_with_contextual/FeatureServer/0',
+  [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/b90850994e574a2cab153c7e679399f6/rest/services/top_places_precalculated_20220307/FeatureServer/0',
+  [HALF_EARTH_FUTURE_WDPA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_20places/FeatureServer/0',
+  [SPECIFIC_REGIONS_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/c622d044b0a7447fb4b00de1c8ba066d/rest/services/SpecificRegions_precalculated/FeatureServer/0',
+  [SPECIFIC_REGIONS_WDPA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/SpecificRegions_wdpa/FeatureServer/0',
 };
