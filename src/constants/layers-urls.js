@@ -250,7 +250,7 @@ export const LAYERS_URLS = {
 
   // Vertebrate species modal
   [SPECIES_LIST]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_species_data_20200817_updated2/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/c7c4769519d04639908c36f508577ac6/rest/services/NRC_species_data_20200817_updated2/FeatureServer',
   [MARINE_SPECIES_LIST]:
     'https://utility.arcgis.com/usrsvcs/servers/5df959008b444568836d12a3ba215a90/rest/services/NRC_marine_species_data_20220323/FeatureServer',
 
