@@ -165,8 +165,8 @@ const CountryDataCardComponent = ({
                         }%`}
                         ),
                       </b>
-                      the <b>total of and fishes ({nspecies_mar})</b> species
-                      and the amount of which of these are{' '}
+                      the <b>total of fishes ({nspecies_mar})</b> species and
+                      the amount of which of these are{' '}
                       <b>endemic ({total_endemic_mar}).</b>
                     </p>
                   </div>
@@ -247,10 +247,10 @@ const CountryDataCardComponent = ({
             Why only land and marine vertebrates?
           </p>
           <p className={styles.hintText}>
-            Terrestrial and marine vertebrates vertebrates represent the species
-            groups with the most comprehensive coverage of distribution data.
-            The Half-Earth Project is actively engaging in research to expand
-            coverage of other taxonomic groups.
+            Terrestrial and marine vertebrates represent the species groups with
+            the most comprehensive coverage of distribution data. The Half-Earth
+            Project is actively engaging in research to expand coverage of other
+            taxonomic groups.
           </p>
         </div>
       </section>
