@@ -4,6 +4,7 @@ import ShareModal from 'components/share-modal';
 import ShareModalButton from 'components/share-button';
 import styles from './featured-map-card-styles.module.scss';
 import animationStyles from 'styles/common-animations.module.scss';
+import { T } from '@transifex/react';
 
 const FeaturedMapCardComponent = ({
   view,
@@ -60,7 +61,9 @@ const FeaturedMapCardComponent = ({
               <h2 className={styles.title}>{featuredMap.title}</h2>
             </section>
             <section className={styles.descriptionSection}>
-              <p className={styles.description}>{featuredMap.description}</p>
+              <p className={styles.description}>
+                <T _str={featuredMap.description} />
+              </p>
             </section>
           </>
         )}
