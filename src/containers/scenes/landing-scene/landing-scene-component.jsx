@@ -10,7 +10,7 @@ import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
-import { T } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 // Constants
 import { useMobile } from 'constants/responsive';
@@ -21,6 +21,7 @@ const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
   const isMobile = useMobile();
+  const t = useT();
   return (
     <Scene
       sceneName={'landing-scene'}
@@ -50,21 +51,27 @@ const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
           }}
         >
           <Globe
-            title="Discover stories"
-            description="Learn about important places of great biodiversity, and how their protection can contribute to preserving global biodiversity."
+            title={t('Discover stories')}
+            description={t(
+              'Learn about important places of great biodiversity, and how their protection can contribute to preserving global biodiversity.'
+            )}
             globeImage={globeDiscover}
             handleClick={() => browsePage({ type: FEATURED })}
           />
           <Globe
-            title="Explore data"
-            description="Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity."
+            title={t('Explore data')}
+            description={t(
+              'Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity.'
+            )}
             globeImage={globeExplore}
             center
             handleClick={() => browsePage({ type: DATA })}
           />
           <Globe
-            title="National Report Cards"
-            description="Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species."
+            title={t('National Report Cards')}
+            description={t(
+              'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species.'
+            )}
             globeImage={globeNRC}
             handleClick={() =>
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING })

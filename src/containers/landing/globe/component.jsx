@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
-import { useT } from '@transifex/react';
 import styles from './styles.module.scss';
 
 const Globe = ({
@@ -14,7 +13,6 @@ const Globe = ({
   handleClick,
 }) => {
   const [isHovered, setHovered] = useState(false);
-  const t = useT();
   return (
     <button
       onClick={handleClick}
@@ -42,7 +40,7 @@ const Globe = ({
           }}
           className={styles.title}
         >
-          {t(title)}
+          {title}
         </motion.p>
         <motion.p
           initial={false}
@@ -57,7 +55,7 @@ const Globe = ({
           }}
           className={styles.description}
         >
-          {t(description)}
+          {description}
         </motion.p>
       </div>
       <motion.img
