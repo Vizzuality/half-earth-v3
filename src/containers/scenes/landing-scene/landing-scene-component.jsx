@@ -10,6 +10,8 @@ import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+import { T } from '@transifex/react';
+
 // Constants
 import { useMobile } from 'constants/responsive';
 // Styles
@@ -36,7 +38,7 @@ const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
             delay: 2,
           }}
         >
-          {!isMobile && 'OR'}
+          {!isMobile && <T _str="OR" />}
         </motion.p>
         <motion.div
           className={styles.globesContainer}

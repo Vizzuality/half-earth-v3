@@ -6,7 +6,7 @@ import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import React from 'react';
 import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
-import { T } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 // Components
 import AudioCard from './audio-card';
 // Constants
@@ -16,6 +16,8 @@ import styles from './hero-styles.module.scss';
 
 const HeroComponent = ({ className, changeUI, browsePage }) => {
   const isMobile = useMobile();
+  const t = useT();
+
   return (
     <div className={cx(styles.container, className)}>
       <motion.h3
@@ -38,7 +40,9 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           delay: 0.5,
         }}
       >
-        Explore where species conservation <br /> activities are needed the most
+        <T _str="Explore where species conservation" />
+        <br />
+        <T _str="activities are needed the most" />
       </motion.h1>
 
       <motion.p
@@ -50,8 +54,9 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           delay: 1.5,
         }}
       >
-        {!isMobile &&
-          'SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT'}
+        {!isMobile && (
+          <T _str="SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT" />
+        )}
       </motion.p>
 
       {!isMobile && (
@@ -69,8 +74,10 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
               number="01"
               duration={'7-8'}
               gif={AUDIO_CARD_1_GIF}
-              title="Priority places"
-              description="Understand where the suggested priority places should happen for vertebrates."
+              title={t('Priority places')}
+              description={t(
+                'Understand where the suggested priority places should happen for vertebrates.'
+              )}
               handleClick={() => {
                 browsePage({ type: DATA });
                 changeUI({
@@ -93,8 +100,10 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
               number="02"
               duration={'10'}
               gif={AUDIO_CARD_2_GIF}
-              title="National Report cards"
-              description="Analyze national and other areas of interest. Download reports to share with others."
+              title={t('National Report cards')}
+              description={t(
+                'Analyze national and other areas of interest. Download reports to share with others.'
+              )}
               handleClick={() => {
                 browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
                 changeUI({
