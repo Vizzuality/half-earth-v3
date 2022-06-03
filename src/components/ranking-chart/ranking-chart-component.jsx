@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
+
 import { Tooltip } from 'react-tippy';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
 import SearchInput from 'components/search-input';
@@ -33,6 +35,7 @@ const RankingChart = ({
   handleLandMarineSelection,
 }) => {
   const [hasScrolled, changeHasScrolled] = useState(false);
+  const t = useT();
 
   const tableRef = useRef();
   useEffect(() => {
@@ -141,7 +144,7 @@ const RankingChart = ({
       <div className={styles.header}>
         <SearchInput
           className={styles.searchInput}
-          placeholder="Search country"
+          placeholder={t('Search country')}
           onChange={handleSearchChange}
           value={searchTerm}
           type="transparent"
@@ -218,7 +221,7 @@ const RankingChart = ({
             className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
           >
             <Arrow className={styles.arrow} />
-            Scroll
+            {t('Scroll')}
           </div>
         </div>
       ) : null}

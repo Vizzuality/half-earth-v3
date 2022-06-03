@@ -4,6 +4,7 @@ import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import styles from './aoi-entry-tooltip-styles.module.scss';
 import { format } from 'd3-format';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 
 function useClickOutside(ref, callback, exceptionRef) {
   useEffect(() => {
@@ -37,6 +38,7 @@ const AOIEntryTooltipComponent = ({
   const tooltipref = useRef(null);
   const [tooltip, setTooltip] = useState(null);
   const buttonRef = useRef(null);
+  const t = useT();
 
   useClickOutside(tooltipref, () => handleTooltipClose(), buttonRef);
 
@@ -73,11 +75,14 @@ const AOIEntryTooltipComponent = ({
     >
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose} />
       <section className={styles.tooltipSection}>
-        <span className={styles.tooltipName}>Priority area {MOL_ID}</span>
+        <span className={styles.tooltipName}>
+          {t('Priority area')} {MOL_ID}
+        </span>
       </section>
       <section className={styles.areaSection}>
         <p className={styles.area}>
-          {format(',.3f')(AREA_KM2)} km<sup>2</sup>
+          {format(',.3f')(AREA_KM2)} {t('km')}
+          <sup>2</sup>
         </p>
       </section>
       <button
@@ -85,7 +90,7 @@ const AOIEntryTooltipComponent = ({
         ref={buttonRef}
         onClick={onExploreAOIClick}
       >
-        Analyze area
+        {t('Analyze area')}
       </button>
     </div>
   );

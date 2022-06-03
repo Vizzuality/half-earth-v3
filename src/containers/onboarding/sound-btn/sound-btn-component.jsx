@@ -1,5 +1,7 @@
 import Modal from 'containers/modals/onboarding-modal';
 import { motion } from 'framer-motion';
+import { useT } from '@transifex/react';
+
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as DotsIcon } from 'icons/dots.svg';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
@@ -144,6 +146,8 @@ const SoundButtonComponent = ({
   onboardingStep,
   waitingInteraction,
 }) => {
+  const t = useT();
+
   const [playing, setPlaying] = useState(true);
   const [playedSeconds, setPlayedSeconds] = useState(0);
   const [pausedTime, setPausedTime] = useState(0);
@@ -237,7 +241,7 @@ const SoundButtonComponent = ({
 
   const renderTooltipText = () => {
     if (!waitingInteraction && waitingStartAudioClick) {
-      return 'Hit play when you are ready to start';
+      return t('Hit play when you are ready to start');
     }
     return waitingInteraction ? (
       <DotsIcon />
@@ -310,8 +314,10 @@ const SoundButtonComponent = ({
       </div>
       <Modal
         isOpen={finishModal}
-        title="What would you like to do next?"
-        description="You just finished the audio tour you can either go on a new tour or explore the Half-Earth Project Map on your own."
+        title={t('What would you like to do next?')}
+        description={t(
+          'You just finished the audio tour you can either go on a new tour or explore the Half-Earth Project Map on your own.'
+        )}
         handleBack={handleBack}
         handleClose={handleSwitchMode}
         onRequestClose={handleSwitchMode}

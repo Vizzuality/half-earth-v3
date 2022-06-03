@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
+
 import CategoryBox from 'components/category-box';
 import Button from 'components/button';
 import Dropdown from 'components/dropdown';
@@ -38,6 +40,8 @@ const AnalyzeAreasCardComponent = ({
   onboardingStep,
 }) => {
   const [isOpen, setOpen] = useState(false);
+  const t = useT();
+
   const handleBoxClick = () => setOpen(!isOpen);
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
   const handleAoiModalToggle = () => {
@@ -55,7 +59,7 @@ const AnalyzeAreasCardComponent = ({
       })}
     >
       <CategoryBox
-        title="Analyze areas"
+        title={t('Analyze areas')}
         Icon={AnalyzeAreasIcon}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
@@ -66,22 +70,28 @@ const AnalyzeAreasCardComponent = ({
         <div className={styles.buttonsContainer}>
           <Button
             type="square"
-            label="Click on the map"
+            label={t('Click on the map')}
             Icon={AoisClickIcon}
             active={selectedAnalysisTab === 'click'}
-            handleClick={() => selectedAnalysisTab !== 'click' && handleAnalysisTabClick('click')}
+            handleClick={() =>
+              selectedAnalysisTab !== 'click' && handleAnalysisTabClick('click')
+            }
           />
           <Button
             type="square"
-            label="Draw or upload a shape"
+            label={t('Draw or upload a shape')}
             Icon={AoisDrawIcon}
             active={selectedAnalysisTab === 'draw'}
-            handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
+            handleClick={() =>
+              selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')
+            }
           />
         </div>
         {selectedAnalysisTab === 'click' && (
           <section className={styles.sectionContainer}>
-            <span className={styles.label}>Choose your area of interest</span>
+            <span className={styles.label}>
+              {t('Choose your area of interest')}
+            </span>
             <div className={styles.dropdownContainer}>
               <Dropdown
                 stacked
@@ -104,7 +114,7 @@ const AnalyzeAreasCardComponent = ({
             <Button
               type="compound"
               Icon={AreasHistoryIcon}
-              label="Open your analyzed areas history"
+              label={t('Open your analyzed areas history')}
               className={styles.areasHistoryButton}
               theme={styles.areasHistoryButton}
               handleClick={handleAoiModalToggle}
@@ -120,7 +130,7 @@ const AnalyzeAreasCardComponent = ({
             >
               <InfoIcon className={styles.info} />
               <span className={styles.warning}>
-                Draw or upload a shape smaller than{' '}
+                {t('Draw or upload a shape smaller than')}{' '}
                 <b>
                   {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}km<sup>2</sup>
                 </b>
@@ -128,14 +138,16 @@ const AnalyzeAreasCardComponent = ({
               </span>
             </div>
             <span className={styles.label}>
-              Draw on the map the area you want to analyze:
+              {t('Draw on the map the area you want to analyze:')}
             </span>
             <Button
               type="rectangular"
-              label={isSketchToolActive ? 'cancel drawing' : 'start drawing'}
+              label={
+                isSketchToolActive ? t('cancel drawing') : t('start drawing')
+              }
               handleClick={handleDrawClick}
             />
-            <span className={styles.separatorLabel}>or</span>
+            <span className={styles.separatorLabel}>{t('or')}</span>
             <ShapeFileUploader
               view={view}
               onSuccess={onShapeUploadSuccess}
@@ -144,7 +156,7 @@ const AnalyzeAreasCardComponent = ({
             <Button
               type="compound"
               Icon={AreasHistoryIcon}
-              label="Open your analyzed areas history"
+              label={t('Open your analyzed areas history')}
               className={styles.areasHistoryButton}
               handleClick={handleAoiModalToggle}
             />

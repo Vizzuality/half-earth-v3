@@ -3,6 +3,7 @@ import React from 'react';
 // components
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
+import { useT } from '@transifex/react';
 
 // containers
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -47,15 +48,17 @@ const Component = ({
   handleCloseSearch,
   selectedSearchOption,
   searchOptions,
-}) =>
-  speciesData.species.length === 0 ? (
+}) => {
+  const t = useT();
+
+  return speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
       <div className={styles.loaderBarContainer}>
         <div className={styles.loaderBarPercentage} />
       </div>
       <div className={styles.loaderTextContainer}>
-        <p>Looking for species to watch here...</p>
-        <p>This could take up to 30 seconds.</p>
+        <p>{t('Looking for species to watch here...')}</p>
+        <p>{t('This could take up to 30 seconds.')}</p>
       </div>
     </section>
   ) : (
@@ -67,7 +70,7 @@ const Component = ({
             className={styles.infoClue}
             title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
           >
-            land vertebrate species
+            {t('land vertebrate species')}
           </span>
         </p>
         <Dropdown
@@ -84,7 +87,7 @@ const Component = ({
           stacked
           width="full"
           parentWidth="322px"
-          placeholderText="SEARCH SPECIES"
+          placeholderText={t('SEARCH SPECIES')}
           onSearch={handleSpeciesSearch}
           options={searchOptions}
           selectedOption={selectedSearchOption}
@@ -169,7 +172,7 @@ const Component = ({
               </p>
             </div>
             <SpeciesBar
-              title="Portion of global range under protection"
+              title={t('Portion of global range under protection')}
               className={styles.speciesBarContainer}
               percentage={individualSpeciesData.globalProtectedPercentage}
               barAnnotation={individualSpeciesData.protectionTarget}
@@ -177,16 +180,16 @@ const Component = ({
             />
             <SpeciesBar
               scale="local"
-              title="Portion of global range in this area"
+              title={t('Portion of global range in this area')}
               className={styles.speciesBarContainer}
               percentage={capPercentage(individualSpeciesData.presenceInArea)}
               percentageLabel={roundRangeInArea(
                 capPercentage(individualSpeciesData.presenceInArea)
               )}
             />
-            <p
-              className={styles.iucnStatus}
-            >{`IUCN status: ${individualSpeciesData.iucnCategory}`}</p>
+            <p className={styles.iucnStatus}>{`${t('IUCN status')}: ${
+              individualSpeciesData.iucnCategory
+            }`}</p>
           </section>
         )}
       </div>
@@ -198,5 +201,6 @@ const Component = ({
       )}
     </SidebarCardWrapper>
   );
+};
 
 export default Component;
