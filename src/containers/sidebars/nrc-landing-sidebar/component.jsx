@@ -3,13 +3,19 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import cx from 'classnames';
 // Hooks
-import { useTooltipRefs, getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+} from 'containers/onboarding/onboarding-hooks';
 // Components
 import LayerToggle from 'components/layer-toggle';
 import SearchLocation from 'components/search-location';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
-import { GLOBAL_SPI_FEATURE_LAYER, NRC_LANDING_LAYERS_SLUG } from 'constants/layers-slugs';
+import {
+  GLOBAL_SPI_FEATURE_LAYER,
+  NRC_LANDING_LAYERS_SLUG,
+} from 'constants/layers-slugs';
 import { NRCLandingLayers } from 'constants/nrc-landing';
 
 // Styles
@@ -26,9 +32,9 @@ const NRCLandingSidebar = ({
   view,
   waitingInteraction,
 }) => {
-
   const { landAverage, marineAverage } = globalAverage;
-  const averageLoaded = landAverage !== undefined || marineAverage !== undefined;
+  const averageLoaded =
+    landAverage !== undefined || marineAverage !== undefined;
 
   const tooltipRefs = useTooltipRefs({
     changeUI,
@@ -37,16 +43,14 @@ const NRCLandingSidebar = ({
     waitingInteraction,
   });
 
-  const {
-    overlay: onboardingOverlay,
-    onClick: onboardingOnClick,
-  } = getOnboardingProps({
-    section: 'nrcLandingSidebar',
-    styles,
-    changeUI,
-    onboardingStep,
-    waitingInteraction,
-  });
+  const { overlay: onboardingOverlay, onClick: onboardingOnClick } =
+    getOnboardingProps({
+      section: 'nrcLandingSidebar',
+      styles,
+      changeUI,
+      onboardingStep,
+      waitingInteraction,
+    });
   return (
     <motion.div
       ref={(ref) => {
@@ -60,14 +64,15 @@ const NRCLandingSidebar = ({
     >
       <p className={styles.title}>National Report Cards</p>
       <p className={styles.body}>
-        Protection Index reflects the average amount of area-based conservation
-        targets met across all endemic species within a given country in a given
-        year, weighted by a country's stewardship. Strategic and targeted
-        protection of species habitat will generally result in a country's SPI
-        increasing, but once a country meets an individual species' target,
-        subsequent additional protection of habitat will not increase the
-        country's SPI. Likewise, any protection of land that does not also
-        protect species habitat will not increase a country's SPI.
+        The Species Protection Index (SPI) reflects the average amount of
+        area-based conservation targets met across all endemic species within a
+        given country in a given year, weighted by a country's stewardship.
+        Strategic and targeted protection of species habitat will generally
+        result in a country's SPI increasing, but once a country meets an
+        individual species' target, subsequent additional protection of habitat
+        will not increase the country's SPI. Likewise, any protection of land
+        that does not also protect species habitat will not increase a country's
+        SPI.
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
@@ -75,7 +80,12 @@ const NRCLandingSidebar = ({
         <div className={styles.togglesContainer}>
           {NRCLandingLayers.map((layer) => {
             const { name } = layer;
-            const nameUpadated = (name && name === 'Land') ? `Land SPI (Global average: ${landAverage})` : (name && name === 'Marine') ? `Marine SPI (Global average: ${marineAverage})` : 0;
+            const nameUpadated =
+              name && name === 'Land'
+                ? `Land SPI (Global average: ${landAverage})`
+                : name && name === 'Marine'
+                ? `Marine SPI (Global average: ${marineAverage})`
+                : 0;
             const layerUpdated = { ...layer, name: nameUpadated };
             return (
               <LayerToggle
@@ -88,9 +98,8 @@ const NRCLandingSidebar = ({
                 onChange={handleLayerToggle}
                 themeCategorySlug={NRC_LANDING_LAYERS_SLUG}
               />
-            )
-          }
-          )}
+            );
+          })}
         </div>
       )}
 

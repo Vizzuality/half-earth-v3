@@ -311,7 +311,7 @@ const SoundButtonComponent = ({
       <Modal
         isOpen={finishModal}
         title="What would you like to do next?"
-        description="You just finished the audio tour you can either go on a new tour or explore the HE map on your own."
+        description="You just finished the audio tour you can either go on a new tour or explore the Half-Earth Project Map on your own."
         handleBack={handleBack}
         handleClose={handleSwitchMode}
         onRequestClose={handleSwitchMode}
