@@ -2,6 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { T } from '@transifex/react';
+
 import ShareModal from 'components/share-modal';
 import About from 'components/about';
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
@@ -41,7 +43,9 @@ const MainMenuContent = ({
           aria-controls="main-menu"
           aria-expanded="true"
         >
-          <div className={styles.closeText}>CLOSE MENU</div>
+          <div className={styles.closeText}>
+            <T _str="CLOSE MENU" />
+          </div>
           <CloseIcon />
         </button>
         <div className={styles.menuListContainer}>
@@ -57,7 +61,7 @@ const MainMenuContent = ({
                   className={styles.menuItemImage}
                 />
                 <h2 className={styles.menuItem} role="menuitem">
-                  Explore data
+                  <T _str="Explore data" />
                 </h2>
               </button>
             </li>
@@ -72,7 +76,7 @@ const MainMenuContent = ({
                   className={styles.menuItemImage}
                 />
                 <h2 className={styles.menuItem} role="menuitem">
-                  Discover Stories
+                  <T _str="Discover Stories" />
                 </h2>
               </button>
             </li>
@@ -89,7 +93,7 @@ const MainMenuContent = ({
                   className={styles.menuItemImage}
                 />
                 <h2 className={styles.menuItem} role="menuitem">
-                  National Report Cards
+                  <T _str="National Report Cards" />
                 </h2>
               </button>
             </li>
@@ -101,7 +105,7 @@ const MainMenuContent = ({
                     className={cx(styles.menuItem, styles.greyItem)}
                     role="menuitem"
                   >
-                    About the map
+                    <T _str="About the map" />
                   </h2>
                 }
               />
@@ -114,7 +118,7 @@ const MainMenuContent = ({
                   onClick={handleShareClick}
                   className={styles.shareButton}
                 >
-                  SHARE THE HALF-EARTH PROJECT MAP
+                  <T _str="SHARE THE HALF-EARTH PROJECT MAP" />
                 </button>
                 <ShareModal
                   isOpen={isShareModalOpen}
@@ -127,7 +131,7 @@ const MainMenuContent = ({
                 className={cx(styles.menuAction, styles.socialAction)}
                 role="menuitem"
               >
-                JOIN THE CONVERSATION
+                <T _str="JOIN THE CONVERSATION" />
                 <ul className={styles.socialLinks}>
                   {joinConversationSocialMedia.map((socialMedia) => (
                     <li key={socialMedia.alt} className={styles.socialLink}>

@@ -3,6 +3,7 @@ import { Modal } from 'he-components';
 import ShareInput from 'components/share-input';
 import ShareSocialIcons from 'components/share-social-icons';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import { T } from '@transifex/react';
 
 import styles from './share-modal-styles.module';
 
@@ -14,7 +15,9 @@ const ShareModalComponent = ({ handleClose, isOpen }) => {
           <ShareIcon />
         </div>
         <div className={styles.shareContent}>
-          <div className={styles.title}>Share this page</div>
+          <div className={styles.title}>
+            <T _str="Share this page" />
+          </div>
           <ShareInput
             setShareUrl={() => `${window.location.href}`}
             className={styles.shareInputLayout}

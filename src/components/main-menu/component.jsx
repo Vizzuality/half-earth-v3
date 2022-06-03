@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 import MainMenuContent from './main-menu-content';
 import styles from './main-menu.module.scss';
+import { T } from '@transifex/react';
 
 import { ReactComponent as MenuIcon } from 'icons/menu.svg';
 
@@ -29,7 +30,9 @@ const MainMenu = ({ className, onboardingStep, onboardingType }) => {
         aria-controls="main-menu"
         aria-expanded={isMenuOpen}
       >
-        <div className={styles.menuTitle}>Menu</div>
+        <div className={styles.menuTitle}>
+          <T _str="Menu" />
+        </div>
         <MenuIcon className={styles.menuButton} />
       </button>
       <MainMenuContent open={isMenuOpen} setMenuOpen={setMenuOpen} />
