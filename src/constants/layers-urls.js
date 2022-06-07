@@ -108,7 +108,7 @@ import {
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
 const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_All_20220504/FeatureServer' :
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220607/FeatureServer' :
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer';
 
 
