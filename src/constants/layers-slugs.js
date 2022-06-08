@@ -84,8 +84,8 @@ export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
 // South Africa layers
-export const SA_AMPHIB_RARITY = 'amphib-rarity-sa';
-export const SA_AMPHIB_RICHNESS = 'amphib-rich-sa';
+export const AMPHIB_RARITY_1KM = 'amphib-rarity-sa';
+export const AMPHIB_RICHNESS_1KM = 'amphib-rich-sa';
 export const SA_DRAGONFLIES_RARITY = 'dragonflies-rare-sa';
 export const SA_DRAGONFLIES_RICHNESS = 'dragonflies-rich-sa';
 export const SA_MAMMALS_RARITY = 'mammals-rare-sa';
@@ -96,8 +96,8 @@ export const SA_RESTIO_RARITY = 'restio-rare-sa';
 export const SA_RESTIO_RICHNESS = 'restio-rich-sa';
 export const SA_PROTEA_RARITY = 'protea-rare-sa';
 export const SA_PROTEA_RICHNESS = 'protea-rich-sa';
-export const SA_REPTILES_RARITY = 'reptiles-rare-sa';
-export const SA_REPTILES_RICHNESS = 'reptiles-rich-sa';
+export const REPTILES_RARITY_1KM = 'reptiles-rare-sa';
+export const REPTILES_RICHNESS_1KM = 'reptiles-rich-sa';
 // Global biodiversity
 
 export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
@@ -130,6 +130,9 @@ export const CONIFERS_RICHNESS = 'conifers-rich';
 export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
+
+export const BUTTERFLIES_RICHNESS_1KM = 'butterflies-richness-1km';
+export const BUTTERFLIES_RARITY_1KM = 'butterflies-rarity-1km';
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';

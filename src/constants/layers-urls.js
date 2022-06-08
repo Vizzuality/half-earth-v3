@@ -35,8 +35,8 @@ import {
   MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
   COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
-  SA_AMPHIB_RARITY,
-  SA_AMPHIB_RICHNESS,
+  AMPHIB_RARITY_1KM,
+  AMPHIB_RICHNESS_1KM,
   SA_DRAGONFLIES_RARITY,
   SA_DRAGONFLIES_RICHNESS,
   SA_MAMMALS_RARITY,
@@ -47,8 +47,8 @@ import {
   SA_RESTIO_RICHNESS,
   SA_PROTEA_RARITY,
   SA_PROTEA_RICHNESS,
-  SA_REPTILES_RARITY,
-  SA_REPTILES_RICHNESS,
+  REPTILES_RARITY_1KM,
+  REPTILES_RICHNESS_1KM,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -83,6 +83,8 @@ import {
   BUTTERFLIES_RICHNESS,
   ODONATES_RICHNESS,
   SAPINDALES_RICHNESS,
+  BUTTERFLIES_RARITY_1KM,
+  BUTTERFLIES_RICHNESS_1KM,
   PLEDGES_LAYER,
   EDUCATOR_AMBASSADORS_LAYER,
   SPECIES_LIST,
@@ -180,9 +182,10 @@ export const LAYERS_URLS = {
   [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Ocean_Based_Drivers_MeriamNelson_cont/MapServer',
   [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Commercial_Fishing_MeriamNelson_cont/MapServer',
   [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Artisanal_Fishing_MeriamNelson_cont/MapServer',
+
   // REGIONAL 1km BIODIVERSITY
-  [SA_AMPHIB_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amph_rar_sa_tif/MapServer`,
-  [SA_AMPHIB_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amph_rich_sa_tif/MapServer`,
+  [AMPHIB_RARITY_1KM]: [`https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amph_rar_sa_tif/MapServer`, `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Amphibian_Total_Rarity/MapServer`],
+  [AMPHIB_RICHNESS_1KM]: [`https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amph_rich_sa_tif/MapServer`, `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Amphibian_Richness/MapServer`],
   [SA_DRAGONFLIES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/df_rar_sa_tif/MapServer`,
   [SA_DRAGONFLIES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/df_rich_sa_tif/MapServer`,
   [SA_MAMMALS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rar_sa_tif/MapServer`,
@@ -193,8 +196,8 @@ export const LAYERS_URLS = {
   [SA_RESTIO_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/restio_rich_sa_tif/MapServer`,
   [SA_PROTEA_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/protea_rar_sa_tif/MapServer`,
   [SA_PROTEA_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/protea_rich_sa_tif/MapServer`,
-  [SA_REPTILES_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rept_rar_sa_tif/MapServer`,
-  [SA_REPTILES_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rept_rich_sa_tif/MapServer`,
+  [REPTILES_RARITY_1KM]: ['https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rept_rar_sa_tif/MapServer', 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Reptile_Species_of_North_America/MapServer'],
+  [REPTILES_RICHNESS_1KM]: [`https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rept_rich_sa_tif/MapServer`, 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Reptile_Species_of_North_America/MapServer'],
   [HUMMINGBIRDS_RARITY]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hb_rarity_raw_tif/MapServer`,
   [HUMMINGBIRDS_RICHNESS]: `https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/hb_rich_1km_tif/MapServer`,
   // Global biodiversity services
@@ -216,6 +219,9 @@ export const LAYERS_URLS = {
 
   [REPTILES_RARITY]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/rarity_025d_reptiles/MapServer',
   [REPTILES_RICHNESS]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/richness_025d_reptiles/MapServer',
+
+  [BUTTERFLIES_RICHNESS_1KM]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Butterfly_Species_of_North_America/MapServer',
+  [BUTTERFLIES_RARITY_1KM]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_of_Butterfly_Species_of_North_America/MapServer',
 
   //// Terrestrial richness and rarity country level services
 
