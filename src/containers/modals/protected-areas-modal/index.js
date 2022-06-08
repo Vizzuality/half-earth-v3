@@ -158,7 +158,7 @@ const Container = (props) => {
     // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
         url: urlValue,
-        whereClause: `MOL_ID = '${aoiId}'`,
+        whereClause: `MOL_IDg = '${aoiId}'`,
         returnGeometry: false
       }).then((features) => {
         if (features) {
