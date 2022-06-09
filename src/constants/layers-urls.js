@@ -160,7 +160,7 @@ export const LAYERS_URLS = {
 
   [MERGED_WDPA_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
   [PROTECTED_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/FeatureServer', // Only used on feature map
-  [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/VectorTileServer',
+  [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson_June2021/MapServer',
   [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_NRC_tiles/MapServer',
   [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Marine_NRC_tiles/MapServer',
 
