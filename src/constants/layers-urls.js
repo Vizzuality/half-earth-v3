@@ -119,7 +119,7 @@ export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsv
 export const COUNTRIES_DATA_SERVICE_URL = `${COUNTRIES_DATA_URL}/0`;
 export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer/0';
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/0c379c259996454fadfc96886deda07d/rest/services/Terrestrial_SPI_NRCs_20220107/FeatureServer/0';
-export const NRC_MARINE_SPI_DATA_LAYER = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Marine_SPI_by_country_202203323_ter1/FeatureServer/0';
+export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
@@ -252,7 +252,7 @@ export const LAYERS_URLS = {
   [SPECIES_LIST]:
     'https://utility.arcgis.com/usrsvcs/servers/c7c4769519d04639908c36f508577ac6/rest/services/NRC_species_data_20200817_updated2/FeatureServer',
   [MARINE_SPECIES_LIST]:
-    'https://utility.arcgis.com/usrsvcs/servers/5df959008b444568836d12a3ba215a90/rest/services/NRC_marine_species_data_20220323/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/b1f5fc986f3d4185aef5558f2ee80f50/rest/services/National_Report_Card_Species_Data_v2/FeatureServer',
 
   // AOIs lookup tables
   [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
