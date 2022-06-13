@@ -1,7 +1,7 @@
 import {
   MERGED_WDPA_VECTOR_TILE_LAYER,
-  SA_AMPHIB_RARITY,
-  SA_AMPHIB_RICHNESS,
+  AMPHIB_RARITY_1KM,
+  AMPHIB_RICHNESS_1KM,
   SA_DRAGONFLIES_RARITY,
   SA_DRAGONFLIES_RICHNESS,
   SA_MAMMALS_RARITY,
@@ -12,8 +12,10 @@ import {
   SA_RESTIO_RICHNESS,
   SA_PROTEA_RARITY,
   SA_PROTEA_RICHNESS,
-  SA_REPTILES_RARITY,
-  SA_REPTILES_RICHNESS,
+  REPTILES_RARITY_1KM,
+  REPTILES_RICHNESS_1KM,
+  BUTTERFLIES_RARITY_1KM,
+  BUTTERFLIES_RICHNESS_1KM,
   HUMMINGBIRDS_RICHNESS,
   HUMMINGBIRDS_RARITY,
   MAMMALS_RARITY,
@@ -88,12 +90,12 @@ export default {
     slug: SPECIES_PROTECTION_INDEX,
     title: 'Species Protection Index'
   },
-  [SA_AMPHIB_RARITY]: {
-    slug: SA_AMPHIB_RARITY,
+  [AMPHIB_RARITY_1KM]: {
+    slug: AMPHIB_RARITY_1KM,
     title: 'Amphibian regional rarity'
   },
-  [SA_AMPHIB_RICHNESS]: {
-    slug: SA_AMPHIB_RICHNESS,
+  [AMPHIB_RICHNESS_1KM]: {
+    slug: AMPHIB_RICHNESS_1KM,
     title: 'Amphibian regional richness'
   },
   [SA_DRAGONFLIES_RARITY]: {
@@ -136,13 +138,21 @@ export default {
     slug: SA_PROTEA_RICHNESS,
     title: 'Protea regional richness'
   },
-  [SA_REPTILES_RARITY]: {
-    slug: SA_REPTILES_RARITY,
+  [REPTILES_RARITY_1KM]: {
+    slug: REPTILES_RARITY_1KM,
     title: 'Reptiles regional rarity'
   },
-  [SA_REPTILES_RICHNESS]: {
-    slug: SA_REPTILES_RICHNESS,
+  [REPTILES_RICHNESS_1KM]: {
+    slug: REPTILES_RICHNESS_1KM,
     title: 'Reptiles regional richness'
+  },
+  [BUTTERFLIES_RICHNESS_1KM]: {
+    slug: BUTTERFLIES_RICHNESS_1KM,
+    title: 'Butterflies regional richness'
+  },
+  [BUTTERFLIES_RARITY_1KM]: {
+    slug: BUTTERFLIES_RARITY_1KM,
+    title: 'Butterflies regional rarity'
   },
   // Hummingbirds
   [HUMMINGBIRDS_RICHNESS]: {

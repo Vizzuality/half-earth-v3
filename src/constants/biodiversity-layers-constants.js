@@ -1,6 +1,6 @@
 import {
-  SA_AMPHIB_RARITY,
-  SA_AMPHIB_RICHNESS,
+  AMPHIB_RARITY_1KM,
+  AMPHIB_RICHNESS_1KM,
   SA_DRAGONFLIES_RARITY,
   SA_DRAGONFLIES_RICHNESS,
   SA_MAMMALS_RARITY,
@@ -11,8 +11,8 @@ import {
   SA_RESTIO_RICHNESS,
   SA_PROTEA_RARITY,
   SA_PROTEA_RICHNESS,
-  SA_REPTILES_RARITY,
-  SA_REPTILES_RICHNESS,
+  REPTILES_RARITY_1KM,
+  REPTILES_RICHNESS_1KM,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -30,6 +30,8 @@ import {
   BIRDS_RICHNESS,
   ANTS_RICHNESS,
   BUTTERFLIES_RICHNESS,
+  BUTTERFLIES_RICHNESS_1KM,
+  BUTTERFLIES_RARITY_1KM,
   ODONATES_RICHNESS,
   SAPINDALES_RICHNESS,
   ALL_TAXA_RARITY,
@@ -186,9 +188,9 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: HUMMINGBIRDS_RICHNESS
         },
         {
-          value: SA_AMPHIB_RICHNESS,
+          value: AMPHIB_RICHNESS_1KM,
           name: 'amphibians',
-          layer: SA_AMPHIB_RICHNESS
+          layer: AMPHIB_RICHNESS_1KM
         },
         {
           value: SA_DRAGONFLIES_RICHNESS,
@@ -216,9 +218,14 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: SA_PROTEA_RICHNESS
         },
         {
-          value: SA_REPTILES_RICHNESS,
+          value: REPTILES_RICHNESS_1KM,
           name: 'reptiles',
-          layer: SA_REPTILES_RICHNESS
+          layer: REPTILES_RICHNESS_1KM
+        },
+        {
+          value: BUTTERFLIES_RICHNESS_1KM,
+          name: 'butterflies',
+          layer: BUTTERFLIES_RICHNESS_1KM
         },
       ],
       'COUNTRY': [
@@ -310,9 +317,9 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: HUMMINGBIRDS_RARITY
         },
         {
-          value: SA_AMPHIB_RARITY,
+          value: AMPHIB_RARITY_1KM,
           name: 'amphibians',
-          layer: SA_AMPHIB_RARITY
+          layer: AMPHIB_RARITY_1KM
         },
         {
           value: SA_DRAGONFLIES_RARITY,
@@ -340,10 +347,15 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: SA_PROTEA_RARITY
         },
         {
-          value: SA_REPTILES_RARITY,
+          value: REPTILES_RARITY_1KM,
           name: 'reptiles',
-          layer: SA_REPTILES_RARITY
-        }
+          layer: REPTILES_RARITY_1KM
+        },
+        {
+          value: BUTTERFLIES_RARITY_1KM,
+          name: 'butterflies',
+          layer: BUTTERFLIES_RARITY_1KM
+        },
       ]
     },
     [MARINE]: {

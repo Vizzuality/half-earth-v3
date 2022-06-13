@@ -37,8 +37,8 @@ import {
   MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER,
   COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
-  SA_AMPHIB_RARITY,
-  SA_AMPHIB_RICHNESS,
+  AMPHIB_RARITY_1KM,
+  AMPHIB_RICHNESS_1KM,
   SA_DRAGONFLIES_RARITY,
   SA_DRAGONFLIES_RICHNESS,
   SA_MAMMALS_RARITY,
@@ -49,8 +49,10 @@ import {
   SA_RESTIO_RICHNESS,
   SA_PROTEA_RARITY,
   SA_PROTEA_RICHNESS,
-  SA_REPTILES_RARITY,
-  SA_REPTILES_RICHNESS,
+  REPTILES_RARITY_1KM,
+  REPTILES_RICHNESS_1KM,
+  BUTTERFLIES_RICHNESS_1KM,
+  BUTTERFLIES_RARITY_1KM,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -418,19 +420,17 @@ export const layersConfig = {
     url: LAYERS_URLS[ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER],
     bbox: null
   },
-  [SA_AMPHIB_RARITY]: {
-    title: SA_AMPHIB_RARITY,
-    slug: SA_AMPHIB_RARITY,
+  [AMPHIB_RARITY_1KM]: {
+    title: AMPHIB_RARITY_1KM,
+    slug: AMPHIB_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[SA_AMPHIB_RARITY],
-    bbox: [13,-37,34,-27.7]
+    url: LAYERS_URLS[AMPHIB_RARITY_1KM],
   },
-  [SA_AMPHIB_RICHNESS]: {
-    title: SA_AMPHIB_RICHNESS,
-    slug: SA_AMPHIB_RICHNESS,
+  [AMPHIB_RICHNESS_1KM]: {
+    title: AMPHIB_RICHNESS_1KM,
+    slug: AMPHIB_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[SA_AMPHIB_RICHNESS],
-    bbox: [13,-37,34,-27.7]
+    url: LAYERS_URLS[AMPHIB_RICHNESS_1KM],
   },
   [SA_DRAGONFLIES_RARITY]: {
     title: SA_DRAGONFLIES_RARITY,
@@ -502,19 +502,29 @@ export const layersConfig = {
     url: LAYERS_URLS[SA_PROTEA_RICHNESS],
     bbox: [13,-37,34,-27.7]
   },
-  [SA_REPTILES_RARITY]: {
-    title: SA_REPTILES_RARITY,
-    slug: SA_REPTILES_RARITY,
+  [REPTILES_RARITY_1KM]: {
+    title: REPTILES_RARITY_1KM,
+    slug: REPTILES_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[SA_REPTILES_RARITY],
-    bbox: [13,-37,34,-27.7]
+    url: LAYERS_URLS[REPTILES_RARITY_1KM],
   },
-  [SA_REPTILES_RICHNESS]: {
-    title: SA_REPTILES_RICHNESS,
-    slug: SA_REPTILES_RICHNESS,
+  [REPTILES_RICHNESS_1KM]: {
+    title: REPTILES_RICHNESS_1KM,
+    slug: REPTILES_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[SA_REPTILES_RICHNESS],
-    bbox: [13,-37,34,-27.7]
+    url: LAYERS_URLS[REPTILES_RICHNESS_1KM],
+  },
+  [BUTTERFLIES_RICHNESS_1KM]: {
+    title: BUTTERFLIES_RICHNESS_1KM,
+    slug: BUTTERFLIES_RICHNESS_1KM,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[BUTTERFLIES_RICHNESS_1KM],
+  },
+  [BUTTERFLIES_RARITY_1KM]: {
+    title: BUTTERFLIES_RARITY_1KM,
+    slug: BUTTERFLIES_RARITY_1KM,
+    type: LAYER_TYPES.TILE_LAYER,
+    url: LAYERS_URLS[BUTTERFLIES_RARITY_1KM],
   },
   [HUMMINGBIRDS_RARITY]: {
     title: HUMMINGBIRDS_RARITY,
@@ -778,12 +788,12 @@ export const BIODIVERSITY_LAYERS_COLOUR_RAMP = [
 
 export const legendConfigs = {
   // South Africa
-  [SA_AMPHIB_RARITY]: {
+  [AMPHIB_RARITY_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian regional rarity"
   },
-  [SA_AMPHIB_RICHNESS]: {
+  [AMPHIB_RICHNESS_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Amphibian regional richness"
@@ -838,12 +848,12 @@ export const legendConfigs = {
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Protea regional richness"
   },
-  [SA_REPTILES_RARITY]: {
+  [REPTILES_RARITY_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Reptiles regional rarity"
   },
-  [SA_REPTILES_RICHNESS]: {
+  [REPTILES_RICHNESS_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
     title: "Reptiles regional richness"
