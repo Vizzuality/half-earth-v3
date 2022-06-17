@@ -10,13 +10,11 @@ const getSortRankingCategory = ({ location }) => (location && get(location, 'que
 
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
-const filterMarineCountriesWhenMarine = createSelector([selectCountriesData, getLandMarineSelected], (countriesData, landMarineSelection) => {
-  if(!countriesData) return null;
-
-  const capitalLandMarine = landMarineSelection[0].toUpperCase() + landMarineSelection.slice(1);
+const filterMarineCountriesWhenMarine = createSelector([selectCountriesData], (countriesData,) => {
+  if (!countriesData) return null;
 
   return Object.keys(countriesData)
-    .filter((iso) => countriesData[iso][capitalLandMarine] !== "False")
+    .filter((iso) => countriesData[iso]["Marine"] !== "False")
     .map((iso) => countriesData[iso]);
 });
 
