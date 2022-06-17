@@ -10,18 +10,12 @@ const getSortRankingCategory = ({ location }) => (location && get(location, 'que
 
 const { REACT_APP_FEATURE_MARINE } = process.env;
 
-const filterMarineCountriesWhenMarine = createSelector([selectCountriesData], (countriesData,) => {
-  if (!countriesData) return null;
-
-  return Object.keys(countriesData)
-    .filter((iso) => countriesData[iso]["Marine"] !== "False")
-    .map((iso) => countriesData[iso]);
-});
-
-const getRankingData = createSelector([filterMarineCountriesWhenMarine, getLandMarineSelected], (countriesData, landMarineSelection) => {
+const getRankingData = createSelector([selectCountriesData, getLandMarineSelected], (countriesData, landMarineSelection) => {
   if(!countriesData) return null;
   const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
-  return Object.keys(countriesData).map((iso) => {
+  return Object.keys(countriesData)
+    .filter((iso) => countriesData[iso]["Marine"] !== "False")
+    .map((iso) => {
     const d = countriesData[iso];
     return {
       [RANKING_INDICATORS.spi]: d[attributes.SPI],
