@@ -62,7 +62,7 @@ const SpeciesCarrousel = ({
           className={styles.carrouselButton}
           onClick={handleSelectPrevSpecies}
         >
-          <ArrowIcon />
+          <ArrowIcon className={styles.arrowIcon} />
         </button>
         <a
           className={styles.speciesImage}
@@ -76,7 +76,7 @@ const SpeciesCarrousel = ({
           className={styles.carrouselButton}
           onClick={handleSelectNextSpecies}
         >
-          <ArrowIcon />
+          <ArrowIcon className={styles.arrowIcon} />
         </button>
       </div>
 
