@@ -14,7 +14,7 @@ const getRankingData = createSelector([selectCountriesData, getLandMarineSelecte
   if(!countriesData) return null;
   const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
   return Object.keys(countriesData)
-    .filter((iso) => countriesData[iso]["Marine"] !== "False")
+    .filter((iso) => countriesData[iso].Marine && countriesData[iso].Marine === "True")
     .map((iso) => {
     const d = countriesData[iso];
     return {
