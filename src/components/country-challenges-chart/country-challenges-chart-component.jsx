@@ -85,13 +85,13 @@ const CountryChallengesChartComponent = ({
             onClick={handleSelectPreviousIndicator}
             style={{ transform: 'scaleX(-1)' }}
           >
-            <ArrowButton />
+            <ArrowButton className={styles.arrowButton} />
           </button>
           <span className={styles.xAxisIndicator}>
             {INDICATOR_LABELS[countryChallengesSelectedKey]}
           </span>
           <button onClick={handleSelectNextIndicator}>
-            <ArrowButton />
+            <ArrowButton className={styles.arrowButton} />
           </button>
         </div>
       </div>
