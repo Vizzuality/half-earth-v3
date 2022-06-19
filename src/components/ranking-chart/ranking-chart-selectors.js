@@ -13,7 +13,9 @@ const { REACT_APP_FEATURE_MARINE } = process.env;
 const getRankingData = createSelector([selectCountriesData, getLandMarineSelected], (countriesData, landMarineSelection) => {
   if(!countriesData) return null;
   const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
-  return Object.keys(countriesData).map((iso) => {
+  return Object.keys(countriesData)
+    .filter((iso) => landMarineSelection === 'marine' ? countriesData[iso].Marine === 'True' : true)
+    .map((iso) => {
     const d = countriesData[iso];
     return {
       [RANKING_INDICATORS.spi]: d[attributes.SPI],
