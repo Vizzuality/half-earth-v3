@@ -118,7 +118,10 @@ export const LAYERS_CATEGORIES = {
   PROTECTION: 'Protection',
   LAND_PRESSURES: 'Human pressures',
   MARINE_HUMAN_PRESSURES: 'Marine use pressures'
-}
+};
+
+const defaultBbox = [-48, -52, 59, 66];
+const USCenteredBbox = [-164, -40, -35, 56];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -426,12 +429,14 @@ export const layersConfig = {
     slug: AMPHIB_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[AMPHIB_RARITY_1KM],
+    bbox: defaultBbox
   },
   [AMPHIB_RICHNESS_1KM]: {
     title: AMPHIB_RICHNESS_1KM,
     slug: AMPHIB_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[AMPHIB_RICHNESS_1KM],
+    bbox: defaultBbox
   },
   [SA_DRAGONFLIES_RARITY]: {
     title: SA_DRAGONFLIES_RARITY,
@@ -508,38 +513,42 @@ export const layersConfig = {
     slug: REPTILES_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[REPTILES_RARITY_1KM],
+    bbox: defaultBbox
   },
   [REPTILES_RICHNESS_1KM]: {
     title: REPTILES_RICHNESS_1KM,
     slug: REPTILES_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[REPTILES_RICHNESS_1KM],
+    bbox: defaultBbox
   },
   [BUTTERFLIES_RICHNESS_1KM]: {
     title: BUTTERFLIES_RICHNESS_1KM,
     slug: BUTTERFLIES_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BUTTERFLIES_RICHNESS_1KM],
+    bbox: USCenteredBbox
   },
   [BUTTERFLIES_RARITY_1KM]: {
     title: BUTTERFLIES_RARITY_1KM,
     slug: BUTTERFLIES_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[BUTTERFLIES_RARITY_1KM],
+    bbox: USCenteredBbox
   },
   [HUMMINGBIRDS_RARITY]: {
     title: HUMMINGBIRDS_RARITY,
     slug: HUMMINGBIRDS_RARITY,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[HUMMINGBIRDS_RARITY],
-    bbox: [-164,-40,-35,56]
+    bbox: USCenteredBbox
   },
   [HUMMINGBIRDS_RICHNESS]: {
     title: HUMMINGBIRDS_RICHNESS,
     slug: HUMMINGBIRDS_RICHNESS,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[HUMMINGBIRDS_RICHNESS],
-    bbox: [-164,-40,-35,56]
+    bbox: USCenteredBbox
   },
   [FISHES_RARITY]: {
     title: FISHES_RARITY,
