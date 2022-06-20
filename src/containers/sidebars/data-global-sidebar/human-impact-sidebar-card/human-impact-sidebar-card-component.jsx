@@ -8,7 +8,6 @@ import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   MARINE_HUMAN_PRESSURES_SLUG,
@@ -35,8 +34,6 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 // Assets
 import HumanPressuresThumbnail from 'images/human-pressures.png';
 
-const humanImpact = LAYERS_CATEGORIES.LAND_PRESSURES;
-
 const HumanImpactSidebarCardComponent = ({
   map,
   source,
@@ -56,7 +53,6 @@ const HumanImpactSidebarCardComponent = ({
     layers.every((l) => activeLayersTitles.includes(l.value));
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
-
   // Onboarding
   const tooltipRefs = useTooltipRefs({
     changeUI,
@@ -99,7 +95,7 @@ const HumanImpactSidebarCardComponent = ({
       <CategoryBox
         title={TEXTS.categoryTitle}
         image={HumanPressuresThumbnail}
-        counter={countedActiveLayers[humanImpact]}
+        counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />

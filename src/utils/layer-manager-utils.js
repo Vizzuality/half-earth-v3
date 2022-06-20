@@ -7,7 +7,8 @@ import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig } from 'constants/mol-
 import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 
 // Toggles all the layers passed as ids on the first parameter
-export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, category) => {
+// Categories can be a string if its a common category or an object if its individual
+export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, categories) => {
   const activeLayersIds = activeLayers ? activeLayers.map(l => l.title) : [];
   const layersToRemove = activeLayers && intersection(layerIdsToToggle, activeLayersIds);
   const layersToAdd = layerIdsToToggle.filter(l => !layersToRemove.includes(l));
@@ -20,6 +21,7 @@ export const batchToggleLayers = (layerIdsToToggle, activeLayers, callback, cate
   }
   if (layersToAdd.length) {
     const updatedLayersToAdd = layersToAdd.map(title => {
+      const category = (!categories || typeof categories === 'string') ? categories : categories[title];
       return { title, category, opacity: DEFAULT_OPACITY }
     });
     updatedLayers = updatedLayers.concat(updatedLayersToAdd)

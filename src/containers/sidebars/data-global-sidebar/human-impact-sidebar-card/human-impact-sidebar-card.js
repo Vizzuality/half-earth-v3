@@ -8,10 +8,8 @@ import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
 import metadataService from 'services/metadata-service';
 import { layerManagerToggle, batchToggleLayers} from 'utils/layer-manager-utils';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
-import {
-  LAND_HUMAN_PRESSURES,
-  MARINE_HUMAN_PRESSURES,
-} from 'constants/layers-slugs';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import mapStateToProps from './human-impact-sidebar-card-selectors';
 
 const actions = {...metadataActions, ...urlActions};
 
@@ -34,11 +32,7 @@ const Container = (props) => {
 
 
   const handleLayerToggle = (option, category) => {
-    const CATEGORY_NAMES = {
-      [LAND_HUMAN_PRESSURES]: 'Human pressures',
-      [MARINE_HUMAN_PRESSURES]: 'Marine use pressures',
-    }
-    const categoryName = CATEGORY_NAMES[category];
+    const categoryName = LAYERS_CATEGORIES[category];
     if (option.layer === 'none') {
       const allHumanPressuresLayerTitles = activeLayers.map(l => (l.category === categoryName) ? l.title : null).filter(Boolean);
       batchToggleLayers(allHumanPressuresLayerTitles, activeLayers, changeGlobe, categoryName)
@@ -60,4 +54,4 @@ const Container = (props) => {
   )
 }
 
-export default connect(null, actions)(Container);
+export default connect(mapStateToProps, actions)(Container);

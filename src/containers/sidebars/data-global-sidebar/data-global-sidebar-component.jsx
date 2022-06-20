@@ -18,7 +18,6 @@ const DataGlobalSidebarComponent = ({
   className,
   activeLayers,
   activeCategory,
-  countedActiveLayers,
   handleGlobeUpdating,
   onboardingStep,
   onboardingType,
@@ -40,7 +39,6 @@ const DataGlobalSidebarComponent = ({
         view={view}
         activeLayers={activeLayers}
         activeCategory={activeCategory}
-        countedActiveLayers={countedActiveLayers}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
@@ -50,7 +48,6 @@ const DataGlobalSidebarComponent = ({
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
-        countedActiveLayers={countedActiveLayers}
         onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
       />
@@ -59,7 +56,6 @@ const DataGlobalSidebarComponent = ({
         activeLayers={activeLayers}
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}
-        countedActiveLayers={countedActiveLayers}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}

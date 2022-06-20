@@ -1,4 +1,3 @@
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
@@ -48,20 +47,6 @@ const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.scen
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
 export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
 export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
-const getCountedActiveLayers = createSelector(
-  [getActiveLayers],
-  (activeLayers) => {
-    const biodiversityLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.BIODIVERSITY).length : 0;
-    const protectionLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.PROTECTION).length : 0;
-    const landHumanPressureLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.LAND_PRESSURES).length : 0;
-
-    return {
-      'Biodiversity': biodiversityLayers,
-      'Protection': protectionLayers,
-      'Human pressures': landHumanPressureLayers
-    };
-  }
-);
 export const getOnboardingType = createSelector(getUiSettings, uiSettings => uiSettings.onboardingType);
 export const getOnboardingStep = createSelector(getUiSettings, uiSettings => uiSettings.onboardingStep);
 export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings => uiSettings.waitingInteraction);
@@ -90,7 +75,6 @@ export default createStructuredSelector({
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
-  countedActiveLayers: getCountedActiveLayers,
   userConfig: selectUserConfig,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,

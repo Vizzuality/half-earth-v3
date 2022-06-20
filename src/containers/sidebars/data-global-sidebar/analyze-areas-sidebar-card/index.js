@@ -158,17 +158,19 @@ const AnalyzeAreasContainer = (props) => {
 
   const handleLayerToggle = (newSelectedOption) => {
 
+    const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
+
     const getLayersToToggle = () => {
       const formerSelectedSlug = selectedOption.slug;
+      const newLayerCategory = newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER ? LAYERS_CATEGORIES.PROTECTION : undefined;
 
-      let layersToToggle = [formerSelectedSlug, newSelectedOption];
+      let layersToToggle = [{ layerId: formerSelectedSlug }, { layerId: newSelectedOption, category: newLayerCategory }];
 
-      const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
       if (protectedAreasSelected) {
         const additionalProtectedAreasLayers = [PROTECTED_AREAS_VECTOR_TILE_LAYER, COMMUNITY_AREAS_VECTOR_TILE_LAYER];
         additionalProtectedAreasLayers.forEach(layer => {
           if (!activeLayers.some(l => l.title === layer)) {
-            layersToToggle.push(layer);
+            layersToToggle.push({ layerId: layer, category: LAYERS_CATEGORIES.PROTECTION });
           }
         })
       }
@@ -177,15 +179,19 @@ const AnalyzeAreasContainer = (props) => {
       // Future places layer will be activated if we select it at some point and never toggled unless we do it from the protection checkbox
       const futureLayerIsActive = activeLayers.some(l => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
       if (futureLayerIsActive && layersToToggle.includes(HALF_EARTH_FUTURE_TILE_LAYER)) {
-        layersToToggle = layersToToggle.filter(l => l !== HALF_EARTH_FUTURE_TILE_LAYER)
+        layersToToggle = layersToToggle.filter(l => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER)
       }
 
       return layersToToggle;
     };
 
-    const category = newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER ? LAYERS_CATEGORIES.PROTECTION : undefined;
-
-    batchToggleLayers(getLayersToToggle(), activeLayers, changeGlobe, category);
+    const layersToToggle = getLayersToToggle();
+    // Categories are used to show the number of layers active on the different sidebars
+    const categories = layersToToggle.reduce((acc, layer) => {
+      acc[layer.layerId] = layer.category;
+      return acc;
+    }, {});
+    batchToggleLayers(layersToToggle.map(l => l.layerId), activeLayers, changeGlobe, categories);
   }
 
 
