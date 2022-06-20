@@ -15,7 +15,7 @@ import { LAYERS_RESOLUTION, LAYERS_TOGGLE_CONFIG, LAYER_VARIANTS, TERRESTRIAL, D
 
 const actions = { ...metadataActions, ...urlActions };
 const BiodiversitySidebarCard = (props) => {
-  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view } = props;
+  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view, landMarineSelection } = props;
   const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
   const previousBiodiversityLayerVariant = usePrevious(
     biodiversityLayerVariant
@@ -56,10 +56,11 @@ const BiodiversitySidebarCard = (props) => {
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
     const resolution = selectedResolution[TERRESTRIAL];
-    const deafaultResolutionLayers = LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][DEFAULT_RESOLUTION[TERRESTRIAL]];
+    const defaultResolutionLayers = LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][DEFAULT_RESOLUTION[TERRESTRIAL]];
     const availableLayers = LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][TERRESTRIAL][resolution];
     const layerTaxa = activeBiodiversityLayers.length ? activeBiodiversityLayers[0].slice(0, activeBiodiversityLayers[0].indexOf("-")) : ""
     const hasMatchingLayer = availableLayers && availableLayers.find(layer => layer.value.includes(layerTaxa));
+
     if (hasMatchingLayer) {
       // select matching layer on selected variant
       handleLayerToggle(hasMatchingLayer);
@@ -68,10 +69,10 @@ const BiodiversitySidebarCard = (props) => {
       handleLayerToggle(availableLayers[0]);
     } else {
       // select first element if there's no maching resolution
-      handleLayerToggle(deafaultResolutionLayers[0]);
+      handleLayerToggle(defaultResolutionLayers[0]);
     }
 
-  }, [biodiversityLayerVariant])
+  }, [biodiversityLayerVariant, selectedResolution])
 
   const handleTabSelection = (slug) => {
     const { onboardingStep, onboardingType } = props;

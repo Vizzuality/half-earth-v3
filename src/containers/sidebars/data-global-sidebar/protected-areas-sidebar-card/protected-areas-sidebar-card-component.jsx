@@ -12,7 +12,6 @@ import {
   conserveNextLayers,
   TEXTS,
 } from 'constants/protected-areas';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import {
   PROTECTION_SLUG,
   FUTURE_PLACES_SLUG,
@@ -28,8 +27,6 @@ import styles from './protected-areas-sidebar-card-styles.module.scss';
 import hrTheme from 'styles/themes/hr-theme.module.scss';
 // Assets
 import ProtectionThumbnail from 'images/existing-protection.png';
-
-const protectedAreas = LAYERS_CATEGORIES.PROTECTION;
 
 const ProtectedAreasSidebarCardComponent = ({
   map,
@@ -85,7 +82,7 @@ const ProtectedAreasSidebarCardComponent = ({
       <CategoryBox
         image={ProtectionThumbnail}
         title={TEXTS.categoryTitle}
-        counter={countedActiveLayers[protectedAreas]}
+        counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />

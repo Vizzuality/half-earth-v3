@@ -43,7 +43,6 @@ const DataSceneComponent = ({
   isGlobeUpdating,
   isFullscreenActive,
   handleGlobeUpdating,
-  countedActiveLayers,
   isBiodiversityActive,
   selectedAnalysisLayer,
   isLandscapeSidebarCollapsed,
@@ -94,7 +93,6 @@ const DataSceneComponent = ({
           activeCategory={activeCategory}
           isLandscapeMode={isLandscapeMode}
           isFullscreenActive={isFullscreenActive}
-          countedActiveLayers={countedActiveLayers}
           handleGlobeUpdating={handleGlobeUpdating}
           isBiodiversityActive={isBiodiversityActive}
           isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}

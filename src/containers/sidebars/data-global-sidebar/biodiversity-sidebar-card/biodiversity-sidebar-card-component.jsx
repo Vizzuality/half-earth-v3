@@ -94,7 +94,6 @@ const BiodiversitySidebarCardComponent = ({
     waitingInteraction,
   });
 
-
   return (
     <motion.div
       ref={(ref) => (tooltipRefs.current.biodiversity = ref)}
@@ -108,7 +107,7 @@ const BiodiversitySidebarCardComponent = ({
       <CategoryBox
         title={LAYERS_CATEGORIES.BIODIVERSITY}
         image={BiodiversityThumbnail}
-        counter={countedActiveLayers[LAYERS_CATEGORIES.BIODIVERSITY]}
+        counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
       />
