@@ -107,8 +107,8 @@ import {
   EEZ_MARINE_BORDERS
 } from 'constants/layers-slugs';
 
-const { REACT_APP_FEATURE_MARINE, NODE_ENV } = process.env;
-const isNotProduction = NODE_ENV === 'development';
+const { REACT_APP_FEATURE_MARINE, REACT_APP_VERCEL_ENV } = process.env;
+const isNotProduction = REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220607/FeatureServer' :
@@ -116,7 +116,7 @@ const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
 
 
 export const GRID_URL = "https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_grid_55k_dis/FeatureServer";
-export const METADATA_SERVICE_URL = isNotProduction ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_staging/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_prod/FeatureServer/0';
+export const METADATA_SERVICE_URL = isNotProduction ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_staging/FeatureServer/0' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_prod/FeatureServer/0';
 export const MONITORING_HE_GOAL_SERVICE_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/monitoringHEgoal/FeatureServer/0'
 export const HIGHLIGHTED_COUNTRY_SPECIES_URL = 'https://utility.arcgis.com/usrsvcs/servers/aa62e9946df34e4ba176827c8ebc1b4d/rest/services/dupl_highlited_sp/FeatureServer/0';
 export const COUNTRIES_DATA_SERVICE_URL = `${COUNTRIES_DATA_URL}/0`;
