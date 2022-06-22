@@ -51,7 +51,7 @@ const Component = ({
 }) => {
   const t = useT();
 
-  return speciesData.species.length === 0 ? (
+  return speciesData.species && speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
       <div className={styles.loaderBarContainer}>
         <div className={styles.loaderBarPercentage} />
@@ -65,7 +65,9 @@ const Component = ({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
-          {SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].title(speciesData.species.length)}
+          {SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].title(
+            speciesData.species && speciesData.species.length
+          )}
           <span
             className={styles.infoClue}
             title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
