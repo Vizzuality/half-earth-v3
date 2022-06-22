@@ -7,12 +7,12 @@ import * as urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import { postAoiToDataBase } from 'utils/geo-processing-services';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
-import { back } from 'redux-first-router';
+import { DATA } from 'router';
 
 const actions = {...urlActions, ...aoiAnalyticsActions}
 
 const AoiSidebarContainer = (props) => {
-  const { speciesData, contextualData, geometry } = props;
+  const { speciesData, contextualData, geometry, browsePage } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues ] = useState({})
   useEffect(() => {
@@ -52,6 +52,10 @@ const AoiSidebarContainer = (props) => {
     postAoiToDataBase(geometry, attributes, speciesData)
   };
 
+  const handleClose = () => {
+    browsePage({ type: DATA });
+  }
+
   return (
     <Component
       area={values.area}
@@ -60,7 +64,7 @@ const AoiSidebarContainer = (props) => {
       population={values.population}
       contextualData={contextualData}
       climateRegime={values.climateRegime}
-      handleClose={back}
+      handleClose={handleClose}
       isShareModalOpen={isShareModalOpen}
       setShareModalOpen={setShareModalOpen}
       {...props}
