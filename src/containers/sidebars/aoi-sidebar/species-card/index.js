@@ -111,9 +111,9 @@ const SpeciesCardContainer = (props) => {
     const filters = SPECIES_FILTERS.map(filter => {
       switch (filter.slug) {
         case 'all':
-          return { slug: filter.slug, label: `${filter.label} (${species.length})` };
+          return { slug: filter.slug, label: `${filter.label} (${species && species.length})` };
         default:
-          const count = species.filter(sp => sp.category === filter.slug).length;
+          const count = species && species.filter(sp => sp.category === filter.slug).length;
           return { slug: filter.slug, label: `${filter.label} (${count})` }
       }
     })
@@ -124,22 +124,23 @@ const SpeciesCardContainer = (props) => {
     setSpeciesFilter({
       slug: selectedSpeciesFilter.slug,
       label: (selectedSpeciesFilter.slug === 'all') ?
-         `${tempLabel} (${species.length})`
-         : `${tempLabel} (${species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
+         `${tempLabel} (${species && species.length})`
+         : `${tempLabel} (${species && species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
     });
 
   }, [speciesData.species])
 
   useEffect(() => {
     const sortSpecies = (s) => orderBy(s, ['has_image', 'conservationConcern'], ['desc', 'desc']);
-    const speciesSorted = sortSpecies(
+    const speciesSorted = speciesData.species && sortSpecies(
       (selectedSpeciesFilter.slug === 'all') ?
         [...speciesData.species] :
         [...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)]
       );
-
-    setSpeciesToDisplay(speciesSorted);
-    setSpeciesToDisplayBackUp([...speciesSorted]);
+    if (speciesSorted) {
+      setSpeciesToDisplay(speciesSorted);
+      setSpeciesToDisplayBackUp([...speciesSorted]);
+    }
   }, [speciesData.species, selectedSpeciesFilter])
 
   useEffect(() => {
