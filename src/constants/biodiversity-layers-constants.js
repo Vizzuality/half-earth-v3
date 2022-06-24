@@ -183,24 +183,9 @@ export const LAYERS_TOGGLE_CONFIG = {
       ],
       'HIGH': [
         {
-          value: HUMMINGBIRDS_RICHNESS,
-          name: 'hummingbirds',
-          layer: HUMMINGBIRDS_RICHNESS
-        },
-        {
           value: AMPHIB_RICHNESS_1KM,
           name: 'amphibians',
           layer: AMPHIB_RICHNESS_1KM
-        },
-        {
-          value: SA_DRAGONFLIES_RICHNESS,
-          name: 'dragonflies',
-          layer: SA_DRAGONFLIES_RICHNESS
-        },
-        {
-          value: SA_MAMMALS_RICHNESS,
-          name: 'mammals',
-          layer: SA_MAMMALS_RICHNESS
         },
         {
           value: SA_BIRDS_RICHNESS,
@@ -208,9 +193,24 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: SA_BIRDS_RICHNESS
         },
         {
-          value: SA_RESTIO_RICHNESS,
-          name: 'restio',
-          layer: SA_RESTIO_RICHNESS
+          value: BUTTERFLIES_RICHNESS_1KM,
+          name: 'butterflies',
+          layer: BUTTERFLIES_RICHNESS_1KM
+        },
+        {
+          value: SA_DRAGONFLIES_RICHNESS,
+          name: 'dragonflies',
+          layer: SA_DRAGONFLIES_RICHNESS
+        },
+        {
+          value: HUMMINGBIRDS_RICHNESS,
+          name: 'hummingbirds',
+          layer: HUMMINGBIRDS_RICHNESS
+        },
+        {
+          value: SA_MAMMALS_RICHNESS,
+          name: 'mammals',
+          layer: SA_MAMMALS_RICHNESS
         },
         {
           value: SA_PROTEA_RICHNESS,
@@ -223,9 +223,9 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: REPTILES_RICHNESS_1KM
         },
         {
-          value: BUTTERFLIES_RICHNESS_1KM,
-          name: 'butterflies',
-          layer: BUTTERFLIES_RICHNESS_1KM
+          value: SA_RESTIO_RICHNESS,
+          name: 'restio',
+          layer: SA_RESTIO_RICHNESS
         },
       ],
       'COUNTRY': [
@@ -312,24 +312,9 @@ export const LAYERS_TOGGLE_CONFIG = {
       ],
       'HIGH': [
         {
-          value: HUMMINGBIRDS_RARITY,
-          name: 'hummingbirds',
-          layer: HUMMINGBIRDS_RARITY
-        },
-        {
           value: AMPHIB_RARITY_1KM,
           name: 'amphibians',
           layer: AMPHIB_RARITY_1KM
-        },
-        {
-          value: SA_DRAGONFLIES_RARITY,
-          name: 'dragonflies',
-          layer: SA_DRAGONFLIES_RARITY
-        },
-        {
-          value: SA_MAMMALS_RARITY,
-          name: 'mammals',
-          layer: SA_MAMMALS_RARITY
         },
         {
           value: SA_BIRDS_RARITY,
@@ -337,9 +322,24 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: SA_BIRDS_RARITY
         },
         {
-          value: SA_RESTIO_RARITY,
-          name: 'restio',
-          layer: SA_RESTIO_RARITY
+          value: BUTTERFLIES_RARITY_1KM,
+          name: 'butterflies',
+          layer: BUTTERFLIES_RARITY_1KM
+        },
+        {
+          value: SA_DRAGONFLIES_RARITY,
+          name: 'dragonflies',
+          layer: SA_DRAGONFLIES_RARITY
+        },
+        {
+          value: HUMMINGBIRDS_RARITY,
+          name: 'hummingbirds',
+          layer: HUMMINGBIRDS_RARITY
+        },
+        {
+          value: SA_MAMMALS_RARITY,
+          name: 'mammals',
+          layer: SA_MAMMALS_RARITY
         },
         {
           value: SA_PROTEA_RARITY,
@@ -352,9 +352,9 @@ export const LAYERS_TOGGLE_CONFIG = {
           layer: REPTILES_RARITY_1KM
         },
         {
-          value: BUTTERFLIES_RARITY_1KM,
-          name: 'butterflies',
-          layer: BUTTERFLIES_RARITY_1KM
+          value: SA_RESTIO_RARITY,
+          name: 'restio',
+          layer: SA_RESTIO_RARITY
         },
       ]
     },
