@@ -69,8 +69,11 @@ const BiodiversitySidebarCardComponent = ({
     const layersForSelectedResolution =
       resolutionsForSelectedCategory &&
       resolutionsForSelectedCategory[selectedResolution[category]];
+
     if (resolutionsForSelectedCategory && layersForSelectedResolution) {
-      return layersForSelectedResolution;
+      const layersAlphabetically = layersForSelectedResolution.sort((a, b) => a.name.localeCompare(b.name))
+
+      return layersAlphabetically;
     } else {
       return [];
     }
