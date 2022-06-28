@@ -2,7 +2,7 @@
 layout: default
 title: Update maximum record count
 parent: Scientists 🧑‍🔬
-permalink: /_docs/science/agol-management
+permalink: /_docs/science/update-maxrecord
 ---
 # Update the maximum record count for feature services in ArcGIS Online
 
