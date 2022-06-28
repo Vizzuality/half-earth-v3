@@ -111,7 +111,7 @@ const { REACT_APP_FEATURE_MARINE, REACT_APP_VERCEL_ENV } = process.env;
 const isNotProduction = REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220607/FeatureServer' :
+  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220623/FeatureServer' :
   'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer';
 
 
