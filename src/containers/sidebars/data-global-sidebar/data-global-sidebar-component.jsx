@@ -33,6 +33,7 @@ const DataGlobalSidebarComponent = ({
         activeLayers={activeLayers}
         view={view}
         onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
       />
       <BiodiversitySidebarCard
         map={map}
