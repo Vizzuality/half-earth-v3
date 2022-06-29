@@ -131,8 +131,10 @@ const CountryDataCardComponent = ({
                       {`${prop_protected_ter && prop_protected_ter.toFixed()}%`}
                       ),
                     </b>
-                    the <b>total of ({nspecies_ter})</b> and the amount of which
-                    of these are <b>endemic ({total_endemic_ter}).</b>
+                    the total number of{' '}
+                    <b>terrestrial vertebrates ({nspecies_ter})</b> and the
+                    amount of these which are{' '}
+                    <b>endemic ({total_endemic_ter}).</b>
                   </p>
                 </div>
               </div>
@@ -165,9 +167,9 @@ const CountryDataCardComponent = ({
                         }%`}
                         ),
                       </b>
-                      the <b>total of fishes ({nspecies_mar})</b> species and
-                      the amount of which of these are{' '}
-                      <b>endemic ({total_endemic_mar}).</b>
+                      the total number of{' '}
+                      <b>marine vertebrates ({nspecies_mar})</b> and the amount
+                      of these which are <b>endemic ({total_endemic_mar}).</b>
                     </p>
                   </div>
                 </div>
