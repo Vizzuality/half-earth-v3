@@ -4,7 +4,7 @@ import Component from './nrc-scene-component';
 // Services
 import EsriFeatureService from 'services/esri-feature-service';
 // Constants
-import { COUNTRIES_GEOMETRIES_SERVICE_URL } from 'constants/layers-urls';
+import { COUNTRIES_GEOMETRIES_SERVICE_URL, EEZ_MARINE_GEOMETRY_BORDERS_URL } from 'constants/layers-urls';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 // Actions
 import countriesGeometriesActions from 'redux_modules/countries-geometries';
@@ -13,6 +13,8 @@ import { visitCountryReportCardAnalyticsEvent } from 'actions/google-analytics-a
 import { DATA, NATIONAL_REPORT_CARD } from 'router'
 import mapStateToProps from './nrc-scene-selectors';
 const actions = { ...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent }
+
+const { REACT_APP_FEATURE_MARINE } = process.env;
 
 const NrcSceneContainer = (props) => {
   const {
@@ -25,10 +27,11 @@ const NrcSceneContainer = (props) => {
   // Get country borders
   useEffect(() => {
     EsriFeatureService.getFeatures({
-      url: COUNTRIES_GEOMETRIES_SERVICE_URL,
+      url: REACT_APP_FEATURE_MARINE ? EEZ_MARINE_GEOMETRY_BORDERS_URL : COUNTRIES_GEOMETRIES_SERVICE_URL,
       whereClause: `GID_0 = '${countryISO}'`,
       returnGeometry: true
     }).then((features) => {
+      console.log('f', features)
       const { geometry } = features[0];
       setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
     }).catch(error => {
