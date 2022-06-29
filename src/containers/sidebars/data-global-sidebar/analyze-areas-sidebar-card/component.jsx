@@ -38,6 +38,7 @@ const AnalyzeAreasCardComponent = ({
   handlePromptModalToggle,
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
+  onboardingType,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const t = useT();
@@ -55,7 +56,8 @@ const AnalyzeAreasCardComponent = ({
     <div
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,
-        [styles.onboardingOverlay]: onboardingStep === 2,
+        [styles.onboardingOverlay]:
+          onboardingType === 'priority-places' && onboardingStep === 2,
       })}
     >
       <CategoryBox

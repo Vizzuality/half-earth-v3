@@ -38,10 +38,9 @@ const Container = (props) => {
     }).then((features) => {
       const { attributes } = features[0];
       const { Global_SPI_ter, Global_SPI_mar } = attributes;
-
       setGlobalAverage({
-        landAverage: Global_SPI_ter && Global_SPI_ter.toFixed(),
-        marineAverage: Global_SPI_mar && Global_SPI_mar.toFixed(),
+        landAverage: Global_SPI_ter && parseFloat(Global_SPI_ter).toFixed(),
+        marineAverage: Global_SPI_mar && parseFloat(Global_SPI_mar).toFixed(),
       });
     })
   }, [])

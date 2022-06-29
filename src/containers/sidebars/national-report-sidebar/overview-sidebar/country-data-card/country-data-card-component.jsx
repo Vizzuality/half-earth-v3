@@ -129,12 +129,12 @@ const CountryDataCardComponent = ({
                     <b>
                       protected land (
                       {`${prop_protected_ter && prop_protected_ter.toFixed()}%`}
-                      ),
+                      )
                     </b>
-                    the total number of{' '}
+                    , the total number of{' '}
                     <b>terrestrial vertebrates ({nspecies_ter})</b> and the
                     amount of these which are{' '}
-                    <b>endemic ({total_endemic_ter}).</b>
+                    <b>endemic ({total_endemic_ter})</b>.
                   </p>
                 </div>
               </div>
@@ -165,11 +165,11 @@ const CountryDataCardComponent = ({
                         {`${
                           prop_protected_mar && prop_protected_mar.toFixed()
                         }%`}
-                        ),
+                        )
                       </b>
-                      the total number of{' '}
+                      , the total number of{' '}
                       <b>marine vertebrates ({nspecies_mar})</b> and the amount
-                      of these which are <b>endemic ({total_endemic_mar}).</b>
+                      of these which are <b>endemic ({total_endemic_mar})</b>.
                     </p>
                   </div>
                 </div>
