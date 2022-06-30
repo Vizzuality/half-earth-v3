@@ -70,13 +70,21 @@ const BiodiversitySidebarCardComponent = ({
       resolutionsForSelectedCategory &&
       resolutionsForSelectedCategory[selectedResolution[category]];
 
-    if (resolutionsForSelectedCategory && layersForSelectedResolution) {
-      const layersAlphabetically = layersForSelectedResolution.sort((a, b) => a.name.localeCompare(b.name))
-
-      return layersAlphabetically;
-    } else {
-      return [];
-    }
+      if (resolutionsForSelectedCategory && layersForSelectedResolution) {
+        const layerAll = layersForSelectedResolution.filter(l => l.name === 'All')
+        const layersStartingWithAll = layersForSelectedResolution
+          .filter(l => l.name.startsWith('All '))
+          .sort((a, b) => a.name.localeCompare(b.name))
+        const otherLayers = layersForSelectedResolution
+          .filter(l => l.name !== 'All')
+          .filter(l => !l.name.startsWith('All '))
+          .sort((a, b) => a.name.localeCompare(b.name))
+        const allLayersAlphabetically = layerAll.concat(layersStartingWithAll, otherLayers)
+  
+        return allLayersAlphabetically;
+      } else {
+        return [];
+      }
   };
 
   const tooltipRefs = useTooltipRefs({
