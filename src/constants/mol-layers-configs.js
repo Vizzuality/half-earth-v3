@@ -120,7 +120,7 @@ export const LAYERS_CATEGORIES = {
   MARINE_HUMAN_PRESSURES: 'Marine use pressures'
 };
 
-const defaultBbox = [-48, -52, 59, 66];
+// const defaultBbox = [-48, -52, 59, 66];
 const USCenteredBbox = [-164, -40, -35, 56];
 
 export const layersConfig = {
@@ -429,14 +429,14 @@ export const layersConfig = {
     slug: AMPHIB_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[AMPHIB_RARITY_1KM],
-    bbox: defaultBbox
+    bbox: USCenteredBbox
   },
   [AMPHIB_RICHNESS_1KM]: {
     title: AMPHIB_RICHNESS_1KM,
     slug: AMPHIB_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[AMPHIB_RICHNESS_1KM],
-    bbox: defaultBbox
+    bbox: USCenteredBbox
   },
   [SA_DRAGONFLIES_RARITY]: {
     title: SA_DRAGONFLIES_RARITY,
@@ -513,14 +513,14 @@ export const layersConfig = {
     slug: REPTILES_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[REPTILES_RARITY_1KM],
-    bbox: defaultBbox
+    bbox: USCenteredBbox
   },
   [REPTILES_RICHNESS_1KM]: {
     title: REPTILES_RICHNESS_1KM,
     slug: REPTILES_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[REPTILES_RICHNESS_1KM],
-    bbox: defaultBbox
+    bbox: USCenteredBbox
   },
   [BUTTERFLIES_RICHNESS_1KM]: {
     title: BUTTERFLIES_RICHNESS_1KM,
