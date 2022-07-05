@@ -7,28 +7,39 @@ permalink: /_docs/science/metadata-service
 
 # Metadata service
 
-The metadata from the info buttons in the *production site* is controlled from a service in arcgis online ([item url](https://eowilson.maps.arcgis.com/home/item.html?id=d899a4364fe5431b8c5bef826ad4430d#data){:target="_blank"} and [service url](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Metadata2/FeatureServer){:target="_blank"}). The service can be updated through the arcgis interface or through the python api.
+The metadata from the info buttons in the *production site* is controlled from a service in arcgis online ([item url](https://eowilson.maps.arcgis.com/home/item.html?id=cab2acd857a34e2faef1f60a9d40e354#overview){:target="_blank"} and [service url](https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/metadata_prod/FeatureServer){:target="_blank"}). This service can be updated directly in ArcGIS Online or through the python API.
 
-The notebook explaining how the service was created the first time and a procedure to update the values inside is available in [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Metadata_publishing.ipynb). The workflow to update the values implicates an overwriting of the service, therefore it is a bit risky to use.
+The notebook explaining how the service was created the first time and a procedure to update the values inside is available in [he-scratchfolder](https://github.com/Vizzuality/he-scratchfolder/blob/master/Metadata_publishing.ipynb). **Note that** the workflow to update the values implicates an overwriting of the service, therefore it is a bit risky to use.
 
-## production vs development metadata services
-The front end code is set so the [production site](https://map.half-earthproject.org/) uses the arcgis online item: `Metadata2`. Meanwhile, any development site uses the `metadata_dev` table service ([arcgis item](https://eowilson.maps.arcgis.com/home/item.html?id=ebbbbd1129cf40b1bdb99602a9e9e310)). When there is an update of the production site the `Metadata2` service needs to be updated. Currently this is done manually, but there is a [notebook](https://eowilson.maps.arcgis.com/home/item.html?id=9223a0f0de834fcf963e5e48cc607f26) that could do this process.
+## Production vs staging metadata services
+The frontend code is set so the [production site](https://map.half-earthproject.org/) uses the arcgis online item: `metadata_prod`, while any development site uses the `metadata_staging` table service ([arcgis item](https://eowilson.maps.arcgis.com/home/item.html?id=ef369a73779d4a37b2252808afef98a7#overview)). When there is an update of the production site, the `metadata_prod` service needs to be updated. This can be done manually, but there is a [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/update_metadata_from_staging_to_production.ipynb) that can do this process in an easier and faster way.
 
-## create new entries
-Ask the Front End for the `slug` they will be using to refer to the layer. Then you will provide the information for each field: slug, title (text), description (text), source (markdown text), mol Logo (boolean).
-### if using the python api (currently not working, probably because there are new fields created... Should move this information to a table service)
-use the [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/Metadata_publishing.ipynb){:target="_blank"} with the code to access the service (you will need appropriate admin permissions):
+## Create new entries
+To create new entries in the `metadata_staging` table, we need to ask the frontend for the `slug` they will be using to refer to the layer. Then, we need to provide the information for each field: slug, title (text), description (text), source (markdown text), mol Logo (boolean). 
+
+The new entries can be created:
+
+* **Using the ArcGIS Online IDE**
+
+Use the *append* data button and select a new file that contains only the new rows. Or use the *overwrite* bottom to upload a table that contains both the old and the new entries.
+
+* **Using the Python API**
+
+Use the [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/Metadata_publishing.ipynb){:target="_blank"} with the code to access the service (you will need appropriate admin permissions). (Note: this is currently not working, probably because there are new fields created... Should move this information to a table service):
 - access the service
 - download the information as csv
 - in an editor provide the information for each field: slug, title (text), description (text), source (markdown text), mol Logo (boolean).
 - merge the new information to the downloaded csv
 - overwrite the service with the complete csv
 
+## Edit existing entries
+* **Using the arcgis online IDE**
 
-### if using the arcgis online IDE
-Use the append data button and select a file with the new rows.
-## edit existing entries
-### if using the python api
-Same as above but with the updated csv, no need to merge new rows.
-### if using the arcgis online IDE
-Open the data view and manually edit. **ATTENTION** there is not an undo button.
+Open the data view and manually edit. **ATTENTION** there is not an undo button so any changes made there are permanent.
+
+* **Using the Python API**
+
+We can use notebooks to retrieve the tables and make changes. The notebook mentioned above could be used, considering only the updated csv, as there is no need to merge new rows.
+
+
+
