@@ -31,7 +31,6 @@ const NrcSceneContainer = (props) => {
       whereClause: `GID_0 = '${countryISO}'`,
       returnGeometry: true
     }).then((features) => {
-      console.log('f', features)
       const { geometry } = features[0];
       setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
     }).catch(error => {

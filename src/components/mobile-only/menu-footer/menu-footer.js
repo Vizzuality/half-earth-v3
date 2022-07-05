@@ -134,21 +134,6 @@ const MenuFooterContainer = props => {
       key: FOOTER_OPTIONS.SEARCH,
       onClickHandler: () => { handler(FOOTER_OPTIONS.SEARCH); handleSearchToggle(); }
     },
-    // {
-    //   icon: featured ? SelectMapIcon : AddLayerIcon,
-    //   name: featured ? 'SELECT MAP' : 'ADD LAYER',
-    //   key: FOOTER_OPTIONS.ADD_LAYER,
-    //   onClickHandler: () => {
-    //     if (featured) { resetFeaturedMap(); toggleFeaturedMapsList(); }
-    //     handler(FOOTER_OPTIONS.ADD_LAYER)
-    //   }
-    // },
-    // {
-    //   icon: LegendIcon,
-    //   name: 'Legend',
-    //   key: FOOTER_OPTIONS.LEGEND,
-    //   onClickHandler: () => handler(FOOTER_OPTIONS.LEGEND)
-    // },
     {
       icon: SettingsIcon,
       name: 'More',
