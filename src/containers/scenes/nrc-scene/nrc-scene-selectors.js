@@ -3,7 +3,6 @@ import { getOnboardingType } from 'containers/onboarding/onboarding-selectors';
 
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
-const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getCountryBorder = ({ countriesGeometries }, { countryISO }) => {
   if (!countryISO || !countriesGeometries) return null;
@@ -25,7 +24,6 @@ const getCountryData = createSelector(
 export default createStructuredSelector({
   countriesData: selectCountriesData,
   countryBorder: getCountryBorder,
-  userConfig: selectUserConfig,
   countryData: getCountryData,
   onboardingType: getOnboardingType
 })

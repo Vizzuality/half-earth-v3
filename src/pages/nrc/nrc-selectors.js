@@ -10,7 +10,6 @@ import { LAND_MARINE } from 'constants/country-mode-constants';
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
-const selectUserConfig = ({ userConfig }) => userConfig || null;
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 const selectActiveView = ({ location }) => location.payload.view || NRC_UI_DEFAULTS.view;
 
@@ -47,7 +46,6 @@ export const getOnWaitingInteraction = createSelector(getUiSettings, uiSettings 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
   countryName: getCountryName,
-  userConfig: selectUserConfig,
   sceneLayers: getDataGlobeLayers,
   openedModal: getHalfEarthModalOpen,
   hasMetadata: selectMetadataData,

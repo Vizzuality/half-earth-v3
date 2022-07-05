@@ -30,7 +30,6 @@ const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 const DataSceneComponent = ({
   sceneMode,
   onMapLoad,
-  userConfig,
   countryISO,
   countryName,
   openedModal,
@@ -79,10 +78,7 @@ const DataSceneComponent = ({
         {!!onboardingType && <SoundButton />}
         <OnboardingTooltip />
 
-        <ArcgisLayerManager
-          userConfig={userConfig}
-          activeLayers={activeLayers}
-        />
+        <ArcgisLayerManager activeLayers={activeLayers} />
 
         {isGlobeUpdating && <Spinner floating />}
 

@@ -7,7 +7,6 @@ import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'sel
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
-const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState,
   (globeUrlState) => {
@@ -51,7 +50,6 @@ export default createStructuredSelector({
   listeners: getListenersSetting,
   sceneMode: getSceneMode,
   countryExtent: selectCountryExtent,
-  userConfig: selectUserConfig,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,

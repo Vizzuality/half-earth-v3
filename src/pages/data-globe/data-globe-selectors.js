@@ -8,7 +8,6 @@ import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'sel
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
-const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState,
   (globeUrlState) => {
@@ -75,7 +74,6 @@ export default createStructuredSelector({
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
-  userConfig: selectUserConfig,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
