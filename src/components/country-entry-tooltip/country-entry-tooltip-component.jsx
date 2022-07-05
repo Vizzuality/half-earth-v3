@@ -166,7 +166,7 @@ const CountryEntryTooltipComponent = ({
             <span className={styles.text}>
               {`${
                 landTab ? LAND_MARINE.land : LAND_MARINE.marine
-              } is protected`}
+              } area is protected`}
             </span>
           </div>
           <div className={styles.infoPill}>
