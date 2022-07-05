@@ -13,7 +13,6 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const DataGlobeComponent = ({
   sceneMode,
   countryISO,
-  userConfig,
   countryName,
   hasMetadata,
   openedModal,
@@ -45,7 +44,6 @@ const DataGlobeComponent = ({
       />
       <DataScene
         sceneMode={sceneMode}
-        userConfig={userConfig}
         countryISO={countryISO}
         countryName={countryName}
         openedModal={openedModal}

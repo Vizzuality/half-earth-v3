@@ -89,14 +89,14 @@ const featuredGlobeContainer = props => {
       layer.maxScale = 250000.0
     }
   }
-  const { activeLayers, userConfig } = props;
+  const { activeLayers } = props;
   return (
     <Component
       handleLayerToggle={toggleLayer}
       handleZoomChange={changeGlobe}
       clickCallbacksArray={clickCallbacksArray}
       mouseMoveCallbacksArray={mouseMoveCallbacksArray}
-      onMapLoad={(map) => handleMapLoad(map, activeLayers, userConfig)}
+      onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       customFunctions={[showLayersOnlyOnLandscape, setVibrantLayerMaxScale]}
       spinGlobe={spinGlobe}
       spinGlobeHandle={handle}

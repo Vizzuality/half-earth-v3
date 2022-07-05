@@ -20,7 +20,6 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const NationalReportCard = ({
   countryISO,
   chartData,
-  userConfig,
   openedModal,
   countryName,
   hasMetadata,
@@ -68,7 +67,6 @@ const NationalReportCard = ({
       <NationalReportCardScene
         chartData={chartData}
         countryISO={countryISO}
-        userConfig={userConfig}
         openedModal={openedModal}
         countryName={countryName}
         activeLayers={activeLayers}

@@ -9,7 +9,6 @@ import dataSceneConfig from 'scenes/landing-scene/landing-scene-config';
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
-const selectUserConfig = ({ userConfig }) => userConfig || null;
 
 const getGlobeSettings = createSelector(selectGlobeUrlState,
   (globeUrlState) => {
@@ -86,5 +85,4 @@ export default createStructuredSelector({
   countryExtent: selectCountryExtent,
   localSceneFilters: getLocalSceneFilters,
   countedActiveLayers: getCountedActiveLayers,
-  userConfig: selectUserConfig
 });

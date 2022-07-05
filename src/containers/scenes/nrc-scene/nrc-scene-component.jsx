@@ -18,7 +18,7 @@ import SoundButton from 'containers/onboarding/sound-btn';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 // Constants
 import {
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
+  GLOBAL_SPI_FEATURE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
   EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs';
@@ -31,7 +31,6 @@ const CountrySceneComponent = ({
   onMapLoad,
   isVisible,
   countryISO,
-  userConfig,
   countryName,
   openedModal,
   activeLayers,
@@ -56,7 +55,7 @@ const CountrySceneComponent = ({
       {onboardingType && <SoundButton />}
       {countryData && <OnboardingTooltip />}
       <LocalSceneViewManager localGeometry={countryBorder} />
-      <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
+      <ArcgisLayerManager activeLayers={activeLayers} />
       <CountryMaskLayer
         countryISO={countryISO}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
@@ -65,7 +64,7 @@ const CountrySceneComponent = ({
         featureLayerSlugs={[
           ...(REACT_APP_FEATURE_MARINE
             ? [EEZ_MARINE_BORDERS]
-            : [COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]),
+            : [GLOBAL_SPI_FEATURE_LAYER]),
           HALF_EARTH_FUTURE_TILE_LAYER,
         ]}
         onFeatureClick={handleAreaClick}

@@ -25,7 +25,6 @@ const NrcLandingComponent = ({
   map,
   sceneMode,
   onMapLoad,
-  userConfig,
   countryISO,
   countryName,
   openedModal,
@@ -51,10 +50,7 @@ const NrcLandingComponent = ({
       >
         {onboardingType && <SoundButton />}
         <OnboardingTooltip className={styles.onboardingTooltip} />
-        <ArcgisLayerManager
-          activeLayers={activeLayers}
-          userConfig={userConfig}
-        />
+        <ArcgisLayerManager activeLayers={activeLayers} />
         {isGlobeUpdating && <Spinner floating />}
         <CountryLabelsLayer
           activeLayers={activeLayers}

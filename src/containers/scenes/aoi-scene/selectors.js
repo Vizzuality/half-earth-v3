@@ -4,7 +4,6 @@ import { selectAoiId, getAoiGeometry, selectAreaType } from 'selectors/aoi-selec
 
 import aoiSceneConfig from './config';
 
-const selectUserConfig = ({ userConfig }) => userConfig || null;
 const selectPrecalculatedLayerSlug = ({ location }) => location.query && location.query.precalculatedLayer;
 const selectLocationObjectId = ({ location }) => location.query && location.query.OBJECTID;
 
@@ -24,7 +23,6 @@ export default createStructuredSelector({
   areaTypeSelected: selectAreaType,
   aoiId: selectAoiId,
   objectId: selectLocationObjectId,
-  userConfig: selectUserConfig,
   activeLayers: getActiveLayers,
   sceneSettings: getGlobeSettings,
   isGlobeUpdating: getGlobeUpdating,

@@ -18,7 +18,6 @@ const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 const AoiSceneComponent = ({
   geometry,
   onMapLoad,
-  userConfig,
   speciesData,
   activeLayers,
   sceneSettings,
@@ -43,10 +42,7 @@ const AoiSceneComponent = ({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
-      <ArcgisLayerManager
-        userConfig={userConfig}
-        activeLayers={updatedActiveLayers}
-      />
+      <ArcgisLayerManager activeLayers={updatedActiveLayers} />
       <MaskAndOutlineGraphicLayer geometry={geometry} />
       <FeatureHighlightLayer
         featureLayerSlugs={[HALF_EARTH_FUTURE_TILE_LAYER]}

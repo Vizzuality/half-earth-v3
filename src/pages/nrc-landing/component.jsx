@@ -13,7 +13,6 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const NationalReportCardLanding = ({
   countryISO,
   countryName,
-  userConfig,
   openedModal,
   hasMetadata,
   activeLayers,
@@ -36,14 +35,13 @@ const NationalReportCardLanding = ({
         map={map}
         countryISO={countryISO}
         countryName={countryName}
-        userConfig={userConfig}
         openedModal={openedModal}
         activeLayers={activeLayers}
         sceneSettings={sceneSettings}
         isFullscreenActive={isFullscreenActive}
         onMapLoad={(loadedMap) => {
           setMap(loadedMap);
-          handleMapLoad(loadedMap, activeLayers)
+          handleMapLoad(loadedMap, activeLayers);
         }}
         onboardingType={onboardingType}
         onboardingStep={onboardingStep}

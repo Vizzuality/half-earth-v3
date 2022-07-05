@@ -6,7 +6,7 @@ import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import PostRobotManager from 'containers/managers/post-robot-manager';
 import ConstantContactLayers from 'containers/layers/constant-contact-layers';
 
-const { REACT_APP_ARGISJS_API_VERSION:API_VERSION } = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 const DataGlobeComponent = ({
   activeLayers,
@@ -16,14 +16,13 @@ const DataGlobeComponent = ({
   listeners,
   handleZoomChange,
   handlePostRobotUpdates,
-  userConfig
 }) => (
   <Scene
     onViewLoad={onLoad}
     sceneSettings={sceneSettings}
     loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
   >
-    <ArcgisLayerManager activeLayers={activeLayers} userConfig={userConfig} />
+    <ArcgisLayerManager activeLayers={activeLayers} />
     <PostRobotManager
       activeLayers={activeLayers}
       handlePostRobotUpdates={handlePostRobotUpdates}

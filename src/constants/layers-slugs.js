@@ -78,7 +78,6 @@ export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer'
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
 // layer with countries data and borders geometries
 export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer';
-export const COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER = 'countries_generalized_borders_layer';
 export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
 export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';

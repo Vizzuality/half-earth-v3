@@ -4,7 +4,6 @@ import {
   MARINE_COUNTRY_PRIORITY_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   COUNTRIES_DATA_FEATURE_LAYER,
-  COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER,
   GLOBAL_SPI_FEATURE_LAYER,
   MARINE_SPI_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
@@ -146,8 +145,6 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Educator_Ambassadors/FeatureServer',
   [COUNTRIES_LABELS_FEATURE_LAYER]: COUNTRIES_DATA_URL,
   [COUNTRIES_DATA_FEATURE_LAYER]: COUNTRIES_DATA_URL,
-  [COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_generalised/FeatureServer',
   [LANDSCAPE_FEATURES_LABELS_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/LandscapeUniqueRivers_gadm36/FeatureServer',
   [CITIES_LABELS_LAYER]:
