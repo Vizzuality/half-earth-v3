@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 // CONSTANTS
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
-import { COUNTRIES_GENERALIZED_BORDERS_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
+import { GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
 // UTILS
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 import { hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip } from 'utils/globe-events-utils';
