@@ -16,8 +16,6 @@ import {
   RANKING_HEADER_LABELS,
 } from 'constants/country-mode-constants';
 
-const { REACT_APP_FEATURE_MARINE } = process.env;
-
 const categories = Object.keys(SORT_GROUPS_SLUGS);
 const RankingChart = ({
   data,
@@ -98,48 +96,30 @@ const RankingChart = ({
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        {REACT_APP_FEATURE_MARINE ? (
-          <>
-            <span className={styles.chartTitle}>Show</span>
-            <div className={styles.landMarineDropdownWrapper}>
-              <Dropdown
-                disabled={!coastal}
-                width="full"
-                parentWidth="130px"
-                options={landMarineOptions}
-                selectedOption={selectedLandMarineOption}
-                handleOptionSelection={handleLandMarineSelection}
-              />
-            </div>
-            <span className={cx(styles.chartTitle, styles.filterTitle)}>
-              sort countries
-            </span>
-            <div className={styles.dropdownWrapper}>
-              <Dropdown
-                width="full"
-                parentWidth="410px"
-                options={SORT_OPTIONS}
-                groups={SORT_GROUPS}
-                selectedOption={selectedFilterOption}
-                handleOptionSelection={handleFilterSelection}
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            <span className={styles.chartTitle}>Sort countries by</span>
-            <div className={styles.dropdownWrapper}>
-              <Dropdown
-                width="full"
-                parentWidth="410px"
-                options={SORT_OPTIONS}
-                groups={SORT_GROUPS}
-                selectedOption={selectedFilterOption}
-                handleOptionSelection={handleFilterSelection}
-              />
-            </div>
-          </>
-        )}
+        <span className={styles.chartTitle}>Show</span>
+        <div className={styles.landMarineDropdownWrapper}>
+          <Dropdown
+            disabled={!coastal}
+            width="full"
+            parentWidth="130px"
+            options={landMarineOptions}
+            selectedOption={selectedLandMarineOption}
+            handleOptionSelection={handleLandMarineSelection}
+          />
+        </div>
+        <span className={cx(styles.chartTitle, styles.filterTitle)}>
+          sort countries
+        </span>
+        <div className={styles.dropdownWrapper}>
+          <Dropdown
+            width="full"
+            parentWidth="410px"
+            options={SORT_OPTIONS}
+            groups={SORT_GROUPS}
+            selectedOption={selectedFilterOption}
+            handleOptionSelection={handleFilterSelection}
+          />
+        </div>
       </div>
       <div className={styles.header}>
         <SearchInput

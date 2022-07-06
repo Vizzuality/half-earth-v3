@@ -8,8 +8,6 @@ import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getSortRankingCategory = ({ location }) => (location && get(location, 'query.ui.sortRankingCategory')) || null;
 
-const { REACT_APP_FEATURE_MARINE } = process.env;
-
 const getRankingData = createSelector([selectCountriesData, getLandMarineSelected], (countriesData, landMarineSelection) => {
   if(!countriesData) return null;
   const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
@@ -28,7 +26,7 @@ const getRankingData = createSelector([selectCountriesData, getLandMarineSelecte
       },
       [RANKING_GROUPS_SLUGS.humanModification]: {
         [RANKING_INDICATORS.veryHigh]: d[attributes.hm_vh],
-        [RANKING_INDICATORS.totalMinusVeryHigh]: REACT_APP_FEATURE_MARINE ? d[attributes.hm] : 100 - d[attributes.prop_hm_very_high] - d[attributes.prop_hm_0],
+        [RANKING_INDICATORS.totalMinusVeryHigh]: d[attributes.hm],
         [RANKING_INDICATORS.noModification]: d[attributes.hm_no]
       },
       [RANKING_GROUPS_SLUGS.protection]: {

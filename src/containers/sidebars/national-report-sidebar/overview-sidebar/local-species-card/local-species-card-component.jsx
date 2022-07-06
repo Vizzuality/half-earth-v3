@@ -37,7 +37,6 @@ const LocalSpeciesCardComponent = ({
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
-  const { REACT_APP_FEATURE_MARINE } = process.env;
   return (
     <div className={styles.cardContainer}>
       <SidebarCardWrapper>
@@ -70,7 +69,6 @@ const LocalSpeciesCardComponent = ({
               </div>
             </div>
           </div>
-
           <ul className={styles.legendList}>
             {/* amphibians */}
             <li className={styles.legendItem}>
@@ -78,7 +76,9 @@ const LocalSpeciesCardComponent = ({
                 <AmphibiansIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${amphibians || 0} amphibians`}</span>
+                <span className={styles.speciesName}>{`${
+                  amphibians || 0
+                } amphibians`}</span>
                 <span>{`${amphibiansEndemic || 0} endemic`}</span>
               </div>
             </li>
@@ -88,7 +88,9 @@ const LocalSpeciesCardComponent = ({
                 <ReptilesIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${reptiles || 0} reptiles`}</span>
+                <span className={styles.speciesName}>{`${
+                  reptiles || 0
+                } reptiles`}</span>
                 <span>{`${reptilesEndemic || 0} endemic`}</span>
               </div>
             </li>
@@ -98,47 +100,51 @@ const LocalSpeciesCardComponent = ({
                 <MammalsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${mammals || 0} mammals (land)`}</span>
+                <span className={styles.speciesName}>{`${
+                  mammals || 0
+                } mammals (land)`}</span>
                 <span>{`${mammalsEndemic || 0} endemic`}</span>
               </div>
             </li>
             {/* mammals (sea) */}
-            {REACT_APP_FEATURE_MARINE && (
-              <li className={styles.legendItem}>
-                <span className={styles.marMammalsIcon}>
-                  <MarMammalsIcon />
-                </span>
-                <div className={styles.legendNameContainer}>
-                  <span className={styles.speciesName}>{`${mammalsMar || 0} mammals (sea)`}</span>
-                  <span>{`${mammalsMarEndemic || 0} endemic`}</span>
-                </div>
-              </li>
-            )}
+            <li className={styles.legendItem}>
+              <span className={styles.marMammalsIcon}>
+                <MarMammalsIcon />
+              </span>
+              <div className={styles.legendNameContainer}>
+                <span className={styles.speciesName}>{`${
+                  mammalsMar || 0
+                } mammals (sea)`}</span>
+                <span>{`${mammalsMarEndemic || 0} endemic`}</span>
+              </div>
+            </li>
             {/* birds */}
             <li className={styles.legendItem}>
               <span className={styles.birdsIcon}>
                 <BirdsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${birds || 0} birds`}</span>
+                <span className={styles.speciesName}>{`${
+                  birds || 0
+                } birds`}</span>
                 <span>{`${birdsEndemic || 0} endemic`}</span>
               </div>
             </li>
             {/* fishes */}
-            {REACT_APP_FEATURE_MARINE && (
-              <li className={styles.legendItem}>
-                <span className={styles.fishesIcon}>
-                  <FishesIcon />
-                </span>
-                <div className={styles.legendNameContainer}>
-                  <span className={styles.speciesName}>{`${fishes || 0} fishes`}</span>
-                  <span>{`${fishesEndemic || 0} endemic`}</span>
-                </div>
-              </li>
-            )}
+            <li className={styles.legendItem}>
+              <span className={styles.fishesIcon}>
+                <FishesIcon />
+              </span>
+              <div className={styles.legendNameContainer}>
+                <span className={styles.speciesName}>{`${
+                  fishes || 0
+                } fishes`}</span>
+                <span>{`${fishesEndemic || 0} endemic`}</span>
+              </div>
+            </li>
           </ul>
           <Button
-            type='compound'
+            type="compound"
             handleClick={toggleModal}
             label="See all vertebrates"
             tooltipText="Open vertebrates list modal"
@@ -146,18 +152,19 @@ const LocalSpeciesCardComponent = ({
           />
         </section>
         <section>
-          <p
-            className={styles.speciesSentence}
-          >{highlightedSpeciesSentence}</p>
+          <p className={styles.speciesSentence}>{highlightedSpeciesSentence}</p>
           <HighLightedSpeciesList
             countryISO={countryISO}
             highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
           />
-          <SpeciesModal open={openedModal === MODALS.SPECIES} handleModalClose={toggleModal} />
+          <SpeciesModal
+            open={openedModal === MODALS.SPECIES}
+            handleModalClose={toggleModal}
+          />
         </section>
       </SidebarCardWrapper>
     </div>
-  )
+  );
 };
 
 export default LocalSpeciesCardComponent;

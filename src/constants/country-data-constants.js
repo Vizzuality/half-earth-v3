@@ -1,9 +1,6 @@
 
 
-const { REACT_APP_FEATURE_MARINE } = process.env;
-
-export const COUNTRY_ATTRIBUTES = REACT_APP_FEATURE_MARINE ?
-{
+export const COUNTRY_ATTRIBUTES = {
   nspecies_richness_ter: 'nspecies_ter',
   nspecies_ter: 'nspecies_ter',
   total_endemic_ter: 'total_endemic_ter',
@@ -22,23 +19,4 @@ export const COUNTRY_ATTRIBUTES = REACT_APP_FEATURE_MARINE ?
   similar_ter: 'similar_ter',
   prop_hm_very_high_ter: 'prop_hm_very_high_ter',
   prop_hm_0_ter: 'prop_hm_0_ter'
-} : {
-  nspecies_richness_ter: 'nspecies', // For species-modal-selectors and ranking-chart-selectors
-  nspecies_ter: 'N_SPECIES',
-  total_endemic_ter: 'total_endemic',
-  prop_protected_ter: 'prop_protected',
-  protection_needed_ter: 'protection_needed',
-  hm_vh_ter: 'prop_hm_very_high',
-  hm_ter: null,
-  hm_no_ter: 'prop_hm_0',
-  Pop2020: 'Population2016',
-  2020: '2016',
-  Area_Country: 'Area',
-  SPI_ter: 'SPI',
-  GID_0: 'GID',
-  Global_SPI_ter: '',
-  Pop2020_SUM: 'SUM',
-  similar_ter: 'similar',
-  prop_hm_very_high_ter: 'prop_hm_very_high',
-  prop_hm_0_ter: 'prop_hm_0_ter',
 };

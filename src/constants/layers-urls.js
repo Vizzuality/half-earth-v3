@@ -106,12 +106,10 @@ import {
   EEZ_MARINE_BORDERS
 } from 'constants/layers-slugs';
 
-const { REACT_APP_FEATURE_MARINE, REACT_APP_VERCEL_ENV } = process.env;
+const { REACT_APP_VERCEL_ENV } = process.env;
 const isNotProduction = REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
-const COUNTRIES_DATA_URL = REACT_APP_FEATURE_MARINE ?
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220623/FeatureServer' :
-  'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm_centroid/FeatureServer';
+const COUNTRIES_DATA_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220623/FeatureServer';
 
 const EEZ_MARINE_BORDERS_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Country_boundaries_with_EEZ/FeatureServer';
 
@@ -126,7 +124,7 @@ export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvc
 export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
 export const LAYERS_URLS = {
-  [GLOBAL_SPI_FEATURE_LAYER]: REACT_APP_FEATURE_MARINE ? 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm/FeatureServer' : 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/spi_data_spi_globe/FeatureServer',
+  [GLOBAL_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_EEZ/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois_prod/FeatureServer/0',
   [AOIS_HISTORIC_DEVELOPMENT]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/shared_custom_aois/FeatureServer/0',
