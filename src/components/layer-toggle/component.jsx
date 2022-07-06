@@ -20,14 +20,19 @@ const LayerToggleComponent = ({
   handleOpacityClick,
   handleBringToBackClick,
   handleBringToFrontClick,
+  className,
 }) => {
   return type === 'radio' ? (
     <div
-      className={cx(styles.wrapper, {
-        [styles[variant]]: variant,
-        [theme[themeCategorySlug]]: themeCategorySlug,
-        [styles.checked]: isChecked,
-      })}
+      className={cx(
+        styles.wrapper,
+        {
+          [styles[variant]]: variant,
+          [theme[themeCategorySlug]]: themeCategorySlug,
+          [styles.checked]: isChecked,
+        },
+        className
+      )}
     >
       <RadioTypeToggle
         theme={theme}
@@ -44,12 +49,16 @@ const LayerToggleComponent = ({
     </div>
   ) : (
     <div
-      className={cx(styles.wrapper, {
-        [styles[variant]]: variant,
-        [theme[themeCategorySlug]]: themeCategorySlug,
-        [styles.checked]: isChecked && !disabled,
-        [styles.disabled]: disabled,
-      })}
+      className={cx(
+        styles.wrapper,
+        {
+          [styles[variant]]: variant,
+          [theme[themeCategorySlug]]: themeCategorySlug,
+          [styles.checked]: isChecked && !disabled,
+          [styles.disabled]: disabled,
+        },
+        className
+      )}
     >
       <CheckboxTypeToggle
         disabled={disabled}

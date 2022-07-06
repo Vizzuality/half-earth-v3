@@ -21,7 +21,6 @@ const CountryDataCardComponent = ({
     nspecies_ter,
     prop_protected_mar,
     prop_protected_ter,
-    SPI,
     SPI_ter,
     SPI_mar,
     total_endemic_mar,
@@ -53,13 +52,16 @@ const CountryDataCardComponent = ({
         </div>
         <div className={styles.indexWrapper}>
           <div className={styles.indexBar}>
-            <div className={styles.progressMark} style={{ left: `${SPI}%` }} />
+            <div
+              className={styles.progressMark}
+              style={{ left: `${SPI_ter}%` }}
+            />
             <div
               className={styles.improvementArea}
-              style={{ left: `${SPI}%`, width: `${100 - SPI}%` }}
+              style={{ left: `${SPI_ter}%`, width: `${100 - SPI_ter}%` }}
             />
           </div>
-          <div className={styles.index}>{`${SPI}`}</div>
+          <div className={styles.index}>{`${SPI_ter}`}</div>
         </div>
         <p className={styles.indexStatement}>{indexStatement}</p>
       </section>

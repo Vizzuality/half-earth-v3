@@ -1,6 +1,5 @@
 @import 'styles/settings';
 
-
 .cardContainer {
   padding: $sidebar-paddings;
   min-height: 595px;
@@ -10,8 +9,6 @@
   margin-bottom: 10px;
 }
 
-.section {
-  &:last-child {
-    padding: 25px 0;
-  }
+.layerToggle {
+  margin: 0 -25px;
 }

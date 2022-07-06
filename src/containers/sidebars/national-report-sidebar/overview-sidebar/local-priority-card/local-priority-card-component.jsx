@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import LayerToggle from 'components/layer-toggle';
@@ -111,6 +112,7 @@ const LocalPriorityCardComponent = (props) => {
         />
         <>
           <LayerToggle
+            className={styles.layerToggle}
             map={map}
             type="checkbox"
             option={NRC_TOGGLES[TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]}
@@ -122,6 +124,7 @@ const LocalPriorityCardComponent = (props) => {
           />
           {coastal && (
             <LayerToggle
+              className={styles.layerToggle}
               map={map}
               type="checkbox"
               option={NRC_TOGGLES[MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]}
@@ -136,7 +139,7 @@ const LocalPriorityCardComponent = (props) => {
       </SidebarCardWrapper>
       <SidebarCardWrapper
         className={styles.wrapper}
-        sectionClassName={styles.section}
+        sectionClassName={cx(styles.section, styles.layerToggleSection)}
       >
         <SidebarCardContent
           title="How much additional protection is needed?"
@@ -146,6 +149,7 @@ const LocalPriorityCardComponent = (props) => {
           metaDataSources={priorityMetadata && priorityMetadata.source}
         />
         <LayerToggle
+          className={styles.layerToggle}
           map={map}
           type="checkbox"
           option={NRC_TOGGLES[LAND_COUNTRY_PRIORITY_LAYER]}
@@ -157,6 +161,7 @@ const LocalPriorityCardComponent = (props) => {
         />
         {coastal && (
           <LayerToggle
+            className={styles.layerToggle}
             map={map}
             type="checkbox"
             option={NRC_TOGGLES[MARINE_COUNTRY_PRIORITY_LAYER]}
@@ -168,13 +173,16 @@ const LocalPriorityCardComponent = (props) => {
           />
         )}
       </SidebarCardWrapper>
-      <SidebarCardWrapper sectionClassName={styles.section}>
+      <SidebarCardWrapper
+        sectionClassName={cx(styles.section, styles.layerToggleSection)}
+      >
         <SidebarCardContent
           title={`Where to protect next in ${countryName}?`}
           description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
         <LayerToggle
+          className={styles.layerToggle}
           map={map}
           type="checkbox"
           option={NRC_TOGGLES[HALF_EARTH_FUTURE_TILE_LAYER]}

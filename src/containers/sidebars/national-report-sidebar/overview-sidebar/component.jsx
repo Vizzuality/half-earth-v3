@@ -43,7 +43,6 @@ const OverviewSidebarComponent = ({
   return (
     <>
       <CountryDataCard
-        SPI={SPI}
         mean={mean}
         chartData={chartData}
         countryISO={countryISO}
