@@ -134,7 +134,6 @@ const CountryEntryTooltipComponent = ({
       />
       <section className={styles.spiInfo}>
         <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
-        <p className={styles.spi}>{spiLand}</p>
         <p className={styles.subtitle}>National species protection index</p>
       </section>
       <section className={styles.countryInfo}>
