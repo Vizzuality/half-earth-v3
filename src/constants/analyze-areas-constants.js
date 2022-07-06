@@ -42,12 +42,12 @@ export const { NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS, FUT
 
 export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 
-const { REACT_APP_FEATURE_PA_AOI, REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI } = process.env;
+const { REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI } = process.env;
 
 export const PRECALCULATED_AOI_OPTIONS = [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
-  ...(REACT_APP_FEATURE_PA_AOI === 'true') ? [{ title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') }] : [],
+  { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
   { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth Future') }
 ]
