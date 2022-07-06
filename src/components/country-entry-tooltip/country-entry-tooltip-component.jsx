@@ -97,95 +97,93 @@ const CountryEntryTooltipComponent = ({
   };
 
   const landTab = activeTab === LAND_MARINE.land;
-
-  return tooltipPosition && tooltip ? (
-    <>
-      <div ref={tooltipref} className={styles.tooltipContainer}>
-        <section className={styles.tooltipSection}>
-          <div>
-            <img
-              className={styles.tooltipFlag}
-              src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-              alt=""
-            />
-            <span className={styles.tooltipName}>{countryName}</span>
-          </div>
-          <div>
-            {Object.keys(tabsData).map((key) => (
-              <button
-                key={key}
-                disabled={!coastal}
-                className={cx({
-                  [styles.switchDataButton]: true,
-                  [styles.switchDataActiveButton]: activeTab === key,
-                })}
-                onClick={() => setActiveTab(key)}
-              >
-                {tabsData[key].text}
-              </button>
-            ))}
-          </div>
-        </section>
-        <CloseIcon
-          className={styles.tooltipClose}
-          onClick={() => {
-            handleTooltipClose();
-            setActiveTab('land');
-          }}
-        />
-        <section className={styles.spiInfo}>
-          <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
-          <p className={styles.spi}>{spiLand}</p>
-          <p className={styles.subtitle}>National species protection index</p>
-        </section>
-        <section className={styles.countryInfo}>
-          <div className={styles.infoPill}>
-            <span className={styles.numeric}>
-              {landTab ? landVertebrates : marVertebrates}
-            </span>
-            <span className={styles.text}>
-              {`${
-                landTab ? LAND_MARINE.land : LAND_MARINE.marine
-              } vertebrate species of which`}{' '}
-              <span className={styles.endemic}>
-                {landTab ? endemicLand : endemicMar}
-              </span>{' '}
-              are endemic
-            </span>
-          </div>
-          <div className={styles.infoPill}>
-            <span className={styles.numeric}>
-              {landTab ? protectionLand : protectionMar}%
-            </span>
-            <span className={styles.text}>
-              {`${
-                landTab ? LAND_MARINE.land : LAND_MARINE.marine
-              } area is protected`}
-            </span>
-          </div>
-          <div className={styles.infoPill}>
-            <span className={styles.numeric}>
-              {landTab ? protectionNeededLand : protectionNeededMar}%
-            </span>
-            <span className={styles.text}>
-              {`of additional ${
-                landTab ? LAND_MARINE.land : LAND_MARINE.marine
-              } protection is needed`}
-            </span>
-          </div>
-        </section>
-        <motion.div {...onboardingOverlay}>
-          <button
-            ref={onboardingButtonReference}
-            className={styles.tooltipExplore}
-            onClick={onExploreCountryClick}
-          >
-            explore
-          </button>
-        </motion.div>
-      </div>
-    </>
-  ) : null;
+  if (!tooltipPosition || !tooltip) return null;
+  return (
+    <div ref={tooltipref} className={styles.tooltipContainer}>
+      <section className={styles.tooltipSection}>
+        <div>
+          <img
+            className={styles.tooltipFlag}
+            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            alt=""
+          />
+          <span className={styles.tooltipName}>{countryName}</span>
+        </div>
+        <div>
+          {Object.keys(tabsData).map((key) => (
+            <button
+              key={key}
+              disabled={!coastal}
+              className={cx({
+                [styles.switchDataButton]: true,
+                [styles.switchDataActiveButton]: activeTab === key,
+              })}
+              onClick={() => setActiveTab(key)}
+            >
+              {tabsData[key].text}
+            </button>
+          ))}
+        </div>
+      </section>
+      <CloseIcon
+        className={styles.tooltipClose}
+        onClick={() => {
+          handleTooltipClose();
+          setActiveTab('land');
+        }}
+      />
+      <section className={styles.spiInfo}>
+        <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
+        <p className={styles.spi}>{spiLand}</p>
+        <p className={styles.subtitle}>National species protection index</p>
+      </section>
+      <section className={styles.countryInfo}>
+        <div className={styles.infoPill}>
+          <span className={styles.numeric}>
+            {landTab ? landVertebrates : marVertebrates}
+          </span>
+          <span className={styles.text}>
+            {`${
+              landTab ? LAND_MARINE.land : LAND_MARINE.marine
+            } vertebrate species of which`}{' '}
+            <span className={styles.endemic}>
+              {landTab ? endemicLand : endemicMar}
+            </span>{' '}
+            are endemic
+          </span>
+        </div>
+        <div className={styles.infoPill}>
+          <span className={styles.numeric}>
+            {landTab ? protectionLand : protectionMar}%
+          </span>
+          <span className={styles.text}>
+            {`${
+              landTab ? LAND_MARINE.land : LAND_MARINE.marine
+            } area is protected`}
+          </span>
+        </div>
+        <div className={styles.infoPill}>
+          <span className={styles.numeric}>
+            {landTab ? protectionNeededLand : protectionNeededMar}%
+          </span>
+          <span className={styles.text}>
+            {`of additional ${
+              landTab ? LAND_MARINE.land : LAND_MARINE.marine
+            } protection is needed`}
+          </span>
+        </div>
+      </section>
+      <motion.div {...onboardingOverlay}>
+        <button
+          ref={onboardingButtonReference}
+          className={styles.tooltipExplore}
+          onClick={onExploreCountryClick}
+        >
+          explore
+        </button>
+      </motion.div>
+    </div>
+  );
 };
 
 export default CountryEntryTooltipComponent;
