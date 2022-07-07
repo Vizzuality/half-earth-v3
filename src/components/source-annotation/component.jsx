@@ -32,10 +32,15 @@ const Component = ({
                   </a>
                 ),
               }}
-              children={`Source: ${metaDataSources}`}
+              children={`${t('Source: ')}${metaDataSources}`}
             />
           )}
-          {isJSX && <span>Source: {metaDataSources}</span>}
+          {isJSX && (
+            <span>
+              {t('Source: ')}
+              {metaDataSources}
+            </span>
+          )}
         </cite>
       )}
       {sources && (

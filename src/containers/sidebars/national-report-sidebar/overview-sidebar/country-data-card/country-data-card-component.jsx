@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
@@ -13,6 +14,7 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
+  const t = useT();
   const [activeTab, setActiveTab] = useState(LAND_MARINE.land);
 
   const {
@@ -199,7 +201,7 @@ const CountryDataCardComponent = ({
               </div>
             </div>
             <p className={styles.areaChartLegendText}>
-              Source: Map Of Life, (Yale University).
+              {t('Source: Map Of Life, (Yale University)')}.
             </p>
           </>
         </div>

@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import { useT } from '@transifex/react';
+
 // Components
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
@@ -40,6 +42,8 @@ const ProtectedAreasSidebarCardComponent = ({
   waitingInteraction,
   changeUI,
 }) => {
+  const t = useT();
+
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
@@ -110,7 +114,9 @@ const ProtectedAreasSidebarCardComponent = ({
           ))}
         </div>
         <hr className={hrTheme.dark} />
-        <span className={styles.layersTitle}>Where to conserve next</span>
+        <span className={styles.layersTitle}>
+          {t('Where to conserve next')}
+        </span>
         <div className={styles.togglesContainer}>
           {conserveNextLayers.map((layer) => (
             <LayerToggle
