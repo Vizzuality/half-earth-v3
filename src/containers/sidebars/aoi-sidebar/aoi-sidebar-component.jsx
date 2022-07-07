@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
@@ -47,6 +48,7 @@ const AOISidebarComponent = ({
   setShareModalOpen,
   dataLoaded,
 }) => {
+  const t = useT();
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
   const handleShareModalOpen = () => {
@@ -82,7 +84,7 @@ const AOISidebarComponent = ({
                 type="text"
                 className={styles.areaNameEdit}
                 onChange={(e) => setUpdatedAreaName(e.target.value)}
-                placeholder="Type name"
+                placeholder={t('Type name')}
               />
             ) : (
               <p className={styles.areaName}>

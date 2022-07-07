@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useT } from '@transifex/react';
 
 import { SETTINGS_OPTIONS } from 'constants/mobile-only';
 import { MODALS } from 'constants/ui-params';
@@ -13,6 +14,8 @@ import Component from './menu-settings-component';
 const actions = { ...urlActions };
 
 const MenuSettingsContainer = props => {
+  const t = useT();
+
   const { openedModal, changeUI } = props;
   const [activeModal, setActiveModal] = useState(null);
 
@@ -32,14 +35,14 @@ const MenuSettingsContainer = props => {
 
   const options = {
     [ABOUT_PARTNERS]: {
-      name: 'Partners',
+      name: t('Partners'),
       Component: Partners,
       onClickHandler: () => {
         setActiveModal(ABOUT_PARTNERS);
       }
     },
     [ABOUT_INSTRUCTIONS]: {
-      name: 'How to navigate the map',
+      name: t('How to navigate the map'),
       Component: MapInstructions,
       onClickHandler: () => {
         setActiveModal(ABOUT_INSTRUCTIONS);

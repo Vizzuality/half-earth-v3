@@ -119,6 +119,13 @@ export const LAYERS_CATEGORIES = {
   MARINE_HUMAN_PRESSURES: 'Marine use pressures'
 };
 
+export const LAYERS_CATEGORIES_LABELS = {
+  BIODIVERSITY: 'Biodiversity',
+  PROTECTION: 'Protection',
+  LAND_PRESSURES: 'Human pressures',
+  MARINE_HUMAN_PRESSURES: 'Marine use pressures'
+};
+
 // const defaultBbox = [-48, -52, 59, 66];
 const USCenteredBbox = [-164, -40, -35, 56];
 

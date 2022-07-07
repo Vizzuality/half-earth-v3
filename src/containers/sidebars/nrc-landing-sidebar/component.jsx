@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 // Hooks
 import {
@@ -32,6 +33,8 @@ const NRCLandingSidebar = ({
   view,
   waitingInteraction,
 }) => {
+  const t = useT();
+
   const { landAverage, marineAverage } = globalAverage;
   const averageLoaded =
     landAverage !== undefined || marineAverage !== undefined;
@@ -111,7 +114,7 @@ const NRCLandingSidebar = ({
         theme="dark"
         width="full"
         parentWidth="380px"
-        placeholder="search countries"
+        placeholder={t('search countries')}
         searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}

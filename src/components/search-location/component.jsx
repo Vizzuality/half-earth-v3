@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import Proptypes from 'prop-types';
+import { useT } from '@transifex/react';
 // Assets
 import { ReactComponent as IconSearch } from 'icons/search.svg';
 // Styles
@@ -28,6 +29,8 @@ const Component = ({
   changeUI,
   reference,
 }) => {
+  const t = useT();
+
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
@@ -42,15 +45,14 @@ const Component = ({
     return null;
   }, []);
 
-  const { overlay: onboardingOverlay } =
-    getOnboardingProps({
-      section: 'searchNRC',
-      styles,
-      changeUI,
-      onboardingType,
-      onboardingStep,
-      waitingInteraction,
-    });
+  const { overlay: onboardingOverlay } = getOnboardingProps({
+    section: 'searchNRC',
+    styles,
+    changeUI,
+    onboardingType,
+    onboardingStep,
+    waitingInteraction,
+  });
   return (
     <motion.div
       ref={reference}
@@ -64,7 +66,7 @@ const Component = ({
     >
       <input
         type="text"
-        placeholder={'search'}
+        placeholder={t('search')}
         className={styles.input}
         ref={setReferenceElement}
         onClick={handleOpenSearch}

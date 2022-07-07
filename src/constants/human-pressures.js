@@ -11,6 +11,8 @@ import {
   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 } from 'constants/layers-slugs';
 
+import { t } from '@transifex/native';
+
 import {
   getLegendGradient
 } from 'utils/legend-utils';
@@ -42,14 +44,14 @@ export const MARINE_HUMAN_PRESSURES_COLOR_RAMP = [
 ]
 
 
-const RAINFED = 'Rainfed agriculture';
-const IRRIGATED = 'Irrigated agriculture';
-const URBAN = 'Urban pressures';
-const RANGELAND = 'Rangeland';
-const LAND_DRIVERS = 'Land-based drivers';
-const OCEAN_DRIVERS = 'Ocean-based drivers';
-const COMMERCIAL_FISHING = 'Commercial fishing';
-const ARTISANAL_FISHING = 'Artisanal fishing';
+const RAINFED = t('Rainfed agriculture');
+const IRRIGATED = t('Irrigated agriculture');
+const URBAN = t('Urban pressures');
+const RANGELAND = t('Rangeland');
+const LAND_DRIVERS = t('Land-based drivers');
+const OCEAN_DRIVERS = t('Ocean-based drivers');
+const COMMERCIAL_FISHING = t('Commercial fishing');
+const ARTISANAL_FISHING = t('Artisanal fishing');
 
 export const PRESSURES_SLUGS = {
   urban: URBAN_HUMAN_PRESSURES_TILE_LAYER,
@@ -81,7 +83,7 @@ export const humanPressuresMarine = [
 
 export const humanPressuresLandscapeWidget = [
   ...humanPressuresLandUse,
-  { name: 'Pressure free', value: 'pressureFree', slug: 'human-pressures-free' },
+  { name: t('Pressure free'), value: 'pressureFree', slug: 'human-pressures-free' },
 ];
 
 export const legendSingleRasterTitles = {
@@ -111,8 +113,8 @@ export const legendConfigs = {
 }
 
 export const TEXTS = {
-  categoryTitle: 'Human pressures',
-  marineLayersTitle: 'Marine use pressures',
-  terrestrialLayersTitle: 'Land use pressures',
-  description: 'Global human pressures causing habitat loss and accelerating species extintion'
+  categoryTitle: t('Human pressures'),
+  marineLayersTitle: t('Marine use pressures'),
+  terrestrialLayersTitle: t('Land use pressures'),
+  description: t('Global human pressures causing habitat loss and accelerating species extintion')
 }

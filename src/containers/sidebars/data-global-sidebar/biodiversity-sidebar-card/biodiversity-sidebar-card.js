@@ -15,7 +15,7 @@ import { LAYERS_RESOLUTION, LAYERS_TOGGLE_CONFIG, LAYER_VARIANTS, TERRESTRIAL, D
 
 const actions = { ...metadataActions, ...urlActions };
 const BiodiversitySidebarCard = (props) => {
-  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view, landMarineSelection } = props;
+  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view } = props;
   const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
   const previousBiodiversityLayerVariant = usePrevious(
     biodiversityLayerVariant

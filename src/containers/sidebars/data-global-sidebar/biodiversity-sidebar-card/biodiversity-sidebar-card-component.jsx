@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import { useT } from '@transifex/react';
+
 // Components
 import Dropdown from 'components/dropdown';
 import CategoryBox from 'components/category-box';
@@ -14,7 +16,7 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
 import { BIODIVERSITY_TABS } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import { LAYERS_CATEGORIES_LABELS } from 'constants/mol-layers-configs';
 import {
   LAYERS_TOGGLE_CONFIG,
   LAYERS_RESOLUTION,
@@ -52,6 +54,8 @@ const BiodiversitySidebarCardComponent = ({
   changeUI,
   waitingInteraction,
 }) => {
+  const t = useT();
+
   const firstStep = onboardingStep === 0;
   const { title, description, source } = cardMetadata || {};
   const [isOpen, setOpen] = useState(false);
@@ -70,21 +74,26 @@ const BiodiversitySidebarCardComponent = ({
       resolutionsForSelectedCategory &&
       resolutionsForSelectedCategory[selectedResolution[category]];
 
-      if (resolutionsForSelectedCategory && layersForSelectedResolution) {
-        const layerAll = layersForSelectedResolution.filter(l => l.name === 'All')
-        const layersStartingWithAll = layersForSelectedResolution
-          .filter(l => l.name.startsWith('All '))
-          .sort((a, b) => a.name.localeCompare(b.name))
-        const otherLayers = layersForSelectedResolution
-          .filter(l => l.name !== 'All')
-          .filter(l => !l.name.startsWith('All '))
-          .sort((a, b) => a.name.localeCompare(b.name))
-        const allLayersAlphabetically = layerAll.concat(layersStartingWithAll, otherLayers)
-  
-        return allLayersAlphabetically;
-      } else {
-        return [];
-      }
+    if (resolutionsForSelectedCategory && layersForSelectedResolution) {
+      const layerAll = layersForSelectedResolution.filter(
+        (l) => l.name === 'All'
+      );
+      const layersStartingWithAll = layersForSelectedResolution
+        .filter((l) => l.name.startsWith('All '))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      const otherLayers = layersForSelectedResolution
+        .filter((l) => l.name !== 'All')
+        .filter((l) => !l.name.startsWith('All '))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      const allLayersAlphabetically = layerAll.concat(
+        layersStartingWithAll,
+        otherLayers
+      );
+
+      return allLayersAlphabetically;
+    } else {
+      return [];
+    }
   };
 
   const tooltipRefs = useTooltipRefs({
@@ -116,7 +125,7 @@ const BiodiversitySidebarCardComponent = ({
       {...onboardingOnClick}
     >
       <CategoryBox
-        title={LAYERS_CATEGORIES.BIODIVERSITY}
+        title={LAYERS_CATEGORIES_LABELS.BIODIVERSITY}
         image={BiodiversityThumbnail}
         counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
@@ -154,7 +163,9 @@ const BiodiversitySidebarCardComponent = ({
           </div>
         )}
         <div className={styles.dropdownContainer}>
-          <span className={styles.dropdownLabel}>Terrestrial species</span>
+          <span className={styles.dropdownLabel}>
+            {t('Terrestrial species')}
+          </span>
           <Dropdown
             theme={'dark'}
             parentWidth="170px"
@@ -190,7 +201,7 @@ const BiodiversitySidebarCardComponent = ({
           <>
             <hr className={hrTheme.dark} />
             <div className={styles.dropdownContainer}>
-              <span className={styles.dropdownLabel}>Marine species</span>
+              <span className={styles.dropdownLabel}>{t('Marine species')}</span>
               <Dropdown
                 theme={'dark'}
                 options={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE]}
