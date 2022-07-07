@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { T } from '@transifex/react';
+import { T, LanguagePicker } from '@transifex/react';
 
 import ShareModal from 'components/share-modal';
 import About from 'components/about';
@@ -13,6 +13,9 @@ import menuDiscoverImage from 'images/menu-discover.png';
 import menuNRCImage from 'images/menu-national-report-cards.png';
 import { DATA, NATIONAL_REPORT_CARD_LANDING, FEATURED } from 'router';
 import { joinConversationSocialMedia } from 'constants/social-media-constants';
+
+const REACT_APP_FEATURE_TRANSLATION =
+  process.env.REACT_APP_FEATURE_TRANSLATION === 'true';
 
 const MainMenuContent = ({
   open,
@@ -48,6 +51,7 @@ const MainMenuContent = ({
           </div>
           <CloseIcon />
         </button>
+        {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker />}
         <div className={styles.menuListContainer}>
           <ul className={styles.menuList} role="menubar">
             <li>
