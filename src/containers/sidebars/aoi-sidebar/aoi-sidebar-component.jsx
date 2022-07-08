@@ -73,7 +73,7 @@ const AOISidebarComponent = ({
           handleClick={handleClose}
           Icon={CloseIcon}
           className={styles.backButton}
-          tooltipText="Go back to the globe"
+          tooltipText={t('Go back to the globe')}
         />
         <DummyBlurWorkaround />
         <div className={styles.topRow}>
@@ -95,7 +95,8 @@ const AOISidebarComponent = ({
               <p className={styles.area}>
                 {`${area} `}
                 <span>
-                  km<sup>2</sup>
+                  {t('km')}
+                  <sup>2</sup>
                 </span>
               </p>
             )}
@@ -106,8 +107,8 @@ const AOISidebarComponent = ({
                 type="rectangular"
                 className={styles.saveButton}
                 handleClick={saveName}
-                tooltipText="Save the area name"
-                label="SAVE"
+                tooltipText={t('Save the area name')}
+                label={t('SAVE')}
               />
             </div>
           ) : (
@@ -117,7 +118,7 @@ const AOISidebarComponent = ({
                   Icon={EditIcon}
                   type="icon-square"
                   handleClick={() => setIsEditingName(true)}
-                  tooltipText="Edit area name"
+                  tooltipText={t('Edit area name')}
                 />
               )}
               {dataLoaded && (
@@ -125,7 +126,7 @@ const AOISidebarComponent = ({
                   Icon={ShareIcon}
                   type="icon-square"
                   handleClick={handleShareModalOpen}
-                  tooltipText="Share this area"
+                  tooltipText={t('Share this area')}
                   disabled
                 />
               )}
@@ -141,14 +142,14 @@ const AOISidebarComponent = ({
           </div>
           <div
             className={styles.contextualIndicator}
-            title={`land cover: ${landCover}`}
+            title={`${t('land cover: ')}${landCover}`}
           >
             <LandCoverIcon />
             <span>{landCover}</span>
           </div>
           <div
             className={styles.contextualIndicator}
-            title={`climate regime: ${climateRegime}`}
+            title={`${t('climate regime: ')}${climateRegime}`}
           >
             <ClimateRegimeIcon />
             <span>{climateRegime}</span>
@@ -184,14 +185,14 @@ const AOISidebarComponent = ({
           metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
         />
         <section className={styles.completeDatabaseWrapper}>
-          <p>Do you have more information about this particular area?</p>
+          <p>{t('Do you have more information about this particular area?')}</p>
           <a
             className={styles.link}
             href="https://mol.org/upload"
             target="_blank"
             rel="noopener noreferrer"
           >
-            help us complete our database
+            {t(' help us complete our database')}
           </a>
         </section>
         <ShareModal

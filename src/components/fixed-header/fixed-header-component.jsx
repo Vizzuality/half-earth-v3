@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 
 import ShareModal from 'components/share-modal';
 import ShareModalButton from 'components/share-button';
 import styles from './fixed-header-styles.module.scss';
 
 import { useMobile } from 'constants/responsive';
-
-const BACK = 'BACK';
 
 const differentFixedHeaderHeights = ['Protection', 'Human pressures'];
 
@@ -20,6 +19,7 @@ const FixedHeader = ({
   isLandscapeSidebarCollapsed,
   noBackClick = false,
 }) => {
+  const t = useT();
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
   const isOnMobile = useMobile();
@@ -49,7 +49,7 @@ const FixedHeader = ({
       {!noBackClick && (
         <button className={styles.button} onClick={closeSidebar}>
           <div className={styles.icon} />
-          <span className={styles.backButton}>{BACK}</span>
+          <span className={styles.backButton}>{t('BACK')}</span>
         </button>
       )}
       <div

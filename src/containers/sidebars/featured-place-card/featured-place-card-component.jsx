@@ -52,7 +52,9 @@ const FeaturedPlaceCardComponent = ({
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
             {hotspotsNumbers &&
-              `${hotspotsNumbers.position} / ${hotspotsNumbers.size} Hotspots`}
+              `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
+                'Hotspots'
+              )}`}
           </div>
           <nav className={styles.navigation}>
             <div className={styles.placesNavigator}>

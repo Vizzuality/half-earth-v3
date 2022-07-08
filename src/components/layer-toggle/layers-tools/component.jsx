@@ -1,4 +1,6 @@
 import React from 'react';
+import { useT } from '@transifex/react';
+
 import LayerOpacityControl from 'components/layer-opacity-control';
 import { Tooltip } from 'react-tippy';
 
@@ -17,54 +19,58 @@ const LayersTools = ({
   onBringToBackClick,
   onBringToFrontClick,
   initialOpacityValue,
-}) => (
-  <div className={styles.toggle}>
-    <span
-      className={styles.iconWrapper}
-      onClick={(e) => onBringToFrontClick(e, option.value)}
-    >
+}) => {
+  const t = useT();
+
+  return (
+    <div className={styles.toggle}>
+      <span
+        className={styles.iconWrapper}
+        onClick={(e) => onBringToFrontClick(e, option.value)}
+      >
+        <Tooltip
+          html={<div className={styles.tooltip}>{t('Bring to front')}</div>}
+          animation="none"
+          position="top"
+        >
+          <BringToFrontIcon className={styles.icon} />
+        </Tooltip>
+      </span>
+      <span
+        className={styles.iconWrapper}
+        onClick={(e) => onBringToBackClick(e, option.value)}
+      >
+        <Tooltip
+          html={<div className={styles.tooltip}>{t('Send to back')}</div>}
+          animation="none"
+          position="top"
+        >
+          <BringToBackIcon className={styles.icon} />
+        </Tooltip>
+      </span>
       <Tooltip
-        html={<div className={styles.tooltip}>Bring to front</div>}
+        html={<div className={styles.tooltip}>{t('Change opacity')}</div>}
         animation="none"
         position="top"
       >
-        <BringToFrontIcon className={styles.icon} />
+        <LayerOpacityControl
+          layer={option}
+          changeGlobe={changeGlobe}
+          activeLayers={activeLayers}
+          initialOpacityValue={initialOpacityValue}
+        />
       </Tooltip>
-    </span>
-    <span
-      className={styles.iconWrapper}
-      onClick={(e) => onBringToBackClick(e, option.value)}
-    >
-      <Tooltip
-        html={<div className={styles.tooltip}>Send to back</div>}
-        animation="none"
-        position="top"
-      >
-        <BringToBackIcon className={styles.icon} />
-      </Tooltip>
-    </span>
-    <Tooltip
-      html={<div className={styles.tooltip}>Change opacity</div>}
-      animation="none"
-      position="top"
-    >
-      <LayerOpacityControl
-        layer={option}
-        changeGlobe={changeGlobe}
-        activeLayers={activeLayers}
-        initialOpacityValue={initialOpacityValue}
-      />
-    </Tooltip>
-    <span className={styles.iconWrapper} onClick={() => onInfoClick(option)}>
-      <Tooltip
-        html={<div className={styles.tooltip}>More info</div>}
-        animation="none"
-        position="top"
-      >
-        <InfoIcon className={styles.icon} />
-      </Tooltip>
-    </span>
-  </div>
-);
+      <span className={styles.iconWrapper} onClick={() => onInfoClick(option)}>
+        <Tooltip
+          html={<div className={styles.tooltip}>{t('More info')}</div>}
+          animation="none"
+          position="top"
+        >
+          <InfoIcon className={styles.icon} />
+        </Tooltip>
+      </span>
+    </div>
+  );
+};
 
 export default LayersTools;

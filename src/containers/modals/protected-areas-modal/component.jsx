@@ -30,7 +30,10 @@ const ProtectedAreasModal = ({
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
         {loading && <Spinner floating />}
-        <h1>Protected areas in {contextualData.areaName}</h1>
+        <h1>
+          {t('Protected areas in ')}
+          {contextualData.areaName}
+        </h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
             <SearchIcon className={styles.searchIcon} />
@@ -42,7 +45,7 @@ const ProtectedAreasModal = ({
           </div>
           <div>
             <strong>{data && data.length}</strong>
-            {` PROTECTED AREAS`}
+            {t(' PROTECTED AREAS')}
           </div>
         </div>
         <div className={styles.tableContainer}>

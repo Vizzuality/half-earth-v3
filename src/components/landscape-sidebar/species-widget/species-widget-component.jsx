@@ -1,4 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import React from 'react';
+import { useT } from '@transifex/react';
 import ReactTooltip from 'react-tooltip';
 import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 import speciesPlaceholder from 'images/speciesPlaceholder.svg';
@@ -45,6 +47,7 @@ const SpeciesCarrousel = ({
   handleSelectPrevSpecies,
   handleSelectNextSpecies,
 }) => {
+  const t = useT();
   const {
     imageURL,
     name,
@@ -101,12 +104,17 @@ const SpeciesCarrousel = ({
       </div>
       <div className={styles.speciesDetails}>
         <div className={styles.speciesDetailsRow}>
-          Global range area: {rangeArea} km<sup>2</sup>
+          {t('Global range area: ')}
+          {rangeArea} km<sup>2</sup>
         </div>
         <div className={styles.speciesDetailsRow}>
-          Global range protected: {proportion}
+          {t('Global range protected: ')}
+          {proportion}
         </div>
-        <div className={styles.speciesDetailsRow}>IUCN: {iucnCategory}</div>
+        <div className={styles.speciesDetailsRow}>
+          {t('IUCN: ')}
+          {iucnCategory}
+        </div>
       </div>
     </>
   );
@@ -120,6 +128,8 @@ const SpeciesWidgetComponent = ({
   handleSelectPrevSpecies,
   loading,
 }) => {
+  const t = useT();
+
   const noData = !data && !loading;
   return (
     <div
@@ -127,13 +137,15 @@ const SpeciesWidgetComponent = ({
       style={{ minHeight: noData ? 'auto' : '700px' }}
     >
       <DummyBlurWorkaround />
-      <h3 className={styles.title}>SPECIES TO WATCH HERE</h3>
-      {noData && <p className={styles.text}>No species data for this area.</p>}
+      <h3 className={styles.title}>{t('SPECIES TO WATCH HERE')}</h3>
+      {noData && (
+        <p className={styles.text}>{t('No species data for this area.')}</p>
+      )}
       {data && selectedSpecies && !loading && (
         <>
           <p className={styles.text}>
-            The radar plot below shows the proportion of species range protected
-            from the available taxonomic groups.
+            {t(`The radar plot below shows the proportion of species range protected
+            from the available taxonomic groups.`)}
           </p>
           <div className={styles.chart}>
             <div className={styles.chartSlice}></div>

@@ -184,24 +184,29 @@ const BiodiversitySidebarCardComponent = ({
           />
         </div>
         <div className={styles.togglesContainer}>
-          {layerTogglesToDisplay(TERRESTRIAL).map((layer) => (
-            <LayerToggle
-              map={map}
-              type="radio"
-              option={layer}
-              variant="light"
-              key={layer.value}
-              activeLayers={activeLayers}
-              onChange={handleLayerToggle}
-              themeCategorySlug={BIODIVERSITY_SLUG}
-            />
-          ))}
+          {layerTogglesToDisplay(TERRESTRIAL).map(
+            (layer) =>
+              console.log(layer) || (
+                <LayerToggle
+                  map={map}
+                  type="radio"
+                  option={layer}
+                  variant="light"
+                  key={layer.value}
+                  activeLayers={activeLayers}
+                  onChange={handleLayerToggle}
+                  themeCategorySlug={BIODIVERSITY_SLUG}
+                />
+              )
+          )}
         </div>
         {layerTogglesToDisplay(MARINE).length && (
           <>
             <hr className={hrTheme.dark} />
             <div className={styles.dropdownContainer}>
-              <span className={styles.dropdownLabel}>{t('Marine species')}</span>
+              <span className={styles.dropdownLabel}>
+                {t('Marine species')}
+              </span>
               <Dropdown
                 theme={'dark'}
                 options={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE]}

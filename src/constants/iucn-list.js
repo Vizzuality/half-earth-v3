@@ -1,11 +1,13 @@
+import { t } from '@transifex/native';
+
 export default {
-  EX: 'Extinct',
-  EW: 'Extinct in the wild',
-  CR: 'Critically endangered',
-  EN: 'Endangered',
-  VU: 'Vulnerable',
-  NT: 'Near threatened',
-  LC: 'Least concern',
-  DD: 'Data deficient',
-  NE: 'Not evaluated',
+  EX: t('Extinct'),
+  EW: t('Extinct in the wild'),
+  CR: t('Critically endangered'),
+  EN: t('Endangered'),
+  VU: t('Vulnerable'),
+  NT: t('Near threatened'),
+  LC: t('Least concern'),
+  DD: t('Data deficient'),
+  NE: t('Not evaluated'),
 }

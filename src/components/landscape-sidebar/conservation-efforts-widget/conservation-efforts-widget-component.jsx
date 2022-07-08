@@ -1,4 +1,5 @@
 import React from 'react';
+import { useT } from '@transifex/react';
 import PieChart from 'components/charts/pie-chart';
 import CheckboxGroup from 'components/checkbox-group';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -10,12 +11,17 @@ import {
 import styles from './conservation-efforts-widget-styles.module.scss';
 
 const ConservationEffortsDescription = ({ allProp, rawData }) => {
+  const t = useT();
+
   return (
     <p className={styles.description}>
-      Of the current landscape,{' '}
-      <span className={styles.boldFont}>{allProp}% is under protection.</span>
+      {t('Of the current landscape,')}{' '}
+      <span className={styles.boldFont}>
+        {allProp}
+        {t('% is under protection.')}
+      </span>
       {rawData[COMMUNITY_BASED] > rawData[PROTECTED]
-        ? 'The majority of the protected areas are community managed.'
+        ? t('The majority of the protected areas are community managed.')
         : ''}
     </p>
   );
@@ -31,6 +37,8 @@ const ConservationEffortsWidget = ({
   toggleLayer,
   loading,
 }) => {
+  const t = useT();
+
   const noData = !loading && !rawData;
   return (
     <>
@@ -40,10 +48,10 @@ const ConservationEffortsWidget = ({
       >
         <DummyBlurWorkaround />
         <div className={styles.padding}>
-          <h3 className={styles.title}>Conservation Efforts</h3>
+          <h3 className={styles.title}>{t('Conservation Efforts')}</h3>
           {noData && (
             <p className={styles.description}>
-              No conservation efforts data for this area.
+              {t('No conservation efforts data for this area.')}
             </p>
           )}
           {!loading && rawData && (
@@ -71,7 +79,8 @@ const ConservationEffortsWidget = ({
               theme={styles}
             />
             <p className={styles.notUnderConservationLabel}>
-              Not under conservation {dataFormatted.notUnderConservation}%
+              {t('Not under conservation ')}
+              {dataFormatted.notUnderConservation}%
             </p>
           </>
         )}

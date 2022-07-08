@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
@@ -49,6 +51,8 @@ const NationalReportSidebarComponent = ({
   waitingInteraction,
   changeUI,
 }) => {
+  const t = useT();
+
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
@@ -82,7 +86,7 @@ const NationalReportSidebarComponent = ({
         handleClick={handleClose}
         Icon={CloseIcon}
         className={cx(styles.backButton, onboardingClassName)}
-        tooltipText="Go back to the globe"
+        tooltipText={t('Go back to the globe')}
         onboardingOverlay={onboardingOverlay}
       />
       <DummyBlurWorkaround />
@@ -103,14 +107,14 @@ const NationalReportSidebarComponent = ({
               Icon={ShareIcon}
               className={styles.actionButton}
               handleClick={setShareModalOpen}
-              tooltipText="Share the URL to this view"
+              tooltipText={t('Share the URL to this view')}
             />
             {localSceneActiveTab === 'overview' && (
               <Button
                 type="icon-square"
                 Icon={DownloadIcon}
                 handleClick={handlePrintReport}
-                tooltipText="Download national data report"
+                tooltipText={t('Download national data report')}
               />
             )}
           </div>
@@ -128,9 +132,9 @@ const NationalReportSidebarComponent = ({
       />
       {!countryData ? (
         <div className={styles.loading}>
-          <span
-            className={styles.loadingText}
-          >{`Loading country information...`}</span>
+          <span className={styles.loadingText}>
+            {t('Loading country information...')}
+          </span>
           <Loading />
         </div>
       ) : (
