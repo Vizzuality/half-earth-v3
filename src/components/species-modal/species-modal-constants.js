@@ -1,6 +1,8 @@
+import { t } from '@transifex/native';
+
 export const VERTEBRATE_TABS = [
-  {slug: 'land', title: 'Land'},
-  {slug: 'marine', title: 'Marine'},
+  {slug: 'land', title: t('Land')},
+  {slug: 'marine', title: t('Marine')},
 ];
 
 export const SPECIES_GROUP_STYLE_CLASS_DICTIONARY = {

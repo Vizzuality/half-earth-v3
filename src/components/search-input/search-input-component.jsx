@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useT, t } from '@transifex/react';
+import { useT } from '@transifex/react';
+import { t } from '@transifex/native';
 
 import { ReactComponent as SearchIcon } from 'icons/search.svg';
 import cx from 'classnames';

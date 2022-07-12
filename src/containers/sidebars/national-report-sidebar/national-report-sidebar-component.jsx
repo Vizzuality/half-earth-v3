@@ -91,7 +91,7 @@ const NationalReportSidebarComponent = ({
       />
       <DummyBlurWorkaround />
       <div className={styles.nameWrapper}>
-        <span className={styles.nrcTitle}>National report card of</span>
+        <span className={styles.nrcTitle}>{t('National report card of')}</span>
         <div className={styles.cardHeader}>
           <div className={styles.flagWrapper}>
             <img

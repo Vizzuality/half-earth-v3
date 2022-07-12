@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { T, LanguagePicker } from '@transifex/react';
+import { T, LanguagePicker, useT } from '@transifex/react';
 
 import ShareModal from 'components/share-modal';
 import About from 'components/about';
@@ -25,137 +25,143 @@ const MainMenuContent = ({
   handleShareClick,
   isShareModalOpen,
   handleJoinConversationClick,
-}) => (
-  <AnimatePresence>
-    {open && (
-      <motion.nav
-        initial={{ x: 690 }}
-        exit={{ x: 690 }}
-        animate={{ x: 0 }}
-        transition={{
-          easing: 'easeOut',
-          duration: 0.4,
-        }}
-        role="navigation"
-        className={styles.mainMenuContent}
-      >
-        <button
-          className={styles.closeMenuButton}
-          onClick={() => setMenuOpen(false)}
-          aria-haspopup="true"
-          aria-controls="main-menu"
-          aria-expanded="true"
+}) => {
+  const t = useT();
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.nav
+          initial={{ x: 690 }}
+          exit={{ x: 690 }}
+          animate={{ x: 0 }}
+          transition={{
+            easing: 'easeOut',
+            duration: 0.4,
+          }}
+          role="navigation"
+          className={styles.mainMenuContent}
         >
-          <div className={styles.closeText}>
-            <T _str="CLOSE MENU" />
-          </div>
-          <CloseIcon />
-        </button>
-        {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker />}
-        <div className={styles.menuListContainer}>
-          <ul className={styles.menuList} role="menubar">
-            <li>
-              <button
-                className={styles.menuButton}
-                onClick={() => browsePage({ type: DATA })}
-              >
-                <img
-                  src={menuExploreImage}
-                  alt="explore data link"
-                  className={styles.menuItemImage}
-                />
-                <h2 className={styles.menuItem} role="menuitem">
-                  <T _str="Explore data" />
-                </h2>
-              </button>
-            </li>
-            <li>
-              <button
-                className={styles.menuButton}
-                onClick={() => browsePage({ type: FEATURED })}
-              >
-                <img
-                  src={menuDiscoverImage}
-                  alt="discover stories link"
-                  className={styles.menuItemImage}
-                />
-                <h2 className={styles.menuItem} role="menuitem">
-                  <T _str="Discover Stories" />
-                </h2>
-              </button>
-            </li>
-            <li>
-              <button
-                className={styles.menuButton}
-                onClick={() =>
-                  browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
-                }
-              >
-                <img
-                  src={menuNRCImage}
-                  alt="National Report Card link"
-                  className={styles.menuItemImage}
-                />
-                <h2 className={styles.menuItem} role="menuitem">
-                  <T _str="National Report Cards" />
-                </h2>
-              </button>
-            </li>
-            <li>
-              <About
-                className={styles.menuButton}
-                buttonContentComponent={
-                  <h2
-                    className={cx(styles.menuItem, styles.greyItem)}
-                    role="menuitem"
-                  >
-                    <T _str="About the map" />
-                  </h2>
-                }
-              />
-            </li>
-          </ul>
-          <ul className={styles.menuActions} role="menubar">
-            <li>
-              <h3 className={styles.menuAction} role="menuitem">
+          <button
+            className={styles.closeMenuButton}
+            onClick={() => setMenuOpen(false)}
+            aria-haspopup="true"
+            aria-controls="main-menu"
+            aria-expanded="true"
+          >
+            <div className={styles.closeText}>
+              <T _str="CLOSE MENU" />
+            </div>
+            <CloseIcon />
+          </button>
+          {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker />}
+          <div className={styles.menuListContainer}>
+            <ul className={styles.menuList} role="menubar">
+              <li>
                 <button
-                  onClick={handleShareClick}
-                  className={styles.shareButton}
+                  className={styles.menuButton}
+                  onClick={() => browsePage({ type: DATA })}
                 >
-                  <T _str="SHARE THE HALF-EARTH PROJECT MAP" />
+                  <img
+                    src={menuExploreImage}
+                    alt="explore data link"
+                    className={styles.menuItemImage}
+                  />
+                  <h2 className={styles.menuItem} role="menuitem">
+                    <T _str="Explore data" />
+                  </h2>
                 </button>
-                <ShareModal
-                  isOpen={isShareModalOpen}
-                  setShareModalOpen={toggleModal}
+              </li>
+              <li>
+                <button
+                  className={styles.menuButton}
+                  onClick={() => browsePage({ type: FEATURED })}
+                >
+                  <img
+                    src={menuDiscoverImage}
+                    alt="discover stories link"
+                    className={styles.menuItemImage}
+                  />
+                  <h2 className={styles.menuItem} role="menuitem">
+                    <T _str="Discover Stories" />
+                  </h2>
+                </button>
+              </li>
+              <li>
+                <button
+                  className={styles.menuButton}
+                  onClick={() =>
+                    browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
+                  }
+                >
+                  <img
+                    src={menuNRCImage}
+                    alt={t('National Report Card link')}
+                    className={styles.menuItemImage}
+                  />
+                  <h2 className={styles.menuItem} role="menuitem">
+                    <T _str="National Report Cards" />
+                  </h2>
+                </button>
+              </li>
+              <li>
+                <About
+                  className={styles.menuButton}
+                  buttonContentComponent={
+                    <h2
+                      className={cx(styles.menuItem, styles.greyItem)}
+                      role="menuitem"
+                    >
+                      <T _str="About the map" />
+                    </h2>
+                  }
                 />
-              </h3>
-            </li>
-            <li>
-              <h3
-                className={cx(styles.menuAction, styles.socialAction)}
-                role="menuitem"
-              >
-                <T _str="JOIN THE CONVERSATION" />
-                <ul className={styles.socialLinks}>
-                  {joinConversationSocialMedia.map((socialMedia) => (
-                    <li key={socialMedia.alt} className={styles.socialLink}>
-                      <button
-                        onClick={() => handleJoinConversationClick(socialMedia)}
-                        className={styles.iconBackground}
-                      >
-                        <socialMedia.icon />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </h3>
-            </li>
-          </ul>
-        </div>
-      </motion.nav>
-    )}
-  </AnimatePresence>
-);
+              </li>
+            </ul>
+            <ul className={styles.menuActions} role="menubar">
+              <li>
+                <h3 className={styles.menuAction} role="menuitem">
+                  <button
+                    onClick={handleShareClick}
+                    className={styles.shareButton}
+                  >
+                    <T _str="SHARE THE HALF-EARTH PROJECT MAP" />
+                  </button>
+                  <ShareModal
+                    isOpen={isShareModalOpen}
+                    setShareModalOpen={toggleModal}
+                  />
+                </h3>
+              </li>
+              <li>
+                <h3
+                  className={cx(styles.menuAction, styles.socialAction)}
+                  role="menuitem"
+                >
+                  <T _str="JOIN THE CONVERSATION" />
+                  <ul className={styles.socialLinks}>
+                    {joinConversationSocialMedia.map((socialMedia) => (
+                      <li key={socialMedia.alt} className={styles.socialLink}>
+                        <button
+                          onClick={() =>
+                            handleJoinConversationClick(socialMedia)
+                          }
+                          className={styles.iconBackground}
+                        >
+                          <socialMedia.icon />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </h3>
+              </li>
+            </ul>
+          </div>
+        </motion.nav>
+      )}
+    </AnimatePresence>
+  );
+};
 
 MainMenuContent.propTypes = {
   open: PropTypes.bool,

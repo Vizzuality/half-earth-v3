@@ -1,13 +1,14 @@
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { t } from '@transifex/native';
 
 export const INDICATOR_LABELS = {
-  [COUNTRY_ATTRIBUTES.nspecies_ter]: 'Number of vertebrate species',
-  [COUNTRY_ATTRIBUTES.total_endemic_ter]: 'Number of endemic vertebrate species',
-  [COUNTRY_ATTRIBUTES.prop_protected_ter]: 'Proportion of land protected',
-  [COUNTRY_ATTRIBUTES.protection_needed_ter]: 'Additional land protection needed',
-  [COUNTRY_ATTRIBUTES.hm_vh_ter]: 'Proportion of very high human modification',
-  [COUNTRY_ATTRIBUTES.Pop2020]: `Population (${COUNTRY_ATTRIBUTES['2020']})`,
-  'GNI_PPP': 'Gross National Income (GNI)',
+  [COUNTRY_ATTRIBUTES.nspecies_ter]: t('Number of vertebrate species'),
+  [COUNTRY_ATTRIBUTES.total_endemic_ter]: t('Number of endemic vertebrate species'),
+  [COUNTRY_ATTRIBUTES.prop_protected_ter]: t('Proportion of land protected'),
+  [COUNTRY_ATTRIBUTES.protection_needed_ter]: t('Additional land protection needed'),
+  [COUNTRY_ATTRIBUTES.hm_vh_ter]: t('Proportion of very high human modification'),
+  [COUNTRY_ATTRIBUTES.Pop2020]: `${t('Population ')}(${COUNTRY_ATTRIBUTES['2020']})`,
+  'GNI_PPP': t('Gross National Income (GNI)'),
 };
 
 export const CONTINENTS = [
@@ -32,24 +33,24 @@ export const CONTINENT_COLORS = {
 }
 
 export const FILTERS_DICTIONARY = {
-  filter_continent: 'by continent',
-  filter_neigh: 'by proximity',
-  [`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]: 'with similar area',
-  [`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]: 'with similar population size',
-  [`filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`]: 'with similar proportion of protection',
-  filter_prop_protected_mar: 'with similar proportion of protection',
-  [`filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`]: 'with similar proportion of very high human encroachment',
-  filter_hm_vh_mar: 'with similar proportion of very high human encroachment',
-  [`filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`]: 'with similar proportion of protection needed',
-  filter_protection_needed_mar: 'with similar proportion of protection needed',
-  filter_GNI_PPP: 'with similar Gross National Income',
-  [`filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`]: 'with similar number of endemic species',
-  filter_total_endemic_mar: 'with similar number of endemic species',
-  [`filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`]: 'with similar number of vertebrate species',
-  filter_nspecies_mar: 'with similar number of vertebrate species',
-  [`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]: 'with similar species Protection Index',
-  filter_SPI_mar: 'with similar species Protection Index',
-  filter_steward: 'with shared stewardship'
+  filter_continent: t('by continent'),
+  filter_neigh: t('by proximity'),
+  [`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]: t('with similar area'),
+  [`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]: t('with similar population size'),
+  [`filter_${COUNTRY_ATTRIBUTES.prop_protected_ter}`]: t('with similar proportion of protection'),
+  filter_prop_protected_mar: t('with similar proportion of protection'),
+  [`filter_${COUNTRY_ATTRIBUTES.hm_vh_ter}`]: t('with similar proportion of very high human encroachment'),
+  filter_hm_vh_mar: t('with similar proportion of very high human encroachment'),
+  [`filter_${COUNTRY_ATTRIBUTES.protection_needed_ter}`]: t('with similar proportion of protection needed'),
+  filter_protection_needed_mar: t('with similar proportion of protection needed'),
+  filter_GNI_PPP: t('with similar Gross National Income'),
+  [`filter_${COUNTRY_ATTRIBUTES.total_endemic_ter}`]: t('with similar number of endemic species'),
+  filter_total_endemic_mar: t('with similar number of endemic species'),
+  [`filter_${COUNTRY_ATTRIBUTES.nspecies_ter}`]: t('with similar number of vertebrate species'),
+  filter_nspecies_mar: t('with similar number of vertebrate species'),
+  [`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]: t('with similar species Protection Index'),
+  filter_SPI_mar: t('with similar species Protection Index'),
+  filter_steward: t('with shared stewardship')
 };
 
 export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
@@ -144,18 +145,18 @@ export const RANKING_INDICATOR_GROUPS = {
 
 export const RANKING_LEGEND = {
   [RANKING_GROUPS_SLUGS.species]: {
-    [RANKING_INDICATORS.nonEndemic]: 'Non endemic species',
-    [RANKING_INDICATORS.endemic]: 'Endemic species',
+    [RANKING_INDICATORS.nonEndemic]: t('Non endemic species'),
+    [RANKING_INDICATORS.endemic]: t('Endemic species'),
   },
   [RANKING_GROUPS_SLUGS.humanModification]: {
-    [RANKING_INDICATORS.veryHigh]: 'Very high human modification',
-    [RANKING_INDICATORS.totalMinusVeryHigh]: 'Human modification',
-    [RANKING_INDICATORS.noModification]: 'No human modification',
+    [RANKING_INDICATORS.veryHigh]: t('Very high human modification'),
+    [RANKING_INDICATORS.totalMinusVeryHigh]: t('Human modification'),
+    [RANKING_INDICATORS.noModification]: t('No human modification'),
   },
   [RANKING_GROUPS_SLUGS.protection]: {
-    [RANKING_INDICATORS.protected]: 'Current protection',
-    [RANKING_INDICATORS.protectionNeeded]: 'Additional protection needed',
-    [RANKING_INDICATORS.protectionNotNeeded]: 'No formal protection needed',
+    [RANKING_INDICATORS.protected]: t('Current protection'),
+    [RANKING_INDICATORS.protectionNeeded]: t('Additional protection needed'),
+    [RANKING_INDICATORS.protectionNotNeeded]: t('No formal protection needed'),
   },
 };
 
@@ -163,42 +164,42 @@ export const SORT_GROUPS_SLUGS = { spi: 'spi', ...RANKING_GROUPS_SLUGS };
 export const SORT_GROUPS = [SORT_GROUPS_SLUGS.species, SORT_GROUPS_SLUGS.humanModification, SORT_GROUPS_SLUGS.protection, SORT_GROUPS_SLUGS.spi];
 
 export const RANKING_HEADER_LABELS = {
-  [SORT_GROUPS_SLUGS.species]: 'species',
-  [SORT_GROUPS_SLUGS.humanModification]: 'human modification',
-  [SORT_GROUPS_SLUGS.protection]: 'protection',
-  [SORT_GROUPS_SLUGS.spi]: 'spi',
+  [SORT_GROUPS_SLUGS.species]: t('species'),
+  [SORT_GROUPS_SLUGS.humanModification]: t('human modification'),
+  [SORT_GROUPS_SLUGS.protection]: t('protection'),
+  [SORT_GROUPS_SLUGS.spi]: t('spi'),
 }
 export const SORT_OPTIONS = [
-  { label: 'species protection index', slug: RANKING_INDICATORS.spi, group: SORT_GROUPS_SLUGS.spi },
-  { label: 'species richness', slug: RANKING_INDICATORS.speciesRichness, group: SORT_GROUPS_SLUGS.species },
-  { label: 'proportion of endemic species', slug: RANKING_INDICATORS.endemic, group: SORT_GROUPS_SLUGS.species },
+  { label: t('species protection index'), slug: RANKING_INDICATORS.spi, group: SORT_GROUPS_SLUGS.spi },
+  { label: t('species richness'), slug: RANKING_INDICATORS.speciesRichness, group: SORT_GROUPS_SLUGS.species },
+  { label: t('proportion of endemic species'), slug: RANKING_INDICATORS.endemic, group: SORT_GROUPS_SLUGS.species },
   {
-    label: 'proportion of very high human modification',
+    label: t('proportion of very high human modification'),
     slug: RANKING_INDICATORS.veryHigh,
     group: SORT_GROUPS_SLUGS.humanModification,
   },
   {
-    label: 'proportion of human modification',
+    label: t('proportion of human modification'),
     slug: RANKING_INDICATORS.totalMinusVeryHigh,
     group: SORT_GROUPS_SLUGS.humanModification,
   },
   {
-    label: 'proportion of non human modification',
+    label: t('proportion of non human modification'),
     slug: RANKING_INDICATORS.noModification,
     group: SORT_GROUPS_SLUGS.humanModification,
   },
   {
-    label: 'proportion of protection',
+    label: t('proportion of protection'),
     slug: RANKING_INDICATORS.protected,
     group: SORT_GROUPS_SLUGS.protection,
   },
   {
-    label: 'proportion of additional protection needed',
+    label: t('proportion of additional protection needed'),
     slug: RANKING_INDICATORS.protectionNeeded,
     group: SORT_GROUPS_SLUGS.protection,
   },
   {
-    label: 'proportion of No formal protection needed',
+    label: t('proportion of No formal protection needed'),
     slug: RANKING_INDICATORS.protectionNotNeeded,
     group: SORT_GROUPS_SLUGS.protection,
   },
@@ -211,11 +212,11 @@ export const LAND_MARINE = {
 
 export const LAND_MARINE_OPTIONS = [
   {
-    label: 'LAND SPI',
+    label: t('LAND SPI'),
     slug: LAND_MARINE.land,
   },
   {
-    label: 'MARINE SPI',
+    label: t('MARINE SPI'),
     slug: LAND_MARINE.marine,
   },
 ];

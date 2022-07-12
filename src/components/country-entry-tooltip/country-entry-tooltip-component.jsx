@@ -1,5 +1,7 @@
 // Dependencies
 import React, { useEffect, useState, useRef } from 'react';
+import { useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
@@ -24,6 +26,8 @@ const CountryEntryTooltipComponent = ({
   onboardingType,
   waitingInteraction,
 }) => {
+  const t = useT();
+
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
@@ -89,10 +93,10 @@ const CountryEntryTooltipComponent = ({
 
   const tabsData = {
     land: {
-      text: 'Land',
+      text: t('Land'),
     },
     marine: {
-      text: 'Marine',
+      text: t('Marine'),
     },
   };
 
@@ -134,7 +138,9 @@ const CountryEntryTooltipComponent = ({
       />
       <section className={styles.spiInfo}>
         <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
-        <p className={styles.subtitle}>National species protection index</p>
+        <p className={styles.subtitle}>
+          {t('National species protection index')}
+        </p>
       </section>
       <section className={styles.countryInfo}>
         <div className={styles.infoPill}>
@@ -142,9 +148,9 @@ const CountryEntryTooltipComponent = ({
             {landTab ? landVertebrates : marVertebrates}
           </span>
           <span className={styles.text}>
-            {`${
-              landTab ? LAND_MARINE.land : LAND_MARINE.marine
-            } vertebrate species of which`}{' '}
+            {`${landTab ? LAND_MARINE.land : LAND_MARINE.marine}${t(
+              ' vertebrate species of which'
+            )}`}{' '}
             <span className={styles.endemic}>
               {landTab ? endemicLand : endemicMar}
             </span>{' '}
@@ -156,9 +162,9 @@ const CountryEntryTooltipComponent = ({
             {landTab ? protectionLand : protectionMar}%
           </span>
           <span className={styles.text}>
-            {`${
-              landTab ? LAND_MARINE.land : LAND_MARINE.marine
-            } area is protected`}
+            {`${landTab ? LAND_MARINE.land : LAND_MARINE.marine}${t(
+              ' area is protected'
+            )}`}
           </span>
         </div>
         <div className={styles.infoPill}>
@@ -166,9 +172,9 @@ const CountryEntryTooltipComponent = ({
             {landTab ? protectionNeededLand : protectionNeededMar}%
           </span>
           <span className={styles.text}>
-            {`of additional ${
+            {`${t('of additional ')}${
               landTab ? LAND_MARINE.land : LAND_MARINE.marine
-            } protection is needed`}
+            }${t(' protection is needed')}`}
           </span>
         </div>
       </section>
@@ -178,7 +184,7 @@ const CountryEntryTooltipComponent = ({
           className={styles.tooltipExplore}
           onClick={onExploreCountryClick}
         >
-          explore
+          {t('explore')}
         </button>
       </motion.div>
     </div>
