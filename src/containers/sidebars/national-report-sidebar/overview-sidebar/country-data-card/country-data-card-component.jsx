@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
@@ -26,6 +27,7 @@ const CountryDataCardComponent = ({
     total_endemic_mar,
     total_endemic_ter,
   } = countryData;
+  const t = useT();
 
   const coastal = Marine === 'True' ? true : false;
 
@@ -33,11 +35,11 @@ const CountryDataCardComponent = ({
 
   const tabsData = {
     land: {
-      text: 'Land',
+      text: t('Land'),
       data: land,
     },
     marine: {
-      text: 'Marine',
+      text: t('Marine'),
       data: marine,
     },
   };
@@ -47,7 +49,7 @@ const CountryDataCardComponent = ({
       <section className={styles.indexOverview}>
         <div className={styles.overviewTextWrapper}>
           <button onClick={handleInfoClick} className={styles.overviewText}>
-            The national species protection index:
+            {t('The national species protection index:')}
           </button>
         </div>
         <div className={styles.indexWrapper}>
@@ -68,7 +70,7 @@ const CountryDataCardComponent = ({
       <section className={styles.indexWidget}>
         <div className={styles.indexExplanation}>
           <p className={styles.indexExplanationText}>
-            National Species Protection Index
+            {t('National Species Protection Index')}
           </p>
           <>
             <div className={styles.donutContainer}>
@@ -85,20 +87,26 @@ const CountryDataCardComponent = ({
                 legendXPosition={53}
                 legendYPosition={58}
                 legendValue={SPI_ter}
-                legendText="LAND SPI"
+                legendText={t('LAND SPI')}
                 outerRadius={'95%'}
                 width={120}
               />
               <div>
                 <p className={styles.legendText}>
-                  The Land SPI is calculated based on the{' '}
+                  {t('The Land SPI is calculated based on the')}{' '}
                   <b>
-                    protected land (
+                    {t('protected land')} (
                     {`${prop_protected_ter && prop_protected_ter.toFixed()}%`})
                   </b>
-                  , the total number of{' '}
-                  <b>terrestrial vertebrates ({nspecies_ter})</b> and the amount
-                  of these which are <b>endemic ({total_endemic_ter})</b>.
+                  {t(', the total number of')}{' '}
+                  <b>
+                    {t('terrestrial vertebrates ')}({nspecies_ter})
+                  </b>{' '}
+                  {t('and the amount of these which are')}{' '}
+                  <b>
+                    {t('endemic ')}({total_endemic_ter})
+                  </b>
+                  .
                 </p>
               </div>
             </div>
@@ -117,27 +125,33 @@ const CountryDataCardComponent = ({
                   legendXPosition={53}
                   legendYPosition={58}
                   legendValue={SPI_mar}
-                  legendText="MARINE SPI"
+                  legendText={t('MARINE SPI')}
                   outerRadius={'95%'}
                   width={120}
                 />
                 <div>
                   <p className={styles.legendText}>
-                    The Marine SPI is based on the{' '}
+                    {t('The Marine SPI is based on the')}{' '}
                     <b>
-                      protected marine areas (
+                      {t('protected marine areas')} (
                       {`${prop_protected_mar && prop_protected_mar.toFixed()}%`}
                       )
                     </b>
-                    , the total number of{' '}
-                    <b>marine vertebrates ({nspecies_mar})</b> and the amount of
-                    these which are <b>endemic ({total_endemic_mar})</b>.
+                    {t(', the total number of')}{' '}
+                    <b>
+                      {t('marine vertebrates')} ({nspecies_mar})
+                    </b>{' '}
+                    {t('and the amount of these which are')}{' '}
+                    <b>
+                      {t('endemic')} ({total_endemic_mar})
+                    </b>
+                    .
                   </p>
                 </div>
               </div>
             )}
             <div className={styles.switchAreaChart}>
-              <p className={styles.switchAreaChartText}>Trend of SPI</p>
+              <p className={styles.switchAreaChartText}>{t('Trend of SPI')}</p>
               <div>
                 {Object.keys(tabsData).map((key) => (
                   <button
@@ -156,7 +170,7 @@ const CountryDataCardComponent = ({
             </div>
             <div className={styles.areaChartContainer}>
               <p className={styles.areaChartYAxisLegend}>
-                Species Protection Index
+                {t('Species Protection Index')}
               </p>
               <AreaChart
                 area1={{
@@ -189,30 +203,30 @@ const CountryDataCardComponent = ({
             <div className={styles.areaLegend}>
               <div className={styles.areaLegendGroup}>
                 <div className={styles.area1BoxLegend} />
-                <p className={styles.areaChartLegendText}>SPI</p>
+                <p className={styles.areaChartLegendText}>{t('SPI')}</p>
               </div>
               <div className={styles.areaLegendGroup}>
                 <div className={styles.area2BoxLegend} />
                 <p className={styles.areaChartLegendText}>
-                  Protected areas (%)
+                  {t('Protected areas (%)')}
                 </p>
               </div>
             </div>
             <p className={styles.areaChartLegendText}>
-              Source: Map Of Life, (Yale University).
+              {t('Source: Map Of Life, (Yale University)')}.
             </p>
           </>
         </div>
         <div className={styles.hint}>
           <BulbIcon />
           <p className={styles.hintTitle}>
-            Why only land and marine vertebrates?
+            {t('Why only land and marine vertebrates?')}
           </p>
           <p className={styles.hintText}>
-            Terrestrial and marine vertebrates represent the species groups with
+            {t(`Terrestrial and marine vertebrates represent the species groups with
             the most comprehensive coverage of distribution data. The Half-Earth
             Project is actively engaging in research to expand coverage of other
-            taxonomic groups.
+            taxonomic groups.`)}
           </p>
         </div>
       </section>

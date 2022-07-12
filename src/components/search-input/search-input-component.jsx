@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useT } from '@transifex/react';
+import { t } from '@transifex/native';
 
 import { ReactComponent as SearchIcon } from 'icons/search.svg';
 import cx from 'classnames';
 import styles from './search-input-styles.module';
 
 const SearchInput = ({ placeholder, onChange, value, type, className }) => {
-  const t = useT();
+  const tr = useT();
 
   return (
     <div
@@ -21,7 +22,7 @@ const SearchInput = ({ placeholder, onChange, value, type, className }) => {
       <input
         type="text"
         className={styles.searchInput}
-        placeholder={t(placeholder)}
+        placeholder={tr(placeholder)}
         onChange={onChange}
         value={value}
       />
@@ -38,7 +39,7 @@ SearchInput.propTypes = {
 };
 
 SearchInput.defaultProps = {
-  placeholder: 'Search',
+  placeholder: t('Search'),
   value: '',
 };
 

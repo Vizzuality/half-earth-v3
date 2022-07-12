@@ -93,6 +93,8 @@ import {
   EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs'
 
+import { t } from '@transifex/native';
+
 import { LAYERS_URLS } from 'constants/layers-urls';
 import {
   BORDERS_LAYERS_RENDERER
@@ -117,6 +119,13 @@ export const LAYERS_CATEGORIES = {
   PROTECTION: 'Protection',
   LAND_PRESSURES: 'Human pressures',
   MARINE_HUMAN_PRESSURES: 'Marine use pressures'
+};
+
+export const LAYERS_CATEGORIES_LABELS = {
+  BIODIVERSITY: t('Biodiversity'),
+  PROTECTION: t('Protection'),
+  LAND_PRESSURES: t('Human pressures'),
+  MARINE_HUMAN_PRESSURES: t('Marine use pressures')
 };
 
 // const defaultBbox = [-48, -52, 59, 66];
@@ -793,193 +802,193 @@ export const legendConfigs = {
   [AMPHIB_RARITY_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian regional rarity"
+    title: t("Amphibian regional rarity")
   },
   [AMPHIB_RICHNESS_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian regional richness"
+    title: t("Amphibian regional richness")
   },
   [SA_DRAGONFLIES_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Dragonflies rarity"
+    title: t("Dragonflies rarity")
   },
   [SA_DRAGONFLIES_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Dragonflies richness"
+    title: t("Dragonflies richness")
   },
   [SA_MAMMALS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals regional rarity"
+    title: t("Mammals regional rarity")
   },
   [SA_MAMMALS_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals regional richness"
+    title: t("Mammals regional richness")
   },
   [SA_BIRDS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds regional rarity"
+    title: t("Birds regional rarity")
   },
   [SA_BIRDS_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds regional richness"
+    title: t("Birds regional richness")
   },
   [SA_RESTIO_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Restio regional rarity"
+    title: t("Restio regional rarity")
   },
   [SA_RESTIO_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Restio regional richness"
+    title: t("Restio regional richness")
   },
   [SA_PROTEA_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Protea regional rarity"
+    title: t("Protea regional rarity")
   },
   [SA_PROTEA_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Protea regional richness"
+    title: t("Protea regional richness")
   },
   [REPTILES_RARITY_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptiles regional rarity"
+    title: t("Reptiles regional rarity")
   },
   [REPTILES_RICHNESS_1KM]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptiles regional richness"
+    title: t("Reptiles regional richness")
   },
   // Hummingbirds
   [HUMMINGBIRDS_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Hummingbirds richness"
+    title: t("Hummingbirds richness")
   },
   [HUMMINGBIRDS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Hummingbirds rarity"
+    title: t("Hummingbirds rarity")
   },
   // Global data
   [MAMMALS_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Mammals priority"
+    title: t("Global Mammals priority")
   },
   [MAMMALS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals rarity"
+    title: t("Mammals rarity")
   },
   [MAMMALS_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Mammals richness"
+    title: t("Mammals richness")
   },
   [FISHES_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Fishes rarity"
+    title: t("Fishes rarity")
   },
   [FISHES_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Fishes richness"
+    title: t("Fishes richness")
   },
   [CONIFERS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Conifers rarity"
+    title: t("Conifers rarity")
   },
   [CONIFERS_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Conifers richness"
+    title: t("Conifers richness")
   },
   [CACTI_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Cacti rarity"
+    title: t("Cacti rarity")
   },
   [CACTI_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Cacti richness"
+    title: t("Cacti richness")
   },
   [AMPHIB_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Amphibian priority"
+    title: t("Global Amphibian priority")
   },
   [AMPHIB_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian rarity"
+    title: t("Amphibian rarity")
   },
   [AMPHIB_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Amphibian richness"
+    title: t("Amphibian richness")
   },
   [REPTILES_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Reptile priority"
+    title: t("Global Reptile priority")
   },
   [REPTILES_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptile richness"
+    title: t("Reptile richness")
   },
   [REPTILES_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Reptile rarity"
+    title: t("Reptile rarity")
   },
   [BIRDS_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global Birds priority"
+    title: t("Global Birds priority")
   },
   [BIRDS_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds rarity"
+    title: t("Birds rarity")
   },
   [BIRDS_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Birds richness"
+    title: t("Birds richness")
   },
   [ALL_TAXA_PRIORITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "Global terrestrial vertebrate priority"
+    title: t("Global terrestrial vertebrate priority")
   },
   [ALL_TAXA_RARITY]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "All groups rarity"
+    title: t("All groups rarity")
   },
   [ALL_TAXA_RICHNESS]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low', 'high'),
-    title: "All groups richness"
+    title: t("All groups richness")
   },
   [COUNTRY_PRIORITY_LAYER]: {
     type: "gradient",
     items: getLegendGradient(BIODIVERSITY_LAYERS_COLOUR_RAMP, 'low priority', 'high priority'),
-    title: "Protection needed"
+    title: t("Protection needed")
   }
 }

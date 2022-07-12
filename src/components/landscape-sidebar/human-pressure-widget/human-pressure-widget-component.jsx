@@ -1,4 +1,5 @@
 import React from 'react';
+import { useT } from '@transifex/react';
 import { format } from 'd3-format';
 import CheckboxGroup from 'components/checkbox-group';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -26,21 +27,28 @@ const BarComponent = ({ selectedPressures, totalPressure }) => {
   );
 };
 
-const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => (
-  <>
-    {!totalPressure || totalPressure === 0 ? (
-      <p className={styles.text}>
-        There is no land human pressure on the selected area
-      </p>
-    ) : (
-      <p className={styles.text}>
-        Of the current landscape,{' '}
-        <b>{format('.2%')(totalPressure / 100)} is under human pressure</b>, the
-        majority of which is pressure from {biggestPressureName}.
-      </p>
-    )}
-  </>
-);
+const PressureStatementComponent = ({ totalPressure, biggestPressureName }) => {
+  const t = useT();
+  return (
+    <>
+      {!totalPressure || totalPressure === 0 ? (
+        <p className={styles.text}>
+          {t('There is no land human pressure on the selected area')}
+        </p>
+      ) : (
+        <p className={styles.text}>
+          {t('Of the current landscape,')}{' '}
+          <b>
+            {format('.2%')(totalPressure / 100)}
+            {t(' is under human pressure')}
+          </b>
+          {t(', the majority of which is pressure from ')}
+          {biggestPressureName}.
+        </p>
+      )}
+    </>
+  );
+};
 
 const HumanPressureWidgetComponent = ({
   handleOnClick,
@@ -51,9 +59,11 @@ const HumanPressureWidgetComponent = ({
   biggestPressureName,
   pressureFree,
 }) => {
+  const t = useT();
+
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Land human pressures in this area</h3>
+      <h3 className={styles.title}>{t('Land human pressures in this area')}</h3>
       <DummyBlurWorkaround />
       <PressureStatementComponent
         totalPressure={totalPressure}
@@ -72,7 +82,8 @@ const HumanPressureWidgetComponent = ({
           />
           {pressureFree && (
             <p className={styles.pressureFreeLabel}>
-              Not under pressure {pressureFree}
+              {t('Not under pressure ')}
+              {pressureFree}
             </p>
           )}
         </>

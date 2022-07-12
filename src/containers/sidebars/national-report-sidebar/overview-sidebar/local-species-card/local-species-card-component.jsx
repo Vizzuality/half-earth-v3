@@ -1,4 +1,6 @@
 import React from 'react';
+import { useT } from '@transifex/react';
+
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SpeciesModal from 'components/species-modal';
 import PieChart from 'components/charts/pie-chart';
@@ -37,11 +39,13 @@ const LocalSpeciesCardComponent = ({
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
+  const t = useT();
+
   return (
     <div className={styles.cardContainer}>
       <SidebarCardWrapper>
         <section className={styles.chartContainer}>
-          <h3 className={styles.title}>Species composition:</h3>
+          <h3 className={styles.title}>{t('Species composition:')}</h3>
           <PieChart
             width={260}
             height={260}
@@ -58,14 +62,14 @@ const LocalSpeciesCardComponent = ({
               <SpeciesOval />
               <div className={styles.chartLegendItemNameContainer}>
                 <span>{`${vertebratesCount}`}</span>
-                <span>species</span>
+                <span>{t('species')}</span>
               </div>
             </div>
             <div className={styles.chartLegendItem}>
               <EndemicOval />
               <div className={styles.chartLegendItemNameContainer}>
                 <span>{endemicVertebratesSentence}</span>
-                <span>endemic</span>
+                <span>{t('endemic')}</span>
               </div>
             </div>
           </div>
@@ -76,10 +80,10 @@ const LocalSpeciesCardComponent = ({
                 <AmphibiansIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${
-                  amphibians || 0
-                } amphibians`}</span>
-                <span>{`${amphibiansEndemic || 0} endemic`}</span>
+                <span className={styles.speciesName}>{`${amphibians || 0}${t(
+                  ' amphibians'
+                )}`}</span>
+                <span>{`${amphibiansEndemic || 0} ${t('endemic')}`}</span>
               </div>
             </li>
             {/* reptiles */}
@@ -146,8 +150,8 @@ const LocalSpeciesCardComponent = ({
           <Button
             type="compound"
             handleClick={toggleModal}
-            label="See all vertebrates"
-            tooltipText="Open vertebrates list modal"
+            label={t('See all vertebrates')}
+            tooltipText={t('Open vertebrates list modal')}
             className={styles.actionButton}
           />
         </section>

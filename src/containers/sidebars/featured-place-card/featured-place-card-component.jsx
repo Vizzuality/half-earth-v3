@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useT } from '@transifex/react';
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import cx from 'classnames';
 import animationStyles from 'styles/common-animations.module.scss';
@@ -19,6 +20,8 @@ const FeaturedPlaceCardComponent = ({
   activeOption,
   hotspotsNumbers,
 }) => {
+  const t = useT();
+
   const isOnMobile = useMobile();
   const isOnScreen =
     selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
@@ -49,7 +52,9 @@ const FeaturedPlaceCardComponent = ({
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
             {hotspotsNumbers &&
-              `${hotspotsNumbers.position} / ${hotspotsNumbers.size} Hotspots`}
+              `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
+                'Hotspots'
+              )}`}
           </div>
           <nav className={styles.navigation}>
             <div className={styles.placesNavigator}>
@@ -101,7 +106,7 @@ const FeaturedPlaceCardComponent = ({
                   <p className={styles.text}>{featuredPlace.description}</p>
                   {featuredMap && featuredMap.sourceText && (
                     <span className={styles.sourceText}>
-                      (Source: <i>{featuredMap.sourceText}</i>)
+                      ({t('Source:')} <i>{featuredMap.sourceText}</i>)
                     </span>
                   )}
                 </div>

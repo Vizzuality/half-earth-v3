@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import orderBy from 'lodash/orderBy';
 
 // constants
-import { DEFAULT_SPECIES_FILTER, IUCN_CATEGORIES } from 'constants/analyze-areas-constants';
+import { DEFAULT_SPECIES_FILTER } from 'constants/analyze-areas-constants';
+import IUCN_LIST from 'constants/iucn-list';
+
 import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
@@ -214,7 +216,7 @@ const SpeciesCardContainer = (props) => {
             ...selectedSpecies,
             commonname: results[0].commonname,
             imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
-            iucnCategory: IUCN_CATEGORIES[results[0].redlist],
+            iucnCategory: IUCN_LIST[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`
           });
           results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))

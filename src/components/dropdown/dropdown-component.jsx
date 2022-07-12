@@ -4,7 +4,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { usePopper } from 'react-popper';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { t } from '@transifex/native';
 // icons
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
@@ -180,6 +180,6 @@ Component.propTypes = {
 Component.defaultProps = {
   width: 'fluid',
   theme: 'light',
-  placeholderText: 'SEARCH',
+  placeholderText: t('SEARCH'),
   searchMode: false,
 };

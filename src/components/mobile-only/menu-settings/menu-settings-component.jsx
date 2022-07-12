@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 import { FOOTER_OPTIONS, SETTINGS_OPTIONS } from 'constants/mobile-only';
@@ -14,6 +16,7 @@ const MenuSettings = ({
   activeModal,
   closeModal,
 }) => {
+  const t = useT();
   const isSettingsOpen = activeOption === FOOTER_OPTIONS.SETTINGS;
   const isHalfEarthModal =
     activeModal && activeModal === SETTINGS_OPTIONS.HALF_EARTH_MODAL;
@@ -41,7 +44,7 @@ const MenuSettings = ({
           <div className={styles.buttonsContainer}>
             <button className={styles.button} onClick={closeModal}>
               <ArrowExpandIcon className={styles.icon} />
-              <span className={styles.backButton}>BACK</span>
+              <span className={styles.backButton}>{t('BACK')}</span>
             </button>
             {isHalfEarthModal && (
               <>

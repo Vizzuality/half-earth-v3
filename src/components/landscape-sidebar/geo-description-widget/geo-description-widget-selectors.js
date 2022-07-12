@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { t } from '@transifex/native';
 
 const getGeodescriberData = ({ geoDescription }) => (geoDescription && geoDescription.data) || null;
 const getGeodescriberLoading = ({ geoDescription }) => (geoDescription && geoDescription.loading) || null;
@@ -18,7 +19,7 @@ const getData = createSelector(
     const { description, description_params, title, title_params } = geodescriberData;
     const parsedDescription = parseGeodescriberText(description, description_params);
     const parsedTitle = parseGeodescriberText(title, title_params);
-    const area = `Area: ${description_params.area_0}`;
+    const area = `${t('Area: ')}${description_params.area_0}`;
     return { description: parsedDescription, title: parsedTitle, area };
   }
 );

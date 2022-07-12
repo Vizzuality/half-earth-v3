@@ -1,4 +1,6 @@
 import React from 'react';
+import { t } from '@transifex/native';
+
 import cx from 'classnames';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
@@ -46,52 +48,52 @@ const LocalPriorityCardComponent = (props) => {
 
   const NRC_TOGGLES = {
     [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
-      name: `Protected areas : ${currentProtection}%`,
+      name: `${t('Protected areas : ')}${currentProtection}%`,
       value: PROTECTED_AREAS_VECTOR_TILE_LAYER,
       id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
       title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
       slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-      metadataTitle: 'Protected areas',
+      metadataTitle: t('Protected areas'),
     },
     [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: {
-      name: `Land protected areas : ${currentProtection}%`,
+      name: `${t('Land protected areas : ')}${currentProtection}%`,
       value: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
       id: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
       title: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
       slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-      metadataTitle: 'Land protected areas',
+      metadataTitle: t('Land protected areas'),
     },
     [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
-      name: `Marine protected areas : ${currentMarineProtection}%`,
+      name: `${t('Marine protected areas: ')}${currentMarineProtection}%`,
       value: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       id: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       title: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
       slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-      metadataTitle: 'Marine protected areas',
+      metadataTitle: t('Marine protected areas'),
     },
     [COUNTRY_PRIORITY_LAYER]: {
-      name: `Additional protection: ${protectionNeeded}%`,
+      name: `${t('Additional protection: ')}${protectionNeeded}%`,
       value: COUNTRY_PRIORITY_LAYER,
       id: COUNTRY_PRIORITY_LAYER,
       title: COUNTRY_PRIORITY_LAYER,
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [LAND_COUNTRY_PRIORITY_LAYER]: {
-      name: `Land protection needed: ${protectionNeeded}%`,
+      name: `${t('Land protection needed: ')}${protectionNeeded}%`,
       value: LAND_COUNTRY_PRIORITY_LAYER,
       id: LAND_COUNTRY_PRIORITY_LAYER,
       title: LAND_COUNTRY_PRIORITY_LAYER,
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [MARINE_COUNTRY_PRIORITY_LAYER]: {
-      name: `Marine protection needed: ${marineProtectionNeeded}%`,
+      name: `${t('Marine protection needed: ')}${marineProtectionNeeded}%`,
       value: MARINE_COUNTRY_PRIORITY_LAYER,
       id: MARINE_COUNTRY_PRIORITY_LAYER,
       title: MARINE_COUNTRY_PRIORITY_LAYER,
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [HALF_EARTH_FUTURE_TILE_LAYER]: {
-      name: `Places for a Half-Earth Future`,
+      name: t('Places for a Half-Earth Future'),
       value: HALF_EARTH_FUTURE_TILE_LAYER,
       id: HALF_EARTH_FUTURE_TILE_LAYER,
       title: HALF_EARTH_FUTURE_TILE_LAYER,

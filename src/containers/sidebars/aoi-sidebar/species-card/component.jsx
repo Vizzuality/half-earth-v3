@@ -165,11 +165,11 @@ const Component = ({
               </div>
             </div>
             <div className={styles.globalRangeArea}>
-              <span>Global habitat-suitable range</span>
+              <span>{t('Global habitat-suitable range')}</span>
               <p>
                 {`${roundGlobalRange(
                   individualSpeciesData.globaldRangeArea
-                )} km`}
+                )}${t(' km')}`}
                 <sup>2</sup>
               </p>
             </div>
@@ -178,7 +178,7 @@ const Component = ({
               className={styles.speciesBarContainer}
               percentage={individualSpeciesData.globalProtectedPercentage}
               barAnnotation={individualSpeciesData.protectionTarget}
-              barAnnotationTitle="Protection target"
+              barAnnotationTitle={t('Protection target')}
             />
             <SpeciesBar
               scale="local"

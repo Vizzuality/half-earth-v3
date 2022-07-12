@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { Loading } from 'he-components';
 import styles from './expanded-info-styles.module.scss';
 
 const ExpandedInfo = (props) => {
+  const t = useT();
+
   const { data, error, speciesName } = props;
   if (error) {
-    return <div>Failed to load</div>;
+    return <div>{t('Failed to load')}</div>;
   }
 
   if (!data || !data[0]) {
@@ -39,8 +42,8 @@ const ExpandedInfo = (props) => {
     <div className={styles.expandedInfo}>
       <div className={styles.imagesContainer}>
         <Image
-          title={`${speciesName} Range map`}
-          alt={`${speciesName} Range map`}
+          title={`${speciesName} ${t(' Range map')}`}
+          alt={`${speciesName} ${t(' Range map')}`}
           src={rangemap}
           className={styles.image}
         />
@@ -57,13 +60,13 @@ const ExpandedInfo = (props) => {
         </div>
         <a
           href={`https://mol.org/species/${scientificname}`}
-          title={`${speciesName} MoL link`}
-          alt={`${speciesName} MoL link`}
+          title={`${speciesName} ${t(' MoL link')}`}
+          alt={`${speciesName} ${t(' MoL link')}`}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.link}
         >
-          View more on Map of Life
+          {t('View more on Map of Life')}
         </a>
       </div>
     </div>

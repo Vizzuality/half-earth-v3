@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import { useT } from '@transifex/react';
+
 // Components
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
@@ -46,6 +48,8 @@ const HumanImpactSidebarCardComponent = ({
   waitingInteraction,
   changeUI,
 }) => {
+  const t = useT();
+
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
@@ -138,7 +142,7 @@ const HumanImpactSidebarCardComponent = ({
               )
             }
           >
-            {allHumanPressuresSelected ? 'Unselect all' : 'Select all'}
+            {allHumanPressuresSelected ? t('Unselect all') : t('Select all')}
           </button>
         </div>
         <hr className={hrTheme.dark} />
@@ -174,7 +178,7 @@ const HumanImpactSidebarCardComponent = ({
               )
             }
           >
-            {allMarinePressuresSelected ? 'Unselect all' : 'Select all'}
+            {allMarinePressuresSelected ? t('Unselect all') : t('Select all')}
           </button>
         </div>
         <SourceAnnotation

@@ -59,49 +59,37 @@ const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 // Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
 export const SIDEBAR_CARDS_CONFIG = {
   [SPECIES_SLUG]: {
-    title: (speciesCount) => <span>This area has<br />up to {speciesCount}</span>,
-    hint: 'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.',
-    warning: <span>Species summaries are less reliable for areas under 1,000 km<sup>2</sup>; only a portion of these species will be found here.</span>
+    title: (speciesCount) => <span>{t('This area has')}<br />{t('up to')} {speciesCount}</span>,
+    hint: t('Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.'),
+    warning: <span>{t('Species summaries are less reliable for areas under 1,000 km')}<sup>2</sup>{t('; only a portion of these species will be found here.')}</span>
   },
   [BIODIVERSITY_SLUG]: {
-    title: 'What is the biodiversity pattern in this area?',
-    description: () => 'Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.',
-    warning: 'Biodiversity patterns not available for areas under __1,000 km2__.'
+    title: t('What is the biodiversity pattern in this area?'),
+    description: () => t('Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.'),
+    warning: t('Biodiversity patterns not available for areas under __1,000 km2__.')
   },
   [PROTECTION_SLUG]: {
-    title: 'What is already protected in this area?',
-    description: ({ protectionPercentage, percentage }) => `Of the current area, __${(protectionPercentage || percentage) ? roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || percentage))) : '0'}% of land is under formal protection__.`,
+    title: t('What is already protected in this area?'),
+    description: ({ protectionPercentage, percentage }) => `${t('Of the current area,')} __${(protectionPercentage || percentage) ? roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || percentage))) : '0'}${t('% of land is under formal protection__.')}`,
     warning: null
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
-    title: 'How much do humans affect this area?',
-    description: ({ pressures }) => pressures ? `Of the current area, __${roundUpPercentage(getTotalPressures(pressures))}% is under human pressure__,
-    the majority of which are pressures from ${getMainPressure(pressures)}.` : '',
+    title: t('How much do humans affect this area?'),
+    description: ({ pressures }) => pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is under human pressure__')},
+    ${t('the majority of which are pressures from ')}${getMainPressure(pressures)}.` : '',
     warning: null
   },
 }
 
 export const SPECIES_FILTERS = [
-  { slug: 'all', label: 'all terrestrial vertebrates' },
-  { slug: BIRDS, label: 'birds' },
-  { slug: MAMMALS, label: 'mammals' },
-  { slug: REPTILES, label: 'reptiles' },
-  { slug: AMPHIBIANS, label: 'amphibians' },
+  { slug: 'all', label: t('all terrestrial vertebrates') },
+  { slug: BIRDS, label: t('birds') },
+  { slug: MAMMALS, label: t('mammals') },
+  { slug: REPTILES, label: t('reptiles') },
+  { slug: AMPHIBIANS, label: t('amphibians') },
 ]
 
-export const DEFAULT_SPECIES_FILTER = { slug: 'all', label: 'all terrestrial vertebrates' };
-
-export const IUCN_CATEGORIES = {
-  EX: 'Extinct',
-  EW: 'Extinct in the wild',
-  CR: 'Critically endangered',
-  EN: 'Endangered',
-  VU: 'Vulnerable',
-  NT: 'Near threatened',
-  LC: 'Least concern',
-  DD: 'Data deficient',
-  NE: 'Not evaluated',
-}
+export const DEFAULT_SPECIES_FILTER = { slug: 'all', label: t('all terrestrial vertebrates') };
 
 export const PRECALCULATED_LAYERS_CONFIG = {
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
@@ -120,20 +108,20 @@ export const HIGHER_AREA_SIZE_LIMIT = 35000;
 
 export const WARNING_MESSAGES = {
   area: {
-    title: 'Area size too big',
-    description: (size) => (<span>The maximum size for on the fly area analysis is {localeFormatting(HIGHER_AREA_SIZE_LIMIT)} km<sup>2</sup>.
-      The area that you are trying to analyze has {localeFormatting(size)} km<sup>2</sup>. Please select a smaller area to trigger the analysis.</span>)
+    title: t('Area size too big'),
+    description: (size) => (<span>{t('The maximum size for on the fly area analysis is ')}{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}{t(' km')}<sup>2</sup>.
+      {t('The area that you are trying to analyze has ')}{localeFormatting(size)}{t(' km')}<sup>2</sup>. {t('Please select a smaller area to trigger the analysis.')}</span>)
   },
   file: {
-    title: 'Something went wrong with your upload',
-    description: () => 'Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.'
+    title: t('Something went wrong with your upload'),
+    description: () => t('Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.')
   },
   400: {
-    title: 'File too big',
-    description: () => 'File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.'
+    title: t('File too big'),
+    description: () => t('File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.')
   },
   500: {
-    title: 'Server error',
-    description: () => 'An error ocurred during the file upload. Please try again'
+    title: t('Server error'),
+    description: () => t('An error ocurred during the file upload. Please try again')
   }
 }

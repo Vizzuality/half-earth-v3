@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { getCellData } from 'selectors/grid-cell-selectors';
 import { format, precisionPrefix, formatPrefix } from 'd3-format';
 import { uniqBy } from "lodash";
-import IUCNList from 'constants/iucn-list';
+import IUCN_LIST from 'constants/iucn-list';
 
 //more about precision prefix: https://github.com/d3/d3-format#precisionPrefix
 const millionsFormat = formatPrefix("." + precisionPrefix(1e4, 1.3e6), 1.3e6); // format millions with two fixed decimals
@@ -71,7 +71,7 @@ const getChartData = (speciesData, taxa, startAngle)  => {
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,
       pointCoordinates: calculateChartPosition(angle, s.PROP_RANGE_PROT),
       color: getDotColor(s.PROP_RANGE_PROT),
-      iucnCategory: IUCNList[s.iucn_cat] || '-'
+      iucnCategory: IUCN_LIST[s.iucn_cat] || '-'
     }
   });
   return chartData;

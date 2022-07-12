@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 import loadable from '@loadable/component';
 import { Modal } from 'he-components';
@@ -38,6 +39,8 @@ const AoiHistoryModalComponent = ({
   handleRemoveAllLocalAoiRecords,
   loading,
 }) => {
+  const t = useT();
+
   const activeInputRef = useRef();
 
   useEffect(() => {
@@ -59,9 +62,9 @@ const AoiHistoryModalComponent = ({
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
-        <h2 className={styles.title}>Your areas of interest history.</h2>
+        <h2 className={styles.title}>{t('Your areas of interest history.')}</h2>
         <p className={styles.description}>
-          These are the areas of interest you have created in the past.
+          {t('These are the areas of interest you have created in the past.')}
         </p>
         {loading && <Spinner />}
         {aoiHistory.length > 0 && (
@@ -70,7 +73,7 @@ const AoiHistoryModalComponent = ({
             type="compound"
             className={styles.deleteAllButton}
             handleClick={handleRemoveAllLocalAoiRecords}
-            label="delete all areas"
+            label={t('delete all areas')}
           />
         )}
         <ul className={styles.aoiListContainer}>
@@ -105,7 +108,7 @@ const AoiHistoryModalComponent = ({
                       type="rectangular"
                       className={styles.saveButton}
                       handleClick={() => handleAoiDataStore(id)}
-                      label="save"
+                      label={t('save')}
                     />
                   ) : (
                     <>
@@ -114,21 +117,23 @@ const AoiHistoryModalComponent = ({
                         type="icon-square"
                         className={styles.item}
                         handleClick={() => handleAoiShareToggle(id)}
-                        tooltipText="Share this area"
+                        tooltipText={t('Share this area')}
                       />
                       <Button
                         Icon={EditIcon}
                         type="icon-square"
                         className={styles.item}
                         handleClick={() => handleActivateAoiEdit(id)}
-                        tooltipText="Edit area information"
+                        tooltipText={t('Edit area information')}
                       />
                       <Button
                         Icon={BinIcon}
                         type="icon-square"
                         className={styles.item}
                         handleClick={() => handleRemoveAoiFromLocal(id)}
-                        tooltipText="Delete this area from your local history"
+                        tooltipText={t(
+                          'Delete this area from your local history'
+                        )}
                       />
                     </>
                   )}

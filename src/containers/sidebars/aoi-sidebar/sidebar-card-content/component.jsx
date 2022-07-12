@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
+import { useT } from '@transifex/react';
 
 // icons
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
@@ -39,64 +40,71 @@ const SidebarCard = ({
   handleProtectedAreasModalToggle,
   contextualData,
   metadata,
-}) => (
-  <SidebarCardWrapper className={styles.cardWrapper}>
-    <div>
-      <p className={styles.title}>{cardTitle}</p>
-      {hasLegend && (
-        <SidebarLegend
-          legendItem={cardCategory}
-          className={styles.legendContainer}
-          theme="light"
-        />
-      )}
-      <ReactMarkdown className={styles.description} source={cardDescription} />
-      {cardCategory === PROTECTION_SLUG && (
-        <div>
-          <Button
-            type="rectangular"
-            className={styles.fullwidthButton}
-            handleClick={handleAllProtectedAreasClick}
-            label="ALL PROTECTED AREAS"
+}) => {
+  const t = useT();
+
+  return (
+    <SidebarCardWrapper className={styles.cardWrapper}>
+      <div>
+        <p className={styles.title}>{cardTitle}</p>
+        {hasLegend && (
+          <SidebarLegend
+            legendItem={cardCategory}
+            className={styles.legendContainer}
+            theme="light"
           />
-          <ProtectedAreasModal
-            isOpen={isProtectedAreasModalOpen}
-            handleModalClose={handleProtectedAreasModalToggle}
-            contextualData={contextualData}
-          />
-        </div>
-      )}
-      <SourceAnnotation
-        theme="dark"
-        metaDataSources={metadata && metadata.source}
-        className={styles.sourceContainer}
-      />
-    </div>
-    {displayWarning ? (
-      <div className={styles.warningWrapper}>
-        <WarningIcon className={styles.warning} />
+        )}
         <ReactMarkdown
           className={styles.description}
-          source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
+          source={cardDescription}
+        />
+        {cardCategory === PROTECTION_SLUG && (
+          <div>
+            <Button
+              type="rectangular"
+              className={styles.fullwidthButton}
+              handleClick={handleAllProtectedAreasClick}
+              label={t('ALL PROTECTED AREAS')}
+            />
+            <ProtectedAreasModal
+              isOpen={isProtectedAreasModalOpen}
+              handleModalClose={handleProtectedAreasModalToggle}
+              contextualData={contextualData}
+            />
+          </div>
+        )}
+        <SourceAnnotation
+          theme="dark"
+          metaDataSources={metadata && metadata.source}
+          className={styles.sourceContainer}
         />
       </div>
-    ) : (
-      <div className={styles.togglesContainer}>
-        {layers.map((layer) => (
-          <LayerToggle
-            map={map}
-            variant="dark"
-            option={layer}
-            key={layer.value}
-            type={toggleType}
-            onChange={onChange}
-            themeCategorySlug={cardCategory}
-            activeLayers={activeLayers}
+      {displayWarning ? (
+        <div className={styles.warningWrapper}>
+          <WarningIcon className={styles.warning} />
+          <ReactMarkdown
+            className={styles.description}
+            source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
           />
-        ))}
-      </div>
-    )}
-  </SidebarCardWrapper>
-);
+        </div>
+      ) : (
+        <div className={styles.togglesContainer}>
+          {layers.map((layer) => (
+            <LayerToggle
+              map={map}
+              variant="dark"
+              option={layer}
+              key={layer.value}
+              type={toggleType}
+              onChange={onChange}
+              themeCategorySlug={cardCategory}
+              activeLayers={activeLayers}
+            />
+          ))}
+        </div>
+      )}
+    </SidebarCardWrapper>
+  );
+};
 
 export default SidebarCard;

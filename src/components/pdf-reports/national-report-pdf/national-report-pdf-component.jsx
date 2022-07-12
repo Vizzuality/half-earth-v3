@@ -1,4 +1,5 @@
 import React from 'react';
+import { useT } from '@transifex/react';
 import styles from './national-report-pdf.module.scss';
 import HighLightedSpeciesList from 'components/highlighted-species-list';
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -30,21 +31,31 @@ const NationalReportPdf = ({
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
+  const t = useT();
 
   return (
     <div className={styles.container}>
       <section className={styles.nameWrapper}>
-        <img className={styles.flag} src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`} alt="" />
+        <img
+          className={styles.flag}
+          src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+          alt=""
+        />
         <span className={styles.countryName}>{countryName}</span>
       </section>
-      <HalfEarthLogo withBackground className={styles.logo}/> 
+      <HalfEarthLogo withBackground className={styles.logo} />
       <section className={styles.date}>
         <span>
-          {Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(new Date())}
+          {Intl.DateTimeFormat('en-US', {
+            month: 'long',
+            year: 'numeric',
+          }).format(new Date())}
         </span>
       </section>
       <section className={styles.indexWrapper}>
-        <p className={styles.overviewText}>{`The national species protection index is: ${SPI}`}</p>
+        <p
+          className={styles.overviewText}
+        >{`The national species protection index is: ${SPI}`}</p>
         <p className={styles.indexStatement}>{indexStatement}</p>
       </section>
       <p className={styles.indexIntro}>This index is based on:</p>
@@ -63,7 +74,9 @@ const NationalReportPdf = ({
             <p className={styles.numberText}>species</p>
           </div>
           <div className={styles.indexBaseDataElement}>
-            <p className={styles.baseNumber}>{`${endemicVertebratesCount || 7}`}</p>
+            <p className={styles.baseNumber}>{`${
+              endemicVertebratesCount || 7
+            }`}</p>
             <p className={styles.numberText}>endemic land</p>
             <p className={styles.numberText}>vertebrated</p>
             <p className={styles.numberText}>species</p>
@@ -72,40 +85,68 @@ const NationalReportPdf = ({
       </section>
       <section className={styles.speciesSentence}>
         <span>{highlightedSpeciesSentence}</span>
-        <p className={styles.datasetSource}><a href="https://mol.org/">Source: Map of Life</a></p>
+        <p className={styles.datasetSource}>
+          <a href="https://mol.org/">{t('Source: Map of Life')}</a>
+        </p>
       </section>
       <section className={styles.speciesComposition}>
         <p className={styles.title}>species composition:</p>
-        <p className={styles.speciesCount}><span className={styles.amphibiansIcon}><AmphibiansIcon /></span> {`${amphibians} amphibians (${amphibiansEndemic} endemic)`}</p>
-        <p className={styles.speciesCount}><span className={styles.birdsIcon}><BirdsIcon /></span> {`${birds} birds (${birdsEndemic} endemic)`}</p>
-        <p className={styles.speciesCount}><span className={styles.mammalsIcon}><MammalsIcon /></span> {`${mammals} mammals (${mammalsEndemic} endemic)`}</p>
-        <p className={styles.speciesCount}><span className={styles.reptilesIcon}><ReptilesIcon /></span> {`${reptiles} reptiles (${reptilesEndemic} endemic)`}</p>
+        <p className={styles.speciesCount}>
+          <span className={styles.amphibiansIcon}>
+            <AmphibiansIcon />
+          </span>{' '}
+          {`${amphibians} amphibians (${amphibiansEndemic} endemic)`}
+        </p>
+        <p className={styles.speciesCount}>
+          <span className={styles.birdsIcon}>
+            <BirdsIcon />
+          </span>{' '}
+          {`${birds} birds (${birdsEndemic} endemic)`}
+        </p>
+        <p className={styles.speciesCount}>
+          <span className={styles.mammalsIcon}>
+            <MammalsIcon />
+          </span>{' '}
+          {`${mammals} mammals (${mammalsEndemic} endemic)`}
+        </p>
+        <p className={styles.speciesCount}>
+          <span className={styles.reptilesIcon}>
+            <ReptilesIcon />
+          </span>{' '}
+          {`${reptiles} reptiles (${reptilesEndemic} endemic)`}
+        </p>
       </section>
       <section className={styles.protectionLegend}>
-        <h3 className={styles.legendTitle}>{`The current protection: ${currentProtection}%`}</h3>
+        <h3
+          className={styles.legendTitle}
+        >{`The current protection: ${currentProtection}%`}</h3>
         <div className={styles.datasetWrapper}>
-          <div className={styles.wdpaIcon}/>
+          <div className={styles.wdpaIcon} />
           <div className={styles.datasetMetadata}>
             <span className={styles.datasetExplanation}>
-            The green areas on the map represent 
-            regions that are currently recognized 
-            as being managed for the long-term conservation of nature.
+              The green areas on the map represent regions that are currently
+              recognized as being managed for the long-term conservation of
+              nature.
             </span>
-            <p className={styles.datasetSource} >Source: WDPA (Jan 2020), OECM (Jan 2020) & RAISG (2019).</p>
+            <p className={styles.datasetSource}>
+              Source: WDPA (Jan 2020), OECM (Jan 2020) & RAISG (2019).
+            </p>
           </div>
         </div>
       </section>
       <section className={styles.priorityLegend}>
-        <h3 className={styles.legendTitle}>{`Additional protection needed: ${protectionNeeded}%`}</h3>
+        <h3
+          className={styles.legendTitle}
+        >{`Additional protection needed: ${protectionNeeded}%`}</h3>
         <p className={styles.legendTag}>higher priority</p>
         <div className={styles.datasetWrapper}>
-          <div className={styles.priorityIcon}/>
+          <div className={styles.priorityIcon} />
           <div className={styles.datasetMetadata}>
             <span className={styles.datasetExplanation}>
               {priorityAreasSentence}
             </span>
-            <p className={styles.datasetSource} >
-              <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract" >
+            <p className={styles.datasetSource}>
+              <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract">
                 Source: Rinnan DS and Jetz W, (2020).
               </a>
             </p>
@@ -120,13 +161,15 @@ const NationalReportPdf = ({
         />
       </section>
       <section className={styles.mapWrapper}>
-        {sceneScreenshotUrl && <img src={sceneScreenshotUrl} alt={`${countryName} map`}/>}
+        {sceneScreenshotUrl && (
+          <img src={sceneScreenshotUrl} alt={`${countryName} map`} />
+        )}
       </section>
-      <section className={styles.urlWrapper} >
+      <section className={styles.urlWrapper}>
         <a href={nrcUrl}>{nrcUrl}</a>
       </section>
     </div>
-  )
-}
+  );
+};
 
 export default NationalReportPdf;

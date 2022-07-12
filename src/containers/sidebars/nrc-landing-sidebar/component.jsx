@@ -1,6 +1,7 @@
 // Dependencies
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 // Hooks
 import {
@@ -32,6 +33,8 @@ const NRCLandingSidebar = ({
   view,
   waitingInteraction,
 }) => {
+  const t = useT();
+
   const { landAverage, marineAverage } = globalAverage;
   const averageLoaded =
     landAverage !== undefined || marineAverage !== undefined;
@@ -62,9 +65,9 @@ const NRCLandingSidebar = ({
       {...onboardingOverlay}
       {...onboardingOnClick}
     >
-      <p className={styles.title}>National Report Cards</p>
+      <p className={styles.title}>{t('National Report Cards')}</p>
       <p className={styles.body}>
-        The Species Protection Index (SPI) reflects the average amount of
+        {t(`The Species Protection Index (SPI) reflects the average amount of
         area-based conservation targets met across all endemic species within a
         given country in a given year, weighted by a country's stewardship.
         Strategic and targeted protection of species habitat will generally
@@ -72,7 +75,7 @@ const NRCLandingSidebar = ({
         individual species' target, subsequent additional protection of habitat
         will not increase the country's SPI. Likewise, any protection of land
         that does not also protect species habitat will not increase a country's
-        SPI.
+        SPI.`)}
       </p>
       <p className={styles.legendTitle}>National Species Protection Index</p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
@@ -80,13 +83,13 @@ const NRCLandingSidebar = ({
         <div className={styles.togglesContainer}>
           {NRCLandingLayers.map((layer) => {
             const { name } = layer;
-            const nameUpadated =
-              name && name === 'Land'
-                ? `Land SPI (Global average: ${landAverage})`
+            const nameUpdated =
+              name && name === t('Land')
+                ? `${t('Land SPI (Global average: ')}${landAverage})`
                 : name && name === 'Marine'
-                ? `Marine SPI (Global average: ${marineAverage})`
+                ? `${t('Marine SPI (Global average: ')}${marineAverage})`
                 : 0;
-            const layerUpdated = { ...layer, name: nameUpadated };
+            const layerUpdated = { ...layer, name: nameUpdated };
             return (
               <LayerToggle
                 map={map}
@@ -111,7 +114,7 @@ const NRCLandingSidebar = ({
         theme="dark"
         width="full"
         parentWidth="380px"
-        placeholder="search countries"
+        placeholder={t('search countries')}
         searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}

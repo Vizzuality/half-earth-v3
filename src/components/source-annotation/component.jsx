@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import styles from './styles.module.scss';
+import { useT } from '@transifex/react';
 
 const Component = ({
   theme,
@@ -10,6 +11,8 @@ const Component = ({
   metaDataSources,
   isJSX = false,
 }) => {
+  const t = useT();
+
   const lastSource = sources && sources.length - 1;
   const isMultiSource = sources && sources.length > 1;
   return (
@@ -29,15 +32,20 @@ const Component = ({
                   </a>
                 ),
               }}
-              children={`Source: ${metaDataSources}`}
+              children={`${t('Source: ')}${metaDataSources}`}
             />
           )}
-          {isJSX && <span>Source: {metaDataSources}</span>}
+          {isJSX && (
+            <span>
+              {t('Source: ')}
+              {metaDataSources}
+            </span>
+          )}
         </cite>
       )}
       {sources && (
         <span className={styles.sourcesWrapper}>
-          {`Source: `}
+          {t('Source: ')}
           {sources.map((source, index) => (
             <>
               {isMultiSource && index === lastSource && <span> and </span>}

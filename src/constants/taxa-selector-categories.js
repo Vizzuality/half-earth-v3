@@ -1,3 +1,5 @@
+import { t } from '@transifex/native';
+
 import { ReactComponent as All } from 'icons/taxa_all.svg';
 import { ReactComponent as Mammals } from 'icons/taxa_mammals.svg';
 import { ReactComponent as Reptiles } from 'icons/taxa_reptiles.svg';
@@ -6,27 +8,27 @@ import { ReactComponent as Birds } from 'icons/taxa_birds.svg';
 
 export default [
   {
-    title: 'all species',
+    title: t('all species'),
     slug: 'all',
     icon: All
   },
   {
-    title: 'reptiles',
+    title: t('reptiles'),
     slug: 'reptiles',
     icon: Reptiles
   },
   {
-    title: 'mammals',
+    title: t('mammals'),
     slug: 'mammals',
     icon: Mammals
   },
   {
-    title: 'amphibians',
+    title: t('amphibians'),
     slug: 'amphibians',
     icon: Amphibians
   },
   {
-    title: 'birds',
+    title: t('birds'),
     slug: 'birds',
     icon: Birds
   },
