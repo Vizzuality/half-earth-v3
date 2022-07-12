@@ -133,7 +133,7 @@ const SpeciesCardContainer = (props) => {
   }, [speciesData.species])
 
   useEffect(() => {
-    const sortSpecies = (s) => orderBy(s, ['has_image', 'globaldRangeArea', 'conservationConcern'], ['desc', 'desc', 'desc']);
+    const sortSpecies = (s) => orderBy(s, ['has_image', 'presenceInArea', 'conservationConcern'], ['desc', 'desc', 'desc']);
     const speciesSorted = speciesData.species && sortSpecies(
       (selectedSpeciesFilter.slug === 'all') ?
         [...speciesData.species] :
