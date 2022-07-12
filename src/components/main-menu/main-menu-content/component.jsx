@@ -1,11 +1,14 @@
 import React from 'react';
+import { hot } from 'react-hot-loader';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { T, LanguagePicker, useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 import ShareModal from 'components/share-modal';
 import About from 'components/about';
+import LanguageSwitcher from 'components/language-switcher';
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import styles from './main-menu-content.module.scss';
 import menuExploreImage from 'images/menu-explore.png';
@@ -13,6 +16,10 @@ import menuDiscoverImage from 'images/menu-discover.png';
 import menuNRCImage from 'images/menu-national-report-cards.png';
 import { DATA, NATIONAL_REPORT_CARD_LANDING, FEATURED } from 'router';
 import { joinConversationSocialMedia } from 'constants/social-media-constants';
+
+const mapStateToProps = ({ location }) => ({
+  route: location.routesMap[location.type],
+});
 
 const REACT_APP_FEATURE_TRANSLATION =
   process.env.REACT_APP_FEATURE_TRANSLATION === 'true';
@@ -25,8 +32,10 @@ const MainMenuContent = ({
   handleShareClick,
   isShareModalOpen,
   handleJoinConversationClick,
+  route,
 }) => {
   const t = useT();
+  const { page } = route;
 
   return (
     <AnimatePresence>
@@ -54,7 +63,10 @@ const MainMenuContent = ({
             </div>
             <CloseIcon />
           </button>
-          {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker />}
+          {REACT_APP_FEATURE_TRANSLATION &&
+            page !== 'landing' &&
+            <LanguageSwitcher />
+          }
           <div className={styles.menuListContainer}>
             <ul className={styles.menuList} role="menubar">
               <li>
@@ -169,4 +181,6 @@ MainMenuContent.propTypes = {
   browsePage: PropTypes.func.isRequired,
 };
 
-export default MainMenuContent;
+export default process.env.NODE_ENV === 'development'
+  ? hot(module)(connect(mapStateToProps, null)(MainMenuContent))
+  : connect(mapStateToProps, null)(MainMenuContent);
