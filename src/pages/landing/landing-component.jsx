@@ -1,4 +1,3 @@
-
 import React from 'react';
 import loadable from '@loadable/component';
 
@@ -14,7 +13,7 @@ const REACT_APP_FEATURE_TRANSLATION =
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const LandingComponent = (props, {
+const LandingComponent = ({
   hasMetadata,
   sceneSettings,
 }) => {
