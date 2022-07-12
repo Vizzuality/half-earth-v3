@@ -133,12 +133,13 @@ const SpeciesCardContainer = (props) => {
   }, [speciesData.species])
 
   useEffect(() => {
-    const sortSpecies = (s) => orderBy(s, ['has_image', 'conservationConcern'], ['desc', 'desc']);
+    const sortSpecies = (s) => orderBy(s, ['has_image', 'globaldRangeArea', 'conservationConcern'], ['desc', 'desc', 'desc']);
     const speciesSorted = speciesData.species && sortSpecies(
       (selectedSpeciesFilter.slug === 'all') ?
         [...speciesData.species] :
         [...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)]
       );
+
     if (speciesSorted) {
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
