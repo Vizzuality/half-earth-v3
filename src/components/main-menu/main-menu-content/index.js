@@ -4,6 +4,10 @@ import * as urlActions from 'actions/url-actions';
 import { joinConversationAnalytics, shareMapAnalytics } from 'actions/google-analytics-actions';
 import Component from './component.jsx';
 
+const mapStateToProps = ({ location }) => ({
+  route: location.routesMap[location.type],
+});
+
 const actions = { ...urlActions, joinConversationAnalytics, shareMapAnalytics };
 const Container = (props) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -30,4 +34,4 @@ const Container = (props) => {
   )
 }
 
-export default connect(null, actions)(Container);
+export default connect(mapStateToProps, actions)(Container);

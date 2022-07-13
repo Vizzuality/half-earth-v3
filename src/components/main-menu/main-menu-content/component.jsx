@@ -1,6 +1,4 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
-import { connect } from 'react-redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,10 +14,6 @@ import menuDiscoverImage from 'images/menu-discover.png';
 import menuNRCImage from 'images/menu-national-report-cards.png';
 import { DATA, NATIONAL_REPORT_CARD_LANDING, FEATURED } from 'router';
 import { joinConversationSocialMedia } from 'constants/social-media-constants';
-
-const mapStateToProps = ({ location }) => ({
-  route: location.routesMap[location.type],
-});
 
 const REACT_APP_FEATURE_TRANSLATION =
   process.env.REACT_APP_FEATURE_TRANSLATION === 'true';
@@ -181,6 +175,4 @@ MainMenuContent.propTypes = {
   browsePage: PropTypes.func.isRequired,
 };
 
-export default process.env.NODE_ENV === 'development'
-  ? hot(module)(connect(mapStateToProps, null)(MainMenuContent))
-  : connect(mapStateToProps, null)(MainMenuContent);
+export default MainMenuContent;

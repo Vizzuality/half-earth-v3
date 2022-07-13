@@ -1,14 +1,8 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
-import { connect } from 'react-redux';
 import cx from 'classnames';
 import { tx } from '@transifex/native';
 import { useLanguages, useLocale } from '@transifex/react';
 import styles from './language-switcher.module.scss';
-
-const mapStateToProps = ({ location }) => ({
-  route: location.routesMap[location.type],
-});
 
 const LanguageSwitcher = (props) => {
   const { route } = props;
@@ -21,7 +15,7 @@ const LanguageSwitcher = (props) => {
       className={
         cx(
           styles.languageButton,
-          locale === code && styles.languageButtonSelected,
+          (locale.length >= 2 ? locale : 'en') === code && styles.languageButtonSelected,
           index !== languages.length - 1 && styles.languageButtonSeparator,
         )
       }
@@ -42,7 +36,4 @@ const LanguageSwitcher = (props) => {
   )
 }
 
-// export default LanguageSwitcher;
-export default process.env.NODE_ENV === 'development'
-  ? hot(module)(connect(mapStateToProps, null)(LanguageSwitcher))
-  : connect(mapStateToProps, null)(LanguageSwitcher);
+export default LanguageSwitcher;
