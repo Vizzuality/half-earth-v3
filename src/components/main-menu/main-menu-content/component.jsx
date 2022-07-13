@@ -2,10 +2,11 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { T, LanguagePicker, useT } from '@transifex/react';
+import { T, useT } from '@transifex/react';
 
 import ShareModal from 'components/share-modal';
 import About from 'components/about';
+import LanguageSwitcher from 'components/language-switcher';
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import styles from './main-menu-content.module.scss';
 import menuExploreImage from 'images/menu-explore.png';
@@ -25,8 +26,10 @@ const MainMenuContent = ({
   handleShareClick,
   isShareModalOpen,
   handleJoinConversationClick,
+  route,
 }) => {
   const t = useT();
+  const { page } = route;
 
   return (
     <AnimatePresence>
@@ -54,7 +57,10 @@ const MainMenuContent = ({
             </div>
             <CloseIcon />
           </button>
-          {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker />}
+          {REACT_APP_FEATURE_TRANSLATION &&
+            page !== 'landing' &&
+            <LanguageSwitcher />
+          }
           <div className={styles.menuListContainer}>
             <ul className={styles.menuList} role="menubar">
               <li>
