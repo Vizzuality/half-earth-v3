@@ -1,4 +1,5 @@
 import React, { useState, forwardRef, useEffect } from 'react';
+import { useT } from '@transifex/react';
 import cx from 'classnames';
 import Slider from 'rc-slider';
 import Tooltip, { useSingleton } from '@tippyjs/react';
@@ -30,38 +31,44 @@ const formatValue = (value) => {
   return `${Math.round(value * 100)}%`;
 };
 
-const OpacityButton = forwardRef(({ isOpen }, ref) => (
-  <div
-    title="Change opacity"
-    ref={ref}
-    className={cx(styles.iconWrapper, { [styles.open]: isOpen })}
-  >
-    <OpacityIcon className={cx(styles.icon, { [styles.open]: isOpen })} />
-  </div>
-));
-
-const TooltipContent = (value, setValue, onOpacityChange) => (
-  <div className={styles.sliderContainer}>
-    <span>opacity</span>
-    <div className={styles.sliderWrapper}>
-      <Slider
-        min={0}
-        max={1}
-        step={0.01}
-        value={value}
-        startPoint={value}
-        className={styles.slider}
-        onChange={(value) => setValue(value)}
-        onAfterChange={(value) => onOpacityChange(value)}
-        railStyle={railStyle}
-        handleStyle={handleStyle}
-        formatValue={formatValue}
-      />
-      <div style={{ width: `${value * 100}%` }} className={styles.track} />
-      <span className={styles.sliderValue}>{formatValue(value)}</span>
+const OpacityButton = forwardRef(({ isOpen }, ref) => {
+  const t = useT();
+  return (
+    <div
+      title={t('Change opacity')}
+      ref={ref}
+      className={cx(styles.iconWrapper, { [styles.open]: isOpen })}
+    >
+      <OpacityIcon className={cx(styles.icon, { [styles.open]: isOpen })} />
     </div>
-  </div>
-);
+  );
+});
+
+const TooltipContent = (value, setValue, onOpacityChange) => {
+  const t = useT();
+  return (
+    <div className={styles.sliderContainer}>
+      <span>{t('opacity')}</span>
+      <div className={styles.sliderWrapper}>
+        <Slider
+          min={0}
+          max={1}
+          step={0.01}
+          value={value}
+          startPoint={value}
+          className={styles.slider}
+          onChange={(value) => setValue(value)}
+          onAfterChange={(value) => onOpacityChange(value)}
+          railStyle={railStyle}
+          handleStyle={handleStyle}
+          formatValue={formatValue}
+        />
+        <div style={{ width: `${value * 100}%` }} className={styles.track} />
+        <span className={styles.sliderValue}>{formatValue(value)}</span>
+      </div>
+    </div>
+  );
+};
 
 const Component = ({ onOpacityChange, initialOpacityValue }) => {
   const [value, setValue] = useState(initialOpacityValue);

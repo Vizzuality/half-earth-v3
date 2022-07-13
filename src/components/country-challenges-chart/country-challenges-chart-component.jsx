@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 
 import ScatterPlot from 'components/charts/scatter-plot';
 import Dropdown from 'components/dropdown';
@@ -26,10 +27,12 @@ const CountryChallengesChartComponent = ({
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
 }) => {
+  const t = useT();
+
   return (
     <div className={className}>
       <div className={styles.headerContainer}>
-        <span className={styles.chartTitle}>Show</span>
+        <span className={styles.chartTitle}>{t('Show')}</span>
         <div className={styles.landMarineDropdownWrapper}>
           <Dropdown
             disabled={!coastal}
@@ -40,7 +43,7 @@ const CountryChallengesChartComponent = ({
           />
         </div>
         <span className={cx(styles.chartTitle, styles.filterTitle)}>
-          filter countries
+          {t('filter countries')}
         </span>
         <div className={styles.dropdownWrapper}>
           <Dropdown
@@ -78,7 +81,7 @@ const CountryChallengesChartComponent = ({
       </div>
       <div className={styles.yAxisContainer}>
         <span className={styles.yAxisIndicator}>
-          Species Protection Index (SPI)
+          {t('Species Protection Index (SPI)')}
         </span>
       </div>
     </div>
