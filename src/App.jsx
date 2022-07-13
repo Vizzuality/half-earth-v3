@@ -1,7 +1,7 @@
 import loadable from '@loadable/component';
 import 'he-components/dist/main.css';
 import React, { Component } from 'react';
-import { tx } from '@transifex/native';
+import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 
@@ -44,6 +44,9 @@ class App extends Component {
   render() {
     tx.init({
       token: REACT_APP_TRANSIFEX_TOKEN,
+      ...(process.env.NODE_ENV === 'development'
+        ? { missingPolicy: new PseudoTranslationPolicy() }
+        : {}),
     });
 
     return (

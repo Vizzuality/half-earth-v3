@@ -154,7 +154,7 @@ const CountryEntryTooltipComponent = ({
             <span className={styles.endemic}>
               {landTab ? endemicLand : endemicMar}
             </span>{' '}
-            are endemic
+            {t('are endemic')}
           </span>
         </div>
         <div className={styles.infoPill}>

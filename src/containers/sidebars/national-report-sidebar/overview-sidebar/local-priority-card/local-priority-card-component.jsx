@@ -108,8 +108,10 @@ const LocalPriorityCardComponent = (props) => {
         sectionClassName={styles.section}
       >
         <SidebarCardContent
-          title="What is already protected?"
-          description="The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature"
+          title={t('What is already protected?')}
+          description={t(
+            'The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature'
+          )}
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
         <>
@@ -144,7 +146,7 @@ const LocalPriorityCardComponent = (props) => {
         sectionClassName={cx(styles.section, styles.layerToggleSection)}
       >
         <SidebarCardContent
-          title="How much additional protection is needed?"
+          title={t('How much additional protection is needed?')}
           description={priorityAreasSentence}
           legendType={hasPriority && 'gradient'}
           legendGradientSlug={COUNTRY_PRIORITY_LAYER}
@@ -179,8 +181,10 @@ const LocalPriorityCardComponent = (props) => {
         sectionClassName={cx(styles.section, styles.layerToggleSection)}
       >
         <SidebarCardContent
-          title={`Where to protect next in ${countryName}?`}
-          description="These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets."
+          title={`${t('Where to protect next in ')}${countryName}?`}
+          description={t(
+            'These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets.'
+          )}
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
         <LayerToggle

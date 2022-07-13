@@ -77,7 +77,9 @@ const NRCLandingSidebar = ({
         that does not also protect species habitat will not increase a country's
         SPI.`)}
       </p>
-      <p className={styles.legendTitle}>National Species Protection Index</p>
+      <p className={styles.legendTitle}>
+        {t('National Species Protection Index')}
+      </p>
       <SidebarLegend className={styles.legend} legendItem="spi" />
       {averageLoaded && (
         <div className={styles.togglesContainer}>

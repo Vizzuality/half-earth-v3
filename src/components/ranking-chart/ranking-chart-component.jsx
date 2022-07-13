@@ -96,7 +96,7 @@ const RankingChart = ({
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        <span className={styles.chartTitle}>Show</span>
+        <span className={styles.chartTitle}>{t('Show')}</span>
         <div className={styles.landMarineDropdownWrapper}>
           <Dropdown
             disabled={!coastal}
@@ -108,7 +108,7 @@ const RankingChart = ({
           />
         </div>
         <span className={cx(styles.chartTitle, styles.filterTitle)}>
-          sort countries
+          {t('sort countries')}
         </span>
         <div className={styles.dropdownWrapper}>
           <Dropdown
