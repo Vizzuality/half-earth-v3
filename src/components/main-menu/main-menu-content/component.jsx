@@ -57,10 +57,9 @@ const MainMenuContent = ({
             </div>
             <CloseIcon />
           </button>
-          {REACT_APP_FEATURE_TRANSLATION &&
-            page !== 'landing' &&
+          {REACT_APP_FEATURE_TRANSLATION && page !== 'landing' && (
             <LanguageSwitcher />
-          }
+          )}
           <div className={styles.menuListContainer}>
             <ul className={styles.menuList} role="menubar">
               <li>
