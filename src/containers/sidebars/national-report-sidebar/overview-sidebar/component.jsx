@@ -7,7 +7,6 @@ import LocalSpeciesCard from './local-species-card';
 const OverviewSidebarComponent = ({
   map,
   activeLayers,
-  SPI,
   mean,
   birds,
   mammals,

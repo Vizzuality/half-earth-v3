@@ -37,10 +37,13 @@ const UserDataModalComponent = ({
   const step1 = () => {
     return (
       <section className={styles.stepContainer}>
-        <p className={styles.title}>WELCOME TO THE NEW HALF-EARTH MAP:</p>
+        <p className={styles.title}>
+          {t('WELCOME TO THE NEW HALF-EARTH MAP:')}
+        </p>
         <p className={styles.bodyText}>
-          We are trying to improve your experience on the map. Can you tell us a
-          bit about yourself?
+          {t(
+            'We are trying to improve your experience on the map. Can you tell us a bit about yourself?'
+          )}
         </p>
         <div className={styles.sectionsWrapper}>
           {USER_MODAL_QUESTIONS.map((q) => (
@@ -51,7 +54,7 @@ const UserDataModalComponent = ({
                   q.required &&
                   requiredFieldsWarning && (
                     <span className={styles.requiredWarning}>
-                      Required fields are empty!
+                      {t('Required fields are empty!')}
                     </span>
                   )}
               </p>
@@ -90,7 +93,7 @@ const UserDataModalComponent = ({
           className={styles.button}
           onClick={() => storeFirstStepData(userData, setUserId, setActiveStep)}
         >
-          SEND
+          {t('SEND')}
         </button>
       </section>
     );
@@ -100,13 +103,14 @@ const UserDataModalComponent = ({
     return (
       <section className={styles.stepContainer}>
         <ScreenIcon className={styles.screenIcon} />
-        <p className={styles.title}>THANK YOU! JUST ONE MORE THING…</p>
+        <p className={styles.title}>{t('THANK YOU! JUST ONE MORE THING…')}</p>
         <p className={styles.question}>
-          Would you like to help us improve the map?
+          {t('Would you like to help us improve the map?')}
         </p>
         <p className={styles.bodyText}>
-          If you share your email with us, we will contact you and invite you to
-          share with us your experience with the map, so we can improve it.
+          {t(
+            'If you share your email with us, we will contact you and invite you to share with us your experience with the map, so we can improve it.'
+          )}
         </p>
         <input
           required
@@ -120,7 +124,7 @@ const UserDataModalComponent = ({
           className={styles.button}
           onClick={() => storeSecondStepData(userId, userData)}
         >
-          done
+          {t('done')}
         </button>
       </section>
     );

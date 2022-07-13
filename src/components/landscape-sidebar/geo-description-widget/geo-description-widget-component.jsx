@@ -1,4 +1,5 @@
 import React from 'react';
+import { useT } from '@transifex/react';
 import { Loading } from 'he-components';
 import { VIEW_MODE } from 'constants/google-analytics-constants';
 import styles from './geo-description-widget-styles.module.scss';
@@ -17,6 +18,8 @@ const GeoDescriptionWidget = (props) => {
     toggleCollapsedLandscapeSidebar,
     isLandscapeSidebarCollapsed,
   } = props;
+  const t = useT();
+
   const isOnMobile = useMobile();
 
   if (loading) {
@@ -26,7 +29,7 @@ const GeoDescriptionWidget = (props) => {
         <div className={styles.loading}>
           <Loading />
           <span className={styles.loadingText}>
-            Loading area information...
+            {t('Loading area information...')}
           </span>
         </div>
       </div>
