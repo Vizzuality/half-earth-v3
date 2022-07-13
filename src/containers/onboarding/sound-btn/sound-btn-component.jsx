@@ -148,7 +148,6 @@ const SoundButtonComponent = ({
 }) => {
   const t = useT();
   const locale = useLocale();
-  console.log({ locale })
 
   const [playing, setPlaying] = useState(true);
   const [playedSeconds, setPlayedSeconds] = useState(0);
