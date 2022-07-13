@@ -266,7 +266,7 @@ const SoundButtonComponent = ({
       <div
         className={cx(styles.scriptBox, {
           [styles.waiting]: waitingInteraction,
-          [styles.languageBigger]: locale !== 'en',
+          [styles.languageBigger]: locale !== 'en' && locale !== '',
         })}
       >
         {renderTooltipText()}
