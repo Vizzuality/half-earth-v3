@@ -20,7 +20,6 @@ const mapStateToProps = ({ location }) => ({
 const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
 
 const AppLayout = (props) => {
-  console.log('pimenta2-1:', props)
   const { route } = props;
   const { page } = route;
   switch (page) {
