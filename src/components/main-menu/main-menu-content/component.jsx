@@ -54,7 +54,7 @@ const MainMenuContent = ({
             </div>
             <CloseIcon />
           </button>
-          {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker />}
+          {REACT_APP_FEATURE_TRANSLATION && <LanguagePicker className={styles.languagePicker} />}
           <div className={styles.menuListContainer}>
             <ul className={styles.menuList} role="menubar">
               <li>
