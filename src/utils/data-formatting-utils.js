@@ -1,5 +1,21 @@
 import { format } from 'd3-format';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { t } from '@transifex/native';
+
+
+const intlLanguage = (l) => {
+  if (l === '') return 'en-GB';
+  if (l === 'en') return 'en-GB';
+  if (l === 'pt') return 'pt-PT';
+  if (l === 'es') return 'es-ES';
+  if (l === 'fr') return 'fr-FR';
+  return 'en-GB';
+}
+
+export const localeNumber = (n, l) => {
+  const formattedNumber = new Intl.NumberFormat(intlLanguage(l)).format(n);
+  return formattedNumber;
+}
 
 export const currencyFormatting = format("$,.2f");
 export const localeFormatting = format(",.0f");
@@ -18,23 +34,23 @@ export const timestampAoiFormatting = (timestamp) => {
   )
 }
 
-export const roundGlobalRange = (value) => {
+export const roundGlobalRange = (value, l) => {
   if (value < 500) {
     return '<500';
   } else if (value < 1000) {
-    return '500-1,000';
+    return `500-${localeNumber(1000, l)}`;
   } else if (value < 5000) {
-    return '1,000-5,000';
+    return `${localeNumber(1000, l)}-${localeNumber(5000, l)}`;
   } else if (value < 10000) {
-    return '5,000-10,000';
+    return `${localeNumber(5000, l)}-${localeNumber(10000, l)}`;
   } else if (value < 50000) {
-    return '10,000-50,000';
+    return `${localeNumber(10000, l)}-${localeNumber(50000, l)}`;
   } else if (value < 100000) {
-    return '50,000-100,000';
+    return `${localeNumber(50000, l)}-${localeNumber(100000, l)}`;
   } else if (value < 1000000) {
-    return '100,000 - 1 million';
+    return `${localeNumber(100000, l)} - 1 ${t('million')}`;
   } else {
-    return format(".2s")(value).replace('M', ' million');
+    return format(".2s")(value).replace('M', `${t('million')}`);
   }
 }
 
@@ -68,16 +84,4 @@ export const countryChallengesSizes = (area) => {
   return 45
 }
 
-const intlLanguage = (l) => {
-  if (l === '') return 'en-GB';
-  if (l === 'en') return 'en-GB';
-  if (l === 'pt') return 'pt-PT';
-  if (l === 'es') return 'es-ES';
-  if (l === 'fr') return 'fr-FR';
-  return 'en-GB';
-}
 
-export const translateNumber = (n, l) => {
-  const formattedNumber = new Intl.NumberFormat(intlLanguage(l)).format(n);
-  return formattedNumber;
-}

@@ -8,7 +8,7 @@ import metadataActions from 'redux_modules/metadata';
 import metadataConfig from 'constants/metadata';
 import metadataService from 'services/metadata-service';
 
-const actions = {...metadataActions, ...urlActions};
+const actions = { ...metadataActions, ...urlActions };
 
 const Container = (props) => {
   const {
@@ -28,7 +28,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[metadataSlug]
-    metadataService.getMetadata(md.slug).then( data => {
+    metadataService.getMetadata(md.slug).then(data => {
       setMetadata(data);
     })
   }, []);
@@ -43,7 +43,7 @@ const Container = (props) => {
     if (selectedLayer === option.slug) {
       layerManagerToggle(option.slug, activeLayers, changeGlobe);
       setSelectedLayer(null);
-    } else if(selectedLayer) {
+    } else if (selectedLayer) {
       batchToggleLayers([selectedLayer, option.slug], activeLayers, changeGlobe)
       setSelectedLayer(option.slug);
     } else {
