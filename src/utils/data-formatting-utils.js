@@ -8,13 +8,13 @@ export const timestampAoiFormatting = (timestamp) => {
   if (!timestamp) return null;
   return (
     Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: 'numeric',
-    hour12: false
-  }).format(new Date(timestamp))
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: 'numeric',
+      hour12: false
+    }).format(new Date(timestamp))
   )
 }
 
@@ -62,8 +62,22 @@ export const countryChallengesChartFormats = {
 }
 
 export const countryChallengesSizes = (area) => {
-  if (area <= 150 ) return 18;
+  if (area <= 150) return 18;
   if (area <= 22000) return 29;
   if (area <= 3250000) return 35;
   return 45
+}
+
+const intlLanguage = (l) => {
+  if (l === '') return 'en-GB';
+  if (l === 'en') return 'en-GB';
+  if (l === 'pt') return 'pt-PT';
+  if (l === 'es') return 'es-ES';
+  if (l === 'fr') return 'fr-FR';
+  return 'en-GB';
+}
+
+export const translateNumber = (n, l) => {
+  const formattedNumber = new Intl.NumberFormat(intlLanguage(l)).format(n);
+  return formattedNumber;
 }

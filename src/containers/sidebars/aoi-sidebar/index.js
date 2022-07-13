@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils';
+
+import { useLocale } from '@transifex/react';
+
+import { percentageFormat, localeFormatting, translateNumber } from 'utils/data-formatting-utils';
 import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
 import Component from './aoi-sidebar-component';
 import * as urlActions from 'actions/url-actions';
@@ -9,19 +12,24 @@ import { postAoiToDataBase } from 'utils/geo-processing-services';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 import { DATA } from 'router';
 
-const actions = {...urlActions, ...aoiAnalyticsActions}
+const actions = { ...urlActions, ...aoiAnalyticsActions }
 
 const AoiSidebarContainer = (props) => {
   const { speciesData, contextualData, geometry, browsePage } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  const [values, setFormattedValues ] = useState({})
+  const [values, setFormattedValues] = useState({})
+
+  const locale = useLocale();
+
+  console.log({ locale })
+
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
       // Custom AOIs rely on percentage instead of protectionPercentage
       const percentage = contextualData.protectionPercentage || contextualData.percentage;
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
-        area: localeFormatting(contextualData.area),
+        area: translateNumber(contextualData.area, locale),
         climateRegime: contextualData.elu && contextualData.elu.climateRegime,
         population: contextualData.population && localeFormatting(contextualData.population),
         mainPressure: contextualData.pressures && getMainPressure(contextualData.pressures),
@@ -29,9 +37,9 @@ const AoiSidebarContainer = (props) => {
         protectionPercentage: percentage && percentageFormat(percentage),
       })
     }
-  }, [contextualData]);
+  }, [contextualData, locale]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (isShareModalOpen && contextualData.isCustom) {
       saveAreaToDB();
     }
