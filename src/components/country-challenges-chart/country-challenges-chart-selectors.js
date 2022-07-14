@@ -3,6 +3,7 @@ import { CONTINENT_COLORS } from 'constants/country-mode-constants';
 import { getCountryChallengesSelectedFilter, getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
+import kebabCase from 'lodash/kebabCase';
 import {
   INDICATOR_LABELS,
   getChallengesRelatedFilterOptions,
@@ -39,10 +40,11 @@ const getScatterplotRawData = createSelector(
 
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
+      const continent = kebabCase(country.continent);
       return {
-        continent: country.continent,
+        continent: continent,
         name: country.NAME_0,
-        color: CONTINENT_COLORS[country.continent] || '#fff',
+        color: CONTINENT_COLORS[continent] || '#fff',
         iso: country.GID_0,
         size: countryChallengesSizes(country[COUNTRY_ATTRIBUTES.Area_Country]),
         xAxisValues: {
