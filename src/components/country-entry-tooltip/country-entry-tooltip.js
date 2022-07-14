@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 // Services
 import EsriFeatureService from 'services/esri-feature-service';
+// utils
+import { useLocale } from '@transifex/react';
+import { getLocaleNumber } from 'utils/data-formatting-utils';
 // Constants
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
@@ -17,6 +20,8 @@ const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions }
 
 const CountryEntryTooltipContainer = props => {
   const { mapTooltipIsVisible, countryISO, changeUI } = props;
+  const locale = useLocale();
+
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [tooltipContent, setContent] = useState({});
 
@@ -37,10 +42,10 @@ const CountryEntryTooltipContainer = props => {
             coastal: attributes.Marine === 'True' ? true : false,
             spiLand: attributes[COUNTRY_ATTRIBUTES.SPI_ter],
             spiMar: attributes.SPI_mar,
-            landVertebrates: attributes[COUNTRY_ATTRIBUTES.nspecies_ter],
-            marVertebrates: attributes.nspecies_mar,
-            endemicLand: attributes[COUNTRY_ATTRIBUTES.total_endemic_ter],
-            endemicMar: attributes.total_endemic_mar,
+            landVertebrates: getLocaleNumber(attributes[COUNTRY_ATTRIBUTES.nspecies_ter], locale),
+            marVertebrates: getLocaleNumber(attributes.nspecies_mar, locale),
+            endemicLand: getLocaleNumber(attributes[COUNTRY_ATTRIBUTES.total_endemic_ter], locale),
+            endemicMar: getLocaleNumber(attributes.total_endemic_mar, locale),
             protectionLand: attributes[COUNTRY_ATTRIBUTES.prop_protected_ter],
             protectionMar: attributes.prop_protected_mar,
             protectionNeededLand: attributes[COUNTRY_ATTRIBUTES.protection_needed_ter],
@@ -49,8 +54,8 @@ const CountryEntryTooltipContainer = props => {
         }
       })
     }
-  }, [countryISO])
-
+  }, [countryISO, locale])
+  console.log({ tooltipContent })
   const handleTooltipClose = () => {
     const { setTooltipIsVisible, setTooltipContent } = props;
     setTooltipIsVisible(false);

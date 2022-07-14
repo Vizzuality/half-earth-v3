@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { useLocale } from '@transifex/react';
 
-import { percentageFormat, localeNumber } from 'utils/data-formatting-utils';
+import { percentageFormat, getLocaleNumber } from 'utils/data-formatting-utils';
 import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
 import Component from './aoi-sidebar-component';
 import * as urlActions from 'actions/url-actions';
@@ -27,9 +27,9 @@ const AoiSidebarContainer = (props) => {
       const percentage = contextualData.protectionPercentage || contextualData.percentage;
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
-        area: localeNumber(contextualData.area, locale),
+        area: getLocaleNumber(contextualData.area, locale),
         climateRegime: contextualData.elu && contextualData.elu.climateRegime,
-        population: contextualData.population && localeNumber(contextualData.population, locale),
+        population: contextualData.population && getLocaleNumber(contextualData.population, locale),
         mainPressure: contextualData.pressures && getMainPressure(contextualData.pressures),
         totalPressures: contextualData.pressures && getTotalPressures(contextualData.pressures),
         protectionPercentage: percentage && percentageFormat(percentage),

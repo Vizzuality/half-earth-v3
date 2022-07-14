@@ -12,8 +12,8 @@ const intlLanguage = (l) => {
   return 'en-GB';
 }
 
-export const localeNumber = (n, l) => {
-  const formattedNumber = new Intl.NumberFormat(intlLanguage(l)).format(n);
+export const getLocaleNumber = (value, locale) => {
+  const formattedNumber = new Intl.NumberFormat(intlLanguage(locale)).format(value);
   return formattedNumber;
 }
 
@@ -38,17 +38,17 @@ export const roundGlobalRange = (value, l) => {
   if (value < 500) {
     return '<500';
   } else if (value < 1000) {
-    return `500-${localeNumber(1000, l)}`;
+    return `500-${getLocaleNumber(1000, l)}`;
   } else if (value < 5000) {
-    return `${localeNumber(1000, l)}-${localeNumber(5000, l)}`;
+    return `${getLocaleNumber(1000, l)}-${getLocaleNumber(5000, l)}`;
   } else if (value < 10000) {
-    return `${localeNumber(5000, l)}-${localeNumber(10000, l)}`;
+    return `${getLocaleNumber(5000, l)}-${getLocaleNumber(10000, l)}`;
   } else if (value < 50000) {
-    return `${localeNumber(10000, l)}-${localeNumber(50000, l)}`;
+    return `${getLocaleNumber(10000, l)}-${getLocaleNumber(50000, l)}`;
   } else if (value < 100000) {
-    return `${localeNumber(50000, l)}-${localeNumber(100000, l)}`;
+    return `${getLocaleNumber(50000, l)}-${getLocaleNumber(100000, l)}`;
   } else if (value < 1000000) {
-    return `${localeNumber(100000, l)} - 1 ${t('million')}`;
+    return `${getLocaleNumber(100000, l)} - 1 ${t('million')}`;
   } else {
     return format(".2s")(value).replace('M', `${t('million')}`);
   }
