@@ -16,7 +16,7 @@ const AreaOfInterest = loadable(() => import('pages/aoi'));
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],
-  lang: location.query.lang,
+  lang: location.query && location.query.lang,
 });
 
 const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
