@@ -84,13 +84,11 @@ const NRCLandingSidebar = ({
       {averageLoaded && (
         <div className={styles.togglesContainer}>
           {NRCLandingLayers.map((layer) => {
-            const { name } = layer;
+            const { name, slug } = layer;
             const nameUpdated =
-              name && name === t('Land')
-                ? `${t('Land SPI (Global average: ')}${landAverage})`
-                : name && name === 'Marine'
-                ? `${t('Marine SPI (Global average: ')}${marineAverage})`
-                : 0;
+              name && slug === GLOBAL_SPI_FEATURE_LAYER
+                ? `${t('Land SPI (Global average:')} ${landAverage})`
+                : `${t('Marine SPI (Global average:')} ${marineAverage})`;
             const layerUpdated = { ...layer, name: nameUpdated };
             return (
               <LayerToggle
