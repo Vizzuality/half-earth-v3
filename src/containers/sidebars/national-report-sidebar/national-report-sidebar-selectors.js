@@ -51,7 +51,7 @@ const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority]
     `${t(`Our global model of comprehensive terrestrial vertebrate biodiversity
   conservation did not identify any areas in `)}${countryData.NAME_0}${t(` in need of additional protection.
   Further expansion of `)}${countryData.NAME_0}${t(`'s`)}${t(` protected areas will nonetheless promote resilience towards global biodiversity loss,
-  and can contribute to creating a global conservation network with more equity between countries.`)}` ;
+  and can contribute to creating a global conservation network with more equity between countries.`)}`;
 })
 
 const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => {
@@ -86,12 +86,12 @@ const getSPIMean = createSelector(getCountryData, countryData => {
 
 const getNumberOfVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData[COUNTRY_ATTRIBUTES.nspecies_ter].toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.nspecies_ter];
 })
 
 const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter].toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter];
 })
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {

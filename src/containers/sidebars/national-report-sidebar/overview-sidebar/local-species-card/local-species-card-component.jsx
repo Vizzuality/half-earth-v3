@@ -1,5 +1,8 @@
 import React from 'react';
 import { useT } from '@transifex/react';
+import { useLocale } from '@transifex/react';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SpeciesModal from 'components/species-modal';
@@ -34,12 +37,14 @@ const LocalSpeciesCardComponent = ({
   mammalsEndemic,
   reptilesEndemic,
   vertebratesCount,
+  endemicVertebratesCount,
   amphibiansEndemic,
   endemicVertebratesSentence,
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
 }) => {
   const t = useT();
+  const locale = useLocale();
 
   return (
     <div className={styles.cardContainer}>
@@ -61,14 +66,15 @@ const LocalSpeciesCardComponent = ({
             <div className={styles.chartLegendItem}>
               <SpeciesOval />
               <div className={styles.chartLegendItemNameContainer}>
-                <span>{`${vertebratesCount}`}</span>
+                <span>{`${getLocaleNumber(vertebratesCount, locale) || 0}`}
+                </span>
                 <span>{t('species')}</span>
               </div>
             </div>
             <div className={styles.chartLegendItem}>
               <EndemicOval />
               <div className={styles.chartLegendItemNameContainer}>
-                <span>{endemicVertebratesSentence}</span>
+                <span>{`${getLocaleNumber(endemicVertebratesCount, locale) || 0} ${endemicVertebratesSentence}`}</span>
                 <span>{t('endemic')}</span>
               </div>
             </div>
@@ -80,10 +86,10 @@ const LocalSpeciesCardComponent = ({
                 <AmphibiansIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${amphibians || 0}${t(
+                <span className={styles.speciesName}>{`${getLocaleNumber(amphibians, locale) || 0}${t(
                   ' amphibians'
                 )}`}</span>
-                <span>{`${amphibiansEndemic || 0} ${t('endemic')}`}</span>
+                <span>{`${getLocaleNumber(amphibiansEndemic, locale) || 0} ${t('endemic')}`}</span>
               </div>
             </li>
             {/* reptiles */}
@@ -92,10 +98,9 @@ const LocalSpeciesCardComponent = ({
                 <ReptilesIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${reptiles || 0} ${t(
-                  'reptiles'
-                )}`}</span>
-                <span>{`${reptilesEndemic || 0} ${t('endemic')}`}</span>
+                <span className={styles.speciesName}>{`${getLocaleNumber(reptiles || 0, locale)
+                  } reptiles`}</span>
+                <span>{`${getLocaleNumber(reptilesEndemic || 0, locale)} endemic`}</span>
               </div>
             </li>
             {/* mammals (land) */}
@@ -104,10 +109,9 @@ const LocalSpeciesCardComponent = ({
                 <MammalsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${mammals || 0} ${t(
-                  'mammals (land)'
-                )}`}</span>
-                <span>{`${mammalsEndemic || 0} ${t('endemic')}`}</span>
+                <span className={styles.speciesName}>{`${getLocaleNumber(mammals || 0, locale)
+                  } mammals (land)`}</span>
+                <span>{`${getLocaleNumber(mammalsEndemic || 0, locale)} endemic`}</span>
               </div>
             </li>
             {/* mammals (sea) */}
@@ -116,10 +120,9 @@ const LocalSpeciesCardComponent = ({
                 <MarMammalsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${mammalsMar || 0} ${t(
-                  'mammals (sea)'
-                )}`}</span>
-                <span>{`${mammalsMarEndemic || 0} ${t('endemic')}`}</span>
+                <span className={styles.speciesName}>{`${getLocaleNumber(mammalsMar || 0, locale)
+                  } mammals (sea)`}</span>
+                <span>{`${getLocaleNumber(mammalsMarEndemic || 0, locale)} endemic`}</span>
               </div>
             </li>
             {/* birds */}
@@ -128,10 +131,9 @@ const LocalSpeciesCardComponent = ({
                 <BirdsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${birds || 0} ${t(
-                  'birds'
-                )}`}</span>
-                <span>{`${birdsEndemic || 0} ${t('endemic')}`}</span>
+                <span className={styles.speciesName}>{`${getLocaleNumber(birds || 0, locale)
+                  } birds`}</span>
+                <span>{`${getLocaleNumber(birdsEndemic || 0, locale)} endemic`}</span>
               </div>
             </li>
             {/* fishes */}
@@ -140,10 +142,9 @@ const LocalSpeciesCardComponent = ({
                 <FishesIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${fishes || 0} ${t(
-                  'fishes'
-                )}`}</span>
-                <span>{`${fishesEndemic || 0} ${t('endemic')}`}</span>
+                <span className={styles.speciesName}>{`${getLocaleNumber(fishes, locale) || 0
+                  } fishes`}</span>
+                <span>{`${getLocaleNumber(fishesEndemic || 0, locale)} endemic`}</span>
               </div>
             </li>
           </ul>

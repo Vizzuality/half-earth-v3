@@ -34,6 +34,7 @@ const getSelectedFilterSlug = createSelector([getCountryChallengesSelectedFilter
 const getScatterplotRawData = createSelector(
   [selectCountriesData, getLandMarineSelected],
   (countriesData, landMarineSelection) => {
+
     if (!countriesData) return null;
     const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
 
@@ -57,20 +58,20 @@ const getScatterplotRawData = createSelector(
         },
         yAxisValue: country[attributes.SPI]
       }
-        }).sort((a, b) => (b.size - a.size))
+    }).sort((a, b) => (b.size - a.size))
   }
 )
 
 const getXAxisKeys = createSelector(
   [selectCountryIso, getScatterplotRawData],
   (countryIso, rawData) => {
-  const AllXAxisKeys = Object.keys(INDICATOR_LABELS);
-  if (!rawData) return AllXAxisKeys;
-  const countryData = rawData.find(country => country.iso === countryIso);
-  return AllXAxisKeys.filter(
-    (key) => countryData.xAxisValues[key] || countryData.xAxisValues[key] === 0
-  );
-});
+    const AllXAxisKeys = Object.keys(INDICATOR_LABELS);
+    if (!rawData) return AllXAxisKeys;
+    const countryData = rawData.find(country => country.iso === countryIso);
+    return AllXAxisKeys.filter(
+      (key) => countryData.xAxisValues[key] || countryData.xAxisValues[key] === 0
+    );
+  });
 
 const getSelectedCountryRelations = createSelector(
   [selectCountriesData, selectCountryIso, getLandMarineSelected],
@@ -158,7 +159,6 @@ const getYAxisTicks = createSelector(
     return [0, 100]
   }
 )
-
 
 const mapStateToProps = createStructuredSelector({
   data: getFilteredData,

@@ -1,5 +1,20 @@
 import { format } from 'd3-format';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { t } from '@transifex/native';
+
+const intlLanguage = (l) => {
+  if (l === '') return 'en-GB';
+  if (l === 'en') return 'en-GB';
+  if (l === 'pt') return 'pt-PT';
+  if (l === 'es') return 'es-ES';
+  if (l === 'fr') return 'fr-FR';
+  return 'en-GB';
+}
+
+export const getLocaleNumber = (value, locale) => {
+  const formattedNumber = new Intl.NumberFormat(intlLanguage(locale)).format(value);
+  return formattedNumber;
+}
 
 export const currencyFormatting = format("$,.2f");
 export const localeFormatting = format(",.0f");
@@ -8,33 +23,33 @@ export const timestampAoiFormatting = (timestamp) => {
   if (!timestamp) return null;
   return (
     Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: 'numeric',
-    hour12: false
-  }).format(new Date(timestamp))
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: 'numeric',
+      hour12: false
+    }).format(new Date(timestamp))
   )
 }
 
-export const roundGlobalRange = (value) => {
+export const roundGlobalRange = (value, l) => {
   if (value < 500) {
     return '<500';
   } else if (value < 1000) {
-    return '500-1,000';
+    return `500-${getLocaleNumber(1000, l)}`;
   } else if (value < 5000) {
-    return '1,000-5,000';
+    return `${getLocaleNumber(1000, l)}-${getLocaleNumber(5000, l)}`;
   } else if (value < 10000) {
-    return '5,000-10,000';
+    return `${getLocaleNumber(5000, l)}-${getLocaleNumber(10000, l)}`;
   } else if (value < 50000) {
-    return '10,000-50,000';
+    return `${getLocaleNumber(10000, l)}-${getLocaleNumber(50000, l)}`;
   } else if (value < 100000) {
-    return '50,000-100,000';
+    return `${getLocaleNumber(50000, l)}-${getLocaleNumber(100000, l)}`;
   } else if (value < 1000000) {
-    return '100,000 - 1 million';
+    return `${getLocaleNumber(100000, l)} - 1 ${t('million')}`;
   } else {
-    return format(".2s")(value).replace('M', ' million');
+    return format(".2s")(value).replace('M', `${t('million')}`);
   }
 }
 
@@ -62,8 +77,10 @@ export const countryChallengesChartFormats = {
 }
 
 export const countryChallengesSizes = (area) => {
-  if (area <= 150 ) return 18;
+  if (area <= 150) return 18;
   if (area <= 22000) return 29;
   if (area <= 3250000) return 35;
   return 45
 }
+
+

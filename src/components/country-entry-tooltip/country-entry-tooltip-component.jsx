@@ -1,13 +1,11 @@
-// Dependencies
 import React, { useEffect, useState, useRef } from 'react';
 import { useT } from '@transifex/react';
-
 import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
-// Assets
+// sssets
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
-// Styles
+// styles
 import styles from './country-entry-tooltip-styles.module.scss';
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 import { LAND_MARINE } from 'constants/country-mode-constants';
@@ -172,9 +170,8 @@ const CountryEntryTooltipComponent = ({
             {landTab ? protectionNeededLand : protectionNeededMar}%
           </span>
           <span className={styles.text}>
-            {`${t('of additional ')}${
-              landTab ? LAND_MARINE.land : LAND_MARINE.marine
-            }${t(' protection is needed')}`}
+            {`${t('of additional ')}${landTab ? LAND_MARINE.land : LAND_MARINE.marine
+              }${t(' protection is needed')}`}
           </span>
         </div>
       </section>

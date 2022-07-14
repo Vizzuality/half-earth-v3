@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { useT } from '@transifex/react';
+import { useLocale } from '@transifex/react';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+
 import cx from 'classnames';
+
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
+
 import styles from './country-data-card-styles.module.scss';
 import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 import { LAND_MARINE } from 'constants/country-mode-constants';
@@ -14,6 +20,8 @@ const CountryDataCardComponent = ({
   handleInfoClick,
   indexStatement,
 }) => {
+  const t = useT();
+  const locale = useLocale();
   const [activeTab, setActiveTab] = useState(LAND_MARINE.land);
 
   const {
@@ -27,7 +35,6 @@ const CountryDataCardComponent = ({
     total_endemic_mar,
     total_endemic_ter,
   } = countryData;
-  const t = useT();
 
   const coastal = Marine === 'True' ? true : false;
 
@@ -100,11 +107,11 @@ const CountryDataCardComponent = ({
                   </b>
                   {t(', the total number of')}{' '}
                   <b>
-                    {t('terrestrial vertebrates ')}({nspecies_ter})
+                    {t('terrestrial vertebrates ')}({getLocaleNumber(nspecies_ter, locale)})
                   </b>{' '}
                   {t('and the amount of these which are')}{' '}
                   <b>
-                    {t('endemic ')}({total_endemic_ter})
+                    {t('endemic ')}({getLocaleNumber(total_endemic_ter, locale)})
                   </b>
                   .
                 </p>
@@ -139,11 +146,11 @@ const CountryDataCardComponent = ({
                     </b>
                     {t(', the total number of')}{' '}
                     <b>
-                      {t('marine vertebrates')} ({nspecies_mar})
+                      {t('marine vertebrates')} ({getLocaleNumber(nspecies_mar, locale)})
                     </b>{' '}
                     {t('and the amount of these which are')}{' '}
                     <b>
-                      {t('endemic')} ({total_endemic_mar})
+                      {t('endemic')} ({getLocaleNumber(total_endemic_mar, locale)})
                     </b>
                     .
                   </p>

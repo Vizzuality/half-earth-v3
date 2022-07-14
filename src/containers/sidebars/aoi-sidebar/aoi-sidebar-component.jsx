@@ -49,6 +49,8 @@ const AOISidebarComponent = ({
   dataLoaded,
 }) => {
   const t = useT();
+
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
   const handleShareModalOpen = () => {
@@ -63,7 +65,7 @@ const AOISidebarComponent = ({
       timestamp: Date.now(),
       areaName: updatedAreaName,
     });
-  };
+  }
 
   return (
     <>
@@ -164,7 +166,7 @@ const AOISidebarComponent = ({
           cardCategory={BIODIVERSITY_SLUG}
           layers={AOI_BIODIVERSITY_TOGGLES}
           metadataSlug={ALL_TAXA_PRIORITY}
-          // displayWarning={area < 10000}
+        // displayWarning={area < 10000}
         />
         <SidebarCard
           map={map}

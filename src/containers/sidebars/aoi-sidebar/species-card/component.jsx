@@ -3,7 +3,7 @@ import React from 'react';
 // components
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 // containers
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -50,6 +50,8 @@ const Component = ({
   searchOptions,
 }) => {
   const t = useT();
+  const locale = useLocale();
+
 
   return speciesData.species && speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
@@ -168,7 +170,7 @@ const Component = ({
               <span>{t('Global habitat-suitable range')}</span>
               <p>
                 {`${roundGlobalRange(
-                  individualSpeciesData.globaldRangeArea
+                  individualSpeciesData.globaldRangeArea, locale
                 )}${t(' km')}`}
                 <sup>2</sup>
               </p>
@@ -189,9 +191,8 @@ const Component = ({
                 capPercentage(individualSpeciesData.presenceInArea)
               )}
             />
-            <p className={styles.iucnStatus}>{`${t('IUCN status')}: ${
-              individualSpeciesData.iucnCategory
-            }`}</p>
+            <p className={styles.iucnStatus}>{`${t('IUCN status')}: ${individualSpeciesData.iucnCategory
+              }`}</p>
           </section>
         )}
       </div>
