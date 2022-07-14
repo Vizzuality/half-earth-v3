@@ -85,12 +85,12 @@ const getSPIMean = createSelector(getCountryData, countryData => {
 
 const getNumberOfVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData[COUNTRY_ATTRIBUTES.nspecies_ter].toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.nspecies_ter];
 })
 
 const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter].toLocaleString('en');
+  return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter];
 })
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
@@ -116,7 +116,7 @@ const getIndexStatement = createSelector(
 
 const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
   if (!endemicVertebrates) return null;
-  return endemicVertebrates === '1' ? `${endemicVertebrates} is` : `${endemicVertebrates} are`
+  return endemicVertebrates === '1' ? 'is' : 'are'
 })
 
 const getTaxa = (taxa) => createSelector(getCountryData, countryData => {
