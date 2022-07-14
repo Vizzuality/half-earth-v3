@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react';
+import { useT } from '@transifex/react';
 import { useDropzone } from 'react-dropzone';
 import { featureCollectionFromShape } from 'utils/analyze-areas-utils';
 import { ReactComponent as AddShapeIcon } from 'icons/add_shape_icon.svg';
 import styles from './styles.module.scss';
 
 const Component = ({ view, onError, onSuccess }) => {
+  const t = useT();
+
   const { getRootProps, getInputProps, rootRef } = useDropzone({
     onDrop: useCallback(() => {
       featureCollectionFromShape(rootRef.current, view, onSuccess, onError);
@@ -30,7 +33,7 @@ const Component = ({ view, onError, onSuccess }) => {
         />
         <AddShapeIcon className={styles.uploadShapeButton} />
         <span className={styles.label}>
-          Drag or click to upload your shapefile.
+          {t('Drag or click to upload your shapefile.')}
         </span>
       </form>
     </div>
