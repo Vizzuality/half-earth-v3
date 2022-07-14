@@ -12,35 +12,35 @@ export const INDICATOR_LABELS = {
 };
 
 export const CONTINENTS = [
-  'Africa',
-  'Antarctica',
-  'Asia',
-  'Europe',
-  'North america',
-  'South america',
-  'Oceania',
+  'africa',
+  'antarctica',
+  'asia',
+  'europe',
+  'north-america',
+  'south-america',
+  'oceania',
 ];
 
 export const CONTINENT_COLORS = {
-  'Africa': '#34BD92',
-  'Antarctica': '#92EB57',
-  'Asia': '#3AA8EE',
-  'Europe': '#FFDE00',
-  'North America': '#8B62E9',
-  'Oceania': '#E87926',
-  'Australia': '#E87926',
-  'South America': '#EB588F'
+  'africa': '#34BD92',
+  'antarctica': '#92EB57',
+  'asia': '#3AA8EE',
+  'europe': '#FFDE00',
+  'north-america': '#8B62E9',
+  'south-america': '#EB588F',
+  'oceania': '#E87926',
+  'australia': '#E87926',
 }
 
 export const CONTINENT_LABELS = {
-  'Africa': t('Africa'),
-  'Antarctica': t('Antarctica'),
-  'Asia': t('Asia'),
-  'Europe': t('Europe'),
-  'North America': t('North America'),
-  'Oceania': t('Oceania'),
-  'Australia': t('Australia'),
-  'South America': t('South America')
+  'africa': t('Africa'),
+  'antarctica': t('Antarctica'),
+  'asia': t('Asia'),
+  'europe': t('Europe'),
+  'north-america': t('North America'),
+  'south-america': t('South America'),
+  'oceania': t('Oceania'),
+  'australia': t('Australia'),
 }
 
 export const FILTERS_DICTIONARY = {

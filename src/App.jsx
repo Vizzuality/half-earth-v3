@@ -1,6 +1,6 @@
 import loadable from '@loadable/component';
 import 'he-components/dist/main.css';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
@@ -16,7 +16,9 @@ const AreaOfInterest = loadable(() => import('pages/aoi'));
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],
+  lang: location.query && location.query.lang,
 });
+
 const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
 
 const AppLayout = (props) => {
@@ -40,25 +42,29 @@ const AppLayout = (props) => {
   }
 };
 
-class App extends Component {
-  render() {
+const App = (props) => {
+  useEffect(() => {
     tx.init({
       token: REACT_APP_TRANSIFEX_TOKEN,
       ...(process.env.NODE_ENV === 'development'
         ? { missingPolicy: new PseudoTranslationPolicy() }
         : {}),
     });
+  }, []);
 
-    return (
-      <div
-        className="App"
-        style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
-      >
-        <AppLayout {...this.props} />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    tx.setCurrentLocale(props.lang);
+  }, [props.lang]);
+
+  return (
+    <div
+      className="App"
+      style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
+    >
+      <AppLayout {...props} />
+    </div>
+  );
+};
 
 export default process.env.NODE_ENV === 'development'
   ? hot(module)(connect(mapStateToProps, null)(App))

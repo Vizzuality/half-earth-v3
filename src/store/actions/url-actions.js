@@ -14,6 +14,19 @@ export const changeUI = createThunkAction(
     )
 );
 
+// change the 'lang' key in url
+export const changeLang = createThunkAction(
+  'changeLang',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'lang',
+        change,
+        state
+      })
+    )
+);
+
 export const changeGlobe = createThunkAction(
   'changeGlobe',
   change => (dispatch, state) =>
@@ -28,11 +41,19 @@ export const changeGlobe = createThunkAction(
 
 export const browsePage = createThunkAction(
   'browsePage',
-  routerAction => (dispatch) => dispatch(routerAction)
+  routerAction => (dispatch, state) => {
+    const location = state().location;
+    const lang = location && location.query && location.query.lang;
+
+    // Retain lang if exists
+    const action = lang ? {...routerAction, query: { ...routerAction.query, lang } } : routerAction;
+    dispatch(action);
+  }
 )
 
 export default {
   changeUI,
   changeGlobe,
+  changeLang,
   browsePage
 }
