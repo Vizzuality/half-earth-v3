@@ -55,7 +55,7 @@ const CountryEntryTooltipContainer = props => {
       })
     }
   }, [countryISO, locale])
-  console.log({ tooltipContent })
+
   const handleTooltipClose = () => {
     const { setTooltipIsVisible, setTooltipContent } = props;
     setTooltipIsVisible(false);

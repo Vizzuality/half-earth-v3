@@ -2,7 +2,6 @@ import { format } from 'd3-format';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { t } from '@transifex/native';
 
-
 const intlLanguage = (l) => {
   if (l === '') return 'en-GB';
   if (l === 'en') return 'en-GB';
