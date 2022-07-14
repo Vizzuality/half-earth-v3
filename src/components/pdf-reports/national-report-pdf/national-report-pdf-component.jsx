@@ -53,9 +53,9 @@ const NationalReportPdf = ({
         </span>
       </section>
       <section className={styles.indexWrapper}>
-        <p
-          className={styles.overviewText}
-        >{`The national species protection index is: ${SPI}`}</p>
+        <p className={styles.overviewText}>{`${t(
+          'The national species protection index is: '
+        )}${SPI}`}</p>
         <p className={styles.indexStatement}>{indexStatement}</p>
       </section>
       <p className={styles.indexIntro}>This index is based on:</p>

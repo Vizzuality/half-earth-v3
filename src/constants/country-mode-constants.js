@@ -32,6 +32,17 @@ export const CONTINENT_COLORS = {
   'South America': '#EB588F'
 }
 
+export const CONTINENT_LABELS = {
+  'Africa': t('Africa'),
+  'Antarctica': t('Antarctica'),
+  'Asia': t('Asia'),
+  'Europe': t('Europe'),
+  'North America': t('North America'),
+  'Oceania': t('Oceania'),
+  'Australia': t('Australia'),
+  'South America': t('South America')
+}
+
 export const FILTERS_DICTIONARY = {
   filter_continent: t('by continent'),
   filter_neigh: t('by proximity'),

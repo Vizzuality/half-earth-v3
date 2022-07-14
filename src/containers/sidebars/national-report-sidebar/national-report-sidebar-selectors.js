@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { t } from '@transifex/native';
 import { random } from 'lodash';
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
@@ -42,15 +43,15 @@ const getHasPriority = createSelector(getCountryData, countryData => {
 const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority], (countryData, hasPriority) => {
   if (!countryData) return null;
   return hasPriority ?
-    `The brightly colored map layer presents one possible configuration
+    `${t(`The brightly colored map layer presents one possible configuration
   of the additional areas needed to achieve the Half-Earth goal of
   comprehensive terrestrial biodiversity conservation. Higher values
-  indicate locations within ${countryData.NAME_0} that contribute more to the
-  conservation of species habitat.` :
-    `Our global model of comprehensive terrestrial vertebrate biodiversity
-  conservation did not identify any areas in ${countryData.NAME_0} in need of additional protection.
-  Further expansion of ${countryData.NAME_0}'s protected areas will nonetheless promote resilience towards global biodiversity loss,
-  and can contribute to creating a global conservation network with more equity between countries.` ;
+  indicate locations within `)}${countryData.NAME_0}${t(` that contribute more to the
+  conservation of species habitat.`)}` :
+    `${t(`Our global model of comprehensive terrestrial vertebrate biodiversity
+  conservation did not identify any areas in `)}${countryData.NAME_0}${t(` in need of additional protection.
+  Further expansion of `)}${countryData.NAME_0}${t(`'s`)}${t(` protected areas will nonetheless promote resilience towards global biodiversity loss,
+  and can contribute to creating a global conservation network with more equity between countries.`)}`;
 })
 
 const getSpeciesProtectionIndex = createSelector(getCountryData, countryData => {
@@ -95,8 +96,8 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData
 
 const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
   if (!countryData) return null;
-  return ` Here are some examples of land species of significant conservation interest for each taxonomic group.
-  These species are either endemic to ${countryData.NAME_0} or have small range sizes.`;
+  return ` ${t(`Here are some examples of land species of significant conservation interest for each taxonomic group.
+  These species are either endemic to `)}${countryData.NAME_0} ${t('or have small range sizes.')}`;
 })
 
 const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, countryData => {
@@ -110,13 +111,13 @@ const getIndexStatement = createSelector(
   [getSpeciesProtectionIndex, getSPIMean],
   (SPI, SPIMean) => {
     if (!SPI || !SPIMean) return null;
-    const comparation = SPI >= SPIMean ? 'higher' : 'lower';
-    return `THE INDEX OF THIS COUNTRY IS ${comparation} than the average national SPI: ${SPIMean} `
+    const comparation = SPI >= SPIMean ? t('higher') : t('lower');
+    return `${t('THE INDEX OF THIS COUNTRY IS ')}${comparation} ${t('than the average national SPI: ')}${SPIMean} `
   })
 
 const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
   if (!endemicVertebrates) return null;
-  return endemicVertebrates === '1' ? 'is' : 'are'
+  return endemicVertebrates === '1' ? `${endemicVertebrates} ${t('is')}` : `${endemicVertebrates} ${t('are')}`
 })
 
 const getTaxa = (taxa) => createSelector(getCountryData, countryData => {

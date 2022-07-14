@@ -1,4 +1,5 @@
 import { LAYER_VARIANTS, LAYER_VARIANTS_LABELS } from 'constants/biodiversity-layers-constants';
+import { t } from '@transifex/native';
 
 export const LOCAL_SCENE_TABS_SLUGS = {
   OVERVIEW: 'overview',
@@ -9,9 +10,9 @@ export const LOCAL_SCENE_TABS_SLUGS = {
 export const LOCAL_SCENE_DEFAULT_TAB = LOCAL_SCENE_TABS_SLUGS.OVERVIEW;
 
 export const LOCAL_SCENE_TABS = [
-  {slug: LOCAL_SCENE_TABS_SLUGS.OVERVIEW, title: 'overview'},
-  {slug: LOCAL_SCENE_TABS_SLUGS.CHALLENGES, title: 'challenges'},
-  {slug: LOCAL_SCENE_TABS_SLUGS.RANKING, title: 'ranking'},
+  {slug: LOCAL_SCENE_TABS_SLUGS.OVERVIEW, title: t('overview')},
+  {slug: LOCAL_SCENE_TABS_SLUGS.CHALLENGES, title: t('challenges')},
+  {slug: LOCAL_SCENE_TABS_SLUGS.RANKING, title: t('ranking')},
 ]
 
 const BIODIVERSITY_TABS_SLUGS = LAYER_VARIANTS;

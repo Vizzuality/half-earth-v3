@@ -1,6 +1,6 @@
 import Modal from 'containers/modals/onboarding-modal';
 import { motion } from 'framer-motion';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as DotsIcon } from 'icons/dots.svg';
@@ -147,6 +147,7 @@ const SoundButtonComponent = ({
   waitingInteraction,
 }) => {
   const t = useT();
+  const locale = useLocale();
 
   const [playing, setPlaying] = useState(true);
   const [playedSeconds, setPlayedSeconds] = useState(0);
@@ -264,6 +265,7 @@ const SoundButtonComponent = ({
       <div
         className={cx(styles.scriptBox, {
           [styles.waiting]: waitingInteraction,
+          [styles.languageBigger]: locale !== 'en' && locale !== '',
         })}
       >
         {renderTooltipText()}
