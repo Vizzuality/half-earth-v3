@@ -1,22 +1,23 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import useEventListener from "hooks/use-event-listener";
-import { ReactComponent as CloseIcon } from "icons/menu-close.svg";
-import PartnersComponent from "../partners/partners";
-import MapInstructionsComponent from "../map-instructions/map-instructions-component";
-import { ABOUT_TABS } from "constants/ui-params";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import { t } from '@transifex/native';
+import useEventListener from 'hooks/use-event-listener';
+import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
+import PartnersComponent from '../partners/partners';
+import MapInstructionsComponent from '../map-instructions/map-instructions-component';
+import { ABOUT_TABS } from 'constants/ui-params';
 
-import styles from "../about-styles.module.scss";
+import styles from '../about-styles.module.scss';
 
 const tabsData = {
   [ABOUT_TABS.PARTNERS]: {
     slug: ABOUT_TABS.PARTNERS,
-    text: "PARTNERS",
+    text: t('PARTNERS'),
     Component: PartnersComponent,
   },
   [ABOUT_TABS.INSTRUCTIONS]: {
     slug: ABOUT_TABS.INSTRUCTIONS,
-    text: "MAP INSTRUCTIONS",
+    text: t('MAP INSTRUCTIONS'),
     Component: MapInstructionsComponent,
   },
 };
@@ -29,7 +30,7 @@ const AboutPage = ({ handleCloseAboutPage }) => {
     if (evt.keyCode === 27) handleCloseAboutPage();
   };
 
-  useEventListener("keydown", keyEscapeEventListener);
+  useEventListener('keydown', keyEscapeEventListener);
 
   const changeActiveTab = (ACTIVE_TAB) => {
     if (ACTIVE_TAB !== activeTab) {
@@ -49,7 +50,7 @@ const AboutPage = ({ handleCloseAboutPage }) => {
           {Object.keys(tabsData).map((key, index) => (
             <button
               key={key}
-              className={key === activeTab ? styles.active : ""}
+              className={key === activeTab ? styles.active : ''}
               onClick={() => changeActiveTab(key)}
             >
               {tabsData[key].text}
@@ -66,7 +67,7 @@ const AboutPage = ({ handleCloseAboutPage }) => {
 
   return ReactDOM.createPortal(
     renderAboutPage,
-    document.getElementById("root")
+    document.getElementById('root')
   );
 };
 

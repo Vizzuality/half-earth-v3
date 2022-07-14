@@ -6,6 +6,7 @@ import {
   getPrecalculatedContextualData,
   setPrecalculatedSpeciesData,
 } from 'utils/geo-processing-services';
+import { t } from '@transifex/native';
 import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs.js';
 import localforage from 'localforage';
 import { writeToForageItem } from 'utils/local-forage-utils';
@@ -37,7 +38,7 @@ const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTa
     const { attributes, geometry } = results[0];
     setPrecalculatedSpeciesData(attributes, setTaxaData);
     setGeometry(geometry);
-    const areaName = `Priority place ${attributes.cluster}`;
+    const areaName = `${t('Priority place')} ${attributes.cluster}`;
     setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId }, null, true, true, areaName))
   });
 }
@@ -113,7 +114,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
 // NOT PRECALCULATED AOIs
 
 const createNewCustomAOI = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData }) => {
-  const areaName = 'Custom area';
+  const areaName = t('Custom area');
   const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
   const contextualData = { area, areaName, aoiId, isCustom: true }
   // Set data before fetch just to show name and available info
