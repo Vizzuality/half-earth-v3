@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { removeURLParameter } from 'utils/url-utils';
 import { ReactComponent as CopyIcon } from 'icons/copy.svg';
 import { useT, T } from '@transifex/react';
 
@@ -22,7 +23,8 @@ const ShareModalComponent = ({ setShareUrl, className, onShareCallback }) => {
   useEffect(() => {
     const iframe = `<iframe id="map-iframe" src="${setShareUrl()}" />`;
     const urlCopy = activeTab === LINK ? setShareUrl() : iframe;
-    setSharePath(urlCopy);
+    console.log('u', urlCopy, removeURLParameter(urlCopy, 'lang'));
+    setSharePath(removeURLParameter(urlCopy, 'lang'));
   }, [activeTab]);
 
   const setTab = () => {
