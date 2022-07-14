@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
-import { useT } from '@transifex/react';
+import { useLocale, useT } from '@transifex/react';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -41,6 +43,7 @@ const SpeciesModalComponent = ({
     }
   };
   const t = useT();
+  const locale = useLocale();
 
   useEventListener('keydown', keyEscapeEventListener);
 
@@ -58,7 +61,7 @@ const SpeciesModalComponent = ({
           className={cx(
             styles.groupColor,
             styles[
-              SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup
+            SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup
             ]
           )}
         />
@@ -112,21 +115,19 @@ const SpeciesModalComponent = ({
   const summaryText = useMemo(() => {
     const speciesNumber =
       countryData[
-        vertebrateType === VERTEBRATE_TABS[0].slug
-          ? 'landSpeciesTotal'
-          : 'marineSpeciesTotal'
+      vertebrateType === VERTEBRATE_TABS[0].slug
+        ? 'landSpeciesTotal'
+        : 'marineSpeciesTotal'
       ];
 
     // the list has been filtered
     if (speciesList.length < speciesNumber) {
-      return `${speciesList.length} of ${speciesNumber} ${
-        vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
-      } vertebrate species`;
+      return `${getLocaleNumber(speciesList.length, locale)} of ${getLocaleNumber(speciesNumber, locale)} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
+        } vertebrate species`;
     }
-    return `${speciesNumber} ${
-      vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
-    } vertebrate species`;
-  }, [countryData, vertebrateType, speciesList]);
+    return `${getLocaleNumber(speciesNumber, locale)} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
+      } vertebrate species`;
+  }, [countryData, vertebrateType, speciesList, locale]);
 
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>

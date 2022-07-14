@@ -98,7 +98,7 @@ const LocalSpeciesCardComponent = ({
                 <ReptilesIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${reptiles || 0
+                <span className={styles.speciesName}>{`${getLocaleNumber(reptiles || 0, locale)
                   } reptiles`}</span>
                 <span>{`${getLocaleNumber(reptilesEndemic || 0, locale)} endemic`}</span>
               </div>
@@ -131,7 +131,7 @@ const LocalSpeciesCardComponent = ({
                 <BirdsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${birds || 0
+                <span className={styles.speciesName}>{`${getLocaleNumber(birds || 0, locale)
                   } birds`}</span>
                 <span>{`${getLocaleNumber(birdsEndemic || 0, locale)} endemic`}</span>
               </div>
