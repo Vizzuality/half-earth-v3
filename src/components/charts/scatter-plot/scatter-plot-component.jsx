@@ -253,7 +253,6 @@ const ScatterPlot = ({
               xAxisTicks.map((tick, index) => (
                 <span className={styles.tick} key={`x-${tick}-${index}`}>
                   {tick}
-                  {/* // TODO: PARSEAR */}
                 </span>
               ))}
           </div>
