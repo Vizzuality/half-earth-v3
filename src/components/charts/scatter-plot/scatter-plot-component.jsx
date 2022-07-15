@@ -233,7 +233,7 @@ const ScatterPlot = ({
                 top: `${chartScale.yScale(yAxisValue)}px`,
               }}
             >
-              {yAxisValue}
+              {getLocaleNumber(yAxisValue, locale)}
             </span>
           )}
           {xAxisValue && (
@@ -250,9 +250,10 @@ const ScatterPlot = ({
           )}
           <div className={styles.xAxisTicksContainer}>
             {xAxisTicks &&
-              xAxisTicks.map((tick, index) => console.log({ tick }) || (
+              xAxisTicks.map((tick, index) => (
                 <span className={styles.tick} key={`x-${tick}-${index}`}>
                   {tick}
+                  {/* // TODO: PARSEAR */}
                 </span>
               ))}
           </div>

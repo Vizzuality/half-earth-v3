@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { format } from 'd3-format';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { t } from '@transifex/native';
