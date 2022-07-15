@@ -12,7 +12,6 @@ const intlLanguage = (l) => {
 }
 
 export const getLocaleNumber = (value, locale) => {
-  console.log({ value })
   const formattedNumber = new Intl.NumberFormat(intlLanguage(locale)).format(value);
   return formattedNumber;
 }
