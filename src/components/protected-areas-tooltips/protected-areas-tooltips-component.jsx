@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { loadModules } from 'esri-loader';
-import { t } from '@transifex/native';
 
 import {
   PROTECTED_AREAS_FEATURE_LAYER,
@@ -23,9 +22,7 @@ const tooltipDot = (color) =>
 const areaNameTooltip = (name) =>
   `<span class="tooltip-area-name">${name}</span>`;
 const areaSizeTooltip = (size) =>
-  `<p class="tooltip-area-size">${size}${t(
-    ' km'
-  )}<sup style="font-size: 7px;">2</sup></p>`;
+  `<p class="tooltip-area-size">${size} km<sup style="font-size: 7px;">2</sup></p>`;
 
 const ProtectedAreasTooltips = ({ view, isLandscapeMode, activeLayers }) => {
   // tooltips handling

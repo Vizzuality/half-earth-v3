@@ -6,7 +6,7 @@ import { ReactComponent as Reptiles } from 'icons/taxa_reptiles.svg';
 import { ReactComponent as Amphibians } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as Birds } from 'icons/taxa_birds.svg';
 
-export default [
+export default () => [
   {
     title: t('all species'),
     slug: 'all',

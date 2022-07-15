@@ -1,6 +1,4 @@
 import {
-  LAND_HUMAN_PRESSURES,
-  MARINE_HUMAN_PRESSURES,
   URBAN_HUMAN_PRESSURES_TILE_LAYER,
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
   RAINFED_HUMAN_PRESSURES_TILE_LAYER,
@@ -12,10 +10,6 @@ import {
 } from 'constants/layers-slugs';
 
 import { t } from '@transifex/native';
-
-import {
-  getLegendGradient
-} from 'utils/legend-utils';
 
 export const LAND_HUMAN_PRESSURES_COLOR_RAMP = [
   "rgba(0, 77, 168, 0.1)",
@@ -43,16 +37,6 @@ export const MARINE_HUMAN_PRESSURES_COLOR_RAMP = [
   "rgb(0, 255, 230)",
 ]
 
-
-const RAINFED = t('Rainfed agriculture');
-const IRRIGATED = t('Irrigated agriculture');
-const URBAN = t('Urban pressures');
-const RANGELAND = t('Rangeland');
-const LAND_DRIVERS = t('Land-based drivers');
-const OCEAN_DRIVERS = t('Ocean-based drivers');
-const COMMERCIAL_FISHING = t('Commercial fishing');
-const ARTISANAL_FISHING = t('Artisanal fishing');
-
 export const PRESSURES_SLUGS = {
   urban: URBAN_HUMAN_PRESSURES_TILE_LAYER,
   rainfed: RAINFED_HUMAN_PRESSURES_TILE_LAYER,
@@ -64,57 +48,33 @@ export const PRESSURES_SLUGS = {
   artisanal:   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 }
 
-export const humanPressuresLandUse = [
-  { name: URBAN, value: PRESSURES_SLUGS.urban, slug: PRESSURES_SLUGS.urban },
-  { name: RAINFED, value: PRESSURES_SLUGS.rainfed, slug: PRESSURES_SLUGS.rainfed },
-  { name: IRRIGATED, value: PRESSURES_SLUGS.irrigated, slug: PRESSURES_SLUGS.irrigated },
-  { name: RANGELAND, value: PRESSURES_SLUGS.rangeland, slug: PRESSURES_SLUGS.rangeland }
-];
+export const getHumanPressuresLandUse = () => {
+  const RAINFED = t('Rainfed agriculture');
+  const IRRIGATED = t('Irrigated agriculture');
+  const URBAN = t('Urban pressures');
+  const RANGELAND = t('Rangeland');
 
-export const humanPressuresMarine = [
-  { name: LAND_DRIVERS,
-    value: PRESSURES_SLUGS.land,
-    slug: PRESSURES_SLUGS.land
-  },
-  { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
-  { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
-  { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
-]
+  return [
+    { name: URBAN, value: PRESSURES_SLUGS.urban, slug: PRESSURES_SLUGS.urban },
+    { name: RAINFED, value: PRESSURES_SLUGS.rainfed, slug: PRESSURES_SLUGS.rainfed },
+    { name: IRRIGATED, value: PRESSURES_SLUGS.irrigated, slug: PRESSURES_SLUGS.irrigated },
+    { name: RANGELAND, value: PRESSURES_SLUGS.rangeland, slug: PRESSURES_SLUGS.rangeland }
+  ];
+};
 
-export const humanPressuresLandscapeWidget = [
-  ...humanPressuresLandUse,
-  { name: t('Pressure free'), value: 'pressureFree', slug: 'human-pressures-free' },
-];
+export const getHumanPressuresMarine = () => {
+  const LAND_DRIVERS = t('Land-based drivers');
+  const OCEAN_DRIVERS = t('Ocean-based drivers');
+  const COMMERCIAL_FISHING = t('Commercial fishing');
+  const ARTISANAL_FISHING = t('Artisanal fishing');
 
-export const legendSingleRasterTitles = {
-  [RAINFED_HUMAN_PRESSURES_TILE_LAYER]: RAINFED,
-  [IRRIGATED_HUMAN_PRESSURES_TILE_LAYER]: IRRIGATED,
-  [URBAN_HUMAN_PRESSURES_TILE_LAYER]: URBAN,
-  [RANGELAND_HUMAN_PRESSURES_TILE_LAYER]: RANGELAND,
-  [MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: LAND_DRIVERS,
-  [MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER]: OCEAN_DRIVERS,
-  [COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: COMMERCIAL_FISHING,
-  [ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER]: ARTISANAL_FISHING,
-}
-
-export const legendConfigs = {
-  [MARINE_HUMAN_PRESSURES]: {
-    groupedLayer: true,
-    group: MARINE_HUMAN_PRESSURES,
-    type: "gradient",
-    items: getLegendGradient(MARINE_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
-  },
-  [LAND_HUMAN_PRESSURES]: {
-    groupedLayer: true,
-    group: LAND_HUMAN_PRESSURES,
-    type: "gradient",
-    items: getLegendGradient(LAND_HUMAN_PRESSURES_COLOR_RAMP, 'low', 'high')
-  },
-}
-
-export const TEXTS = {
-  categoryTitle: t('Human pressures'),
-  marineLayersTitle: t('Marine use pressures'),
-  terrestrialLayersTitle: t('Land use pressures'),
-  description: t('Global human pressures causing habitat loss and accelerating species extintion')
+  return [
+    { name: LAND_DRIVERS,
+      value: PRESSURES_SLUGS.land,
+      slug: PRESSURES_SLUGS.land
+    },
+    { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
+    { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
+    { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
+  ]
 }

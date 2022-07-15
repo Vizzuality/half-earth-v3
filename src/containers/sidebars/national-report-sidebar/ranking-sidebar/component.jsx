@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useLocale, useT } from '@transifex/react';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import styles from './styles.module.scss';
@@ -7,13 +8,17 @@ import metadataConfig, { RANKING_CHART } from 'constants/metadata';
 
 import {
   RANKING_COLORS,
-  RANKING_LEGEND,
+  getRankingLegend,
   RANKING_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
 import metadataService from 'services/metadata-service';
 
 const Component = () => {
+  const t = useT();
+
   const [metadata, setMetadata] = useState(null);
+  const locale = useLocale();
+  const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
 
   useEffect(() => {
     const md = metadataConfig[RANKING_CHART];
@@ -41,7 +46,7 @@ const Component = () => {
       <div className={styles.cardContainer}>
         <SidebarCardWrapper>
           <SidebarCardContent
-            title={metadataConfig[RANKING_CHART].title}
+            title={t('Species Protection Index')}
             description={metadata && metadata.description}
             metaDataSources={metadata && metadata.source}
           />
@@ -49,13 +54,13 @@ const Component = () => {
       </div>
       <div className={styles.legendContainer}>
         <LegendBlock
-          legendItems={RANKING_LEGEND[RANKING_GROUPS_SLUGS.species]}
+          legendItems={rankingLegend[RANKING_GROUPS_SLUGS.species]}
         />
         <LegendBlock
-          legendItems={RANKING_LEGEND[RANKING_GROUPS_SLUGS.humanModification]}
+          legendItems={rankingLegend[RANKING_GROUPS_SLUGS.humanModification]}
         />
         <LegendBlock
-          legendItems={RANKING_LEGEND[RANKING_GROUPS_SLUGS.protection]}
+          legendItems={rankingLegend[RANKING_GROUPS_SLUGS.protection]}
         />
       </div>
     </>
