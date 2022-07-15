@@ -28,7 +28,6 @@ const CountryChallengesChartComponent = ({
   handleSelectPreviousIndicator,
 }) => {
   const t = useT();
-
   return (
     <div className={className}>
       <div className={styles.headerContainer}>

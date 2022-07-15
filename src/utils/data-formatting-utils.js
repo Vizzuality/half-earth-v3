@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { format } from 'd3-format';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { t } from '@transifex/native';
@@ -75,6 +76,7 @@ export const countryChallengesChartFormats = {
   [COUNTRY_ATTRIBUTES.total_endemic_ter]: value => localeFormatting(value),
   [COUNTRY_ATTRIBUTES.nspecies_ter]: value => localeFormatting(value),
 }
+
 
 export const countryChallengesSizes = (area) => {
   if (area <= 150) return 18;

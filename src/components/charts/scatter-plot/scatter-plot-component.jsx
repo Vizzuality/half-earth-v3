@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { countryChallengesChartFormats } from 'utils/data-formatting-utils';
+import { useLocale } from '@transifex/react';
+import { format } from 'd3-format';
 import * as d3 from 'd3';
 import cx from 'classnames';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 import styles from './scatter-plot-styles.module.scss';
 
@@ -46,6 +51,7 @@ const ScatterPlot = ({
   handleContainerClick,
   countryChallengesSelectedKey,
 }) => {
+  const locale = useLocale();
   const chartSurfaceRef = useRef(null);
   const [chartScale, setChartScale] = useState(null);
   const [tooltipState, setTooltipState] = useState(null);
@@ -62,6 +68,19 @@ const ScatterPlot = ({
     d3.min(data, (d) => d.xAxisValues[selectedKey]);
   const maxXValue = (data, selectedKey) =>
     d3.max(data, (d) => d.xAxisValues[selectedKey]);
+
+  const percentageFormat = format(".0f");
+  const currencyFormatting = format("$,.2f")
+  const countryChallengesChartFormats = {
+    [COUNTRY_ATTRIBUTES.Pop2020]: value => getLocaleNumber(value, locale),
+    GNI_PPP: value => `${currencyFormatting(value)} B`,
+    [COUNTRY_ATTRIBUTES.hm_vh_ter]: value => `${percentageFormat(value)}%`,
+    [COUNTRY_ATTRIBUTES.prop_protected_ter]: value => `${percentageFormat(value)}%`,
+    [COUNTRY_ATTRIBUTES.protection_needed_ter]: value => `${percentageFormat(value)}%`,
+    [COUNTRY_ATTRIBUTES.total_endemic_ter]: value => getLocaleNumber(value, locale),
+    [COUNTRY_ATTRIBUTES.nspecies_ter]: value => getLocaleNumber(value, locale),
+  }
+
   const formatFunction =
     countryChallengesChartFormats[countryChallengesSelectedKey];
 
@@ -226,11 +245,12 @@ const ScatterPlot = ({
               }}
             >
               {formatFunction(xAxisValue)}
+
             </span>
           )}
           <div className={styles.xAxisTicksContainer}>
             {xAxisTicks &&
-              xAxisTicks.map((tick, index) => (
+              xAxisTicks.map((tick, index) => console.log({ tick }) || (
                 <span className={styles.tick} key={`x-${tick}-${index}`}>
                   {tick}
                 </span>

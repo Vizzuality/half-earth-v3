@@ -1,7 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
 import { getCountryChallengesSelectedFilter, getLandMarineSelected } from 'pages/nrc/nrc-selectors';
-import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
+import { countryChallengesChartFormats, countryChallengesSizes, getLocaleNumber } from 'utils/data-formatting-utils';
+import { selectLangUrlState } from 'selectors/location-selectors'
 import * as d3 from 'd3';
 import kebabCase from 'lodash/kebabCase';
 import {
@@ -32,8 +33,8 @@ const getSelectedFilterSlug = createSelector([getCountryChallengesSelectedFilter
 });
 
 const getScatterplotRawData = createSelector(
-  [selectCountriesData, getLandMarineSelected],
-  (countriesData, landMarineSelection) => {
+  [selectCountriesData, getLandMarineSelected, selectLangUrlState],
+  (countriesData, landMarineSelection, locale) => {
 
     if (!countriesData) return null;
     const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
@@ -41,6 +42,7 @@ const getScatterplotRawData = createSelector(
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
       const continent = kebabCase(country.continent);
+      console.log('VALUE', parseFloat(getLocaleNumber(country[attributes.SPI], locale)));
       return {
         continent: continent,
         name: country.NAME_0,
@@ -56,7 +58,7 @@ const getScatterplotRawData = createSelector(
           [COUNTRY_ATTRIBUTES.total_endemic_ter]: country[attributes.total_endemic],
           [COUNTRY_ATTRIBUTES.nspecies_ter]: country[attributes.nspecies]
         },
-        yAxisValue: country[attributes.SPI]
+        yAxisValue: country[attributes.SPI],
       }
     }).sort((a, b) => (b.size - a.size))
   }
