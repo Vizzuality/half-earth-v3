@@ -44,13 +44,13 @@ const TickLines = ({
 
 const ScatterPlot = ({
   data,
-  xAxisTicks,
   yAxisTicks,
   countryISO,
   onBubbleClick,
   handleContainerClick,
   countryChallengesSelectedKey,
 }) => {
+
   const locale = useLocale();
   const chartSurfaceRef = useRef(null);
   const [chartScale, setChartScale] = useState(null);
@@ -71,6 +71,7 @@ const ScatterPlot = ({
 
   const percentageFormat = format(".0f");
   const currencyFormatting = format("$,.2f")
+
   const countryChallengesChartFormats = {
     [COUNTRY_ATTRIBUTES.Pop2020]: value => getLocaleNumber(value, locale),
     GNI_PPP: value => `${currencyFormatting(value)} B`,
@@ -83,6 +84,19 @@ const ScatterPlot = ({
 
   const formatFunction =
     countryChallengesChartFormats[countryChallengesSelectedKey];
+
+  const getXAxisTicks = (data, selectedKey) => {
+    if (!data || !selectedKey) return null;
+    const highValue = d3.max(data, d => d.xAxisValues[selectedKey])
+    const lowValue = d3.min(data, d => d.xAxisValues[selectedKey])
+    const formatFunction = countryChallengesChartFormats[selectedKey];
+    return [
+      formatFunction(lowValue),
+      formatFunction(highValue)
+    ]
+  };
+
+  const xAxisTicks = getXAxisTicks(data, countryChallengesSelectedKey);
 
   const calculateScale = () => {
     if (data && chartSurfaceRef.current) {
