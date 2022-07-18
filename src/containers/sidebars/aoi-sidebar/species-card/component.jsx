@@ -52,9 +52,6 @@ const Component = ({
   const t = useT();
   const locale = useLocale();
 
-  console.log('locale', locale)
-
-
   return speciesData.species && speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
       <div className={styles.loaderBarContainer}>

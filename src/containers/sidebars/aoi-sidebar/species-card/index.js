@@ -24,6 +24,9 @@ const SpeciesCardContainer = (props) => {
   const { species } = speciesData;
 
   const locale = useLocale();
+  const language = locale !== '' ? locale : 'en'
+
+
   // Species dropdown
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER);
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
@@ -173,7 +176,7 @@ const SpeciesCardContainer = (props) => {
           nextSpeciesName = speciesToDisplay[selectedSpeciesIndex + 1].name;
         }
 
-        MolService.getSpecies(previousSpeciesName, locale)
+        MolService.getSpecies(previousSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setPreviousImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -181,7 +184,7 @@ const SpeciesCardContainer = (props) => {
               setPreviousImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
           });
-        MolService.getSpecies(nextSpeciesName, locale)
+        MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -199,7 +202,7 @@ const SpeciesCardContainer = (props) => {
           nextSpeciesName = speciesToDisplay[0].name;
         }
 
-        MolService.getSpecies(nextSpeciesName, locale)
+        MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -214,7 +217,7 @@ const SpeciesCardContainer = (props) => {
       }
 
 
-      MolService.getSpecies(selectedSpecies.name, locale).then((results) => {
+      MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
           setIndividualSpeciesData({
             ...selectedSpecies,
