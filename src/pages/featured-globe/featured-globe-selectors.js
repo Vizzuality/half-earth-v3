@@ -1,7 +1,9 @@
-import { createSelector, createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
+import { createSelector, createStructuredSelector } from 'reselect';
+
 import { getFeaturedGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState } from 'selectors/location-selectors';
+
 import initialState from './featured-globe-initial-state';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);

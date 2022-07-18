@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import { loadModules } from 'esri-loader';
-import { layersConfig } from 'constants/mol-layers-configs';
+import featuredMapsActions from 'redux_modules/featured-maps-list';
+
+import { readStoryAnalytics } from 'actions/google-analytics-actions';
+import * as urlActions from 'actions/url-actions';
+
 import { hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+
+import { loadModules } from 'esri-loader';
+
+import {
+  FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
+} from 'constants/layers-groups';
 import {
   FEATURED_PLACES_LAYER,
   VIBRANT_BASEMAP_LAYER,
   SATELLITE_BASEMAP_LAYER
 } from 'constants/layers-slugs';
-import {
-  FEATURED_GLOBE_LANDSCAPE_ONLY_LAYERS
-} from 'constants/layers-groups';
+import { layersConfig } from 'constants/mol-layers-configs';
 import { useMobile } from 'constants/responsive';
 
 import Component from './featured-globe-component.jsx';
-
 import mapStateToProps from './featured-globe-selectors';
-import * as urlActions from 'actions/url-actions';
-import { readStoryAnalytics } from 'actions/google-analytics-actions';
-import featuredMapsActions from 'redux_modules/featured-maps-list';
+
+
 
 const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics }
 

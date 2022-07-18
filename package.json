@@ -74,7 +74,8 @@
     "docs:serve": "bundle exec jekyll serve",
     "eject": "react-scripts eject",
     "transifex:push": "dotenv cross-var ./node_modules/.bin/txjs-cli push src/ --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
-    "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%"
+    "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -92,7 +93,12 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "cypress": "^6.3.0",
+    "eslint": "^8.20.0",
     "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "identity-obj-proxy": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "react-app-rewired": "^2.1.1",

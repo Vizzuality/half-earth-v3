@@ -1,16 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// Constants
-import * as urlActions from 'actions/url-actions';
-import Component from './aoi-entry-tooltip-component';
-import { AREA_OF_INTEREST } from 'router';
-import { AREA_TYPES } from 'constants/aois';
-import mapTooltipActions from 'redux_modules/map-tooltip';
-import mapStateToProps from 'selectors/map-tooltip-selectors';
 import aoisActions from 'redux_modules/aois';
-import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import mapTooltipActions from 'redux_modules/map-tooltip';
+
+import mapStateToProps from 'selectors/map-tooltip-selectors';
+
+import * as urlActions from 'actions/url-actions';
+
+import { createHashFromGeometry } from 'utils/analyze-areas-utils';
+
+
+import { AREA_OF_INTEREST } from 'router';
+
+import { AREA_TYPES } from 'constants/aois';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+
+import Component from './aoi-entry-tooltip-component';
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions, ...mapTooltipActions }
 
 const AoiEntryTooltipContainer = props => {

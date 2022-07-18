@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import { useT, useLocale } from '@transifex/react';
 
@@ -6,11 +7,9 @@ import {
   getCountryNames,
 } from 'constants/translation-constants';
 
-// icons
-import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
 import { ReactComponent as ArrowDown } from 'icons/arrow_down.svg';
+import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
 
-// styles
 import styles from './protected-areas-table-styles.module.scss';
 
 const ProtectedAreasTable = ({ data, handleSortChange }) => {

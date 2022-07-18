@@ -1,8 +1,12 @@
-import { createSelector, createStructuredSelector } from 'reselect';
 import { getCountryNames } from 'constants/translation-constants';
-import { t } from '@transifex/native';
+
 import { random } from 'lodash';
+import { createSelector, createStructuredSelector } from 'reselect';
+
+import { t } from '@transifex/native';
+
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
+
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { selectLangUrlState } from 'selectors/location-selectors';
 

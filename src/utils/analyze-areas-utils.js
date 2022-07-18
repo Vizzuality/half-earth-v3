@@ -1,13 +1,16 @@
-import sha1 from 'sha1';
+import { percentageFormat } from 'utils/data-formatting-utils';
+
 import { loadModules } from 'esri-loader';
-import amphibiansPlaceholder from 'images/no-amphibian.png';
-import mammalsPlaceholder from 'images/no-mammal.png';
-import reptilesPlaceholder from 'images/no-reptile.png';
-import birdsPlaceholder from 'images/no-bird.png';
 import _intersectionBy from 'lodash/intersectionBy';
 import _pick from 'lodash/pick';
-import { percentageFormat } from 'utils/data-formatting-utils';
+import sha1 from 'sha1';
+
 import { getPrecalculatedAOIOptions } from 'constants/analyze-areas-constants';
+
+import amphibiansPlaceholder from 'images/no-amphibian.png';
+import birdsPlaceholder from 'images/no-bird.png';
+import mammalsPlaceholder from 'images/no-mammal.png';
+import reptilesPlaceholder from 'images/no-reptile.png';
 
 export function logGeometryArea(geometry) {
   loadModules(["esri/geometry/geometryEngine"])

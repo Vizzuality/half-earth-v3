@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useMemo } from 'react';
+
 import { connect } from 'react-redux';
-import Component from './scene-component';
-import { loadModules } from 'esri-loader';
-import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+
 import urlActions from 'actions/url-actions';
+
+import { loadModules } from 'esri-loader';
 import sceneActions from 'redux_modules/scene';
+
+import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+
+import Component from './scene-component';
 
 const actions = { ...urlActions, ...sceneActions };
 

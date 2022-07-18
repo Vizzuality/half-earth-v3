@@ -3,14 +3,19 @@ import { useT, useLocale } from '@transifex/react';
 import { getCountryNames } from 'constants/translation-constants';
 
 import { connect } from 'react-redux';
-import Component from './component.jsx';
-import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
-import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
-import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
+
+import urlActions from 'actions/url-actions';
+
 import { setCountryTooltip, flyToCentroid } from 'utils/globe-events-utils';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
+
+import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
+import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+
+import Component from './component.jsx';
+
 const actions = { ...mapTooltipActions, ...urlActions };
 
 const SearchLocationContainer = (props) => {

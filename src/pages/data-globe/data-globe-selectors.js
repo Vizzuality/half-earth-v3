@@ -1,8 +1,10 @@
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
-import dataSceneConfig from 'scenes/data-scene/data-scene-config';
+
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'selectors/location-selectors';
+
+import dataSceneConfig from 'scenes/data-scene/data-scene-config';
 
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
