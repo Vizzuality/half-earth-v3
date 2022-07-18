@@ -10,6 +10,7 @@ const HighlightedSpeciesContainer = (props) => {
   const { countryISO, highlightedSpeciesRandomNumber } = props;
 
   const locale = useLocale();
+  const language = locale !== '' ? locale : 'en'
 
   const [highlightedSpeciesInitial, setHiglightedSpeciesInitial] = useState(null);
   const [highlightedSpecies, setHiglightedSpecies] = useState(null);
@@ -32,7 +33,7 @@ const HighlightedSpeciesContainer = (props) => {
   useEffect(() => {
     if (highlightedSpeciesInitial) {
       const speciesNames = highlightedSpeciesInitial.map(species => species.scientificName);
-      MolService.getSpecies(speciesNames, locale).then((results) => {
+      MolService.getSpecies(speciesNames, language).then((results) => {
         const _highlightedSpecies = results.map((species, index) => (
           {
             ...highlightedSpeciesInitial[index],
