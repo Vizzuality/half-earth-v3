@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useT, useLocale } from '@transifex/react';
 
 import orderBy from 'lodash/orderBy';
-import { useLocale } from '@transifex/react';
 
 // constants
 import { getIUCNList } from 'constants/iucn-list';
@@ -30,7 +29,6 @@ const SpeciesCardContainer = (props) => {
   const { speciesData } = props;
   const { species } = speciesData;
 
-  const locale = useLocale();
   const language = locale !== '' ? locale : 'en'
 
 
