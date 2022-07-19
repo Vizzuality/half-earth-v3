@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import cx from 'classnames';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import ScatterPlot from 'components/charts/scatter-plot';
 import Dropdown from 'components/dropdown';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 
-import { INDICATOR_LABELS } from 'constants/country-mode-constants';
+import { getIndicatorLabels } from 'constants/country-mode-constants';
 import styles from './country-challenges-chart-styles.module.scss';
 
 const CountryChallengesChartComponent = ({
@@ -28,6 +28,8 @@ const CountryChallengesChartComponent = ({
   handleSelectPreviousIndicator,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const indicatorLabels = useMemo(() => getIndicatorLabels(), [locale]);
 
   return (
     <div className={className}>
@@ -72,7 +74,7 @@ const CountryChallengesChartComponent = ({
             <ArrowButton className={styles.arrowButton} />
           </button>
           <span className={styles.xAxisIndicator}>
-            {INDICATOR_LABELS[countryChallengesSelectedKey]}
+            {indicatorLabels[countryChallengesSelectedKey]}
           </span>
           <button onClick={handleSelectNextIndicator}>
             <ArrowButton className={styles.arrowButton} />

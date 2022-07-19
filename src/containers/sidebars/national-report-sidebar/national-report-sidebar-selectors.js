@@ -3,6 +3,7 @@ import { t } from '@transifex/native';
 import { random } from 'lodash';
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { selectLangUrlState } from 'selectors/location-selectors';
 
 const SPECIES_COLOR = {
   amphibians: '#34BD92',
@@ -40,7 +41,8 @@ const getHasPriority = createSelector(getCountryData, countryData => {
   return countryData.has_priority === 1;
 })
 
-const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority], (countryData, hasPriority) => {
+// locale is here to recompute the data when the language changes
+const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority, selectLangUrlState], (countryData, hasPriority, locale) => {
   if (!countryData) return null;
   return hasPriority ?
     `${t(`The brightly colored map layer presents one possible configuration
@@ -94,7 +96,8 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, countryData
   return countryData[COUNTRY_ATTRIBUTES.total_endemic_ter];
 })
 
-const getHighlightedSpeciesSentence = createSelector(getCountryData, countryData => {
+// locale is here to recompute the data when the language changes
+const getHighlightedSpeciesSentence = createSelector([getCountryData, selectLangUrlState], (countryData, locale) => {
   if (!countryData) return null;
   return ` ${t(`Here are some examples of land species of significant conservation interest for each taxonomic group.
   These species are either endemic to `)}${countryData.NAME_0} ${t('or have small range sizes.')}`;
@@ -107,15 +110,17 @@ const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, country
   return highlightedSpeciesRandomNumber;
 })
 
+// locale is here to recompute the data when the language changes
 const getIndexStatement = createSelector(
-  [getSpeciesProtectionIndex, getSPIMean],
-  (SPI, SPIMean) => {
+  [getSpeciesProtectionIndex, getSPIMean, selectLangUrlState],
+  (SPI, SPIMean, locale) => {
     if (!SPI || !SPIMean) return null;
     const comparation = SPI >= SPIMean ? t('higher') : t('lower');
     return `${t('THE INDEX OF THIS COUNTRY IS ')}${comparation} ${t('than the average national SPI: ')}${SPIMean} `
   })
 
-const getEndemicSpeciesSentence = createSelector(getNumberOfEndemicVertebrates, endemicVertebrates => {
+// locale is here to recompute the data when the language changes
+const getEndemicSpeciesSentence = createSelector([getNumberOfEndemicVertebrates, selectLangUrlState], (endemicVertebrates, locale) => {
   if (!endemicVertebrates) return null;
   return endemicVertebrates === '1' ? `${endemicVertebrates} ${t('is')}` : `${endemicVertebrates} ${t('are')}`
 })

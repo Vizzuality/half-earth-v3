@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useLocale, useT } from '@transifex/react';
 import { connect } from 'react-redux';
 
 // constants
-import { PRECALCULATED_AOI_OPTIONS, HIGHER_AREA_SIZE_LIMIT, WARNING_MESSAGES } from 'constants/analyze-areas-constants';
+import { getPrecalculatedAOIOptions, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import { PROTECTED_AREAS_VECTOR_TILE_LAYER,COMMUNITY_AREAS_VECTOR_TILE_LAYER,  GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
 import { AREA_TYPES } from 'constants/aois.js';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
@@ -10,6 +11,7 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 // utils
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
+import { localeFormatting } from 'utils/data-formatting-utils';
 
 // hooks
 import { useSketchWidget } from 'hooks/esri';
@@ -29,8 +31,33 @@ import mapStateToProps from './analyze-areas-sidebar-card-selectors.js';
 const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions };
 
 const AnalyzeAreasContainer = (props) => {
+  const locale = useLocale();
+  const t = useT();
+
+  const WARNING_MESSAGES = {
+    area: {
+      title: t('Area size too big'),
+      description: (size) => (<span>{t('The maximum size for on the fly area analysis is ')}{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}{t(' km')}<sup>2</sup>.
+        {t('The area that you are trying to analyze has ')}{localeFormatting(size)}{t(' km')}<sup>2</sup>. {t('Please select a smaller area to trigger the analysis.')}</span>)
+    },
+    file: {
+      title: t('Something went wrong with your upload'),
+      description: () => t('Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.')
+    },
+    400: {
+      title: t('File too big'),
+      description: () => t('File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.')
+    },
+    500: {
+      title: t('Server error'),
+      description: () => t('An error ocurred during the file upload. Please try again')
+    }
+  }
+
+  const precalculatedAOIOptions = useMemo(() => getPrecalculatedAOIOptions(), [locale]);
+
   const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected, areaTypeSelected } = props;
-  const [selectedOption, setSelectedOption] = useState(PRECALCULATED_AOI_OPTIONS[0]);
+  const [selectedOption, setSelectedOption] = useState(precalculatedAOIOptions[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
   const [promptModalContent, setPromptModalContent] = useState({
@@ -43,7 +70,8 @@ const AnalyzeAreasContainer = (props) => {
     if (activeOption) {
       setSelectedOption(activeOption);
     }
-  }, [])
+    // Don't remove locale. Is here to recalculate the titles translation
+  }, [locale])
 
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
@@ -115,11 +143,11 @@ const AnalyzeAreasContainer = (props) => {
       case 'draw':
         setAreaTypeSelected(AREA_TYPES.custom);
         setSelectedAnalysisTab('draw');
-        handleLayerToggle(PRECALCULATED_AOI_OPTIONS[0]);
+        handleLayerToggle(precalculatedAOIOptions[0]);
         break;
       case 'click':
         setSelectedAnalysisTab('click');
-        handleLayerToggle(PRECALCULATED_AOI_OPTIONS[0]);
+        handleLayerToggle(precalculatedAOIOptions[0]);
         if (sketchTool) { handleSketchToolDestroy(); }
         break;
       default:

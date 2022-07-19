@@ -18,7 +18,7 @@ import ExpandedInfo from './expanded-info';
 import styles from './species-modal-styles.module.scss';
 import capitalize from 'lodash/capitalize';
 import {
-  VERTEBRATE_TABS,
+  getVertebrateTabs,
   SPECIES_GROUP_STYLE_CLASS_DICTIONARY,
 } from './species-modal-constants';
 
@@ -34,6 +34,11 @@ const SpeciesModalComponent = ({
   searchTerm,
   vertebrateType,
 }) => {
+  const t = useT();
+
+  const locale = useLocale();
+  const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
+
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {
@@ -42,8 +47,6 @@ const SpeciesModalComponent = ({
       handleModalClose();
     }
   };
-  const t = useT();
-  const locale = useLocale();
 
   useEventListener('keydown', keyEscapeEventListener);
 
@@ -61,7 +64,7 @@ const SpeciesModalComponent = ({
           className={cx(
             styles.groupColor,
             styles[
-            SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup
+              SPECIES_GROUP_STYLE_CLASS_DICTIONARY[speciesgroup] || speciesgroup
             ]
           )}
         />
@@ -115,18 +118,23 @@ const SpeciesModalComponent = ({
   const summaryText = useMemo(() => {
     const speciesNumber =
       countryData[
-      vertebrateType === VERTEBRATE_TABS[0].slug
-        ? 'landSpeciesTotal'
-        : 'marineSpeciesTotal'
+        vertebrateType === vertebrateTabs[0].slug
+          ? 'landSpeciesTotal'
+          : 'marineSpeciesTotal'
       ];
 
     // the list has been filtered
     if (speciesList.length < speciesNumber) {
-      return `${getLocaleNumber(speciesList.length, locale)} of ${getLocaleNumber(speciesNumber, locale)} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
-        } vertebrate species`;
-    }
-    return `${getLocaleNumber(speciesNumber, locale)} ${vertebrateType === VERTEBRATE_TABS[0].slug ? 'Land' : 'Marine'
+      return `${getLocaleNumber(
+        speciesList.length,
+        locale
+      )} of ${getLocaleNumber(speciesNumber, locale)} ${
+        vertebrateType === vertebrateTabs[0].slug ? 'Land' : 'Marine'
       } vertebrate species`;
+    }
+    return `${getLocaleNumber(speciesNumber, locale)} ${
+      vertebrateType === vertebrateTabs[0].slug ? 'Land' : 'Marine'
+    } vertebrate species`;
   }, [countryData, vertebrateType, speciesList, locale]);
 
   const renderSpeciesModal = (
@@ -147,7 +155,7 @@ const SpeciesModalComponent = ({
           <div className={styles.summary}>
             <Tabs
               disabled={!countryData.coastal}
-              tabs={VERTEBRATE_TABS}
+              tabs={vertebrateTabs}
               onClick={handleVertebrateChange}
               className={styles.speciesTab}
               defaultTabSlug={vertebrateType}

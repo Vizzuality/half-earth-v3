@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import { Tooltip } from 'react-tippy';
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
@@ -10,10 +10,9 @@ import Dropdown from 'components/dropdown';
 import styles from './ranking-chart-styles.module.scss';
 import {
   SORT_GROUPS,
-  SORT_OPTIONS,
-  RANKING_LEGEND,
+  getSortOptions,
+  getRankingLegend,
   SORT_GROUPS_SLUGS,
-  RANKING_HEADER_LABELS,
 } from 'constants/country-mode-constants';
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
@@ -34,6 +33,15 @@ const RankingChart = ({
 }) => {
   const [hasScrolled, changeHasScrolled] = useState(false);
   const t = useT();
+  const locale = useLocale();
+  const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
+  const sortOptions = useMemo(() => getSortOptions(), [locale]);
+  const RANKING_HEADER_LABELS = {
+    [SORT_GROUPS_SLUGS.species]: t('species'),
+    [SORT_GROUPS_SLUGS.humanModification]: t('human modification'),
+    [SORT_GROUPS_SLUGS.protection]: t('protection'),
+    [SORT_GROUPS_SLUGS.spi]: t('spi'),
+  };
 
   const tableRef = useRef();
   useEffect(() => {
@@ -53,7 +61,7 @@ const RankingChart = ({
     <div className={styles.tooltip}>
       <div className={styles.labels}>
         {Object.keys(d[name]).map((key) => (
-          <div key={`legend-${key}`}> {RANKING_LEGEND[name][key]}: </div>
+          <div key={`legend-${key}`}> {rankingLegend[name][key]}: </div>
         ))}
       </div>
       <div className={styles.values}>
@@ -114,7 +122,7 @@ const RankingChart = ({
           <Dropdown
             width="full"
             parentWidth="410px"
-            options={SORT_OPTIONS}
+            options={sortOptions}
             groups={SORT_GROUPS}
             selectedOption={selectedFilterOption}
             handleOptionSelection={handleFilterSelection}

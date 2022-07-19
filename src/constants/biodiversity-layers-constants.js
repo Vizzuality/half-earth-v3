@@ -59,12 +59,6 @@ export const LAYER_VARIANTS = {
   RARITY: 'rarity'
 };
 
-export const LAYER_VARIANTS_LABELS = {
-  PRIORITY: t('priority'),
-  RICHNESS: t('richness'),
-  RARITY: t('rarity')
-};
-
 const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
 
 const TAXA_DISTRIBUTION = {
@@ -74,32 +68,35 @@ const TAXA_DISTRIBUTION = {
 
 export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION
 
-export const RESOLUTIONS = {
+export const getResolutions = () => ({
   LOWEST: {label: t('~55km2 resolution'), slug: 'LOWEST'},
   LOW: {label: t('~27km2 resolution'), slug: 'LOW'},
   HIGH: {label: t('~1km2 resolution'), slug: 'HIGH'},
-  COUNTRY: {label: t('Country resolution'), slug: 'COUNTRY'},
-}
+  COUNTRY: {label: t('Country resolution'), slug: 'COUNTRY'}
+});
 
 
-export const LAYERS_RESOLUTION = {
-  [PRIORITY]: {
-    [TERRESTRIAL]: [RESOLUTIONS.LOW],
-    [MARINE]: [RESOLUTIONS.LOWEST]
-  },
-  [RICHNESS]: {
-    [TERRESTRIAL]: [RESOLUTIONS.LOW, RESOLUTIONS.HIGH, RESOLUTIONS.COUNTRY],
-    [MARINE]: [RESOLUTIONS.LOWEST]
-  },
-  [RARITY]: {
-    [TERRESTRIAL]: [RESOLUTIONS.LOW, RESOLUTIONS.HIGH],
-    [MARINE]: [RESOLUTIONS.LOWEST]
-  },
-}
+export const getLayersResolution = () => {
+  const resolutions = getResolutions();
+  return ({
+    [PRIORITY]: {
+      [TERRESTRIAL]: [resolutions.LOW],
+      [MARINE]: [resolutions.LOWEST]
+    },
+    [RICHNESS]: {
+      [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH, resolutions.COUNTRY],
+      [MARINE]: [resolutions.LOWEST]
+    },
+    [RARITY]: {
+      [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH],
+      [MARINE]: [resolutions.LOWEST]
+    },
+  })
+};
 
 export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST'};
 
-export const LAYERS_TOGGLE_CONFIG = {
+export const getLayersToggleConfig = () => ({
   [PRIORITY]: {
     [TERRESTRIAL]: {
       'LOW': [
@@ -436,9 +433,9 @@ export const LAYERS_TOGGLE_CONFIG = {
       ]
     }
   }
-}
+});
 
-export const AOI_BIODIVERSITY_TOGGLES = [
+export const getAOIBiodiversityToggles = () => [
   {
     name: t('All groups richness'),
     title: t('All groups richness'),

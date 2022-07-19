@@ -28,7 +28,6 @@ import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 
 import {
   LOCAL_SCENE_TABS_SLUGS,
-  LOCAL_SCENE_TABS,
   LOCAL_SCENE_DEFAULT_TAB,
 } from 'constants/ui-params';
 
@@ -52,6 +51,12 @@ const NationalReportSidebarComponent = ({
   changeUI,
 }) => {
   const t = useT();
+
+  const LOCAL_SCENE_TABS = [
+    { slug: LOCAL_SCENE_TABS_SLUGS.OVERVIEW, title: t('overview') },
+    { slug: LOCAL_SCENE_TABS_SLUGS.CHALLENGES, title: t('challenges') },
+    { slug: LOCAL_SCENE_TABS_SLUGS.RANKING, title: t('ranking') },
+  ];
 
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);

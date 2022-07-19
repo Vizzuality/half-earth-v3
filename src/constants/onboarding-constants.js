@@ -9,7 +9,7 @@ export const ONBOARDING_TYPE_CENTER = {
   'priority-places': [-51.9, -14.2]
 };
 
-export const SCRIPTS = {
+export const getScripts = () => ({
   'priority-places': {
     intro: [
       { startTime: 0, endTime: 11, text: t('Species are disappearing at an alarming rate. Human activities are one of the most significant drivers of habitat degradation and other threats') },
@@ -151,4 +151,4 @@ export const SCRIPTS = {
       { startTime: 0, endTime: 8.4, text: t(`We hope that you will explore other countries, and dive into some comparisons. Check out our other tours for more information.`) }
     ],
   }
-}
+});

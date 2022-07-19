@@ -73,7 +73,10 @@ const GeoDescriptionWidget = (props) => {
         autoHeight
       />
       <div className={styles.descriptionWrapper}>
-        <span className={styles.areaText}>{data.area}</span>
+        <span className={styles.areaText}>
+          ${t('Area: ')}
+          {data.area}
+        </span>
         <p>{data.description}</p>
       </div>
     </div>

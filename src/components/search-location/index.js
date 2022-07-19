@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useT } from '@transifex/react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
@@ -16,6 +17,8 @@ const SearchLocationContainer = (props) => {
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
 
+  const t = useT();
+
   useEffect(() => {
     if (searchResults && searchResults.length !== 0) {
       setIsSearchResultsVisible(true);
@@ -29,13 +32,13 @@ const SearchLocationContainer = (props) => {
     const { setBatchTooltipData } = props;
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
 
-    const { title, subtitle, buttonText, id, iso } = tooltipConfig;
+    const { title, subtitle, id, iso } = tooltipConfig;
     const { geometry, attributes } = result.feature;
     setBatchTooltipData({
       isVisible: true,
       geometry,
       content: {
-        buttonText,
+        buttonText: t('analyze area'),
         id: attributes[id],
         title: attributes[title] || attributes['NAME_0'],
         subtitle: attributes[subtitle] || attributes['NAME_1'],
