@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useLocale } from '@transifex/react';
 import { useFeatureLayer } from 'hooks/esri';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 import { LAND_MARINE } from 'constants/country-mode-constants';
@@ -12,7 +13,7 @@ import {
   getSortedSpeciesList
 } from './species-modal-selectors';
 import * as urlActions from 'actions/url-actions';
-import { VERTEBRATE_TABS } from './species-modal-constants';
+import { getVertebrateTabs } from './species-modal-constants';
 
 const actions = { ...urlActions };
 
@@ -26,7 +27,10 @@ const mapStateToProps = (state) => ({
 const SpeciesModalContainer = (props) => {
   const { changeUI, countryData, speciesModalSort, state } = props;
 
-  const [vertebrateType, setVertebrateType] = useState(VERTEBRATE_TABS[0].slug);
+  const locale = useLocale();
+  const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
+
+  const [vertebrateType, setVertebrateType] = useState(vertebrateTabs[0].slug);
   const [speciesList, setSpeciesList] = useState([]);
 
   const landLayer = useFeatureLayer({ layerSlug:  SPECIES_LIST });

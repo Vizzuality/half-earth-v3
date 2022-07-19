@@ -1,6 +1,6 @@
 import { t } from '@transifex/native';
 
-export default {
+export const getIUCNList = () => ({
   EX: t('Extinct'),
   EW: t('Extinct in the wild'),
   CR: t('Critically endangered'),
@@ -10,4 +10,4 @@ export default {
   LC: t('Least concern'),
   DD: t('Data deficient'),
   NE: t('Not evaluated'),
-}
+});

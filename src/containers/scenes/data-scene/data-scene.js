@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useLocale, useT } from '@transifex/react';
 import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import Component from './data-scene-component';
@@ -18,13 +19,15 @@ const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 const Container = (props) => {
   const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+  const locale = useLocale();
+  const t = useT();
 
   const handleHighlightLayerFeatureClick = (features) => {
 
     if (features && features.length && selectedAnalysisLayer) {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
 
-      const { title, subtitle, buttonText, id } = tooltipConfig;
+      const { title, subtitle, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
 
       let customId;
@@ -43,7 +46,7 @@ const Container = (props) => {
         isVisible: true,
         geometry,
         content: {
-          buttonText,
+          buttonText: t('analyze area'),
           id: customId || attributes[id],
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
@@ -61,7 +64,8 @@ const Container = (props) => {
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
     setSelectedAnalysisLayer(activeOption);
-  }, [activeLayers])
+    // Don't remove locale. Is here to recalculate the titles translation
+  }, [activeLayers, locale]);
 
   return (
     <Component

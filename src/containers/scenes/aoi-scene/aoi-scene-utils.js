@@ -6,7 +6,6 @@ import {
   getPrecalculatedContextualData,
   setPrecalculatedSpeciesData,
 } from 'utils/geo-processing-services';
-import { t } from '@transifex/native';
 import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs.js';
 import localforage from 'localforage';
 import { writeToForageItem } from 'utils/local-forage-utils';
@@ -26,7 +25,7 @@ import {
 } from 'constants/geo-processing-services';
 
 // PRECALCULATED FUTURE PLACES
-const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData }) => {
+const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData, t }) => {
   setSpeciesData({ species: [] }); // First reset species data
   changeGlobe({ areaType: AREA_TYPES.futurePlaces })
 
@@ -63,9 +62,9 @@ const setSpecificRegion = ({ aoiId, setGeometry, setContextualData, setTaxaData,
 }
 
 // PRECALCULATED AOIs
-export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe }) => {
+export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t }) => {
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
-    return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe });
+    return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe, t });
   }
 
   if (areaTypeSelected === AREA_TYPES.specificRegions || precalculatedLayerSlug === SPECIFIC_REGIONS_TILE_LAYER) {
@@ -113,7 +112,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
 
 // NOT PRECALCULATED AOIs
 
-const createNewCustomAOI = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData }) => {
+const createNewCustomAOI = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, t }) => {
   const areaName = t('Custom area');
   const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
   const contextualData = { area, areaName, aoiId, isCustom: true }
@@ -168,7 +167,7 @@ const recoverAOIfromLocal = ({ aoiData, aoiId, jsonUtils, setContextualData, set
   setContextualData(contextualData);
 }
 
-export const recoverOrCreateNotPrecalculatedAoi = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected }) => {
+export const recoverOrCreateNotPrecalculatedAoi = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t }) => {
   localforage.getItem(aoiId).then((localStoredAoi) => {
     if (localStoredAoi && localStoredAoi.jsonGeometry) {
       setAreaTypeSelected(AREA_TYPES.custom);
@@ -179,7 +178,7 @@ export const recoverOrCreateNotPrecalculatedAoi = ({ aoiStoredGeometry, geometry
           recoverAOIFromDB({ aoiData, setContextualData, setGeometry, setSpeciesData });
         } else {
           // If we don't have it anywhere we just execute the GP services job to create one
-          createNewCustomAOI({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData });
+          createNewCustomAOI({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, t });
         }
       }).catch(error => {
         console.error('Could not retrieve AOI', error);

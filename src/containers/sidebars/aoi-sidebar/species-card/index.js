@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
+
 import orderBy from 'lodash/orderBy';
 import { useLocale } from '@transifex/react';
 
 // constants
-import { DEFAULT_SPECIES_FILTER } from 'constants/analyze-areas-constants';
-import IUCN_LIST from 'constants/iucn-list';
+import { getIUCNList } from 'constants/iucn-list';
 
-import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
+import { getSpeciesFilters } from 'constants/analyze-areas-constants';
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
 // utils
@@ -20,6 +21,12 @@ import Component from './component';
 const SEARCH_RESULTS_SLUG = 'search-results';
 
 const SpeciesCardContainer = (props) => {
+  const locale = useLocale();
+  const t = useT();
+
+  const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
+  const iucnList = useMemo(() => getIUCNList(), [locale]);
+
   const { speciesData } = props;
   const { species } = speciesData;
 
@@ -28,10 +35,12 @@ const SpeciesCardContainer = (props) => {
 
 
   // Species dropdown
+
+  const DEFAULT_SPECIES_FILTER = { slug: 'all', label: t('all terrestrial vertebrates') };
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER);
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
   const [placeholderText, setPlaceholderText] = useState(null);
-  const [speciesFilters, setFilterWithCount] = useState(SPECIES_FILTERS);
+  const [speciesFilters, setFilterWithCount] = useState(speciesFiltersSource);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
   const [speciesToDisplayBackUp, setSpeciesToDisplayBackUp] = useState(species);
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
@@ -115,7 +124,7 @@ const SpeciesCardContainer = (props) => {
   }, [searchOptions]);
 
   useEffect(() => {
-    const filters = SPECIES_FILTERS.map(filter => {
+    const filters = speciesFiltersSource.map(filter => {
       switch (filter.slug) {
         case 'all':
           return { slug: filter.slug, label: `${filter.label} (${species && species.length})` };
@@ -127,7 +136,7 @@ const SpeciesCardContainer = (props) => {
     setFilterWithCount(filters);
 
     // update species count in selected filter
-    const tempLabel = SPECIES_FILTERS.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
+    const tempLabel = speciesFiltersSource.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
     setSpeciesFilter({
       slug: selectedSpeciesFilter.slug,
       label: (selectedSpeciesFilter.slug === 'all') ?
@@ -223,7 +232,7 @@ const SpeciesCardContainer = (props) => {
             ...selectedSpecies,
             commonname: results[0].commonname,
             imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
-            iucnCategory: IUCN_LIST[results[0].redlist],
+            iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`
           });
           results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))

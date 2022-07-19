@@ -16,8 +16,8 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 import {
   GLOBAL_SPI_FEATURE_LAYER,
   NRC_LANDING_LAYERS_SLUG,
+  MARINE_SPI_FEATURE_LAYER,
 } from 'constants/layers-slugs';
-import { NRCLandingLayers } from 'constants/nrc-landing';
 
 // Styles
 import styles from './styles.module.scss';
@@ -34,6 +34,25 @@ const NRCLandingSidebar = ({
   waitingInteraction,
 }) => {
   const t = useT();
+
+  const NRCLandingLayers = [
+    {
+      name: t('Land'),
+      value: GLOBAL_SPI_FEATURE_LAYER,
+      id: GLOBAL_SPI_FEATURE_LAYER,
+      title: GLOBAL_SPI_FEATURE_LAYER,
+      slug: GLOBAL_SPI_FEATURE_LAYER, //TODO: change specific slug for metadata
+      metadataTitle: t('Land SPI'),
+    },
+    {
+      name: t('Marine'),
+      value: MARINE_SPI_FEATURE_LAYER,
+      id: MARINE_SPI_FEATURE_LAYER,
+      title: MARINE_SPI_FEATURE_LAYER,
+      slug: MARINE_SPI_FEATURE_LAYER, //TODO: change specific slug for metadata
+      metadataTitle: t('Marine SPI'),
+    },
+  ];
 
   const { landAverage, marineAverage } = globalAverage;
   const averageLoaded =

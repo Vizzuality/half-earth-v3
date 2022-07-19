@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { t } from '@transifex/native';
+import { useT } from '@transifex/react';
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import PartnersComponent from '../partners/partners';
@@ -9,21 +9,22 @@ import { ABOUT_TABS } from 'constants/ui-params';
 
 import styles from '../about-styles.module.scss';
 
-const tabsData = {
-  [ABOUT_TABS.PARTNERS]: {
-    slug: ABOUT_TABS.PARTNERS,
-    text: t('PARTNERS'),
-    Component: PartnersComponent,
-  },
-  [ABOUT_TABS.INSTRUCTIONS]: {
-    slug: ABOUT_TABS.INSTRUCTIONS,
-    text: t('MAP INSTRUCTIONS'),
-    Component: MapInstructionsComponent,
-  },
-};
-
 const AboutPage = ({ handleCloseAboutPage }) => {
   const [activeTab, setActiveTab] = useState(ABOUT_TABS.PARTNERS);
+  const t = useT();
+
+  const tabsData = {
+    [ABOUT_TABS.PARTNERS]: {
+      slug: ABOUT_TABS.PARTNERS,
+      text: t('PARTNERS'),
+      Component: PartnersComponent,
+    },
+    [ABOUT_TABS.INSTRUCTIONS]: {
+      slug: ABOUT_TABS.INSTRUCTIONS,
+      text: t('MAP INSTRUCTIONS'),
+      Component: MapInstructionsComponent,
+    },
+  };
 
   const keyEscapeEventListener = (evt) => {
     evt = evt || window.event;

@@ -1,7 +1,7 @@
+import React, { useState, useEffect, useMemo } from 'react';
 import Modal from 'containers/modals/onboarding-modal';
 import { motion } from 'framer-motion';
 import { useT, useLocale } from '@transifex/react';
-
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as DotsIcon } from 'icons/dots.svg';
 import { ReactComponent as PlayIcon } from 'icons/play.svg';
@@ -9,7 +9,6 @@ import { ReactComponent as PauseIcon } from 'icons/pause.svg';
 import { ReactComponent as MuteIcon } from 'icons/mute.svg';
 import { ReactComponent as MutedIcon } from 'icons/muted.svg';
 import cx from 'classnames';
-import React, { useState, useEffect } from 'react';
 import { LANDING } from 'router';
 import priorityPlaces01 from 'sounds/tour1-track1-intro.mp3';
 import priorityPlaces02 from 'sounds/tour1-track2-priority.mp3';
@@ -26,7 +25,10 @@ import nationalReportCards05 from 'sounds/tour2-track5-challenges.mp3';
 import nationalReportCards06 from 'sounds/tour2-track6-ranking.mp3';
 import nationalReportCards07 from 'sounds/tour2-track7-closure.mp3';
 
-import { SCRIPTS, NO_INTERACTION_STEPS } from 'constants/onboarding-constants';
+import {
+  getScripts,
+  NO_INTERACTION_STEPS,
+} from 'constants/onboarding-constants';
 import StepsArcs from '../step-arcs';
 import styles from './sound-btn-styles.module.scss';
 import AudioPlayer from './audio-player';
@@ -148,6 +150,7 @@ const SoundButtonComponent = ({
 }) => {
   const t = useT();
   const locale = useLocale();
+  const scripts = useMemo(() => getScripts(), [locale]);
 
   const [playing, setPlaying] = useState(true);
   const [playedSeconds, setPlayedSeconds] = useState(0);
@@ -179,8 +182,8 @@ const SoundButtonComponent = ({
 
   const script =
     onboardingType &&
-    SCRIPTS[onboardingType] &&
-    Object.values(SCRIPTS[onboardingType])[onboardingStep];
+    scripts[onboardingType] &&
+    Object.values(scripts[onboardingType])[onboardingStep];
   const file = files[onboardingType][onboardingStep];
 
   const handleBack = () => {
@@ -207,14 +210,14 @@ const SoundButtonComponent = ({
   };
 
   const handleEndOfStep = () => {
-    if (!Object.keys(SCRIPTS[onboardingType])[onboardingStep + 1]) {
+    if (!Object.keys(scripts[onboardingType])[onboardingStep + 1]) {
       return handleFinishOnBoarding();
     }
 
     setTextMark(0);
 
     const dontWaitStep = NO_INTERACTION_STEPS[onboardingType].includes(
-      Object.keys(SCRIPTS[onboardingType])[onboardingStep]
+      Object.keys(scripts[onboardingType])[onboardingStep]
     );
 
     if (dontWaitStep) {
@@ -230,7 +233,7 @@ const SoundButtonComponent = ({
     setPlaying(!waitingInteraction);
   }, [waitingInteraction]);
 
-  if (playing && onboardingType && SCRIPTS[onboardingType] && !script) {
+  if (playing && onboardingType && scripts[onboardingType] && !script) {
     handleFinishOnBoarding();
   }
 
@@ -238,7 +241,7 @@ const SoundButtonComponent = ({
   const endTime = script && script[textMark] && script[textMark].endTime;
   const text = script && script[textMark] && script[textMark].text;
   const stepsNumber =
-    SCRIPTS[onboardingType] && Object.keys(SCRIPTS[onboardingType]).length;
+    scripts[onboardingType] && Object.keys(scripts[onboardingType]).length;
 
   const renderTooltipText = () => {
     if (!waitingInteraction && waitingStartAudioClick) {

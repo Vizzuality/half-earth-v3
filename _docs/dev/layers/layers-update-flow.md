@@ -64,16 +64,3 @@ These are the layer types we are currently using in the platform:
       bbox: [-164,-40,-35,56]
     }
     ```
-- The last step for a layer to be ready to be used on the platform is to add the needed configuration to be consumed by the `legend` component. Different legend configurations are created depending on the category of the layer (_biodiversity_, _human pressures_ or _protected areas_), and those are stored into the associated file in the `constants` folder. In this case, fishes priority layer, the legend config to be updated is located on the `constants/biodiversity-layers-constants` file.
-    ```js
-    import {
-      FISHES_PRIORITY
-    } from 'constants/layers-slugs';
-
-    export const legendConfigs = {
-      [FISHES_PRIORITY]: {
-        ...defaultGradientConfig,
-        title: "Fishes priority"
-      }
-    }
-    ```

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 // icons
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
@@ -18,7 +18,7 @@ import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 // constants
 import {
   PROTECTION_SLUG,
-  SIDEBAR_CARDS_CONFIG,
+  getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
 
 // styles
@@ -42,6 +42,8 @@ const SidebarCard = ({
   metadata,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
 
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
@@ -84,7 +86,7 @@ const SidebarCard = ({
           <WarningIcon className={styles.warning} />
           <ReactMarkdown
             className={styles.description}
-            source={SIDEBAR_CARDS_CONFIG[cardCategory].warning}
+            source={sidebarCardsConfig[cardCategory].warning}
           />
         </div>
       ) : (

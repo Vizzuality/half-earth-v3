@@ -1,5 +1,5 @@
 import React from 'react';
-import { t } from '@transifex/native';
+import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -41,6 +41,7 @@ const LocalPriorityCardComponent = (props) => {
     countryName,
     countryData,
   } = props;
+  const t = useT();
 
   const { Marine } = countryData;
 

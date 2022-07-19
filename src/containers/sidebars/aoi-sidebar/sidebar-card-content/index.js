@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import Component from './component';
-import { AOI_LEGEND_CATEGORIES, SIDEBAR_CARDS_CONFIG } from 'constants/analyze-areas-constants';
+import { AOI_LEGEND_CATEGORIES, getSidebarCardsConfig } from 'constants/analyze-areas-constants';
 import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
@@ -20,10 +21,13 @@ const Container = (props) => {
     metadataSlug
   } = props;
 
+  const locale = useLocale();
+  const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
+
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
-  const { description, title } = SIDEBAR_CARDS_CONFIG[cardCategory];
+  const { description, title } = sidebarCardsConfig[cardCategory];
   const [metadata, setMetadata] = useState(null);
 
   useEffect(() => {
