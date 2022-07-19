@@ -1,7 +1,7 @@
 import { BIODIVERSITY_DEFAULT_TAB } from 'constants/ui-params';
-import { selectUiUrlState } from 'selectors/location-selectors';
+import { selectUiUrlState, selectLangUrlState } from 'selectors/location-selectors';
 import { createSelector, createStructuredSelector } from 'reselect';
-import { LAYERS_TOGGLE_CONFIG } from 'constants/biodiversity-layers-constants';
+import { getLayersToggleConfig } from 'constants/biodiversity-layers-constants';
 
 export const getLayerVariant = createSelector(
   [selectUiUrlState],
@@ -10,10 +10,12 @@ export const getLayerVariant = createSelector(
 );
 
 export const getCountedActiveLayers = createSelector(
-  [(state, props) => props && props.activeLayers], (activeLayers) => {
+  [(state, props) => props && props.activeLayers, selectLangUrlState], (activeLayers, locale) => {
     if(!activeLayers || !activeLayers.length) return 0;
 
-    const allLayers = Object.values(LAYERS_TOGGLE_CONFIG)
+    // getLayersToggleConfig will update depending on the locale
+    const layersToggleConfig = getLayersToggleConfig();
+    const allLayers = Object.values(layersToggleConfig)
       .map((marineOrTerrestrialGroups) =>
         Object.values(marineOrTerrestrialGroups).map((resolutionGroups) =>
           Object.values(resolutionGroups).map((layers) =>

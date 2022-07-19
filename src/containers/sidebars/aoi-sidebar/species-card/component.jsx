@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // components
 import SpeciesBar from 'components/charts/species-bar';
@@ -16,7 +16,7 @@ import {
 
 // constants
 import {
-  SIDEBAR_CARDS_CONFIG,
+  getSidebarCardsConfig,
   SPECIES_SLUG,
 } from 'constants/analyze-areas-constants';
 
@@ -51,7 +51,7 @@ const Component = ({
 }) => {
   const t = useT();
   const locale = useLocale();
-
+  const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
 
   return speciesData.species && speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
@@ -67,12 +67,12 @@ const Component = ({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>
-          {SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].title(
+          {sidebarCardsConfig[SPECIES_SLUG].title(
             speciesData.species && speciesData.species.length
           )}
           <span
             className={styles.infoClue}
-            title={SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].hint}
+            title={sidebarCardsConfig[SPECIES_SLUG].hint}
           >
             {t('land vertebrate species')}
           </span>
@@ -170,7 +170,9 @@ const Component = ({
               <span>{t('Global habitat-suitable range')}</span>
               <p>
                 {`${roundGlobalRange(
-                  individualSpeciesData.globaldRangeArea, locale
+                  individualSpeciesData.globaldRangeArea,
+                  locale,
+                  t
                 )}${t(' km')}`}
                 <sup>2</sup>
               </p>
@@ -191,15 +193,16 @@ const Component = ({
                 capPercentage(individualSpeciesData.presenceInArea)
               )}
             />
-            <p className={styles.iucnStatus}>{`${t('IUCN status')}: ${individualSpeciesData.iucnCategory
-              }`}</p>
+            <p className={styles.iucnStatus}>{`${t('IUCN status')}: ${
+              individualSpeciesData.iucnCategory
+            }`}</p>
           </section>
         )}
       </div>
       {area && area < 1000 && (
         <div className={styles.warningContainer}>
           <WarningIcon className={styles.icon} />
-          <span>{SIDEBAR_CARDS_CONFIG[SPECIES_SLUG].warning}</span>
+          <span>{sidebarCardsConfig[SPECIES_SLUG].warning}</span>
         </div>
       )}
     </SidebarCardWrapper>

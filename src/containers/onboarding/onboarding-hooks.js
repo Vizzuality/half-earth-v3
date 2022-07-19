@@ -213,7 +213,3 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
     }
   }[section];
 };
-
-export const getTooltipText = (onboardingType, onboardingStep) => (
-  onboardingType === 'national-report-cards' && onboardingStep === 1 ? 'Type here to continue' : 'Click here to continue.'
-);

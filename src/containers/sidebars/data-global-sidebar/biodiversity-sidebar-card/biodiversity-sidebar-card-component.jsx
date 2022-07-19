@@ -1,5 +1,6 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useLocale } from '@transifex/react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import { useT } from '@transifex/react';
@@ -14,15 +15,15 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 // Constants
-import { BIODIVERSITY_TABS } from 'constants/ui-params';
+import { getBiodiversityTabs } from 'constants/ui-params';
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
-import { LAYERS_CATEGORIES_LABELS } from 'constants/mol-layers-configs';
+
 import {
-  LAYERS_TOGGLE_CONFIG,
-  LAYERS_RESOLUTION,
+  getLayersToggleConfig,
+  getLayersResolution,
   TERRESTRIAL,
   MARINE,
-  RESOLUTIONS,
+  getResolutions,
 } from 'constants/biodiversity-layers-constants';
 // Hooks
 import {
@@ -55,6 +56,11 @@ const BiodiversitySidebarCardComponent = ({
   waitingInteraction,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const biodiversityTabs = useMemo(() => getBiodiversityTabs(), [locale]);
+  const resolutions = useMemo(() => getResolutions(), [locale]);
+  const layersResolution = useMemo(() => getLayersResolution(), [locale]);
+  const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
 
   const firstStep = onboardingStep === 0;
   const { title, description, source } = cardMetadata || {};
@@ -69,7 +75,7 @@ const BiodiversitySidebarCardComponent = ({
   });
   const layerTogglesToDisplay = (category) => {
     const resolutionsForSelectedCategory =
-      LAYERS_TOGGLE_CONFIG[biodiversityLayerVariant][category];
+      layersToggleConfig[biodiversityLayerVariant][category];
     const layersForSelectedResolution =
       resolutionsForSelectedCategory &&
       resolutionsForSelectedCategory[selectedResolution[category]];
@@ -125,7 +131,7 @@ const BiodiversitySidebarCardComponent = ({
       {...onboardingOnClick}
     >
       <CategoryBox
-        title={LAYERS_CATEGORIES_LABELS.BIODIVERSITY}
+        title={t('Biodiversity')}
         image={BiodiversityThumbnail}
         counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
@@ -146,7 +152,7 @@ const BiodiversitySidebarCardComponent = ({
           className={styles.legendContainer}
         />
         <Tabs
-          tabs={BIODIVERSITY_TABS}
+          tabs={biodiversityTabs}
           onClick={handleTabSelection}
           className={styles.tabsContainer}
           defaultTabSlug={biodiversityLayerVariant}
@@ -169,8 +175,8 @@ const BiodiversitySidebarCardComponent = ({
           <Dropdown
             theme={'dark'}
             parentWidth="170px"
-            options={LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL]}
-            selectedOption={RESOLUTIONS[selectedResolution[TERRESTRIAL]]}
+            options={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
+            selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
             handleOptionSelection={(op) =>
               setSelectedResolution({
                 ...selectedResolution,
@@ -178,8 +184,7 @@ const BiodiversitySidebarCardComponent = ({
               })
             }
             disabled={
-              LAYERS_RESOLUTION[biodiversityLayerVariant][TERRESTRIAL].length <
-              2
+              layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2
             }
           />
         </div>
@@ -206,9 +211,9 @@ const BiodiversitySidebarCardComponent = ({
               </span>
               <Dropdown
                 theme={'dark'}
-                options={LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE]}
+                options={layersResolution[biodiversityLayerVariant][MARINE]}
                 selectedOption={
-                  LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE][0]
+                  layersResolution[biodiversityLayerVariant][MARINE][0]
                 }
                 handleOptionSelection={(op) =>
                   setSelectedResolution({
@@ -217,7 +222,7 @@ const BiodiversitySidebarCardComponent = ({
                   })
                 }
                 disabled={
-                  LAYERS_RESOLUTION[biodiversityLayerVariant][MARINE].length < 2
+                  layersResolution[biodiversityLayerVariant][MARINE].length < 2
                 }
               />
             </div>

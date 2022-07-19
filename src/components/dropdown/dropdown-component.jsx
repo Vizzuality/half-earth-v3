@@ -4,7 +4,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { usePopper } from 'react-popper';
 import { motion, AnimatePresence } from 'framer-motion';
-import { t } from '@transifex/native';
+import { useT } from '@transifex/react';
 // icons
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
@@ -32,6 +32,8 @@ const Component = ({
   handleSearchIconClick,
   onCloseSearch,
 }) => {
+  const t = useT();
+
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
@@ -95,7 +97,7 @@ const Component = ({
             onKeyPress={handleSearchKeyPress}
             onChange={handleSearchInputChange}
             type="text"
-            placeholder={placeholderText}
+            placeholder={placeholderText || t('SEARCH')}
           />
         </div>
       )}
@@ -180,6 +182,5 @@ Component.propTypes = {
 Component.defaultProps = {
   width: 'fluid',
   theme: 'light',
-  placeholderText: t('SEARCH'),
   searchMode: false,
 };

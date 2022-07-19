@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useLocale } from '@transifex/react';
 import PartnersComponent from './partners-component';
-import { texts, partners, platformPartners, dataPartners, researchPartners, sponsors } from './partners-data';
+import { getTexts, getPartners, getPlatformPartners, getDataPartners, getResearchPartners, getSponsors } from './partners-data';
 import styles from './partners-styles.module.scss';
 
 const PartnersContainer = () => {
+  const locale = useLocale();
+  const texts = useMemo(() => getTexts(), [locale]);
+  const partners = useMemo(() => getPartners(), [locale]);
+  const platformPartners = useMemo(() => getPlatformPartners(), [locale]);
+  const dataPartners = useMemo(() => getDataPartners(), [locale]);
+  const researchPartners = useMemo(() => getResearchPartners(), [locale]);
+  const sponsors = useMemo(() => getSponsors(), [locale]);
+
   const sections = [
     {
       title: texts.partners.title,

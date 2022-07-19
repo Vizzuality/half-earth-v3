@@ -1,9 +1,10 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import get from 'lodash/get';
-import { SORT_OPTIONS, RANKING_INDICATORS, RANKING_GROUPS_SLUGS, RANKING_INDICATOR_GROUPS } from 'constants/country-mode-constants';
-import { LAND_MARINE_OPTIONS, LAND_MARINE_COUNTRY_ATTRIBUTES } from 'constants/country-mode-constants';
+import { getSortOptions, RANKING_INDICATORS, RANKING_GROUPS_SLUGS, RANKING_INDICATOR_GROUPS } from 'constants/country-mode-constants';
+import { getLandMarineOptions, LAND_MARINE_COUNTRY_ATTRIBUTES } from 'constants/country-mode-constants';
 import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
+import { selectLangUrlState } from 'selectors/location-selectors';
 
 const selectCountriesData = ({ countryData }) => (countryData && countryData.data) || null;
 const getSortRankingCategory = ({ location }) => (location && get(location, 'query.ui.sortRankingCategory')) || null;
@@ -50,23 +51,26 @@ const getSortedData = createSelector([getDataWithSPIOrder, getSortRankingCategor
   return sortBy(data, d => sortRankingGroup ? d[sortRankingGroup][sortRankingCategory.slug] : d[sortRankingCategory]).reverse();
 });
 
-const getSelectedFilterOption = createSelector([getSortRankingCategory], (sortRankingCategory) => {
-  if (!sortRankingCategory) return SORT_OPTIONS[0];
-  return SORT_OPTIONS.find(o => o.slug === sortRankingCategory.slug) || SORT_OPTIONS[0];
+const getSelectedFilterOption = createSelector([getSortRankingCategory, selectLangUrlState], (sortRankingCategory, locale) => {
+  // locale is here to recompute sortOptions when locale changes
+  const sortOptions = getSortOptions();
+  if (!sortRankingCategory) return sortOptions[0];
+  return sortOptions.find(o => o.slug === sortRankingCategory.slug) || sortOptions[0];
 });
 
-const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
+// locale is here to recompute landmarineOptions
+const getCalculatedlandMarineOptions = createSelector(selectLangUrlState, locale => getLandMarineOptions());
 
 const getSelectedLandMarineOption = createSelector(
-  getLandMarineSelected,
-  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection)
+  [getLandMarineSelected, getCalculatedlandMarineOptions],
+  (landMarineSelection, landMarine) => landMarine.find(option => option.slug === landMarineSelection)
 );
 
 const mapStateToProps = createStructuredSelector({
   data: getSortedData,
   selectedFilterOption: getSelectedFilterOption,
   selectedLandMarineOption: getSelectedLandMarineOption,
-  landMarineOptions: getLandMarineOptions
+  landMarineOptions: getCalculatedlandMarineOptions
 });
 
 export default mapStateToProps;

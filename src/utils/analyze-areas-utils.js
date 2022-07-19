@@ -7,7 +7,7 @@ import birdsPlaceholder from 'images/no-bird.png';
 import _intersectionBy from 'lodash/intersectionBy';
 import _pick from 'lodash/pick';
 import { percentageFormat } from 'utils/data-formatting-utils';
-import { PRECALCULATED_AOI_OPTIONS } from 'constants/analyze-areas-constants';
+import { getPrecalculatedAOIOptions } from 'constants/analyze-areas-constants';
 
 export function logGeometryArea(geometry) {
   loadModules(["esri/geometry/geometryEngine"])
@@ -28,7 +28,7 @@ export function calculateGeometryArea(geometry, geometryEngine) {
 }
 
 export function getSelectedAnalysisLayer(activeLayers) {
-  const intersectionArray = _intersectionBy(PRECALCULATED_AOI_OPTIONS, activeLayers, 'title');
+  const intersectionArray = _intersectionBy(getPrecalculatedAOIOptions(), activeLayers, 'title');
   return intersectionArray[0];
 }
 

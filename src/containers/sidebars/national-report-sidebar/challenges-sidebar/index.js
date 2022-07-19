@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useT } from '@transifex/react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
@@ -9,6 +10,7 @@ const actions = { visitNrcChallengesAnalytics }
 
 const Container = (props) => {
   const [metadata, setMetadata] = useState(null);
+  const t = useT();
 
   useEffect(() => {
     const md = metadataConfig[CHALLENGES_CHART]
@@ -25,7 +27,7 @@ const Container = (props) => {
 
   return (
     <Component
-      metaDataTitle={metadataConfig[CHALLENGES_CHART].title}
+      metaDataTitle={t('What are the challenges for a country?')}
       metaDataDescription={metadata && metadata.description}
       metaDataSources={metadata && metadata.source}
       {...props}

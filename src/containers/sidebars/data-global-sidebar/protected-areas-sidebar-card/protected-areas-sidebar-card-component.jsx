@@ -1,8 +1,8 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 // Components
 import CategoryBox from 'components/category-box';
@@ -10,9 +10,8 @@ import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 // Constants
 import {
-  WDPALayers,
-  conserveNextLayers,
-  TEXTS,
+  getWDPALayers,
+  getConserveNextLayers,
 } from 'constants/protected-areas';
 import {
   PROTECTION_SLUG,
@@ -43,6 +42,10 @@ const ProtectedAreasSidebarCardComponent = ({
   changeUI,
 }) => {
   const t = useT();
+  const locale = useLocale();
+
+  const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
+  const conserveNextLayers = useMemo(() => getConserveNextLayers(), [locale]);
 
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -71,6 +74,14 @@ const ProtectedAreasSidebarCardComponent = ({
     waitingInteraction,
   });
 
+  const texts = {
+    categoryTitle: t('Protection'),
+    layersTitle: t('Conservation areas'),
+    description: t(
+      'Global protections clasified according to their management objectives.'
+    ),
+  };
+
   return (
     <motion.div
       ref={(ref) => {
@@ -85,7 +96,7 @@ const ProtectedAreasSidebarCardComponent = ({
     >
       <CategoryBox
         image={ProtectionThumbnail}
-        title={TEXTS.categoryTitle}
+        title={texts.categoryTitle}
         counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
         isOpen={isOpen}
@@ -96,9 +107,9 @@ const ProtectedAreasSidebarCardComponent = ({
           [styles.onboardingMode]: onboardingStep === 3,
         })}
       >
-        <span className={styles.description}>{TEXTS.description}</span>
+        <span className={styles.description}>{texts.description}</span>
         <hr className={hrTheme.dark} />
-        <span className={styles.layersTitle}>{TEXTS.layersTitle}</span>
+        <span className={styles.layersTitle}>{texts.layersTitle}</span>
         <div className={styles.togglesContainer}>
           {WDPALayers.map((layer) => (
             <LayerToggle
