@@ -11,7 +11,6 @@ import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
 // utils
 import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
-
 // services
 import MolService from 'services/mol';
 
@@ -29,6 +28,10 @@ const SpeciesCardContainer = (props) => {
 
   const { speciesData } = props;
   const { species } = speciesData;
+
+  const language = locale !== '' ? locale : 'en'
+
+
   // Species dropdown
 
   const DEFAULT_SPECIES_FILTER = { slug: 'all', label: t('all terrestrial vertebrates') };
@@ -180,7 +183,7 @@ const SpeciesCardContainer = (props) => {
           nextSpeciesName = speciesToDisplay[selectedSpeciesIndex + 1].name;
         }
 
-        MolService.getSpecies(previousSpeciesName)
+        MolService.getSpecies(previousSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setPreviousImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -188,7 +191,7 @@ const SpeciesCardContainer = (props) => {
               setPreviousImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
           });
-        MolService.getSpecies(nextSpeciesName)
+        MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -206,7 +209,7 @@ const SpeciesCardContainer = (props) => {
           nextSpeciesName = speciesToDisplay[0].name;
         }
 
-        MolService.getSpecies(nextSpeciesName)
+        MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -220,7 +223,8 @@ const SpeciesCardContainer = (props) => {
         setNextImage(null);
       }
 
-      MolService.getSpecies(selectedSpecies.name).then((results) => {
+
+      MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
           setIndividualSpeciesData({
             ...selectedSpecies,
@@ -235,7 +239,7 @@ const SpeciesCardContainer = (props) => {
         }
       })
     }
-  }, [selectedSpecies]);
+  }, [selectedSpecies, locale]);
 
   return (
     <Component
