@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { useLanguages, useLocale } from '@transifex/react';
+import { tx } from '@transifex/native';
 import styles from './language-switcher.module.scss';
 
 const LanguageSwitcher = (props) => {
@@ -19,7 +20,10 @@ const LanguageSwitcher = (props) => {
         )}
         key={code}
         onClick={() => {
-          changeLang(code);
+          // We need to wait until the locale is loaded to avoid race conditions
+          tx.setCurrentLocale(code).then(() => {
+            changeLang(code);
+          });
         }}
       >
         {code}
