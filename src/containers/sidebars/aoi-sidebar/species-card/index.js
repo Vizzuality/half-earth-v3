@@ -74,7 +74,7 @@ const SpeciesCardContainer = (props) => {
         const nameFound = species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0;
         let commonNameFound = false;
         if (species.commonName) {
-          commonNameFound = species.commonName.findIndex((cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0 ) >= 0;
+          commonNameFound = species.commonName.findIndex((cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0) >= 0;
         }
         return nameFound || commonNameFound;
       })
@@ -84,7 +84,7 @@ const SpeciesCardContainer = (props) => {
       }));
     // Remove duplicates
     const tempSet = new Set(results);
-    const resultsSorted = Array.from(tempSet).sort((a,b) => {
+    const resultsSorted = Array.from(tempSet).sort((a, b) => {
       if (a.slug < b.slug) return -1;
       if (a.slug > b.slug) return 1;
       return 0;
@@ -135,8 +135,8 @@ const SpeciesCardContainer = (props) => {
     setSpeciesFilter({
       slug: selectedSpeciesFilter.slug,
       label: (selectedSpeciesFilter.slug === 'all') ?
-         `${tempLabel} (${species && species.length})`
-         : `${tempLabel} (${species && species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
+        `${tempLabel} (${species && species.length})`
+        : `${tempLabel} (${species && species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
     });
 
   }, [speciesData.species])
@@ -147,7 +147,7 @@ const SpeciesCardContainer = (props) => {
       (selectedSpeciesFilter.slug === 'all') ?
         [...speciesData.species] :
         [...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)]
-      );
+    );
 
     if (speciesSorted) {
       setSpeciesToDisplay(speciesSorted);
@@ -192,7 +192,7 @@ const SpeciesCardContainer = (props) => {
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
-            } else  {
+            } else {
               setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
           });
