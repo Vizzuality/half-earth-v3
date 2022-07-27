@@ -13,7 +13,7 @@ import { t } from '@transifex/native';
 import { BIRDS, AMPHIBIANS, MAMMALS, REPTILES } from 'constants/geo-processing-services';
 
 import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
-import { percentageFormat, localeFormatting } from 'utils/data-formatting-utils';
+import { percentageFormat } from 'utils/data-formatting-utils';
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
@@ -44,7 +44,7 @@ export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
 
 const { REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI } = process.env;
 
-export const PRECALCULATED_AOI_OPTIONS = [
+export const getPrecalculatedAOIOptions = () => [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
@@ -57,7 +57,7 @@ export const AOIS_HISTORIC = process.env.NODE_ENV === "development" ? AOIS_HISTO
 const capPercentage = (percentage) => percentage > 100 ? 100 : percentage;
 
 // Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
-export const SIDEBAR_CARDS_CONFIG = {
+export const getSidebarCardsConfig = () => ({
   [SPECIES_SLUG]: {
     title: (speciesCount) => <span>{t('This area has')}<br />{t('up to')} {speciesCount}</span>,
     hint: t('Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.'),
@@ -78,18 +78,16 @@ export const SIDEBAR_CARDS_CONFIG = {
     description: ({ pressures }) => pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is under human pressure__')},
     ${t('the majority of which are pressures from ')}${getMainPressure(pressures)}.` : '',
     warning: null
-  },
-}
+  }
+});
 
-export const SPECIES_FILTERS = [
+export const getSpeciesFilters = () => [
   { slug: 'all', label: t('all terrestrial vertebrates') },
   { slug: BIRDS, label: t('birds') },
   { slug: MAMMALS, label: t('mammals') },
   { slug: REPTILES, label: t('reptiles') },
   { slug: AMPHIBIANS, label: t('amphibians') },
 ]
-
-export const DEFAULT_SPECIES_FILTER = { slug: 'all', label: t('all terrestrial vertebrates') };
 
 export const PRECALCULATED_LAYERS_CONFIG = {
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
@@ -105,23 +103,3 @@ export const PRECALCULATED_LAYERS_CONFIG = {
 }
 
 export const HIGHER_AREA_SIZE_LIMIT = 35000;
-
-export const WARNING_MESSAGES = {
-  area: {
-    title: t('Area size too big'),
-    description: (size) => (<span>{t('The maximum size for on the fly area analysis is ')}{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}{t(' km')}<sup>2</sup>.
-      {t('The area that you are trying to analyze has ')}{localeFormatting(size)}{t(' km')}<sup>2</sup>. {t('Please select a smaller area to trigger the analysis.')}</span>)
-  },
-  file: {
-    title: t('Something went wrong with your upload'),
-    description: () => t('Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.')
-  },
-  400: {
-    title: t('File too big'),
-    description: () => t('File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.')
-  },
-  500: {
-    title: t('Server error'),
-    description: () => t('An error ocurred during the file upload. Please try again')
-  }
-}

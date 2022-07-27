@@ -24,8 +24,7 @@ import inaturalistLogo from 'logos/inaturalist.png';
 
 import { t } from '@transifex/native';
 
-
-export const texts = {
+export const getTexts = () => ({
   partners: {
     title: t('Half-Earth Project Map - Core Team'),
     content: [
@@ -46,9 +45,9 @@ export const texts = {
   researchPartners: {
     title: t('Research partners')
   },
-}
+});
 
-export const partners = [
+export const getPartners = () => [
   { href: 'https://mol.org/', image: { src: molLogo, alt: t('Map of Life') } },
   {
     href: 'https://eowilsonfoundation.org/',
@@ -63,14 +62,14 @@ export const partners = [
   }
 ];
 
-export const platformPartners = [
+export const getPlatformPartners = () => [
   {
     href: 'https://www.esri.com/en-us/home',
     image: { src: esriLogo, alt: t('Esri') }
   }
 ]
 
-export const dataPartners = [
+export const getDataPartners = () => [
   {
     href: 'https://mol.org/',
     image: { src: molLogo, alt: t('Map of Life') }
@@ -131,7 +130,7 @@ export const dataPartners = [
   }
 ];
 
-export const researchPartners = [
+export const getResearchPartners = () => [
   {
     href: 'https://www.yale.edu/',
     image: { src: yaleLogo, alt: t('Yale University') }
@@ -154,7 +153,7 @@ export const researchPartners = [
   }
 ];
 
-export const sponsors =  [{
+export const getSponsors = () => [{
     href: 'https://www.esri.com/en-us/home',
     image: { src: esriLogo, alt: t('Esri') }
   },

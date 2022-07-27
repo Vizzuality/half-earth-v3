@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useT } from '@transifex/react';
+
 import { connect } from 'react-redux';
 import orderBy from 'lodash/orderBy';
 import isEmpty from 'lodash/isEmpty';
@@ -27,6 +29,8 @@ const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 // Protected areas are fetched on protected areas modal except for PA type AOIs
 const AOIScene = props => {
   const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected, areaTypeSelected, objectId } = props;
+
+  const t = useT();
 
   const [taxaData, setTaxaData] = useState([])
   const [geometry, setGeometry] = useState(null);
@@ -60,14 +64,14 @@ const AOIScene = props => {
   // Get PRECALCULATED AOIs
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
-      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe });
+      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t });
     }
   }, [precalculatedLayerSlug, geometryEngine, objectId])
 
   // Get NOT PRECALCULATED AOIs
   useEffect(() => {
     if (aoiId && geometryEngine && jsonUtils && !precalculatedLayerSlug) {
-      recoverOrCreateNotPrecalculatedAoi({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected });
+      recoverOrCreateNotPrecalculatedAoi({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t });
     }
   }, [aoiId, geometryEngine, jsonUtils])
 

@@ -1,6 +1,6 @@
 import { t } from '@transifex/native';
 
-export const VERTEBRATE_TABS = [
+export const getVertebrateTabs = () => [
   {slug: 'land', title: t('Land')},
   {slug: 'marine', title: t('Marine')},
 ];
@@ -11,4 +11,4 @@ export const SPECIES_GROUP_STYLE_CLASS_DICTIONARY = {
 };
 
 
-export default { VERTEBRATE_TABS, SPECIES_GROUP_STYLE_CLASS_DICTIONARY };
+export default { getVertebrateTabs, SPECIES_GROUP_STYLE_CLASS_DICTIONARY };

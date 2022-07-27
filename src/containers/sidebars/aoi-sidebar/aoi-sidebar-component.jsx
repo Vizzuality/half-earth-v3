@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import cx from 'classnames';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
@@ -17,9 +17,9 @@ import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 
 import { writeToForageItem } from 'utils/local-forage-utils';
 
-import { humanPressuresLandUse } from 'constants/human-pressures';
-import { WDPALayers } from 'constants/protected-areas';
-import { AOI_BIODIVERSITY_TOGGLES } from 'constants/biodiversity-layers-constants';
+import { getHumanPressuresLandUse } from 'constants/human-pressures';
+import { getWDPALayers } from 'constants/protected-areas';
+import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
@@ -49,7 +49,17 @@ const AOISidebarComponent = ({
   dataLoaded,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const humanPressuresLandUse = useMemo(
+    () => getHumanPressuresLandUse(),
+    [locale]
+  );
 
+  const aoiBiodiversityToggles = useMemo(
+    () => getAOIBiodiversityToggles(),
+    [locale]
+  );
+  const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
@@ -65,7 +75,7 @@ const AOISidebarComponent = ({
       timestamp: Date.now(),
       areaName: updatedAreaName,
     });
-  }
+  };
 
   return (
     <>
@@ -164,9 +174,9 @@ const AOISidebarComponent = ({
           activeLayers={activeLayers}
           contextualData={contextualData}
           cardCategory={BIODIVERSITY_SLUG}
-          layers={AOI_BIODIVERSITY_TOGGLES}
+          layers={aoiBiodiversityToggles}
           metadataSlug={ALL_TAXA_PRIORITY}
-        // displayWarning={area < 10000}
+          // displayWarning={area < 10000}
         />
         <SidebarCard
           map={map}

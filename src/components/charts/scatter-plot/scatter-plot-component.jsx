@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLocale } from '@transifex/react';
 import { format } from 'd3-format';
+
 import * as d3 from 'd3';
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 import styles from './scatter-plot-styles.module.scss';
@@ -44,7 +49,6 @@ const TickLines = ({
 
 const ScatterPlot = ({
   data,
-  xAxisTicks,
   yAxisTicks,
   countryISO,
   onBubbleClick,
@@ -71,6 +75,7 @@ const ScatterPlot = ({
 
   const percentageFormat = format(".0f");
   const currencyFormatting = format("$,.2f")
+
   const countryChallengesChartFormats = {
     [COUNTRY_ATTRIBUTES.Pop2020]: value => getLocaleNumber(value, locale),
     GNI_PPP: value => `${currencyFormatting(value)} B`,
@@ -83,6 +88,19 @@ const ScatterPlot = ({
 
   const formatFunction =
     countryChallengesChartFormats[countryChallengesSelectedKey];
+
+  const getXAxisTicks = (data, selectedKey) => {
+    if (!data || !selectedKey) return null;
+    const highValue = d3.max(data, d => d.xAxisValues[selectedKey])
+    const lowValue = d3.min(data, d => d.xAxisValues[selectedKey])
+    const formatFunction = countryChallengesChartFormats[selectedKey];
+    return [
+      formatFunction(lowValue),
+      formatFunction(highValue)
+    ]
+  };
+
+  const xAxisTicks = getXAxisTicks(data, countryChallengesSelectedKey);
 
   const calculateScale = () => {
     if (data && chartSurfaceRef.current) {

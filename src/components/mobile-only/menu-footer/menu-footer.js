@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useT } from '@transifex/react';
 import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -28,6 +29,8 @@ const MenuFooterContainer = props => {
   const { view, isSidebarOpen, isLandscapeMode, activeOption,
     // selectedSidebar, selectedFeaturedMap, featured = false
   } = props;
+  const t = useT();
+
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
   const [searchResults, setSearchResults] = useState();
 
@@ -36,13 +39,13 @@ const MenuFooterContainer = props => {
     const { setBatchTooltipData } = props;
     const tooltipConfig = MAP_TOOLTIP_CONFIG[GADM_0_ADMIN_AREAS_FEATURE_LAYER];
 
-    const { title, subtitle, buttonText, id } = tooltipConfig;
+    const { title, subtitle, id } = tooltipConfig;
     const { geometry, attributes } = result.feature;
     setBatchTooltipData({
       isVisible: true,
       geometry,
       content: {
-        buttonText,
+        buttonText: t('analyze area'),
         id: attributes[id],
         title: attributes[title] || attributes['NAME_0'],
         subtitle: attributes[subtitle] || attributes['NAME_1'],

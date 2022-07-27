@@ -1,11 +1,17 @@
-import React, {useEffect, useState} from 'react';
- import Component from './highlighted-species-list-component';
+import React, { useEffect, useState } from 'react';
+import { useLocale } from '@transifex/react';
+
+import Component from './highlighted-species-list-component';
 import EsriFeatureService from 'services/esri-feature-service';
 import MolService from 'services/mol';
 import { HIGHLIGHTED_COUNTRY_SPECIES_URL } from 'constants/layers-urls';
 
 const HighlightedSpeciesContainer = (props) => {
-  const {countryISO, highlightedSpeciesRandomNumber } = props;
+  const { countryISO, highlightedSpeciesRandomNumber } = props;
+
+  const locale = useLocale();
+  const language = locale !== '' ? locale : 'en'
+
   const [highlightedSpeciesInitial, setHiglightedSpeciesInitial] = useState(null);
   const [highlightedSpecies, setHiglightedSpecies] = useState(null);
 
@@ -16,10 +22,10 @@ const HighlightedSpeciesContainer = (props) => {
         whereClause: `GID_0 = '${countryISO}' AND random = ${highlightedSpeciesRandomNumber}`
       }).then((features) => {
         const _highlightedSpeciesInitial = features.map((species) => ({
-              rangeProtected: species.attributes.percentprotectedglobal,
-              scientificName: species.attributes.species_scientific_name,
-            }))
-            setHiglightedSpeciesInitial(_highlightedSpeciesInitial)
+          rangeProtected: species.attributes.percentprotectedglobal,
+          scientificName: species.attributes.species_scientific_name,
+        }))
+        setHiglightedSpeciesInitial(_highlightedSpeciesInitial)
       })
     }
   }, [countryISO, highlightedSpeciesRandomNumber])
@@ -27,7 +33,7 @@ const HighlightedSpeciesContainer = (props) => {
   useEffect(() => {
     if (highlightedSpeciesInitial) {
       const speciesNames = highlightedSpeciesInitial.map(species => species.scientificName);
-      MolService.getSpecies(speciesNames).then((results) => {
+      MolService.getSpecies(speciesNames, language).then((results) => {
         const _highlightedSpecies = results.map((species, index) => (
           {
             ...highlightedSpeciesInitial[index],
@@ -39,7 +45,7 @@ const HighlightedSpeciesContainer = (props) => {
       }
       )
     }
-  }, [highlightedSpeciesInitial])
+  }, [highlightedSpeciesInitial, locale])
 
   return (
     <Component

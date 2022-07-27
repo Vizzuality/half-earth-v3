@@ -53,6 +53,7 @@ const App = (props) => {
   }, []);
 
   useEffect(() => {
+    // Used for initial render
     tx.setCurrentLocale(props.lang);
   }, [props.lang]);
 

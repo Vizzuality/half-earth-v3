@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
-import { WDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR } from 'constants/protected-areas';
+import { getWDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR } from 'constants/protected-areas';
+import { selectLangUrlState } from 'selectors/location-selectors';
 
 export const COMMUNITY_BASED = 'community';
 export const PROTECTED = 'protected';
@@ -82,11 +83,14 @@ const getConservationAreasFormatted = createSelector(
   }
 )
 
+// locale is here to recompute the data when the language changes
+const getComputedWDPALayers = createSelector(selectLangUrlState, locale => getWDPALayers());
+
 const getAlreadyChecked = createSelector(
-  [getActiveLayersFromProps],
-  (activeLayers) => {
+  [getActiveLayersFromProps, getComputedWDPALayers],
+  (activeLayers, wdpaLayers) => {
     if (!activeLayers) return {};
-    const alreadyChecked = WDPALayers.reduce((acc, option) => ({
+    const alreadyChecked = wdpaLayers.reduce((acc, option) => ({
       ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title)
     }), {});
     return alreadyChecked;
@@ -106,10 +110,10 @@ const getChartData = createSelector(
 )
 
 const getProtectedLayers = createSelector(
-  [getConservationAreasFormatted],
-  (dataFormatted) => {
+  [getConservationAreasFormatted, getComputedWDPALayers],
+  (dataFormatted, wdpaLayers) => {
     if (!dataFormatted) return [];
-    const protectedLayers = WDPALayers.map(layer => ({
+    const protectedLayers = wdpaLayers.map(layer => ({
       ...layer,
       name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
       metadataTitle: layer.metadataTitle,

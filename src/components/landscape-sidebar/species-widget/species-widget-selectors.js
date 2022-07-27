@@ -1,8 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getCellData } from 'selectors/grid-cell-selectors';
+import { selectLangUrlState } from 'selectors/location-selectors';
 import { format, precisionPrefix, formatPrefix } from 'd3-format';
 import { uniqBy } from "lodash";
-import IUCN_LIST from 'constants/iucn-list';
+import { getIUCNList } from 'constants/iucn-list';
 
 //more about precision prefix: https://github.com/d3/d3-format#precisionPrefix
 const millionsFormat = formatPrefix("." + precisionPrefix(1e4, 1.3e6), 1.3e6); // format millions with two fixed decimals
@@ -55,7 +56,10 @@ const calculateChartPosition = (angle, propRange) => {
   return { x: correctionX, y: correctionY };
 }
 
-const getChartData = (speciesData, taxa, startAngle)  => {
+// locale is here to recompute the data when the language changes
+const getComputedIUCNList = createSelector(selectLangUrlState, locale => getIUCNList());
+
+const getChartData = (speciesData, taxa, startAngle, iucnList)  => {
   const data = speciesData.filter(s => s.taxa === taxa);
   const angleOffset = 88 / (data.length + 1);
 
@@ -71,18 +75,18 @@ const getChartData = (speciesData, taxa, startAngle)  => {
       imageURL: s.url_sp.startsWith('http') ? s.url_sp : null,
       pointCoordinates: calculateChartPosition(angle, s.PROP_RANGE_PROT),
       color: getDotColor(s.PROP_RANGE_PROT),
-      iucnCategory: IUCN_LIST[s.iucn_cat] || '-'
+      iucnCategory: iucnList[s.iucn_cat] || '-'
     }
   });
   return chartData;
 };
 
-const getData = createSelector(getUniqeSpeciesData, speciesData => {
+const getData = createSelector([getUniqeSpeciesData, getComputedIUCNList], (speciesData, iucnList) => {
   if (!speciesData) return null;
-  const birdsData = getChartData(speciesData, 'bird', 0);
-  const reptilesData = getChartData(speciesData, 'reptile', 90);
-  const mammalsData = getChartData(speciesData, 'mammal', 180)
-  const amphibiansData = getChartData(speciesData, 'amphibian', 270);
+  const birdsData = getChartData(speciesData, 'bird', 0, iucnList);
+  const reptilesData = getChartData(speciesData, 'reptile', 90, iucnList);
+  const mammalsData = getChartData(speciesData, 'mammal', 180, iucnList)
+  const amphibiansData = getChartData(speciesData, 'amphibian', 270, iucnList, );
   const speciesChartData = [...birdsData, ...reptilesData, ...mammalsData, ...amphibiansData];
   return speciesChartData.length ? speciesChartData : null;
 });

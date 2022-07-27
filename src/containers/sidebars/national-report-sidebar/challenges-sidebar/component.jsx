@@ -5,11 +5,22 @@ import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import cx from 'classnames';
 import kebabCase from 'lodash/kebabCase';
 
-import { CONTINENTS, CONTINENT_LABELS } from 'constants/country-mode-constants';
+import { CONTINENTS } from 'constants/country-mode-constants';
 import styles from './styles.module.scss';
 
 const Component = ({ metaDataTitle, metaDataSources, metaDataDescription }) => {
   const t = useT();
+  const CONTINENT_LABELS = {
+    africa: t('Africa'),
+    antarctica: t('Antarctica'),
+    asia: t('Asia'),
+    europe: t('Europe'),
+    'north-america': t('North America'),
+    'south-america': t('South America'),
+    oceania: t('Oceania'),
+    australia: t('Australia'),
+  };
+
   return (
     <>
       <div className={styles.cardContainer}>

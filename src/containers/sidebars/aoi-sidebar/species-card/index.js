@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
+
 import orderBy from 'lodash/orderBy';
 
 // constants
-import { DEFAULT_SPECIES_FILTER } from 'constants/analyze-areas-constants';
-import IUCN_LIST from 'constants/iucn-list';
+import { getIUCNList } from 'constants/iucn-list';
 
-import { SPECIES_FILTERS } from 'constants/analyze-areas-constants';
+import { getSpeciesFilters } from 'constants/analyze-areas-constants';
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
 // utils
 import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
-
 // services
 import MolService from 'services/mol';
 
@@ -20,13 +20,25 @@ import Component from './component';
 const SEARCH_RESULTS_SLUG = 'search-results';
 
 const SpeciesCardContainer = (props) => {
+  const locale = useLocale();
+  const t = useT();
+
+  const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
+  const iucnList = useMemo(() => getIUCNList(), [locale]);
+
   const { speciesData } = props;
   const { species } = speciesData;
+
+  const language = locale !== '' ? locale : 'en'
+
+
   // Species dropdown
+
+  const DEFAULT_SPECIES_FILTER = { slug: 'all', label: t('all terrestrial vertebrates') };
   const [selectedSpeciesFilter, setSpeciesFilter] = useState(DEFAULT_SPECIES_FILTER);
   const [selectedSpeciesIndex, setSelectedSpeciesIndex] = useState(0);
   const [placeholderText, setPlaceholderText] = useState(null);
-  const [speciesFilters, setFilterWithCount] = useState(SPECIES_FILTERS);
+  const [speciesFilters, setFilterWithCount] = useState(speciesFiltersSource);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
   const [speciesToDisplayBackUp, setSpeciesToDisplayBackUp] = useState(species);
   const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
@@ -65,7 +77,7 @@ const SpeciesCardContainer = (props) => {
         const nameFound = species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0;
         let commonNameFound = false;
         if (species.commonName) {
-          commonNameFound = species.commonName.findIndex((cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0 ) >= 0;
+          commonNameFound = species.commonName.findIndex((cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0) >= 0;
         }
         return nameFound || commonNameFound;
       })
@@ -75,7 +87,7 @@ const SpeciesCardContainer = (props) => {
       }));
     // Remove duplicates
     const tempSet = new Set(results);
-    const resultsSorted = Array.from(tempSet).sort((a,b) => {
+    const resultsSorted = Array.from(tempSet).sort((a, b) => {
       if (a.slug < b.slug) return -1;
       if (a.slug > b.slug) return 1;
       return 0;
@@ -110,7 +122,7 @@ const SpeciesCardContainer = (props) => {
   }, [searchOptions]);
 
   useEffect(() => {
-    const filters = SPECIES_FILTERS.map(filter => {
+    const filters = speciesFiltersSource.map(filter => {
       switch (filter.slug) {
         case 'all':
           return { slug: filter.slug, label: `${filter.label} (${species && species.length})` };
@@ -122,12 +134,12 @@ const SpeciesCardContainer = (props) => {
     setFilterWithCount(filters);
 
     // update species count in selected filter
-    const tempLabel = SPECIES_FILTERS.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
+    const tempLabel = speciesFiltersSource.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
     setSpeciesFilter({
       slug: selectedSpeciesFilter.slug,
       label: (selectedSpeciesFilter.slug === 'all') ?
-         `${tempLabel} (${species && species.length})`
-         : `${tempLabel} (${species && species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
+        `${tempLabel} (${species && species.length})`
+        : `${tempLabel} (${species && species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
     });
 
   }, [speciesData.species])
@@ -138,7 +150,7 @@ const SpeciesCardContainer = (props) => {
       (selectedSpeciesFilter.slug === 'all') ?
         [...speciesData.species] :
         [...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)]
-      );
+    );
 
     if (speciesSorted) {
       setSpeciesToDisplay(speciesSorted);
@@ -171,7 +183,7 @@ const SpeciesCardContainer = (props) => {
           nextSpeciesName = speciesToDisplay[selectedSpeciesIndex + 1].name;
         }
 
-        MolService.getSpecies(previousSpeciesName)
+        MolService.getSpecies(previousSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setPreviousImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -179,11 +191,11 @@ const SpeciesCardContainer = (props) => {
               setPreviousImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
           });
-        MolService.getSpecies(nextSpeciesName)
+        MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
-            } else  {
+            } else {
               setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
           });
@@ -197,7 +209,7 @@ const SpeciesCardContainer = (props) => {
           nextSpeciesName = speciesToDisplay[0].name;
         }
 
-        MolService.getSpecies(nextSpeciesName)
+        MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
               setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
@@ -211,13 +223,14 @@ const SpeciesCardContainer = (props) => {
         setNextImage(null);
       }
 
-      MolService.getSpecies(selectedSpecies.name).then((results) => {
+
+      MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
             imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
-            iucnCategory: IUCN_LIST[results[0].redlist],
+            iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`
           });
           results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))
@@ -226,7 +239,7 @@ const SpeciesCardContainer = (props) => {
         }
       })
     }
-  }, [selectedSpecies]);
+  }, [selectedSpecies, locale]);
 
   return (
     <Component

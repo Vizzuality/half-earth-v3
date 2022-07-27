@@ -1,14 +1,15 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { CONTINENT_COLORS } from 'constants/country-mode-constants';
+import { selectLangUrlState } from 'selectors/location-selectors';
 import { getCountryChallengesSelectedFilter, getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 import { countryChallengesChartFormats, countryChallengesSizes } from 'utils/data-formatting-utils';
 import * as d3 from 'd3';
 import kebabCase from 'lodash/kebabCase';
 import {
-  INDICATOR_LABELS,
+  getIndicatorLabels,
   getChallengesRelatedFilterOptions,
   LAND_MARINE,
-  LAND_MARINE_OPTIONS,
+  getLandMarineOptions,
   LAND_MARINE_COUNTRY_ATTRIBUTES
 } from 'constants/country-mode-constants';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
@@ -64,9 +65,10 @@ const getScatterplotRawData = createSelector(
 )
 
 const getXAxisKeys = createSelector(
-  [selectCountryIso, getScatterplotRawData],
-  (countryIso, rawData) => {
-    const AllXAxisKeys = Object.keys(INDICATOR_LABELS);
+  [selectCountryIso, getScatterplotRawData, selectLangUrlState],
+  (countryIso, rawData, locale) => {
+    // locale is here to recompute indicatorLabels
+    const AllXAxisKeys = Object.keys(getIndicatorLabels());
     if (!rawData) return AllXAxisKeys;
     const countryData = rawData.find(country => country.iso === countryIso);
     return AllXAxisKeys.filter(
@@ -126,7 +128,8 @@ const getChallengesDependantFilterOptions = createSelector(
   }
 );
 
-const getLandMarineOptions = () => LAND_MARINE_OPTIONS;
+// locale is here to recompute landMarineOptions
+const getComputedLandMarineOptions = createSelector(selectLangUrlState, locale => getLandMarineOptions());
 
 const getSelectedFilterOption = createSelector(
   [getSelectedFilterSlug, getChallengesFilterOptions],
@@ -134,8 +137,9 @@ const getSelectedFilterOption = createSelector(
 );
 
 const getSelectedLandMarineOption = createSelector(
-  getLandMarineSelected,
-  landMarineSelection => LAND_MARINE_OPTIONS.find(option => option.slug === landMarineSelection)
+  [getLandMarineSelected,
+  getComputedLandMarineOptions],
+  (landMarineSelection, landMarineOptions) => landMarineOptions.find(option => option.slug === landMarineSelection)
 );
 
 

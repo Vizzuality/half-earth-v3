@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { getTooltipText } from 'containers/onboarding/onboarding-hooks';
+import { useT } from '@transifex/react';
 import styles from './onboarding-tooltip-styles.module.scss';
 
 const OnboardingTooltipComponent = ({
@@ -12,6 +12,12 @@ const OnboardingTooltipComponent = ({
   tooltipLeft,
   waitingInteraction,
 }) => {
+  const t = useT();
+  const getTooltipText = (onboardingType, onboardingStep) =>
+    onboardingType === 'national-report-cards' && onboardingStep === 1
+      ? t('Type here to continue')
+      : t('Click here to continue.');
+
   if (
     !waitingInteraction ||
     typeof onboardingStep !== 'number' ||

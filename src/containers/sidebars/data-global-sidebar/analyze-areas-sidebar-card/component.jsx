@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import cx from 'classnames';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import CategoryBox from 'components/category-box';
 import Button from 'components/button';
@@ -15,7 +15,7 @@ import { ReactComponent as AoisClickIcon } from 'icons/aois_click.svg';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
 import {
-  PRECALCULATED_AOI_OPTIONS,
+  getPrecalculatedAOIOptions,
   HIGHER_AREA_SIZE_LIMIT,
 } from 'constants/analyze-areas-constants';
 import { localeFormatting } from 'utils/data-formatting-utils';
@@ -42,6 +42,11 @@ const AnalyzeAreasCardComponent = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const t = useT();
+  const locale = useLocale();
+  const precalculatedAOIOptions = useMemo(
+    () => getPrecalculatedAOIOptions(),
+    [locale]
+  );
 
   const handleBoxClick = () => setOpen(!isOpen);
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
@@ -100,7 +105,7 @@ const AnalyzeAreasCardComponent = ({
                 theme={'dark'}
                 width="full"
                 parentWidth="380px"
-                options={PRECALCULATED_AOI_OPTIONS}
+                options={precalculatedAOIOptions}
                 selectedOption={selectedOption}
                 handleOptionSelection={handleOptionSelection}
               />

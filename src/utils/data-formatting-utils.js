@@ -1,6 +1,5 @@
 import { format } from 'd3-format';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
-import { t } from '@transifex/native';
 
 const intlLanguage = (l) => {
   if (l === '') return 'en-GB';
@@ -33,21 +32,21 @@ export const timestampAoiFormatting = (timestamp) => {
   )
 }
 
-export const roundGlobalRange = (value, l) => {
+export const roundGlobalRange = (value, locale, t) => {
   if (value < 500) {
     return '<500';
   } else if (value < 1000) {
-    return `500-${getLocaleNumber(1000, l)}`;
+    return `500-${getLocaleNumber(1000, locale)}`;
   } else if (value < 5000) {
-    return `${getLocaleNumber(1000, l)}-${getLocaleNumber(5000, l)}`;
+    return `${getLocaleNumber(1000, locale)}-${getLocaleNumber(5000, locale)}`;
   } else if (value < 10000) {
-    return `${getLocaleNumber(5000, l)}-${getLocaleNumber(10000, l)}`;
+    return `${getLocaleNumber(5000, locale)}-${getLocaleNumber(10000, locale)}`;
   } else if (value < 50000) {
-    return `${getLocaleNumber(10000, l)}-${getLocaleNumber(50000, l)}`;
+    return `${getLocaleNumber(10000, locale)}-${getLocaleNumber(50000, locale)}`;
   } else if (value < 100000) {
-    return `${getLocaleNumber(50000, l)}-${getLocaleNumber(100000, l)}`;
+    return `${getLocaleNumber(50000, locale)}-${getLocaleNumber(100000, locale)}`;
   } else if (value < 1000000) {
-    return `${getLocaleNumber(100000, l)} - 1 ${t('million')}`;
+    return `${getLocaleNumber(100000, locale)} - 1 ${t('million')}`;
   } else {
     return format(".2s")(value).replace('M', `${t('million')}`);
   }
@@ -83,5 +82,3 @@ export const countryChallengesSizes = (area) => {
   if (area <= 3250000) return 35;
   return 45
 }
-
-

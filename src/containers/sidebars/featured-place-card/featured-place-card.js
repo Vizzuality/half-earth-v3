@@ -25,7 +25,7 @@ const FeaturedPlaceCardContainer = props => {
 
   useEffect(() => {
     featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace && setFeaturedPlace({...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace]});
-  },[selectedFeaturedPlace, selectedFeaturedMap])
+  },[selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces])
 
   useEffect(() => {
     if (featuredMapsList) {

@@ -1,8 +1,8 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 // Components
 import CategoryBox from 'components/category-box';
@@ -19,9 +19,8 @@ import {
   MARINE_HUMAN_PRESSURES,
 } from 'constants/layers-slugs';
 import {
-  humanPressuresLandUse,
-  humanPressuresMarine,
-  TEXTS,
+  getHumanPressuresLandUse,
+  getHumanPressuresMarine,
 } from 'constants/human-pressures';
 // Hooks
 import {
@@ -49,6 +48,24 @@ const HumanImpactSidebarCardComponent = ({
   changeUI,
 }) => {
   const t = useT();
+  const locale = useLocale();
+
+  const humanPressuresLandUse = useMemo(
+    () => getHumanPressuresLandUse(),
+    [locale]
+  );
+  const humanPressuresMarine = useMemo(
+    () => getHumanPressuresMarine(),
+    [locale]
+  );
+  const texts = {
+    categoryTitle: t('Human pressures'),
+    marineLayersTitle: t('Marine use pressures'),
+    terrestrialLayersTitle: t('Land use pressures'),
+    description: t(
+      'Global human pressures causing habitat loss and accelerating species extintion'
+    ),
+  };
 
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
@@ -97,7 +114,7 @@ const HumanImpactSidebarCardComponent = ({
       {...onboardingOnClick}
     >
       <CategoryBox
-        title={TEXTS.categoryTitle}
+        title={texts.categoryTitle}
         image={HumanPressuresThumbnail}
         counter={countedActiveLayers}
         handleBoxClick={handleBoxClick}
@@ -106,10 +123,10 @@ const HumanImpactSidebarCardComponent = ({
       <div
         className={cx(styles.layersTogglesContainer, { [styles.open]: isOpen })}
       >
-        <span className={styles.description}>{TEXTS.description}</span>
+        <span className={styles.description}>{texts.description}</span>
         <hr className={hrTheme.dark} />
         <span className={styles.layersTitle}>
-          {TEXTS.terrestrialLayersTitle}
+          {texts.terrestrialLayersTitle}
         </span>
         <SidebarLegend
           legendItem={LAND_HUMAN_PRESSURES_SLUG}
@@ -146,7 +163,7 @@ const HumanImpactSidebarCardComponent = ({
           </button>
         </div>
         <hr className={hrTheme.dark} />
-        <span className={styles.layersTitle}>{TEXTS.marineLayersTitle}</span>
+        <span className={styles.layersTitle}>{texts.marineLayersTitle}</span>
         <SidebarLegend
           legendItem={MARINE_HUMAN_PRESSURES_SLUG}
           className={styles.legendContainer}
