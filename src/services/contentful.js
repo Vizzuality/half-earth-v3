@@ -15,58 +15,64 @@ const config = {
   env: 'master'
 };
 
-function formatText(paragraphs) {
-  return paragraphs.map(p => p.value).join(',');
+export const removeLanguageFromSlug = (slug) => {
+  const splittedSlug = slug.split('_');
+  return splittedSlug ? splittedSlug[0] : slug;
 }
 
-function parseStories(stories) {
-  return stories.reduce(
-    async (acc, story) => {
-      const parsedStory = {
-        id: story.fields.position.lat + story.fields.position.lon,
-        title: story.fields.title,
-        text: formatText(story.fields.text.content[0].content),
-        url: story.fields.link,
-        lat: story.fields.position.lat,
-        lon: story.fields.position.lon
-      };
-      await getContentfulImage(story.fields.image.sys.id).then(storyImageUrl => {
-        parsedStory.image = storyImageUrl;
-      });
-      const acummPromise = await acc;
-      return [ ...acummPromise, parsedStory ];
-    },
-    []
-  );
+const hasTranslation = (slug, allItems, locale, slugName = 'slug') => {
+  const slugWithoutLocale = removeLanguageFromSlug(slug);
+  return allItems.some(s => s[slugName].startsWith(slugWithoutLocale) && s.language  === locale);
 }
 
-function parseFeaturedMaps(featuredMaps) {
-  return featuredMaps.reduce(
-    async (acc, map) => {
+const isOtherLocalesData = (data, locale, allItems, slugName = 'slug') => {
+  const isEnOrDoesntHaveTranslation = locale === 'en' || locale === '' || !hasTranslation(data.fields[slugName], allItems, locale, slugName);
+  const dataLanguageIsNotEn = data.fields.language && data.fields.language !== 'en';
+
+  const dataLanguageIsDifferentToLocale = !data.fields.language || data.fields.language !== locale;
+
+  return (isEnOrDoesntHaveTranslation && dataLanguageIsNotEn) || (!isEnOrDoesntHaveTranslation && dataLanguageIsDifferentToLocale);
+}
+
+function parseFeaturedMaps(data, locale = 'en') {
+  const allItems = data.map(p => p.fields);
+
+  return data.reduce(
+    async (acc, data) => {
+      // Filter other locales data
+      if (isOtherLocalesData(data, locale, allItems)) {
+        return acc;
+      }
+
       const featuredMap = {
-        slug: map.fields.slug,
-        title: map.fields.title,
-        description: map.fields.description,
+        slug: removeLanguageFromSlug(data.fields.slug),
+        title: data.fields.title,
+        description: data.fields.description,
       };
-      await getContentfulImage(map.fields.picture.sys.id).then(mapImageUrl => {
+      await getContentfulImage(data.fields.picture.sys.id).then(mapImageUrl => {
         featuredMap.image = mapImageUrl;
       });
       const acummPromise = await acc;
       return [ ...acummPromise, featuredMap ];
     },
-    []
-  )
+[])
 }
 
-async function parseFeaturedPlaces(data, config) {
+async function parseFeaturedPlaces(data, config, locale) {
+  const allItems = data.map(p => p.fields);
+
   return data.reduce(
-    async (acc, place) => {
+    async (acc, data) => {
+      // Filter other locales data
+      if (isOtherLocalesData(data, locale, allItems, 'nameSlug')) {
+        return acc;
+      }
       const featuredPlace = {
-        slug: place.fields.nameSlug,
-        title: place.fields.title,
-        description: place.fields.description,
+        slug: removeLanguageFromSlug(data.fields.nameSlug),
+        title: data.fields.title,
+        description: data.fields.description,
       };
-      place.fields.image && await getContentfulImage(place.fields.image.sys.id, config).then(placeImageUrl => {
+      data.fields.image && await getContentfulImage(data.fields.image.sys.id, config).then(placeImageUrl => {
         featuredPlace.image = placeImageUrl;
       });
       const acummPromise = await acc;
@@ -74,13 +80,6 @@ async function parseFeaturedPlaces(data, config) {
     },
     []
   )
-}
-
-const parseTexts = items => {
-  return items.map(({ fields }) => fields).reduce((acc, item) => {
-    acc[item.view] = item;
-    return acc
-  }, {});
 }
 
 async function getContentfulImage(assetId, config) {
@@ -97,7 +96,7 @@ async function getContentfulImage(assetId, config) {
 }
 
 async function fetchContentfulEntry(
-  { contentType = 'metadata', filterField = 'layerSlug', filterValue = '' }
+  { contentType = 'featuredMaps', filterField = 'layerSlug', filterValue = '' }
 ) {
   let url = `${config.baseUrl}/spaces/${config.space}/environments/${config.env}/entries?content_type=${contentType}&access_token=${config.token}`;
   if (filterField && filterValue) {
@@ -105,6 +104,7 @@ async function fetchContentfulEntry(
   }
   try {
     const data = await fetch(url).then(d => d.json());
+
     return data;
   } catch (e) {
     console.warn(e);
@@ -112,44 +112,20 @@ async function fetchContentfulEntry(
   }
 }
 
-async function getMetadata(slug) {
-  const data = await fetchContentfulEntry({ filterValue: slug });
-  if (data && data.items && data.items.length > 0) {
-    return data.items[0].fields;
-  }
-  return null;
-}
-
-async function getStories() {
-  const data = await fetchContentfulEntry({ contentType: 'stories' });
-  if (data && data.items && data.items.length > 0) {
-    return parseStories(data.items);
-  }
-  return null;
-}
-
-async function getTexts(slug) {
-  const data = await fetchContentfulEntry({ contentType: 'texts', filterField:'view', filterValue: slug });
-  if (data && data.items && data.items.length > 0) {
-    return parseTexts(data.items);
-  }
-  return null;
-}
-
-async function getFeaturedMapData() {
+async function getFeaturedMapData(locale = 'en') {
   const data = await fetchContentfulEntry({ contentType: 'featuredMaps'});
   if (data && data.items && data.items.length > 0) {
-    return parseFeaturedMaps(data.items);
+    return parseFeaturedMaps(data.items, locale);
   }
   return null;
 }
 
-async function getFeaturedPlacesData(slug, config) {
+async function getFeaturedPlacesData(slug, config, locale = 'en') {
   const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'featureSlug', filterValue: slug });
   if (data && data.items && data.items.length > 0) {
-    return parseFeaturedPlaces(data.items, config);
+    return parseFeaturedPlaces(data.items, config, locale);
   }
   return null;
 }
 
-export default { getEntries: fetchContentfulEntry, getMetadata, getStories, getTexts, getFeaturedMapData, getFeaturedPlacesData };
+export default { getFeaturedMapData, getFeaturedPlacesData };

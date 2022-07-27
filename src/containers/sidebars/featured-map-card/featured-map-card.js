@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import featuredMapPlacesActions from 'redux_modules/featured-map-places';
@@ -9,10 +10,11 @@ const actions = { ...urlActions, ...featuredMapPlacesActions };
 
 const FeaturedMapCardContainer = props => {
   const { featuredMapsList, selectedFeaturedMap, setFeaturedMapPlaces } = props;
+  const locale = useLocale();
 
   useEffect(() => {
-    setFeaturedMapPlaces(selectedFeaturedMap)
-  }, [selectedFeaturedMap])
+    setFeaturedMapPlaces({ slug: selectedFeaturedMap, locale })
+  }, [selectedFeaturedMap, locale])
 
   const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
   return (

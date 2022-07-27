@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
 import { findLayerInMap } from 'utils/layer-manager-utils';
@@ -25,7 +25,7 @@ const FeaturedPlaceCardContainer = props => {
 
   useEffect(() => {
     featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace && setFeaturedPlace({...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace]});
-  },[selectedFeaturedPlace, selectedFeaturedMap])
+  },[selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces])
 
   useEffect(() => {
     if (featuredMapsList) {
@@ -45,7 +45,7 @@ const FeaturedPlaceCardContainer = props => {
         setFeaturedPlacesList(list);
       });
     }
-  }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa])
+  }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa, featuredMapPlaces])
 
   const handleNextPlaceClick = place => {
     const index = featuredPlacesList.indexOf(place);

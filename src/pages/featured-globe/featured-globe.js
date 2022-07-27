@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import { loadModules } from 'esri-loader';
 import { layersConfig } from 'constants/mol-layers-configs';
@@ -26,6 +27,8 @@ const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics }
 const featuredGlobeContainer = props => {
   const [handle, setHandle] = useState(null);
   const isOnMobile = useMobile();
+  const locale = useLocale();
+
   const { changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap, isFeaturedPlaceCard, isFullscreenActive } = props;
 
   const handleMarkerClick = (viewPoint, view) => {
@@ -42,10 +45,11 @@ const featuredGlobeContainer = props => {
       if (!isFeaturedPlaceCard) setAvatarImage(view, layerFeatures, selectedFeaturedMap, featuredMapPlaces);
     }
   };
+
   useEffect(() => {
     const { setFeaturedMapsList } = props;
-    setFeaturedMapsList();
-  },[])
+    setFeaturedMapsList(locale);
+  },[locale])
 
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER,VIBRANT_BASEMAP_LAYER]});
