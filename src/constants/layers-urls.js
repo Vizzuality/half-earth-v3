@@ -267,15 +267,15 @@ export const LAYERS_URLS = {
   [REPTILES_LOOKUP]: 'https://utility.arcgis.com/usrsvcs/servers/f0b987e051844fd78b05c813ba251548/rest/services/Test_Reptile_CRF_species_table/FeatureServer/0',
   // AOIs precalculated layers
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/e4c7c676b18547e6b1934d9738a6a41f/rest/services/gadm0_precalculated_20220224/FeatureServer/0',
-  [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0/FeatureServer/0',
-  [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1/FeatureServer/0',
+  [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/a03cb23afb28445ab20d99704471f509/rest/services/wdpa_with_gadm0/FeatureServer/0',
+  [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/f11adee1ba584ce9a77abf9a386048de/rest/services/wdpa_with_gadm1/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/329a41aec90249c2ba5d6330f43f9390/rest/services/gadm1_precalculated_range_area/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: [
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification1/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification2_90/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification3/FeatureServer/0'
   ],
-  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_precal_with_contextual/FeatureServer/0',
+  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/8b58ef418c9c44498c313bd24fc5acef/rest/services/wdpa_precal_with_contextual/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/2dc6c1d662b84ff2a05f8320cc6bc822/rest/services/top_places_precalculated_20220601/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_20places/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/c622d044b0a7447fb4b00de1c8ba066d/rest/services/SpecificRegions_precalculated/FeatureServer/0',
