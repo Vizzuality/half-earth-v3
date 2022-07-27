@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Component from './featured-map-card-component';
-import mapStateToProps from './featured-map-card-selectors';
 import * as urlActions from 'actions/url-actions';
 import featuredMapPlacesActions from 'redux_modules/featured-map-places';
+import Component from './featured-map-card-component';
+import mapStateToProps from './featured-map-card-selectors';
 
 const actions = { ...urlActions, ...featuredMapPlacesActions };
 
