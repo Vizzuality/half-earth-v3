@@ -23,7 +23,6 @@ const ShareModalComponent = ({ setShareUrl, className, onShareCallback }) => {
   useEffect(() => {
     const iframe = `<iframe id="map-iframe" src="${setShareUrl()}" />`;
     const urlCopy = activeTab === LINK ? setShareUrl() : iframe;
-    console.log('u', urlCopy, removeURLParameter(urlCopy, 'lang'));
     setSharePath(removeURLParameter(urlCopy, 'lang'));
   }, [activeTab]);
 

@@ -48,7 +48,7 @@ const AboutPage = ({ handleCloseAboutPage }) => {
     <div className={styles.aboutPage}>
       <div className={styles.navbar}>
         <div className={styles.tabsSwitch}>
-          {Object.keys(tabsData).map((key, index) => (
+          {Object.keys(tabsData).map((key) => (
             <button
               key={key}
               className={key === activeTab ? styles.active : ''}
