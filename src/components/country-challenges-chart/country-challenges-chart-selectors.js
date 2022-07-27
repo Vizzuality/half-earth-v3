@@ -42,6 +42,7 @@ const getScatterplotRawData = createSelector(
     return Object.keys(countriesData).map((key) => {
       const country = countriesData[key];
       const continent = kebabCase(country.continent);
+
       return {
         continent: continent,
         name: country.NAME_0,
@@ -57,7 +58,7 @@ const getScatterplotRawData = createSelector(
           [COUNTRY_ATTRIBUTES.total_endemic_ter]: country[attributes.total_endemic],
           [COUNTRY_ATTRIBUTES.nspecies_ter]: country[attributes.nspecies]
         },
-        yAxisValue: country[attributes.SPI]
+        yAxisValue: country[attributes.SPI],
       }
     }).sort((a, b) => (b.size - a.size))
   }

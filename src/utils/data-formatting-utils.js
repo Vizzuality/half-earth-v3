@@ -75,6 +75,7 @@ export const countryChallengesChartFormats = {
   [COUNTRY_ATTRIBUTES.nspecies_ter]: value => localeFormatting(value),
 }
 
+
 export const countryChallengesSizes = (area) => {
   if (area <= 150) return 18;
   if (area <= 22000) return 29;
