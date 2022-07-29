@@ -275,7 +275,7 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification2_90/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_Simplification3/FeatureServer/0'
   ],
-  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_precal_with_contextual/FeatureServer/0',
+  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_precal_with_contextual_updated/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/2dc6c1d662b84ff2a05f8320cc6bc822/rest/services/top_places_precalculated_20220601/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_20places_updated/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/c622d044b0a7447fb4b00de1c8ba066d/rest/services/SpecificRegions_precalculated/FeatureServer/0',
