@@ -1,5 +1,6 @@
 import React from 'react';
-import { useT } from '@transifex/react';
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { useT, useLocale } from '@transifex/react';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import cx from 'classnames';
@@ -20,6 +21,7 @@ const Component = ({ metaDataTitle, metaDataSources, metaDataDescription }) => {
     oceania: t('Oceania'),
     australia: t('Australia'),
   };
+  const locale = useLocale();
 
   return (
     <>
@@ -76,7 +78,9 @@ const Component = ({ metaDataTitle, metaDataSources, metaDataDescription }) => {
             />
           </svg>
           <div>
-            <span className={styles.value}>&#60;22,000</span>
+            <span className={styles.value}>
+              &#60;{getLocaleNumber(22000, locale)}
+            </span>
             <span className={styles.unit}>
               {t('km')}
               <sup>2</sup>
