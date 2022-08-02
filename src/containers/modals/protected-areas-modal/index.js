@@ -77,21 +77,22 @@ const Container = (props) => {
   useEffect(() => {
     let urlValue;
     switch (areaTypeSelected) {
-      case [AREA_TYPES.national]:
+      case AREA_TYPES.national:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
         break;
-      case [AREA_TYPES.subnational]:
+      case AREA_TYPES.subnational:
         urlValue = LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
         break;
-      case [AREA_TYPES.futurePlaces]:
+      case AREA_TYPES.futurePlaces:
         urlValue = LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER];
         break;
-      case [AREA_TYPES.specificRegions]:
+      case AREA_TYPES.specificRegions:
         urlValue = LAYERS_URLS[SPECIFIC_REGIONS_WDPA_LAYER];
         break;
       default:
         urlValue = LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER];
     }
+
     // ---------------- CUSTOM AOIS SPECIAL CASE -----------------
     if (areaTypeSelected === AREA_TYPES.custom) {
       const protectedAreas = contextualData.protectedAreasList;
