@@ -4,7 +4,10 @@ import cx from 'classnames';
 import { useLocale, useT } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
-import { getCountryNames } from 'constants/translation-constants';
+import {
+  getCountryNames,
+  getSpeciesGroup,
+} from 'constants/translation-constants';
 
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -40,7 +43,7 @@ const SpeciesModalComponent = ({
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
   const countryNames = useCallback(getCountryNames, [locale]);
-
+  const translatedSpeciesGroup = useCallback(getSpeciesGroup, [locale]);
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {
@@ -78,7 +81,12 @@ const SpeciesModalComponent = ({
             <div
               className={cx(styles.mainInfo, { [styles.isOpened]: isOpened })}
             >
-              <div className={styles.tableItem}>{capitalize(speciesgroup)}</div>
+              <div className={styles.tableItem}>
+                {capitalize(
+                  translatedSpeciesGroup[speciesgroup.toLowerCase()] ||
+                    speciesgroup
+                )}
+              </div>
               <div className={cx(styles.tableItem, styles.bold, styles.italic)}>
                 {species}
               </div>
@@ -89,7 +97,9 @@ const SpeciesModalComponent = ({
                   [styles.bold]: stewardship === 1,
                 })}
               >
-                {stewardship === 1 ? 'Endemic' : `${stewardship} countries`}
+                {stewardship === 1
+                  ? t('Endemic')
+                  : `${stewardship} ${t('countries')}`}
               </div>
               <ArrowIcon
                 className={cx(styles.arrowIcon, {
@@ -109,12 +119,13 @@ const SpeciesModalComponent = ({
   };
 
   const headers = [
-    'Species group',
-    'Species',
-    'Range within country protected',
-    'Species protection score',
-    'Stewardship',
+    t('Species group'),
+    t('Species'),
+    t('Range within country protected'),
+    t('Species protection score'),
+    t('Stewardship'),
   ];
+
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
   const summaryText = useMemo(() => {
@@ -127,16 +138,15 @@ const SpeciesModalComponent = ({
 
     // the list has been filtered
     if (speciesList.length < speciesNumber) {
-      return `${getLocaleNumber(
-        speciesList.length,
-        locale
-      )} of ${getLocaleNumber(speciesNumber, locale)} ${
-        vertebrateType === vertebrateTabs[0].slug ? 'Land' : 'Marine'
-      } vertebrate species`;
+      return `${getLocaleNumber(speciesList.length, locale)} ${t(
+        'of'
+      )} ${getLocaleNumber(speciesNumber, locale)} ${
+        vertebrateType === vertebrateTabs[0].slug ? t('Land') : t('Marine')
+      } ${t('vertebrate species')}`;
     }
     return `${getLocaleNumber(speciesNumber, locale)} ${
-      vertebrateType === vertebrateTabs[0].slug ? 'Land' : 'Marine'
-    } vertebrate species`;
+      vertebrateType === vertebrateTabs[0].slug ? t('Land') : t('Marine')
+    } ${t('vertebrate species')}`;
   }, [countryData, vertebrateType, speciesList, locale]);
 
   const renderSpeciesModal = (
