@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { getCountryNames } from 'constants/translation-constants';
 import { t } from '@transifex/native';
 import { random } from 'lodash';
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
@@ -29,7 +30,7 @@ const getCountryData = createSelector(
 // locale is here to recompute the data when the language changes
 const getCountryName = createSelector([getCountryData, selectLangUrlState], (countryData, locale) => {
   if (!countryData) return null;
-  const countryNames = getCountryName();
+  const countryNames = getCountryNames();
 
   return countryNames[countryData.NAME_0] || countryData.NAME_0;
 })
