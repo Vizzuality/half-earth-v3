@@ -1,6 +1,8 @@
-import React from 'react';
-import { useT } from '@transifex/react';
+import React, { useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
 import styles from './national-report-pdf.module.scss';
+import { getCountryNames } from 'constants/translation-constants';
+
 import HighLightedSpeciesList from 'components/highlighted-species-list';
 import HalfEarthLogo from 'components/half-earth-logo';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
@@ -32,6 +34,8 @@ const NationalReportPdf = ({
   highlightedSpeciesRandomNumber,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   return (
     <div className={styles.container}>
@@ -41,7 +45,9 @@ const NationalReportPdf = ({
           src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
           alt=""
         />
-        <span className={styles.countryName}>{countryName}</span>
+        <span className={styles.countryName}>
+          {countryNames(countryName) || countryName}
+        </span>
       </section>
       <HalfEarthLogo withBackground className={styles.logo} />
       <section className={styles.date}>
@@ -162,7 +168,10 @@ const NationalReportPdf = ({
       </section>
       <section className={styles.mapWrapper}>
         {sceneScreenshotUrl && (
-          <img src={sceneScreenshotUrl} alt={`${countryName} map`} />
+          <img
+            src={sceneScreenshotUrl}
+            alt={`${countryNames(countryName) || countryName} map`}
+          />
         )}
       </section>
       <section className={styles.urlWrapper}>

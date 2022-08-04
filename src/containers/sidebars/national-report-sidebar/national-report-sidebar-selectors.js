@@ -26,9 +26,12 @@ const getCountryData = createSelector(
   }
 )
 
-const getCountryName = createSelector(getCountryData, countryData => {
+// locale is here to recompute the data when the language changes
+const getCountryName = createSelector([getCountryData, selectLangUrlState], (countryData, locale) => {
   if (!countryData) return null;
-  return countryData.NAME_0;
+  const countryNames = getCountryName();
+
+  return countryNames(countryData.NAME_0) || countryData.NAME_0;
 })
 
 const getDescription = createSelector(getCountryData, countryData => {
@@ -42,17 +45,17 @@ const getHasPriority = createSelector(getCountryData, countryData => {
 })
 
 // locale is here to recompute the data when the language changes
-const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority, selectLangUrlState], (countryData, hasPriority, locale) => {
+const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority, selectLangUrlState, getCountryName], (countryData, hasPriority, locale, countryName) => {
   if (!countryData) return null;
   return hasPriority ?
     `${t(`The brightly colored map layer presents one possible configuration
   of the additional areas needed to achieve the Half-Earth goal of
   comprehensive terrestrial biodiversity conservation. Higher values
-  indicate locations within `)}${countryData.NAME_0}${t(` that contribute more to the
+  indicate locations within `)}${countryName}${t(` that contribute more to the
   conservation of species habitat.`)}` :
     `${t(`Our global model of comprehensive terrestrial vertebrate biodiversity
-  conservation did not identify any areas in `)}${countryData.NAME_0}${t(` in need of additional protection.
-  Further expansion of `)}${countryData.NAME_0}${t(`'s`)}${t(` protected areas will nonetheless promote resilience towards global biodiversity loss,
+  conservation did not identify any areas in `)}${countryName}${t(` in need of additional protection.
+  Further expansion of `)}${countryName}${t(`'s`)}${t(` protected areas will nonetheless promote resilience towards global biodiversity loss,
   and can contribute to creating a global conservation network with more equity between countries.`)}`;
 })
 

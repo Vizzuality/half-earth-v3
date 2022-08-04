@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useT } from '@transifex/react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
 import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
-// sssets
+import { getCountryNames } from 'constants/translation-constants';
+
+// Assets
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
+
 // styles
 import styles from './country-entry-tooltip-styles.module.scss';
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
@@ -25,6 +28,9 @@ const CountryEntryTooltipComponent = ({
   waitingInteraction,
 }) => {
   const t = useT();
+  const locale = useLocale();
+
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
@@ -109,7 +115,9 @@ const CountryEntryTooltipComponent = ({
             src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
             alt=""
           />
-          <span className={styles.tooltipName}>{countryName}</span>
+          <span className={styles.tooltipName}>
+            {countryNames(countryName) || countryName}
+          </span>
         </div>
         <div>
           {Object.keys(tabsData).map((key) => (
@@ -170,8 +178,9 @@ const CountryEntryTooltipComponent = ({
             {landTab ? protectionNeededLand : protectionNeededMar}%
           </span>
           <span className={styles.text}>
-            {`${t('of additional ')}${landTab ? LAND_MARINE.land : LAND_MARINE.marine
-              }${t(' protection is needed')}`}
+            {`${t('of additional ')}${
+              landTab ? LAND_MARINE.land : LAND_MARINE.marine
+            }${t(' protection is needed')}`}
           </span>
         </div>
       </section>

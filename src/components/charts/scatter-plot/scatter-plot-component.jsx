@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocale } from '@transifex/react';
 import { format } from 'd3-format';
@@ -7,6 +7,7 @@ import * as d3 from 'd3';
 import cx from 'classnames';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { getCountryNames } from 'constants/translation-constants';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 import styles from './scatter-plot-styles.module.scss';
@@ -60,6 +61,7 @@ const ScatterPlot = ({
   const padding = 50; // for chart edges
   const tooltipOffset = 20;
 
+  const countryNames = useMemo(getCountryNames, [locale]);
   const getX = (e, ref) => e.clientX - ref.current.getBoundingClientRect().left;
   const getY = (e, ref) => e.clientY - ref.current.getBoundingClientRect().top;
 
@@ -146,7 +148,7 @@ const ScatterPlot = ({
                   onClick={() =>
                     onBubbleClick({
                       countryISO: bubble.iso,
-                      countryName: bubble.name,
+                      countryName: countryNames[bubble.name] || bubble.name,
                     })
                   }
                 >

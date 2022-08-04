@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { useLocale, useT } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
+import { getCountryNames } from 'constants/translation-constants';
 
 import useEventListener from 'hooks/use-event-listener';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -38,6 +39,7 @@ const SpeciesModalComponent = ({
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
@@ -140,7 +142,9 @@ const SpeciesModalComponent = ({
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
-        <h1 className={styles.title}>Vertebrates in {countryData.name}</h1>
+        <h1 className={styles.title}>
+          Vertebrates in {countryNames(countryData.name) || countryData.name}
+        </h1>
         <section className={styles.section}>
           <div className={styles.search}>
             <SearchIcon className={styles.searchIcon} />

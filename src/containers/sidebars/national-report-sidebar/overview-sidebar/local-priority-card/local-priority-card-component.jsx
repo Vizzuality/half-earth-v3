@@ -1,5 +1,6 @@
-import React from 'react';
-import { useT } from '@transifex/react';
+import React, { useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
+import { getCountryNames } from 'constants/translation-constants';
 
 import cx from 'classnames';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -42,6 +43,9 @@ const LocalPriorityCardComponent = (props) => {
     countryData,
   } = props;
   const t = useT();
+  const locale = useLocale();
+
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   const { Marine } = countryData;
 
@@ -182,7 +186,9 @@ const LocalPriorityCardComponent = (props) => {
         sectionClassName={cx(styles.section, styles.layerToggleSection)}
       >
         <SidebarCardContent
-          title={`${t('Where to protect next in ')}${countryName}?`}
+          title={`${t('Where to protect next in ')}${
+            countryNames(countryName) || countryName
+          }?`}
           description={t(
             'These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets.'
           )}
