@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocale } from '@transifex/react';
 import { format } from 'd3-format';
@@ -61,7 +61,7 @@ const ScatterPlot = ({
   const padding = 50; // for chart edges
   const tooltipOffset = 20;
 
-  const countryNames = useMemo(getCountryNames, [locale]);
+  const countryNames = useCallback(getCountryNames, [locale]);
   const getX = (e, ref) => e.clientX - ref.current.getBoundingClientRect().left;
   const getY = (e, ref) => e.clientY - ref.current.getBoundingClientRect().top;
 

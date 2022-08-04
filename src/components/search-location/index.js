@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useT, useLocale } from '@transifex/react';
 import { getCountryNames } from 'constants/translation-constants';
 
@@ -22,7 +22,7 @@ const SearchLocationContainer = (props) => {
   const t = useT();
   const locale = useLocale();
 
-  const countryNames = useMemo(getCountryNames, [locale]);
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   useEffect(() => {
     if (searchResults && searchResults.length !== 0) {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useT, useLocale } from '@transifex/react';
 import styles from './national-report-pdf.module.scss';
 import { getCountryNames } from 'constants/translation-constants';
@@ -35,7 +35,7 @@ const NationalReportPdf = ({
 }) => {
   const t = useT();
   const locale = useLocale();
-  const countryNames = useMemo(getCountryNames, [locale]);
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   return (
     <div className={styles.container}>
@@ -46,7 +46,7 @@ const NationalReportPdf = ({
           alt=""
         />
         <span className={styles.countryName}>
-          {countryNames(countryName) || countryName}
+          {countryNames[countryName] || countryName}
         </span>
       </section>
       <HalfEarthLogo withBackground className={styles.logo} />
@@ -170,7 +170,7 @@ const NationalReportPdf = ({
         {sceneScreenshotUrl && (
           <img
             src={sceneScreenshotUrl}
-            alt={`${countryNames(countryName) || countryName} map`}
+            alt={`${countryNames[countryName] || countryName} map`}
           />
         )}
       </section>

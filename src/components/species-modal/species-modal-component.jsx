@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import { useLocale, useT } from '@transifex/react';
@@ -39,7 +39,7 @@ const SpeciesModalComponent = ({
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
-  const countryNames = useMemo(getCountryNames, [locale]);
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
@@ -143,7 +143,8 @@ const SpeciesModalComponent = ({
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
         <h1 className={styles.title}>
-          Vertebrates in {countryNames(countryData.name) || countryData.name}
+          {t('Vertebrates in ')}
+          {countryNames[countryData.name] || countryData.name}
         </h1>
         <section className={styles.section}>
           <div className={styles.search}>

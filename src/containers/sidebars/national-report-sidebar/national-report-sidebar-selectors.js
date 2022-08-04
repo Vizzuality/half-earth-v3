@@ -31,7 +31,7 @@ const getCountryName = createSelector([getCountryData, selectLangUrlState], (cou
   if (!countryData) return null;
   const countryNames = getCountryName();
 
-  return countryNames(countryData.NAME_0) || countryData.NAME_0;
+  return countryNames[countryData.NAME_0] || countryData.NAME_0;
 })
 
 const getDescription = createSelector(getCountryData, countryData => {

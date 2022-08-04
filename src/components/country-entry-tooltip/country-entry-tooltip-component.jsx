@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useT, useLocale } from '@transifex/react';
 import cx from 'classnames';
 import { loadModules } from 'esri-loader';
@@ -30,7 +30,7 @@ const CountryEntryTooltipComponent = ({
   const t = useT();
   const locale = useLocale();
 
-  const countryNames = useMemo(getCountryNames, [locale]);
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
@@ -116,7 +116,7 @@ const CountryEntryTooltipComponent = ({
             alt=""
           />
           <span className={styles.tooltipName}>
-            {countryNames(countryName) || countryName}
+            {countryNames[countryName] || countryName}
           </span>
         </div>
         <div>

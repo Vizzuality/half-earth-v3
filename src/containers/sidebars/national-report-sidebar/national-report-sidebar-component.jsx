@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useT, useLocale } from '@transifex/react';
 import { getCountryNames } from 'constants/translation-constants';
 
@@ -53,7 +53,7 @@ const NationalReportSidebarComponent = ({
 }) => {
   const t = useT();
   const locale = useLocale();
-  const countryNames = useMemo(getCountryNames, [locale]);
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   const LOCAL_SCENE_TABS = [
     { slug: LOCAL_SCENE_TABS_SLUGS.OVERVIEW, title: t('overview') },
@@ -109,7 +109,7 @@ const NationalReportSidebarComponent = ({
             />
             {countryName && (
               <p className={styles.countryName}>
-                {countryNames(countryName) || countryName}
+                {countryNames[countryName] || countryName}
               </p>
             )}
           </div>
