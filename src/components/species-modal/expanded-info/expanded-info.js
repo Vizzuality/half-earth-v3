@@ -6,7 +6,7 @@ const fetcher = (url) => (
   fetch(url).then((res) => res.json())
 );
 
-const ExpandedInfoContainer = (props) => {
+function ExpandedInfoContainer(props) {
   const { speciesName } = props;
   if (!speciesName) return null;
 
@@ -16,7 +16,7 @@ const ExpandedInfoContainer = (props) => {
     () => fetcher(url)
   );
 
-  return <Component {...props} data={data} error={error}/>;
-};
+  return <Component {...props} data={data} error={error} />;
+}
 
 export default ExpandedInfoContainer;

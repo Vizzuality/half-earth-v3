@@ -14,11 +14,11 @@ import { useSearchWidgetLogic } from 'hooks/esri';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
 
-import Component from './component.jsx';
+import Component from './component';
 
 const actions = { ...mapTooltipActions, ...urlActions };
 
-const SearchLocationContainer = (props) => {
+function SearchLocationContainer(props) {
   const { view, searchSourceLayerSlug, changeGlobe } = props;
   const [searchResults, setSearchResults] = useState(false);
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
@@ -35,14 +35,15 @@ const SearchLocationContainer = (props) => {
     } else {
       setIsSearchResultsVisible(false);
     }
-  }, [searchResults])
-
+  }, [searchResults]);
 
   const browseSelectedFeature = ({ result }) => {
     const { setBatchTooltipData } = props;
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
 
-    const { title, subtitle, id, iso } = tooltipConfig;
+    const {
+      title, subtitle, id, iso,
+    } = tooltipConfig;
     const { geometry, attributes } = result.feature;
     setBatchTooltipData({
       isVisible: true,
@@ -50,18 +51,18 @@ const SearchLocationContainer = (props) => {
       content: {
         buttonText: t('analyze area'),
         id: attributes[id],
-        title: attributes[title] || attributes['NAME_0'],
-        subtitle: attributes[subtitle] || attributes['NAME_1'],
-      }
+        title: attributes[title] || attributes.NAME_0,
+        subtitle: attributes[subtitle] || attributes.NAME_1,
+      },
     });
 
-    flyToCentroid(view, geometry, 4)
+    flyToCentroid(view, geometry, 4);
 
     // National Report Card search
     if (iso) {
       setCountryTooltip({ countryIso: attributes[iso], countryName: countryNames[attributes[title]] || attributes[title], changeGlobe });
     }
-  }
+  };
 
   const getSearchResults = (e) => {
     const { results } = e;
@@ -69,11 +70,13 @@ const SearchLocationContainer = (props) => {
     if (!isSearchResultVisible) {
       setIsSearchResultsVisible(true);
     }
-  }
+  };
 
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    const { url, title, outFields, searchFields, suggestionTemplate } = config;
+    const {
+      url, title, outFields, searchFields, suggestionTemplate,
+    } = config;
     setSearchWidgetConfig({
       searchResultsCallback: getSearchResults,
       postSearchCallback: browseSelectedFeature,
@@ -83,30 +86,34 @@ const SearchLocationContainer = (props) => {
           searchFields,
           suggestionTemplate,
           layer: new FeatureLayer({ url, title, outFields }),
-        }]
-      }
-    })
-  }, [searchSourceLayerSlug])
+        }];
+      },
+    });
+  }, [searchSourceLayerSlug]);
 
-  const { updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig);
+  const {
+    updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick,
+  } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig);
 
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    const { url, title, outFields, searchFields, suggestionTemplate } = config;
+    const {
+      url, title, outFields, searchFields, suggestionTemplate,
+    } = config;
     updateSources((FeatureLayer) => {
       return [{
         outFields,
         searchFields,
         suggestionTemplate,
         layer: new FeatureLayer({ url, title, outFields }),
-      }]
-    })
-  }, [searchSourceLayerSlug])
+      }];
+    });
+  }, [searchSourceLayerSlug]);
 
   const onOptionSelection = (selectedOption) => {
-    handleSearchSuggestionClick(selectedOption)
+    handleSearchSuggestionClick(selectedOption);
     setIsSearchResultsVisible(false);
-  }
+  };
 
   return (
     <Component
@@ -117,7 +124,7 @@ const SearchLocationContainer = (props) => {
       isSearchResultVisible={isSearchResultVisible}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(null, actions)(SearchLocationContainer);

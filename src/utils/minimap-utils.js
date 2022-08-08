@@ -6,11 +6,11 @@ export const synchronizeWebScenes = (globeView, minimapView) => {
     viewToSync.zoom = 0;
   };
   // it returns the handler in case it needs to be removed
-  return globeView.watch("viewpoint", (newViewpoint) => sync(newViewpoint, minimapView));
+  return globeView.watch('viewpoint', (newViewpoint) => sync(newViewpoint, minimapView));
 };
 
 export const updateMainViewExtentGraphic = (mainView, graphic) => {
-  mainView.watch("center", () => {
+  mainView.watch('center', () => {
     graphic.geometry = mainView.extent;
-  })
-}
+  });
+};

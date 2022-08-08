@@ -9,14 +9,13 @@ import * as urlActions from 'actions/url-actions';
 
 const actions = { ...urlActions };
 
-const LandingContainer = props => {
-
+function LandingContainer(props) {
   const { changeGlobe } = props;
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER] });
     activateLayersOnLoad(map, activeLayers, layersConfig);
-  }
+  };
 
   return (
     <LandingComponent
@@ -24,8 +23,7 @@ const LandingContainer = props => {
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
-  )
+  );
 }
-
 
 export default connect(mapStateToProps, actions)(LandingContainer);

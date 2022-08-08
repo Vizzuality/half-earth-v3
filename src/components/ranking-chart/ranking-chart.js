@@ -8,9 +8,9 @@ import metadataActions from 'redux_modules/metadata';
 import { NATIONAL_REPORT_CARD } from 'router';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
-const actions = {...metadataActions, ...urlActions };
+const actions = { ...metadataActions, ...urlActions };
 
-const RankingChartContainer = (props) => {
+function RankingChartContainer(props) {
   const { data } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState();
@@ -18,26 +18,26 @@ const RankingChartContainer = (props) => {
 
   useEffect(() => {
     const { countryISO, data } = props;
-    const newIndex = data.findIndex(d => d.iso === countryISO);
+    const newIndex = data.findIndex((d) => d.iso === countryISO);
     setScrollIndex(newIndex);
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (data && searchTerm) {
-      const newIndex = data.findIndex(d => d.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
+      const newIndex = data.findIndex((d) => d.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
       setScrollIndex(newIndex);
     }
     return undefined;
-  }, [debouncedSearchTerm])
+  }, [debouncedSearchTerm]);
 
   const handleFilterSelection = (selectedFilter) => {
     const { changeUI } = props;
-    changeUI({ sortRankingCategory: selectedFilter })
-  }
+    changeUI({ sortRankingCategory: selectedFilter });
+  };
 
   const handleCountryClick = (countryISO) => {
     const { browsePage } = props;
-    browsePage({type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view:  LOCAL_SCENE_TABS_SLUGS.RANKING }});
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.RANKING } });
   };
 
   const handleSearchChange = (event) => {
@@ -48,7 +48,7 @@ const RankingChartContainer = (props) => {
   const handleLandMarineSelection = (selectedFilter) => {
     const { changeUI } = props;
     changeUI({ landMarineSelection: selectedFilter.slug });
-  }
+  };
 
   return (
     <Component
@@ -60,7 +60,7 @@ const RankingChartContainer = (props) => {
       searchTerm={searchTerm}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(RankingChartContainer);

@@ -5,13 +5,13 @@ async function getSpecies(species, locale) {
   const speciesArray = Array.isArray(species) ? species : [species];
 
   const promises = speciesArray.map(
-    specie => fetch(`${config.url}${config.query}${specie}${config.lang}${locale}`).then(d => d.json())
+    (specie) => fetch(`${config.url}${config.query}${specie}${config.lang}${locale}`).then((d) => d.json()),
   );
 
   const data = await Promise.all(promises);
   return data && data
-    .filter(d => !!d.length)
-    .map(d => ({ ...d[0] }));
+    .filter((d) => !!d.length)
+    .map((d) => ({ ...d[0] }));
 }
 
 export default { getSpecies };

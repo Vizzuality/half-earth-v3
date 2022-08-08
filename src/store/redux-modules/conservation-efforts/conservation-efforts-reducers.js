@@ -1,9 +1,10 @@
-import * as actions from './conservation-efforts-actions';
 import { isEqual } from 'lodash';
+
+import * as actions from './conservation-efforts-actions';
 
 export const initialState = {
   data: null,
-  loading: false
+  loading: false,
 };
 
 function setConservationEfforts(state, { payload }) {
@@ -11,5 +12,5 @@ function setConservationEfforts(state, { payload }) {
 }
 
 export default {
-  [actions.setConservationEfforts]: setConservationEfforts
+  [actions.setConservationEfforts]: setConservationEfforts,
 };

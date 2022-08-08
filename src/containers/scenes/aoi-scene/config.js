@@ -5,9 +5,8 @@ import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
-  HALF_EARTH_FUTURE_TILE_LAYER
+  HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
-
 
 export default {
   activeLayers: [
@@ -21,23 +20,23 @@ export default {
   ],
   padding: {
     bottom: 60,
-    left: 300
+    left: 300,
   },
   isGlobeUpdating: false,
   environment: {
     background: {
       type: 'color',
-      color: [0, 0, 0, 0]
+      color: [0, 0, 0, 0],
     },
     starsEnabled: false,
-    atmosphereEnabled: false
+    atmosphereEnabled: false,
   },
   ui: {
-    components: []
+    components: [],
   },
   constraints: {
     tilt: {
-      max: 60
-    }
-  }
+      max: 60,
+    },
+  },
 };

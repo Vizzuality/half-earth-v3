@@ -16,9 +16,10 @@ import { NATIONAL_REPORT_CARD } from 'router';
 
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions }
 
-const CountryEntryTooltipContainer = props => {
+const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions };
+
+function CountryEntryTooltipContainer(props) {
   const { mapTooltipIsVisible, countryISO, changeUI } = props;
   const locale = useLocale();
 
@@ -32,14 +33,14 @@ const CountryEntryTooltipContainer = props => {
       EsriFeatureService.getFeatures({
         url: COUNTRIES_DATA_SERVICE_URL,
         whereClause: `GID_0 = '${countryISO}'`,
-        returnGeometry: true
+        returnGeometry: true,
       }).then((features) => {
         const { geometry, attributes } = features[0];
         if (geometry) {
           setTooltipPosition(geometry);
           setTooltipIsVisible(true);
           setContent({
-            coastal: attributes.Marine === 'True' ? true : false,
+            coastal: attributes.Marine === 'True',
             spiLand: attributes[COUNTRY_ATTRIBUTES.SPI_ter],
             spiMar: attributes.SPI_mar,
             landVertebrates: getLocaleNumber(attributes[COUNTRY_ATTRIBUTES.nspecies_ter], locale),
@@ -49,26 +50,28 @@ const CountryEntryTooltipContainer = props => {
             protectionLand: attributes[COUNTRY_ATTRIBUTES.prop_protected_ter],
             protectionMar: attributes.prop_protected_mar,
             protectionNeededLand: attributes[COUNTRY_ATTRIBUTES.protection_needed_ter],
-            protectionNeededMar: attributes.protection_needed_mar
+            protectionNeededMar: attributes.protection_needed_mar,
           });
         }
-      })
+      });
     }
-  }, [countryISO, locale])
+  }, [countryISO, locale]);
 
   const handleTooltipClose = () => {
     const { setTooltipIsVisible, setTooltipContent } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
-  }
+  };
 
   const handleExploreCountryClick = () => {
-    const { setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics, onboardingStep, onboardingType } = props;
+    const {
+      setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics, onboardingStep, onboardingType,
+    } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
     enterNrcAnalytics(countryName);
-    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO }, });
-    onboardingStep && onboardingType && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 3, waitingInteraction: false })
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO } });
+    onboardingStep && onboardingType && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 3, waitingInteraction: false });
   };
 
   return (
@@ -80,7 +83,7 @@ const CountryEntryTooltipContainer = props => {
       onExploreCountryClick={handleExploreCountryClick}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(CountryEntryTooltipContainer);

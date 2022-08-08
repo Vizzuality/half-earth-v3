@@ -12,9 +12,9 @@ import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import mapStateToProps from './human-impact-sidebar-card-selectors';
 
-const actions = {...metadataActions, ...urlActions};
+const actions = { ...metadataActions, ...urlActions };
 
-const Container = (props) => {
+function Container(props) {
   const {
     changeGlobe,
     activeLayers,
@@ -32,20 +32,19 @@ const Container = (props) => {
     })
   }, [locale]);
 
-
   const handleLayerToggle = (option, category) => {
     const categoryName = LAYERS_CATEGORIES[category];
     if (option.layer === 'none') {
-      const allHumanPressuresLayerTitles = activeLayers.map(l => (l.category === categoryName) ? l.title : null).filter(Boolean);
-      batchToggleLayers(allHumanPressuresLayerTitles, activeLayers, changeGlobe, categoryName)
+      const allHumanPressuresLayerTitles = activeLayers.map((l) => ((l.category === categoryName) ? l.title : null)).filter(Boolean);
+      batchToggleLayers(allHumanPressuresLayerTitles, activeLayers, changeGlobe, categoryName);
     } else if (option.layer === 'all') {
       const allCategorySlugs = LEGEND_GROUPED_LAYERS_GROUPS[category];
-      const nonActiveHumanLayers = allCategorySlugs.filter(slug => !activeLayers.some(l => l.title === slug));
-      batchToggleLayers(nonActiveHumanLayers, activeLayers, changeGlobe, categoryName)
+      const nonActiveHumanLayers = allCategorySlugs.filter((slug) => !activeLayers.some((l) => l.title === slug));
+      batchToggleLayers(nonActiveHumanLayers, activeLayers, changeGlobe, categoryName);
     } else {
       layerManagerToggle(option.value, activeLayers, changeGlobe, categoryName);
     }
-  }
+  };
 
   return (
     <Component
@@ -53,7 +52,7 @@ const Container = (props) => {
       source={metadataSource}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(Container);

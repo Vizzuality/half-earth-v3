@@ -8,24 +8,28 @@ function setCountryDataLoading(state) {
 
 function setCountryDataReady(state, { payload }) {
   if (!payload) return state;
-  
+
   const countriesData = payload.reduce((acc, country) => {
     const { attributes } = country;
     const { GID_0 } = attributes;
     return {
       ...acc,
-      [GID_0]: attributes
-    }
-  }, {})
-  return { ...state, error: false, loading: false, data: {...state.data, ...countriesData } };
+      [GID_0]: attributes,
+    };
+  }, {});
+  return {
+    ...state, error: false, loading: false, data: { ...state.data, ...countriesData },
+  };
 }
 
 function setCountryDataError(state, { payload }) {
-  return { ...state, loading: false, data: null, error: payload };
+  return {
+    ...state, loading: false, data: null, error: payload,
+  };
 }
 
 export default {
   [actions.setCountryDataLoading]: setCountryDataLoading,
   [actions.setCountryDataReady]: setCountryDataReady,
-  [actions.setCountryDataError]: setCountryDataError
+  [actions.setCountryDataError]: setCountryDataError,
 };

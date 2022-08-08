@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Component from './country-challenges-chart-component';
 
 import mapStateToProps from './country-challenges-chart-selectors';
-import { NATIONAL_REPORT_CARD } from 'router'
+import { NATIONAL_REPORT_CARD } from 'router';
 
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
@@ -12,8 +12,7 @@ import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 const actions = { ...metadataActions, ...urlActions };
 
-const CountryChallengesChartContainer = (props) => {
-
+function CountryChallengesChartContainer(props) {
   const handleSelectNextIndicator = () => {
     const { changeUI, countryChallengesSelectedKey, xAxisKeys } = props;
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
@@ -22,7 +21,7 @@ const CountryChallengesChartContainer = (props) => {
     } else {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[0] });
     }
-  }
+  };
 
   const handleSelectPreviousIndicator = () => {
     const { changeUI, countryChallengesSelectedKey, xAxisKeys } = props;
@@ -32,22 +31,22 @@ const CountryChallengesChartContainer = (props) => {
     } else {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[xAxisKeys.length - 1] });
     }
-  }
+  };
 
   const handleBubbleClick = ({ countryISO }) => {
     const { browsePage, selectedFilterOption } = props;
     browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES }, query: { ui: { countryChallengesSelectedFilter: selectedFilterOption.slug } } });
-  }
+  };
 
   const handleFilterSelection = (selectedFilter) => {
     const { changeUI } = props;
     changeUI({ countryChallengesSelectedFilter: selectedFilter.slug });
-  }
+  };
 
   const handleLandMarineSelection = (selectedFilter) => {
     const { changeUI } = props;
     changeUI({ landMarineSelection: selectedFilter.slug });
-  }
+  };
 
   return (
     <Component
@@ -58,8 +57,7 @@ const CountryChallengesChartContainer = (props) => {
       handleLandMarineSelection={handleLandMarineSelection}
       {...props}
     />
-  )
+  );
 }
-
 
 export default connect(mapStateToProps, actions)(CountryChallengesChartContainer);

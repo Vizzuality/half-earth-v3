@@ -1,40 +1,40 @@
 import { loadModules } from 'esri-loader';
 
-export const createGraphicLayer = (GraphicsLayer, graphicsArray, id = "graphicLayer") => {
+export const createGraphicLayer = (GraphicsLayer, graphicsArray, id = 'graphicLayer') => {
   return new GraphicsLayer({
-    id: id,
+    id,
     title: id,
-    graphics: graphicsArray
+    graphics: graphicsArray,
   });
-}
+};
 
 export const createPointGraphic = (GraphicConstructor, symbol, lon, lat) => {
-  var point = {
-    type: "point",
+  const point = {
+    type: 'point',
     longitude: lon,
-    latitude: lat
+    latitude: lat,
   };
   return new GraphicConstructor({
     geometry: point,
-    symbol: symbol
+    symbol,
   });
-}
+};
 
 export const createGraphic = (Graphic, graphicStyles, geometry) => {
   const graphic = new Graphic({
     symbol: {
-      type: "polygon-3d",
+      type: 'polygon-3d',
       symbolLayers: [
         {
-          type: "fill",
-          material: { color: [...graphicStyles.fillColor, graphicStyles.fillOpacity], },
+          type: 'fill',
+          material: { color: [...graphicStyles.fillColor, graphicStyles.fillOpacity] },
           outline: {
             color: [...graphicStyles.outlineColor, graphicStyles.outlineOpacity],
-            size: graphicStyles.outlineWidth
-          }
-        }
-      ]
-    }
+            size: graphicStyles.outlineWidth,
+          },
+        },
+      ],
+    },
   });
 
   if (geometry) {
@@ -42,19 +42,19 @@ export const createGraphic = (Graphic, graphicStyles, geometry) => {
   }
 
   return graphic;
-}
+};
 
 export const createPolygonGeometry = (gridCell) => {
-  return loadModules(["esri/geometry/Polygon"])
+  return loadModules(['esri/geometry/Polygon'])
     .then(([Polygon]) => {
       return new Polygon(gridCell);
-    }).catch(error => {
+    }).catch((error) => {
       console.error(error);
-    })
-}
+    });
+};
 
 export const simplePictureMarker = (asset, symbol = {}) => ({
-  type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+  type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
   url: asset,
-  ...symbol
-})
+  ...symbol,
+});

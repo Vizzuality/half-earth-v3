@@ -16,6 +16,7 @@ export const setModalMetadata = createThunkAction('setModalMetadata', payload =>
 
 export const fetchModalMetaDataFail = createAction('fetchModalMetaDataFail');
 export const fetchModalMetaDataReady = createAction('fetchModalMetaDataReady');
+
 export const fetchModalMetaData = createThunkAction('fetchModalMetaData', ({ slug, locale }) => async dispatch => {
   try {
     const data = await ContentfulService.getMetadata(slug, locale);

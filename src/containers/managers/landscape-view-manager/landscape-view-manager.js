@@ -5,10 +5,9 @@ import Component from './landscape-view-manager-component';
 import * as urlActions from 'actions/url-actions';
 import * as analyticsActions from 'actions/google-analytics-actions';
 
-const actions = { ...urlActions, ...analyticsActions }
+const actions = { ...urlActions, ...analyticsActions };
 
-const LandscapeViewManagerContainer = props => {
-
+function LandscapeViewManagerContainer(props) {
   const handleZoomChange = (params) => {
     const { landscapeView } = params;
     landscapeView && props.enterLandscapeModeAnalyticsEvent();
@@ -20,7 +19,7 @@ const LandscapeViewManagerContainer = props => {
       onZoomChange={handleZoomChange}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(null, actions)(LandscapeViewManagerContainer);

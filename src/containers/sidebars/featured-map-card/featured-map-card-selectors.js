@@ -4,12 +4,12 @@ const selectFeaturedMapsList = ({ featuredMapsList }) => featuredMapsList.data |
 
 const getFeaturedMapsList = createSelector(
   selectFeaturedMapsList,
-  featuredMaps => {
+  (featuredMaps) => {
     if (!featuredMaps) return null;
     return featuredMaps;
-  }
-)
+  },
+);
 
 export default createStructuredSelector({
-  featuredMapsList: getFeaturedMapsList
-})
+  featuredMapsList: getFeaturedMapsList,
+});

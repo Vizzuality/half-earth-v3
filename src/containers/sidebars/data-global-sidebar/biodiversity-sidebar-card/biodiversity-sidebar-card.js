@@ -12,44 +12,48 @@ import mapStateToProps from './biodiversity-sidebar-card-selectors';
 
 import usePrevious from 'hooks/use-previous';
 import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
-import { getLayersResolution, getLayersToggleConfig, LAYER_VARIANTS, TERRESTRIAL, DEFAULT_RESOLUTION } from 'constants/biodiversity-layers-constants';
+import {
+  getLayersResolution, getLayersToggleConfig, LAYER_VARIANTS, TERRESTRIAL, DEFAULT_RESOLUTION,
+} from 'constants/biodiversity-layers-constants';
 
 const actions = { ...metadataActions, ...urlActions };
-const BiodiversitySidebarCard = (props) => {
+function BiodiversitySidebarCard(props) {
   const locale = useLocale();
   const layersResolution = useMemo(() => getLayersResolution(), [locale]);
   const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
 
-  const { changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view } = props;
+  const {
+    changeGlobe, changeUI, activeLayers, biodiversityLayerVariant, view,
+  } = props;
   const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
   const previousBiodiversityLayerVariant = usePrevious(
-    biodiversityLayerVariant
+    biodiversityLayerVariant,
   );
   const [cardMetadata, setCardMetadata] = useState({
     [PRIORITY]: {},
     [RICHNESS]: {},
     [RARITY]: {},
-  })
+  });
 
   const [showCard, setShowCard] = useState(true);
 
-  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY)
-  const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION)
+  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY);
+  const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION);
   useEffect(() => {
     if (isEmpty(cardMetadata[biodiversityLayerVariant])) {
       ContentfulService.getMetadata(biodiversityLayerVariant, locale).then(data => {
         setCardMetadata({
           ...cardMetadata,
           [biodiversityLayerVariant]: {
-            ...data
-          }
+            ...data,
+          },
         });
-      })
+      });
     }
   }, [biodiversityLayerVariant, layersResolution, locale]);
 
   useEffect(() => {
-    const resolutionExists = (category) => layersResolution[biodiversityLayerVariant][category].some(res => res.slug === selectedResolution[category]);
+    const resolutionExists = (category) => layersResolution[biodiversityLayerVariant][category].some((res) => res.slug === selectedResolution[category]);
     if (!resolutionExists(TERRESTRIAL)) {
       setSelectedResolution(DEFAULT_RESOLUTION);
     }
@@ -63,8 +67,8 @@ const BiodiversitySidebarCard = (props) => {
     const resolution = selectedResolution[TERRESTRIAL];
     const defaultResolutionLayers = layersToggleConfig[biodiversityLayerVariant][TERRESTRIAL][DEFAULT_RESOLUTION[TERRESTRIAL]];
     const availableLayers = layersToggleConfig[biodiversityLayerVariant][TERRESTRIAL][resolution];
-    const layerTaxa = activeBiodiversityLayers.length ? activeBiodiversityLayers[0].slice(0, activeBiodiversityLayers[0].indexOf("-")) : ""
-    const hasMatchingLayer = availableLayers && availableLayers.find(layer => layer.value.includes(layerTaxa));
+    const layerTaxa = activeBiodiversityLayers.length ? activeBiodiversityLayers[0].slice(0, activeBiodiversityLayers[0].indexOf('-')) : '';
+    const hasMatchingLayer = availableLayers && availableLayers.find((layer) => layer.value.includes(layerTaxa));
 
     if (hasMatchingLayer) {
       // select matching layer on selected variant
@@ -76,23 +80,23 @@ const BiodiversitySidebarCard = (props) => {
       // select first element if there's no maching resolution
       handleLayerToggle(defaultResolutionLayers[0]);
     }
-
-  }, [biodiversityLayerVariant, selectedResolution])
+  }, [biodiversityLayerVariant, selectedResolution]);
 
   const handleTabSelection = (slug) => {
     const { onboardingStep, onboardingType } = props;
     changeUI({
       biodiversityLayerVariant: slug,
       onboardingStep: onboardingStep && (onboardingStep + 1),
-      waitingInteraction: onboardingType && false});
-  }
+      waitingInteraction: onboardingType && false,
+    });
+  };
 
   const handleClearAndAddLayers = (bioLayerIds, layerIds) => {
     batchToggleLayers(
       bioLayerIds.concat(layerIds),
       activeLayers,
       changeGlobe,
-      LAYERS_CATEGORIES.BIODIVERSITY
+      LAYERS_CATEGORIES.BIODIVERSITY,
     );
   };
 
@@ -103,18 +107,18 @@ const BiodiversitySidebarCard = (props) => {
       setSelectedLayer(null);
     } else if (selectedLayer) {
       layer.bbox && flyToLayerExtent(layer.bbox, view);
-      batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+      batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
       setSelectedLayer(option.layer);
     } else {
       layer.bbox && flyToLayerExtent(layer.bbox, view);
       layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
       setSelectedLayer(option.layer);
     }
-  }
+  };
 
   const handleCloseCard = () => {
     setShowCard(false);
-  }
+  };
 
   return (
     <Component
@@ -129,5 +133,5 @@ const BiodiversitySidebarCard = (props) => {
       {...props}
     />
   );
-};
+}
 export default connect(mapStateToProps, actions)(BiodiversitySidebarCard);

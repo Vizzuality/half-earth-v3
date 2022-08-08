@@ -3,7 +3,7 @@ module.exports = {
     ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
     tsconfigRootDir: __dirname,
-    project: './tsconfig.eslint.json',
+    // project: './config-overrides.js',
     ecmaFeatures: {
       jsx: true, // Allows for the parsing of JSX
     },
@@ -12,16 +12,21 @@ module.exports = {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
     },
+    // 'import/resolver': {
+    //   node: {
+    //     paths: ['src'],
+    //   },
+    // },
   },
   extends: [
-    'plugin:react/recommended', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'plugin:cypress/recommended',
+    'airbnb',
   ],
   plugins: ['cypress', 'import'],
   rules: {
     // Place to specify ESLint rules.
     // Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+    'import/no-unresolved': 'off',
     'react/prop-types': 0,
     'no-console': [1, { allow: ['info', 'warn', 'error'] }],
     'react/jsx-props-no-spreading': [0, {}],

@@ -1,9 +1,10 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import CONTENTFUL from 'services/contentful';
+
 const CONFIG = { imageWidth: 300, imageHeight: 190 };
 
 export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', ({ slug, locale }) => async (dispatch, state) => {
-  const { featuredMapPlaces: { data }} = state();
+  const { featuredMapPlaces: { data } } = state();
   try {
     const places = await CONTENTFUL.getFeaturedPlacesData(slug, CONFIG, locale);
     const dataObject = places.reduce((acc, place) => {
@@ -14,16 +15,17 @@ export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', ({
           return acc;
         }, '');
         description.push(p);
-      })
-      return { ...acc,
+      });
+      return {
+        ...acc,
         [place.slug]: {
           title: place.title,
           imageUrl: place.image,
-          description: description.join('\n')
-        }
-      }
-    }, {})
-    dispatch(fetchFeaturedMapPlacesReady({ data: { ...data, [slug]: dataObject} }));
+          description: description.join('\n'),
+        },
+      };
+    }, {});
+    dispatch(fetchFeaturedMapPlacesReady({ data: { ...data, [slug]: dataObject } }));
   } catch (e) {
     console.warn(e);
     dispatch(fetchFeaturedMapPlacesFail(e));

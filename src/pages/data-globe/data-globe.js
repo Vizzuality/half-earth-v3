@@ -11,17 +11,15 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import DataGlobeComponent from './data-globe-component.jsx';
 import mapStateToProps from './data-globe-selectors';
 
+const actions = { ...urlActions };
 
-const actions = {...urlActions};
-
-const DataGlobeContainer = props => {
-
+function DataGlobeContainer(props) {
   const { changeGlobe } = props;
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
-    setBasemap({map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER]});
+    setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER] });
     activateLayersOnLoad(map, activeLayers, layersConfig);
-  }
+  };
 
   return (
     <DataGlobeComponent
@@ -29,8 +27,7 @@ const DataGlobeContainer = props => {
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
-  )
+  );
 }
-
 
 export default connect(mapStateToProps, actions)(DataGlobeContainer);

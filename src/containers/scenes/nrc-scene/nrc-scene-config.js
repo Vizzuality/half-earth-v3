@@ -9,10 +9,10 @@ import {
   MERGED_WDPA_VECTOR_TILE_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
-  EEZ_MARINE_BORDERS
+  EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs';
 
-import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js'
+import { DEFAULT_OPACITY } from 'constants/mol-layers-configs.js';
 
 export default {
   activeLayers: [
@@ -26,28 +26,28 @@ export default {
     { title: MARINE_COUNTRY_PRIORITY_LAYER, opacity: DEFAULT_OPACITY },
     { title: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER, opacity: DEFAULT_OPACITY },
     { title: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY },
-    { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY }
+    { title: MERGED_WDPA_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY },
   ],
   zoom: 3.8,
   center: [16.9515536, 0.116959],
   padding: {
-    left: 300
+    left: 300,
   },
   isGlobeUpdating: false,
   environment: {
     background: {
       type: 'color',
-      color: [0, 0, 0, 0]
+      color: [0, 0, 0, 0],
     },
     starsEnabled: false,
-    atmosphereEnabled: false
+    atmosphereEnabled: false,
   },
   ui: {
-    components: []
+    components: [],
   },
   constraints: {
     tilt: {
-      max: 60
-    }
-  }
+      max: 60,
+    },
+  },
 };

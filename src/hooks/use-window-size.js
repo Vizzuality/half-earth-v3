@@ -3,7 +3,7 @@ import React from 'react';
 export default () => {
   const [windowSize, setWindowSize] = React.useState({
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
   });
 
   function changeWindowSize() {
@@ -19,4 +19,4 @@ export default () => {
   }, []);
 
   return windowSize;
-}
+};

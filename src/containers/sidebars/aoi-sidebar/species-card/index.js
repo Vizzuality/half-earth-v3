@@ -19,7 +19,7 @@ import Component from './component';
 
 const SEARCH_RESULTS_SLUG = 'search-results';
 
-const SpeciesCardContainer = (props) => {
+function SpeciesCardContainer(props) {
   const locale = useLocale();
   const t = useT();
 
@@ -40,8 +40,8 @@ const SpeciesCardContainer = (props) => {
   const [speciesFilters, setFilterWithCount] = useState(speciesFiltersSource);
   const [speciesToDisplay, setSpeciesToDisplay] = useState(species);
   const [speciesToDisplayBackUp, setSpeciesToDisplayBackUp] = useState(species);
-  const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex])
-  const [individualSpeciesData, setIndividualSpeciesData] = useState(null)
+  const [selectedSpecies, setSelectedSpecies] = useState(speciesToDisplay[selectedSpeciesIndex]);
+  const [individualSpeciesData, setIndividualSpeciesData] = useState(null);
   // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
@@ -55,7 +55,7 @@ const SpeciesCardContainer = (props) => {
     setSearchOptions([]);
     setSelectedSearchOption(null);
     setSpeciesToDisplay([...speciesToDisplayBackUp]);
-  }
+  };
 
   const handleSearchOptionSelected = (option) => {
     if (option.slug === SEARCH_RESULTS_SLUG) {
@@ -68,7 +68,7 @@ const SpeciesCardContainer = (props) => {
     }
     setSelectedSpeciesIndex(0);
     setSelectedSearchOption(option);
-  }
+  };
 
   const handleSpeciesSearch = (value) => {
     const results = speciesToDisplay
@@ -82,7 +82,7 @@ const SpeciesCardContainer = (props) => {
       })
       .map((elem) => ({
         label: elem.name,
-        slug: elem.name
+        slug: elem.name,
       }));
     // Remove duplicates
     const tempSet = new Set(results);
@@ -98,21 +98,21 @@ const SpeciesCardContainer = (props) => {
     } else {
       setSearchOptions([]);
     }
-  }
+  };
 
   const handleNextSpeciesSelection = () => {
     if (selectedSpeciesIndex === speciesToDisplay.length - 1) {
-      setSelectedSpeciesIndex(0)
+      setSelectedSpeciesIndex(0);
     } else {
       setSelectedSpeciesIndex(selectedSpeciesIndex + 1);
     }
-  }
+  };
 
   const handlePreviousSpeciesSelection = () => {
-    selectedSpeciesIndex === 0 ?
-      setSelectedSpeciesIndex(speciesToDisplay.length - 1) :
-      setSelectedSpeciesIndex(selectedSpeciesIndex - 1)
-  }
+    selectedSpeciesIndex === 0
+      ? setSelectedSpeciesIndex(speciesToDisplay.length - 1)
+      : setSelectedSpeciesIndex(selectedSpeciesIndex - 1);
+  };
 
   useEffect(() => {
     if (selectedSearchOption === null && searchOptions && searchOptions.length > 0) {
@@ -121,55 +121,54 @@ const SpeciesCardContainer = (props) => {
   }, [searchOptions]);
 
   useEffect(() => {
-    const filters = speciesFiltersSource.map(filter => {
+    const filters = speciesFiltersSource.map((filter) => {
       switch (filter.slug) {
         case 'all':
           return { slug: filter.slug, label: `${filter.label} (${species && species.length})` };
         default:
-          const count = species && species.filter(sp => sp.category === filter.slug).length;
-          return { slug: filter.slug, label: `${filter.label} (${count})` }
+          const count = species && species.filter((sp) => sp.category === filter.slug).length;
+          return { slug: filter.slug, label: `${filter.label} (${count})` };
       }
-    })
+    });
     setFilterWithCount(filters);
 
     // update species count in selected filter
     const tempLabel = speciesFiltersSource.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
     setSpeciesFilter({
       slug: selectedSpeciesFilter.slug,
-      label: (selectedSpeciesFilter.slug === 'all') ?
-        `${tempLabel} (${species && species.length})`
-        : `${tempLabel} (${species && species.filter(sp => sp.category === selectedSpeciesFilter.slug).length})`
+      label: (selectedSpeciesFilter.slug === 'all')
+        ? `${tempLabel} (${species && species.length})`
+        : `${tempLabel} (${species && species.filter((sp) => sp.category === selectedSpeciesFilter.slug).length})`,
     });
-
-  }, [speciesData.species])
+  }, [speciesData.species]);
 
   useEffect(() => {
     const sortSpecies = (s) => orderBy(s, ['has_image', 'presenceInArea', 'conservationConcern'], ['desc', 'desc', 'desc']);
     const speciesSorted = speciesData.species && sortSpecies(
-      (selectedSpeciesFilter.slug === 'all') ?
-        [...speciesData.species] :
-        [...speciesData.species.filter(sp => sp.category === selectedSpeciesFilter.slug)]
+      (selectedSpeciesFilter.slug === 'all')
+        ? [...speciesData.species]
+        : [...speciesData.species.filter((sp) => sp.category === selectedSpeciesFilter.slug)],
     );
 
     if (speciesSorted) {
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
     }
-  }, [speciesData.species, selectedSpeciesFilter])
+  }, [speciesData.species, selectedSpeciesFilter]);
 
   useEffect(() => {
-    setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex])
-  }, [speciesToDisplay, selectedSpeciesIndex])
+    setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex]);
+  }, [speciesToDisplay, selectedSpeciesIndex]);
 
   useEffect(() => {
     setSelectedSpeciesIndex(0);
-  }, [selectedSpeciesFilter])
+  }, [selectedSpeciesFilter]);
 
   useEffect(() => {
     if (selectedSpecies) {
-
       if (speciesToDisplay.length >= 3) {
-        let previousSpeciesName, nextSpeciesName;
+        let previousSpeciesName; let
+          nextSpeciesName;
 
         if (selectedSpeciesIndex === 0) {
           previousSpeciesName = speciesToDisplay[speciesToDisplay.length - 1].name;
@@ -198,7 +197,6 @@ const SpeciesCardContainer = (props) => {
               setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
           });
-
       } else if (speciesToDisplay.length === 2) {
         let nextSpeciesName;
 
@@ -222,7 +220,6 @@ const SpeciesCardContainer = (props) => {
         setNextImage(null);
       }
 
-
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
           setIndividualSpeciesData({
@@ -230,13 +227,13 @@ const SpeciesCardContainer = (props) => {
             commonname: results[0].commonname,
             imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
-            molLink: `https://mol.org/species/${selectedSpecies.name}`
+            molLink: `https://mol.org/species/${selectedSpecies.name}`,
           });
-          results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa))
+          results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa));
         } else {
           handleNextSpeciesSelection();
         }
-      })
+      });
     }
   }, [selectedSpecies, locale]);
 
@@ -261,7 +258,7 @@ const SpeciesCardContainer = (props) => {
       handleCloseSearch={handleCloseSearch}
       {...props}
     />
-  )
+  );
 }
 
 export default SpeciesCardContainer;

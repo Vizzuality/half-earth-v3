@@ -8,10 +8,10 @@ function setGridCellData(state, { payload }) {
 }
 
 function setGridCellGeometry(state, { payload }) {
-  return { ...state, geometry: payload }
+  return { ...state, geometry: payload };
 }
 
 export default {
   [actions.setGridCellData]: setGridCellData,
-  [actions.setGridCellGeometry]: setGridCellGeometry
+  [actions.setGridCellGeometry]: setGridCellGeometry,
 };

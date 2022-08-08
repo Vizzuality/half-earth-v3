@@ -11,8 +11,8 @@ const buildSW = () => {
       '**/*.{js,css,html,svg}',
     ],
     // Increase the limit to 4mb:
-    maximumFileSizeToCacheInBytes: 4 * 1024 * 1024
-  })
-}
+    maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+  });
+};
 
 buildSW();

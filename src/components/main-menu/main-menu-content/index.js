@@ -9,19 +9,19 @@ const mapStateToProps = ({ location }) => ({
 });
 
 const actions = { ...urlActions, joinConversationAnalytics, shareMapAnalytics };
-const Container = (props) => {
+function Container(props) {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  const toggleModal = () => setShareModalOpen(!isShareModalOpen)
+  const toggleModal = () => setShareModalOpen(!isShareModalOpen);
 
   const handleShareClick = () => {
     toggleModal();
     props.shareMapAnalytics();
-  }
+  };
 
   const handleJoinConversationClick = (socialMedia) => {
-    props.joinConversationAnalytics(socialMedia.alt)
-    window.open(socialMedia.projectLink)
-  }
+    props.joinConversationAnalytics(socialMedia.alt);
+    window.open(socialMedia.projectLink);
+  };
 
   return (
     <Component
@@ -31,7 +31,7 @@ const Container = (props) => {
       handleJoinConversationClick={handleJoinConversationClick}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(Container);

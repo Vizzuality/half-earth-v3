@@ -13,12 +13,12 @@ import mammalsPlaceholder from 'images/no-mammal.png';
 import reptilesPlaceholder from 'images/no-reptile.png';
 
 export function logGeometryArea(geometry) {
-  loadModules(["esri/geometry/geometryEngine"])
+  loadModules(['esri/geometry/geometryEngine'])
     .then(([geometryEngine]) => {
       const SQ_KM_WKID = 109414;
       const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
-      console.info('AREA', area, 'KM2')
-    })
+      console.info('AREA', area, 'KM2');
+    });
 }
 
 export function roundUpPercentage(value) {
@@ -27,7 +27,7 @@ export function roundUpPercentage(value) {
 
 export function calculateGeometryArea(geometry, geometryEngine) {
   const SQ_KM_WKID = 109414;
-  return geometryEngine.geodesicArea(geometry, SQ_KM_WKID)
+  return geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
 }
 
 export function getSelectedAnalysisLayer(activeLayers) {
@@ -38,28 +38,28 @@ export function getSelectedAnalysisLayer(activeLayers) {
 export function createHashFromGeometry(geometry) {
   const ringsArray = geometry.rings;
   const flatRings = ringsArray.flat(Infinity);
-  return sha1(flatRings.toString())
+  return sha1(flatRings.toString());
 }
 
 export function featureCollectionFromShape(input, view, onSucces, onError) {
   const generateRequestParams = {
-    filetype: "shapefile",
+    filetype: 'shapefile',
     publishParameters: JSON.stringify({
-      targetSR: view.spatialReference
+      targetSR: view.spatialReference,
     }),
-    f: "json"
+    f: 'json',
   };
-  loadModules(["esri/request"])
+  loadModules(['esri/request'])
     .then(([esriRequest]) => {
-      esriRequest("https://www.arcgis.com/sharing/rest/content/features/generate", {
-          query: generateRequestParams,
-          body: input,
-          method: 'post',
-          responseType: "json"
-        })
+      esriRequest('https://www.arcgis.com/sharing/rest/content/features/generate', {
+        query: generateRequestParams,
+        body: input,
+        method: 'post',
+        responseType: 'json',
+      })
         .then((response) => onSucces(response))
-        .catch((error) => onError( error))
-    })
+        .catch((error) => onError(error));
+    });
 }
 
 export const getTotalPressures = (pressures) => {
@@ -69,40 +69,40 @@ export const getTotalPressures = (pressures) => {
   }, 0);
   total = (total > 100) ? 100 : total;
   return percentageFormat(total);
-}
+};
 
 export const getMainPressure = (pressures) => {
   if (!pressures) return null;
-  const existingPressures = Object.keys(pressures).filter(key => pressures[key] !== null);
+  const existingPressures = Object.keys(pressures).filter((key) => pressures[key] !== null);
   const cleanedPressures = _pick(pressures, existingPressures);
   const sorted = Object.keys(cleanedPressures).sort(
-    (a, b) => parseFloat(pressures[b]) - parseFloat(pressures[a])
+    (a, b) => parseFloat(pressures[b]) - parseFloat(pressures[a]),
   );
   return sorted[0];
-}
+};
 
 export const getPlaceholderSpeciesImage = (taxa) => {
   switch (taxa) {
     case 'amphibians':
-      return amphibiansPlaceholder
+      return amphibiansPlaceholder;
     case 'mammals':
-      return mammalsPlaceholder
+      return mammalsPlaceholder;
     case 'reptiles':
-      return reptilesPlaceholder
+      return reptilesPlaceholder;
     case 'birds':
-      return birdsPlaceholder
+      return birdsPlaceholder;
     default:
-      return mammalsPlaceholder
+      return mammalsPlaceholder;
   }
-}
+};
 
 export const getPlaceholderSpeciesText = (taxa) => {
   switch (taxa) {
     case undefined:
-      return `Photo not available for this animal`
+      return 'Photo not available for this animal';
     case null:
-      return `Photo not available for this animal`
+      return 'Photo not available for this animal';
     default:
-      return `Photo not available for this ${taxa.substring(0, taxa.length -1)}`
+      return `Photo not available for this ${taxa.substring(0, taxa.length - 1)}`;
   }
-}
+};

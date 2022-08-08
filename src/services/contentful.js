@@ -6,25 +6,25 @@ const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
 
 const contentfulClient = createClient({
   space: REACT_APP_CONTENTFUL_SPACE_ID,
-  accessToken: REACT_APP_CONTENTFUL_TOKEN
+  accessToken: REACT_APP_CONTENTFUL_TOKEN,
 });
 
 const config = {
   baseUrl: 'https://cdn.contentful.com',
   space: REACT_APP_CONTENTFUL_SPACE_ID,
   token: REACT_APP_CONTENTFUL_TOKEN,
-  env: 'master'
+  env: 'master',
 };
 
 export const removeLanguageFromSlug = (slug) => {
   const splittedSlug = slug.split('_');
   return splittedSlug ? splittedSlug[0] : slug;
-}
+};
 
 const hasTranslation = (slug, allItems, locale, slugName = 'slug') => {
   const slugWithoutLocale = removeLanguageFromSlug(slug);
-  return allItems.some(s => s[slugName].startsWith(slugWithoutLocale) && s.language  === locale);
-}
+  return allItems.some((s) => s[slugName].startsWith(slugWithoutLocale) && s.language === locale);
+};
 
 const isOtherLocalesData = (data, locale, allItems, slugName = 'slug') => {
   const isEnOrDoesntHaveTranslation = locale === 'en' || locale === '' || !hasTranslation(data.fields[slugName], allItems, locale, slugName);
@@ -33,10 +33,10 @@ const isOtherLocalesData = (data, locale, allItems, slugName = 'slug') => {
   const dataLanguageIsDifferentToLocale = !data.fields.language || data.fields.language !== locale;
 
   return (isEnOrDoesntHaveTranslation && dataLanguageIsNotEn) || (!isEnOrDoesntHaveTranslation && dataLanguageIsDifferentToLocale);
-}
+};
 
 function parseFeaturedMaps(data, locale = 'en') {
-  const allItems = data.map(p => p.fields);
+  const allItems = data.map((p) => p.fields);
 
   return data.reduce(
     async (acc, data) => {
@@ -50,17 +50,18 @@ function parseFeaturedMaps(data, locale = 'en') {
         title: data.fields.title,
         description: data.fields.description,
       };
-      await getContentfulImage(data.fields.picture.sys.id).then(mapImageUrl => {
+      await getContentfulImage(data.fields.picture.sys.id).then((mapImageUrl) => {
         featuredMap.image = mapImageUrl;
       });
       const acummPromise = await acc;
-      return [ ...acummPromise, featuredMap ];
+      return [...acummPromise, featuredMap];
     },
-[])
+    [],
+  );
 }
 
 async function parseFeaturedPlaces(data, config, locale) {
-  const allItems = data.map(p => p.fields);
+  const allItems = data.map((p) => p.fields);
 
   return data.reduce(
     async (acc, data) => {
@@ -73,14 +74,14 @@ async function parseFeaturedPlaces(data, config, locale) {
         title: data.fields.title,
         description: data.fields.description,
       };
-      data.fields.image && await getContentfulImage(data.fields.image.sys.id, config).then(placeImageUrl => {
+      data.fields.image && await getContentfulImage(data.fields.image.sys.id, config).then((placeImageUrl) => {
         featuredPlace.image = placeImageUrl;
       });
       const acummPromise = await acc;
-      return [ ...acummPromise, featuredPlace ];
+      return [...acummPromise, featuredPlace];
     },
-    []
-  )
+    [],
+  );
 }
 async function parseMetadata(data, locale) {
   const allItems = data.map(p => p.fields);
@@ -97,7 +98,7 @@ async function parseMetadata(data, locale) {
 
 async function getContentfulImage(assetId, config) {
   try {
-    const imageUrl = await contentfulClient.getAsset(assetId).then(asset => asset.fields.file.url);
+    const imageUrl = await contentfulClient.getAsset(assetId).then((asset) => asset.fields.file.url);
     if (config) {
       return `${imageUrl}?w=${config.imageWidth || ''}&h=${config.imageHeight || ''}`;
     }
@@ -109,7 +110,7 @@ async function getContentfulImage(assetId, config) {
 }
 
 async function fetchContentfulEntry(
-  { contentType = 'featuredMaps', filterField = 'layerSlug', filterValue = '' }
+  { contentType = 'featuredMaps', filterField = 'layerSlug', filterValue = '' },
 ) {
   let url = `${config.baseUrl}/spaces/${config.space}/environments/${config.env}/entries?content_type=${contentType}&access_token=${config.token}`;
   if (filterField && filterValue) {
@@ -125,7 +126,7 @@ async function fetchContentfulEntry(
 }
 
 async function getFeaturedMapData(locale = 'en') {
-  const data = await fetchContentfulEntry({ contentType: 'featuredMaps'});
+  const data = await fetchContentfulEntry({ contentType: 'featuredMaps' });
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedMaps(data.items, locale);
   }
@@ -133,7 +134,7 @@ async function getFeaturedMapData(locale = 'en') {
 }
 
 async function getFeaturedPlacesData(slug, config, locale = 'en') {
-  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField:'featureSlug', filterValue: slug });
+  const data = await fetchContentfulEntry({ contentType: 'featuredPoints', filterField: 'featureSlug', filterValue: slug });
   if (data && data.items && data.items.length > 0) {
     return parseFeaturedPlaces(data.items, config, locale);
   }

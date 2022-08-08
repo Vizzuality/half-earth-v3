@@ -6,9 +6,9 @@ import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
 import ContentfulService from 'services/contentful';
 import { visitNrcChallengesAnalytics } from 'actions/google-analytics-actions';
 
-const actions = { visitNrcChallengesAnalytics }
+const actions = { visitNrcChallengesAnalytics };
 
-const Container = (props) => {
+function Container(props) {
   const [metadata, setMetadata] = useState(null);
   const t = useT();
   const locale = useLocale();
@@ -17,14 +17,13 @@ const Container = (props) => {
     const md = metadataConfig[CHALLENGES_CHART]
     ContentfulService.getMetadata(md.slug, locale).then(data => {
       setMetadata(data);
-    })
+    });
   }, []);
 
   useEffect(() => {
     const { visitNrcChallengesAnalytics } = props;
-    visitNrcChallengesAnalytics()
-  }, [])
-
+    visitNrcChallengesAnalytics();
+  }, []);
 
   return (
     <Component
@@ -33,7 +32,7 @@ const Container = (props) => {
       metaDataSources={metadata && metadata.source}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(null, actions)(Container);

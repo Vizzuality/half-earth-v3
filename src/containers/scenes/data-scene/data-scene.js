@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocale, useT } from '@transifex/react';
-import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
+import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import Component from './data-scene-component';
 // ACTIONS
@@ -11,7 +11,6 @@ import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
-import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import { setMapTooltipData } from 'utils/map-tooltip-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
@@ -27,7 +26,6 @@ const Container = (props) => {
   const t = useT();
 
   const handleHighlightLayerFeatureClick = (features) => {
-
     if (features && features.length && selectedAnalysisLayer) {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
 
@@ -73,12 +71,12 @@ const Container = (props) => {
         }
       });
     }
-  }
+  };
 
   const handleTooltipActionButtonClick = () => {
     precomputedAoiAnalytics(mapTooltipContent.title);
     browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug, OBJECTID: mapTooltipContent.objectId } });
-  }
+  };
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
@@ -113,7 +111,7 @@ const Container = (props) => {
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(Container);

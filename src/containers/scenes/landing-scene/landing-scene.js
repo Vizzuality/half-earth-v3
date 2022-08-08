@@ -13,12 +13,13 @@ import mapStateToProps from 'selectors/map-tooltip-selectors';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
-
-const Container = (props) => {
+function Container(props) {
   const locale = useLocale();
   const t = useT();
 
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
+  const {
+    activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics,
+  } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const handleHighlightLayerFeatureClick = (features) => {
@@ -34,15 +35,15 @@ const Container = (props) => {
           id: attributes[id],
           title: attributes[title],
           subtitle: attributes[subtitle],
-        }
+        },
       });
     }
-  }
+  };
 
   const handleTooltipActionButtonClick = () => {
     precomputedAoiAnalytics(mapTooltipContent.title);
     browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug } });
-  }
+  };
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
@@ -57,7 +58,7 @@ const Container = (props) => {
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(Container);

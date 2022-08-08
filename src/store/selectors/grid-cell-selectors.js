@@ -4,12 +4,12 @@ export const selectCellData = ({ gridCellData }) => (gridCellData && gridCellDat
 
 export const getCellData = createSelector(
   [selectCellData],
-  cellData => {
+  (cellData) => {
     if (!cellData) return null;
     return cellData;
-  }
-)
+  },
+);
 
 export default createStructuredSelector({
-  cellData: getCellData
-})
+  cellData: getCellData,
+});

@@ -2,7 +2,7 @@ import * as actions from './scene-actions';
 
 export const initialState = {
   map: null,
-  view:null,
+  view: null,
 };
 
 function setSceneView(state, { payload }) {
