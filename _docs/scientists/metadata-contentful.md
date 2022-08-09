@@ -69,4 +69,7 @@ The first step would be to add the new information, in English, in [metadata_sta
 Now, run the notebook [Metadata_updates_Contentful](https://eowilson.maps.arcgis.com/home/notebook/notebook.html?id=4789ac26c6134727827236421c73fd39). Note that this notebook can be scheduled to run automatically, if needed. 
 
 ### 3. Entries for translations
-For the translations, new entries have to be made manually in Contentful, using the same name followed by _es, _pt, _fr, according to the language of the translation. 
+For the translations, new entries have to be made manually in Contentful, in the same content type. They will have the same name followed by _es, _pt, _fr, according to the language of the translation. The only two fields that need to be translated are:
+
+* description
+* title
