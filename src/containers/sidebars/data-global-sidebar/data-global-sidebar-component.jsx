@@ -10,6 +10,7 @@ import styles from './data-global-sidebar-styles.module.scss';
 import BiodiversitySidebarCard from './biodiversity-sidebar-card';
 import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import HumanImpactSidebarCard from './human-impact-sidebar-card';
+import CarbonSidebarCard from './carbon-sidebar-card';
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
 
 const DataGlobalSidebarComponent = ({
@@ -60,6 +61,12 @@ const DataGlobalSidebarComponent = ({
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
+      />
+      <CarbonSidebarCard
+        map={map}
+        activeLayers={activeLayers}
+        activeCategory={activeCategory}
+        handleGlobeUpdating={handleGlobeUpdating}
       />
     </div>
   );

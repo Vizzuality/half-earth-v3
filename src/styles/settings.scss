@@ -38,8 +38,10 @@ $tango: #E87926;
 $french-rose: #EB588F;
 $neon-carrot: #FF9C32;
 
-// Project colours
+// Project colors
 $space-background: #09141A;
+$navy-he: $elephant;
+
 $brand-color-main: #18BAB4;
 $brand-color-secondary: $elephant;
 $brand-color-main-hover: darken($brand-color-main, 10);
@@ -55,15 +57,20 @@ $_temporary-dark-text: #222;
 $_temporary-light-text: #747474;
 $accent-grey: #a0afb8;
 $logos-text: $oslo-gray;
+$priority-blue: #0664F6;
 $half-earth-meter-green: $screamin-green;
 $half-earth-meter-blue: $lochmara;
+
 $mammals-color: $medium-purple;
 $mar-mammals-color: $picton-blue;
 $amphibians-color: $shamrock;
 $birds-color: $saffron-mango;
 $fishes-color: #38E5DB;
 $reptiles-color: $conifer;
-$priority-blue: #0664F6;
+
+// layers
+$carbon-layer: #FF9500;
+
 $biodiversity-gradient: linear-gradient(0deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
 $biodiversity-gradient-rotated: linear-gradient(90deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
 $human-pressure-high: #F3E0F7;
@@ -71,10 +78,12 @@ $human-pressure-mid: #9F82CE;
 $human-pressure-low: #282052;
 $human-pressures-gradient: linear-gradient(90deg, rgba(0, 77, 168, 0.1) 0%, rgba(166, 0, 212, 0.2) 15%, rgba(255, 0, 0, 0.5) 54%, rgb(255, 191, 0) 100%);
 $marine-pressures-gradient: linear-gradient(90deg, rgba(86, 0, 115, 0.15) 0%, rgba(0, 14, 224, 0.25) 50%, rgb(0, 197, 255) 94%, rgb(0, 255, 230) 100%);
+$carbon-layer-gradient: linear-gradient(90deg, rgba($navy-he, 0.1) 0%, #A838004D 30%, $carbon-layer 100%);
 $spi-gradient: linear-gradient(270deg, rgba(28, 83, 168, 0.1) 0%, rgba(217, 28, 220, 0.25) 17.71%, rgba(234, 28, 152, 0.35) 38.02%, rgba(248, 28, 70, 0.45) 58.85%, rgba(255, 113, 28, 0.75) 77.6%, #FFC01C 98.44%);
 $spi-chart-gradient: linear-gradient(to bottom, #060B2B99, #1D113599, #250F3B99, #37103399, #82121399, #A7481599, #FFBF0099);
 $challenges-view-background: #040E14;
 $warning: #DC2626;
+
 // country ranking
 $endemic-species: #F8D300;
 $non-endemic-species: #F87200;

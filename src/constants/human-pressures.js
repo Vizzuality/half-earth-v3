@@ -11,32 +11,6 @@ import {
 
 import { t } from '@transifex/native';
 
-export const LAND_HUMAN_PRESSURES_COLOR_RAMP = [
-  "rgba(0, 77, 168, 0.1)",
-  "rgba(0, 77, 168, 0.1)",
-  "rgba(166, 0, 212, 0.2)",
-  "rgba(166, 0, 212, 0.2)",
-  "rgba(166, 0, 212, 0.2)",
-  "rgba(255, 0, 0, 0.5)",
-  "rgba(255, 0, 0, 0.5)",
-  "rgba(255, 0, 0, 0.5)",
-  "rgb(255, 191, 0)",
-  "rgb(255, 191, 0)",
-]
-
-export const MARINE_HUMAN_PRESSURES_COLOR_RAMP = [
-  "rgba(86, 0, 115, 0.15)",
-  "rgba(86, 0, 115, 0.15)",
-  "rgba(86, 0, 115, 0.15)",
-  "rgba(86, 0, 115, 0.15)",
-  "rgba(86, 0, 115, 0.15)",
-  "rgba(0, 14, 224, 0.25)",
-  "rgba(0, 14, 224, 0.25)",
-  "rgba(0, 14, 224, 0.25)",
-  "rgb(0, 197, 255)",
-  "rgb(0, 255, 230)",
-]
-
 export const PRESSURES_SLUGS = {
   urban: URBAN_HUMAN_PRESSURES_TILE_LAYER,
   rainfed: RAINFED_HUMAN_PRESSURES_TILE_LAYER,
