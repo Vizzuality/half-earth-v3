@@ -26,6 +26,10 @@ import {
   PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
 import {
+  getAOIContextualData,
+  getCountryNames,
+} from 'constants/translation-constants';
+import {
   MERGED_PROTECTION,
   MERGED_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
@@ -77,6 +81,12 @@ const AOISidebarComponent = ({
     });
   };
 
+  const AOIContextualTranslations = useMemo(
+    () => getAOIContextualData(),
+    [locale]
+  );
+  const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
+
   return (
     <>
       <section className={styles.headerCard}>
@@ -100,7 +110,9 @@ const AOISidebarComponent = ({
               />
             ) : (
               <p className={styles.areaName}>
-                {updatedAreaName || contextualData.areaName}
+                {updatedAreaName ||
+                  countryNamesTranslations[contextualData.areaName] ||
+                  contextualData.areaName}
               </p>
             )}
             {area && (
@@ -154,14 +166,18 @@ const AOISidebarComponent = ({
           </div>
           <div
             className={styles.contextualIndicator}
-            title={`${t('land cover: ')}${landCover}`}
+            title={`${t('land cover: ')}${
+              AOIContextualTranslations[landCover] || landCover
+            }`}
           >
             <LandCoverIcon />
             <span>{landCover}</span>
           </div>
           <div
             className={styles.contextualIndicator}
-            title={`${t('climate regime: ')}${climateRegime}`}
+            title={`${t('climate regime: ')}${
+              AOIContextualTranslations[climateRegime] || climateRegime
+            }`}
           >
             <ClimateRegimeIcon />
             <span>{climateRegime}</span>

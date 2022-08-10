@@ -1,5 +1,10 @@
-import React from 'react';
-import { useT } from '@transifex/react';
+import React, { useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
+
+import {
+  getWDPATranslations,
+  getCountryNames,
+} from 'constants/translation-constants';
 
 // icons
 import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
@@ -10,7 +15,11 @@ import styles from './protected-areas-table-styles.module.scss';
 
 const ProtectedAreasTable = ({ data, handleSortChange }) => {
   const t = useT();
-
+  const locale = useLocale();
+  const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
+  const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
+  const translateString = (data) => WDPATranslations[data] || data;
+  const translateCountry = (data) => CountryNamesTranslations[data] || data;
   return (
     <table className={styles.protectedAreasTable}>
       <thead>
@@ -144,11 +153,11 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
           data.map((row, index) => (
             <tr key={`wdpa-row-${row.NAME}-${index}`}>
               <td className={styles.firstColumn}>{row.NAME}</td>
-              <td>{row.GOV_TYP}</td>
-              <td>{row.DESIG}</td>
-              <td>{row.DESIG_T}</td>
-              <td>{row.IUCN_CA}</td>
-              <td>{row.NAME_0}</td>
+              <td>{translateString(row.GOV_TYP)}</td>
+              <td>{translateString(row.DESIG)}</td>
+              <td>{translateString(row.DESIG_T)}</td>
+              <td>{translateString(row.IUCN_CA)}</td>
+              <td>{translateCountry(row.NAME_0)}</td>
               <td className={styles.lastColumn}>
                 {`${Math.round(row.AREA_KM)}km`}
                 <sup>2</sup>

@@ -269,9 +269,10 @@ export const getSpeciesGroup = () => ({
   'marine mammals': t('marine mammals')
 });
 
-// Contextual data
+// AOI Contextual data
 
-export const getLandCoverMajority = () => ({
+export const getAOIContextualData = () => ({
+  // Land cover majority
   'Shrubland': t('Shrubland'),
   'Grassland': t('Grassland'),
   'Forest': t('Forest'),
@@ -279,9 +280,8 @@ export const getLandCoverMajority = () => ({
   'Sparsley or Non vegetated': t('Sparsley or Non vegetated'),
   'None': t('None'),
   'Settlement': t('Settlement'),
-  'Snow and Ice': t('Snow and Ice')
-});
-export const getClimateRegimeMajority = () => ({
+  'Snow and Ice': t('Snow and Ice'),
+  // Climate regime majority
   'Tropical Dry': t('Tropical Dry'),
   'Cool Temperate Dry': t('Cool Temperate Dry'),
   'Sub Tropical Moist': t('Sub Tropical Moist'),
@@ -290,7 +290,7 @@ export const getClimateRegimeMajority = () => ({
   'Warm Temperate Moist': t('Warm Temperate Moist'),
   'Tropical Desert': t('Tropical Desert'),
   'Warm Temperate Dry': t('Warm Temperate Dry'),
-  'None': t('None'),
+  // 'None': t('None'),
   'Polar Moist': t('Polar Moist'),
   'Sub Tropical Dry': t('Sub Tropical Dry'),
   'Boreal Moist': t('Boreal Moist'),
@@ -300,9 +300,9 @@ export const getClimateRegimeMajority = () => ({
   'Boreal Dry': t('Boreal Dry')
 });
 
-// WDPA:
+// WDPA
 
-export const getWDPATerms = () => ({
+export const getWDPATranslations = () => ({
   // DESIG_T
   'National': t('National'),
   'Regional': t('Regional'),
