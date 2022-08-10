@@ -190,7 +190,7 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
               <td>{translateString(row.GOV_TYP)}</td>
               <td>{translateString(row.DESIG)}</td>
               <td>{translateString(row.DESIG_T)}</td>
-              <td>{row.STATUS}</td>
+              <td>{translateString(row.STATUS)}</td>
               <td>{row.STATUS_}</td>
               <td>{translateString(row.IUCN_CA)}</td>
               <td>{translateCountry(row.NAME_0)}</td>
