@@ -16,6 +16,7 @@ Target readers:
 - Developers 👩🏽‍💻
 - Scientists 🧑‍🔬
 - Resigners 🧑‍🎨
+- Translators ✍️
 
 ______
 
