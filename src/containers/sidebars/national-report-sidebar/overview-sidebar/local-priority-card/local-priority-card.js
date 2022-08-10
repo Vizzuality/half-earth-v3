@@ -10,7 +10,7 @@ import metadataConfig, {
   COUNTRY_PRIORITY,
   HALF_EARTH_FUTURE_TILE_LAYER
 } from 'constants/metadata';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
 import mapStateToProps from './local-priority-card-selectors';
 
 const LocalPriorityCardContainer = props => {
@@ -25,21 +25,21 @@ const LocalPriorityCardContainer = props => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION]
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       setProtectionsMetadata(data);
     })
   }, []);
 
   useEffect(() => {
     const md = metadataConfig[COUNTRY_PRIORITY]
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       setPriorityMetadata(data);
     })
   }, []);
 
   useEffect(() => {
     const md = metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER]
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       setFuturePlacesMetadata(data);
     })
   }, []);

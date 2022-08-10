@@ -7,8 +7,7 @@ import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import metadataConfig from 'constants/metadata';
-import metadataService from 'services/metadata-service';
-
+import ContentfulService from 'services/contentful';
 const actions = { ...metadataActions, ...urlActions };
 
 const Container = (props) => {
@@ -30,9 +29,10 @@ const Container = (props) => {
   const { description, title } = sidebarCardsConfig[cardCategory];
   const [metadata, setMetadata] = useState(null);
 
+  // Just to get the sources of each card
   useEffect(() => {
     const md = metadataConfig[metadataSlug]
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       setMetadata(data);
     })
   }, []);
