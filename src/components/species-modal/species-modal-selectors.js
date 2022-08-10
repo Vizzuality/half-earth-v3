@@ -1,8 +1,10 @@
 import { createSelector } from 'reselect';
+import { selectLangUrlState } from 'selectors/location-selectors';
 import get from 'lodash/get';
 import { SORT } from 'components/header-item';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import sortBy from 'lodash/sortBy';
+import { getCountryNames } from 'constants/translation-constants';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 
@@ -15,14 +17,15 @@ const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
 
 export const getCountryData = createSelector(
-  [selectCountriesData, selectCountryIso],
-  (countriesData, iso) => {
+  [selectCountriesData, selectCountryIso, selectLangUrlState],
+  (countriesData, iso, locale) => {
     if (!countriesData) return null;
     const countryData = countriesData[iso];
+    const countryNames = getCountryNames();
 
     return {
       iso: countryData.GID_0,
-      name: countryData.NAME_0,
+      name: countryNames[countryData.NAME_0] || countryData.NAME_0,
       coastal: countryData.Marine === 'True' ? true : false,
       landSpeciesTotal: countryData[COUNTRY_ATTRIBUTES.nspecies_richness_ter],
       marineSpeciesTotal: countryData['nspecies_mar'],

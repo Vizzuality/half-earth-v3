@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useT } from '@transifex/react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useT, useLocale } from '@transifex/react';
+import { getCountryNames } from 'constants/translation-constants';
+
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
@@ -18,6 +20,9 @@ const SearchLocationContainer = (props) => {
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
 
   const t = useT();
+  const locale = useLocale();
+
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   useEffect(() => {
     if (searchResults && searchResults.length !== 0) {
@@ -49,7 +54,7 @@ const SearchLocationContainer = (props) => {
 
     // National Report Card search
     if (iso) {
-      setCountryTooltip({ countryIso: attributes[iso], countryName: attributes[title], changeGlobe });
+      setCountryTooltip({ countryIso: attributes[iso], countryName: countryNames[attributes[title]] || attributes[title], changeGlobe });
     }
   }
 
