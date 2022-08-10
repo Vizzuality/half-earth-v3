@@ -11,7 +11,7 @@ import {
   getRankingLegend,
   RANKING_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
 
 const Component = () => {
   const t = useT();
@@ -22,7 +22,7 @@ const Component = () => {
 
   useEffect(() => {
     const md = metadataConfig[RANKING_CHART];
-    metadataService.getMetadata(md.slug).then((data) => {
+    ContentfulService.getMetadata(md.slug).then((data) => {
       setMetadata(data);
     });
   }, []);

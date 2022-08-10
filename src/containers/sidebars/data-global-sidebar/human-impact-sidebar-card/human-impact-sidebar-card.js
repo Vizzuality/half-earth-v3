@@ -5,7 +5,7 @@ import metadataActions from 'redux_modules/metadata';
 import Component from './human-impact-sidebar-card-component';
 import metadataConfig from 'constants/metadata';
 import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
 import { layerManagerToggle, batchToggleLayers} from 'utils/layer-manager-utils';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
@@ -23,7 +23,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES];
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       if (data) {
         setMetadataSource(data.source);
       }

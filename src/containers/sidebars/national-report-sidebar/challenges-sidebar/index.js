@@ -3,7 +3,7 @@ import { useT } from '@transifex/react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
 import { visitNrcChallengesAnalytics } from 'actions/google-analytics-actions';
 
 const actions = { visitNrcChallengesAnalytics }
@@ -14,7 +14,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[CHALLENGES_CHART]
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       setMetadata(data);
     })
   }, []);

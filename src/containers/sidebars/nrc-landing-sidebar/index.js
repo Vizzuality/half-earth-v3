@@ -8,7 +8,8 @@ import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
+
 const actions = { ...metadataActions, ...urlActions };
 
 const Container = (props) => {
@@ -23,7 +24,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       if (data) {
         setProtectionsMetadataSource(data.source);
       }

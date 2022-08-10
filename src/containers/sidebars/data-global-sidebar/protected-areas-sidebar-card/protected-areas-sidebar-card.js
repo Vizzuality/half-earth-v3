@@ -6,7 +6,7 @@ import Component from './protected-areas-sidebar-card-component';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
 import mapStateToProps from './protected-areas-sidebar-card-selectors';
 
 const actions = {...metadataActions, ...urlActions};
@@ -22,7 +22,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
-    metadataService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug).then(data => {
       if (data) {
         setProtectionsMetadataSource(data.source);
       }

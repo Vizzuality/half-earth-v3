@@ -3,7 +3,7 @@ import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import metadataService from 'services/metadata-service';
+import ContentfulService from 'services/contentful';
 import isEmpty from 'lodash/isEmpty';
 import Component from './biodiversity-sidebar-card-component';
 import { LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
@@ -37,7 +37,7 @@ const BiodiversitySidebarCard = (props) => {
   const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION)
   useEffect(() => {
     if (isEmpty(cardMetadata[biodiversityLayerVariant])) {
-      metadataService.getMetadata(biodiversityLayerVariant).then(data => {
+      ContentfulService.getMetadata(biodiversityLayerVariant).then(data => {
         setCardMetadata({
           ...cardMetadata,
           [biodiversityLayerVariant]: {

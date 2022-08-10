@@ -81,6 +81,18 @@ async function parseFeaturedPlaces(data, config, locale) {
     []
   )
 }
+async function parseMetadata(data, locale) {
+  const allItems = data.map(p => p.fields);
+  const metadata = data[0];
+  // Filter other locales data
+  if (isOtherLocalesData(metadata, locale, allItems, 'layerSlug')) {
+    return null;
+  }
+  return ({
+    ...metadata.fields,
+    slug: removeLanguageFromSlug(metadata.fields.layerSlug),
+  });
+}
 
 async function getContentfulImage(assetId, config) {
   try {
@@ -128,4 +140,12 @@ async function getFeaturedPlacesData(slug, config, locale = 'en') {
   return null;
 }
 
-export default { getFeaturedMapData, getFeaturedPlacesData };
+async function getMetadata(slug, locale = 'en') {
+  const data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slug });
+  if (data && data.items && data.items.length > 0) {
+    return parseMetadata(data.items, config, locale);
+  }
+  return null;
+}
+
+export default { getFeaturedMapData, getFeaturedPlacesData, getMetadata };
