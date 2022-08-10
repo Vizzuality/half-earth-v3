@@ -167,20 +167,31 @@ const AOISidebarComponent = ({
           <div
             className={styles.contextualIndicator}
             title={`${t('land cover: ')}${
-              AOIContextualTranslations[landCover] || landCover
+              AOIContextualTranslations[landCover && landCover.toLowerCase()] ||
+              landCover
             }`}
           >
             <LandCoverIcon />
-            <span>{landCover}</span>
+            <span>
+              {AOIContextualTranslations[
+                landCover && landCover.toLowerCase()
+              ] || landCover}
+            </span>
           </div>
           <div
             className={styles.contextualIndicator}
             title={`${t('climate regime: ')}${
-              AOIContextualTranslations[climateRegime] || climateRegime
+              AOIContextualTranslations[
+                climateRegime && climateRegime.toLowerCase()
+              ] || climateRegime
             }`}
           >
             <ClimateRegimeIcon />
-            <span>{climateRegime}</span>
+            <span>
+              {AOIContextualTranslations[
+                climateRegime && climateRegime.toLowerCase()
+              ] || climateRegime}
+            </span>
           </div>
         </div>
         <SpeciesCard area={area} speciesData={speciesData} />
