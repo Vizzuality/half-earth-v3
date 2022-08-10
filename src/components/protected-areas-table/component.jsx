@@ -94,6 +94,40 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
           </th>
           <th>
             <div className={styles.headerColumnContainer}>
+              <span>{t('STATUS')}</span>
+              <div className={styles.arrowsContainer}>
+                <ArrowUp
+                  onClick={() =>
+                    handleSortChange({ value: 'STATUS', ascending: true })
+                  }
+                />
+                <ArrowDown
+                  onClick={() =>
+                    handleSortChange({ value: 'STATUS', ascending: false })
+                  }
+                />
+              </div>
+            </div>
+          </th>
+          <th>
+            <div className={styles.headerColumnContainer}>
+              <span>{t('STATUS YEAR')}</span>
+              <div className={styles.arrowsContainer}>
+                <ArrowUp
+                  onClick={() =>
+                    handleSortChange({ value: 'STATUS_', ascending: true })
+                  }
+                />
+                <ArrowDown
+                  onClick={() =>
+                    handleSortChange({ value: 'STATUS_', ascending: false })
+                  }
+                />
+              </div>
+            </div>
+          </th>
+          <th>
+            <div className={styles.headerColumnContainer}>
               <span>{t('IUCN CATEGORY')}</span>
               <div className={styles.arrowsContainer}>
                 <ArrowUp
@@ -156,6 +190,8 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
               <td>{translateString(row.GOV_TYP)}</td>
               <td>{translateString(row.DESIG)}</td>
               <td>{translateString(row.DESIG_T)}</td>
+              <td>{row.STATUS}</td>
+              <td>{row.STATUS_}</td>
               <td>{translateString(row.IUCN_CA)}</td>
               <td>{translateCountry(row.NAME_0)}</td>
               <td className={styles.lastColumn}>
