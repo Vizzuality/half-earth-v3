@@ -53,6 +53,17 @@
   }
 }
 
+.carbon-layer-land {
+  input:checked+label::after {
+    background: $carbon-layer-gradient;
+  }
+
+  input:checked+label::before {
+    background: $carbon-layer;
+  }
+
+}
+
 
 .nrc-landing-layers {
   input:checked+label::after {
