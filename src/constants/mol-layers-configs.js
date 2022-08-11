@@ -773,7 +773,7 @@ export const layersConfig = {
   [CARBON_LAYER]: {
     title: CARBON_LAYER,
     slug: CARBON_LAYER,
-    type: LAYER_TYPES.FEATURE_LAYER,
+    type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[CARBON_LAYER],
     bbox: null
   },

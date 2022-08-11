@@ -99,7 +99,7 @@ export const REPTILES_RARITY_1KM = 'reptiles-rare-sa';
 export const REPTILES_RICHNESS_1KM = 'reptiles-rich-sa';
 
 // Carbon Layer
-export const CARBON_LAYER = 'carbon-layer';
+export const CARBON_LAYER = 'carbon-layer-land';
 
 // Global biodiversity
 

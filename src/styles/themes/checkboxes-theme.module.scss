@@ -53,7 +53,7 @@
   }
 }
 
-.carbon-layer {
+.carbon-layer-land {
   input:checked+label::after {
     background: $carbon-layer-gradient;
   }

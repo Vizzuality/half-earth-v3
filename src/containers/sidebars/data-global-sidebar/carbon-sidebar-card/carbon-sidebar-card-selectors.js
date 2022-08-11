@@ -8,10 +8,9 @@ const getComputedCarbonLayer = createSelector(selectLangUrlState, locale => getC
 export const getCountedActiveLayers = createSelector(
   [(state, props) => props && props.activeLayers, getComputedCarbonLayer], (activeLayers, carbonLayer) => {
     if(!activeLayers || !activeLayers.length) return 0;
-    const allLayers = Object.values(carbonLayer).map((layer) => layer.value)
     return activeLayers
       .map((l) => l.title)
-      .reduce((acc, l) => (allLayers.includes(l) ? acc + 1 : acc), 0);
+      .reduce((acc, title) => (carbonLayer.value === title ? acc + 1 : acc), 0);
 });
 
 export default createStructuredSelector({
