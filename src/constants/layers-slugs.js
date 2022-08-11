@@ -82,13 +82,12 @@ export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
 export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
+
 // South Africa layers
 export const AMPHIB_RARITY_1KM = 'amphib-rarity-sa';
 export const AMPHIB_RICHNESS_1KM = 'amphib-rich-sa';
 export const SA_DRAGONFLIES_RARITY = 'dragonflies-rare-sa';
 export const SA_DRAGONFLIES_RICHNESS = 'dragonflies-rich-sa';
-export const SA_MAMMALS_RARITY = 'mammals-rare-sa';
-export const SA_MAMMALS_RICHNESS = 'mammals-rich-sa';
 export const SA_BIRDS_RARITY = 'birds-rare-sa';
 export const SA_BIRDS_RICHNESS = 'birds-rich-sa';
 export const SA_RESTIO_RARITY = 'restio-rare-sa';
@@ -134,8 +133,16 @@ export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
 
+// 1KM
 export const BUTTERFLIES_RICHNESS_1KM = 'butterflies-richness-1km';
 export const BUTTERFLIES_RARITY_1KM = 'butterflies-rarity-1km';
+export const MAMMALS_RICHNESS_1KM = 'mammals-rare-sa';
+export const SUMMER_BIRDS_RICHNESS_1KM = 'summer-birds-richness-1km';
+export const WINTER_BIRDS_RICHNESS_1KM = 'winter-birds-richness-1km';
+export const MAMMALS_RARITY_1KM = 'mammals-rich-sa';
+export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
+export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
+
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';

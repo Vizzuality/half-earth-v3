@@ -5,8 +5,6 @@ import {
   AMPHIB_RICHNESS_1KM,
   SA_DRAGONFLIES_RARITY,
   SA_DRAGONFLIES_RICHNESS,
-  SA_MAMMALS_RARITY,
-  SA_MAMMALS_RICHNESS,
   SA_BIRDS_RARITY,
   SA_BIRDS_RICHNESS,
   SA_RESTIO_RARITY,
@@ -15,6 +13,12 @@ import {
   SA_PROTEA_RICHNESS,
   REPTILES_RARITY_1KM,
   REPTILES_RICHNESS_1KM,
+  MAMMALS_RICHNESS_1KM,
+  SUMMER_BIRDS_RICHNESS_1KM,
+  WINTER_BIRDS_RICHNESS_1KM,
+  MAMMALS_RARITY_1KM,
+  SUMMER_BIRDS_RARITY_1KM,
+  WINTER_BIRDS_RARITY_1KM,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -233,12 +237,6 @@ export const getLayersToggleConfig = () => ({
           layer: HUMMINGBIRDS_RICHNESS
         },
         {
-          value: SA_MAMMALS_RICHNESS,
-          name: t('mammals'),
-          title: t('mammals'),
-          layer: SA_MAMMALS_RICHNESS
-        },
-        {
           value: SA_PROTEA_RICHNESS,
           name: t('protea'),
           title: t('protea'),
@@ -255,6 +253,24 @@ export const getLayersToggleConfig = () => ({
           name: t('restio'),
           title: t('restio'),
           layer: SA_RESTIO_RICHNESS
+        },
+        {
+          value: MAMMALS_RICHNESS_1KM,
+          name: t('mammals'),
+          title: t('mammals'),
+          layer: MAMMALS_RICHNESS_1KM
+        },
+        {
+          value: SUMMER_BIRDS_RICHNESS_1KM,
+          name: t('summer birds'),
+          title: t('summer birds'),
+          layer: SUMMER_BIRDS_RICHNESS_1KM
+        },
+        {
+          value: WINTER_BIRDS_RICHNESS_1KM,
+          name: t('winter birds'),
+          title: t('winter birds'),
+          layer: WINTER_BIRDS_RICHNESS_1KM
         },
       ],
       'COUNTRY': [
@@ -385,12 +401,6 @@ export const getLayersToggleConfig = () => ({
           layer: HUMMINGBIRDS_RARITY
         },
         {
-          value: SA_MAMMALS_RARITY,
-          name: t('mammals'),
-          title: t('mammals'),
-          layer: SA_MAMMALS_RARITY
-        },
-        {
           value: SA_PROTEA_RARITY,
           name: t('protea'),
           title: t('protea'),
@@ -407,6 +417,24 @@ export const getLayersToggleConfig = () => ({
           name: t('restio'),
           title: t('restio'),
           layer: SA_RESTIO_RARITY
+        },
+        {
+          value: MAMMALS_RARITY_1KM,
+          name: t('mammals'),
+          title: t('mammals'),
+          layer: MAMMALS_RARITY_1KM
+        },
+        {
+          value: SUMMER_BIRDS_RARITY_1KM,
+          name: t('summer birds'),
+          title: t('summer birds'),
+          layer: SUMMER_BIRDS_RARITY_1KM
+        },
+        {
+          value: WINTER_BIRDS_RARITY_1KM,
+          name: t('winter birds'),
+          title: t('winter birds'),
+          layer: WINTER_BIRDS_RARITY_1KM
         },
       ]
     },
