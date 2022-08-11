@@ -35,7 +35,7 @@ const Container = (props) => {
     ContentfulService.getMetadata(md.slug, locale).then(data => {
       setMetadata(data);
     })
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {

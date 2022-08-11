@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux'
 import Component from './component';
 import metadataActions from 'redux_modules/metadata';
@@ -11,11 +12,13 @@ const actions = { ...metadataActions, layerToggleAnalytics };
 const LayerToggle = (props) => {
   const { map, activeLayers, option } = props;
   const [isChecked, setIsChecked] = useState(false)
+  const locale = useLocale();
 
   const handleInfoClick = (option) => {
     const { setModalMetadata } = props;
     setModalMetadata({
       slug: `${option.slug || option.value}`,
+      locale,
       title: `${option.metadataTitle || option.name} metadata`,
       isOpen: true
     });

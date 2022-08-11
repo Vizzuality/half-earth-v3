@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
@@ -16,18 +17,19 @@ const Container = (props) => {
     changeGlobe,
     activeLayers,
   } = props;
+  const locale = useLocale();
 
   const [selectedLayers, setSelectedLayers] = useState([]);
   const [protectionMetadataSource, setProtectionsMetadataSource] = useState(null);
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       if (data) {
         setProtectionsMetadataSource(data.source);
       }
     })
-  }, []);
+  }, [locale]);
 
   const handleLayerToggle = (option) => {
     if (option.layer === 'all') {

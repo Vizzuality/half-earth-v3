@@ -141,9 +141,16 @@ async function getFeaturedPlacesData(slug, config, locale = 'en') {
 }
 
 async function getMetadata(slug, locale = 'en') {
-  const data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slug });
-  if (data && data.items && data.items.length > 0) {
-    return parseMetadata(data.items, config, locale);
+  const slugWithLocale = locale && locale !== 'en' ? `${slug}_${locale}` : slug;
+  let data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slugWithLocale });
+  const hasData = (data) => data && data.items && data.items.length > 0;
+  if (!hasData(data)) {
+    // Try with the english (default) version
+    data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slug });
+  }
+
+  if (!!hasData(data)) {
+    return parseMetadata(data.items, locale);
   }
   return null;
 }
