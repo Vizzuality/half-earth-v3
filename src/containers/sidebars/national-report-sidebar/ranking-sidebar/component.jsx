@@ -22,10 +22,10 @@ const Component = () => {
 
   useEffect(() => {
     const md = metadataConfig[RANKING_CHART];
-    ContentfulService.getMetadata(md.slug).then((data) => {
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       setMetadata(data);
     });
-  }, []);
+  }, [locale]);
 
   const LegendBlock = ({ legendItems }) => (
     <div className={styles.legendBlock}>

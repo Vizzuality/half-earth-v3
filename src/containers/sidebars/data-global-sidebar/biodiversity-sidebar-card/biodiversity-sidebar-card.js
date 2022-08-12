@@ -37,7 +37,7 @@ const BiodiversitySidebarCard = (props) => {
   const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION)
   useEffect(() => {
     if (isEmpty(cardMetadata[biodiversityLayerVariant])) {
-      ContentfulService.getMetadata(biodiversityLayerVariant).then(data => {
+      ContentfulService.getMetadata(biodiversityLayerVariant, locale).then(data => {
         setCardMetadata({
           ...cardMetadata,
           [biodiversityLayerVariant]: {
@@ -46,7 +46,7 @@ const BiodiversitySidebarCard = (props) => {
         });
       })
     }
-  }, [biodiversityLayerVariant, layersResolution]);
+  }, [biodiversityLayerVariant, layersResolution, locale]);
 
   useEffect(() => {
     const resolutionExists = (category) => layersResolution[biodiversityLayerVariant][category].some(res => res.slug === selectedResolution[category]);

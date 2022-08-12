@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
+import { useLocale } from '@transifex/react';
 import Component from './local-priority-card-component';
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 import * as urlActions from 'actions/url-actions';
@@ -17,6 +18,7 @@ const LocalPriorityCardContainer = props => {
   const [priorityMetadata, setPriorityMetadata] = useState(null);
   const [protectionMetadata, setProtectionsMetadata] = useState(null);
   const [futurePlacesMetadata, setFuturePlacesMetadata] = useState(null);
+  const locale = useLocale();
 
   const handleLayerToggle = (option) => {
     const { changeGlobe, activeLayers } = props;
@@ -25,24 +27,24 @@ const LocalPriorityCardContainer = props => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION]
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       setProtectionsMetadata(data);
     })
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     const md = metadataConfig[COUNTRY_PRIORITY]
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       setPriorityMetadata(data);
     })
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     const md = metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER]
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       setFuturePlacesMetadata(data);
     })
-  }, []);
+  }, [locale]);
 
   return (
   <Component

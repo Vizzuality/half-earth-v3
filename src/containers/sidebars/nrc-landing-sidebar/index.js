@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import EsriFeatureService from 'services/esri-feature-service';
 import * as urlActions from 'actions/url-actions';
@@ -17,6 +18,7 @@ const Container = (props) => {
     changeGlobe,
     activeLayers,
   } = props;
+  const locale = useLocale();
 
   const [selectedLayers, setSelectedLayers] = useState([]);
   const [protectionMetadataSource, setProtectionsMetadataSource] = useState(null);
@@ -24,12 +26,12 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       if (data) {
         setProtectionsMetadataSource(data.source);
       }
     })
-  }, []);
+  }, [locale]);
 
   // Set global average data
   useEffect(() => {

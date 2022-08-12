@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import Component from './component.jsx';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
@@ -11,10 +11,11 @@ const actions = { visitNrcChallengesAnalytics }
 const Container = (props) => {
   const [metadata, setMetadata] = useState(null);
   const t = useT();
+  const locale = useLocale();
 
   useEffect(() => {
     const md = metadataConfig[CHALLENGES_CHART]
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       setMetadata(data);
     })
   }, []);

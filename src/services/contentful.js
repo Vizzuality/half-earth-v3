@@ -1,4 +1,5 @@
 import { createClient } from 'contentful';
+import fetchWithCache from './fetch';
 
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
@@ -115,8 +116,7 @@ async function fetchContentfulEntry(
     url += `&fields.${filterField}=${filterValue}&limit=999`;
   }
   try {
-    const data = await fetch(url).then(d => d.json());
-
+    const data = await fetchWithCache(url);
     return data;
   } catch (e) {
     console.warn(e);
@@ -141,9 +141,16 @@ async function getFeaturedPlacesData(slug, config, locale = 'en') {
 }
 
 async function getMetadata(slug, locale = 'en') {
-  const data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slug });
-  if (data && data.items && data.items.length > 0) {
-    return parseMetadata(data.items, config, locale);
+  const slugWithLocale = locale && locale !== 'en' ? `${slug}_${locale}` : slug;
+  let data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slugWithLocale });
+  const hasData = (data) => data && data.items && data.items.length > 0;
+  if (!hasData(data)) {
+    // Try with the english (default) version
+    data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slug });
+  }
+
+  if (!!hasData(data)) {
+    return parseMetadata(data.items, locale);
   }
   return null;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
@@ -20,15 +21,16 @@ const Container = (props) => {
   } = props;
 
   const [metadataSource, setMetadataSource] = useState(null);
+  const locale = useLocale();
 
   useEffect(() => {
     const md = metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES];
-    ContentfulService.getMetadata(md.slug).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then(data => {
       if (data) {
         setMetadataSource(data.source);
       }
     })
-  }, []);
+  }, [locale]);
 
 
   const handleLayerToggle = (option, category) => {

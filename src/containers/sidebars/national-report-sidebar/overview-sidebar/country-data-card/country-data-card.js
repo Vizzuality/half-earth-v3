@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import mapStateToProps from './country-data-card-selectors';
 import metadataActions from 'redux_modules/metadata';
@@ -12,6 +13,7 @@ const actions = { checkSpiInfoAnalytics, ...metadataActions }
 
 const CountryDataCardContainer = props => {
   const { areaChartData } = props;
+  const locale = useLocale();
 
   const handleInfoClick = () => {
     const {
@@ -22,6 +24,7 @@ const CountryDataCardContainer = props => {
     const md = metadataConfig[SPECIES_PROTECTION_INDEX]
     setModalMetadata({
       slug: md.slug,
+      locale,
       isOpen: true
     });
   }
