@@ -1,4 +1,5 @@
 import { createClient } from 'contentful';
+import fetchWithCache from './fetch';
 
 const { REACT_APP_CONTENTFUL_SPACE_ID } = process.env;
 const { REACT_APP_CONTENTFUL_TOKEN } = process.env;
@@ -115,8 +116,7 @@ async function fetchContentfulEntry(
     url += `&fields.${filterField}=${filterValue}&limit=999`;
   }
   try {
-    const data = await fetch(url).then(d => d.json());
-
+    const data = await fetchWithCache(url);
     return data;
   } catch (e) {
     console.warn(e);
