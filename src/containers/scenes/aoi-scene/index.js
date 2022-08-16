@@ -75,6 +75,7 @@ const AOIScene = props => {
     }
   }, [aoiId, geometryEngine, jsonUtils])
 
+
   useEffect(() => {
     const orderedSpecies = orderBy([...speciesData.species, ...taxaData], ['has_image', 'conservationConcern'], ['desc', 'desc']);
     setSpeciesData({ species: orderedSpecies });

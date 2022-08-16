@@ -50,6 +50,7 @@ const DataSceneComponent = ({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  speciesData,
 }) => {
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
@@ -126,7 +127,10 @@ const DataSceneComponent = ({
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
         />
-        <MapTooltip onActionButtonClick={handleTooltipActionButtonClick} />
+        <MapTooltip
+          onActionButtonClick={handleTooltipActionButtonClick}
+          speciesData={speciesData}
+        />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>
     </>

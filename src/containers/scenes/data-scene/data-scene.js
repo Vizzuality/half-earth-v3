@@ -18,6 +18,7 @@ const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 const Container = (props) => {
   const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+
   const locale = useLocale();
   const t = useT();
 
@@ -28,7 +29,7 @@ const Container = (props) => {
 
       const { title, subtitle, id} = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
-      console.log({attributes})
+
       let customId;
       let customTitle;
       if (selectedAnalysisLayer.slug === HALF_EARTH_FUTURE_TILE_LAYER) {
@@ -41,6 +42,8 @@ const Container = (props) => {
         customId = `region-${attributes.region}`;
       }
 
+
+
       setBatchTooltipData({
         isVisible: true,
         geometry,
@@ -50,7 +53,7 @@ const Container = (props) => {
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
-          percentage_protected: Math.round(attributes.percentage_protected),
+          percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
         }
       });
     }
