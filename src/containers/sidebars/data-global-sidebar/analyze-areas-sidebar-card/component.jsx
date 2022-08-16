@@ -39,7 +39,9 @@ const AnalyzeAreasCardComponent = ({
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
   onboardingType,
+
 }) => {
+
   const [isOpen, setOpen] = useState(false);
   const t = useT();
   const locale = useLocale();

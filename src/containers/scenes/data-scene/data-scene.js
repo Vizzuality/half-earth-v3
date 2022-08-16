@@ -12,15 +12,19 @@ import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
+import { setMapTooltipData } from 'utils/species-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 const Container = (props) => {
   const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+  const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
+  const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
 
   const locale = useLocale();
   const t = useT();
+
 
   const handleHighlightLayerFeatureClick = (features) => {
 
@@ -42,7 +46,9 @@ const Container = (props) => {
         customId = `region-${attributes.region}`;
       }
 
+      setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData});
 
+      console.log({landVertebrateSpeciesNum, protectedAreaTooltipData})
 
       setBatchTooltipData({
         isVisible: true,
