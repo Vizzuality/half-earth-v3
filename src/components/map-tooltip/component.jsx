@@ -59,12 +59,17 @@ const MapTooltipComponent = ({
             <div className={styles.featureNaming}>
               <span className={styles.title}>{content.title}</span>
               <span className={styles.subtitle}>{content.subtitle}</span>
+              <div className={styles.speciesContent}>
+                <p>land vertebrate species</p>
+                <p><span className={styles.speciesContentNumbers}>{content.percentage_protected}%</span>land is protected</p>
+              </div>
             </div>
           </section>
           <CloseIcon
             className={styles.tooltipClose}
             onClick={onCloseButtonClick}
           />
+
           <button
             className={styles.tooltipExplore}
             onClick={onActionButtonClick}

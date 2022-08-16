@@ -33,6 +33,7 @@
 .featureNaming {
   display: flex;
   flex-direction: column;
+  width: 100%;
   .title {
     @extend %title;
     color: $white;
@@ -41,6 +42,21 @@
   .subtitle {
     @extend %annotation;
     color: $white;
+    margin-bottom: 5px;
+  }
+
+  .speciesContent {
+    @extend %annotation;
+    background-color: $elephant;
+    border-radius: 4px;
+    margin: 5px 0px;
+    padding: 10px 20px;
+    width: 100%;
+
+    .speciesContentNumbers {
+      font-weight: bold;
+      margin-right: 25px;
+    }
   }
 }
 
@@ -49,7 +65,7 @@
   background-color: $brand-color-main;
   width: 100%;
   height: 30px;
-  padding: 5px 20px;
+  padding: 0px 20px;
   border-radius: 2px;
 }
 

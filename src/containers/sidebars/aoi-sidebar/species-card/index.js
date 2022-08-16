@@ -27,6 +27,7 @@ const SpeciesCardContainer = (props) => {
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
   const { speciesData } = props;
+  console.log('speciesData', speciesData.species.length);
   const { species } = speciesData;
 
   const language = locale !== '' ? locale : 'en'

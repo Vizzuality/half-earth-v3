@@ -15,7 +15,6 @@ import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
-
 const Container = (props) => {
   const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
@@ -27,9 +26,9 @@ const Container = (props) => {
     if (features && features.length && selectedAnalysisLayer) {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
 
-      const { title, subtitle, id } = tooltipConfig;
+      const { title, subtitle, id} = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
-
+      console.log({attributes})
       let customId;
       let customTitle;
       if (selectedAnalysisLayer.slug === HALF_EARTH_FUTURE_TILE_LAYER) {
@@ -50,7 +49,8 @@ const Container = (props) => {
           id: customId || attributes[id],
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
-          objectId: attributes.OBJECTID // Only for feature places
+          objectId: attributes.OBJECTID, // Only for feature places
+          percentage_protected: Math.round(attributes.percentage_protected),
         }
       });
     }
