@@ -50,7 +50,6 @@ const DataSceneComponent = ({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-  // speciesData,
 }) => {
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;

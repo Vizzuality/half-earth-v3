@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import cx from 'classnames';
+import { useT } from '@transifex/react';
 import { loadModules } from 'esri-loader';
+
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import styles from './styles.module.scss';
 import { useMobile } from 'constants/responsive';
@@ -14,6 +16,7 @@ const MapTooltipComponent = ({
   onCloseButtonClick,
   onActionButtonClick,
 }) => {
+  const t = useT();
   const tooltipref = useRef(null);
   const [tooltip, setTooltip] = useState(null);
 
@@ -60,8 +63,8 @@ const MapTooltipComponent = ({
               <span className={styles.title}>{content.title}</span>
               <span className={styles.subtitle}>{content.subtitle}</span>
               <div className={styles.speciesContent}>
-                <p>land vertebrate species</p>
-                <p><span className={styles.speciesContentNumbers}>{content.percentage_protected}%</span>land is protected</p>
+                <p> {t('land vertebrate species')}</p>
+                <p><span className={styles.speciesContentNumbers}>{content.percentage_protected}%</span> {t('land is protected')}</p>
               </div>
             </div>
           </section>
