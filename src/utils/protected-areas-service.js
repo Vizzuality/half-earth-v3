@@ -18,12 +18,14 @@ export const setMapTooltipData = ({  molId, setLandVertebrateSpeciesNum, setProt
     const landVertebrateSpeciesNum = birds + mammals + reptiles + amphibians;
 
     setLandVertebrateSpeciesNum(landVertebrateSpeciesNum);
+
     setProtectedAreaTooltipData({
       description: `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} in ${attributes.STATUS_}`,
       status: attributes.STATUS_,
       status_year: attributes.STATUS_,
       IUCN_type: attributes.IUCN_CA,
       designation_type: attributes.DESIG_T,
+      percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
     })
   });
 }

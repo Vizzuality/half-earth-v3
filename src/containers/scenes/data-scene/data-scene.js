@@ -12,7 +12,7 @@ import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
-import { setMapTooltipData } from 'utils/species-service';
+import { setMapTooltipData } from 'utils/protected-areas-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
@@ -22,7 +22,7 @@ const Container = (props) => {
   const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
   const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
   const [batchTooltipData, updateBatchTooltipData]= useState();
-
+console.log({batchTooltipData});
   const locale = useLocale();
   const t = useT();
 
@@ -57,7 +57,6 @@ const Container = (props) => {
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
-          percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
         }
       })
 
