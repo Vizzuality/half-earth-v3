@@ -76,6 +76,10 @@ const Container = (props) => {
     // Don't remove locale. Is here to recalculate the titles translation
   }, [activeLayers, locale]);
 
+  useEffect(() => {
+    handleHighlightLayerFeatureClick();
+  }, [mapTooltipContent, setMapTooltipData]);
+
   return (
     <Component
       selectedAnalysisLayer={selectedAnalysisLayer}
