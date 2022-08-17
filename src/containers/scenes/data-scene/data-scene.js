@@ -22,7 +22,7 @@ const Container = (props) => {
   const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
   const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
   const [batchTooltipData, updateBatchTooltipData]= useState();
-console.log({batchTooltipData});
+
   const locale = useLocale();
   const t = useT();
 
