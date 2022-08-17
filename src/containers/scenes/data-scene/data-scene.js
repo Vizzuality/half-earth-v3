@@ -82,6 +82,7 @@ const Container = (props) => {
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
+    console.log('activeOption', activeOption);
     setSelectedAnalysisLayer(activeOption);
     // Don't remove locale. Is here to recalculate the titles translation
   }, [activeLayers, locale]);

@@ -56,6 +56,7 @@ const DataSceneComponent = ({
 
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
+  console.log({selectedAnalysisLayer})
   const isProtectedArea = selectedAnalysisLayer && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
   const updatedSceneSettings = useMemo(
     () => ({

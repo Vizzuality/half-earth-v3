@@ -28,6 +28,7 @@ export function calculateGeometryArea(geometry, geometryEngine) {
 }
 
 export function getSelectedAnalysisLayer(activeLayers) {
+  console.log({activeLayers})
   const intersectionArray = _intersectionBy(getPrecalculatedAOIOptions(), activeLayers, 'title');
   return intersectionArray[0];
 }
