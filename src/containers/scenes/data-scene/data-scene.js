@@ -21,10 +21,12 @@ const Container = (props) => {
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
   const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
   const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
+  const [batchTooltipData, updateBatchTooltipData]= useState();
 
   const locale = useLocale();
   const t = useT();
 
+console.log({mapTooltipContent})
 
   const handleHighlightLayerFeatureClick = (features) => {
 
@@ -48,7 +50,18 @@ const Container = (props) => {
 
       setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData});
 
-      console.log({landVertebrateSpeciesNum, protectedAreaTooltipData})
+      updateBatchTooltipData({
+        isVisible: true,
+        geometry,
+        content: {
+          buttonText: t('analyze area'),
+          id: customId || attributes[id],
+          title: customTitle || attributes[title],
+          subtitle: attributes[subtitle],
+          objectId: attributes.OBJECTID, // Only for feature places
+          percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
+        }
+      })
 
       setBatchTooltipData({
         isVisible: true,
@@ -76,9 +89,25 @@ const Container = (props) => {
     // Don't remove locale. Is here to recalculate the titles translation
   }, [activeLayers, locale]);
 
+
   useEffect(() => {
-    handleHighlightLayerFeatureClick();
-  }, [mapTooltipContent, setMapTooltipData]);
+    if(protectedAreaTooltipData && landVertebrateSpeciesNum) {
+      const { description, designation_type, IUCN_type, status, status_year } = protectedAreaTooltipData;
+
+      setBatchTooltipData({
+          ...batchTooltipData,
+          content: {
+            ...mapTooltipContent,
+            description,
+            designation_type,
+            IUCN_type,
+            status,
+            status_year,
+            species: landVertebrateSpeciesNum,
+          }
+        })
+    }
+  },[landVertebrateSpeciesNum, protectedAreaTooltipData]);
 
   return (
     <Component

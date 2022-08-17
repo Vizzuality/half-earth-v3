@@ -18,6 +18,7 @@ import Widgets from 'containers/widgets';
 // Constants
 import { MobileOnly, useMobile } from 'constants/responsive';
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
+import { WDPA_OECM_FEATURE_LAYER } from 'constants/layers-slugs';
 // Styles
 import animationStyles from 'styles/common-animations.module.scss';
 import styles from './data-scene-styles.module.scss';
@@ -52,8 +53,10 @@ const DataSceneComponent = ({
   waitingInteraction,
   speciesData,
 }) => {
+
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
+  const isProtectedArea = selectedAnalysisLayer && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -130,6 +133,7 @@ const DataSceneComponent = ({
         <MapTooltip
           onActionButtonClick={handleTooltipActionButtonClick}
           speciesData={speciesData}
+          isProtectedArea={isProtectedArea}
         />
         <LabelsLayer activeLayers={activeLayers} />
       </Scene>

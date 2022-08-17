@@ -12,6 +12,7 @@ const MapTooltipComponent = ({
   view,
   content,
   isVisible,
+  isProtectedArea,
   tooltipPosition,
   onCloseButtonClick,
   onActionButtonClick,
@@ -61,10 +62,13 @@ const MapTooltipComponent = ({
             {img && <img className={styles.tooltipFlag} alt="" />}
             <div className={styles.featureNaming}>
               <span className={styles.title}>{content.title}</span>
+              {isProtectedArea && <span className={styles.subtitle}>{content.description}</span>}
               <span className={styles.subtitle}>{content.subtitle}</span>
               <div className={styles.speciesContent}>
-                <p> {t('land vertebrate species')}</p>
+                {content.species && <p><span className={styles.speciesContentNumbers}>{content.species}</span>{t('land vertebrate species')}</p>}
                 <p><span className={styles.speciesContentNumbers}>{content.percentage_protected}%</span> {t('land is protected')}</p>
+                {isProtectedArea && <span className={styles.subtitle}>{content.status}</span>}
+                {isProtectedArea && <span className={styles.subtitle}>{content.status_year}</span>}
               </div>
             </div>
           </section>
