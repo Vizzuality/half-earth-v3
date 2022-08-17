@@ -33,6 +33,7 @@
 .featureNaming {
   display: flex;
   flex-direction: column;
+  width: 100%;
   .title {
     @extend %title;
     color: $white;
@@ -41,6 +42,37 @@
   .subtitle {
     @extend %annotation;
     color: $white;
+    margin-bottom: 5px;
+  }
+
+  .description {
+    @extend %annotation;
+    color: $white;
+    margin-bottom: 5px;
+    line-height: 1.5;
+  }
+
+  .speciesContent {
+    @extend %annotation;
+    background-color: $elephant;
+    border-radius: 4px;
+    margin: 5px 0px;
+    padding: 10px 20px;
+    width: 100%;
+
+    .content {
+      align-items: baseline;
+      display: flex;
+      line-height: 12px;
+      height: 30px;
+
+      .contentData {
+        font-weight: bold;
+        padding-right: 5px;
+        width: 38%;
+      }
+    }
+
   }
 }
 
@@ -49,7 +81,7 @@
   background-color: $brand-color-main;
   width: 100%;
   height: 30px;
-  padding: 5px 20px;
+  padding: 0px 20px;
   border-radius: 2px;
 }
 

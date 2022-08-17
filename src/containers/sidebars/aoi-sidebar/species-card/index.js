@@ -31,7 +31,6 @@ const SpeciesCardContainer = (props) => {
 
   const language = locale !== '' ? locale : 'en'
 
-
   // Species dropdown
 
   const DEFAULT_SPECIES_FILTER = { slug: 'all', label: t('all terrestrial vertebrates') };

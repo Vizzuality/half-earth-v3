@@ -13,7 +13,7 @@ const fetcher = (url) => (
 );
 
 const fetchWithCache = async (url) => {
-  console.log(queryClient)
+
   try {
     const data = await queryClient.fetchQuery([url], () => fetcher(url));
     return data;
