@@ -45,6 +45,13 @@
     margin-bottom: 5px;
   }
 
+  .description {
+    @extend %annotation;
+    color: $white;
+    margin-bottom: 5px;
+    line-height: 1.5;
+  }
+
   .speciesContent {
     @extend %annotation;
     background-color: $elephant;
@@ -53,10 +60,19 @@
     padding: 10px 20px;
     width: 100%;
 
-    .speciesContentNumbers {
-      font-weight: bold;
-      margin-right: 25px;
+    .content {
+      align-items: baseline;
+      display: flex;
+      line-height: 12px;
+      height: 30px;
+
+      .contentData {
+        font-weight: bold;
+        padding-right: 5px;
+        width: 38%;
+      }
     }
+
   }
 }
 

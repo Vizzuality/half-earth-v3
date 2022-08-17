@@ -26,8 +26,6 @@ const Container = (props) => {
   const locale = useLocale();
   const t = useT();
 
-console.log({mapTooltipContent})
-
   const handleHighlightLayerFeatureClick = (features) => {
 
     if (features && features.length && selectedAnalysisLayer) {
