@@ -12,7 +12,7 @@ import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
-import { setMapTooltipData } from 'utils/protected-areas-service';
+import { setMapTooltipData } from 'utils/map-tooltip-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
