@@ -1,4 +1,5 @@
 import {
+  ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   GLOBAL_SPI_FEATURE_LAYER,
@@ -10,6 +11,13 @@ import {
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 export const SEARCH_SOURCES_CONFIG = {
+  [ADMIN_AREAS_FEATURE_LAYER]: {
+    url: LAYERS_URLS[ADMIN_AREAS_FEATURE_LAYER],
+    title: ADMIN_AREAS_FEATURE_LAYER,
+    outFields: ["*"],
+    searchFields: ["NAME_0", "NAME_1", "GID_0"],
+    suggestionTemplate: '{NAME_1}, {NAME_0}'
+  },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     url: LAYERS_URLS[GADM_0_ADMIN_AREAS_FEATURE_LAYER],
     title: GADM_0_ADMIN_AREAS_FEATURE_LAYER,

@@ -1,4 +1,5 @@
 import {
+  ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
@@ -9,6 +10,11 @@ import {
 
 
 const MAP_TOOLTIP_CONFIG = {
+  [ADMIN_AREAS_FEATURE_LAYER] : {
+    title: 'NAME_1',
+    subtitle: 'NAME_0',
+    id: 'MOL_ID'
+  },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER] : {
     title: 'NAME_0',
     id: 'MOL_ID'
