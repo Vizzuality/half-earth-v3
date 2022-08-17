@@ -68,7 +68,6 @@ const SearchLocationContainer = (props) => {
 
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    console.log({searchSourceLayerSlug})
     const { url, title, outFields, searchFields, suggestionTemplate } = config;
     setSearchWidgetConfig({
       searchResultsCallback: getSearchResults,
