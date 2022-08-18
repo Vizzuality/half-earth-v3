@@ -226,7 +226,6 @@ const AnalyzeAreasContainer = (props) => {
     batchToggleLayers(layersToToggle.map(l => l.layerId), activeLayers, changeGlobe, categories);
   }
 
-
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 
   const handleDrawClick = () => {
