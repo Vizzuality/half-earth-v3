@@ -82,3 +82,26 @@ import { selectLangUrlState } from 'selectors/location-selectors';
 const getComputedWDPALayers = createSelector(selectLangUrlState, locale => getScripts());
 
 ```
+
+### Strings from precalculated data
+
+For strings that come from precalculated data coming from ArcGIS Online we have them included as a dictionary on different functions on the translation-constant.js file. We have to instatiate the function then on the component depending on the locale and search for the string on the dictionary if it doesn't exist we should default to the original string.
+```
+translation-constant.js
+
+import { t } from '@transifex/native';
+
+export const getCountries = () => ({ spain: t('spain') });
+
+
+component.js
+import { getCountries } from './translation-constant';
+import { useLocale } from '@transifex/react';
+
+const Component = ({ precalculatedCountry }) => {
+  const locale = useLocale();
+  const countries = useMemo(() => getCountries(), [locale]);
+
+  return countries[precalculatedCountry] || precalculatedCountry;
+};
+```
