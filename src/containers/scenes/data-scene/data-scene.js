@@ -9,15 +9,23 @@ import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
-import mapStateToProps from 'selectors/map-tooltip-selectors';
-import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
+
+import mapStateToProps from './data-scene-selectors';
+
+import {
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+} from 'constants/layers-slugs';
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import { setMapTooltipData } from 'utils/map-tooltip-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 const Container = (props) => {
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
+
+  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics, areaTypeSelected} = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
   const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
   const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
@@ -56,7 +64,7 @@ const Container = (props) => {
           id: customId || attributes[id],
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
-          objectId: attributes.OBJECTID, // Only for feature places
+          objectId: attributes.OBJECTID,
         }
       })
 
@@ -70,14 +78,21 @@ const Container = (props) => {
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
           percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
+          isSubnational: !!attributes.GID_1,
         }
       });
     }
   }
 
   const handleTooltipActionButtonClick = () => {
-    precomputedAoiAnalytics(mapTooltipContent.title);
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug, OBJECTID: mapTooltipContent.objectId } });
+    const { isSubnational, title } = mapTooltipContent;
+    precomputedAoiAnalytics(title);
+
+    const isAdminNational = areaTypeSelected === 'national_boundaries' && !isSubnational;
+    const isAdminSubnational = areaTypeSelected === 'national_boundaries' && isSubnational;
+
+    const precalculatedLayer = isAdminNational  ? GADM_0_ADMIN_AREAS_FEATURE_LAYER : isAdminSubnational ? GADM_1_ADMIN_AREAS_FEATURE_LAYER   : selectedAnalysisLayer.slug;
+    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId } });
   }
 
   useEffect(() => {
@@ -111,6 +126,7 @@ const Container = (props) => {
       selectedAnalysisLayer={selectedAnalysisLayer}
       handleTooltipActionButtonClick={handleTooltipActionButtonClick}
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
+      areaTypeSelected={areaTypeSelected}
       {...props}
     />
   )

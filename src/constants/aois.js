@@ -6,5 +6,6 @@ export const AREA_TYPES = {
   protected: 'protected_areas',
   national: 'national_boundaries',
   subnational: 'subnational_boundaries',
+  administrative: 'administrative_boundaries',
   specificRegions: 'specific_regions',
 }

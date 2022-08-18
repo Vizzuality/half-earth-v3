@@ -8,6 +8,8 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER
@@ -169,6 +171,12 @@ const AnalyzeAreasContainer = (props) => {
     switch (option.slug) {
       case ADMIN_AREAS_FEATURE_LAYER:
         setAreaTypeSelected(AREA_TYPES.administrative);
+        break;
+      case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
+        setAreaTypeSelected(AREA_TYPES.subnational);
+        break;
+      case GADM_0_ADMIN_AREAS_FEATURE_LAYER:
+        setAreaTypeSelected(AREA_TYPES.national);
         break;
       case WDPA_OECM_FEATURE_LAYER:
         setAreaTypeSelected(AREA_TYPES.protected);

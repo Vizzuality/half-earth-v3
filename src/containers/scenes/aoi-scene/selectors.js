@@ -5,6 +5,7 @@ import { selectAoiId, getAoiGeometry, selectAreaType } from 'selectors/aoi-selec
 import aoiSceneConfig from './config';
 
 const selectPrecalculatedLayerSlug = ({ location }) => location.query && location.query.precalculatedLayer;
+
 const selectLocationObjectId = ({ location }) => location.query && location.query.OBJECTID;
 
 const getGlobeSettings = createSelector([selectGlobeUrlState],
