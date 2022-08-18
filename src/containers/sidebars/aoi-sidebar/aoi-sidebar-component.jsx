@@ -52,6 +52,7 @@ const AOISidebarComponent = ({
   setShareModalOpen,
   dataLoaded,
 }) => {
+
   const t = useT();
   const locale = useLocale();
   const humanPressuresLandUse = useMemo(

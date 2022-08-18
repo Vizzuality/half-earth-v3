@@ -24,8 +24,6 @@ import {
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
 
-import { PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
-
 export function getJobInfo(url, params) {
   return new Promise((resolve, reject) => {
     loadModules(["esri/rest/geoprocessor"]).then(async ([geoprocessor]) => {
@@ -203,9 +201,10 @@ export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
   getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then(data => setTaxaData(data));
 };
 
-const getAreaName = (data, config) => {
-  if (!config) return null;
-  return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
+const getAreaName = (data) => {
+  if (data.NAME_1) return `${data.NAME_1}, (${data.GID_0})`;
+  if (!data.NAME_1) return `${data.NAME_0}`;
+  return null;
 }
 
 export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false, areaName) => {
@@ -221,7 +220,7 @@ export const getPrecalculatedContextualData = (data, layerSlug, includeProtected
       landCover: data.land_cover_majority
     },
     area: data.AREA_KM2,
-    areaName: areaName || getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
+    areaName: areaName || getAreaName(data),
     pressures,
     population: data.population_sum,
     ...(includeProtectedAreasList && { ...data.protectedAreasList }),

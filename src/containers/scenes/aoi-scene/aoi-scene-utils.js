@@ -97,6 +97,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
     }
 
     const setNationalOrSubnationalType = () => {
+      console.log('hello', attributes)
       setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
       setPrecalculatedSpeciesData(attributes, setTaxaData);
     }
