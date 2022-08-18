@@ -172,12 +172,6 @@ const AnalyzeAreasContainer = (props) => {
       case ADMIN_AREAS_FEATURE_LAYER:
         setAreaTypeSelected(AREA_TYPES.administrative);
         break;
-      case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.subnational);
-        break;
-      case GADM_0_ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.national);
-        break;
       case WDPA_OECM_FEATURE_LAYER:
         setAreaTypeSelected(AREA_TYPES.protected);
         break;

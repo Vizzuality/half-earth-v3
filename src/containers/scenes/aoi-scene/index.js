@@ -43,14 +43,13 @@ const AOIScene = props => {
 
   const [tooltipInfo, setTooltipInfo] = useState(null);
 
-  const setAreaType = (attributes) => {
+  const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
     if (attributes.GID_1) {
       areaType = AREA_TYPES.subnational;
     } else if (attributes.GID_0) {
       areaType = AREA_TYPES.national;
     }
-    setAreaTypeSelected(areaType);
     return areaType;
   }
 
@@ -64,7 +63,7 @@ const AOIScene = props => {
   // Get PRECALCULATED AOIs
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
-      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t });
+      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t });
     }
   }, [precalculatedLayerSlug, geometryEngine, objectId])
 

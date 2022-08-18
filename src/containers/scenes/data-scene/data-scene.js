@@ -21,15 +21,17 @@ import {
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import { setMapTooltipData } from 'utils/map-tooltip-service';
 
+import { AREA_TYPES } from 'constants/aois';
+
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 const Container = (props) => {
 
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics, areaTypeSelected} = props;
+  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics, areaTypeSelected, mapTooltipData} = props;
+
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
   const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
   const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
-  const [batchTooltipData, updateBatchTooltipData]= useState();
 
   const locale = useLocale();
   const t = useT();
@@ -56,21 +58,10 @@ const Container = (props) => {
 
       setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData});
 
-      updateBatchTooltipData({
-        isVisible: true,
-        geometry,
-        content: {
-          buttonText: t('analyze area'),
-          id: customId || attributes[id],
-          title: customTitle || attributes[title],
-          subtitle: attributes[subtitle],
-          objectId: attributes.OBJECTID,
-        }
-      })
-
       setBatchTooltipData({
         isVisible: true,
         geometry,
+        isSubnational: !!attributes.GID_1,
         content: {
           buttonText: t('analyze area'),
           id: customId || attributes[id],
@@ -78,21 +69,25 @@ const Container = (props) => {
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
           percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
-          isSubnational: !!attributes.GID_1,
         }
       });
     }
   }
 
   const handleTooltipActionButtonClick = () => {
-    const { isSubnational, title } = mapTooltipContent;
+    const { title } = mapTooltipContent;
+    const { isSubnational } = mapTooltipData;
     precomputedAoiAnalytics(title);
 
-    const isAdminNational = areaTypeSelected === 'national_boundaries' && !isSubnational;
-    const isAdminSubnational = areaTypeSelected === 'national_boundaries' && isSubnational;
+    const isAdminNational = areaTypeSelected === AREA_TYPES.administrative && !isSubnational;
+    const isAdminSubnational = areaTypeSelected === AREA_TYPES.administrative && isSubnational;
 
-    const precalculatedLayer = isAdminNational  ? GADM_0_ADMIN_AREAS_FEATURE_LAYER : isAdminSubnational ? GADM_1_ADMIN_AREAS_FEATURE_LAYER   : selectedAnalysisLayer.slug;
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId } });
+    const precalculatedLayer = () => {
+      if ( isAdminNational) return GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+      if (isAdminSubnational) return GADM_1_ADMIN_AREAS_FEATURE_LAYER;
+      return selectedAnalysisLayer.slug;
+    }
+    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: precalculatedLayer(), OBJECTID: mapTooltipContent.objectId } });
   }
 
   useEffect(() => {
@@ -107,7 +102,7 @@ const Container = (props) => {
       const { description, designation_type, IUCN_type, status, status_year } = protectedAreaTooltipData;
 
       setBatchTooltipData({
-          ...batchTooltipData,
+          ...mapTooltipData,
           content: {
             ...mapTooltipContent,
             description,
