@@ -26,6 +26,7 @@ const LanguageSwitcher = (props) => {
           });
         }}
       >
+        Hola
         {code}
       </button>
     ));
