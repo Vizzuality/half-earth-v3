@@ -62,7 +62,7 @@ const setSpecificRegion = ({ aoiId, setGeometry, setContextualData, setTaxaData,
 }
 
 // PRECALCULATED AOIs
-export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t }) => {
+export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t }) => {
 
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
     return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe, t });
@@ -101,7 +101,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
       setPrecalculatedSpeciesData(attributes, setTaxaData);
     }
 
-    const areaType = setAreaType(attributes);
+    const areaType = getAreaType(attributes);
     if (areaType === AREA_TYPES.protected) {
       setProtectedAreasType();
     } else {

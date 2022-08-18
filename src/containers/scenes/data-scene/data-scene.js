@@ -84,7 +84,7 @@ const Container = (props) => {
 
     const precalculatedLayer = () => {
       if ( isAdminNational) return GADM_0_ADMIN_AREAS_FEATURE_LAYER;
-      if (isAdminSubnational) return GADM_1_ADMIN_AREAS_FEATURE_LAYER;
+      if ( isAdminSubnational) return GADM_1_ADMIN_AREAS_FEATURE_LAYER;
       return selectedAnalysisLayer.slug;
     }
     browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: precalculatedLayer(), OBJECTID: mapTooltipContent.objectId } });
