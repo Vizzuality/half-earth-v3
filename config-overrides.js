@@ -35,6 +35,12 @@ module.exports = function override(config, env) {
       'store-middleware': path.resolve(__dirname, 'src/store/store-middleware')
     }
   }
+
+  config.output = {
+    ...config.output,
+    filename: 'static/js/[name].[chunkhash].[contenthash].js',
+    chunkFilename: 'static/js/[name].[chunkhash].[contenthash].chunk.js',
+  };
   config = rewireReactHotLoader(config, env);
   return config;
 }
