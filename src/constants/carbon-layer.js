@@ -6,6 +6,6 @@ export const getCarbonLayer = () => {
   return ({
     name: CARBON_LAYER_LABEL,
     value: CARBON_LAYER,
-    slug: CARBON_LAYER
+    slug: CARBON_LAYER,
   });
-}
+};

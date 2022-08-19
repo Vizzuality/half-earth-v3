@@ -5,24 +5,23 @@ import { MODALS } from 'constants/ui-params';
 import * as urlActions from 'actions/url-actions';
 import { openSpeciesListAnalytics } from 'actions/google-analytics-actions';
 
-const actions = {...urlActions, openSpeciesListAnalytics };
+const actions = { ...urlActions, openSpeciesListAnalytics };
 
-const LocalSpeciesCardContainer = (props) => {
-
+function LocalSpeciesCardContainer(props) {
   const toggleModal = () => {
     const { openedModal, changeUI, openSpeciesListAnalytics } = props;
     changeUI({ openedModal: !openedModal ? MODALS.SPECIES : null });
     if (!openedModal) {
-      openSpeciesListAnalytics()
+      openSpeciesListAnalytics();
     }
-  }
+  };
 
   return (
     <Component
       {...props}
       toggleModal={toggleModal}
     />
-  )
+  );
 }
 
 export default connect(null, actions)(LocalSpeciesCardContainer);

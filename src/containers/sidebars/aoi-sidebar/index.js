@@ -12,12 +12,14 @@ import { postAoiToDataBase } from 'utils/geo-processing-services';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 import { DATA } from 'router';
 
-const actions = { ...urlActions, ...aoiAnalyticsActions }
+const actions = { ...urlActions, ...aoiAnalyticsActions };
 
-const AoiSidebarContainer = (props) => {
-  const { speciesData, contextualData, geometry, browsePage } = props;
+function AoiSidebarContainer(props) {
+  const {
+    speciesData, contextualData, geometry, browsePage,
+  } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  const [values, setFormattedValues] = useState({})
+  const [values, setFormattedValues] = useState({});
 
   const locale = useLocale();
 
@@ -33,7 +35,7 @@ const AoiSidebarContainer = (props) => {
         mainPressure: contextualData.pressures && getMainPressure(contextualData.pressures),
         totalPressures: contextualData.pressures && getTotalPressures(contextualData.pressures),
         protectionPercentage: percentage && percentageFormat(percentage),
-      })
+      });
     }
   }, [contextualData, locale]);
 
@@ -41,7 +43,7 @@ const AoiSidebarContainer = (props) => {
     if (isShareModalOpen && contextualData.isCustom) {
       saveAreaToDB();
     }
-  }, [isShareModalOpen])
+  }, [isShareModalOpen]);
 
   const saveAreaToDB = () => {
     const attributes = {
@@ -53,14 +55,14 @@ const AoiSidebarContainer = (props) => {
       species: JSON.stringify(speciesData.species),
       per_global: contextualData.percentage,
       // per_aoi: 0, Not used yet
-      time_stamp: Date.now()
-    }
-    postAoiToDataBase(geometry, attributes, speciesData)
+      time_stamp: Date.now(),
+    };
+    postAoiToDataBase(geometry, attributes, speciesData);
   };
 
   const handleClose = () => {
     browsePage({ type: DATA });
-  }
+  };
 
   return (
     <Component
@@ -75,7 +77,7 @@ const AoiSidebarContainer = (props) => {
       setShareModalOpen={setShareModalOpen}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(null, actions)(AoiSidebarContainer);

@@ -27,15 +27,17 @@ import mapStateToProps from './selectors';
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 
 // Protected areas are fetched on protected areas modal except for PA type AOIs
-const AOIScene = props => {
-  const { changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected, areaTypeSelected, objectId } = props;
+function AOIScene(props) {
+  const {
+    changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected, areaTypeSelected, objectId,
+  } = props;
 
   const t = useT();
 
-  const [taxaData, setTaxaData] = useState([])
+  const [taxaData, setTaxaData] = useState([]);
   const [geometry, setGeometry] = useState(null);
   const [jsonUtils, setJsonUtils] = useState(null);
-  const [contextualData, setContextualData] = useState({})
+  const [contextualData, setContextualData] = useState({});
   const [geometryEngine, setGeometryEngine] = useState(null);
   const [speciesData, setSpeciesData] = useState({ species: [] });
   const [storedArea, setStoredArea] = useState(null);
@@ -52,34 +54,37 @@ const AOIScene = props => {
     }
     setAreaTypeSelected(areaType);
     return areaType;
-  }
+  };
 
   useEffect(() => {
-    loadModules(["esri/geometry/geometryEngine", "esri/geometry/support/jsonUtils"]).then(([geometryEngine, jsonUtils]) => {
+    loadModules(['esri/geometry/geometryEngine', 'esri/geometry/support/jsonUtils']).then(([geometryEngine, jsonUtils]) => {
       setGeometryEngine(geometryEngine);
       setJsonUtils(jsonUtils);
-    })
-  }, [])
+    });
+  }, []);
 
   // Get PRECALCULATED AOIs
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
-      setPrecalculatedAOIs({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t });
+      setPrecalculatedAOIs({
+        areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t,
+      });
     }
-  }, [precalculatedLayerSlug, geometryEngine, objectId])
+  }, [precalculatedLayerSlug, geometryEngine, objectId]);
 
   // Get NOT PRECALCULATED AOIs
   useEffect(() => {
     if (aoiId && geometryEngine && jsonUtils && !precalculatedLayerSlug) {
-      recoverOrCreateNotPrecalculatedAoi({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t });
+      recoverOrCreateNotPrecalculatedAoi({
+        aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t,
+      });
     }
-  }, [aoiId, geometryEngine, jsonUtils])
-
+  }, [aoiId, geometryEngine, jsonUtils]);
 
   useEffect(() => {
     const orderedSpecies = orderBy([...speciesData.species, ...taxaData], ['has_image', 'conservationConcern'], ['desc', 'desc']);
     setSpeciesData({ species: orderedSpecies });
-  }, [taxaData])
+  }, [taxaData]);
 
   // Reconcile all data until completely loaded
   useEffect(() => {
@@ -88,11 +93,11 @@ const AOIScene = props => {
       const updatedStoredArea = (speciesData.species && speciesData.species.length > 0) ? {
         ...storedArea,
         species: [...speciesData.species],
-        ...contextualData
+        ...contextualData,
       } : {
         ...storedArea,
-        ...contextualData
-      }
+        ...contextualData,
+      };
       writeToForageItem(aoiId, updatedStoredArea);
       setStoredArea(updatedStoredArea, storedArea);
     }
@@ -100,17 +105,16 @@ const AOIScene = props => {
     if (hasAllData) {
       setLoaded(true);
     }
-
   }, [speciesData, precalculatedLayerSlug, contextualData]);
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER] });
     activateLayersOnLoad(map, activeLayers, layersConfig);
-  }
+  };
 
   const handleFuturePlaceClick = (results) => {
-    if(!results) return;
+    if (!results) return;
     const { graphic } = results[0] || {};
     if (!graphic) return;
     const { attributes, geometry } = graphic;
@@ -130,8 +134,7 @@ const AOIScene = props => {
       setTooltipInfo={setTooltipInfo}
       {...props}
     />
-  )
+  );
 }
-
 
 export default connect(mapStateToProps, actions)(AOIScene);

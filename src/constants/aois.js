@@ -7,4 +7,4 @@ export const AREA_TYPES = {
   national: 'national_boundaries',
   subnational: 'subnational_boundaries',
   specificRegions: 'specific_regions',
-}
+};

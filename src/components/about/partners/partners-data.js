@@ -30,20 +30,20 @@ export const getTexts = () => ({
     content: [
       `${t('The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life')}`,
       `<p style="margin-bottom: 0px;">${t('Click here to know more about the core team of Half-Earth:')}</p>`,
-      `<a target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/">www.half-earthproject.org/half-earth-project-team-members</a>`
-    ]
+      '<a target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/">www.half-earthproject.org/half-earth-project-team-members</a>',
+    ],
   },
   platformPartners: {
-    title: t('Platform partner')
+    title: t('Platform partner'),
   },
   sponsors: {
-    title: t('Funding support')
+    title: t('Funding support'),
   },
   dataPartners: {
-    title: t('Data partners')
+    title: t('Data partners'),
   },
   researchPartners: {
-    title: t('Research partners')
+    title: t('Research partners'),
   },
 });
 
@@ -54,118 +54,118 @@ export const getPartners = () => [
     image: {
       src: eoWilsonLogo,
       alt: t('Wilson Biodiversity Foundation'),
-    }
+    },
   },
   {
     href: 'http://www.vizzuality.com/',
-    image: { src: vizzualityLogo, alt: t('vizzuality') }
-  }
+    image: { src: vizzualityLogo, alt: t('vizzuality') },
+  },
 ];
 
 export const getPlatformPartners = () => [
   {
     href: 'https://www.esri.com/en-us/home',
-    image: { src: esriLogo, alt: t('Esri') }
-  }
-]
+    image: { src: esriLogo, alt: t('Esri') },
+  },
+];
 
 export const getDataPartners = () => [
   {
     href: 'https://mol.org/',
-    image: { src: molLogo, alt: t('Map of Life') }
+    image: { src: molLogo, alt: t('Map of Life') },
   },
   {
     href: 'http://coru.oceans.ubc.ca/',
     image: {
       src: changingOceanLogo,
-      alt: t('Changing Ocean Research Unit')
-    }
+      alt: t('Changing Ocean Research Unit'),
+    },
   },
   {
     href: 'https://www.gbif.org/',
-    image: { src: gbifLogo, alt: t('GBIF') }
+    image: { src: gbifLogo, alt: t('GBIF') },
   },
   {
     href: 'https://ebird.org/home',
-    image: { src: eBirdLogo, alt: t('eBird') }
+    image: { src: eBirdLogo, alt: t('eBird') },
   },
   {
     href: 'https://www.iucn.org/',
-    image: { src: iucnLogo, alt: t('iucn') }
+    image: { src: iucnLogo, alt: t('iucn') },
   },
   {
     href: 'http://globalfishingwatch.org/',
     image: {
       src: globalFishingWatchLogo,
-      alt: t('Global Fishing Watch')
-    }
+      alt: t('Global Fishing Watch'),
+    },
   },
   {
     href: 'https://www.unep-wcmc.org/',
-    image: { src: unEnvironmentLogo, alt: t('UNEP-WCMC') }
+    image: { src: unEnvironmentLogo, alt: t('UNEP-WCMC') },
   },
   {
     href: 'https://www.esa-landcover-cci.org/',
-    image: { src: esaLogo, alt: t('ESA') }
+    image: { src: esaLogo, alt: t('ESA') },
   },
   {
     href: 'https://raisg.socioambiental.org/',
-    image: { src: raisgLogo, alt: t('RAISG') }
+    image: { src: raisgLogo, alt: t('RAISG') },
   },
   {
     href: 'http://eol.org/',
-    image: { src: eolLogo, alt: t('Encyclopedia of Life') }
+    image: { src: eolLogo, alt: t('Encyclopedia of Life') },
   },
   {
     href: 'https://www.inaturalist.org/',
-    image: { src: inaturalistLogo, alt: t('iNaturalist') }
+    image: { src: inaturalistLogo, alt: t('iNaturalist') },
   },
   {
     href: 'https://www.gorongosa.org/',
-    image: { src: gorongosaLogo, alt: t('Gorongosa National Park') }
+    image: { src: gorongosaLogo, alt: t('Gorongosa National Park') },
   },
   {
     href: 'https://www.fieldmuseum.org/',
-    image: { src: fieldMuseumLogo, alt: t('Field Museum') }
-  }
+    image: { src: fieldMuseumLogo, alt: t('Field Museum') },
+  },
 ];
 
 export const getResearchPartners = () => [
   {
     href: 'https://www.yale.edu/',
-    image: { src: yaleLogo, alt: t('Yale University') }
+    image: { src: yaleLogo, alt: t('Yale University') },
   },
   {
     href: 'https://www.ubc.ca/',
-    image: { src: ubcLogo, alt: t('University of British Columbia') }
+    image: { src: ubcLogo, alt: t('University of British Columbia') },
   },
   {
     href: 'http://www.ufl.edu/',
-    image: { src: universityOfFloridaLogo, alt: t('University of Florida') }
+    image: { src: universityOfFloridaLogo, alt: t('University of Florida') },
   },
   {
     href: 'https://earthengine.google.com/',
-    image: { src: googleEarthEngineLogo, alt: t('Google Earth Engine') }
+    image: { src: googleEarthEngineLogo, alt: t('Google Earth Engine') },
   },
   {
     href: 'https://cloud.google.com',
-    image: { src: googleCloudLogo, alt: t('Google Cloud Platform') }
-  }
+    image: { src: googleCloudLogo, alt: t('Google Cloud Platform') },
+  },
 ];
 
 export const getSponsors = () => [{
-    href: 'https://www.esri.com/en-us/home',
-    image: { src: esriLogo, alt: t('Esri') }
-  },
-  {
-    href: 'https://www.moore.org/',
-    image: { src: mooreFoundationLogo, alt: t('Gordon and Betty Moore Foundation') }
-  },
-  {
-    href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-    image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundationc'), className: 'bbees' }
-  },
-  {
-    label: 'Jeff and Laurie Ubben'
-  }
+  href: 'https://www.esri.com/en-us/home',
+  image: { src: esriLogo, alt: t('Esri') },
+},
+{
+  href: 'https://www.moore.org/',
+  image: { src: mooreFoundationLogo, alt: t('Gordon and Betty Moore Foundation') },
+},
+{
+  href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
+  image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundationc'), className: 'bbees' },
+},
+{
+  label: 'Jeff and Laurie Ubben',
+},
 ];

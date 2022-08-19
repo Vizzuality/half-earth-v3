@@ -32,9 +32,9 @@ export const LAND_COUNTRY_PRIORITY_LAYER = 'land_country_priority_layer';
 export const MARINE_COUNTRY_PRIORITY_LAYER = 'marine_country_priority_layer';
 
 // Terrestrial human pressures tiled layers.
-export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures'
-export const LAND_HUMAN_PRESSURES = 'land_human_pressures'
-export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures'
+export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures';
+export const LAND_HUMAN_PRESSURES = 'land_human_pressures';
+export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures';
 // Land human pressures
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
@@ -46,7 +46,7 @@ export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_land_drive
 export const MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_ocean_drivers_human_pressures';
 export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'commercial_fishing_human_pressures';
 export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_human_pressures';
-//////
+/// ///
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const MASK_LAYER = 'mask-layer';
 export const GLOBAL_SPI_FEATURE_LAYER = 'spi-feature-layer';
@@ -142,7 +142,6 @@ export const WINTER_BIRDS_RICHNESS_1KM = 'winter-birds-richness-1km';
 export const MAMMALS_RARITY_1KM = 'mammals-rich-sa';
 export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
 export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
-
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';

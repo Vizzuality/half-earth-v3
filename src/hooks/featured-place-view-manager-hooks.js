@@ -9,19 +9,19 @@ export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlac
   useEffect(() => {
     const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (selectedFeaturedPlace && featuredPlacesLayer && !isLandscapeMode) {
       const query = featuredPlacesLayer.createQuery();
-      query.where = `nam_slg = '${selectedFeaturedPlace}'`
-      featuredPlacesLayer.queryFeatures(query).then(result => {
+      query.where = `nam_slg = '${selectedFeaturedPlace}'`;
+      featuredPlacesLayer.queryFeatures(query).then((result) => {
         const lon = get(result, 'features[0].geometry.longitude');
         const lat = get(result, 'features[0].geometry.latitude');
         setCoords([lon, lat]);
       });
-    } 
-  }, [selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode])
+    }
+  }, [selectedFeaturedPlace, featuredPlacesLayer, isLandscapeMode]);
 
   useEffect(() => {
     if (coords) {
@@ -29,18 +29,20 @@ export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlac
       const heading = 0;
       const zoom = 6;
       const target = coords;
-      const featuredPlace = { target, zoom, tilt, heading };
+      const featuredPlace = {
+        target, zoom, tilt, heading,
+      };
       const options = {
         speedFactor: 0.5,
-        duration: 1000
-      }
+        duration: 1000,
+      };
       view.goTo(featuredPlace, options)
-        .catch(function(error) {
+        .catch((error) => {
           // Avoid displaying console errors when transition is aborted by user interacions
-          if (error.name !== "AbortError") {
+          if (error.name !== 'AbortError') {
             console.error(error);
           }
         });
     }
-  }, [coords])
+  }, [coords]);
 }

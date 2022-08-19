@@ -34,8 +34,7 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
 
   useEffect(() => {
     if (activeSlug && onboardingRefs.current[activeSlug]) {
-      const { top, width, left } =
-        onboardingRefs.current[activeSlug].getBoundingClientRect();
+      const { top, width, left } = onboardingRefs.current[activeSlug].getBoundingClientRect();
       changeUI({
         onboardingTooltipTop: top,
         onboardingTooltipLeft: left + width,
@@ -43,9 +42,11 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
     }
   }, [onboardingRefs, activeSlug]);
   return onboardingRefs;
-}
+};
 
-export const useOpenSection = ({ section, setOpen, onboardingStep, waitingInteraction }) => {
+export const useOpenSection = ({
+  section, setOpen, onboardingStep, waitingInteraction,
+}) => {
   const sections = {
     priority: [1, 2, 3],
     protection: [4],
@@ -66,42 +67,39 @@ export const useOpenSection = ({ section, setOpen, onboardingStep, waitingIntera
       setOpen(true);
     }
   }, [onboardingStep, setOpen, waitingInteraction]);
-}
+};
 
-export const getOnboardingProps = ({ section, slug, styles, changeUI, onboardingStep, onboardingType, waitingInteraction }) => {
-
+export const getOnboardingProps = ({
+  section, slug, styles, changeUI, onboardingStep, onboardingType, waitingInteraction,
+}) => {
   if (!section || typeof onboardingStep !== 'number' || !waitingInteraction) {
     return {};
   }
 
-  const richnessonboardingStep =
-    slug === 'richness' &&
-    onboardingType === 'priority-places' &&
-    onboardingStep === 1;
-  const rarityOnBoardingTab =
-    slug === 'rarity' &&
-    onboardingType === 'priority-places' &&
-    onboardingStep === 2;
-  const challengesOnBoardingTab =
-    slug === 'challenges' &&
-    onboardingType === 'national-report-cards' &&
-    onboardingStep === 3;
-  const rankingOnBoardingTab =
-    slug === 'ranking' &&
-    onboardingType === 'national-report-cards' &&
-    onboardingStep === 4;
+  const richnessonboardingStep = slug === 'richness'
+    && onboardingType === 'priority-places'
+    && onboardingStep === 1;
+  const rarityOnBoardingTab = slug === 'rarity'
+    && onboardingType === 'priority-places'
+    && onboardingStep === 2;
+  const challengesOnBoardingTab = slug === 'challenges'
+    && onboardingType === 'national-report-cards'
+    && onboardingStep === 3;
+  const rankingOnBoardingTab = slug === 'ranking'
+    && onboardingType === 'national-report-cards'
+    && onboardingStep === 4;
 
-  const isTabActiveStep = richnessonboardingStep ||
-    rarityOnBoardingTab ||
-    challengesOnBoardingTab ||
-    rankingOnBoardingTab;
+  const isTabActiveStep = richnessonboardingStep
+    || rarityOnBoardingTab
+    || challengesOnBoardingTab
+    || rankingOnBoardingTab;
   const outline = '5px solid #00BDB5';
   const transition = {
     duration: 1.75,
     repeat: Infinity,
   };
 
-  const getOutline = (animatedOnboardingStep) => onboardingStep === animatedOnboardingStep && outline
+  const getOutline = (animatedOnboardingStep) => onboardingStep === animatedOnboardingStep && outline;
   return {
     biodiversity: {
       overlay: {
@@ -112,15 +110,14 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
       },
       className: {
         [styles.onboardingOverlay]: !(
-          onboardingStep === 0 ||
-          onboardingStep === 1 ||
-          onboardingStep === 2
+          onboardingStep === 0
+          || onboardingStep === 1
+          || onboardingStep === 2
         ),
         [uiStyles.allowClick]: onboardingStep === 0,
       },
       onClick: {
-        onClick: () =>
-          changeUI({ onboardingStep: 1, waitingInteraction: false }),
+        onClick: () => changeUI({ onboardingStep: 1, waitingInteraction: false }),
       },
     },
 
@@ -136,8 +133,7 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
         [uiStyles.allowClick]: onboardingStep === 4,
       },
       onClick: onboardingStep === 4 && {
-        onClick: () =>
-          changeUI({ onboardingStep: 5, waitingInteraction: false }),
+        onClick: () => changeUI({ onboardingStep: 5, waitingInteraction: false }),
       },
     },
     protection: {
@@ -154,8 +150,7 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
         [uiStyles.allowClick]: onboardingStep === 3,
       },
       onClick: onboardingStep === 3 && {
-        onClick: () =>
-          changeUI({ onboardingStep: 4, waitingInteraction: false }),
+        onClick: () => changeUI({ onboardingStep: 4, waitingInteraction: false }),
       },
     },
     nrcLandingSidebar: {
@@ -163,11 +158,10 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
         animate: {
           outline: getOutline(0),
         },
-        transition
+        transition,
       },
       onClick: {
-        onClick: () =>
-          onboardingStep === 0 && changeUI({ onboardingStep: 1, waitingInteraction: false }),
+        onClick: () => onboardingStep === 0 && changeUI({ onboardingStep: 1, waitingInteraction: false }),
       },
     },
     searchNRC: {
@@ -176,26 +170,26 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
           outline: getOutline(1),
         },
         transition,
-      }
+      },
     },
     exploreNRC: {
       overlay: {
         animate: {
           outline: getOutline(2),
         },
-        transition
-      }
+        transition,
+      },
     },
     closure: {
       overlay: {
         animate: {
           outline: getOutline(5),
         },
-        transition
+        transition,
       },
       className: {
         [uiStyles.allowClick]: onboardingStep === 5,
-      }
+      },
     },
     tabs: {
       overlay: {
@@ -210,6 +204,6 @@ export const getOnboardingProps = ({ section, slug, styles, changeUI, onboarding
       className: {
         [uiStyles.allowClick]: isTabActiveStep,
       },
-    }
+    },
   }[section];
 };

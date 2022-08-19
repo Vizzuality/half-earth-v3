@@ -9,7 +9,7 @@ export default {
     isGlobeUpdating: false,
     viewingMode: 'global',
     ui: {
-      components: []
+      components: [],
     },
   },
   ui: {
@@ -17,7 +17,7 @@ export default {
     activeOption: 'add_layer', // mobile
     isFullscreenActive: false,
     activeCategory: '',
-    sceneMode: 'data'
+    sceneMode: 'data',
   },
-  listeners: false
-}
+  listeners: false,
+};

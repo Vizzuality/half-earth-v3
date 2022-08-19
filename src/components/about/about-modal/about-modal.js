@@ -1,1 +1,1 @@
-export { default } from  './about-modal-component';
+export { default } from './about-modal-component';

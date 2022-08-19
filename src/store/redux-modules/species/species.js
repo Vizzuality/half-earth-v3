@@ -7,4 +7,4 @@ const reduxConfig = { actions, reducers, initialState };
 
 reducerRegistry.registerModule('speciesData', reduxConfig);
 
-export default actions; 
+export default actions;

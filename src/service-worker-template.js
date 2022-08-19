@@ -1,16 +1,15 @@
-if ('function' === typeof importScripts) {
+if (typeof importScripts === 'function') {
   /* global importScripts */
   importScripts(
-    'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js'
+    'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js',
   );
   /* global workbox */
   if (workbox) {
-
     workbox.core.setCacheNameDetails({
       prefix: 'HEv3',
       suffix: 'v1',
       precache: 'install-time-cache',
-      runtime: 'run-time-cache'
+      runtime: 'run-time-cache',
     });
 
     // This will be populated at build time
@@ -18,7 +17,7 @@ if ('function' === typeof importScripts) {
     // on the service-worker-build.js file
     workbox.precaching.precacheAndRoute([]);
 
-    /* custom cache rules*/
+    /* custom cache rules */
     workbox.routing.registerNavigationRoute('/index.html');
 
     // Cache own images
@@ -32,7 +31,7 @@ if ('function' === typeof importScripts) {
             maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
           }),
         ],
-      })
+      }),
     );
 
     // Cache own fonts
@@ -45,7 +44,7 @@ if ('function' === typeof importScripts) {
             maxAgeSeconds: 120 * 24 * 60 * 60, // 120 Days
           }),
         ],
-      })
+      }),
     );
 
     // Cache arcgis js API
@@ -62,8 +61,6 @@ if ('function' === typeof importScripts) {
     //     ]
     //   })
     // )
-
-
   } else {
     console.info('Workbox could not be loaded. No Offline support');
   }

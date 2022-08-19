@@ -1,6 +1,6 @@
 import {
   LOCAL_SCENE_TABS_SLUGS,
-  BIODIVERSITY_DEFAULT_TAB
+  BIODIVERSITY_DEFAULT_TAB,
 } from 'constants/ui-params';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
@@ -14,5 +14,5 @@ export const NRC_UI_DEFAULTS = {
   speciesModalSearch: null,
   speciesModalSort: null,
   rankingSearch: null,
-  sortRankingCategory: null
-}
+  sortRankingCategory: null,
+};

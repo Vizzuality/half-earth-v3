@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { flyToCentroid } from 'utils/globe-events-utils';
 
-const LocalSceneViewManager = ({
+function LocalSceneViewManager({
   view,
   localGeometry,
-}) => {
+}) {
   useEffect(() => {
     if (view && localGeometry) {
       const { extent } = localGeometry;
       view.extent = extent;
-      flyToCentroid(view, localGeometry)
+      flyToCentroid(view, localGeometry);
     }
   }, [localGeometry]);
 

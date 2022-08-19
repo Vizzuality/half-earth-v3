@@ -16,7 +16,7 @@ import {
   SPECIFIC_REGIONS_WDPA_LAYER,
 } from 'constants/layers-slugs';
 import {
-  AREA_TYPES
+  AREA_TYPES,
 } from 'constants/aois';
 
 // actions
@@ -28,7 +28,7 @@ import Component from './component';
 
 const actions = { ...aoisActions };
 
-const Container = (props) => {
+function Container(props) {
   const { aoiId, areaTypeSelected, contextualData } = props;
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(null);
@@ -39,34 +39,31 @@ const Container = (props) => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
-  }
+  };
 
   const handleSortChange = (value) => {
     setSorting(value);
-  }
+  };
 
   const sortFunction = (a, b) => {
-    if (a[sorting.value] > b[sorting.value])
-      return sorting.ascending ? 1 : -1;
-    else if (a[sorting.value] < b[sorting.value])
-      return sorting.ascending ? -1 : 1;
-    else
-      return 0;
-  }
+    if (a[sorting.value] > b[sorting.value]) return sorting.ascending ? 1 : -1;
+    if (a[sorting.value] < b[sorting.value]) return sorting.ascending ? -1 : 1;
+    return 0;
+  };
 
   useEffect(() => {
     if (search && search !== '') {
       setFilteredData([...data.filter((row) => {
         const searchLowerCase = search.toLowerCase();
-        return row.NAME.toLowerCase().includes(searchLowerCase) ||
-          row.GOV_TYP.toLowerCase().includes(searchLowerCase) ||
-          row.IUCN_CA.toLowerCase().includes(searchLowerCase) ||
-          row.DESIG.toLowerCase().includes(searchLowerCase);
+        return row.NAME.toLowerCase().includes(searchLowerCase)
+          || row.GOV_TYP.toLowerCase().includes(searchLowerCase)
+          || row.IUCN_CA.toLowerCase().includes(searchLowerCase)
+          || row.DESIG.toLowerCase().includes(searchLowerCase);
       })]);
     } else {
       setFilteredData([...data]);
     }
-  }, [debouncedSearch])
+  }, [debouncedSearch]);
 
   useEffect(() => {
     const sortedData = [...filteredData];
@@ -101,13 +98,12 @@ const Container = (props) => {
         setFilteredData([...protectedAreas]);
         setLoading(false);
       }
-    }
-    else if (areaTypeSelected === AREA_TYPES.futurePlaces) {
+    } else if (areaTypeSelected === AREA_TYPES.futurePlaces) {
       // --------------- FUTURE PLACES SPECIAL CASE --------------
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
         whereClause: `places = '${contextualData.cluster}'`,
-        returnGeometry: false
+        returnGeometry: false,
       }).then((results) => {
         if (results) {
           const tempData = results.map((f) => f.attributes);
@@ -120,14 +116,13 @@ const Container = (props) => {
         }
         setLoading(false);
       });
-    }
-    else if (areaTypeSelected === AREA_TYPES.specificRegions) {
+    } else if (areaTypeSelected === AREA_TYPES.specificRegions) {
       // --------------- SPECIFIC REGIONS SPECIAL CASE --------------
       const region = contextualData.aoiId && contextualData.aoiId.replace('region-', '');
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[SPECIFIC_REGIONS_WDPA_LAYER],
         whereClause: `region = '${region}'`,
-        returnGeometry: false
+        returnGeometry: false,
       }).then((results) => {
         if (results) {
           const tempData = results.map((f) => f.attributes);
@@ -140,8 +135,7 @@ const Container = (props) => {
         }
         setLoading(false);
       });
-    }
-    else if (areaTypeSelected === AREA_TYPES.protected) {
+    } else if (areaTypeSelected === AREA_TYPES.protected) {
       // --------------- PROTECTED AREA SPECIAL CASE --------------
       const areaValue = {
         DESIG: contextualData.DESIG_E,
@@ -150,17 +144,17 @@ const Container = (props) => {
         IUCN_CA: contextualData.IUCN_CA,
         NAME: contextualData.NAME,
         NAME_0: contextualData.ISO3,
-       GOV_TYP: contextualData.GOV_TYP,
-     }
-     setData([areaValue]);
-     setFilteredData([areaValue]);
-     setLoading(false);
+        GOV_TYP: contextualData.GOV_TYP,
+      };
+      setData([areaValue]);
+      setFilteredData([areaValue]);
+      setLoading(false);
     } else if (aoiId) {
     // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
         url: urlValue,
         whereClause: `MOL_IDg = '${aoiId}'`,
-        returnGeometry: false
+        returnGeometry: false,
       }).then((features) => {
         if (features) {
           const tempData = features.map((f) => f.attributes);
@@ -174,7 +168,6 @@ const Container = (props) => {
         setLoading(false);
       });
     }
-
   }, [aoiId, contextualData]);
 
   return (
@@ -185,7 +178,7 @@ const Container = (props) => {
       loading={loading}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(Container);

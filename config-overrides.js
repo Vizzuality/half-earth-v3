@@ -1,8 +1,9 @@
 const path = require('path');
+const rewireReactHotLoader = require('react-app-rewire-hot-loader');
+
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 // Hot reload without eject
 // docs on: https://github.com/cdharris/react-app-rewire-hot-loader
-const rewireReactHotLoader = require('react-app-rewire-hot-loader')
 
 module.exports = function override(config, env) {
   config.resolve = {
@@ -32,9 +33,10 @@ module.exports = function override(config, env) {
       images: path.resolve(__dirname, 'src/assets/images'),
       gifs: path.resolve(__dirname, 'src/assets/gifs'),
       sounds: path.resolve(__dirname, 'src/assets/sounds'),
-      'store-middleware': path.resolve(__dirname, 'src/store/store-middleware')
-    }
-  }
+      'store-middleware': path.resolve(__dirname, 'src/store/store-middleware'),
+    },
+  };
+  // eslint-disable-next-line no-param-reassign
   config = rewireReactHotLoader(config, env);
   return config;
-}
+};

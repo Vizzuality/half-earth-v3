@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useWatchUtils } from 'hooks/esri';
 import Component from './national-report-pdf-component';
@@ -14,25 +14,25 @@ const NationalReportPdfContainer = (props) => {
 
   useEffect(() => {
     setNrcUrl(`${window.location.origin}${window.location.pathname}`);
-  }, [countryISO])
+  }, [countryISO]);
 
   useEffect(() => {
-    watchHandle = watchUtils && watchUtils.whenFalseOnce(view, "updating", function(updating) {
-        getSceneImageUrl();
-    })
+    watchHandle = watchUtils && watchUtils.whenFalseOnce(view, 'updating', (updating) => {
+      getSceneImageUrl();
+    });
     return function cleanUp() {
       watchHandle && watchHandle.remove();
-    }
-  },[watchUtils, countryISO]);
+    };
+  }, [watchUtils, countryISO]);
 
-  const getSceneImageUrl = ()=> {
+  const getSceneImageUrl = () => {
     const options = {
-      width: 430
-    }
-    view.takeScreenshot(options).then(function(screenshot) {
+      width: 430,
+    };
+    view.takeScreenshot(options).then((screenshot) => {
       setSceneScreenshotUrl(screenshot.dataUrl);
-    })
-  }
+    });
+  };
 
   return (
     ReactDOM.createPortal(
@@ -41,9 +41,9 @@ const NationalReportPdfContainer = (props) => {
         sceneScreenshotUrl={sceneScreenshotUrl}
         {...props}
       />,
-      document.getElementById('root')
+      document.getElementById('root'),
     )
-  )
-}
+  );
+};
 
 export default connect(mapStateToProps, null)(NationalReportPdfContainer);

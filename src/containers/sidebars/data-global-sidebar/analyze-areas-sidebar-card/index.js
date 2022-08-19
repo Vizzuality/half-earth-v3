@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 // constants
 import { getPrecalculatedAOIOptions, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
-import { PROTECTED_AREAS_VECTOR_TILE_LAYER,COMMUNITY_AREAS_VECTOR_TILE_LAYER,  GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
+import {
+  PROTECTED_AREAS_VECTOR_TILE_LAYER, COMMUNITY_AREAS_VECTOR_TILE_LAYER, GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER,
+} from 'constants/layers-slugs';
 import { AREA_TYPES } from 'constants/aois.js';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -28,42 +30,60 @@ import { loadModules } from 'esri-loader';
 import Component from './component.jsx';
 import mapStateToProps from './analyze-areas-sidebar-card-selectors.js';
 
-const actions = { ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions };
+const actions = {
+  ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions,
+};
 
-const AnalyzeAreasContainer = (props) => {
+function AnalyzeAreasContainer(props) {
   const locale = useLocale();
   const t = useT();
 
   const WARNING_MESSAGES = {
     area: {
       title: t('Area size too big'),
-      description: (size) => (<span>{t('The maximum size for on the fly area analysis is ')}{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}{t(' km')}<sup>2</sup>.
-        {t('The area that you are trying to analyze has ')}{localeFormatting(size)}{t(' km')}<sup>2</sup>. {t('Please select a smaller area to trigger the analysis.')}</span>)
+      description: (size) => (
+        <span>
+          {t('The maximum size for on the fly area analysis is ')}
+          {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
+          {t(' km')}
+          <sup>2</sup>
+          .
+          {t('The area that you are trying to analyze has ')}
+          {localeFormatting(size)}
+          {t(' km')}
+          <sup>2</sup>
+          .
+          {' '}
+          {t('Please select a smaller area to trigger the analysis.')}
+        </span>
+      ),
     },
     file: {
       title: t('Something went wrong with your upload'),
-      description: () => t('Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.')
+      description: () => t('Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.'),
     },
     400: {
       title: t('File too big'),
-      description: () => t('File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.')
+      description: () => t('File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.'),
     },
     500: {
       title: t('Server error'),
-      description: () => t('An error ocurred during the file upload. Please try again')
-    }
-  }
+      description: () => t('An error ocurred during the file upload. Please try again'),
+    },
+  };
 
   const precalculatedAOIOptions = useMemo(() => getPrecalculatedAOIOptions(), [locale]);
 
-  const { browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected, areaTypeSelected } = props;
+  const {
+    browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected, areaTypeSelected,
+  } = props;
   const [selectedOption, setSelectedOption] = useState(precalculatedAOIOptions[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
   const [promptModalContent, setPromptModalContent] = useState({
     title: '',
-    description: ''
-  })
+    description: '',
+  });
 
   useEffect(() => {
     const activeOption = getSelectedAnalysisLayer(activeLayers);
@@ -71,7 +91,7 @@ const AnalyzeAreasContainer = (props) => {
       setSelectedOption(activeOption);
     }
     // Don't remove locale. Is here to recalculate the titles translation
-  }, [locale])
+  }, [locale]);
 
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
@@ -88,12 +108,12 @@ const AnalyzeAreasContainer = (props) => {
       setAoiGeometry({ hash, geometry });
       props.shapeDrawSuccessfulAnalytics();
       browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
-      changeGlobe({ areaTypeSelected })
+      changeGlobe({ areaTypeSelected });
     }
-  }
+  };
 
   const onShapeUploadSuccess = (response) => {
-    loadModules(["esri/geometry/Polygon", "esri/geometry/geometryEngine"])
+    loadModules(['esri/geometry/Polygon', 'esri/geometry/geometryEngine'])
       .then(([Polygon, geometryEngine]) => {
         const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
         const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
@@ -110,13 +130,13 @@ const AnalyzeAreasContainer = (props) => {
           setAoiGeometry({ hash, geometry: geometryInstance });
           props.shapeUploadSuccessfulAnalytics();
           browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
-          changeGlobe({ areaTypeSelected })
+          changeGlobe({ areaTypeSelected });
         }
-      })
-  }
+      });
+  };
 
   const onShapeUploadError = (error) => {
-    if (error.message === "Invalid file format.") {
+    if (error.message === 'Invalid file format.') {
       setPromptModalContent({
         title: WARNING_MESSAGES.file.title,
         description: WARNING_MESSAGES.file.description(),
@@ -129,7 +149,7 @@ const AnalyzeAreasContainer = (props) => {
     }
     setPromptModalOpen(true);
     props.shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
-  }
+  };
 
   const {
     sketchTool,
@@ -155,7 +175,7 @@ const AnalyzeAreasContainer = (props) => {
         handleSketchToolDestroy();
         break;
     }
-  }
+  };
 
   const handleOptionSelection = (option) => {
     // eslint-disable-next-line default-case
@@ -176,16 +196,15 @@ const AnalyzeAreasContainer = (props) => {
         setAreaTypeSelected(AREA_TYPES.specificRegions);
         break;
       default:
-        setAreaTypeSelected(AREA_TYPES.custom)
+        setAreaTypeSelected(AREA_TYPES.custom);
         break;
     }
     handleLayerToggle(option.slug);
     setSelectedOption(option);
     setTooltipIsVisible(false);
-  }
+  };
 
   const handleLayerToggle = (newSelectedOption) => {
-
     const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
@@ -196,18 +215,18 @@ const AnalyzeAreasContainer = (props) => {
 
       if (protectedAreasSelected) {
         const additionalProtectedAreasLayers = [PROTECTED_AREAS_VECTOR_TILE_LAYER, COMMUNITY_AREAS_VECTOR_TILE_LAYER];
-        additionalProtectedAreasLayers.forEach(layer => {
-          if (!activeLayers.some(l => l.title === layer)) {
+        additionalProtectedAreasLayers.forEach((layer) => {
+          if (!activeLayers.some((l) => l.title === layer)) {
             layersToToggle.push({ layerId: layer, category: LAYERS_CATEGORIES.PROTECTION });
           }
-        })
+        });
       }
 
       // Never toggle (remove) future places layer if its active
       // Future places layer will be activated if we select it at some point and never toggled unless we do it from the protection checkbox
-      const futureLayerIsActive = activeLayers.some(l => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
+      const futureLayerIsActive = activeLayers.some((l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
       if (futureLayerIsActive && layersToToggle.includes(HALF_EARTH_FUTURE_TILE_LAYER)) {
-        layersToToggle = layersToToggle.filter(l => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER)
+        layersToToggle = layersToToggle.filter((l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER);
       }
 
       return layersToToggle;
@@ -219,19 +238,18 @@ const AnalyzeAreasContainer = (props) => {
       acc[layer.layerId] = layer.category;
       return acc;
     }, {});
-    batchToggleLayers(layersToToggle.map(l => l.layerId), activeLayers, changeGlobe, categories);
-  }
-
+    batchToggleLayers(layersToToggle.map((l) => l.layerId), activeLayers, changeGlobe, categories);
+  };
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 
   const handleDrawClick = () => {
     if (!sketchTool) {
-      handleSketchToolActivation()
+      handleSketchToolActivation();
     } else {
-      handleSketchToolDestroy()
+      handleSketchToolDestroy();
     }
-  }
+  };
 
   return (
     <Component

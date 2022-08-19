@@ -4,28 +4,28 @@ import { selectGlobeUrlState, selectListenersState } from 'selectors/location-se
 import initialState from './map-iframe-initial-state';
 import sceneSettings from './map-iframe-settings';
 
-const getGlobeSettings = createSelector(selectGlobeUrlState, globeUrlState => {
+const getGlobeSettings = createSelector(selectGlobeUrlState, (globeUrlState) => {
   return {
     ...initialState.globe,
-    ...globeUrlState
-  }
-})
+    ...globeUrlState,
+  };
+});
 
-const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
-  return listenersUrlState ? listenersUrlState : initialState.listeners;
-})
+const getListenersSetting = createSelector(selectListenersState, (listenersUrlState) => {
+  return listenersUrlState || initialState.listeners;
+});
 
-const getSceneSettings = createSelector(getGlobeSettings, globeSettings => {
+const getSceneSettings = createSelector(getGlobeSettings, (globeSettings) => {
   return {
     ...sceneSettings,
     zoom: globeSettings.zoom,
-    center: globeSettings.center
-  }
-})
+    center: globeSettings.center,
+  };
+});
 
-export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
-const getLandscapeMode = createSelector(getGlobeSettings, globeSettings => globeSettings.landscapeView)
-const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
+export const getActiveLayers = createSelector(getGlobeSettings, (globeSettings) => globeSettings.activeLayers);
+const getLandscapeMode = createSelector(getGlobeSettings, (globeSettings) => globeSettings.landscapeView);
+const getGlobeUpdating = createSelector(getGlobeSettings, (globeSettings) => globeSettings.isGlobeUpdating);
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
@@ -33,5 +33,5 @@ export default createStructuredSelector({
   isLandscapeMode: getLandscapeMode,
   sceneSettings: getSceneSettings,
   isGlobeUpdating: getGlobeUpdating,
-  listeners: getListenersSetting
-})
+  listeners: getListenersSetting,
+});

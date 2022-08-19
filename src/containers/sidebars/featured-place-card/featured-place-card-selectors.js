@@ -5,16 +5,16 @@ const selectFeaturedMapPlaces = ({ featuredMapPlaces }) => featuredMapPlaces.dat
 
 const getFeaturedMapsList = createSelector(
   selectFeaturedMapsList,
-  featuredMaps => {
+  (featuredMaps) => {
     if (!featuredMaps) return null;
-    featuredMaps.forEach(map => {
-      map.sourceText = map.slug === "bestPlaces" ? "Half-Earth: Our Planet’s Fight for Life" : null;
+    featuredMaps.forEach((map) => {
+      map.sourceText = map.slug === 'bestPlaces' ? 'Half-Earth: Our Planet’s Fight for Life' : null;
     });
     return featuredMaps;
-  }
-)
+  },
+);
 
 export default createStructuredSelector({
   featuredMapsList: getFeaturedMapsList,
-  featuredMapPlaces: selectFeaturedMapPlaces
-})
+  featuredMapPlaces: selectFeaturedMapPlaces,
+});

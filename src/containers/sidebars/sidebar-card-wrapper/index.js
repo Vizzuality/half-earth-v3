@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Component from './component.jsx';
 
-const Container = (props) => {
+function Container(props) {
   const { children, onClose } = props;
   const [isClosed, setIsClosed] = useState(false);
   const handleCardClose = () => {
@@ -9,18 +9,18 @@ const Container = (props) => {
     if (onClose) {
       onClose();
     }
-  }
+  };
   useEffect(() => {
     // display the content of the card whenever the children are updated
     setIsClosed(false);
-  }, [children])
+  }, [children]);
   return (
     <Component
       isClosed={isClosed}
       onCardClose={handleCardClose}
       {...props}
     />
-  )
+  );
 }
 
 export default Container;

@@ -7,7 +7,7 @@ import {
   LANDSCAPE_FEATURES_LABELS_LAYER,
 } from 'constants/layers-slugs';
 
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs'
+import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 export default {
   globe: {
@@ -17,30 +17,30 @@ export default {
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: ALL_TAXA_PRIORITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY },
-      { title: GADM_0_ADMIN_AREAS_FEATURE_LAYER }
+      { title: GADM_0_ADMIN_AREAS_FEATURE_LAYER },
     ],
     zoom: 3.8,
     center: [16.9515536, 0.116959],
     padding: {
-      left: 300
+      left: 300,
     },
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,
       background: {
-        type: "color",
-        color: [0, 10, 16]
+        type: 'color',
+        color: [0, 10, 16],
       },
-      alphaCompositingEnabled: true
+      alphaCompositingEnabled: true,
     },
     constraints: {
       altitude: {
         max: 35512548,
-        min: 10000
-      }
+        min: 10000,
+      },
     },
     ui: {
-      components: []
+      components: [],
     },
   },
   ui: {
@@ -48,7 +48,7 @@ export default {
     activeOption: 'add_layer', // mobile
     isFullscreenActive: false,
     activeCategory: '',
-    sceneMode: 'data'
+    sceneMode: 'data',
   },
-  listeners: false
-}
+  listeners: false,
+};

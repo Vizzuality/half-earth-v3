@@ -10,9 +10,9 @@ function areEqual(prevProps, nextProps) {
     'freeToPlay',
     'playing',
     'script',
-    'textMark'
+    'textMark',
   ];
-  if (changingKeys.some(key => prevProps[key] !== nextProps[key])) {
+  if (changingKeys.some((key) => prevProps[key] !== nextProps[key])) {
     return false;
   }
   return true;

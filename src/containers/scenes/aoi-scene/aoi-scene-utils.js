@@ -11,8 +11,7 @@ import localforage from 'localforage';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
-import { AREA_TYPES } from 'constants/aois';
-import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
+import { AREA_TYPES, STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 
@@ -25,50 +24,64 @@ import {
 } from 'constants/geo-processing-services';
 
 // PRECALCULATED FUTURE PLACES
-const setFuturePlace = ({ aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData, t }) => {
+const setFuturePlace = ({
+  aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData, t,
+}) => {
   setSpeciesData({ species: [] }); // First reset species data
-  changeGlobe({ areaType: AREA_TYPES.futurePlaces })
+  changeGlobe({ areaType: AREA_TYPES.futurePlaces });
 
   EsriFeatureService.getFeatures({
     url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
     whereClause: `OBJECTID = '${objectId}'`,
-    returnGeometry: true
+    returnGeometry: true,
   }).then((results) => {
     const { attributes, geometry } = results[0];
     setPrecalculatedSpeciesData(attributes, setTaxaData);
     setGeometry(geometry);
     const areaName = `${t('Priority place')} ${attributes.cluster}`;
-    setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId }, null, true, true, areaName))
+    setContextualData(getPrecalculatedContextualData({
+      ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId,
+    }, null, true, true, areaName));
   });
-}
+};
 
 // PRECALCULATED SPECIFIC REGIONS
-const setSpecificRegion = ({ aoiId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData }) => {
+const setSpecificRegion = ({
+  aoiId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData,
+}) => {
   setSpeciesData({ species: [] }); // First reset species data
-  changeGlobe({ areaType: AREA_TYPES.specificRegions })
+  changeGlobe({ areaType: AREA_TYPES.specificRegions });
   const region = aoiId.replace('region-', '');
 
   EsriFeatureService.getFeatures({
     url: LAYERS_URLS[SPECIFIC_REGIONS_TILE_LAYER],
     whereClause: `region = '${region}'`,
-    returnGeometry: true
+    returnGeometry: true,
   }).then((results) => {
     const { attributes, geometry } = results[0];
     const { NAME } = attributes;
     setPrecalculatedSpeciesData(attributes, setTaxaData);
     setGeometry(geometry);
-    setContextualData(getPrecalculatedContextualData({ ...attributes, jsonGeometry: JSON.stringify(geometry), areaName: NAME, aoiId }, null, true, true, NAME))
+    setContextualData(getPrecalculatedContextualData({
+      ...attributes, jsonGeometry: JSON.stringify(geometry), areaName: NAME, aoiId,
+    }, null, true, true, NAME));
   });
-}
+};
 
 // PRECALCULATED AOIs
-export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t }) => {
+export const setPrecalculatedAOIs = ({
+  areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t,
+}) => {
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
-    return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe, t });
+    return setFuturePlace({
+      aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe, t,
+    });
   }
 
   if (areaTypeSelected === AREA_TYPES.specificRegions || precalculatedLayerSlug === SPECIFIC_REGIONS_TILE_LAYER) {
-    return setSpecificRegion({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe });
+    return setSpecificRegion({
+      aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe,
+    });
   }
 
   // WDPA have an url array instead of a single url
@@ -77,7 +90,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
   EsriFeatureService.getFeatures({
     url,
     whereClause: `MOL_ID = '${aoiId}'`,
-    returnGeometry: true
+    returnGeometry: true,
   }).then((features) => {
     const { geometry, attributes } = features[0];
     setGeometry(geometry);
@@ -88,18 +101,18 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
         whereClause: `MOL_ID = '${aoiId}'`,
-        returnGeometry: false
+        returnGeometry: false,
       }).then((results) => {
         const { attributes: protectedAreaAttributes } = results[0];
-        setContextualData(getPrecalculatedContextualData(protectedAreaAttributes, precalculatedLayerSlug, true, true))
+        setContextualData(getPrecalculatedContextualData(protectedAreaAttributes, precalculatedLayerSlug, true, true));
         setPrecalculatedSpeciesData(protectedAreaAttributes, setTaxaData);
       });
-    }
+    };
 
     const setNationalOrSubnationalType = () => {
       setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
       setPrecalculatedSpeciesData(attributes, setTaxaData);
-    }
+    };
 
     const areaType = setAreaType(attributes);
     if (areaType === AREA_TYPES.protected) {
@@ -107,15 +120,19 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
     } else {
       setNationalOrSubnationalType();
     }
-  })
-}
+  });
+};
 
 // NOT PRECALCULATED AOIs
 
-const createNewCustomAOI = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, t }) => {
+const createNewCustomAOI = ({
+  aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, t,
+}) => {
   const areaName = t('Custom area');
   const area = calculateGeometryArea(aoiStoredGeometry, geometryEngine);
-  const contextualData = { area, areaName, aoiId, isCustom: true }
+  const contextualData = {
+    area, areaName, aoiId, isCustom: true,
+  };
   // Set data before fetch just to show name and available info
   setContextualData(contextualData);
 
@@ -130,7 +147,7 @@ const createNewCustomAOI = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtil
     setContextualData({ ...data, ...contextualData });
   });
 
-  [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach(taxa => {
+  [BIRDS, MAMMALS, REPTILES, AMPHIBIANS].forEach((taxa) => {
     getSpeciesData(taxa, aoiStoredGeometry).then((data) => {
       let dataWithoutWhales = data;
       // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
@@ -139,52 +156,68 @@ const createNewCustomAOI = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtil
       }
       setTaxaData(dataWithoutWhales);
     });
-  })
-}
+  });
+};
 
-const recoverAOIFromDB = ({ aoiData, setContextualData, setGeometry, setSpeciesData }) => {
+const recoverAOIFromDB = ({
+  aoiData, setContextualData, setGeometry, setSpeciesData,
+}) => {
   const { geometry, attributes: { species, ...otherAttributes } } = aoiData;
   setGeometry(geometry);
   setSpeciesData({ species: JSON.parse(species) });
-  setContextualData({ ...otherAttributes,
+  setContextualData({
+    ...otherAttributes,
     ...STRINGIFIED_ATTRIBUTES.reduce((acc, key) => {
       acc[key] = JSON.parse(otherAttributes[key]);
       return acc;
     }, {}),
     percentage: otherAttributes.per_global,
-    isCustom: true
-  })
-}
+    isCustom: true,
+  });
+};
 
-const recoverAOIfromLocal = ({ aoiData, aoiId, jsonUtils, setContextualData, setGeometry, setSpeciesData }) => {
+const recoverAOIfromLocal = ({
+  aoiData, aoiId, jsonUtils, setContextualData, setGeometry, setSpeciesData,
+}) => {
   const { jsonGeometry, species, ...rest } = aoiData;
   const geometry = jsonUtils.fromJSON(jsonGeometry);
   setGeometry(geometry);
   setSpeciesData({ species });
-  const contextualData = { ...rest,
-    aoiId, isCustom: true };
+  const contextualData = {
+    ...rest,
+    aoiId,
+    isCustom: true,
+  };
 
   setContextualData(contextualData);
-}
+};
 
-export const recoverOrCreateNotPrecalculatedAoi = ({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t }) => {
+export const recoverOrCreateNotPrecalculatedAoi = ({
+  aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t,
+}) => {
   localforage.getItem(aoiId).then((localStoredAoi) => {
     if (localStoredAoi && localStoredAoi.jsonGeometry) {
       setAreaTypeSelected(AREA_TYPES.custom);
-      recoverAOIfromLocal({ aoiData: localStoredAoi, aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected });
+      recoverAOIfromLocal({
+        aoiData: localStoredAoi, aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected,
+      });
     } else {
       getAoiFromDataBase(aoiId).then((aoiData) => {
         if (aoiData && aoiData[0]) {
-          recoverAOIFromDB({ aoiData, setContextualData, setGeometry, setSpeciesData });
+          recoverAOIFromDB({
+            aoiData, setContextualData, setGeometry, setSpeciesData,
+          });
         } else {
           // If we don't have it anywhere we just execute the GP services job to create one
-          createNewCustomAOI({ aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, t });
+          createNewCustomAOI({
+            aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, t,
+          });
         }
-      }).catch(error => {
+      }).catch((error) => {
         console.error('Could not retrieve AOI', error);
-      })
+      });
     }
   }).catch((error) => {
-    console.error(error)
-  })
-}
+    console.error(error);
+  });
+};

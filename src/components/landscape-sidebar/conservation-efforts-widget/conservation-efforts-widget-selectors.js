@@ -1,12 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { sumBy } from 'lodash';
-import { getWDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR } from 'constants/protected-areas';
+import {
+  getWDPALayers, PROTECTED_AREAS_COLOR, COMMUNITY_AREAS_COLOR, NOT_UNDER_CONSERVATION_COLOR,
+} from 'constants/protected-areas';
 import { selectLangUrlState } from 'selectors/location-selectors';
 
 export const COMMUNITY_BASED = 'community';
 export const PROTECTED = 'protected';
 export const NOT_UNDER_CONSERVATION = 'notUnderConservation';
-
 
 const conservationEffortsData = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.data;
 const conservationEffortsLoading = ({ conservationEffortsData }) => conservationEffortsData && conservationEffortsData.loading;
@@ -16,7 +17,7 @@ const getActiveLayersFromProps = (state, props) => props.activeLayers;
 
 const getConservationEfforts = createSelector(
   [conservationEffortsData],
-  cellData => {
+  (cellData) => {
     if (!cellData || !cellData.length) return null;
     const conservationEfforts = cellData.reduce((acc, current) => {
       return {
@@ -24,11 +25,11 @@ const getConservationEfforts = createSelector(
         [current.ID]: {
           community: current.comm_prot_prop,
           not_community: current.not_comm_prot_prop,
-          all: current.all_prot_prop
-        }
-        }
+          all: current.all_prot_prop,
+        },
+      };
     }, {});
-    const values = Object.values(conservationEfforts)
+    const values = Object.values(conservationEfforts);
     const gridCellsLength = Object.keys(conservationEfforts).length;
     const community_prop = sumBy(values, 'community') / gridCellsLength;
     const not_community_prop = sumBy(values, 'not_community') / gridCellsLength;
@@ -36,10 +37,10 @@ const getConservationEfforts = createSelector(
     return {
       community_prop,
       not_community_prop,
-      all_prop
-    }
-  }
-)
+      all_prop,
+    };
+  },
+);
 
 const getConservationAreasLogic = createSelector(
   [getConservationEfforts],
@@ -59,16 +60,16 @@ const getConservationAreasLogic = createSelector(
     }
 
     return areas;
-  }
-)
+  },
+);
 
 const getAllPropsForDynamicSentence = createSelector(
   [getConservationEfforts],
   (conservationEfforts) => {
     if (!conservationEfforts) return null;
     return conservationEfforts.all_prop.toFixed(2);
-  }
-)
+  },
+);
 
 const getConservationAreasFormatted = createSelector(
   [getConservationAreasLogic],
@@ -80,47 +81,55 @@ const getConservationAreasFormatted = createSelector(
     }, {});
 
     return formattedAreas;
-  }
-)
+  },
+);
 
 // locale is here to recompute the data when the language changes
-const getComputedWDPALayers = createSelector(selectLangUrlState, locale => getWDPALayers());
+const getComputedWDPALayers = createSelector(selectLangUrlState, (locale) => getWDPALayers());
 
 const getAlreadyChecked = createSelector(
   [getActiveLayersFromProps, getComputedWDPALayers],
   (activeLayers, wdpaLayers) => {
     if (!activeLayers) return {};
     const alreadyChecked = wdpaLayers.reduce((acc, option) => ({
-      ...acc, [option.value]: activeLayers.some(layer => layer.title === option.title)
+      ...acc, [option.value]: activeLayers.some((layer) => layer.title === option.title),
     }), {});
     return alreadyChecked;
-});
+  },
+);
 
 const getChartData = createSelector(
   [getConservationAreasLogic, getAlreadyChecked],
   (chartValues, alreadyChecked) => {
     if (!chartValues) return null;
     const chartData = [
-      {name: 'protected', value: chartValues[PROTECTED], color: PROTECTED_AREAS_COLOR, explodedSlice: alreadyChecked['Protected areas'] },
-      {name: 'community', value: chartValues[COMMUNITY_BASED], color: COMMUNITY_AREAS_COLOR, explodedSlice: alreadyChecked['Community areas']},
-      {name: 'not under conservation', value: chartValues[NOT_UNDER_CONSERVATION], color: NOT_UNDER_CONSERVATION_COLOR, explodedSlice: false},
-    ]
+      {
+        name: 'protected', value: chartValues[PROTECTED], color: PROTECTED_AREAS_COLOR, explodedSlice: alreadyChecked['Protected areas'],
+      },
+      {
+        name: 'community', value: chartValues[COMMUNITY_BASED], color: COMMUNITY_AREAS_COLOR, explodedSlice: alreadyChecked['Community areas'],
+      },
+      {
+        name: 'not under conservation', value: chartValues[NOT_UNDER_CONSERVATION], color: NOT_UNDER_CONSERVATION_COLOR, explodedSlice: false,
+      },
+    ];
     return chartData;
-  }
-)
+  },
+);
 
 const getProtectedLayers = createSelector(
   [getConservationAreasFormatted, getComputedWDPALayers],
   (dataFormatted, wdpaLayers) => {
     if (!dataFormatted) return [];
-    const protectedLayers = wdpaLayers.map(layer => ({
+    const protectedLayers = wdpaLayers.map((layer) => ({
       ...layer,
       name: layer.name === 'Protected areas' ? `${layer.name} ${dataFormatted.protected}%` : `${layer.name} ${dataFormatted.community}%`,
       metadataTitle: layer.metadataTitle,
-      rightDot: layer.name === 'Protected areas' ? PROTECTED_AREAS_COLOR : COMMUNITY_AREAS_COLOR
+      rightDot: layer.name === 'Protected areas' ? PROTECTED_AREAS_COLOR : COMMUNITY_AREAS_COLOR,
     })) || [];
     return protectedLayers;
-});
+  },
+);
 
 const getActiveSlices = createSelector(
   [getConservationAreasLogic, getAlreadyChecked],
@@ -137,18 +146,20 @@ const getActiveSlices = createSelector(
       return obj;
     }, {});
     return activeSlices;
-});
+  },
+);
 
 const getSelectedCellsIds = createSelector(
   [gridCellData],
   (cellData) => {
-  if(!cellData) return null;
-  const selectedCellsIDs = cellData.map(i => {
-    const id = i.ID || i.CELL_ID;
-    return `'${id}'`;
-  });
-  return selectedCellsIDs;
-});
+    if (!cellData) return null;
+    const selectedCellsIDs = cellData.map((i) => {
+      const id = i.ID || i.CELL_ID;
+      return `'${id}'`;
+    });
+    return selectedCellsIDs;
+  },
+);
 
 export default createStructuredSelector({
   selectedCellsIDs: getSelectedCellsIds,
@@ -160,5 +171,5 @@ export default createStructuredSelector({
   alreadyChecked: getAlreadyChecked,
   protectedLayers: getProtectedLayers,
   explodedSlices: getActiveSlices,
-  loading: conservationEffortsLoading
+  loading: conservationEffortsLoading,
 });

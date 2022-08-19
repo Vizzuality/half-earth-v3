@@ -55,412 +55,411 @@ import {
   CONIFERS_RICHNESS,
   HUMMINGBIRDS_RARITY,
   HUMMINGBIRDS_RICHNESS,
-} from 'constants/layers-slugs'
+} from 'constants/layers-slugs';
 
 export const LAYER_VARIANTS = {
   PRIORITY: 'priority',
   RICHNESS: 'richness',
-  RARITY: 'rarity'
+  RARITY: 'rarity',
 };
 
 const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
 
 const TAXA_DISTRIBUTION = {
   TERRESTRIAL: 'terrestrial',
-  MARINE: 'marine'
-}
+  MARINE: 'marine',
+};
 
-export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION
+export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION;
 
 export const getResolutions = () => ({
-  LOWEST: {label: t('~55km2 resolution'), slug: 'LOWEST'},
-  LOW: {label: t('~27km2 resolution'), slug: 'LOW'},
-  HIGH: {label: t('~1km2 resolution'), slug: 'HIGH'},
-  COUNTRY: {label: t('Country resolution'), slug: 'COUNTRY'}
+  LOWEST: { label: t('~55km2 resolution'), slug: 'LOWEST' },
+  LOW: { label: t('~27km2 resolution'), slug: 'LOW' },
+  HIGH: { label: t('~1km2 resolution'), slug: 'HIGH' },
+  COUNTRY: { label: t('Country resolution'), slug: 'COUNTRY' },
 });
-
 
 export const getLayersResolution = () => {
   const resolutions = getResolutions();
   return ({
     [PRIORITY]: {
       [TERRESTRIAL]: [resolutions.LOW],
-      [MARINE]: [resolutions.LOWEST]
+      [MARINE]: [resolutions.LOWEST],
     },
     [RICHNESS]: {
       [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH, resolutions.COUNTRY],
-      [MARINE]: [resolutions.LOWEST]
+      [MARINE]: [resolutions.LOWEST],
     },
     [RARITY]: {
       [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH],
-      [MARINE]: [resolutions.LOWEST]
+      [MARINE]: [resolutions.LOWEST],
     },
-  })
+  });
 };
 
-export const DEFAULT_RESOLUTION = {[TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST'};
+export const DEFAULT_RESOLUTION = { [TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST' };
 
 export const getLayersToggleConfig = () => ({
   [PRIORITY]: {
     [TERRESTRIAL]: {
-      'LOW': [
+      LOW: [
         {
           value: ALL_TAXA_PRIORITY,
           name: t('All terrestrial vertebrates'),
           title: t('All terrestrial vertebrates'),
-          layer: ALL_TAXA_PRIORITY
+          layer: ALL_TAXA_PRIORITY,
         },
         {
           value: AMPHIB_PRIORITY,
           name: t('amphibians'),
           title: t('amphibians'),
-          layer: AMPHIB_PRIORITY
+          layer: AMPHIB_PRIORITY,
         },
         {
           value: BIRDS_PRIORITY,
           name: t('birds'),
           title: t('birds'),
-          layer: BIRDS_PRIORITY
+          layer: BIRDS_PRIORITY,
         },
         {
           value: MAMMALS_PRIORITY,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_PRIORITY
+          layer: MAMMALS_PRIORITY,
         },
         {
           value: REPTILES_PRIORITY,
           name: t('reptiles'),
           title: t('reptiles'),
-          layer:  REPTILES_PRIORITY
-        }
-      ]
+          layer: REPTILES_PRIORITY,
+        },
+      ],
     },
     [MARINE]: {
-      'LOWEST': [
+      LOWEST: [
         {
           value: ALL_MARINE_VERTEBRATES_PRIORITY,
           name: t('All marine vertebrates'),
           title: t('All marine vertebrates'),
-          layer: ALL_MARINE_VERTEBRATES_PRIORITY
+          layer: ALL_MARINE_VERTEBRATES_PRIORITY,
         },
         {
           value: FISHES_PRIORITY,
           name: t('fishes'),
           title: t('fishes'),
-          layer: FISHES_PRIORITY
+          layer: FISHES_PRIORITY,
         },
         {
           value: MARINE_MAMMALS_PRIORITY,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MARINE_MAMMALS_PRIORITY
+          layer: MARINE_MAMMALS_PRIORITY,
         },
-      ]
-    }
+      ],
+    },
   },
   [RICHNESS]: {
     [TERRESTRIAL]: {
-      'LOW': [
+      LOW: [
         {
           value: ALL_TAXA_RICHNESS,
           name: t('all groups'),
           title: t('all groups'),
-          layer: ALL_TAXA_RICHNESS
+          layer: ALL_TAXA_RICHNESS,
         },
         {
           value: AMPHIB_RICHNESS,
           name: t('amphibians'),
           title: t('amphibians'),
-          layer: AMPHIB_RICHNESS
+          layer: AMPHIB_RICHNESS,
         },
         {
           value: BIRDS_RICHNESS,
           name: t('birds'),
           title: t('birds'),
-          layer: BIRDS_RICHNESS
+          layer: BIRDS_RICHNESS,
         },
         {
           value: CACTI_RICHNESS,
           name: t('cacti'),
           title: t('cacti'),
-          layer: CACTI_RICHNESS
+          layer: CACTI_RICHNESS,
         },
         {
           value: CONIFERS_RICHNESS,
           name: t('conifers'),
           title: t('conifers'),
-          layer: CONIFERS_RICHNESS
+          layer: CONIFERS_RICHNESS,
         },
         {
           value: MAMMALS_RICHNESS,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_RICHNESS
+          layer: MAMMALS_RICHNESS,
         },
         {
           value: REPTILES_RICHNESS,
           name: t('reptiles'),
           title: t('reptiles'),
-          layer: REPTILES_RICHNESS
-        }
+          layer: REPTILES_RICHNESS,
+        },
       ],
-      'HIGH': [
+      HIGH: [
         {
           value: AMPHIB_RICHNESS_1KM,
           name: t('amphibians'),
           title: t('amphibians'),
-          layer: AMPHIB_RICHNESS_1KM
+          layer: AMPHIB_RICHNESS_1KM,
         },
         {
           value: SA_BIRDS_RICHNESS,
           name: t('birds'),
           title: t('birds'),
-          layer: SA_BIRDS_RICHNESS
+          layer: SA_BIRDS_RICHNESS,
         },
         {
           value: BUTTERFLIES_RICHNESS_1KM,
           name: t('butterflies'),
           title: t('butterflies'),
-          layer: BUTTERFLIES_RICHNESS_1KM
+          layer: BUTTERFLIES_RICHNESS_1KM,
         },
         {
           value: SA_DRAGONFLIES_RICHNESS,
           name: t('dragonflies'),
           title: t('dragonflies'),
-          layer: SA_DRAGONFLIES_RICHNESS
+          layer: SA_DRAGONFLIES_RICHNESS,
         },
         {
           value: HUMMINGBIRDS_RICHNESS,
           name: t('hummingbirds'),
           title: t('hummingbirds'),
-          layer: HUMMINGBIRDS_RICHNESS
+          layer: HUMMINGBIRDS_RICHNESS,
         },
         {
           value: SA_PROTEA_RICHNESS,
           name: t('protea'),
           title: t('protea'),
-          layer: SA_PROTEA_RICHNESS
+          layer: SA_PROTEA_RICHNESS,
         },
         {
           value: REPTILES_RICHNESS_1KM,
           name: t('reptiles'),
           title: t('reptiles'),
-          layer: REPTILES_RICHNESS_1KM
+          layer: REPTILES_RICHNESS_1KM,
         },
         {
           value: SA_RESTIO_RICHNESS,
           name: t('restio'),
           title: t('restio'),
-          layer: SA_RESTIO_RICHNESS
+          layer: SA_RESTIO_RICHNESS,
         },
         {
           value: MAMMALS_RICHNESS_1KM,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_RICHNESS_1KM
+          layer: MAMMALS_RICHNESS_1KM,
         },
         {
           value: SUMMER_BIRDS_RICHNESS_1KM,
           name: t('summer birds'),
           title: t('summer birds'),
-          layer: SUMMER_BIRDS_RICHNESS_1KM
+          layer: SUMMER_BIRDS_RICHNESS_1KM,
         },
         {
           value: WINTER_BIRDS_RICHNESS_1KM,
           name: t('winter birds'),
           title: t('winter birds'),
-          layer: WINTER_BIRDS_RICHNESS_1KM
+          layer: WINTER_BIRDS_RICHNESS_1KM,
         },
       ],
-      'COUNTRY': [
+      COUNTRY: [
         {
           value: ANTS_RICHNESS,
           name: t('ants'),
           title: t('ants'),
-          layer: ANTS_RICHNESS
+          layer: ANTS_RICHNESS,
         },
         {
           value: BUTTERFLIES_RICHNESS,
           name: t('butterflies'),
           title: t('butterflies'),
-          layer: BUTTERFLIES_RICHNESS
+          layer: BUTTERFLIES_RICHNESS,
         },
         {
           value: ODONATES_RICHNESS,
           name: t('odonates'),
           title: t('odonates'),
-          layer: ODONATES_RICHNESS
+          layer: ODONATES_RICHNESS,
         },
         {
           value: SAPINDALES_RICHNESS,
           name: t('sapindales'),
           title: t('sapindales'),
-          layer: SAPINDALES_RICHNESS
+          layer: SAPINDALES_RICHNESS,
         },
-      ]
+      ],
     },
     [MARINE]: {
-      'LOWEST': [
+      LOWEST: [
         {
           value: ALL_MARINE_VERTEBRATES_RICHNESS,
           name: t('all marine vertebrates'),
           title: t('all marine vertebrates'),
-          layer: ALL_MARINE_VERTEBRATES_RICHNESS
+          layer: ALL_MARINE_VERTEBRATES_RICHNESS,
         },
         {
           value: FISHES_RICHNESS,
           name: t('fishes'),
           title: t('fishes'),
-          layer: FISHES_RICHNESS
+          layer: FISHES_RICHNESS,
         },
         {
           value: MARINE_MAMMALS_RICHNESS,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MARINE_MAMMALS_RICHNESS
-        }
-      ]
-    }
+          layer: MARINE_MAMMALS_RICHNESS,
+        },
+      ],
+    },
   },
   [RARITY]: {
     [TERRESTRIAL]: {
-      'LOW': [
+      LOW: [
         {
           value: ALL_TAXA_RARITY,
           name: t('all groups'),
           title: t('all groups'),
-          layer: ALL_TAXA_RARITY
+          layer: ALL_TAXA_RARITY,
         },
         {
           value: AMPHIB_RARITY,
           name: t('amphibians'),
           title: t('amphibians'),
-          layer: AMPHIB_RARITY
+          layer: AMPHIB_RARITY,
         },
         {
           value: BIRDS_RARITY,
           name: t('birds'),
           title: t('birds'),
-          layer: BIRDS_RARITY
+          layer: BIRDS_RARITY,
         },
         {
           value: CACTI_RARITY,
           name: t('cacti'),
           title: t('cacti'),
-          layer: CACTI_RARITY
+          layer: CACTI_RARITY,
         },
         {
           value: CONIFERS_RARITY,
           name: t('conifers'),
           title: t('conifers'),
-          layer: CONIFERS_RARITY
+          layer: CONIFERS_RARITY,
         },
         {
           value: MAMMALS_RARITY,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_RARITY
+          layer: MAMMALS_RARITY,
         },
         {
           value: REPTILES_RARITY,
           name: t('reptiles'),
           title: t('reptiles'),
-          layer: REPTILES_RARITY
-        }
+          layer: REPTILES_RARITY,
+        },
       ],
-      'HIGH': [
+      HIGH: [
         {
           value: AMPHIB_RARITY_1KM,
           name: t('amphibians'),
           title: t('amphibians'),
-          layer: AMPHIB_RARITY_1KM
+          layer: AMPHIB_RARITY_1KM,
         },
         {
           value: SA_BIRDS_RARITY,
           name: t('birds'),
           title: t('birds'),
-          layer: SA_BIRDS_RARITY
+          layer: SA_BIRDS_RARITY,
         },
         {
           value: BUTTERFLIES_RARITY_1KM,
           name: t('butterflies'),
           title: t('butterflies'),
-          layer: BUTTERFLIES_RARITY_1KM
+          layer: BUTTERFLIES_RARITY_1KM,
         },
         {
           value: SA_DRAGONFLIES_RARITY,
           name: t('dragonflies'),
           title: t('dragonflies'),
-          layer: SA_DRAGONFLIES_RARITY
+          layer: SA_DRAGONFLIES_RARITY,
         },
         {
           value: HUMMINGBIRDS_RARITY,
           name: t('hummingbirds'),
           title: t('hummingbirds'),
-          layer: HUMMINGBIRDS_RARITY
+          layer: HUMMINGBIRDS_RARITY,
         },
         {
           value: SA_PROTEA_RARITY,
           name: t('protea'),
           title: t('protea'),
-          layer: SA_PROTEA_RARITY
+          layer: SA_PROTEA_RARITY,
         },
         {
           value: REPTILES_RARITY_1KM,
           name: t('reptiles'),
           title: t('reptiles'),
-          layer: REPTILES_RARITY_1KM
+          layer: REPTILES_RARITY_1KM,
         },
         {
           value: SA_RESTIO_RARITY,
           name: t('restio'),
           title: t('restio'),
-          layer: SA_RESTIO_RARITY
+          layer: SA_RESTIO_RARITY,
         },
         {
           value: MAMMALS_RARITY_1KM,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_RARITY_1KM
+          layer: MAMMALS_RARITY_1KM,
         },
         {
           value: SUMMER_BIRDS_RARITY_1KM,
           name: t('summer birds'),
           title: t('summer birds'),
-          layer: SUMMER_BIRDS_RARITY_1KM
+          layer: SUMMER_BIRDS_RARITY_1KM,
         },
         {
           value: WINTER_BIRDS_RARITY_1KM,
           name: t('winter birds'),
           title: t('winter birds'),
-          layer: WINTER_BIRDS_RARITY_1KM
+          layer: WINTER_BIRDS_RARITY_1KM,
         },
-      ]
+      ],
     },
     [MARINE]: {
-      'LOWEST': [
+      LOWEST: [
         {
           value: ALL_MARINE_VERTEBRATES_RARITY,
           name: t('all marine vertebrates'),
           title: t('all marine vertebrates'),
-          layer: ALL_MARINE_VERTEBRATES_RARITY
+          layer: ALL_MARINE_VERTEBRATES_RARITY,
         },
         {
           value: FISHES_RARITY,
           name: t('fishes'),
           title: t('fishes'),
-          layer: FISHES_RARITY
+          layer: FISHES_RARITY,
         },
         {
           value: MARINE_MAMMALS_RARITY,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MARINE_MAMMALS_RARITY
-        }
-      ]
-    }
-  }
+          layer: MARINE_MAMMALS_RARITY,
+        },
+      ],
+    },
+  },
 });
 
 export const getAOIBiodiversityToggles = () => [
@@ -470,7 +469,7 @@ export const getAOIBiodiversityToggles = () => [
     value: ALL_TAXA_RICHNESS,
     id: ALL_TAXA_RICHNESS,
     slug: ALL_TAXA_RICHNESS,
-    metadataTitle: t('Protected areas')
+    metadataTitle: t('Protected areas'),
   },
   {
     name: t('All groups rarity'),
@@ -478,7 +477,7 @@ export const getAOIBiodiversityToggles = () => [
     value: ALL_TAXA_RARITY,
     id: ALL_TAXA_RARITY,
     slug: ALL_TAXA_RARITY,
-    metadataTitle: t('Protected areas')
+    metadataTitle: t('Protected areas'),
   },
   {
     name: t('All groups priority'),
@@ -486,6 +485,6 @@ export const getAOIBiodiversityToggles = () => [
     id: ALL_TAXA_PRIORITY,
     title: ALL_TAXA_PRIORITY,
     slug: ALL_TAXA_PRIORITY,
-    metadataTitle: t('Protected areas')
-  }
-]
+    metadataTitle: t('Protected areas'),
+  },
+];

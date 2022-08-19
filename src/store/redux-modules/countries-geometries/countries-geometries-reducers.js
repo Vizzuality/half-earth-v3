@@ -7,8 +7,8 @@ function setCountryGeometryLoading(state) {
 }
 
 function setCountryBorderReady(state, { payload }) {
-  const iso = payload.iso;
-  const otherCountryGeometries = (state.data && state.data[iso]) || {}
+  const { iso } = payload;
+  const otherCountryGeometries = (state.data && state.data[iso]) || {};
   return {
     loading: false,
     error: false,
@@ -16,15 +16,15 @@ function setCountryBorderReady(state, { payload }) {
       ...state.data,
       [payload.iso]: {
         ...otherCountryGeometries,
-        borderGraphic: payload.borderGraphic
-      }
-    }
-  }
+        borderGraphic: payload.borderGraphic,
+      },
+    },
+  };
 }
 
 function setCountryMaskReady(state, { payload }) {
-  const iso = payload.iso;
-  const otherCountryGeometries = (state.data && state.data[iso]) || {}
+  const { iso } = payload;
+  const otherCountryGeometries = (state.data && state.data[iso]) || {};
   return {
     loading: false,
     error: false,
@@ -32,14 +32,16 @@ function setCountryMaskReady(state, { payload }) {
       ...state.data,
       [payload.iso]: {
         ...otherCountryGeometries,
-        mask: payload.mask
-      }
-    }
-  }
+        mask: payload.mask,
+      },
+    },
+  };
 }
 
 function setCountryGeometryError(state, { payload }) {
-  return { ...state, loading: false, data: null, error: payload };
+  return {
+    ...state, loading: false, data: null, error: payload,
+  };
 }
 
 export default {

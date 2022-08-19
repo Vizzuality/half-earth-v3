@@ -10,9 +10,9 @@ import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
 import ContentfulService from 'services/contentful';
 import mapStateToProps from './protected-areas-sidebar-card-selectors';
 
-const actions = {...metadataActions, ...urlActions};
+const actions = { ...metadataActions, ...urlActions };
 
-const Container = (props) => {
+function Container(props) {
   const {
     changeGlobe,
     activeLayers,
@@ -24,23 +24,23 @@ const Container = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       if (data) {
         setProtectionsMetadataSource(data.source);
       }
-    })
+    });
   }, [locale]);
 
   const handleLayerToggle = (option) => {
     if (option.layer === 'all') {
       // batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
     } else {
-      selectedLayers.find(layer => layer === option.value) ?
-        setSelectedLayers(selectedLayers.filter(layer => layer !== option.value)) :
-        setSelectedLayers([...selectedLayers, option.value]);
+      selectedLayers.find((layer) => layer === option.value)
+        ? setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value))
+        : setSelectedLayers([...selectedLayers, option.value]);
       layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
     }
-  }
+  };
 
   return (
     <Component
@@ -49,7 +49,7 @@ const Container = (props) => {
       source={protectionMetadataSource}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(Container);

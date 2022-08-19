@@ -12,42 +12,40 @@ export const MAP_IFRAME = 'location/MAP_IFRAME';
 export const routes = {
   [LANDING]: {
     path: '/',
-    page: 'landing'
+    page: 'landing',
   },
   [DATA]: {
     path: '/dataGlobe',
-    page: 'data-globe'
+    page: 'data-globe',
   },
   [FEATURED]: {
     path: '/featuredGlobe',
-    page: 'featured-globe'
+    page: 'featured-globe',
   },
   [MAP_IFRAME]: {
     path: '/map',
-    page: 'map-iframe'
+    page: 'map-iframe',
   },
   [NATIONAL_REPORT_CARD]: {
     path: '/nrc/:iso/:view?',
-    page: 'nrc'
+    page: 'nrc',
   },
   [NATIONAL_REPORT_CARD_LANDING]: {
     path: '/nrc',
-    page: 'nrc-landing'
+    page: 'nrc-landing',
   },
   [AREA_OF_INTEREST]: {
     path: '/aoi/:id?',
-    page: 'aoi'
+    page: 'aoi',
   },
-  [NOT_FOUND]: { path: '/404', thunk: dispatch => dispatch(redirect({ type: LANDING })) }
+  [NOT_FOUND]: { path: '/404', thunk: (dispatch) => dispatch(redirect({ type: LANDING })) },
 };
 
 const options = {
   querySerializer: {
     parse: decodeUrlForState,
-    stringify: encodeStateForUrl
+    stringify: encodeStateForUrl,
   },
-}
-
-
+};
 
 export default connectRoutes(routes, options);
