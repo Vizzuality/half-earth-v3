@@ -23,7 +23,7 @@ export const getCountryData = createSelector(
     return {
       iso: countryData.GID_0,
       name: countryNames[countryData.NAME_0] || countryData.NAME_0,
-      coastal: countryData.Marine === 'True' ? true : false,
+      coastal: countryData.Marine === 'True',
       landSpeciesTotal: countryData[COUNTRY_ATTRIBUTES.nspecies_richness_ter],
       marineSpeciesTotal: countryData.nspecies_mar,
     };

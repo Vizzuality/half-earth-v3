@@ -15,12 +15,14 @@ import { setMapTooltipData } from 'utils/map-tooltip-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
-const Container = (props) => {
-  const { activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics } = props;
+function Container(props) {
+  const {
+    activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics,
+  } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
-  const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum]= useState();
-  const [protectedAreaTooltipData, setProtectedAreaTooltipData]= useState();
-  const [batchTooltipData, updateBatchTooltipData]= useState();
+  const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum] = useState();
+  const [protectedAreaTooltipData, setProtectedAreaTooltipData] = useState();
+  const [batchTooltipData, updateBatchTooltipData] = useState();
 
   const locale = useLocale();
   const t = useT();
@@ -29,7 +31,7 @@ const Container = (props) => {
     if (features && features.length && selectedAnalysisLayer) {
       const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
 
-      const { title, subtitle, id} = tooltipConfig;
+      const { title, subtitle, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
 
       let customId;
@@ -44,7 +46,7 @@ const Container = (props) => {
         customId = `region-${attributes.region}`;
       }
 
-      setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData});
+      setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData });
 
       updateBatchTooltipData({
         isVisible: true,
@@ -55,8 +57,8 @@ const Container = (props) => {
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
-        }
-      })
+        },
+      });
 
       setBatchTooltipData({
         isVisible: true,
@@ -68,7 +70,7 @@ const Container = (props) => {
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
           percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
-        }
+        },
       });
     }
   };
@@ -84,25 +86,26 @@ const Container = (props) => {
     // Don't remove locale. Is here to recalculate the titles translation
   }, [activeLayers, locale]);
 
-
   useEffect(() => {
-    if(protectedAreaTooltipData && landVertebrateSpeciesNum) {
-      const { description, designation_type, IUCN_type, status, status_year } = protectedAreaTooltipData;
+    if (protectedAreaTooltipData && landVertebrateSpeciesNum) {
+      const {
+        description, designation_type, IUCN_type, status, status_year,
+      } = protectedAreaTooltipData;
 
       setBatchTooltipData({
-          ...batchTooltipData,
-          content: {
-            ...mapTooltipContent,
-            description,
-            designation_type,
-            IUCN_type,
-            status,
-            status_year,
-            species: landVertebrateSpeciesNum,
-          }
-        })
+        ...batchTooltipData,
+        content: {
+          ...mapTooltipContent,
+          description,
+          designation_type,
+          IUCN_type,
+          status,
+          status_year,
+          species: landVertebrateSpeciesNum,
+        },
+      });
     }
-  },[landVertebrateSpeciesNum, protectedAreaTooltipData]);
+  }, [landVertebrateSpeciesNum, protectedAreaTooltipData]);
 
   return (
     <Component

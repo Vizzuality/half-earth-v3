@@ -26,24 +26,24 @@ function LocalPriorityCardContainer(props) {
   };
 
   useEffect(() => {
-    const md = metadataConfig[MERGED_PROTECTION]
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    const md = metadataConfig[MERGED_PROTECTION];
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       setProtectionsMetadata(data);
-    })
+    });
   }, [locale]);
 
   useEffect(() => {
-    const md = metadataConfig[COUNTRY_PRIORITY]
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    const md = metadataConfig[COUNTRY_PRIORITY];
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       setPriorityMetadata(data);
-    })
+    });
   }, [locale]);
 
   useEffect(() => {
-    const md = metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER]
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    const md = metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER];
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       setFuturePlacesMetadata(data);
-    })
+    });
   }, [locale]);
 
   return (

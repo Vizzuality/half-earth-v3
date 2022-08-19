@@ -257,19 +257,19 @@ export const getLayersToggleConfig = () => ({
           value: MAMMALS_RICHNESS_1KM,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_RICHNESS_1KM
+          layer: MAMMALS_RICHNESS_1KM,
         },
         {
           value: SUMMER_BIRDS_RICHNESS_1KM,
           name: t('summer birds'),
           title: t('summer birds'),
-          layer: SUMMER_BIRDS_RICHNESS_1KM
+          layer: SUMMER_BIRDS_RICHNESS_1KM,
         },
         {
           value: WINTER_BIRDS_RICHNESS_1KM,
           name: t('winter birds'),
           title: t('winter birds'),
-          layer: WINTER_BIRDS_RICHNESS_1KM
+          layer: WINTER_BIRDS_RICHNESS_1KM,
         },
       ],
       COUNTRY: [
@@ -421,19 +421,19 @@ export const getLayersToggleConfig = () => ({
           value: MAMMALS_RARITY_1KM,
           name: t('mammals'),
           title: t('mammals'),
-          layer: MAMMALS_RARITY_1KM
+          layer: MAMMALS_RARITY_1KM,
         },
         {
           value: SUMMER_BIRDS_RARITY_1KM,
           name: t('summer birds'),
           title: t('summer birds'),
-          layer: SUMMER_BIRDS_RARITY_1KM
+          layer: SUMMER_BIRDS_RARITY_1KM,
         },
         {
           value: WINTER_BIRDS_RARITY_1KM,
           name: t('winter birds'),
           title: t('winter birds'),
-          layer: WINTER_BIRDS_RARITY_1KM
+          layer: WINTER_BIRDS_RARITY_1KM,
         },
       ],
     },

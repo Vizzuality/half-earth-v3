@@ -29,7 +29,7 @@ function SpeciesCardContainer(props) {
   const { speciesData } = props;
   const { species } = speciesData;
 
-  const language = locale !== '' ? locale : 'en'
+  const language = locale !== '' ? locale : 'en';
 
   // Species dropdown
 

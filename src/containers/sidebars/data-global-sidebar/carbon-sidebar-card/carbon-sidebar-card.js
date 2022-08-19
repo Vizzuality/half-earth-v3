@@ -11,9 +11,9 @@ import { layerManagerToggle } from 'utils/layer-manager-utils';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import mapStateToProps from './carbon-sidebar-card-selectors';
 
-const actions = {...metadataActions, ...urlActions};
+const actions = { ...metadataActions, ...urlActions };
 
-const CarbonSidebarCardContainer = (props) => {
+function CarbonSidebarCardContainer(props) {
   const {
     changeGlobe,
     activeLayers,
@@ -25,18 +25,17 @@ const CarbonSidebarCardContainer = (props) => {
 
   useEffect(() => {
     const md = metadataConfig[CARBON_LAYER];
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       if (data) {
         setMetadataSource(data.source);
       }
-    })
+    });
   }, [locale]);
-
 
   const handleLayerToggle = (option, category) => {
     const categoryName = LAYERS_CATEGORIES[category];
     layerManagerToggle(option.value, activeLayers, changeGlobe, categoryName);
-  }
+  };
 
   return (
     <CarbonSidebarCardComponent
@@ -44,7 +43,7 @@ const CarbonSidebarCardContainer = (props) => {
       source={metadataSource}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(CarbonSidebarCardContainer);

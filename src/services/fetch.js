@@ -13,12 +13,11 @@ const fetcher = (url) => (
 );
 
 const fetchWithCache = async (url) => {
-
   try {
     const data = await queryClient.fetchQuery([url], () => fetcher(url));
     return data;
   } catch (error) {
-    console.error('Fetch failed', error)
+    console.error('Fetch failed', error);
   }
 };
 

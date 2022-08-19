@@ -8,6 +8,7 @@ import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
 import metadataConfig from 'constants/metadata';
 import ContentfulService from 'services/contentful';
+
 const actions = { ...metadataActions, ...urlActions };
 
 function Container(props) {
@@ -31,10 +32,10 @@ function Container(props) {
 
   // Just to get the sources of each card
   useEffect(() => {
-    const md = metadataConfig[metadataSlug]
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    const md = metadataConfig[metadataSlug];
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       setMetadata(data);
-    })
+    });
   }, [locale]);
 
   useEffect(() => {

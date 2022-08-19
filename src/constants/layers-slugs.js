@@ -143,7 +143,6 @@ export const MAMMALS_RARITY_1KM = 'mammals-rich-sa';
 export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
 export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
 
-
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';
 export const ODONATES_RICHNESS = 'odonates-richness';

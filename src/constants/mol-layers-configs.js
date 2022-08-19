@@ -520,42 +520,42 @@ export const layersConfig = {
     slug: MAMMALS_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[MAMMALS_RICHNESS_1KM],
-    bbox: USCenteredBbox
+    bbox: USCenteredBbox,
   },
   [SUMMER_BIRDS_RICHNESS_1KM]: {
     title: SUMMER_BIRDS_RICHNESS_1KM,
     slug: SUMMER_BIRDS_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SUMMER_BIRDS_RICHNESS_1KM],
-    bbox: USCenteredBbox
+    bbox: USCenteredBbox,
   },
   [WINTER_BIRDS_RICHNESS_1KM]: {
     title: WINTER_BIRDS_RICHNESS_1KM,
     slug: WINTER_BIRDS_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[WINTER_BIRDS_RICHNESS_1KM],
-    bbox: USCenteredBbox
+    bbox: USCenteredBbox,
   },
   [MAMMALS_RARITY_1KM]: {
     title: MAMMALS_RARITY_1KM,
     slug: MAMMALS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[MAMMALS_RARITY_1KM],
-    bbox: USCenteredBbox
+    bbox: USCenteredBbox,
   },
   [SUMMER_BIRDS_RARITY_1KM]: {
     title: SUMMER_BIRDS_RARITY_1KM,
     slug: SUMMER_BIRDS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[SUMMER_BIRDS_RARITY_1KM],
-    bbox: USCenteredBbox
+    bbox: USCenteredBbox,
   },
   [WINTER_BIRDS_RARITY_1KM]: {
     title: WINTER_BIRDS_RARITY_1KM,
     slug: WINTER_BIRDS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[WINTER_BIRDS_RARITY_1KM],
-    bbox: USCenteredBbox
+    bbox: USCenteredBbox,
   },
   [HUMMINGBIRDS_RARITY]: {
     title: HUMMINGBIRDS_RARITY,
@@ -807,7 +807,7 @@ export const layersConfig = {
     slug: CARBON_LAYER,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[CARBON_LAYER],
-    bbox: null
+    bbox: null,
   },
 };
 

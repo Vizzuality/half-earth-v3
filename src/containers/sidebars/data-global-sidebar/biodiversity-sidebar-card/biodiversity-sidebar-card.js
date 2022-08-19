@@ -41,7 +41,7 @@ function BiodiversitySidebarCard(props) {
   const [selectedResolution, setSelectedResolution] = useState(DEFAULT_RESOLUTION);
   useEffect(() => {
     if (isEmpty(cardMetadata[biodiversityLayerVariant])) {
-      ContentfulService.getMetadata(biodiversityLayerVariant, locale).then(data => {
+      ContentfulService.getMetadata(biodiversityLayerVariant, locale).then((data) => {
         setCardMetadata({
           ...cardMetadata,
           [biodiversityLayerVariant]: {

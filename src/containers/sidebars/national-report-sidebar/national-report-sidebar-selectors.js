@@ -37,7 +37,7 @@ const getCountryName = createSelector([getCountryData, selectLangUrlState], (cou
   const countryNames = getCountryNames();
 
   return countryNames[countryData.NAME_0] || countryData.NAME_0;
-})
+});
 
 const getDescription = createSelector(getCountryData, (countryData) => {
   if (!countryData) return null;
@@ -52,17 +52,17 @@ const getHasPriority = createSelector(getCountryData, (countryData) => {
 // locale is here to recompute the data when the language changes
 const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority, selectLangUrlState, getCountryName], (countryData, hasPriority, locale, countryName) => {
   if (!countryData) return null;
-  return hasPriority ?
-    `${t(`The brightly colored map layer presents one possible configuration
+  return hasPriority
+    ? `${t(`The brightly colored map layer presents one possible configuration
   of the additional areas needed to achieve the Half-Earth goal of
   comprehensive terrestrial biodiversity conservation. Higher values
   indicate locations within `)}${countryName}${t(` that contribute more to the
-  conservation of species habitat.`)}` :
-    `${t(`Our global model of comprehensive terrestrial vertebrate biodiversity
+  conservation of species habitat.`)}`
+    : `${t(`Our global model of comprehensive terrestrial vertebrate biodiversity
   conservation did not identify any areas in `)}${countryName}${t(` in need of additional protection.
-  Further expansion of `)}${countryName}${t(`'s`)}${t(` protected areas will nonetheless promote resilience towards global biodiversity loss,
+  Further expansion of `)}${countryName}${t('\'s')}${t(` protected areas will nonetheless promote resilience towards global biodiversity loss,
   and can contribute to creating a global conservation network with more equity between countries.`)}`;
-})
+});
 
 const getSpeciesProtectionIndex = createSelector(getCountryData, (countryData) => {
   if (!countryData) return null;

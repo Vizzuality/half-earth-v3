@@ -2,12 +2,11 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { WDPA_OECM_FEATURE_DATA_LAYER } from 'constants/layers-slugs.js';
 import EsriFeatureService from 'services/esri-feature-service';
 
-export const setMapTooltipData = ({  molId, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData }) => {
-
+export const setMapTooltipData = ({ molId, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData }) => {
   EsriFeatureService.getFeatures({
     url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
     whereClause: `MOL_ID = '${molId}'`,
-    returnGeometry: false
+    returnGeometry: false,
   }).then((results) => {
     const { attributes } = results[0];
 
@@ -26,6 +25,6 @@ export const setMapTooltipData = ({  molId, setLandVertebrateSpeciesNum, setProt
       IUCN_type: attributes.IUCN_CA,
       designation_type: attributes.DESIG_T,
       percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
-    })
+    });
   });
-}
+};

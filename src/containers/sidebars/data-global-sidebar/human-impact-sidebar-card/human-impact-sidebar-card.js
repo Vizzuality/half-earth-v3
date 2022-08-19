@@ -7,7 +7,7 @@ import Component from './human-impact-sidebar-card-component';
 import metadataConfig from 'constants/metadata';
 import { MARINE_AND_LAND_HUMAN_PRESSURES } from 'constants/layers-slugs';
 import ContentfulService from 'services/contentful';
-import { layerManagerToggle, batchToggleLayers} from 'utils/layer-manager-utils';
+import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
 import { LEGEND_GROUPED_LAYERS_GROUPS } from 'constants/layers-groups';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 import mapStateToProps from './human-impact-sidebar-card-selectors';
@@ -25,11 +25,11 @@ function Container(props) {
 
   useEffect(() => {
     const md = metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES];
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       if (data) {
         setMetadataSource(data.source);
       }
-    })
+    });
   }, [locale]);
 
   const handleLayerToggle = (option, category) => {

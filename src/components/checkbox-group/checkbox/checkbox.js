@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import Component from './checkbox-component';
 import metadataActions from 'redux_modules/metadata';
 
-
-const CheckboxContainer = props => {
+function CheckboxContainer(props) {
   const locale = useLocale();
 
   const handleInfoClick = (option) => {

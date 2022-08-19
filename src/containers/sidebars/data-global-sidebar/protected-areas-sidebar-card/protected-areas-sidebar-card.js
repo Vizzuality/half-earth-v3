@@ -24,11 +24,11 @@ function Container(props) {
 
   useEffect(() => {
     const md = metadataConfig[MERGED_PROTECTION];
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       if (data) {
         setProtectionsMetadataSource(data.source);
       }
-    })
+    });
   }, [locale]);
 
   const handleLayerToggle = (option) => {

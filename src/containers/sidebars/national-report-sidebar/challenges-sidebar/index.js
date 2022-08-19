@@ -14,8 +14,8 @@ function Container(props) {
   const locale = useLocale();
 
   useEffect(() => {
-    const md = metadataConfig[CHALLENGES_CHART]
-    ContentfulService.getMetadata(md.slug, locale).then(data => {
+    const md = metadataConfig[CHALLENGES_CHART];
+    ContentfulService.getMetadata(md.slug, locale).then((data) => {
       setMetadata(data);
     });
   }, []);

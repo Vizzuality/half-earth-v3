@@ -84,7 +84,7 @@ async function parseFeaturedPlaces(data, config, locale) {
   );
 }
 async function parseMetadata(data, locale) {
-  const allItems = data.map(p => p.fields);
+  const allItems = data.map((p) => p.fields);
   const metadata = data[0];
   // Filter other locales data
   if (isOtherLocalesData(metadata, locale, allItems, 'layerSlug')) {
@@ -143,14 +143,14 @@ async function getFeaturedPlacesData(slug, config, locale = 'en') {
 
 async function getMetadata(slug, locale = 'en') {
   const slugWithLocale = locale && locale !== 'en' ? `${slug}_${locale}` : slug;
-  let data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slugWithLocale });
+  let data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField: 'layerSlug', filterValue: slugWithLocale });
   const hasData = (data) => data && data.items && data.items.length > 0;
   if (!hasData(data)) {
     // Try with the english (default) version
-    data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField:'layerSlug', filterValue: slug });
+    data = await fetchContentfulEntry({ contentType: 'metadataProd', filterField: 'layerSlug', filterValue: slug });
   }
 
-  if (!!hasData(data)) {
+  if (hasData(data)) {
     return parseMetadata(data.items, locale);
   }
   return null;
