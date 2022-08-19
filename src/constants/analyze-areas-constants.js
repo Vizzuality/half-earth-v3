@@ -95,6 +95,13 @@ export const PRECALCULATED_LAYERS_CONFIG = {
     name: 'NAME_1',
     subtitle: 'GID_0'
   },
+  [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
+    name: 'NAME_0',
+  },
+  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: {
+    name: 'NAME_1',
+    subtitle: 'GID_0'
+  },
   [WDPA_OECM_FEATURE_LAYER]: {
     name: 'NAME',
   },

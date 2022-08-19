@@ -62,7 +62,7 @@ const setSpecificRegion = ({ aoiId, setGeometry, setContextualData, setTaxaData,
 }
 
 // PRECALCULATED AOIs
-export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t }) => {
+export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t}) => {
 
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
     return setFuturePlace({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe, t });
@@ -71,6 +71,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
   if (areaTypeSelected === AREA_TYPES.specificRegions || precalculatedLayerSlug === SPECIFIC_REGIONS_TILE_LAYER) {
     return setSpecificRegion({  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe });
   }
+
   // WDPA have an url array instead of a single url
   const url = Array.isArray(LAYERS_URLS[precalculatedLayerSlug]) ? LAYERS_URLS[precalculatedLayerSlug][0] : LAYERS_URLS[precalculatedLayerSlug];
 
@@ -97,7 +98,6 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
     }
 
     const setNationalOrSubnationalType = () => {
-      console.log('hello', attributes)
       setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
       setPrecalculatedSpeciesData(attributes, setTaxaData);
     }
