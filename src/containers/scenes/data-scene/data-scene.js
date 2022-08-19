@@ -46,7 +46,7 @@ function Container(props) {
         customId = `region-${attributes.region}`;
       }
 
-      setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData });
+      setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData, t });
 
       updateBatchTooltipData({
         isVisible: true,

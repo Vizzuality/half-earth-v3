@@ -2,7 +2,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 import { WDPA_OECM_FEATURE_DATA_LAYER } from 'constants/layers-slugs.js';
 import EsriFeatureService from 'services/esri-feature-service';
 
-export const setMapTooltipData = ({ molId, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData }) => {
+export const setMapTooltipData = ({ molId, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData, t }) => {
   EsriFeatureService.getFeatures({
     url: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
     whereClause: `MOL_ID = '${molId}'`,
@@ -19,8 +19,8 @@ export const setMapTooltipData = ({ molId, setLandVertebrateSpeciesNum, setProte
     setLandVertebrateSpeciesNum(landVertebrateSpeciesNum);
 
     setProtectedAreaTooltipData({
-      description: `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} in ${attributes.STATUS_}`,
-      status: attributes.STATUS_,
+      description: `${t(attributes.DESIG)}, ${t(attributes.STATUS).toLowerCase()} ${t('in')} ${attributes.STATUS_}`,
+      status: attributes.STATUS,
       status_year: attributes.STATUS_,
       IUCN_type: attributes.IUCN_CA,
       designation_type: attributes.DESIG_T,
