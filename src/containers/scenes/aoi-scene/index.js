@@ -44,12 +44,10 @@ const AOIScene = props => {
   const [tooltipInfo, setTooltipInfo] = useState(null);
 
   const getAreaType = (attributes) => {
-    let areaType = AREA_TYPES.protected;
-    if (attributes.GID_1) {
-      areaType = AREA_TYPES.subnational;
-    } else if (attributes.GID_0) {
-      areaType = AREA_TYPES.national;
-    }
+    let areaType = AREA_TYPES.national;
+    if (attributes.GID_1) return areaType = AREA_TYPES.subnational;
+    if (attributes.GID_0) return areaType = AREA_TYPES.national;
+    if(attributes.DESIG) return areaType = AREA_TYPES.protectedArea;
     return areaType;
   }
 

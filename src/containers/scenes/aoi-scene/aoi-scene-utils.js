@@ -103,6 +103,7 @@ export const setPrecalculatedAOIs = ({ areaTypeSelected, precalculatedLayerSlug,
     }
 
     const areaType = getAreaType(attributes);
+
     if (areaType === AREA_TYPES.protected) {
       setProtectedAreasType();
     } else {
