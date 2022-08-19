@@ -202,6 +202,7 @@ export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
 };
 
 const getAreaName = (data) => {
+  if (data.NAME) return `${data.NAME}`;
   if (data.NAME_1) return `${data.NAME_1}, (${data.GID_0})`;
   if (!data.NAME_1) return `${data.NAME_0}`;
   return null;
