@@ -68,7 +68,8 @@ const MapTooltipComponent = ({
               <div className={styles.speciesContent}>
                 {content.species && (
                   <div className={styles.content}>
-                    <p className={styles.contentData}>{content.species}</p> {t('land vertebrate species')}
+                    <p className={styles.contentData}>{content.species}</p>
+                    <p className={styles.contentDescription}>{t('land vertebrate species')}</p>
                   </div>
                 )}
                 <div className={styles.content}>

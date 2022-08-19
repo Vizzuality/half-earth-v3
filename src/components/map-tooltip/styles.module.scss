@@ -65,11 +65,16 @@
       display: flex;
       line-height: 12px;
       height: 30px;
+      width: 100%;
 
       .contentData {
         font-weight: bold;
         padding-right: 5px;
         width: 38%;
+      }
+
+      .contentDescription {
+        width: 62%;
       }
     }
 
