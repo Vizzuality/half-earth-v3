@@ -20,7 +20,7 @@ export const setMapTooltipData = ({ molId, setLandVertebrateSpeciesNum, setProte
 
     setProtectedAreaTooltipData({
       description: `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} in ${attributes.STATUS_}`,
-      status: attributes.STATUS_,
+      status: attributes.STATUS,
       status_year: attributes.STATUS_,
       IUCN_type: attributes.IUCN_CA,
       designation_type: attributes.DESIG_T,
