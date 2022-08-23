@@ -27,6 +27,7 @@ module.exports = {
     // Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     'import/no-unresolved': 'off',
+    'import/extensions': 'off',
     'react/prop-types': 0,
     'no-console': [1, { allow: ['info', 'warn', 'error'] }],
     'react/jsx-props-no-spreading': [0, {}],
@@ -139,6 +140,11 @@ module.exports = {
           },
           {
             pattern: 'styles/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: './styles**',
             group: 'internal',
             position: 'after',
           },

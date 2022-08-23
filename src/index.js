@@ -16,5 +16,3 @@ function Root() {
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 serviceWorker.register();
-
-
