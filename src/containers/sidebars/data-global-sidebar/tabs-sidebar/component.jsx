@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
@@ -13,13 +13,17 @@ function TabsSidebarComponent({
   className,
   onboardingStep,
   onboardingType,
-
+  activeLayers,
 }) {
   const sidebarTabs = getTabs();
   const [isOpen/* , setOpen */] = useState(false);
   const [activeSidebarTab, setActivesidebarTab] = useState(sidebarTabs[0].slug);
 
   const handleSidebarTabs = (tab) => setActivesidebarTab(tab);
+
+  const categoryActiveLayersCounter = useMemo(() => {
+    return activeLayers.filter((al) => !!al.category).length;
+  }, [activeLayers]);
 
   return (
     <div className={cx(styles.sidebarTabsContainer, className, {
@@ -30,7 +34,7 @@ function TabsSidebarComponent({
     >
       <div className={cx(styles.tabs, className)}>
         <ul className={styles.tabList} role="tablist">
-          {sidebarTabs.map((tab, i) => {
+          {sidebarTabs.map((tab) => {
             const { slug, title } = tab;
             const tabSlug = slug || title;
             const {
@@ -61,12 +65,13 @@ function TabsSidebarComponent({
                   }}
                 >
                   <div
-                    className={cx(
-                      styles.title,
-                      { [styles.active]: slug === activeSidebarTab },
-                      { [styles.first]: i === 0 },
-                    )}
+                    className={styles.titleContainer}
                   >
+                    {(slug === sidebarTabs[0].slug && activeSidebarTab !== slug) && (
+                      <div className={styles.layersIndicator}>
+                        {categoryActiveLayersCounter}
+                      </div>
+                    )}
                     {title}
                   </div>
                 </motion.div>

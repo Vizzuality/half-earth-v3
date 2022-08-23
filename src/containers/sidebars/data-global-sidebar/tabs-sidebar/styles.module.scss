@@ -45,8 +45,29 @@
       border-radius: $border-radius-desktop;
     }
 
-    .title {
+    &[aria-selected="false"] {
+      opacity: 0.6;
+    }
+
+    .titleContainer {
+      align-items: center;
+      display: flex;
+      justify-content: center;
       line-height: 26px;
+
+      .layersIndicator {
+        @extend %subtitle;
+        align-items: center;
+        background-color: $white;
+        border-radius: 100%;
+        color: $elephant;
+        display: flex;
+        height: 16px;
+        justify-content: center;
+        font-weight: 400;
+        margin-right: 10px;
+        width: 16px;
+      }
     }
   }
 
