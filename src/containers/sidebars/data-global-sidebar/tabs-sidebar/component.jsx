@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 
-import Tabs from 'components/tabs';
+import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import styles from './styles.module.scss';
 
@@ -14,27 +15,66 @@ function TabsSidebarComponent({
   onboardingType,
 
 }) {
-  const tabNames = getTabs();
+  const sidebarTabs = getTabs();
   const [isOpen/* , setOpen */] = useState(false);
-  const [activeTab, setActiveTab] = useState(tabNames[0].slug);
+  const [activeSidebarTab, setActivesidebarTab] = useState(sidebarTabs[0].slug);
 
-  console.log({ activeTab });
-
-  const handleTabs = (tabSlug) => setActiveTab(tabSlug);
+  const handleSidebarTabs = (tab) => setActivesidebarTab(tab);
 
   return (
-    <div className={cx(styles.sidebarCardContainer, className, {
+    <div className={cx(styles.sidebarTabsContainer, className, {
       [styles.open]: isOpen,
       [styles.onboardingOverlay]:
           onboardingType === 'priority-places' && onboardingStep === 2,
     })}
     >
-      <Tabs
-        tabs={tabNames}
-        onClick={handleTabs}
-        className={styles.speciesTab}
-        defaultTabSlug={tabNames[0].slug}
-      />
+      <div className={cx(styles.tabs, className)}>
+        <ul className={styles.tabList} role="tablist">
+          {sidebarTabs.map((tab, i) => {
+            const { slug, title } = tab;
+            const tabSlug = slug || title;
+            const {
+              overlay: onboardingOverlay,
+              className: onboardingClassname,
+            } = getOnboardingProps({
+              section: 'tabs',
+              slug: tabSlug,
+              styles,
+              onboardingType,
+              onboardingStep,
+              // waitingInteraction,
+            });
+            return (
+              <li role="presentation" key={`tab-${tabSlug}`}>
+                <motion.div
+                  className={cx(
+                    styles.tab,
+                    onboardingClassname,
+                  )}
+                  role="tab"
+                  aria-selected={slug === activeSidebarTab}
+                  {...onboardingOverlay}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleSidebarTabs(slug);
+                  }}
+                >
+                  <div
+                    className={cx(
+                      styles.title,
+                      { [styles.active]: slug === activeSidebarTab },
+                      { [styles.first]: i === 0 },
+                    )}
+                  >
+                    {title}
+                  </div>
+                </motion.div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

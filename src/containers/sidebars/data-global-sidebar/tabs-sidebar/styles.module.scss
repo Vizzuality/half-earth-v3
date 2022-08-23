@@ -1,86 +1,56 @@
 @import 'styles/settings';
+@import 'styles/ui.module';
 @import 'styles/shared-sidebar.module';
 @import 'styles/typography-extends.scss';
 
-.sidebarCardContainer {
+.sidebarTabsContainer {
   @extend .sharedSidebarCardContainer;
-}
+  padding: 6px;
 
-.cardContentContainer {
-  @extend .sharedLayersTogglesContainer;
-}
-
-.buttonsContainer {
-  display: flex;
-  justify-content: space-between;
-  padding-top: $sidebar-paddings;
-}
-.sectionContainer {
-  padding-top: $sidebar-paddings;
-}
-
-.sizeWarningContainer {
-  display: flex;
-  align-items: center;
-  padding: $paragraph-gutter;
-  margin-bottom: $site-gutter;
-  background-color: $white-opacity;
-  border-radius: $border-radius-desktop;
-  &.active {
-    background-color: $warning;
-  }
-
-  .info {
-    position: relative;
-    top: 3px;
-    fill: $white;
-    margin-right: $paragraph-gutter;
-  }
-
-  .warning {
-    @extend %bodyText;
-    color: $white;
-  }
-}
-
-.separatorLabel,
-.label {
-  @extend %bodyText;
-  color: $white;
-  display: block;
-  padding-bottom: $paragraph-gutter;
-}
-
-.separatorLabel {
-  text-align: center;
-  padding: $sidebar-paddings 0;
-}
-
-.shapeUploader {
-  display: flex;
-  align-items: center;
-  padding: 40px;
-  width: 100%;
-  height: 100px;
-  border: 1px dashed $white;
-  border-radius: $border-radius-desktop;
-  .uploadShapeButton{
-    margin-right: $paragraph-gutter;
-  }
-  .label {
-    padding-bottom: 0;
-  }
-}
-
-.areasHistoryButton {
-  background-color: transparent;
-  border-radius: $border-radius-desktop;
-  margin-top: $sidebar-paddings;
-  span {
-    @extend %bodyText;
-    text-transform: none !important;
-  }
   &:hover {
-    background-color: $white-opacity;
+    border-color: $elephant;
+  }
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+
+  ul[role="tablist"] {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li[role="presentation"] {
+    flex: 1;
+  }
+
+  .tab {
+    @extend %title;
+    display: inline-block;
+    padding: 12px 0;
+    height: 50px;
+    width: 100%;
+    color: $white;
+    text-align: center;
+    cursor: pointer;
+
+    &[aria-selected="true"] {
+      background-color: $elephant;
+      color: $white;
+      border-radius: $border-radius-desktop;
+    }
+
+    .title {
+      line-height: 26px;
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
   }
 }
