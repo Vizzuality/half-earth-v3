@@ -28,6 +28,7 @@ module.exports = {
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'react/jsx-filename-extension': 'off',
     'react/prop-types': 0,
     'no-console': [1, { allow: ['info', 'warn', 'error'] }],
     'react/jsx-props-no-spreading': [0, {}],
