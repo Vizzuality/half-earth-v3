@@ -7,6 +7,8 @@ import { getSidebarTabs } from 'constants/aois';
 
 import uiStyles from 'styles/ui.module.scss';
 
+import TabsSidebar from '../tabs-sidebar';
+
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
 import BiodiversitySidebarCard from './biodiversity-sidebar-card';
 import CarbonSidebarCard from './carbon-sidebar-card';
@@ -14,7 +16,6 @@ import styles from './data-global-sidebar-styles.module.scss';
 import HumanImpactSidebarCard from './human-impact-sidebar-card';
 import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import mapStateToProps from './selectors';
-import TabsSidebar from './tabs-sidebar';
 
 function DataGlobalSidebarComponent({
   map,

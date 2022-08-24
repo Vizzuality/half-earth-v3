@@ -1,4 +1,13 @@
 import React from 'react';
+
+import { t } from '@transifex/native';
+
+import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
+import { percentageFormat } from 'utils/data-formatting-utils';
+
+import {
+  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
+} from 'constants/geo-processing-services';
 import {
   ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
@@ -9,14 +18,6 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
-import { t } from '@transifex/native';
-
-import {
-  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
-} from 'constants/geo-processing-services';
-
-import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
-import { percentageFormat } from 'utils/data-formatting-utils';
 
 const {
   REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI,
@@ -84,11 +85,12 @@ export const getSidebarCardsConfig = () => ({
       </span>
     ),
     hint: t('Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.'),
-    warning: <span>
-      {t('Species summaries are less reliable for areas under 1,000 km')}
-      <sup>2</sup>
-      {t('; only a portion of these species will be found here.')}
-             </span>,
+    warning:
+  <span>
+    {t('Species summaries are less reliable for areas under 1,000 km')}
+    <sup>2</sup>
+    {t('; only a portion of these species will be found here.')}
+  </span>,
   },
   [BIODIVERSITY_SLUG]: {
     title: t('What is the biodiversity pattern in this area?'),

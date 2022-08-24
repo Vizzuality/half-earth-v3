@@ -12,6 +12,14 @@ export const AREA_TYPES = {
   specificRegions: 'specific_regions',
 };
 
+export const BASE_LAYERS = [
+  { title: 'graphic_layer' },
+  { title: 'cities_labels_layer' },
+  { title: 'countries_labels_layer' },
+  { title: 'landscape_features_labels_layer' },
+  { title: 'gadm-0-admin-areas-feature-layer+' },
+];
+
 export const getSidebarTabs = () => [
   { slug: 'map-layers', title: t('Map Layers') },
   { slug: 'analyze-areas', title: t('Analyze Areas') },

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
-import { getSidebarTabs } from 'constants/aois';
+import { BASE_LAYERS, getSidebarTabs } from 'constants/aois';
 
 import styles from './styles.module.scss';
 
@@ -25,18 +25,24 @@ function TabsSidebarComponent({
 }) {
   const sidebarTabs = getSidebarTabs();
 
+  const categoryActiveLayersCounter = useMemo(() => {
+    return activeLayers.map((al, i) => {
+      if (!BASE_LAYERS[i]) return al;
+      return null;
+    }).filter((i) => i !== null).length;
+  }, [activeLayers]);
+
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
-  && sidebarTabActive !== slug;
-  const mapLayersIsActive = (slug) => slug === sidebarTabs[0].slug && sidebarTabActive === slug;
-  const analyzeAreasIsActive = (slug) => slug === sidebarTabs[1].slug;
+  && sidebarTabActive !== slug && categoryActiveLayersCounter > 0;
+
+  const displayMapLayersIcon = (slug) => slug === sidebarTabs[0].slug
+  && (categoryActiveLayersCounter === 0 || sidebarTabActive === slug);
+
+  const displayAnalyzeAreasIcon = (slug) => slug === sidebarTabs[1].slug;
 
   const handleSidebarTabs = (tab) => {
     saveSidebarTab(tab);
   };
-
-  const categoryActiveLayersCounter = useMemo(() => {
-    return activeLayers.filter((al) => !!al.category).length;
-  }, [activeLayers]);
 
   return (
     <div className={cx(styles.sidebarTabsContainer, className, {
@@ -84,10 +90,10 @@ function TabsSidebarComponent({
                       {categoryActiveLayersCounter}
                     </div>
                     )}
-                    {mapLayersIsActive(slug) && (
+                    {displayMapLayersIcon(slug) && (
                       <MapLayersIcon className={styles.tabIcon} />
                     )}
-                    {analyzeAreasIsActive(slug) && (
+                    {displayAnalyzeAreasIcon(slug) && (
                       <AnalyzeAreasIcon className={styles.tabIcon} />
                     )}
                     {title}
