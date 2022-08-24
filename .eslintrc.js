@@ -150,6 +150,11 @@ module.exports = {
             position: 'after',
           },
           {
+            pattern: 'icons/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
             pattern: 'images/**',
             group: 'internal',
             position: 'after',

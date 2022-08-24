@@ -7,6 +7,9 @@ import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import styles from './styles.module.scss';
 
+import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
+import { ReactComponent as MapLayersIcon } from 'icons/map_layers.svg';
+
 import { getTabs } from './constants';
 
 function TabsSidebarComponent({
@@ -16,8 +19,12 @@ function TabsSidebarComponent({
   activeLayers,
 }) {
   const sidebarTabs = getTabs();
-  const [isOpen/* , setOpen */] = useState(false);
   const [activeSidebarTab, setActivesidebarTab] = useState(sidebarTabs[0].slug);
+
+  const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
+  && activeSidebarTab !== slug;
+  const mapLayersIsActive = (slug) => slug === sidebarTabs[0].slug && activeSidebarTab === slug;
+  const analyzeAreasIsActive = (slug) => slug === sidebarTabs[1].slug;
 
   const handleSidebarTabs = (tab) => setActivesidebarTab(tab);
 
@@ -27,7 +34,6 @@ function TabsSidebarComponent({
 
   return (
     <div className={cx(styles.sidebarTabsContainer, className, {
-      [styles.open]: isOpen,
       [styles.onboardingOverlay]:
           onboardingType === 'priority-places' && onboardingStep === 2,
     })}
@@ -67,10 +73,16 @@ function TabsSidebarComponent({
                   <div
                     className={styles.titleContainer}
                   >
-                    {(slug === sidebarTabs[0].slug && activeSidebarTab !== slug) && (
-                      <div className={styles.layersIndicator}>
-                        {categoryActiveLayersCounter}
-                      </div>
+                    {mapLayersCounterIsActive(slug) && (
+                    <div className={styles.layersIndicator}>
+                      {categoryActiveLayersCounter}
+                    </div>
+                    )}
+                    {mapLayersIsActive(slug) && (
+                      <MapLayersIcon className={styles.tabIcon} />
+                    )}
+                    {analyzeAreasIsActive(slug) && (
+                      <AnalyzeAreasIcon className={styles.tabIcon} />
                     )}
                     {title}
                   </div>

@@ -5,7 +5,6 @@
 
 .sidebarTabsContainer {
   @extend .sharedSidebarCardContainer;
-  padding: 6px;
 
   &:hover {
     border-color: $elephant;
@@ -27,6 +26,10 @@
 
   li[role="presentation"] {
     flex: 1;
+    padding: 6px 3px 6px 6px;
+    &:last-child {
+      padding: 6px 6px 6px 3px;
+    }
   }
 
   .tab {
@@ -39,10 +42,18 @@
     text-align: center;
     cursor: pointer;
 
+    &:hover {
+      background-color: $firefly;
+    }
+
     &[aria-selected="true"] {
       background-color: $elephant;
-      color: $white;
       border-radius: $border-radius-desktop;
+      color: $white;
+
+      &:hover {
+        background-color: $firefly;
+      }
     }
 
     &[aria-selected="false"] {
@@ -54,6 +65,12 @@
       display: flex;
       justify-content: center;
       line-height: 26px;
+
+      .tabIcon {
+        height: 18px;
+        width: 18px;
+        margin-right: 10px;
+      }
 
       .layersIndicator {
         @extend %subtitle;
