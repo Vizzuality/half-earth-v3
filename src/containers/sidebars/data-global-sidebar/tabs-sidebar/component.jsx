@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
@@ -12,21 +13,26 @@ import styles from './styles.module.scss';
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as MapLayersIcon } from 'icons/map_layers.svg';
 
+import mapStateToProps from './selectors';
+
 function TabsSidebarComponent({
   className,
   onboardingStep,
   onboardingType,
   activeLayers,
+  saveSidebarTab,
+  sidebarTabActive,
 }) {
   const sidebarTabs = getSidebarTabs();
-  const [activeSidebarTab, setActivesidebarTab] = useState(sidebarTabs[0].slug);
 
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
-  && activeSidebarTab !== slug;
-  const mapLayersIsActive = (slug) => slug === sidebarTabs[0].slug && activeSidebarTab === slug;
+  && sidebarTabActive !== slug;
+  const mapLayersIsActive = (slug) => slug === sidebarTabs[0].slug && sidebarTabActive === slug;
   const analyzeAreasIsActive = (slug) => slug === sidebarTabs[1].slug;
 
-  const handleSidebarTabs = (tab) => setActivesidebarTab(tab);
+  const handleSidebarTabs = (tab) => {
+    saveSidebarTab(tab);
+  };
 
   const categoryActiveLayersCounter = useMemo(() => {
     return activeLayers.filter((al) => !!al.category).length;
@@ -62,7 +68,7 @@ function TabsSidebarComponent({
                     onboardingClassname,
                   )}
                   role="tab"
-                  aria-selected={slug === activeSidebarTab}
+                  aria-selected={slug === sidebarTabActive}
                   {...onboardingOverlay}
                   onClick={(e) => {
                     e.preventDefault();
@@ -95,5 +101,4 @@ function TabsSidebarComponent({
     </div>
   );
 }
-
-export default TabsSidebarComponent;
+export default connect(mapStateToProps, null)(TabsSidebarComponent);
