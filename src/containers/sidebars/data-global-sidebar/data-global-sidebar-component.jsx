@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 import { getSidebarTabs } from 'constants/aois';
 
@@ -43,15 +44,29 @@ function DataGlobalSidebarComponent({
         onboardingType={onboardingType}
       />
       {sidebarTabActive === sidebarTabs[1].slug && (
+      <motion.div
+        initial={{ opacity: 0, x: 200 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.4,
+        }}
+      >
         <AnalyzeAreasSidebarCard
           activeLayers={activeLayers}
           view={view}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
         />
+      </motion.div>
       )}
       {sidebarTabActive === sidebarTabs[0].slug && (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.4,
+          }}
+        >
           <BiodiversitySidebarCard
             map={map}
             view={view}
@@ -84,7 +99,7 @@ function DataGlobalSidebarComponent({
             activeCategory={activeCategory}
             handleGlobeUpdating={handleGlobeUpdating}
           />
-        </div>
+        </motion.div>
       )}
     </div>
   );
