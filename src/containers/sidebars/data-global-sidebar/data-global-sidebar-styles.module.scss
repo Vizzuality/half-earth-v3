@@ -2,10 +2,15 @@
 @import 'styles/settings';
 
 .container {
+  overflow: hidden;
+}
+
+.content {
   @extend %verticalScrollbar;
-  height: calc(100vh - #{$sidebar-top-margin});
+  // height: calc(100vh - #{$sidebar-top-margin});
   width: calc(#{$sidebar-width} + 25px);
   padding-bottom: $site-gutter;
+  overflow-x: hidden;
 }
 
 .togglesContainer {

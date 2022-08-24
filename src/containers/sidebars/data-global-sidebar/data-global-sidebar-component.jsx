@@ -33,33 +33,36 @@ function DataGlobalSidebarComponent({
   const sidebarTabs = getSidebarTabs();
   return (
     <div
-      className={cx(styles.container, className, {
-        [uiStyles.onboardingMode]: !!onboardingType,
-      })}
+      className={cx(styles.container, className)}
     >
-      <TabsSidebar
-        activeLayers={activeLayers}
-        view={view}
-        onboardingStep={onboardingStep}
-        onboardingType={onboardingType}
-      />
-      {sidebarTabActive === sidebarTabs[1].slug && (
-      <motion.div
-        initial={{ opacity: 0, x: 200 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 0.4,
-        }}
+      <div
+        className={cx(styles.content, {
+          [uiStyles.onboardingMode]: !!onboardingType,
+        })}
       >
-        <AnalyzeAreasSidebarCard
+        <TabsSidebar
           activeLayers={activeLayers}
           view={view}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
         />
-      </motion.div>
-      )}
-      {sidebarTabActive === sidebarTabs[0].slug && (
+        {sidebarTabActive === sidebarTabs[1].slug && (
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.4,
+          }}
+        >
+          <AnalyzeAreasSidebarCard
+            activeLayers={activeLayers}
+            view={view}
+            onboardingStep={onboardingStep}
+            onboardingType={onboardingType}
+          />
+        </motion.div>
+        )}
+        {sidebarTabActive === sidebarTabs[0].slug && (
         <motion.div
           initial={{ opacity: 0, x: 200 }}
           animate={{ opacity: 1, x: 0 }}
@@ -100,7 +103,8 @@ function DataGlobalSidebarComponent({
             handleGlobeUpdating={handleGlobeUpdating}
           />
         </motion.div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
