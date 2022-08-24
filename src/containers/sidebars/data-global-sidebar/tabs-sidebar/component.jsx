@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
+import { getSidebarTabs } from 'constants/aois';
+
 import styles from './styles.module.scss';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as MapLayersIcon } from 'icons/map_layers.svg';
-
-import { getTabs } from './constants';
 
 function TabsSidebarComponent({
   className,
@@ -18,7 +18,7 @@ function TabsSidebarComponent({
   onboardingType,
   activeLayers,
 }) {
-  const sidebarTabs = getTabs();
+  const sidebarTabs = getSidebarTabs();
   const [activeSidebarTab, setActivesidebarTab] = useState(sidebarTabs[0].slug);
 
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
