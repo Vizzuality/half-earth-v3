@@ -5,6 +5,7 @@
 
 .sidebarTabsContainer {
   @extend .sharedSidebarCardContainer;
+  @include backdropBlur();
 
   &:hover {
     border-color: $elephant;

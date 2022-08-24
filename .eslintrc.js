@@ -64,17 +64,12 @@ module.exports = {
           },
 
           {
-            pattern: 'selectors/**',
+            pattern: 'esri-loader',
             group: 'builtin',
             position: 'after',
           },
           {
-            pattern: 'actions/**',
-            group: 'builtin',
-            position: 'after',
-          },
-          {
-            pattern: 'utils/**',
+            pattern: 'router',
             group: 'builtin',
             position: 'after',
           },
@@ -93,7 +88,22 @@ module.exports = {
             group: 'builtin',
           },
           {
+            pattern: 'selectors/**',
+            group: 'builtin',
+            position: 'after',
+          },
+          {
             pattern: 'prop-types',
+            group: 'builtin',
+            position: 'after',
+          },
+          {
+            pattern: 'actions/**',
+            group: 'builtin',
+            position: 'after',
+          },
+          {
+            pattern: 'utils/**',
             group: 'builtin',
             position: 'after',
           },

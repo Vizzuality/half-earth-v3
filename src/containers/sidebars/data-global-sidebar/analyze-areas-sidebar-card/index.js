@@ -4,17 +4,18 @@ import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
+import { loadModules } from 'esri-loader';
+
+import { AREA_OF_INTEREST } from 'router';
+
+import { useLocale, useT } from '@transifex/react';
+
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { localeFormatting } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
-
-import { useLocale, useT } from '@transifex/react';
-
-import { loadModules } from 'esri-loader';
-import { AREA_OF_INTEREST } from 'router';
 
 import { useSketchWidget } from 'hooks/esri';
 
@@ -227,6 +228,7 @@ function AnalyzeAreasContainer(props) {
     }, {});
     batchToggleLayers(layersToToggle.map((l) => l.layerId), activeLayers, changeGlobe, categories);
   };
+
   const handleAnalysisTabClick = (selectedTab) => {
     switch (selectedTab) {
       case 'draw':

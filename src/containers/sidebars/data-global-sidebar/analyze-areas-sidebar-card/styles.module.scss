@@ -3,11 +3,15 @@
 @import 'styles/typography-extends.scss';
 
 .sidebarCardContainer {
+  @include backdropBlur();
   @extend .sharedSidebarCardContainer;
+  padding: 0 16px 16px 16px;
 }
 
-.cardContentContainer {
-  @extend .sharedLayersTogglesContainer;
+.subtitle {
+  @extend %bodyText;
+  color: $grey-text;
+  font-weight: 400;
 }
 
 .buttonsContainer {
@@ -15,9 +19,11 @@
   justify-content: space-between;
   padding-top: $sidebar-paddings;
 }
+
 .sectionContainer {
   padding-top: $sidebar-paddings;
 }
+
 
 .sizeWarningContainer {
   display: flex;
@@ -54,22 +60,6 @@
 .separatorLabel {
   text-align: center;
   padding: $sidebar-paddings 0;
-}
-
-.shapeUploader {
-  display: flex;
-  align-items: center;
-  padding: 40px;
-  width: 100%;
-  height: 100px;
-  border: 1px dashed $white;
-  border-radius: $border-radius-desktop;
-  .uploadShapeButton{
-    margin-right: $paragraph-gutter;
-  }
-  .label {
-    padding-bottom: 0;
-  }
 }
 
 .areasHistoryButton {
