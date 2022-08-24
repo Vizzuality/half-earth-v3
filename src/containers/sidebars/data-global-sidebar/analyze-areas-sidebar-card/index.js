@@ -1,9 +1,25 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useLocale, useT } from '@transifex/react';
 import { connect } from 'react-redux';
+import aoisActions from 'redux_modules/aois';
+import aoisGeometriesActions from 'redux_modules/aois-geometries';
+import mapTooltipActions from 'redux_modules/map-tooltip';
 
-// constants
+import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
+import urlActions from 'actions/url-actions';
+
+import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
+import { localeFormatting } from 'utils/data-formatting-utils';
+import { batchToggleLayers } from 'utils/layer-manager-utils';
+
+import { useLocale, useT } from '@transifex/react';
+
+import { loadModules } from 'esri-loader';
+import { AREA_OF_INTEREST } from 'router';
+
+import { useSketchWidget } from 'hooks/esri';
+
 import { getPrecalculatedAOIOptions, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
+import { AREA_TYPES } from 'constants/aois.js';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
@@ -14,31 +30,17 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
-import { AREA_TYPES } from 'constants/aois.js';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
-// utils
-import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
-import { batchToggleLayers } from 'utils/layer-manager-utils';
-import { localeFormatting } from 'utils/data-formatting-utils';
-
-// hooks
-import { useSketchWidget } from 'hooks/esri';
-
-// actions
-import { AREA_OF_INTEREST } from 'router';
-import urlActions from 'actions/url-actions';
-import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
-import mapTooltipActions from 'redux_modules/map-tooltip';
-import aoisGeometriesActions from 'redux_modules/aois-geometries';
-import aoisActions from 'redux_modules/aois';
-import { loadModules } from 'esri-loader';
-
 import Component from './component.jsx';
-import mapStateToProps from './analyze-areas-sidebar-card-selectors.js';
+import mapStateToProps from './selectors.js';
 
 const actions = {
-  ...urlActions, ...mapTooltipActions, ...aoisGeometriesActions, ...aoiAnalyticsActions, ...aoisActions,
+  ...urlActions,
+  ...mapTooltipActions,
+  ...aoisGeometriesActions,
+  ...aoiAnalyticsActions,
+  ...aoisActions,
 };
 
 function AnalyzeAreasContainer(props) {
@@ -48,6 +50,7 @@ function AnalyzeAreasContainer(props) {
   const WARNING_MESSAGES = {
     area: {
       title: t('Area size too big'),
+      // eslint-disable-next-line react/no-unstable-nested-components
       description: (size) => (
         <span>
           {t('The maximum size for on the fly area analysis is ')}
@@ -82,8 +85,21 @@ function AnalyzeAreasContainer(props) {
   const precalculatedAOIOptions = useMemo(() => getPrecalculatedAOIOptions(), [locale]);
 
   const {
-    browsePage, view, activeLayers, changeGlobe, setTooltipIsVisible, setAoiGeometry, setAreaTypeSelected, areaTypeSelected,
+    browsePage,
+    view,
+    activeLayers,
+    changeGlobe,
+    setTooltipIsVisible,
+    setAoiGeometry,
+    setAreaTypeSelected,
+    areaTypeSelected,
+    shapeDrawSuccessfulAnalytics,
+    shapeDrawTooBigAnalytics,
+    shapeUploadErrorAnalytics,
+    shapeUploadSuccessfulAnalytics,
+    shapeUploadTooBigAnalytics,
   } = props;
+
   const [selectedOption, setSelectedOption] = useState(precalculatedAOIOptions[0]);
   const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
@@ -108,12 +124,12 @@ function AnalyzeAreasContainer(props) {
         description: WARNING_MESSAGES.area.description(area),
       });
       setPromptModalOpen(true);
-      props.shapeDrawTooBigAnalytics();
+      shapeDrawTooBigAnalytics();
     } else {
       const { geometry } = graphic;
       const hash = createHashFromGeometry(geometry);
       setAoiGeometry({ hash, geometry });
-      props.shapeDrawSuccessfulAnalytics();
+      shapeDrawSuccessfulAnalytics();
       browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
       changeGlobe({ areaTypeSelected });
     }
@@ -122,7 +138,8 @@ function AnalyzeAreasContainer(props) {
   const onShapeUploadSuccess = (response) => {
     loadModules(['esri/geometry/Polygon', 'esri/geometry/geometryEngine'])
       .then(([Polygon, geometryEngine]) => {
-        const featureSetGeometry = response.data.featureCollection.layers[0].featureSet.features[0].geometry;
+        const featureSetGeometry = response.data.featureCollection.layers[0]
+          .featureSet.features[0].geometry;
         const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
         if (area > HIGHER_AREA_SIZE_LIMIT) {
           setPromptModalContent({
@@ -130,12 +147,12 @@ function AnalyzeAreasContainer(props) {
             description: WARNING_MESSAGES.area.description(area),
           });
           setPromptModalOpen(true);
-          props.shapeUploadTooBigAnalytics();
+          shapeUploadTooBigAnalytics();
         } else {
           const geometryInstance = new Polygon(featureSetGeometry);
           const hash = createHashFromGeometry(geometryInstance);
           setAoiGeometry({ hash, geometry: geometryInstance });
-          props.shapeUploadSuccessfulAnalytics();
+          shapeUploadSuccessfulAnalytics();
           browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
           changeGlobe({ areaTypeSelected });
         }
@@ -155,7 +172,7 @@ function AnalyzeAreasContainer(props) {
       });
     }
     setPromptModalOpen(true);
-    props.shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
+    shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
   };
 
   const {
@@ -165,6 +182,51 @@ function AnalyzeAreasContainer(props) {
     handleSketchToolActivation,
   } = useSketchWidget(view, { postDrawCallback });
 
+  const handleLayerToggle = (newSelectedOption) => {
+    const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
+
+    const getLayersToToggle = () => {
+      const formerSelectedSlug = selectedOption.slug;
+      const newLayerCategory = newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER
+        ? LAYERS_CATEGORIES.PROTECTION : undefined;
+
+      let layersToToggle = [
+        { layerId: formerSelectedSlug },
+        { layerId: newSelectedOption, category: newLayerCategory },
+      ];
+
+      if (protectedAreasSelected) {
+        const additionalProtectedAreasLayers = [
+          PROTECTED_AREAS_VECTOR_TILE_LAYER,
+          COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+        ];
+        additionalProtectedAreasLayers.forEach((layer) => {
+          if (!activeLayers.some((l) => l.title === layer)) {
+            layersToToggle.push({ layerId: layer, category: LAYERS_CATEGORIES.PROTECTION });
+          }
+        });
+      }
+
+      // Never toggle (remove) future places layer if its active
+      // Future places layer will be activated if we select it at some point
+      // and never toggled unless we do it from the protection checkbox
+      const futureLayerIsActive = activeLayers
+        .some((l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
+      if (futureLayerIsActive && layersToToggle.includes(HALF_EARTH_FUTURE_TILE_LAYER)) {
+        layersToToggle = layersToToggle.filter((l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER);
+      }
+
+      return layersToToggle;
+    };
+
+    const layersToToggle = getLayersToToggle();
+    // Categories are used to show the number of layers active on the different sidebars
+    const categories = layersToToggle.reduce((acc, layer) => {
+      acc[layer.layerId] = layer.category;
+      return acc;
+    }, {});
+    batchToggleLayers(layersToToggle.map((l) => l.layerId), activeLayers, changeGlobe, categories);
+  };
   const handleAnalysisTabClick = (selectedTab) => {
     switch (selectedTab) {
       case 'draw':
@@ -212,43 +274,6 @@ function AnalyzeAreasContainer(props) {
     handleLayerToggle(option.slug);
     setSelectedOption(option);
     setTooltipIsVisible(false);
-  };
-
-  const handleLayerToggle = (newSelectedOption) => {
-    const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
-
-    const getLayersToToggle = () => {
-      const formerSelectedSlug = selectedOption.slug;
-      const newLayerCategory = newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER ? LAYERS_CATEGORIES.PROTECTION : undefined;
-
-      let layersToToggle = [{ layerId: formerSelectedSlug }, { layerId: newSelectedOption, category: newLayerCategory }];
-
-      if (protectedAreasSelected) {
-        const additionalProtectedAreasLayers = [PROTECTED_AREAS_VECTOR_TILE_LAYER, COMMUNITY_AREAS_VECTOR_TILE_LAYER];
-        additionalProtectedAreasLayers.forEach((layer) => {
-          if (!activeLayers.some((l) => l.title === layer)) {
-            layersToToggle.push({ layerId: layer, category: LAYERS_CATEGORIES.PROTECTION });
-          }
-        });
-      }
-
-      // Never toggle (remove) future places layer if its active
-      // Future places layer will be activated if we select it at some point and never toggled unless we do it from the protection checkbox
-      const futureLayerIsActive = activeLayers.some((l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
-      if (futureLayerIsActive && layersToToggle.includes(HALF_EARTH_FUTURE_TILE_LAYER)) {
-        layersToToggle = layersToToggle.filter((l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER);
-      }
-
-      return layersToToggle;
-    };
-
-    const layersToToggle = getLayersToToggle();
-    // Categories are used to show the number of layers active on the different sidebars
-    const categories = layersToToggle.reduce((acc, layer) => {
-      acc[layer.layerId] = layer.category;
-      return acc;
-    }, {});
-    batchToggleLayers(layersToToggle.map((l) => l.layerId), activeLayers, changeGlobe, categories);
   };
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
