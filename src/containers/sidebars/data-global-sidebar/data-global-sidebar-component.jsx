@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import cx from 'classnames';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import TabsSidebar from 'containers/sidebars/tabs-sidebar';
 
@@ -44,64 +44,73 @@ function DataGlobalSidebarComponent({
           [uiStyles.onboardingMode]: !!onboardingType,
         })}
       >
-        {sidebarTabActive === sidebarTabs[1].slug && (
-        <motion.div
-          initial={{ opacity: 0, x: 200, width: '100%' }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 0.4,
-          }}
-        >
-          <AnalyzeAreasSidebarCard
-            activeLayers={activeLayers}
-            view={view}
-            onboardingStep={onboardingStep}
-            onboardingType={onboardingType}
-          />
-        </motion.div>
-        )}
-        {sidebarTabActive === sidebarTabs[0].slug && (
-        <motion.div
-          initial={{ opacity: 0, x: 200 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 0.4,
-          }}
-        >
-          <BiodiversitySidebarCard
-            map={map}
-            view={view}
-            activeLayers={activeLayers}
-            activeCategory={activeCategory}
-            onboardingStep={onboardingStep}
-            onboardingType={onboardingType}
-            waitingInteraction={waitingInteraction}
-          />
-          <ProtectedAreasSidebarCard
-            map={map}
-            activeLayers={activeLayers}
-            activeCategory={activeCategory}
-            handleGlobeUpdating={handleGlobeUpdating}
-            onboardingStep={onboardingStep}
-            waitingInteraction={waitingInteraction}
-          />
-          <HumanImpactSidebarCard
-            map={map}
-            activeLayers={activeLayers}
-            activeCategory={activeCategory}
-            handleGlobeUpdating={handleGlobeUpdating}
-            onboardingStep={onboardingStep}
-            onboardingType={onboardingType}
-            waitingInteraction={waitingInteraction}
-          />
-          <CarbonSidebarCard
-            map={map}
-            activeLayers={activeLayers}
-            activeCategory={activeCategory}
-            handleGlobeUpdating={handleGlobeUpdating}
-          />
-        </motion.div>
-        )}
+        <AnimatePresence>
+          {sidebarTabActive === sidebarTabs[1].slug && (
+          <motion.div
+            key={sidebarTabs[1].slug}
+            initial={{ opacity: 0, x: 200, width: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            // exit={{ opacity: 0, x: 200 }}
+            transition={{
+              duration: 0.4,
+              ease: 'easeInOut',
+            }}
+          >
+            <AnalyzeAreasSidebarCard
+              activeLayers={activeLayers}
+              view={view}
+              onboardingStep={onboardingStep}
+              onboardingType={onboardingType}
+            />
+          </motion.div>
+          )}
+          {sidebarTabActive === sidebarTabs[0].slug && (
+          <motion.div
+            className={styles.mapLayersContainer}
+            key={sidebarTabs[0].slug}
+            initial={{ opacity: 0, x: 200 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 200 }}
+            transition={{
+              duration: 0.4,
+              ease: 'easeInOut',
+            }}
+          >
+            <BiodiversitySidebarCard
+              map={map}
+              view={view}
+              activeLayers={activeLayers}
+              activeCategory={activeCategory}
+              onboardingStep={onboardingStep}
+              onboardingType={onboardingType}
+              waitingInteraction={waitingInteraction}
+            />
+            <ProtectedAreasSidebarCard
+              map={map}
+              activeLayers={activeLayers}
+              activeCategory={activeCategory}
+              handleGlobeUpdating={handleGlobeUpdating}
+              onboardingStep={onboardingStep}
+              waitingInteraction={waitingInteraction}
+            />
+            <HumanImpactSidebarCard
+              map={map}
+              activeLayers={activeLayers}
+              activeCategory={activeCategory}
+              handleGlobeUpdating={handleGlobeUpdating}
+              onboardingStep={onboardingStep}
+              onboardingType={onboardingType}
+              waitingInteraction={waitingInteraction}
+            />
+            <CarbonSidebarCard
+              map={map}
+              activeLayers={activeLayers}
+              activeCategory={activeCategory}
+              handleGlobeUpdating={handleGlobeUpdating}
+            />
+          </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -2,15 +2,17 @@
 @import 'styles/settings';
 
 .container {
-  overflow-y: hidden !important;
+
 }
 
 .content {
-  @extend %verticalScrollbar;
   height: 85vh;
   padding-bottom: $site-gutter;
-  overflow-x: hidden;
-  overflow-y: auto;
+}
+
+.mapLayersContainer {
+  @extend %verticalScrollbar;
+  height: 100%;
 }
 
 .togglesContainer {
