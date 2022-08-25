@@ -3,11 +3,19 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
-$sidebar-content-top: 180px;
+.sidebarContainer {
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  height: calc(100vh - #{$nav-bar-height});
+  width: calc(#{$sidebar-width} + 30px);
+  top: $nav-bar-height;
+  left: $site-gutter;
+  padding-bottom: $site-gutter;
+  padding-left: 5px;
+}
 
 .headerCard {
   @include backdropBlur();
-  position: fixed;
   z-index: $bring-to-front;
   top: $ui-left-top;
   left: $site-gutter;
@@ -16,17 +24,16 @@ $sidebar-content-top: 180px;
   border: $sidebar-border;
 }
 
-.container {
+.content {
   @extend %verticalScrollbar;
   @include backdropBlur();
   position: absolute;
-  top: $sidebar-content-top;
-  left: $site-gutter;
+  left: 40;
   display: flex;
   flex-direction: column;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;
-  height: calc(100vh - #{$sidebar-content-top});
+  height: 72vh;
   width: $sidebar-width;
   padding: $site-gutter;
   z-index: $bring-to-front;

@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 
+import TabsSidebar from 'containers/sidebars/tabs-sidebar';
+
 import { getSidebarTabs } from 'constants/aois';
 
 import uiStyles from 'styles/ui.module.scss';
-
-import TabsSidebar from '../tabs-sidebar';
 
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
 import BiodiversitySidebarCard from './biodiversity-sidebar-card';
@@ -35,20 +35,20 @@ function DataGlobalSidebarComponent({
     <div
       className={cx(styles.container, className)}
     >
+      <TabsSidebar
+        activeLayers={activeLayers}
+        view={view}
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+      />
       <div
         className={cx(styles.content, {
           [uiStyles.onboardingMode]: !!onboardingType,
         })}
       >
-        <TabsSidebar
-          activeLayers={activeLayers}
-          view={view}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-        />
         {sidebarTabActive === sidebarTabs[1].slug && (
         <motion.div
-          initial={{ opacity: 0, x: 200 }}
+          initial={{ opacity: 0, x: 200, width: '100%' }}
           animate={{ opacity: 1, x: 0 }}
           transition={{
             duration: 0.4,
