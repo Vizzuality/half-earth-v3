@@ -37,7 +37,7 @@ import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+// import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
@@ -52,11 +52,11 @@ function AOISidebarComponent({
   activeLayers,
   climateRegime,
   contextualData,
-  shareAoiAnalytics,
+  // shareAoiAnalytics,
   handleClose,
   isShareModalOpen,
   setShareModalOpen,
-  dataLoaded,
+  // dataLoaded,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -73,10 +73,10 @@ function AOISidebarComponent({
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
-  const handleShareModalOpen = () => {
-    shareAoiAnalytics();
-    setShareModalOpen(true);
-  };
+  // const handleShareModalOpen = () => {
+  //   shareAoiAnalytics();
+  //   setShareModalOpen(true);
+  // };
 
   const saveName = () => {
     setIsEditingName(false);
@@ -159,7 +159,8 @@ function AOISidebarComponent({
                   tooltipText={t('Edit area name')}
                 />
                 )}
-                {dataLoaded && (
+                {/* // TODO: Share button will be place on side menu */}
+                {/* {dataLoaded && (
                 <Button
                   Icon={ShareIcon}
                   type="icon-square"
@@ -167,7 +168,7 @@ function AOISidebarComponent({
                   tooltipText={t('Share this area')}
                   disabled
                 />
-                )}
+                )} */}
               </div>
             )}
           </div>

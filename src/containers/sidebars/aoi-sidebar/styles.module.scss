@@ -40,9 +40,11 @@
 }
 
 .backButton {
+  height: 32px;
+  left: calc(#{$local-sidebar-width} - #{$rounded-button-size}/2);
   position: absolute;
-  top: -$local-sidebar-top-margin;
-  left: calc(#{$local-sidebar-width}/2 - #{$rounded-button-size}/2);
+  top: $local-sidebar-top-margin;
+  width: 32px;
 }
 
 .loading {
@@ -66,7 +68,6 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: $site-gutter;
 }
 
 .nameWrapper {
