@@ -69,8 +69,8 @@
 
       .tabIcon {
         height: 18px;
-        width: 18px;
         margin-right: 10px;
+        width: 18px;
       }
 
       .layersIndicator {
@@ -86,7 +86,24 @@
         margin-right: 10px;
         width: 16px;
       }
+
+      .analyzeAreaSelectedIconContainer {
+        display: flex;
+        position: relative;
+
+        .aoiIndicator {
+          background-color: $screamin-green;
+          border-radius: 50%;
+          height: 6px;
+          position: absolute;
+          width: 6px;
+          z-index: 1;
+          bottom: 0px;
+          right: 9px;
+        }
+      }
     }
+
   }
 
   .disabled {
