@@ -44,15 +44,15 @@ function DataGlobalSidebarComponent({
           [uiStyles.onboardingMode]: !!onboardingType,
         })}
       >
-        <AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
           {sidebarTabActive === sidebarTabs[1].slug && (
           <motion.div
             key={sidebarTabs[1].slug}
-            initial={{ opacity: 0, x: 200, width: '100%' }}
+            initial={{ opacity: 0, x: 160, width: '100%' }}
             animate={{ opacity: 1, x: 0 }}
-            // exit={{ opacity: 0, x: 200 }}
+            exit={{ opacity: 0, x: 160 }}
             transition={{
-              duration: 0.4,
+              duration: 0.25,
               ease: 'easeInOut',
             }}
           >
@@ -68,11 +68,11 @@ function DataGlobalSidebarComponent({
           <motion.div
             className={styles.mapLayersContainer}
             key={sidebarTabs[0].slug}
-            initial={{ opacity: 0, x: 200 }}
+            initial={{ opacity: 0, x: 160 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 200 }}
+            exit={{ opacity: 0, x: 160 }}
             transition={{
-              duration: 0.4,
+              duration: 0.25,
               ease: 'easeInOut',
             }}
           >
