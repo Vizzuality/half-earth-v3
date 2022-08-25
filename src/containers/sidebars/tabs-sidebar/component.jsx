@@ -17,11 +17,10 @@ import mapStateToProps from './selectors';
 
 function TabsSidebarComponent({
   className,
-  onboardingStep,
-  onboardingType,
   activeLayers,
   saveSidebarTab,
   sidebarTabActive,
+  onTabClick = () => {},
 }) {
   const sidebarTabs = getSidebarTabs();
 
@@ -42,14 +41,11 @@ function TabsSidebarComponent({
 
   const handleSidebarTabs = (tab) => {
     saveSidebarTab(tab);
+    onTabClick(tab);
   };
 
   return (
-    <div className={cx(styles.sidebarTabsContainer, className, {
-      [styles.onboardingOverlay]:
-          onboardingType === 'priority-places' && onboardingStep === 2,
-    })}
-    >
+    <div className={cx(styles.sidebarTabsContainer, className)}>
       <div className={cx(styles.tabs, className)}>
         <ul className={styles.tabList} role="tablist">
           {sidebarTabs.map((tab) => {
@@ -62,9 +58,6 @@ function TabsSidebarComponent({
               section: 'tabs',
               slug: tabSlug,
               styles,
-              onboardingType,
-              onboardingStep,
-              // waitingInteraction,
             });
             return (
               <li role="presentation" key={`tab-${tabSlug}`}>

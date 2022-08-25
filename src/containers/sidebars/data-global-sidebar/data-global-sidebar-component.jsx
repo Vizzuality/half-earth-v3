@@ -38,8 +38,6 @@ function DataGlobalSidebarComponent({
       <TabsSidebar
         activeLayers={activeLayers}
         view={view}
-        onboardingStep={onboardingStep}
-        onboardingType={onboardingType}
       />
       <div
         className={cx(styles.content, {

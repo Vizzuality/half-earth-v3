@@ -9,7 +9,7 @@ const actions = {
 };
 
 function TabsSidebarContainer(props) {
-  const { setSidebarTabActive } = props;
+  const { setSidebarTabActive, onTabClick } = props;
 
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);
@@ -18,6 +18,7 @@ function TabsSidebarContainer(props) {
   return (
     <Component
       saveSidebarTab={saveSidebarTab}
+      onTabClick={onTabClick}
       {...props}
     />
   );

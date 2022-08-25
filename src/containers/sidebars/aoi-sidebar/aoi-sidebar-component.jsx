@@ -1,4 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import { connect } from 'react-redux';
+
+import { DATA } from 'router';
 
 import { useT, useLocale } from '@transifex/react';
 
@@ -17,6 +20,7 @@ import {
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
+import { getSidebarTabs } from 'constants/aois';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
 import {
@@ -37,14 +41,16 @@ import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
-// import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
+import mapStateToProps from './selectors';
+// import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
 
 function AOISidebarComponent({
   map,
   area,
+  view,
   className,
   landCover,
   population,
@@ -54,10 +60,13 @@ function AOISidebarComponent({
   contextualData,
   // shareAoiAnalytics,
   handleClose,
+  sidebarTabActive,
   isShareModalOpen,
   setShareModalOpen,
   // dataLoaded,
+  browsePage,
 }) {
+  const sidebarTabs = getSidebarTabs();
   const t = useT();
   const locale = useLocale();
   const humanPressuresLandUse = useMemo(
@@ -93,13 +102,16 @@ function AOISidebarComponent({
   );
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
+  const handleOnTabClick = useMemo(() => {
+    return sidebarTabActive === sidebarTabs[0].slug ? browsePage({ type: DATA }) : () => {};
+  }, [sidebarTabActive]);
+
   return (
     <div className={styles.sidebarContainer}>
       <TabsSidebar
         activeLayers={activeLayers}
-        // view={view}
-        // onboardingStep={onboardingStep}
-        // onboardingType={onboardingType}
+        view={view}
+        onTabClick={() => handleOnTabClick()}
       />
       <div>
         <section className={styles.headerCard}>
@@ -130,13 +142,13 @@ function AOISidebarComponent({
                 </p>
               )}
               {area && (
-              <p className={styles.area}>
-                {`${area} `}
-                <span>
-                  {t('km')}
-                  <sup>2</sup>
-                </span>
-              </p>
+                <p className={styles.area}>
+                  {`${area} `}
+                  <span>
+                    {t('km')}
+                    <sup>2</sup>
+                  </span>
+                </p>
               )}
             </div>
             {isEditingName ? (
@@ -258,4 +270,4 @@ function AOISidebarComponent({
   );
 }
 
-export default AOISidebarComponent;
+export default connect(mapStateToProps, null)(AOISidebarComponent);
