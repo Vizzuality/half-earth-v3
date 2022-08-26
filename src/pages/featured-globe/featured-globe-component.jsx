@@ -9,8 +9,8 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import LandscapeViewManager from 'containers/managers/landscape-view-manager';
+import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
-import Widgets from 'containers/widgets';
 
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -28,16 +28,12 @@ import uiStyles from 'styles/ui.module.scss';
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const FeaturedPlaceCard = loadable(() =>
-  import('containers/sidebars/featured-place-card')
-);
-const ProtectedAreasTooltips = loadable(() =>
-  import('components/protected-areas-tooltips')
-);
+const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
+const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const DataGlobeComponent = ({
+function DataGlobeComponent({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
@@ -61,7 +57,7 @@ const DataGlobeComponent = ({
   mouseMoveCallbacksArray,
   activeOption,
   openedModal,
-}) => {
+}) {
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = useMobile();
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
@@ -108,7 +104,7 @@ const DataGlobeComponent = ({
           selectedFeaturedPlace={selectedFeaturedPlace}
           isLandscapeMode={isLandscapeMode}
         />
-        <Widgets
+        <SideMenu
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
           hidden={esriWidgetsHidden}
@@ -177,6 +173,6 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
     </>
   );
-};
+}
 
 export default DataGlobeComponent;

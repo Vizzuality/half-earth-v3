@@ -1,21 +1,24 @@
 import React, { useMemo } from 'react';
+
 // Components
-import Scene from 'components/scene';
-import Widgets from 'containers/widgets';
-import AoiSidebar from 'containers/sidebars/aoi-sidebar';
+import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';
+import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
-import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
-import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import SideMenu from 'containers/menus/sidemenu';
+import AoiSidebar from 'containers/sidebars/aoi-sidebar';
+
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
-import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+import Scene from 'components/scene';
+
 import { AREA_TYPES } from 'constants/aois';
+import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const AoiSceneComponent = ({
+function AoiSceneComponent({
   geometry,
   onMapLoad,
   speciesData,
@@ -27,18 +30,16 @@ const AoiSceneComponent = ({
   tooltipInfo,
   setTooltipInfo,
   areaTypeSelected,
-}) => {
-
+}) {
   const updatedActiveLayers = useMemo(
-    () =>
-      areaTypeSelected === AREA_TYPES.futurePlaces
-        ? activeLayers
-        : activeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER),
-    [activeLayers, areaTypeSelected]
+    () => (areaTypeSelected === AREA_TYPES.futurePlaces
+      ? activeLayers
+      : activeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER)),
+    [activeLayers, areaTypeSelected],
   );
   return (
     <Scene
-      sceneName={'aoi-scene'}
+      sceneName="aoi-scene"
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
@@ -50,7 +51,7 @@ const AoiSceneComponent = ({
         onFeatureClick={handleFuturePlaceClick}
       />
       <LocalSceneViewManager localGeometry={geometry} />
-      <Widgets activeLayers={updatedActiveLayers} />
+      <SideMenu activeLayers={updatedActiveLayers} />
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={updatedActiveLayers} />
       <AoiSidebar
@@ -66,6 +67,6 @@ const AoiSceneComponent = ({
       />
     </Scene>
   );
-};
+}
 
 export default AoiSceneComponent;

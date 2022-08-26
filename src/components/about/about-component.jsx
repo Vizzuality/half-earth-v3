@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
+
 import AboutModal from './about-modal';
 
-const AboutComponent = ({
+function AboutComponent({
   className,
-  openAboutPageAnalyticsEvent,
+  // openAboutPageAnalyticsEvent,
   buttonContentComponent,
-}) => {
+}) {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
     setAboutPageOpened(true);
-    openAboutPageAnalyticsEvent();
+    // openAboutPageAnalyticsEvent();
   };
 
   const handleCloseAboutPage = () => setAboutPageOpened(false);
 
   return (
     <>
-      <button className={className} onClick={handleOpenAboutPage}>
+      <button
+        type="button"
+        className={className}
+        onClick={handleOpenAboutPage}
+      >
         {buttonContentComponent}
       </button>
       {isAboutPageOpened && (
@@ -25,6 +30,6 @@ const AboutComponent = ({
       )}
     </>
   );
-};
+}
 
 export default AboutComponent;

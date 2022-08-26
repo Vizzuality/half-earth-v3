@@ -4,9 +4,9 @@ import React from 'react';
 import { ReactComponent as ZoomInIcon } from 'icons/zoomIn.svg';
 import { ReactComponent as ZoomOutIcon } from 'icons/zoomOut.svg';
 
-import styles from './zoom-widget.module.scss';
+import styles from './styles.module.scss';
 
-function ZoomWidgetComponent({ zoomWidget }) {
+function ZoomControlsComponent({ zoomWidget }) {
   return (
     <div className={styles.zoomComponent}>
       <button
@@ -28,4 +28,4 @@ function ZoomWidgetComponent({ zoomWidget }) {
   );
 }
 
-export default ZoomWidgetComponent;
+export default ZoomControlsComponent;
