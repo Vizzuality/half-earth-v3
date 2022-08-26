@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import cx from 'classnames';
 import { ReactComponent as HelpIcon } from 'icons/help.svg';
@@ -9,6 +9,7 @@ import MinimapWidget from 'containers/menus/sidemenu/minimap-widget';
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 
 import Button from 'components/button';
+import ShareModal from 'components/share-modal';
 
 import { useMobile } from 'constants/responsive';
 
@@ -27,6 +28,8 @@ function SideMenuComponent({
   onboardingStep,
 }) {
   const isOnMobile = useMobile();
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
+
   const hiddenWidget = hidden || isOnMobile;
   return (
     <div
@@ -58,7 +61,7 @@ function SideMenuComponent({
         Icon={ShareIcon}
         type="icon-square"
         className={styles.shareBtn}
-        // handleClick={() => handleAoiShareToggle(id)}
+        handleClick={setShareModalOpen}
       />
       {!hideMiniMap && (
         <MinimapWidget
@@ -68,6 +71,10 @@ function SideMenuComponent({
           openedModal={openedModal}
         />
       )}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        setShareModalOpen={setShareModalOpen}
+      />
     </div>
   );
 }
