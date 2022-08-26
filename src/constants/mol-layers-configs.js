@@ -122,6 +122,7 @@ export const LAYERS_CATEGORIES = {
 // const defaultBbox = [-48, -52, 59, 66];
 
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
+const AmericaCenteredBbox = [-237.285547, -59.589424, 77.011328, 66.818301];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -562,14 +563,14 @@ export const layersConfig = {
     slug: HUMMINGBIRDS_RARITY,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[HUMMINGBIRDS_RARITY],
-    bbox: USCenteredBbox,
+    bbox: AmericaCenteredBbox,
   },
   [HUMMINGBIRDS_RICHNESS]: {
     title: HUMMINGBIRDS_RICHNESS,
     slug: HUMMINGBIRDS_RICHNESS,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[HUMMINGBIRDS_RICHNESS],
-    bbox: USCenteredBbox,
+    bbox: AmericaCenteredBbox,
   },
   [FISHES_RARITY]: {
     title: FISHES_RARITY,
