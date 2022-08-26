@@ -1,4 +1,7 @@
 import {
+  BORDERS_LAYERS_RENDERER,
+} from 'constants/graphic-styles';
+import {
   COUNTRY_PRIORITY_LAYER,
   LAND_COUNTRY_PRIORITY_LAYER,
   MARINE_COUNTRY_PRIORITY_LAYER,
@@ -97,11 +100,7 @@ import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs';
-
 import { LAYERS_URLS } from 'constants/layers-urls';
-import {
-  BORDERS_LAYERS_RENDERER,
-} from 'constants/graphic-styles';
 
 const LAYER_TYPES = {
   FEATURE_LAYER: 'FeatureLayer',
@@ -121,7 +120,8 @@ export const LAYERS_CATEGORIES = {
 };
 
 // const defaultBbox = [-48, -52, 59, 66];
-const USCenteredBbox = [-164, -40, -35, 56];
+
+const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
