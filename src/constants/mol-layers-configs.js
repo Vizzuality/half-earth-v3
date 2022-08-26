@@ -122,7 +122,7 @@ export const LAYERS_CATEGORIES = {
 // const defaultBbox = [-48, -52, 59, 66];
 
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
-const AmericaCenteredBbox = [-164, -40, -35, 56];
+const AmericaCenteredBbox = [-237.285547, -59.589424, 77.011328, 66.818301];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
