@@ -8,17 +8,18 @@ $esri-calcite-styles-correction: 15px;
   right: calc(#{$site-gutter} - #{$esri-calcite-styles-correction});
   display: flex;
   flex-direction: column;
-  background-color: $elephant;
   border-radius: 2px;
 }
 
 .zoomButton {
   align-items: center;
+  background-color: $elephant;
   display: flex;
-  height: $widget-button-size;
+  height: 32px;
   justify-content: center;
   padding: 0;
-  width: $widget-button-size;
+  width: 32px;
+  margin-top: 5px;
 
   &:hover svg {
     fill: $robins-egg-blue;
