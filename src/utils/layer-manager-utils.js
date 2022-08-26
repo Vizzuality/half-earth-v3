@@ -1,10 +1,12 @@
-import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
-import intersection from 'lodash/intersection';
+import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
+
 import { loadModules } from 'esri-loader';
+import intersection from 'lodash/intersection';
+
+import { LEGEND_FREE_LAYERS } from 'constants/layers-groups';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
 
 // LEGAGY
-import { addLayerAnalyticsEvent, removeLayerAnalyticsEvent } from 'actions/google-analytics-actions';
 
 // Toggles all the layers passed as ids on the first parameter
 // Categories can be a string if its a common category or an object if its individual
