@@ -1,11 +1,7 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
 
-$esri-calcite-styles-correction: 15px;
 .zoomComponent {
-  position: absolute;
-  top: calc(#{$nav-bar-height} - #{$esri-calcite-styles-correction});
-  right: calc(#{$site-gutter} - #{$esri-calcite-styles-correction});
   display: flex;
   flex-direction: column;
   border-radius: 2px;
