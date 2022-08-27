@@ -4,8 +4,9 @@
 
 .switcherBtn {
   border: none;
-  color: $grey-text;
+  color: $white;
   font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   margin-top: 10px;
   transition: color 200ms ease-in;

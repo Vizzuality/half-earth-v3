@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { tx } from '@transifex/native';
 import { useLanguages, useLocale } from '@transifex/react';
 
+import { motion } from 'framer-motion';
+
 import styles from './styles.module.scss';
 
 function SideMenuLanguageSwitcher(props) {
@@ -11,6 +13,7 @@ function SideMenuLanguageSwitcher(props) {
   const locale = useLocale();
 
   const [languageOptions, setLanguageOptions] = useState(languages);
+  const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
     const options = languages.filter((l) => l.code !== locale);
@@ -18,14 +21,31 @@ function SideMenuLanguageSwitcher(props) {
   }, [locale, languages]);
 
   return (
-    <div className={styles.switcher}>
+    <div
+      className={styles.switcher}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
       <button
         className={styles.switcherBtn}
         type="button"
       >
-        {locale}
+        {locale || 'en'}
       </button>
-      <div className={styles.switcherContent}>
+      <motion.div
+        className={styles.switcherContent}
+        initial={{
+          right: '-100px',
+          opacity: 0,
+        }}
+        animate={{
+          right: isHover ? '28px' : '-100px',
+          opacity: isHover ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.4,
+        }}
+      >
         {languageOptions.map(({ code }) => (
           <button
             type="button"
@@ -37,9 +57,8 @@ function SideMenuLanguageSwitcher(props) {
           >
             {code}
           </button>
-
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
