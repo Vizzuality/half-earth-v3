@@ -10,6 +10,7 @@ import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 
 import Button from 'components/button';
 import ShareModal from 'components/share-modal';
+import SideMenuLanguageSwitcher from 'components/sidemenu-language-switcher';
 
 import { useMobile } from 'constants/responsive';
 
@@ -71,6 +72,7 @@ function SideMenuComponent({
           openedModal={openedModal}
         />
       )}
+      <SideMenuLanguageSwitcher />
       <ShareModal
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}

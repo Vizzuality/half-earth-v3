@@ -1,0 +1,49 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.switcherBtn {
+  border: none;
+  color: $grey-text;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+  margin-top: 10px;
+  transition: color 200ms ease-in;
+}
+
+.switcher {
+  display: inline-block;
+  position: relative;
+}
+
+.switcherContent {
+  color: $grey-text;
+  display: none;
+  font-size: $font-size-xs;
+  position: absolute;
+  z-index: 1;
+  right: 28px;
+  top: 6px;
+}
+
+.switcherContent button {
+  display: flex;
+  color: $grey-text;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+.switcherContent button:hover {
+  color: $white;
+  font-weight: $font-weight-bold;
+}
+
+.switcher:hover .switcherContent {
+  display: flex;
+}
+
+.switcher:hover .switcherBtn {
+  color: $white;
+  font-weight: $font-weight-bold;
+}
