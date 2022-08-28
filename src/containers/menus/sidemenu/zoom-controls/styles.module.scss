@@ -3,8 +3,9 @@
 
 .zoomComponent {
   display: flex;
-  flex-direction: column;
   border-radius: 2px;
+  flex-direction: column;
+  position: relative;
 }
 
 .zoomButton {
@@ -15,7 +16,6 @@
   justify-content: center;
   padding: 0;
   width: 32px;
-  margin-top: 5px;
 
   &:hover svg {
     fill: $robins-egg-blue;
@@ -27,11 +27,13 @@
 }
 
 .spacer {
-  background-color: $white;
-  height: 0.5px;
-  opacity: 0.5;
-  margin: auto;
-  width: 16px;
+  background-color: $space-background;
+  height: 2px;
+  opacity: 0.4;
+  position: absolute;
+  top: 32px;
+  right: 4px;
+  width: 24px;
 }
 
 @media print {

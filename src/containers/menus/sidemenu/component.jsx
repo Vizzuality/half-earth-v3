@@ -45,12 +45,12 @@ function SideMenuComponent({
         handleClick={() => console.info('search')}
       />
       {!hideZoom && (onboardingStep === null || onboardingStep === undefined) && (
-        <ZoomControls
-          map={map}
-          view={view}
-          isNotMapsList={isNotMapsList}
-          hidden={hiddenWidget}
-        />
+      <ZoomControls
+        map={map}
+        view={view}
+        isNotMapsList={isNotMapsList}
+        hidden={hiddenWidget}
+      />
       )}
       <Button
         Icon={HelpIcon}

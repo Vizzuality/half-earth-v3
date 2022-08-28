@@ -16,7 +16,7 @@ function ZoomControlsComponent({ zoomWidget }) {
       >
         <ZoomInIcon />
       </button>
-
+      <span className={styles.spacer} />
       <button
         className={styles.zoomButton}
         type="button"
