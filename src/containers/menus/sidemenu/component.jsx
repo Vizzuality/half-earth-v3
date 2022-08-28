@@ -9,6 +9,7 @@ import MinimapWidget from 'containers/menus/sidemenu/minimap-widget';
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 
 import Button from 'components/button';
+import SearchLocation from 'components/search-location';
 import ShareModal from 'components/share-modal';
 import SideMenuLanguageSwitcher from 'components/sidemenu-language-switcher';
 
@@ -27,9 +28,12 @@ function SideMenuComponent({
   isNotMapsList = true,
   hidden = false,
   onboardingStep,
+  selectedOption,
 }) {
   const isOnMobile = useMobile();
+
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [isSearcherOpen, setIsSearcherOpen] = useState(false);
 
   const hiddenWidget = hidden || isOnMobile;
   return (
@@ -42,15 +46,27 @@ function SideMenuComponent({
         Icon={SearchIcon}
         type="icon-square"
         className={styles.searchBtn}
-        handleClick={() => console.info('search')}
+        handleClick={() => setIsSearcherOpen(true)}
       />
+      {isSearcherOpen && (
+        <div className={styles.searcherContainer}>
+          <SearchLocation
+            stacked
+            view={view}
+            theme="dark"
+            width="full"
+            parentWidth="380px"
+            searchSourceLayerSlug={selectedOption.slug}
+          />
+        </div>
+      )}
       {!hideZoom && (onboardingStep === null || onboardingStep === undefined) && (
-      <ZoomControls
-        map={map}
-        view={view}
-        isNotMapsList={isNotMapsList}
-        hidden={hiddenWidget}
-      />
+        <ZoomControls
+          map={map}
+          view={view}
+          isNotMapsList={isNotMapsList}
+          hidden={hiddenWidget}
+        />
       )}
       <Button
         Icon={HelpIcon}

@@ -14,6 +14,14 @@
     margin-bottom: 72px;
   }
 
+  .searcherContainer {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    width: 500px;
+    border: 1px solid red;
+  }
+
   .shareBtn {
     height: 32px;
     margin-top: 5px;
