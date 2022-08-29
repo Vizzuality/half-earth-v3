@@ -21,41 +21,60 @@ function HelpModalComponent({ handleClose, isOpen }) {
     middleClick: t('ZOOM VIEW'),
   };
 
+  const storyTitles = {
+    firstStep: t(
+      'Map Layers',
+    ),
+    secondStep: t(
+      'Analyze Areas',
+    ),
+  };
+
   const storyDescriptions = {
     firstStep: t(
-      '1. At higher zoom levels, the map enables you to view datasets at a global scale.',
+      'Explore different datasets at a global scale, from biodiversity patterns to human pressures.',
     ),
-    secondstep: t(
-      '2. Search for a place or zoom the globe manually to your desired location and the side panel will show fine detail at local scale.',
+    secondStep: t(
+      'Select an area to analyze and the side panel will show fine detail at local scale.',
     ),
   };
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.modalContainer}>
         <div className={styles.wrapper}>
-          <span className={styles.title}>{title}</span>
-          <div className={styles.mouseNavigationSection}>
-            <div className={styles.mouseClickIcon}>
-              <RotateMouseIcon />
-              <span>{mouseClickLabels.leftClick}</span>
-            </div>
-            <div className={styles.mouseClickIcon}>
-              <ZoomMouseIcon />
-              <span>{mouseClickLabels.rightClick}</span>
-            </div>
-            <div className={styles.mouseClickIcon}>
-              <PanMouseIcon />
-              <span>{mouseClickLabels.middleClick}</span>
+          <div className={styles.header}>
+            <span className={styles.title}>{title}</span>
+            <div className={styles.mouseNavigationSection}>
+              <div className={styles.mouseClickIcon}>
+                <RotateMouseIcon />
+                <span>{mouseClickLabels.leftClick}</span>
+              </div>
+              <div className={styles.mouseClickIcon}>
+                <ZoomMouseIcon />
+                <span>{mouseClickLabels.rightClick}</span>
+              </div>
+              <div className={styles.mouseClickIcon}>
+                <PanMouseIcon />
+                <span>{mouseClickLabels.middleClick}</span>
+              </div>
             </div>
           </div>
           <div className={styles.storySection}>
             <div className={styles.storyElement}>
               <GlobeIcon />
-              <span>{storyDescriptions.firstStep}</span>
+
+              <div className={styles.storyText}>
+                <h3 className={styles.storyTitle}>{storyTitles.firstStep}</h3>
+                <p>{storyDescriptions.firstStep}</p>
+              </div>
             </div>
             <div className={styles.storyElement}>
               <LandscapeIcon />
-              <span>{storyDescriptions.secondstep}</span>
+
+              <div className={styles.storyText}>
+                <h3 className={styles.storyTitle}>{storyTitles.secondStep}</h3>
+                <p>{storyDescriptions.secondStep}</p>
+              </div>
             </div>
           </div>
         </div>

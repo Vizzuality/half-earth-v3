@@ -3,9 +3,9 @@
 @import 'styles/typography-extends';
 
 .modal {
-  width: 90% !important;
-  max-width: 90% !important;
-  height: 90% !important;
+  width: 95% !important;
+  max-width: 95% !important;
+  height: 95% !important;
 }
 
 .modalContent {
@@ -43,49 +43,46 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: center;
+    margin-top: 80px;
     padding: 32px;
     width: 100%;
 
-    .title {
-      @extend %display1;
-      color: $white;
-      margin-bottom: 56px;
-    }
-
-    .mouseNavigationSection {
+    .header {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 80px;
-      width: auto;
-
-      @media #{$tablet-portrait} {
-        width: 400px;
+      flex-direction: column;
+      min-width: 500px;
+      margin-bottom: 112px;
+      .title {
+        @extend %display1;
+        color: $white;
+        font-weight: 100;
+        margin-bottom: 56px;
       }
 
-      .mouseClickIcon {
-        align-items: center;
+      .mouseNavigationSection {
         display: flex;
-        flex: 1;
-        flex-direction: column;
-        padding: 0 15px;
+        justify-content: space-between;
 
-        @media #{$tablet-portrait} {
+        .mouseClickIcon {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
           padding: 0;
-        }
 
-        span {
-          color: $white;
-          font-family: $font-family-1;
-          font-size: $font-size-xxs;
-          font-weight: bold;
-          letter-spacing: $letter-spacing;
-          line-height: $line-height;
-          margin-top: 20px;
-          text-transform: uppercase;
+          span {
+            color: $white;
+            font-family: $font-family-1;
+            font-size: $font-size-xxs;
+            font-weight: bold;
+            letter-spacing: $letter-spacing;
+            line-height: $line-height;
+            margin-top: 20px;
+            text-transform: uppercase;
+          }
         }
       }
     }
+
 
     .storySection {
       display: block;
@@ -93,24 +90,35 @@
       width: 100%;
 
       @media #{$tablet-portrait} {
-        // width: 670px;
+        width: 750px;
         display: flex;
         text-align: left;
         justify-content: space-between;
       }
 
       .storyElement {
-        display: inline-flex;
-        margin-bottom: 40px;
+        align-items: center;
+        display: flex;
+        margin-right: 70px;
+        &:last-of-type {
+          margin-right: 0;
+        }
 
-        span {
-          width: 179px;
+        .storyText {
+          width: 250px;
           color: $white;
           font-family: $font-family-1;
           font-size: $font-size-sm;
           font-weight: $font-weight-light;
           line-height: 22px;
           margin-left: 20px;
+
+          .storyTitle {
+            font-size: $font-size-sm;
+            font-weight: $font-weight;
+            line-height: 0;
+            text-transform: uppercase;
+          }
         }
       }
 
