@@ -1,0 +1,49 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.modal {
+  width: 90% !important;
+  max-width: 90% !important;
+  height: auto !important;
+
+  @media #{$tablet-landscape} {
+    max-width: 620px !important;
+    width: 600px !important;
+  }
+}
+
+.modalContent {
+  padding: 0 !important;
+}
+
+.modalContainer {
+  display: flex;
+  padding: 24px;
+  background-color: $brand-color-secondary;
+
+  @media #{$tablet-landscape} {
+    max-width: 620px;
+    width: 600px;
+  }
+
+}
+
+.closeBtn {
+  // TODO: Remove button when we stop using half-earth-components
+  display: none;
+}
+
+.shareContent {
+  flex: 1;
+}
+
+.copyContainer {
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: column;
+
+  @media #{$tablet-landscape} {
+    flex-direction: row;
+  }
+}

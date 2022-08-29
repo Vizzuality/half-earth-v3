@@ -7,6 +7,7 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import MinimapWidget from 'containers/menus/sidemenu/minimap-widget';
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
+import HelpModal from 'containers/modals/help-modal';
 
 import Button from 'components/button';
 import SearchLocation from 'components/search-location';
@@ -33,7 +34,8 @@ function SideMenuComponent({
   const isOnMobile = useMobile();
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  const [isSearcherOpen, setIsSearcherOpen] = useState(false);
+  const [isSearcherOpen, setSearcherOpen] = useState(false);
+  const [isHelpModalOpen, setHelpModalOpen] = useState(false);
 
   const hiddenWidget = hidden || isOnMobile;
   return (
@@ -46,9 +48,9 @@ function SideMenuComponent({
         Icon={SearchIcon}
         type="icon-square"
         className={styles.searchBtn}
-        handleClick={() => setIsSearcherOpen(true)}
+        handleClick={() => setSearcherOpen(true)}
       />
-      {console.log('isSearcherOpen', isSearcherOpen)}
+
       {isSearcherOpen && (
         <div className={styles.searcherContainer}>
           <SearchLocation
@@ -58,7 +60,7 @@ function SideMenuComponent({
             parentWidth="380px"
             searchSourceLayerSlug={selectedOption.slug}
             hasResetButton
-            handleCloseButton={() => setIsSearcherOpen(false)}
+            handleCloseButton={() => setSearcherOpen(false)}
           />
         </div>
       )}
@@ -74,13 +76,13 @@ function SideMenuComponent({
       <Button
         Icon={HelpIcon}
         type="icon-square"
-        className={styles.shareBtn}
-        handleClick={() => console.info('help')}
+        className={styles.menuBtn}
+        handleClick={() => setHelpModalOpen(true)}
       />
       <Button
         Icon={ShareIcon}
         type="icon-square"
-        className={styles.shareBtn}
+        className={styles.menuBtn}
         handleClick={setShareModalOpen}
       />
       {!hideMiniMap && (
@@ -96,6 +98,11 @@ function SideMenuComponent({
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}
       />
+      <HelpModal
+        isOpen={isHelpModalOpen}
+        setHelpModalOpen={setHelpModalOpen}
+      />
+
     </div>
   );
 }
