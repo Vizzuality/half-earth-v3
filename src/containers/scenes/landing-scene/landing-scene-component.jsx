@@ -1,34 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
-import Scene from 'components/scene';
-// Constants
+import { T, useT } from '@transifex/react';
+
+import { motion } from 'framer-motion';
+import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+
 import Globe from 'containers/landing/globe';
 import Hero from 'containers/landing/hero';
-import { motion } from 'framer-motion';
+import AboutModal from 'containers/modals/about-modal';
+
+import Scene from 'components/scene';
+
+import { useMobile } from 'constants/responsive';
+
 import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
-import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
-import { T, useT } from '@transifex/react';
 
-// Constants
-import { useMobile } from 'constants/responsive';
-// Styles
 import styles from './landing-scene-styles.module.scss';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
+function LandingSceneComponent({ sceneSettings, browsePage }) {
   const isMobile = useMobile();
   const t = useT();
+
+  const [isAboutModalOpen, setAboutModalOpen] = useState(false);
+
   return (
     <Scene
-      sceneName={'landing-scene'}
+      sceneName="landing-scene"
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
       <div className={styles.sceneContainer}>
+        <button
+          className={styles.aboutBtn}
+          type="button"
+          onClick={() => setAboutModalOpen(true)}
+        >
+          {t('About the map')}
+        </button>
+        <AboutModal
+          isOpen={isAboutModalOpen}
+          setHelpModalOpen={setAboutModalOpen}
+        />
         <Hero />
         <motion.p
           className={styles.or}
@@ -53,7 +70,7 @@ const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
           <Globe
             title={t('Discover stories')}
             description={t(
-              'Learn about important places of great biodiversity, and how their protection can contribute to preserving global biodiversity.'
+              'Learn about important places of great biodiversity, and how their protection can contribute to preserving global biodiversity.',
             )}
             globeImage={globeDiscover}
             handleClick={() => browsePage({ type: FEATURED })}
@@ -61,7 +78,7 @@ const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
           <Globe
             title={t('Explore data')}
             description={t(
-              'Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity.'
+              'Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity.',
             )}
             globeImage={globeExplore}
             center
@@ -70,17 +87,15 @@ const LandingSceneComponent = ({ sceneSettings, browsePage }) => {
           <Globe
             title={t('National Report Cards')}
             description={t(
-              'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species.'
+              'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species.',
             )}
             globeImage={globeNRC}
-            handleClick={() =>
-              browsePage({ type: NATIONAL_REPORT_CARD_LANDING })
-            }
+            handleClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}
           />
         </motion.div>
       </div>
     </Scene>
   );
-};
+}
 
 export default LandingSceneComponent;

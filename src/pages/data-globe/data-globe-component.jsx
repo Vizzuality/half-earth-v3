@@ -39,10 +39,6 @@ function DataGlobeComponent({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      {/* <MainMenu
-        onboardingStep={onboardingStep}
-        onboardingType={onboardingType}
-      /> */}
       <DataScene
         sceneMode={sceneMode}
         countryISO={countryISO}

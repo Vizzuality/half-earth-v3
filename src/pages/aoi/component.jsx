@@ -7,7 +7,6 @@ import cx from 'classnames';
 import AreaOfInterestScene from 'scenes/aoi-scene';
 
 import HalfEarthLogo from 'components/half-earth-logo';
-// import MainMenu from 'components/main-menu';
 
 import uiStyles from 'styles/ui.module.scss';
 
@@ -19,7 +18,6 @@ function AreaOfInterestPageComponent({ hasMetadata }) {
   return (
     <>
       <HalfEarthLogo className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)} />
-      {/* <MainMenu /> */}
       <AreaOfInterestScene />
       {hasMetadata && <InfoModal />}
     </>
