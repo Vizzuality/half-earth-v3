@@ -39,7 +39,11 @@ function HelpModalComponent({ handleClose, isOpen }) {
     ),
   };
   return (
-    <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={handleClose}
+      theme={styles}
+    >
       <div className={styles.modalContainer}>
         <div className={styles.wrapper}>
           <div className={styles.header}>

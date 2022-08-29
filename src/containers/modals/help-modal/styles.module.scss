@@ -2,6 +2,7 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+
 .modal {
   width: 95% !important;
   max-width: 95% !important;
@@ -13,22 +14,16 @@
 }
 
 .closeBtn {
-  // TODO: Remove button when we stop using half-earth-components
-  display: none;
+  background-color: transparent;
+  border: none;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 .shareContent {
   flex: 1;
-}
-
-.copyContainer {
-  display: flex;
-  margin-bottom: 20px;
-  flex-direction: column;
-
-  @media #{$tablet-landscape} {
-    flex-direction: row;
-  }
 }
 
 .modalContainer {
@@ -37,6 +32,7 @@
   height: 100%;
   padding: 24px;
   width: 100%;
+  overflow: hidden;
 
   .wrapper {
     align-items: center;
@@ -83,7 +79,6 @@
       }
     }
 
-
     .storySection {
       display: block;
       text-align: center;
@@ -121,8 +116,6 @@
           }
         }
       }
-
     }
-
   }
 }
