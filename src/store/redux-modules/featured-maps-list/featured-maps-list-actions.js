@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-  import CONTENTFUL from 'services/contentful';
+import CONTENTFUL from 'services/contentful';
 
 export const setFeaturedMapsList = createThunkAction('setFeaturedMapsList', (locale) => async (dispatch, state) => {
   try {
@@ -8,7 +8,7 @@ export const setFeaturedMapsList = createThunkAction('setFeaturedMapsList', (loc
   } catch (e) {
     console.warn(e);
     dispatch(fetchFeaturedMapsDataFail(e));
-    }
+  }
 });
 
 export const fetchFeaturedMapsDataFail = createAction('fetchFeaturedMapsDataFail');

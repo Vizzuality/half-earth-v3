@@ -1,26 +1,27 @@
 import React from 'react';
-import loadable from '@loadable/component';
-import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 
-import Scene from 'components/scene';
-import Widgets from 'containers/widgets';
-import LandscapeViewManager from 'containers/managers/landscape-view-manager';
-import GlobeEventsManager from 'containers/managers/globe-events-manager';
-import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import loadable from '@loadable/component';
+
+import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
-import Spinner from 'components/spinner';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
+import GlobeEventsManager from 'containers/managers/globe-events-manager';
+import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
+import Widgets from 'containers/widgets';
+
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
-import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
-
-import { MobileOnly, useMobile } from 'constants/responsive';
-
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
+import Scene from 'components/scene';
+import Spinner from 'components/spinner';
+
+import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
+import { MobileOnly, useMobile } from 'constants/responsive';
 
 import uiStyles from 'styles/ui.module.scss';
 

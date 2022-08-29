@@ -7,11 +7,13 @@ import metadataActions from 'redux_modules/metadata';
 import countryDataActions from 'redux_modules/country-data';
 import { downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 
-import { NATIONAL_REPORT_CARD_LANDING, NATIONAL_REPORT_CARD } from 'router'
+import { NATIONAL_REPORT_CARD_LANDING, NATIONAL_REPORT_CARD } from 'router';
 
-const actions = { ...urlActions, ...countryDataActions, ...metadataActions, downloadNrcPdfAnalytics };
+const actions = {
+  ...urlActions, ...countryDataActions, ...metadataActions, downloadNrcPdfAnalytics,
+};
 
-const NationalReportSidebarContainer = (props) => {
+function NationalReportSidebarContainer(props) {
   const {
     browsePage,
     onboardingType,
@@ -21,10 +23,12 @@ const NationalReportSidebarContainer = (props) => {
     const { changeUI } = props;
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
     if (onboardingType) changeUI({ onboardingType: 'national-report-cards', onboardingStep: 6, waitingInteraction: false });
-  }
+  };
 
   const handleTabSelection = (slug) => {
-    const { browsePage, countryISO, changeUI, onboardingType, onboardingStep } = props;
+    const {
+      browsePage, countryISO, changeUI, onboardingType, onboardingStep,
+    } = props;
     browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: slug } });
     if (onboardingType) {
       changeUI({ onboardingStep: onboardingStep + 1, onboardingType, waitingInteraction: false });
@@ -37,9 +41,9 @@ const NationalReportSidebarContainer = (props) => {
     const tempTitle = document.title;
     document.title = `Half-Earth National Report Card ${date} - ${countryName}`;
     window.print();
-    downloadNrcPdfAnalytics(countryName)
+    downloadNrcPdfAnalytics(countryName);
     document.title = tempTitle;
-  }
+  };
 
   return (
     <Component
@@ -48,8 +52,7 @@ const NationalReportSidebarContainer = (props) => {
       handleClose={handleClose}
       {...props}
     />
-  )
+  );
 }
-
 
 export default connect(mapStateToProps, actions)(NationalReportSidebarContainer);

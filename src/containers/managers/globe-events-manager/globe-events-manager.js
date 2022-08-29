@@ -1,17 +1,17 @@
-
-const GlobeEventsManager = ({view, clickCallbacksArray, selectedFeaturedMap, mouseMoveCallbacksArray }) => {
-
-  view.on("pointer-down", function(event) {
+function GlobeEventsManager({
+  view, clickCallbacksArray, selectedFeaturedMap, mouseMoveCallbacksArray,
+}) {
+  view.on('pointer-down', (event) => {
     event.stopPropagation();
-    view.hitTest(event).then(function(response) {
-      clickCallbacksArray.forEach(cb => cb(response, view, selectedFeaturedMap))
+    view.hitTest(event).then((response) => {
+      clickCallbacksArray.forEach((cb) => cb(response, view, selectedFeaturedMap));
     });
   });
 
-  view.on("pointer-move", function(event) {
+  view.on('pointer-move', (event) => {
     event.stopPropagation();
-    view.hitTest(event).then(function(response) {
-      mouseMoveCallbacksArray.forEach(cb => cb(response, view))
+    view.hitTest(event).then((response) => {
+      mouseMoveCallbacksArray.forEach((cb) => cb(response, view));
     });
   });
   return null;

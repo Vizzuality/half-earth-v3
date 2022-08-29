@@ -7,26 +7,26 @@ import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 export const useWatchUtils = () => {
   const [watchUtils, setWatchUtils] = useState(null);
   useEffect(() => {
-    loadModules(["esri/core/watchUtils"]).then(([watchUtils]) => {
+    loadModules(['esri/core/watchUtils']).then(([watchUtils]) => {
       setWatchUtils(watchUtils);
-    })
+    });
   }, []);
   return watchUtils;
-}
+};
 
-export const useFeatureLayer = ({layerSlug, outFields = ["*"]}) => {
+export const useFeatureLayer = ({ layerSlug, outFields = ['*'] }) => {
   const [layer, setLayer] = useState(null);
   useEffect(() => {
-    loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+    loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
       const _layer = new FeatureLayer({
         url: LAYERS_URLS[layerSlug],
-        outFields
+        outFields,
       });
-      setLayer(_layer)
+      setLayer(_layer);
     });
-  }, [])
+  }, []);
   return layer;
-}
+};
 
 export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidgetConfig) => {
   const [searchWidget, setSearchWidget] = useState(null);
@@ -34,24 +34,24 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
   const [esriConstructors, setEsriConstructors] = useState();
 
   useEffect(() => {
-    loadModules(["esri/widgets/Search", "esri/layers/FeatureLayer", "esri/tasks/Locator"])
+    loadModules(['esri/widgets/Search', 'esri/layers/FeatureLayer', 'esri/tasks/Locator'])
       .then(([Search, FeatureLayer, Locator]) => {
-        setEsriConstructors({Search, FeatureLayer, Locator})
+        setEsriConstructors({ Search, FeatureLayer, Locator });
       }).catch((err) => console.error(err));
-  },[])
+  }, []);
 
   const handleOpenSearch = (ref) => {
     if (!esriConstructors) return null;
     const { Search, FeatureLayer, Locator } = esriConstructors;
     if (searchWidget === null) {
       const sWidget = new Search({
-        view: view,
+        view,
         locationEnabled: true, // do not show the Use current location box when clicking in the input field
         popupEnabled: false, // hide location popup
         resultGraphicEnabled: false, // hide location pin
         sources: searchSources(FeatureLayer, Locator),
         includeDefaultSources: false,
-        goToOverride: () => {} // Go to will be done on the callback
+        goToOverride: () => {}, // Go to will be done on the callback
       });
       setSearchWidget(sWidget);
     }
@@ -59,26 +59,26 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
 
   const updateSources = (searchSourcesFunction) => {
     if (searchWidget) {
-      const {FeatureLayer, Locator} = esriConstructors;
-      searchWidget.sources = searchSourcesFunction(FeatureLayer, Locator)
+      const { FeatureLayer, Locator } = esriConstructors;
+      searchWidget.sources = searchSourcesFunction(FeatureLayer, Locator);
     }
-  }
+  };
 
   const handleCloseSearch = () => {
     setSearchWidget(null);
-  }
+  };
 
   const handleSearchInputChange = (event) => {
     if (searchWidget) {
       searchWidget.suggest(event.target.value);
     }
-  }
+  };
 
   const handleSearchSuggestionClick = (option) => {
     if (searchWidget) {
       searchWidget.search(option);
     }
-  }
+  };
 
   useEffect(() => {
     if (searchWidget && searchWidgetConfig) {
@@ -93,9 +93,9 @@ export const useSearchWidgetLogic = (view, searchTermsAnalyticsEvent, searchWidg
     handleCloseSearch,
     handleSearchInputChange,
     handleSearchSuggestionClick,
-    searchWidget
-  }
-}
+    searchWidget,
+  };
+};
 
 export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   const [sketchTool, setSketchTool] = useState(null);
@@ -105,17 +105,16 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   const [geometryArea, setGeometryArea] = useState(0);
 
   useEffect(() => {
-    loadModules(["esri/widgets/Sketch/SketchViewModel","esri/geometry/geometryEngine"]).then(([SketchViewModel, geometryEngine]) => {
+    loadModules(['esri/widgets/Sketch/SketchViewModel', 'esri/geometry/geometryEngine']).then(([SketchViewModel, geometryEngine]) => {
       setConstructors({
         geometryEngine,
-        SketchViewModel
-      })
-    })
-  }, [])
-
+        SketchViewModel,
+      });
+    });
+  }, []);
 
   const handleSketchToolActivation = () => {
-    loadModules(["esri/widgets/Sketch",  "esri/widgets/Sketch/SketchViewModel","esri/layers/GraphicsLayer"]).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
+    loadModules(['esri/widgets/Sketch', 'esri/widgets/Sketch/SketchViewModel', 'esri/layers/GraphicsLayer']).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
       const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
       setSketchLayer(_sketchLayer);
       view.map.add(_sketchLayer);
@@ -126,7 +125,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
         defaultCreateOptions: { hasZ: false },
         defaultUpdateOptions: { enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true },
         visibleElements: {
-          settingsMenu: false
+          settingsMenu: false,
         },
         // viewModel: new SketchViewModel({
         //   view: view,
@@ -137,35 +136,33 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
         //   }
         // })
       });
-      setSketchTool(_sketchTool)
+      setSketchTool(_sketchTool);
     });
-  }
+  };
 
   const addWidgetToTheUi = () => {
-    view.ui.add(sketchTool, "manual");
-    const container = document.createElement("div");
-    const rootNode = document.getElementById("root");
+    view.ui.add(sketchTool, 'manual');
+    const container = document.createElement('div');
+    const rootNode = document.getElementById('root');
     rootNode.appendChild(container);
-  }
+  };
 
-  const  handleSketchToolDestroy = () => {
+  const handleSketchToolDestroy = () => {
     view.ui.remove(sketchTool);
-    setSketchTool(null)
+    setSketchTool(null);
     sketchTool.destroy();
-  }
+  };
 
   useEffect(() => {
-    if(sketchTool) {
-
+    if (sketchTool) {
       addWidgetToTheUi();
 
       sketchTool.on('create', (event) => {
         if (event.state === 'active') {
           if (event.graphic.geometry.rings[0].length > 3) {
-            setGeometryArea(calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine))
+            setGeometryArea(calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine));
           }
-        }
-        else if (event.state === 'complete') {
+        } else if (event.state === 'complete') {
           setGeometryArea(0);
           postDrawCallback(sketchLayer, event.graphic, calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine));
         }
@@ -173,8 +170,8 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
     }
 
     return function cleanUp() {
-      sketchLayer && view.map.remove(sketchLayer)
-    }
+      sketchLayer && view.map.remove(sketchLayer);
+    };
   }, [sketchTool]);
 
   return {
@@ -182,5 +179,5 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
     geometryArea,
     handleSketchToolDestroy,
     handleSketchToolActivation,
-  }
-}
+  };
+};

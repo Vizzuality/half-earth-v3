@@ -1,6 +1,8 @@
 import loadable from '@loadable/component';
 import 'he-components/dist/main.css';
 import React, { useEffect } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
@@ -42,6 +44,8 @@ const AppLayout = (props) => {
   }
 };
 
+const queryClient = new QueryClient();
+
 const App = (props) => {
   useEffect(() => {
     tx.init({
@@ -58,12 +62,14 @@ const App = (props) => {
   }, [props.lang]);
 
   return (
-    <div
-      className="App"
-      style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
-    >
-      <AppLayout {...props} />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div
+        className="App"
+        style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
+      >
+        <AppLayout {...props} />
+      </div>
+    </QueryClientProvider>
   );
 };
 

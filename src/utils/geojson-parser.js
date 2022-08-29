@@ -8,11 +8,11 @@ export const esriGeometryToGeojson = (geometry) => {
           properties: {},
           geometry: {
             type: 'Polygon',
-            coordinates: geometry.rings
-          }
-        }
-      ]
-    }
+            coordinates: geometry.rings,
+          },
+        },
+      ],
+    },
   };
 
   return JSON.stringify(geojsonObject);
@@ -20,11 +20,11 @@ export const esriGeometryToGeojson = (geometry) => {
 
 export const geoJsonObject = (geometry) => {
   return {
-   type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Polygon',
-          coordinates: geometry.rings
-        }
-      }
-}
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'Polygon',
+      coordinates: geometry.rings,
+    },
+  };
+};

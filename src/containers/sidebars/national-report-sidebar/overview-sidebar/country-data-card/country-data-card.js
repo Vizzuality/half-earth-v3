@@ -1,30 +1,32 @@
 import React from 'react';
+import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
 import mapStateToProps from './country-data-card-selectors';
 import metadataActions from 'redux_modules/metadata';
-import metadataConfig from 'constants/metadata';
+import metadataConfig, { SPECIES_PROTECTION_INDEX } from 'constants/metadata';
 import { checkSpiInfoAnalytics } from 'actions/google-analytics-actions';
-import { SPECIES_PROTECTION_INDEX } from 'constants/metadata';
 
 import Component from './country-data-card-component';
 
-const actions = { checkSpiInfoAnalytics, ...metadataActions }
+const actions = { checkSpiInfoAnalytics, ...metadataActions };
 
-const CountryDataCardContainer = props => {
+function CountryDataCardContainer(props) {
   const { areaChartData } = props;
+  const locale = useLocale();
 
   const handleInfoClick = () => {
     const {
       setModalMetadata,
-      checkSpiInfoAnalytics
+      checkSpiInfoAnalytics,
     } = props;
-    checkSpiInfoAnalytics('Species Protection Index')
-    const md = metadataConfig[SPECIES_PROTECTION_INDEX]
+    checkSpiInfoAnalytics('Species Protection Index');
+    const md = metadataConfig[SPECIES_PROTECTION_INDEX];
     setModalMetadata({
       slug: md.slug,
-      isOpen: true
+      locale,
+      isOpen: true,
     });
-  }
+  };
 
   return (
     <Component
@@ -32,7 +34,7 @@ const CountryDataCardContainer = props => {
       handleInfoClick={handleInfoClick}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(CountryDataCardContainer);

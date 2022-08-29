@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 
 export const initialState = {
   data: null,
-  loading: false
+  loading: false,
 };
 
 function setSpeciesData(state, { payload }) {

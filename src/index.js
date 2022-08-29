@@ -6,13 +6,15 @@ import store from './store';
 import * as serviceWorker from './serviceWorker';
 import 'styles/base';
 
-const Root = () => {
+function Root() {
   return (
     <Provider store={store()}>
       <App />
     </Provider>
   );
-};
+}
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 serviceWorker.register();
+
+

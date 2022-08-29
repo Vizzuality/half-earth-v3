@@ -7,7 +7,7 @@ import Component from './component';
 import { AREA_OF_INTEREST } from 'router';
 import urlActions from 'actions/url-actions';
 
-const Container = (props) => {
+function Container(props) {
   const { isOpen, handleClose, browsePage } = props;
   const [aoiHistory, setAoiHistory] = useState([]);
   const [editAoiId, setEditAoiId] = useState(null);
@@ -22,61 +22,61 @@ const Container = (props) => {
         setLoading(false);
       });
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   const handleAoiClick = (id) => {
-    browsePage({ type: AREA_OF_INTEREST, payload: { id }});
-  }
+    browsePage({ type: AREA_OF_INTEREST, payload: { id } });
+  };
 
   const handleAoiNameChange = (e) => {
     setUpdatedAoiName(e.target.value);
-  }
+  };
 
   const handleModalClose = () => {
     setEditAoiId(null);
-    setShareAoiId(null)
+    setShareAoiId(null);
     handleClose();
-  }
+  };
 
   const handleAoiDataStore = (id) => {
     writeToForageItem(id, {
       areaName: updatedAoiName,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }).then(() => {
       getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
       setEditAoiId(null);
-    })
-  }
+    });
+  };
 
   const handleActivateAoiEdit = (id) => {
-    setEditAoiId(id)
-  }
+    setEditAoiId(id);
+  };
 
   const handleAoiShareToggle = (id) => {
     if (id === shareAoiId) {
-      setShareAoiId(null)
+      setShareAoiId(null);
     } else {
-      setShareAoiId(id)
+      setShareAoiId(id);
     }
-  }
+  };
 
   const handleRemoveAoiFromLocal = (id) => {
     localforage.removeItem(id)
       .then(() => {
         getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
-      })
-  }
+      });
+  };
 
   const handleRemoveAllLocalAoiRecords = () => {
-    localforage.dropInstance().then(() => setAoiHistory([]))
-  }
+    localforage.dropInstance().then(() => setAoiHistory([]));
+  };
 
   const handleAoiShare = (id) => {
     localforage.getItem(id).then((storedValues) => {
       // TODO: store AOI on arcgis online
-      console.info(id, storedValues)
-    })
-  }
+      console.info(id, storedValues);
+    });
+  };
 
   return (
     <Component
@@ -95,7 +95,7 @@ const Container = (props) => {
       loading={loading}
       {...props}
     />
-  )
+  );
 }
 
 export default connect(null, urlActions)(Container);

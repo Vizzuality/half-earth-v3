@@ -1,13 +1,14 @@
-// Dependencies
 import React from 'react';
+
 import loadable from '@loadable/component';
-// Components
+
+import DataScene from 'scenes/data-scene';
+
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
-import DataScene from 'scenes/data-scene';
-// Styles
+
 import uiStyles from 'styles/ui.module.scss';
-// Dynamic imports
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const DataGlobeComponent = ({

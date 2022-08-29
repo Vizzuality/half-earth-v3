@@ -2,7 +2,7 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
-  HALF_EARTH_FUTURE_METADATA_SLUG
+  HALF_EARTH_FUTURE_METADATA_SLUG,
 } from 'constants/layers-slugs';
 import { t } from '@transifex/native';
 
@@ -17,7 +17,7 @@ export const getWDPALayers = () => [
     id: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     title: PROTECTED_AREAS_VECTOR_TILE_LAYER,
     slug: PROTECTED_AREAS_VECTOR_TILE_LAYER,
-    metadataTitle: t('Protected areas')
+    metadataTitle: t('Protected areas'),
   },
   {
     name: t('Community based'),
@@ -26,9 +26,9 @@ export const getWDPALayers = () => [
     title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     groupedLayer: true,
-    metadataTitle: t('Community-based protected areas')
+    metadataTitle: t('Community-based protected areas'),
 
-  }
+  },
 ];
 
 export const getConserveNextLayers = () => [
@@ -38,6 +38,6 @@ export const getConserveNextLayers = () => [
     id: HALF_EARTH_FUTURE_TILE_LAYER,
     title: HALF_EARTH_FUTURE_TILE_LAYER,
     slug: HALF_EARTH_FUTURE_METADATA_SLUG,
-    metadataTitle: t('Places for a Half-Earth Future')
-  }
+    metadataTitle: t('Places for a Half-Earth Future'),
+  },
 ];

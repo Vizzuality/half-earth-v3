@@ -1,5 +1,3 @@
-
-
 export const COUNTRY_ATTRIBUTES = {
   nspecies_richness_ter: 'nspecies_ter',
   nspecies_ter: 'nspecies_ter',
@@ -18,5 +16,5 @@ export const COUNTRY_ATTRIBUTES = {
   GID_0: 'GID_0',
   similar_ter: 'similar_ter',
   prop_hm_very_high_ter: 'prop_hm_very_high_ter',
-  prop_hm_0_ter: 'prop_hm_0_ter'
+  prop_hm_0_ter: 'prop_hm_0_ter',
 };

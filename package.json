@@ -6,6 +6,7 @@
     "@esri/arcgis-rest-feature-layer": "^3.4.3",
     "@esri/arcgis-rest-request": "^3.4.3",
     "@loadable/component": "^5.10.1",
+    "@tanstack/react-query": "^4.1.0",
     "@tippyjs/react": "^4.2.5",
     "@transifex/cli": "^4.1.0",
     "@transifex/native": "^4.1.0",
@@ -20,11 +21,13 @@
     "directory-named-webpack-plugin": "^4.0.1",
     "dotenv": "^16.0.1",
     "dotenv-cli": "^5.1.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-react": "^7.30.1",
     "esri-loader": "^3.2.0",
     "framer-motion": "^4.0.3",
     "he-components": "github:vizzuality/half-earth-components#0.2.1",
     "localforage": "^1.10.0",
-    "lodash-es": "4.17.21",
+    "lodash": "4.17.21",
     "node-sass": "yarn:sass",
     "post-robot": "8.0.28",
     "prop-types": "^15.7.2",
@@ -58,9 +61,11 @@
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
     "sha1": "^1.1.1",
-    "swr": "^0.3.2",
     "vega-lib": "^4.4.0",
     "workbox-build": "^4.3.1"
+  },
+  "resolutions": {
+    "**/**/node-gyp": "5.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -71,7 +76,8 @@
     "docs:serve": "bundle exec jekyll serve",
     "eject": "react-scripts eject",
     "transifex:push": "dotenv cross-var ./node_modules/.bin/txjs-cli push src/ --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
-    "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%"
+    "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -89,7 +95,11 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "cypress": "^6.3.0",
-    "eslint-plugin-cypress": "^2.11.2",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "identity-obj-proxy": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "react-app-rewired": "^2.1.1",

@@ -3,7 +3,7 @@ import { layersConfig } from 'constants/mol-layers-configs';
 import { setLayersVisibility } from 'utils/arcgis-layer-manager-utils';
 import { addActiveLayersToScene } from 'utils/layer-manager-utils';
 
-const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
+function ArcgisLayerManager({ map, activeLayers, customFunctions }) {
   const { layers } = map;
   const { items: sceneLayers } = layers;
   // Active layers will be always checked and added to the map if they are not
@@ -11,10 +11,10 @@ const ArcgisLayerManager = ({ map, activeLayers, customFunctions }) => {
     // Add not already created activeLayers to the map
     addActiveLayersToScene(activeLayers, layersConfig, map);
     // setLayersOrder(activeLayers, map);
-    setLayersVisibility(activeLayers, sceneLayers, customFunctions)
+    setLayersVisibility(activeLayers, sceneLayers, customFunctions);
   }, [activeLayers]);
 
-  return null
+  return null;
 }
 
 export default ArcgisLayerManager;

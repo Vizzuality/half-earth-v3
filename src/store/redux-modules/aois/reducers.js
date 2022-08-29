@@ -5,9 +5,9 @@ export const initialState = { areaTypeSelected: AREA_TYPES.national };
 
 const setAreaTypeSelected = (state, { payload }) => ({
   ...state,
-  areaTypeSelected: payload
+  areaTypeSelected: payload,
 });
 
 export default {
-  [actions.setAreaTypeSelected]: setAreaTypeSelected
+  [actions.setAreaTypeSelected]: setAreaTypeSelected,
 };

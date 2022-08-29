@@ -28,6 +28,7 @@ const AoiSceneComponent = ({
   setTooltipInfo,
   areaTypeSelected,
 }) => {
+
   const updatedActiveLayers = useMemo(
     () =>
       areaTypeSelected === AREA_TYPES.futurePlaces

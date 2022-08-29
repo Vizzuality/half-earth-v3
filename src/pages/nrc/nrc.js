@@ -16,7 +16,7 @@ import * as urlActions from 'actions/url-actions';
 
 const actions = { ...countryDataActions, ...urlActions };
 
-const NrcContainer = props => {
+function NrcContainer(props) {
   const {
     countryISO,
     setCountryDataLoading,
@@ -28,20 +28,20 @@ const NrcContainer = props => {
   useEffect(() => {
     setCountryDataLoading();
     EsriFeatureService.getFeatures({
-      url: COUNTRIES_DATA_SERVICE_URL
+      url: COUNTRIES_DATA_SERVICE_URL,
     }).then((features) => {
       setCountryDataReady(features);
     }).catch((error) => {
       setCountryDataError(error);
-    })
-  }, [])
+    });
+  }, []);
 
   const { changeGlobe } = props;
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
   const handleMapLoad = (map, activeLayers) => {
     setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER] });
     activateLayersOnLoad(map, activeLayers, layersConfig);
-  }
+  };
 
   const [chartLandData, setChartLandData] = useState(null);
   const [chartMarineData, setChartMarineData] = useState(null);
@@ -50,22 +50,21 @@ const NrcContainer = props => {
       EsriFeatureService.getFeatures({
         url: NRC_TERRESTRIAL_SPI_DATA_LAYER,
         whereClause: `GID_0 = '${countryISO}'`,
-        returnGeometry: false
-      }).then(data => {
+        returnGeometry: false,
+      }).then((data) => {
         if (data && data.length > 0) {
-          setChartLandData(data.map(r => r.attributes));
+          setChartLandData(data.map((r) => r.attributes));
         }
       });
       EsriFeatureService.getFeatures({
         url: NRC_MARINE_SPI_DATA_LAYER,
         whereClause: `GID_0 = '${countryISO}'`,
-        returnGeometry: false
-      }).then(data => {
+        returnGeometry: false,
+      }).then((data) => {
         if (data && data.length > 0) {
-          setChartMarineData(data.map(r => r.attributes));
+          setChartMarineData(data.map((r) => r.attributes));
         }
       });
-
     }
   }, [countryISO]);
 
@@ -76,8 +75,7 @@ const NrcContainer = props => {
       handleGlobeUpdating={handleGlobeUpdating}
       {...props}
     />
-  )
+  );
 }
-
 
 export default connect(mapStateToProps, actions)(NrcContainer);

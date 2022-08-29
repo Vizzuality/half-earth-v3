@@ -1,9 +1,9 @@
 import { createAction } from 'redux-tools';
 
 export const setSceneMap = createAction(
-  'SET_SCENE_MAP'
+  'SET_SCENE_MAP',
 );
 
 export const setSceneView = createAction(
-  'SET_SCENE_VIEW'
+  'SET_SCENE_VIEW',
 );

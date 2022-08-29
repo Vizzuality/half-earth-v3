@@ -14,4 +14,4 @@ export default (value, delay) => {
   }, [value]);
 
   return debouncedValue;
-}
+};

@@ -8,44 +8,48 @@ import dataSceneConfig from 'scenes/landing-scene/landing-scene-config';
 
 const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
-const selectCountryExtent = ({ countryExtent }) => countryExtent ? countryExtent.data : null;
+const selectCountryExtent = ({ countryExtent }) => (countryExtent ? countryExtent.data : null);
 
-const getGlobeSettings = createSelector(selectGlobeUrlState,
+const getGlobeSettings = createSelector(
+  selectGlobeUrlState,
   (globeUrlState) => {
     return {
       ...dataSceneConfig.globe,
-      ...globeUrlState
-    }
-  })
+      ...globeUrlState,
+    };
+  },
+);
 
-const getUiSettings = createSelector(selectUiUrlState,
+const getUiSettings = createSelector(
+  selectUiUrlState,
   (uiUrlState) => {
     return {
       ...dataSceneConfig.ui,
-      ...uiUrlState
-    }
-  })
+      ...uiUrlState,
+    };
+  },
+);
 
-const getListenersSetting = createSelector(selectListenersState, listenersUrlState => {
-  return listenersUrlState ? listenersUrlState : false;
-})
+const getListenersSetting = createSelector(selectListenersState, (listenersUrlState) => {
+  return listenersUrlState || false;
+});
 
-export const getActiveLayers = createSelector(getGlobeSettings, globeSettings => globeSettings.activeLayers)
-export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, globeSettings => globeSettings.countryTooltipDisplayFor);
-const getGlobeUpdating = createSelector(getGlobeSettings, globeSettings => globeSettings.isGlobeUpdating)
-const getSelectedSpecies = createSelector(getGlobeSettings, globeSettings => globeSettings.selectedSpecies)
-export const getCountryISO = createSelector(getGlobeSettings, globeSettings => globeSettings.countryISO)
-const getCountryName = createSelector(getGlobeSettings, globeSettings => globeSettings.countryName)
-const getSidebarVisibility = createSelector(getUiSettings, uiSettings => uiSettings.isSidebarOpen)
-const getFullscreenActive = createSelector(getUiSettings, uiSettings => uiSettings.isFullscreenActive)
-const getActiveCategory = createSelector(getUiSettings, uiSettings => uiSettings.activeCategory)
-const getActiveOption = createSelector(getUiSettings, uiSettings => uiSettings.activeOption)
-const getLandscapeSidebarCollapsed = createSelector(getUiSettings, uiSettings => uiSettings.isLandscapeSidebarCollapsed);
-const getHalfEarthModalOpen = createSelector(getUiSettings, uiSettings => uiSettings.openedModal);
-const getSceneMode = createSelector(getUiSettings, uiSettings => uiSettings.sceneMode);
-const getCountryChallengesSelectedKey = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedKey);
-export const getLocalSceneFilters = createSelector(getUiSettings, uiSettings => uiSettings.localSceneFilters);
-export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, uiSettings => uiSettings.countryChallengesSelectedFilter);
+export const getActiveLayers = createSelector(getGlobeSettings, (globeSettings) => globeSettings.activeLayers);
+export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, (globeSettings) => globeSettings.countryTooltipDisplayFor);
+const getGlobeUpdating = createSelector(getGlobeSettings, (globeSettings) => globeSettings.isGlobeUpdating);
+const getSelectedSpecies = createSelector(getGlobeSettings, (globeSettings) => globeSettings.selectedSpecies);
+export const getCountryISO = createSelector(getGlobeSettings, (globeSettings) => globeSettings.countryISO);
+const getCountryName = createSelector(getGlobeSettings, (globeSettings) => globeSettings.countryName);
+const getSidebarVisibility = createSelector(getUiSettings, (uiSettings) => uiSettings.isSidebarOpen);
+const getFullscreenActive = createSelector(getUiSettings, (uiSettings) => uiSettings.isFullscreenActive);
+const getActiveCategory = createSelector(getUiSettings, (uiSettings) => uiSettings.activeCategory);
+const getActiveOption = createSelector(getUiSettings, (uiSettings) => uiSettings.activeOption);
+const getLandscapeSidebarCollapsed = createSelector(getUiSettings, (uiSettings) => uiSettings.isLandscapeSidebarCollapsed);
+const getHalfEarthModalOpen = createSelector(getUiSettings, (uiSettings) => uiSettings.openedModal);
+const getSceneMode = createSelector(getUiSettings, (uiSettings) => uiSettings.sceneMode);
+const getCountryChallengesSelectedKey = createSelector(getUiSettings, (uiSettings) => uiSettings.countryChallengesSelectedKey);
+export const getLocalSceneFilters = createSelector(getUiSettings, (uiSettings) => uiSettings.localSceneFilters);
+export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, (uiSettings) => uiSettings.countryChallengesSelectedFilter);
 const getCountedActiveLayers = createSelector(
   [getActiveLayers],
   (activeLayers) => {
@@ -54,13 +58,12 @@ const getCountedActiveLayers = createSelector(
     const landHumanPressureLayers = activeLayers ? activeLayers.filter(({ category }) => category === LAYERS_CATEGORIES.LAND_PRESSURES).length : 0;
 
     return {
-      'Biodiversity': biodiversityLayers,
+      Biodiversity: biodiversityLayers,
       'Existing protection': protectionLayers,
-      'Human pressures': landHumanPressureLayers
+      'Human pressures': landHumanPressureLayers,
     };
-  }
+  },
 );
-
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,

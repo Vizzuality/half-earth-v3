@@ -1,0 +1,45 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends';
+
+.sidebarCardContainer {
+  @extend .sharedSidebarCardContainer;
+  position: relative;
+}
+
+.layersTogglesContainer {
+  @extend .sharedLayersTogglesContainer;
+}
+
+.layersTitle {
+  @extend %subtitle;
+  color: $white;
+}
+
+.description {
+  @extend %bodyText;
+  color: $white;
+}
+
+.legendContainer,
+.sourceContainer,
+.togglesContainer,
+.dropdownContainer {
+  padding-top: $sidebar-vertical-flow;
+}
+
+.allButton {
+  @extend %bodyText;
+  color: $white;
+  text-decoration: underline;
+  text-underline-offset: 1.5px;
+  padding: 8px 20px 0;
+}
+
+.togglesContainer {
+  // this way we expand the toggles to the edge of the sidebar
+  position: relative;
+  left: -$sidebar-paddings;
+  width: calc(100% + (2 * #{$sidebar-paddings}));
+}

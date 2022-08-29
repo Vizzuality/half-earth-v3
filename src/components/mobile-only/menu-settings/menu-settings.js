@@ -13,7 +13,7 @@ import Component from './menu-settings-component';
 
 const actions = { ...urlActions };
 
-const MenuSettingsContainer = props => {
+function MenuSettingsContainer(props) {
   const t = useT();
 
   const { openedModal, changeUI } = props;
@@ -24,11 +24,11 @@ const MenuSettingsContainer = props => {
     if (openedModal === MODALS.HE) setActiveModal(HALF_EARTH_MODAL);
   }, []);
 
-  const closeHEModal = () => { changeUI({ openedModal: null }) }
+  const closeHEModal = () => { changeUI({ openedModal: null }); };
 
   const closeModal = () => {
-    if (activeModal === HALF_EARTH_MODAL) { closeHEModal() }
-    setActiveModal(null)
+    if (activeModal === HALF_EARTH_MODAL) { closeHEModal(); }
+    setActiveModal(null);
   };
 
   const { HALF_EARTH_MODAL, ABOUT_PARTNERS, ABOUT_INSTRUCTIONS } = SETTINGS_OPTIONS;
@@ -39,22 +39,25 @@ const MenuSettingsContainer = props => {
       Component: Partners,
       onClickHandler: () => {
         setActiveModal(ABOUT_PARTNERS);
-      }
+      },
     },
     [ABOUT_INSTRUCTIONS]: {
       name: t('How to navigate the map'),
       Component: MapInstructions,
       onClickHandler: () => {
         setActiveModal(ABOUT_INSTRUCTIONS);
-      }
-    }
-  }
+      },
+    },
+  };
 
-  return <Component
-    options={options}
-    activeModal={activeModal}
-    closeModal={closeModal}
-    {...props} />;
+  return (
+    <Component
+      options={options}
+      activeModal={activeModal}
+      closeModal={closeModal}
+      {...props}
+    />
+  );
 }
 
 export default connect(null, actions)(MenuSettingsContainer);

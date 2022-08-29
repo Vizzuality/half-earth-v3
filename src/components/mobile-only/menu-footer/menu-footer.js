@@ -22,18 +22,17 @@ import {
 } from 'constants/layers-slugs';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 
-
 import Component from './menu-footer-component';
 
-const MenuFooterContainer = props => {
-  const { view, isSidebarOpen, isLandscapeMode, activeOption,
+function MenuFooterContainer(props) {
+  const {
+    view, isSidebarOpen, isLandscapeMode, activeOption,
     // selectedSidebar, selectedFeaturedMap, featured = false
   } = props;
   const t = useT();
 
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
   const [searchResults, setSearchResults] = useState();
-
 
   const browseSelectedFeature = ({ result }) => {
     const { setBatchTooltipData } = props;
@@ -47,12 +46,12 @@ const MenuFooterContainer = props => {
       content: {
         buttonText: t('analyze area'),
         id: attributes[id],
-        title: attributes[title] || attributes['NAME_0'],
-        subtitle: attributes[subtitle] || attributes['NAME_1'],
-      }
+        title: attributes[title] || attributes.NAME_0,
+        subtitle: attributes[subtitle] || attributes.NAME_1,
+      },
     });
-    flyToCentroid(view, geometry, 4)
-  }
+    flyToCentroid(view, geometry, 4);
+  };
 
   const getSearchResults = (e) => {
     const { results } = e;
@@ -62,12 +61,14 @@ const MenuFooterContainer = props => {
     } else if (!isSearchResultVisible) {
       setIsSearchResultsVisible(true);
     }
-  }
+  };
 
   // TODO: Select which area slug we want to search for. Maybe with a dropdown?
 
   const config = SEARCH_SOURCES_CONFIG[GADM_0_ADMIN_AREAS_FEATURE_LAYER];
-  const { url, title, outFields, searchFields, suggestionTemplate } = config;
+  const {
+    url, title, outFields, searchFields, suggestionTemplate,
+  } = config;
   const searchWidgetConfig = {
     searchResultsCallback: getSearchResults,
     postSearchCallback: browseSelectedFeature,
@@ -77,20 +78,21 @@ const MenuFooterContainer = props => {
         searchFields,
         suggestionTemplate,
         layer: new FeatureLayer({ url, title, outFields }),
-      }]
-    }
+      }];
+    },
   };
 
-  const { handleOpenSearch, handleCloseSearch, handleSearchInputChange, handleSearchSuggestionClick, searchWidget } = useSearchWidgetLogic(
+  const {
+    handleOpenSearch, handleCloseSearch, handleSearchInputChange, handleSearchSuggestionClick, searchWidget,
+  } = useSearchWidgetLogic(
     view,
     searchTermsAnalyticsEvent,
-    searchWidgetConfig
+    searchWidgetConfig,
   );
 
-
-  const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); }
+  const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); };
   const resetActiveOption = () => props.changeUI({ activeOption: '' });
-  const setActiveOption = (option) => props.changeUI({ activeOption: option })
+  const setActiveOption = (option) => props.changeUI({ activeOption: option });
 
   // const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
 
@@ -104,17 +106,16 @@ const MenuFooterContainer = props => {
   useEffect(() => {
     if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
     if (activeOption !== FOOTER_OPTIONS.SEARCH && searchWidget) handleCloseSearch();
-  }, [activeOption])
+  }, [activeOption]);
 
   const handleSearchToggle = () => {
-    if (!searchWidget) { handleOpenSearch() }
-    else { handleCloseSearch() }
-  }
+    if (!searchWidget) { handleOpenSearch(); } else { handleCloseSearch(); }
+  };
 
   const onOptionSelection = (option) => {
-    handleSearchSuggestionClick(option)
+    handleSearchSuggestionClick(option);
     setIsSearchResultsVisible(false);
-  }
+  };
 
   useEffect(() => {
     if (isLandscapeMode) {
@@ -122,12 +123,12 @@ const MenuFooterContainer = props => {
       handleSidebarClose();
       handleCloseSearch();
     }
-  }, [isLandscapeMode])
+  }, [isLandscapeMode]);
 
   const handler = (option) => {
     if (activeOption === option) resetActiveOption();
     else setActiveOption(option);
-  }
+  };
 
   // TODO: Add layer and legend options again
   const options = [
@@ -135,24 +136,26 @@ const MenuFooterContainer = props => {
       icon: SearchIcon,
       name: 'Find places',
       key: FOOTER_OPTIONS.SEARCH,
-      onClickHandler: () => { handler(FOOTER_OPTIONS.SEARCH); handleSearchToggle(); }
+      onClickHandler: () => { handler(FOOTER_OPTIONS.SEARCH); handleSearchToggle(); },
     },
     {
       icon: SettingsIcon,
       name: 'More',
       key: FOOTER_OPTIONS.SETTINGS,
-      onClickHandler: () => handler(FOOTER_OPTIONS.SETTINGS)
-    }
-  ]
+      onClickHandler: () => handler(FOOTER_OPTIONS.SETTINGS),
+    },
+  ];
 
-  return <Component
-    options={options}
-    handleSearchInputChange={handleSearchInputChange}
-    isSearchResultVisible={isSearchResultVisible}
-    searchResults={searchResults}
-    onOptionSelection={onOptionSelection}
-    {...props}
-  />;
+  return (
+    <Component
+      options={options}
+      handleSearchInputChange={handleSearchInputChange}
+      isSearchResultVisible={isSearchResultVisible}
+      searchResults={searchResults}
+      onOptionSelection={onOptionSelection}
+      {...props}
+    />
+  );
 }
 
 export default connect(null, { ...urlActions, ...mapTooltipActions })(MenuFooterContainer);

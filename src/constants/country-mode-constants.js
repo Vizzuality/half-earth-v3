@@ -8,7 +8,7 @@ export const getIndicatorLabels = () => ({
   [COUNTRY_ATTRIBUTES.protection_needed_ter]: t('Additional land protection needed'),
   [COUNTRY_ATTRIBUTES.hm_vh_ter]: t('Proportion of very high human modification'),
   [COUNTRY_ATTRIBUTES.Pop2020]: `${t('Population ')}(${COUNTRY_ATTRIBUTES['2020']})`,
-  'GNI_PPP': t('Gross National Income (GNI)'),
+  GNI_PPP: t('Gross National Income (GNI)'),
 });
 
 export const CONTINENTS = [
@@ -22,15 +22,15 @@ export const CONTINENTS = [
 ];
 
 export const CONTINENT_COLORS = {
-  'africa': '#34BD92',
-  'antarctica': '#92EB57',
-  'asia': '#3AA8EE',
-  'europe': '#FFDE00',
+  africa: '#34BD92',
+  antarctica: '#92EB57',
+  asia: '#3AA8EE',
+  europe: '#FFDE00',
   'north-america': '#8B62E9',
   'south-america': '#EB588F',
-  'oceania': '#E87926',
-  'australia': '#E87926',
-}
+  oceania: '#E87926',
+  australia: '#E87926',
+};
 
 export const getFiltersDictionary = () => ({
   filter_continent: t('by continent'),
@@ -50,7 +50,7 @@ export const getFiltersDictionary = () => ({
   filter_nspecies_mar: t('with similar number of vertebrate species'),
   [`filter_${COUNTRY_ATTRIBUTES.SPI_ter}`]: t('with similar species Protection Index'),
   filter_SPI_mar: t('with similar species Protection Index'),
-  filter_steward: t('with shared stewardship')
+  filter_steward: t('with shared stewardship'),
 });
 
 export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
@@ -66,7 +66,7 @@ export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
     SPI: COUNTRY_ATTRIBUTES.SPI_ter,
     similar: COUNTRY_ATTRIBUTES.similar_ter,
     nspecies_richness: COUNTRY_ATTRIBUTES.nspecies_richness_ter,
-    hm_no: COUNTRY_ATTRIBUTES.hm_no_ter
+    hm_no: COUNTRY_ATTRIBUTES.hm_no_ter,
   },
   marine: {
     hm_vh: 'hm_vh_mar',
@@ -80,26 +80,26 @@ export const LAND_MARINE_COUNTRY_ATTRIBUTES = {
     SPI: 'SPI_mar',
     similar: 'similar_mar',
     nspecies_richness: 'nspecies_mar',
-    hm_no: 'hm_no_mar'
-  }
+    hm_no: 'hm_no_mar',
+  },
 };
 
 export const getChallengesRelatedFilterOptions = (landMarineSelection) => {
   const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
   const filtersDictionary = getFiltersDictionary();
   return [
-    {slug: 'filter_continent', label: filtersDictionary.filter_continent},
-    {slug: 'filter_neigh', label: filtersDictionary.filter_neigh},
-    {slug: `filter_${COUNTRY_ATTRIBUTES.Area_Country}`, label: filtersDictionary[`filter_${COUNTRY_ATTRIBUTES.Area_Country}`]},
-    {slug: `filter_${COUNTRY_ATTRIBUTES.Pop2020}`, label: filtersDictionary[`filter_${COUNTRY_ATTRIBUTES.Pop2020}`]},
-    {slug: `filter_${attributes.prop_protected}`, label: filtersDictionary[`filter_${attributes.prop_protected}`]},
-    {slug: `filter_${attributes.hm_vh}`, label: filtersDictionary[`filter_${attributes.hm_vh}`]},
-    {slug: `filter_${attributes.protection_needed}`, label: filtersDictionary[`filter_${attributes.protection_needed}`]},
-    {slug: 'filter_GNI_PPP', label: filtersDictionary.filter_GNI_PPP},
-    {slug: `filter_${attributes.total_endemic}`, label: filtersDictionary[`filter_${attributes.total_endemic}`]},
-    {slug: `filter_${attributes.nspecies}`, label: filtersDictionary[`filter_${attributes.nspecies}`]},
-    {slug: `filter_${attributes.SPI}`, label: filtersDictionary[`filter_${attributes.SPI}`]},
-    {slug: 'filter_steward', label: filtersDictionary.filter_steward}
+    { slug: 'filter_continent', label: filtersDictionary.filter_continent },
+    { slug: 'filter_neigh', label: filtersDictionary.filter_neigh },
+    { slug: `filter_${COUNTRY_ATTRIBUTES.Area_Country}`, label: filtersDictionary[`filter_${COUNTRY_ATTRIBUTES.Area_Country}`] },
+    { slug: `filter_${COUNTRY_ATTRIBUTES.Pop2020}`, label: filtersDictionary[`filter_${COUNTRY_ATTRIBUTES.Pop2020}`] },
+    { slug: `filter_${attributes.prop_protected}`, label: filtersDictionary[`filter_${attributes.prop_protected}`] },
+    { slug: `filter_${attributes.hm_vh}`, label: filtersDictionary[`filter_${attributes.hm_vh}`] },
+    { slug: `filter_${attributes.protection_needed}`, label: filtersDictionary[`filter_${attributes.protection_needed}`] },
+    { slug: 'filter_GNI_PPP', label: filtersDictionary.filter_GNI_PPP },
+    { slug: `filter_${attributes.total_endemic}`, label: filtersDictionary[`filter_${attributes.total_endemic}`] },
+    { slug: `filter_${attributes.nspecies}`, label: filtersDictionary[`filter_${attributes.nspecies}`] },
+    { slug: `filter_${attributes.SPI}`, label: filtersDictionary[`filter_${attributes.SPI}`] },
+    { slug: 'filter_steward', label: filtersDictionary.filter_steward },
   ];
 };
 
@@ -125,12 +125,12 @@ export const RANKING_COLORS = {
   [RANKING_INDICATORS.protected]: '#008604',
   [RANKING_INDICATORS.protectionNeeded]: '#B3E74B',
   [RANKING_INDICATORS.protectionNotNeeded]: '#AFB8A0',
-}
+};
 
 export const RANKING_GROUPS_SLUGS = {
   species: 'species',
   humanModification: 'humanModification',
-  protection: 'protection'
+  protection: 'protection',
 };
 
 export const RANKING_INDICATOR_GROUPS = {
@@ -141,7 +141,7 @@ export const RANKING_INDICATOR_GROUPS = {
   [RANKING_INDICATORS.noModification]: RANKING_GROUPS_SLUGS.humanModification,
   [RANKING_INDICATORS.protected]: RANKING_GROUPS_SLUGS.protection,
   [RANKING_INDICATORS.protectionNeeded]: RANKING_GROUPS_SLUGS.protection,
-  [RANKING_INDICATORS.protectionNotNeeded]: RANKING_GROUPS_SLUGS.protection
+  [RANKING_INDICATORS.protectionNotNeeded]: RANKING_GROUPS_SLUGS.protection,
 };
 
 export const getRankingLegend = () => ({

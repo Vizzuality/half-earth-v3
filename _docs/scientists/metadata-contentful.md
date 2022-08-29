@@ -38,7 +38,6 @@ To migrate data from ArcGIS Online to Contentful we use both the ESRI and the Co
 * Contentful content delivery token &rarr; In the Contentful platform under Settings/API Keys you will find the current tokens. For this, we have been using `Half-Earth 2 - Science`, which is a content delivery token, a token that can only be used for read-only queries. 
 * Content management token &rarr; To be able to create new entries using the API the content delivery token is not enough, we need a content management token. That can be get under the **Content management tokens** tab, clicking on *Generate personal token*. Once the token appears, it needs to be copied and saved because, once the window is closed, it won't be possible to see it again.
 
-
 ## 1. Migrating all metadata into Contentful
 
 These are the steps needed to import all metadata saved in AGOL into Contentful. Note that **this process only needs to be done once!**

@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, {
+  useEffect, useState, useCallback, useMemo,
+} from 'react';
 import { useLocale } from '@transifex/react';
 import { useFeatureLayer } from 'hooks/esri';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
@@ -10,7 +12,7 @@ import {
   getCountryData,
   getSearchTerm,
   getSpeciesModalSort,
-  getSortedSpeciesList
+  getSortedSpeciesList,
 } from './species-modal-selectors';
 import * as urlActions from 'actions/url-actions';
 import { getVertebrateTabs } from './species-modal-constants';
@@ -21,11 +23,13 @@ const mapStateToProps = (state) => ({
   countryData: getCountryData(state),
   speciesModalSort: getSpeciesModalSort(state),
   searchTerm: getSearchTerm(state),
-  state
+  state,
 });
 
-const SpeciesModalContainer = (props) => {
-  const { changeUI, countryData, speciesModalSort, state } = props;
+function SpeciesModalContainer(props) {
+  const {
+    changeUI, countryData, speciesModalSort, state,
+  } = props;
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
@@ -33,13 +37,13 @@ const SpeciesModalContainer = (props) => {
   const [vertebrateType, setVertebrateType] = useState(vertebrateTabs[0].slug);
   const [speciesList, setSpeciesList] = useState([]);
 
-  const landLayer = useFeatureLayer({ layerSlug:  SPECIES_LIST });
-  const marineLayer = useFeatureLayer({ layerSlug:  MARINE_SPECIES_LIST });
+  const landLayer = useFeatureLayer({ layerSlug: SPECIES_LIST });
+  const marineLayer = useFeatureLayer({ layerSlug: MARINE_SPECIES_LIST });
 
   useEffect(() => {
     const layer = vertebrateType === LAND_MARINE.land ? landLayer : marineLayer;
     if (layer && countryData.iso
-      ) {
+    ) {
       const getFeatures = async () => {
         const query = await layer.createQuery();
         query.where = `iso3 = '${countryData.iso}'`;
@@ -61,17 +65,15 @@ const SpeciesModalContainer = (props) => {
   };
 
   const handleSortClick = (category) => {
-    const sortedCategory =
-      speciesModalSort && speciesModalSort.split('-')[0];
+    const sortedCategory = speciesModalSort && speciesModalSort.split('-')[0];
     const direction = speciesModalSort && speciesModalSort.split('-')[1];
-    let sortDirection =
-      sortedCategory === category && direction === SORT.DESC
-        ? SORT.ASC
-        : SORT.DESC;
+    const sortDirection = sortedCategory === category && direction === SORT.DESC
+      ? SORT.ASC
+      : SORT.DESC;
     changeUI({ speciesModalSort: `${category}-${sortDirection}` });
   };
 
-  const handleVertebrateChange = useCallback((tabSlug) => { setVertebrateType(tabSlug)}, []);
+  const handleVertebrateChange = useCallback((tabSlug) => { setVertebrateType(tabSlug); }, []);
 
   return (
     <Component

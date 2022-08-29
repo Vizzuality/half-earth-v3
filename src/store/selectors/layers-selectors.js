@@ -5,29 +5,29 @@ export const selectDataGlobeSpec = ({ dataGlobeSpec }) => dataGlobeSpec && (data
 
 export const getFeaturedGlobeLayers = createSelector(
   selectFeaturedGlobeSpec,
-  layerSpec => {
+  (layerSpec) => {
     if (!layerSpec) return null;
-    return layerSpec.operationalLayers.map(l => ({
+    return layerSpec.operationalLayers.map((l) => ({
       id: l.id,
-      title: l.title
-    }))
-  }
-)
+      title: l.title,
+    }));
+  },
+);
 
 export const getDataGlobeLayers = createSelector(
   selectDataGlobeSpec,
-  layerSpec => {
+  (layerSpec) => {
     if (!layerSpec) return null;
-    return layerSpec.operationalLayers.map(l => ({
+    return layerSpec.operationalLayers.map((l) => ({
       id: l.id,
-      title: l.title
-    }))
-  }
-)
+      title: l.title,
+    }));
+  },
+);
 
 export default createStructuredSelector({
   featuredGlobeSpec: selectFeaturedGlobeSpec,
   featuredGlobeLayers: getFeaturedGlobeLayers,
   dataGlobeSpec: selectDataGlobeSpec,
-  dataGlobeLayers: getDataGlobeLayers
-})
+  dataGlobeLayers: getDataGlobeLayers,
+});

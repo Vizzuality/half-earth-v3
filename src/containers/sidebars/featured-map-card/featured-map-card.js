@@ -8,21 +8,21 @@ import mapStateToProps from './featured-map-card-selectors';
 
 const actions = { ...urlActions, ...featuredMapPlacesActions };
 
-const FeaturedMapCardContainer = props => {
+function FeaturedMapCardContainer(props) {
   const { featuredMapsList, selectedFeaturedMap, setFeaturedMapPlaces } = props;
   const locale = useLocale();
 
   useEffect(() => {
-    setFeaturedMapPlaces({ slug: selectedFeaturedMap, locale })
-  }, [selectedFeaturedMap, locale])
+    setFeaturedMapPlaces({ slug: selectedFeaturedMap, locale });
+  }, [selectedFeaturedMap, locale]);
 
-  const featuredMap = featuredMapsList && featuredMapsList.find(map => map.slug === selectedFeaturedMap);
+  const featuredMap = featuredMapsList && featuredMapsList.find((map) => map.slug === selectedFeaturedMap);
   return (
     <Component
       featuredMap={featuredMap}
-      {...props }
+      {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(FeaturedMapCardContainer);

@@ -1,7 +1,7 @@
 import { createStructuredSelector } from 'reselect';
 import { selectAoiId, getAoiGeometry, selectAreaType } from 'selectors/aoi-selectors';
 
-const selectPrecalculatedLayerSlug = ({location}) => location.query && location.query.precalculatedLayer;
+const selectPrecalculatedLayerSlug = ({ location }) => location.query && location.query.precalculatedLayer;
 
 export default createStructuredSelector({
   aoiId: selectAoiId,

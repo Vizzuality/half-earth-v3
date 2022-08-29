@@ -32,9 +32,9 @@ export const LAND_COUNTRY_PRIORITY_LAYER = 'land_country_priority_layer';
 export const MARINE_COUNTRY_PRIORITY_LAYER = 'marine_country_priority_layer';
 
 // Terrestrial human pressures tiled layers.
-export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures'
-export const LAND_HUMAN_PRESSURES = 'land_human_pressures'
-export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures'
+export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures';
+export const LAND_HUMAN_PRESSURES = 'land_human_pressures';
+export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures';
 // Land human pressures
 export const URBAN_HUMAN_PRESSURES_TILE_LAYER = 'urban_human_pressures';
 export const IRRIGATED_HUMAN_PRESSURES_TILE_LAYER = 'irrigated_human_pressures';
@@ -46,7 +46,7 @@ export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_land_drive
 export const MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_ocean_drivers_human_pressures';
 export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'commercial_fishing_human_pressures';
 export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_human_pressures';
-//////
+/// ///
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const MASK_LAYER = 'mask-layer';
 export const GLOBAL_SPI_FEATURE_LAYER = 'spi-feature-layer';
@@ -82,13 +82,12 @@ export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
 export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
+
 // South Africa layers
 export const AMPHIB_RARITY_1KM = 'amphib-rarity-sa';
 export const AMPHIB_RICHNESS_1KM = 'amphib-rich-sa';
 export const SA_DRAGONFLIES_RARITY = 'dragonflies-rare-sa';
 export const SA_DRAGONFLIES_RICHNESS = 'dragonflies-rich-sa';
-export const SA_MAMMALS_RARITY = 'mammals-rare-sa';
-export const SA_MAMMALS_RICHNESS = 'mammals-rich-sa';
 export const SA_BIRDS_RARITY = 'birds-rare-sa';
 export const SA_BIRDS_RICHNESS = 'birds-rich-sa';
 export const SA_RESTIO_RARITY = 'restio-rare-sa';
@@ -97,6 +96,10 @@ export const SA_PROTEA_RARITY = 'protea-rare-sa';
 export const SA_PROTEA_RICHNESS = 'protea-rich-sa';
 export const REPTILES_RARITY_1KM = 'reptiles-rare-sa';
 export const REPTILES_RICHNESS_1KM = 'reptiles-rich-sa';
+
+// Carbon Layer
+export const CARBON_LAYER = 'carbon-layer-land';
+
 // Global biodiversity
 
 export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
@@ -130,8 +133,15 @@ export const REPTILES_PRIORITY = 'reptiles-priority';
 export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
 
+// 1KM
 export const BUTTERFLIES_RICHNESS_1KM = 'butterflies-richness-1km';
 export const BUTTERFLIES_RARITY_1KM = 'butterflies-rarity-1km';
+export const MAMMALS_RICHNESS_1KM = 'mammals-rare-sa';
+export const SUMMER_BIRDS_RICHNESS_1KM = 'summer-birds-richness-1km';
+export const WINTER_BIRDS_RICHNESS_1KM = 'winter-birds-richness-1km';
+export const MAMMALS_RARITY_1KM = 'mammals-rich-sa';
+export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
+export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';

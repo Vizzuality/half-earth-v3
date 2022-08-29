@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Component from './dropdown-component.jsx';
 
-const DropdownContainer = ({
+function DropdownContainer({
   handleOptionSelection,
   handleCloseSearch,
   onSearch,
   ...props
-}) => {
+}) {
   const [dropdownOpen, setDropdownToggle] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
 
@@ -16,30 +16,30 @@ const DropdownContainer = ({
       handleCloseSearch();
     }
     setDropdownToggle(false);
-  }
+  };
 
   const onOptionSelection = (selectedOption) => {
-    handleOptionSelection(selectedOption)
+    handleOptionSelection(selectedOption);
     setDropdownToggle(false);
-  }
+  };
 
   const dropdownToggle = () => {
     setDropdownToggle(!dropdownOpen);
-  }
+  };
 
   const handleSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
       onSearch(searchValue);
     }
-  }
+  };
 
   const handleSearchIconClick = () => {
     onSearch(searchValue);
-  }
+  };
 
   const handleSearchInputChange = (event) => {
     setSearchValue(event.target.value);
-  }
+  };
 
   return (
     <Component
@@ -52,7 +52,7 @@ const DropdownContainer = ({
       onCloseSearch={onCloseSearch}
       {...props}
     />
-  )
+  );
 }
 
 export default DropdownContainer;

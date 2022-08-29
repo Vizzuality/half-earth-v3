@@ -10,26 +10,26 @@ export default () => [
   {
     title: t('all species'),
     slug: 'all',
-    icon: All
+    icon: All,
   },
   {
     title: t('reptiles'),
     slug: 'reptiles',
-    icon: Reptiles
+    icon: Reptiles,
   },
   {
     title: t('mammals'),
     slug: 'mammals',
-    icon: Mammals
+    icon: Mammals,
   },
   {
     title: t('amphibians'),
     slug: 'amphibians',
-    icon: Amphibians
+    icon: Amphibians,
   },
   {
     title: t('birds'),
     slug: 'birds',
-    icon: Birds
+    icon: Birds,
   },
-]
+];

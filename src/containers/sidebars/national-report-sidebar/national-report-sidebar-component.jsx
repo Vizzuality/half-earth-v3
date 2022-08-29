@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useT } from '@transifex/react';
+import React, { useState, useCallback } from 'react';
+import { useT, useLocale } from '@transifex/react';
+import { getCountryNames } from 'constants/translation-constants';
 
 import cx from 'classnames';
 import { Loading } from 'he-components';
@@ -51,6 +52,8 @@ const NationalReportSidebarComponent = ({
   changeUI,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const countryNames = useCallback(getCountryNames, [locale]);
 
   const LOCAL_SCENE_TABS = [
     { slug: LOCAL_SCENE_TABS_SLUGS.OVERVIEW, title: t('overview') },
@@ -104,7 +107,11 @@ const NationalReportSidebarComponent = ({
               src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
               alt=""
             />
-            {countryName && <p className={styles.countryName}>{countryName}</p>}
+            {countryName && (
+              <p className={styles.countryName}>
+                {countryNames[countryName] || countryName}
+              </p>
+            )}
           </div>
           <div className={styles.actionButtons}>
             <Button

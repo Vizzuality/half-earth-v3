@@ -7,58 +7,60 @@ import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
 import * as actions from 'actions/url-actions';
 
-const FeaturedPlaceCardContainer = props => {
-  const { view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode, featuredMapPlaces } = props;
+function FeaturedPlaceCardContainer(props) {
+  const {
+    view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode, featuredMapPlaces,
+  } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   const [featuredPlace, setFeaturedPlace] = useState({
     imageUrl: '',
     title: '',
-    description: ''
+    description: '',
   });
 
   useEffect(() => {
     const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
-  }, [])
+  }, []);
 
   useEffect(() => {
-    featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace && setFeaturedPlace({...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace]});
-  },[selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces])
+    featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace && setFeaturedPlace({ ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace] });
+  }, [selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces]);
 
   useEffect(() => {
     if (featuredMapsList) {
-      const _featuredMap = featuredMapsList.find(map => map.slug === selectedFeaturedMap);
-      setFeaturedMap(_featuredMap)
+      const _featuredMap = featuredMapsList.find((map) => map.slug === selectedFeaturedMap);
+      setFeaturedMap(_featuredMap);
     }
-  },[featuredMapsList, selectedFeaturedMap])
+  }, [featuredMapsList, selectedFeaturedMap]);
 
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
     if (featuredPlacesLayer && !isLandscapeMode) {
       const queryParams = featuredPlacesLayer.createQuery();
       queryParams.where = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`;
-      featuredPlacesLayer.queryFeatures(queryParams).then(function(results){
+      featuredPlacesLayer.queryFeatures(queryParams).then((results) => {
         const { features } = results;
-        const list = orderBy(features, place => place.geometry.longitude).map(place => place.attributes.nam_slg);
+        const list = orderBy(features, (place) => place.geometry.longitude).map((place) => place.attributes.nam_slg);
         setFeaturedPlacesList(list);
       });
     }
-  }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa, featuredMapPlaces])
+  }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa, featuredMapPlaces]);
 
-  const handleNextPlaceClick = place => {
+  const handleNextPlaceClick = (place) => {
     const index = featuredPlacesList.indexOf(place);
     const nextPlaceIndex = (index + 1) < featuredPlacesList.length ? index + 1 : 0;
-    changeUI({ selectedFeaturedPlace: featuredPlacesList[nextPlaceIndex] })
-  }
-  const handlePrevPlaceClick = place => {
+    changeUI({ selectedFeaturedPlace: featuredPlacesList[nextPlaceIndex] });
+  };
+  const handlePrevPlaceClick = (place) => {
     const index = featuredPlacesList.indexOf(place);
     const prevPlaceIndex = (index - 1) < 0 ? featuredPlacesList.length - 1 : index - 1;
-    changeUI({ selectedFeaturedPlace: featuredPlacesList[prevPlaceIndex] })
-  }
+    changeUI({ selectedFeaturedPlace: featuredPlacesList[prevPlaceIndex] });
+  };
 
-  const handleLandscapeTrigger = () => view.goTo({ zoom: 8.1 })
+  const handleLandscapeTrigger = () => view.goTo({ zoom: 8.1 });
   let hotspotsNumbers = null;
   if (featuredPlacesList && selectedFeaturedPlace) {
     const position = featuredPlacesList.indexOf(selectedFeaturedPlace);
@@ -79,9 +81,9 @@ const FeaturedPlaceCardContainer = props => {
       handlePrevPlaceClick={handlePrevPlaceClick}
       handleLandscapeTrigger={handleLandscapeTrigger}
       hotspotsNumbers={hotspotsNumbers}
-      {...props }
+      {...props}
     />
-  )
+  );
 }
 
 export default connect(mapStateToProps, actions)(FeaturedPlaceCardContainer);

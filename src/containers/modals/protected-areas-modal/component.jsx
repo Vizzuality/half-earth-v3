@@ -1,7 +1,8 @@
-import React from 'react';
-import { useT } from '@transifex/react';
+import React, { useMemo } from 'react';
+import { useT, useLocale } from '@transifex/react';
 import { Modal } from 'he-components';
 import loadable from '@loadable/component';
+import { getCountryNames } from 'constants/translation-constants';
 
 // components
 import ProtectedAreasTable from 'components/protected-areas-table';
@@ -25,6 +26,8 @@ const ProtectedAreasModal = ({
   loading,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
@@ -32,7 +35,8 @@ const ProtectedAreasModal = ({
         {loading && <Spinner floating />}
         <h1>
           {t('Protected areas in ')}
-          {contextualData.areaName}
+          {CountryNamesTranslations[contextualData.areaName] ||
+            contextualData.areaName}
         </h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
