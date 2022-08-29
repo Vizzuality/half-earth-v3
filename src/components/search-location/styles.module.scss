@@ -23,7 +23,7 @@
   height: 16px;
   left: 16px;
   top: 11px;
-} 
+}
 
 .input {
   @extend %title;
@@ -99,4 +99,12 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
+}
+
+.closeButton {
+  height: 8px;
+  position: absolute;
+  right: 10px;
+  width: 8px;
+  top: 10px;
 }

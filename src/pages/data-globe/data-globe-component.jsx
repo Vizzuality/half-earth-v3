@@ -5,13 +5,13 @@ import loadable from '@loadable/component';
 import DataScene from 'scenes/data-scene';
 
 import HalfEarthLogo from 'components/half-earth-logo';
-import MainMenu from 'components/main-menu';
+// import MainMenu from 'components/main-menu';
 
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const DataGlobeComponent = ({
+function DataGlobeComponent({
   sceneMode,
   countryISO,
   countryName,
@@ -35,14 +35,14 @@ const DataGlobeComponent = ({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-}) => {
+}) {
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu
+      {/* <MainMenu
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
-      />
+      /> */}
       <DataScene
         sceneMode={sceneMode}
         countryISO={countryISO}
@@ -70,6 +70,6 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
     </>
   );
-};
+}
 
 export default DataGlobeComponent;

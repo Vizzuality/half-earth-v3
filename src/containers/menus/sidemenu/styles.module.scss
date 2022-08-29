@@ -1,6 +1,5 @@
 @import 'styles/settings';
 @import 'styles/ui.module';
-@import 'styles/typography-extends';
 
 .menuContainer {
   position: absolute;
@@ -18,8 +17,11 @@
     position: absolute;
     top: 6px;
     right: 0;
-    width: 500px;
-    border: 1px solid red;
+    width: 380px;
+    height: 32px;
+    background: $space-background;
+    border: none;
+    border-radius: 6px;
   }
 
   .shareBtn {

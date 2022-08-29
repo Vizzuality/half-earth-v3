@@ -48,18 +48,21 @@ function SideMenuComponent({
         className={styles.searchBtn}
         handleClick={() => setIsSearcherOpen(true)}
       />
+      {console.log('isSearcherOpen', isSearcherOpen)}
       {isSearcherOpen && (
         <div className={styles.searcherContainer}>
           <SearchLocation
-            stacked
             view={view}
             theme="dark"
             width="full"
             parentWidth="380px"
             searchSourceLayerSlug={selectedOption.slug}
+            hasResetButton
+            handleCloseButton={() => setIsSearcherOpen(false)}
           />
         </div>
       )}
+
       {!hideZoom && (onboardingStep === null || onboardingStep === undefined) && (
         <ZoomControls
           map={map}

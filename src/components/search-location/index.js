@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useT, useLocale } from '@transifex/react';
-import { getCountryNames } from 'constants/translation-constants';
-
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -9,10 +6,13 @@ import urlActions from 'actions/url-actions';
 
 import { setCountryTooltip, flyToCentroid } from 'utils/globe-events-utils';
 
+import { useT, useLocale } from '@transifex/react';
+
 import { useSearchWidgetLogic } from 'hooks/esri';
 
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+import { getCountryNames } from 'constants/translation-constants';
 
 import Component from './component';
 
@@ -60,7 +60,11 @@ function SearchLocationContainer(props) {
 
     // National Report Card search
     if (iso) {
-      setCountryTooltip({ countryIso: attributes[iso], countryName: countryNames[attributes[title]] || attributes[title], changeGlobe });
+      setCountryTooltip({
+        countryIso: attributes[iso],
+        countryName: countryNames[attributes[title]] || attributes[title],
+        changeGlobe,
+      });
     }
   };
 
@@ -116,6 +120,7 @@ function SearchLocationContainer(props) {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Component
       searchResults={searchResults}
       handleOpenSearch={handleOpenSearch}

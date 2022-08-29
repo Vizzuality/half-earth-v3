@@ -1,18 +1,20 @@
-// Dependencies
 import React, { useCallback, useState } from 'react';
-import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
+import { usePopper } from 'react-popper';
+
+import { useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import Proptypes from 'prop-types';
-import { useT } from '@transifex/react';
-// Assets
+import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
-// Styles
-import styles from './styles.module.scss';
+import Proptypes from 'prop-types';
+
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
-const Component = ({
+import styles from './styles.module.scss';
+
+function Component({
   width,
   theme,
   stacked,
@@ -28,14 +30,16 @@ const Component = ({
   waitingInteraction,
   changeUI,
   reference,
-}) => {
+  hasResetButton,
+  handleCloseButton,
+}) {
   const t = useT();
 
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
-    popperElement
+    popperElement,
   );
 
   const onNextonboardingStep = useCallback((countryValue) => {
@@ -73,9 +77,9 @@ const Component = ({
         onChange={handleInputChange}
       />
 
-      {<IconSearch className={styles.placeholderIcon} />}
-      {isSearchResultVisible &&
-        createPortal(
+      <IconSearch className={styles.placeholderIcon} />
+      {isSearchResultVisible
+        && createPortal(
           <div
             ref={setPopperElement}
             style={{ ...popperStyles.popper, width: parentWidth }}
@@ -100,11 +104,20 @@ const Component = ({
               ))}
             </ul>
           </div>,
-          document.getElementById('root')
+          // eslint-disable-next-line no-undef
+          document.getElementById('root'),
         )}
+      {hasResetButton && (
+        <button
+          type="button"
+          onClick={handleCloseButton}
+        >
+          <CloseIcon className={styles.closeButton} />
+        </button>
+      )}
     </motion.div>
   );
-};
+}
 
 export default Component;
 
@@ -114,8 +127,8 @@ Component.propTypes = {
       label: Proptypes.string,
       slug: Proptypes.string,
       group: Proptypes.string,
-    })
-  ),
+    }),
+  ).isRequired,
   dropdownOpen: Proptypes.bool,
   hasGroups: Proptypes.bool,
   selectedOption: Proptypes.shape(),
@@ -123,9 +136,13 @@ Component.propTypes = {
   width: Proptypes.oneOf(['fluid', 'full']),
   theme: Proptypes.oneOf(['light', 'dark']),
   reference: Proptypes.node,
+  hasResetButton: Proptypes.bool,
+  handleCloseButton: Proptypes.func,
 };
 
 Component.defaultProps = {
-  width: 'fluid',
+  dropdownOpen: false,
+  hasResetButton: false,
   theme: 'light',
+  width: 'fluid',
 };
