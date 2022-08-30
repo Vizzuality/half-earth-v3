@@ -1,11 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import cx from 'classnames';
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 import { loadModules } from 'esri-loader';
 
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import styles from './styles.module.scss';
 import { useMobile } from 'constants/responsive';
+import {
+  getCountryNames,
+  getWDPATranslations,
+} from 'constants/translation-constants';
 
 const MapTooltipComponent = ({
   img,
@@ -18,15 +22,14 @@ const MapTooltipComponent = ({
   onActionButtonClick,
 }) => {
   const t = useT();
+  const locale = useLocale();
+  const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
+  const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
+  const translateInfo = (data) => WDPATranslations[data] || data;
+  const translateCountry = (data) => CountryNamesTranslations[data] || data;
+
   const tooltipref = useRef(null);
   const [tooltip, setTooltip] = useState(null);
-  const protectedAreaDataIsFetched =
-    isProtectedArea &&
-    content &&
-    content.description &&
-    content.IUCN_type &&
-    content.status &&
-    content.status_year;
 
   // Create a new Popup to contain the tooltip
   useEffect(() => {
@@ -68,14 +71,18 @@ const MapTooltipComponent = ({
           <section className={styles.tooltipSection}>
             {img && <img className={styles.tooltipFlag} alt="" />}
             <div className={styles.featureNaming}>
-              <span className={styles.title}>{content.title}</span>
+              <span className={styles.title}>
+                {translateCountry(content.title)}
+              </span>
               {isProtectedArea && (
                 <span className={styles.description}>
-                  {content.description}
+                  {translateInfo(content.description)}
                 </span>
               )}
               {!isProtectedArea && (
-                <span className={styles.subtitle}>{content.subtitle}</span>
+                <span className={styles.subtitle}>
+                  {translateCountry(content.subtitle)}
+                </span>
               )}
               <div className={styles.speciesContent}>
                 {content.nspecies && (
@@ -92,16 +99,18 @@ const MapTooltipComponent = ({
                   </p>{' '}
                   {t('land is protected')}
                 </div>
-                {protectedAreaDataIsFetched && (
+                {isProtectedArea && (
                   <>
                     <div className={styles.content}>
                       <p className={styles.contentData}>
-                        {content.designation_type}
+                        {translateInfo(content.designation_type)}
                       </p>
                       {t('designation type')}
                     </div>
                     <div className={styles.content}>
-                      <p className={styles.contentData}>{content.IUCN_type}</p>
+                      <p className={styles.contentData}>
+                        {translateInfo(content.IUCN_type)}
+                      </p>
                       {t('IUCN type')}
                     </div>
                   </>
