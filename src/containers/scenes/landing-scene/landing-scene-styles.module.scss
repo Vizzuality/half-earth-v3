@@ -17,14 +17,6 @@
     font-size: 45px;
   }
 
-  .aboutBtn {
-    @extend %annotation;
-    color: white;
-    font-weight: 600;
-    margin-left: auto;
-    text-transform: uppercase;
-  }
-
   .globesContainer {
     align-content: end;
     margin: auto 0 0 0;

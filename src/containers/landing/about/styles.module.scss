@@ -1,0 +1,15 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.aboutBtn {
+  @extend %annotation;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: $bring-to-front;
+  padding: 20px 20px 8px 40px;
+}

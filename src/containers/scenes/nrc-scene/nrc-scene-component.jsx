@@ -22,7 +22,10 @@ import {
 } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 function CountrySceneComponent({
   onMapLoad,
@@ -73,7 +76,7 @@ function CountrySceneComponent({
 
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {isVisible && (
+      {FEATURE_OPTIMIZE_MENUS && isVisible && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}

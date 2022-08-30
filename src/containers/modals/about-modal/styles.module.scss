@@ -31,90 +31,109 @@
   height: 100%;
   padding: 24px;
   width: 100%;
-  overflow: hidden;
+ overflow: hidden;
 
   .wrapper {
     align-items: center;
     display: flex;
     flex-direction: column;
     height: 100%;
-    margin-top: 80px;
     padding: 32px;
     width: 100%;
 
-    .header {
+    .section {
+      align-items: center;
       display: flex;
       flex-direction: column;
-      min-width: 500px;
-      margin-bottom: 112px;
-      .title {
-        @extend %display1;
-        color: $white;
-        font-weight: 100;
-        margin-bottom: 56px;
-      }
-
-      .mouseNavigationSection {
-        display: flex;
-        justify-content: space-between;
-
-        .mouseClickIcon {
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          padding: 0;
-
-          span {
-            color: $white;
-            font-family: $font-family-1;
-            font-size: $font-size-xxs;
-            font-weight: bold;
-            letter-spacing: $letter-spacing;
-            line-height: $line-height;
-            margin-top: 20px;
-            text-transform: uppercase;
-          }
-        }
-      }
-    }
-
-    .storySection {
-      display: block;
-      text-align: center;
+      justify-content: space-between;
+      margin-bottom: 50px;
       width: 100%;
 
       @media #{$tablet-portrait} {
-        width: 750px;
-        display: flex;
+        width: 960px;
+      }
+    }
+
+    .title {
+      @extend %display2;
+      color: $white;
+      margin: 0;
+      margin-bottom: 50px;
+      text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+      padding: 0 20px;
+      text-align: center;
+
+      @media #{$tablet-portrait} {
+        font-size: 24px;
+        padding: 0;
         text-align: left;
-        justify-content: space-between;
       }
+    }
 
-      .storyElement {
+    .logosWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+
+      & > * {
+        @extend %title;
+        color: $logos-text;
         align-items: center;
+        font-size: $font-size-sm;
+        justify-content: center;
         display: flex;
-        margin-right: 70px;
-        &:last-of-type {
-          margin-right: 0;
-        }
+        margin-bottom: 20px;
+        width: 25%;
+      }
 
-        .storyText {
-          width: 250px;
-          color: $white;
-          font-family: $font-family-1;
-          font-size: $font-size-sm;
-          font-weight: $font-weight-light;
-          line-height: 22px;
-          margin-left: 20px;
+      @media #{$tablet-portrait} {
+        flex-direction: row;
+      }
+    }
 
-          .storyTitle {
-            font-size: $font-size-sm;
-            font-weight: $font-weight;
-            line-height: 0;
-            text-transform: uppercase;
-          }
+    .description {
+      @extend %bodyText;
+      color: $white;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+
+      a {
+        color: $brand-color-main;
+        text-decoration: none;
+      }
+
+      @media #{$tablet-portrait} {
+        padding: 0;
+      }
+    }
+
+    .partners {
+      .description {
+        width: auto;
+
+        @media #{$tablet-portrait} {
+          width: 500px;
         }
       }
+      .logosWrapper {
+        justify-content: space-between;
+        width: 75%;
+      }
+    }
+
+    .platformPartners .logosWrapper {
+      justify-content: center;
+    }
+
+    .sponsors .title {
+      margin-bottom: 34px;
+    }
+
+    .narrow {
+      height: 70px;
     }
   }
 }

@@ -98,10 +98,12 @@ function SideMenuComponent({
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}
       />
-      <HelpModal
-        isOpen={isHelpModalOpen}
-        setHelpModalOpen={setHelpModalOpen}
-      />
+      <div className={styles.helpModalWrapper}>
+        <HelpModal
+          isOpen={isHelpModalOpen}
+          setHelpModalOpen={setHelpModalOpen}
+        />
+      </div>
 
     </div>
   );

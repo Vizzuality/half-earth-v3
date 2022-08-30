@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Components
 import { T, useT } from '@transifex/react';
@@ -8,7 +8,6 @@ import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import Globe from 'containers/landing/globe';
 import Hero from 'containers/landing/hero';
-import AboutModal from 'containers/modals/about-modal';
 
 import Scene from 'components/scene';
 
@@ -20,13 +19,13 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './landing-scene-styles.module.scss';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+} = process.env;
 
 function LandingSceneComponent({ sceneSettings, browsePage }) {
   const isMobile = useMobile();
   const t = useT();
-
-  const [isAboutModalOpen, setAboutModalOpen] = useState(false);
 
   return (
     <Scene
@@ -35,17 +34,6 @@ function LandingSceneComponent({ sceneSettings, browsePage }) {
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
     >
       <div className={styles.sceneContainer}>
-        <button
-          className={styles.aboutBtn}
-          type="button"
-          onClick={() => setAboutModalOpen(true)}
-        >
-          {t('About the map')}
-        </button>
-        <AboutModal
-          isOpen={isAboutModalOpen}
-          setHelpModalOpen={setAboutModalOpen}
-        />
         <Hero />
         <motion.p
           className={styles.or}
