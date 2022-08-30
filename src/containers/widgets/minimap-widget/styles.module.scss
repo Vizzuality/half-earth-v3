@@ -1,0 +1,21 @@
+@import 'styles/settings';
+$globe-size: 60px;
+
+.wrapper {
+  position: absolute;
+  right: 65px;
+  top: $nav-bar-height;
+  pointer-events: none;
+  height: $globe-size;
+  width: $globe-size;
+
+  .esri-ui-top-left {
+    display: none;
+  }
+}
+
+@media print {
+  .wrapper {
+    display: none;
+  }
+}

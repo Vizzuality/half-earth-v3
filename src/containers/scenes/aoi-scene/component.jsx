@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 
-// Components
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';
@@ -9,6 +8,7 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
 import SideMenu from 'containers/menus/sidemenu';
 import AoiSidebar from 'containers/sidebars/aoi-sidebar';
+import Widgets from 'containers/widgets';
 
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import Scene from 'components/scene';
@@ -56,6 +56,9 @@ function AoiSceneComponent({
       <LocalSceneViewManager localGeometry={geometry} />
       {FEATURE_OPTIMIZE_MENUS && (
         <SideMenu activeLayers={updatedActiveLayers} />
+      )}
+      {!FEATURE_OPTIMIZE_MENUS && (
+        <Widgets activeLayers={updatedActiveLayers} />
       )}
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={updatedActiveLayers} />
