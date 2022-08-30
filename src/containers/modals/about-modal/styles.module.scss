@@ -10,6 +10,12 @@
 
 .modalContent {
   padding: 0 !important;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 }
 
 .closeBtn {
@@ -28,10 +34,8 @@
 .modalContainer {
   background-color: $brand-color-secondary;
   display: flex;
-  height: 100%;
   padding: 24px;
   width: 100%;
- overflow: hidden;
 
   .wrapper {
     align-items: center;
@@ -50,7 +54,7 @@
       width: 100%;
 
       @media #{$tablet-portrait} {
-        width: 960px;
+        width: 760px;
       }
     }
 
@@ -58,7 +62,7 @@
       @extend %display2;
       color: $white;
       margin: 0;
-      margin-bottom: 50px;
+      margin-bottom: 34px;
       text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
       padding: 0 20px;
       text-align: center;
@@ -120,7 +124,7 @@
       }
       .logosWrapper {
         justify-content: space-between;
-        width: 75%;
+        width: 65%;
       }
     }
 
