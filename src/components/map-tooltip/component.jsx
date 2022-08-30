@@ -78,9 +78,9 @@ const MapTooltipComponent = ({
                 <span className={styles.subtitle}>{content.subtitle}</span>
               )}
               <div className={styles.speciesContent}>
-                {content.species && (
+                {content.nspecies && (
                   <div className={styles.content}>
-                    <p className={styles.contentData}>{content.species}</p>
+                    <p className={styles.contentData}>{content.nspecies}</p>
                     <p className={styles.contentDescription}>
                       {t('land vertebrate species')}
                     </p>

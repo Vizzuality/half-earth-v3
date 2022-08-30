@@ -11,7 +11,6 @@ import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
-import { setMapTooltipData } from 'utils/map-tooltip-service';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
@@ -20,9 +19,6 @@ function Container(props) {
     activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics,
   } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
-  const [landVertebrateSpeciesNum, setLandVertebrateSpeciesNum] = useState();
-  const [protectedAreaTooltipData, setProtectedAreaTooltipData] = useState();
-  const [batchTooltipData, updateBatchTooltipData] = useState();
 
   const locale = useLocale();
   const t = useT();
@@ -46,19 +42,6 @@ function Container(props) {
         customId = `region-${attributes.region}`;
       }
 
-      setMapTooltipData({ molId: attributes.MOL_ID, setLandVertebrateSpeciesNum, setProtectedAreaTooltipData });
-
-      updateBatchTooltipData({
-        isVisible: true,
-        geometry,
-        content: {
-          buttonText: t('analyze area'),
-          id: customId || attributes[id],
-          title: customTitle || attributes[title],
-          subtitle: attributes[subtitle],
-          objectId: attributes.OBJECTID, // Only for feature places
-        },
-      });
 
       setBatchTooltipData({
         isVisible: true,
@@ -70,6 +53,12 @@ function Container(props) {
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
           percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
+          description: attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} in ${attributes.STATUS_}`,
+          nspecies: attributes.nspecies,
+          status: attributes.STATUS,
+          status_year: attributes.STATUS_,
+          IUCN_type: attributes.IUCN_CA,
+          designation_type: attributes.DESIG_T,
         },
       });
     }
@@ -85,27 +74,6 @@ function Container(props) {
     setSelectedAnalysisLayer(activeOption);
     // Don't remove locale. Is here to recalculate the titles translation
   }, [activeLayers, locale]);
-
-  useEffect(() => {
-    if (protectedAreaTooltipData && landVertebrateSpeciesNum) {
-      const {
-        description, designation_type, IUCN_type, status, status_year,
-      } = protectedAreaTooltipData;
-
-      setBatchTooltipData({
-        ...batchTooltipData,
-        content: {
-          ...mapTooltipContent,
-          description,
-          designation_type,
-          IUCN_type,
-          status,
-          status_year,
-          species: landVertebrateSpeciesNum,
-        },
-      });
-    }
-  }, [landVertebrateSpeciesNum, protectedAreaTooltipData]);
 
   return (
     <Component
