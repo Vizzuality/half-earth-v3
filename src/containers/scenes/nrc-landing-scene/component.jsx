@@ -20,7 +20,10 @@ import styles from './nrc-landing-scene-styles.module.scss';
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 function NrcLandingComponent({
   map,
@@ -64,11 +67,13 @@ function NrcLandingComponent({
         isLandscapeMode={isLandscapeMode}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
-      <SideMenu
-        activeLayers={activeLayers}
-        openedModal={openedModal}
-        onboardingStep={onboardingStep}
-      />
+      {FEATURE_OPTIMIZE_MENUS && (
+        <SideMenu
+          activeLayers={activeLayers}
+          openedModal={openedModal}
+          onboardingStep={onboardingStep}
+        />
+      )}
       <CountryEntryTooltip
         countryISO={countryISO}
         countryName={countryName}

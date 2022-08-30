@@ -28,7 +28,10 @@ import styles from './data-scene-styles.module.scss';
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 function DataSceneComponent({
   sceneMode,
@@ -125,12 +128,14 @@ function DataSceneComponent({
         onFeatureClick={handleHighlightLayerFeatureClick}
       />
       )}
-      <SideMenu
-        openedModal={openedModal}
-        activeLayers={activeLayers}
-        isFullscreenActive={isFullscreenActive}
-        onboardingStep={onboardingStep}
-      />
+      {FEATURE_OPTIMIZE_MENUS && (
+        <SideMenu
+          openedModal={openedModal}
+          activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
+          onboardingStep={onboardingStep}
+        />
+      )}
       <MapTooltip
         onActionButtonClick={handleTooltipActionButtonClick}
         speciesData={speciesData}

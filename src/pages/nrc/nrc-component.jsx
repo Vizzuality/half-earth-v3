@@ -1,23 +1,31 @@
-// Dependencies
 import React, { useState } from 'react';
+
 import loadable from '@loadable/component';
+
 import cx from 'classnames';
-// Components
+
+import NationalReportCardScene from 'scenes/nrc-scene';
+
+import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
+
 import CountryChallengesChart from 'components/country-challenges-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
 import MainMenu from 'components/main-menu';
 import RankingChart from 'components/ranking-chart';
-import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
-import NationalReportCardScene from 'scenes/nrc-scene';
-// Constants
+
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
-// Styles
+
 import uiStyles from 'styles/ui.module.scss';
+
 import styles from './nrc-styles.module.scss';
+
+const {
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const NationalReportCard = ({
+function NationalReportCard({
   countryISO,
   chartData,
   openedModal,
@@ -34,21 +42,23 @@ const NationalReportCard = ({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-}) => {
+}) {
   const [map, setMap] = useState();
 
   const { marine } = chartData;
-  const coastal = marine ? true : false;
+  const coastal = !!marine;
 
   return (
     <>
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <MainMenu
-        nBoardingStep={onboardingStep}
-        onboardingType={onboardingType}
-      />
+      {!FEATURE_OPTIMIZE_MENUS && (
+        <MainMenu
+          onBoardingStep={onboardingStep}
+          onboardingType={onboardingType}
+        />
+      )}
       <NationalReportSidebar
         chartData={chartData}
         countryISO={countryISO}
@@ -113,6 +123,6 @@ const NationalReportCard = ({
       {hasMetadata && <InfoModal />}
     </>
   );
-};
+}
 
 export default NationalReportCard;

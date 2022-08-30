@@ -31,7 +31,10 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
 const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 function DataGlobeComponent({
   sceneSettings,
@@ -65,7 +68,9 @@ function DataGlobeComponent({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu />
+      {!FEATURE_OPTIMIZE_MENUS && (
+        <MainMenu />
+      )}
       <Scene
         sceneName="featured-scene"
         sceneSettings={sceneSettings}
@@ -104,13 +109,15 @@ function DataGlobeComponent({
           selectedFeaturedPlace={selectedFeaturedPlace}
           isLandscapeMode={isLandscapeMode}
         />
-        <SideMenu
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-          hidden={esriWidgetsHidden}
-          openedModal={openedModal}
-          disableSettings
-        />
+        {FEATURE_OPTIMIZE_MENUS && (
+          <SideMenu
+            activeLayers={activeLayers}
+            isFullscreenActive={isFullscreenActive}
+            hidden={esriWidgetsHidden}
+            openedModal={openedModal}
+            disableSettings
+          />
+        )}
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
             className={uiStyles.uiTopLeft}

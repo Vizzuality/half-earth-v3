@@ -5,11 +5,15 @@ import loadable from '@loadable/component';
 import DataScene from 'scenes/data-scene';
 
 import HalfEarthLogo from 'components/half-earth-logo';
-// import MainMenu from 'components/main-menu';
+import MainMenu from 'components/main-menu';
 
 import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
+
+const {
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 function DataGlobeComponent({
   sceneMode,
@@ -39,6 +43,12 @@ function DataGlobeComponent({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
+      {!FEATURE_OPTIMIZE_MENUS && (
+        <MainMenu
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+        />
+      )}
       <DataScene
         sceneMode={sceneMode}
         countryISO={countryISO}

@@ -16,7 +16,10 @@ import Scene from 'components/scene';
 import { AREA_TYPES } from 'constants/aois';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+} = process.env;
 
 function AoiSceneComponent({
   geometry,
@@ -51,7 +54,9 @@ function AoiSceneComponent({
         onFeatureClick={handleFuturePlaceClick}
       />
       <LocalSceneViewManager localGeometry={geometry} />
-      <SideMenu activeLayers={updatedActiveLayers} />
+      {FEATURE_OPTIMIZE_MENUS && (
+        <SideMenu activeLayers={updatedActiveLayers} />
+      )}
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={updatedActiveLayers} />
       <AoiSidebar
