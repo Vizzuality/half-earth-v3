@@ -4,7 +4,7 @@ import {
   ELU_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
-import { AOIS_HISTORIC, PRECALCULATED_LAYERS_CONFIG } from 'constants/analyze-areas-constants';
+import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/biodiversity';
 import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
@@ -199,9 +199,10 @@ export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
   getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then((data) => setTaxaData(data));
 };
 
-const getAreaName = (data, config) => {
-  if (!config) return null;
-  return config.subtitle ? `${data[config.name]}, (${data[config.subtitle]})` : data[config.name];
+const getAreaName = (data, ) => {
+  if (data.NAME) return `${data.NAME}`;
+  if (data.NAME_1) return `${data.NAME_1}, (${data.GID_0})`;
+  if (!data.NAME_1) return `${data.NAME_0}`;
 };
 
 export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false, areaName) => {
@@ -216,7 +217,7 @@ export const getPrecalculatedContextualData = (data, layerSlug, includeProtected
       landCover: data.land_cover_majority,
     },
     area: data.AREA_KM2,
-    areaName: areaName || getAreaName(data, PRECALCULATED_LAYERS_CONFIG[layerSlug]),
+    areaName: areaName || getAreaName(data),
     pressures,
     population: data.population_sum,
     ...(includeProtectedAreasList && { ...data.protectedAreasList }),

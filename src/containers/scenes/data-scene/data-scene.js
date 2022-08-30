@@ -10,13 +10,19 @@ import urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
+import {
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+ } from 'constants/layers-slugs';
+ import { AREA_TYPES } from 'constants/aois';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
-    activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics,
+    activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics, areaTypeSelected, mapTooltipData
   } = props;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
@@ -42,10 +48,10 @@ function Container(props) {
         customId = `region-${attributes.region}`;
       }
 
-
       setBatchTooltipData({
         isVisible: true,
         geometry,
+        isSubnational: !!attributes.GID_1,
         content: {
           buttonText: t('analyze area'),
           id: customId || attributes[id],
@@ -65,8 +71,19 @@ function Container(props) {
   };
 
   const handleTooltipActionButtonClick = () => {
-    precomputedAoiAnalytics(mapTooltipContent.title);
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug, OBJECTID: mapTooltipContent.objectId } });
+    const { isSubnational, title } = mapTooltipContent;
+    precomputedAoiAnalytics(title);
+
+    const isAdminNational = areaTypeSelected === AREA_TYPES.administrative && !isSubnational;
+    const isAdminSubnational = areaTypeSelected === AREA_TYPES.administrative && isSubnational;
+
+    const getPrecalculatedLayer = () => {
+      if ( isAdminNational) return GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+      if (isAdminSubnational) return GADM_1_ADMIN_AREAS_FEATURE_LAYER;
+      return selectedAnalysisLayer.slug;
+    }
+
+    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: getPrecalculatedLayer(), OBJECTID: mapTooltipContent.objectId } });
   };
 
   useEffect(() => {
@@ -80,6 +97,7 @@ function Container(props) {
       selectedAnalysisLayer={selectedAnalysisLayer}
       handleTooltipActionButtonClick={handleTooltipActionButtonClick}
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
+      areaTypeSelected={areaTypeSelected}
       {...props}
     />
   );
