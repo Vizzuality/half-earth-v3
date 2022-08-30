@@ -52,8 +52,8 @@ function Container(props) {
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
-          percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areaa
-          description: attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} in ${attributes.STATUS_}`,
+          percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areas
+          description: attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
           nspecies: attributes.nspecies,
           status: attributes.STATUS,
           status_year: attributes.STATUS_,
