@@ -20,7 +20,13 @@ const MapTooltipComponent = ({
   const t = useT();
   const tooltipref = useRef(null);
   const [tooltip, setTooltip] = useState(null);
-  const protectedAreaDataIsFetched = isProtectedArea && content && content.description && content.IUCN_type && content.status  && content.status_year;
+  const protectedAreaDataIsFetched =
+    isProtectedArea &&
+    content &&
+    content.description &&
+    content.IUCN_type &&
+    content.status &&
+    content.status_year;
 
   // Create a new Popup to contain the tooltip
   useEffect(() => {
@@ -63,24 +69,41 @@ const MapTooltipComponent = ({
             {img && <img className={styles.tooltipFlag} alt="" />}
             <div className={styles.featureNaming}>
               <span className={styles.title}>{content.title}</span>
-              {isProtectedArea && <span className={styles.description}>{content.description}</span>}
-              {!isProtectedArea && <span className={styles.subtitle}>{content.subtitle}</span>}
+              {isProtectedArea && (
+                <span className={styles.description}>
+                  {content.description}
+                </span>
+              )}
+              {!isProtectedArea && (
+                <span className={styles.subtitle}>{content.subtitle}</span>
+              )}
               <div className={styles.speciesContent}>
                 {content.species && (
                   <div className={styles.content}>
                     <p className={styles.contentData}>{content.species}</p>
-                    <p className={styles.contentDescription}>{t('land vertebrate species')}</p>
+                    <p className={styles.contentDescription}>
+                      {t('land vertebrate species')}
+                    </p>
                   </div>
                 )}
                 <div className={styles.content}>
-                  <p className={styles.contentData}>{content.percentage_protected}%</p> {t('land is protected')}
+                  <p className={styles.contentData}>
+                    {content.percentage_protected}%
+                  </p>{' '}
+                  {t('land is protected')}
                 </div>
                 {protectedAreaDataIsFetched && (
                   <>
-                    <div className={styles.content}><p className={styles.contentData}>{content.designation_type}</p>{t('designation type')}</div>
-                    <div className={styles.content}><p className={styles.contentData}>{content.IUCN_type}</p>{t('IUCN type')}</div>
-                    <div className={styles.content}><p className={styles.contentData}>{content.status}</p>{t('status')}</div>
-                    <div className={styles.content}><p className={styles.contentData}>{content.status_year}</p>{t('status year')}</div>
+                    <div className={styles.content}>
+                      <p className={styles.contentData}>
+                        {content.designation_type}
+                      </p>
+                      {t('designation type')}
+                    </div>
+                    <div className={styles.content}>
+                      <p className={styles.contentData}>{content.IUCN_type}</p>
+                      {t('IUCN type')}
+                    </div>
                   </>
                 )}
               </div>
