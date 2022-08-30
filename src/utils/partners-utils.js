@@ -48,8 +48,8 @@ export const getTexts = () => ({
 });
 
 export const getPartners = () => [
-  { href: 'https://mol.org/', image: { src: molLogo, alt: t('Map of Life') } },
   {
+    index: 0,
     href: 'https://eowilsonfoundation.org/',
     image: {
       src: eoWilsonLogo,
@@ -57,6 +57,15 @@ export const getPartners = () => [
     },
   },
   {
+    index: 1,
+    href: 'https://mol.org/',
+    image: {
+      src: molLogo,
+      alt: t('Map of Life'),
+    },
+  },
+  {
+    index: 2,
     href: 'http://www.vizzuality.com/',
     image: { src: vizzualityLogo, alt: t('vizzuality') },
   },
@@ -71,6 +80,12 @@ export const getPlatformPartners = () => [
 
 export const getDataPartners = () => [
   {
+    index: 0,
+    href: 'https://mol.org/',
+    image: { src: molLogo, alt: t('Map of Life') },
+  },
+  {
+    index: 1,
     href: 'http://coru.oceans.ubc.ca/',
     image: {
       src: changingOceanLogo,
@@ -78,22 +93,22 @@ export const getDataPartners = () => [
     },
   },
   {
-    href: 'https://mol.org/',
-    image: { src: molLogo, alt: t('Map of Life') },
-  },
-  {
+    index: 2,
     href: 'https://www.gbif.org/',
     image: { src: gbifLogo, alt: t('GBIF') },
   },
   {
+    index: 3,
     href: 'https://ebird.org/home',
     image: { src: eBirdLogo, alt: t('eBird') },
   },
   {
+    index: 4,
     href: 'https://www.iucn.org/',
     image: { src: iucnLogo, alt: t('iucn') },
   },
   {
+    index: 5,
     href: 'http://globalfishingwatch.org/',
     image: {
       src: globalFishingWatchLogo,
@@ -101,30 +116,37 @@ export const getDataPartners = () => [
     },
   },
   {
+    index: 6,
     href: 'https://www.unep-wcmc.org/',
     image: { src: unEnvironmentLogo, alt: t('UNEP-WCMC') },
   },
   {
+    index: 7,
     href: 'https://www.esa-landcover-cci.org/',
     image: { src: esaLogo, alt: t('ESA') },
   },
   {
+    index: 8,
     href: 'https://raisg.socioambiental.org/',
     image: { src: raisgLogo, alt: t('RAISG') },
   },
   {
+    index: 9,
     href: 'http://eol.org/',
     image: { src: eolLogo, alt: t('Encyclopedia of Life') },
   },
   {
+    index: 10,
     href: 'https://www.inaturalist.org/',
     image: { src: inaturalistLogo, alt: t('iNaturalist') },
   },
   {
+    index: 11,
     href: 'https://www.gorongosa.org/',
     image: { src: gorongosaLogo, alt: t('Gorongosa National Park') },
   },
   {
+    index: 12,
     href: 'https://www.fieldmuseum.org/',
     image: { src: fieldMuseumLogo, alt: t('Field Museum') },
   },
@@ -132,40 +154,50 @@ export const getDataPartners = () => [
 
 export const getResearchPartners = () => [
   {
+    index: 0,
     href: 'https://www.yale.edu/',
     image: { src: yaleLogo, alt: t('Yale University') },
   },
   {
+    index: 1,
     href: 'https://www.ubc.ca/',
     image: { src: ubcLogo, alt: t('University of British Columbia') },
   },
   {
+    index: 2,
     href: 'http://www.ufl.edu/',
     image: { src: universityOfFloridaLogo, alt: t('University of Florida') },
   },
   {
+    index: 3,
     href: 'https://earthengine.google.com/',
     image: { src: googleEarthEngineLogo, alt: t('Google Earth Engine') },
   },
   {
+    index: 4,
     href: 'https://cloud.google.com',
     image: { src: googleCloudLogo, alt: t('Google Cloud Platform') },
   },
 ];
 
-export const getSponsors = () => [{
-  href: 'https://www.esri.com/en-us/home',
-  image: { src: esriLogo, alt: t('Esri') },
-},
-{
-  href: 'https://www.moore.org/',
-  image: { src: mooreFoundationLogo, alt: t('Gordon and Betty Moore Foundation') },
-},
-{
-  href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-  image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundationc'), className: 'bbees' },
-},
-{
-  label: 'Jeff and Laurie Ubben',
-},
+export const getSponsors = () => [
+  {
+    index: 0,
+    href: 'https://www.esri.com/en-us/home',
+    image: { src: esriLogo, alt: t('Esri') },
+  },
+  {
+    index: 1,
+    href: 'https://www.moore.org/',
+    image: { src: mooreFoundationLogo, alt: t('Gordon and Betty Moore Foundation') },
+  },
+  {
+    index: 2,
+    href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
+    image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundationc'), className: 'bbees' },
+  },
+  {
+    index: 3,
+    label: 'Jeff and Laurie Ubben',
+  },
 ];
