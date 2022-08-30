@@ -102,6 +102,13 @@ function DataSceneComponent({
 
       {isGlobeUpdating && <Spinner floating />}
 
+      {!!onboardingType && <SoundButton />}
+      <OnboardingTooltip />
+
+      <ArcgisLayerManager activeLayers={activeLayers} />
+
+      {isGlobeUpdating && <Spinner floating />}
+
       <DataGlobalSidebar
         activeLayers={activeLayers}
         activeOption={activeOption}
@@ -115,9 +122,10 @@ function DataSceneComponent({
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
-        className={cx(styles.sidebarContainer, {
+        className={cx({
+          [styles.sidebarContainer]: FEATURE_NEW_MENUS,
+          [styles.sidebarContainerOLD]: !FEATURE_NEW_MENUS,
           [animationStyles.leftHidden]: sidebarHidden,
-          [uiStyles.blur]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 
@@ -168,6 +176,28 @@ function DataSceneComponent({
         />
       )}
 
+      <CountryLabelsLayer
+        sceneMode={sceneMode}
+        countryISO={countryISO}
+        countryName={countryName}
+        activeLayers={activeLayers}
+        isLandscapeMode={isLandscapeMode}
+      />
+
+      {selectedAnalysisLayer && (
+        <FeatureHighlightLayer
+          featureLayerSlugs={selectedAnalysisLayer.slug}
+          onFeatureClick={handleHighlightLayerFeatureClick}
+        />
+      )}
+
+      <Widgets
+        openedModal={openedModal}
+        activeLayers={activeLayers}
+        isFullscreenActive={isFullscreenActive}
+        onboardingStep={onboardingStep}
+      />
+
       <MapTooltip
         onActionButtonClick={handleTooltipActionButtonClick}
         speciesData={speciesData}
@@ -180,6 +210,7 @@ function DataSceneComponent({
         <GlobesMenu browsePage={browsePage} />
       )}
 
+      <LabelsLayer activeLayers={activeLayers} />
     </Scene>
   );
 }

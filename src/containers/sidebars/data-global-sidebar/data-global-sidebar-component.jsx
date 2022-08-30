@@ -18,6 +18,8 @@ import HumanImpactSidebarCard from './human-impact-sidebar-card';
 import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import mapStateToProps from './selectors';
 
+const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
+
 function DataGlobalSidebarComponent({
   map,
   view,
@@ -31,89 +33,136 @@ function DataGlobalSidebarComponent({
   sidebarTabActive,
 }) {
   const sidebarTabs = getSidebarTabs();
-  return (
-    <div
-      className={cx(styles.container, className)}
-    >
-      <TabsSidebar
-        activeLayers={activeLayers}
-        view={view}
-      />
+  if (FEATURE_NEW_MENUS) {
+    return (
+      <div className={cx(styles.container, className)}>
+        <TabsSidebar
+          activeLayers={activeLayers}
+          view={view}
+        />
+        <div
+          className={cx(styles.content, {
+            [uiStyles.onboardingMode]: !!onboardingType,
+          })}
+        >
+          <AnimatePresence exitBeforeEnter>
+            {sidebarTabActive === sidebarTabs[1].slug && (
+            <motion.div
+              key={sidebarTabs[1].slug}
+              initial={{ opacity: 0, x: 160, width: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 160 }}
+              transition={{
+                duration: 0.25,
+                ease: 'easeInOut',
+              }}
+            >
+              <AnalyzeAreasSidebarCard
+                activeLayers={activeLayers}
+                view={view}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
+              />
+            </motion.div>
+            )}
+            {sidebarTabActive === sidebarTabs[0].slug && (
+            <motion.div
+              className={styles.mapLayersContainer}
+              key={sidebarTabs[0].slug}
+              initial={{ opacity: 0, x: 160 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 160 }}
+              transition={{
+                duration: 0.25,
+                ease: 'easeInOut',
+              }}
+            >
+              <BiodiversitySidebarCard
+                map={map}
+                view={view}
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
+                waitingInteraction={waitingInteraction}
+              />
+              <ProtectedAreasSidebarCard
+                map={map}
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                handleGlobeUpdating={handleGlobeUpdating}
+                onboardingStep={onboardingStep}
+                waitingInteraction={waitingInteraction}
+              />
+              <HumanImpactSidebarCard
+                map={map}
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                handleGlobeUpdating={handleGlobeUpdating}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
+                waitingInteraction={waitingInteraction}
+              />
+              <CarbonSidebarCard
+                map={map}
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                handleGlobeUpdating={handleGlobeUpdating}
+              />
+            </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    );
+  }
+
+  if (!FEATURE_NEW_MENUS) {
+    return (
       <div
-        className={cx(styles.content, {
+        className={cx(styles.container, className, {
           [uiStyles.onboardingMode]: !!onboardingType,
         })}
       >
-        <AnimatePresence exitBeforeEnter>
-          {sidebarTabActive === sidebarTabs[1].slug && (
-          <motion.div
-            key={sidebarTabs[1].slug}
-            initial={{ opacity: 0, x: 160, width: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 160 }}
-            transition={{
-              duration: 0.25,
-              ease: 'easeInOut',
-            }}
-          >
-            <AnalyzeAreasSidebarCard
-              activeLayers={activeLayers}
-              view={view}
-              onboardingStep={onboardingStep}
-              onboardingType={onboardingType}
-            />
-          </motion.div>
-          )}
-          {sidebarTabActive === sidebarTabs[0].slug && (
-          <motion.div
-            className={styles.mapLayersContainer}
-            key={sidebarTabs[0].slug}
-            initial={{ opacity: 0, x: 160 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 160 }}
-            transition={{
-              duration: 0.25,
-              ease: 'easeInOut',
-            }}
-          >
-            <BiodiversitySidebarCard
-              map={map}
-              view={view}
-              activeLayers={activeLayers}
-              activeCategory={activeCategory}
-              onboardingStep={onboardingStep}
-              onboardingType={onboardingType}
-              waitingInteraction={waitingInteraction}
-            />
-            <ProtectedAreasSidebarCard
-              map={map}
-              activeLayers={activeLayers}
-              activeCategory={activeCategory}
-              handleGlobeUpdating={handleGlobeUpdating}
-              onboardingStep={onboardingStep}
-              waitingInteraction={waitingInteraction}
-            />
-            <HumanImpactSidebarCard
-              map={map}
-              activeLayers={activeLayers}
-              activeCategory={activeCategory}
-              handleGlobeUpdating={handleGlobeUpdating}
-              onboardingStep={onboardingStep}
-              onboardingType={onboardingType}
-              waitingInteraction={waitingInteraction}
-            />
-            <CarbonSidebarCard
-              map={map}
-              activeLayers={activeLayers}
-              activeCategory={activeCategory}
-              handleGlobeUpdating={handleGlobeUpdating}
-            />
-          </motion.div>
-          )}
-        </AnimatePresence>
+        <AnalyzeAreasSidebarCard
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+        />
+        <BiodiversitySidebarCard
+          map={map}
+          view={view}
+          activeLayers={activeLayers}
+          activeCategory={activeCategory}
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
+        />
+        <ProtectedAreasSidebarCard
+          map={map}
+          activeLayers={activeLayers}
+          activeCategory={activeCategory}
+          handleGlobeUpdating={handleGlobeUpdating}
+          onboardingStep={onboardingStep}
+          waitingInteraction={waitingInteraction}
+        />
+        <HumanImpactSidebarCard
+          map={map}
+          activeLayers={activeLayers}
+          activeCategory={activeCategory}
+          handleGlobeUpdating={handleGlobeUpdating}
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+          waitingInteraction={waitingInteraction}
+        />
+        <CarbonSidebarCard
+          map={map}
+          activeLayers={activeLayers}
+          activeCategory={activeCategory}
+          handleGlobeUpdating={handleGlobeUpdating}
+        />
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default connect(mapStateToProps, null)(DataGlobalSidebarComponent);
