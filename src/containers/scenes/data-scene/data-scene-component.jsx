@@ -11,6 +11,7 @@ import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
+import Widgets from 'containers/widgets';
 
 import MapTooltip from 'components/map-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
@@ -130,6 +131,14 @@ function DataSceneComponent({
       )}
       {FEATURE_OPTIMIZE_MENUS && (
         <SideMenu
+          openedModal={openedModal}
+          activeLayers={activeLayers}
+          isFullscreenActive={isFullscreenActive}
+          onboardingStep={onboardingStep}
+        />
+      )}
+      {!FEATURE_OPTIMIZE_MENUS && (
+        <Widgets
           openedModal={openedModal}
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}

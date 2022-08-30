@@ -9,6 +9,7 @@ import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
+import Widgets from 'containers/widgets';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
@@ -73,6 +74,13 @@ function NrcLandingComponent({
           openedModal={openedModal}
           onboardingStep={onboardingStep}
         />
+      )}
+      {!FEATURE_OPTIMIZE_MENUS && (
+      <Widgets
+        activeLayers={activeLayers}
+        openedModal={openedModal}
+        onboardingStep={onboardingStep}
+      />
       )}
       <CountryEntryTooltip
         countryISO={countryISO}

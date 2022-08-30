@@ -10,6 +10,7 @@ import LocalSceneViewManager from 'containers/managers/local-scene-view-manager'
 import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
+import Widgets from 'containers/widgets';
 
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
@@ -78,6 +79,13 @@ function CountrySceneComponent({
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
       {FEATURE_OPTIMIZE_MENUS && isVisible && (
         <SideMenu
+          activeLayers={activeLayers}
+          openedModal={openedModal}
+          isFullscreenActive={isFullscreenActive}
+        />
+      )}
+      {!FEATURE_OPTIMIZE_MENUS && isVisible && (
+        <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}

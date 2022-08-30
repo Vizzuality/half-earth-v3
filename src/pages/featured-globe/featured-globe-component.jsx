@@ -11,6 +11,7 @@ import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
+import Widgets from 'containers/widgets';
 
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -111,6 +112,15 @@ function DataGlobeComponent({
         />
         {FEATURE_OPTIMIZE_MENUS && (
           <SideMenu
+            activeLayers={activeLayers}
+            isFullscreenActive={isFullscreenActive}
+            hidden={esriWidgetsHidden}
+            openedModal={openedModal}
+            disableSettings
+          />
+        )}
+        {!FEATURE_OPTIMIZE_MENUS && (
+          <Widgets
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
             hidden={esriWidgetsHidden}
