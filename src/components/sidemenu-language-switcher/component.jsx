@@ -11,14 +11,15 @@ function SideMenuLanguageSwitcher(props) {
   const { changeLang } = props;
   const languages = useLanguages();
   const locale = useLocale();
+  const localeValue = locale === '' ? 'en' : locale;
 
-  const [languageOptions, setLanguageOptions] = useState(languages);
+  const [languageOptions, setLanguageOptions] = useState([]);
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    const options = languages.filter((l) => l.code !== locale);
+    const options = languages.filter((l) => l.code !== localeValue);
     setLanguageOptions(options);
-  }, [locale, languages]);
+  }, [localeValue, languages]);
 
   return (
     <div
@@ -30,7 +31,7 @@ function SideMenuLanguageSwitcher(props) {
         className={styles.switcherBtn}
         type="button"
       >
-        {locale || 'en'}
+        {localeValue}
       </button>
       <motion.div
         className={styles.switcherContent}
