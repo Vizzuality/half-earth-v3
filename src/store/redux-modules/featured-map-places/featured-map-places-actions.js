@@ -12,7 +12,6 @@ export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', ({
       const description = [];
       place.description && place.description.content.forEach((paragraph) => {
         const p = paragraph.content.reduce((acc, sentence) => {
-          console.log(sentence.marks[0] && sentence.marks[0].type);
           if (sentence.nodeType === 'text' && sentence.marks[0] && sentence.marks[0].type === 'bold') return `${acc}<p><b>${sentence.value}</b></p>`;
           if (sentence.nodeType === 'text') return `${acc}<p>${sentence.value}</p>`;
           return acc;
