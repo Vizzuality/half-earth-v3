@@ -31,7 +31,7 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const {
   REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
 function DataSceneComponent({
@@ -129,7 +129,7 @@ function DataSceneComponent({
         onFeatureClick={handleHighlightLayerFeatureClick}
       />
       )}
-      {FEATURE_OPTIMIZE_MENUS && (
+      {FEATURE_NEW_MENUS && (
         <SideMenu
           openedModal={openedModal}
           activeLayers={activeLayers}
@@ -137,7 +137,7 @@ function DataSceneComponent({
           onboardingStep={onboardingStep}
         />
       )}
-      {!FEATURE_OPTIMIZE_MENUS && (
+      {!FEATURE_NEW_MENUS && (
         <Widgets
           openedModal={openedModal}
           activeLayers={activeLayers}

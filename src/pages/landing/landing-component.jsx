@@ -15,7 +15,7 @@ import uiStyles from 'styles/ui.module.scss';
 const REACT_APP_FEATURE_TRANSLATION = process.env.REACT_APP_FEATURE_TRANSLATION === 'true';
 
 const {
-  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
@@ -28,10 +28,10 @@ function LandingComponent({
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
       {REACT_APP_FEATURE_TRANSLATION && <LanguageSwitcher />}
-      {FEATURE_OPTIMIZE_MENUS && (
+      {FEATURE_NEW_MENUS && (
         <About />
       )}
-      {!FEATURE_OPTIMIZE_MENUS && (
+      {!FEATURE_NEW_MENUS && (
         <MainMenu />
       )}
       <LandingScene

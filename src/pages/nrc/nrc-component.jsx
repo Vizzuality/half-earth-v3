@@ -20,7 +20,7 @@ import uiStyles from 'styles/ui.module.scss';
 import styles from './nrc-styles.module.scss';
 
 const {
-  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
@@ -53,7 +53,7 @@ function NationalReportCard({
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      {!FEATURE_OPTIMIZE_MENUS && (
+      {!FEATURE_NEW_MENUS && (
         <MainMenu
           onBoardingStep={onboardingStep}
           onboardingType={onboardingType}

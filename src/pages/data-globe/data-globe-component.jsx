@@ -12,7 +12,7 @@ import uiStyles from 'styles/ui.module.scss';
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 const {
-  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
 function DataGlobeComponent({
@@ -43,7 +43,7 @@ function DataGlobeComponent({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      {!FEATURE_OPTIMIZE_MENUS && (
+      {!FEATURE_NEW_MENUS && (
         <MainMenu
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}

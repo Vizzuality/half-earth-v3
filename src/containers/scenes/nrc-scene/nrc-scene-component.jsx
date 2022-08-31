@@ -25,7 +25,7 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 const {
   REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
 function CountrySceneComponent({
@@ -77,14 +77,14 @@ function CountrySceneComponent({
 
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {FEATURE_OPTIMIZE_MENUS && isVisible && (
+      {FEATURE_NEW_MENUS && isVisible && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}
         />
       )}
-      {!FEATURE_OPTIMIZE_MENUS && isVisible && (
+      {!FEATURE_NEW_MENUS && isVisible && (
         <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}

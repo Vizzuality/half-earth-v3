@@ -34,7 +34,7 @@ const ProtectedAreasTooltips = loadable(() => import('components/protected-areas
 
 const {
   REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_OPTIMIZE_MENUS: FEATURE_OPTIMIZE_MENUS,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
 function DataGlobeComponent({
@@ -69,7 +69,7 @@ function DataGlobeComponent({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      {!FEATURE_OPTIMIZE_MENUS && (
+      {!FEATURE_NEW_MENUS && (
         <MainMenu />
       )}
       <Scene
@@ -110,7 +110,7 @@ function DataGlobeComponent({
           selectedFeaturedPlace={selectedFeaturedPlace}
           isLandscapeMode={isLandscapeMode}
         />
-        {FEATURE_OPTIMIZE_MENUS && (
+        {FEATURE_NEW_MENUS && (
           <SideMenu
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
@@ -119,7 +119,7 @@ function DataGlobeComponent({
             disableSettings
           />
         )}
-        {!FEATURE_OPTIMIZE_MENUS && (
+        {!FEATURE_NEW_MENUS && (
           <Widgets
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
