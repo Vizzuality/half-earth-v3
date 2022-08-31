@@ -3,6 +3,8 @@
 @import 'styles/typography-extends';
 @import 'styles/common-animations.module';
 
+$sidebar-content-top: 180px;
+
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
@@ -14,8 +16,36 @@
   padding-left: 5px;
 }
 
+.container {
+  @extend %verticalScrollbar;
+  @include backdropBlur();
+  position: absolute;
+  top: $sidebar-content-top;
+  left: $site-gutter;
+  display: flex;
+  flex-direction: column;
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
+  height: calc(100vh - #{$sidebar-content-top});
+  width: $sidebar-width;
+  padding: $site-gutter;
+  z-index: $bring-to-front;
+}
+
+
 .headerCard {
   @include backdropBlur();
+  z-index: $bring-to-front;
+  top: $ui-left-top;
+  left: $site-gutter;
+  width: $sidebar-width;
+  padding: $sidebar-paddings;
+  border: $sidebar-border;
+}
+
+.headerCardOLD {
+  @include backdropBlur();
+  position: fixed;
   z-index: $bring-to-front;
   top: $ui-left-top;
   left: $site-gutter;
@@ -37,6 +67,13 @@
   width: $sidebar-width;
   padding: $site-gutter;
   z-index: $bring-to-front;
+}
+
+
+.backButtonOLD {
+  position: absolute;
+  top: -$local-sidebar-top-margin;
+  left: calc(#{$local-sidebar-width}/2 - #{$rounded-button-size}/2);
 }
 
 .backButton {
@@ -68,6 +105,13 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.topRowOLD {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: $site-gutter;
 }
 
 .nameWrapper {

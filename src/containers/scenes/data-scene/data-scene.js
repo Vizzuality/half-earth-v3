@@ -1,6 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
+
+import { AREA_OF_INTEREST } from 'router';
+
+import { useLocale, useT } from '@transifex/react';
 
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 
@@ -8,10 +13,6 @@ import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
-
-import { useLocale, useT } from '@transifex/react';
-
-import { AREA_OF_INTEREST } from 'router';
 
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
@@ -72,7 +73,8 @@ function Container(props) {
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
-          percentage_protected: Math.round(attributes.percentage_protected) || 100, // 100 is for protected areas
+          // 100 is for protected areas
+          percentage_protected: Math.round(attributes.percentage_protected) || 100,
           description: attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
           nspecies: attributes.nspecies,
           status: attributes.STATUS,
@@ -88,7 +90,13 @@ function Container(props) {
     const { title } = mapTooltipContent;
     precomputedAoiAnalytics(title);
 
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId } });
+    browsePage({
+      type: AREA_OF_INTEREST,
+      payload: { id: mapTooltipContent.id },
+      query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
+    });
+
+    precomputedAoiAnalytics(mapTooltipContent.title);
   };
 
   useEffect(() => {

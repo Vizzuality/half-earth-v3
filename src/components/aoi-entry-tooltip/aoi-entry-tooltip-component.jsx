@@ -1,21 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
+
 import { loadModules } from 'esri-loader';
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import styles from './aoi-entry-tooltip-styles.module.scss';
-import { format } from 'd3-format';
-import cx from 'classnames';
+
 import { useT } from '@transifex/react';
+
+import cx from 'classnames';
+import { format } from 'd3-format';
+
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
+
+import styles from './aoi-entry-tooltip-styles.module.scss';
 
 function useClickOutside(ref, callback, exceptionRef) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (
-        ref &&
-        ref.current &&
-        !ref.current.contains(event.target) &&
-        exceptionRef &&
-        exceptionRef.current &&
-        !exceptionRef.current.contains(event.target)
+        ref
+        && ref.current
+        && !ref.current.contains(event.target)
+        && exceptionRef
+        && exceptionRef.current
+        && !exceptionRef.current.contains(event.target)
       ) {
         callback();
       }
@@ -28,13 +33,13 @@ function useClickOutside(ref, callback, exceptionRef) {
   }, [ref]);
 }
 
-const AOIEntryTooltipComponent = ({
+function AOIEntryTooltipComponent({
   view,
   tooltipContent,
   tooltipPosition,
   handleTooltipClose,
   onExploreAOIClick,
-}) => {
+}) {
   const tooltipref = useRef(null);
   const [tooltip, setTooltip] = useState(null);
   const buttonRef = useRef(null);
@@ -76,12 +81,16 @@ const AOIEntryTooltipComponent = ({
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose} />
       <section className={styles.tooltipSection}>
         <span className={styles.tooltipName}>
-          {t('Priority area')} {MOL_ID}
+          {t('Priority area')}
+          {' '}
+          {MOL_ID}
         </span>
       </section>
       <section className={styles.areaSection}>
         <p className={styles.area}>
-          {format(',.3f')(AREA_KM2)} {t('km')}
+          {format(',.3f')(AREA_KM2)}
+          {' '}
+          {t('km')}
           <sup>2</sup>
         </p>
       </section>
@@ -94,6 +103,6 @@ const AOIEntryTooltipComponent = ({
       </button>
     </div>
   );
-};
+}
 
 export default AOIEntryTooltipComponent;

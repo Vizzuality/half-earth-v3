@@ -41,11 +41,15 @@ import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import mapStateToProps from './selectors';
-// import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
+
+const {
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
 
 function AOISidebarComponent({
   map,
@@ -58,12 +62,12 @@ function AOISidebarComponent({
   activeLayers,
   climateRegime,
   contextualData,
-  // shareAoiAnalytics,
+  shareAoiAnalytics,
   handleClose,
   sidebarTabActive,
   isShareModalOpen,
   setShareModalOpen,
-  // dataLoaded,
+  dataLoaded,
   browsePage,
 }) {
   const sidebarTabs = getSidebarTabs();
@@ -82,10 +86,10 @@ function AOISidebarComponent({
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
-  // const handleShareModalOpen = () => {
-  //   shareAoiAnalytics();
-  //   setShareModalOpen(true);
-  // };
+  const handleShareModalOpen = () => {
+    shareAoiAnalytics();
+    setShareModalOpen(true);
+  };
 
   const saveName = () => {
     setIsEditingName(false);
@@ -106,28 +110,177 @@ function AOISidebarComponent({
     return sidebarTabActive === sidebarTabs[0].slug ? browsePage({ type: DATA }) : () => {};
   }, [sidebarTabActive]);
 
-  return (
-    <div className={styles.sidebarContainer}>
-      <TabsSidebar
-        activeLayers={activeLayers}
-        view={view}
-        onTabClick={() => handleOnTabClick()}
-      />
-      <div>
-        <section className={styles.headerCard}>
+  if (FEATURE_NEW_MENUS) {
+    return (
+      <div className={styles.sidebarContainer}>
+        <TabsSidebar
+          activeLayers={activeLayers}
+          view={view}
+          onTabClick={() => handleOnTabClick()}
+        />
+        <div>
+          <section className={styles.headerCard}>
+            <Button
+              type="rounded"
+              handleClick={handleClose}
+              Icon={CloseIcon}
+              className={styles.backButton}
+              tooltipText={t('Go back to the globe')}
+            />
+            <DummyBlurWorkaround />
+            <div className={styles.topRow}>
+              <div className={styles.nameWrapper}>
+                {isEditingName ? (
+                  <input
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                    autoFocus
+                    type="text"
+                    className={styles.areaNameEdit}
+                    onChange={(e) => setUpdatedAreaName(e.target.value)}
+                    placeholder={t('Type name')}
+                  />
+                ) : (
+                  <p className={styles.areaName}>
+                    {updatedAreaName
+                  || countryNamesTranslations[contextualData.areaName]
+                  || contextualData.areaName}
+                  </p>
+                )}
+                {area && (
+                <p className={styles.area}>
+                  {`${area} `}
+                  <span>
+                    {t('km')}
+                    <sup>2</sup>
+                  </span>
+                </p>
+                )}
+              </div>
+              {isEditingName ? (
+                <div className={styles.actionButtons}>
+                  <Button
+                    type="rectangular"
+                    className={styles.saveButton}
+                    handleClick={saveName}
+                    tooltipText={t('Save the area name')}
+                    label={t('SAVE')}
+                  />
+                </div>
+              ) : (
+                <div className={styles.actionButtons}>
+                  {contextualData.isCustom && (
+                  <Button
+                    Icon={EditIcon}
+                    type="icon-square"
+                    handleClick={() => setIsEditingName(true)}
+                    tooltipText={t('Edit area name')}
+                  />
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+          <div className={cx(styles.content, className)}>
+            <div className={styles.contextualDataRow}>
+              <div className={styles.contextualIndicator} title="population">
+                <PopulationIcon />
+                <span>{population}</span>
+              </div>
+              <div
+                className={styles.contextualIndicator}
+                title={`${t('land cover: ')}${
+                  AOIContextualTranslations[landCover && landCover.toLowerCase()]
+              || landCover
+                }`}
+              >
+                <LandCoverIcon />
+                <span>
+                  {AOIContextualTranslations[
+                    landCover && landCover.toLowerCase()
+                  ] || landCover}
+                </span>
+              </div>
+              <div
+                className={styles.contextualIndicator}
+                title={`${t('climate regime: ')}${
+                  AOIContextualTranslations[
+                    climateRegime && climateRegime.toLowerCase()
+                  ] || climateRegime
+                }`}
+              >
+                <ClimateRegimeIcon />
+                <span>
+                  {AOIContextualTranslations[
+                    climateRegime && climateRegime.toLowerCase()
+                  ] || climateRegime}
+                </span>
+              </div>
+            </div>
+            <SpeciesCard area={area} speciesData={speciesData} />
+            <SidebarCard
+              map={map}
+              toggleType="radio"
+              activeLayers={activeLayers}
+              contextualData={contextualData}
+              cardCategory={BIODIVERSITY_SLUG}
+              layers={aoiBiodiversityToggles}
+              metadataSlug={ALL_TAXA_PRIORITY}
+            />
+            <SidebarCard
+              map={map}
+              layers={WDPALayers}
+              toggleType="checkbox"
+              activeLayers={activeLayers}
+              cardCategory={PROTECTION_SLUG}
+              contextualData={contextualData}
+              metadataSlug={MERGED_PROTECTION}
+            />
+            <SidebarCard
+              map={map}
+              toggleType="checkbox"
+              activeLayers={activeLayers}
+              layers={humanPressuresLandUse}
+              contextualData={contextualData}
+              cardCategory={LAND_HUMAN_PRESSURES_SLUG}
+              metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
+            />
+            <section className={styles.completeDatabaseWrapper}>
+              <p>{t('Do you have more information about this particular area?')}</p>
+              <a
+                className={styles.link}
+                href="https://mol.org/upload"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t(' help us complete our database')}
+              </a>
+            </section>
+            <ShareModal
+              isOpen={isShareModalOpen}
+              setShareModalOpen={setShareModalOpen}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (!FEATURE_NEW_MENUS) {
+    return (
+      <>
+        <section className={styles.headerCardOLD}>
           <Button
             type="rounded"
             handleClick={handleClose}
             Icon={CloseIcon}
-            className={styles.backButton}
+            className={styles.backButtonOLD}
             tooltipText={t('Go back to the globe')}
           />
           <DummyBlurWorkaround />
-          <div className={styles.topRow}>
+          <div className={styles.topRowOLD}>
             <div className={styles.nameWrapper}>
               {isEditingName ? (
                 <input
-                // eslint-disable-next-line jsx-a11y/no-autofocus
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                   type="text"
                   className={styles.areaNameEdit}
@@ -136,19 +289,18 @@ function AOISidebarComponent({
                 />
               ) : (
                 <p className={styles.areaName}>
-                  {updatedAreaName
-                  || countryNamesTranslations[contextualData.areaName]
+                  {updatedAreaName || countryNamesTranslations[contextualData.areaName]
                   || contextualData.areaName}
                 </p>
               )}
               {area && (
-                <p className={styles.area}>
-                  {`${area} `}
-                  <span>
-                    {t('km')}
-                    <sup>2</sup>
-                  </span>
-                </p>
+              <p className={styles.area}>
+                {`${area} `}
+                <span>
+                  {t('km')}
+                  <sup>2</sup>
+                </span>
+              </p>
               )}
             </div>
             {isEditingName ? (
@@ -171,8 +323,7 @@ function AOISidebarComponent({
                   tooltipText={t('Edit area name')}
                 />
                 )}
-                {/* // TODO: Share button will be place on side menu */}
-                {/* {dataLoaded && (
+                {dataLoaded && (
                 <Button
                   Icon={ShareIcon}
                   type="icon-square"
@@ -180,12 +331,12 @@ function AOISidebarComponent({
                   tooltipText={t('Share this area')}
                   disabled
                 />
-                )} */}
+                )}
               </div>
             )}
           </div>
         </section>
-        <div className={cx(styles.content, className)}>
+        <div className={cx(styles.container, className)}>
           <div className={styles.contextualDataRow}>
             <div className={styles.contextualIndicator} title="population">
               <PopulationIcon />
@@ -195,7 +346,7 @@ function AOISidebarComponent({
               className={styles.contextualIndicator}
               title={`${t('land cover: ')}${
                 AOIContextualTranslations[landCover && landCover.toLowerCase()]
-              || landCover
+                || landCover
               }`}
             >
               <LandCoverIcon />
@@ -208,16 +359,14 @@ function AOISidebarComponent({
             <div
               className={styles.contextualIndicator}
               title={`${t('climate regime: ')}${
-                AOIContextualTranslations[
-                  climateRegime && climateRegime.toLowerCase()
-                ] || climateRegime
+                AOIContextualTranslations[climateRegime && climateRegime.toLowerCase()]
+                || climateRegime
               }`}
             >
               <ClimateRegimeIcon />
               <span>
-                {AOIContextualTranslations[
-                  climateRegime && climateRegime.toLowerCase()
-                ] || climateRegime}
+                {AOIContextualTranslations[climateRegime && climateRegime.toLowerCase()]
+                || climateRegime}
               </span>
             </div>
           </div>
@@ -265,9 +414,9 @@ function AOISidebarComponent({
             setShareModalOpen={setShareModalOpen}
           />
         </div>
-      </div>
-    </div>
-  );
+      </>
+    );
+  }
 }
 
 export default connect(mapStateToProps, null)(AOISidebarComponent);

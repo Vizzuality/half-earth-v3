@@ -125,6 +125,8 @@ function DataGlobalSidebarComponent({
         })}
       >
         <AnalyzeAreasSidebarCard
+          activeLayers={activeLayers}
+          view={view}
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
         />
