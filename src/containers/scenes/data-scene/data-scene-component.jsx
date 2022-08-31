@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -8,6 +8,7 @@ import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import GlobePageIndicator from 'containers/menus/globe-page-indicator';
+import GlobesMenu from 'containers/menus/globes-menu';
 import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
@@ -59,6 +60,7 @@ function DataSceneComponent({
   onboardingStep,
   waitingInteraction,
   speciesData,
+  browsePage,
 }) {
   const isMobile = useMobile();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
@@ -76,6 +78,22 @@ function DataSceneComponent({
     [isMobile, onboardingType],
   );
 
+  const [cursorBottom, setCursorBottom] = useState(false);
+  console.log({ cursorBottom });
+
+  useEffect(() => {
+    const windowHeight = window.innerHeight;
+    document.addEventListener('mousemove', (event) => {
+      const mouseYPosition = event.clientY;
+      if ((windowHeight - mouseYPosition) < 50) {
+        setCursorBottom(true);
+      }
+      if ((windowHeight - mouseYPosition) > 50) {
+        setCursorBottom(false);
+      }
+    });
+  }, [document]);
+
   return (
     <Scene
       onMapLoad={onMapLoad}
@@ -85,6 +103,7 @@ function DataSceneComponent({
       initialRotation
       disabled={!!onboardingType}
     >
+
       {!!onboardingType && <SoundButton />}
       <OnboardingTooltip />
 
@@ -125,10 +144,10 @@ function DataSceneComponent({
         isLandscapeMode={isLandscapeMode}
       />
       {selectedAnalysisLayer && (
-      <FeatureHighlightLayer
-        featureLayerSlugs={selectedAnalysisLayer.slug}
-        onFeatureClick={handleHighlightLayerFeatureClick}
-      />
+        <FeatureHighlightLayer
+          featureLayerSlugs={selectedAnalysisLayer.slug}
+          onFeatureClick={handleHighlightLayerFeatureClick}
+        />
       )}
       {FEATURE_NEW_MENUS && (
         <SideMenu
@@ -155,6 +174,10 @@ function DataSceneComponent({
         isProtectedArea={isProtectedArea}
       />
       <LabelsLayer activeLayers={activeLayers} />
+      {FEATURE_NEW_MENUS && cursorBottom && (
+        <GlobesMenu browsePage={browsePage} />
+      )}
+
     </Scene>
   );
 }

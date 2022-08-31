@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useT } from '@transifex/react';
 
+import cx from 'classnames';
 import { motion } from 'framer-motion';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
@@ -13,11 +14,14 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './styles.module';
 
-function GlobesMenuComponent({ browsePage }) {
+function GlobesMenuComponent({ browsePage, landing = false }) {
   const t = useT();
   return (
     <motion.div
-      className={styles.globesContainer}
+      className={cx({
+        [styles.globesContainerLanding]: landing,
+        [styles.globesContainer]: !landing,
+      })}
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

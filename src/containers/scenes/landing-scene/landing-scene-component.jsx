@@ -39,7 +39,7 @@ function LandingSceneComponent({ sceneSettings, browsePage }) {
         >
           {!isMobile && <T _str="OR" />}
         </motion.p>
-        <GlobesMenu browsePage={browsePage} />
+        <GlobesMenu browsePage={browsePage} landing />
       </div>
     </Scene>
   );

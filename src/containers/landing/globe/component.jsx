@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
+
 import styles from './styles.module.scss';
 
-const Globe = ({
+function Globe({
   className,
   description,
   title,
   globeImage,
   center,
   handleClick,
-}) => {
+}) {
   const [isHovered, setHovered] = useState(false);
   return (
     <button
-      onClick={handleClick}
+      type="button"
       className={cx({
         className: !!className,
         [styles.container]: true,
         [styles.containerCenter]: center,
       })}
+      onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -75,7 +78,7 @@ const Globe = ({
       />
     </button>
   );
-};
+}
 
 Globe.propTypes = {
   className: PropTypes.string,
