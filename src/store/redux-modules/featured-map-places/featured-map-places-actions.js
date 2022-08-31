@@ -1,4 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
+
 import CONTENTFUL from 'services/contentful';
 
 const CONFIG = { imageWidth: 300, imageHeight: 190 };
@@ -12,16 +13,19 @@ export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', ({
       place.description && place.description.content.forEach((paragraph) => {
         const p = paragraph.content.reduce((acc, sentence) => {
           if (sentence.nodeType === 'text') return acc + sentence.value;
+
           return acc;
         }, '');
         description.push(p);
       });
+      console.log({ place });
+      console.log({ description });
       return {
         ...acc,
         [place.slug]: {
           title: place.title,
           imageUrl: place.image,
-          description: description.join('\n'),
+          description: `<p>${description.join('\n')}</p>`,
         },
       };
     }, {});
