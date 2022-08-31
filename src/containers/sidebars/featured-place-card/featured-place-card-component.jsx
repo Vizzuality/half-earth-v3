@@ -106,7 +106,6 @@ function FeaturedPlaceCardComponent({
                     {featuredPlace.title}
                   </h2>
                 )}
-                {console.log({ description: featuredPlace.description })}
                 <div>
                   <p
                     className={styles.text}

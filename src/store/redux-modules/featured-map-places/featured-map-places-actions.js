@@ -12,20 +12,19 @@ export const setFeaturedMapPlaces = createThunkAction('setFeaturedMapPlaces', ({
       const description = [];
       place.description && place.description.content.forEach((paragraph) => {
         const p = paragraph.content.reduce((acc, sentence) => {
-          if (sentence.nodeType === 'text') return acc + sentence.value;
-
+          console.log(sentence.marks[0] && sentence.marks[0].type);
+          if (sentence.nodeType === 'text' && sentence.marks[0] && sentence.marks[0].type === 'bold') return `${acc}<p><b>${sentence.value}</b></p>`;
+          if (sentence.nodeType === 'text') return `${acc}<p>${sentence.value}</p>`;
           return acc;
         }, '');
         description.push(p);
       });
-      console.log({ place });
-      console.log({ description });
       return {
         ...acc,
         [place.slug]: {
           title: place.title,
           imageUrl: place.image,
-          description: `<p>${description.join('\n')}</p>`,
+          description: description.join('\n'),
         },
       };
     }, {});
