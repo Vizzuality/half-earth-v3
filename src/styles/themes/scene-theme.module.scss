@@ -4,6 +4,20 @@
   width: 100%;
   height: 100%;
   position: relative;
+  &.disabled {
+    :global .esri-view-root {
+      pointer-events: none;
+    }
+  }
+  :global .esri-ui-top-right {
+    top: 58px;
+  }
+}
+
+.sceneWrapperOLD {
+  width: 100%;
+  height: 100%;
+  position: relative;
 
   &.disabled {
     :global .esri-view-root {

@@ -1,9 +1,18 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
+
 import cx from 'classnames';
+
 import Spinner from 'components/spinner';
+
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const SceneComponent = ({
+const {
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
+
+function SceneComponent({
   map,
   view,
   loadState,
@@ -15,7 +24,7 @@ const SceneComponent = ({
   interactionsDisabled = false,
   handleSceneClick,
   disabled,
-}) => {
+}) {
   if (loadState === 'loading') {
     return (
       <>
@@ -27,10 +36,12 @@ const SceneComponent = ({
         <Spinner spinnerWithOverlay initialLoading display={spinner} />
       </>
     );
-  } else if (loadState === 'loaded') {
+  } if (loadState === 'loaded') {
     return (
       <div
-        className={cx(styles.sceneWrapper, className, {
+        className={cx(className, {
+          [styles.sceneWrapper]: FEATURE_NEW_MENUS,
+          [styles.sceneWrapperOLD]: !FEATURE_NEW_MENUS,
           [styles.disabled]: disabled,
         })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}
@@ -49,6 +60,6 @@ const SceneComponent = ({
       </div>
     );
   }
-};
+}
 
 export default SceneComponent;
