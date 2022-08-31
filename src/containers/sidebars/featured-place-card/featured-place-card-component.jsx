@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { useT } from '@transifex/react';
-import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
+
 import cx from 'classnames';
-import animationStyles from 'styles/common-animations.module.scss';
-import { useMobile } from 'constants/responsive';
-import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
+
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
+
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import { useMobile } from 'constants/responsive';
+
+import animationStyles from 'styles/common-animations.module.scss';
+
 import styles from './featured-place-card-styles.module';
 
-const FeaturedPlaceCardComponent = ({
+function FeaturedPlaceCardComponent({
   selectedFeaturedPlace,
   isLandscapeMode,
   isFullscreenActive,
@@ -19,16 +25,14 @@ const FeaturedPlaceCardComponent = ({
   handlePrevPlaceClick,
   activeOption,
   hotspotsNumbers,
-}) => {
+}) {
   const t = useT();
 
   const isOnMobile = useMobile();
-  const isOnScreen =
-    selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
-  const visibleOnMobile =
-    isOnMobile &&
-    activeOption === FOOTER_OPTIONS.ADD_LAYER &&
-    selectedFeaturedPlace;
+  const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
+  const visibleOnMobile = isOnMobile
+    && activeOption === FOOTER_OPTIONS.ADD_LAYER
+    && selectedFeaturedPlace;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   const contentWrapper = useRef();
@@ -46,14 +50,14 @@ const FeaturedPlaceCardComponent = ({
         className={cx(
           styles.content,
           animationStyles.transformOpacityWithDelay,
-          { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile }
+          { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile },
         )}
       >
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
-            {hotspotsNumbers &&
-              `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
-                'Hotspots'
+            {hotspotsNumbers
+              && `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
+                'Hotspots',
               )}`}
           </div>
           <nav className={styles.navigation}>
@@ -103,10 +107,18 @@ const FeaturedPlaceCardComponent = ({
                   </h2>
                 )}
                 <div>
-                  <p className={styles.text}>{featuredPlace.description}</p>
+                  <p
+                    className={styles.text}
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{ __html: featuredPlace.description }}
+                  />
                   {featuredMap && featuredMap.sourceText && (
                     <span className={styles.sourceText}>
-                      ({t('Source:')} <i>{featuredMap.sourceText}</i>)
+                      (
+                      {t('Source:')}
+                      {' '}
+                      <i>{featuredMap.sourceText}</i>
+                      )
                     </span>
                   )}
                 </div>
@@ -117,6 +129,6 @@ const FeaturedPlaceCardComponent = ({
       </div>
     </div>
   );
-};
+}
 
 export default FeaturedPlaceCardComponent;
