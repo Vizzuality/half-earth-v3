@@ -5,6 +5,7 @@ import loadable from '@loadable/component';
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import GlobePageIndicator from 'containers/menus/globe-page-indicator';
 import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
@@ -74,6 +75,9 @@ function NrcLandingComponent({
           openedModal={openedModal}
           onboardingStep={onboardingStep}
         />
+      )}
+      {FEATURE_NEW_MENUS && (
+      <GlobePageIndicator />
       )}
       {!FEATURE_NEW_MENUS && (
       <Widgets

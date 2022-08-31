@@ -9,6 +9,7 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import LandscapeViewManager from 'containers/managers/landscape-view-manager';
+import GlobePageIndicator from 'containers/menus/globe-page-indicator';
 import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 import Widgets from 'containers/widgets';
@@ -118,6 +119,9 @@ function DataGlobeComponent({
             openedModal={openedModal}
             disableSettings
           />
+        )}
+        {FEATURE_NEW_MENUS && (
+          <GlobePageIndicator />
         )}
         {!FEATURE_NEW_MENUS && (
           <Widgets
