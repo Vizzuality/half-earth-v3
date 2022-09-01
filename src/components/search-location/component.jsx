@@ -88,7 +88,7 @@ function Component({
         && createPortal(
           <div
             ref={setPopperElement}
-            style={{ ...popperStyles.popper, width: parentWidth }}
+            style={{ ...popperStyles.popper, width: parentWidth, zIndex: 5 }}
             {...attributes.popper}
           >
             <ul
