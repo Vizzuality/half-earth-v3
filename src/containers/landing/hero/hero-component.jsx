@@ -1,21 +1,16 @@
-// dependencies
 import React from 'react';
 
 import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-// assets
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
 import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
-// Components
 import { useMobile } from 'constants/responsive';
 
 import AudioCard from './audio-card';
-// Constants
-// styles
 import styles from './hero-styles.module.scss';
 
 function HeroComponent({ className, changeUI, browsePage }) {
