@@ -120,6 +120,7 @@ function DataSceneComponent({
           [uiStyles.blur]: cursorBottom,
         })}
       />
+
       <MobileOnly>
         <MenuFooter
           activeOption={activeOption}
@@ -128,6 +129,7 @@ function DataSceneComponent({
         />
         <MenuSettings activeOption={activeOption} openedModal={openedModal} />
       </MobileOnly>
+
       <CountryLabelsLayer
         sceneMode={sceneMode}
         countryISO={countryISO}
@@ -135,13 +137,15 @@ function DataSceneComponent({
         activeLayers={activeLayers}
         isLandscapeMode={isLandscapeMode}
       />
+
       {selectedAnalysisLayer && (
         <FeatureHighlightLayer
           featureLayerSlugs={selectedAnalysisLayer.slug}
           onFeatureClick={handleHighlightLayerFeatureClick}
         />
       )}
-      {FEATURE_NEW_MENUS && (
+
+      {FEATURE_NEW_MENUS && !isMobile && (
         <SideMenu
           openedModal={openedModal}
           activeLayers={activeLayers}
@@ -150,10 +154,12 @@ function DataSceneComponent({
           blur={cursorBottom}
         />
       )}
-      {FEATURE_NEW_MENUS && (
+
+      {FEATURE_NEW_MENUS && !isMobile && (
         <GlobePageIndicator />
       )}
-      {!FEATURE_NEW_MENUS && (
+
+      {(!FEATURE_NEW_MENUS || isMobile) && (
         <Widgets
           openedModal={openedModal}
           activeLayers={activeLayers}
@@ -161,13 +167,16 @@ function DataSceneComponent({
           onboardingStep={onboardingStep}
         />
       )}
+
       <MapTooltip
         onActionButtonClick={handleTooltipActionButtonClick}
         speciesData={speciesData}
         isProtectedArea={isProtectedArea}
       />
+
       <LabelsLayer activeLayers={activeLayers} />
-      {FEATURE_NEW_MENUS && cursorBottom && (
+
+      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && (
         <GlobesMenu browsePage={browsePage} />
       )}
 
