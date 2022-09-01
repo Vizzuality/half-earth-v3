@@ -3,6 +3,11 @@
 import React from 'react';
 
 import cx from 'classnames';
+import {
+  routes, DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING,
+} from 'router';
+
+import useIsCursorBottom from 'hooks/use-cursor-bottom';
 
 import Spinner from 'components/spinner';
 
@@ -25,6 +30,14 @@ function SceneComponent({
   handleSceneClick,
   disabled,
 }) {
+  const cursorBottom = useIsCursorBottom({ });
+
+  const url = window !== undefined && window.location.pathname && window.location.pathname;
+
+  const globesMenuPages = (url === routes[FEATURED].path)
+    || (url === routes[NATIONAL_REPORT_CARD_LANDING].path)
+    || (url === routes[DATA].path);
+
   if (loadState === 'loading') {
     return (
       <>
@@ -42,6 +55,7 @@ function SceneComponent({
         className={cx(className, {
           [styles.sceneWrapper]: FEATURE_NEW_MENUS,
           [styles.sceneWrapperOLD]: !FEATURE_NEW_MENUS,
+          [styles.sceneWrapperBlur]: FEATURE_NEW_MENUS && cursorBottom && globesMenuPages,
           [styles.disabled]: disabled,
         })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}
