@@ -91,7 +91,7 @@ function DataSceneComponent({
       initialRotation
       disabled={!!onboardingType}
       className={cx({
-        [uiStyles.blurScene]: cursorBottom && !onboardingType,
+        [uiStyles.blurScene]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
       })}
     >
 
@@ -117,7 +117,7 @@ function DataSceneComponent({
         waitingInteraction={waitingInteraction}
         className={cx(styles.sidebarContainer, {
           [animationStyles.leftHidden]: sidebarHidden,
-          [uiStyles.blur]: cursorBottom && !onboardingType,
+          [uiStyles.blur]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 

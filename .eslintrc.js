@@ -60,6 +60,7 @@ module.exports = {
             pattern: 'redux_modules/**',
             group: 'builtin',
           },
+
           {
             pattern: 'selectors/**',
             group: 'builtin',
@@ -88,6 +89,11 @@ module.exports = {
           {
             pattern: 'lodash',
             group: 'builtin',
+          },
+          {
+            pattern: 'prop-types',
+            group: 'builtin',
+            position: 'after',
           },
           {
             pattern: 'reselect',

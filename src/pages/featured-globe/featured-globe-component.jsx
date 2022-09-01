@@ -92,7 +92,7 @@ function DataGlobeComponent({
         urlParamsUpdateDisabled
         initialRotation
         className={cx({
-          [uiStyles.blurScene]: cursorBottom && !selectedFeaturedPlace,
+          [uiStyles.blurScene]: cursorBottom && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
         })}
       >
         {isGlobeUpdating && <Spinner floating />}
@@ -147,7 +147,7 @@ function DataGlobeComponent({
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
             className={cx(uiStyles.uiTopLeft, {
-              [uiStyles.blur]: cursorBottom && !selectedFeaturedPlace,
+              [uiStyles.blur]: cursorBottom && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
             })}
             activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}

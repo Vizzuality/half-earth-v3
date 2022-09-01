@@ -65,7 +65,7 @@ function NrcLandingComponent({
           !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
         }
       className={cx({
-        [uiStyles.blurScene]: cursorBottom && !onboardingType,
+        [uiStyles.blurScene]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
       })}
     >
 
@@ -127,7 +127,7 @@ function NrcLandingComponent({
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
         className={cx({
-          [uiStyles.blur]: cursorBottom && !onboardingType,
+          [uiStyles.blur]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 

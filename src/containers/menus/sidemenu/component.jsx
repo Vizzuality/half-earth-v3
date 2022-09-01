@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 import { ReactComponent as HelpIcon } from 'icons/help.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
@@ -7,7 +9,6 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import useIsCursorBottom from 'hooks/use-cursor-bottom';
 
-import MinimapWidget from 'containers/menus/sidemenu/minimap-widget';
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 import HelpModal from 'containers/modals/help-modal';
 
@@ -25,14 +26,12 @@ import styles from './styles.module';
 function SideMenuComponent({
   map,
   view,
-  hideZoom = false,
-  hideMiniMap = true,
-  openedModal = null,
-  isNotMapsList = true,
-  hidden = false,
+  hideZoom,
+  isNotMapsList,
+  hidden,
   onboardingStep,
   selectedOption,
-  blur = false,
+  blur,
 }) {
   const isOnMobile = useMobile();
   const cursorBottom = useIsCursorBottom({ });
@@ -96,14 +95,6 @@ function SideMenuComponent({
         className={styles.menuBtn}
         handleClick={setShareModalOpen}
       />
-      {!hideMiniMap && (
-        <MinimapWidget
-          map={map}
-          view={view}
-          hidden={hiddenWidget}
-          openedModal={openedModal}
-        />
-      )}
       <SideMenuLanguageSwitcher />
       <ShareModal
         isOpen={isShareModalOpen}
@@ -119,5 +110,24 @@ function SideMenuComponent({
     </div>
   );
 }
+
+SideMenuComponent.propTypes = {
+  blur: PropTypes.bool,
+  hidden: PropTypes.bool,
+  hideZoom: PropTypes.bool,
+  isNotMapsList: PropTypes.bool,
+  map: PropTypes.shape.isRequired,
+  onboardingStep: PropTypes.oneOf([1, 2, 3, 4, 5]),
+  selectedOption: PropTypes.shape.isRequired,
+  view: PropTypes.shape.isRequired,
+};
+
+SideMenuComponent.defaultProps = {
+  blur: false,
+  hidden: false,
+  hideZoom: false,
+  isNotMapsList: true,
+  onboardingStep: null,
+};
 
 export default SideMenuComponent;
