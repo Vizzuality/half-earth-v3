@@ -91,7 +91,7 @@ function DataSceneComponent({
       initialRotation
       disabled={!!onboardingType}
       className={cx({
-        [uiStyles.blurScene]: cursorBottom,
+        [uiStyles.blurScene]: cursorBottom && !onboardingType,
       })}
     >
 
@@ -117,7 +117,7 @@ function DataSceneComponent({
         waitingInteraction={waitingInteraction}
         className={cx(styles.sidebarContainer, {
           [animationStyles.leftHidden]: sidebarHidden,
-          [uiStyles.blur]: cursorBottom,
+          [uiStyles.blur]: cursorBottom && !onboardingType,
         })}
       />
 
@@ -145,7 +145,7 @@ function DataSceneComponent({
         />
       )}
 
-      {FEATURE_NEW_MENUS && !isMobile && (
+      {FEATURE_NEW_MENUS && !isMobile && !onboardingType && (
         <SideMenu
           openedModal={openedModal}
           activeLayers={activeLayers}
@@ -176,7 +176,7 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={activeLayers} />
 
-      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && (
+      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && !onboardingType && (
         <GlobesMenu browsePage={browsePage} />
       )}
 

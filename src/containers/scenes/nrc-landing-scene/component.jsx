@@ -65,13 +65,18 @@ function NrcLandingComponent({
           !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
         }
       className={cx({
-        [uiStyles.blurScene]: cursorBottom,
+        [uiStyles.blurScene]: cursorBottom && !onboardingType,
       })}
     >
+
       {onboardingType && <SoundButton />}
+
       <OnboardingTooltip className={styles.onboardingTooltip} />
+
       <ArcgisLayerManager activeLayers={activeLayers} />
+
       {isGlobeUpdating && <Spinner floating />}
+
       <CountryLabelsLayer
         activeLayers={activeLayers}
         countryISO={countryISO}
@@ -79,12 +84,14 @@ function NrcLandingComponent({
         countryName={countryName}
         sceneMode={sceneMode}
       />
+
       <CountriesBordersLayer
         countryISO={countryISO}
         isLandscapeMode={isLandscapeMode}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
-      {FEATURE_NEW_MENUS && !isMobile && (
+
+      {FEATURE_NEW_MENUS && !isMobile && !onboardingType && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}
@@ -92,9 +99,11 @@ function NrcLandingComponent({
           blur={cursorBottom}
         />
       )}
+
       {FEATURE_NEW_MENUS && !isMobile && (
         <GlobePageIndicator />
       )}
+
       {!FEATURE_NEW_MENUS && (
         <Widgets
           activeLayers={activeLayers}
@@ -102,6 +111,7 @@ function NrcLandingComponent({
           onboardingStep={onboardingStep}
         />
       )}
+
       <CountryEntryTooltip
         countryISO={countryISO}
         countryName={countryName}
@@ -109,6 +119,7 @@ function NrcLandingComponent({
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
       />
+
       <NRCLandingSidebar
         activeLayers={activeLayers}
         map={map}
@@ -116,11 +127,13 @@ function NrcLandingComponent({
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
         className={cx({
-          [uiStyles.blur]: cursorBottom,
+          [uiStyles.blur]: cursorBottom && !onboardingType,
         })}
       />
+
       <LabelsLayer activeLayers={activeLayers} />
-      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && (
+
+      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && !onboardingType && (
         <GlobesMenu browsePage={browsePage} />
       )}
     </Scene>

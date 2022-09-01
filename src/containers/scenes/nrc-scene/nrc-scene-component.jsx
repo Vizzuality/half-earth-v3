@@ -79,7 +79,7 @@ function CountrySceneComponent({
 
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {FEATURE_NEW_MENUS && isVisible && !isMobile && (
+      {FEATURE_NEW_MENUS && isVisible && !isMobile && !onboardingType && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}
