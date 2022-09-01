@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import loadable from '@loadable/component';
 
 import cx from 'classnames';
+
+import useIsCursorBottom from 'hooks/use-cursor-bottom';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
@@ -63,6 +65,7 @@ function DataSceneComponent({
   browsePage,
 }) {
   const isMobile = useMobile();
+  const cursorBottom = useIsCursorBottom();
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const isProtectedArea = selectedAnalysisLayer
   && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
@@ -77,22 +80,6 @@ function DataSceneComponent({
     }),
     [isMobile, onboardingType],
   );
-
-  const [cursorBottom, setCursorBottom] = useState(false);
-  console.log({ cursorBottom });
-
-  useEffect(() => {
-    const windowHeight = window.innerHeight;
-    document.addEventListener('mousemove', (event) => {
-      const mouseYPosition = event.clientY;
-      if ((windowHeight - mouseYPosition) < 50) {
-        setCursorBottom(true);
-      }
-      if ((windowHeight - mouseYPosition) > 50) {
-        setCursorBottom(false);
-      }
-    });
-  }, [document]);
 
   return (
     <Scene
