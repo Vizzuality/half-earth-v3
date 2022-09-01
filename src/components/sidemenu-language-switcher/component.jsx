@@ -49,6 +49,7 @@ function SideMenuLanguageSwitcher(props) {
       >
         {languageOptions.map(({ code }) => (
           <button
+            key={code}
             type="button"
             onClick={() => {
               tx.setCurrentLocale(code).then(() => {

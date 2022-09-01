@@ -89,6 +89,9 @@ function DataSceneComponent({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       initialRotation
       disabled={!!onboardingType}
+      className={cx({
+        [styles.blurScene]: cursorBottom,
+      })}
     >
 
       {!!onboardingType && <SoundButton />}
@@ -113,6 +116,7 @@ function DataSceneComponent({
         waitingInteraction={waitingInteraction}
         className={cx(styles.sidebarContainer, {
           [animationStyles.leftHidden]: sidebarHidden,
+          [styles.blur]: cursorBottom,
         })}
       />
       <MobileOnly>

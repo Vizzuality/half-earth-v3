@@ -25,9 +25,10 @@ function AboutModalComponent({ handleClose, isOpen, sections }) {
                   .map(({ href, image, label }) => {
                     return (
                       label ? (
-                        <span>{label}</span>
+                        <span key={label}>{label}</span>
                       ) : (
                         <a
+                          key={label}
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"

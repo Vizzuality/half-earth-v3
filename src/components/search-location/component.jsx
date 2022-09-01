@@ -128,7 +128,7 @@ Component.propTypes = {
       slug: Proptypes.string,
       group: Proptypes.string,
     }),
-  ).isRequired,
+  ),
   dropdownOpen: Proptypes.bool,
   hasGroups: Proptypes.bool,
   selectedOption: Proptypes.shape(),
