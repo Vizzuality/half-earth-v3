@@ -27,6 +27,7 @@ import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
 import animationStyles from 'styles/common-animations.module.scss';
+import uiStyles from 'styles/ui.module';
 
 import styles from './data-scene-styles.module.scss';
 
@@ -90,7 +91,7 @@ function DataSceneComponent({
       initialRotation
       disabled={!!onboardingType}
       className={cx({
-        [styles.blurScene]: cursorBottom,
+        [uiStyles.blurScene]: cursorBottom,
       })}
     >
 
@@ -116,7 +117,7 @@ function DataSceneComponent({
         waitingInteraction={waitingInteraction}
         className={cx(styles.sidebarContainer, {
           [animationStyles.leftHidden]: sidebarHidden,
-          [styles.blur]: cursorBottom,
+          [uiStyles.blur]: cursorBottom,
         })}
       />
       <MobileOnly>

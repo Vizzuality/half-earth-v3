@@ -13,13 +13,3 @@
   padding-bottom: $site-gutter;
   padding-left: 5px;
 }
-
-.blurScene {
-  canvas {
-    filter: blur(2px);
-  }
-}
-
-.blur {
-  filter: blur(2px);
-}
