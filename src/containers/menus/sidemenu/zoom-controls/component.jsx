@@ -1,12 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import { ReactComponent as ZoomInIcon } from 'icons/zoomIn.svg';
 import { ReactComponent as ZoomOutIcon } from 'icons/zoomOut.svg';
 
 import styles from './styles.module.scss';
 
-function ZoomControlsComponent({ zoomWidget }) {
+function ZoomControls({ zoomWidget }) {
   return (
     <div className={styles.zoomComponent}>
       <button
@@ -28,4 +30,8 @@ function ZoomControlsComponent({ zoomWidget }) {
   );
 }
 
-export default ZoomControlsComponent;
+ZoomControls.propTypes = {
+  zoomWidget: PropTypes.func.isRequired,
+};
+
+export default ZoomControls;

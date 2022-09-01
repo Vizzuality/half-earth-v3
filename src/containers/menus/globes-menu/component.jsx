@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useT } from '@transifex/react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
@@ -14,8 +16,9 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './styles.module';
 
-function GlobesMenuComponent({ browsePage, landing = false }) {
+function GlobesMenu({ browsePage, landing = false }) {
   const t = useT();
+
   return (
     <motion.div
       className={cx({
@@ -58,4 +61,13 @@ function GlobesMenuComponent({ browsePage, landing = false }) {
   );
 }
 
-export default GlobesMenuComponent;
+GlobesMenu.propTypes = {
+  browsePage: PropTypes.func.isRequired,
+  landing: PropTypes.bool,
+};
+
+GlobesMenu.defaultProps = {
+  landing: false,
+};
+
+export default GlobesMenu;

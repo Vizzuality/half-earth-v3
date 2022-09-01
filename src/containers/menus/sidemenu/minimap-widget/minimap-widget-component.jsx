@@ -1,11 +1,15 @@
 import React from 'react';
-import styles from './minimap-widget.module.scss';
+
+import PropTypes from 'prop-types';
+
 import Scene from 'components/scene';
+
 import sceneSettings from './minimap-settings';
+import styles from './minimap-widget.module.scss';
 
 const { REACT_APP_MINIMAP_GLOBE_SCENE_ID: SCENE_ID } = process.env;
 
-const MinimapWidgetComponent = ({ view: globeView, handleMapLoad }) => {
+function MinimapWidget({ view: globeView, handleMapLoad }) {
   return (
     <div className={styles.wrapper}>
       <Scene
@@ -16,6 +20,11 @@ const MinimapWidgetComponent = ({ view: globeView, handleMapLoad }) => {
       />
     </div>
   );
+}
+
+MinimapWidget.propTypes = {
+  handleMapLoad: PropTypes.func.isRequired,
+  view: PropTypes.shape.isRequired,
 };
 
-export default MinimapWidgetComponent;
+export default MinimapWidget;

@@ -23,7 +23,7 @@ import uiStyles from 'styles/ui.module.scss';
 
 import styles from './styles.module';
 
-function SideMenuComponent({
+function SideMenu({
   map,
   view,
   hideZoom,
@@ -111,7 +111,7 @@ function SideMenuComponent({
   );
 }
 
-SideMenuComponent.propTypes = {
+SideMenu.propTypes = {
   blur: PropTypes.bool,
   hidden: PropTypes.bool,
   hideZoom: PropTypes.bool,
@@ -122,7 +122,7 @@ SideMenuComponent.propTypes = {
   view: PropTypes.shape.isRequired,
 };
 
-SideMenuComponent.defaultProps = {
+SideMenu.defaultProps = {
   blur: false,
   hidden: false,
   hideZoom: false,
@@ -130,4 +130,4 @@ SideMenuComponent.defaultProps = {
   onboardingStep: null,
 };
 
-export default SideMenuComponent;
+export default SideMenu;

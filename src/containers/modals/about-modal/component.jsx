@@ -1,12 +1,14 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 import { Modal } from 'he-components';
 import ReactMarkdown from 'react-markdown/with-html';
 
 import styles from './styles.module';
 
-function AboutModalComponent({ handleClose, isOpen, sections }) {
+function AboutModal({ handleClose, isOpen, sections }) {
   return (
     <Modal
       isOpen={isOpen}
@@ -58,4 +60,14 @@ function AboutModalComponent({ handleClose, isOpen, sections }) {
   );
 }
 
-export default AboutModalComponent;
+AboutModal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool,
+  sections: PropTypes.arrayOf.isRequired,
+};
+
+AboutModal.defaultProps = {
+  isOpen: false,
+};
+
+export default AboutModal;

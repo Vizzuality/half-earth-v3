@@ -11,7 +11,7 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './styles.module';
 
-function GlobePageIndicatorComponent() {
+function GlobePageIndicator() {
   const url = window !== undefined && window.location.pathname && window.location.pathname;
 
   return (
@@ -56,4 +56,4 @@ function GlobePageIndicatorComponent() {
   );
 }
 
-export default GlobePageIndicatorComponent;
+export default GlobePageIndicator;

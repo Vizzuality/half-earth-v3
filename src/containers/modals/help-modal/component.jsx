@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useT } from '@transifex/react';
 
+import PropTypes from 'prop-types';
+
 import { Modal } from 'he-components';
 import { ReactComponent as GlobeIcon } from 'icons/globe.svg';
 import { ReactComponent as LandscapeIcon } from 'icons/landscape.svg';
@@ -11,7 +13,7 @@ import { ReactComponent as ZoomMouseIcon } from 'icons/zoom_mouse.svg';
 
 import styles from './styles.module';
 
-function HelpModalComponent({ handleClose, isOpen }) {
+function HelpModal({ handleClose, isOpen }) {
   const t = useT();
   const title = t('How to navigate the map');
 
@@ -87,4 +89,13 @@ function HelpModalComponent({ handleClose, isOpen }) {
   );
 }
 
-export default HelpModalComponent;
+HelpModal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool,
+};
+
+HelpModal.defaultProps = {
+  isOpen: false,
+};
+
+export default HelpModal;
