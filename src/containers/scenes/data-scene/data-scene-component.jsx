@@ -65,7 +65,7 @@ function DataSceneComponent({
   browsePage,
 }) {
   const isMobile = useMobile();
-  const cursorBottom = useIsCursorBottom();
+  const cursorBottom = useIsCursorBottom({ });
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const isProtectedArea = selectedAnalysisLayer
   && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;

@@ -26,7 +26,7 @@ function GlobesMenuComponent({ browsePage, landing = false }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.8,
-        delay: 2,
+        delay: landing ? 2 : 0,
       }}
     >
       <Globe
