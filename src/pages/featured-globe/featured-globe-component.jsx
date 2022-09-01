@@ -2,6 +2,10 @@ import React from 'react';
 
 import loadable from '@loadable/component';
 
+import cx from 'classnames';
+
+import useIsCursorBottom from 'hooks/use-cursor-bottom';
+
 import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
@@ -10,6 +14,7 @@ import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-ma
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import LandscapeViewManager from 'containers/managers/landscape-view-manager';
 import GlobePageIndicator from 'containers/menus/globe-page-indicator';
+import GlobesMenu from 'containers/menus/globes-menu';
 import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 import Widgets from 'containers/widgets';
@@ -25,7 +30,7 @@ import Spinner from 'components/spinner';
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import uiStyles from 'styles/ui.module.scss';
+import uiStyles from 'styles/ui.module';
 
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
@@ -62,9 +67,12 @@ function DataGlobeComponent({
   mouseMoveCallbacksArray,
   activeOption,
   openedModal,
+  browsePage,
 }) {
-  const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const isOnMobile = useMobile();
+  const cursorBottom = useIsCursorBottom({ });
+
+  const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
 
   return (
@@ -83,6 +91,9 @@ function DataGlobeComponent({
         }
         urlParamsUpdateDisabled
         initialRotation
+        className={cx({
+          [uiStyles.blurScene]: cursorBottom,
+        })}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -134,7 +145,9 @@ function DataGlobeComponent({
         )}
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
-            className={uiStyles.uiTopLeft}
+            className={cx(uiStyles.uiTopLeft, {
+              [uiStyles.blur]: cursorBottom,
+            })}
             activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
@@ -190,8 +203,12 @@ function DataGlobeComponent({
             isLandscapeMode={isLandscapeMode}
           />
         )}
+        {FEATURE_NEW_MENUS && cursorBottom && (
+          <GlobesMenu browsePage={browsePage} />
+        )}
       </Scene>
       {hasMetadata && <InfoModal />}
+
     </>
   );
 }

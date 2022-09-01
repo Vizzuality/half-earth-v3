@@ -27,6 +27,7 @@ function NationalReportCardLanding({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  browsePage,
 }) {
   const [map, setMap] = useState();
   return (
@@ -55,6 +56,7 @@ function NationalReportCardLanding({
         onboardingType={onboardingType}
         onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
+        browsePage={browsePage}
       />
 
       {hasMetadata && <InfoModal />}
