@@ -32,6 +32,8 @@ function Component({
   reference,
   hasResetButton,
   handleCloseButton,
+  className = {},
+  setSearcherOpen,
 }) {
   const t = useT();
 
@@ -65,6 +67,7 @@ function Component({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
+        [className.inputContainer]: className.inputContainer,
       })}
       {...onboardingOverlay}
     >
@@ -77,7 +80,10 @@ function Component({
         onChange={handleInputChange}
       />
 
-      <IconSearch className={styles.placeholderIcon} />
+      <IconSearch className={cx(styles.placeholderIcon, {
+        [className.placeholderIcon]: className.placeholderIcon,
+      })}
+      />
       {isSearchResultVisible
         && createPortal(
           <div
@@ -96,6 +102,7 @@ function Component({
                   key={option.key}
                   onClick={() => {
                     onOptionSelection(option);
+                    setSearcherOpen(false);
                     onNextonboardingStep(option);
                   }}
                 >

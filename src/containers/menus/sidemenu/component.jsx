@@ -58,17 +58,22 @@ function SideMenuComponent({
       />
 
       {isSearcherOpen && (
-        <div className={styles.searcherContainer}>
-          <SearchLocation
-            view={view}
-            theme="dark"
-            width="full"
-            parentWidth="380px"
-            searchSourceLayerSlug={selectedOption.slug}
-            hasResetButton
-            handleCloseButton={() => setSearcherOpen(false)}
-          />
-        </div>
+      <div className={styles.searcherContainer}>
+        <SearchLocation
+          view={view}
+          theme="dark"
+          width="full"
+          parentWidth="380px"
+          searchSourceLayerSlug={selectedOption.slug}
+          hasResetButton
+          handleCloseButton={() => setSearcherOpen(false)}
+          setSearcherOpen={setSearcherOpen}
+          className={{
+            inputContainer: styles.searchLocation,
+            placeholderIcon: styles.placeholderIcon,
+          }}
+        />
+      </div>
       )}
 
       {!hideZoom && (onboardingStep === null || onboardingStep === undefined) && (

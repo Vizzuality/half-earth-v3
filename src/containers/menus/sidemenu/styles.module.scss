@@ -22,6 +22,14 @@
     background: $space-background;
     border: none;
     border-radius: 6px;
+
+    .searchLocation {
+      height: 32px;
+    }
+
+    .placeholderIcon {
+      top: 7px;
+    }
   }
 
   .menuBtn {
