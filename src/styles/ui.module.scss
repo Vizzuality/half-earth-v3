@@ -94,11 +94,11 @@ $scrollbar-width: 4px;
 }
 
 .blur {
-  filter: blur(2px);
+  filter: blur($bottom-menu-blur);
 }
 
 .blurScene {
   canvas {
-    filter: blur(2px);
+    filter: blur($bottom-menu-blur);
   }
 }

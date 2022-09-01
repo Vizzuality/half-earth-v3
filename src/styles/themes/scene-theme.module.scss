@@ -25,7 +25,7 @@
   }
   :global .esri-ui-top-right {
     top: 58px;
-    filter: blur(2px);
+    filter: blur($bottom-menu-blur);
   }
 }
 

@@ -32,5 +32,5 @@
 }
 
 .blur {
-  filter: blur(2px);
+  filter: blur($bottom-menu-blur);
 }
