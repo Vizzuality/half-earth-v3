@@ -69,11 +69,11 @@ function DataGlobeComponent({
   openedModal,
   browsePage,
 }) {
-  const isOnMobile = useMobile();
+  const isMobile = useMobile();
   const cursorBottom = useIsCursorBottom({ });
 
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isMobile;
 
   return (
     <>
@@ -87,7 +87,7 @@ function DataGlobeComponent({
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         interactionsDisabled={
-          (isMapsList || isFeaturedPlaceCard) && !isOnMobile
+          (isMapsList || isFeaturedPlaceCard) && !isMobile
         }
         urlParamsUpdateDisabled
         initialRotation
@@ -122,7 +122,7 @@ function DataGlobeComponent({
           selectedFeaturedPlace={selectedFeaturedPlace}
           isLandscapeMode={isLandscapeMode}
         />
-        {FEATURE_NEW_MENUS && (
+        {FEATURE_NEW_MENUS && !isMobile && !selectedFeaturedPlace && (
           <SideMenu
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
@@ -132,7 +132,7 @@ function DataGlobeComponent({
             blur={!selectedFeaturedPlace}
           />
         )}
-        {FEATURE_NEW_MENUS && !selectedFeaturedPlace && (
+        {FEATURE_NEW_MENUS && !selectedFeaturedPlace && !isMobile && (
           <GlobePageIndicator />
         )}
         {!FEATURE_NEW_MENUS && (
@@ -204,7 +204,7 @@ function DataGlobeComponent({
             isLandscapeMode={isLandscapeMode}
           />
         )}
-        {FEATURE_NEW_MENUS && cursorBottom && !selectedFeaturedPlace && (
+        {FEATURE_NEW_MENUS && cursorBottom && !selectedFeaturedPlace && !isMobile && (
           <GlobesMenu browsePage={browsePage} />
         )}
       </Scene>

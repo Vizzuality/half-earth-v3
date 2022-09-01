@@ -15,6 +15,7 @@ import Scene from 'components/scene';
 
 import { AREA_TYPES } from 'constants/aois';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+import { useMobile } from 'constants/responsive';
 
 const {
   REACT_APP_ARGISJS_API_VERSION: API_VERSION,
@@ -34,12 +35,15 @@ function AoiSceneComponent({
   setTooltipInfo,
   areaTypeSelected,
 }) {
+  const isMobile = useMobile();
+
   const updatedActiveLayers = useMemo(
     () => (areaTypeSelected === AREA_TYPES.futurePlaces
       ? activeLayers
       : activeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER)),
     [activeLayers, areaTypeSelected],
   );
+
   return (
     <Scene
       sceneName="aoi-scene"
@@ -54,7 +58,7 @@ function AoiSceneComponent({
         onFeatureClick={handleFuturePlaceClick}
       />
       <LocalSceneViewManager localGeometry={geometry} />
-      {FEATURE_NEW_MENUS && (
+      {FEATURE_NEW_MENUS && !isMobile && (
         <SideMenu activeLayers={updatedActiveLayers} />
       )}
       {!FEATURE_NEW_MENUS && (

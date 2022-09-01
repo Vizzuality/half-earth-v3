@@ -20,6 +20,7 @@ import Widgets from 'containers/widgets';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
 
+import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import uiStyles from 'styles/ui.module';
@@ -50,7 +51,9 @@ function NrcLandingComponent({
   waitingInteraction,
   browsePage,
 }) {
+  const isMobile = useMobile();
   const cursorBottom = useIsCursorBottom({ });
+
   return (
     <Scene
       sceneName="nrc-landing-scene"
@@ -81,7 +84,7 @@ function NrcLandingComponent({
         isLandscapeMode={isLandscapeMode}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
-      {FEATURE_NEW_MENUS && (
+      {FEATURE_NEW_MENUS && !isMobile && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}
@@ -89,7 +92,7 @@ function NrcLandingComponent({
           blur={cursorBottom}
         />
       )}
-      {FEATURE_NEW_MENUS && (
+      {FEATURE_NEW_MENUS && !isMobile && (
         <GlobePageIndicator />
       )}
       {!FEATURE_NEW_MENUS && (
@@ -117,7 +120,7 @@ function NrcLandingComponent({
         })}
       />
       <LabelsLayer activeLayers={activeLayers} />
-      {FEATURE_NEW_MENUS && cursorBottom && (
+      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && (
         <GlobesMenu browsePage={browsePage} />
       )}
     </Scene>
