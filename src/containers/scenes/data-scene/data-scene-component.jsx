@@ -147,6 +147,7 @@ function DataSceneComponent({
           activeLayers={activeLayers}
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
+          blur={cursorBottom}
         />
       )}
       {FEATURE_NEW_MENUS && (

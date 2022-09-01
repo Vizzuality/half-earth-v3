@@ -92,7 +92,7 @@ function DataGlobeComponent({
         urlParamsUpdateDisabled
         initialRotation
         className={cx({
-          [uiStyles.blurScene]: cursorBottom,
+          [uiStyles.blurScene]: cursorBottom && !selectedFeaturedPlace,
         })}
       >
         {isGlobeUpdating && <Spinner floating />}
@@ -129,9 +129,10 @@ function DataGlobeComponent({
             hidden={esriWidgetsHidden}
             openedModal={openedModal}
             disableSettings
+            blur={!selectedFeaturedPlace}
           />
         )}
-        {FEATURE_NEW_MENUS && (
+        {FEATURE_NEW_MENUS && !selectedFeaturedPlace && (
           <GlobePageIndicator />
         )}
         {!FEATURE_NEW_MENUS && (
@@ -146,7 +147,7 @@ function DataGlobeComponent({
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
             className={cx(uiStyles.uiTopLeft, {
-              [uiStyles.blur]: cursorBottom,
+              [uiStyles.blur]: cursorBottom && !selectedFeaturedPlace,
             })}
             activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
@@ -203,7 +204,7 @@ function DataGlobeComponent({
             isLandscapeMode={isLandscapeMode}
           />
         )}
-        {FEATURE_NEW_MENUS && cursorBottom && (
+        {FEATURE_NEW_MENUS && cursorBottom && !selectedFeaturedPlace && (
           <GlobesMenu browsePage={browsePage} />
         )}
       </Scene>

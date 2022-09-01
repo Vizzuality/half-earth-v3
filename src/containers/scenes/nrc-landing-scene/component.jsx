@@ -86,6 +86,7 @@ function NrcLandingComponent({
           activeLayers={activeLayers}
           openedModal={openedModal}
           onboardingStep={onboardingStep}
+          blur={cursorBottom}
         />
       )}
       {FEATURE_NEW_MENUS && (
