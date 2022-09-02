@@ -1,3 +1,6 @@
-import Component from './component';
+import { connect } from 'react-redux';
 
-export default Component;
+import Component from './component';
+import mapStateToProps from './selectors';
+
+export default connect(mapStateToProps, null)(Component);

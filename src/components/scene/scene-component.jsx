@@ -3,9 +3,6 @@
 import React from 'react';
 
 import cx from 'classnames';
-import {
-  routes, DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING,
-} from 'router';
 
 import useIsCursorBottom from 'hooks/use-cursor-bottom';
 

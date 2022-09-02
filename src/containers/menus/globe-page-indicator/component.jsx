@@ -11,15 +11,13 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './styles.module';
 
-function GlobePageIndicator() {
-  const url = window !== undefined && window.location.pathname && window.location.pathname;
-
+function GlobePageIndicator({ pathname }) {
   return (
     <div className={styles.container}>
       <div
         className={cx({
-          [styles.globeHighlight]: url === routes[FEATURED].path,
-          [styles.globeHidden]: url !== routes[FEATURED].path,
+          [styles.globeHighlight]: pathname === routes[FEATURED].path,
+          [styles.globeHidden]: pathname !== routes[FEATURED].path,
         })}
       >
         <img
@@ -30,8 +28,8 @@ function GlobePageIndicator() {
       </div>
       <div
         className={cx({
-          [styles.globeHighlight]: url === routes[DATA].path,
-          [styles.globeHidden]: url !== routes[DATA].path,
+          [styles.globeHighlight]: pathname === routes[DATA].path,
+          [styles.globeHidden]: pathname !== routes[DATA].path,
         })}
       >
         <img
@@ -42,8 +40,8 @@ function GlobePageIndicator() {
       </div>
       <div
         className={cx({
-          [styles.globeHighlight]: url === routes[NATIONAL_REPORT_CARD_LANDING].path,
-          [styles.globeHidden]: url !== routes[NATIONAL_REPORT_CARD_LANDING].path,
+          [styles.globeHighlight]: pathname === routes[NATIONAL_REPORT_CARD_LANDING].path,
+          [styles.globeHidden]: pathname !== routes[NATIONAL_REPORT_CARD_LANDING].path,
         })}
       >
         <img
