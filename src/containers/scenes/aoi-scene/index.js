@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import aoisActions from 'redux_modules/aois';
+import aoisGeometriesActions from 'redux_modules/aois-geometries';
+
+import { loadModules } from 'esri-loader';
+
 import { useT } from '@transifex/react';
 
-import { connect } from 'react-redux';
-import orderBy from 'lodash/orderBy';
-import isEmpty from 'lodash/isEmpty';
-import { loadModules } from 'esri-loader';
-import aoisGeometriesActions from 'redux_modules/aois-geometries';
-import { setPrecalculatedAOIs, recoverOrCreateNotPrecalculatedAoi } from './aoi-scene-utils';
-
-// actions
-import aoisActions from 'redux_modules/aois';
 import * as urlActions from 'actions/url-actions';
 
-// utils
 import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
-import { layersConfig } from 'constants/mol-layers-configs';
-import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-import { AREA_TYPES } from 'constants/aois';
+import isEmpty from 'lodash/isEmpty';
+import orderBy from 'lodash/orderBy';
 
-// local
+import { AREA_TYPES } from 'constants/aois';
+import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { layersConfig } from 'constants/mol-layers-configs';
+
+import { setPrecalculatedAOIs, recoverOrCreateNotPrecalculatedAoi } from './aoi-scene-utils';
 import Component from './component.jsx';
 import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 
 const {
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL
+  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
 } = process.env;
 
 // Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
   const {
-    changeGlobe, aoiId, aoiStoredGeometry, activeLayers, precalculatedLayerSlug, setAreaTypeSelected, areaTypeSelected, objectId,
+    changeGlobe,
+    aoiId,
+    aoiStoredGeometry,
+    activeLayers,
+    precalculatedLayerSlug,
+    setAreaTypeSelected,
+    areaTypeSelected,
+    objectId,
   } = props;
 
   const t = useT();
@@ -48,7 +54,6 @@ function AOIScene(props) {
   const [loaded, setLoaded] = useState(false);
 
   const [tooltipInfo, setTooltipInfo] = useState(null);
-
 
   const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
@@ -72,7 +77,17 @@ function AOIScene(props) {
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
       setPrecalculatedAOIs({
-        areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t,
+        areaTypeSelected,
+        precalculatedLayerSlug,
+        aoiId,
+        objectId,
+        setGeometry,
+        setContextualData,
+        setTaxaData,
+        setSpeciesData,
+        getAreaType,
+        changeGlobe,
+        t,
       });
     }
   }, [precalculatedLayerSlug, geometryEngine, objectId]);
@@ -81,7 +96,17 @@ function AOIScene(props) {
   useEffect(() => {
     if (aoiId && geometryEngine && jsonUtils && !precalculatedLayerSlug) {
       recoverOrCreateNotPrecalculatedAoi({
-        aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t,
+        aoiStoredGeometry,
+        geometryEngine,
+        aoiId,
+        jsonUtils,
+        setContextualData,
+        setGeometry,
+        setStoredArea,
+        setTaxaData,
+        setSpeciesData,
+        setAreaTypeSelected,
+        t,
       });
     }
   }, [aoiId, geometryEngine, jsonUtils]);
@@ -93,7 +118,10 @@ function AOIScene(props) {
 
   // Reconcile all data until completely loaded
   useEffect(() => {
-    const hasAllData = speciesData && contextualData && !isEmpty(contextualData) && (!contextualData.isCustom || contextualData.protectedAreasList);
+    const hasAllData = speciesData
+      && contextualData
+        && !isEmpty(contextualData)
+          && (!contextualData.isCustom || contextualData.protectedAreasList);
     if (!precalculatedLayerSlug && hasAllData) {
       const updatedStoredArea = (speciesData.species && speciesData.species.length > 0) ? {
         ...storedArea,
@@ -137,6 +165,7 @@ function AOIScene(props) {
       dataLoaded={loaded}
       tooltipInfo={tooltipInfo}
       setTooltipInfo={setTooltipInfo}
+      aoiId={aoiId}
       {...props}
     />
   );

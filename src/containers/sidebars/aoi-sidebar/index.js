@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import { DATA } from 'router';
+
 import { useLocale } from '@transifex/react';
 
-import { percentageFormat, getLocaleNumber } from 'utils/data-formatting-utils';
-import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
-import Component from './aoi-sidebar-component';
-import * as urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
+import * as urlActions from 'actions/url-actions';
+
+import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
+import { percentageFormat, getLocaleNumber } from 'utils/data-formatting-utils';
 import { postAoiToDataBase } from 'utils/geo-processing-services';
+
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
-import { DATA } from 'router';
+
+import Component from './aoi-sidebar-component';
 
 const actions = { ...urlActions, ...aoiAnalyticsActions };
 

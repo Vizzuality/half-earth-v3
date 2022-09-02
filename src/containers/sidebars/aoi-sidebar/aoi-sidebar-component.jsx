@@ -69,6 +69,8 @@ function AOISidebarComponent({
   setShareModalOpen,
   dataLoaded,
   browsePage,
+  changeUI,
+  aoiId,
 }) {
   const sidebarTabs = getSidebarTabs();
   const t = useT();
@@ -107,7 +109,11 @@ function AOISidebarComponent({
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
   const handleOnTabClick = useMemo(() => {
-    return sidebarTabActive === sidebarTabs[0].slug ? browsePage({ type: DATA }) : () => {};
+    if (sidebarTabActive === sidebarTabs[0].slug) {
+      browsePage({ type: DATA });
+      changeUI({ aoiId });
+    }
+    return () => {};
   }, [sidebarTabActive]);
 
   if (FEATURE_NEW_MENUS) {

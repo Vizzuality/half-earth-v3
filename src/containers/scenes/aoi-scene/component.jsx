@@ -23,6 +23,7 @@ const {
 } = process.env;
 
 function AoiSceneComponent({
+  aoiId,
   geometry,
   onMapLoad,
   speciesData,
@@ -72,6 +73,7 @@ function AoiSceneComponent({
         contextualData={contextualData}
         geometry={geometry}
         dataLoaded={dataLoaded}
+        aoiId={aoiId}
       />
       <AOIEntryTooltip
         tooltipInfo={tooltipInfo}

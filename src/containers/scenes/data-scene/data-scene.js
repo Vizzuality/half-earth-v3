@@ -29,7 +29,11 @@ const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
-    activeLayers, setBatchTooltipData, browsePage, precomputedAoiAnalytics, mapTooltipData,
+    mapTooltipData,
+    activeLayers,
+    setBatchTooltipData,
+    browsePage,
+    precomputedAoiAnalytics,
   } = props;
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
@@ -60,7 +64,8 @@ function Container(props) {
         if (selectedAnalysisLayer.slug !== ADMIN_AREAS_FEATURE_LAYER) {
           return selectedAnalysisLayer.slug;
         }
-        return attributes.GID_1 ? GADM_1_ADMIN_AREAS_FEATURE_LAYER : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+        return attributes.GID_1
+          ? GADM_1_ADMIN_AREAS_FEATURE_LAYER : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
       };
 
       setBatchTooltipData({
