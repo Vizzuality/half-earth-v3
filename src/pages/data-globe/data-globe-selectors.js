@@ -54,6 +54,7 @@ export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, 
 export const getOnboardingType = createSelector(getUiSettings, (uiSettings) => uiSettings.onboardingType);
 export const getOnboardingStep = createSelector(getUiSettings, (uiSettings) => uiSettings.onboardingStep);
 export const getOnWaitingInteraction = createSelector(getUiSettings, (uiSettings) => uiSettings.waitingInteraction);
+export const getAOIId = createSelector(getUiSettings, (uiSettings) => uiSettings.aoiId);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -81,4 +82,5 @@ export default createStructuredSelector({
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
+  aoiId: getAOIId,
 });

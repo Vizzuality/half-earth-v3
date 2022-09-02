@@ -31,6 +31,7 @@ function DataGlobalSidebarComponent({
   onboardingType,
   waitingInteraction,
   sidebarTabActive,
+  aoiId,
 }) {
   const sidebarTabs = getSidebarTabs();
   if (FEATURE_NEW_MENUS) {
@@ -38,6 +39,7 @@ function DataGlobalSidebarComponent({
       <div className={cx(styles.container, className)}>
         <TabsSidebar
           activeLayers={activeLayers}
+          aoiId={aoiId}
           view={view}
         />
         <div

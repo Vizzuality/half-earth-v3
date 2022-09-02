@@ -11,14 +11,15 @@ import { BASE_LAYERS, getSidebarTabs } from 'constants/aois';
 import styles from './styles.module.scss';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
-// import { ReactComponent as AnalyzeAreasSelectedIcon } from 'icons/analyze_areas_selected.svg';
+import { ReactComponent as AnalyzeAreasSelectedIcon } from 'icons/analyze_areas_selected.svg';
 import { ReactComponent as MapLayersIcon } from 'icons/map_layers.svg';
 
 import mapStateToProps from './selectors';
 
 function TabsSidebarComponent({
-  className,
+  aoiId,
   activeLayers,
+  className,
   saveSidebarTab,
   sidebarTabActive,
   onTabClick = () => {},
@@ -77,22 +78,28 @@ function TabsSidebarComponent({
                   }}
                 >
                   <div className={styles.titleContainer}>
+
                     {mapLayersCounterIsActive(slug) && (
-                    <div className={styles.layersIndicator}>
-                      {categoryActiveLayersCounter}
-                    </div>
+                      <div className={styles.layersIndicator}>
+                        {categoryActiveLayersCounter}
+                      </div>
                     )}
+
                     {displayMapLayersIcon(slug) && (
                       <MapLayersIcon className={styles.tabIcon} />
                     )}
-                    {displayAnalyzeAreasIcon(slug) && (
+
+                    {displayAnalyzeAreasIcon(slug) && !aoiId && (
                       <AnalyzeAreasIcon className={styles.tabIcon} />
-                      // TODO: Set indicator when some aoi is selected and user is on map-layers
-                      // <div className={styles.analyzeAreaSelectedIconContainer}>
-                      //   <AnalyzeAreasSelectedIcon className={styles.tabIcon} />
-                      //   <div className={styles.aoiIndicator} />
-                      // </div>
                     )}
+
+                    {displayAnalyzeAreasIcon(slug) && aoiId && (
+                      <div className={styles.analyzeAreaSelectedIconContainer}>
+                        <AnalyzeAreasSelectedIcon className={styles.tabIcon} />
+                        <div className={styles.aoiIndicator} />
+                      </div>
+                    )}
+
                     {title}
                   </div>
                 </motion.div>

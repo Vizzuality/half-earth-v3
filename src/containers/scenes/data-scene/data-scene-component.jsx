@@ -62,6 +62,7 @@ function DataSceneComponent({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  aoiId,
   speciesData,
   browsePage,
 }) {
@@ -122,6 +123,7 @@ function DataSceneComponent({
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
+        aoiId={aoiId}
         className={cx({
           [styles.sidebarContainer]: FEATURE_NEW_MENUS,
           [styles.sidebarContainerOLD]: !FEATURE_NEW_MENUS,
