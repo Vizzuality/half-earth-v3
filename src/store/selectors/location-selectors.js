@@ -3,4 +3,6 @@ export const selectGlobeUrlState = ({ location }) => location.query && (location
 export const selectUiUrlState = ({ location }) => location.query && (location.query.ui || {});
 export const selectLangUrlState = ({ location }) => location.query && (location.query.lang || 'en');
 // for map iframe and post robot
-export const selectListenersState = ({ location }) => location.query && (location.query.listeners || false);
+export const selectListenersState = ({ location }) => location.query
+&& (location.query.listeners || false);
+export const selectPathname = ({ location }) => location.pathname || null;

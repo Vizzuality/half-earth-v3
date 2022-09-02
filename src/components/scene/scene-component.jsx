@@ -29,14 +29,9 @@ function SceneComponent({
   interactionsDisabled = false,
   handleSceneClick,
   disabled,
+  isGlobesMenuPages,
 }) {
   const cursorBottom = useIsCursorBottom({ });
-
-  const url = window !== undefined && window.location.pathname && window.location.pathname;
-
-  const globesMenuPages = (url === routes[FEATURED].path)
-    || (url === routes[NATIONAL_REPORT_CARD_LANDING].path)
-    || (url === routes[DATA].path);
 
   if (loadState === 'loading') {
     return (
@@ -55,7 +50,7 @@ function SceneComponent({
         className={cx(className, {
           [styles.sceneWrapper]: FEATURE_NEW_MENUS,
           [styles.sceneWrapperOLD]: !FEATURE_NEW_MENUS,
-          [styles.sceneWrapperBlur]: FEATURE_NEW_MENUS && cursorBottom && globesMenuPages,
+          [styles.sceneWrapperBlur]: FEATURE_NEW_MENUS && cursorBottom && isGlobesMenuPages,
           [styles.disabled]: disabled,
         })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}
