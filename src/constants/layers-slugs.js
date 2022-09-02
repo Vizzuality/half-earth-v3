@@ -155,6 +155,7 @@ export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
 export const SPECIES_LIST = 'species-list';
 export const MARINE_SPECIES_LIST = 'marine-species-list';
 // AOIs precalculated layers
+export const ADMIN_AREAS_FEATURE_LAYER = 'admin_areas_feature_layer';
 export const GADM_0_ADMIN_AREAS_FEATURE_LAYER = 'gadm-0-admin-areas-feature-layer';
 export const GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-0-admin-areas-with-wdpas-feature-layer';
 export const GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-1-admin-areas-with-wdpas-feature-layer';

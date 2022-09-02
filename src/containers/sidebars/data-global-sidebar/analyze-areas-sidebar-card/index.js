@@ -5,7 +5,14 @@ import { connect } from 'react-redux';
 // constants
 import { getPrecalculatedAOIOptions, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import {
-  PROTECTED_AREAS_VECTOR_TILE_LAYER, COMMUNITY_AREAS_VECTOR_TILE_LAYER, GADM_1_ADMIN_AREAS_FEATURE_LAYER, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
+  COMMUNITY_AREAS_VECTOR_TILE_LAYER,
+  ADMIN_AREAS_FEATURE_LAYER,
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_LAYER,
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
 import { AREA_TYPES } from 'constants/aois.js';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
@@ -180,6 +187,9 @@ function AnalyzeAreasContainer(props) {
   const handleOptionSelection = (option) => {
     // eslint-disable-next-line default-case
     switch (option.slug) {
+      case ADMIN_AREAS_FEATURE_LAYER:
+        setAreaTypeSelected(AREA_TYPES.administrative);
+        break;
       case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
         setAreaTypeSelected(AREA_TYPES.subnational);
         break;

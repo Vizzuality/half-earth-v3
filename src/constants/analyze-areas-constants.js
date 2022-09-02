@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   AOIS_HISTORIC_PRODUCTION,
@@ -17,6 +18,11 @@ import {
 import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
 import { percentageFormat } from 'utils/data-formatting-utils';
 
+const {
+  REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI,
+  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL
+} = process.env;
+
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
 export const MARINE_HUMAN_PRESSURES_SLUG = 'marine-human-pressures';
 export const BIODIVERSITY_SLUG = 'biodiversity';
@@ -33,6 +39,7 @@ export const AOI_LEGEND_CATEGORIES = [
 ];
 
 const SEARCH_SOURCES = {
+  ADMINISTRATIVE_BOUNDARIES: ADMIN_AREAS_FEATURE_LAYER,
   NATIONAL_BOUNDARIES: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   SUBNATIONAL_BOUNDARIES: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   PROTECTED_AREAS: WDPA_OECM_FEATURE_LAYER,
@@ -41,14 +48,18 @@ const SEARCH_SOURCES = {
 };
 
 export const {
-  NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS, FUTURE_PLACES,
+  ADMINISTRATIVE_BOUNDARIES, NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS, FUTURE_PLACES,
 } = SEARCH_SOURCES;
 
-export const DEFAULT_SOURCE = NATIONAL_BOUNDARIES;
+export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
 
-const { REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI } = process.env;
 
-export const getPrecalculatedAOIOptions = () => [
+export const getPrecalculatedAOIOptions = () => FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
+  { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
+  { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
+  ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth Future') },
+] : [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
@@ -106,6 +117,10 @@ export const getSpeciesFilters = () => [
 ];
 
 export const PRECALCULATED_LAYERS_CONFIG = {
+  [ADMIN_AREAS_FEATURE_LAYER]: {
+    name: 'NAME_1',
+    subtitle: 'GID_0',
+  },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     name: 'NAME_0',
   },

@@ -10,14 +10,22 @@ import urlActions from 'actions/url-actions';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 import mapStateToProps from 'selectors/map-tooltip-selectors';
-import { HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs';
+import {
+  HALF_EARTH_FUTURE_TILE_LAYER,
+  SPECIFIC_REGIONS_TILE_LAYER,
+  ADMIN_AREAS_FEATURE_LAYER,
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+ } from 'constants/layers-slugs';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
-    activeLayers, setBatchTooltipData, browsePage, mapTooltipContent, precomputedAoiAnalytics,
+    activeLayers, setBatchTooltipData, browsePage, precomputedAoiAnalytics, mapTooltipData
   } = props;
+  const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
+  console.log('da', mapTooltipData)
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const locale = useLocale();
@@ -42,10 +50,17 @@ function Container(props) {
         customId = `region-${attributes.region}`;
       }
 
+      const getPrecalculatedLayer = (attributes) => {
+        if (selectedAnalysisLayer.slug !== ADMIN_AREAS_FEATURE_LAYER) {
+          return selectedAnalysisLayer.slug;
+        }
+        return !!attributes.GID_1 ? GADM_1_ADMIN_AREAS_FEATURE_LAYER : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+      };
 
       setBatchTooltipData({
         isVisible: true,
         geometry,
+        precalculatedLayer: getPrecalculatedLayer(attributes),
         content: {
           buttonText: t('analyze area'),
           id: customId || attributes[id],
@@ -65,8 +80,10 @@ function Container(props) {
   };
 
   const handleTooltipActionButtonClick = () => {
-    precomputedAoiAnalytics(mapTooltipContent.title);
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer: selectedAnalysisLayer.slug, OBJECTID: mapTooltipContent.objectId } });
+    const { title } = mapTooltipContent;
+    precomputedAoiAnalytics(title);
+
+    browsePage({ type: AREA_OF_INTEREST, payload: { id: mapTooltipContent.id }, query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId } });
   };
 
   useEffect(() => {
