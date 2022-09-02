@@ -26,6 +26,10 @@ import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 
+const {
+  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL
+} = process.env;
+
 // Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
   const {
@@ -45,14 +49,15 @@ function AOIScene(props) {
 
   const [tooltipInfo, setTooltipInfo] = useState(null);
 
-  const setAreaType = (attributes) => {
+
+  const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
     if (attributes.GID_1) {
       areaType = AREA_TYPES.subnational;
     } else if (attributes.GID_0) {
       areaType = AREA_TYPES.national;
     }
-    setAreaTypeSelected(areaType);
+    !FEATURE_MERGE_NATIONAL_SUBNATIONAL && setAreaTypeSelected(areaType);
     return areaType;
   };
 
@@ -67,7 +72,7 @@ function AOIScene(props) {
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
       setPrecalculatedAOIs({
-        areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, setAreaType, changeGlobe, t,
+        areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t,
       });
     }
   }, [precalculatedLayerSlug, geometryEngine, objectId]);

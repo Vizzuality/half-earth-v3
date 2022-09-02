@@ -64,7 +64,7 @@ function DataSceneComponent({
   waitingInteraction,
   speciesData,
   browsePage,
-}) {
+}) => {
   const isMobile = useMobile();
   const cursorBottom = useIsCursorBottom({ });
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
