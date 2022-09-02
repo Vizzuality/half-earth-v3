@@ -4,14 +4,14 @@ import AboutModal from './about-modal';
 
 function AboutComponent({
   className,
-  // openAboutPageAnalyticsEvent,
+  openAboutPageAnalyticsEvent,
   buttonContentComponent,
 }) {
   const [isAboutPageOpened, setAboutPageOpened] = useState(false);
 
   const handleOpenAboutPage = () => {
     setAboutPageOpened(true);
-    // openAboutPageAnalyticsEvent();
+    openAboutPageAnalyticsEvent();
   };
 
   const handleCloseAboutPage = () => setAboutPageOpened(false);

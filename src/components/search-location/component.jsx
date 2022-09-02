@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
@@ -89,7 +91,8 @@ function SearchLocation({
         && createPortal(
           <div
             ref={setPopperElement}
-            style={{ ...popperStyles.popper, width: parentWidth, zIndex: 5 }}
+            style={{ ...popperStyles.popper, width: parentWidth }}
+            className={styles.searchResultsList}
             {...attributes.popper}
           >
             <ul

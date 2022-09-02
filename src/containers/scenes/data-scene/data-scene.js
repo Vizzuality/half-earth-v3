@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useLocale, useT } from '@transifex/react';
-import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
-import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
-import Component from './data-scene-component';
-// ACTIONS
-import { AREA_OF_INTEREST } from 'router';
-import urlActions from 'actions/url-actions';
-import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
+
 import mapStateToProps from 'selectors/map-tooltip-selectors';
+
+import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
+import urlActions from 'actions/url-actions';
+
+import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
+
+import { useLocale, useT } from '@transifex/react';
+
+import { AREA_OF_INTEREST } from 'router';
+
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
- } from 'constants/layers-slugs';
+} from 'constants/layers-slugs';
+import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
+
+import Component from './data-scene-component';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
-    activeLayers, setBatchTooltipData, browsePage, precomputedAoiAnalytics, mapTooltipData
+    activeLayers, setBatchTooltipData, browsePage, precomputedAoiAnalytics, mapTooltipData,
   } = props;
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
-  console.log('da', mapTooltipData)
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const locale = useLocale();
@@ -54,7 +59,7 @@ function Container(props) {
         if (selectedAnalysisLayer.slug !== ADMIN_AREAS_FEATURE_LAYER) {
           return selectedAnalysisLayer.slug;
         }
-        return !!attributes.GID_1 ? GADM_1_ADMIN_AREAS_FEATURE_LAYER : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+        return attributes.GID_1 ? GADM_1_ADMIN_AREAS_FEATURE_LAYER : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
       };
 
       setBatchTooltipData({
