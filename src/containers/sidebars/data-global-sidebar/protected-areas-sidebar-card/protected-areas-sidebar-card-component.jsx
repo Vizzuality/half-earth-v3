@@ -1,35 +1,36 @@
-// Dependencies
 import React, { useState, useMemo } from 'react';
-import cx from 'classnames';
-import { motion } from 'framer-motion';
+
 import { useT, useLocale } from '@transifex/react';
 
-// Components
-import CategoryBox from 'components/category-box';
-import LayerToggle from 'components/layer-toggle';
-import SourceAnnotation from 'components/source-annotation';
-// Constants
-import {
-  getWDPALayers,
-  getConserveNextLayers,
-} from 'constants/protected-areas';
-import {
-  PROTECTION_SLUG,
-  FUTURE_PLACES_SLUG,
-} from 'constants/analyze-areas-constants';
-// Hooks
+import cx from 'classnames';
+import { motion } from 'framer-motion';
+
 import {
   useTooltipRefs,
   getOnboardingProps,
   useOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
-// Styles
-import styles from './protected-areas-sidebar-card-styles.module.scss';
+
+import CategoryBox from 'components/category-box';
+import LayerToggle from 'components/layer-toggle';
+import SourceAnnotation from 'components/source-annotation';
+
+import {
+  PROTECTION_SLUG,
+  FUTURE_PLACES_SLUG,
+} from 'constants/analyze-areas-constants';
+import {
+  getWDPALayers,
+  getConserveNextLayers,
+} from 'constants/protected-areas';
+
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-// Assets
+
 import ProtectionThumbnail from 'images/existing-protection.png';
 
-const ProtectedAreasSidebarCardComponent = ({
+import styles from './protected-areas-sidebar-card-styles.module.scss';
+
+function ProtectedAreasSidebarCardComponent({
   map,
   source,
   activeLayers,
@@ -40,7 +41,7 @@ const ProtectedAreasSidebarCardComponent = ({
   onboardingType,
   waitingInteraction,
   changeUI,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
 
@@ -59,6 +60,7 @@ const ProtectedAreasSidebarCardComponent = ({
     section: 'protection',
     setOpen,
     onboardingStep,
+    onboardingType,
     waitingInteraction,
   });
   const {
@@ -78,7 +80,7 @@ const ProtectedAreasSidebarCardComponent = ({
     categoryTitle: t('Protection'),
     layersTitle: t('Conservation areas'),
     description: t(
-      'Global protections clasified according to their management objectives.'
+      'Global protections clasified according to their management objectives.',
     ),
   };
 
@@ -150,6 +152,6 @@ const ProtectedAreasSidebarCardComponent = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default ProtectedAreasSidebarCardComponent;

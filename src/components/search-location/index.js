@@ -19,7 +19,10 @@ import Component from './component';
 const actions = { ...mapTooltipActions, ...urlActions };
 
 function SearchLocationContainer(props) {
-  const { view, searchSourceLayerSlug, changeGlobe } = props;
+  const {
+    view, searchSourceLayerSlug, changeGlobe, simple = false,
+  } = props;
+
   const [searchResults, setSearchResults] = useState(false);
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
   const [isSearchResultVisible, setIsSearchResultsVisible] = useState(false);
@@ -45,21 +48,23 @@ function SearchLocationContainer(props) {
       title, subtitle, id, iso,
     } = tooltipConfig;
     const { geometry, attributes } = result.feature;
-    setBatchTooltipData({
-      isVisible: true,
-      geometry,
-      content: {
-        buttonText: t('analyze area'),
-        id: attributes[id],
-        title: attributes[title] || attributes.NAME_0,
-        subtitle: attributes[subtitle] || attributes.NAME_1,
-      },
-    });
+    if (!simple) {
+      setBatchTooltipData({
+        isVisible: true,
+        geometry,
+        content: {
+          buttonText: t('analyze area'),
+          id: attributes[id],
+          title: attributes[title] || attributes.NAME_0,
+          subtitle: attributes[subtitle] || attributes.NAME_1,
+        },
+      });
+    }
 
     flyToCentroid(view, geometry, 4);
 
     // National Report Card search
-    if (iso) {
+    if (iso && !simple) {
       setCountryTooltip({
         countryIso: attributes[iso],
         countryName: countryNames[attributes[title]] || attributes[title],

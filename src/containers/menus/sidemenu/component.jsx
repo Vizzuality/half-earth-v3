@@ -67,6 +67,7 @@ function SideMenu({
           hasResetButton
           handleCloseButton={() => setSearcherOpen(false)}
           setSearcherOpen={setSearcherOpen}
+          simple
           className={{
             inputContainer: styles.searchLocation,
             placeholderIcon: styles.placeholderIcon,

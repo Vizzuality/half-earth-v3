@@ -1,4 +1,5 @@
 import { useRef, useEffect, useMemo } from 'react';
+
 import uiStyles from 'styles/ui.module.scss';
 
 export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => {
@@ -45,7 +46,7 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
 };
 
 export const useOpenSection = ({
-  section, setOpen, onboardingStep, waitingInteraction,
+  section, setOpen, onboardingStep, onboardingType, waitingInteraction,
 }) => {
   const sections = {
     priority: [1, 2, 3],
@@ -61,9 +62,12 @@ export const useOpenSection = ({
   const waitingInteractionClose = waitingInteractionsClose[section];
 
   useEffect(() => {
-    if (waitingInteraction && waitingInteractionClose && waitingInteractionClose.includes(onboardingStep)) {
+    if (waitingInteraction
+      && waitingInteractionClose
+      && waitingInteractionClose.includes(onboardingStep)) {
       setOpen(false);
-    } else if (stepsToOpen.includes(onboardingStep)) {
+    } else if (stepsToOpen.includes(onboardingStep) && !!onboardingType) {
+      console.log({ stepsToOpen, onboardingStep, onboardingType });
       setOpen(true);
     }
   }, [onboardingStep, setOpen, waitingInteraction]);

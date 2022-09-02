@@ -4,17 +4,18 @@ import { usePopper } from 'react-popper';
 
 import { useT } from '@transifex/react';
 
+import Proptypes from 'prop-types';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
-import Proptypes from 'prop-types';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import styles from './styles.module.scss';
 
-function Component({
+function SearchLocation({
   width,
   theme,
   stacked,
@@ -126,30 +127,31 @@ function Component({
   );
 }
 
-export default Component;
+export default SearchLocation;
 
-Component.propTypes = {
+SearchLocation.propTypes = {
+  dropdownOpen: Proptypes.bool,
+  hasResetButton: Proptypes.bool,
+  handleCloseButton: Proptypes.func.isRequired,
+  onOptionSelection: Proptypes.func.isRequired,
   options: Proptypes.arrayOf(
     Proptypes.shape({
       label: Proptypes.string,
       slug: Proptypes.string,
       group: Proptypes.string,
     }),
-  ),
-  dropdownOpen: Proptypes.bool,
-  hasGroups: Proptypes.bool,
-  selectedOption: Proptypes.shape(),
-  onOptionSelection: Proptypes.func.isRequired,
-  width: Proptypes.oneOf(['fluid', 'full']),
+  ).isRequired,
+  reference: Proptypes.node.isRequired,
+  selectedOption: Proptypes.shape().isRequired,
+  simple: Proptypes.bool,
   theme: Proptypes.oneOf(['light', 'dark']),
-  reference: Proptypes.node,
-  hasResetButton: Proptypes.bool,
-  handleCloseButton: Proptypes.func,
+  width: Proptypes.oneOf(['fluid', 'full']),
 };
 
-Component.defaultProps = {
-  dropdownOpen: false,
+SearchLocation.defaultProps = {
   hasResetButton: false,
+  dropdownOpen: false,
+  simple: false,
   theme: 'light',
   width: 'fluid',
 };
