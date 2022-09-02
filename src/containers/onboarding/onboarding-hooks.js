@@ -67,7 +67,6 @@ export const useOpenSection = ({
       && waitingInteractionClose.includes(onboardingStep)) {
       setOpen(false);
     } else if (stepsToOpen.includes(onboardingStep) && !!onboardingType) {
-      console.log({ stepsToOpen, onboardingStep, onboardingType });
       setOpen(true);
     }
   }, [onboardingStep, setOpen, waitingInteraction]);

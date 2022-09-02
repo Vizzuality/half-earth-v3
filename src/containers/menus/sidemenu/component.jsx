@@ -19,17 +19,13 @@ import SideMenuLanguageSwitcher from 'components/sidemenu-language-switcher';
 
 import { useMobile } from 'constants/responsive';
 
-import uiStyles from 'styles/ui.module.scss';
-
 import styles from './styles.module';
 
 function SideMenu({
   map,
   view,
-  hideZoom,
   isNotMapsList,
   hidden,
-  onboardingStep,
   selectedOption,
   blur,
 }) {
@@ -41,11 +37,9 @@ function SideMenu({
   const [isHelpModalOpen, setHelpModalOpen] = useState(false);
 
   const hiddenWidget = hidden || isOnMobile;
-
   return (
     <div
       className={cx(styles.menuContainer, {
-        [uiStyles.onboardingOverlay]: typeof onboardingStep === 'number',
         [styles.blur]: blur && cursorBottom,
       })}
     >
@@ -76,14 +70,13 @@ function SideMenu({
       </div>
       )}
 
-      {!hideZoom && (onboardingStep === null || onboardingStep === undefined) && (
-        <ZoomControls
-          map={map}
-          view={view}
-          isNotMapsList={isNotMapsList}
-          hidden={hiddenWidget}
-        />
-      )}
+      <ZoomControls
+        map={map}
+        view={view}
+        isNotMapsList={isNotMapsList}
+        hidden={hiddenWidget}
+      />
+
       <Button
         Icon={HelpIcon}
         type="icon-square"
@@ -115,10 +108,8 @@ function SideMenu({
 SideMenu.propTypes = {
   blur: PropTypes.bool,
   hidden: PropTypes.bool,
-  hideZoom: PropTypes.bool,
   isNotMapsList: PropTypes.bool,
   map: PropTypes.shape.isRequired,
-  onboardingStep: PropTypes.oneOf([1, 2, 3, 4, 5]),
   selectedOption: PropTypes.shape.isRequired,
   view: PropTypes.shape.isRequired,
 };
@@ -126,9 +117,7 @@ SideMenu.propTypes = {
 SideMenu.defaultProps = {
   blur: false,
   hidden: false,
-  hideZoom: false,
   isNotMapsList: true,
-  onboardingStep: null,
 };
 
 export default SideMenu;
