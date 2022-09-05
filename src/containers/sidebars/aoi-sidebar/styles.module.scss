@@ -229,3 +229,8 @@ $sidebar-content-top: 180px;
     }
   }
 }
+
+.mapLayersContainer {
+  @extend %verticalScrollbar;
+  height: 100%;
+}

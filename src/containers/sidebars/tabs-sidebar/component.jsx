@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import cx from 'classnames';
@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
-import { BASE_LAYERS, getSidebarTabs } from 'constants/aois';
+import { getSidebarTabs } from 'constants/aois';
 
 import styles from './styles.module.scss';
 
@@ -18,7 +18,7 @@ import mapStateToProps from './selectors';
 
 function TabsSidebarComponent({
   aoiId,
-  activeLayers,
+  categoryActiveLayersCounter,
   className,
   saveSidebarTab,
   sidebarTabActive,
@@ -26,18 +26,11 @@ function TabsSidebarComponent({
 }) {
   const sidebarTabs = getSidebarTabs();
 
-  const categoryActiveLayersCounter = useMemo(() => {
-    return activeLayers.map((al, i) => {
-      if (!BASE_LAYERS[i]) return al;
-      return null;
-    }).filter((i) => i !== null).length;
-  }, [activeLayers]);
-
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
-  && sidebarTabActive !== slug && categoryActiveLayersCounter > 0;
+  && sidebarTabActive !== slug && categoryActiveLayersCounter.length > 0;
 
   const displayMapLayersIcon = (slug) => slug === sidebarTabs[0].slug
-  && (categoryActiveLayersCounter === 0 || sidebarTabActive === slug);
+  && (categoryActiveLayersCounter.length === 0 || sidebarTabActive === slug);
 
   const displayAnalyzeAreasIcon = (slug) => slug === sidebarTabs[1].slug;
 
@@ -81,7 +74,7 @@ function TabsSidebarComponent({
 
                     {mapLayersCounterIsActive(slug) && (
                       <div className={styles.layersIndicator}>
-                        {categoryActiveLayersCounter}
+                        {categoryActiveLayersCounter.length}
                       </div>
                     )}
 
