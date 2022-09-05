@@ -23,6 +23,7 @@ const {
 } = process.env;
 
 function AoiSceneComponent({
+  activeCategory,
   aoiId,
   geometry,
   onMapLoad,
@@ -31,10 +32,14 @@ function AoiSceneComponent({
   sceneSettings,
   contextualData,
   dataLoaded,
-  handleFuturePlaceClick,
   tooltipInfo,
   setTooltipInfo,
   areaTypeSelected,
+  handleFuturePlaceClick,
+  handleGlobeUpdating,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
 }) {
   const isMobile = useMobile();
 
@@ -68,12 +73,17 @@ function AoiSceneComponent({
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={updatedActiveLayers} />
       <AoiSidebar
+        activeCategory={activeCategory}
+        aoiId={aoiId}
         speciesData={speciesData}
         activeLayers={updatedActiveLayers}
         contextualData={contextualData}
         geometry={geometry}
         dataLoaded={dataLoaded}
-        aoiId={aoiId}
+        handleGlobeUpdating={handleGlobeUpdating}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
+        waitingInteraction={waitingInteraction}
       />
       <AOIEntryTooltip
         tooltipInfo={tooltipInfo}

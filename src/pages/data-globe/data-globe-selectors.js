@@ -6,7 +6,8 @@ import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'sel
 
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
 
-const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
+const selectBiodiversityData = ({ biodiversityData }) => biodiversityData
+&& (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => (countryExtent ? countryExtent.data : null);
 
