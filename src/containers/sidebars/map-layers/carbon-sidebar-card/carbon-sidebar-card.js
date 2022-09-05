@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import CarbonSidebarCardComponent from './carbon-sidebar-card-component';
-import metadataConfig from 'constants/metadata';
-import { CARBON_LAYER } from 'constants/layers-slugs';
-import ContentfulService from 'services/contentful';
+
+import { useLocale } from '@transifex/react';
+
+import * as urlActions from 'actions/url-actions';
+
 import { layerManagerToggle } from 'utils/layer-manager-utils';
+
+import ContentfulService from 'services/contentful';
+
+import { CARBON_LAYER } from 'constants/layers-slugs';
+import metadataConfig from 'constants/metadata';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+
+import CarbonSidebarCardComponent from './carbon-sidebar-card-component';
 import mapStateToProps from './carbon-sidebar-card-selectors';
 
 const actions = { ...metadataActions, ...urlActions };
 
 function CarbonSidebarCardContainer(props) {
   const {
-    changeGlobe,
     activeLayers,
+    changeGlobe,
+    changeUI,
   } = props;
 
   const locale = useLocale();
@@ -35,6 +42,8 @@ function CarbonSidebarCardContainer(props) {
   const handleLayerToggle = (option, category) => {
     const categoryName = LAYERS_CATEGORIES[category];
     layerManagerToggle(option.value, activeLayers, changeGlobe, categoryName);
+    const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
+    changeUI({ categoryActiveLayers: updateActiveLayers });
   };
 
   return (
