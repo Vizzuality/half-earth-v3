@@ -92,3 +92,13 @@ $scrollbar-width: 4px;
 .allowClick {
   pointer-events: auto;
 }
+
+.blur {
+  filter: blur($bottom-menu-blur);
+}
+
+.blurScene {
+  canvas {
+    filter: blur($bottom-menu-blur);
+  }
+}

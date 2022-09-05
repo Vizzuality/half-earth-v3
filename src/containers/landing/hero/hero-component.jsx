@@ -1,20 +1,19 @@
-// dependencies
+import React from 'react';
+
+import { T, useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-// assets
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
-import React from 'react';
 import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
-import { T, useT } from '@transifex/react';
-// Components
-import AudioCard from './audio-card';
-// Constants
+
 import { useMobile } from 'constants/responsive';
-// styles
+
+import AudioCard from './audio-card';
 import styles from './hero-styles.module.scss';
 
-const HeroComponent = ({ className, changeUI, browsePage }) => {
+function HeroComponent({ className, changeUI, browsePage }) {
   const isMobile = useMobile();
   const t = useT();
 
@@ -72,11 +71,11 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           >
             <AudioCard
               number="01"
-              duration={'7-8'}
+              duration="7-8"
               gif={AUDIO_CARD_1_GIF}
               title={t('Priority places')}
               description={t(
-                'Understand where the suggested priority places should happen for vertebrates.'
+                'Understand where the suggested priority places should happen for vertebrates.',
               )}
               handleClick={() => {
                 browsePage({ type: DATA });
@@ -98,11 +97,11 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
           >
             <AudioCard
               number="02"
-              duration={'10'}
+              duration="10"
               gif={AUDIO_CARD_2_GIF}
               title={t('National Report cards')}
               description={t(
-                'Analyze national and other areas of interest. Download reports to share with others.'
+                'Analyze national and other areas of interest. Download reports to share with others.',
               )}
               handleClick={() => {
                 browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
@@ -117,6 +116,6 @@ const HeroComponent = ({ className, changeUI, browsePage }) => {
       )}
     </div>
   );
-};
+}
 
 export default HeroComponent;

@@ -1,0 +1,143 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.modal {
+  width: 95% !important;
+  max-width: 95% !important;
+  height: 95% !important;
+}
+
+.modalContent {
+  padding: 0 !important;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+.closeBtn {
+  background-color: transparent;
+  border: none;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.shareContent {
+  flex: 1;
+}
+
+.modalContainer {
+  background-color: $brand-color-secondary;
+  display: flex;
+  padding: 24px;
+  width: 100%;
+
+  .wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 32px;
+    width: 100%;
+
+    .section {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-bottom: 50px;
+      width: 100%;
+
+      @media #{$tablet-portrait} {
+        width: 760px;
+      }
+    }
+
+    .title {
+      @extend %display2;
+      color: $white;
+      margin: 0;
+      margin-bottom: 34px;
+      text-shadow: 0 0 10px 0 rgba(255,255,255,0.5);
+      padding: 0 20px;
+      text-align: center;
+
+      @media #{$tablet-portrait} {
+        font-size: 24px;
+        padding: 0;
+        text-align: left;
+      }
+    }
+
+    .logosWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+
+      & > * {
+        @extend %title;
+        color: $logos-text;
+        align-items: center;
+        font-size: $font-size-sm;
+        justify-content: center;
+        display: flex;
+        margin-bottom: 20px;
+        width: 25%;
+      }
+
+      @media #{$tablet-portrait} {
+        flex-direction: row;
+      }
+    }
+
+    .description {
+      @extend %bodyText;
+      color: $white;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+
+      a {
+        color: $brand-color-main;
+        text-decoration: none;
+      }
+
+      @media #{$tablet-portrait} {
+        padding: 0;
+      }
+    }
+
+    .partners {
+      .description {
+        width: auto;
+
+        @media #{$tablet-portrait} {
+          width: 500px;
+        }
+      }
+      .logosWrapper {
+        justify-content: space-between;
+        width: 65%;
+      }
+    }
+
+    .platformPartners .logosWrapper {
+      justify-content: center;
+    }
+
+    .sponsors .title {
+      margin-bottom: 34px;
+    }
+
+    .narrow {
+      height: 70px;
+    }
+  }
+}

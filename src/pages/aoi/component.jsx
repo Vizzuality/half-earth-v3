@@ -1,22 +1,35 @@
 import React from 'react';
-import cx from 'classnames';
+
 import loadable from '@loadable/component';
-import MainMenu from "components/main-menu";
+
+import cx from 'classnames';
+
 import AreaOfInterestScene from 'scenes/aoi-scene';
+
 import HalfEarthLogo from 'components/half-earth-logo';
+import MainMenu from 'components/main-menu';
+
+import uiStyles from 'styles/ui.module.scss';
 
 import styles from './styles.module.scss';
-import uiStyles from 'styles/ui.module.scss';
-// Dynamic imports
+
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const AreaOfInterestPageComponent = ({hasMetadata}) => (
-  <>
-    <HalfEarthLogo className={cx(styles.hideOnPrint,uiStyles.halfEarthLogoTopLeft)}/>
-    <MainMenu />
-    <AreaOfInterestScene />
-    {hasMetadata && <InfoModal />}
-  </>
-);
+const {
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
+
+function AreaOfInterestPageComponent({ hasMetadata }) {
+  return (
+    <>
+      <HalfEarthLogo className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)} />
+      {!FEATURE_NEW_MENUS && (
+        <MainMenu />
+      )}
+      <AreaOfInterestScene />
+      {hasMetadata && <InfoModal />}
+    </>
+  );
+}
 
 export default AreaOfInterestPageComponent;

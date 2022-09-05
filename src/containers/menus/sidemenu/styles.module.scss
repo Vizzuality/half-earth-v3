@@ -1,0 +1,44 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.menuContainer {
+  position: absolute;
+  top: 32px;
+  right: 15px;
+
+  .searchBtn {
+    height: 32px;
+    margin-top: 5px;
+    width: 32px;
+    margin-bottom: 72px;
+  }
+
+  .searcherContainer {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    width: 380px;
+    height: 32px;
+    background: $space-background;
+    border: none;
+    border-radius: 6px;
+
+    .searchLocation {
+      height: 32px;
+    }
+
+    .placeholderIcon {
+      top: 7px;
+    }
+  }
+
+  .menuBtn {
+    height: 32px;
+    margin-top: 5px;
+    width: 32px;
+  }
+}
+
+.blur {
+  filter: blur($bottom-menu-blur);
+}

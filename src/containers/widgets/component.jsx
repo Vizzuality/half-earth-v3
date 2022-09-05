@@ -1,15 +1,15 @@
 import React from 'react';
+
 import cx from 'classnames';
-// WIDGETS
-import ZoomWidget from 'containers/widgets/zoom-widget';
+
 import MinimapWidget from 'containers/widgets/minimap-widget';
+import ZoomWidget from 'containers/widgets/zoom-widget';
 
 import { useMobile } from 'constants/responsive';
 
-// Styles
 import uiStyles from 'styles/ui.module.scss';
 
-const WidgetsComponent = ({
+function WidgetsComponent({
   map,
   view,
   hideZoom = false,
@@ -18,7 +18,7 @@ const WidgetsComponent = ({
   isNotMapsList = true,
   hidden = false,
   onboardingStep,
-}) => {
+}) {
   const isOnMobile = useMobile();
   const hiddenWidget = hidden || isOnMobile;
   return (
@@ -45,6 +45,6 @@ const WidgetsComponent = ({
       )}
     </div>
   );
-};
+}
 
 export default WidgetsComponent;

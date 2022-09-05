@@ -1,18 +1,23 @@
-// Dependencies
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback, useState } from 'react';
-import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
+import { usePopper } from 'react-popper';
+
+import { useT } from '@transifex/react';
+
+import Proptypes from 'prop-types';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import Proptypes from 'prop-types';
-import { useT } from '@transifex/react';
-// Assets
+import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
-// Styles
-import styles from './styles.module.scss';
+
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
-const Component = ({
+import styles from './styles.module.scss';
+
+function SearchLocation({
   width,
   theme,
   stacked,
@@ -28,14 +33,18 @@ const Component = ({
   waitingInteraction,
   changeUI,
   reference,
-}) => {
+  hasResetButton,
+  handleCloseButton,
+  className = {},
+  setSearcherOpen,
+}) {
   const t = useT();
 
   const [popperElement, setPopperElement] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
-    popperElement
+    popperElement,
   );
 
   const onNextonboardingStep = useCallback((countryValue) => {
@@ -61,6 +70,7 @@ const Component = ({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
+        [className.inputContainer]: className.inputContainer,
       })}
       {...onboardingOverlay}
     >
@@ -73,12 +83,16 @@ const Component = ({
         onChange={handleInputChange}
       />
 
-      {<IconSearch className={styles.placeholderIcon} />}
-      {isSearchResultVisible &&
-        createPortal(
+      <IconSearch className={cx(styles.placeholderIcon, {
+        [className.placeholderIcon]: className.placeholderIcon,
+      })}
+      />
+      {isSearchResultVisible
+        && createPortal(
           <div
             ref={setPopperElement}
             style={{ ...popperStyles.popper, width: parentWidth }}
+            className={styles.searchResultsList}
             {...attributes.popper}
           >
             <ul
@@ -92,6 +106,7 @@ const Component = ({
                   key={option.key}
                   onClick={() => {
                     onOptionSelection(option);
+                    setSearcherOpen(false);
                     onNextonboardingStep(option);
                   }}
                 >
@@ -100,32 +115,46 @@ const Component = ({
               ))}
             </ul>
           </div>,
-          document.getElementById('root')
+          // eslint-disable-next-line no-undef
+          document.getElementById('root'),
         )}
+      {hasResetButton && (
+        <button
+          type="button"
+          onClick={handleCloseButton}
+        >
+          <CloseIcon className={styles.closeButton} />
+        </button>
+      )}
     </motion.div>
   );
-};
+}
 
-export default Component;
+export default SearchLocation;
 
-Component.propTypes = {
+SearchLocation.propTypes = {
+  dropdownOpen: Proptypes.bool,
+  hasResetButton: Proptypes.bool,
+  handleCloseButton: Proptypes.func.isRequired,
+  onOptionSelection: Proptypes.func.isRequired,
   options: Proptypes.arrayOf(
     Proptypes.shape({
       label: Proptypes.string,
       slug: Proptypes.string,
       group: Proptypes.string,
-    })
-  ),
-  dropdownOpen: Proptypes.bool,
-  hasGroups: Proptypes.bool,
-  selectedOption: Proptypes.shape(),
-  onOptionSelection: Proptypes.func.isRequired,
-  width: Proptypes.oneOf(['fluid', 'full']),
+    }),
+  ).isRequired,
+  reference: Proptypes.node.isRequired,
+  selectedOption: Proptypes.shape().isRequired,
+  simple: Proptypes.bool,
   theme: Proptypes.oneOf(['light', 'dark']),
-  reference: Proptypes.node,
+  width: Proptypes.oneOf(['fluid', 'full']),
 };
 
-Component.defaultProps = {
-  width: 'fluid',
+SearchLocation.defaultProps = {
+  hasResetButton: false,
+  dropdownOpen: false,
+  simple: false,
   theme: 'light',
+  width: 'fluid',
 };

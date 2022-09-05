@@ -1,9 +1,12 @@
-import { loadModules } from 'esri-loader';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import ZoomWidgetComponent from './zoom-widget-component';
+
 import * as actions from 'actions/url-actions';
+
+import { loadModules } from 'esri-loader';
+
+import ZoomWidgetComponent from './component';
 
 function ZoomWidget(props) {
   const { view, hidden } = props;
@@ -19,6 +22,7 @@ function ZoomWidget(props) {
       setZoomWidget(zoomWidget);
       if (!hidden) {
         view.ui.add(node, 'top-right');
+        // eslint-disable-next-line react/jsx-filename-extension
         ReactDOM.render(<ZoomWidgetComponent zoomWidget={zoomWidget} />, node);
       }
     }).catch((err) => console.error(err));

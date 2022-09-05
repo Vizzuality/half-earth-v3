@@ -11,7 +11,11 @@ import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const DataGlobeComponent = ({
+const {
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
+
+function DataGlobeComponent({
   sceneMode,
   countryISO,
   countryName,
@@ -35,14 +39,16 @@ const DataGlobeComponent = ({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-}) => {
+}) {
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu
-        onboardingStep={onboardingStep}
-        onboardingType={onboardingType}
-      />
+      {!FEATURE_NEW_MENUS && (
+        <MainMenu
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
+        />
+      )}
       <DataScene
         sceneMode={sceneMode}
         countryISO={countryISO}
@@ -70,6 +76,6 @@ const DataGlobeComponent = ({
       {hasMetadata && <InfoModal />}
     </>
   );
-};
+}
 
 export default DataGlobeComponent;

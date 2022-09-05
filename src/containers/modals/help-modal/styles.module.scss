@@ -1,0 +1,120 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.modal {
+  width: 95% !important;
+  max-width: 95% !important;
+  height: 95% !important;
+}
+
+.modalContent {
+  padding: 0 !important;
+}
+
+.closeBtn {
+  background-color: transparent;
+  border: none;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.shareContent {
+  flex: 1;
+}
+
+.modalContainer {
+  background-color: $brand-color-secondary;
+  display: flex;
+  height: 100%;
+  padding: 24px;
+  width: 100%;
+  overflow: hidden;
+
+  .wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 80px;
+    padding: 32px;
+    width: 100%;
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      min-width: 500px;
+      margin-bottom: 112px;
+      .title {
+        @extend %display1;
+        color: $white;
+        font-weight: 100;
+        margin-bottom: 56px;
+      }
+
+      .mouseNavigationSection {
+        display: flex;
+        justify-content: space-between;
+
+        .mouseClickIcon {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+
+          span {
+            color: $white;
+            font-family: $font-family-1;
+            font-size: $font-size-xxs;
+            font-weight: bold;
+            letter-spacing: $letter-spacing;
+            line-height: $line-height;
+            margin-top: 20px;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+
+    .storySection {
+      display: block;
+      text-align: center;
+      width: 100%;
+
+      @media #{$tablet-portrait} {
+        width: 750px;
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+      }
+
+      .storyElement {
+        align-items: center;
+        display: flex;
+        margin-right: 70px;
+        &:last-of-type {
+          margin-right: 0;
+        }
+
+        .storyText {
+          width: 250px;
+          color: $white;
+          font-family: $font-family-1;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-light;
+          line-height: 22px;
+          margin-left: 20px;
+
+          .storyTitle {
+            font-size: $font-size-sm;
+            font-weight: $font-weight;
+            line-height: 0;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+}

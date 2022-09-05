@@ -2,6 +2,10 @@ import React from 'react';
 
 import loadable from '@loadable/component';
 
+import cx from 'classnames';
+
+import useIsCursorBottom from 'hooks/use-cursor-bottom';
+
 import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
@@ -9,6 +13,9 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import FeaturedPlaceViewManager from 'containers/managers/featured-place-view-manager';
 import GlobeEventsManager from 'containers/managers/globe-events-manager';
 import LandscapeViewManager from 'containers/managers/landscape-view-manager';
+import GlobePageIndicator from 'containers/menus/globe-page-indicator';
+import GlobesMenu from 'containers/menus/globes-menu';
+import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 import Widgets from 'containers/widgets';
 
@@ -23,21 +30,20 @@ import Spinner from 'components/spinner';
 import { ZOOM_LEVEL_TRIGGER } from 'constants/landscape-view-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
-import uiStyles from 'styles/ui.module.scss';
+import uiStyles from 'styles/ui.module';
 
 const GridLayer = loadable(() => import('components/grid-layer'));
 const LandscapeSidebar = loadable(() => import('components/landscape-sidebar'));
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const FeaturedPlaceCard = loadable(() =>
-  import('containers/sidebars/featured-place-card')
-);
-const ProtectedAreasTooltips = loadable(() =>
-  import('components/protected-areas-tooltips')
-);
+const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
+const ProtectedAreasTooltips = loadable(() => import('components/protected-areas-tooltips'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
 
-const DataGlobeComponent = ({
+function DataGlobeComponent({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
@@ -61,25 +67,33 @@ const DataGlobeComponent = ({
   mouseMoveCallbacksArray,
   activeOption,
   openedModal,
-}) => {
+  browsePage,
+}) {
+  const isMobile = useMobile();
+  const cursorBottom = useIsCursorBottom({ });
+
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
-  const isOnMobile = useMobile();
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isOnMobile;
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isMobile;
 
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      <MainMenu />
+      {!FEATURE_NEW_MENUS && (
+        <MainMenu />
+      )}
       <Scene
         sceneName="featured-scene"
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
         interactionsDisabled={
-          (isMapsList || isFeaturedPlaceCard) && !isOnMobile
+          (isMapsList || isFeaturedPlaceCard) && !isMobile
         }
         urlParamsUpdateDisabled
         initialRotation
+        className={cx({
+          [uiStyles.blurScene]: cursorBottom && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
+        })}
       >
         {isGlobeUpdating && <Spinner floating />}
         <MobileOnly>
@@ -108,16 +122,33 @@ const DataGlobeComponent = ({
           selectedFeaturedPlace={selectedFeaturedPlace}
           isLandscapeMode={isLandscapeMode}
         />
-        <Widgets
-          activeLayers={activeLayers}
-          isFullscreenActive={isFullscreenActive}
-          hidden={esriWidgetsHidden}
-          openedModal={openedModal}
-          disableSettings
-        />
+        {FEATURE_NEW_MENUS && !isMobile && !selectedFeaturedPlace && (
+          <SideMenu
+            activeLayers={activeLayers}
+            isFullscreenActive={isFullscreenActive}
+            hidden={esriWidgetsHidden}
+            openedModal={openedModal}
+            disableSettings
+            blur={!selectedFeaturedPlace}
+          />
+        )}
+        {FEATURE_NEW_MENUS && !selectedFeaturedPlace && !isMobile && (
+          <GlobePageIndicator />
+        )}
+        {!FEATURE_NEW_MENUS && (
+          <Widgets
+            activeLayers={activeLayers}
+            isFullscreenActive={isFullscreenActive}
+            hidden={esriWidgetsHidden}
+            openedModal={openedModal}
+            disableSettings
+          />
+        )}
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
-            className={uiStyles.uiTopLeft}
+            className={cx(uiStyles.uiTopLeft, {
+              [uiStyles.blur]: cursorBottom && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
+            })}
             activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
@@ -173,10 +204,14 @@ const DataGlobeComponent = ({
             isLandscapeMode={isLandscapeMode}
           />
         )}
+        {FEATURE_NEW_MENUS && cursorBottom && !selectedFeaturedPlace && !isMobile && (
+          <GlobesMenu browsePage={browsePage} />
+        )}
       </Scene>
       {hasMetadata && <InfoModal />}
+
     </>
   );
-};
+}
 
 export default DataGlobeComponent;

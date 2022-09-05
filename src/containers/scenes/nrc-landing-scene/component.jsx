@@ -1,27 +1,41 @@
-// Dependencies
 import React from 'react';
+
 import loadable from '@loadable/component';
-// Components
-import CountryEntryTooltip from 'components/country-entry-tooltip';
-import Scene from 'components/scene';
+
+import cx from 'classnames';
+
+import useIsCursorBottom from 'hooks/use-cursor-bottom';
+
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import GlobePageIndicator from 'containers/menus/globe-page-indicator';
+import GlobesMenu from 'containers/menus/globes-menu';
+import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import Widgets from 'containers/widgets';
-import OnboardingTooltip from 'containers/onboarding/tooltip';
-// Constants
+
+import CountryEntryTooltip from 'components/country-entry-tooltip';
+import Scene from 'components/scene';
+
+import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-// Styles
+
+import uiStyles from 'styles/ui.module';
+
 import styles from './nrc-landing-scene-styles.module.scss';
-// Dynamic imports
+
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
 
-const NrcLandingComponent = ({
+function NrcLandingComponent({
   map,
   sceneMode,
   onMapLoad,
@@ -35,58 +49,95 @@ const NrcLandingComponent = ({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-}) => {
+  browsePage,
+}) {
+  const isMobile = useMobile();
+  const cursorBottom = useIsCursorBottom({ });
+
   return (
-    <>
-      <Scene
-        sceneName={'nrc-landing-scene'}
-        sceneSettings={sceneSettings}
-        loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
-        onMapLoad={onMapLoad}
-        initialRotation
-        disabled={
+    <Scene
+      sceneName="nrc-landing-scene"
+      sceneSettings={sceneSettings}
+      loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
+      onMapLoad={onMapLoad}
+      initialRotation
+      disabled={
           !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
         }
-      >
-        {onboardingType && <SoundButton />}
-        <OnboardingTooltip className={styles.onboardingTooltip} />
-        <ArcgisLayerManager activeLayers={activeLayers} />
-        {isGlobeUpdating && <Spinner floating />}
-        <CountryLabelsLayer
+      className={cx({
+        [uiStyles.blurScene]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
+      })}
+    >
+
+      {onboardingType && <SoundButton />}
+
+      <OnboardingTooltip className={styles.onboardingTooltip} />
+
+      <ArcgisLayerManager activeLayers={activeLayers} />
+
+      {isGlobeUpdating && <Spinner floating />}
+
+      <CountryLabelsLayer
+        activeLayers={activeLayers}
+        countryISO={countryISO}
+        isLandscapeMode={isLandscapeMode}
+        countryName={countryName}
+        sceneMode={sceneMode}
+      />
+
+      <CountriesBordersLayer
+        countryISO={countryISO}
+        isLandscapeMode={isLandscapeMode}
+        spatialReference={LOCAL_SPATIAL_REFERENCE}
+      />
+
+      {FEATURE_NEW_MENUS && !isMobile && !onboardingType && (
+        <SideMenu
           activeLayers={activeLayers}
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          countryName={countryName}
-          sceneMode={sceneMode}
+          openedModal={openedModal}
+          onboardingStep={onboardingStep}
+          blur={cursorBottom}
         />
-        <CountriesBordersLayer
-          countryISO={countryISO}
-          isLandscapeMode={isLandscapeMode}
-          spatialReference={LOCAL_SPATIAL_REFERENCE}
-        />
+      )}
+
+      {FEATURE_NEW_MENUS && !isMobile && (
+        <GlobePageIndicator />
+      )}
+
+      {!FEATURE_NEW_MENUS && (
         <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
           onboardingStep={onboardingStep}
         />
-        <CountryEntryTooltip
-          countryISO={countryISO}
-          countryName={countryName}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-          waitingInteraction={waitingInteraction}
-        />
-        <NRCLandingSidebar
-          activeLayers={activeLayers}
-          map={map}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-          waitingInteraction={waitingInteraction}
-        />
-        <LabelsLayer activeLayers={activeLayers} />
-      </Scene>
-    </>
+      )}
+
+      <CountryEntryTooltip
+        countryISO={countryISO}
+        countryName={countryName}
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+        waitingInteraction={waitingInteraction}
+      />
+
+      <NRCLandingSidebar
+        activeLayers={activeLayers}
+        map={map}
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+        waitingInteraction={waitingInteraction}
+        className={cx({
+          [uiStyles.blur]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
+        })}
+      />
+
+      <LabelsLayer activeLayers={activeLayers} />
+
+      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && !onboardingType && (
+        <GlobesMenu browsePage={browsePage} />
+      )}
+    </Scene>
   );
-};
+}
 
 export default NrcLandingComponent;

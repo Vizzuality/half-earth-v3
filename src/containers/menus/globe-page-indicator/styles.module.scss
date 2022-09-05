@@ -1,0 +1,41 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+$container-width: 100px;
+
+.container {
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  right: calc(50% - $container-width/2);
+  height: 34px;
+  position: absolute;
+  width: $container-width;
+
+  .globeHighlight {
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid $accent-grey;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    height: 27px;
+    width: 27px;
+  }
+
+  .globeHidden {
+    align-items: center;
+    background-color: transparent;
+    border: none;;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    height: 27px;
+    width: 27px;
+  }
+
+  .globeImage {
+    height: 20px;
+    width: 20px;
+  }
+}

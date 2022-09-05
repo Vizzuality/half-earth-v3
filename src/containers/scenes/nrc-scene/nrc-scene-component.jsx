@@ -1,31 +1,35 @@
-// Dependencies
 import React from 'react';
 
-// Components
-import Scene from 'components/scene';
-import CountryEntryTooltip from 'components/country-entry-tooltip';
-import AOIEntryTooltip from 'components/aoi-entry-tooltip';
-import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
+import CountryLabelsLayer from 'containers/layers/country-labels-layer';
+import CountryMaskLayer from 'containers/layers/country-mask-layer';
+import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
+import LabelsLayer from 'containers/layers/labels-layer';
+import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
+import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
+import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
+import SideMenu from 'containers/menus/sidemenu';
+import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
-import LabelsLayer from 'containers/layers/labels-layer';
-import CountryMaskLayer from 'containers/layers/country-mask-layer';
-import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
-import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
-import CountryLabelsLayer from 'containers/layers/country-labels-layer';
-import SoundButton from 'containers/onboarding/sound-btn';
-import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
-// Constants
+
+import AOIEntryTooltip from 'components/aoi-entry-tooltip';
+import CountryEntryTooltip from 'components/country-entry-tooltip';
+import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
+import Scene from 'components/scene';
+
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs';
+import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+const {
+  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+} = process.env;
 
-const CountrySceneComponent = ({
+function CountrySceneComponent({
   onMapLoad,
   isVisible,
   countryISO,
@@ -41,10 +45,11 @@ const CountrySceneComponent = ({
   setTooltipInfo,
   onboardingType,
   countryData,
-}) => {
+}) {
+  const isMobile = useMobile();
   return (
     <Scene
-      sceneName={'nrc-scene'}
+      sceneName="nrc-scene"
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
@@ -74,7 +79,14 @@ const CountrySceneComponent = ({
 
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {isVisible && (
+      {FEATURE_NEW_MENUS && isVisible && !isMobile && !onboardingType && (
+        <SideMenu
+          activeLayers={activeLayers}
+          openedModal={openedModal}
+          isFullscreenActive={isFullscreenActive}
+        />
+      )}
+      {!FEATURE_NEW_MENUS && isVisible && (
         <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
@@ -84,6 +96,6 @@ const CountrySceneComponent = ({
       <PdfNationalReport onMapLoad={onMapLoad} countryISO={countryISO} />
     </Scene>
   );
-};
+}
 
 export default CountrySceneComponent;

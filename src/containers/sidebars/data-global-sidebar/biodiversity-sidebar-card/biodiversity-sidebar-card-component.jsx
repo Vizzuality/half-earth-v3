@@ -1,23 +1,26 @@
-// Dependencies
 import React, { useState, useMemo } from 'react';
-import { useLocale } from '@transifex/react';
+
+import { useLocale, useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import { useT } from '@transifex/react';
 
-// Components
-import Dropdown from 'components/dropdown';
+import {
+  useTooltipRefs,
+  getOnboardingProps,
+  useOpenSection,
+} from 'containers/onboarding/onboarding-hooks';
+import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
 import CategoryBox from 'components/category-box';
+import Dropdown from 'components/dropdown';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import Tabs from 'components/tabs';
-import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
-import SidebarLegend from 'containers/sidebars/sidebar-legend';
-// Constants
-import { getBiodiversityTabs } from 'constants/ui-params';
-import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
 
+import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
 import {
   getLayersToggleConfig,
   getLayersResolution,
@@ -25,19 +28,15 @@ import {
   MARINE,
   getResolutions,
 } from 'constants/biodiversity-layers-constants';
-// Hooks
-import {
-  useTooltipRefs,
-  getOnboardingProps,
-  useOpenSection,
-} from 'containers/onboarding/onboarding-hooks';
-// Styles
-import styles from './biodiversity-sidebar-card-styles.module.scss';
+import { getBiodiversityTabs } from 'constants/ui-params';
+
 import hrTheme from 'styles/themes/hr-theme.module.scss';
-// Assets
+
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
-const BiodiversitySidebarCardComponent = ({
+import styles from './biodiversity-sidebar-card-styles.module.scss';
+
+function BiodiversitySidebarCardComponent({
   activeLayers,
   countedActiveLayers,
   className,
@@ -54,7 +53,7 @@ const BiodiversitySidebarCardComponent = ({
   onboardingType,
   changeUI,
   waitingInteraction,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const biodiversityTabs = useMemo(() => getBiodiversityTabs(), [locale]);
@@ -71,18 +70,17 @@ const BiodiversitySidebarCardComponent = ({
     section: 'priority',
     setOpen,
     onboardingStep,
+    onboardingType,
     waitingInteraction,
   });
   const layerTogglesToDisplay = (category) => {
-    const resolutionsForSelectedCategory =
-      layersToggleConfig[biodiversityLayerVariant][category];
-    const layersForSelectedResolution =
-      resolutionsForSelectedCategory &&
-      resolutionsForSelectedCategory[selectedResolution[category]];
+    const resolutionsForSelectedCategory = layersToggleConfig[biodiversityLayerVariant][category];
+    const layersForSelectedResolution = resolutionsForSelectedCategory
+      && resolutionsForSelectedCategory[selectedResolution[category]];
 
     if (resolutionsForSelectedCategory && layersForSelectedResolution) {
       const layerAll = layersForSelectedResolution.filter(
-        (l) => l.name === 'All'
+        (l) => l.name === 'All',
       );
       const layersStartingWithAll = layersForSelectedResolution
         .filter((l) => l.name.startsWith('All '))
@@ -93,13 +91,12 @@ const BiodiversitySidebarCardComponent = ({
         .sort((a, b) => a.name.localeCompare(b.name));
       const allLayersAlphabetically = layerAll.concat(
         layersStartingWithAll,
-        otherLayers
+        otherLayers,
       );
 
       return allLayersAlphabetically;
-    } else {
-      return [];
     }
+    return [];
   };
 
   const tooltipRefs = useTooltipRefs({
@@ -144,7 +141,7 @@ const BiodiversitySidebarCardComponent = ({
           {
             [styles.open]: isOpen,
             [styles.onboardingMode]: firstStep,
-          }
+          },
         )}
       >
         <SidebarLegend
@@ -173,16 +170,14 @@ const BiodiversitySidebarCardComponent = ({
             {t('Terrestrial species')}
           </span>
           <Dropdown
-            theme={'dark'}
+            theme="dark"
             parentWidth="170px"
             options={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
             selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
-            handleOptionSelection={(op) =>
-              setSelectedResolution({
-                ...selectedResolution,
-                [TERRESTRIAL]: op.slug,
-              })
-            }
+            handleOptionSelection={(op) => setSelectedResolution({
+              ...selectedResolution,
+              [TERRESTRIAL]: op.slug,
+            })}
             disabled={
               layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2
             }
@@ -210,17 +205,15 @@ const BiodiversitySidebarCardComponent = ({
                 {t('Marine species')}
               </span>
               <Dropdown
-                theme={'dark'}
+                theme="dark"
                 options={layersResolution[biodiversityLayerVariant][MARINE]}
                 selectedOption={
                   layersResolution[biodiversityLayerVariant][MARINE][0]
                 }
-                handleOptionSelection={(op) =>
-                  setSelectedResolution({
-                    ...selectedResolution,
-                    [MARINE]: op.slug,
-                  })
-                }
+                handleOptionSelection={(op) => setSelectedResolution({
+                  ...selectedResolution,
+                  [MARINE]: op.slug,
+                })}
                 disabled={
                   layersResolution[biodiversityLayerVariant][MARINE].length < 2
                 }
@@ -250,6 +243,6 @@ const BiodiversitySidebarCardComponent = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default BiodiversitySidebarCardComponent;

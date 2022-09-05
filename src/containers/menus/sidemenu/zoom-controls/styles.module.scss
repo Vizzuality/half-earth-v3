@@ -1,0 +1,43 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.zoomComponent {
+  display: flex;
+  border-radius: 2px;
+  flex-direction: column;
+  position: relative;
+}
+
+.zoomButton {
+  align-items: center;
+  background-color: $elephant;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  width: 32px;
+
+  &:hover svg {
+    fill: $robins-egg-blue;
+  }
+
+  svg {
+    fill: $white;
+  }
+}
+
+.spacer {
+  background-color: $space-background;
+  height: 2px;
+  opacity: 0.4;
+  position: absolute;
+  top: 32px;
+  right: 4px;
+  width: 24px;
+}
+
+@media print {
+  .zoomComponent {
+    display: none;
+  }
+}
