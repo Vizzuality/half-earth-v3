@@ -18,7 +18,7 @@ import mapStateToProps from './selectors';
 
 function TabsSidebarComponent({
   aoiId,
-  categoryActiveLayers,
+  savedActiveLayers,
   className,
   saveSidebarTab,
   sidebarTabActive,
@@ -26,11 +26,13 @@ function TabsSidebarComponent({
 }) {
   const sidebarTabs = getSidebarTabs();
 
+  console.log(savedActiveLayers);
+
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
-  && sidebarTabActive !== slug && categoryActiveLayers.length > 0;
+  && savedActiveLayers && sidebarTabActive !== slug && savedActiveLayers.length > 0;
 
   const displayMapLayersIcon = (slug) => slug === sidebarTabs[0].slug
-  && (categoryActiveLayers.length === 0 || sidebarTabActive === slug);
+  && savedActiveLayers && (savedActiveLayers.length === 0 || sidebarTabActive === slug);
 
   const displayAnalyzeAreasIcon = (slug) => slug === sidebarTabs[1].slug;
 
@@ -72,9 +74,9 @@ function TabsSidebarComponent({
                 >
                   <div className={styles.titleContainer}>
 
-                    {mapLayersCounterIsActive(slug) && (
+                    {mapLayersCounterIsActive(slug) && savedActiveLayers && (
                       <div className={styles.layersIndicator}>
-                        {categoryActiveLayers.length}
+                        {savedActiveLayers.length}
                       </div>
                     )}
 

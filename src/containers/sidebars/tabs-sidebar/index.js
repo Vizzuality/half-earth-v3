@@ -5,28 +5,46 @@ import aoisActions from 'redux_modules/aois';
 import { BASE_LAYERS } from 'constants/aois';
 
 import Component from './component';
+import mapStateToProps from './selectors';
 
 const actions = {
   ...aoisActions,
 };
 
 function TabsSidebarContainer(props) {
-  const { activeLayers, setSidebarTabActive, onTabClick } = props;
+  const {
+    categoryActiveLayers, setSidebarTabActive, onTabClick,
+  } = props;
+
+  console.log({ categoryActiveLayers });
+
+  const parsedLayers = useMemo(() => {
+    if (categoryActiveLayers) {
+      return categoryActiveLayers.map((acl) => {
+        return {
+          title: acl,
+        };
+      });
+    } return null;
+  }, []);
+
+  const savedActiveLayers = useMemo(() => {
+    if (parsedLayers) {
+      return parsedLayers.map((al, i) => {
+        if (!BASE_LAYERS[i]) return al;
+        return null;
+      }).filter((i) => i !== null).map((al) => al.title);
+    }
+    return null;
+  }, [categoryActiveLayers]);
 
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);
   };
 
-  const categoryActiveLayers = useMemo(() => {
-    return activeLayers.map((al, i) => {
-      if (!BASE_LAYERS[i]) return al;
-      return null;
-    }).filter((i) => i !== null);
-  }, [activeLayers]);
-
   return (
     <Component
-      categoryActiveLayers={categoryActiveLayers}
+      savedActiveLayers={savedActiveLayers}
       saveSidebarTab={saveSidebarTab}
       onTabClick={onTabClick}
       {...props}
@@ -34,4 +52,4 @@ function TabsSidebarContainer(props) {
   );
 }
 
-export default connect(null, actions)(TabsSidebarContainer);
+export default connect(mapStateToProps, actions)(TabsSidebarContainer);
