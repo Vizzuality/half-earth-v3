@@ -17,7 +17,7 @@ export const BASE_LAYERS = [
   { title: 'cities_labels_layer' },
   { title: 'countries_labels_layer' },
   { title: 'landscape_features_labels_layer' },
-  { title: 'gadm-0-admin-areas-feature-layer+' },
+  { title: 'gadm-0-admin-areas-feature-layer' },
 ];
 
 export const getSidebarTabs = () => [
