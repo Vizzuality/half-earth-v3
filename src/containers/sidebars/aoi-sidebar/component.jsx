@@ -10,10 +10,7 @@ import { writeToForageItem } from 'utils/local-forage-utils';
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import ProtectedAreasSidebarCard from 'containers/sidebars/data-global-sidebar//protected-areas-sidebar-card';
-import BiodiversitySidebarCard from 'containers/sidebars/data-global-sidebar/biodiversity-sidebar-card';
-import CarbonSidebarCard from 'containers/sidebars/data-global-sidebar/carbon-sidebar-card';
-import HumanImpactSidebarCard from 'containers/sidebars/data-global-sidebar/human-impact-sidebar-card';
+import MapLayers from 'containers/sidebars/map-layers';
 import TabsSidebar from 'containers/sidebars/tabs-sidebar';
 
 import Button from 'components/button';
@@ -56,7 +53,7 @@ const {
   REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
-function AOISidebarComponent({
+function AOISidebar({
   activeCategory,
   aoiId,
   map,
@@ -307,37 +304,15 @@ function AOISidebarComponent({
                   ease: 'easeInOut',
                 }}
               >
-                <BiodiversitySidebarCard
+                <MapLayers
                   activeLayers={activeLayers}
                   activeCategory={activeCategory}
+                  handleGlobeUpdating={handleGlobeUpdating}
                   map={map}
                   onboardingStep={onboardingStep}
                   onboardingType={onboardingType}
                   view={view}
                   waitingInteraction={waitingInteraction}
-                />
-                <ProtectedAreasSidebarCard
-                  activeLayers={activeLayers}
-                  activeCategory={activeCategory}
-                  handleGlobeUpdating={handleGlobeUpdating}
-                  map={map}
-                  onboardingStep={onboardingStep}
-                  waitingInteraction={waitingInteraction}
-                />
-                <HumanImpactSidebarCard
-                  activeCategory={activeCategory}
-                  activeLayers={activeLayers}
-                  handleGlobeUpdating={handleGlobeUpdating}
-                  map={map}
-                  onboardingStep={onboardingStep}
-                  onboardingType={onboardingType}
-                  waitingInteraction={waitingInteraction}
-                />
-                <CarbonSidebarCard
-                  activeLayers={activeLayers}
-                  activeCategory={activeCategory}
-                  handleGlobeUpdating={handleGlobeUpdating}
-                  map={map}
                 />
               </motion.div>
             )}
@@ -501,4 +476,4 @@ function AOISidebarComponent({
   }
 }
 
-export default connect(mapStateToProps, null)(AOISidebarComponent);
+export default connect(mapStateToProps, null)(AOISidebar);

@@ -14,7 +14,7 @@ import { postAoiToDataBase } from 'utils/geo-processing-services';
 
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 
-import Component from './aoi-sidebar-component';
+import Component from './component';
 
 const actions = { ...urlActions, ...aoiAnalyticsActions };
 

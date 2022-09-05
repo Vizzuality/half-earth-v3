@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import MapLayers from 'containers/sidebars/map-layers';
 import TabsSidebar from 'containers/sidebars/tabs-sidebar';
 
 import { getSidebarTabs } from 'constants/aois';
@@ -11,11 +12,7 @@ import { getSidebarTabs } from 'constants/aois';
 import uiStyles from 'styles/ui.module.scss';
 
 import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
-import BiodiversitySidebarCard from './biodiversity-sidebar-card';
-import CarbonSidebarCard from './carbon-sidebar-card';
 import styles from './data-global-sidebar-styles.module.scss';
-import HumanImpactSidebarCard from './human-impact-sidebar-card';
-import ProtectedAreasSidebarCard from './protected-areas-sidebar-card';
 import mapStateToProps from './selectors';
 
 const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
@@ -79,37 +76,15 @@ function DataGlobalSidebarComponent({
                 ease: 'easeInOut',
               }}
             >
-              <BiodiversitySidebarCard
+              <MapLayers
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                handleGlobeUpdating={handleGlobeUpdating}
                 map={map}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
                 view={view}
-                activeLayers={activeLayers}
-                activeCategory={activeCategory}
-                onboardingStep={onboardingStep}
-                onboardingType={onboardingType}
                 waitingInteraction={waitingInteraction}
-              />
-              <ProtectedAreasSidebarCard
-                map={map}
-                activeLayers={activeLayers}
-                activeCategory={activeCategory}
-                handleGlobeUpdating={handleGlobeUpdating}
-                onboardingStep={onboardingStep}
-                waitingInteraction={waitingInteraction}
-              />
-              <HumanImpactSidebarCard
-                map={map}
-                activeLayers={activeLayers}
-                activeCategory={activeCategory}
-                handleGlobeUpdating={handleGlobeUpdating}
-                onboardingStep={onboardingStep}
-                onboardingType={onboardingType}
-                waitingInteraction={waitingInteraction}
-              />
-              <CarbonSidebarCard
-                map={map}
-                activeLayers={activeLayers}
-                activeCategory={activeCategory}
-                handleGlobeUpdating={handleGlobeUpdating}
               />
             </motion.div>
             )}
@@ -132,37 +107,15 @@ function DataGlobalSidebarComponent({
           onboardingStep={onboardingStep}
           onboardingType={onboardingType}
         />
-        <BiodiversitySidebarCard
+        <MapLayers
+          activeLayers={activeLayers}
+          activeCategory={activeCategory}
+          handleGlobeUpdating={handleGlobeUpdating}
           map={map}
+          onboardingStep={onboardingStep}
+          onboardingType={onboardingType}
           view={view}
-          activeLayers={activeLayers}
-          activeCategory={activeCategory}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
           waitingInteraction={waitingInteraction}
-        />
-        <ProtectedAreasSidebarCard
-          map={map}
-          activeLayers={activeLayers}
-          activeCategory={activeCategory}
-          handleGlobeUpdating={handleGlobeUpdating}
-          onboardingStep={onboardingStep}
-          waitingInteraction={waitingInteraction}
-        />
-        <HumanImpactSidebarCard
-          map={map}
-          activeLayers={activeLayers}
-          activeCategory={activeCategory}
-          handleGlobeUpdating={handleGlobeUpdating}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-          waitingInteraction={waitingInteraction}
-        />
-        <CarbonSidebarCard
-          map={map}
-          activeLayers={activeLayers}
-          activeCategory={activeCategory}
-          handleGlobeUpdating={handleGlobeUpdating}
         />
       </div>
     );
