@@ -50,6 +50,7 @@ function AOIEntryTooltipComponent({
   // Create a new Popup to contain the tooltip
   useEffect(() => {
     loadModules(['esri/widgets/Popup']).then(([Popup]) => {
+      // eslint-disable-next-line no-underscore-dangle
       const _tooltip = new Popup({ view });
       setTooltip(_tooltip);
     });
@@ -81,16 +82,12 @@ function AOIEntryTooltipComponent({
       <CloseIcon className={styles.tooltipClose} onClick={handleTooltipClose} />
       <section className={styles.tooltipSection}>
         <span className={styles.tooltipName}>
-          {t('Priority area')}
-          {' '}
-          {MOL_ID}
+          {t('Priority area')} {MOL_ID}
         </span>
       </section>
       <section className={styles.areaSection}>
         <p className={styles.area}>
-          {format(',.3f')(AREA_KM2)}
-          {' '}
-          {t('km')}
+          {format(',.3f')(AREA_KM2)} {t('km')}
           <sup>2</sup>
         </p>
       </section>

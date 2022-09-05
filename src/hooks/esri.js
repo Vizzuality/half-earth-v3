@@ -125,21 +125,28 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   }, []);
 
   const handleSketchToolActivation = () => {
-    loadModules(['esri/widgets/Sketch', 'esri/widgets/Sketch/SketchViewModel', 'esri/layers/GraphicsLayer']).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
-      const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
-      setSketchLayer(_sketchLayer);
-      view.map.add(_sketchLayer);
-      const _sketchTool = new Sketch({
-        view,
-        layer: _sketchLayer,
-        availableCreateTools: ['polygon', 'rectangle', 'circle'],
-        defaultCreateOptions: { hasZ: false },
-        defaultUpdateOptions: {
-          enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true,
-        },
-        visibleElements: {
-          settingsMenu: false,
-        },
+    loadModules(['esri/widgets/Sketch', 'esri/widgets/Sketch/SketchViewModel', 'esri/layers/GraphicsLayer']).then(
+      (
+        [
+          Sketch,
+          // SketchViewModel,
+          GraphicsLayer,
+        ],
+      ) => {
+        const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
+        setSketchLayer(_sketchLayer);
+        view.map.add(_sketchLayer);
+        const _sketchTool = new Sketch({
+          view,
+          layer: _sketchLayer,
+          availableCreateTools: ['polygon', 'rectangle', 'circle'],
+          defaultCreateOptions: { hasZ: false },
+          defaultUpdateOptions: {
+            enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true,
+          },
+          visibleElements: {
+            settingsMenu: false,
+          },
         // viewModel: new SketchViewModel({
         //   view: view,
         //   layer:_sketchLayer,
@@ -148,14 +155,17 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
         //     color: [147, 255, 95, 0.2]
         //   }
         // })
-      });
-      setSketchTool(_sketchTool);
-    });
+        });
+        setSketchTool(_sketchTool);
+      },
+    );
   };
 
   const addWidgetToTheUi = () => {
     view.ui.add(sketchTool, 'manual');
+    // eslint-disable-next-line no-undef
     const container = document.createElement('div');
+    // eslint-disable-next-line no-undef
     const rootNode = document.getElementById('root');
     rootNode.appendChild(container);
   };
