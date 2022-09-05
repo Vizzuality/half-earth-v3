@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
@@ -13,7 +13,6 @@ import Widgets from 'containers/widgets';
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import Scene from 'components/scene';
 
-import { AREA_TYPES } from 'constants/aois';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { useMobile } from 'constants/responsive';
 
@@ -28,27 +27,19 @@ function AoiSceneComponent({
   geometry,
   onMapLoad,
   speciesData,
-  activeLayers,
   sceneSettings,
   contextualData,
   dataLoaded,
   tooltipInfo,
   setTooltipInfo,
-  areaTypeSelected,
   handleFuturePlaceClick,
   handleGlobeUpdating,
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  updatedActiveLayers,
 }) {
   const isMobile = useMobile();
-
-  const updatedActiveLayers = useMemo(
-    () => (areaTypeSelected === AREA_TYPES.futurePlaces
-      ? activeLayers
-      : activeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER)),
-    [activeLayers, areaTypeSelected],
-  );
 
   return (
     <Scene

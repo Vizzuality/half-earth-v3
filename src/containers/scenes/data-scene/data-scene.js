@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -14,7 +14,6 @@ import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 
-import { BASE_LAYERS } from 'constants/aois';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
@@ -42,13 +41,6 @@ function Container(props) {
 
   const locale = useLocale();
   const t = useT();
-
-  const categoryActiveLayers = useMemo(() => {
-    return activeLayers.map((al, i) => {
-      if (!BASE_LAYERS[i]) return al;
-      return null;
-    }).filter((i) => i !== null).map((al) => al.title);
-  }, [activeLayers]);
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -108,7 +100,7 @@ function Container(props) {
       payload: { id: mapTooltipContent.id },
       query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
     });
-    changeUI({ categoryActiveLayers });
+    changeUI({ categoryActiveLayers: activeLayers });
   };
 
   useEffect(() => {

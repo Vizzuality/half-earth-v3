@@ -56,8 +56,8 @@ const {
 function AOISidebar({
   activeCategory,
   aoiId,
-  map,
   area,
+  map,
   view,
   className,
   landCover,
@@ -82,6 +82,7 @@ function AOISidebar({
   const sidebarTabs = getSidebarTabs();
   const t = useT();
   const locale = useLocale();
+
   const humanPressuresLandUse = useMemo(
     () => getHumanPressuresLandUse(),
     [locale],
@@ -95,6 +96,7 @@ function AOISidebar({
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
+
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
     setShareModalOpen(true);
@@ -293,28 +295,28 @@ function AOISidebar({
           </motion.div>
           )}
           {sidebarTabActive === sidebarTabs[0].slug && (
-          <motion.div
-            className={styles.mapLayersContainer}
-            key={sidebarTabs[0].slug}
-            initial={{ opacity: 0, x: 160 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 160 }}
-            transition={{
-              duration: 0.25,
-              ease: 'easeInOut',
-            }}
-          >
-            <MapLayers
-              activeLayers={activeLayers}
-              activeCategory={activeCategory}
-              handleGlobeUpdating={handleGlobeUpdating}
-              map={map}
-              onboardingStep={onboardingStep}
-              onboardingType={onboardingType}
-              view={view}
-              waitingInteraction={waitingInteraction}
-            />
-          </motion.div>
+            <motion.div
+              className={styles.mapLayersContainer}
+              key={sidebarTabs[0].slug}
+              initial={{ opacity: 0, x: 160 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 160 }}
+              transition={{
+                duration: 0.25,
+                ease: 'easeInOut',
+              }}
+            >
+              <MapLayers
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                handleGlobeUpdating={handleGlobeUpdating}
+                map={map}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
+                view={view}
+                waitingInteraction={waitingInteraction}
+              />
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

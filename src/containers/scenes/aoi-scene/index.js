@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
@@ -14,9 +14,10 @@ import { writeToForageItem } from 'utils/local-forage-utils';
 
 import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
+import unionBy from 'lodash/unionBy';
 
 import { AREA_TYPES } from 'constants/aois';
-import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { HALF_EARTH_FUTURE_TILE_LAYER, FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import { setPrecalculatedAOIs, recoverOrCreateNotPrecalculatedAoi } from './aoi-scene-utils';
@@ -40,6 +41,7 @@ function AOIScene(props) {
     setAreaTypeSelected,
     areaTypeSelected,
     objectId,
+    categoryActiveLayers,
   } = props;
 
   const t = useT();
@@ -65,6 +67,13 @@ function AOIScene(props) {
     !FEATURE_MERGE_NATIONAL_SUBNATIONAL && setAreaTypeSelected(areaType);
     return areaType;
   };
+
+  const updatedActiveLayers = useMemo(() => {
+    const mergeLayers = unionBy(categoryActiveLayers, activeLayers, 'title');
+
+    return (areaTypeSelected === AREA_TYPES.futurePlaces)
+      ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
+  }, [categoryActiveLayers, activeLayers, areaTypeSelected]);
 
   useEffect(() => {
     loadModules(['esri/geometry/geometryEngine', 'esri/geometry/support/jsonUtils']).then(([geometryEngine, jsonUtils]) => {
@@ -161,11 +170,12 @@ function AOIScene(props) {
       contextualData={contextualData}
       handleGlobeUpdating={handleGlobeUpdating}
       handleFuturePlaceClick={handleFuturePlaceClick}
-      onMapLoad={(map) => handleMapLoad(map, activeLayers)}
+      onMapLoad={(map) => handleMapLoad(map, updatedActiveLayers)}
       dataLoaded={loaded}
       tooltipInfo={tooltipInfo}
       setTooltipInfo={setTooltipInfo}
       aoiId={aoiId}
+      updatedActiveLayers={updatedActiveLayers}
       {...props}
     />
   );
