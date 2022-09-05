@@ -110,6 +110,7 @@ import {
   MAMMALS_LOOKUP,
   REPTILES_LOOKUP,
   EEZ_MARINE_BORDERS,
+  SEARCH_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
@@ -273,6 +274,7 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/b1f5fc986f3d4185aef5558f2ee80f50/rest/services/National_Report_Card_Species_Data_v2/FeatureServer',
 
   // AOIs lookup tables
+  [SEARCH_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/AOI_lookup/FeatureServer/0',
   [ELU_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/ecosytem_categories_lookup/FeatureServer/0',
   [WDPA_LOOKUP_TABLE]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_OECM_June2021_WDPAID_table/FeatureServer/0',
   [AMPHIBIAN_LOOKUP]: 'https://utility.arcgis.com/usrsvcs/servers/c20121cd88754247bbbeac5da6b26be1/rest/services/Test_Amphibian_CRF_species_table/FeatureServer/0',
@@ -282,7 +284,7 @@ export const LAYERS_URLS = {
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
     'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer/0',
-    'https://utility.arcgis.com/usrsvcs/servers/4d23b29746e547deb9d4c1d61df8e0d4/rest/services/gadm1_precalculated_20220224_nspecies/FeatureServer/0'
+    'https://utility.arcgis.com/usrsvcs/servers/4d23b29746e547deb9d4c1d61df8e0d4/rest/services/gadm1_precalculated_20220224_nspecies/FeatureServer/0',
   ],
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer/0',
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0_updated/FeatureServer/0',
