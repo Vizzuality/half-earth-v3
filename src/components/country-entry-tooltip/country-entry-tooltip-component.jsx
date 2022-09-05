@@ -1,19 +1,24 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, {
+  useEffect, useState, useRef, useCallback,
+} from 'react';
+
 import { useT, useLocale } from '@transifex/react';
+
 import cx from 'classnames';
 import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
-import { getCountryNames } from 'constants/translation-constants';
-
 // Assets
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 // styles
-import styles from './country-entry-tooltip-styles.module.scss';
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
-import { LAND_MARINE } from 'constants/country-mode-constants';
 
-const CountryEntryTooltipComponent = ({
+import { LAND_MARINE } from 'constants/country-mode-constants';
+import { getCountryNames } from 'constants/translation-constants';
+
+import styles from './country-entry-tooltip-styles.module.scss';
+
+function CountryEntryTooltipComponent({
   view,
   countryISO,
   countryName,
@@ -26,7 +31,7 @@ const CountryEntryTooltipComponent = ({
   changeUI,
   onboardingType,
   waitingInteraction,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
 
@@ -54,6 +59,7 @@ const CountryEntryTooltipComponent = ({
   // Create a new Popup to contain the tooltip
   useEffect(() => {
     loadModules(['esri/widgets/Popup']).then(([Popup]) => {
+      // eslint-disable-next-line no-underscore-dangle
       const _tooltip = new Popup({ view, alignment: 'top-center' });
       setTooltip(_tooltip);
     });
@@ -72,8 +78,7 @@ const CountryEntryTooltipComponent = ({
         camera.position.latitude += 5;
         view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' }).then(() => {
           if (onboardingStep === 2 && onboardingButtonReference.current) {
-            const { y, x, width } =
-              onboardingButtonReference.current.getBoundingClientRect();
+            const { y, x, width } = onboardingButtonReference.current.getBoundingClientRect();
             changeUI({
               onboardingTooltipTop: y,
               onboardingTooltipLeft: x + width + 10,
@@ -124,6 +129,7 @@ const CountryEntryTooltipComponent = ({
             <button
               key={key}
               disabled={!coastal}
+              type="button"
               className={cx({
                 [styles.switchDataButton]: true,
                 [styles.switchDataActiveButton]: activeTab === key,
@@ -155,27 +161,31 @@ const CountryEntryTooltipComponent = ({
           </span>
           <span className={styles.text}>
             {`${landTab ? LAND_MARINE.land : LAND_MARINE.marine}${t(
-              ' vertebrate species of which'
-            )}`}{' '}
+              ' vertebrate species of which',
+            )}`}
+            {' '}
             <span className={styles.endemic}>
               {landTab ? endemicLand : endemicMar}
-            </span>{' '}
+            </span>
+            {' '}
             {t('are endemic')}
           </span>
         </div>
         <div className={styles.infoPill}>
           <span className={styles.numeric}>
-            {landTab ? protectionLand : protectionMar}%
+            {landTab ? protectionLand : protectionMar}
+            %
           </span>
           <span className={styles.text}>
             {`${landTab ? LAND_MARINE.land : LAND_MARINE.marine}${t(
-              ' area is protected'
+              ' area is protected',
             )}`}
           </span>
         </div>
         <div className={styles.infoPill}>
           <span className={styles.numeric}>
-            {landTab ? protectionNeededLand : protectionNeededMar}%
+            {landTab ? protectionNeededLand : protectionNeededMar}
+            %
           </span>
           <span className={styles.text}>
             {`${t('of additional ')}${
@@ -187,6 +197,7 @@ const CountryEntryTooltipComponent = ({
       <motion.div {...onboardingOverlay}>
         <button
           ref={onboardingButtonReference}
+          type="button"
           className={styles.tooltipExplore}
           onClick={onExploreCountryClick}
         >
@@ -195,6 +206,6 @@ const CountryEntryTooltipComponent = ({
       </motion.div>
     </div>
   );
-};
+}
 
 export default CountryEntryTooltipComponent;
