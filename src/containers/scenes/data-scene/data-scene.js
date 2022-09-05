@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -14,6 +14,7 @@ import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 
+import { BASE_LAYERS } from 'constants/aois';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
@@ -34,12 +35,20 @@ function Container(props) {
     setBatchTooltipData,
     browsePage,
     precomputedAoiAnalytics,
+    changeUI,
   } = props;
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 
   const locale = useLocale();
   const t = useT();
+
+  const categoryActiveLayers = useMemo(() => {
+    return activeLayers.map((al, i) => {
+      if (!BASE_LAYERS[i]) return al;
+      return null;
+    }).filter((i) => i !== null).map((al) => al.title);
+  }, [activeLayers]);
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -94,14 +103,12 @@ function Container(props) {
   const handleTooltipActionButtonClick = () => {
     const { title } = mapTooltipContent;
     precomputedAoiAnalytics(title);
-
     browsePage({
       type: AREA_OF_INTEREST,
       payload: { id: mapTooltipContent.id },
       query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
     });
-
-    precomputedAoiAnalytics(mapTooltipContent.title);
+    changeUI({ categoryActiveLayers });
   };
 
   useEffect(() => {

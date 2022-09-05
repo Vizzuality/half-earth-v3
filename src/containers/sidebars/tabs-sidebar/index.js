@@ -17,7 +17,7 @@ function TabsSidebarContainer(props) {
     setSidebarTabActive(selectedTab);
   };
 
-  const categoryActiveLayersCounter = useMemo(() => {
+  const categoryActiveLayers = useMemo(() => {
     return activeLayers.map((al, i) => {
       if (!BASE_LAYERS[i]) return al;
       return null;
@@ -26,7 +26,7 @@ function TabsSidebarContainer(props) {
 
   return (
     <Component
-      categoryActiveLayersCounter={categoryActiveLayersCounter}
+      categoryActiveLayers={categoryActiveLayers}
       saveSidebarTab={saveSidebarTab}
       onTabClick={onTabClick}
       {...props}
