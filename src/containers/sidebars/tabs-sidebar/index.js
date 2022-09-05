@@ -13,10 +13,8 @@ const actions = {
 
 function TabsSidebarContainer(props) {
   const {
-    categoryActiveLayers, setSidebarTabActive, onTabClick,
+    categoryActiveLayers, activeLayers, setSidebarTabActive, onTabClick,
   } = props;
-
-  console.log({ categoryActiveLayers });
 
   const parsedLayers = useMemo(() => {
     if (categoryActiveLayers) {
@@ -38,13 +36,20 @@ function TabsSidebarContainer(props) {
     return null;
   }, [categoryActiveLayers]);
 
+  const mapLayersActive = useMemo(() => {
+    return activeLayers.map((al, i) => {
+      if (!BASE_LAYERS[i]) return al;
+      return null;
+    }).filter((i) => i !== null);
+  }, [activeLayers]);
+
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);
   };
 
   return (
     <Component
-      savedActiveLayers={savedActiveLayers}
+      savedActiveLayers={savedActiveLayers || mapLayersActive}
       saveSidebarTab={saveSidebarTab}
       onTabClick={onTabClick}
       {...props}

@@ -26,8 +26,6 @@ function TabsSidebarComponent({
 }) {
   const sidebarTabs = getSidebarTabs();
 
-  console.log(savedActiveLayers);
-
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
   && savedActiveLayers && sidebarTabActive !== slug && savedActiveLayers.length > 0;
 
