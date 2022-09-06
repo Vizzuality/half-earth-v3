@@ -22,6 +22,7 @@ import { layersConfig } from 'constants/mol-layers-configs';
 
 import { setPrecalculatedAOIs, recoverOrCreateNotPrecalculatedAoi } from './aoi-scene-utils';
 import Component from './component.jsx';
+import aoiSceneConfig from './config';
 import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
@@ -42,6 +43,7 @@ function AOIScene(props) {
     areaTypeSelected,
     objectId,
     categoryActiveLayers,
+    changeUI,
   } = props;
 
   const t = useT();
@@ -56,6 +58,24 @@ function AOIScene(props) {
   const [loaded, setLoaded] = useState(false);
 
   const [tooltipInfo, setTooltipInfo] = useState(null);
+
+  // !This reconciliate active layers with default config layers
+  useEffect(() => {
+    if (!categoryActiveLayers) return null;
+
+    const defaultCategoryLayers = aoiSceneConfig.activeLayers.filter((al) => !!al.category);
+
+    const categoryActiveLayersTitles = categoryActiveLayers
+      .map((cal) => cal.title);
+
+    defaultCategoryLayers.forEach((dcl) => {
+      if (!categoryActiveLayersTitles.includes(dcl.title)) {
+        changeUI({ categoryActiveLayers: [...categoryActiveLayers, dcl] });
+      }
+    });
+
+    return undefined;
+  }, []);
 
   const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;

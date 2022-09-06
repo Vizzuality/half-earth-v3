@@ -79,7 +79,6 @@ function AOISidebar({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-  categoryActiveLayers,
 }) {
   const sidebarTabs = getSidebarTabs();
   const t = useT();
@@ -120,14 +119,9 @@ function AOISidebar({
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
   const handleOnTabClick = useMemo(() => {
-    const updatedActiveLayers = [
-      ...categoryActiveLayers,
-      { title: PROTECTED_AREAS_VECTOR_TILE_LAYER },
-    ];
-
     if (sidebarTabActive === sidebarTabs[0].slug) {
       if (!aoiId) return browsePage({ type: DATA });
-      changeUI({ aoiId, categoryActiveLayers: updatedActiveLayers });
+      changeUI({ aoiId });
     }
     return () => {};
   }, [sidebarTabActive]);
