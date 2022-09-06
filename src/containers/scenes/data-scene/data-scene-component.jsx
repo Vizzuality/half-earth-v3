@@ -178,28 +178,6 @@ function DataSceneComponent({
         />
       )}
 
-      <CountryLabelsLayer
-        sceneMode={sceneMode}
-        countryISO={countryISO}
-        countryName={countryName}
-        activeLayers={activeLayers}
-        isLandscapeMode={isLandscapeMode}
-      />
-
-      {selectedAnalysisLayer && (
-        <FeatureHighlightLayer
-          featureLayerSlugs={selectedAnalysisLayer.slug}
-          onFeatureClick={handleHighlightLayerFeatureClick}
-        />
-      )}
-
-      <Widgets
-        openedModal={openedModal}
-        activeLayers={activeLayers}
-        isFullscreenActive={isFullscreenActive}
-        onboardingStep={onboardingStep}
-      />
-
       <MapTooltip
         onActionButtonClick={handleTooltipActionButtonClick}
         speciesData={speciesData}

@@ -20,6 +20,7 @@ export const BASE_LAYERS = [
   { title: 'gadm-0-admin-areas-feature-layer' },
   { title: 'mask-layer' },
   { title: 'specific-regions-tile' },
+  { title: 'admin_areas_feature_layer' },
 ];
 
 export const getSidebarTabs = () => [

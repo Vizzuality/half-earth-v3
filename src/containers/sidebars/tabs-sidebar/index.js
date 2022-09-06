@@ -25,6 +25,8 @@ function TabsSidebarContainer(props) {
       .some(({ title: id2 }) => id2 === id1));
   }, [activeLayers, categoryActiveLayers]);
 
+  console.log({ mapLayersActive });
+
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);
   };
