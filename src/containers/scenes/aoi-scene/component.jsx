@@ -38,6 +38,7 @@ function AoiSceneComponent({
   onboardingStep,
   waitingInteraction,
   updatedActiveLayers,
+  categoryActiveLayers,
 }) {
   const isMobile = useMobile();
 
@@ -66,6 +67,7 @@ function AoiSceneComponent({
       <AoiSidebar
         activeCategory={activeCategory}
         aoiId={aoiId}
+        categoryActiveLayers={categoryActiveLayers}
         speciesData={speciesData}
         activeLayers={updatedActiveLayers}
         contextualData={contextualData}

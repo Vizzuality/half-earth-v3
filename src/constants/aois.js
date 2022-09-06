@@ -18,6 +18,8 @@ export const BASE_LAYERS = [
   { title: 'countries_labels_layer' },
   { title: 'landscape_features_labels_layer' },
   { title: 'gadm-0-admin-areas-feature-layer' },
+  { title: 'mask-layer' },
+  { title: 'specific-regions-tile' },
 ];
 
 export const getSidebarTabs = () => [

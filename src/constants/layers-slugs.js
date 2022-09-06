@@ -22,7 +22,8 @@ export const HALF_EARTH_FUTURE_METADATA_SLUG = 'places-future';
 export const SPECIFIC_REGIONS_TILE_LAYER = 'specific-regions-tile';
 export const SPECIFIC_REGIONS_WDPA_LAYER = 'specific-regions-wdpa-tile';
 
-// Biodiversity facets layer. Disolved layer created by John Grayson based on MoL biodiversity facets.
+// Biodiversity facets layer. Disolved layer created
+// by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
 // Dinamically created graphics layer to paint aggregated gridcells
 export const GRID_LAYER = 'grid_layer';

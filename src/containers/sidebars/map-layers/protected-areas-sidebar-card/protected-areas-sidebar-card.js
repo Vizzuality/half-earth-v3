@@ -45,6 +45,7 @@ function Container(props) {
       selectedLayers.find((layer) => layer === option.value)
         ? setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value))
         : setSelectedLayers([...selectedLayers, option.value]);
+
       layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
       const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
       changeUI({ categoryActiveLayers: updateActiveLayers });

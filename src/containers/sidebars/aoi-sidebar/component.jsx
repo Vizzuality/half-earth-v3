@@ -25,6 +25,7 @@ import {
 import { getSidebarTabs } from 'constants/aois';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
+import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import {
   MERGED_PROTECTION,
   MERGED_LAND_HUMAN_PRESSURES,
@@ -78,6 +79,7 @@ function AOISidebar({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  categoryActiveLayers,
 }) {
   const sidebarTabs = getSidebarTabs();
   const t = useT();
@@ -118,9 +120,14 @@ function AOISidebar({
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
   const handleOnTabClick = useMemo(() => {
+    const updatedActiveLayers = [
+      ...categoryActiveLayers,
+      { title: PROTECTED_AREAS_VECTOR_TILE_LAYER },
+    ];
+
     if (sidebarTabActive === sidebarTabs[0].slug) {
       if (!aoiId) return browsePage({ type: DATA });
-      changeUI({ aoiId });
+      changeUI({ aoiId, categoryActiveLayers: updatedActiveLayers });
     }
     return () => {};
   }, [sidebarTabActive]);
