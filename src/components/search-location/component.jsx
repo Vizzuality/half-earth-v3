@@ -83,9 +83,10 @@ function SearchLocation({
         onChange={handleInputChange}
       />
 
-      <IconSearch className={cx(styles.placeholderIcon, {
-        [className.placeholderIcon]: className.placeholderIcon,
-      })}
+      <IconSearch
+        className={cx(styles.placeholderIcon, {
+          [className.placeholderIcon]: className.placeholderIcon,
+        })}
       />
       {isSearchResultVisible
         && createPortal(
@@ -106,7 +107,9 @@ function SearchLocation({
                   key={option.key}
                   onClick={() => {
                     onOptionSelection(option);
-                    setSearcherOpen(false);
+                    if (setSearcherOpen) {
+                      setSearcherOpen(false);
+                    }
                     onNextonboardingStep(option);
                   }}
                 >
@@ -119,10 +122,7 @@ function SearchLocation({
           document.getElementById('root'),
         )}
       {hasResetButton && (
-        <button
-          type="button"
-          onClick={handleCloseButton}
-        >
+        <button type="button" onClick={handleCloseButton}>
           <CloseIcon className={styles.closeButton} />
         </button>
       )}

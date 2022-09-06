@@ -26,8 +26,10 @@ function useClickOutside(ref, callback, exceptionRef) {
       }
     }
 
+    // eslint-disable-next-line no-undef
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
+      // eslint-disable-next-line no-undef
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
@@ -50,6 +52,7 @@ function AOIEntryTooltipComponent({
   // Create a new Popup to contain the tooltip
   useEffect(() => {
     loadModules(['esri/widgets/Popup']).then(([Popup]) => {
+      // eslint-disable-next-line no-underscore-dangle
       const _tooltip = new Popup({ view });
       setTooltip(_tooltip);
     });
@@ -97,6 +100,7 @@ function AOIEntryTooltipComponent({
       <button
         className={styles.tooltipExplore}
         ref={buttonRef}
+        type="button"
         onClick={onExploreAOIClick}
       >
         {t('Analyze area')}

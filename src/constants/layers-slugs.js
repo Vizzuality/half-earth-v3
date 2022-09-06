@@ -167,6 +167,7 @@ export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
 export const AOIS_HISTORIC_DEVELOPMENT = 'aois-historic-development';
 
 // AOIs lookup tables
+export const SEARCH_LOOKUP_TABLE = 'search-lookup-table';
 export const ELU_LOOKUP_TABLE = 'elu-lookup-table';
 export const WDPA_LOOKUP_TABLE = 'wdpa-lookup-table';
 export const AMPHIBIAN_LOOKUP = 'amphibians-lookup-table';

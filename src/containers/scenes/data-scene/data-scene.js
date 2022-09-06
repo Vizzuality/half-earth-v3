@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -61,12 +61,13 @@ function Container(props) {
         customId = `region-${attributes.region}`;
       }
 
-      const getPrecalculatedLayer = (attributes) => {
+      const getPrecalculatedLayer = (precalculatedAttributes) => {
         if (selectedAnalysisLayer.slug !== ADMIN_AREAS_FEATURE_LAYER) {
           return selectedAnalysisLayer.slug;
         }
-        return attributes.GID_1
-          ? GADM_1_ADMIN_AREAS_FEATURE_LAYER : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+        return precalculatedAttributes.GID_1
+          ? GADM_1_ADMIN_AREAS_FEATURE_LAYER
+          : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
       };
 
       setBatchTooltipData({
@@ -79,9 +80,10 @@ function Container(props) {
           title: customTitle || attributes[title],
           subtitle: attributes[subtitle],
           objectId: attributes.OBJECTID, // Only for feature places
-          // 100 is for protected areas
           percentage_protected: Math.round(attributes.percentage_protected) || 100,
-          description: attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
+          // 100 is for protected areas
+          description:
+            attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
           nspecies: attributes.nspecies,
           status: attributes.STATUS,
           status_year: attributes.STATUS_,
@@ -110,6 +112,7 @@ function Container(props) {
   }, [activeLayers, locale]);
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Component
       selectedAnalysisLayer={selectedAnalysisLayer}
       handleTooltipActionButtonClick={handleTooltipActionButtonClick}

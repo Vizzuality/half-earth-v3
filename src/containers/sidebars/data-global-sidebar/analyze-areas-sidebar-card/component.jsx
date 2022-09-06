@@ -50,7 +50,6 @@ function AnalyzeAreasCardComponent({
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
   onboardingType,
-
 }) {
   const t = useT();
   const locale = useLocale();

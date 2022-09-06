@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
@@ -10,6 +11,10 @@ import { useT, useLocale } from '@transifex/react';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
 
+import EsriFeatureService from 'services/esri-feature-service';
+
+import { SEARCH_LOOKUP_TABLE } from 'constants/layers-slugs';
+import { LAYERS_URLS } from 'constants/layers-urls';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
 import { getCountryNames } from 'constants/translation-constants';
@@ -17,6 +22,20 @@ import { getCountryNames } from 'constants/translation-constants';
 import Component from './component';
 
 const actions = { ...mapTooltipActions, ...urlActions };
+
+const {
+  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL,
+} = process.env;
+
+const getSearchedLayerData = (layerSlug, molId) => new Promise((resolve, reject) => {
+  EsriFeatureService.getFeatures({
+    url: LAYERS_URLS[layerSlug],
+    returnGeometry: true,
+    whereClause: `MOL_ID = '${molId}'`,
+  }).then((features) => {
+    resolve(features);
+  }).catch((error) => reject(error));
+});
 
 function SearchLocationContainer(props) {
   const {
@@ -40,23 +59,48 @@ function SearchLocationContainer(props) {
     }
   }, [searchResults]);
 
-  const browseSelectedFeature = ({ result }) => {
+  const browseSelectedFeature = async ({ result }) => {
     const { setBatchTooltipData } = props;
-    const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
 
+    let searchResult;
+    if (REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+      // We have to find the information of the layer with the lookup table info
+      const { attributes } = result.feature;
+      const { LAYERSLUG, MOL_ID } = attributes;
+      searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
+    }
+
+    const feature = REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL
+      ? searchResult && searchResult[0]
+      : result.feature;
+
+    const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
     const {
       title, subtitle, id, iso,
     } = tooltipConfig;
-    const { geometry, attributes } = result.feature;
+    const { geometry, attributes } = feature;
+
     if (!simple) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
+        precalculatedLayer: REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL
+          && result.feature.attributes.LAYERSLUG,
         content: {
           buttonText: t('analyze area'),
           id: attributes[id],
           title: attributes[title] || attributes.NAME_0,
           subtitle: attributes[subtitle] || attributes.NAME_1,
+          objectId: attributes.OBJECTID, // Only for feature places
+          percentage_protected: Math.round(attributes.percentage_protected) || 100,
+          // 100 is for protected areas
+          description:
+            attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
+          nspecies: attributes.nspecies,
+          status: attributes.STATUS,
+          status_year: attributes.STATUS_,
+          IUCN_type: attributes.IUCN_CA,
+          designation_type: attributes.DESIG_T,
         },
       });
     }
@@ -81,42 +125,41 @@ function SearchLocationContainer(props) {
     }
   };
 
+  const {
+    updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick,
+  } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig, simple);
+
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    const {
-      url, title, outFields, searchFields, suggestionTemplate,
+    let {
+      url, searchFields, suggestionTemplate, title,
     } = config;
+
+    if (REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+      url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
+      searchFields = ['NAME'];
+      suggestionTemplate = '{NAME}';
+      title = SEARCH_LOOKUP_TABLE;
+    }
+
+    const getSearchSources = (FeatureLayer) => [{
+      searchFields,
+      suggestionTemplate,
+      outFields: ['*'],
+      layer: new FeatureLayer({
+        url,
+        title,
+        outFields: ['*'],
+      }),
+    }];
+
     setSearchWidgetConfig({
       searchResultsCallback: getSearchResults,
       postSearchCallback: browseSelectedFeature,
-      searchSources: (FeatureLayer) => {
-        return [{
-          outFields,
-          searchFields,
-          suggestionTemplate,
-          layer: new FeatureLayer({ url, title, outFields }),
-        }];
-      },
+      searchSources: getSearchSources,
     });
-  }, [searchSourceLayerSlug]);
 
-  const {
-    updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick,
-  } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig);
-
-  useEffect(() => {
-    const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    const {
-      url, title, outFields, searchFields, suggestionTemplate,
-    } = config;
-    updateSources((FeatureLayer) => {
-      return [{
-        outFields,
-        searchFields,
-        suggestionTemplate,
-        layer: new FeatureLayer({ url, title, outFields }),
-      }];
-    });
+    updateSources(getSearchSources);
   }, [searchSourceLayerSlug]);
 
   const onOptionSelection = (selectedOption) => {
