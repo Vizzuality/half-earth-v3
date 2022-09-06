@@ -43,7 +43,7 @@ function GlobesMenu({ browsePage, landing = false }) {
       <Globe
         title={t('Explore data')}
         description={t(
-          'Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity.',
+          'Explore areas of interest, the vertebrate species that live there, the human pressures that exist, and the current conservation efforts and those that are needed to safeguard enough habitat to preserve global biodiversity.',
         )}
         globeImage={globeExplore}
         center
