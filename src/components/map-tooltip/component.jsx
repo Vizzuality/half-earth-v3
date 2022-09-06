@@ -1,17 +1,20 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
-import cx from 'classnames';
-import { useT, useLocale } from '@transifex/react';
-import { loadModules } from 'esri-loader';
 
+import { useT, useLocale } from '@transifex/react';
+
+import cx from 'classnames';
+import { loadModules } from 'esri-loader';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import styles from './styles.module.scss';
+
 import { useMobile } from 'constants/responsive';
 import {
   getCountryNames,
   getWDPATranslations,
 } from 'constants/translation-constants';
 
-const MapTooltipComponent = ({
+import styles from './styles.module.scss';
+
+function MapTooltipComponent({
   img,
   view,
   content,
@@ -20,7 +23,7 @@ const MapTooltipComponent = ({
   tooltipPosition,
   onCloseButtonClick,
   onActionButtonClick,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
@@ -34,6 +37,7 @@ const MapTooltipComponent = ({
   // Create a new Popup to contain the tooltip
   useEffect(() => {
     loadModules(['esri/widgets/Popup']).then(([Popup]) => {
+      // eslint-disable-next-line no-underscore-dangle
       const _tooltip = new Popup({ view });
       setTooltip(_tooltip);
     });
@@ -124,6 +128,7 @@ const MapTooltipComponent = ({
           />
 
           <button
+            type="button"
             className={styles.tooltipExplore}
             onClick={onActionButtonClick}
           >
@@ -133,6 +138,6 @@ const MapTooltipComponent = ({
       )}
     </div>
   );
-};
+}
 
 export default MapTooltipComponent;

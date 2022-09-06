@@ -1,27 +1,33 @@
 import React, { useState, useMemo } from 'react';
-import cx from 'classnames';
+
+import { localeFormatting } from 'utils/data-formatting-utils';
+
 import { useT, useLocale } from '@transifex/react';
 
-import CategoryBox from 'components/category-box';
-import Button from 'components/button';
-import Dropdown from 'components/dropdown';
-import ShapeFileUploader from 'components/shape-file-uploader';
-import SearchLocation from 'components/search-location';
+import cx from 'classnames';
+import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
+import { ReactComponent as AoisClickIcon } from 'icons/aois_click.svg';
+import { ReactComponent as AoisDrawIcon } from 'icons/aois_draw.svg';
+import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
+
 import AoiHistoryModal from 'containers/modals/aoi-history-modal';
 import PromptModal from 'containers/modals/prompt-modal';
-import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
-import { ReactComponent as AoisDrawIcon } from 'icons/aois_draw.svg';
-import { ReactComponent as AoisClickIcon } from 'icons/aois_click.svg';
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
-import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
+
+import Button from 'components/button';
+import CategoryBox from 'components/category-box';
+import Dropdown from 'components/dropdown';
+import SearchLocation from 'components/search-location';
+import ShapeFileUploader from 'components/shape-file-uploader';
+
 import {
   getPrecalculatedAOIOptions,
   HIGHER_AREA_SIZE_LIMIT,
 } from 'constants/analyze-areas-constants';
-import { localeFormatting } from 'utils/data-formatting-utils';
+
 import styles from './styles.module.scss';
 
-const AnalyzeAreasCardComponent = ({
+function AnalyzeAreasCardComponent({
   view,
   geometryArea,
   selectedOption,
@@ -39,15 +45,13 @@ const AnalyzeAreasCardComponent = ({
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
   onboardingType,
-
-}) => {
-
+}) {
   const [isOpen, setOpen] = useState(false);
   const t = useT();
   const locale = useLocale();
   const precalculatedAOIOptions = useMemo(
     () => getPrecalculatedAOIOptions(),
-    [locale]
+    [locale],
   );
 
   const handleBoxClick = () => setOpen(!isOpen);
@@ -82,18 +86,14 @@ const AnalyzeAreasCardComponent = ({
             label={t('Click on the map')}
             Icon={AoisClickIcon}
             active={selectedAnalysisTab === 'click'}
-            handleClick={() =>
-              selectedAnalysisTab !== 'click' && handleAnalysisTabClick('click')
-            }
+            handleClick={() => selectedAnalysisTab !== 'click' && handleAnalysisTabClick('click')}
           />
           <Button
             type="square"
             label={t('Draw or upload a shape')}
             Icon={AoisDrawIcon}
             active={selectedAnalysisTab === 'draw'}
-            handleClick={() =>
-              selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')
-            }
+            handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
           />
         </div>
         {selectedAnalysisTab === 'click' && (
@@ -104,7 +104,7 @@ const AnalyzeAreasCardComponent = ({
             <div className={styles.dropdownContainer}>
               <Dropdown
                 stacked
-                theme={'dark'}
+                theme="dark"
                 width="full"
                 parentWidth="380px"
                 options={precalculatedAOIOptions}
@@ -114,7 +114,7 @@ const AnalyzeAreasCardComponent = ({
               <SearchLocation
                 stacked
                 view={view}
-                theme={'dark'}
+                theme="dark"
                 width="full"
                 parentWidth="380px"
                 searchSourceLayerSlug={selectedOption.slug}
@@ -139,9 +139,12 @@ const AnalyzeAreasCardComponent = ({
             >
               <InfoIcon className={styles.info} />
               <span className={styles.warning}>
-                {t('Draw or upload a shape smaller than')}{' '}
+                {t('Draw or upload a shape smaller than')}
                 <b>
-                  {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}km<sup>2</sup>
+                  {' '}
+                  {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
+                  km
+                  <sup>2</sup>
                 </b>
                 .
               </span>
@@ -184,6 +187,6 @@ const AnalyzeAreasCardComponent = ({
       />
     </div>
   );
-};
+}
 
 export default AnalyzeAreasCardComponent;

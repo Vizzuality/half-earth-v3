@@ -38,10 +38,19 @@ function AoiEntryTooltipContainer(props) {
     const aoiId = createHashFromGeometry(geometry);
     setAreaTypeSelected(AREA_TYPES.futurePlaces);
 
-    browsePage({ type: AREA_OF_INTEREST, payload: { id: aoiId }, query: { precalculatedLayer: HALF_EARTH_FUTURE_TILE_LAYER, OBJECTID: attributes.OBJECTID } });
+    browsePage({
+      type: AREA_OF_INTEREST,
+      payload: { id: aoiId },
+      query:
+      {
+        precalculatedLayer: HALF_EARTH_FUTURE_TILE_LAYER,
+        OBJECTID: attributes.OBJECTID,
+      },
+    });
   };
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Component
       mapTooltipIsVisible={mapTooltipIsVisible}
       tooltipContent={tooltipInfo}
