@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 
-import { calculateGeometryArea } from 'utils/analyze-areas-utils';
-
 import { loadModules } from 'esri-loader';
+
+import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 
 import { LAYERS_URLS } from 'constants/layers-urls';
 
@@ -129,7 +129,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
       (
         [
           Sketch,
-          // SketchViewModel,
+          SketchViewModel,
           GraphicsLayer,
         ],
       ) => {
@@ -147,14 +147,14 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
           visibleElements: {
             settingsMenu: false,
           },
-        // viewModel: new SketchViewModel({
-        //   view: view,
-        //   layer:_sketchLayer,
-        //   polygonSymbol: {
-        //     type: "simple-fill",
-        //     color: [147, 255, 95, 0.2]
-        //   }
-        // })
+          viewModel: new SketchViewModel({
+            view,
+            layer: _sketchLayer,
+            polygonSymbol: {
+              type: 'simple-fill',
+              color: [147, 255, 95, 0.2],
+            },
+          }),
         });
         setSketchTool(_sketchTool);
       },
