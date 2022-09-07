@@ -45,7 +45,6 @@ function DataSceneComponent({
   countryISO,
   countryName,
   openedModal,
-  activeLayers,
   activeOption,
   sceneSettings,
   isSidebarOpen,

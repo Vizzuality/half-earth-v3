@@ -30,7 +30,6 @@ import mapStateToProps from './data-scene-selectors';
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
-  console.log(props);
   const {
     mapTooltipData,
     activeLayers,
