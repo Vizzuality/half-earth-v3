@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import Modal from 'containers/modals/onboarding-modal';
-import { motion } from 'framer-motion';
+
 import { useT, useLocale } from '@transifex/react';
+
+import cx from 'classnames';
+import { motion } from 'framer-motion';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as DotsIcon } from 'icons/dots.svg';
-import { ReactComponent as PlayIcon } from 'icons/play.svg';
-import { ReactComponent as PauseIcon } from 'icons/pause.svg';
 import { ReactComponent as MuteIcon } from 'icons/mute.svg';
 import { ReactComponent as MutedIcon } from 'icons/muted.svg';
-import cx from 'classnames';
+import { ReactComponent as PauseIcon } from 'icons/pause.svg';
+import { ReactComponent as PlayIcon } from 'icons/play.svg';
 import { LANDING } from 'router';
 import priorityPlaces01 from 'sounds/tour1-track1-intro.mp3';
 import priorityPlaces02 from 'sounds/tour1-track2-priority.mp3';
@@ -25,13 +26,17 @@ import nationalReportCards05 from 'sounds/tour2-track5-challenges.mp3';
 import nationalReportCards06 from 'sounds/tour2-track6-ranking.mp3';
 import nationalReportCards07 from 'sounds/tour2-track7-closure.mp3';
 
+import Modal from 'containers/modals/onboarding-modal';
+
 import {
   getScripts,
   NO_INTERACTION_STEPS,
 } from 'constants/onboarding-constants';
+
 import StepsArcs from '../step-arcs';
-import styles from './sound-btn-styles.module.scss';
+
 import AudioPlayer from './audio-player';
+import styles from './sound-btn-styles.module.scss';
 
 const files = {
   'priority-places': [
@@ -54,7 +59,7 @@ const files = {
   ],
 };
 
-const ButtonIcon = ({
+function ButtonIcon({
   waitingStartAudioClick,
   waitingInteraction,
   handlePlay,
@@ -67,7 +72,7 @@ const ButtonIcon = ({
   setPausedTime,
   playedSeconds,
   changeUI,
-}) => {
+}) {
   const renderAudioBars = () => (
     <div className={styles.audioBars} onMouseEnter={() => setPauseIcon(true)}>
       <motion.div
@@ -139,15 +144,15 @@ const ButtonIcon = ({
       )}
     </>
   );
-};
+}
 
-const SoundButtonComponent = ({
+function SoundButtonComponent({
   browsePage,
   changeUI,
   onboardingType,
   onboardingStep,
   waitingInteraction,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const scripts = useMemo(() => getScripts(), [locale]);
@@ -180,10 +185,9 @@ const SoundButtonComponent = ({
     setPlaying(true);
   };
 
-  const script =
-    onboardingType &&
-    scripts[onboardingType] &&
-    Object.values(scripts[onboardingType])[onboardingStep];
+  const script = onboardingType
+    && scripts[onboardingType]
+    && Object.values(scripts[onboardingType])[onboardingStep];
   const file = files[onboardingType][onboardingStep];
 
   const handleBack = () => {
@@ -217,7 +221,7 @@ const SoundButtonComponent = ({
     setTextMark(0);
 
     const dontWaitStep = NO_INTERACTION_STEPS[onboardingType].includes(
-      Object.keys(scripts[onboardingType])[onboardingStep]
+      Object.keys(scripts[onboardingType])[onboardingStep],
     );
 
     if (dontWaitStep) {
@@ -240,8 +244,7 @@ const SoundButtonComponent = ({
   const startTime = script && script[textMark] && script[textMark].startTime;
   const endTime = script && script[textMark] && script[textMark].endTime;
   const text = script && script[textMark] && script[textMark].text;
-  const stepsNumber =
-    scripts[onboardingType] && Object.keys(scripts[onboardingType]).length;
+  const stepsNumber = scripts[onboardingType] && Object.keys(scripts[onboardingType]).length;
 
   const renderTooltipText = () => {
     if (!waitingInteraction && waitingStartAudioClick) {
@@ -321,7 +324,7 @@ const SoundButtonComponent = ({
         isOpen={finishModal}
         title={t('What would you like to do next?')}
         description={t(
-          'You just finished the audio tour you can either go on a new tour or explore the Half-Earth Project Map on your own.'
+          'You just finished the audio tour. You can either take a new tour or explore the Half-Earth Project Map on your own.',
         )}
         handleBack={handleBack}
         handleClose={handleSwitchMode}
@@ -329,6 +332,6 @@ const SoundButtonComponent = ({
       />
     </div>
   );
-};
+}
 
 export default SoundButtonComponent;

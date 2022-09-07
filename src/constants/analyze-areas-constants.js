@@ -1,4 +1,13 @@
 import React from 'react';
+
+import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
+import { percentageFormat } from 'utils/data-formatting-utils';
+
+import { t } from '@transifex/native';
+
+import {
+  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
+} from 'constants/geo-processing-services';
 import {
   ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
@@ -9,18 +18,10 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
-import { t } from '@transifex/native';
-
-import {
-  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
-} from 'constants/geo-processing-services';
-
-import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
-import { percentageFormat } from 'utils/data-formatting-utils';
 
 const {
   REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI,
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL
+  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
 } = process.env;
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
@@ -53,19 +54,18 @@ export const {
 
 export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
 
-
-export const getPrecalculatedAOIOptions = () => FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
+export const getPrecalculatedAOIOptions = () => (FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
   { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth Future') },
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
 ] : [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth Future') },
-];
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
+]);
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === 'development' ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;
 

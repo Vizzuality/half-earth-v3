@@ -90,7 +90,7 @@ function AnalyzeAreasCardComponent({
           />
           <Button
             type="square"
-            label={t('Draw or upload a shape')}
+            label={t('Define region of interest')}
             Icon={AoisDrawIcon}
             active={selectedAnalysisTab === 'draw'}
             handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}

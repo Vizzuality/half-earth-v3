@@ -1,10 +1,11 @@
+import { t } from '@transifex/native';
+
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
   HALF_EARTH_FUTURE_METADATA_SLUG,
 } from 'constants/layers-slugs';
-import { t } from '@transifex/native';
 
 export const PROTECTED_AREAS_COLOR = '#008604';
 export const FUTURE_PLACES_COLOR = '#FF9C32';
@@ -20,7 +21,7 @@ export const getWDPALayers = () => [
     metadataTitle: t('Protected areas'),
   },
   {
-    name: t('Community based'),
+    name: t('Community-based'),
     value: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     id: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     title: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
@@ -33,11 +34,11 @@ export const getWDPALayers = () => [
 
 export const getConserveNextLayers = () => [
   {
-    name: t('Places for a Half-Earth Future'),
+    name: t('Priority Areas to Achieve a Half-Earth Future'),
     value: HALF_EARTH_FUTURE_TILE_LAYER,
     id: HALF_EARTH_FUTURE_TILE_LAYER,
     title: HALF_EARTH_FUTURE_TILE_LAYER,
     slug: HALF_EARTH_FUTURE_METADATA_SLUG,
-    metadataTitle: t('Places for a Half-Earth Future'),
+    metadataTitle: t('Priority Areas to Achieve a Half-Earth Future'),
   },
 ];
