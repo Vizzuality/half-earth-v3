@@ -31,7 +31,7 @@ const {
   REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
 } = process.env;
 
-// Protected areas are fetched on protected areas modal except for PA type AOIs
+// !Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
   const {
     changeGlobe,
@@ -102,7 +102,7 @@ function AOIScene(props) {
     });
   }, []);
 
-  // Get PRECALCULATED AOIs
+  // !Get PRECALCULATED AOIs
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
       setPrecalculatedAOIs({
@@ -145,7 +145,7 @@ function AOIScene(props) {
     setSpeciesData({ species: orderedSpecies });
   }, [taxaData]);
 
-  // Reconcile all data until completely loaded
+  // !Reconcile all data until completely loaded
   useEffect(() => {
     const hasAllData = speciesData
       && contextualData

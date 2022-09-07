@@ -50,20 +50,27 @@ function AoiSceneComponent({
       onMapLoad={onMapLoad}
     >
       <ArcgisLayerManager activeLayers={updatedActiveLayers} />
+
       <MaskAndOutlineGraphicLayer geometry={geometry} />
+
       <FeatureHighlightLayer
         featureLayerSlugs={[HALF_EARTH_FUTURE_TILE_LAYER]}
         onFeatureClick={handleFuturePlaceClick}
       />
+
       <LocalSceneViewManager localGeometry={geometry} />
       {FEATURE_NEW_MENUS && !isMobile && (
         <SideMenu activeLayers={updatedActiveLayers} />
       )}
+
       {!FEATURE_NEW_MENUS && (
         <Widgets activeLayers={updatedActiveLayers} />
       )}
+
       <TerrainExaggerationLayer />
+
       <LabelsLayer activeLayers={updatedActiveLayers} />
+
       <AoiSidebar
         activeCategory={activeCategory}
         aoiId={aoiId}
@@ -78,6 +85,7 @@ function AoiSceneComponent({
         onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
       />
+
       <AOIEntryTooltip
         tooltipInfo={tooltipInfo}
         setTooltipInfo={setTooltipInfo}

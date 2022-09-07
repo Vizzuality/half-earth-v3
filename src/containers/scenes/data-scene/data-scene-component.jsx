@@ -103,13 +103,6 @@ function DataSceneComponent({
 
       {isGlobeUpdating && <Spinner floating />}
 
-      {!!onboardingType && <SoundButton />}
-      <OnboardingTooltip />
-
-      <ArcgisLayerManager activeLayers={activeLayers} />
-
-      {isGlobeUpdating && <Spinner floating />}
-
       <DataGlobalSidebar
         activeLayers={activeLayers}
         activeOption={activeOption}
@@ -190,7 +183,6 @@ function DataSceneComponent({
         <GlobesMenu browsePage={browsePage} />
       )}
 
-      <LabelsLayer activeLayers={activeLayers} />
     </Scene>
   );
 }
