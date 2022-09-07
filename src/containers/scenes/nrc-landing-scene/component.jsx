@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import loadable from '@loadable/component';
 
 import cx from 'classnames';
-
-import useIsCursorBottom from 'hooks/use-cursor-bottom';
 
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
@@ -52,7 +50,8 @@ function NrcLandingComponent({
   browsePage,
 }) {
   const isMobile = useMobile();
-  const cursorBottom = useIsCursorBottom({ });
+
+  const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
   return (
     <Scene
@@ -65,7 +64,7 @@ function NrcLandingComponent({
           !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
         }
       className={cx({
-        [uiStyles.blurScene]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
+        [uiStyles.blurScene]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
       })}
     >
 
@@ -96,12 +95,12 @@ function NrcLandingComponent({
           activeLayers={activeLayers}
           openedModal={openedModal}
           onboardingStep={onboardingStep}
-          blur={cursorBottom}
+          blur={activeGlobesMenu}
         />
       )}
 
       {FEATURE_NEW_MENUS && !isMobile && (
-        <GlobePageIndicator />
+        <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
       )}
 
       {!FEATURE_NEW_MENUS && (
@@ -127,14 +126,17 @@ function NrcLandingComponent({
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
         className={cx({
-          [uiStyles.blur]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
+          [uiStyles.blur]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 
       <LabelsLayer activeLayers={activeLayers} />
 
-      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && !onboardingType && (
-        <GlobesMenu browsePage={browsePage} />
+      {FEATURE_NEW_MENUS && activeGlobesMenu && !isMobile && !onboardingType && (
+        <GlobesMenu
+          browsePage={browsePage}
+          onMouseLeave={() => setActiveGlobesMenu(false)}
+        />
       )}
     </Scene>
   );

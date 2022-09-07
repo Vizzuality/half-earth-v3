@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 import {
   routes, DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING,
@@ -11,9 +13,9 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './styles.module';
 
-function GlobePageIndicator({ pathname }) {
+function GlobePageIndicator({ onMouseEnter, pathname }) {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onMouseEnter={onMouseEnter}>
       <div
         className={cx({
           [styles.globeHighlight]: pathname === routes[FEATURED].path,
@@ -53,5 +55,14 @@ function GlobePageIndicator({ pathname }) {
     </div>
   );
 }
+
+GlobePageIndicator.propTypes = {
+  pathname: PropTypes.string.isRequired,
+  onMouseEnter: PropTypes.func,
+};
+
+GlobePageIndicator.defaultProps = {
+  onMouseEnter: () => {},
+};
 
 export default GlobePageIndicator;

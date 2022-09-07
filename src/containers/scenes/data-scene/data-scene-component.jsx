@@ -156,9 +156,7 @@ function DataSceneComponent({
       )}
 
       {FEATURE_NEW_MENUS && !isMobile && (
-        <div onMouseEnter={() => setActiveGlobesMenu(true)}>
-          <GlobePageIndicator />
-        </div>
+        <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
       )}
 
       {(!FEATURE_NEW_MENUS || isMobile) && (
