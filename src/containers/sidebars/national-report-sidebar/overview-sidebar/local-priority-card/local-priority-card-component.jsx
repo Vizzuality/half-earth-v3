@@ -116,9 +116,9 @@ function LocalPriorityCardComponent(props) {
         sectionClassName={styles.section}
       >
         <SidebarCardContent
-          title={t('What is already protected?')}
+          title={t('Current protection status')}
           description={t(
-            'The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature',
+            'The green areas on the map represent regions that are recognized as currently being managed for long-term nature conservation',
           )}
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
@@ -193,7 +193,7 @@ function LocalPriorityCardComponent(props) {
             countryNames[countryName] || countryName
           }?`}
           description={t(
-            'These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets.',
+            'These unprotected places have been identified as those where conservation efforts should be directed to efficiently achieve the most rapid gains in biodiversity habitat and species protection. ',
           )}
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
