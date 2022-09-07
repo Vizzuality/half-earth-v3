@@ -1,14 +1,17 @@
 import React from 'react';
-import { useT } from '@transifex/react';
 import { connect } from 'react-redux';
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
+
 import { helpCompleteDatabaseAnalyticsEvent } from 'actions/google-analytics-actions';
+
+import { useT } from '@transifex/react';
+
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 import styles from './mol-uploader-styles.module.scss';
 
 const actions = { helpCompleteDatabaseAnalyticsEvent };
 
-const MOLUploader = ({ helpCompleteDatabaseAnalyticsEvent }) => {
+function MOLUploader({ helpCompleteDatabaseAnalyticsEvent }) {
   const t = useT();
 
   const handleClick = () => {
@@ -25,10 +28,10 @@ const MOLUploader = ({ helpCompleteDatabaseAnalyticsEvent }) => {
         <h3 className={styles.title}>{t('Help us complete our database')}</h3>
       </div>
       <div className={styles.question}>
-        {t('Do you have more information about this particular area?')}
+        {t('Do you have more information about this area?')}
       </div>
     </div>
   );
-};
+}
 
 export default connect(null, actions)(MOLUploader);

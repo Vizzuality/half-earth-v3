@@ -49,10 +49,15 @@ const SEARCH_SOURCES = {
 };
 
 export const {
-  ADMINISTRATIVE_BOUNDARIES, NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS, FUTURE_PLACES,
+  ADMINISTRATIVE_BOUNDARIES,
+  NATIONAL_BOUNDARIES,
+  SUBNATIONAL_BOUNDARIES,
+  PROTECTED_AREAS,
+  FUTURE_PLACES,
 } = SEARCH_SOURCES;
 
-export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
+export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL
+  ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
 
 export const getPrecalculatedAOIOptions = () => (FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
   { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
@@ -91,18 +96,18 @@ export const getSidebarCardsConfig = () => ({
              </span>,
   },
   [BIODIVERSITY_SLUG]: {
-    title: t('What is the biodiversity pattern in this area?'),
-    description: () => t('Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.'),
+    title: t('Biodiversity patterns'),
+    description: () => t('The species range maps are summarized by biodiversity richness and rarity.  By combining richness and rarity, these maps inform the __Half-Earth Project’s__ prioritization for conservation efforts. These three layers (richness, rarity, and priority) can be visualized below.'),
     warning: t('Biodiversity patterns not available for areas under __1,000 km2__.'),
   },
   [PROTECTION_SLUG]: {
-    title: t('What is already protected in this area?'),
+    title: t('Current protection status'),
     description: ({ protectionPercentage, percentage }) => `${t('Of the current area,')} __${(protectionPercentage || percentage) ? roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || percentage))) : '0'}${t('% of land is under formal protection__.')}`,
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
-    title: t('How much do humans affect this area?'),
-    description: ({ pressures }) => (pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is under human pressure__')},
+    title: t('Human impact'),
+    description: ({ pressures }) => (pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is currently experiencing human pressures__')},
     ${t('the majority of which are pressures from ')}${getMainPressure(pressures)}.` : ''),
     warning: null,
   },
