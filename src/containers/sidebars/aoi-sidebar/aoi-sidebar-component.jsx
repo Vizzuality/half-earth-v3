@@ -1,42 +1,44 @@
 import React, { useState, useMemo } from 'react';
-import cx from 'classnames';
+
+import { writeToForageItem } from 'utils/local-forage-utils';
+
 import { useT, useLocale } from '@transifex/react';
 
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import cx from 'classnames';
+import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
 import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
-import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import Button from 'components/button';
-import ShareModal from 'components/share-modal';
-import SidebarCard from './sidebar-card-content';
-import SpeciesCard from './species-card';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+import ShareModal from 'components/share-modal';
 
-import { writeToForageItem } from 'utils/local-forage-utils';
-
-import { getHumanPressuresLandUse } from 'constants/human-pressures';
-import { getWDPALayers } from 'constants/protected-areas';
-import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
-import {
-  getAOIContextualData,
-  getCountryNames,
-} from 'constants/translation-constants';
+import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
+import { getHumanPressuresLandUse } from 'constants/human-pressures';
 import {
   MERGED_PROTECTION,
   MERGED_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
 } from 'constants/metadata';
+import { getWDPALayers } from 'constants/protected-areas';
+import {
+  getAOIContextualData,
+  getCountryNames,
+} from 'constants/translation-constants';
+
+import SidebarCard from './sidebar-card-content';
+import SpeciesCard from './species-card';
 import styles from './styles.module.scss';
 
-const AOISidebarComponent = ({
+function AOISidebarComponent({
   map,
   area,
   className,
@@ -51,17 +53,17 @@ const AOISidebarComponent = ({
   isShareModalOpen,
   setShareModalOpen,
   dataLoaded,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const humanPressuresLandUse = useMemo(
     () => getHumanPressuresLandUse(),
-    [locale]
+    [locale],
   );
 
   const aoiBiodiversityToggles = useMemo(
     () => getAOIBiodiversityToggles(),
-    [locale]
+    [locale],
   );
   const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 
@@ -83,7 +85,7 @@ const AOISidebarComponent = ({
 
   const AOIContextualTranslations = useMemo(
     () => getAOIContextualData(),
-    [locale]
+    [locale],
   );
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
@@ -110,9 +112,9 @@ const AOISidebarComponent = ({
               />
             ) : (
               <p className={styles.areaName}>
-                {updatedAreaName ||
-                  countryNamesTranslations[contextualData.areaName] ||
-                  contextualData.areaName}
+                {updatedAreaName
+                  || countryNamesTranslations[contextualData.areaName]
+                  || contextualData.areaName}
               </p>
             )}
             {area && (
@@ -167,8 +169,8 @@ const AOISidebarComponent = ({
           <div
             className={styles.contextualIndicator}
             title={`${t('land cover: ')}${
-              AOIContextualTranslations[landCover && landCover.toLowerCase()] ||
-              landCover
+              AOIContextualTranslations[landCover && landCover.toLowerCase()]
+              || landCover
             }`}
           >
             <LandCoverIcon />
@@ -224,7 +226,7 @@ const AOISidebarComponent = ({
           metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
         />
         <section className={styles.completeDatabaseWrapper}>
-          <p>{t('Do you have more information about this particular area?')}</p>
+          <p>{t('Do you have more information about this area?')}</p>
           <a
             className={styles.link}
             href="https://mol.org/upload"
@@ -241,6 +243,6 @@ const AOISidebarComponent = ({
       </div>
     </>
   );
-};
+}
 
 export default AOISidebarComponent;

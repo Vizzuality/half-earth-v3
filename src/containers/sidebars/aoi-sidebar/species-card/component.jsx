@@ -1,36 +1,31 @@
 import React, { useMemo } from 'react';
 
-// components
-import SpeciesBar from 'components/charts/species-bar';
-import Dropdown from 'components/dropdown';
-import { useT, useLocale } from '@transifex/react';
-
-// containers
-import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-
-// utils
 import {
   roundRangeInArea,
   roundGlobalRange,
 } from 'utils/data-formatting-utils';
 
-// constants
+import { useT, useLocale } from '@transifex/react';
+
+import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
+import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
+import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
+import SpeciesBar from 'components/charts/species-bar';
+import Dropdown from 'components/dropdown';
+
 import {
   getSidebarCardsConfig,
   SPECIES_SLUG,
 } from 'constants/analyze-areas-constants';
 
-// icons
-import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
-import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
-
-// styles
 import styles from './styles.module.scss';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
-const Component = ({
+function Component({
   area,
   speciesData,
   speciesFilters,
@@ -48,7 +43,7 @@ const Component = ({
   handleCloseSearch,
   selectedSearchOption,
   searchOptions,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
@@ -68,7 +63,7 @@ const Component = ({
       <div>
         <p className={styles.title}>
           {sidebarCardsConfig[SPECIES_SLUG].title(
-            speciesData.species && speciesData.species.length
+            speciesData.species && speciesData.species.length,
           )}
           <span
             className={styles.infoClue}
@@ -149,11 +144,12 @@ const Component = ({
                     className={styles.commonName}
                     href={individualSpeciesData.molLink}
                   >
-                    {individualSpeciesData.commonname ||
-                      individualSpeciesData.name}
+                    {individualSpeciesData.commonname
+                      || individualSpeciesData.name}
                   </a>
                   <span className={styles.scientificName}>
-                    {individualSpeciesData.name}{' '}
+                    {individualSpeciesData.name}
+                    {' '}
                   </span>
                 </div>
                 {showCarouselArrows && (
@@ -167,12 +163,12 @@ const Component = ({
               </div>
             </div>
             <div className={styles.globalRangeArea}>
-              <span>{t('Global habitat-suitable range')}</span>
+              <span>{t('Area of habitat-suitable range for this species available globally')}</span>
               <p>
                 {`${roundGlobalRange(
                   individualSpeciesData.globaldRangeArea,
                   locale,
-                  t
+                  t,
                 )}${t(' km')}`}
                 <sup>2</sup>
               </p>
@@ -190,12 +186,14 @@ const Component = ({
               className={styles.speciesBarContainer}
               percentage={capPercentage(individualSpeciesData.presenceInArea)}
               percentageLabel={roundRangeInArea(
-                capPercentage(individualSpeciesData.presenceInArea)
+                capPercentage(individualSpeciesData.presenceInArea),
               )}
             />
-            <p className={styles.iucnStatus}>{`${t('IUCN status')}: ${
-              individualSpeciesData.iucnCategory
-            }`}</p>
+            <p className={styles.iucnStatus}>
+              {`${t('IUCN status')}: ${
+                individualSpeciesData.iucnCategory
+              }`}
+            </p>
           </section>
         )}
       </div>
@@ -207,6 +205,6 @@ const Component = ({
       )}
     </SidebarCardWrapper>
   );
-};
+}
 
 export default Component;

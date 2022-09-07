@@ -1,4 +1,13 @@
 import React from 'react';
+
+import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
+import { percentageFormat } from 'utils/data-formatting-utils';
+
+import { t } from '@transifex/native';
+
+import {
+  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
+} from 'constants/geo-processing-services';
 import {
   ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
@@ -9,18 +18,10 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
-import { t } from '@transifex/native';
-
-import {
-  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
-} from 'constants/geo-processing-services';
-
-import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/analyze-areas-utils';
-import { percentageFormat } from 'utils/data-formatting-utils';
 
 const {
   REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI,
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL
+  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
 } = process.env;
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
@@ -48,24 +49,28 @@ const SEARCH_SOURCES = {
 };
 
 export const {
-  ADMINISTRATIVE_BOUNDARIES, NATIONAL_BOUNDARIES, SUBNATIONAL_BOUNDARIES, PROTECTED_AREAS, FUTURE_PLACES,
+  ADMINISTRATIVE_BOUNDARIES,
+  NATIONAL_BOUNDARIES,
+  SUBNATIONAL_BOUNDARIES,
+  PROTECTED_AREAS,
+  FUTURE_PLACES,
 } = SEARCH_SOURCES;
 
-export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
+export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL
+  ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
 
-
-export const getPrecalculatedAOIOptions = () => FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
+export const getPrecalculatedAOIOptions = () => (FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
   { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth Future') },
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
 ] : [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth Future') },
-];
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
+]);
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === 'development' ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;
 
@@ -91,18 +96,18 @@ export const getSidebarCardsConfig = () => ({
              </span>,
   },
   [BIODIVERSITY_SLUG]: {
-    title: t('What is the biodiversity pattern in this area?'),
-    description: () => t('Species range maps are summarised in biodiversity richness which informs rarity driving __Half-Earth Project’s__ prioritisation exercise.'),
+    title: t('Biodiversity patterns'),
+    description: () => t('The species range maps are summarized by biodiversity richness and rarity.  By combining richness and rarity, these maps inform the __Half-Earth Project’s__ prioritization for conservation efforts. These three layers (richness, rarity, and priority) can be visualized below.'),
     warning: t('Biodiversity patterns not available for areas under __1,000 km2__.'),
   },
   [PROTECTION_SLUG]: {
-    title: t('What is already protected in this area?'),
+    title: t('Current protection status'),
     description: ({ protectionPercentage, percentage }) => `${t('Of the current area,')} __${(protectionPercentage || percentage) ? roundUpPercentage(percentageFormat(capPercentage(protectionPercentage || percentage))) : '0'}${t('% of land is under formal protection__.')}`,
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
-    title: t('How much do humans affect this area?'),
-    description: ({ pressures }) => (pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is under human pressure__')},
+    title: t('Human impact'),
+    description: ({ pressures }) => (pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is currently experiencing human pressures__')},
     ${t('the majority of which are pressures from ')}${getMainPressure(pressures)}.` : ''),
     warning: null,
   },

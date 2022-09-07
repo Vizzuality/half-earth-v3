@@ -41,7 +41,7 @@ function HeroComponent({ className, changeUI, browsePage }) {
       >
         <T _str="Explore where species conservation" />
         <br />
-        <T _str="activities are needed the most" />
+        <T _str="activities are most needed" />
       </motion.h1>
 
       <motion.p
@@ -73,9 +73,9 @@ function HeroComponent({ className, changeUI, browsePage }) {
               number="01"
               duration="7-8"
               gif={AUDIO_CARD_1_GIF}
-              title={t('Priority places')}
+              title={t('Priority Areas')}
               description={t(
-                'Understand where the suggested priority places should happen for vertebrates.',
+                'Learn about priority areas for preserving global vertebrate biodiversity.',
               )}
               handleClick={() => {
                 browsePage({ type: DATA });
@@ -99,9 +99,9 @@ function HeroComponent({ className, changeUI, browsePage }) {
               number="02"
               duration="10"
               gif={AUDIO_CARD_2_GIF}
-              title={t('National Report cards')}
+              title={t('National Report Cards')}
               description={t(
-                'Analyze national and other areas of interest. Download reports to share with others.',
+                'Analyze the current status of conservation efforts in each nation or area of interest and download reports to share with others.',
               )}
               handleClick={() => {
                 browsePage({ type: NATIONAL_REPORT_CARD_LANDING });

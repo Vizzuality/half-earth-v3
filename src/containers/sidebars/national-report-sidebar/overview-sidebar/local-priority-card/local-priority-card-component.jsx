@@ -1,14 +1,19 @@
 import React, { useCallback } from 'react';
+
 import { useT, useLocale } from '@transifex/react';
-import { getCountryNames } from 'constants/translation-constants';
 
 import cx from 'classnames';
-import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
 import LayerToggle from 'components/layer-toggle';
 
-import styles from './local-priority-card-styles.module.scss';
-
+import {
+  PROTECTION_SLUG,
+  ADDITIONAL_PROTECTION_SLUG,
+  FUTURE_PLACES_SLUG,
+} from 'constants/analyze-areas-constants';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COUNTRY_PRIORITY_LAYER,
@@ -19,13 +24,11 @@ import {
   MARINE_COUNTRY_PRIORITY_LAYER,
   HALF_EARTH_FUTURE_METADATA_SLUG,
 } from 'constants/layers-slugs';
-import {
-  PROTECTION_SLUG,
-  ADDITIONAL_PROTECTION_SLUG,
-  FUTURE_PLACES_SLUG,
-} from 'constants/analyze-areas-constants';
+import { getCountryNames } from 'constants/translation-constants';
 
-const LocalPriorityCardComponent = (props) => {
+import styles from './local-priority-card-styles.module.scss';
+
+function LocalPriorityCardComponent(props) {
   const {
     hasPriority,
     protectionNeeded,
@@ -49,7 +52,7 @@ const LocalPriorityCardComponent = (props) => {
 
   const { Marine } = countryData;
 
-  const coastal = Marine === 'True' ? true : false;
+  const coastal = Marine === 'True';
 
   const NRC_TOGGLES = {
     [PROTECTED_AREAS_VECTOR_TILE_LAYER]: {
@@ -98,7 +101,7 @@ const LocalPriorityCardComponent = (props) => {
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [HALF_EARTH_FUTURE_TILE_LAYER]: {
-      name: t('Places for a Half-Earth Future'),
+      name: t('Priority Areas to Achieve a Half-Earth Future'),
       value: HALF_EARTH_FUTURE_TILE_LAYER,
       id: HALF_EARTH_FUTURE_TILE_LAYER,
       title: HALF_EARTH_FUTURE_TILE_LAYER,
@@ -113,9 +116,9 @@ const LocalPriorityCardComponent = (props) => {
         sectionClassName={styles.section}
       >
         <SidebarCardContent
-          title={t('What is already protected?')}
+          title={t('Current protection status')}
           description={t(
-            'The green areas on the map represent regions that are currently recognized as being managed for the long-term conservation of nature'
+            'The green areas on the map represent regions that are recognized as currently being managed for long-term nature conservation',
           )}
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
@@ -190,7 +193,7 @@ const LocalPriorityCardComponent = (props) => {
             countryNames[countryName] || countryName
           }?`}
           description={t(
-            'These locations indentify the unprotected places that will lead to the most rapid conservation gains for biodiversity habitat via contributions to species representation targets.'
+            'These unprotected places have been identified as those where conservation efforts should be directed to efficiently achieve the most rapid gains in biodiversity habitat and species protection. ',
           )}
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
@@ -208,6 +211,6 @@ const LocalPriorityCardComponent = (props) => {
       </SidebarCardWrapper>
     </div>
   );
-};
+}
 
 export default LocalPriorityCardComponent;
