@@ -146,7 +146,7 @@ SearchLocation.propTypes = {
   ).isRequired,
   reference: Proptypes.node.isRequired,
   selectedOption: Proptypes.shape().isRequired,
-  simple: Proptypes.bool,
+  searchType: Proptypes.oneOf(['simple', 'country', 'full']),
   theme: Proptypes.oneOf(['light', 'dark']),
   width: Proptypes.oneOf(['fluid', 'full']),
 };
@@ -154,7 +154,7 @@ SearchLocation.propTypes = {
 SearchLocation.defaultProps = {
   hasResetButton: false,
   dropdownOpen: false,
-  simple: false,
+  searchType: 'full',
   theme: 'light',
   width: 'fluid',
 };
