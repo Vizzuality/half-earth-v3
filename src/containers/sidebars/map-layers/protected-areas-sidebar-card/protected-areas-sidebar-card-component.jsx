@@ -80,7 +80,7 @@ function ProtectedAreasSidebarCardComponent({
     categoryTitle: t('Protection'),
     layersTitle: t('Conservation areas'),
     description: t(
-      'Global protections clasified according to their management objectives.',
+      'Global protections classified according to their management objectives.',
     ),
   };
 
@@ -128,7 +128,7 @@ function ProtectedAreasSidebarCardComponent({
         </div>
         <hr className={hrTheme.dark} />
         <span className={styles.layersTitle}>
-          {t('Where to conserve next')}
+          {t('Where additional conservation is needed')}
         </span>
         <div className={styles.togglesContainer}>
           {conserveNextLayers.map((layer) => (

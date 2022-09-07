@@ -34,12 +34,13 @@ function HelpModal({ handleClose, isOpen }) {
 
   const storyDescriptions = {
     firstStep: t(
-      'Explore different datasets at a global scale, from biodiversity patterns to human pressures.',
+      'At higher zoom levels, the map enables you to view datasets at a global scale.',
     ),
     secondStep: t(
-      'Select an area to analyze and the side panel will show fine detail at local scale.',
+      'Search for a place using the search bar at the bottom of the left-hand report card or find a country or region by manually zooming on the globe. Once selected, the left side panel will display fine detail at a local scale.',
     ),
   };
+
   return (
     <Modal
       isOpen={isOpen}

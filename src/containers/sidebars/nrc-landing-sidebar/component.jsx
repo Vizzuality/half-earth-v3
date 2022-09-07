@@ -88,14 +88,15 @@ function NRCLandingSidebar({
       <p className={styles.title}>{t('National Report Cards')}</p>
       <p className={styles.body}>
         {t(`The Species Protection Index (SPI) reflects the average amount of
-        area-based conservation targets met across all endemic species within a
-        given country in a given year, weighted by a country's stewardship.
-        Strategic and targeted protection of species habitat will generally
-        result in a country's SPI increasing, but once a country meets an
-        individual species' target, subsequent additional protection of habitat
-        will not increase the country's SPI. Likewise, any protection of land
-        that does not also protect species habitat will not increase a country's
-        SPI.`)}
+        area-based conservation targets that have been met for all endemic species within the
+        country each year, weighted by a country's stewardship of those species (the
+        proportion of the species population present in that country).
+        Strategic and targeted protection of species habitat will generally result in
+        an increase in a country's SPI, but once a country meets an individual species'
+        target, additional habitat protection for that species will not increase the
+        country's SPI. Likewise, any protection of land that does not also protect species
+        habitat will not increase a country's SPI.
+        `)}
       </p>
       <p className={styles.legendTitle}>
         {t('National Species Protection Index')}

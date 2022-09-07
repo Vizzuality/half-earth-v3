@@ -1,14 +1,15 @@
-import { getCountryNames } from 'constants/translation-constants';
-
+/* eslint-disable camelcase */
 import { random } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
+
+import { selectLangUrlState } from 'selectors/location-selectors';
 
 import { t } from '@transifex/native';
 
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
-import { selectLangUrlState } from 'selectors/location-selectors';
+import { getCountryNames } from 'constants/translation-constants';
 
 const SPECIES_COLOR = {
   amphibians: '#34BD92',
@@ -32,7 +33,10 @@ const getCountryData = createSelector(
 );
 
 // locale is here to recompute the data when the language changes
-const getCountryName = createSelector([getCountryData, selectLangUrlState], (countryData, locale) => {
+const getCountryName = createSelector([
+  getCountryData,
+  selectLangUrlState,
+], (countryData, locale) => {
   if (!countryData) return null;
   const countryNames = getCountryNames();
 
@@ -50,13 +54,18 @@ const getHasPriority = createSelector(getCountryData, (countryData) => {
 });
 
 // locale is here to recompute the data when the language changes
-const getPriorityAreasSentence = createSelector([getCountryData, getHasPriority, selectLangUrlState, getCountryName], (countryData, hasPriority, locale, countryName) => {
+const getPriorityAreasSentence = createSelector([
+  getCountryData,
+  getHasPriority,
+  selectLangUrlState,
+  getCountryName,
+], (countryData, hasPriority, locale, countryName) => {
   if (!countryData) return null;
   return hasPriority
     ? `${t(`The brightly colored map layer presents one possible configuration
   of the additional areas needed to achieve the Half-Earth goal of
   comprehensive terrestrial biodiversity conservation. Higher values
-  indicate locations within `)}${countryName}${t(` that contribute more to the
+  indicate locations within `)}${countryName}${t(` that would contribute more to the
   conservation of species habitat.`)}`
     : `${t(`Our global model of comprehensive terrestrial vertebrate biodiversity
   conservation did not identify any areas in `)}${countryName}${t(` in need of additional protection.
@@ -105,7 +114,10 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, (countryDat
 });
 
 // locale is here to recompute the data when the language changes
-const getHighlightedSpeciesSentence = createSelector([getCountryData, selectLangUrlState], (countryData, locale) => {
+const getHighlightedSpeciesSentence = createSelector([
+  getCountryData,
+  selectLangUrlState,
+], (countryData, locale) => {
   if (!countryData) return null;
   return ` ${t(`Here are some examples of land species of significant conservation interest for each taxonomic group.
   These species are either endemic to `)}${countryData.NAME_0} ${t('or have small range sizes.')}`;
@@ -124,12 +136,15 @@ const getIndexStatement = createSelector(
   (SPI, SPIMean, locale) => {
     if (!SPI || !SPIMean) return null;
     const comparation = SPI >= SPIMean ? t('higher') : t('lower');
-    return `${t('THE INDEX OF THIS COUNTRY IS ')}${comparation} ${t('than the average national SPI: ')}${SPIMean} `;
+    return `${t('THE SPI OF THIS COUNTRY IS ')}${comparation} ${t('than the national average: ')}${SPIMean} `;
   },
 );
 
 // locale is here to recompute the data when the language changes
-const getEndemicSpeciesSentence = createSelector([getNumberOfEndemicVertebrates, selectLangUrlState], (endemicVertebrates, locale) => {
+const getEndemicSpeciesSentence = createSelector([
+  getNumberOfEndemicVertebrates,
+  selectLangUrlState,
+], (endemicVertebrates, locale) => {
   if (!endemicVertebrates) return null;
   return endemicVertebrates === '1' ? `${endemicVertebrates} ${t('is')}` : `${endemicVertebrates} ${t('are')}`;
 });

@@ -66,7 +66,7 @@ function HumanImpactSidebarCardComponent({
     marineLayersTitle: t('Marine use pressures'),
     terrestrialLayersTitle: t('Land use pressures'),
     description: t(
-      'Global human pressures causing habitat loss and accelerating species extintion',
+      'Global human pressures causing habitat loss and accelerating species extinction',
     ),
   };
 

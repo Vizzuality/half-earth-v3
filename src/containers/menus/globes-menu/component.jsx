@@ -35,7 +35,7 @@ function GlobesMenu({ browsePage, landing = false }) {
       <Globe
         title={t('Discover stories')}
         description={t(
-          'Learn about important places of great biodiversity, and how their protection can contribute to preserving global biodiversity.',
+          'Learn about important places of great biodiversity, what sets them apart from the rest of the world and what challenges they face today.',
         )}
         globeImage={globeDiscover}
         handleClick={() => browsePage({ type: FEATURED })}
@@ -43,7 +43,7 @@ function GlobesMenu({ browsePage, landing = false }) {
       <Globe
         title={t('Explore data')}
         description={t(
-          'Investigate species in their place and the priority areas needed to safeguard enough habitat to preserve global biodiversity.',
+          'Explore areas of interest, the vertebrate species that live there, the human pressures that exist, and the current conservation efforts and those that are needed to safeguard enough habitat to preserve global biodiversity.',
         )}
         globeImage={globeExplore}
         center
@@ -52,7 +52,7 @@ function GlobesMenu({ browsePage, landing = false }) {
       <Globe
         title={t('National Report Cards')}
         description={t(
-          'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species.',
+          'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species and critical land area',
         )}
         globeImage={globeNRC}
         handleClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}

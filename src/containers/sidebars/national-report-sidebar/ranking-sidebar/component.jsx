@@ -1,19 +1,22 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useLocale, useT } from '@transifex/react';
-import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
-import styles from './styles.module.scss';
 
-import metadataConfig, { RANKING_CHART } from 'constants/metadata';
+import { useLocale, useT } from '@transifex/react';
+
+import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+
+import ContentfulService from 'services/contentful';
 
 import {
   RANKING_COLORS,
   getRankingLegend,
   RANKING_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
-import ContentfulService from 'services/contentful';
+import metadataConfig, { RANKING_CHART } from 'constants/metadata';
 
-const Component = () => {
+import styles from './styles.module.scss';
+
+function Component() {
   const t = useT();
 
   const [metadata, setMetadata] = useState(null);
@@ -27,26 +30,28 @@ const Component = () => {
     });
   }, [locale]);
 
-  const LegendBlock = ({ legendItems }) => (
-    <div className={styles.legendBlock}>
-      {Object.keys(legendItems).map((slug) => (
-        <div key={`${RANKING_COLORS[slug]}`} className={styles.legendItem}>
-          <span
-            className={styles.color}
-            style={{ backgroundColor: `${RANKING_COLORS[slug]}` }}
-          />
-          <span className={styles.label}>{legendItems[slug]}</span>
-        </div>
-      ))}
-    </div>
-  );
+  function LegendBlock({ legendItems }) {
+    return (
+      <div className={styles.legendBlock}>
+        {Object.keys(legendItems).map((slug) => (
+          <div key={`${RANKING_COLORS[slug]}`} className={styles.legendItem}>
+            <span
+              className={styles.color}
+              style={{ backgroundColor: `${RANKING_COLORS[slug]}` }}
+            />
+            <span className={styles.label}>{legendItems[slug]}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <>
       <div className={styles.cardContainer}>
         <SidebarCardWrapper>
           <SidebarCardContent
-            title={t('Species Protection Index')}
+            title={t('National Species Protection Index')}
             description={metadata && metadata.description}
             metaDataSources={metadata && metadata.source}
           />
@@ -65,6 +70,6 @@ const Component = () => {
       </div>
     </>
   );
-};
+}
 
 export default Component;

@@ -12,7 +12,7 @@ The precalculated refers to the summary data that results from crossing a geomet
 
 The precalculated data appears as a dropdown menu in the `Analyze areas`section, where the user can select between the different precalculated option:
 
-* National Boundaries 
+* National Boundaries
 * Subnational Boundaries
 * Places for the Half-Earth Future
 * Protected Areas
@@ -77,7 +77,7 @@ These tables have a unique field names `MOL_ID` that will be used throughout the
 * [**Terrestrial WDPA simplified 3**](https://eowilson.maps.arcgis.com/home/item.html?id=d61ebb797860432db6e4aa578555c275)
 * [**Terrestrial + Marine WDPA raw**](https://eowilson.maps.arcgis.com/home/item.html?id=17659b62323646b8ae622680dab49952)
 * [**Terrestrial + Marine WDPA simplified**](https://eowilson.maps.arcgis.com/home/item.html?id=1a617eaeaf77458cb569f683366e3920)
-* [**Places for a Half-Earth Future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
+* [**Priority Areas to Achieve a Half-Earth Future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
 
 #### 2. **Biodiversity CRFs**
 There is one biodiversity data cube per terrestrial taxa (in the future there will also be marine taxa: fish and mammals).
@@ -107,20 +107,20 @@ This is the summary of steps:
 1. Table of precalculated data:
 - Precalculate Biodiversity data in ArcGIS Pro (explained in more detail below)
 - Precalculate Contextual data in ArcGIS Pro (explained in more detail below)
-- Merge in Python: 
+- Merge in Python:
    1. **Original notebooks**. Because the data has to be shared in a particular format, it is necessary to carry out the process in Python. The[notebook for AOI](https://github.com/Vizzuality/he-scratchfolder/blob/main/Precalculated_AOI_tables.ipynb) was used for gadm0 and gadm1. However, this method is not efficient, especially when dealing with large databases like the WDPAs.
    2. **Efficient method**. To overcome this problem, this [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/main/Precalculated_WDPA.ipynb) was used to merge the precalculated data for WDPAs. The [HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb) and the [Specific Regions](https://github.com/Vizzuality/he-scratchfolder/blob/master/SpecificRegions_Precalculation.ipynb) also followed the same method. Because it is extremely quicker, simpler and cleaner, the method followed in these last notebooks is very much recommended if these calculations need to be run again.
 
 2. Table of protected areas by country
 For each of these layers, except in the case of the WDPAs, a table with the protected areas that intersect each geometry needs to be provided separately. To identify the WDPAs that fall within each polygon, we can either perform a spatial join between the geometries we are precalculating the data for and the WDPA layer in ArcGIS Online or use an specific Python [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/main/WDPA_gadm1.ipynb) created for this purpose.
 
-**NOTE:** In ArcGIS Pro (Viz2 VM), the history tab of the project `SpecificRegions` shows all the steps followed to calculate both biodiversity and contextual data, as well as to generate the table of protected areas for those geometries. 
+**NOTE:** In ArcGIS Pro (Viz2 VM), the history tab of the project `SpecificRegions` shows all the steps followed to calculate both biodiversity and contextual data, as well as to generate the table of protected areas for those geometries.
 
 
 #### **Steps to precalculate biodiversity data in ArcGIS Pro:**
 There are two example projects for this in Viz2 VM that show the input and output data of this process and the steps followed (history tab). ArcGIS Pro Projects: `gadm0_amphibians_sample_20211003` and `gadm1_reptiles_sample_20211003` show a examples for gadm0 and gadm1 respectively.
 
- 1. **Sample**: Use the Sample tool with the feature layer (geometry) against each species crf. Process as multidimensional and use `MOL_ID` as unique identifier. Select the statistic `SUM`. If the geometries are too big (such a country or a regions), the sample tool might fail. Thus, it's necessary to break the geometries in smaller pieces, using the `Subdivide Polygon` tool. 
+ 1. **Sample**: Use the Sample tool with the feature layer (geometry) against each species crf. Process as multidimensional and use `MOL_ID` as unique identifier. Select the statistic `SUM`. If the geometries are too big (such a country or a regions), the sample tool might fail. Thus, it's necessary to break the geometries in smaller pieces, using the `Subdivide Polygon` tool.
 ![](/public/precalc_sample.png)
 
 2. **Table to Table**: To keep only the values where the species field is above 0
@@ -135,7 +135,7 @@ There are two example projects for this in Viz2 VM that show the input and outpu
 ![](/public/precalc_export_csv.png)
 
 #### **Steps precalculate contextual data:**
-In this case we are using models created with Model Builder to process the data. The models are available in the ArcGIS Pro Project `Contextual_precalculations`. For more clarity, the toolbox in the project `SpecifiRegions` provides a better understanding of the models that we used for the contextual precalculations. The models used can be accessed from the Catalog panel, Toolboxes > Contextual_precalculations.tbx. 
+In this case we are using models created with Model Builder to process the data. The models are available in the ArcGIS Pro Project `Contextual_precalculations`. For more clarity, the toolbox in the project `SpecifiRegions` provides a better understanding of the models that we used for the contextual precalculations. The models used can be accessed from the Catalog panel, Toolboxes > Contextual_precalculations.tbx.
 As in the biodiversity precalculations, we need to input 2 parameters (a feature layer and a crf). In this case, we perform Zonal Statistics to get the summary values of each crf inside each geometry. The field `MOL_ID` identifies each unique geometry. Once we have the output tables of each type of data, we export them as csvs and process them in python using any of the notebooks that follow the [efficient method](https://github.com/Vizzuality/he-scratchfolder/blob/master/SpecificRegions_Precalculation.ipynb).
 
 
@@ -168,7 +168,7 @@ Currently, there are 4 lookup tables in AGOL:
 
 
 
-## **Steps to process Precalculated data 20 Places for a Half-Earth Future:**
+## **Steps to process Precalculated data 20 Priority Areas to Achieve a Half-Earth Future:**
 Project in ArcGIS Pro: `Places_HE_Future`
 1. Access the data from AGOL and download into ArcGIS Pro as a shapefile (the [current layer](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291) is not final and will most probably change, but the processing steps will be the same)
 2. Convert shapefile to geojson with the tool Feature to json. This will allow uploading the file in AGOL as a geojson instead of a shapefile (shapefiles have character limitations that will truncate the string it'll be create later)
@@ -189,7 +189,7 @@ Project in ArcGIS Pro: `Places_HE_Future`
   - Add the WDPA_Mercator layer (only terrestrial) (in the Catalog panel, Add to Database: ArcGIS > Projects > Contextual precalculations.gdb and select the layer `WDPA_Mercator`)
 6. Format and merge data in python ([notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)). Export file as geojson and upload it in AGOL.
 7. For Protected Areas data
-   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for a Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
+   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Priority Areas to Achieve a Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
    - Create a csv with only the relevant fields (exclude geometry) using the Table to Table tool.
    - Upload the table in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=ec40de8083304b279d416685a5b98209). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.
 
