@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import loadable from '@loadable/component';
 
 import cx from 'classnames';
-
-import useIsCursorBottom from 'hooks/use-cursor-bottom';
 
 import FeaturedPlacesLayer from 'containers/layers/featured-places-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
@@ -70,7 +68,8 @@ function DataGlobeComponent({
   browsePage,
 }) {
   const isMobile = useMobile();
-  const cursorBottom = useIsCursorBottom({ });
+
+  const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
   const isFeaturedPlaceCard = selectedFeaturedPlace && !isLandscapeMode;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isMobile;
@@ -81,6 +80,7 @@ function DataGlobeComponent({
       {!FEATURE_NEW_MENUS && (
         <MainMenu />
       )}
+
       <Scene
         sceneName="featured-scene"
         sceneSettings={sceneSettings}
@@ -92,10 +92,12 @@ function DataGlobeComponent({
         urlParamsUpdateDisabled
         initialRotation
         className={cx({
-          [uiStyles.blurScene]: cursorBottom && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
+          [uiStyles.blurScene]: activeGlobesMenu && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
         })}
       >
+
         {isGlobeUpdating && <Spinner floating />}
+
         <MobileOnly>
           <MenuFooter
             featured
@@ -106,22 +108,27 @@ function DataGlobeComponent({
           />
           <MenuSettings activeOption={activeOption} openedModal={openedModal} />
         </MobileOnly>
+
         <ArcgisLayerManager
           activeLayers={activeLayers}
           customFunctions={customFunctions}
         />
+
         <GlobeEventsManager
           clickCallbacksArray={clickCallbacksArray}
           mouseMoveCallbacksArray={mouseMoveCallbacksArray}
         />
+
         <LandscapeViewManager
           zoomLevelTrigger={ZOOM_LEVEL_TRIGGER}
           isLandscapeMode={isLandscapeMode}
         />
+
         <FeaturedPlaceViewManager
           selectedFeaturedPlace={selectedFeaturedPlace}
           isLandscapeMode={isLandscapeMode}
         />
+
         {FEATURE_NEW_MENUS && !isMobile && !selectedFeaturedPlace && (
           <SideMenu
             activeLayers={activeLayers}
@@ -132,9 +139,11 @@ function DataGlobeComponent({
             blur={!selectedFeaturedPlace}
           />
         )}
+
         {FEATURE_NEW_MENUS && !selectedFeaturedPlace && !isMobile && (
-          <GlobePageIndicator />
+          <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
         )}
+
         {!FEATURE_NEW_MENUS && (
           <Widgets
             activeLayers={activeLayers}
@@ -144,10 +153,11 @@ function DataGlobeComponent({
             disableSettings
           />
         )}
+
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
             className={cx(uiStyles.uiTopLeft, {
-              [uiStyles.blur]: cursorBottom && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
+              [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
             })}
             activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
@@ -159,12 +169,14 @@ function DataGlobeComponent({
             handle={spinGlobeHandle}
           />
         )}
+
         <FeaturedPlacesLayer
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
           isLandscapeMode={isLandscapeMode}
           handleLayerToggle={handleLayerToggle}
         />
+
         <FeaturedTaxaSelector
           selectedTaxa={selectedTaxa}
           isMapsList={isMapsList}
@@ -174,6 +186,7 @@ function DataGlobeComponent({
           selectedFeaturedPlace={selectedFeaturedPlace}
           activeOption={activeOption}
         />
+
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
           isLandscapeMode={isLandscapeMode}
@@ -182,6 +195,7 @@ function DataGlobeComponent({
           selectedTaxa={selectedTaxa}
           activeOption={activeOption}
         />
+
         {isLandscapeMode && (
           <LandscapeSidebar
             activeLayers={activeLayers}
@@ -193,20 +207,29 @@ function DataGlobeComponent({
             isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
           />
         )}
+
         {isLandscapeMode && (
           <GridLayer handleGlobeUpdating={handleGlobeUpdating} />
         )}
+
         {isLandscapeMode && <TerrainExaggerationLayer exaggeration={3} />}
+
         {isLandscapeMode && <LabelsLayer activeLayers={activeLayers} />}
+
         {isLandscapeMode && (
           <ProtectedAreasTooltips
             activeLayers={activeLayers}
             isLandscapeMode={isLandscapeMode}
           />
         )}
-        {FEATURE_NEW_MENUS && cursorBottom && !selectedFeaturedPlace && !isMobile && (
-          <GlobesMenu browsePage={browsePage} />
+
+        {FEATURE_NEW_MENUS && activeGlobesMenu && !selectedFeaturedPlace && !isMobile && (
+          <GlobesMenu
+            browsePage={browsePage}
+            onMouseLeave={() => setActiveGlobesMenu(false)}
+          />
         )}
+
       </Scene>
       {hasMetadata && <InfoModal />}
 
