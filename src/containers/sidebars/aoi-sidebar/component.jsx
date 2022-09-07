@@ -25,7 +25,6 @@ import {
 import { getSidebarTabs } from 'constants/aois';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
-import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
 import {
   MERGED_PROTECTION,
   MERGED_LAND_HUMAN_PRESSURES,

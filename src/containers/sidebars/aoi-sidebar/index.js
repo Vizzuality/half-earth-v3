@@ -20,7 +20,7 @@ const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function AoiSidebarContainer(props) {
   const {
-    speciesData, contextualData, geometry, browsePage,
+    speciesData, contextualData, geometry, browsePage, categoryActiveLayers, changeUI,
   } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
@@ -66,6 +66,7 @@ function AoiSidebarContainer(props) {
 
   const handleClose = () => {
     browsePage({ type: DATA });
+    changeUI({ categoryActiveLayers });
   };
 
   return (

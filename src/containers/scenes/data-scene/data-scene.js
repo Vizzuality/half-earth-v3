@@ -7,7 +7,7 @@ import { AREA_OF_INTEREST } from 'router';
 
 import { useLocale, useT } from '@transifex/react';
 
-import mapStateToProps from 'selectors/map-tooltip-selectors';
+// import mapStateToProps from 'selectors/map-tooltip-selectors';
 
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
@@ -24,6 +24,7 @@ import {
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 
 import Component from './data-scene-component';
+import mapStateToProps from './data-scene-selectors';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
@@ -35,7 +36,9 @@ function Container(props) {
     browsePage,
     precomputedAoiAnalytics,
     changeUI,
+    // categoryActiveLayers,
   } = props;
+
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
 

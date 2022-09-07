@@ -77,6 +77,13 @@ function AOIScene(props) {
     return undefined;
   }, []);
 
+  const updatedActiveLayers = useMemo(() => {
+    const mergeLayers = unionBy(categoryActiveLayers, activeLayers, 'title');
+
+    return (areaTypeSelected === AREA_TYPES.futurePlaces)
+      ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
+  }, [categoryActiveLayers, activeLayers, areaTypeSelected]);
+
   const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
     if (attributes.GID_1) {
@@ -87,13 +94,6 @@ function AOIScene(props) {
     !FEATURE_MERGE_NATIONAL_SUBNATIONAL && setAreaTypeSelected(areaType);
     return areaType;
   };
-
-  const updatedActiveLayers = useMemo(() => {
-    const mergeLayers = unionBy(categoryActiveLayers, activeLayers, 'title');
-
-    return (areaTypeSelected === AREA_TYPES.futurePlaces)
-      ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
-  }, [categoryActiveLayers, activeLayers, areaTypeSelected]);
 
   useEffect(() => {
     loadModules(['esri/geometry/geometryEngine', 'esri/geometry/support/jsonUtils']).then(([geometryEngine, jsonUtils]) => {
