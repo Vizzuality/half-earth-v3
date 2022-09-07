@@ -1,34 +1,34 @@
-import eoWilsonLogo from 'logos/eoWilson.png';
-import molLogo from 'logos/mol.png';
-import gbifLogo from 'logos/gbif.png';
-import eBirdLogo from 'logos/eBird.png';
-import changingOceanLogo from 'logos/changingOcean.png';
-import vizzualityLogo from 'logos/vizzuality.png';
-import globalFishingWatchLogo from 'logos/globalFishingWatch.png';
-import esaLogo from 'logos/esa.png';
-import iucnLogo from 'logos/iucn.png';
-import unEnvironmentLogo from 'logos/unEnvironment.png';
-import raisgLogo from 'logos/raisg.png';
-import eolLogo from 'logos/eol.png';
-import yaleLogo from 'logos/yale.png';
-import ubcLogo from 'logos/ubc.png';
-import universityOfFloridaLogo from 'logos/universityOfFlorida.png';
-import googleEarthEngineLogo from 'logos/googleEarthEngine.png';
-import googleCloudLogo from 'logos/googleCloud.png';
-import esriLogo from 'logos/esri.png';
-import mooreFoundationLogo from 'logos/mooreFoundation.png';
+import { t } from '@transifex/native';
+
 import burtsLogo from 'logos/BB_Foundation_logo_stacked.png';
+import changingOceanLogo from 'logos/changingOcean.png';
+import eBirdLogo from 'logos/eBird.png';
+import eolLogo from 'logos/eol.png';
+import eoWilsonLogo from 'logos/eoWilson.png';
+import esaLogo from 'logos/esa.png';
+import esriLogo from 'logos/esri.png';
 import fieldMuseumLogo from 'logos/field-museum-logo_2018.png';
+import gbifLogo from 'logos/gbif.png';
+import globalFishingWatchLogo from 'logos/globalFishingWatch.png';
+import googleCloudLogo from 'logos/googleCloud.png';
+import googleEarthEngineLogo from 'logos/googleEarthEngine.png';
 import gorongosaLogo from 'logos/gorongosa_np_logo.png';
 import inaturalistLogo from 'logos/inaturalist.png';
-
-import { t } from '@transifex/native';
+import iucnLogo from 'logos/iucn.png';
+import molLogo from 'logos/mol.png';
+import mooreFoundationLogo from 'logos/mooreFoundation.png';
+import raisgLogo from 'logos/raisg.png';
+import ubcLogo from 'logos/ubc.png';
+import unEnvironmentLogo from 'logos/unEnvironment.png';
+import universityOfFloridaLogo from 'logos/universityOfFlorida.png';
+import vizzualityLogo from 'logos/vizzuality.png';
+import yaleLogo from 'logos/yale.png';
 
 export const getTexts = () => ({
   partners: {
     title: t('Half-Earth Project Map - Core Team'),
     content: [
-      `${t('The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life')}`,
+      `${t('The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to identify the best opportunities to conserve species biodiversity. Vizzuality brings this information to life')}`,
       `<p style="margin-bottom: 0px;">${t('Click here to know more about the core team of Half-Earth:')}</p>`,
       '<a target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/">www.half-earthproject.org/half-earth-project-team-members</a>',
     ],
@@ -163,7 +163,7 @@ export const getSponsors = () => [{
 },
 {
   href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-  image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundationc'), className: 'bbees' },
+  image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundation'), className: 'bbees' },
 },
 {
   label: 'Jeff and Laurie Ubben',

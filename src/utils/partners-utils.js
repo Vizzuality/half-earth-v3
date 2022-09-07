@@ -193,7 +193,7 @@ export const getSponsors = () => [
   {
     index: 2,
     href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-    image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundationc'), className: 'bbees' },
+    image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundation'), className: 'bbees' },
   },
   {
     index: 3,
