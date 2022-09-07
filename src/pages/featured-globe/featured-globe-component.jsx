@@ -91,6 +91,7 @@ function DataGlobeComponent({
         }
         urlParamsUpdateDisabled
         initialRotation
+        blur={activeGlobesMenu}
         className={cx({
           [uiStyles.blurScene]: activeGlobesMenu && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
         })}

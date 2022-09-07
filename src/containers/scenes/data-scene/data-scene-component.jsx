@@ -90,6 +90,7 @@ function DataSceneComponent({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       initialRotation
       disabled={!!onboardingType}
+      blur={activeGlobesMenu}
       className={cx({
         [uiStyles.blurScene]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
       })}

@@ -4,8 +4,6 @@ import React from 'react';
 
 import cx from 'classnames';
 
-import useIsCursorBottom from 'hooks/use-cursor-bottom';
-
 import Spinner from 'components/spinner';
 
 import styles from 'styles/themes/scene-theme.module.scss';
@@ -27,9 +25,8 @@ function SceneComponent({
   handleSceneClick,
   disabled,
   isGlobesMenuPages,
+  blur,
 }) {
-  const cursorBottom = useIsCursorBottom({ });
-
   if (loadState === 'loading') {
     return (
       <>
@@ -47,7 +44,7 @@ function SceneComponent({
         className={cx(className, {
           [styles.sceneWrapper]: FEATURE_NEW_MENUS,
           [styles.sceneWrapperOLD]: !FEATURE_NEW_MENUS,
-          [styles.sceneWrapperBlur]: FEATURE_NEW_MENUS && cursorBottom && isGlobesMenuPages,
+          [styles.sceneWrapperBlur]: FEATURE_NEW_MENUS && blur && isGlobesMenuPages,
           [styles.disabled]: disabled,
         })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}

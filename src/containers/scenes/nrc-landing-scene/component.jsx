@@ -63,6 +63,7 @@ function NrcLandingComponent({
       disabled={
           !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
         }
+      blur={activeGlobesMenu}
       className={cx({
         [uiStyles.blurScene]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
       })}
