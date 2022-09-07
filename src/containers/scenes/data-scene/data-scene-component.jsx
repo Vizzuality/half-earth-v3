@@ -65,6 +65,7 @@ function DataSceneComponent({
   aoiId,
   speciesData,
   browsePage,
+  updatedActiveLayers,
 }) {
   const isMobile = useMobile();
   const cursorBottom = useIsCursorBottom({ });
@@ -99,12 +100,12 @@ function DataSceneComponent({
       {!!onboardingType && <SoundButton />}
       <OnboardingTooltip />
 
-      <ArcgisLayerManager activeLayers={activeLayers} />
+      <ArcgisLayerManager activeLayers={updatedActiveLayers} />
 
       {isGlobeUpdating && <Spinner floating />}
 
       <DataGlobalSidebar
-        activeLayers={activeLayers}
+        activeLayers={updatedActiveLayers}
         activeOption={activeOption}
         isSidebarOpen={isSidebarOpen}
         activeCategory={activeCategory}
@@ -137,7 +138,7 @@ function DataSceneComponent({
         sceneMode={sceneMode}
         countryISO={countryISO}
         countryName={countryName}
-        activeLayers={activeLayers}
+        activeLayers={updatedActiveLayers}
         isLandscapeMode={isLandscapeMode}
       />
 
@@ -151,7 +152,7 @@ function DataSceneComponent({
       {FEATURE_NEW_MENUS && !isMobile && !onboardingType && (
         <SideMenu
           openedModal={openedModal}
-          activeLayers={activeLayers}
+          activeLayers={updatedActiveLayers}
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
           blur={cursorBottom}
@@ -165,7 +166,7 @@ function DataSceneComponent({
       {(!FEATURE_NEW_MENUS || isMobile) && (
         <Widgets
           openedModal={openedModal}
-          activeLayers={activeLayers}
+          activeLayers={updatedActiveLayers}
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
         />
@@ -177,7 +178,7 @@ function DataSceneComponent({
         isProtectedArea={isProtectedArea}
       />
 
-      <LabelsLayer activeLayers={activeLayers} />
+      <LabelsLayer activeLayers={updatedActiveLayers} />
 
       {FEATURE_NEW_MENUS && cursorBottom && !isMobile && !onboardingType && (
         <GlobesMenu browsePage={browsePage} />
