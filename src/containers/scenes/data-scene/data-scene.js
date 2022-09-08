@@ -33,7 +33,6 @@ const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
-    aoiId,
     mapTooltipData,
     activeLayers,
     setBatchTooltipData,
@@ -58,7 +57,9 @@ function Container(props) {
   }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
 
   const updateActiveCategoryLayers = useMemo(() => {
-    if (!aoiId) return intersectionBy(activeLayers, CATEGORY_LAYERS, 'title');
+    if (!activeCategoryLayers) {
+      return intersectionBy(activeLayers, CATEGORY_LAYERS, 'title');
+    }
     return activeCategoryLayers;
   }, [activeLayers, activeCategoryLayers]);
 
@@ -122,6 +123,7 @@ function Container(props) {
       payload: { id: mapTooltipContent.id },
       query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
     });
+
     changeUI({ activeCategoryLayers: updateActiveCategoryLayers });
   };
 
