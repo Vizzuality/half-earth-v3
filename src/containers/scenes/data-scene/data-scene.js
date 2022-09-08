@@ -55,10 +55,12 @@ function Container(props) {
       ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
   }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
 
-  const updateactiveCategoryLayers = useMemo(() => {
+  const updateActiveCategoryLayers = useMemo(() => {
     if (!aoiId) return activeLayers.filter((al) => al.category);
     return activeCategoryLayers;
   }, [activeLayers, activeCategoryLayers]);
+
+  console.log({ activeCategoryLayers });
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -120,7 +122,7 @@ function Container(props) {
       payload: { id: mapTooltipContent.id },
       query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
     });
-    changeUI({ activeCategoryLayers: updateactiveCategoryLayers });
+    changeUI({ activeCategoryLayers: updateActiveCategoryLayers });
   };
 
   useEffect(() => {
