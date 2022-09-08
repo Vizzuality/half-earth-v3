@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { selectAreaType } from 'selectors/aoi-selectors';
+import { selectAreaType, selectAoiId } from 'selectors/aoi-selectors';
 import { selectUiUrlState } from 'selectors/location-selectors';
 import { selectTooltipData } from 'selectors/map-tooltip-selectors';
 
@@ -21,6 +21,7 @@ const getCategoryActiveLayers = createSelector(getUiSettings, (
 ) => uiSettings.categoryActiveLayers);
 
 export default createStructuredSelector({
+  aoiId: selectAoiId,
   areaTypeSelected: selectAreaType,
   categoryActiveLayers: getCategoryActiveLayers,
   mapTooltipData: selectTooltipData,

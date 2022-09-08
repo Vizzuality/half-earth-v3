@@ -31,6 +31,7 @@ const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
+    aoiId,
     mapTooltipData,
     activeLayers,
     setBatchTooltipData,
@@ -53,6 +54,11 @@ function Container(props) {
     return (areaTypeSelected === AREA_TYPES.futurePlaces)
       ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
   }, [categoryActiveLayers, activeLayers, areaTypeSelected]);
+
+  const updateCategoryActiveLayers = useMemo(() => {
+    if (!aoiId) return activeLayers.filter((al) => al.category);
+    return categoryActiveLayers;
+  }, [activeLayers, categoryActiveLayers]);
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -114,7 +120,7 @@ function Container(props) {
       payload: { id: mapTooltipContent.id },
       query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
     });
-    changeUI({ categoryActiveLayers: activeLayers });
+    changeUI({ categoryActiveLayers: updateCategoryActiveLayers });
   };
 
   useEffect(() => {
