@@ -15,11 +15,11 @@ const getUiSettings = createSelector(
   },
 );
 
-const getCategoryActiveLayers = createSelector(getUiSettings, (
+const getActiveCategoryLayers = createSelector(getUiSettings, (
   uiSettings,
-) => uiSettings.categoryActiveLayers);
+) => uiSettings.activeCategoryLayers);
 
 export default createStructuredSelector({
   sidebarTabActive: setSidebarTabActive,
-  categoryActiveLayers: getCategoryActiveLayers,
+  activeCategoryLayers: getActiveCategoryLayers,
 });

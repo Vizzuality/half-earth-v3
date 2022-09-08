@@ -38,9 +38,9 @@ const getGlobeUpdating = createSelector(getGlobeSettings, (
   globeSettings,
 ) => globeSettings.isGlobeUpdating);
 
-const getCategoryActiveLayers = createSelector(getUiSettings, (
+const getActiveCategoryLayers = createSelector(getUiSettings, (
   uiSettings,
-) => uiSettings.categoryActiveLayers);
+) => uiSettings.activeCategoryLayers);
 
 export default createStructuredSelector({
   areaTypeSelected: selectAreaType,
@@ -50,6 +50,6 @@ export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
   isGlobeUpdating: getGlobeUpdating,
   aoiStoredGeometry: getAoiGeometry,
-  categoryActiveLayers: getCategoryActiveLayers,
+  activeCategoryLayers: getActiveCategoryLayers,
   precalculatedLayerSlug: selectPrecalculatedLayerSlug,
 });

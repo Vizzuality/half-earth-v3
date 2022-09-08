@@ -39,7 +39,7 @@ function Container(props) {
     precomputedAoiAnalytics,
     areaTypeSelected,
     changeUI,
-    categoryActiveLayers,
+    activeCategoryLayers,
   } = props;
 
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
@@ -49,16 +49,16 @@ function Container(props) {
   const t = useT();
 
   const updatedActiveLayers = useMemo(() => {
-    const mergeLayers = unionBy(categoryActiveLayers, activeLayers, 'title');
+    const mergeLayers = unionBy(activeCategoryLayers, activeLayers, 'title');
 
     return (areaTypeSelected === AREA_TYPES.futurePlaces)
       ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
-  }, [categoryActiveLayers, activeLayers, areaTypeSelected]);
+  }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
 
-  const updateCategoryActiveLayers = useMemo(() => {
+  const updateactiveCategoryLayers = useMemo(() => {
     if (!aoiId) return activeLayers.filter((al) => al.category);
-    return categoryActiveLayers;
-  }, [activeLayers, categoryActiveLayers]);
+    return activeCategoryLayers;
+  }, [activeLayers, activeCategoryLayers]);
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -120,7 +120,7 @@ function Container(props) {
       payload: { id: mapTooltipContent.id },
       query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
     });
-    changeUI({ categoryActiveLayers: updateCategoryActiveLayers });
+    changeUI({ activeCategoryLayers: updateactiveCategoryLayers });
   };
 
   useEffect(() => {

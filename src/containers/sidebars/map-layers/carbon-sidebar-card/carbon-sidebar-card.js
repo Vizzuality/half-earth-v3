@@ -43,7 +43,7 @@ function CarbonSidebarCardContainer(props) {
     const categoryName = LAYERS_CATEGORIES[category];
     layerManagerToggle(option.value, activeLayers, changeGlobe, categoryName);
     const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
-    changeUI({ categoryActiveLayers: updateActiveLayers });
+    changeUI({ activeCategoryLayers: updateActiveLayers });
   };
 
   return (

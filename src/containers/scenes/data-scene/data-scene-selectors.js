@@ -16,13 +16,13 @@ const getUiSettings = createSelector(
   },
 );
 
-const getCategoryActiveLayers = createSelector(getUiSettings, (
+const getActiveCategoryLayers = createSelector(getUiSettings, (
   uiSettings,
-) => uiSettings.categoryActiveLayers);
+) => uiSettings.activeCategoryLayers);
 
 export default createStructuredSelector({
   aoiId: selectAoiId,
   areaTypeSelected: selectAreaType,
-  categoryActiveLayers: getCategoryActiveLayers,
+  activeCategoryLayers: getActiveCategoryLayers,
   mapTooltipData: selectTooltipData,
 });

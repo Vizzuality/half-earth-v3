@@ -13,17 +13,17 @@ const actions = {
 
 function TabsSidebarContainer(props) {
   const {
-    activeLayers, aoiId, categoryActiveLayers, setSidebarTabActive, onTabClick,
+    activeLayers, aoiId, activeCategoryLayers, setSidebarTabActive, onTabClick,
   } = props;
 
   const mapLayersActive = useMemo(() => {
     if (aoiId) {
-      return categoryActiveLayers.filter(({ title: id1 }) => !BASE_LAYERS
+      return activeCategoryLayers.filter(({ title: id1 }) => !BASE_LAYERS
         .some(({ title: id2 }) => id2 === id1));
     }
     return activeLayers.filter(({ title: id1 }) => !BASE_LAYERS
       .some(({ title: id2 }) => id2 === id1));
-  }, [activeLayers, categoryActiveLayers]);
+  }, [activeLayers, activeCategoryLayers]);
 
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);

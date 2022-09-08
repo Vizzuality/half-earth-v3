@@ -42,7 +42,7 @@ function AOIScene(props) {
     setAreaTypeSelected,
     areaTypeSelected,
     objectId,
-    categoryActiveLayers,
+    activeCategoryLayers,
     changeUI,
   } = props;
 
@@ -61,16 +61,16 @@ function AOIScene(props) {
 
   // !This reconciliate active layers with default config layers
   useEffect(() => {
-    if (!categoryActiveLayers) return null;
+    if (!activeCategoryLayers) return null;
 
     const defaultCategoryLayers = aoiSceneConfig.activeLayers.filter((al) => !!al.category);
 
-    const categoryActiveLayersTitles = categoryActiveLayers
+    const activeCategoryLayersTitles = activeCategoryLayers
       .map((cal) => cal.title);
 
     defaultCategoryLayers.forEach((dcl) => {
-      if (!categoryActiveLayersTitles.includes(dcl.title)) {
-        changeUI({ categoryActiveLayers: [...categoryActiveLayers, dcl] });
+      if (!activeCategoryLayersTitles.includes(dcl.title)) {
+        changeUI({ activeCategoryLayers: [...activeCategoryLayers, dcl] });
       }
     });
 
@@ -78,11 +78,11 @@ function AOIScene(props) {
   }, []);
 
   const updatedActiveLayers = useMemo(() => {
-    const mergeLayers = unionBy(categoryActiveLayers, activeLayers, 'title');
+    const mergeLayers = unionBy(activeCategoryLayers, activeLayers, 'title');
 
     return (areaTypeSelected === AREA_TYPES.futurePlaces)
       ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
-  }, [categoryActiveLayers, activeLayers, areaTypeSelected]);
+  }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
 
   const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
