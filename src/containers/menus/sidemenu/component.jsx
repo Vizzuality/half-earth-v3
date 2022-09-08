@@ -16,17 +16,11 @@ import ShareModal from 'components/share-modal';
 import SideMenuLanguageSwitcher from 'components/sidemenu-language-switcher';
 
 import { useMobile } from 'constants/responsive';
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module';
 
-function SideMenu({
-  map,
-  view,
-  isNotMapsList,
-  hidden,
-  selectedOption,
-  blur,
-}) {
+function SideMenu({ map, view, isNotMapsList, hidden, selectedOption, blur }) {
   const isOnMobile = useMobile();
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -48,23 +42,23 @@ function SideMenu({
       />
 
       {isSearcherOpen && (
-      <div className={styles.searcherContainer}>
-        <SearchLocation
-          view={view}
-          theme="dark"
-          width="full"
-          parentWidth="380px"
-          searchSourceLayerSlug={selectedOption.slug}
-          hasResetButton
-          handleCloseButton={() => setSearcherOpen(false)}
-          setSearcherOpen={setSearcherOpen}
-          simple
-          className={{
-            inputContainer: styles.searchLocation,
-            placeholderIcon: styles.placeholderIcon,
-          }}
-        />
-      </div>
+        <div className={styles.searcherContainer}>
+          <SearchLocation
+            view={view}
+            theme="dark"
+            width="full"
+            parentWidth="380px"
+            searchSourceLayerSlug={selectedOption.slug}
+            hasResetButton
+            handleCloseButton={() => setSearcherOpen(false)}
+            setSearcherOpen={setSearcherOpen}
+            searchType={SEARCH_TYPES.simple}
+            className={{
+              inputContainer: styles.searchLocation,
+              placeholderIcon: styles.placeholderIcon,
+            }}
+          />
+        </div>
       )}
 
       <ZoomControls
@@ -97,7 +91,6 @@ function SideMenu({
           setHelpModalOpen={setHelpModalOpen}
         />
       </div>
-
     </div>
   );
 }

@@ -24,6 +24,7 @@ import {
   getPrecalculatedAOIOptions,
   HIGHER_AREA_SIZE_LIMIT,
 } from 'constants/analyze-areas-constants';
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module.scss';
 
@@ -113,6 +114,7 @@ function AnalyzeAreasCardComponent({
               />
               <SearchLocation
                 stacked
+                searchType={SEARCH_TYPES.full}
                 view={view}
                 theme="dark"
                 width="full"
