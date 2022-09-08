@@ -12,9 +12,11 @@ import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 
+import intersectionBy from 'lodash/intersectionBy';
 import unionBy from 'lodash/unionBy';
 
 import { AREA_TYPES } from 'constants/aois';
+import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
@@ -56,11 +58,9 @@ function Container(props) {
   }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
 
   const updateActiveCategoryLayers = useMemo(() => {
-    if (!aoiId) return activeLayers.filter((al) => al.category);
+    if (!aoiId) return intersectionBy(activeLayers, CATEGORY_LAYERS, 'title');
     return activeCategoryLayers;
   }, [activeLayers, activeCategoryLayers]);
-
-  console.log({ activeCategoryLayers });
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
