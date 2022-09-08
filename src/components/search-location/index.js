@@ -16,7 +16,7 @@ import EsriFeatureService from 'services/esri-feature-service';
 import { SEARCH_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
-import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+import { SEARCH_SOURCES_CONFIG, SEARCH_TYPES } from 'constants/search-location-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
 import Component from './component';
@@ -39,7 +39,7 @@ const getSearchedLayerData = (layerSlug, molId) => new Promise((resolve, reject)
 
 function SearchLocationContainer(props) {
   const {
-    view, searchSourceLayerSlug, changeGlobe, simple = false,
+    view, searchSourceLayerSlug, changeGlobe, searchType,
   } = props;
 
   const [searchResults, setSearchResults] = useState(false);
@@ -63,14 +63,14 @@ function SearchLocationContainer(props) {
     const { setBatchTooltipData } = props;
 
     let searchResult;
-    if (REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
       // We have to find the information of the layer with the lookup table info
       const { attributes } = result.feature;
       const { LAYERSLUG, MOL_ID } = attributes;
       searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
     }
 
-    const feature = REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL
+    const feature = searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL
       ? searchResult && searchResult[0]
       : result.feature;
 
@@ -80,12 +80,13 @@ function SearchLocationContainer(props) {
     } = tooltipConfig;
     const { geometry, attributes } = feature;
 
-    if (!simple) {
+    if (searchType !== SEARCH_TYPES.simple) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
-        precalculatedLayer: REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL
-          && result.feature.attributes.LAYERSLUG,
+        precalculatedLayer: (searchType === SEARCH_TYPES.full
+          && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL)
+          ? result.feature.attributes.LAYERSLUG : undefined,
         content: {
           buttonText: t('analyze area'),
           id: attributes[id],
@@ -108,7 +109,7 @@ function SearchLocationContainer(props) {
     flyToCentroid(view, geometry, 4);
 
     // National Report Card search
-    if (iso && !simple) {
+    if (iso) {
       setCountryTooltip({
         countryIso: attributes[iso],
         countryName: countryNames[attributes[title]] || attributes[title],
@@ -127,7 +128,7 @@ function SearchLocationContainer(props) {
 
   const {
     updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick,
-  } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig, simple);
+  } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig, searchType === SEARCH_TYPES.simple);
 
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
@@ -135,7 +136,7 @@ function SearchLocationContainer(props) {
       url, searchFields, suggestionTemplate, title,
     } = config;
 
-    if (REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
       url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
       searchFields = ['NAME'];
       suggestionTemplate = '{NAME}';

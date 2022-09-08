@@ -1,10 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import loadable from '@loadable/component';
 
 import cx from 'classnames';
-
-import useIsCursorBottom from 'hooks/use-cursor-bottom';
 
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
@@ -67,7 +65,9 @@ function DataSceneComponent({
   updatedActiveLayers,
 }) {
   const isMobile = useMobile();
-  const cursorBottom = useIsCursorBottom({ });
+
+  const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
+
   const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
   const isProtectedArea = selectedAnalysisLayer
   && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
@@ -91,8 +91,9 @@ function DataSceneComponent({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       initialRotation
       disabled={!!onboardingType}
+      blur={activeGlobesMenu}
       className={cx({
-        [uiStyles.blurScene]: cursorBottom && !onboardingType && FEATURE_NEW_MENUS,
+        [uiStyles.blurScene]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
       })}
     >
 
@@ -121,6 +122,7 @@ function DataSceneComponent({
           [styles.sidebarContainer]: FEATURE_NEW_MENUS,
           [styles.sidebarContainerOLD]: !FEATURE_NEW_MENUS,
           [animationStyles.leftHidden]: sidebarHidden,
+          [uiStyles.blur]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 
@@ -154,12 +156,12 @@ function DataSceneComponent({
           activeLayers={updatedActiveLayers}
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
-          blur={cursorBottom}
+          blur={activeGlobesMenu}
         />
       )}
 
       {FEATURE_NEW_MENUS && !isMobile && (
-        <GlobePageIndicator />
+        <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
       )}
 
       {(!FEATURE_NEW_MENUS || isMobile) && (
@@ -179,8 +181,11 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {FEATURE_NEW_MENUS && cursorBottom && !isMobile && !onboardingType && (
-        <GlobesMenu browsePage={browsePage} />
+      {FEATURE_NEW_MENUS && activeGlobesMenu && !isMobile && !onboardingType && (
+        <GlobesMenu
+          browsePage={browsePage}
+          onMouseLeave={() => setActiveGlobesMenu(false)}
+        />
       )}
 
     </Scene>

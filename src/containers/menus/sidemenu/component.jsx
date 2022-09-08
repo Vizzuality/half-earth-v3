@@ -7,8 +7,6 @@ import { ReactComponent as HelpIcon } from 'icons/help.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
-import useIsCursorBottom from 'hooks/use-cursor-bottom';
-
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 import HelpModal from 'containers/modals/help-modal';
 
@@ -18,19 +16,12 @@ import ShareModal from 'components/share-modal';
 import SideMenuLanguageSwitcher from 'components/sidemenu-language-switcher';
 
 import { useMobile } from 'constants/responsive';
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module';
 
-function SideMenu({
-  map,
-  view,
-  isNotMapsList,
-  hidden,
-  selectedOption,
-  blur,
-}) {
+function SideMenu({ map, view, isNotMapsList, hidden, selectedOption, blur }) {
   const isOnMobile = useMobile();
-  const cursorBottom = useIsCursorBottom({ });
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isSearcherOpen, setSearcherOpen] = useState(false);
@@ -40,7 +31,7 @@ function SideMenu({
   return (
     <div
       className={cx(styles.menuContainer, {
-        [styles.blur]: blur && cursorBottom,
+        [styles.blur]: blur,
       })}
     >
       <Button
@@ -51,23 +42,23 @@ function SideMenu({
       />
 
       {isSearcherOpen && (
-      <div className={styles.searcherContainer}>
-        <SearchLocation
-          view={view}
-          theme="dark"
-          width="full"
-          parentWidth="380px"
-          searchSourceLayerSlug={selectedOption.slug}
-          hasResetButton
-          handleCloseButton={() => setSearcherOpen(false)}
-          setSearcherOpen={setSearcherOpen}
-          simple
-          className={{
-            inputContainer: styles.searchLocation,
-            placeholderIcon: styles.placeholderIcon,
-          }}
-        />
-      </div>
+        <div className={styles.searcherContainer}>
+          <SearchLocation
+            view={view}
+            theme="dark"
+            width="full"
+            parentWidth="380px"
+            searchSourceLayerSlug={selectedOption.slug}
+            hasResetButton
+            handleCloseButton={() => setSearcherOpen(false)}
+            setSearcherOpen={setSearcherOpen}
+            searchType={SEARCH_TYPES.simple}
+            className={{
+              inputContainer: styles.searchLocation,
+              placeholderIcon: styles.placeholderIcon,
+            }}
+          />
+        </div>
       )}
 
       <ZoomControls
@@ -100,7 +91,6 @@ function SideMenu({
           setHelpModalOpen={setHelpModalOpen}
         />
       </div>
-
     </div>
   );
 }

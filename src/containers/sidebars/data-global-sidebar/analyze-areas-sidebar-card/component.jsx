@@ -19,6 +19,7 @@ import {
   getPrecalculatedAOIOptions,
   HIGHER_AREA_SIZE_LIMIT,
 } from 'constants/analyze-areas-constants';
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module.scss';
 
@@ -77,8 +78,10 @@ function AnalyzeAreasCardComponent({
           onboardingType === 'priority-places' && onboardingStep === 2,
         })}
       >
+
         <h2 className={styles.subtitle}>{t('Analyze pre-calculated areas or your own custom area.')}</h2>
         <div>
+
           <div className={styles.buttonsContainer}>
             <Button
               type="square"
@@ -95,39 +98,41 @@ function AnalyzeAreasCardComponent({
               handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
             />
           </div>
+
           {selectedAnalysisTab === 'click' && (
-            <section className={styles.sectionContainer}>
-              <span className={styles.label}>
-                {t('Choose your area of interest')}
-              </span>
-              <div className={styles.dropdownContainer}>
-                <Dropdown
-                  stacked
-                  theme="dark"
-                  width="full"
-                  parentWidth="380px"
-                  options={precalculatedAOIOptions}
-                  selectedOption={selectedOption}
-                  handleOptionSelection={handleOptionSelection}
-                />
-                <SearchLocation
-                  stacked
-                  view={view}
-                  theme="dark"
-                  width="full"
-                  parentWidth="380px"
-                  searchSourceLayerSlug={selectedOption.slug}
-                />
-              </div>
-              <Button
-                type="compound"
-                Icon={AreasHistoryIcon}
-                label={t('See your automatically saved areas')}
-                className={styles.areasHistoryButton}
-                theme={styles.areasHistoryButton}
-                handleClick={handleAoiModalToggle}
+          <section className={styles.sectionContainer}>
+            <span className={styles.label}>
+              {t('Choose your area of interest')}
+            </span>
+            <div className={styles.dropdownContainer}>
+              <Dropdown
+                stacked
+                theme="dark"
+                width="full"
+                parentWidth="380px"
+                options={precalculatedAOIOptions}
+                selectedOption={selectedOption}
+                handleOptionSelection={handleOptionSelection}
               />
-            </section>
+              <SearchLocation
+                stacked
+                searchType={SEARCH_TYPES.full}
+                view={view}
+                theme="dark"
+                width="full"
+                parentWidth="380px"
+                searchSourceLayerSlug={selectedOption.slug}
+              />
+            </div>
+            <Button
+              type="compound"
+              Icon={AreasHistoryIcon}
+              label={t('See your automatically saved areas')}
+              className={styles.areasHistoryButton}
+              theme={styles.areasHistoryButton}
+              handleClick={handleAoiModalToggle}
+            />
+          </section>
           )}
           {selectedAnalysisTab === 'draw' && (
             <section className={styles.sectionContainer}>
