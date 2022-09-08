@@ -7,8 +7,6 @@ import { ReactComponent as HelpIcon } from 'icons/help.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
-import useIsCursorBottom from 'hooks/use-cursor-bottom';
-
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 import HelpModal from 'containers/modals/help-modal';
 
@@ -24,7 +22,6 @@ import styles from './styles.module';
 
 function SideMenu({ map, view, isNotMapsList, hidden, selectedOption, blur }) {
   const isOnMobile = useMobile();
-  const cursorBottom = useIsCursorBottom({});
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isSearcherOpen, setSearcherOpen] = useState(false);
@@ -34,7 +31,7 @@ function SideMenu({ map, view, isNotMapsList, hidden, selectedOption, blur }) {
   return (
     <div
       className={cx(styles.menuContainer, {
-        [styles.blur]: blur && cursorBottom,
+        [styles.blur]: blur,
       })}
     >
       <Button

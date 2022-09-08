@@ -16,12 +16,14 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './styles.module';
 
-function GlobesMenu({ browsePage, landing = false }) {
+function GlobesMenu({
+  browsePage, className, landing = false, onMouseLeave,
+}) {
   const t = useT();
 
   return (
     <motion.div
-      className={cx({
+      className={cx(className, {
         [styles.globesContainerLanding]: landing,
         [styles.globesContainer]: !landing,
       })}
@@ -31,6 +33,7 @@ function GlobesMenu({ browsePage, landing = false }) {
         duration: 0.8,
         delay: landing ? 2 : 0,
       }}
+      onMouseLeave={onMouseLeave}
     >
       <Globe
         title={t('Discover stories')}
@@ -63,11 +66,15 @@ function GlobesMenu({ browsePage, landing = false }) {
 
 GlobesMenu.propTypes = {
   browsePage: PropTypes.func.isRequired,
+  className: PropTypes.string,
   landing: PropTypes.bool,
+  onMouseLeave: PropTypes.func,
 };
 
 GlobesMenu.defaultProps = {
+  className: '',
   landing: false,
+  onMouseLeave: () => {},
 };
 
 export default GlobesMenu;
