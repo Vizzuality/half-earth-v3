@@ -13,17 +13,28 @@ const actions = {
 
 function TabsSidebarContainer(props) {
   const {
-    activeLayers, aoiId, activeCategoryLayers, setSidebarTabActive, onTabClick,
+    activeLayers,
+    aoiId,
+    activeCategoryLayers,
+    biodiversityCountedActiveLayers,
+    carbonCountedActiveLayers,
+    humanCountedActiveLayers,
+    protectionCountedActiveLayers,
+    setSidebarTabActive,
+    onTabClick,
   } = props;
 
-  const mapLayersActive = useMemo(() => {
-    if (aoiId && activeCategoryLayers) {
-      return activeCategoryLayers.filter(({ title: id1 }) => !BASE_LAYERS
-        .some(({ title: id2 }) => id2 === id1));
-    }
-    return activeLayers.filter(({ title: id1 }) => !BASE_LAYERS
-      .some(({ title: id2 }) => id2 === id1));
-  }, [activeLayers, activeCategoryLayers]);
+  const countedActiveLayers = useMemo(() => {
+    return biodiversityCountedActiveLayers
+      + protectionCountedActiveLayers
+      + humanCountedActiveLayers
+      + carbonCountedActiveLayers;
+  }, [
+    biodiversityCountedActiveLayers,
+    protectionCountedActiveLayers,
+    humanCountedActiveLayers,
+    carbonCountedActiveLayers,
+  ]);
 
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);
@@ -31,7 +42,7 @@ function TabsSidebarContainer(props) {
 
   return (
     <Component
-      mapLayersActive={mapLayersActive}
+      countedActiveLayers={countedActiveLayers}
       saveSidebarTab={saveSidebarTab}
       onTabClick={onTabClick}
       {...props}
