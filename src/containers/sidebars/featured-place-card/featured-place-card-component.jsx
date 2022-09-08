@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useT } from '@transifex/react';
@@ -8,7 +9,6 @@ import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
-import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import { useMobile } from 'constants/responsive';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -17,22 +17,18 @@ import styles from './featured-place-card-styles.module';
 
 function FeaturedPlaceCardComponent({
   selectedFeaturedPlace,
-  isLandscapeMode,
   isFullscreenActive,
   featuredMap,
   featuredPlace,
   handleNextPlaceClick,
   handlePrevPlaceClick,
-  activeOption,
   hotspotsNumbers,
 }) {
   const t = useT();
 
   const isOnMobile = useMobile();
-  const isOnScreen = selectedFeaturedPlace && !isLandscapeMode && !isFullscreenActive;
-  const visibleOnMobile = isOnMobile
-    && activeOption === FOOTER_OPTIONS.ADD_LAYER
-    && selectedFeaturedPlace;
+  const isOnScreen = selectedFeaturedPlace && !isFullscreenActive;
+  const visibleOnMobile = isOnMobile && selectedFeaturedPlace;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   const contentWrapper = useRef();
@@ -63,6 +59,8 @@ function FeaturedPlaceCardComponent({
           <nav className={styles.navigation}>
             <div className={styles.placesNavigator}>
               <div
+                role="button"
+                tabIndex={0}
                 className={styles.arrowWrapper}
                 onClick={() => handlePrevPlaceClick(selectedFeaturedPlace)}
               >
@@ -70,6 +68,8 @@ function FeaturedPlaceCardComponent({
               </div>
               <div className={styles.separator} />
               <div
+                role="button"
+                tabIndex={0}
                 className={styles.arrowWrapper}
                 onClick={() => handleNextPlaceClick(selectedFeaturedPlace)}
               >
@@ -110,7 +110,9 @@ function FeaturedPlaceCardComponent({
                   <p
                     className={styles.text}
                     // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{ __html: featuredPlace.description }}
+                    dangerouslySetInnerHTML={{
+                      __html: featuredPlace.description,
+                    }}
                   />
                   {featuredMap && featuredMap.sourceText && (
                     <span className={styles.sourceText}>

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { loadModules } from 'esri-loader';
+
 import { findLayerInMap } from 'utils/layer-manager-utils';
+
+import { loadModules } from 'esri-loader';
+
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 function FeaturedMapLayer({
-  map, view, selectedFeaturedMap, isLandscapeMode, isFullscreenActive, selectedTaxa,
+  map, view, selectedFeaturedMap, isFullscreenActive, selectedTaxa,
 }) {
   const [featuredPlacesLayerView, setFeaturedPlacesLayerView] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
@@ -34,13 +37,13 @@ function FeaturedMapLayer({
         featuredPlacesLayerView.filter = filter;
       });
     }
-  }, [featuredPlacesLayerView, selectedFeaturedMap, isLandscapeMode, selectedTaxa]);
+  }, [featuredPlacesLayerView, selectedFeaturedMap, selectedTaxa]);
 
   useEffect(() => {
     if (featuredPlacesLayerView) {
-      featuredPlacesLayerView.visible = !isLandscapeMode;
+      featuredPlacesLayerView.visible = true;
     }
-  }, [isLandscapeMode, isFullscreenActive]);
+  }, [isFullscreenActive]);
 
   return null;
 }

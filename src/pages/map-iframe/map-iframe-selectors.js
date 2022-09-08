@@ -1,6 +1,9 @@
+/* eslint-disable max-len */
 import { createSelector, createStructuredSelector } from 'reselect';
+
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectListenersState } from 'selectors/location-selectors';
+
 import initialState from './map-iframe-initial-state';
 import sceneSettings from './map-iframe-settings';
 
@@ -24,13 +27,11 @@ const getSceneSettings = createSelector(getGlobeSettings, (globeSettings) => {
 });
 
 export const getActiveLayers = createSelector(getGlobeSettings, (globeSettings) => globeSettings.activeLayers);
-const getLandscapeMode = createSelector(getGlobeSettings, (globeSettings) => globeSettings.landscapeView);
 const getGlobeUpdating = createSelector(getGlobeSettings, (globeSettings) => globeSettings.isGlobeUpdating);
 
 export default createStructuredSelector({
   sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
-  isLandscapeMode: getLandscapeMode,
   sceneSettings: getSceneSettings,
   isGlobeUpdating: getGlobeUpdating,
   listeners: getListenersSetting,

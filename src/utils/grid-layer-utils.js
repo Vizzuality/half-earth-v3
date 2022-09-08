@@ -1,5 +1,7 @@
-import { loadModules } from 'esri-loader';
+/* eslint-disable max-len */
 import { isEqual, flattenDeep } from 'lodash';
+
+import { loadModules } from 'esri-loader';
 
 export const calculateAgregatedGridCellGeometry = (hasContainedGridCells, gridCells, geometryEngineModule) => {
   if (!gridCells.length) return null;

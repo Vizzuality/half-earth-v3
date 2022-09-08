@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import cx from 'classnames';
-import ShareModal from 'components/share-modal';
-import ShareModalButton from 'components/share-button';
-import styles from './featured-map-card-styles.module.scss';
-import animationStyles from 'styles/common-animations.module.scss';
+
 import { T } from '@transifex/react';
 
-const FeaturedMapCardComponent = ({
+import cx from 'classnames';
+
+import ShareModalButton from 'components/share-button';
+import ShareModal from 'components/share-modal';
+
+import animationStyles from 'styles/common-animations.module.scss';
+
+import styles from './featured-map-card-styles.module.scss';
+
+function FeaturedMapCardComponent({
   view,
   className,
   selectedSidebar,
-  isLandscapeMode,
   isFullscreenActive,
   featuredMap,
   selectedFeaturedPlace,
   spinGlobe,
   handle,
-}) => {
+}) {
   const isOpen = selectedSidebar === 'featuredMapCard';
 
-  const isOnScreen =
-    isOpen && !isLandscapeMode && !isFullscreenActive && !selectedFeaturedPlace;
+  const isOnScreen = isOpen && !isFullscreenActive && !selectedFeaturedPlace;
 
   useEffect(() => {
     view.when(() => {
@@ -68,9 +71,9 @@ const FeaturedMapCardComponent = ({
           </>
         )}
       </div>
-    )) ||
-    null
+    ))
+    || null
   );
-};
+}
 
 export default FeaturedMapCardComponent;

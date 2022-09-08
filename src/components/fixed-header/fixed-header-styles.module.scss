@@ -67,11 +67,6 @@ $icon-size: 25px;
   background-image: url('../../assets/icons/arrow_expand.svg');
 }
 
-.collapsedFlipToggleSwitchIcon {
-  transform: rotate(-90deg);
-  top: 35px;
-}
-
 .backButton {
   @extend %subtitle;
   margin-top: 4px;
