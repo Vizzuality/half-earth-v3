@@ -127,7 +127,7 @@ function AnalyzeAreasCardComponent({
             <Button
               type="compound"
               Icon={AreasHistoryIcon}
-              label={t('See your automatically saved areas')}
+              label={t('Open your analyzed areas history.')}
               className={styles.areasHistoryButton}
               theme={styles.areasHistoryButton}
               handleClick={handleAoiModalToggle}
@@ -172,7 +172,7 @@ function AnalyzeAreasCardComponent({
               <Button
                 type="compound"
                 Icon={AreasHistoryIcon}
-                label={t('See your automatically saved areas')}
+                label={t('Open your analyzed areas history.')}
                 className={styles.areasHistoryButton}
                 handleClick={handleAoiModalToggle}
               />
@@ -254,7 +254,7 @@ function AnalyzeAreasCardComponent({
               <Button
                 type="compound"
                 Icon={AreasHistoryIcon}
-                label={t('See your automatically saved areas')}
+                label={t('Open your analyzed areas history.')}
                 className={styles.areasHistoryButton}
                 theme={styles.areasHistoryButton}
                 handleClick={handleAoiModalToggle}
@@ -297,7 +297,7 @@ function AnalyzeAreasCardComponent({
               <Button
                 type="compound"
                 Icon={AreasHistoryIcon}
-                label={t('See your automatically saved areas')}
+                label={t('Open your analyzed areas history.')}
                 className={styles.areasHistoryButton}
                 handleClick={handleAoiModalToggle}
               />
