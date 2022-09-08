@@ -17,7 +17,7 @@ function TabsSidebarContainer(props) {
   } = props;
 
   const mapLayersActive = useMemo(() => {
-    if (aoiId) {
+    if (aoiId && activeCategoryLayers) {
       return activeCategoryLayers.filter(({ title: id1 }) => !BASE_LAYERS
         .some(({ title: id2 }) => id2 === id1));
     }
