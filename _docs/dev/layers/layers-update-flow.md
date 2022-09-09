@@ -64,3 +64,7 @@ These are the layer types we are currently using in the platform:
       bbox: [-164,-40,-35,56]
     }
     ```
+
+- If the layers are going to show on the map layers tab be sure to add a count of the layers on the respective section E.g. `getLayersToggleConfig` on `biodiversity-layers-constants` > `getBiodiversityCountedActiveLayer` on `biodiversity-sidebar-card-selectors`
+
+And also add them to the main list on `category-layer-constants`
