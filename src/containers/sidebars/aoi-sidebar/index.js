@@ -12,7 +12,10 @@ import { getTotalPressures, getMainPressure } from 'utils/analyze-areas-utils';
 import { percentageFormat, getLocaleNumber } from 'utils/data-formatting-utils';
 import { postAoiToDataBase } from 'utils/geo-processing-services';
 
+import intersectionBy from 'lodash/intersectionBy';
+
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
+import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 
 import Component from './component';
 
@@ -20,7 +23,7 @@ const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function AoiSidebarContainer(props) {
   const {
-    speciesData, contextualData, geometry, browsePage, activeCategoryLayers, changeUI,
+    speciesData, contextualData, geometry, browsePage, changeUI, activeLayers,
   } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
@@ -43,12 +46,6 @@ function AoiSidebarContainer(props) {
     }
   }, [contextualData, locale]);
 
-  useEffect(() => {
-    if (isShareModalOpen && contextualData.isCustom) {
-      saveAreaToDB();
-    }
-  }, [isShareModalOpen]);
-
   const saveAreaToDB = () => {
     const attributes = {
       ...contextualData,
@@ -64,9 +61,15 @@ function AoiSidebarContainer(props) {
     postAoiToDataBase(geometry, attributes, speciesData);
   };
 
+  useEffect(() => {
+    if (isShareModalOpen && contextualData.isCustom) {
+      saveAreaToDB();
+    }
+  }, [isShareModalOpen]);
+
   const handleClose = () => {
     browsePage({ type: DATA });
-    changeUI({ activeCategoryLayers });
+    changeUI({ activeCategoryLayers: intersectionBy(activeLayers, CATEGORY_LAYERS, 'title') });
   };
 
   return (

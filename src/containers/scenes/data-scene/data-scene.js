@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -15,7 +15,6 @@ import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-
 import intersectionBy from 'lodash/intersectionBy';
 import unionBy from 'lodash/unionBy';
 
-import { AREA_TYPES } from 'constants/aois';
 import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
@@ -38,30 +37,26 @@ function Container(props) {
     setBatchTooltipData,
     browsePage,
     precomputedAoiAnalytics,
-    areaTypeSelected,
     changeUI,
     activeCategoryLayers,
   } = props;
 
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
 
   const locale = useLocale();
   const t = useT();
 
-  const updatedActiveLayers = useMemo(() => {
-    const mergeLayers = unionBy(activeCategoryLayers, activeLayers, 'title');
-
-    return (areaTypeSelected === AREA_TYPES.futurePlaces)
-      ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
-  }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
-
-  const updateActiveCategoryLayers = useMemo(() => {
-    if (!activeCategoryLayers) {
-      return intersectionBy(activeLayers, CATEGORY_LAYERS, 'title');
+  useEffect(() => {
+    // Add temporary activeCategoryLayers to activeLayers at render and reset the param
+    if (activeCategoryLayers) {
+      setUpdatedActiveLayers(unionBy(activeCategoryLayers, activeLayers, 'title'));
+      changeUI({ activeCategoryLayers: undefined });
+    } else {
+      setUpdatedActiveLayers(activeLayers);
     }
-    return activeCategoryLayers;
-  }, [activeLayers, activeCategoryLayers]);
+  }, [activeLayers]);
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -121,10 +116,12 @@ function Container(props) {
     browsePage({
       type: AREA_OF_INTEREST,
       payload: { id: mapTooltipContent.id },
-      query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
+      query: {
+        precalculatedLayer,
+        OBJECTID: mapTooltipContent.objectId,
+      },
     });
-
-    changeUI({ activeCategoryLayers: updateActiveCategoryLayers });
+    changeUI({ activeCategoryLayers: intersectionBy(updatedActiveLayers, CATEGORY_LAYERS, 'title') });
   };
 
   useEffect(() => {

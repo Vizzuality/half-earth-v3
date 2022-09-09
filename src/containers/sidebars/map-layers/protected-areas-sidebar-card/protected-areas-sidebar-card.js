@@ -22,7 +22,6 @@ function Container(props) {
   const {
     activeLayers,
     changeGlobe,
-    changeUI,
   } = props;
   const locale = useLocale();
 
@@ -39,17 +38,13 @@ function Container(props) {
   }, [locale]);
 
   const handleLayerToggle = (option) => {
-    if (option.layer === 'all') {
-      // batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+    if (selectedLayers.find((layer) => layer === option.value)) {
+      setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value));
     } else {
-      selectedLayers.find((layer) => layer === option.value)
-        ? setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value))
-        : setSelectedLayers([...selectedLayers, option.value]);
-
-      layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
-      const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
-      changeUI({ activeCategoryLayers: updateActiveLayers });
+      setSelectedLayers([...selectedLayers, option.value]);
     }
+
+    layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
   };
 
   return (

@@ -23,7 +23,6 @@ function CarbonSidebarCardContainer(props) {
   const {
     activeLayers,
     changeGlobe,
-    changeUI,
   } = props;
 
   const locale = useLocale();
@@ -42,8 +41,6 @@ function CarbonSidebarCardContainer(props) {
   const handleLayerToggle = (option, category) => {
     const categoryName = LAYERS_CATEGORIES[category];
     layerManagerToggle(option.value, activeLayers, changeGlobe, categoryName);
-    const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
-    changeUI({ activeCategoryLayers: updateActiveLayers });
   };
 
   return (

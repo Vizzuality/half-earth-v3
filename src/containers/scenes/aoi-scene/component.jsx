@@ -37,8 +37,7 @@ function AoiSceneComponent({
   onboardingType,
   onboardingStep,
   waitingInteraction,
-  updatedActiveLayers,
-  activeCategoryLayers,
+  activeLayers,
 }) {
   const isMobile = useMobile();
 
@@ -49,7 +48,7 @@ function AoiSceneComponent({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
-      <ArcgisLayerManager activeLayers={updatedActiveLayers} />
+      <ArcgisLayerManager activeLayers={activeLayers} />
 
       <MaskAndOutlineGraphicLayer geometry={geometry} />
 
@@ -60,23 +59,20 @@ function AoiSceneComponent({
 
       <LocalSceneViewManager localGeometry={geometry} />
       {FEATURE_NEW_MENUS && !isMobile && (
-        <SideMenu activeLayers={updatedActiveLayers} />
+        <SideMenu activeLayers={activeLayers} />
       )}
 
-      {!FEATURE_NEW_MENUS && (
-        <Widgets activeLayers={updatedActiveLayers} />
-      )}
+      {!FEATURE_NEW_MENUS && <Widgets activeLayers={activeLayers} />}
 
       <TerrainExaggerationLayer />
 
-      <LabelsLayer activeLayers={updatedActiveLayers} />
+      <LabelsLayer activeLayers={activeLayers} />
 
       <AoiSidebar
         activeCategory={activeCategory}
         aoiId={aoiId}
-        activeCategoryLayers={activeCategoryLayers}
         speciesData={speciesData}
-        activeLayers={updatedActiveLayers}
+        activeLayers={activeLayers}
         contextualData={contextualData}
         geometry={geometry}
         dataLoaded={dataLoaded}

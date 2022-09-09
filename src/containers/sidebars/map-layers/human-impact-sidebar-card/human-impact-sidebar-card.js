@@ -24,7 +24,6 @@ function Container(props) {
   const {
     changeGlobe,
     activeLayers,
-    changeUI,
   } = props;
 
   const [metadataSource, setMetadataSource] = useState(null);
@@ -53,8 +52,6 @@ function Container(props) {
       batchToggleLayers(nonActiveHumanLayers, activeLayers, changeGlobe, categoryName);
     } else {
       layerManagerToggle(option.value, activeLayers, changeGlobe, categoryName);
-      const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
-      changeUI({ activeCategoryLayers: updateActiveLayers });
     }
   };
 

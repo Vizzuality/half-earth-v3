@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
@@ -17,12 +17,11 @@ import orderBy from 'lodash/orderBy';
 import unionBy from 'lodash/unionBy';
 
 import { AREA_TYPES } from 'constants/aois';
-import { HALF_EARTH_FUTURE_TILE_LAYER, FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
 import { setPrecalculatedAOIs, recoverOrCreateNotPrecalculatedAoi } from './aoi-scene-utils';
 import Component from './component.jsx';
-import aoiSceneConfig from './config';
 import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
@@ -31,7 +30,7 @@ const {
   REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
 } = process.env;
 
-// !Protected areas are fetched on protected areas modal except for PA type AOIs
+// Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
   const {
     changeGlobe,
@@ -58,31 +57,24 @@ function AOIScene(props) {
   const [loaded, setLoaded] = useState(false);
 
   const [tooltipInfo, setTooltipInfo] = useState(null);
+  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
 
-  // !This reconciliate active layers with default config layers
+  // Add future places layer only if the AOI  is a future place
   useEffect(() => {
-    if (!activeCategoryLayers) return null;
+    if (precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
+      setUpdatedActiveLayers(unionBy({ title: HALF_EARTH_FUTURE_TILE_LAYER }, activeLayers, 'title'));
+    }
+  }, [areaTypeSelected]);
 
-    const defaultCategoryLayers = aoiSceneConfig.activeLayers.filter((al) => !!al.category);
-
-    const activeCategoryLayersTitles = activeCategoryLayers
-      .map((cal) => cal.title);
-
-    defaultCategoryLayers.forEach((dcl) => {
-      if (!activeCategoryLayersTitles.includes(dcl.title)) {
-        changeUI({ activeCategoryLayers: [...activeCategoryLayers, dcl] });
-      }
-    });
-
-    return undefined;
-  }, []);
-
-  const updatedActiveLayers = useMemo(() => {
-    const mergeLayers = unionBy(activeCategoryLayers, activeLayers, 'title');
-
-    return (areaTypeSelected === AREA_TYPES.futurePlaces)
-      ? mergeLayers : mergeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER);
-  }, [activeCategoryLayers, activeLayers, areaTypeSelected]);
+  useEffect(() => {
+    // Add temporary activeCategoryLayers to activeLayers at render and reset the param
+    if (activeCategoryLayers) {
+      setUpdatedActiveLayers(unionBy(activeCategoryLayers, activeLayers, 'title'));
+      changeUI({ activeCategoryLayers: undefined });
+    } else {
+      setUpdatedActiveLayers(activeLayers);
+    }
+  }, [activeLayers]);
 
   const getAreaType = (attributes) => {
     let areaType = AREA_TYPES.protected;
@@ -91,18 +83,20 @@ function AOIScene(props) {
     } else if (attributes.GID_0) {
       areaType = AREA_TYPES.national;
     }
-    !FEATURE_MERGE_NATIONAL_SUBNATIONAL && setAreaTypeSelected(areaType);
+    if (!FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+      setAreaTypeSelected(areaType);
+    }
     return areaType;
   };
 
   useEffect(() => {
-    loadModules(['esri/geometry/geometryEngine', 'esri/geometry/support/jsonUtils']).then(([geometryEngine, jsonUtils]) => {
-      setGeometryEngine(geometryEngine);
-      setJsonUtils(jsonUtils);
+    loadModules(['esri/geometry/geometryEngine', 'esri/geometry/support/jsonUtils']).then(([_geometryEngine, _jsonUtils]) => {
+      setGeometryEngine(_geometryEngine);
+      setJsonUtils(_jsonUtils);
     });
   }, []);
 
-  // !Get PRECALCULATED AOIs
+  // Get PRECALCULATED AOIs
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
       setPrecalculatedAOIs({
@@ -145,7 +139,7 @@ function AOIScene(props) {
     setSpeciesData({ species: orderedSpecies });
   }, [taxaData]);
 
-  // !Reconcile all data until completely loaded
+  // Reconcile all data until completely loaded
   useEffect(() => {
     const hasAllData = speciesData
       && contextualData
@@ -170,21 +164,22 @@ function AOIScene(props) {
   }, [speciesData, precalculatedLayerSlug, contextualData]);
 
   const handleGlobeUpdating = (updating) => changeGlobe({ isGlobeUpdating: updating });
-  const handleMapLoad = (map, activeLayers) => {
+  const handleMapLoad = (map, initialActiveLayers) => {
     setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, FIREFLY_BASEMAP_LAYER] });
-    activateLayersOnLoad(map, activeLayers, layersConfig);
+    activateLayersOnLoad(map, initialActiveLayers, layersConfig);
   };
 
   const handleFuturePlaceClick = (results) => {
     if (!results) return;
     const { graphic } = results[0] || {};
     if (!graphic) return;
-    const { attributes, geometry } = graphic;
-    setTooltipInfo({ attributes, geometry });
+    const { attributes, geometry: graphicGeo } = graphic;
+    setTooltipInfo({ attributes, geometry: graphicGeo });
   };
 
   return (
     <Component
+      {...props}
       geometry={geometry}
       speciesData={speciesData}
       contextualData={contextualData}
@@ -195,8 +190,7 @@ function AOIScene(props) {
       tooltipInfo={tooltipInfo}
       setTooltipInfo={setTooltipInfo}
       aoiId={aoiId}
-      updatedActiveLayers={updatedActiveLayers}
-      {...props}
+      activeLayers={updatedActiveLayers}
     />
   );
 }
