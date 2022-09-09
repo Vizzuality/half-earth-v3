@@ -55,10 +55,12 @@ function HumanImpactSidebarCardComponent({
     () => getHumanPressuresLandUse(),
     [locale],
   );
+
   const humanPressuresMarine = useMemo(
     () => getHumanPressuresMarine(),
     [locale],
   );
+
   const texts = {
     categoryTitle: t('Human pressures'),
     marineLayersTitle: t('Marine use pressures'),
@@ -148,6 +150,7 @@ function HumanImpactSidebarCardComponent({
             />
           ))}
           <button
+            type="button"
             className={styles.allButton}
             onClick={() => handleLayerToggle(
               {
@@ -180,6 +183,7 @@ function HumanImpactSidebarCardComponent({
             />
           ))}
           <button
+            type="button"
             className={styles.allButton}
             onClick={() => handleLayerToggle(
               {

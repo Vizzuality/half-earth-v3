@@ -27,6 +27,8 @@ module.exports = {
     // Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'react/jsx-filename-extension': 'off',
     'react/prop-types': 0,
     'no-console': [1, { allow: ['info', 'warn', 'error'] }],
     'react/jsx-props-no-spreading': [0, {}],
@@ -62,17 +64,12 @@ module.exports = {
           },
 
           {
-            pattern: 'selectors/**',
+            pattern: 'esri-loader',
             group: 'builtin',
             position: 'after',
           },
           {
-            pattern: 'actions/**',
-            group: 'builtin',
-            position: 'after',
-          },
-          {
-            pattern: 'utils/**',
+            pattern: 'router',
             group: 'builtin',
             position: 'after',
           },
@@ -91,7 +88,22 @@ module.exports = {
             group: 'builtin',
           },
           {
+            pattern: 'selectors/**',
+            group: 'builtin',
+            position: 'after',
+          },
+          {
             pattern: 'prop-types',
+            group: 'builtin',
+            position: 'after',
+          },
+          {
+            pattern: 'actions/**',
+            group: 'builtin',
+            position: 'after',
+          },
+          {
+            pattern: 'utils/**',
             group: 'builtin',
             position: 'after',
           },
@@ -139,6 +151,16 @@ module.exports = {
           },
           {
             pattern: 'styles/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: './styles**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: 'icons/**',
             group: 'internal',
             position: 'after',
           },

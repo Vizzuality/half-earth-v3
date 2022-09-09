@@ -1,20 +1,28 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect, useMemo } from 'react';
-import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import ContentfulService from 'services/contentful';
-import isEmpty from 'lodash/isEmpty';
-import Component from './biodiversity-sidebar-card-component';
-import { LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
+
+import { useLocale } from '@transifex/react';
+
+import * as urlActions from 'actions/url-actions';
+
 import { batchToggleLayers, layerManagerToggle, flyToLayerExtent } from 'utils/layer-manager-utils';
-import mapStateToProps from './biodiversity-sidebar-card-selectors';
+
+import isEmpty from 'lodash/isEmpty';
 
 import usePrevious from 'hooks/use-previous';
-import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
+
+import ContentfulService from 'services/contentful';
+
 import {
   getLayersResolution, getLayersToggleConfig, LAYER_VARIANTS, TERRESTRIAL, DEFAULT_RESOLUTION,
 } from 'constants/biodiversity-layers-constants';
+import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
+import { LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
+
+import Component from './biodiversity-sidebar-card-component';
+import mapStateToProps from './biodiversity-sidebar-card-selectors';
 
 const actions = { ...metadataActions, ...urlActions };
 function BiodiversitySidebarCard(props) {
@@ -53,11 +61,33 @@ function BiodiversitySidebarCard(props) {
   }, [biodiversityLayerVariant, layersResolution, locale]);
 
   useEffect(() => {
-    const resolutionExists = (category) => layersResolution[biodiversityLayerVariant][category].some((res) => res.slug === selectedResolution[category]);
+    const resolutionExists = (category) => layersResolution[biodiversityLayerVariant][category]
+      .some((res) => res.slug === selectedResolution[category]);
     if (!resolutionExists(TERRESTRIAL)) {
       setSelectedResolution(DEFAULT_RESOLUTION);
     }
   }, [biodiversityLayerVariant, layersResolution]);
+
+  const handleLayerToggle = (option) => {
+    const layer = layersConfig[option.layer];
+    if (selectedLayer === option.layer) {
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
+      setSelectedLayer(null);
+    } else if (selectedLayer) {
+      if (layer.bbox) flyToLayerExtent(layer.bbox, view);
+      batchToggleLayers(
+        [selectedLayer, option.layer],
+        activeLayers,
+        changeGlobe,
+        LAYERS_CATEGORIES.BIODIVERSITY,
+      );
+      setSelectedLayer(option.layer);
+    } else {
+      if (layer.bbox) flyToLayerExtent(layer.bbox, view);
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
+      setSelectedLayer(option.layer);
+    }
+  };
 
   useEffect(() => {
     if (!previousBiodiversityLayerVariant) return;
@@ -98,22 +128,6 @@ function BiodiversitySidebarCard(props) {
       changeGlobe,
       LAYERS_CATEGORIES.BIODIVERSITY,
     );
-  };
-
-  const handleLayerToggle = (option) => {
-    const layer = layersConfig[option.layer];
-    if (selectedLayer === option.layer) {
-      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
-      setSelectedLayer(null);
-    } else if (selectedLayer) {
-      layer.bbox && flyToLayerExtent(layer.bbox, view);
-      batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
-      setSelectedLayer(option.layer);
-    } else {
-      layer.bbox && flyToLayerExtent(layer.bbox, view);
-      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
-      setSelectedLayer(option.layer);
-    }
   };
 
   const handleCloseCard = () => {

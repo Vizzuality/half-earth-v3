@@ -63,6 +63,7 @@ $scrollbar-width: 4px;
 
 %verticalScrollbar {
   overflow-y: auto;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: $scrollbar-width;

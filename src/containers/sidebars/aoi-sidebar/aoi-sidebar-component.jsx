@@ -1,16 +1,10 @@
 import React, { useState, useMemo } from 'react';
 
-import { writeToForageItem } from 'utils/local-forage-utils';
-
 import { useT, useLocale } from '@transifex/react';
 
+import { writeToForageItem } from 'utils/local-forage-utils';
+
 import cx from 'classnames';
-import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
-import { ReactComponent as CloseIcon } from 'icons/closes.svg';
-import { ReactComponent as EditIcon } from 'icons/edit.svg';
-import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
-import { ReactComponent as PopulationIcon } from 'icons/population.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import Button from 'components/button';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -34,9 +28,17 @@ import {
   getCountryNames,
 } from 'constants/translation-constants';
 
+import styles from './styles.module.scss';
+
+import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
+import { ReactComponent as CloseIcon } from 'icons/closes.svg';
+import { ReactComponent as EditIcon } from 'icons/edit.svg';
+import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
+import { ReactComponent as PopulationIcon } from 'icons/population.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
+
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
-import styles from './styles.module.scss';
 
 function AOISidebarComponent({
   map,
@@ -104,6 +106,7 @@ function AOISidebarComponent({
           <div className={styles.nameWrapper}>
             {isEditingName ? (
               <input
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 type="text"
                 className={styles.areaNameEdit}

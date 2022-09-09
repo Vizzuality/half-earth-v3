@@ -119,6 +119,7 @@ function BiodiversitySidebarCardComponent({
 
   return (
     <motion.div
+      // eslint-disable-next-line no-return-assign
       ref={(ref) => (tooltipRefs.current.biodiversity = ref)}
       className={cx(styles.sidebarCardContainer, className, {
         [styles.open]: isOpen,

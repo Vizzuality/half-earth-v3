@@ -2,8 +2,21 @@
 @import 'styles/shared-sidebar.module';
 @import 'styles/typography-extends.scss';
 
-.sidebarCardContainer {
+.sidebarCardContainerOLD {
+  @include backdropBlur();
   @extend .sharedSidebarCardContainer;
+}
+
+.sidebarCardContainer {
+  @include backdropBlur();
+  @extend .sharedSidebarCardContainer;
+  padding: 0 16px 16px 16px;
+}
+
+.subtitle {
+  @extend %bodyText;
+  color: $grey-text;
+  font-weight: 400;
 }
 
 .cardContentContainer {
@@ -15,6 +28,7 @@
   justify-content: space-between;
   padding-top: $sidebar-paddings;
 }
+
 .sectionContainer {
   padding-top: $sidebar-paddings;
 }
@@ -51,11 +65,6 @@
   padding-bottom: $paragraph-gutter;
 }
 
-.separatorLabel {
-  text-align: center;
-  padding: $sidebar-paddings 0;
-}
-
 .shapeUploader {
   display: flex;
   align-items: center;
@@ -70,6 +79,11 @@
   .label {
     padding-bottom: 0;
   }
+}
+
+.separatorLabel {
+  text-align: center;
+  padding: $sidebar-paddings 0;
 }
 
 .areasHistoryButton {

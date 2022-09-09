@@ -7,7 +7,8 @@ import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'sel
 
 import dataSceneConfig from 'scenes/data-scene/data-scene-config';
 
-const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
+const selectBiodiversityData = ({ biodiversityData }) => biodiversityData
+&& (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => (countryExtent ? countryExtent.data : null);
 
@@ -53,6 +54,7 @@ export const getCountryChallengesSelectedFilter = createSelector(getUiSettings, 
 export const getOnboardingType = createSelector(getUiSettings, (uiSettings) => uiSettings.onboardingType);
 export const getOnboardingStep = createSelector(getUiSettings, (uiSettings) => uiSettings.onboardingStep);
 export const getOnWaitingInteraction = createSelector(getUiSettings, (uiSettings) => uiSettings.waitingInteraction);
+export const getAOIId = createSelector(getUiSettings, (uiSettings) => uiSettings.aoiId);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
@@ -78,4 +80,5 @@ export default createStructuredSelector({
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
+  aoiId: getAOIId,
 });

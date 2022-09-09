@@ -19,14 +19,27 @@ const {
   REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
-function AreaOfInterestPageComponent({ hasMetadata }) {
+function AreaOfInterestPageComponent({
+  activeCategory,
+  handleGlobeUpdating,
+  hasMetadata,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
+}) {
   return (
     <>
       <HalfEarthLogo className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)} />
       {!FEATURE_NEW_MENUS && (
         <MainMenu />
       )}
-      <AreaOfInterestScene />
+      <AreaOfInterestScene
+        activeCategory={activeCategory}
+        handleGlobeUpdating={handleGlobeUpdating}
+        onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
+        waitingInteraction={waitingInteraction}
+      />
       {hasMetadata && <InfoModal />}
     </>
   );

@@ -4,19 +4,16 @@ import {
   CITIES_LABELS_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
-  SPECIFIC_REGIONS_TILE_LAYER,
-  HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
 
+// ! All the map layers tab layers should have a category attribute
 export default {
   activeLayers: [
     { title: MASK_LAYER },
     { title: GRAPHIC_LAYER },
     { title: CITIES_LABELS_LAYER },
     { title: LANDSCAPE_FEATURES_LABELS_LAYER },
-    { title: PROTECTED_AREAS_VECTOR_TILE_LAYER },
-    { title: SPECIFIC_REGIONS_TILE_LAYER },
-    { title: HALF_EARTH_FUTURE_TILE_LAYER },
+    { title: PROTECTED_AREAS_VECTOR_TILE_LAYER, category: 'Protection' },
   ],
   padding: {
     bottom: 60,

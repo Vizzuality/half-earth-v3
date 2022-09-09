@@ -34,6 +34,7 @@ function DataGlobeComponent({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  aoiId,
 }) {
   return (
     <>
@@ -63,6 +64,7 @@ function DataGlobeComponent({
         onboardingType={onboardingType}
         onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}
+        aoiId={aoiId}
         onMapLoad={(map) => handleMapLoad(map, activeLayers)}
       />
       {hasMetadata && <InfoModal />}

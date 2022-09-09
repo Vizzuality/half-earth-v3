@@ -45,3 +45,9 @@ On the other hand, reliyng on [redux-first-router](https://www.npmjs.com/package
 - So inside the pages `selectors` we merge the `location` state with the `initial state` defined for each page to get the _actual_ state of the app and pass it to page components to define the way they should be displayed (both `globe` and `ui` state).
 
  ![`location` with UI and GLOBE keys](/public/store-example1.png)
+
+ ## UI and globe params (WIP)
+
+ UI params:
+ - activeCategoryLayers: temporal url parameter to store the active layers of the map layers tab between the data globe and the AOI page. This parameter is reset once we get the needed layers information
+ - activeLayers:  Active layers on the globe

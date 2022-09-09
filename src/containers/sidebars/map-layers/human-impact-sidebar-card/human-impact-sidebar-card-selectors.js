@@ -15,7 +15,7 @@ const getComputedHumanPressuresLandUse = createSelector(selectLangUrlState, (loc
 // eslint-disable-next-line no-unused-vars
 const getComputedHumanPressuresMarine = createSelector(selectLangUrlState, (locale) => getHumanPressuresMarine());
 
-export const getCountedActiveLayers = createSelector([(state, props) => props && props.activeLayers, getComputedHumanPressuresLandUse, getComputedHumanPressuresMarine], (activeLayers, humanPressuresLandUse, humanPressuresMarine) => {
+export const getHumanCountedActiveLayers = createSelector([(state, props) => props && props.activeLayers, getComputedHumanPressuresLandUse, getComputedHumanPressuresMarine], (activeLayers, humanPressuresLandUse, humanPressuresMarine) => {
   if (!activeLayers || !activeLayers.length) return 0;
   const humanPressuresLayers = humanPressuresLandUse.concat(humanPressuresMarine);
   const allLayers = Object.values(humanPressuresLayers).map((layer) => layer.value);
@@ -25,5 +25,5 @@ export const getCountedActiveLayers = createSelector([(state, props) => props &&
 });
 
 export default createStructuredSelector({
-  countedActiveLayers: getCountedActiveLayers,
+  countedActiveLayers: getHumanCountedActiveLayers,
 });

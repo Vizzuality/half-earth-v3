@@ -43,7 +43,6 @@ function DataSceneComponent({
   countryISO,
   countryName,
   openedModal,
-  activeLayers,
   activeOption,
   sceneSettings,
   isSidebarOpen,
@@ -58,16 +57,19 @@ function DataSceneComponent({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  aoiId,
   speciesData,
   browsePage,
+  updatedActiveLayers,
 }) {
   const isMobile = useMobile();
 
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea = selectedAnalysisLayer
-    && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
+  const isProtectedArea =
+    selectedAnalysisLayer &&
+    selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -77,7 +79,7 @@ function DataSceneComponent({
           : sceneSettings.center,
       ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType],
+    [isMobile, onboardingType]
   );
 
   return (
@@ -97,12 +99,12 @@ function DataSceneComponent({
       {!!onboardingType && <SoundButton />}
       <OnboardingTooltip />
 
-      <ArcgisLayerManager activeLayers={activeLayers} />
+      <ArcgisLayerManager activeLayers={updatedActiveLayers} />
 
       {isGlobeUpdating && <Spinner floating />}
 
       <DataGlobalSidebar
-        activeLayers={activeLayers}
+        activeLayers={updatedActiveLayers}
         activeOption={activeOption}
         isSidebarOpen={isSidebarOpen}
         activeCategory={activeCategory}
@@ -112,7 +114,10 @@ function DataSceneComponent({
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
-        className={cx(styles.sidebarContainer, {
+        aoiId={aoiId}
+        className={cx({
+          [styles.sidebarContainer]: FEATURE_NEW_MENUS,
+          [styles.sidebarContainerOLD]: !FEATURE_NEW_MENUS,
           [animationStyles.leftHidden]: sidebarHidden,
           [uiStyles.blur]:
             activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
@@ -128,7 +133,7 @@ function DataSceneComponent({
         sceneMode={sceneMode}
         countryISO={countryISO}
         countryName={countryName}
-        activeLayers={activeLayers}
+        activeLayers={updatedActiveLayers}
       />
 
       {selectedAnalysisLayer && (
@@ -141,7 +146,7 @@ function DataSceneComponent({
       {FEATURE_NEW_MENUS && !isMobile && !onboardingType && (
         <SideMenu
           openedModal={openedModal}
-          activeLayers={activeLayers}
+          activeLayers={updatedActiveLayers}
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
           blur={activeGlobesMenu}
@@ -155,7 +160,7 @@ function DataSceneComponent({
       {(!FEATURE_NEW_MENUS || isMobile) && (
         <Widgets
           openedModal={openedModal}
-          activeLayers={activeLayers}
+          activeLayers={updatedActiveLayers}
           isFullscreenActive={isFullscreenActive}
           onboardingStep={onboardingStep}
         />
@@ -167,17 +172,17 @@ function DataSceneComponent({
         isProtectedArea={isProtectedArea}
       />
 
-      <LabelsLayer activeLayers={activeLayers} />
+      <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {FEATURE_NEW_MENUS
-        && activeGlobesMenu
-        && !isMobile
-        && !onboardingType && (
+      {FEATURE_NEW_MENUS &&
+        activeGlobesMenu &&
+        !isMobile &&
+        !onboardingType && (
           <GlobesMenu
             browsePage={browsePage}
             onMouseLeave={() => setActiveGlobesMenu(false)}
           />
-      )}
+        )}
     </Scene>
   );
 }

@@ -2,10 +2,17 @@
 @import 'styles/settings';
 
 .container {
-  @extend %verticalScrollbar;
-  height: calc(100vh - #{$sidebar-top-margin});
-  width: calc(#{$sidebar-width} + 25px);
+
+}
+
+.content {
+  height: 85vh;
   padding-bottom: $site-gutter;
+}
+
+.mapLayersContainer {
+  @extend %verticalScrollbar;
+  height: 100%;
 }
 
 .togglesContainer {

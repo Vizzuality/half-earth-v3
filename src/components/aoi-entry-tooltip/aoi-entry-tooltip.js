@@ -4,13 +4,13 @@ import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
+import { AREA_OF_INTEREST } from 'router';
+
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 
 import * as urlActions from 'actions/url-actions';
 
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
-
-import { AREA_OF_INTEREST } from 'router';
 
 import { AREA_TYPES } from 'constants/aois';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';

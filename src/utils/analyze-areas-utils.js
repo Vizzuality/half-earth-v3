@@ -1,7 +1,8 @@
+import { loadModules } from 'esri-loader';
+
 import { percentageFormat } from 'utils/data-formatting-utils';
 
-import { loadModules } from 'esri-loader';
-import _intersectionBy from 'lodash/intersectionBy';
+import intersectionBy from 'lodash/intersectionBy';
 import _pick from 'lodash/pick';
 import sha1 from 'sha1';
 
@@ -31,7 +32,7 @@ export function calculateGeometryArea(geometry, geometryEngine) {
 }
 
 export function getSelectedAnalysisLayer(activeLayers) {
-  const intersectionArray = _intersectionBy(getPrecalculatedAOIOptions(), activeLayers, 'title');
+  const intersectionArray = intersectionBy(getPrecalculatedAOIOptions(), activeLayers, 'title');
   return intersectionArray[0];
 }
 

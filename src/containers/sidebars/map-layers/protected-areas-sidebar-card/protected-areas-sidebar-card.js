@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import Component from './protected-areas-sidebar-card-component';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+
+import { useLocale } from '@transifex/react';
+
+import * as urlActions from 'actions/url-actions';
+
 import { layerManagerToggle } from 'utils/layer-manager-utils';
-import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
+
 import ContentfulService from 'services/contentful';
+
+import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+
+import Component from './protected-areas-sidebar-card-component';
 import mapStateToProps from './protected-areas-sidebar-card-selectors';
 
 const actions = { ...metadataActions, ...urlActions };
 
 function Container(props) {
   const {
-    changeGlobe,
     activeLayers,
+    changeGlobe,
   } = props;
   const locale = useLocale();
 
@@ -32,14 +38,13 @@ function Container(props) {
   }, [locale]);
 
   const handleLayerToggle = (option) => {
-    if (option.layer === 'all') {
-      // batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
+    if (selectedLayers.find((layer) => layer === option.value)) {
+      setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value));
     } else {
-      selectedLayers.find((layer) => layer === option.value)
-        ? setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value))
-        : setSelectedLayers([...selectedLayers, option.value]);
-      layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
+      setSelectedLayers([...selectedLayers, option.value]);
     }
+
+    layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
   };
 
   return (

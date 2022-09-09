@@ -5,15 +5,15 @@
 
 $sidebar-content-top: 180px;
 
-.headerCard {
-  @include backdropBlur();
-  position: fixed;
-  z-index: $bring-to-front;
-  top: $ui-left-top;
+.sidebarContainer {
+  @include animationFunction($propertyToAnimate: all);
+  position: absolute;
+  height: calc(100vh - #{$nav-bar-height});
+  width: calc(#{$sidebar-width} + 30px);
+  top: $nav-bar-height;
   left: $site-gutter;
-  width: $sidebar-width;
-  padding: $sidebar-paddings;
-  border: $sidebar-border;
+  padding-bottom: $site-gutter;
+  padding-left: 5px;
 }
 
 .container {
@@ -32,10 +32,56 @@ $sidebar-content-top: 180px;
   z-index: $bring-to-front;
 }
 
-.backButton {
+
+.headerCard {
+  @include backdropBlur();
+  z-index: $bring-to-front;
+  top: $ui-left-top;
+  left: $site-gutter;
+  width: $sidebar-width;
+  padding: $sidebar-paddings;
+  border: $sidebar-border;
+}
+
+.headerCardOLD {
+  @include backdropBlur();
+  position: fixed;
+  z-index: $bring-to-front;
+  top: $ui-left-top;
+  left: $site-gutter;
+  width: $sidebar-width;
+  padding: $sidebar-paddings;
+  border: $sidebar-border;
+}
+
+.content {
+  @extend %verticalScrollbar;
+  @include backdropBlur();
+  position: absolute;
+  left: 40;
+  display: flex;
+  flex-direction: column;
+  border: $sidebar-border;
+  border-radius: $sidebar-border-radius;
+  height: 72vh;
+  width: $sidebar-width;
+  padding: $site-gutter;
+  z-index: $bring-to-front;
+}
+
+
+.backButtonOLD {
   position: absolute;
   top: -$local-sidebar-top-margin;
   left: calc(#{$local-sidebar-width}/2 - #{$rounded-button-size}/2);
+}
+
+.backButton {
+  height: 32px;
+  left: calc(#{$local-sidebar-width} - #{$rounded-button-size}/2);
+  position: absolute;
+  top: $local-sidebar-top-margin;
+  width: 32px;
 }
 
 .loading {
@@ -56,6 +102,12 @@ $sidebar-content-top: 180px;
 }
 
 .topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.topRowOLD {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -176,4 +228,9 @@ $sidebar-content-top: 180px;
       background-color: $brand-color-main;
     }
   }
+}
+
+.mapLayersContainer {
+  @extend %verticalScrollbar;
+  height: 100%;
 }

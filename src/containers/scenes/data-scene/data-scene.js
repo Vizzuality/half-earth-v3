@@ -3,17 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
-import mapStateToProps from 'selectors/map-tooltip-selectors';
+import { AREA_OF_INTEREST } from 'router';
+
+import { useLocale, useT } from '@transifex/react';
 
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
 
-import { useLocale, useT } from '@transifex/react';
+import intersectionBy from 'lodash/intersectionBy';
+import unionBy from 'lodash/unionBy';
 
-import { AREA_OF_INTEREST } from 'router';
-
+import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
@@ -24,18 +26,37 @@ import {
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 
 import Component from './data-scene-component';
+import mapStateToProps from './data-scene-selectors';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
 
 function Container(props) {
   const {
-    activeLayers, setBatchTooltipData, browsePage, precomputedAoiAnalytics, mapTooltipData,
+    mapTooltipData,
+    activeLayers,
+    setBatchTooltipData,
+    browsePage,
+    precomputedAoiAnalytics,
+    changeUI,
+    activeCategoryLayers,
   } = props;
+
   const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
 
   const locale = useLocale();
   const t = useT();
+
+  useEffect(() => {
+    // Add temporary activeCategoryLayers to activeLayers at render and reset the param
+    if (activeCategoryLayers) {
+      setUpdatedActiveLayers(unionBy(activeCategoryLayers, activeLayers, 'title'));
+      changeUI({ activeCategoryLayers: undefined });
+    } else {
+      setUpdatedActiveLayers(activeLayers);
+    }
+  }, [activeLayers]);
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
@@ -95,8 +116,12 @@ function Container(props) {
     browsePage({
       type: AREA_OF_INTEREST,
       payload: { id: mapTooltipContent.id },
-      query: { precalculatedLayer, OBJECTID: mapTooltipContent.objectId },
+      query: {
+        precalculatedLayer,
+        OBJECTID: mapTooltipContent.objectId,
+      },
     });
+    changeUI({ activeCategoryLayers: intersectionBy(updatedActiveLayers, CATEGORY_LAYERS, 'title') });
   };
 
   useEffect(() => {
@@ -111,6 +136,7 @@ function Container(props) {
       selectedAnalysisLayer={selectedAnalysisLayer}
       handleTooltipActionButtonClick={handleTooltipActionButtonClick}
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
+      updatedActiveLayers={updatedActiveLayers}
       {...props}
     />
   );

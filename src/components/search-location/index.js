@@ -3,11 +3,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
+import { useT, useLocale } from '@transifex/react';
+
 import urlActions from 'actions/url-actions';
 
 import { setCountryTooltip, flyToCentroid } from 'utils/globe-events-utils';
-
-import { useT, useLocale } from '@transifex/react';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
@@ -13,7 +13,6 @@ import Widgets from 'containers/widgets';
 import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import Scene from 'components/scene';
 
-import { AREA_TYPES } from 'constants/aois';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { useMobile } from 'constants/responsive';
 
@@ -23,26 +22,24 @@ const {
 } = process.env;
 
 function AoiSceneComponent({
+  activeCategory,
+  aoiId,
   geometry,
   onMapLoad,
   speciesData,
-  activeLayers,
   sceneSettings,
   contextualData,
   dataLoaded,
-  handleFuturePlaceClick,
   tooltipInfo,
   setTooltipInfo,
-  areaTypeSelected,
+  handleFuturePlaceClick,
+  handleGlobeUpdating,
+  onboardingType,
+  onboardingStep,
+  waitingInteraction,
+  activeLayers,
 }) {
   const isMobile = useMobile();
-
-  const updatedActiveLayers = useMemo(
-    () => (areaTypeSelected === AREA_TYPES.futurePlaces
-      ? activeLayers
-      : activeLayers.filter((l) => l.title !== HALF_EARTH_FUTURE_TILE_LAYER)),
-    [activeLayers, areaTypeSelected],
-  );
 
   return (
     <Scene
@@ -51,28 +48,40 @@ function AoiSceneComponent({
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
     >
-      <ArcgisLayerManager activeLayers={updatedActiveLayers} />
+      <ArcgisLayerManager activeLayers={activeLayers} />
+
       <MaskAndOutlineGraphicLayer geometry={geometry} />
+
       <FeatureHighlightLayer
         featureLayerSlugs={[HALF_EARTH_FUTURE_TILE_LAYER]}
         onFeatureClick={handleFuturePlaceClick}
       />
+
       <LocalSceneViewManager localGeometry={geometry} />
       {FEATURE_NEW_MENUS && !isMobile && (
-        <SideMenu activeLayers={updatedActiveLayers} />
+        <SideMenu activeLayers={activeLayers} />
       )}
-      {!FEATURE_NEW_MENUS && (
-        <Widgets activeLayers={updatedActiveLayers} />
-      )}
+
+      {!FEATURE_NEW_MENUS && <Widgets activeLayers={activeLayers} />}
+
       <TerrainExaggerationLayer />
-      <LabelsLayer activeLayers={updatedActiveLayers} />
+
+      <LabelsLayer activeLayers={activeLayers} />
+
       <AoiSidebar
+        activeCategory={activeCategory}
+        aoiId={aoiId}
         speciesData={speciesData}
-        activeLayers={updatedActiveLayers}
+        activeLayers={activeLayers}
         contextualData={contextualData}
         geometry={geometry}
         dataLoaded={dataLoaded}
+        handleGlobeUpdating={handleGlobeUpdating}
+        onboardingType={onboardingType}
+        onboardingStep={onboardingStep}
+        waitingInteraction={waitingInteraction}
       />
+
       <AOIEntryTooltip
         tooltipInfo={tooltipInfo}
         setTooltipInfo={setTooltipInfo}

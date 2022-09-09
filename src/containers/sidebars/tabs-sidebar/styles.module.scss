@@ -1,0 +1,112 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/shared-sidebar.module';
+@import 'styles/typography-extends.scss';
+
+.sidebarTabsContainer {
+  @extend .sharedSidebarCardContainer;
+  @include backdropBlur();
+
+  &:hover {
+    border-color: $elephant;
+  }
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+
+  ul[role="tablist"] {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li[role="presentation"] {
+    flex: 1;
+    padding: 6px 3px 6px 6px;
+    &:last-child {
+      padding: 6px 6px 6px 3px;
+    }
+  }
+
+  .tab {
+    @extend %title;
+    display: inline-block;
+    padding: 12px 0;
+    height: 50px;
+    width: 100%;
+    color: $white;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $firefly;
+    }
+
+    &[aria-selected="true"] {
+      background-color: $elephant;
+      border-radius: $border-radius-desktop;
+      color: $white;
+
+      &:hover {
+        background-color: $firefly;
+      }
+    }
+
+    &[aria-selected="false"] {
+      opacity: 0.6;
+    }
+
+    .titleContainer {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      line-height: 26px;
+
+      .tabIcon {
+        height: 18px;
+        margin-right: 10px;
+        width: 18px;
+      }
+
+      .layersIndicator {
+        @extend %subtitle;
+        align-items: center;
+        background-color: $white;
+        border-radius: 100%;
+        color: $elephant;
+        display: flex;
+        height: 16px;
+        justify-content: center;
+        font-weight: 400;
+        margin-right: 10px;
+        width: 16px;
+      }
+
+      .analyzeAreaSelectedIconContainer {
+        display: flex;
+        position: relative;
+
+        .aoiIndicator {
+          background-color: $screamin-green;
+          border-radius: 50%;
+          height: 6px;
+          position: absolute;
+          width: 6px;
+          z-index: 1;
+          bottom: 0px;
+          right: 9px;
+        }
+      }
+    }
+
+  }
+
+  .disabled {
+    pointer-events: none;
+  }
+}
