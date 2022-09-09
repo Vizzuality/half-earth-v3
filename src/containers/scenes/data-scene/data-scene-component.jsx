@@ -47,13 +47,11 @@ function DataSceneComponent({
   sceneSettings,
   isSidebarOpen,
   activeCategory,
-  isLandscapeMode,
   isGlobeUpdating,
   isFullscreenActive,
   handleGlobeUpdating,
   isBiodiversityActive,
   selectedAnalysisLayer,
-  isLandscapeSidebarCollapsed,
   handleTooltipActionButtonClick,
   handleHighlightLayerFeatureClick,
   onboardingType,
@@ -68,9 +66,10 @@ function DataSceneComponent({
 
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
-  const sidebarHidden = isLandscapeMode || isFullscreenActive || isMobile;
-  const isProtectedArea = selectedAnalysisLayer
-  && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
+  const sidebarHidden = isFullscreenActive || isMobile;
+  const isProtectedArea =
+    selectedAnalysisLayer &&
+    selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -80,7 +79,7 @@ function DataSceneComponent({
           : sceneSettings.center,
       ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType],
+    [isMobile, onboardingType]
   );
 
   return (
@@ -93,10 +92,10 @@ function DataSceneComponent({
       disabled={!!onboardingType}
       blur={activeGlobesMenu}
       className={cx({
-        [uiStyles.blurScene]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
+        [uiStyles.blurScene]:
+          activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
       })}
     >
-
       {!!onboardingType && <SoundButton />}
       <OnboardingTooltip />
 
@@ -109,11 +108,9 @@ function DataSceneComponent({
         activeOption={activeOption}
         isSidebarOpen={isSidebarOpen}
         activeCategory={activeCategory}
-        isLandscapeMode={isLandscapeMode}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         isBiodiversityActive={isBiodiversityActive}
-        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onboardingStep={onboardingStep}
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
@@ -122,16 +119,13 @@ function DataSceneComponent({
           [styles.sidebarContainer]: FEATURE_NEW_MENUS,
           [styles.sidebarContainerOLD]: !FEATURE_NEW_MENUS,
           [animationStyles.leftHidden]: sidebarHidden,
-          [uiStyles.blur]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
+          [uiStyles.blur]:
+            activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 
       <MobileOnly>
-        <MenuFooter
-          activeOption={activeOption}
-          isSidebarOpen={isSidebarOpen}
-          isLandscapeMode={isLandscapeMode}
-        />
+        <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} />
         <MenuSettings activeOption={activeOption} openedModal={openedModal} />
       </MobileOnly>
 
@@ -140,7 +134,6 @@ function DataSceneComponent({
         countryISO={countryISO}
         countryName={countryName}
         activeLayers={updatedActiveLayers}
-        isLandscapeMode={isLandscapeMode}
       />
 
       {selectedAnalysisLayer && (
@@ -181,13 +174,15 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {FEATURE_NEW_MENUS && activeGlobesMenu && !isMobile && !onboardingType && (
-        <GlobesMenu
-          browsePage={browsePage}
-          onMouseLeave={() => setActiveGlobesMenu(false)}
-        />
-      )}
-
+      {FEATURE_NEW_MENUS &&
+        activeGlobesMenu &&
+        !isMobile &&
+        !onboardingType && (
+          <GlobesMenu
+            browsePage={browsePage}
+            onMouseLeave={() => setActiveGlobesMenu(false)}
+          />
+        )}
     </Scene>
   );
 }

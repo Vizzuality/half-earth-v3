@@ -1,12 +1,10 @@
 // Protected areas layers.
 export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged-protected';
-export const PROTECTED_AREAS_FEATURE_LAYER = 'protected_areas_feature_layer';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
 
 export const TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER = 'terrestrial_protected_areas_vector_tile_layer';
 export const MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER = 'marine_protected_areas_vector_tile_layer';
 
-export const COMMUNITY_AREAS_FEATURE_LAYER = 'community_areas_feature_layer';
 export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
 export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
 export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species';

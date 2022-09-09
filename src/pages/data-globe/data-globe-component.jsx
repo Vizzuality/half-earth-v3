@@ -11,9 +11,7 @@ import uiStyles from 'styles/ui.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
-const {
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
+const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
 
 function DataGlobeComponent({
   sceneMode,
@@ -27,15 +25,12 @@ function DataGlobeComponent({
   sceneSettings,
   isSidebarOpen,
   activeCategory,
-  isLandscapeMode,
-  isGlobeUpdating,
   selectedSpecies,
   isFullscreenActive,
   handleGlobeUpdating,
   countedActiveLayers,
   isBiodiversityActive,
   countryTooltipDisplayFor,
-  isLandscapeSidebarCollapsed,
   onboardingType,
   onboardingStep,
   waitingInteraction,
@@ -63,12 +58,9 @@ function DataGlobeComponent({
         countedActiveLayers={countedActiveLayers}
         activeCategory={activeCategory}
         selectedSpecies={selectedSpecies}
-        isLandscapeMode={isLandscapeMode}
-        isGlobeUpdating={isGlobeUpdating}
         isFullscreenActive={isFullscreenActive}
         handleGlobeUpdating={handleGlobeUpdating}
         countryTooltipDisplayFor={countryTooltipDisplayFor}
-        isLandscapeSidebarCollapsed={isLandscapeSidebarCollapsed}
         onboardingType={onboardingType}
         onboardingStep={onboardingStep}
         waitingInteraction={waitingInteraction}

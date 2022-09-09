@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
@@ -24,7 +25,6 @@ const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
 });
 
 // GLOBE
-const getLandscapeMode = createSelector(getGlobeSettings, (globeSettings) => globeSettings.landscapeView);
 const getActiveLayers = createSelector(getGlobeSettings, (globeSettings) => globeSettings.activeLayers);
 
 // UI
@@ -37,7 +37,6 @@ const getFullscreenActive = createSelector(getUiSettings, (uiSettings) => uiSett
 const getGlobeUpdating = createSelector(getGlobeSettings, (globeSettings) => globeSettings.isGlobeUpdating);
 const getSelectedSpecies = createSelector(getGlobeSettings, (globeSettings) => globeSettings.selectedSpecies);
 const getActiveOption = createSelector(getUiSettings, (uiSettings) => uiSettings.activeOption);
-const getLandscapeSidebarCollapsed = createSelector(getUiSettings, (uiSettings) => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, (uiSettings) => uiSettings.openedModal);
 
 export default createStructuredSelector({
@@ -45,7 +44,6 @@ export default createStructuredSelector({
   sceneSettings: getGlobeSettings,
   sceneLayers: getFeaturedGlobeLayers,
   activeLayers: getActiveLayers,
-  isLandscapeMode: getLandscapeMode,
   hasMetadata: selectMetadataData,
   isFullscreenActive: getFullscreenActive,
   selectedFeaturedMap: getSelectedFeaturedMap,
@@ -57,5 +55,4 @@ export default createStructuredSelector({
   selectedSpecies: getSelectedSpecies,
   openedModal: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
-  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
 });

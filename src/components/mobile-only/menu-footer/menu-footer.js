@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useT } from '@transifex/react';
-import urlActions from 'actions/url-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
-import { useSearchWidgetLogic } from 'hooks/esri';
 import { searchTermsAnalyticsEvent } from 'actions/google-analytics-actions';
-import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import urlActions from 'actions/url-actions';
+
 import { flyToCentroid } from 'utils/globe-events-utils';
+
+import { useT } from '@transifex/react';
 
 // icons
 import { ReactComponent as SearchIcon } from 'icons/searchMobile.svg';
-// import { ReactComponent as AddLayerIcon } from 'icons/addLayer.svg';
-// import { ReactComponent as SelectMapIcon } from 'icons/selectMap.svg';
 import { ReactComponent as SettingsIcon } from 'icons/settings.svg';
-// import { ReactComponent as LegendIcon } from 'icons/legend.svg';
 
-import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+import { useSearchWidgetLogic } from 'hooks/esri';
+
 import {
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
+import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
 
 import Component from './menu-footer-component';
 
 function MenuFooterContainer(props) {
   const {
-    view, isSidebarOpen, isLandscapeMode, activeOption,
+    view, isSidebarOpen, activeOption,
     // selectedSidebar, selectedFeaturedMap, featured = false
   } = props;
   const t = useT();
@@ -83,28 +83,23 @@ function MenuFooterContainer(props) {
   };
 
   const {
-    handleOpenSearch, handleCloseSearch, handleSearchInputChange, handleSearchSuggestionClick, searchWidget,
+    handleOpenSearch,
+    handleCloseSearch,
+    handleSearchInputChange,
+    handleSearchSuggestionClick,
+    searchWidget,
   } = useSearchWidgetLogic(
     view,
     searchTermsAnalyticsEvent,
     searchWidgetConfig,
   );
-
-  const handleSidebarClose = () => { if (isSidebarOpen) props.changeUI({ isSidebarOpen: false }); };
-  const resetActiveOption = () => props.changeUI({ activeOption: '' });
-  const setActiveOption = (option) => props.changeUI({ activeOption: option });
-
-  // const FEATURED_MAPS_LIST_SIDEBAR = 'featuredMapsList';
-
-  // const resetFeaturedMap = () => { if (selectedFeaturedMap) props.changeUI({ selectedFeaturedMap: '' }); }
-
-  // const toggleFeaturedMapsList = () => {
-  //   const activeSidebar =  selectedSidebar && activeOption === FOOTER_OPTIONS.ADD_LAYER;
-  //   props.changeUI({ selectedSidebar: activeSidebar ? '' : FEATURED_MAPS_LIST_SIDEBAR});
-  // }
+  const { changeUI } = props;
+  const handleSidebarClose = () => { if (isSidebarOpen) changeUI({ isSidebarOpen: false }); };
+  const resetActiveOption = () => changeUI({ activeOption: '' });
+  const setActiveOption = (option) => changeUI({ activeOption: option });
 
   useEffect(() => {
-    if (activeOption !== FOOTER_OPTIONS.ADD_LAYER && isSidebarOpen) handleSidebarClose();
+    if (isSidebarOpen) handleSidebarClose();
     if (activeOption !== FOOTER_OPTIONS.SEARCH && searchWidget) handleCloseSearch();
   }, [activeOption]);
 
@@ -117,20 +112,11 @@ function MenuFooterContainer(props) {
     setIsSearchResultsVisible(false);
   };
 
-  useEffect(() => {
-    if (isLandscapeMode) {
-      resetActiveOption();
-      handleSidebarClose();
-      handleCloseSearch();
-    }
-  }, [isLandscapeMode]);
-
   const handler = (option) => {
     if (activeOption === option) resetActiveOption();
     else setActiveOption(option);
   };
 
-  // TODO: Add layer and legend options again
   const options = [
     {
       icon: SearchIcon,
@@ -147,6 +133,7 @@ function MenuFooterContainer(props) {
   ];
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Component
       options={options}
       handleSearchInputChange={handleSearchInputChange}

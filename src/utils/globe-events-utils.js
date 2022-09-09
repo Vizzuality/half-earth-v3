@@ -1,5 +1,7 @@
-import { loadModules } from 'esri-loader';
+/* eslint-disable max-len */
 import { get } from 'lodash';
+
+import { loadModules } from 'esri-loader';
 
 const markerDefaultStyles = 'overflow: hidden; border-radius: 20px; position: absolute; display: none; width: 40px; height: 40px; pointer-events: none; background-size: cover;';
 
@@ -15,16 +17,22 @@ export const hitResults = (viewPoint, layerTitle) => {
 
 export const setCursor = (layerFeatures) => {
   if (layerFeatures && layerFeatures.length) {
+    // eslint-disable-next-line no-undef
     document.body.style.cursor = 'pointer';
   } else {
+    // eslint-disable-next-line no-undef
     document.body.style.cursor = 'default';
   }
 };
 
-export const setDefaultCursor = () => document.body.style.cursor = 'default';
+export const setDefaultCursor = () => {
+  // eslint-disable-next-line no-undef
+  document.body.style.cursor = 'default';
+};
 
 export const removeAvatarImage = (markerElement) => {
   setDefaultCursor();
+  // eslint-disable-next-line no-undef
   const marker = markerElement || document.getElementById('avatar');
   if (marker) {
     marker.setAttribute('style', `${markerDefaultStyles}`);
@@ -32,11 +40,14 @@ export const removeAvatarImage = (markerElement) => {
 };
 
 export const setAvatarImage = (view, layerFeatures, selectedFeaturedMap, featuredMapPlaces) => {
+  // eslint-disable-next-line no-undef
   let marker = document.getElementById('avatar');
   if (!marker) {
+    // eslint-disable-next-line no-undef
     marker = document.createElement('div');
     marker.setAttribute('style', `${markerDefaultStyles}`);
     marker.setAttribute('id', 'avatar');
+    // eslint-disable-next-line no-undef
     document.body.appendChild(marker);
   }
   if (layerFeatures && layerFeatures.length) {

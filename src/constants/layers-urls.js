@@ -12,11 +12,8 @@ import {
   SATELLITE_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
   MERGED_WDPA_VECTOR_TILE_LAYER,
-  PROTECTED_AREAS_FEATURE_LAYER,
-  PROTECTED_AREAS_VECTOR_TILE_LAYER,
   MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
   TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
-  COMMUNITY_AREAS_FEATURE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
   CARBON_LAYER,
   HALF_EARTH_FUTURE_WDPA_LAYER,
@@ -170,12 +167,9 @@ export const LAYERS_URLS = {
   // Protected areas WDPA
 
   [MERGED_WDPA_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
-  [PROTECTED_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/FeatureServer', // Only used on feature map
-  [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_June2021_no_oecm_tiles_2/MapServer',
   [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_NRC_tiles/MapServer',
   [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Marine_NRC_tiles/MapServer',
 
-  [COMMUNITY_AREAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/FeatureServer',
   [COMMUNITY_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Community_Based_MeriamNelson/VectorTileServer',
   [GRID_CELLS_PROTECTED_AREAS_PERCENTAGE]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/ArcGIS/rest/services/marine_and_land_grid_55km_prot_prop/FeatureServer',

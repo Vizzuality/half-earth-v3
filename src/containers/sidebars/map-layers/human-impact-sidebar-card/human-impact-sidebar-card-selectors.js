@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import { selectLangUrlState } from 'selectors/location-selectors';
@@ -8,8 +9,10 @@ import {
 } from 'constants/human-pressures';
 
 // locale is here to recompute the data when the language changes
+// eslint-disable-next-line no-unused-vars
 const getComputedHumanPressuresLandUse = createSelector(selectLangUrlState, (locale) => getHumanPressuresLandUse());
 // locale is here to recompute the data when the language changes
+// eslint-disable-next-line no-unused-vars
 const getComputedHumanPressuresMarine = createSelector(selectLangUrlState, (locale) => getHumanPressuresMarine());
 
 export const getHumanCountedActiveLayers = createSelector([(state, props) => props && props.activeLayers, getComputedHumanPressuresLandUse, getComputedHumanPressuresMarine], (activeLayers, humanPressuresLandUse, humanPressuresMarine) => {

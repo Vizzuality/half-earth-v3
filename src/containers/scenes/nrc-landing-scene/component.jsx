@@ -42,7 +42,6 @@ function NrcLandingComponent({
   openedModal,
   activeLayers,
   sceneSettings,
-  isLandscapeMode,
   isGlobeUpdating,
   onboardingType,
   onboardingStep,
@@ -61,14 +60,14 @@ function NrcLandingComponent({
       onMapLoad={onMapLoad}
       initialRotation
       disabled={
-          !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
-        }
+        !!onboardingType && onboardingStep !== 2 && onboardingStep !== 3
+      }
       blur={activeGlobesMenu}
       className={cx({
-        [uiStyles.blurScene]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
+        [uiStyles.blurScene]:
+          activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
       })}
     >
-
       {onboardingType && <SoundButton />}
 
       <OnboardingTooltip className={styles.onboardingTooltip} />
@@ -80,14 +79,12 @@ function NrcLandingComponent({
       <CountryLabelsLayer
         activeLayers={activeLayers}
         countryISO={countryISO}
-        isLandscapeMode={isLandscapeMode}
         countryName={countryName}
         sceneMode={sceneMode}
       />
 
       <CountriesBordersLayer
         countryISO={countryISO}
-        isLandscapeMode={isLandscapeMode}
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
@@ -127,17 +124,21 @@ function NrcLandingComponent({
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
         className={cx({
-          [uiStyles.blur]: activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
+          [uiStyles.blur]:
+            activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
         })}
       />
 
       <LabelsLayer activeLayers={activeLayers} />
 
-      {FEATURE_NEW_MENUS && activeGlobesMenu && !isMobile && !onboardingType && (
-        <GlobesMenu
-          browsePage={browsePage}
-          onMouseLeave={() => setActiveGlobesMenu(false)}
-        />
+      {FEATURE_NEW_MENUS
+        && activeGlobesMenu
+        && !isMobile
+        && !onboardingType && (
+          <GlobesMenu
+            browsePage={browsePage}
+            onMouseLeave={() => setActiveGlobesMenu(false)}
+          />
       )}
     </Scene>
   );

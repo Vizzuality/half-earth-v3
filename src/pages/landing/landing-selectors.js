@@ -1,12 +1,16 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+/* eslint-disable max-len */
 import { isEmpty } from 'lodash';
+import { createSelector, createStructuredSelector } from 'reselect';
+
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectUiUrlState, selectListenersState } from 'selectors/location-selectors';
-import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import dataSceneConfig from 'scenes/landing-scene/landing-scene-config';
 
-const selectBiodiversityData = ({ biodiversityData }) => biodiversityData && (biodiversityData.data || null);
+import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+
+const selectBiodiversityData = ({ biodiversityData }) => biodiversityData
+  && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => (countryExtent ? countryExtent.data : null);
 
@@ -44,7 +48,6 @@ const getSidebarVisibility = createSelector(getUiSettings, (uiSettings) => uiSet
 const getFullscreenActive = createSelector(getUiSettings, (uiSettings) => uiSettings.isFullscreenActive);
 const getActiveCategory = createSelector(getUiSettings, (uiSettings) => uiSettings.activeCategory);
 const getActiveOption = createSelector(getUiSettings, (uiSettings) => uiSettings.activeOption);
-const getLandscapeSidebarCollapsed = createSelector(getUiSettings, (uiSettings) => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, (uiSettings) => uiSettings.openedModal);
 const getSceneMode = createSelector(getUiSettings, (uiSettings) => uiSettings.sceneMode);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, (uiSettings) => uiSettings.countryChallengesSelectedKey);
@@ -81,7 +84,6 @@ export default createStructuredSelector({
   selectedSpecies: getSelectedSpecies,
   openedModal: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
-  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,

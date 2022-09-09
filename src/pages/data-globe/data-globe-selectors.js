@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
@@ -37,7 +38,6 @@ const getListenersSetting = createSelector(selectListenersState, (listenersUrlSt
 
 export const getActiveLayers = createSelector(getGlobeSettings, (globeSettings) => globeSettings.activeLayers);
 export const getCountryTooltipDisplayFor = createSelector(getGlobeSettings, (globeSettings) => globeSettings.countryTooltipDisplayFor);
-const getLandscapeMode = createSelector(getGlobeSettings, (globeSettings) => globeSettings.landscapeView);
 const getGlobeUpdating = createSelector(getGlobeSettings, (globeSettings) => globeSettings.isGlobeUpdating);
 const getSelectedSpecies = createSelector(getGlobeSettings, (globeSettings) => globeSettings.selectedSpecies);
 export const getCountryISO = createSelector(getGlobeSettings, (globeSettings) => globeSettings.countryISO);
@@ -46,7 +46,6 @@ const getSidebarVisibility = createSelector(getUiSettings, (uiSettings) => uiSet
 const getFullscreenActive = createSelector(getUiSettings, (uiSettings) => uiSettings.isFullscreenActive);
 const getActiveCategory = createSelector(getUiSettings, (uiSettings) => uiSettings.activeCategory);
 const getActiveOption = createSelector(getUiSettings, (uiSettings) => uiSettings.activeOption);
-const getLandscapeSidebarCollapsed = createSelector(getUiSettings, (uiSettings) => uiSettings.isLandscapeSidebarCollapsed);
 const getHalfEarthModalOpen = createSelector(getUiSettings, (uiSettings) => uiSettings.openedModal);
 const getSceneMode = createSelector(getUiSettings, (uiSettings) => uiSettings.sceneMode);
 const getCountryChallengesSelectedKey = createSelector(getUiSettings, (uiSettings) => uiSettings.countryChallengesSelectedKey);
@@ -63,7 +62,6 @@ export default createStructuredSelector({
   activeLayers: getActiveLayers,
   countryISO: getCountryISO,
   countryName: getCountryName,
-  isLandscapeMode: getLandscapeMode,
   isSidebarOpen: getSidebarVisibility,
   isGlobeUpdating: getGlobeUpdating,
   isFullscreenActive: getFullscreenActive,
@@ -74,7 +72,6 @@ export default createStructuredSelector({
   selectedSpecies: getSelectedSpecies,
   openedModal: getHalfEarthModalOpen,
   activeOption: getActiveOption, // mobile
-  isLandscapeSidebarCollapsed: getLandscapeSidebarCollapsed, // mobile
   sceneMode: getSceneMode,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
