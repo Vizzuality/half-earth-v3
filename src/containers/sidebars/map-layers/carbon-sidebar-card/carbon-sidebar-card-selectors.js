@@ -5,6 +5,7 @@ import { selectLangUrlState } from 'selectors/location-selectors';
 import { getCarbonLayer } from 'constants/carbon-layer';
 
 // locale is here to recompute the data when the language changes
+// eslint-disable-next-line no-unused-vars
 const getComputedCarbonLayer = createSelector(selectLangUrlState, (locale) => getCarbonLayer());
 
 export const getCarbonCountedActiveLayers = createSelector([

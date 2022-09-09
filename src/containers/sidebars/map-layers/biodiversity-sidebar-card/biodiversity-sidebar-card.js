@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
@@ -67,6 +68,27 @@ function BiodiversitySidebarCard(props) {
     }
   }, [biodiversityLayerVariant, layersResolution]);
 
+  const handleLayerToggle = (option) => {
+    const layer = layersConfig[option.layer];
+    if (selectedLayer === option.layer) {
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
+      setSelectedLayer(null);
+    } else if (selectedLayer) {
+      if (layer.bbox) flyToLayerExtent(layer.bbox, view);
+      batchToggleLayers(
+        [selectedLayer, option.layer],
+        activeLayers,
+        changeGlobe,
+        LAYERS_CATEGORIES.BIODIVERSITY,
+      );
+      setSelectedLayer(option.layer);
+    } else {
+      if (layer.bbox) flyToLayerExtent(layer.bbox, view);
+      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
+      setSelectedLayer(option.layer);
+    }
+  };
+
   useEffect(() => {
     if (!previousBiodiversityLayerVariant) return;
     const activeBiodiversityLayers = activeLayers
@@ -106,24 +128,6 @@ function BiodiversitySidebarCard(props) {
       changeGlobe,
       LAYERS_CATEGORIES.BIODIVERSITY,
     );
-  };
-
-  const handleLayerToggle = (option) => {
-    const layer = layersConfig[option.layer];
-    const updateActiveLayers = activeLayers.filter((al) => al.title !== option.value);
-    changeUI({ activeCategoryLayers: updateActiveLayers });
-    if (selectedLayer === option.layer) {
-      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
-      setSelectedLayer(null);
-    } else if (selectedLayer) {
-      layer.bbox && flyToLayerExtent(layer.bbox, view);
-      batchToggleLayers([selectedLayer, option.layer], activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
-      setSelectedLayer(option.layer);
-    } else {
-      layer.bbox && flyToLayerExtent(layer.bbox, view);
-      layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);
-      setSelectedLayer(option.layer);
-    }
   };
 
   const handleCloseCard = () => {

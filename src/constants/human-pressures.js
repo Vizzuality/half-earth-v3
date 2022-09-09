@@ -1,3 +1,5 @@
+import { t } from '@transifex/native';
+
 import {
   URBAN_HUMAN_PRESSURES_TILE_LAYER,
   IRRIGATED_HUMAN_PRESSURES_TILE_LAYER,
@@ -8,8 +10,6 @@ import {
   COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
   ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER,
 } from 'constants/layers-slugs';
-
-import { t } from '@transifex/native';
 
 export const PRESSURES_SLUGS = {
   urban: URBAN_HUMAN_PRESSURES_TILE_LAYER,
@@ -49,7 +49,9 @@ export const getHumanPressuresMarine = () => {
       slug: PRESSURES_SLUGS.land,
     },
     { name: OCEAN_DRIVERS, value: PRESSURES_SLUGS.ocean, slug: PRESSURES_SLUGS.ocean },
-    { name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial },
+    {
+      name: COMMERCIAL_FISHING, value: PRESSURES_SLUGS.commercial, slug: PRESSURES_SLUGS.commercial,
+    },
     { name: ARTISANAL_FISHING, value: PRESSURES_SLUGS.artisanal, slug: PRESSURES_SLUGS.artisanal },
   ];
 };

@@ -1,4 +1,5 @@
-import EsriFeatureService from 'services/esri-feature-service';
+/* eslint-disable max-len */
+import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 import {
   getSpeciesData,
   getContextData,
@@ -6,22 +7,23 @@ import {
   getPrecalculatedContextualData,
   setPrecalculatedSpeciesData,
 } from 'utils/geo-processing-services';
-import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs.js';
-import localforage from 'localforage';
 import { writeToForageItem } from 'utils/local-forage-utils';
 
-import { LAYERS_URLS } from 'constants/layers-urls';
+import localforage from 'localforage';
+
+import EsriFeatureService from 'services/esri-feature-service';
+
 import { AREA_TYPES, STRINGIFIED_ATTRIBUTES } from 'constants/aois';
-
-import { calculateGeometryArea } from 'utils/analyze-areas-utils';
-
-// constants
 import {
   BIRDS,
   MAMMALS,
   REPTILES,
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
+import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs.js';
+import { LAYERS_URLS } from 'constants/layers-urls';
+
+// constants
 
 // PRECALCULATED FUTURE PLACES
 const setFuturePlace = ({
@@ -71,6 +73,7 @@ const setSpecificRegion = ({
 // PRECALCULATED AOIs
 export const setPrecalculatedAOIs = ({
   areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t,
+// eslint-disable-next-line consistent-return
 }) => {
   if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
     return setFuturePlace({

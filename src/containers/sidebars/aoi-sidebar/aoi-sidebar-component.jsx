@@ -106,6 +106,7 @@ function AOISidebarComponent({
           <div className={styles.nameWrapper}>
             {isEditingName ? (
               <input
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 type="text"
                 className={styles.areaNameEdit}
