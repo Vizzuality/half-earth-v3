@@ -213,7 +213,8 @@ function AnalyzeAreasContainer(props) {
       // and never toggled unless we do it from the protection checkbox
       const futureLayerIsActive = activeLayers
         .some((l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
-      if (futureLayerIsActive && layersToToggle.includes(HALF_EARTH_FUTURE_TILE_LAYER)) {
+      if (futureLayerIsActive
+        && layersToToggle.some((l) => l.layerId === HALF_EARTH_FUTURE_TILE_LAYER)) {
         layersToToggle = layersToToggle.filter((l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER);
       }
 
@@ -221,7 +222,6 @@ function AnalyzeAreasContainer(props) {
     };
 
     const layersToToggle = getLayersToToggle();
-    // Categories are used to show the number of layers active on the different sidebars
     const categories = layersToToggle.reduce((acc, layer) => {
       acc[layer.layerId] = layer.category;
       return acc;
@@ -290,6 +290,7 @@ function AnalyzeAreasContainer(props) {
 
   return (
     <Component
+      {...props}
       geometryArea={geometryArea}
       selectedOption={selectedOption}
       isSketchToolActive={sketchTool}
@@ -302,7 +303,6 @@ function AnalyzeAreasContainer(props) {
       handleOptionSelection={handleOptionSelection}
       handleAnalysisTabClick={handleAnalysisTabClick}
       handlePromptModalToggle={handlePromptModalToggle}
-      {...props}
     />
   );
 }
