@@ -11,6 +11,7 @@ export const getLayerVariant = createSelector(
 );
 
 export const getBiodiversityCountedActiveLayers = createSelector([
+  // eslint-disable-next-line no-unused-vars
   (state, props) => props && props.activeLayers, selectLangUrlState], (activeLayers, locale) => {
   if (!activeLayers || !activeLayers.length) return 0;
 

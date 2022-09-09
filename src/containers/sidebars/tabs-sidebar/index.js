@@ -1,8 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import aoisActions from 'redux_modules/aois';
-
-import { BASE_LAYERS } from 'constants/aois';
 
 import Component from './component';
 import mapStateToProps from './selectors';
@@ -13,28 +11,10 @@ const actions = {
 
 function TabsSidebarContainer(props) {
   const {
-    activeLayers,
-    aoiId,
-    activeCategoryLayers,
-    biodiversityCountedActiveLayers,
-    carbonCountedActiveLayers,
-    humanCountedActiveLayers,
-    protectionCountedActiveLayers,
     setSidebarTabActive,
     onTabClick,
+    countedActiveCategoryLayers,
   } = props;
-
-  const countedActiveLayers = useMemo(() => {
-    return biodiversityCountedActiveLayers
-      + protectionCountedActiveLayers
-      + humanCountedActiveLayers
-      + carbonCountedActiveLayers;
-  }, [
-    biodiversityCountedActiveLayers,
-    protectionCountedActiveLayers,
-    humanCountedActiveLayers,
-    carbonCountedActiveLayers,
-  ]);
 
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);
@@ -42,7 +22,7 @@ function TabsSidebarContainer(props) {
 
   return (
     <Component
-      countedActiveLayers={countedActiveLayers}
+      countedActiveLayers={countedActiveCategoryLayers}
       saveSidebarTab={saveSidebarTab}
       onTabClick={onTabClick}
       {...props}
