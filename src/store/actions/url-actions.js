@@ -1,5 +1,6 @@
-import { createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
+
+import { createThunkAction } from 'redux-tools';
 
 // change the 'ui' key in url
 export const changeUI = createThunkAction(
@@ -43,7 +44,9 @@ export const browsePage = createThunkAction(
     const lang = location && location.query && location.query.lang;
 
     // Retain lang if exists
-    const action = lang ? { ...routerAction, query: { ...routerAction.query, lang } } : routerAction;
+    const action = lang
+      ? { ...routerAction, query: { ...routerAction.query, lang } }
+      : routerAction;
     dispatch(action);
   },
 );

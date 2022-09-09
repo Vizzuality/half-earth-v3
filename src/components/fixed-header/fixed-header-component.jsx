@@ -1,24 +1,28 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+
 import { useT } from '@transifex/react';
 
-import ShareModal from 'components/share-modal';
+import PropTypes from 'prop-types';
+
+import cx from 'classnames';
+
 import ShareModalButton from 'components/share-button';
-import styles from './fixed-header-styles.module.scss';
+import ShareModal from 'components/share-modal';
 
 import { useMobile } from 'constants/responsive';
 
+import styles from './fixed-header-styles.module.scss';
+
 const differentFixedHeaderHeights = ['Protection', 'Human pressures'];
 
-const FixedHeader = ({
+function FixedHeader({
   closeSidebar,
   title,
   autoHeight,
   toggleCollapsedLandscapeSidebar,
-  isLandscapeSidebarCollapsed,
   noBackClick = false,
-}) => {
+}) {
   const t = useT();
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
@@ -30,7 +34,7 @@ const FixedHeader = ({
       className={cx(
         styles.header,
         { [styles.higherHeader]: isHigherHeader },
-        { [styles.autoHeightHeader]: autoHeight }
+        { [styles.autoHeightHeader]: autoHeight },
       )}
     >
       {!isOnMobile && (
@@ -47,12 +51,14 @@ const FixedHeader = ({
         </>
       )}
       {!noBackClick && (
-        <button className={styles.button} onClick={closeSidebar}>
+        <button type="button" className={styles.button} onClick={closeSidebar}>
           <div className={styles.icon} />
           <span className={styles.backButton}>{t('BACK')}</span>
         </button>
       )}
       <div
+        role="button"
+        tabIndex={0}
         onClick={flipToggleSwitch ? toggleCollapsedLandscapeSidebar : () => {}}
         className={styles.titleContainer}
       >
@@ -60,18 +66,13 @@ const FixedHeader = ({
           ? title.split(' ').map((word) => <span key={word}>{word}</span>)
           : title}
         {flipToggleSwitch && (
-          <div
-            className={cx(styles.flipToggleSwitchIcon, {
-              [styles.collapsedFlipToggleSwitchIcon]:
-                isLandscapeSidebarCollapsed,
-            })}
-          />
+          <div className={cx(styles.flipToggleSwitchIcon)} />
         )}
       </div>
       {title && <div className={styles.spacer} />}
     </div>
   );
-};
+}
 
 FixedHeader.propTypes = {
   closeSidebar: PropTypes.func,

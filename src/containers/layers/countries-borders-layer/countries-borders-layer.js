@@ -1,23 +1,30 @@
+/* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
-import { loadModules } from 'esri-loader';
 import { connect } from 'react-redux';
-import debounce from 'lodash/debounce';
-// CONSTANTS
-import { GRID_CELL_STYLES } from 'constants/graphic-styles';
-import { GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
-// UTILS
-import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
+
+import * as urlActions from 'actions/url-actions';
+
 import {
   hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip,
 } from 'utils/globe-events-utils';
+import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
+
+import { loadModules } from 'esri-loader';
+import debounce from 'lodash/debounce';
+
+// CONSTANTS
+import { GRID_CELL_STYLES } from 'constants/graphic-styles';
+import { GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
+
+// UTILS
+
 // ACTIONS
-import * as urlActions from 'actions/url-actions';
 
 const actions = { ...urlActions };
 
 function CountriesBordersLayerContainer(props) {
   const {
-    view, changeGlobe, countryISO, isLandscapeMode,
+    view, changeGlobe, countryISO,
   } = props;
 
   const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
@@ -28,7 +35,11 @@ function CountriesBordersLayerContainer(props) {
     loadModules(['esri/Graphic', 'esri/layers/GraphicsLayer']).then(([Graphic, GraphicsLayer]) => {
       const _selectedCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
       const _hoveredCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
-      const graphicsLayer = createGraphicLayer(GraphicsLayer, [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic], GRAPHIC_LAYER);
+      const graphicsLayer = createGraphicLayer(
+        GraphicsLayer,
+        [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic],
+        GRAPHIC_LAYER,
+      );
       setSelectedCountryGraphic(_selectedCountryBorderGraphic);
       setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
       view.map.add(graphicsLayer);
@@ -70,26 +81,30 @@ function CountriesBordersLayerContainer(props) {
 
   useEffect(() => {
     let eventHandler;
-    if (selectedCountryBorderGraphic && !isLandscapeMode) {
+    if (selectedCountryBorderGraphic) {
       eventHandler = view.on('click', onLabelEvent);
     }
     return function cleanUp() {
-      eventHandler && eventHandler.remove();
+      if (eventHandler) {
+        eventHandler.remove();
+      }
     };
-  }, [countryISO, selectedCountryBorderGraphic, isLandscapeMode]);
+  }, [countryISO, selectedCountryBorderGraphic]);
 
   useEffect(() => {
     let eventHandler;
-    if (hoveredCountryBorderGraphic && !isLandscapeMode) {
+    if (hoveredCountryBorderGraphic) {
       eventHandler = view.on(
         'pointer-move',
         debounce(onLabelEvent, 35, { leading: true, trailing: true }),
       );
     }
     return function cleanUp() {
-      eventHandler && eventHandler.remove();
+      if (eventHandler) {
+        eventHandler.remove();
+      }
     };
-  }, [hoveredCountryBorderGraphic, isLandscapeMode]);
+  }, [hoveredCountryBorderGraphic]);
 
   return null;
 }

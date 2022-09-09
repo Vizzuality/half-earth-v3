@@ -1,35 +1,32 @@
 import React, { useMemo } from 'react';
-import cx from 'classnames';
-import getTaxaCategories from 'constants/taxa-selector-categories';
-import animationStyles from 'styles/common-animations.module.scss';
+
 import { useLocale } from '@transifex/react';
+
+import cx from 'classnames';
+
 import { useMobile } from 'constants/responsive';
-import { FOOTER_OPTIONS } from 'constants/mobile-only';
+import getTaxaCategories from 'constants/taxa-selector-categories';
+
+import animationStyles from 'styles/common-animations.module.scss';
 
 import styles from './featured-taxa-styles.module.scss';
 
-const FeaturedTaxaSelectorComponent = ({
+function FeaturedTaxaSelectorComponent({
   selectedTaxa,
   isFullscreenActive,
-  isLandscapeMode,
   isMapsList,
   selectedFeaturedMap,
   selectedFeaturedPlace,
   handleTaxaButtonClick,
-  activeOption,
-}) => {
+}) {
   const isOnMobile = useMobile();
   const locale = useLocale();
   const taxaCategories = useMemo(() => getTaxaCategories(), [locale]);
 
-  const isActive = activeOption === FOOTER_OPTIONS.ADD_LAYER;
-  const isOnScreen =
-    selectedFeaturedMap === 'priorPlaces' &&
-    !isMapsList &&
-    !selectedFeaturedPlace &&
-    !isLandscapeMode &&
-    !isFullscreenActive;
-  const isOnMobileScreen = isActive && isOnScreen;
+  const isOnScreen = selectedFeaturedMap === 'priorPlaces'
+    && !isMapsList
+    && !selectedFeaturedPlace
+    && !isFullscreenActive;
   return (
     <div className={styles.wrapper}>
       <div
@@ -37,14 +34,15 @@ const FeaturedTaxaSelectorComponent = ({
           styles.container,
           animationStyles.transformOpacityWithDelay,
           {
-            [animationStyles.bottomUp]: isOnMobile
-              ? !isOnMobileScreen
-              : !isOnScreen,
-          }
+            [animationStyles.bottomUp]: isOnMobile || !isOnScreen,
+          },
         )}
       >
         {taxaCategories.map((t) => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
           <div
+            role="button"
+            tabIndex="0"
             key={t.slug}
             className={styles.taxaButton}
             onClick={() => handleTaxaButtonClick(t.slug)}
@@ -62,6 +60,6 @@ const FeaturedTaxaSelectorComponent = ({
       </div>
     </div>
   );
-};
+}
 
 export default FeaturedTaxaSelectorComponent;

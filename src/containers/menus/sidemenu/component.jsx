@@ -20,9 +20,10 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module';
 
-function SideMenu({ map, view, isNotMapsList, hidden, selectedOption, blur }) {
+function SideMenu({
+  map, view, isNotMapsList, hidden, selectedOption, blur,
+}) {
   const isOnMobile = useMobile();
-
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isSearcherOpen, setSearcherOpen] = useState(false);
   const [isHelpModalOpen, setHelpModalOpen] = useState(false);
@@ -99,15 +100,16 @@ SideMenu.propTypes = {
   blur: PropTypes.bool,
   hidden: PropTypes.bool,
   isNotMapsList: PropTypes.bool,
-  map: PropTypes.shape.isRequired,
-  selectedOption: PropTypes.shape.isRequired,
-  view: PropTypes.shape.isRequired,
+  map: PropTypes.shape(),
+  view: PropTypes.shape(),
 };
 
 SideMenu.defaultProps = {
   blur: false,
   hidden: false,
   isNotMapsList: true,
+  map: null,
+  view: null,
 };
 
 export default SideMenu;

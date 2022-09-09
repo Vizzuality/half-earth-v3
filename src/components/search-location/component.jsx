@@ -135,17 +135,9 @@ export default SearchLocation;
 SearchLocation.propTypes = {
   dropdownOpen: Proptypes.bool,
   hasResetButton: Proptypes.bool,
-  handleCloseButton: Proptypes.func.isRequired,
+  handleCloseButton: Proptypes.func,
   onOptionSelection: Proptypes.func.isRequired,
-  options: Proptypes.arrayOf(
-    Proptypes.shape({
-      label: Proptypes.string,
-      slug: Proptypes.string,
-      group: Proptypes.string,
-    }),
-  ).isRequired,
-  reference: Proptypes.node.isRequired,
-  selectedOption: Proptypes.shape().isRequired,
+  reference: Proptypes.func,
   searchType: Proptypes.oneOf(['simple', 'country', 'full']),
   theme: Proptypes.oneOf(['light', 'dark']),
   width: Proptypes.oneOf(['fluid', 'full']),
@@ -157,4 +149,6 @@ SearchLocation.defaultProps = {
   searchType: 'full',
   theme: 'light',
   width: 'fluid',
+  reference: undefined,
+  handleCloseButton: undefined,
 };

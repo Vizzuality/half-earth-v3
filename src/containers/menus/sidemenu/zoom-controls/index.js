@@ -14,16 +14,17 @@ function ZoomControls(props) {
 
   // Load custom zoom widget
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     const node = document.createElement('div');
     loadModules(['esri/widgets/Zoom/ZoomViewModel']).then(([ZoomView]) => {
-      const zoomWidget = new ZoomView({
+      const zoomWidgetCreator = new ZoomView({
         view,
       });
-      setZoomWidget(zoomWidget);
+      setZoomWidget(zoomWidgetCreator);
       if (!hidden) {
         view.ui.add(node, 'top-right');
         // eslint-disable-next-line react/jsx-filename-extension
-        ReactDOM.render(<ZoomControlsComponent zoomWidget={zoomWidget} />, node);
+        ReactDOM.render(<ZoomControlsComponent zoomWidget={zoomWidgetCreator} />, node);
       }
     }).catch((err) => console.error(err));
     return function cleanup() {

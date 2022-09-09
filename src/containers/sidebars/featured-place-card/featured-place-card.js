@@ -1,15 +1,20 @@
+import { orderBy } from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { orderBy } from 'lodash';
+
+import * as actions from 'actions/url-actions';
+
 import { findLayerInMap } from 'utils/layer-manager-utils';
+
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
+
 import Component from './featured-place-card-component';
 import mapStateToProps from './featured-place-card-selectors';
-import * as actions from 'actions/url-actions';
 
 function FeaturedPlaceCardContainer(props) {
   const {
-    view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace, selectedTaxa, changeUI, isLandscapeMode, featuredMapPlaces,
+    view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace,
+    selectedTaxa, changeUI, featuredMapPlaces,
   } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
@@ -26,24 +31,27 @@ function FeaturedPlaceCardContainer(props) {
   }, []);
 
   useEffect(() => {
-    featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace && setFeaturedPlace({ ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace] });
+    if (featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace) {
+      setFeaturedPlace({ ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace] });
+    }
   }, [selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces]);
 
   useEffect(() => {
     if (featuredMapsList) {
-      const _featuredMap = featuredMapsList.find((map) => map.slug === selectedFeaturedMap);
-      setFeaturedMap(_featuredMap);
+      const updatedFeaturedMap = featuredMapsList.find((m) => m.slug === selectedFeaturedMap);
+      setFeaturedMap(updatedFeaturedMap);
     }
   }, [featuredMapsList, selectedFeaturedMap]);
 
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
-    if (featuredPlacesLayer && !isLandscapeMode) {
+    if (featuredPlacesLayer) {
       const queryParams = featuredPlacesLayer.createQuery();
       queryParams.where = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then((results) => {
         const { features } = results;
-        const list = orderBy(features, (place) => place.geometry.longitude).map((place) => place.attributes.nam_slg);
+        const list = orderBy(features, (place) => place.geometry.longitude)
+          .map((place) => place.attributes.nam_slg);
         setFeaturedPlacesList(list);
       });
     }
@@ -73,6 +81,7 @@ function FeaturedPlaceCardContainer(props) {
   }
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Component
       featuredMap={featuredMap}
       featuredPlace={featuredPlace}

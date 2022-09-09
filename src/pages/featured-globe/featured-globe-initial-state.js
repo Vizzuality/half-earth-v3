@@ -45,7 +45,6 @@ export default {
     selectedFeaturedPlace: null,
     isFullscreenActive: false,
     activeOption: 'add_layer', // mobile
-    isLandscapeMode: false,
   },
   listeners: false,
 };
