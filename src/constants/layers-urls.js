@@ -11,6 +11,7 @@ import {
   VIBRANT_BASEMAP_LAYER,
   SATELLITE_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
+  PROTECTED_AREAS_VECTOR_TILE_LAYER,
   MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
   TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
@@ -164,6 +165,7 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Carbon_Total_2018/MapServer',
 
   // Protected areas WDPA
+  [PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://vectortileservices9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Protected_Areas_MeriamNelson/VectorTileServer',
 
   [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_NRC_tiles/MapServer',
   [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Marine_NRC_tiles/MapServer',

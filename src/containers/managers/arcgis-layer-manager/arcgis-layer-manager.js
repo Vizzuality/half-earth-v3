@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
-import { layersConfig } from 'constants/mol-layers-configs';
+
 import { setLayersVisibility } from 'utils/arcgis-layer-manager-utils';
 import { addActiveLayersToScene } from 'utils/layer-manager-utils';
+
+import { layersConfig } from 'constants/mol-layers-configs';
 
 function ArcgisLayerManager({ map, activeLayers, customFunctions }) {
   const { layers } = map;
