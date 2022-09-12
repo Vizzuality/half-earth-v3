@@ -27,10 +27,14 @@ function FeaturedPlaceCardContainer(props) {
     description: '',
   });
 
+  const handleClose = () => {
+    browsePage({ type: FEATURED });
+    window.location.reload();
+  };
   useEffect(() => {
     const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
-  }, []);
+  }, [handleClose]);
 
   useEffect(() => {
     if (featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace) {
@@ -81,11 +85,6 @@ function FeaturedPlaceCardContainer(props) {
       };
     }
   }
-
-  const handleClose = () => {
-    browsePage({ type: FEATURED });
-    window.location.reload();
-  };
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension
