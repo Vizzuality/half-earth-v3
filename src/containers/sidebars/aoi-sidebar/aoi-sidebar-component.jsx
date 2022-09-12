@@ -13,16 +13,13 @@ import ShareModal from 'components/share-modal';
 import {
   LAND_HUMAN_PRESSURES_SLUG,
   BIODIVERSITY_SLUG,
-  PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
 import {
-  MERGED_PROTECTION,
   MERGED_LAND_HUMAN_PRESSURES,
   ALL_TAXA_PRIORITY,
 } from 'constants/metadata';
-import { getWDPALayers } from 'constants/protected-areas';
 import {
   getAOIContextualData,
   getCountryNames,
@@ -67,7 +64,6 @@ function AOISidebarComponent({
     () => getAOIBiodiversityToggles(),
     [locale],
   );
-  const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
@@ -209,15 +205,6 @@ function AOISidebarComponent({
           layers={aoiBiodiversityToggles}
           metadataSlug={ALL_TAXA_PRIORITY}
           // displayWarning={area < 10000}
-        />
-        <SidebarCard
-          map={map}
-          layers={WDPALayers}
-          toggleType="checkbox"
-          activeLayers={activeLayers}
-          cardCategory={PROTECTION_SLUG}
-          contextualData={contextualData}
-          metadataSlug={MERGED_PROTECTION}
         />
         <SidebarCard
           map={map}

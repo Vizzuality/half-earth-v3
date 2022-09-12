@@ -7,13 +7,9 @@ import * as urlActions from 'actions/url-actions';
 
 import { layerManagerToggle } from 'utils/layer-manager-utils';
 
-import { useLocale } from '@transifex/react';
-
-import ContentfulService from 'services/contentful';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-import metadataConfig, { MERGED_PROTECTION } from 'constants/metadata';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import Component from './component';
@@ -25,20 +21,9 @@ function Container(props) {
     changeGlobe,
     activeLayers,
   } = props;
-  const locale = useLocale();
 
   const [selectedLayers, setSelectedLayers] = useState([]);
-  const [protectionMetadataSource, setProtectionsMetadataSource] = useState(null);
   const [globalAverage, setGlobalAverage] = useState({});
-
-  useEffect(() => {
-    const md = metadataConfig[MERGED_PROTECTION];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
-      if (data) {
-        setProtectionsMetadataSource(data.source);
-      }
-    });
-  }, [locale]);
 
   // Set global average data
   useEffect(() => {
@@ -78,7 +63,6 @@ function Container(props) {
       globalAverage={globalAverage}
       selectedLayers={selectedLayers}
       handleLayerToggle={handleLayerToggle}
-      source={protectionMetadataSource}
       {...props}
     />
   );

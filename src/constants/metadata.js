@@ -1,5 +1,4 @@
 import {
-  MERGED_WDPA_VECTOR_TILE_LAYER,
   AMPHIB_RARITY_1KM,
   AMPHIB_RICHNESS_1KM,
   SA_DRAGONFLIES_RARITY,
@@ -61,7 +60,6 @@ import {
 export const SPECIES_PROTECTION_INDEX = 'spi-def';
 export const CHALLENGES_CHART = 'challenges-plot';
 export const RANKING_CHART = 'spi-ranking';
-export const MERGED_PROTECTION = MERGED_WDPA_VECTOR_TILE_LAYER;
 export const COUNTRY_PRIORITY = COUNTRY_PRIORITY_LAYER;
 
 export {
@@ -85,9 +83,6 @@ export default {
   },
   [RANKING_CHART]: {
     slug: RANKING_CHART,
-  },
-  [MERGED_PROTECTION]: {
-    slug: MERGED_PROTECTION,
   },
   [SPECIES_PROTECTION_INDEX]: {
     slug: SPECIES_PROTECTION_INDEX,

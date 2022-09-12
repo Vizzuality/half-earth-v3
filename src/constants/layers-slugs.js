@@ -1,5 +1,4 @@
 // Protected areas layers.
-export const MERGED_WDPA_VECTOR_TILE_LAYER = 'merged-protected';
 export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
 
 export const TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER = 'terrestrial_protected_areas_vector_tile_layer';

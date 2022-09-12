@@ -11,7 +11,6 @@ import {
   VIBRANT_BASEMAP_LAYER,
   SATELLITE_BASEMAP_LAYER,
   PRIORITY_PLACES_POLYGONS,
-  MERGED_WDPA_VECTOR_TILE_LAYER,
   MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
   TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
@@ -166,7 +165,6 @@ export const LAYERS_URLS = {
 
   // Protected areas WDPA
 
-  [MERGED_WDPA_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_WDPA_OECM_Jan2020_cleaned_MOL/VectorTileServer',
   [TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Terrestrial_NRC_tiles/MapServer',
   [MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER]: 'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Marine_NRC_tiles/MapServer',
 
