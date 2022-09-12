@@ -1,10 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import sceneActions from 'redux_modules/scene';
 
-import urlActions from 'actions/url-actions';
-
 import { loadModules } from 'esri-loader';
+
+import urlActions from 'actions/url-actions';
 
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 
