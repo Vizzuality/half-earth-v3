@@ -67,10 +67,6 @@ function Component({ metaDataTitle, metaDataSources, metaDataDescription }) {
             </svg>
             <div>
               <span className={styles.value}>&#60;150</span>
-              <span className={styles.unit}>
-                {t('km')}
-                <sup>2</sup>
-              </span>
             </div>
           </div>
           <div>
@@ -86,12 +82,7 @@ function Component({ metaDataTitle, metaDataSources, metaDataDescription }) {
             </svg>
             <div>
               <span className={styles.value}>
-                &#60;
-                {getLocaleNumber(22000, locale)}
-              </span>
-              <span className={styles.unit}>
-                {t('km')}
-                <sup>2</sup>
+                150 - 22 K
               </span>
             </div>
           </div>
@@ -107,10 +98,11 @@ function Component({ metaDataTitle, metaDataSources, metaDataDescription }) {
               />
             </svg>
             <div>
-              <span className={styles.value}>&#60;3,25M</span>
-              <span className={styles.unit}>
-                {t('km')}
-                <sup>2</sup>
+              <span className={styles.value}>
+                22 K -
+                {' '}
+                {getLocaleNumber(3.25, locale)}
+                M
               </span>
             </div>
           </div>
@@ -127,10 +119,6 @@ function Component({ metaDataTitle, metaDataSources, metaDataDescription }) {
             </svg>
             <div>
               <span className={styles.value}>&#60;500M</span>
-              <span className={styles.unit}>
-                {t('km')}
-                <sup>2</sup>
-              </span>
             </div>
           </div>
         </div>
