@@ -34,7 +34,7 @@ const {
   REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
 } = process.env;
 
-function DataGlobeComponent({
+function FeaturedGlobe({
   sceneSettings,
   isFullscreenActive,
   selectedFeaturedMap,
@@ -62,7 +62,7 @@ function DataGlobeComponent({
 
   const isFeaturedPlaceCard = selectedFeaturedPlace;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isMobile;
-
+  console.log({ isGlobeUpdating });
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
@@ -114,7 +114,7 @@ function DataGlobeComponent({
             hidden={esriWidgetsHidden}
             openedModal={openedModal}
             disableSettings
-            blur={!selectedFeaturedPlace}
+            blur={!selectedFeaturedPlace && selectedFeaturedPlace !== null}
           />
         )}
 
@@ -183,4 +183,4 @@ function DataGlobeComponent({
   );
 }
 
-export default DataGlobeComponent;
+export default FeaturedGlobe;
