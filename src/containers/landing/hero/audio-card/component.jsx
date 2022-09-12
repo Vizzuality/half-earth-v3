@@ -1,12 +1,16 @@
 import React from 'react';
+
 import { useT } from '@transifex/react';
+
 import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
+
 import { ReactComponent as VolumeControl } from 'icons/volume-control.svg';
 
-const AudioCard = ({
+function AudioCard({
   className,
   description,
   duration,
@@ -14,13 +18,20 @@ const AudioCard = ({
   number,
   title,
   handleClick,
-}) => {
+}) {
   const t = useT();
 
   return (
-    <button onClick={handleClick} className={cx(className, styles.container)}>
+    <button
+      Type="button"
+      onClick={handleClick}
+      className={cx(className, styles.container)}
+    >
       <div className={styles.numberContainer}>
-        <p className={styles.number}>{number}.</p>
+        <p className={styles.number}>
+          {number}
+          .
+        </p>
         <img className={styles.gif} src={gif} alt={title} />
       </div>
 
@@ -38,16 +49,20 @@ const AudioCard = ({
       </div>
     </button>
   );
-};
+}
 
 AudioCard.propTypes = {
   className: PropTypes.string,
-  description: PropTypes.string,
-  duration: PropTypes.string,
-  gif: PropTypes.string,
-  number: PropTypes.string,
-  title: PropTypes.string,
-  handleClick: PropTypes.func,
+  description: PropTypes.string.isRequired,
+  duration: PropTypes.string.isRequired,
+  gif: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};
+
+AudioCard.defaultProps = {
+  className: '',
 };
 
 export default AudioCard;

@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
+
 import { T, useT } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import AUDIO_CARD_1_GIF from 'gifs/audio-card-1.gif';
 import AUDIO_CARD_2_GIF from 'gifs/audio-card-2.gif';
-import { DATA, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import { useMobile } from 'constants/responsive';
 
