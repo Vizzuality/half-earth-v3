@@ -1,20 +1,21 @@
 import React from 'react';
 
+import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+
 import { useT } from '@transifex/react';
 
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import { DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import Globe from 'containers/landing/globe';
+
+import styles from './styles.module';
 
 import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
-
-import styles from './styles.module';
 
 function GlobesMenu({
   browsePage, className, landing = false, onMouseLeave,

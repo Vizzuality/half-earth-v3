@@ -4,7 +4,7 @@
 .container {
   display: flex;
   min-height: 138px;
-  max-width: 383px;
+  max-width: 413px;
   outline: 1px solid $elephant;
   padding: 0;
   position: relative;
@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: center;
     height: 138px;
-    width: 262px;
+    min-width: 115px;
 
     p {
       @extend %display1;
@@ -61,7 +61,7 @@
     position: absolute;
     right: 8px;
     top: 6px;
-    
+
     .volumeIcon {
       height: 16px;
       width: 16px;
