@@ -84,6 +84,7 @@ function FeaturedPlaceCardContainer(props) {
 
   const handleClose = () => {
     browsePage({ type: FEATURED });
+    window.location.reload();
   };
 
   return (

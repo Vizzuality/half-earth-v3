@@ -62,7 +62,7 @@ function FeaturedGlobe({
 
   const isFeaturedPlaceCard = selectedFeaturedPlace;
   const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isMobile;
-  console.log({ isGlobeUpdating });
+
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
