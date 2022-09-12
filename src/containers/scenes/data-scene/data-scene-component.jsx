@@ -67,9 +67,8 @@ function DataSceneComponent({
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea =
-    selectedAnalysisLayer &&
-    selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
+  const isProtectedArea = selectedAnalysisLayer
+    && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -79,7 +78,7 @@ function DataSceneComponent({
           : sceneSettings.center,
       ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType]
+    [isMobile, onboardingType],
   );
 
   return (
@@ -174,15 +173,15 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {FEATURE_NEW_MENUS &&
-        activeGlobesMenu &&
-        !isMobile &&
-        !onboardingType && (
+      {FEATURE_NEW_MENUS
+        && activeGlobesMenu
+        && !isMobile
+        && !onboardingType && (
           <GlobesMenu
             browsePage={browsePage}
             onMouseLeave={() => setActiveGlobesMenu(false)}
           />
-        )}
+      )}
     </Scene>
   );
 }

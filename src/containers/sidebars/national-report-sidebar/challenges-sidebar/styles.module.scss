@@ -65,27 +65,43 @@
 }
 
 .circlesLegend {
-  display: flex;
-  align-items: center;
-  padding: 0px 25px 25px;
-  justify-content: space-between;
-  position: relative;
+
   margin-bottom: 40px;
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .value {
+  padding: 0px 25px 0px;
+
+  .circlesLegendTitle {
     @extend %subtitle;
-    position: absolute;
     color: $white;
-    bottom: 0px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    text-transform: uppercase;
   }
-  .unit {
-    @extend %annotation;
-    position: absolute;
-    color: $white;
-    bottom: -20px;
+
+  .circles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0px 0px 25px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    .value {
+      @extend %subtitle;
+      position: absolute;
+      color: $white;
+      bottom: 0px;
+    }
+    .unit {
+      @extend %annotation;
+      position: absolute;
+      color: $white;
+      bottom: -20px;
+    }
   }
 }
