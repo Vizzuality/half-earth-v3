@@ -2,6 +2,8 @@ import { orderBy } from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import { FEATURED } from 'router';
+
 import * as actions from 'actions/url-actions';
 
 import { findLayerInMap } from 'utils/layer-manager-utils';
@@ -14,7 +16,7 @@ import mapStateToProps from './featured-place-card-selectors';
 function FeaturedPlaceCardContainer(props) {
   const {
     view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace,
-    selectedTaxa, changeUI, featuredMapPlaces,
+    selectedTaxa, changeUI, featuredMapPlaces, browsePage,
   } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
@@ -41,7 +43,7 @@ function FeaturedPlaceCardContainer(props) {
       const updatedFeaturedMap = featuredMapsList.find((m) => m.slug === selectedFeaturedMap);
       setFeaturedMap(updatedFeaturedMap);
     }
-  }, [featuredMapsList, selectedFeaturedMap]);
+  }, [featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace]);
 
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
@@ -80,6 +82,10 @@ function FeaturedPlaceCardContainer(props) {
     }
   }
 
+  const handleClose = () => {
+    browsePage({ type: FEATURED });
+  };
+
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <Component
@@ -89,6 +95,7 @@ function FeaturedPlaceCardContainer(props) {
       handleNextPlaceClick={handleNextPlaceClick}
       handlePrevPlaceClick={handlePrevPlaceClick}
       handleLandscapeTrigger={handleLandscapeTrigger}
+      handleClose={handleClose}
       hotspotsNumbers={hotspotsNumbers}
       {...props}
     />
