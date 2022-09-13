@@ -164,12 +164,39 @@
   display: flex;
   flex-direction: row;
   padding: 0;
+  position: relative;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  input:checked ~ .checkbox:after {
+    display: block;
+  }
+
+  input:checked ~ .checkbox {
+    background-color: #2196F3;
+  }
 
   .checkbox {
     border-radius: 50%;
     border: 1px solid $white;
     height: 16px;
     width: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #eee;
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
   }
 
   .checkboxSelected {
