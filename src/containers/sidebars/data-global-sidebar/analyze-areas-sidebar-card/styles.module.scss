@@ -158,3 +158,28 @@
     color: $grey-text;
   }
 }
+
+.checkboxContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+
+  .checkbox {
+    border-radius: 50%;
+    border: 1px solid $white;
+    height: 16px;
+    width: 16px;
+  }
+
+  .checkboxSelected {
+    background-color: $brand-color-main;
+  }
+
+  .label {
+    @extend %bodyText;
+    color: $white;
+    margin: 0;
+    padding: 0 0 0 10px;
+  }
+}

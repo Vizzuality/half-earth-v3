@@ -11,6 +11,7 @@ import PromptModal from 'containers/modals/prompt-modal';
 
 import Button from 'components/button';
 import CategoryBox from 'components/category-box';
+import Checkbox from 'components/checkbox';
 import Dropdown from 'components/dropdown';
 import SearchLocation from 'components/search-location';
 import ShapeFileUploader from 'components/shape-file-uploader';
@@ -64,6 +65,12 @@ function AnalyzeAreasCardComponent({
 
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   const handleAoiModalToggle = () => {
     if (!isAoiHistoryModalOpen) {
       aoiHistoryModalOpenAnalytics();
@@ -116,7 +123,28 @@ function AnalyzeAreasCardComponent({
                   {' '}
                   {t('to select:')}
                 </p>
-                <Dropdown
+
+                {precalculatedAOIOptions.map((option) => {
+                  return (
+                    <div className={styles.checkboxContainer}>
+                      <input
+                        type="checkbox"
+                        className={cx({
+                          [styles.checkbox]: !isChecked,
+                          [styles.checkboxSelected]: isChecked,
+                        })}
+                        id={option.slug}
+                        name={option.slug}
+                        value={option.slug}
+                        checked={isChecked}
+                        onChange={handleOnChange}
+                      />
+                      <p className={styles.label}>{option.label}</p>
+                    </div>
+                  );
+                })}
+
+                {/* <Dropdown
                   stacked
                   theme="dark"
                   width="full"
@@ -124,7 +152,7 @@ function AnalyzeAreasCardComponent({
                   options={precalculatedAOIOptions}
                   selectedOption={selectedOption}
                   handleOptionSelection={handleOptionSelection}
-                />
+                /> */}
               </div>
             )}
             {selectedAnalysisTab === 'search' && (
