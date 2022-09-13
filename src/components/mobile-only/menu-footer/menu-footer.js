@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
+import { useT } from '@transifex/react';
+
 import { searchTermsAnalyticsEvent } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { flyToCentroid } from 'utils/globe-events-utils';
-
-import { useT } from '@transifex/react';
+import { getTooltipContent } from 'utils/tooltip-utils';
 
 // icons
-import { ReactComponent as SearchIcon } from 'icons/searchMobile.svg';
-import { ReactComponent as SettingsIcon } from 'icons/settings.svg';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
 
@@ -21,6 +20,9 @@ import {
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { FOOTER_OPTIONS } from 'constants/mobile-only';
 import { SEARCH_SOURCES_CONFIG } from 'constants/search-location-constants';
+
+import { ReactComponent as SearchIcon } from 'icons/searchMobile.svg';
+import { ReactComponent as SettingsIcon } from 'icons/settings.svg';
 
 import Component from './menu-footer-component';
 
@@ -43,12 +45,7 @@ function MenuFooterContainer(props) {
     setBatchTooltipData({
       isVisible: true,
       geometry,
-      content: {
-        buttonText: t('analyze area'),
-        id: attributes[id],
-        title: attributes[title] || attributes.NAME_0,
-        subtitle: attributes[subtitle] || attributes.NAME_1,
-      },
+      content: getTooltipContent(t, attributes, id, title, subtitle),
     });
     flyToCentroid(view, geometry, 4);
   };

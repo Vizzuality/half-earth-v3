@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, {
+  useEffect, useState, useRef, useMemo,
+} from 'react';
+
+import { loadModules } from 'esri-loader';
 
 import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
-import { loadModules } from 'esri-loader';
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 import { useMobile } from 'constants/responsive';
 import {
@@ -13,6 +15,8 @@ import {
 } from 'constants/translation-constants';
 
 import styles from './styles.module.scss';
+
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 function MapTooltipComponent({
   img,
@@ -99,8 +103,10 @@ function MapTooltipComponent({
                 )}
                 <div className={styles.content}>
                   <p className={styles.contentData}>
-                    {content.percentage_protected}%
-                  </p>{' '}
+                    {content.percentage_protected}
+                    %
+                  </p>
+                  {' '}
                   {t('land is protected')}
                 </div>
                 {isProtectedArea && (

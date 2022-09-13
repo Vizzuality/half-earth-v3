@@ -61,14 +61,14 @@ function DataSceneComponent({
   speciesData,
   browsePage,
   updatedActiveLayers,
+  mapTooltipData,
 }) {
   const isMobile = useMobile();
 
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
-
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea = selectedAnalysisLayer
-    && selectedAnalysisLayer.slug === WDPA_OECM_FEATURE_LAYER;
+  const isProtectedArea = mapTooltipData
+    && mapTooltipData.precalculatedLayer === WDPA_OECM_FEATURE_LAYER;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,

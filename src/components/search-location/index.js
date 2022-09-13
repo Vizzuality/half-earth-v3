@@ -8,6 +8,7 @@ import { useT, useLocale } from '@transifex/react';
 import urlActions from 'actions/url-actions';
 
 import { setCountryTooltip, flyToCentroid } from 'utils/globe-events-utils';
+import { getTooltipContent } from 'utils/tooltip-utils';
 
 import { useSearchWidgetLogic } from 'hooks/esri';
 
@@ -28,8 +29,11 @@ const {
 } = process.env;
 
 const getSearchedLayerData = (layerSlug, molId) => new Promise((resolve, reject) => {
+  const url = Array.isArray(LAYERS_URLS[layerSlug])
+    ? LAYERS_URLS[layerSlug][0]
+    : LAYERS_URLS[layerSlug];
   EsriFeatureService.getFeatures({
-    url: LAYERS_URLS[layerSlug],
+    url,
     returnGeometry: true,
     whereClause: `MOL_ID = '${molId}'`,
   }).then((features) => {
@@ -61,7 +65,6 @@ function SearchLocationContainer(props) {
 
   const browseSelectedFeature = async ({ result }) => {
     const { setBatchTooltipData } = props;
-
     let searchResult;
     if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
       // We have to find the information of the layer with the lookup table info
@@ -87,22 +90,7 @@ function SearchLocationContainer(props) {
         precalculatedLayer: (searchType === SEARCH_TYPES.full
           && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL)
           ? result.feature.attributes.LAYERSLUG : undefined,
-        content: {
-          buttonText: t('analyze area'),
-          id: attributes[id],
-          title: attributes[title] || attributes.NAME_0,
-          subtitle: attributes[subtitle] || attributes.NAME_1,
-          objectId: attributes.OBJECTID, // Only for feature places
-          percentage_protected: Math.round(attributes.percentage_protected) || 100,
-          // 100 is for protected areas
-          description:
-            attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
-          nspecies: attributes.nspecies,
-          status: attributes.STATUS,
-          status_year: attributes.STATUS_,
-          IUCN_type: attributes.IUCN_CA,
-          designation_type: attributes.DESIG_T,
-        },
+        content: getTooltipContent(t, attributes, id, title, subtitle),
       });
     }
 
@@ -142,7 +130,6 @@ function SearchLocationContainer(props) {
       suggestionTemplate = '{NAME}';
       title = SEARCH_LOOKUP_TABLE;
     }
-
     const getSearchSources = (FeatureLayer) => [{
       searchFields,
       suggestionTemplate,
