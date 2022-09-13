@@ -11,6 +11,7 @@ import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
+import { getTooltipContent } from 'utils/tooltip-utils';
 
 import intersectionBy from 'lodash/intersectionBy';
 import unionBy from 'lodash/unionBy';
@@ -90,22 +91,7 @@ function Container(props) {
         isVisible: true,
         geometry,
         precalculatedLayer: getPrecalculatedLayer(attributes),
-        content: {
-          buttonText: t('analyze area'),
-          id: customId || attributes[id],
-          title: customTitle || attributes[title],
-          subtitle: attributes[subtitle],
-          objectId: attributes.OBJECTID, // Only for feature places
-          percentage_protected: Math.round(attributes.percentage_protected) || 100,
-          // 100 is for protected areas
-          description:
-            attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} t('in') ${attributes.STATUS_}`,
-          nspecies: attributes.nspecies,
-          status: attributes.STATUS,
-          status_year: attributes.STATUS_,
-          IUCN_type: attributes.IUCN_CA,
-          designation_type: attributes.DESIG_T,
-        },
+        content: getTooltipContent(t, attributes, id, title, subtitle, customId, customTitle),
       });
     }
   };
