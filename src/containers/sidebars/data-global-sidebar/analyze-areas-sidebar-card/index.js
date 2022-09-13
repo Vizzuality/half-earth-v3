@@ -236,10 +236,16 @@ function AnalyzeAreasContainer(props) {
         setSelectedAnalysisTab('draw');
         handleLayerToggle(precalculatedAOIOptions[0]);
         break;
+      case 'search':
+        setSelectedAnalysisTab('search');
+        break;
       case 'click':
         setSelectedAnalysisTab('click');
         handleLayerToggle(precalculatedAOIOptions[0]);
         if (sketchTool) { handleSketchToolDestroy(); }
+        break;
+      case 'upload':
+        setSelectedAnalysisTab('upload');
         break;
       default:
         setSelectedAnalysisTab('click');

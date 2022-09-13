@@ -29,7 +29,10 @@ import { ReactComponent as AoisDrawIcon } from 'icons/aois_draw.svg';
 import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
-const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
+const {
+  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
+  REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN: FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
+} = process.env;
 
 function AnalyzeAreasCardComponent({
   view,
@@ -79,61 +82,136 @@ function AnalyzeAreasCardComponent({
         <h2 className={styles.subtitle}>
           {t('Analyze pre-calculated areas or your own custom area.')}
         </h2>
-        <div>
-          <div className={styles.buttonsContainer}>
-            <Button
-              type="square"
-              label={t('Click on the map')}
-              Icon={AoisClickIcon}
-              active={selectedAnalysisTab === 'click'}
-              handleClick={() => selectedAnalysisTab !== 'click'
-                && handleAnalysisTabClick('click')}
-            />
-            <Button
-              type="square"
-              label={t('Define region of interest')}
-              Icon={AoisDrawIcon}
-              active={selectedAnalysisTab === 'draw'}
-              handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
-            />
-          </div>
 
-          {selectedAnalysisTab === 'click' && (
-            <section className={styles.sectionContainer}>
-              <span className={styles.label}>
-                {t('Choose your area of interest')}
-              </span>
-              <div className={styles.dropdownContainer}>
-                <Dropdown
-                  stacked
-                  theme="dark"
-                  width="full"
-                  parentWidth="380px"
-                  options={precalculatedAOIOptions}
-                  selectedOption={selectedOption}
-                  handleOptionSelection={handleOptionSelection}
+        {FEATURE_TAG_ANALYZE_AREAS_REDESIGN && (
+          <div className={styles.analyzeMenuContainer}>
+            <p className={styles.analyzeMenuTitle}>{t('Selection Type')}</p>
+            <div className={styles.analyzeMenuTabsContainer}>
+              <button
+                active={selectedAnalysisTab === 'click'}
+                className={cx({
+                  [styles.tabButton]: true,
+                  [styles.tabButtonActive]: selectedAnalysisTab === 'click',
+                })}
+                type="button"
+                onClick={() => selectedAnalysisTab !== 'click'
+                && handleAnalysisTabClick('click')}
+              >
+                <AoisClickIcon className={cx({
+                  [styles.tabIcon]: true,
+                  [styles.tabIconActive]: selectedAnalysisTab === 'click',
+                })}
                 />
-                <SearchLocation
-                  stacked
-                  searchType={SEARCH_TYPES.full}
-                  view={view}
-                  theme="dark"
-                  width="full"
-                  parentWidth="380px"
-                  searchSourceLayerSlug={selectedOption.slug}
+              </button>
+
+              <button
+                active={selectedAnalysisTab === 'search'}
+                className={cx({
+                  [styles.tabButton]: true,
+                  [styles.tabButtonActive]: selectedAnalysisTab === 'search',
+                })}
+                type="button"
+                onClick={() => selectedAnalysisTab !== 'search'
+                && handleAnalysisTabClick('search')}
+              >
+                <AoisClickIcon className={cx({
+                  [styles.tabIcon]: true,
+                  [styles.tabIconActive]: selectedAnalysisTab === 'search',
+                })}
                 />
-              </div>
+              </button>
+
+              <button
+                active={selectedAnalysisTab === 'draw'}
+                className={cx({
+                  [styles.tabButton]: true,
+                  [styles.tabButtonActive]: selectedAnalysisTab === 'draw',
+                })}
+                type="button"
+                onClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
+              >
+                <AoisDrawIcon className={cx({
+                  [styles.tabIcon]: true,
+                  [styles.tabIconActive]: selectedAnalysisTab === 'draw',
+                })}
+                />
+              </button>
+
+              <button
+                active={selectedAnalysisTab === 'upload'}
+                className={cx({
+                  [styles.tabButton]: true,
+                  [styles.tabButtonActive]: selectedAnalysisTab === 'upload',
+                })}
+                type="button"
+                onClick={() => selectedAnalysisTab !== 'upload'
+                && handleAnalysisTabClick('upload')}
+              >
+                <AoisClickIcon className={cx({
+                  [styles.tabIcon]: true,
+                  [styles.tabIconActive]: selectedAnalysisTab === 'upload',
+                })}
+                />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {!FEATURE_TAG_ANALYZE_AREAS_REDESIGN && (
+          <div>
+            <div className={styles.buttonsContainer}>
               <Button
-                type="compound"
-                Icon={AreasHistoryIcon}
-                label={t('Open your analyzed areas history.')}
-                className={styles.areasHistoryButton}
-                theme={styles.areasHistoryButton}
-                handleClick={handleAoiModalToggle}
+                type="square"
+                label={t('Click on the map')}
+                Icon={AoisClickIcon}
+                active={selectedAnalysisTab === 'click'}
+                handleClick={() => selectedAnalysisTab !== 'click'
+                  && handleAnalysisTabClick('click')}
               />
-            </section>
-          )}
-          {selectedAnalysisTab === 'draw' && (
+              <Button
+                type="square"
+                label={t('Define region of interest')}
+                Icon={AoisDrawIcon}
+                active={selectedAnalysisTab === 'draw'}
+                handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
+              />
+            </div>
+            {selectedAnalysisTab === 'click' && (
+              <section className={styles.sectionContainer}>
+                <span className={styles.label}>
+                  {t('Choose your area of interest')}
+                </span>
+                <div className={styles.dropdownContainer}>
+                  <Dropdown
+                    stacked
+                    theme="dark"
+                    width="full"
+                    parentWidth="380px"
+                    options={precalculatedAOIOptions}
+                    selectedOption={selectedOption}
+                    handleOptionSelection={handleOptionSelection}
+                  />
+                  <SearchLocation
+                    stacked
+                    searchType={SEARCH_TYPES.full}
+                    view={view}
+                    theme="dark"
+                    width="full"
+                    parentWidth="380px"
+                    searchSourceLayerSlug={selectedOption.slug}
+                  />
+                </div>
+                <Button
+                  type="compound"
+                  Icon={AreasHistoryIcon}
+                  label={t('Open your analyzed areas history.')}
+                  className={styles.areasHistoryButton}
+                  theme={styles.areasHistoryButton}
+                  handleClick={handleAoiModalToggle}
+                />
+              </section>
+            )}
+            {selectedAnalysisTab === 'draw' && (
             <section className={styles.sectionContainer}>
               <div
                 className={cx(styles.sizeWarningContainer, {
@@ -157,9 +235,7 @@ function AnalyzeAreasCardComponent({
               </span>
               <Button
                 type="rectangular"
-                label={
-                  isSketchToolActive ? t('cancel drawing') : t('start drawing')
-                }
+                label={isSketchToolActive ? t('cancel drawing') : t('start drawing')}
                 handleClick={handleDrawClick}
               />
               <span className={styles.separatorLabel}>{t('or')}</span>
@@ -168,16 +244,18 @@ function AnalyzeAreasCardComponent({
                 onSuccess={onShapeUploadSuccess}
                 onError={onShapeUploadError}
               />
-              <Button
-                type="compound"
-                Icon={AreasHistoryIcon}
-                label={t('Open your analyzed areas history.')}
-                className={styles.areasHistoryButton}
-                handleClick={handleAoiModalToggle}
-              />
+
             </section>
-          )}
-        </div>
+            )}
+          </div>
+        )}
+        <Button
+          type="compound"
+          Icon={AreasHistoryIcon}
+          label={t('Open your analyzed areas history.')}
+          className={styles.areasHistoryButton}
+          handleClick={handleAoiModalToggle}
+        />
         <AoiHistoryModal
           isOpen={isAoiHistoryModalOpen}
           handleClose={handleAoiModalToggle}
