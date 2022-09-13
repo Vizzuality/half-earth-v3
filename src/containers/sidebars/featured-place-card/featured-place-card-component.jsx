@@ -4,14 +4,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useT } from '@transifex/react';
 
 import cx from 'classnames';
-import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
 
+import Button from 'components/button';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
 import { useMobile } from 'constants/responsive';
 
 import animationStyles from 'styles/common-animations.module.scss';
+
+import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
+import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 
 import styles from './featured-place-card-styles.module';
 
@@ -22,6 +25,7 @@ function FeaturedPlaceCardComponent({
   featuredPlace,
   handleNextPlaceClick,
   handlePrevPlaceClick,
+  handleClose,
   hotspotsNumbers,
 }) {
   const t = useT();
@@ -49,6 +53,7 @@ function FeaturedPlaceCardComponent({
           { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile },
         )}
       >
+
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
             {hotspotsNumbers
@@ -127,6 +132,13 @@ function FeaturedPlaceCardComponent({
               </div>
             </>
           )}
+          <Button
+            type="rounded"
+            handleClick={handleClose}
+            Icon={CloseIcon}
+            className={styles.backButton}
+            tooltipText={t('Go back to the globe')}
+          />
         </section>
       </div>
     </div>

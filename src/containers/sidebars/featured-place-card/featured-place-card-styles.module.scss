@@ -250,6 +250,6 @@ $card-content-max-height: 220px;
   position: absolute;
   top: -20px;
   left: calc(50% - #{$rounded-button-size} / 2);
-  box-shadow: $box-shadow-strong;
+  box-shadow: $box-shadow-soft;
   z-index: $bring-to-front;
 }

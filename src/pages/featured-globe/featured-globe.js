@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import featuredMapsActions from 'redux_modules/featured-maps-list';
 
+import { loadModules } from 'esri-loader';
+
+import { useLocale } from '@transifex/react';
+
 import { readStoryAnalytics } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
@@ -9,10 +13,6 @@ import {
   hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor,
 } from 'utils/globe-events-utils';
 import { layerManagerToggle, activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
-
-import { useLocale } from '@transifex/react';
-
-import { loadModules } from 'esri-loader';
 
 import {
   FEATURED_PLACES_LAYER,
@@ -33,7 +33,7 @@ const featuredGlobeContainer = (props) => {
   const locale = useLocale();
 
   const {
-    changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap,
+    activeLayers, changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap,
     isFeaturedPlaceCard, isFullscreenActive,
   } = props;
 
@@ -59,9 +59,9 @@ const featuredGlobeContainer = (props) => {
     setFeaturedMapsList(locale);
   }, [locale]);
 
-  const handleMapLoad = (map, activeLayers) => {
+  const handleMapLoad = (map, _activeLayers) => {
     setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, VIBRANT_BASEMAP_LAYER] });
-    activateLayersOnLoad(map, activeLayers, layersConfig);
+    activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
 
   const spinGlobe = (view) => {
@@ -76,7 +76,6 @@ const featuredGlobeContainer = (props) => {
       setHandle(spinningGlobe);
     });
   };
-
   const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
   const toggleLayer = (layerId) => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
@@ -93,7 +92,7 @@ const featuredGlobeContainer = (props) => {
       layer.maxScale = 250000.0;
     }
   };
-  const { activeLayers } = props;
+
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <Component

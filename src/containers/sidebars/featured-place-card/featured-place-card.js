@@ -6,6 +6,8 @@ import * as actions from 'actions/url-actions';
 
 import { findLayerInMap } from 'utils/layer-manager-utils';
 
+import initialState from 'pages/featured-globe/featured-globe-initial-state';
+
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
 import Component from './featured-place-card-component';
@@ -25,10 +27,14 @@ function FeaturedPlaceCardContainer(props) {
     description: '',
   });
 
+  const handleClose = () => {
+    changeUI({ selectedFeaturedPlace: undefined });
+    view.goTo({ zoom: initialState.globe.zoom });
+  };
   useEffect(() => {
     const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
     setFeaturedPlacesLayer(layer);
-  }, []);
+  }, [handleClose]);
 
   useEffect(() => {
     if (featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace) {
@@ -41,7 +47,7 @@ function FeaturedPlaceCardContainer(props) {
       const updatedFeaturedMap = featuredMapsList.find((m) => m.slug === selectedFeaturedMap);
       setFeaturedMap(updatedFeaturedMap);
     }
-  }, [featuredMapsList, selectedFeaturedMap]);
+  }, [featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace]);
 
   // get all the slugs of the places belonging to the selected featured map
   useEffect(() => {
@@ -89,6 +95,7 @@ function FeaturedPlaceCardContainer(props) {
       handleNextPlaceClick={handleNextPlaceClick}
       handlePrevPlaceClick={handlePrevPlaceClick}
       handleLandscapeTrigger={handleLandscapeTrigger}
+      handleClose={handleClose}
       hotspotsNumbers={hotspotsNumbers}
       {...props}
     />
