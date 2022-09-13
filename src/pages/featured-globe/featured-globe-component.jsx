@@ -114,7 +114,7 @@ function FeaturedGlobe({
             hidden={esriWidgetsHidden}
             openedModal={openedModal}
             disableSettings
-            blur={!selectedFeaturedPlace && selectedFeaturedPlace !== null}
+            blur={activeGlobesMenu}
           />
         )}
 

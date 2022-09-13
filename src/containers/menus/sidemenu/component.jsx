@@ -3,9 +3,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
-import { ReactComponent as HelpIcon } from 'icons/help.svg';
-import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import ZoomControls from 'containers/menus/sidemenu/zoom-controls';
 import HelpModal from 'containers/modals/help-modal';
@@ -19,6 +16,10 @@ import { useMobile } from 'constants/responsive';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module';
+
+import { ReactComponent as HelpIcon } from 'icons/help.svg';
+import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 function SideMenu({
   map, view, isNotMapsList, hidden, selectedOption, blur,
