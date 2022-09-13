@@ -104,8 +104,10 @@
   display: flex;
   justify-content: space-between;
 
+
+
   .analyzeMenuTitle {
-    @extend %subtitle;
+    @extend %bodyText;
     color: $white;
     text-transform: uppercase;
   }
@@ -114,6 +116,7 @@
     border: 1px solid $brand-color-main;
     border-radius: 4px;
     display: flex;
+    margin: 6px 0;
 
     .tabButton {
       height: 48px;
@@ -138,8 +141,20 @@
   }
 }
 
-.searchLabel {
+.sectionLabel {
   @extend %bodyText;
   color: $white;
   display: block;
+  margin-bottom: 0;
+}
+
+.sectionSubtitleLabel {
+  @extend %annotation;
+  color: $grey-text;
+  margin: 6px 0;
+
+  a {
+    @extend %annotation;
+    color: $grey-text;
+  }
 }

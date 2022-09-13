@@ -109,23 +109,96 @@ function AnalyzeAreasCardComponent({
                 })}
               </div>
             </div>
+            {selectedAnalysisTab === 'click' && (
+              <div>
+                <p className={styles.sectionLabel}>
+                  <b>{t('Click on the map')}</b>
+                  {' '}
+                  {t('to select:')}
+                </p>
+                <Dropdown
+                  stacked
+                  theme="dark"
+                  width="full"
+                  parentWidth="380px"
+                  options={precalculatedAOIOptions}
+                  selectedOption={selectedOption}
+                  handleOptionSelection={handleOptionSelection}
+                />
+              </div>
+            )}
             {selectedAnalysisTab === 'search' && (
-            <div>
-              <p className={styles.searchLabel}>
-                <b>{t('Search')}</b>
-                {' '}
-                {t('a country, region or protected areas')}
-              </p>
-              <SearchLocation
-                stacked
-                searchType={SEARCH_TYPES.full}
-                view={view}
-                theme="dark"
-                width="full"
-                parentWidth="380px"
-                searchSourceLayerSlug={selectedOption.slug}
-              />
-            </div>
+              <div>
+                <p className={styles.sectionLabel}>
+                  <b>{t('Search')}</b>
+                  {' '}
+                  {t('a country, region or protected areas')}
+                </p>
+                <SearchLocation
+                  stacked
+                  searchType={SEARCH_TYPES.full}
+                  view={view}
+                  theme="dark"
+                  width="full"
+                  parentWidth="380px"
+                  searchSourceLayerSlug={selectedOption.slug}
+                />
+              </div>
+            )}
+            {selectedAnalysisTab === 'draw' && (
+              <section className={styles.sectionContainer}>
+                <div
+                  className={cx(styles.sizeWarningContainer, {
+                    [styles.active]: geometryArea > HIGHER_AREA_SIZE_LIMIT,
+                  })}
+                >
+                  <InfoIcon className={styles.info} />
+                  <span className={styles.warning}>
+                    {t('Draw or upload a shape smaller than')}
+                    {' '}
+                    <b>
+                      {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
+                      km
+                      <sup>2</sup>
+                    </b>
+                    .
+                  </span>
+                </div>
+                <p className={styles.sectionLabel}>
+                  {t('Draw on the map the area you want to analyze:')}
+                </p>
+                <Button
+                  type="rectangular"
+                  label={isSketchToolActive ? t('cancel drawing') : t('start drawing')}
+                  handleClick={handleDrawClick}
+                />
+                <span className={styles.separatorLabel}>{t('or')}</span>
+
+              </section>
+            )}
+            {selectedAnalysisTab === 'upload' && (
+              <>
+                <p className={styles.sectionLabel}>
+                  {t('Upload your own shapefile. The shape should be smaller than')}
+                  {' '}
+                  <b>{t('35,000 km2')}</b>
+                  {' '}
+                  {t('approximately the size of Belgium.')}
+                </p>
+
+                <p className={styles.sectionSubtitleLabel}>
+                  {t('Learn more about shape files')}
+                  {' '}
+                  <a href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm">{t('here')}</a>
+                  .
+                </p>
+                <ShapeFileUploader
+                  sizeWarning="(Add a .zip file with a maximum of 2MB)"
+                  view={view}
+                  onSuccess={onShapeUploadSuccess}
+                  onError={onShapeUploadError}
+                />
+              </>
             )}
           </>
         )}
@@ -185,40 +258,40 @@ function AnalyzeAreasCardComponent({
               </section>
             )}
             {selectedAnalysisTab === 'draw' && (
-            <section className={styles.sectionContainer}>
-              <div
-                className={cx(styles.sizeWarningContainer, {
-                  [styles.active]: geometryArea > HIGHER_AREA_SIZE_LIMIT,
-                })}
-              >
-                <InfoIcon className={styles.info} />
-                <span className={styles.warning}>
-                  {t('Draw or upload a shape smaller than')}
-                  {' '}
-                  <b>
-                    {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
-                    km
-                    <sup>2</sup>
-                  </b>
-                  .
+              <section className={styles.sectionContainer}>
+                <div
+                  className={cx(styles.sizeWarningContainer, {
+                    [styles.active]: geometryArea > HIGHER_AREA_SIZE_LIMIT,
+                  })}
+                >
+                  <InfoIcon className={styles.info} />
+                  <span className={styles.warning}>
+                    {t('Draw or upload a shape smaller than')}
+                    {' '}
+                    <b>
+                      {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
+                      km
+                      <sup>2</sup>
+                    </b>
+                    .
+                  </span>
+                </div>
+                <span className={styles.label}>
+                  {t('Draw on the map the area you want to analyze:')}
                 </span>
-              </div>
-              <span className={styles.label}>
-                {t('Draw on the map the area you want to analyze:')}
-              </span>
-              <Button
-                type="rectangular"
-                label={isSketchToolActive ? t('cancel drawing') : t('start drawing')}
-                handleClick={handleDrawClick}
-              />
-              <span className={styles.separatorLabel}>{t('or')}</span>
-              <ShapeFileUploader
-                view={view}
-                onSuccess={onShapeUploadSuccess}
-                onError={onShapeUploadError}
-              />
+                <Button
+                  type="rectangular"
+                  label={isSketchToolActive ? t('cancel drawing') : t('start drawing')}
+                  handleClick={handleDrawClick}
+                />
+                <span className={styles.separatorLabel}>{t('or')}</span>
+                <ShapeFileUploader
+                  view={view}
+                  onSuccess={onShapeUploadSuccess}
+                  onError={onShapeUploadError}
+                />
 
-            </section>
+              </section>
             )}
           </div>
         )}
