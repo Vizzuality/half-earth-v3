@@ -2,11 +2,11 @@ import { orderBy } from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { FEATURED } from 'router';
-
 import * as actions from 'actions/url-actions';
 
 import { findLayerInMap } from 'utils/layer-manager-utils';
+
+import initialState from 'pages/featured-globe/featured-globe-initial-state';
 
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
@@ -16,7 +16,7 @@ import mapStateToProps from './featured-place-card-selectors';
 function FeaturedPlaceCardContainer(props) {
   const {
     view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace,
-    selectedTaxa, changeUI, featuredMapPlaces, browsePage,
+    selectedTaxa, changeUI, featuredMapPlaces,
   } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
@@ -28,8 +28,8 @@ function FeaturedPlaceCardContainer(props) {
   });
 
   const handleClose = () => {
-    browsePage({ type: FEATURED });
-    window.location.reload();
+    changeUI({ selectedFeaturedPlace: undefined });
+    view.goTo({ zoom: initialState.globe.zoom });
   };
   useEffect(() => {
     const layer = findLayerInMap(FEATURED_PLACES_LAYER, map);
