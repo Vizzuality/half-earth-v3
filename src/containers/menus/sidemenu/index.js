@@ -4,13 +4,13 @@ import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
+import { useLocale } from '@transifex/react';
+
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
-
-import { useLocale } from '@transifex/react';
 
 import { getPrecalculatedAOIOptions } from 'constants/analyze-areas-constants';
 import { AREA_TYPES } from 'constants/aois.js';
@@ -35,14 +35,15 @@ const actions = {
   ...aoisActions,
 };
 
-function SideMenuComponent(props) {
+function SideMenu(props) {
+  const {
+    activeLayers, changeGlobe, setTooltipIsVisible, setAreaTypeSelected,
+  } = props;
+
   const locale = useLocale();
 
   const precalculatedAOIOptions = useMemo(() => getPrecalculatedAOIOptions(), [locale]);
 
-  const {
-    activeLayers, changeGlobe, setTooltipIsVisible, setAreaTypeSelected,
-  } = props;
   const [selectedOption, setSelectedOption] = useState(precalculatedAOIOptions[0]);
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
 
@@ -141,4 +142,4 @@ function SideMenuComponent(props) {
   );
 }
 
-export default connect(null, actions)(SideMenuComponent);
+export default connect(null, actions)(SideMenu);
