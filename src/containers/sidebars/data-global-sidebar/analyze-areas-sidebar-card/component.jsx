@@ -29,6 +29,8 @@ import { ReactComponent as AoisDrawIcon } from 'icons/aois_draw.svg';
 import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
+import { TABS } from './constants';
+
 const {
   REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
   REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN: FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
@@ -87,72 +89,23 @@ function AnalyzeAreasCardComponent({
           <div className={styles.analyzeMenuContainer}>
             <p className={styles.analyzeMenuTitle}>{t('Selection Type')}</p>
             <div className={styles.analyzeMenuTabsContainer}>
-              <button
-                active={selectedAnalysisTab === 'click'}
-                className={cx({
-                  [styles.tabButton]: true,
-                  [styles.tabButtonActive]: selectedAnalysisTab === 'click',
-                })}
-                type="button"
-                onClick={() => selectedAnalysisTab !== 'click'
-                && handleAnalysisTabClick('click')}
-              >
-                <AoisClickIcon className={cx({
-                  [styles.tabIcon]: true,
-                  [styles.tabIconActive]: selectedAnalysisTab === 'click',
-                })}
-                />
-              </button>
+              {TABS(selectedAnalysisTab).map((t) => {
+                return (
 
-              <button
-                active={selectedAnalysisTab === 'search'}
-                className={cx({
-                  [styles.tabButton]: true,
-                  [styles.tabButtonActive]: selectedAnalysisTab === 'search',
-                })}
-                type="button"
-                onClick={() => selectedAnalysisTab !== 'search'
-                && handleAnalysisTabClick('search')}
-              >
-                <AoisClickIcon className={cx({
-                  [styles.tabIcon]: true,
-                  [styles.tabIconActive]: selectedAnalysisTab === 'search',
-                })}
-                />
-              </button>
-
-              <button
-                active={selectedAnalysisTab === 'draw'}
-                className={cx({
-                  [styles.tabButton]: true,
-                  [styles.tabButtonActive]: selectedAnalysisTab === 'draw',
-                })}
-                type="button"
-                onClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
-              >
-                <AoisDrawIcon className={cx({
-                  [styles.tabIcon]: true,
-                  [styles.tabIconActive]: selectedAnalysisTab === 'draw',
-                })}
-                />
-              </button>
-
-              <button
-                active={selectedAnalysisTab === 'upload'}
-                className={cx({
-                  [styles.tabButton]: true,
-                  [styles.tabButtonActive]: selectedAnalysisTab === 'upload',
-                })}
-                type="button"
-                onClick={() => selectedAnalysisTab !== 'upload'
-                && handleAnalysisTabClick('upload')}
-              >
-                <AoisClickIcon className={cx({
-                  [styles.tabIcon]: true,
-                  [styles.tabIconActive]: selectedAnalysisTab === 'upload',
-                })}
-                />
-              </button>
+                  <button
+                    active={selectedAnalysisTab === `${t.label}`}
+                    className={cx({
+                      [styles.tabButton]: true,
+                      [styles.tabButtonActive]: selectedAnalysisTab === `${t.label}`,
+                    })}
+                    type="button"
+                    onClick={() => selectedAnalysisTab !== `${t.label}`
+                && handleAnalysisTabClick(`${t.label}`)}
+                  >
+                    {t.icon}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
