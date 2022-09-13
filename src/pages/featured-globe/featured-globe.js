@@ -34,7 +34,7 @@ const featuredGlobeContainer = (props) => {
 
   const {
     activeLayers, changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap,
-    isFeaturedPlaceCard, isFullscreenActive, selectedFeaturedPlace,
+    isFeaturedPlaceCard, isFullscreenActive,
   } = props;
 
   const handleMarkerClick = (viewPoint) => {
@@ -59,9 +59,9 @@ const featuredGlobeContainer = (props) => {
     setFeaturedMapsList(locale);
   }, [locale]);
 
-  const handleMapLoad = (map, activeLayers) => {
+  const handleMapLoad = (map, _activeLayers) => {
     setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, VIBRANT_BASEMAP_LAYER] });
-    activateLayersOnLoad(map, activeLayers, layersConfig);
+    activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
 
   const spinGlobe = (view) => {
