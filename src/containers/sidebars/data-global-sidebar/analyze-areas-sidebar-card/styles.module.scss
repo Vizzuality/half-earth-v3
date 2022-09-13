@@ -119,21 +119,27 @@
       height: 48px;
       padding: 12px;
       width: 46px;
+
+      .tabIcon {
+        height: 24px;
+        fill: $white;
+        margin-bottom: $paragraph-gutter;
+        width: 24px;
+      }
+
+      .tabIconActive {
+        fill: $dark-text;
+      }
     }
 
     .tabButtonActive {
       background-color: $brand-color-main;
     }
-
-    .tabIcon {
-      height: 24px;
-      fill: $white;
-      margin-bottom: $paragraph-gutter;
-      width: 24px;
-    }
-
-    .tabIconActive {
-      fill: $dark-text;
-    }
   }
+}
+
+.searchLabel {
+  @extend %bodyText;
+  color: $white;
+  display: block;
 }

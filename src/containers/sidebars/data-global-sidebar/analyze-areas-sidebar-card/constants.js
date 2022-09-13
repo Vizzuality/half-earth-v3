@@ -9,12 +9,12 @@ import { ReactComponent as AoisDrawIcon } from 'icons/aois_draw.svg';
 import { ReactComponent as AoisSearchIcon } from 'icons/aois_search.svg';
 import { ReactComponent as AoisUploadIcon } from 'icons/aois_upload.svg';
 
-export const TABS = (selectedAnalysisTab) => [
+export const TABS = (tab) => [
   {
     label: 'click',
     icon: <AoisClickIcon className={cx({
       [styles.tabIcon]: true,
-      [styles.tabIconActive]: selectedAnalysisTab === 'click',
+      [styles.tabIconActive]: tab === 'click',
     })}
     />,
   },
@@ -22,7 +22,7 @@ export const TABS = (selectedAnalysisTab) => [
     label: 'search',
     icon: <AoisSearchIcon className={cx({
       [styles.tabIcon]: true,
-      [styles.tabIconActive]: selectedAnalysisTab === 'search',
+      [styles.tabIconActive]: tab === 'search',
     })}
     />,
   },
@@ -30,7 +30,7 @@ export const TABS = (selectedAnalysisTab) => [
     label: 'draw',
     icon: <AoisDrawIcon className={cx({
       [styles.tabIcon]: true,
-      [styles.tabIconActive]: selectedAnalysisTab === 'draw',
+      [styles.tabIconActive]: tab === 'draw',
     })}
     />,
   },
@@ -38,7 +38,7 @@ export const TABS = (selectedAnalysisTab) => [
     label: 'upload',
     icon: <AoisUploadIcon className={cx({
       [styles.tabIcon]: true,
-      [styles.tabIconActive]: selectedAnalysisTab === 'upload',
+      [styles.tabIconActive]: tab === 'upload',
     })}
     />,
   },

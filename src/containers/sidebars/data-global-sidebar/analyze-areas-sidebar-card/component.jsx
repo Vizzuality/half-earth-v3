@@ -86,28 +86,48 @@ function AnalyzeAreasCardComponent({
         </h2>
 
         {FEATURE_TAG_ANALYZE_AREAS_REDESIGN && (
-          <div className={styles.analyzeMenuContainer}>
-            <p className={styles.analyzeMenuTitle}>{t('Selection Type')}</p>
-            <div className={styles.analyzeMenuTabsContainer}>
-              {TABS(selectedAnalysisTab).map((t) => {
-                return (
+          <>
+            <div className={styles.analyzeMenuContainer}>
+              <p className={styles.analyzeMenuTitle}>{t('Selection Type')}</p>
+              <div className={styles.analyzeMenuTabsContainer}>
+                {TABS(selectedAnalysisTab).map((tab) => {
+                  return (
 
-                  <button
-                    active={selectedAnalysisTab === `${t.label}`}
-                    className={cx({
-                      [styles.tabButton]: true,
-                      [styles.tabButtonActive]: selectedAnalysisTab === `${t.label}`,
-                    })}
-                    type="button"
-                    onClick={() => selectedAnalysisTab !== `${t.label}`
-                && handleAnalysisTabClick(`${t.label}`)}
-                  >
-                    {t.icon}
-                  </button>
-                );
-              })}
+                    <button
+                      active={selectedAnalysisTab === `${tab.label}`}
+                      className={cx({
+                        [styles.tabButton]: true,
+                        [styles.tabButtonActive]: selectedAnalysisTab === `${tab.label}`,
+                      })}
+                      type="button"
+                      onClick={() => selectedAnalysisTab !== `${tab.label}`
+                  && handleAnalysisTabClick(`${tab.label}`)}
+                    >
+                      {tab.icon}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+            {selectedAnalysisTab === 'search' && (
+            <div>
+              <p className={styles.searchLabel}>
+                <b>{t('Search')}</b>
+                {' '}
+                {t('a country, region or protected areas')}
+              </p>
+              <SearchLocation
+                stacked
+                searchType={SEARCH_TYPES.full}
+                view={view}
+                theme="dark"
+                width="full"
+                parentWidth="380px"
+                searchSourceLayerSlug={selectedOption.slug}
+              />
+            </div>
+            )}
+          </>
         )}
 
         {!FEATURE_TAG_ANALYZE_AREAS_REDESIGN && (
