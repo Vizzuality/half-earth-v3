@@ -3,10 +3,10 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import styles from './styles.module.scss';
+
 import { ReactComponent as ZoomInIcon } from 'icons/zoomIn.svg';
 import { ReactComponent as ZoomOutIcon } from 'icons/zoomOut.svg';
-
-import styles from './styles.module.scss';
 
 function ZoomControls({ zoomWidget }) {
   return (

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import * as actions from 'actions/url-actions';
-
 import { loadModules } from 'esri-loader';
+
+import * as actions from 'actions/url-actions';
 
 import ZoomControlsComponent from './component';
 
