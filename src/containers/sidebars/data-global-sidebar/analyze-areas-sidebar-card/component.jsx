@@ -146,42 +146,29 @@ function AnalyzeAreasCardComponent({
               </div>
             )}
             {selectedAnalysisTab === 'draw' && (
-              <section className={styles.sectionContainer}>
-                <div
-                  className={cx(styles.sizeWarningContainer, {
-                    [styles.active]: geometryArea > HIGHER_AREA_SIZE_LIMIT,
-                  })}
-                >
-                  <InfoIcon className={styles.info} />
-                  <span className={styles.warning}>
-                    {t('Draw or upload a shape smaller than')}
-                    {' '}
-                    <b>
-                      {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
-                      km
-                      <sup>2</sup>
-                    </b>
-                    .
-                  </span>
-                </div>
+              <div>
                 <p className={styles.sectionLabel}>
-                  {t('Draw on the map the area you want to analyze:')}
+                  {t('Draw shape smaller than')}
+                  {' '}
+                  <b>
+                    {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
+                    km
+                    <sup>2</sup>
+                  </b>
+                  {t(', approximately the size of Belgium.')}
                 </p>
-                <Button
-                  type="rectangular"
-                  label={isSketchToolActive ? t('cancel drawing') : t('start drawing')}
-                  handleClick={handleDrawClick}
-                />
-                <span className={styles.separatorLabel}>{t('or')}</span>
 
-              </section>
+                <p className={styles.sectionLabel}>
+                  {t('Use the different drawing tools to draw the area.')}
+                </p>
+              </div>
             )}
             {selectedAnalysisTab === 'upload' && (
               <>
                 <p className={styles.sectionLabel}>
                   {t('Upload your own shapefile. The shape should be smaller than')}
                   {' '}
-                  <b>{t('35,000 km2')}</b>
+                  <b>{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}</b>
                   {' '}
                   {t('approximately the size of Belgium.')}
                 </p>

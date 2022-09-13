@@ -44,6 +44,10 @@ const actions = {
   ...aoisActions,
 };
 
+const {
+  REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN: FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
+} = process.env;
+
 function AnalyzeAreasContainer(props) {
   const locale = useLocale();
   const t = useT();
@@ -230,27 +234,48 @@ function AnalyzeAreasContainer(props) {
   };
 
   const handleAnalysisTabClick = (selectedTab) => {
-    switch (selectedTab) {
-      case 'draw':
-        setAreaTypeSelected(AREA_TYPES.custom);
-        setSelectedAnalysisTab('draw');
-        handleLayerToggle(precalculatedAOIOptions[0]);
-        break;
-      case 'search':
-        setSelectedAnalysisTab('search');
-        break;
-      case 'click':
-        setSelectedAnalysisTab('click');
-        handleLayerToggle(precalculatedAOIOptions[0]);
-        if (sketchTool) { handleSketchToolDestroy(); }
-        break;
-      case 'upload':
-        setSelectedAnalysisTab('upload');
-        break;
-      default:
-        setSelectedAnalysisTab('click');
-        handleSketchToolDestroy();
-        break;
+    if (FEATURE_TAG_ANALYZE_AREAS_REDESIGN) {
+      switch (selectedTab) {
+        case 'draw':
+          setAreaTypeSelected(AREA_TYPES.custom);
+          setSelectedAnalysisTab('draw');
+          handleSketchToolActivation();
+          handleLayerToggle(precalculatedAOIOptions[0]);
+          break;
+        case 'search':
+          setSelectedAnalysisTab('search');
+          break;
+        case 'click':
+          setSelectedAnalysisTab('click');
+          handleLayerToggle(precalculatedAOIOptions[0]);
+          if (sketchTool) { handleSketchToolDestroy(); }
+          break;
+        case 'upload':
+          setSelectedAnalysisTab('upload');
+          break;
+        default:
+          setSelectedAnalysisTab('click');
+          handleSketchToolDestroy();
+          break;
+      }
+    }
+    if (!FEATURE_TAG_ANALYZE_AREAS_REDESIGN) {
+      switch (selectedTab) {
+        case 'draw':
+          setAreaTypeSelected(AREA_TYPES.custom);
+          setSelectedAnalysisTab('draw');
+          handleLayerToggle(precalculatedAOIOptions[0]);
+          break;
+        case 'click':
+          setSelectedAnalysisTab('click');
+          handleLayerToggle(precalculatedAOIOptions[0]);
+          if (sketchTool) { handleSketchToolDestroy(); }
+          break;
+        default:
+          setSelectedAnalysisTab('click');
+          handleSketchToolDestroy();
+          break;
+      }
     }
   };
 

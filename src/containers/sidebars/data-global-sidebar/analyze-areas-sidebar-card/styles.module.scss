@@ -145,13 +145,13 @@
   @extend %bodyText;
   color: $white;
   display: block;
-  margin-bottom: 0;
+  margin-bottom: 6px;
 }
 
 .sectionSubtitleLabel {
   @extend %annotation;
   color: $grey-text;
-  margin: 6px 0;
+  margin: 0 0 6px 0;
 
   a {
     @extend %annotation;
