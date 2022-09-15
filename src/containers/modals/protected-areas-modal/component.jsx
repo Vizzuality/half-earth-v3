@@ -1,22 +1,28 @@
 import React, { useMemo } from 'react';
-import { useT, useLocale } from '@transifex/react';
-import { Modal } from 'he-components';
+
 import loadable from '@loadable/component';
+
+import { useT, useLocale } from '@transifex/react';
+
+import { Modal } from 'he-components';
+
+import ProtectedAreasTable from 'components/protected-areas-table';
+
 import { getCountryNames } from 'constants/translation-constants';
 
 // components
-import ProtectedAreasTable from 'components/protected-areas-table';
 
 // icons
+import styles from './styles.module';
+
 import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 
 // styles
-import styles from './styles.module';
 
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 
-const ProtectedAreasModal = ({
+function ProtectedAreasModal({
   isOpen,
   handleModalClose,
   handleSearchInputChange,
@@ -24,7 +30,7 @@ const ProtectedAreasModal = ({
   data,
   contextualData,
   loading,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
@@ -35,8 +41,8 @@ const ProtectedAreasModal = ({
         {loading && <Spinner floating />}
         <h1>
           {t('Protected areas in ')}
-          {CountryNamesTranslations[contextualData.areaName] ||
-            contextualData.areaName}
+          {CountryNamesTranslations[contextualData.areaName]
+            || contextualData.areaName}
         </h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>
@@ -61,6 +67,6 @@ const ProtectedAreasModal = ({
       </div>
     </Modal>
   );
-};
+}
 
 export default ProtectedAreasModal;

@@ -1,19 +1,21 @@
 import React, { useMemo } from 'react';
-import ReactMarkdown from 'react-markdown/with-html';
+
 import { useT, useLocale } from '@transifex/react';
 
+import ReactMarkdown from 'react-markdown/with-html';
+
 // icons
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 // components
-import SourceAnnotation from 'components/source-annotation';
-import LayerToggle from 'components/layer-toggle';
+import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
+import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
 import Button from 'components/button';
+import LayerToggle from 'components/layer-toggle';
+import SourceAnnotation from 'components/source-annotation';
 
 // containers
-import SidebarLegend from 'containers/sidebars/sidebar-legend';
-import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 
 // constants
 import {
@@ -24,7 +26,9 @@ import {
 // styles
 import styles from './styles.module.scss';
 
-const SidebarCard = ({
+import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+
+function SidebarCard({
   map,
   layers,
   onChange,
@@ -40,7 +44,7 @@ const SidebarCard = ({
   handleProtectedAreasModalToggle,
   contextualData,
   metadata,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
@@ -107,6 +111,6 @@ const SidebarCard = ({
       )}
     </SidebarCardWrapper>
   );
-};
+}
 
 export default SidebarCard;

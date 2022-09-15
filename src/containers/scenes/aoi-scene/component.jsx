@@ -10,7 +10,7 @@ import SideMenu from 'containers/menus/sidemenu';
 import AoiSidebar from 'containers/sidebars/aoi-sidebar';
 import Widgets from 'containers/widgets';
 
-import AOIEntryTooltip from 'components/aoi-entry-tooltip';
+import FuturePlaceTooltip from 'components/future-place-tooltip';
 import Scene from 'components/scene';
 
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
@@ -82,7 +82,7 @@ function AoiSceneComponent({
         waitingInteraction={waitingInteraction}
       />
 
-      <AOIEntryTooltip
+      <FuturePlaceTooltip
         tooltipInfo={tooltipInfo}
         setTooltipInfo={setTooltipInfo}
       />

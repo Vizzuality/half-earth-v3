@@ -20,8 +20,14 @@ export default {
       { title: CITIES_LABELS_LAYER },
       { title: COUNTRIES_LABELS_FEATURE_LAYER },
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
-      { title: ALL_TAXA_PRIORITY, opacity: DEFAULT_OPACITY, category: LAYERS_CATEGORIES.BIODIVERSITY },
-      ...FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [{ title: ADMIN_AREAS_FEATURE_LAYER }] : [{ title: GADM_0_ADMIN_AREAS_FEATURE_LAYER }],
+      {
+        title: ALL_TAXA_PRIORITY,
+        opacity: DEFAULT_OPACITY,
+        category: LAYERS_CATEGORIES.BIODIVERSITY,
+      },
+      ...FEATURE_MERGE_NATIONAL_SUBNATIONAL
+        ? [{ title: ADMIN_AREAS_FEATURE_LAYER }]
+        : [{ title: GADM_0_ADMIN_AREAS_FEATURE_LAYER }],
     ],
     zoom: 3.8,
     center: [16.9515536, 0.116959],

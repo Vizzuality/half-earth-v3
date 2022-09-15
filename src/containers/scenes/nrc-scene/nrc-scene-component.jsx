@@ -12,8 +12,8 @@ import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 import Widgets from 'containers/widgets';
 
-import AOIEntryTooltip from 'components/aoi-entry-tooltip';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
+import FuturePlaceTooltip from 'components/future-place-tooltip';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import Scene from 'components/scene';
 
@@ -41,7 +41,7 @@ function CountrySceneComponent({
   isFullscreenActive,
   handleAreaClick,
   countryTooltipDisplayFor,
-  aoiTooltipInfo,
+  futurePlaceTooltipInfo,
   setTooltipInfo,
   onboardingType,
   countryData,
@@ -71,8 +71,8 @@ function CountrySceneComponent({
         countryTooltipDisplayFor={countryTooltipDisplayFor}
         countryName={countryName}
       />
-      <AOIEntryTooltip
-        tooltipInfo={aoiTooltipInfo}
+      <FuturePlaceTooltip
+        tooltipInfo={futurePlaceTooltipInfo}
         setTooltipInfo={setTooltipInfo}
       />
       <CountryLabelsLayer activeLayers={activeLayers} countryISO={countryISO} />

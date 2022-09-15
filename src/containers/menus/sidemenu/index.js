@@ -13,15 +13,11 @@ import { getSelectedAnalysisLayer } from 'utils/analyze-areas-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 
 import { getPrecalculatedAOIOptions } from 'constants/analyze-areas-constants';
-import { AREA_TYPES } from 'constants/aois.js';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
-  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
-  SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
@@ -37,7 +33,7 @@ const actions = {
 
 function SideMenu(props) {
   const {
-    activeLayers, changeGlobe, setTooltipIsVisible, setAreaTypeSelected,
+    activeLayers, changeGlobe, setTooltipIsVisible,
   } = props;
 
   const locale = useLocale();
@@ -102,27 +98,6 @@ function SideMenu(props) {
   };
 
   const handleOptionSelection = (option) => {
-    // eslint-disable-next-line default-case
-    switch (option.slug) {
-      case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.subnational);
-        break;
-      case GADM_0_ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.national);
-        break;
-      case WDPA_OECM_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.protected);
-        break;
-      case HALF_EARTH_FUTURE_TILE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.futurePlaces);
-        break;
-      case SPECIFIC_REGIONS_TILE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.specificRegions);
-        break;
-      default:
-        setAreaTypeSelected(AREA_TYPES.custom);
-        break;
-    }
     handleLayerToggle(option.slug);
     setSelectedOption(option);
     setTooltipIsVisible(false);

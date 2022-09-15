@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { selectAoiId, getAoiGeometry, selectAreaType } from 'selectors/aoi-selectors';
+import { selectAoiId, getAoiGeometry } from 'selectors/aoi-selectors';
 import { selectUiUrlState, selectGlobeUrlState } from 'selectors/location-selectors';
 
 import aoiSceneConfig from './config';
@@ -43,7 +43,6 @@ const getActiveCategoryLayers = createSelector(getUiSettings, (
 ) => uiSettings.activeCategoryLayers);
 
 export default createStructuredSelector({
-  areaTypeSelected: selectAreaType,
   aoiId: selectAoiId,
   objectId: selectLocationObjectId,
   activeLayers: getActiveLayers,

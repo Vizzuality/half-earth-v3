@@ -68,7 +68,6 @@ function AnalyzeAreasCardComponent({
   const [isChecked, setIsChecked] = useState(false);
 
   const handleOnChange = () => {
-    console.log();
     setIsChecked(!isChecked);
   };
 
@@ -108,10 +107,8 @@ function AnalyzeAreasCardComponent({
                           selectedAnalysisTab === `${tab.label}`,
                       })}
                       type="button"
-                      onClick={() =>
-                        selectedAnalysisTab !== `${tab.label}` &&
-                        handleAnalysisTabClick(`${tab.label}`)
-                      }
+                      onClick={() => selectedAnalysisTab !== `${tab.label}`
+                        && handleAnalysisTabClick(`${tab.label}`)}
                     >
                       {tab.icon}
                     </button>
@@ -122,7 +119,9 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'click' && (
               <div>
                 <p className={styles.sectionLabel}>
-                  <b>{t('Click on the map')}</b> {t('to select:')}
+                  <b>{t('Click on the map')}</b>
+                  {' '}
+                  {t('to select:')}
                 </p>
 
                 {precalculatedAOIOptions.map((option) => {
@@ -155,7 +154,8 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'search' && (
               <div>
                 <p className={styles.sectionLabel}>
-                  <b>{t('Search')}</b>{' '}
+                  <b>{t('Search')}</b>
+                  {' '}
                   {t('a country, region or protected areas')}
                 </p>
                 <SearchLocation
@@ -172,7 +172,8 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'draw' && (
               <div>
                 <p className={styles.sectionLabel}>
-                  {t('Draw shape smaller than')}{' '}
+                  {t('Draw shape smaller than')}
+                  {' '}
                   <b>
                     {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
                     km
@@ -190,14 +191,17 @@ function AnalyzeAreasCardComponent({
               <>
                 <p className={styles.sectionLabel}>
                   {t(
-                    'Upload your own shapefile. The shape should be smaller than'
-                  )}{' '}
-                  <b>{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}</b>{' '}
+                    'Upload your own shapefile. The shape should be smaller than',
+                  )}
+                  {' '}
+                  <b>{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}</b>
+                  {' '}
                   {t('approximately the size of Belgium.')}
                 </p>
 
                 <p className={styles.sectionSubtitleLabel}>
-                  {t('Learn more about shape files')}{' '}
+                  {t('Learn more about shape files')}
+                  {' '}
                   <a href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm">
                     {t('here')}
                   </a>
@@ -222,20 +226,16 @@ function AnalyzeAreasCardComponent({
                 label={t('Click on the map')}
                 Icon={AoisClickIcon}
                 active={selectedAnalysisTab === 'click'}
-                handleClick={() =>
-                  selectedAnalysisTab !== 'click' &&
-                  handleAnalysisTabClick('click')
-                }
+                handleClick={() => selectedAnalysisTab !== 'click'
+                  && handleAnalysisTabClick('click')}
               />
               <Button
                 type="square"
                 label={t('Define region of interest')}
                 Icon={AoisDrawIcon}
                 active={selectedAnalysisTab === 'draw'}
-                handleClick={() =>
-                  selectedAnalysisTab !== 'draw' &&
-                  handleAnalysisTabClick('draw')
-                }
+                handleClick={() => selectedAnalysisTab !== 'draw'
+                  && handleAnalysisTabClick('draw')}
               />
             </div>
             {selectedAnalysisTab === 'click' && (
@@ -282,7 +282,8 @@ function AnalyzeAreasCardComponent({
                 >
                   <InfoIcon className={styles.info} />
                   <span className={styles.warning}>
-                    {t('Draw or upload a shape smaller than')}{' '}
+                    {t('Draw or upload a shape smaller than')}
+                    {' '}
                     <b>
                       {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
                       km
@@ -361,20 +362,16 @@ function AnalyzeAreasCardComponent({
                 label={t('Click on the map')}
                 Icon={AoisClickIcon}
                 active={selectedAnalysisTab === 'click'}
-                handleClick={() =>
-                  selectedAnalysisTab !== 'click' &&
-                  handleAnalysisTabClick('click')
-                }
+                handleClick={() => selectedAnalysisTab !== 'click'
+                  && handleAnalysisTabClick('click')}
               />
               <Button
                 type="square"
                 label={t('Draw or upload a shape')}
                 Icon={AoisDrawIcon}
                 active={selectedAnalysisTab === 'draw'}
-                handleClick={() =>
-                  selectedAnalysisTab !== 'draw' &&
-                  handleAnalysisTabClick('draw')
-                }
+                handleClick={() => selectedAnalysisTab !== 'draw'
+                  && handleAnalysisTabClick('draw')}
               />
             </div>
             {selectedAnalysisTab === 'click' && (
@@ -421,7 +418,8 @@ function AnalyzeAreasCardComponent({
                 >
                   <InfoIcon className={styles.info} />
                   <span className={styles.warning}>
-                    {t('Draw or upload a shape smaller than')}{' '}
+                    {t('Draw or upload a shape smaller than')}
+                    {' '}
                     <b>
                       {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
                       km

@@ -20,21 +20,15 @@ import { batchToggleLayers } from 'utils/layer-manager-utils';
 import { useSketchWidget } from 'hooks/esri';
 
 import { getPrecalculatedAOIOptions, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
-import { AREA_TYPES } from 'constants/aois.js';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
-  ADMIN_AREAS_FEATURE_LAYER,
-  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
-  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
   WDPA_OECM_FEATURE_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
-  SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 import Component from './component.jsx';
-import mapStateToProps from './selectors.js';
 
 const actions = {
   ...urlActions,
@@ -96,8 +90,6 @@ function AnalyzeAreasContainer(props) {
     changeGlobe,
     setTooltipIsVisible,
     setAoiGeometry,
-    setAreaTypeSelected,
-    areaTypeSelected,
     shapeDrawSuccessfulAnalytics,
     shapeDrawTooBigAnalytics,
     shapeUploadErrorAnalytics,
@@ -136,7 +128,6 @@ function AnalyzeAreasContainer(props) {
       setAoiGeometry({ hash, geometry });
       shapeDrawSuccessfulAnalytics();
       browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
-      changeGlobe({ areaTypeSelected });
     }
   };
 
@@ -159,7 +150,6 @@ function AnalyzeAreasContainer(props) {
           setAoiGeometry({ hash, geometry: geometryInstance });
           shapeUploadSuccessfulAnalytics();
           browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
-          changeGlobe({ areaTypeSelected });
         }
       });
   };
@@ -237,7 +227,6 @@ function AnalyzeAreasContainer(props) {
     if (FEATURE_TAG_ANALYZE_AREAS_REDESIGN) {
       switch (selectedTab) {
         case 'draw':
-          setAreaTypeSelected(AREA_TYPES.custom);
           setSelectedAnalysisTab('draw');
           handleSketchToolActivation();
           handleLayerToggle(precalculatedAOIOptions[0]);
@@ -262,7 +251,6 @@ function AnalyzeAreasContainer(props) {
     if (!FEATURE_TAG_ANALYZE_AREAS_REDESIGN) {
       switch (selectedTab) {
         case 'draw':
-          setAreaTypeSelected(AREA_TYPES.custom);
           setSelectedAnalysisTab('draw');
           handleLayerToggle(precalculatedAOIOptions[0]);
           break;
@@ -280,30 +268,6 @@ function AnalyzeAreasContainer(props) {
   };
 
   const handleOptionSelection = (option) => {
-    // eslint-disable-next-line default-case
-    switch (option.slug) {
-      case ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.administrative);
-        break;
-      case GADM_1_ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.subnational);
-        break;
-      case GADM_0_ADMIN_AREAS_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.national);
-        break;
-      case WDPA_OECM_FEATURE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.protected);
-        break;
-      case HALF_EARTH_FUTURE_TILE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.futurePlaces);
-        break;
-      case SPECIFIC_REGIONS_TILE_LAYER:
-        setAreaTypeSelected(AREA_TYPES.specificRegions);
-        break;
-      default:
-        setAreaTypeSelected(AREA_TYPES.custom);
-        break;
-    }
     handleLayerToggle(option.slug);
     setSelectedOption(option);
     setTooltipIsVisible(false);
@@ -338,4 +302,4 @@ function AnalyzeAreasContainer(props) {
   );
 }
 
-export default connect(mapStateToProps, actions)(AnalyzeAreasContainer);
+export default connect(null, actions)(AnalyzeAreasContainer);
