@@ -14,7 +14,10 @@ import { useSearchWidgetLogic } from 'hooks/esri';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import { SEARCH_LOOKUP_TABLE } from 'constants/layers-slugs';
+import {
+  SEARCH_LOOKUP_TABLE, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+} from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
 import { SEARCH_SOURCES_CONFIG, SEARCH_TYPES } from 'constants/search-location-constants';
@@ -83,13 +86,21 @@ function SearchLocationContainer(props) {
     } = tooltipConfig;
     const { geometry, attributes } = feature;
 
+    // TODO: Check this when we merge the administrative options
+    const getPrecalculatedLayer = () => {
+      if (attributes.DESIG_T) {
+        return WDPA_OECM_FEATURE_LAYER;
+      }
+      return attributes.GID_1
+        ? GADM_1_ADMIN_AREAS_FEATURE_LAYER
+        : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
+    };
+
     if (searchType !== SEARCH_TYPES.simple) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
-        precalculatedLayer: (searchType === SEARCH_TYPES.full
-          && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL)
-          ? result.feature.attributes.LAYERSLUG : undefined,
+        precalculatedLayer: result.feature.attributes.LAYERSLUG || getPrecalculatedLayer(),
         content: getTooltipContent(t, attributes, id, title, subtitle),
       });
     }
