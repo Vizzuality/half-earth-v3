@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { layersConfig } from 'constants/mol-layers-configs';
-import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
-import mapStateToProps from './landing-selectors';
-import LandingComponent from './landing-component.jsx';
-import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+
 import * as urlActions from 'actions/url-actions';
+
+import { activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+
+import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { layersConfig } from 'constants/mol-layers-configs';
+
+import LandingComponent from './landing-component.jsx';
+import mapStateToProps from './landing-selectors';
 
 const actions = { ...urlActions };
 

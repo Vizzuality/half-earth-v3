@@ -65,7 +65,7 @@ function Container(props) {
 
       const { title, subtitle, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
-
+console.log(selectedAnalysisLayer)
       let customId;
       let customTitle;
       if (selectedAnalysisLayer.slug === HALF_EARTH_FUTURE_TILE_LAYER) {

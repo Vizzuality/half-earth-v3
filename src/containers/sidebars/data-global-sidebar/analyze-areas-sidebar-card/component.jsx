@@ -33,7 +33,8 @@ import { TABS } from './constants';
 
 const {
   REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-  REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN: FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
+  REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN:
+    FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
 } = process.env;
 
 function AnalyzeAreasCardComponent({
@@ -67,6 +68,7 @@ function AnalyzeAreasCardComponent({
   const [isChecked, setIsChecked] = useState(false);
 
   const handleOnChange = () => {
+    console.log();
     setIsChecked(!isChecked);
   };
 
@@ -98,16 +100,18 @@ function AnalyzeAreasCardComponent({
               <div className={styles.analyzeMenuTabsContainer}>
                 {TABS(selectedAnalysisTab).map((tab) => {
                   return (
-
                     <button
                       active={selectedAnalysisTab === `${tab.label}`}
                       className={cx({
                         [styles.tabButton]: true,
-                        [styles.tabButtonActive]: selectedAnalysisTab === `${tab.label}`,
+                        [styles.tabButtonActive]:
+                          selectedAnalysisTab === `${tab.label}`,
                       })}
                       type="button"
-                      onClick={() => selectedAnalysisTab !== `${tab.label}`
-                  && handleAnalysisTabClick(`${tab.label}`)}
+                      onClick={() =>
+                        selectedAnalysisTab !== `${tab.label}` &&
+                        handleAnalysisTabClick(`${tab.label}`)
+                      }
                     >
                       {tab.icon}
                     </button>
@@ -118,15 +122,17 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'click' && (
               <div>
                 <p className={styles.sectionLabel}>
-                  <b>{t('Click on the map')}</b>
-                  {' '}
-                  {t('to select:')}
+                  <b>{t('Click on the map')}</b> {t('to select:')}
                 </p>
 
                 {precalculatedAOIOptions.map((option) => {
                   return (
-                    <div className={styles.checkboxContainer}>
+                    <div
+                      className={styles.checkboxContainer}
+                      key={`checkbox-container-${option.slug}`}
+                    >
                       <input
+                        key={`checkbox-${option.slug}`}
                         type="checkbox"
                         id={option.slug}
                         name={option.slug}
@@ -134,10 +140,11 @@ function AnalyzeAreasCardComponent({
                         checked={isChecked}
                         onChange={handleOnChange}
                       />
-                      <span className={cx({
-                        [styles.checkbox]: !isChecked,
-                        [styles.checkboxSelected]: isChecked,
-                      })}
+                      <span
+                        className={cx({
+                          [styles.checkbox]: !isChecked,
+                          [styles.checkboxSelected]: isChecked,
+                        })}
                       />
                       <p className={styles.label}>{option.label}</p>
                     </div>
@@ -148,8 +155,7 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'search' && (
               <div>
                 <p className={styles.sectionLabel}>
-                  <b>{t('Search')}</b>
-                  {' '}
+                  <b>{t('Search')}</b>{' '}
                   {t('a country, region or protected areas')}
                 </p>
                 <SearchLocation
@@ -166,8 +172,7 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'draw' && (
               <div>
                 <p className={styles.sectionLabel}>
-                  {t('Draw shape smaller than')}
-                  {' '}
+                  {t('Draw shape smaller than')}{' '}
                   <b>
                     {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
                     km
@@ -184,17 +189,18 @@ function AnalyzeAreasCardComponent({
             {selectedAnalysisTab === 'upload' && (
               <>
                 <p className={styles.sectionLabel}>
-                  {t('Upload your own shapefile. The shape should be smaller than')}
-                  {' '}
-                  <b>{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}</b>
-                  {' '}
+                  {t(
+                    'Upload your own shapefile. The shape should be smaller than'
+                  )}{' '}
+                  <b>{localeFormatting(HIGHER_AREA_SIZE_LIMIT)}</b>{' '}
                   {t('approximately the size of Belgium.')}
                 </p>
 
                 <p className={styles.sectionSubtitleLabel}>
-                  {t('Learn more about shape files')}
-                  {' '}
-                  <a href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm">{t('here')}</a>
+                  {t('Learn more about shape files')}{' '}
+                  <a href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm">
+                    {t('here')}
+                  </a>
                   .
                 </p>
                 <ShapeFileUploader
@@ -216,15 +222,20 @@ function AnalyzeAreasCardComponent({
                 label={t('Click on the map')}
                 Icon={AoisClickIcon}
                 active={selectedAnalysisTab === 'click'}
-                handleClick={() => selectedAnalysisTab !== 'click'
-                  && handleAnalysisTabClick('click')}
+                handleClick={() =>
+                  selectedAnalysisTab !== 'click' &&
+                  handleAnalysisTabClick('click')
+                }
               />
               <Button
                 type="square"
                 label={t('Define region of interest')}
                 Icon={AoisDrawIcon}
                 active={selectedAnalysisTab === 'draw'}
-                handleClick={() => selectedAnalysisTab !== 'draw' && handleAnalysisTabClick('draw')}
+                handleClick={() =>
+                  selectedAnalysisTab !== 'draw' &&
+                  handleAnalysisTabClick('draw')
+                }
               />
             </div>
             {selectedAnalysisTab === 'click' && (
@@ -271,8 +282,7 @@ function AnalyzeAreasCardComponent({
                 >
                   <InfoIcon className={styles.info} />
                   <span className={styles.warning}>
-                    {t('Draw or upload a shape smaller than')}
-                    {' '}
+                    {t('Draw or upload a shape smaller than')}{' '}
                     <b>
                       {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
                       km
@@ -286,7 +296,11 @@ function AnalyzeAreasCardComponent({
                 </span>
                 <Button
                   type="rectangular"
-                  label={isSketchToolActive ? t('cancel drawing') : t('start drawing')}
+                  label={
+                    isSketchToolActive
+                      ? t('cancel drawing')
+                      : t('start drawing')
+                  }
                   handleClick={handleDrawClick}
                 />
                 <span className={styles.separatorLabel}>{t('or')}</span>
@@ -295,7 +309,6 @@ function AnalyzeAreasCardComponent({
                   onSuccess={onShapeUploadSuccess}
                   onError={onShapeUploadError}
                 />
-
               </section>
             )}
           </div>
@@ -348,16 +361,20 @@ function AnalyzeAreasCardComponent({
                 label={t('Click on the map')}
                 Icon={AoisClickIcon}
                 active={selectedAnalysisTab === 'click'}
-                handleClick={() => selectedAnalysisTab !== 'click'
-                  && handleAnalysisTabClick('click')}
+                handleClick={() =>
+                  selectedAnalysisTab !== 'click' &&
+                  handleAnalysisTabClick('click')
+                }
               />
               <Button
                 type="square"
                 label={t('Draw or upload a shape')}
                 Icon={AoisDrawIcon}
                 active={selectedAnalysisTab === 'draw'}
-                handleClick={() => selectedAnalysisTab !== 'draw'
-                  && handleAnalysisTabClick('draw')}
+                handleClick={() =>
+                  selectedAnalysisTab !== 'draw' &&
+                  handleAnalysisTabClick('draw')
+                }
               />
             </div>
             {selectedAnalysisTab === 'click' && (
@@ -404,8 +421,7 @@ function AnalyzeAreasCardComponent({
                 >
                   <InfoIcon className={styles.info} />
                   <span className={styles.warning}>
-                    {t('Draw or upload a shape smaller than')}
-                    {' '}
+                    {t('Draw or upload a shape smaller than')}{' '}
                     <b>
                       {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
                       km
