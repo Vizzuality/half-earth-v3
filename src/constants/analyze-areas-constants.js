@@ -69,13 +69,13 @@ export const getPrecalculatedAOIOptions = () => (FEATURE_MERGE_NATIONAL_SUBNATIO
   { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth future') },
 ] : [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth future') },
 ]);
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === 'development' ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;

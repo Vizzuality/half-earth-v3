@@ -101,7 +101,7 @@ function LocalPriorityCardComponent(props) {
       slug: COUNTRY_PRIORITY_LAYER,
     },
     [HALF_EARTH_FUTURE_TILE_LAYER]: {
-      name: t('Priority Areas to Achieve a Half-Earth Future'),
+      name: t('Places for a Half-Earth future'),
       value: HALF_EARTH_FUTURE_TILE_LAYER,
       id: HALF_EARTH_FUTURE_TILE_LAYER,
       title: HALF_EARTH_FUTURE_TILE_LAYER,
@@ -118,7 +118,7 @@ function LocalPriorityCardComponent(props) {
         <SidebarCardContent
           title={t('Current protection status')}
           description={t(
-            'The green areas on the map represent regions that are recognized as currently being managed for long-term nature conservation',
+            'The green areas on the map represent regions that are recognized as currently being managed for long-term nature conservation'
           )}
           metaDataSources={protectionMetadata && protectionMetadata.source}
         />
@@ -193,7 +193,7 @@ function LocalPriorityCardComponent(props) {
             countryNames[countryName] || countryName
           }?`}
           description={t(
-            'These unprotected places have been identified as those where conservation efforts should be directed to efficiently achieve the most rapid gains in biodiversity habitat and species protection. ',
+            'These unprotected places have been identified as those where conservation efforts should be directed to efficiently achieve the most rapid gains in biodiversity habitat and species protection. '
           )}
           metaDataSources={futurePlacesMetadata && futurePlacesMetadata.source}
         />
