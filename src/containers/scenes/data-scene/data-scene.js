@@ -42,7 +42,7 @@ function Container(props) {
     activeCategoryLayers,
   } = props;
 
-  const { content: mapTooltipContent, precalculatedLayer } = mapTooltipData;
+  const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
 
@@ -89,7 +89,7 @@ function Container(props) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
-        precalculatedLayer: getPrecalculatedLayer(attributes),
+        precalculatedLayerSlug: getPrecalculatedLayer(attributes),
         content: getTooltipContent(t, attributes, id, title, subtitle, customId, customTitle),
       });
     }
@@ -102,7 +102,7 @@ function Container(props) {
       type: AREA_OF_INTEREST,
       payload: { id: mapTooltipContent.id },
       query: {
-        precalculatedLayer,
+        precalculatedLayerSlug,
         OBJECTID: mapTooltipContent.objectId,
       },
     });

@@ -12,7 +12,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 
-import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 
 import Component from './future-place-tooltip-component';
 
@@ -41,7 +41,7 @@ function FuturePlaceTooltipContainer(props) {
       payload: { id: aoiId },
       query:
       {
-        precalculatedLayer: HALF_EARTH_FUTURE_TILE_LAYER,
+        precalculatedLayerSlug: PRECALCULATED_LAYERS_SLUG.protectedAreas,
         OBJECTID: attributes.OBJECTID,
       },
     });

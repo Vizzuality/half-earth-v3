@@ -6,7 +6,7 @@ import { selectUiUrlState, selectGlobeUrlState } from 'selectors/location-select
 import aoiSceneConfig from './config';
 
 const selectPrecalculatedLayerSlug = ({ location }) => location.query
-  && location.query.precalculatedLayer;
+  && location.query.precalculatedLayerSlug;
 
 const selectLocationObjectId = ({ location }) => location.query && location.query.OBJECTID;
 

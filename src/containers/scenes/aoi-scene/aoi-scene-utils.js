@@ -13,6 +13,7 @@ import localforage from 'localforage';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 import {
   BIRDS,
@@ -21,7 +22,7 @@ import {
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
 import {
-  WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER, WDPA_OECM_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER,
 } from 'constants/layers-slugs.js';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
@@ -117,7 +118,7 @@ export const setPrecalculatedAOIs = ({
       setPrecalculatedSpeciesData(attributes, setTaxaData);
     };
 
-    if (precalculatedLayerSlug === WDPA_OECM_FEATURE_LAYER) {
+    if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas) {
       setProtectedAreasType();
     } else {
       setNationalOrSubnationalType();

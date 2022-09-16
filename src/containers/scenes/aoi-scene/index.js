@@ -16,6 +16,7 @@ import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 import unionBy from 'lodash/unionBy';
 
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
@@ -54,7 +55,7 @@ function AOIScene(props) {
 
   // Add future places layer only if the AOI  is a future place
   useEffect(() => {
-    if (precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
+    if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.futurePlaces) {
       setUpdatedActiveLayers(unionBy({ title: HALF_EARTH_FUTURE_TILE_LAYER }, activeLayers, 'title'));
     }
   }, [precalculatedLayerSlug]);

@@ -100,7 +100,7 @@ function SearchLocationContainer(props) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
-        precalculatedLayer: result.feature.attributes.LAYERSLUG || getPrecalculatedLayer(),
+        precalculatedLayerSlug: result.feature.attributes.LAYERSLUG || getPrecalculatedLayer(),
         content: getTooltipContent(t, attributes, id, title, subtitle),
       });
     }
