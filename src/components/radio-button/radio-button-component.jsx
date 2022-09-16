@@ -1,18 +1,23 @@
 import React from 'react';
+
 import cx from 'classnames';
 
 import styles from './radio-button-styles.module.scss';
 
-const RadioButton = ({ option, checked, onChange, theme, id, disabled }) => {
+function RadioButton({
+  option, checked, onChange, theme, id, disabled,
+}) {
   return (
-    <div className={cx(
-        theme,
-        styles.radioButton,
-        {[styles.disabled]: disabled}
-      )} 
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div
+      role="button"
+      tabIndex="0"
+      className={cx(theme && theme.radioButton, styles.radioButton, {
+        [styles.disabled]: disabled,
+      })}
       onClick={(e) => {
-        e.preventDefault()
-        onChange(option)
+        e.preventDefault();
+        onChange(option);
       }}
     >
       <input
@@ -23,7 +28,12 @@ const RadioButton = ({ option, checked, onChange, theme, id, disabled }) => {
         checked={checked}
         readOnly
       />
-      <label htmlFor={id} className={styles.radioInput}>
+      <label
+        htmlFor={id}
+        className={cx(styles.radioInput, theme && theme.radioLabel, {
+          [theme && theme.checked]: checked,
+        })}
+      >
         {option.name}
       </label>
     </div>

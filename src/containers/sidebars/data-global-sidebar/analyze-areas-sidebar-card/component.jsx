@@ -12,6 +12,7 @@ import PromptModal from 'containers/modals/prompt-modal';
 import Button from 'components/button';
 import CategoryBox from 'components/category-box';
 import Dropdown from 'components/dropdown';
+import RadioButton from 'components/radio-button';
 import SearchLocation from 'components/search-location';
 import ShapeFileUploader from 'components/shape-file-uploader';
 
@@ -20,6 +21,8 @@ import {
   HIGHER_AREA_SIZE_LIMIT,
 } from 'constants/analyze-areas-constants';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
+
+import radioTheme from 'styles/themes/radio-theme.module.scss';
 
 import styles from './styles.module.scss';
 
@@ -65,12 +68,6 @@ function AnalyzeAreasCardComponent({
 
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleOnChange = () => {
-    setIsChecked(!isChecked);
-  };
-
   const handleAoiModalToggle = () => {
     if (!isAoiHistoryModalOpen) {
       aoiHistoryModalOpenAnalytics();
@@ -127,25 +124,16 @@ function AnalyzeAreasCardComponent({
                 {precalculatedAOIOptions.map((option) => {
                   return (
                     <div
-                      className={styles.checkboxContainer}
-                      key={`checkbox-container-${option.slug}`}
+                      className={styles.radioContainer}
+                      key={`radio-container-${option.slug}`}
                     >
-                      <input
-                        key={`checkbox-${option.slug}`}
-                        type="checkbox"
+                      <RadioButton
                         id={option.slug}
-                        name={option.slug}
-                        value={option.slug}
-                        checked={isChecked}
-                        onChange={handleOnChange}
+                        option={{ ...option, name: option.label }}
+                        checked={selectedOption.slug === option.slug}
+                        onChange={() => handleOptionSelection(option)}
+                        theme={radioTheme}
                       />
-                      <span
-                        className={cx({
-                          [styles.checkbox]: !isChecked,
-                          [styles.checkboxSelected]: isChecked,
-                        })}
-                      />
-                      <p className={styles.label}>{option.label}</p>
                     </div>
                   );
                 })}

@@ -1,11 +1,13 @@
 import React from 'react';
+
 import cx from 'classnames';
+
 import Checkbox from 'components/checkbox';
 import LayerTools from 'components/layer-toggle/layers-tools';
 
 import styles from './styles.module.scss';
 
-const CheckboxType = ({
+function CheckboxType({
   option,
   onChange,
   disabled,
@@ -15,8 +17,7 @@ const CheckboxType = ({
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
-}) => {
-
+}) {
   return (
     <div
       key={option.name}
@@ -24,9 +25,7 @@ const CheckboxType = ({
         [styles.container]: true,
       })}
     >
-      <div
-        className={styles.checkboxOption}
-      >
+      <div className={styles.checkboxOption}>
         <Checkbox
           disabled={disabled}
           option={option}
@@ -46,7 +45,7 @@ const CheckboxType = ({
         />
       )}
     </div>
-  )
+  );
 }
 
 export default CheckboxType;
