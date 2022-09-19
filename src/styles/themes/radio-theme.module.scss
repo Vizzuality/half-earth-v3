@@ -1,0 +1,11 @@
+@import 'styles/settings';
+
+.radioLabel {
+  color: $white;
+}
+
+.checked {
+  &:before {
+    background-color: $brand-color-main;
+  }
+}

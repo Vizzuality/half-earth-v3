@@ -20,7 +20,7 @@ import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 
-import { WDPA_OECM_FEATURE_LAYER } from 'constants/layers-slugs';
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
@@ -68,7 +68,7 @@ function DataSceneComponent({
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
   const sidebarHidden = isFullscreenActive || isMobile;
   const isProtectedArea = mapTooltipData
-    && mapTooltipData.precalculatedLayer === WDPA_OECM_FEATURE_LAYER;
+    && mapTooltipData.precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,

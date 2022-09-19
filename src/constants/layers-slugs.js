@@ -10,15 +10,6 @@ export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species'
 export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human_pressures_percentage';
 export const RAISIG_AREAS_VECTOR_TILE_LAYER = 'RAISIG_areas_vector_tile_layer';
 
-// Future places layers
-export const HALF_EARTH_FUTURE_TILE_LAYER = 'WDPA_20_vector_tile_places';
-export const HALF_EARTH_FUTURE_WDPA_LAYER = 'WDPA_20_feature_places';
-export const HALF_EARTH_FUTURE_METADATA_SLUG = 'places-future';
-
-// Specific regions layers
-export const SPECIFIC_REGIONS_TILE_LAYER = 'specific-regions-tile';
-export const SPECIFIC_REGIONS_WDPA_LAYER = 'specific-regions-wdpa-tile';
-
 // Biodiversity facets layer. Disolved layer created
 // by John Grayson based on MoL biodiversity facets.
 export const BIODIVERSITY_FACETS_LAYER = 'biodiversity_facets';
@@ -149,17 +140,31 @@ export const SAPINDALES_RICHNESS = 'sapindales-richness';
 // Hummingbirds
 export const HUMMINGBIRDS_RARITY = 'hummingbirds-rare';
 export const HUMMINGBIRDS_RICHNESS = 'hummingbirds-rich';
+
 // Species modal
 export const SPECIES_LIST = 'species-list';
 export const MARINE_SPECIES_LIST = 'marine-species-list';
+
 // AOIs precalculated layers
 export const ADMIN_AREAS_FEATURE_LAYER = 'admin_areas_feature_layer';
 export const GADM_0_ADMIN_AREAS_FEATURE_LAYER = 'gadm-0-admin-areas-feature-layer';
 export const GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-0-admin-areas-with-wdpas-feature-layer';
+
 export const GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-1-admin-areas-with-wdpas-feature-layer';
 export const GADM_1_ADMIN_AREAS_FEATURE_LAYER = 'gadm-1-admin-areas-feature-layer';
+
 export const WDPA_OECM_FEATURE_LAYER = 'wdpa-oecm-feature-layer';
 export const WDPA_OECM_FEATURE_DATA_LAYER = 'wdpa-oecm-feature-data-layer';
+
+// Future places layers
+export const HALF_EARTH_FUTURE_TILE_LAYER = 'WDPA_20_vector_tile_places';
+export const HALF_EARTH_FUTURE_WDPA_LAYER = 'WDPA_20_feature_places';
+export const HALF_EARTH_FUTURE_METADATA_SLUG = 'places-future';
+
+// Specific regions layers
+export const SPECIFIC_REGIONS_TILE_LAYER = 'specific-regions-tile';
+export const SPECIFIC_REGIONS_WDPA_LAYER = 'specific-regions-wdpa-tile';
+
 export const AOIS_HISTORIC_PRODUCTION = 'aois-historic-production';
 export const AOIS_HISTORIC_DEVELOPMENT = 'aois-historic-development';
 

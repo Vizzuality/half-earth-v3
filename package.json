@@ -1,6 +1,6 @@
 {
-  "name": "half-earth-2019",
-  "version": "0.1.0",
+  "name": "half-earth-v3",
+  "version": "7.4.2",
   "private": true,
   "dependencies": {
     "@esri/arcgis-rest-feature-layer": "^3.4.3",
@@ -11,7 +11,6 @@
     "@transifex/cli": "^4.1.0",
     "@transifex/native": "^4.1.0",
     "@transifex/react": "^4.1.0",
-    "airtable": "^0.8.1",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
     "cross-var": "^1.1.0",
@@ -61,7 +60,6 @@
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
     "sha1": "^1.1.1",
-    "vega-lib": "^4.4.0",
     "workbox-build": "^4.3.1"
   },
   "resolutions": {

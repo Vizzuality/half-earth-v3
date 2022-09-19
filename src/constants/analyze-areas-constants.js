@@ -11,13 +11,19 @@ import {
 import {
   ADMIN_AREAS_FEATURE_LAYER,
   GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER,
   AOIS_HISTORIC_PRODUCTION,
   AOIS_HISTORIC_DEVELOPMENT,
   WDPA_OECM_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_DATA_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
+  HALF_EARTH_FUTURE_WDPA_LAYER,
   SPECIFIC_REGIONS_TILE_LAYER,
+  SPECIFIC_REGIONS_WDPA_LAYER,
 } from 'constants/layers-slugs';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 const {
   REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI,
@@ -63,13 +69,13 @@ export const getPrecalculatedAOIOptions = () => (FEATURE_MERGE_NATIONAL_SUBNATIO
   { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth future') },
 ] : [
   { title: NATIONAL_BOUNDARIES, slug: NATIONAL_BOUNDARIES, label: t('National boundaries') },
   { title: SUBNATIONAL_BOUNDARIES, slug: SUBNATIONAL_BOUNDARIES, label: t('Subnational boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],
-  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Priority Areas to Achieve a Half-Earth Future') },
+  { title: FUTURE_PLACES, slug: FUTURE_PLACES, label: t('Places for a Half-Earth future') },
 ]);
 
 export const AOIS_HISTORIC = process.env.NODE_ENV === 'development' ? AOIS_HISTORIC_DEVELOPMENT : AOIS_HISTORIC_PRODUCTION;
@@ -137,6 +143,23 @@ export const PRECALCULATED_LAYERS_CONFIG = {
   [WDPA_OECM_FEATURE_LAYER]: {
     name: 'NAME',
   },
+};
+
+// Custom AOIs don't have a precalculated layer
+export const PRECALCULATED_LAYERS_SLUG = {
+  national: GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  subnational: GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+  protectedAreas: WDPA_OECM_FEATURE_LAYER,
+  futurePlaces: HALF_EARTH_FUTURE_TILE_LAYER,
+  specificRegions: SPECIFIC_REGIONS_TILE_LAYER,
+};
+
+export const PRECALCULATED_LAYERS_PROTECTED_AREAS_DATA_URL = {
+  [PRECALCULATED_LAYERS_SLUG.national]: LAYERS_URLS[GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER],
+  [PRECALCULATED_LAYERS_SLUG.subnational]: LAYERS_URLS[GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER],
+  [PRECALCULATED_LAYERS_SLUG.protectedAreas]: LAYERS_URLS[WDPA_OECM_FEATURE_DATA_LAYER],
+  [PRECALCULATED_LAYERS_SLUG.futurePlaces]: LAYERS_URLS[HALF_EARTH_FUTURE_WDPA_LAYER],
+  [PRECALCULATED_LAYERS_SLUG.specificRegions]: LAYERS_URLS[SPECIFIC_REGIONS_WDPA_LAYER],
 };
 
 export const HIGHER_AREA_SIZE_LIMIT = 35000;

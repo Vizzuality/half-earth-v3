@@ -12,18 +12,17 @@ import * as urlActions from 'actions/url-actions';
 
 import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 
-import { AREA_TYPES } from 'constants/aois';
-import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 
-import Component from './aoi-entry-tooltip-component';
+import Component from './future-place-tooltip-component';
 
 const actions = {
   ...urlActions, ...aoisActions, ...aoisGeometriesActions, ...mapTooltipActions,
 };
 
-function AoiEntryTooltipContainer(props) {
+function FuturePlaceTooltipContainer(props) {
   const {
-    mapTooltipIsVisible, setTooltipInfo, tooltipInfo, setAreaTypeSelected,
+    mapTooltipIsVisible, setTooltipInfo, tooltipInfo,
   } = props;
 
   const handleTooltipClose = () => {
@@ -36,14 +35,13 @@ function AoiEntryTooltipContainer(props) {
     setTooltipInfo(null);
     // TODO: Add analytics
     const aoiId = createHashFromGeometry(geometry);
-    setAreaTypeSelected(AREA_TYPES.futurePlaces);
 
     browsePage({
       type: AREA_OF_INTEREST,
       payload: { id: aoiId },
       query:
       {
-        precalculatedLayer: HALF_EARTH_FUTURE_TILE_LAYER,
+        precalculatedLayerSlug: PRECALCULATED_LAYERS_SLUG.protectedAreas,
         OBJECTID: attributes.OBJECTID,
       },
     });
@@ -62,4 +60,4 @@ function AoiEntryTooltipContainer(props) {
   );
 }
 
-export default connect(mapStateToProps, actions)(AoiEntryTooltipContainer);
+export default connect(mapStateToProps, actions)(FuturePlaceTooltipContainer);

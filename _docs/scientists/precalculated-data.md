@@ -77,7 +77,7 @@ These tables have a unique field names `MOL_ID` that will be used throughout the
 * [**Terrestrial WDPA simplified 3**](https://eowilson.maps.arcgis.com/home/item.html?id=d61ebb797860432db6e4aa578555c275)
 * [**Terrestrial + Marine WDPA raw**](https://eowilson.maps.arcgis.com/home/item.html?id=17659b62323646b8ae622680dab49952)
 * [**Terrestrial + Marine WDPA simplified**](https://eowilson.maps.arcgis.com/home/item.html?id=1a617eaeaf77458cb569f683366e3920)
-* [**Priority Areas to Achieve a Half-Earth Future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
+* [**Places for a Half-Earth future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
 
 #### 2. **Biodiversity CRFs**
 There is one biodiversity data cube per terrestrial taxa (in the future there will also be marine taxa: fish and mammals).
@@ -168,7 +168,7 @@ Currently, there are 4 lookup tables in AGOL:
 
 
 
-## **Steps to process Precalculated data 20 Priority Areas to Achieve a Half-Earth Future:**
+## **Steps to process Precalculated data 20 Places for a Half-Earth future:**
 Project in ArcGIS Pro: `Places_HE_Future`
 1. Access the data from AGOL and download into ArcGIS Pro as a shapefile (the [current layer](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291) is not final and will most probably change, but the processing steps will be the same)
 2. Convert shapefile to geojson with the tool Feature to json. This will allow uploading the file in AGOL as a geojson instead of a shapefile (shapefiles have character limitations that will truncate the string it'll be create later)
@@ -189,7 +189,7 @@ Project in ArcGIS Pro: `Places_HE_Future`
   - Add the WDPA_Mercator layer (only terrestrial) (in the Catalog panel, Add to Database: ArcGIS > Projects > Contextual precalculations.gdb and select the layer `WDPA_Mercator`)
 6. Format and merge data in python ([notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)). Export file as geojson and upload it in AGOL.
 7. For Protected Areas data
-   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Priority Areas to Achieve a Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
+   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for a Half-Earth future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
    - Create a csv with only the relevant fields (exclude geometry) using the Table to Table tool.
    - Upload the table in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=ec40de8083304b279d416685a5b98209). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.
 

@@ -13,24 +13,26 @@ import localforage from 'localforage';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import { AREA_TYPES, STRINGIFIED_ATTRIBUTES } from 'constants/aois';
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
+import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 import {
   BIRDS,
   MAMMALS,
   REPTILES,
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
-import { WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER } from 'constants/layers-slugs.js';
+import {
+  WDPA_OECM_FEATURE_DATA_LAYER, HALF_EARTH_FUTURE_TILE_LAYER, SPECIFIC_REGIONS_TILE_LAYER,
+} from 'constants/layers-slugs.js';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 // constants
 
 // PRECALCULATED FUTURE PLACES
 const setFuturePlace = ({
-  aoiId, objectId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData, t,
+  aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, t,
 }) => {
   setSpeciesData({ species: [] }); // First reset species data
-  changeGlobe({ areaType: AREA_TYPES.futurePlaces });
 
   EsriFeatureService.getFeatures({
     url: LAYERS_URLS[HALF_EARTH_FUTURE_TILE_LAYER],
@@ -49,10 +51,9 @@ const setFuturePlace = ({
 
 // PRECALCULATED SPECIFIC REGIONS
 const setSpecificRegion = ({
-  aoiId, setGeometry, setContextualData, setTaxaData, changeGlobe, setSpeciesData,
+  aoiId, setGeometry, setContextualData, setTaxaData, setSpeciesData,
 }) => {
   setSpeciesData({ species: [] }); // First reset species data
-  changeGlobe({ areaType: AREA_TYPES.specificRegions });
   const region = aoiId.replace('region-', '');
 
   EsriFeatureService.getFeatures({
@@ -72,18 +73,18 @@ const setSpecificRegion = ({
 
 // PRECALCULATED AOIs
 export const setPrecalculatedAOIs = ({
-  areaTypeSelected, precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, getAreaType, changeGlobe, t,
+  precalculatedLayerSlug, aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, t,
 // eslint-disable-next-line consistent-return
 }) => {
-  if (areaTypeSelected === AREA_TYPES.futurePlaces || precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
+  if (precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
     return setFuturePlace({
-      aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe, t,
+      aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, t,
     });
   }
 
-  if (areaTypeSelected === AREA_TYPES.specificRegions || precalculatedLayerSlug === SPECIFIC_REGIONS_TILE_LAYER) {
+  if (precalculatedLayerSlug === SPECIFIC_REGIONS_TILE_LAYER) {
     return setSpecificRegion({
-      aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData, changeGlobe,
+      aoiId, objectId, setGeometry, setContextualData, setTaxaData, setSpeciesData,
     });
   }
 
@@ -117,8 +118,7 @@ export const setPrecalculatedAOIs = ({
       setPrecalculatedSpeciesData(attributes, setTaxaData);
     };
 
-    const areaType = getAreaType(attributes);
-    if (areaType === AREA_TYPES.protected) {
+    if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas) {
       setProtectedAreasType();
     } else {
       setNationalOrSubnationalType();
@@ -196,13 +196,12 @@ const recoverAOIfromLocal = ({
 };
 
 export const recoverOrCreateNotPrecalculatedAoi = ({
-  aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected, t,
+  aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, t,
 }) => {
   localforage.getItem(aoiId).then((localStoredAoi) => {
     if (localStoredAoi && localStoredAoi.jsonGeometry) {
-      setAreaTypeSelected(AREA_TYPES.custom);
       recoverAOIfromLocal({
-        aoiData: localStoredAoi, aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData, setAreaTypeSelected,
+        aoiData: localStoredAoi, aoiStoredGeometry, geometryEngine, aoiId, jsonUtils, setContextualData, setGeometry, setStoredArea, setTaxaData, setSpeciesData,
       });
     } else {
       getAoiFromDataBase(aoiId).then((aoiData) => {

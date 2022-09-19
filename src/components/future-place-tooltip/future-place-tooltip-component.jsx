@@ -9,7 +9,7 @@ import { format } from 'd3-format';
 
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
-import styles from './aoi-entry-tooltip-styles.module.scss';
+import styles from './future-place-tooltip-styles.module.scss';
 
 function useClickOutside(ref, callback, exceptionRef) {
   useEffect(() => {

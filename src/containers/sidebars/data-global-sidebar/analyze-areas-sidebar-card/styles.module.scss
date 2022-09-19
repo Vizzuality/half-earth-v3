@@ -98,3 +98,115 @@
     background-color: $white-opacity;
   }
 }
+
+.analyzeMenuContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+
+
+  .analyzeMenuTitle {
+    @extend %bodyText;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  .analyzeMenuTabsContainer {
+    border: 1px solid $brand-color-main;
+    border-radius: 4px;
+    display: flex;
+    margin: 6px 0;
+
+    .tabButton {
+      height: 48px;
+      padding: 12px;
+      width: 46px;
+
+      .tabIcon {
+        height: 24px;
+        fill: $white;
+        margin-bottom: $paragraph-gutter;
+        width: 24px;
+      }
+
+      .tabIconActive {
+        fill: $dark-text;
+      }
+    }
+
+    .tabButtonActive {
+      background-color: $brand-color-main;
+    }
+  }
+}
+
+.sectionLabel {
+  @extend %bodyText;
+  color: $white;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.sectionSubtitleLabel {
+  @extend %annotation;
+  color: $grey-text;
+  margin: 0 0 6px 0;
+
+  a {
+    @extend %annotation;
+    color: $grey-text;
+  }
+}
+
+.checkboxContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  position: relative;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  input:checked ~ .checkbox:after {
+    display: block;
+  }
+
+  input:checked ~ .checkbox {
+    background-color: #2196F3;
+  }
+
+  .checkbox {
+    border-radius: 50%;
+    border: 1px solid $white;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #eee;
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  }
+
+  .checkboxSelected {
+    background-color: $brand-color-main;
+  }
+
+  .label {
+    @extend %bodyText;
+    color: $white;
+    margin: 0;
+    padding: 0 0 0 10px;
+  }
+}

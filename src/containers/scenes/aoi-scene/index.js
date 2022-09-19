@@ -16,7 +16,7 @@ import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 import unionBy from 'lodash/unionBy';
 
-import { AREA_TYPES } from 'constants/aois';
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { FIREFLY_BASEMAP_LAYER, SATELLITE_BASEMAP_LAYER, HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
 
@@ -26,10 +26,6 @@ import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
 
-const {
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
-} = process.env;
-
 // Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
   const {
@@ -38,8 +34,6 @@ function AOIScene(props) {
     aoiStoredGeometry,
     activeLayers,
     precalculatedLayerSlug,
-    setAreaTypeSelected,
-    areaTypeSelected,
     objectId,
     activeCategoryLayers,
     changeUI,
@@ -61,10 +55,10 @@ function AOIScene(props) {
 
   // Add future places layer only if the AOI  is a future place
   useEffect(() => {
-    if (precalculatedLayerSlug === HALF_EARTH_FUTURE_TILE_LAYER) {
+    if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.futurePlaces) {
       setUpdatedActiveLayers(unionBy({ title: HALF_EARTH_FUTURE_TILE_LAYER }, activeLayers, 'title'));
     }
-  }, [areaTypeSelected]);
+  }, [precalculatedLayerSlug]);
 
   useEffect(() => {
     // Add temporary activeCategoryLayers to activeLayers at render and reset the param
@@ -75,19 +69,6 @@ function AOIScene(props) {
       setUpdatedActiveLayers(activeLayers);
     }
   }, [activeLayers]);
-
-  const getAreaType = (attributes) => {
-    let areaType = AREA_TYPES.protected;
-    if (attributes.GID_1) {
-      areaType = AREA_TYPES.subnational;
-    } else if (attributes.GID_0) {
-      areaType = AREA_TYPES.national;
-    }
-    if (!FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
-      setAreaTypeSelected(areaType);
-    }
-    return areaType;
-  };
 
   useEffect(() => {
     loadModules(['esri/geometry/geometryEngine', 'esri/geometry/support/jsonUtils']).then(([_geometryEngine, _jsonUtils]) => {
@@ -100,7 +81,6 @@ function AOIScene(props) {
   useEffect(() => {
     if (precalculatedLayerSlug && geometryEngine) {
       setPrecalculatedAOIs({
-        areaTypeSelected,
         precalculatedLayerSlug,
         aoiId,
         objectId,
@@ -108,8 +88,6 @@ function AOIScene(props) {
         setContextualData,
         setTaxaData,
         setSpeciesData,
-        getAreaType,
-        changeGlobe,
         t,
       });
     }
@@ -128,7 +106,6 @@ function AOIScene(props) {
         setStoredArea,
         setTaxaData,
         setSpeciesData,
-        setAreaTypeSelected,
         t,
       });
     }
