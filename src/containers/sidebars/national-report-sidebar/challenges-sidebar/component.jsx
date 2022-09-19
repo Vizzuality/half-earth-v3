@@ -81,9 +81,7 @@ function Component({ metaDataTitle, metaDataSources, metaDataDescription }) {
               />
             </svg>
             <div>
-              <span className={styles.value}>
-                150 - 22 K
-              </span>
+              <span className={styles.value}>150 - 22K</span>
             </div>
           </div>
           <div>
@@ -99,7 +97,7 @@ function Component({ metaDataTitle, metaDataSources, metaDataDescription }) {
             </svg>
             <div>
               <span className={styles.value}>
-                22 K -
+                22K -
                 {' '}
                 {getLocaleNumber(3.25, locale)}
                 M
