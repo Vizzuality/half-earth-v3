@@ -97,6 +97,7 @@ function AnalyzeAreasCardComponent({
                 {TABS(selectedAnalysisTab).map((tab) => {
                   return (
                     <button
+                      key={tab.label}
                       active={selectedAnalysisTab === `${tab.label}`}
                       className={cx({
                         [styles.tabButton]: true,

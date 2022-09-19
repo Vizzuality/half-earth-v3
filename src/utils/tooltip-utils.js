@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 export const getTooltipContent = (t, attributes, id, title, subtitle, customId, customTitle) => ({
   buttonText: t('analyze area'),
   id: customId || attributes[id],
@@ -7,7 +8,9 @@ export const getTooltipContent = (t, attributes, id, title, subtitle, customId, 
   percentage_protected: Math.round(attributes.percentage_protected) || 100,
   // 100 is for protected areas
   description:
-    attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} ${t('in')} ${attributes.STATUS_}`,
+    attributes.DESIG && `${attributes.DESIG}, ${attributes.STATUS.toLowerCase()} ${
+      attributes.STATUS_ ? `${t('in')} ${attributes.STATUS_}` : ''
+    }`,
   nspecies: attributes.nspecies,
   status: attributes.STATUS,
   // eslint-disable-next-line no-underscore-dangle
