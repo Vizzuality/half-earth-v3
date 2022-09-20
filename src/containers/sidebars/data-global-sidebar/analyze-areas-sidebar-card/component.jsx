@@ -34,11 +34,7 @@ import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
 import { TABS } from './constants';
 
-const {
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-  REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN:
-    FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
-} = process.env;
+const { REACT_APP_FEATURE_NEW_MENUS } = process.env;
 
 function AnalyzeAreasCardComponent({
   view,
@@ -76,7 +72,7 @@ function AnalyzeAreasCardComponent({
   };
 
   const handleBoxClick = () => setOpen(!isOpen);
-  if (FEATURE_NEW_MENUS) {
+  if (REACT_APP_FEATURE_NEW_MENUS) {
     return (
       <div
         className={cx(styles.sidebarCardContainer, className, {
@@ -89,7 +85,7 @@ function AnalyzeAreasCardComponent({
           {t('Analyze pre-calculated areas or your own custom area.')}
         </h2>
 
-        {FEATURE_TAG_ANALYZE_AREAS_REDESIGN && (
+        {REACT_APP_FEATURE_NEW_MENUS && (
           <>
             <div className={styles.analyzeMenuContainer}>
               <p className={styles.analyzeMenuTitle}>{t('Selection Type')}</p>
@@ -207,7 +203,7 @@ function AnalyzeAreasCardComponent({
           </>
         )}
 
-        {!FEATURE_TAG_ANALYZE_AREAS_REDESIGN && (
+        {!REACT_APP_FEATURE_NEW_MENUS && (
           <div>
             <div className={styles.buttonsContainer}>
               <Button
@@ -323,7 +319,7 @@ function AnalyzeAreasCardComponent({
       </div>
     );
   }
-  if (!FEATURE_NEW_MENUS) {
+  if (!REACT_APP_FEATURE_NEW_MENUS) {
     return (
       <div
         className={cx(styles.sidebarCardContainerOLD, className, {

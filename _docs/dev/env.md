@@ -33,5 +33,4 @@ REACT_APP_VERCEL_ENV=
 
 REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI= Show specific regions as an option in analyze areas
 REACT_APP_FEATURE_TRANSLATION= Show transifex and contentful translation through the language selector
-REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL= Merge administrative boundaries (national and subnational options on the analyze areas dropdown and search)
-REACT_APP_FEATURE_NEW_MENUS= Use the new tabs to show Map layers and Analyze areas. Use new top menu and bottom globes option
+REACT_APP_FEATURE_NEW_MENUS= Use the new tabs to show Map layers and Analyze areas. Use new top menu and bottom globes option. Merge national, subnational and PA search

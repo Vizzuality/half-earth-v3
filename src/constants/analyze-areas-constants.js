@@ -27,7 +27,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 
 const {
   REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI,
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
+  REACT_APP_FEATURE_NEW_MENUS,
 } = process.env;
 
 export const LAND_HUMAN_PRESSURES_SLUG = 'land-human-pressures';
@@ -62,10 +62,10 @@ export const {
   FUTURE_PLACES,
 } = SEARCH_SOURCES;
 
-export const DEFAULT_SOURCE = FEATURE_MERGE_NATIONAL_SUBNATIONAL
+export const DEFAULT_SOURCE = REACT_APP_FEATURE_NEW_MENUS
   ? ADMINISTRATIVE_BOUNDARIES : NATIONAL_BOUNDARIES;
 
-export const getPrecalculatedAOIOptions = () => (FEATURE_MERGE_NATIONAL_SUBNATIONAL ? [
+export const getPrecalculatedAOIOptions = () => (REACT_APP_FEATURE_NEW_MENUS ? [
   { title: ADMINISTRATIVE_BOUNDARIES, slug: ADMINISTRATIVE_BOUNDARIES, label: t('Administrative boundaries') },
   { title: PROTECTED_AREAS, slug: WDPA_OECM_FEATURE_LAYER, label: t('Protected areas') },
   ...(REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI === 'true') ? [{ title: SPECIFIC_REGIONS_TILE_LAYER, slug: SPECIFIC_REGIONS_TILE_LAYER, label: t('Specific regions') }] : [],

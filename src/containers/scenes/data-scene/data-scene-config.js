@@ -10,7 +10,7 @@ import {
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
 const {
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL: FEATURE_MERGE_NATIONAL_SUBNATIONAL,
+  REACT_APP_FEATURE_NEW_MENUS,
 } = process.env;
 
 export default {
@@ -25,7 +25,7 @@ export default {
         opacity: DEFAULT_OPACITY,
         category: LAYERS_CATEGORIES.BIODIVERSITY,
       },
-      ...FEATURE_MERGE_NATIONAL_SUBNATIONAL
+      ...REACT_APP_FEATURE_NEW_MENUS
         ? [{ title: ADMIN_AREAS_FEATURE_LAYER }]
         : [{ title: GADM_0_ADMIN_AREAS_FEATURE_LAYER }],
     ],

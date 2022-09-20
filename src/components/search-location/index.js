@@ -28,7 +28,7 @@ import Component from './component';
 const actions = { ...mapTooltipActions, ...urlActions };
 
 const {
-  REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL,
+  REACT_APP_FEATURE_NEW_MENUS,
 } = process.env;
 
 const getSearchedLayerData = (layerSlug, molId) => new Promise((resolve, reject) => {
@@ -69,14 +69,14 @@ function SearchLocationContainer(props) {
   const browseSelectedFeature = async ({ result }) => {
     const { setBatchTooltipData } = props;
     let searchResult;
-    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS) {
       // We have to find the information of the layer with the lookup table info
       const { attributes } = result.feature;
       const { LAYERSLUG, MOL_ID } = attributes;
       searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
     }
 
-    const feature = searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL
+    const feature = searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS
       ? searchResult && searchResult[0]
       : result.feature;
 
@@ -135,7 +135,7 @@ function SearchLocationContainer(props) {
       url, searchFields, suggestionTemplate, title,
     } = config;
 
-    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_MERGE_NATIONAL_SUBNATIONAL) {
+    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS) {
       url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
       searchFields = ['NAME'];
       suggestionTemplate = '{NAME}';

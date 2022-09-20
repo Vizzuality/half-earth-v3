@@ -38,9 +38,7 @@ const actions = {
   ...aoisActions,
 };
 
-const {
-  REACT_APP_FEATURE_TAG_ANALYZE_AREAS_REDESIGN: FEATURE_TAG_ANALYZE_AREAS_REDESIGN,
-} = process.env;
+const { REACT_APP_FEATURE_NEW_MENUS } = process.env;
 
 function AnalyzeAreasContainer(props) {
   const locale = useLocale();
@@ -224,7 +222,7 @@ function AnalyzeAreasContainer(props) {
   };
 
   const handleAnalysisTabClick = (selectedTab) => {
-    if (FEATURE_TAG_ANALYZE_AREAS_REDESIGN) {
+    if (REACT_APP_FEATURE_NEW_MENUS) {
       switch (selectedTab) {
         case 'draw':
           setSelectedAnalysisTab('draw');
@@ -248,7 +246,7 @@ function AnalyzeAreasContainer(props) {
           break;
       }
     }
-    if (!FEATURE_TAG_ANALYZE_AREAS_REDESIGN) {
+    if (!REACT_APP_FEATURE_NEW_MENUS) {
       switch (selectedTab) {
         case 'draw':
           setSelectedAnalysisTab('draw');
