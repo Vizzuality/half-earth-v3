@@ -1,9 +1,12 @@
 import React from 'react';
-import SourceAnnotation from 'components/source-annotation';
-import styles from './styles.module.scss';
+
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
-const SidebarCardContent = ({
+import SourceAnnotation from 'components/source-annotation';
+
+import styles from './styles.module.scss';
+
+function SidebarCardContent({
   title,
   sources,
   legendType,
@@ -11,7 +14,7 @@ const SidebarCardContent = ({
   basicColor = '#008604',
   description,
   metaDataSources,
-}) => {
+}) {
   return (
     <section>
       <h3 className={styles.title}>{title}</h3>
@@ -38,6 +41,6 @@ const SidebarCardContent = ({
       <SourceAnnotation sources={sources} metaDataSources={metaDataSources} />
     </section>
   );
-};
+}
 
 export default SidebarCardContent;

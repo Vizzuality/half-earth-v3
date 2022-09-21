@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 // Services
-import EsriFeatureService from 'services/esri-feature-service';
-// utils
-import { useLocale } from '@transifex/react';
-import { getLocaleNumber } from 'utils/data-formatting-utils';
-// Constants
-import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
-import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import mapTooltipActions from 'redux_modules/map-tooltip';
 
-import * as urlActions from 'actions/url-actions';
-import { enterNrcAnalytics } from 'actions/google-analytics-actions';
-import Component from './country-entry-tooltip-component';
 import { NATIONAL_REPORT_CARD } from 'router';
 
-import mapTooltipActions from 'redux_modules/map-tooltip';
+import { useLocale } from '@transifex/react';
+
 import mapStateToProps from 'selectors/map-tooltip-selectors';
+
+import { enterNrcAnalytics } from 'actions/google-analytics-actions';
+import * as urlActions from 'actions/url-actions';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+
+import EsriFeatureService from 'services/esri-feature-service';
+// utils
+
+// Constants
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
+import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+
+import Component from './country-entry-tooltip-component';
 
 const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions };
 
@@ -65,13 +71,16 @@ function CountryEntryTooltipContainer(props) {
 
   const handleExploreCountryClick = () => {
     const {
-      setTooltipIsVisible, countryISO, setTooltipContent, browsePage, countryName, enterNrcAnalytics, onboardingStep, onboardingType,
+      setTooltipIsVisible, countryISO: _countryISO, setTooltipContent, browsePage,
+      countryName, enterNrcAnalytics: _enterNrcAnalytics, onboardingStep, onboardingType,
     } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
-    enterNrcAnalytics(countryName);
-    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO } });
-    onboardingStep && onboardingType && changeUI({ onboardingType: 'national-report-cards', onboardingStep: 3, waitingInteraction: false });
+    _enterNrcAnalytics(countryName);
+    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO } });
+    if (onboardingStep && onboardingType) {
+      changeUI({ onboardingType: 'national-report-cards', onboardingStep: 3, waitingInteraction: false });
+    }
   };
 
   return (
