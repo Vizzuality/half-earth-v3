@@ -277,7 +277,7 @@ export const getAOIContextualData = () => ({
   grassland: t('Grassland'),
   forest: t('Forest'),
   cropland: t('Cropland'),
-  'sparsley or nnon vegetated': t('Sparsley or Non vegetated'),
+  'sparsley or non vegetated': t('Sparsley or Non vegetated'),
   none: t('None'),
   settlement: t('Settlement'),
   'snow and ice': t('Snow and Ice'),
