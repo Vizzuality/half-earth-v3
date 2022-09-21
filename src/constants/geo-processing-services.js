@@ -51,6 +51,13 @@ const LAND_PRESSURES_LABELS = {
   urban: 'urban activities',
 };
 
+export const getLandPressuresTranslatedLabels = (t) => ({
+  irrigated: t('irrigated agriculture'),
+  rainfed: t('rainfed agriculture'),
+  rangelands: t('rangelands'),
+  urban: t('urban activities'),
+});
+
 export const LAND_PRESSURES_LABELS_SLUGS = {
   [LAND_PRESSURES_LABELS.irrigated]: 'percent_irrigated',
   [LAND_PRESSURES_LABELS.rainfed]: 'percent_rainfed',
