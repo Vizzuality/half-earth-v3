@@ -42,7 +42,8 @@ function Container(props) {
     if (Object.keys(contextualData).length > 0) {
       setCardDescription(description(contextualData));
     }
-  }, [contextualData]);
+    // Don't remove locale. Is here to recalculate the description translation
+  }, [contextualData, locale]);
 
   const radioTypeToggle = (option) => {
     if (selectedLayer === option.slug) {
