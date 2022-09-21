@@ -1,26 +1,30 @@
 import React from 'react';
-import { useT } from '@transifex/react';
-import { useLocale } from '@transifex/react';
+
+import { useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
-import SpeciesModal from 'components/species-modal';
+
+import Button from 'components/button';
 import PieChart from 'components/charts/pie-chart';
 import HighLightedSpeciesList from 'components/highlighted-species-list';
+import SpeciesModal from 'components/species-modal';
+
 import { MODALS } from 'constants/ui-params';
-import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
-import { ReactComponent as MarMammalsIcon } from 'icons/taxa_marine_mammals.svg';
+
+import { ReactComponent as EndemicOval } from 'icons/endemic_oval.svg';
+import { ReactComponent as SpeciesOval } from 'icons/species_oval.svg';
+import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
+import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
+import { ReactComponent as MarMammalsIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
-import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
-import { ReactComponent as SpeciesOval } from 'icons/species_oval.svg';
-import { ReactComponent as EndemicOval } from 'icons/endemic_oval.svg';
-import styles from './local-species-card-styles.module.scss';
-import Button from 'components/button';
 
-const LocalSpeciesCardComponent = ({
+import styles from './local-species-card-styles.module.scss';
+
+function LocalSpeciesCardComponent({
   birds,
   mammals,
   mammalsMar,
@@ -42,7 +46,7 @@ const LocalSpeciesCardComponent = ({
   endemicVertebratesSentence,
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
 
@@ -66,7 +70,8 @@ const LocalSpeciesCardComponent = ({
             <div className={styles.chartLegendItem}>
               <SpeciesOval />
               <div className={styles.chartLegendItemNameContainer}>
-                <span>{`${getLocaleNumber(vertebratesCount, locale) || 0}`}
+                <span>
+                  {`${getLocaleNumber(vertebratesCount, locale) || 0}`}
                 </span>
                 <span>{t('species')}</span>
               </div>
@@ -74,7 +79,11 @@ const LocalSpeciesCardComponent = ({
             <div className={styles.chartLegendItem}>
               <EndemicOval />
               <div className={styles.chartLegendItemNameContainer}>
-                <span>{`${getLocaleNumber(endemicVertebratesCount, locale) || 0} ${endemicVertebratesSentence}`}</span>
+                <span>
+                  {`${
+                    getLocaleNumber(endemicVertebratesCount, locale) || 0
+                  } ${endemicVertebratesSentence}`}
+                </span>
                 <span>{t('endemic')}</span>
               </div>
             </div>
@@ -86,10 +95,16 @@ const LocalSpeciesCardComponent = ({
                 <AmphibiansIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${getLocaleNumber(amphibians, locale) || 0}${t(
-                  ' amphibians'
-                )}`}</span>
-                <span>{`${getLocaleNumber(amphibiansEndemic, locale) || 0} ${t('endemic')}`}</span>
+                <span className={styles.speciesName}>
+                  {`${getLocaleNumber(amphibians, locale) || 0} ${t(
+                    ' amphibians',
+                  )}`}
+                </span>
+                <span>
+                  {`${getLocaleNumber(amphibiansEndemic, locale) || 0} ${t(
+                    'endemic',
+                  )}`}
+                </span>
               </div>
             </li>
             {/* reptiles */}
@@ -98,9 +113,14 @@ const LocalSpeciesCardComponent = ({
                 <ReptilesIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${getLocaleNumber(reptiles || 0, locale)
-                  } reptiles`}</span>
-                <span>{`${getLocaleNumber(reptilesEndemic || 0, locale)} endemic`}</span>
+                <span className={styles.speciesName}>
+                  {`${getLocaleNumber(reptiles || 0, locale)} ${t('reptiles')}`}
+                </span>
+                <span>
+                  {`${getLocaleNumber(reptilesEndemic || 0, locale)} ${t(
+                    'endemic',
+                  )}`}
+                </span>
               </div>
             </li>
             {/* mammals (land) */}
@@ -109,9 +129,16 @@ const LocalSpeciesCardComponent = ({
                 <MammalsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${getLocaleNumber(mammals || 0, locale)
-                  } mammals (land)`}</span>
-                <span>{`${getLocaleNumber(mammalsEndemic || 0, locale)} endemic`}</span>
+                <span className={styles.speciesName}>
+                  {`${getLocaleNumber(mammals || 0, locale)} ${t(
+                    'mammals (land)',
+                  )}`}
+                </span>
+                <span>
+                  {`${getLocaleNumber(mammalsEndemic || 0, locale)} ${t(
+                    'endemic',
+                  )}`}
+                </span>
               </div>
             </li>
             {/* mammals (sea) */}
@@ -120,9 +147,16 @@ const LocalSpeciesCardComponent = ({
                 <MarMammalsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${getLocaleNumber(mammalsMar || 0, locale)
-                  } mammals (sea)`}</span>
-                <span>{`${getLocaleNumber(mammalsMarEndemic || 0, locale)} endemic`}</span>
+                <span className={styles.speciesName}>
+                  {`${getLocaleNumber(mammalsMar || 0, locale)} ${t(
+                    'mammals (sea)',
+                  )}`}
+                </span>
+                <span>
+                  {`${getLocaleNumber(mammalsMarEndemic || 0, locale)} ${t(
+                    'endemic',
+                  )}`}
+                </span>
               </div>
             </li>
             {/* birds */}
@@ -131,9 +165,14 @@ const LocalSpeciesCardComponent = ({
                 <BirdsIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${getLocaleNumber(birds || 0, locale)
-                  } birds`}</span>
-                <span>{`${getLocaleNumber(birdsEndemic || 0, locale)} endemic`}</span>
+                <span className={styles.speciesName}>
+                  {`${getLocaleNumber(birds || 0, locale)} ${t('birds')}`}
+                </span>
+                <span>
+                  {`${getLocaleNumber(birdsEndemic || 0, locale)} ${t(
+                    'endemic',
+                  )}`}
+                </span>
               </div>
             </li>
             {/* fishes */}
@@ -142,9 +181,14 @@ const LocalSpeciesCardComponent = ({
                 <FishesIcon />
               </span>
               <div className={styles.legendNameContainer}>
-                <span className={styles.speciesName}>{`${getLocaleNumber(fishes, locale) || 0
-                  } fishes`}</span>
-                <span>{`${getLocaleNumber(fishesEndemic || 0, locale)} endemic`}</span>
+                <span className={styles.speciesName}>
+                  {`${getLocaleNumber(fishes, locale) || 0} ${t('fishes')}`}
+                </span>
+                <span>
+                  {`${getLocaleNumber(fishesEndemic || 0, locale)}${t(
+                    'endemic',
+                  )}`}
+                </span>
               </div>
             </li>
           </ul>
@@ -170,6 +214,6 @@ const LocalSpeciesCardComponent = ({
       </SidebarCardWrapper>
     </div>
   );
-};
+}
 
 export default LocalSpeciesCardComponent;

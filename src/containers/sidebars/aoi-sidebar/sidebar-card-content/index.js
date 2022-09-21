@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import Component from './component';
-import { AOI_LEGEND_CATEGORIES, getSidebarCardsConfig } from 'constants/analyze-areas-constants';
-import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
-import * as urlActions from 'actions/url-actions';
 import metadataActions from 'redux_modules/metadata';
-import metadataConfig from 'constants/metadata';
+
+import { useLocale } from '@transifex/react';
+
+import * as urlActions from 'actions/url-actions';
+
+import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
+
 import ContentfulService from 'services/contentful';
+
+import { AOI_LEGEND_CATEGORIES, getSidebarCardsConfig } from 'constants/analyze-areas-constants';
+import metadataConfig from 'constants/metadata';
+
+import Component from './component';
 
 const actions = { ...metadataActions, ...urlActions };
 
@@ -42,7 +48,8 @@ function Container(props) {
     if (Object.keys(contextualData).length > 0) {
       setCardDescription(description(contextualData));
     }
-  }, [contextualData]);
+    // Don't remove locale. Is here to recalculate the description translation
+  }, [contextualData, locale]);
 
   const radioTypeToggle = (option) => {
     if (selectedLayer === option.slug) {

@@ -6,7 +6,7 @@ import { getTotalPressures, getMainPressure, roundUpPercentage } from 'utils/ana
 import { percentageFormat } from 'utils/data-formatting-utils';
 
 import {
-  BIRDS, AMPHIBIANS, MAMMALS, REPTILES,
+  BIRDS, AMPHIBIANS, MAMMALS, REPTILES, getLandPressuresTranslatedLabels,
 } from 'constants/geo-processing-services';
 import {
   ADMIN_AREAS_FEATURE_LAYER,
@@ -115,7 +115,7 @@ export const getSidebarCardsConfig = () => ({
   [LAND_HUMAN_PRESSURES_SLUG]: {
     title: t('Human impact'),
     description: ({ pressures }) => (pressures ? `${t('Of the current area, ')}__${roundUpPercentage(getTotalPressures(pressures))}${t('% is currently experiencing human pressures__')},
-    ${t('the majority of which are pressures from ')}${getMainPressure(pressures)}.` : ''),
+    ${t('the majority of which are pressures from ')}${getLandPressuresTranslatedLabels(t)[getMainPressure(pressures)] || getMainPressure(pressures)}.` : ''),
     warning: null,
   },
 });

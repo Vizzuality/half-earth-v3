@@ -2,9 +2,9 @@
 import { random } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { selectLangUrlState } from 'selectors/location-selectors';
-
 import { t } from '@transifex/native';
+
+import { selectLangUrlState } from 'selectors/location-selectors';
 
 import { getOnWaitingInteraction } from 'containers/onboarding/onboarding-selectors';
 
@@ -36,6 +36,7 @@ const getCountryData = createSelector(
 const getCountryName = createSelector([
   getCountryData,
   selectLangUrlState,
+// eslint-disable-next-line no-unused-vars
 ], (countryData, locale) => {
   if (!countryData) return null;
   const countryNames = getCountryNames();
@@ -117,10 +118,12 @@ const getNumberOfEndemicVertebrates = createSelector(getCountryData, (countryDat
 const getHighlightedSpeciesSentence = createSelector([
   getCountryData,
   selectLangUrlState,
+// eslint-disable-next-line no-unused-vars
 ], (countryData, locale) => {
   if (!countryData) return null;
+  const countryNames = getCountryNames();
   return ` ${t(`Here are some examples of land species of significant conservation interest for each taxonomic group.
-  These species are either endemic to `)}${countryData.NAME_0} ${t('or have small range sizes.')}`;
+  These species are either endemic to `)}${countryNames[countryData.NAME_0] || countryData.NAME_0} ${t('or have small range sizes.')}`;
 });
 
 const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, (countryData) => {
@@ -133,6 +136,7 @@ const getHighlightedSpeciesRandomNumber = createSelector(getCountryData, (countr
 // locale is here to recompute the data when the language changes
 const getIndexStatement = createSelector(
   [getSpeciesProtectionIndex, getSPIMean, selectLangUrlState],
+  // eslint-disable-next-line no-unused-vars
   (SPI, SPIMean, locale) => {
     if (!SPI || !SPIMean) return null;
     const comparation = SPI >= SPIMean ? t('higher') : t('lower');
@@ -144,6 +148,7 @@ const getIndexStatement = createSelector(
 const getEndemicSpeciesSentence = createSelector([
   getNumberOfEndemicVertebrates,
   selectLangUrlState,
+// eslint-disable-next-line no-unused-vars
 ], (endemicVertebrates, locale) => {
   if (!endemicVertebrates) return null;
   return endemicVertebrates === '1' ? `${endemicVertebrates} ${t('is')}` : `${endemicVertebrates} ${t('are')}`;

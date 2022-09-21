@@ -2,19 +2,22 @@ import React, {
   useEffect, useState, useRef, useCallback,
 } from 'react';
 
+import { loadModules } from 'esri-loader';
+
 import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
-import { loadModules } from 'esri-loader';
 import { motion } from 'framer-motion';
+
 // Assets
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 // styles
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { getCountryNames } from 'constants/translation-constants';
+
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 import styles from './country-entry-tooltip-styles.module.scss';
 
@@ -160,9 +163,9 @@ function CountryEntryTooltipComponent({
             {landTab ? landVertebrates : marVertebrates}
           </span>
           <span className={styles.text}>
-            {`${landTab ? LAND_MARINE.land : LAND_MARINE.marine}${t(
-              ' vertebrate species of which',
-            )}`}
+            {landTab
+              ? t('land vertebrate species of which')
+              : t('marine vertebrate species of which')}
             {' '}
             <span className={styles.endemic}>
               {landTab ? endemicLand : endemicMar}
@@ -177,9 +180,9 @@ function CountryEntryTooltipComponent({
             %
           </span>
           <span className={styles.text}>
-            {`${landTab ? LAND_MARINE.land : LAND_MARINE.marine}${t(
-              ' area is protected',
-            )}`}
+            {landTab
+              ? t('land area is protected')
+              : t('marine area is protected')}
           </span>
         </div>
         <div className={styles.infoPill}>
@@ -188,9 +191,9 @@ function CountryEntryTooltipComponent({
             %
           </span>
           <span className={styles.text}>
-            {`${t('of additional ')}${
-              landTab ? LAND_MARINE.land : LAND_MARINE.marine
-            }${t(' protection is needed')}`}
+            {landTab
+              ? t('of additional land protection is needed')
+              : t('of additional marine protection is needed')}
           </span>
         </div>
       </section>

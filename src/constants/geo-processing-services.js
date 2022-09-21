@@ -26,7 +26,8 @@ export const CRF_DATA_CATEGORIES = {
 };
 
 export const {
-  BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS, POPULATION, HUMAN_PRESSURES, PROTECTED_AREA_PERCENTAGE,
+  BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS,
+  POPULATION, HUMAN_PRESSURES, PROTECTED_AREA_PERCENTAGE,
 } = CRF_NAMES;
 
 export const CONTEXTUAL_DATA_TABLES = {
@@ -50,6 +51,13 @@ const LAND_PRESSURES_LABELS = {
   rangelands: 'rangelands',
   urban: 'urban activities',
 };
+
+export const getLandPressuresTranslatedLabels = (t) => ({
+  irrigated: t('irrigated agriculture'),
+  rainfed: t('rainfed agriculture'),
+  rangelands: t('rangelands'),
+  urban: t('urban activities'),
+});
 
 export const LAND_PRESSURES_LABELS_SLUGS = {
   [LAND_PRESSURES_LABELS.irrigated]: 'percent_irrigated',

@@ -9,10 +9,10 @@ import {
 } from 'constants/layers-slugs';
 
 const MAP_TOOLTIP_CONFIG = {
-  [ADMIN_AREAS_FEATURE_LAYER] : {
+  [ADMIN_AREAS_FEATURE_LAYER]: {
     title: 'NAME_1',
     subtitle: 'NAME_0',
-    id: 'MOL_ID'
+    id: 'MOL_ID',
   },
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: {
     title: 'NAME_0',
