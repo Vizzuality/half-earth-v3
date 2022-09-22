@@ -145,6 +145,10 @@ function SearchLocationContainer(props) {
       searchFields,
       suggestionTemplate,
       outFields: ['*'],
+      ...((searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS)
+        ? { filter: { where: `LANGUAGES = '${locale || 'en'}'` } }
+        : {}
+      ),
       layer: new FeatureLayer({
         url,
         title,
@@ -159,7 +163,7 @@ function SearchLocationContainer(props) {
     });
 
     updateSources(getSearchSources);
-  }, [searchSourceLayerSlug]);
+  }, [searchSourceLayerSlug, locale]);
 
   const onOptionSelection = (selectedOption) => {
     handleSearchSuggestionClick(selectedOption);
