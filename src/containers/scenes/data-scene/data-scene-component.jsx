@@ -21,6 +21,7 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
+import { getSidebarTabs } from 'constants/aois';
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 
@@ -62,13 +63,17 @@ function DataSceneComponent({
   browsePage,
   updatedActiveLayers,
   mapTooltipData,
+  sidebarTabActive,
 }) {
   const isMobile = useMobile();
-
+  const sidebarTabs = getSidebarTabs();
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
+
+  const enabledHighlightedLayer = selectedAnalysisLayer && sidebarTabActive === sidebarTabs[1].slug;
   const sidebarHidden = isFullscreenActive || isMobile;
   const isProtectedArea = mapTooltipData
     && mapTooltipData.precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas;
+
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -135,7 +140,7 @@ function DataSceneComponent({
         activeLayers={updatedActiveLayers}
       />
 
-      {selectedAnalysisLayer && (
+      {enabledHighlightedLayer && (
         <FeatureHighlightLayer
           featureLayerSlugs={selectedAnalysisLayer.slug}
           onFeatureClick={handleHighlightLayerFeatureClick}

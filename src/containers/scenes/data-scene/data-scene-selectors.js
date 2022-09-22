@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { selectAoiId } from 'selectors/aoi-selectors';
+import { selectAoiId, setSidebarTabActive } from 'selectors/aoi-selectors';
 import { selectUiUrlState } from 'selectors/location-selectors';
 import { selectTooltipData } from 'selectors/map-tooltip-selectors';
 
@@ -24,4 +24,5 @@ export default createStructuredSelector({
   aoiId: selectAoiId,
   activeCategoryLayers: getActiveCategoryLayers,
   mapTooltipData: selectTooltipData,
+  sidebarTabActive: setSidebarTabActive,
 });
