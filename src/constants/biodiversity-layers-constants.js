@@ -3,14 +3,14 @@ import { t } from '@transifex/native';
 import {
   AMPHIB_RARITY_1KM,
   AMPHIB_RICHNESS_1KM,
-  SA_DRAGONFLIES_RARITY,
-  SA_DRAGONFLIES_RICHNESS,
-  SA_BIRDS_RARITY,
-  SA_BIRDS_RICHNESS,
-  SA_RESTIO_RARITY,
-  SA_RESTIO_RICHNESS,
-  SA_PROTEA_RARITY,
-  SA_PROTEA_RICHNESS,
+  DRAGONFLIES_RARITY_1KM,
+  DRAGONFLIES_RICHNESS_1KM,
+  BIRDS_RARITY_1KM,
+  BIRDS_RICHNESS_1KM,
+  RESTIO_RARITY_1KM,
+  RESTIO_RICHNESS_1KM,
+  PROTEA_RARITY_1KM,
+  PROTEA_RICHNESS_1KM,
   REPTILES_RARITY_1KM,
   REPTILES_RICHNESS_1KM,
   MAMMALS_RICHNESS_1KM,
@@ -212,10 +212,10 @@ export const getLayersToggleConfig = () => ({
           layer: AMPHIB_RICHNESS_1KM,
         },
         {
-          value: SA_BIRDS_RICHNESS,
+          value: BIRDS_RICHNESS_1KM,
           name: t('birds'),
           title: t('birds'),
-          layer: SA_BIRDS_RICHNESS,
+          layer: BIRDS_RICHNESS_1KM,
         },
         {
           value: BUTTERFLIES_RICHNESS_1KM,
@@ -224,10 +224,10 @@ export const getLayersToggleConfig = () => ({
           layer: BUTTERFLIES_RICHNESS_1KM,
         },
         {
-          value: SA_DRAGONFLIES_RICHNESS,
+          value: DRAGONFLIES_RICHNESS_1KM,
           name: t('dragonflies'),
           title: t('dragonflies'),
-          layer: SA_DRAGONFLIES_RICHNESS,
+          layer: DRAGONFLIES_RICHNESS_1KM,
         },
         {
           value: HUMMINGBIRDS_RICHNESS,
@@ -236,10 +236,10 @@ export const getLayersToggleConfig = () => ({
           layer: HUMMINGBIRDS_RICHNESS,
         },
         {
-          value: SA_PROTEA_RICHNESS,
+          value: PROTEA_RICHNESS_1KM,
           name: t('protea'),
           title: t('protea'),
-          layer: SA_PROTEA_RICHNESS,
+          layer: PROTEA_RICHNESS_1KM,
         },
         {
           value: REPTILES_RICHNESS_1KM,
@@ -248,10 +248,10 @@ export const getLayersToggleConfig = () => ({
           layer: REPTILES_RICHNESS_1KM,
         },
         {
-          value: SA_RESTIO_RICHNESS,
+          value: RESTIO_RICHNESS_1KM,
           name: t('restio'),
           title: t('restio'),
-          layer: SA_RESTIO_RICHNESS,
+          layer: RESTIO_RICHNESS_1KM,
         },
         {
           value: MAMMALS_RICHNESS_1KM,
@@ -376,10 +376,10 @@ export const getLayersToggleConfig = () => ({
           layer: AMPHIB_RARITY_1KM,
         },
         {
-          value: SA_BIRDS_RARITY,
+          value: BIRDS_RARITY_1KM,
           name: t('birds'),
           title: t('birds'),
-          layer: SA_BIRDS_RARITY,
+          layer: BIRDS_RARITY_1KM,
         },
         {
           value: BUTTERFLIES_RARITY_1KM,
@@ -388,10 +388,10 @@ export const getLayersToggleConfig = () => ({
           layer: BUTTERFLIES_RARITY_1KM,
         },
         {
-          value: SA_DRAGONFLIES_RARITY,
+          value: DRAGONFLIES_RARITY_1KM,
           name: t('dragonflies'),
           title: t('dragonflies'),
-          layer: SA_DRAGONFLIES_RARITY,
+          layer: DRAGONFLIES_RARITY_1KM,
         },
         {
           value: HUMMINGBIRDS_RARITY,
@@ -400,10 +400,10 @@ export const getLayersToggleConfig = () => ({
           layer: HUMMINGBIRDS_RARITY,
         },
         {
-          value: SA_PROTEA_RARITY,
+          value: PROTEA_RARITY_1KM,
           name: t('protea'),
           title: t('protea'),
-          layer: SA_PROTEA_RARITY,
+          layer: PROTEA_RARITY_1KM,
         },
         {
           value: REPTILES_RARITY_1KM,
@@ -412,10 +412,10 @@ export const getLayersToggleConfig = () => ({
           layer: REPTILES_RARITY_1KM,
         },
         {
-          value: SA_RESTIO_RARITY,
+          value: RESTIO_RARITY_1KM,
           name: t('restio'),
           title: t('restio'),
-          layer: SA_RESTIO_RARITY,
+          layer: RESTIO_RARITY_1KM,
         },
         {
           value: MAMMALS_RARITY_1KM,

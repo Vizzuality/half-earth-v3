@@ -72,20 +72,6 @@ export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
 export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
 
-// South Africa layers
-export const AMPHIB_RARITY_1KM = 'amphib-rarity-sa';
-export const AMPHIB_RICHNESS_1KM = 'amphib-rich-sa';
-export const SA_DRAGONFLIES_RARITY = 'dragonflies-rare-sa';
-export const SA_DRAGONFLIES_RICHNESS = 'dragonflies-rich-sa';
-export const SA_BIRDS_RARITY = 'birds-rare-sa';
-export const SA_BIRDS_RICHNESS = 'birds-rich-sa';
-export const SA_RESTIO_RARITY = 'restio-rare-sa';
-export const SA_RESTIO_RICHNESS = 'restio-rich-sa';
-export const SA_PROTEA_RARITY = 'protea-rare-sa';
-export const SA_PROTEA_RICHNESS = 'protea-rich-sa';
-export const REPTILES_RARITY_1KM = 'reptiles-rare-sa';
-export const REPTILES_RICHNESS_1KM = 'reptiles-rich-sa';
-
 // Carbon Layer
 export const CARBON_LAYER = 'carbon-layer-land';
 
@@ -123,12 +109,24 @@ export const REPTILES_RARITY = 'reptiles-rarity';
 export const REPTILES_RICHNESS = 'reptiles-richness';
 
 // 1KM
+export const AMPHIB_RARITY_1KM = 'amphib-rarity-1km';
+export const AMPHIB_RICHNESS_1KM = 'amphib-richness-1km';
+export const DRAGONFLIES_RARITY_1KM = 'dragonflies-rarity-1km';
+export const DRAGONFLIES_RICHNESS_1KM = 'dragonflies-richness-1km';
+export const BIRDS_RARITY_1KM = 'birds-rarity-1km';
+export const BIRDS_RICHNESS_1KM = 'birds-richness-1km';
+export const RESTIO_RARITY_1KM = 'restio-rarity-1km';
+export const RESTIO_RICHNESS_1KM = 'restio-richness-1km';
+export const PROTEA_RARITY_1KM = 'protea-rarity-1km';
+export const PROTEA_RICHNESS_1KM = 'protea-richness-1km';
+export const REPTILES_RARITY_1KM = 'reptiles-rarity-1km';
+export const REPTILES_RICHNESS_1KM = 'reptiles-richness-1km';
 export const BUTTERFLIES_RICHNESS_1KM = 'butterflies-richness-1km';
 export const BUTTERFLIES_RARITY_1KM = 'butterflies-rarity-1km';
-export const MAMMALS_RICHNESS_1KM = 'mammals-rare-sa';
 export const SUMMER_BIRDS_RICHNESS_1KM = 'summer-birds-richness-1km';
 export const WINTER_BIRDS_RICHNESS_1KM = 'winter-birds-richness-1km';
-export const MAMMALS_RARITY_1KM = 'mammals-rich-sa';
+export const MAMMALS_RICHNESS_1KM = 'mammals-rarity-1km';
+export const MAMMALS_RARITY_1KM = 'mammals-richness-1km';
 export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
 export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
 
