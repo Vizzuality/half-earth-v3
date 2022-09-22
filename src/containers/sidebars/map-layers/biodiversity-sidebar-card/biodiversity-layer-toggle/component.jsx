@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
-import Dropdown from 'components/dropdown';
 import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
+import Select from 'components/select';
 
 import styles from './styles.module.scss';
 
@@ -22,7 +22,7 @@ function BiodiversityLayerToggle({
   onBringToFrontClick,
   layers,
 }) {
-  const [selectedLayer, setSelectedLayer] = useState(layers[0]);
+  // const [selectedLayer, setSelectedLayer] = useState(layers[0]);
   // const key = `radio-button-${title}-${layer.value}-${variant}`;
   const key = `radio-button-${title}-test-${variant}`;
   return (
@@ -41,7 +41,11 @@ function BiodiversityLayerToggle({
           onChange={onChange}
         />
       </div>
-
+      <Select
+        options={layers}
+        onSelect={(e) => console.info(e)}
+        placeholder="All vertebrates"
+      />
       {isChecked && (
         <LayerTools
           option="test"

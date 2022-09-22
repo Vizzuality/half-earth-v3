@@ -1,0 +1,170 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.dropdownContainer {
+  padding: 10px;
+  background-color: $white;
+  border-radius: 6px;
+  position: relative;
+  border: 1px solid $dark-opacity;
+  &.fullWidth {
+    width: 100%;
+  }
+}
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &.fullWidth {
+    justify-content: space-between;
+  }
+}
+
+.selectedOptionLabel {
+  @extend %title;
+  color: $dark-text;
+}
+
+.closeSearch {
+  position: absolute;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 100%;
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+
+  .searchIcon {
+    cursor: pointer;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    background: none;
+    margin-left: 10px;
+  }
+}
+
+.arrowIcon {
+  margin-left: 10px;
+  transform: rotate(90deg);
+  transition: all .1s linear;
+  &.dropdownOpen {
+    position: relative;
+    top: -2px;
+    transform: rotate(-90deg);
+  }
+  path {
+    fill: $dark-text;
+    stroke: $dark-text;
+  }
+}
+
+.group {
+  &:not(:last-child) {
+    &::after {
+      background-color: $dark-opacity;
+      height: 1px;
+      content: "";
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .groupList {
+    padding: 10px 0;
+    list-style: none;
+  }
+
+  &:first-child {
+    .groupList {
+      padding: 0 0 10px;
+    }
+  }
+
+  &:last-child {
+    .groupList {
+      padding: 10px 0 0;
+    }
+  }
+}
+
+.optionsList {
+  max-height: 220px;
+  overflow: auto;
+  @extend %title;
+  color: $dark-text;
+  cursor: pointer;
+  background-color: $white;
+  list-style: none;
+  padding: $sidebar-paddings 0;
+  margin-top: 6px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border: 1px solid $dark-opacity;
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  .option {
+    padding: 5px $sidebar-paddings;
+
+    &:hover {
+      background-color: $dark-opacity;
+    }
+
+    &.selectedOption {
+      pointer-events: none;
+      color: rgba($_temporary-dark-text, 0.5);
+    }
+  }
+}
+
+.dark {
+  background-color: transparent;
+  border: 1px solid $white-opacity;
+  &:hover,
+  &.open {
+    background-color: $white-opacity;
+  }
+  .selectedOptionLabel {
+    color: $white;
+  }
+  .arrowIcon {
+    path {
+      fill: $white;
+      stroke: $white;
+    }
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  .arrowIcon {
+    path {
+      fill: $white-opacity;
+      stroke: $white-opacity;
+    }
+  }
+}
+
+.stacked {
+  &:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &:last-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
