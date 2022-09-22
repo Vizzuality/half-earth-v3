@@ -277,13 +277,13 @@ export const LAYERS_URLS = {
   [REPTILES_LOOKUP]: 'https://utility.arcgis.com/usrsvcs/servers/f0b987e051844fd78b05c813ba251548/rest/services/Test_Reptile_CRF_species_table/FeatureServer/0',
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
-    'https://utility.arcgis.com/usrsvcs/servers/cd751e28e141476295a4e777fc4fdd96/rest/services/gadm0_precalculated_20220224_nspecies_819cf952b53447d4b2e622aa85edeb33/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer',
     'https://utility.arcgis.com/usrsvcs/servers/176718716a2849e486671cebc59f3c94/rest/services/gadm1_precalculated_20220224_nspecies_9382041fa11b4941badeaf3b73c61216/FeatureServer',
   ],
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer/0',
+  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4d23b29746e547deb9d4c1d61df8e0d4/rest/services/gadm1_precalculated_20220224_nspecies/FeatureServer/0',
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0_updated/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_updated/FeatureServer/0',
-  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4d23b29746e547deb9d4c1d61df8e0d4/rest/services/gadm1_precalculated_20220224_nspecies/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: [
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp50_nspecies/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp90_nspecies/FeatureServer/0',
