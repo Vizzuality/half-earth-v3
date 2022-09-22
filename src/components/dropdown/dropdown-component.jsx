@@ -9,12 +9,10 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// icons
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 
-// styles
 import styles from './dropdown-styles.module.scss';
 
 function Component({

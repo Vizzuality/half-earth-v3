@@ -63,6 +63,15 @@ export const LAYER_VARIANTS = {
   RARITY: 'rarity',
 };
 
+export const SPECIES_GROUPS = {
+  MAMMALS: 'mammals',
+  BIRDS: 'birds',
+  AMPHIBIANS: 'amphibians',
+  PLANTS: 'plants',
+  INVERTEBRATES: 'invertebrates',
+  REPTILES: 'reptiles',
+};
+
 const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
 
 const TAXA_DISTRIBUTION = {
