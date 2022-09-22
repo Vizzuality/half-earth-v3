@@ -67,11 +67,13 @@ function DataSceneComponent({
 }) {
   const isMobile = useMobile();
   const sidebarTabs = getSidebarTabs();
-
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
+
+  const enabledHighlightedLayer = selectedAnalysisLayer && sidebarTabActive === sidebarTabs[1].slug;
   const sidebarHidden = isFullscreenActive || isMobile;
   const isProtectedArea = mapTooltipData
     && mapTooltipData.precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas;
+
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -138,7 +140,7 @@ function DataSceneComponent({
         activeLayers={updatedActiveLayers}
       />
 
-      {selectedAnalysisLayer && sidebarTabActive === sidebarTabs[1].slug && (
+      {enabledHighlightedLayer && (
         <FeatureHighlightLayer
           featureLayerSlugs={selectedAnalysisLayer.slug}
           onFeatureClick={handleHighlightLayerFeatureClick}
