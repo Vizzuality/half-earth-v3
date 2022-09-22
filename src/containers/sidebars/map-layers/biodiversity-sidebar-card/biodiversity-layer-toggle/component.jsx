@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
-import Select from 'components/select';
+import GroupSelect from 'components/select';
 
 import styles from './styles.module.scss';
 
@@ -22,39 +22,48 @@ function BiodiversityLayerToggle({
   onBringToFrontClick,
   layers,
 }) {
-  // const [selectedLayer, setSelectedLayer] = useState(layers[0]);
-  // const key = `radio-button-${title}-${layer.value}-${variant}`;
+  const [selectedLayer, setSelectedLayer] = useState(layers[0]);
   const key = `radio-button-${title}-test-${variant}`;
-  const colourOptions = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9' },
-    { value: 'blue', label: 'Blue', color: '#0052CC' },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630' },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
+
+  console.log({ selectedLayer });
+
+  const parseGroupLayers = (group) => {
+    return layers.filter((layer) => layer.group === group).map((layer) => {
+      return {
+        ...layer,
+        label: layer.title,
+      };
+    });
+  };
+
+  const GROUPED_OPTIONS = [
+    {
+      label: 'mammals',
+      options: parseGroupLayers('mammals'),
+    },
+    {
+      label: 'birds',
+      options: parseGroupLayers('birds'),
+    },
+    {
+      label: 'amphibians',
+      options: parseGroupLayers('amphibians'),
+    },
+    {
+      label: 'plants',
+      options: parseGroupLayers('plants'),
+    },
+    {
+      label: 'invertebrates',
+      options: parseGroupLayers('invertebrates'),
+    },
+    {
+      label: 'reptils',
+      options: parseGroupLayers('reptils'),
+    },
   ];
 
-  const flavourOptions = [
-    { value: 'vanilla', label: 'Vanilla', rating: 'safe' },
-    { value: 'chocolate', label: 'Chocolate', rating: 'good' },
-    { value: 'strawberry', label: 'Strawberry', rating: 'wild' },
-  ];
-  const groupedOptions = [
-    {
-      label: 'Colours',
-      options: colourOptions,
-    },
-    {
-      label: 'Flavours',
-      options: flavourOptions,
-    },
-  ];
   return (
-
     <div className={cx(
       styles.container,
       { [styles.checked]: isChecked },
@@ -68,10 +77,9 @@ function BiodiversityLayerToggle({
           checked={isChecked}
           onChange={onChange}
         />
-        <Select
-          options={layers}
-          groupedOptions={groupedOptions}
-          onSelect={(e) => console.info(e)}
+        <GroupSelect
+          groupedOptions={GROUPED_OPTIONS}
+          onSelect={(l) => setSelectedLayer(l)}
         />
       </div>
       {isChecked && (

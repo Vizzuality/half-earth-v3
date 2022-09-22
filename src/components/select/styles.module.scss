@@ -2,12 +2,10 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-.dropdownContainer {
-
-}
-
 .arrowIcon {
+  position: absolute;
   margin-left: 10px;
+  right: 16px;
   transform: rotate(90deg);
   transition: all .1s linear;
 

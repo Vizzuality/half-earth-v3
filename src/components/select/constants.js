@@ -24,7 +24,7 @@ export const customStyles = {
     margin: 0,
     opacity: disabled && 0.4,
     position: 'absolute',
-    right: '8px',
+    right: '18px',
     top: '10px',
     transform: menuIsOpen && 'rotate(180deg)',
     transition: 'transform 0.3s ease-out',
@@ -46,6 +46,7 @@ export const customStyles = {
     margin: 0,
     top: '38px',
     maxWidth: '168px',
+    overflowX: 'hidden',
   }),
   menuList: (provided) => ({
     ...provided,

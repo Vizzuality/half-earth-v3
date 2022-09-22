@@ -63,15 +63,6 @@ export const LAYER_VARIANTS = {
   RARITY: 'rarity',
 };
 
-export const SPECIES_GROUPS = {
-  MAMMALS: 'mammals',
-  BIRDS: 'birds',
-  AMPHIBIANS: 'amphibians',
-  PLANTS: 'plants',
-  INVERTEBRATES: 'invertebrates',
-  REPTILES: 'reptiles',
-};
-
 const { PRIORITY, RICHNESS, RARITY } = LAYER_VARIANTS;
 
 const TAXA_DISTRIBUTION = {
@@ -123,24 +114,28 @@ export const getLayersToggleConfig = () => ({
           name: t('amphibians'),
           title: t('amphibians'),
           layer: AMPHIB_PRIORITY,
+          group: t('amphibians'),
         },
         {
           value: BIRDS_PRIORITY,
           name: t('birds'),
           title: t('birds'),
           layer: BIRDS_PRIORITY,
+          group: t('birds'),
         },
         {
           value: MAMMALS_PRIORITY,
           name: t('mammals'),
           title: t('mammals'),
           layer: MAMMALS_PRIORITY,
+          group: t('mammals'),
         },
         {
           value: REPTILES_PRIORITY,
           name: t('reptiles'),
           title: t('reptiles'),
           layer: REPTILES_PRIORITY,
+          group: t('reptiles'),
         },
       ],
     },
@@ -157,12 +152,14 @@ export const getLayersToggleConfig = () => ({
           name: t('fishes'),
           title: t('fishes'),
           layer: FISHES_PRIORITY,
+          group: t('fishes'),
         },
         {
           value: MARINE_MAMMALS_PRIORITY,
           name: t('mammals'),
           title: t('mammals'),
           layer: MARINE_MAMMALS_PRIORITY,
+          group: t('mammals'),
         },
       ],
     },

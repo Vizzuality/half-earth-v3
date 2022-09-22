@@ -195,19 +195,6 @@ function BiodiversitySidebarCardComponent({
             themeCategorySlug={BIODIVERSITY_SLUG}
             layers={layerTogglesToDisplay(TERRESTRIAL)}
           />
-
-          {/* {layerTogglesToDisplay(TERRESTRIAL).map((layer) => (
-            <LayerToggle
-              map={map}
-              type="radio"
-              option={layer}
-              variant="light"
-              key={layer.value}
-              activeLayers={activeLayers}
-              onChange={handleLayerToggle}
-              themeCategorySlug={BIODIVERSITY_SLUG}
-            />
-          ))} */}
         </div>
         {layerTogglesToDisplay(MARINE).length && (
           <>
