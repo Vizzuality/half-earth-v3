@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
 import { usePopper } from 'react-popper';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import { useT } from '@transifex/react';
+
+import PropTypes from 'prop-types';
+
+import cx from 'classnames';
+import { motion, AnimatePresence } from 'framer-motion';
+
 // icons
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
-import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 
 // styles
 import styles from './dropdown-styles.module.scss';
 
-const Component = ({
+function Component({
   width,
   theme,
   stacked,
@@ -31,20 +35,18 @@ const Component = ({
   handleSearchInputChange,
   handleSearchIconClick,
   onCloseSearch,
-}) => {
+}) {
   const t = useT();
 
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
-    popperElement
+    popperElement,
   );
 
-  const showDropdown =
-    !searchMode || (searchMode && options && options.length > 0);
-  const showSearchInput =
-    searchMode && (!options || (options && options.length === 0));
+  const showDropdown = !searchMode || (searchMode && options && options.length > 0);
+  const showSearchInput = searchMode && (!options || (options && options.length === 0));
   const showCloseButton = searchMode && options && options.length > 0;
 
   const renderFilters = () => {
@@ -70,10 +72,10 @@ const Component = ({
 
     return groups
       ? groups.map((group) => (
-          <li className={cx(styles.group)} key={group}>
-            <ul className={styles.groupList}>{renderOptions(group)}</ul>
-          </li>
-        ))
+        <li className={cx(styles.group)} key={group}>
+          <ul className={styles.groupList}>{renderOptions(group)}</ul>
+        </li>
+      ))
       : renderOptions();
   };
 
@@ -134,8 +136,8 @@ const Component = ({
           )}
         </div>
       )}
-      {dropdownOpen &&
-        createPortal(
+      {dropdownOpen
+        && createPortal(
           <div
             ref={setPopperElement}
             style={{ ...popperStyles.popper, width: parentWidth, zIndex: 10 }}
@@ -151,11 +153,11 @@ const Component = ({
               {renderFilters()}
             </ul>
           </div>,
-          document.getElementById('root')
+          document.getElementById('root'),
         )}
     </div>
   );
-};
+}
 
 export default Component;
 
@@ -165,7 +167,7 @@ Component.propTypes = {
       label: PropTypes.string,
       slug: PropTypes.string,
       group: PropTypes.string,
-    })
+    }),
   ),
   placeholderText: PropTypes.string,
   dropdownOpen: PropTypes.bool,

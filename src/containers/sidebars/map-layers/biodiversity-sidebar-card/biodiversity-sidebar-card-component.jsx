@@ -34,6 +34,7 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
+import BiodiversityLayerToggle from './biodiversity-layer-toggle';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
 
 function BiodiversitySidebarCardComponent({
@@ -185,7 +186,17 @@ function BiodiversitySidebarCardComponent({
           />
         </div>
         <div className={styles.togglesContainer}>
-          {layerTogglesToDisplay(TERRESTRIAL).map((layer) => (
+          <BiodiversityLayerToggle
+            map={map}
+            type="radio"
+            variant="light"
+            activeLayers={activeLayers}
+            onChange={handleLayerToggle}
+            themeCategorySlug={BIODIVERSITY_SLUG}
+            layers={layerTogglesToDisplay(TERRESTRIAL)}
+          />
+
+          {/* {layerTogglesToDisplay(TERRESTRIAL).map((layer) => (
             <LayerToggle
               map={map}
               type="radio"
@@ -196,7 +207,7 @@ function BiodiversitySidebarCardComponent({
               onChange={handleLayerToggle}
               themeCategorySlug={BIODIVERSITY_SLUG}
             />
-          ))}
+          ))} */}
         </div>
         {layerTogglesToDisplay(MARINE).length && (
           <>

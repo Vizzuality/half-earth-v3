@@ -1,0 +1,26 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+.radioOption {
+  @extend %subtitle;
+  width: 100%;
+  color: inherit;
+  cursor: pointer;
+}
+
+.reverseSwitchIcon {
+  transform: rotate(180deg);
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  padding: 0 20px;
+  position: relative;
+  justify-content: space-between;
+  &:hover,
+  &.checked {
+    background-color: $white-opacity;
+  }
+}
