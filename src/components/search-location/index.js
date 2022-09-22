@@ -146,7 +146,7 @@ function SearchLocationContainer(props) {
       suggestionTemplate,
       outFields: ['*'],
       ...((searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS)
-        ? { filter: { where: `LANGUAGES = '${locale || 'en'}'` } }
+        ? { filter: { where: `LANGUAGES LIKE '%${locale || 'en'}%'` } }
         : {}
       ),
       layer: new FeatureLayer({
