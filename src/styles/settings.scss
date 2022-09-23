@@ -1,210 +1,211 @@
 // Colors
-$white: #fff;
-$black: #000000;
-$elephant: #0F2B3B;
-$robins-egg-blue: #00BDB5;
-$oslo-gray: #7B878D;
-$alto: #D8D8D8;
-$athens-gray: #ECEFF2;
-$firefly: #0A212E;
-$vida-loca: #4B9217;
-$cobalt: #0041B1;
-$lochmara: #0272BA;
-$biloba-flower: #BCACE8;
-$port-gore: #282052;
-$blue: #0E2B3B;
-$inactive-purple: #5E5C7A;
-$active-purple: #3F3576;
-$mandalay: #A47916;
-$marzipan: #F7DEA1;
-$color-facebook: #39579a;
-$color-twitter: #69ace0;
-$screamin-green: #93FF5F;
-$persimmon: #FF6C47;
-$vivid-tangerine: #FF9D85;
-$saffron-mango: #FCC44A;
-$peach-yellow: #FAE3B3;
-$pickled-bluewood: #354D5B;
-$slate-gray: #6C828F;
-$catalina-blue: #0C2C84;
-$wild-sand: #f5f5f5;
-$sulu: #BFF78D;
-$shamrock: #34BD92;
-$conifer: #92EB57;
-$picton-blue: #3AA8EE;
-$gold: #F8D300;
-$medium-purple: #8B62E9;
-$tango: #E87926;
-$french-rose: #EB588F;
-$neon-carrot: #FF9C32;
+  $white: #fff;
+  $black: #000000;
+  $elephant: #0F2B3B;
+  $robins-egg-blue: #00BDB5;
+  $oslo-gray: #7B878D;
+  $alto: #D8D8D8;
+  $athens-gray: #ECEFF2;
+  $firefly: #0A212E;
+  $vida-loca: #4B9217;
+  $cobalt: #0041B1;
+  $lochmara: #0272BA;
+  $biloba-flower: #BCACE8;
+  $port-gore: #282052;
+  $blue: #0E2B3B;
+  $inactive-purple: #5E5C7A;
+  $active-purple: #3F3576;
+  $mandalay: #A47916;
+  $marzipan: #F7DEA1;
+  $color-facebook: #39579a;
+  $color-twitter: #69ace0;
+  $screamin-green: #93FF5F;
+  $persimmon: #FF6C47;
+  $vivid-tangerine: #FF9D85;
+  $saffron-mango: #FCC44A;
+  $peach-yellow: #FAE3B3;
+  $pickled-bluewood: #354D5B;
+  $slate-gray: #6C828F;
+  $catalina-blue: #0C2C84;
+  $wild-sand: #f5f5f5;
+  $sulu: #BFF78D;
+  $shamrock: #34BD92;
+  $conifer: #92EB57;
+  $picton-blue: #3AA8EE;
+  $gold: #F8D300;
+  $medium-purple: #8B62E9;
+  $tango: #E87926;
+  $french-rose: #EB588F;
+  $neon-carrot: #FF9C32;
 
-// Project colors
-$space-background: #09141A;
-$navy-he: $elephant;
+  // Project colors
+  $space-background: #09141A;
+  $navy-he: $elephant;
 
-$brand-color-main: #18BAB4;
-$brand-color-secondary: $elephant;
-$brand-color-main-hover: darken($brand-color-main, 10);
-$brand-color-secondary-hover: lighten($elephant, 10);
-$dark-text: #222;
-$dark-text-hover: darken($dark-text, 30%);
-$grey-text: #A0AFB8;
-$grey-text-hover: lighten($grey-text, 10%);
-$light-text: $white;
-$white-opacity: rgba(255, 255, 255, 0.1);
-$dark-opacity: rgba(34, 34, 34, 0.1);
-$_temporary-dark-text: #222;
-$_temporary-light-text: #747474;
-$accent-grey: #a0afb8;
-$logos-text: $oslo-gray;
-$priority-blue: #0664F6;
-$half-earth-meter-green: $screamin-green;
-$half-earth-meter-blue: $lochmara;
+  $brand-color-main: #18BAB4;
+  $brand-color-secondary: $elephant;
+  $brand-color-main-hover: darken($brand-color-main, 10);
+  $brand-color-secondary-hover: lighten($elephant, 10);
+  $dark-text: #222;
+  $dark-text-hover: darken($dark-text, 30%);
+  $grey-text: #A0AFB8;
+  $grey-text-hover: lighten($grey-text, 10%);
+  $light-text: $white;
+  $white-opacity: rgba(255, 255, 255, 0.1);
+  $dark-opacity: rgba(34, 34, 34, 0.1);
+  $_temporary-dark-text: #222;
+  $_temporary-light-text: #747474;
+  $accent-grey: #a0afb8;
+  $logos-text: $oslo-gray;
+  $priority-blue: #0664F6;
+  $half-earth-meter-green: $screamin-green;
+  $half-earth-meter-blue: $lochmara;
 
-$mammals-color: $medium-purple;
-$mar-mammals-color: $picton-blue;
-$amphibians-color: $shamrock;
-$birds-color: $saffron-mango;
-$fishes-color: #38E5DB;
-$reptiles-color: $conifer;
+  $mammals-color: $medium-purple;
+  $mar-mammals-color: $picton-blue;
+  $amphibians-color: $shamrock;
+  $birds-color: $saffron-mango;
+  $fishes-color: #38E5DB;
+  $reptiles-color: $conifer;
 
-// layers
-$carbon-layer: #FF9500;
+  // layers
+  $carbon-layer: #FF9500;
 
-$biodiversity-gradient: linear-gradient(0deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
-$biodiversity-gradient-rotated: linear-gradient(90deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
-$human-pressure-high: #F3E0F7;
-$human-pressure-mid: #9F82CE;
-$human-pressure-low: #282052;
-$human-pressures-gradient: linear-gradient(90deg, rgba(0, 77, 168, 0.1) 0%, rgba(166, 0, 212, 0.2) 15%, rgba(255, 0, 0, 0.5) 54%, rgb(255, 191, 0) 100%);
-$marine-pressures-gradient: linear-gradient(90deg, rgba(86, 0, 115, 0.15) 0%, rgba(0, 14, 224, 0.25) 50%, rgb(0, 197, 255) 94%, rgb(0, 255, 230) 100%);
-$carbon-layer-gradient: linear-gradient(90deg, rgba($navy-he, 0.1) 0%, #A838004D 30%, $carbon-layer 100%);
-$spi-gradient: linear-gradient(270deg, rgba(28, 83, 168, 0.1) 0%, rgba(217, 28, 220, 0.25) 17.71%, rgba(234, 28, 152, 0.35) 38.02%, rgba(248, 28, 70, 0.45) 58.85%, rgba(255, 113, 28, 0.75) 77.6%, #FFC01C 98.44%);
-$spi-chart-gradient: linear-gradient(to bottom, #060B2B99, #1D113599, #250F3B99, #37103399, #82121399, #A7481599, #FFBF0099);
-$challenges-view-background: #040E14;
-$warning: #DC2626;
+  $biodiversity-gradient: linear-gradient(0deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
+  $biodiversity-gradient-rotated: linear-gradient(90deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
+  $human-pressure-high: #F3E0F7;
+  $human-pressure-mid: #9F82CE;
+  $human-pressure-low: #282052;
+  $human-pressures-gradient: linear-gradient(90deg, rgba(0, 77, 168, 0.1) 0%, rgba(166, 0, 212, 0.2) 15%, rgba(255, 0, 0, 0.5) 54%, rgb(255, 191, 0) 100%);
+  $marine-pressures-gradient: linear-gradient(90deg, rgba(86, 0, 115, 0.15) 0%, rgba(0, 14, 224, 0.25) 50%, rgb(0, 197, 255) 94%, rgb(0, 255, 230) 100%);
+  $carbon-layer-gradient: linear-gradient(90deg, rgba($navy-he, 0.1) 0%, #A838004D 30%, $carbon-layer 100%);
+  $spi-gradient: linear-gradient(270deg, rgba(28, 83, 168, 0.1) 0%, rgba(217, 28, 220, 0.25) 17.71%, rgba(234, 28, 152, 0.35) 38.02%, rgba(248, 28, 70, 0.45) 58.85%, rgba(255, 113, 28, 0.75) 77.6%, #FFC01C 98.44%);
+  $spi-chart-gradient: linear-gradient(to bottom, #060B2B99, #1D113599, #250F3B99, #37103399, #82121399, #A7481599, #FFBF0099);
+  $challenges-view-background: #040E14;
+  $warning: #DC2626;
 
-// country ranking
-$endemic-species: #F8D300;
-$non-endemic-species: #F87200;
-$human-modification-high-color: #731CFF;
-$human-modification-color: #B284FD;
-$non-human-modification: #a0afb8;
-$protection-non-needed-color: #AFB8A0;
-$protected-areas: #008604;
-$protection-needed: #B3E74B;
-$future-places: $neon-carrot;
+  // country ranking
+  $endemic-species: #F8D300;
+  $non-endemic-species: #F87200;
+  $human-modification-high-color: #731CFF;
+  $human-modification-color: #B284FD;
+  $non-human-modification: #a0afb8;
+  $protection-non-needed-color: #AFB8A0;
+  $protected-areas: #008604;
+  $protection-needed: #B3E74B;
+  $future-places: $neon-carrot;
 
-// Continent colors
-$africa: $shamrock;
-$antarctica: $conifer;
-$asia: $picton-blue;
-$europe: $gold;
-$north-america: $medium-purple;
-$oceania: $tango;
-$south-america: $french-rose;
+  // Continent colors
+  $africa: $shamrock;
+  $antarctica: $conifer;
+  $asia: $picton-blue;
+  $europe: $gold;
+  $north-america: $medium-purple;
+  $oceania: $tango;
+  $south-america: $french-rose;
 
-// Modal
-$modal-light-background: $athens-gray;
+  // Modal
+  $modal-light-background: $athens-gray;
 
-// Animations
-$animation-time: 0.3s;
-$transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  // Animations
+  $animation-time: 0.3s;
+  $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
-// Font sizes
-$font-size-base: 1rem;
-$font-size-xxs: 10px;
-$font-size-xs: 12px;
-$font-size-sm: 14px;
-$font-size-xl: 32px;
-$font-size-xxl: 40px;
+  // Font sizes
+  $font-size-base: 1rem;
+  $font-size-xxs: 10px;
+  $font-size-xs: 12px;
+  $font-size-sm: 14px;
+  $font-size-xl: 32px;
+  $font-size-xxl: 40px;
 
-//font-weights
-$font-weight-light: lighter;
-$font-weight: normal;
-$font-weight-bold: bold;
+  //font-weights
+  $font-weight-light: lighter;
+  $font-weight: normal;
+  $font-weight-bold: bold;
 
-$font-family-1: 'Inter',
-sans-serif;
-$font-family-1-light: 'Inter',
-sans-serif;
-$font-family-serif: 'ivypresto-display',
-serif;
-$font-family-sans-serif: 'Inter',
-sans-serif;
+  $font-family-1: 'Inter',
+  sans-serif;
+  $font-family-1-light: 'Inter',
+  sans-serif;
+  $font-family-serif: 'ivypresto-display',
+  serif;
+  $font-family-sans-serif: 'Inter',
+  sans-serif;
 
-// Layout
-$site-gutter: 20px;
-$widget-button-size: 30px;
-$rounded-button-size: 42px;
-$he-project-logo-size: 25px;
-$nav-bar-height: 55px;
-// Blur
-$blur-level: 16px;
+  // Layout
+  $site-gutter: 20px;
+  $widget-button-size: 30px;
+  $rounded-button-size: 42px;
+  $he-project-logo-size: 25px;
+  $nav-bar-height: 55px;
+  // Blur
+  $blur-level: 16px;
 
-// Box shadow
-$box-shadow-strong: 0 2px 10px 0 $firefly;
-$box-shadow-soft: 0px 2px 10px rgba(10, 33, 46, 0.2);
+  // Box shadow
+  $box-shadow-strong: 0 2px 10px 0 $firefly;
+  $box-shadow-soft: 0px 2px 10px rgba(10, 33, 46, 0.2);
 
-// Global
-$sidebar-margin: 24px;
-$sidebar-paddings: 20px;
-$paragraph-margin: 35px;
-$paragraph-gutter: 10px;
-$sidebar-cards-padding: 25px;
-$sidebar-border-width: 2px;
-$sidebar-border: $sidebar-border-width solid $brand-color-secondary;
-;
-$sidebar-border-radius: 4px;
+  // Global
+  $sidebar-margin: 24px;
+  $sidebar-paddings: 20px;
+  $paragraph-margin: 35px;
+  $paragraph-gutter: 10px;
+  $sidebar-cards-padding: 25px;
+  $sidebar-border-width: 2px;
+  $sidebar-border: $sidebar-border-width solid $brand-color-secondary;
+  ;
+  $sidebar-border-radius: 4px;
 
-$mobile-sidebar-side-paddings: 32px;
+  $mobile-sidebar-side-paddings: 32px;
 
-$bottom-menu-blur: 2px;
+  $bottom-menu-blur: 2px;
 
-// Letter styles
-$letter-spacing: 1.5px;
-$line-height: 14px;
+  // Letter styles
+  $letter-spacing: 1.5px;
+  $line-height: 14px;
 
-// Sidebar
-$sidebar-vertical-flow: 1em;
-$layout-top-margin: 15px;
-$sidebar-top-margin: 30px;
-$local-sidebar-top-margin: 20px;
-$high-sidebar-top-margin: 268px;
-$sidebar-header-height: 100px;
-$sidebar-header-height-mobile: 150px;
-$ui-left-top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
-$sidebar-width: 420px; // use this for entry boxes and sidebar width
-$country-sidebar-width: 490px;
-$local-sidebar-width: 420px;
-$widgetsTopMargin: 8px;
-$cards-bottom-margin: 8px;
-$border-radius-desktop: 2px;
-$border-radius-mobile: 16px 16px 0 0;
-$counter-size: 25px;
-// featured cards
-$card-max-width: 820px;
-$card-border-radius: 6px;
-// country scene
-$country-scene-chart-width: calc(90vw - #{$country-sidebar-width});
+  // Sidebar
+  $sidebar-vertical-flow: 1em;
+  $layout-top-margin: 15px;
+  $sidebar-top-margin: 30px;
+  $local-sidebar-top-margin: 20px;
+  $high-sidebar-top-margin: 268px;
+  $sidebar-header-height: 100px;
+  $sidebar-header-height-mobile: 150px;
+  $ui-left-top: calc(#{$sidebar-top-margin} + #{$he-project-logo-size});
+  $sidebar-width: 420px; // use this for entry boxes and sidebar width
+  $country-sidebar-width: 490px;
+  $local-sidebar-width: 420px;
+  $widgetsTopMargin: 8px;
+  $cards-bottom-margin: 8px;
+  $border-radius-desktop: 2px;
+  $border-radius-mobile: 16px 16px 0 0;
+  $counter-size: 25px;
+  // featured cards
+  $card-max-width: 820px;
+  $card-border-radius: 6px;
+  // country scene
+  $country-scene-chart-width: calc(90vw - #{$country-sidebar-width});
 
-//z indexes
-$max-z-index: 100001;
-$over-all: 20;
-$over-front: 15;
-$bring-to-front: 5;
-$default-z-index: 1;
-$send-to-back: 0;
-$under-back: -1;
+  //z indexes
+  $max-z-index: 100001;
+  $over-all: 20;
+  $over-front: 15;
+  $bring-to-front: 5;
+  $default-z-index: 1;
+  $send-to-back: 0;
+  $under-back: -1;
 
-// Breakpoints
-$breakpoint-mobile-only: 37.4375rem; // 599px / 16px
-$breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
-$breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
-$breakpoint-desktop: 75rem; // 1200px / 16px
+  // Breakpoints
+  $breakpoint-mobile-only: 37.4375rem; // 599px / 16px
+  $breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
+  $breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
+  $breakpoint-desktop: 75rem; // 1200px / 16px
 
-// Media queries
-$mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
-$tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
-$tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
-$desktop: 'screen and (min-width: #{$breakpoint-desktop})';
+  // Media queries
+  $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
+  $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
+  $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
+  $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
+

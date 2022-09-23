@@ -1,3 +1,21 @@
+import variables from './styles.module.scss';
+
+const getColorsFromSettings = (prefix, isArray) => {
+  const colors = {};
+  Object.keys(variables).forEach((v) => {
+    if (v.startsWith(prefix)) {
+      const colorKey = v.replace(`${prefix}-`, '');
+      colors[colorKey] = isArray ? variables[v].split(',') : variables[v];
+    }
+  });
+  return colors;
+};
+
+const COLORS = getColorsFromSettings('colors');
+const FONT_SIZES = getColorsFromSettings('fontSizes');
+const FONT_WEIGHTS = getColorsFromSettings('fontWeights');
+const FONT_FAMILIES = getColorsFromSettings('fontFamily');
+
 export const customStyles = {
   container: () => ({
     width: '100%',
@@ -10,7 +28,7 @@ export const customStyles = {
     boxSizing: 'border-box',
     cursor: 'pointer',
     height: '38px',
-    fontSize: '14px',
+    fontSize: FONT_SIZES['font-size-sm'],
     width: '100%',
     outline: 'none',
     paddingLeft: '6px',
@@ -22,8 +40,8 @@ export const customStyles = {
     },
   }),
   groupHeading: () => ({
-    color: 'black',
-    fontWeight: 'bold',
+    color: COLORS.black,
+    fontWeight: FONT_WEIGHTS['font-weight-bold'],
     marginLeft: '10px',
     textTransform: 'capitalize',
   }),
@@ -52,10 +70,11 @@ export const customStyles = {
     alignItems: 'center',
     backgroundColor: isSelected && 'transparent',
     borderRadius: menuIsOpen && '6px',
-    color: 'black',
+    color: COLORS.black,
     cursor: isDisabled ? 'not-allowed' : 'pointer',
     display: 'flex',
     height: '30px',
+    fontFamily: FONT_FAMILIES['font-family-1'],
     marginLeft: '6px',
     ':last-of-type': {
       borderBottom: 'none',
@@ -64,14 +83,16 @@ export const customStyles = {
   }),
   placeholder: (styles, state) => ({
     ...styles,
-    color: 'white',
+    color: COLORS.white,
+    fontFamily: FONT_FAMILIES['font-family-1'],
     opacity: state.selectProps.disabled && 0.4,
     transition: 'transform 0.3s ease-out',
   }),
   singleValue: (styles) => ({
     ...styles,
     bottom: 0,
-    color: 'white',
+    color: COLORS.white,
+    fontFamily: FONT_FAMILIES['font-family-1'],
     overflow: 'visible',
   }),
 };

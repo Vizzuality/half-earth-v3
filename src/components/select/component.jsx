@@ -13,6 +13,7 @@ import { customStyles } from './constants';
 function GroupedSelect({
   onSelect,
   groupedOptions,
+
 }) {
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -27,6 +28,7 @@ function GroupedSelect({
       onChange={handleChange}
       options={groupedOptions}
       styles={customStyles}
+      placeholder="All Groups"
       components={{
         IndicatorSeparator: () => null,
         DropdownIndicator: ({ selectProps: { menuIsOpen } }) => (

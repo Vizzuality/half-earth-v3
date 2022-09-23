@@ -7,7 +7,6 @@ import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
 
 import {
-
   TERRESTRIAL,
   GROUPED_OPTIONS,
 } from 'constants/biodiversity-layers-constants';
