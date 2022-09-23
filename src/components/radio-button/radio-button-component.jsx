@@ -17,6 +17,7 @@ function RadioButton({
   groupedOptions,
   setSelectedLayer,
 }) {
+  console.log({ checked, theme });
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div

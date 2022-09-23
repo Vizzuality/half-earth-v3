@@ -73,10 +73,10 @@ const TAXA_DISTRIBUTION = {
 export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION;
 
 export const getResolutions = () => ({
-  LOWEST: { label: t('~55km2 resolution'), slug: 'LOWEST' },
-  LOW: { label: t('~27km2 resolution'), slug: 'LOW' },
-  HIGH: { label: t('~1km2 resolution'), slug: 'HIGH' },
-  COUNTRY: { label: t('Country resolution'), slug: 'COUNTRY' },
+  LOWEST: { label: t('~55km2'), slug: 'LOWEST' },
+  LOW: { label: t('~27km2'), slug: 'LOW' },
+  HIGH: { label: t('~1km2'), slug: 'HIGH' },
+  COUNTRY: { label: t('Country'), slug: 'COUNTRY' },
 });
 
 export const getLayersResolution = () => {
@@ -492,5 +492,41 @@ export const getAOIBiodiversityToggles = () => [
     title: ALL_TAXA_PRIORITY,
     slug: ALL_TAXA_PRIORITY,
     metadataTitle: t('Protected areas'),
+  },
+];
+
+const parseGroupLayers = (group, layers) => {
+  return layers.filter((layer) => layer.group === group).map((layer) => {
+    return {
+      ...layer,
+      label: layer.title,
+    };
+  });
+};
+
+export const GROUPED_OPTIONS = (layers) => [
+  {
+    label: 'mammals',
+    options: parseGroupLayers('mammals', layers),
+  },
+  {
+    label: 'birds',
+    options: parseGroupLayers('birds', layers),
+  },
+  {
+    label: 'amphibians',
+    options: parseGroupLayers('amphibians', layers),
+  },
+  {
+    label: 'plants',
+    options: parseGroupLayers('plants', layers),
+  },
+  {
+    label: 'invertebrates',
+    options: parseGroupLayers('invertebrates', layers),
+  },
+  {
+    label: 'reptils',
+    options: parseGroupLayers('reptils', layers),
   },
 ];

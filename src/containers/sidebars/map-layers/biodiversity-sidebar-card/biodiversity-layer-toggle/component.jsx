@@ -5,6 +5,10 @@ import cx from 'classnames';
 import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
 
+import { GROUPED_OPTIONS } from 'constants/biodiversity-layers-constants';
+
+import theme from 'styles/themes/checkboxes-theme.module.scss';
+
 import styles from './styles.module.scss';
 
 function BiodiversityLayerToggle({
@@ -30,42 +34,6 @@ function BiodiversityLayerToggle({
 
   const key = `radio-button-${title}-${selectedLayer.value}-${variant}`;
 
-  const parseGroupLayers = (group) => {
-    return layers.filter((layer) => layer.group === group).map((layer) => {
-      return {
-        ...layer,
-        label: layer.title,
-      };
-    });
-  };
-
-  const GROUPED_OPTIONS = [
-    {
-      label: 'mammals',
-      options: parseGroupLayers('mammals'),
-    },
-    {
-      label: 'birds',
-      options: parseGroupLayers('birds'),
-    },
-    {
-      label: 'amphibians',
-      options: parseGroupLayers('amphibians'),
-    },
-    {
-      label: 'plants',
-      options: parseGroupLayers('plants'),
-    },
-    {
-      label: 'invertebrates',
-      options: parseGroupLayers('invertebrates'),
-    },
-    {
-      label: 'reptils',
-      options: parseGroupLayers('reptils'),
-    },
-  ];
-
   return (
     <div className={cx(
       styles.container,
@@ -75,12 +43,13 @@ function BiodiversityLayerToggle({
       <div className={styles.radioOption}>
         <RadioButton
           id={key}
+          theme={theme.biodiversity}
           name={title}
           option={selectedLayer}
           checked={isChecked}
           onChange={onChange}
           biodiversityToggle
-          groupedOptions={GROUPED_OPTIONS}
+          groupedOptions={GROUPED_OPTIONS(layers)}
           setSelectedLayer={setSelectedLayer}
         />
       </div>
