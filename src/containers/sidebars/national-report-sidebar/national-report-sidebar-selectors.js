@@ -44,10 +44,13 @@ const getCountryName = createSelector([
   return countryNames[countryData.NAME_0] || countryData.NAME_0;
 });
 
-const getDescription = createSelector(getCountryData, (countryData) => {
-  if (!countryData) return null;
-  return countryData.sentence;
-});
+const getDescription = createSelector(
+  [getCountryData, selectLangUrlState],
+  (countryData, locale) => {
+    if (!countryData) return null;
+    return locale && locale !== 'en' ? countryData[`sentence_${locale}`] : countryData.sentence;
+  },
+);
 
 const getHasPriority = createSelector(getCountryData, (countryData) => {
   if (!countryData) return null;
