@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -6,14 +6,13 @@ import cx from 'classnames';
 
 import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
-import GroupSelect from 'components/select';
 
 import styles from './styles.module.scss';
 
 function BiodiversityLayerToggle({
   activeLayers,
-  isChecked,
   layers,
+  layerToggleAnalytics,
   onBringToBackClick,
   onBringToFrontClick,
   onInfoClick,
@@ -23,6 +22,13 @@ function BiodiversityLayerToggle({
   variant,
 }) {
   const [selectedLayer, setSelectedLayer] = useState(layers[0]);
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    const newChecked = activeLayers.some((layer) => layer.title === selectedLayer.value);
+    setIsChecked(newChecked);
+    if (newChecked) { layerToggleAnalytics(selectedLayer.value); }
+  }, [activeLayers]);
 
   const key = `radio-button-${title}-${selectedLayer.value}-${variant}`;
 
@@ -75,15 +81,14 @@ function BiodiversityLayerToggle({
           option={selectedLayer}
           checked={isChecked}
           onChange={onChange}
-        />
-        <GroupSelect
+          biodiversityToggle
           groupedOptions={GROUPED_OPTIONS}
-          onSelect={(l) => setSelectedLayer(l)}
+          setSelectedLayer={setSelectedLayer}
         />
       </div>
-      {isChecked && selectedLayer && (
+      {isChecked && (
         <LayerTools
-          option={selectedLayer.value}
+          option={selectedLayer}
           onInfoClick={onInfoClick}
           activeLayers={activeLayers}
           onOpacityClick={onOpacityClick}
