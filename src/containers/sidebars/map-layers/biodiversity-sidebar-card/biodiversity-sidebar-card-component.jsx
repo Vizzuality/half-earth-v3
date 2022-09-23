@@ -191,7 +191,7 @@ function BiodiversitySidebarCardComponent({
             type="radio"
             variant="light"
             activeLayers={activeLayers}
-            onChange={(e) => onSelect(e)}
+            onChange={handleLayerToggle}
             themeCategorySlug={BIODIVERSITY_SLUG}
             layers={layerTogglesToDisplay(TERRESTRIAL)}
           />

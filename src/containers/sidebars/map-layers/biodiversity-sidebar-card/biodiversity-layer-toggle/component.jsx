@@ -14,10 +14,11 @@ function BiodiversityLayerToggle({
   activeLayers,
   isChecked,
   layers,
-  onInfoClick,
-  onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
+  onInfoClick,
+  onOpacityClick,
+  onChange,
   title,
   variant,
 }) {
@@ -71,9 +72,9 @@ function BiodiversityLayerToggle({
         <RadioButton
           id={key}
           name={title}
-          option={selectedLayer.value}
+          option={selectedLayer}
           checked={isChecked}
-          onChange={() => console.info(selectedLayer)}
+          onChange={onChange}
         />
         <GroupSelect
           groupedOptions={GROUPED_OPTIONS}
