@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import PropTypes from 'prop-types';
-
 import cx from 'classnames';
 
 import LayerTools from 'components/layer-toggle/layers-tools';
@@ -99,13 +97,5 @@ function BiodiversityLayerToggle({
     </div>
   );
 }
-
-BiodiversityLayerToggle.propTypes = {
-  options: PropTypes.arrayOf({}),
-};
-
-BiodiversityLayerToggle.defaultProps = {
-  options: [],
-};
 
 export default BiodiversityLayerToggle;

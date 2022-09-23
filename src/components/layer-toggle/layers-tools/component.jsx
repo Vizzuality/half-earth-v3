@@ -1,17 +1,17 @@
 import React from 'react';
+import { Tooltip } from 'react-tippy';
+
 import { useT } from '@transifex/react';
 
 import LayerOpacityControl from 'components/layer-opacity-control';
-import { Tooltip } from 'react-tippy';
-
-// icons
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
-import { ReactComponent as BringToBackIcon } from 'icons/bring_to_back.svg';
-import { ReactComponent as BringToFrontIcon } from 'icons/bring_to_front.svg';
 
 import styles from './styles.module.scss';
 
-const LayersTools = ({
+import { ReactComponent as BringToBackIcon } from 'icons/bring_to_back.svg';
+import { ReactComponent as BringToFrontIcon } from 'icons/bring_to_front.svg';
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
+
+function LayersTools({
   option,
   onInfoClick,
   changeGlobe,
@@ -19,7 +19,7 @@ const LayersTools = ({
   onBringToBackClick,
   onBringToFrontClick,
   initialOpacityValue,
-}) => {
+}) {
   const t = useT();
 
   return (
@@ -71,6 +71,6 @@ const LayersTools = ({
       </span>
     </div>
   );
-};
+}
 
 export default LayersTools;
