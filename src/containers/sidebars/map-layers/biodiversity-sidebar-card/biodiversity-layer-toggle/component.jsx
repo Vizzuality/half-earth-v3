@@ -1,6 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
-
-import { useLocale } from '@transifex/react';
+import React, { useEffect, useState } from 'react';
 
 import cx from 'classnames';
 
@@ -9,7 +7,7 @@ import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
 
 import {
-  getResolutions,
+
   TERRESTRIAL,
   GROUPED_OPTIONS,
 } from 'constants/biodiversity-layers-constants';
@@ -27,6 +25,7 @@ function BiodiversityLayerToggle({
   onBringToFrontClick,
   onOpacityClick,
   onChange,
+  resolutions,
   resolutionOptions,
   selectedResolution,
   setSelectedResolution,
@@ -34,9 +33,6 @@ function BiodiversityLayerToggle({
   title,
   variant,
 }) {
-  const locale = useLocale();
-  const resolutions = useMemo(() => getResolutions(), [locale]);
-
   const [selectedLayer, setSelectedLayer] = useState(layers[0]);
   const [isChecked, setIsChecked] = useState(false);
 

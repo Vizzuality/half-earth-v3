@@ -171,19 +171,6 @@ function BiodiversitySidebarCardComponent({
           <span className={styles.dropdownLabel}>
             {t('Terrestrial species')}
           </span>
-          <Dropdown
-            theme="dark"
-            parentWidth="170px"
-            options={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
-            selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
-            handleOptionSelection={(op) => setSelectedResolution({
-              ...selectedResolution,
-              [TERRESTRIAL]: op.slug,
-            })}
-            disabled={
-              layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2
-            }
-          />
         </div>
         <div className={styles.togglesContainer}>
           <BiodiversityLayerToggle
@@ -194,6 +181,7 @@ function BiodiversitySidebarCardComponent({
             onChange={handleLayerToggle}
             themeCategorySlug={BIODIVERSITY_SLUG}
             layers={layerTogglesToDisplay(TERRESTRIAL)}
+            resolutions={resolutions}
             resolutionOptions={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
             selectedResolution={selectedResolution}
             setSelectedResolution={setSelectedResolution}
