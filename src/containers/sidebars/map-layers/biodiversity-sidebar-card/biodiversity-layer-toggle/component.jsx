@@ -34,7 +34,6 @@ function BiodiversityLayerToggle({
   title,
   variant,
 }) {
-  console.log({ themeToggle: theme });
   const locale = useLocale();
   const resolutions = useMemo(() => getResolutions(), [locale]);
 
@@ -52,7 +51,7 @@ function BiodiversityLayerToggle({
   return (
     <div
       className={cx(
-        styles.wrapper,
+        styles.container,
         {
           [styles[variant]]: variant,
           [theme[themeCategorySlug]]: themeCategorySlug,
@@ -60,54 +59,42 @@ function BiodiversityLayerToggle({
         },
       )}
     >
-      <div className={cx(
-        styles.container,
-        { [styles.checked]: isChecked },
-      )}
-      >
-        <div className={styles.radioOption}>
-          <RadioButton
-            id={key}
-            theme={theme.biodiversity}
-            name={title}
-            option={selectedLayer}
-            checked={isChecked}
-            onChange={onChange}
-            biodiversityToggle
-            groupedOptions={GROUPED_OPTIONS(layers)}
-            setSelectedLayer={setSelectedLayer}
-          />
-        </div>
-        <div style={{
-          height: '38px',
-          paddingLeft: '4px',
-        }}
-        >
-          <Dropdown
-            theme="dark"
-            parentWidth="170px"
-            options={resolutionOptions}
-            selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
-            handleOptionSelection={(op) => setSelectedResolution({
-              ...selectedResolution,
-              [TERRESTRIAL]: op.slug,
-            })}
-            disabled={
-          resolutionOptions.length < 2
-            }
-          />
-        </div>
-
-        <LayerTools
+      <div className={styles.radioOption}>
+        <RadioButton
+          id={key}
+          theme={theme.biodiversity}
+          name={title}
           option={selectedLayer}
-          onInfoClick={handleInfoClick}
-          activeLayers={activeLayers}
-          onOpacityClick={onOpacityClick}
-          onBringToBackClick={onBringToBackClick}
-          onBringToFrontClick={onBringToFrontClick}
+          checked={isChecked}
+          onChange={onChange}
+          biodiversityToggle
+          groupedOptions={GROUPED_OPTIONS(layers)}
+          setSelectedLayer={setSelectedLayer}
         />
-
       </div>
+
+      <Dropdown
+        theme="dark"
+        parentWidth="170px"
+        options={resolutionOptions}
+        selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
+        handleOptionSelection={(op) => setSelectedResolution({
+          ...selectedResolution,
+          [TERRESTRIAL]: op.slug,
+        })}
+        disabled={resolutionOptions.length < 2}
+        className={styles.resolutionDropown}
+      />
+
+      <LayerTools
+        option={selectedLayer}
+        onInfoClick={handleInfoClick}
+        activeLayers={activeLayers}
+        onOpacityClick={onOpacityClick}
+        onBringToBackClick={onBringToBackClick}
+        onBringToFrontClick={onBringToFrontClick}
+      />
+
     </div>
   );
 }

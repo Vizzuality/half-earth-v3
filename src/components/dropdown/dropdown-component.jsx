@@ -16,6 +16,7 @@ import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 import styles from './dropdown-styles.module.scss';
 
 function Component({
+  className,
   width,
   theme,
   stacked,
@@ -85,6 +86,7 @@ function Component({
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
         [styles.disabled]: disabled,
+        [className]: !!className,
       })}
     >
       {showSearchInput && (
