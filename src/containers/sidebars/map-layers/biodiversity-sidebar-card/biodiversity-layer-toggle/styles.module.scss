@@ -15,11 +15,14 @@
 }
 
 .container {
+  align-items: center;
   display: flex;
-  width: 100%;
+  justify-content: space-between;
+  height: 44px;
   padding: 0 20px;
   position: relative;
-  justify-content: space-between;
+  width: 100%;
+
   &:hover,
   &.checked {
     background-color: $white-opacity;

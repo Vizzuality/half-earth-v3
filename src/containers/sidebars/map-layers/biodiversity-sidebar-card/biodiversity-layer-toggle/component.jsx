@@ -9,11 +9,11 @@ import styles from './styles.module.scss';
 
 function BiodiversityLayerToggle({
   activeLayers,
+  handleInfoClick,
   layers,
   layerToggleAnalytics,
   onBringToBackClick,
   onBringToFrontClick,
-  onInfoClick,
   onOpacityClick,
   onChange,
   title,
@@ -87,7 +87,7 @@ function BiodiversityLayerToggle({
       {isChecked && (
         <LayerTools
           option={selectedLayer}
-          onInfoClick={onInfoClick}
+          onInfoClick={handleInfoClick}
           activeLayers={activeLayers}
           onOpacityClick={onOpacityClick}
           onBringToBackClick={onBringToBackClick}

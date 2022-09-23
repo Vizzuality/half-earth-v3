@@ -49,6 +49,7 @@ function RadioButton({
         </label>
       )}
       {biodiversityToggle && (
+        // eslint-disable-next-line jsx-a11y/label-has-associated-control
         <label
           htmlFor={id}
           className={cx(styles.radioInput, theme && theme.radioLabel, {

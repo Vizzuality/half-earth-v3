@@ -21,6 +21,7 @@ function LayersTools({
   initialOpacityValue,
 }) {
   const t = useT();
+  console.log({ layerTools: option });
 
   return (
     <div className={styles.toggle}>

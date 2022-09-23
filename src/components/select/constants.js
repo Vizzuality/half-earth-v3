@@ -73,6 +73,5 @@ export const customStyles = {
     bottom: 0,
     color: 'white',
     overflow: 'visible',
-    position: 'absolute',
   }),
 };
