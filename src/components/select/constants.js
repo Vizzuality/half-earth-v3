@@ -1,4 +1,7 @@
 export const customStyles = {
+  container: () => ({
+    width: '100%',
+  }),
   control: (provided, state) => ({
     ...provided,
     backgroundColor: 'tramsparent',
@@ -8,7 +11,7 @@ export const customStyles = {
     cursor: 'pointer',
     height: '38px',
     fontSize: '14px',
-    maxWidth: '168px',
+    width: '100%',
     outline: 'none',
     paddingLeft: '6px',
     paddingTop: 0,
@@ -17,17 +20,6 @@ export const customStyles = {
     ':hover': {
       border: (state.isFocused || state.selectProps.error) && '1px solid transparent',
     },
-  }),
-  dropdownIndicator: (provided, { selectProps: { menuIsOpen, disabled } }) => ({
-    ...provided,
-    color: 'red',
-    margin: 0,
-    opacity: disabled && 0.4,
-    position: 'absolute',
-    right: '18px',
-    top: '10px',
-    transform: menuIsOpen && 'rotate(180deg)',
-    transition: 'transform 0.3s ease-out',
   }),
   groupHeading: () => ({
     color: 'black',

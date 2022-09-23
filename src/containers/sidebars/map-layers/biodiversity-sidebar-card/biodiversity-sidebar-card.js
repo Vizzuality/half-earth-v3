@@ -69,6 +69,7 @@ function BiodiversitySidebarCard(props) {
   }, [biodiversityLayerVariant, layersResolution]);
 
   const handleLayerToggle = (option) => {
+    console.log({ option });
     const layer = layersConfig[option.layer];
     if (selectedLayer === option.layer) {
       layerManagerToggle(option.layer, activeLayers, changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY);

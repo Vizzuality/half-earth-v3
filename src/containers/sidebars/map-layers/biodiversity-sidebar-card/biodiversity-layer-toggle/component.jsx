@@ -11,21 +11,19 @@ import GroupSelect from 'components/select';
 import styles from './styles.module.scss';
 
 function BiodiversityLayerToggle({
-  title,
-  variant,
-  onChange,
-  isChecked,
-  onInfoClick,
   activeLayers,
+  isChecked,
+  layers,
+  onInfoClick,
   onOpacityClick,
   onBringToBackClick,
   onBringToFrontClick,
-  layers,
+  title,
+  variant,
 }) {
   const [selectedLayer, setSelectedLayer] = useState(layers[0]);
-  const key = `radio-button-${title}-test-${variant}`;
 
-  console.log({ selectedLayer });
+  const key = `radio-button-${title}-${selectedLayer.value}-${variant}`;
 
   const parseGroupLayers = (group) => {
     return layers.filter((layer) => layer.group === group).map((layer) => {
@@ -73,18 +71,18 @@ function BiodiversityLayerToggle({
         <RadioButton
           id={key}
           name={title}
-          option="test"
+          option={selectedLayer.value}
           checked={isChecked}
-          onChange={onChange}
+          onChange={() => console.info(selectedLayer)}
         />
         <GroupSelect
           groupedOptions={GROUPED_OPTIONS}
           onSelect={(l) => setSelectedLayer(l)}
         />
       </div>
-      {isChecked && (
+      {isChecked && selectedLayer && (
         <LayerTools
-          option="test"
+          option={selectedLayer.value}
           onInfoClick={onInfoClick}
           activeLayers={activeLayers}
           onOpacityClick={onOpacityClick}

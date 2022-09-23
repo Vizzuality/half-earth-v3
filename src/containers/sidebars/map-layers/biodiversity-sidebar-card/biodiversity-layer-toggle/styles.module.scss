@@ -4,9 +4,10 @@
 
 .radioOption {
   @extend %subtitle;
-  width: 100%;
   color: inherit;
   cursor: pointer;
+  display: flex;
+  width: 50%;
 }
 
 .reverseSwitchIcon {
