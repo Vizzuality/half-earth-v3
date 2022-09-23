@@ -4,7 +4,7 @@ export const customStyles = {
   }),
   control: (provided, state) => ({
     ...provided,
-    backgroundColor: 'tramsparent',
+    backgroundColor: 'transparent',
     border: '1px solid rgba(255,255,255, 0.1)',
     borderRadius: '6px',
     boxSizing: 'border-box',

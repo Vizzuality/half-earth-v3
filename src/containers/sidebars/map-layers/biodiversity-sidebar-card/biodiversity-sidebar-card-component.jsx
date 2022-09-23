@@ -194,6 +194,9 @@ function BiodiversitySidebarCardComponent({
             onChange={handleLayerToggle}
             themeCategorySlug={BIODIVERSITY_SLUG}
             layers={layerTogglesToDisplay(TERRESTRIAL)}
+            resolutionOptions={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
+            selectedResolution={selectedResolution}
+            setSelectedResolution={setSelectedResolution}
           />
         </div>
         {layerTogglesToDisplay(MARINE).length && (
