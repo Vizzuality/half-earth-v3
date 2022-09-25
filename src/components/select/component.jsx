@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
@@ -13,7 +15,6 @@ import { customStyles } from './constants';
 function GroupedSelect({
   onSelect,
   groupedOptions,
-
 }) {
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -43,5 +44,10 @@ function GroupedSelect({
     />
   );
 }
+
+GroupedSelect.propTypes = {
+  groupedOptions: PropTypes.objectOf.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
 
 export default GroupedSelect;

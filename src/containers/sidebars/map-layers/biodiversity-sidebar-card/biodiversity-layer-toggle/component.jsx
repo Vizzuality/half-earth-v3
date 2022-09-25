@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 
 import Dropdown from 'components/dropdown';
@@ -93,5 +95,23 @@ function BiodiversityLayerToggle({
     </div>
   );
 }
+
+BiodiversityLayerToggle.propTypes = {
+  activeLayers: PropTypes.shape({}).isRequired,
+  handleInfoClick: PropTypes.func.isRequired,
+  layers: PropTypes.shape({}).isRequired,
+  layerToggleAnalytics: PropTypes.func.isRequired,
+  onBringToBackClick: PropTypes.func.isRequired,
+  onBringToFrontClick: PropTypes.func.isRequired,
+  onOpacityClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  resolutions: PropTypes.objectOf.isRequired,
+  resolutionOptions: PropTypes.shape({}).isRequired,
+  selectedResolution: PropTypes.func.isRequired,
+  setSelectedResolution: PropTypes.func.isRequired,
+  themeCategorySlug: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  variant: PropTypes.string.isRequired,
+};
 
 export default BiodiversityLayerToggle;
