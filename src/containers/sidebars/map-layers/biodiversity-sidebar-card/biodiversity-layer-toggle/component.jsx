@@ -36,7 +36,6 @@ function BiodiversityLayerToggle({
 }) {
   const [selectedLayer, setSelectedLayer] = useState(layers[0]);
   const [isChecked, setIsChecked] = useState(false);
-
   useEffect(() => {
     const newChecked = activeLayers.some((layer) => layer.title === selectedLayer.value);
     setIsChecked(newChecked);

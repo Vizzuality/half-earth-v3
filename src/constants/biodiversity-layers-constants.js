@@ -108,6 +108,7 @@ export const getLayersToggleConfig = () => ({
           name: t('All terrestrial vertebrates'),
           title: t('All terrestrial vertebrates'),
           layer: ALL_TAXA_PRIORITY,
+          group: ALL_TAXA_PRIORITY,
         },
         {
           value: AMPHIB_PRIORITY,
@@ -499,12 +500,15 @@ const parseGroupLayers = (group, layers) => {
   return layers.filter((layer) => layer.group === group).map((layer) => {
     return {
       ...layer,
-      label: layer.title,
+      label: layer.value === ALL_TAXA_PRIORITY ? 'All groups' : layer.title,
     };
   });
 };
 
 export const GROUPED_OPTIONS = (layers) => [
+  {
+    options: parseGroupLayers(ALL_TAXA_PRIORITY, layers),
+  },
   {
     label: t('mammals'),
     options: parseGroupLayers(t('mammals'), layers),

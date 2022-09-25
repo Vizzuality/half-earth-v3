@@ -38,7 +38,7 @@ function GroupedSelect({
         IndicatorSeparator: () => null,
         SingleValue: (v) => {
           const { data } = v;
-          return (<p className={styles.singleValue}>{t(data.name)}</p>);
+          return (<p className={styles.singleValue}>{t(data.label)}</p>);
         },
         DropdownIndicator: ({ selectProps: { menuIsOpen } }) => (
           <IconArrow className={cx({
