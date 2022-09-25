@@ -506,27 +506,27 @@ const parseGroupLayers = (group, layers) => {
 
 export const GROUPED_OPTIONS = (layers) => [
   {
-    label: 'mammals',
-    options: parseGroupLayers('mammals', layers),
+    label: t('mammals'),
+    options: parseGroupLayers(t('mammals'), layers),
   },
   {
-    label: 'birds',
-    options: parseGroupLayers('birds', layers),
+    label: t('birds'),
+    options: parseGroupLayers(t('birds'), layers),
   },
   {
-    label: 'amphibians',
-    options: parseGroupLayers('amphibians', layers),
+    label: t('amphibians'),
+    options: parseGroupLayers(t('amphibians'), layers),
   },
   {
-    label: 'plants',
-    options: parseGroupLayers('plants', layers),
+    label: t('plants'),
+    options: parseGroupLayers(t('plants'), layers),
   },
   {
-    label: 'invertebrates',
-    options: parseGroupLayers('invertebrates', layers),
+    label: t('invertebrates'),
+    options: parseGroupLayers(t('invertebrates'), layers),
   },
   {
-    label: 'reptils',
-    options: parseGroupLayers('reptils', layers),
+    label: t('reptils'),
+    options: parseGroupLayers(t('reptils'), layers),
   },
 ];

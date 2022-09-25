@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 
+import { useT } from '@transifex/react';
+
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
@@ -16,6 +18,8 @@ function GroupedSelect({
   onSelect,
   groupedOptions,
 }) {
+  const t = useT();
+
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleChange = (value) => {
@@ -29,9 +33,13 @@ function GroupedSelect({
       onChange={handleChange}
       options={groupedOptions}
       styles={customStyles}
-      placeholder="All Groups"
+      placeholder={t('All Groups')}
       components={{
         IndicatorSeparator: () => null,
+        SingleValue: (v) => {
+          const { data } = v;
+          return (<p className={styles.singleValue}>{t(data.name)}</p>);
+        },
         DropdownIndicator: ({ selectProps: { menuIsOpen } }) => (
           <IconArrow className={cx({
             [styles.arrowIcon]: true,
@@ -39,7 +47,6 @@ function GroupedSelect({
           })}
           />
         ),
-
       }}
     />
   );

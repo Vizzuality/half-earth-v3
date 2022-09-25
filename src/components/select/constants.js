@@ -88,11 +88,8 @@ export const customStyles = {
     opacity: state.selectProps.disabled && 0.4,
     transition: 'transform 0.3s ease-out',
   }),
-  singleValue: (styles) => ({
+  valueContainer: (styles) => ({
     ...styles,
-    bottom: 0,
-    color: COLORS.white,
-    fontFamily: FONT_FAMILIES['font-family-1'],
-    overflow: 'visible',
+    display: 'flex',
   }),
 };
