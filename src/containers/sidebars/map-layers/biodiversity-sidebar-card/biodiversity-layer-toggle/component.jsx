@@ -9,7 +9,6 @@ import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
 
 import {
-  TERRESTRIAL,
   GROUPED_OPTIONS,
 } from 'constants/biodiversity-layers-constants';
 
@@ -19,6 +18,7 @@ import styles from './styles.module.scss';
 
 function BiodiversityLayerToggle({
   activeLayers,
+  disabled,
   handleInfoClick,
   layers,
   layerToggleAnalytics,
@@ -26,10 +26,11 @@ function BiodiversityLayerToggle({
   onBringToFrontClick,
   onOpacityClick,
   onChange,
-  resolutions,
   resolutionOptions,
+  selectedOption,
   selectedResolution,
   setSelectedResolution,
+  speciesType,
   themeCategorySlug,
   title,
   variant,
@@ -73,12 +74,12 @@ function BiodiversityLayerToggle({
         theme="dark"
         parentWidth="170px"
         options={resolutionOptions}
-        selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
+        selectedOption={selectedOption}
         handleOptionSelection={(op) => setSelectedResolution({
           ...selectedResolution,
-          [TERRESTRIAL]: op.slug,
+          [speciesType]: op.slug,
         })}
-        disabled={resolutionOptions.length < 2}
+        disabled={disabled}
         className={styles.resolutionDropown}
       />
 
@@ -104,10 +105,10 @@ BiodiversityLayerToggle.propTypes = {
   onBringToFrontClick: PropTypes.func.isRequired,
   onOpacityClick: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  resolutions: PropTypes.objectOf.isRequired,
   resolutionOptions: PropTypes.shape({}).isRequired,
   selectedResolution: PropTypes.func.isRequired,
   setSelectedResolution: PropTypes.func.isRequired,
+  speciesType: PropTypes.oneOf(['TERRESTRIAL', 'MARINE']).isRequired,
   themeCategorySlug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,

@@ -147,6 +147,7 @@ export const getLayersToggleConfig = () => ({
           name: t('All marine vertebrates'),
           title: t('All marine vertebrates'),
           layer: ALL_MARINE_VERTEBRATES_PRIORITY,
+          group: ALL_MARINE_VERTEBRATES_PRIORITY,
         },
         {
           value: FISHES_PRIORITY,
@@ -500,37 +501,54 @@ const parseGroupLayers = (group, layers) => {
   return layers.filter((layer) => layer.group === group).map((layer) => {
     return {
       ...layer,
-      label: layer.value === ALL_TAXA_PRIORITY ? 'All groups' : layer.title,
+      label: layer.title,
+    };
+  });
+};
+
+const parseAllGroupLayers = (group, layers) => {
+  return layers.filter((layer) => layer.group === group).map((layer) => {
+    return {
+      ...layer,
+      label: 'All groups',
     };
   });
 };
 
 export const GROUPED_OPTIONS = (layers) => [
   {
-    options: parseGroupLayers(ALL_TAXA_PRIORITY, layers),
+    options: parseAllGroupLayers(ALL_TAXA_PRIORITY, layers),
   },
   {
-    label: t('mammals'),
-    options: parseGroupLayers(t('mammals'), layers),
-  },
-  {
-    label: t('birds'),
-    options: parseGroupLayers(t('birds'), layers),
+    options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_PRIORITY, layers),
   },
   {
     label: t('amphibians'),
     options: parseGroupLayers(t('amphibians'), layers),
   },
   {
-    label: t('plants'),
-    options: parseGroupLayers(t('plants'), layers),
+    label: t('birds'),
+    options: parseGroupLayers(t('birds'), layers),
+  },
+  {
+    label: t('fishes'),
+    options: parseGroupLayers(t('fishes'), layers),
   },
   {
     label: t('invertebrates'),
     options: parseGroupLayers(t('invertebrates'), layers),
   },
   {
+    label: t('mammals'),
+    options: parseGroupLayers(t('mammals'), layers),
+  },
+  {
+    label: t('plants'),
+    options: parseGroupLayers(t('plants'), layers),
+  },
+  {
     label: t('reptils'),
     options: parseGroupLayers(t('reptils'), layers),
   },
+
 ];

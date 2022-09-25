@@ -19,6 +19,7 @@ const FONT_FAMILIES = getColorsFromSettings('fontFamily');
 export const customStyles = {
   container: () => ({
     width: '100%',
+    zIndex: 99,
   }),
   control: (provided, state) => ({
     ...provided,
@@ -64,6 +65,7 @@ export const customStyles = {
     paddingTop: 0,
     paddingBottom: 0,
     maxHeight: '182px',
+    overflowX: 'hidden',
   }),
   option: (styles, { isDisabled, isSelected, selectProps: { menuIsOpen } }) => ({
     ...styles,

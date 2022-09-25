@@ -15,8 +15,6 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import CategoryBox from 'components/category-box';
-import Dropdown from 'components/dropdown';
-import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 import Tabs from 'components/tabs';
 
@@ -174,17 +172,19 @@ function BiodiversitySidebarCardComponent({
         </div>
         <div className={styles.togglesContainer}>
           <BiodiversityLayerToggle
-            map={map}
-            type="radio"
-            variant="light"
             activeLayers={activeLayers}
-            onChange={handleLayerToggle}
-            themeCategorySlug={BIODIVERSITY_SLUG}
+            disabled={layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2}
             layers={layerTogglesToDisplay(TERRESTRIAL)}
-            resolutions={resolutions}
+            map={map}
+            onChange={handleLayerToggle}
             resolutionOptions={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
+            selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
             selectedResolution={selectedResolution}
             setSelectedResolution={setSelectedResolution}
+            speciesType={TERRESTRIAL}
+            themeCategorySlug={BIODIVERSITY_SLUG}
+            type="radio"
+            variant="light"
           />
         </div>
         {layerTogglesToDisplay(MARINE).length && (
@@ -194,34 +194,24 @@ function BiodiversitySidebarCardComponent({
               <span className={styles.dropdownLabel}>
                 {t('Marine species')}
               </span>
-              <Dropdown
-                theme="dark"
-                options={layersResolution[biodiversityLayerVariant][MARINE]}
-                selectedOption={
-                  layersResolution[biodiversityLayerVariant][MARINE][0]
-                }
-                handleOptionSelection={(op) => setSelectedResolution({
-                  ...selectedResolution,
-                  [MARINE]: op.slug,
-                })}
-                disabled={
-                  layersResolution[biodiversityLayerVariant][MARINE].length < 2
-                }
-              />
             </div>
+
             <div className={styles.togglesContainer}>
-              {layerTogglesToDisplay(MARINE).map((layer) => (
-                <LayerToggle
-                  map={map}
-                  type="radio"
-                  option={layer}
-                  variant="light"
-                  key={layer.value}
-                  activeLayers={activeLayers}
-                  onChange={handleLayerToggle}
-                  themeCategorySlug={BIODIVERSITY_SLUG}
-                />
-              ))}
+              <BiodiversityLayerToggle
+                activeLayers={activeLayers}
+                disabled={layersResolution[biodiversityLayerVariant][MARINE].length < 2}
+                layers={layerTogglesToDisplay(MARINE)}
+                map={map}
+                onChange={handleLayerToggle}
+                resolutionOptions={layersResolution[biodiversityLayerVariant][MARINE]}
+                selectedOption={layersResolution[biodiversityLayerVariant][MARINE][0]}
+                selectedResolution={selectedResolution}
+                setSelectedResolution={setSelectedResolution}
+                speciesType={MARINE}
+                themeCategorySlug={BIODIVERSITY_SLUG}
+                type="radio"
+                variant="light"
+              />
             </div>
           </>
         )}
