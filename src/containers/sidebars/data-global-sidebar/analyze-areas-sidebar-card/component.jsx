@@ -104,7 +104,16 @@ function AnalyzeAreasCardComponent({
                       onClick={() => selectedAnalysisTab !== `${tab.label}`
                         && handleAnalysisTabClick(`${tab.label}`)}
                     >
-                      {tab.icon}
+                      <span>{tab.icon}</span>
+                      <span className={cx({
+                        [styles.tabButtonCaption]: true,
+                        [styles.tabButtonCaptionActive]:
+                        selectedAnalysisTab === `${tab.label}`,
+                      })}
+                      >
+                        {tab.label}
+
+                      </span>
                     </button>
                   );
                 })}
