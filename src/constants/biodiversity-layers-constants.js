@@ -569,10 +569,16 @@ export const GROUPED_OPTIONS = (layers) => [
     options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_PRIORITY, layers),
   },
   {
-    options: parseAllGroupLayers(ALL_TAXA_PRIORITY, layers),
+    options: parseAllGroupLayers(ALL_TAXA_RICHNESS, layers),
   },
   {
-    options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_PRIORITY, layers),
+    options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_RICHNESS, layers),
+  },
+  {
+    options: parseAllGroupLayers(ALL_TAXA_RARITY, layers),
+  },
+  {
+    options: parseAllGroupLayers(ALL_MARINE_VERTEBRATES_RARITY, layers),
   },
   {
     label: t('amphibians'),
