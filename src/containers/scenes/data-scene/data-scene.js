@@ -49,12 +49,18 @@ function Container(props) {
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
 
   useEffect(() => {
-    if (sidebarTabActive === sidebarTabs[0].slug) {
-      return setUpdatedActiveLayers(updatedActiveLayers
-        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER));
+    const hasAdminLayer = !!updatedActiveLayers
+      .find((ual) => ual.title === ADMIN_AREAS_FEATURE_LAYER);
+
+    if (sidebarTabActive === sidebarTabs[0].slug && hasAdminLayer) {
+      const layersWithoutAdmin = updatedActiveLayers
+        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
+      setUpdatedActiveLayers(layersWithoutAdmin);
     }
-    return setUpdatedActiveLayers([...updatedActiveLayers, { title: ADMIN_AREAS_FEATURE_LAYER }]);
-  }, [sidebarTabActive]);
+    if (sidebarTabActive === sidebarTabs[1].slug && !hasAdminLayer) {
+      setUpdatedActiveLayers([...updatedActiveLayers, { title: ADMIN_AREAS_FEATURE_LAYER }]);
+    }
+  }, [sidebarTabActive, updatedActiveLayers]);
 
   const locale = useLocale();
   const t = useT();
