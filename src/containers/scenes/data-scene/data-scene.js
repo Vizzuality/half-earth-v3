@@ -40,11 +40,16 @@ function Container(props) {
     precomputedAoiAnalytics,
     changeUI,
     activeCategoryLayers,
+    sidebarTabActive,
   } = props;
-
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
+
+  useEffect(() => {
+    if (sidebarTabActive === 'map-layers') return setUpdatedActiveLayers(updatedActiveLayers.filter((ual) => ual.title !== 'admin_areas_feature_layer'));
+    return setUpdatedActiveLayers([...updatedActiveLayers, { title: 'admin_areas_feature_layer' }]);
+  }, [sidebarTabActive]);
 
   const locale = useLocale();
   const t = useT();
