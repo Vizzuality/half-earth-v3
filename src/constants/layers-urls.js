@@ -278,7 +278,7 @@ export const LAYERS_URLS = {
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
     'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer',
-    'https://utility.arcgis.com/usrsvcs/servers/176718716a2849e486671cebc59f3c94/rest/services/gadm1_precalculated_20220224_nspecies_9382041fa11b4941badeaf3b73c61216/FeatureServer',
+    'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer',
   ],
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4d23b29746e547deb9d4c1d61df8e0d4/rest/services/gadm1_precalculated_20220224_nspecies/FeatureServer/0',
