@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Select from 'react-select';
 
 import { useT } from '@transifex/react';
@@ -19,6 +19,7 @@ function GroupedSelect({
   groupedOptions,
 }) {
   const t = useT();
+  const ref = useRef();
 
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -34,6 +35,8 @@ function GroupedSelect({
       options={groupedOptions}
       styles={customStyles}
       placeholder={t('All Groups')}
+      menuPortalTarget={document.body}
+      menuPosition="absolute"
       components={{
         IndicatorSeparator: () => null,
         SingleValue: (v) => {

@@ -42,8 +42,11 @@ export const customStyles = {
   groupHeading: () => ({
     color: COLORS.black,
     fontWeight: FONT_WEIGHTS['font-weight-bold'],
-    marginLeft: '10px',
+    paddingLeft: '10px',
     textTransform: 'capitalize',
+  }),
+  group: () => ({
+    padding: 0,
   }),
   input: (styles) => ({
     ...styles,
@@ -53,34 +56,38 @@ export const customStyles = {
   }),
   menu: (provided) => ({
     ...provided,
+    borderRadius: '0 0 6px 6px',
     margin: 0,
-    top: '38px',
+    top: 0,
     maxWidth: '154px',
     overflowX: 'hidden',
   }),
   menuList: (provided) => ({
     ...provided,
-    borderRadius: '6px',
     paddingTop: 0,
     paddingBottom: 0,
     maxHeight: '182px',
     overflowX: 'hidden',
   }),
-  option: (styles, { isDisabled, isSelected, selectProps: { menuIsOpen } }) => ({
+  option: (styles, { isDisabled, isSelected }) => ({
     ...styles,
     alignItems: 'center',
     backgroundColor: isSelected && 'transparent',
-    borderRadius: menuIsOpen && '6px',
     color: COLORS.black,
     cursor: isDisabled ? 'not-allowed' : 'pointer',
     display: 'flex',
-    height: '30px',
+    height: '36px',
+    margin: 0,
     fontFamily: FONT_FAMILIES['font-family-1'],
-    marginLeft: '6px',
+    fontSize: '14px',
+    paddingLeft: '18px',
     ':last-of-type': {
       borderBottom: 'none',
     },
     textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: COLORS.alto,
+    },
   }),
   placeholder: (styles, state) => ({
     ...styles,
