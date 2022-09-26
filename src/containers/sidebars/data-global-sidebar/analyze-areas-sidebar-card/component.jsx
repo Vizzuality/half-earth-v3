@@ -112,7 +112,6 @@ function AnalyzeAreasCardComponent({
                       })}
                       >
                         {tab.label}
-
                       </span>
                     </button>
                   );
