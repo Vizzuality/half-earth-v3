@@ -14,25 +14,9 @@ function RadioButton({
   id,
   disabled,
   biodiversityToggle,
-  groupedOptions,
+  parseGroupOptions,
   setSelectedLayer,
 }) {
-  const parseGroupOptions = () => {
-    const groupedOptionsMultiple = groupedOptions
-      .filter((o) => !!o.options.length)
-      .find((o) => o.options.length > 1);
-
-    if (!groupedOptionsMultiple) {
-      return groupedOptions.map((go) => {
-        return {
-          ...go,
-          label: null,
-        };
-      });
-    }
-    return groupedOptions;
-  };
-
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
