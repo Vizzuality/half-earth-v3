@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { t } from '@transifex/native';
+
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
@@ -11,7 +13,7 @@ import { ReactComponent as AoisUploadIcon } from 'icons/aois_upload.svg';
 
 export const TABS = (tab) => [
   {
-    label: 'click',
+    label: t('click'),
     icon: <AoisClickIcon className={cx({
       [styles.tabIcon]: true,
       [styles.tabIconActive]: tab === 'click',
@@ -19,7 +21,7 @@ export const TABS = (tab) => [
     />,
   },
   {
-    label: 'search',
+    label: t('search'),
     icon: <AoisSearchIcon className={cx({
       [styles.tabIcon]: true,
       [styles.tabIconActive]: tab === 'search',
@@ -27,7 +29,7 @@ export const TABS = (tab) => [
     />,
   },
   {
-    label: 'draw',
+    label: t('draw'),
     icon: <AoisDrawIcon className={cx({
       [styles.tabIcon]: true,
       [styles.tabIconActive]: tab === 'draw',
@@ -35,7 +37,7 @@ export const TABS = (tab) => [
     />,
   },
   {
-    label: 'upload',
+    label: t('upload'),
     icon: <AoisUploadIcon className={cx({
       [styles.tabIcon]: true,
       [styles.tabIconActive]: tab === 'upload',
