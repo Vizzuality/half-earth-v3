@@ -46,7 +46,9 @@ function Container(props) {
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
   const sidebarTabs = getSidebarTabs();
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
-  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
+  const activeLayersWithoutAdmin = activeLayers
+    .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
+  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayersWithoutAdmin);
 
   useEffect(() => {
     const hasAdminLayer = !!updatedActiveLayers
