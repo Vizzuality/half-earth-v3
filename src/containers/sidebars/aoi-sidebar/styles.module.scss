@@ -118,6 +118,7 @@ $sidebar-content-top: 180px;
   display: flex;
   flex-flow: column nowrap;
   align-items: baseline;
+  min-height: 60px;
 }
 
 .areaName {
