@@ -16,6 +16,7 @@ import { getTooltipContent } from 'utils/tooltip-utils';
 import intersectionBy from 'lodash/intersectionBy';
 import unionBy from 'lodash/unionBy';
 
+import { getSidebarTabs } from 'constants/aois';
 import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
@@ -43,12 +44,16 @@ function Container(props) {
     sidebarTabActive,
   } = props;
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
+  const sidebarTabs = getSidebarTabs();
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
 
   useEffect(() => {
-    if (sidebarTabActive === 'map-layers') return setUpdatedActiveLayers(updatedActiveLayers.filter((ual) => ual.title !== 'admin_areas_feature_layer'));
-    return setUpdatedActiveLayers([...updatedActiveLayers, { title: 'admin_areas_feature_layer' }]);
+    if (sidebarTabActive === sidebarTabs[0].slug) {
+      return setUpdatedActiveLayers(updatedActiveLayers
+        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER));
+    }
+    return setUpdatedActiveLayers([...updatedActiveLayers, { title: ADMIN_AREAS_FEATURE_LAYER }]);
   }, [sidebarTabActive]);
 
   const locale = useLocale();
