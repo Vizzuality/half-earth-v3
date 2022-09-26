@@ -145,15 +145,15 @@ function AOISidebar({
               }}
             >
               <section className={styles.headerCard}>
-                {area && areaName && (
-                  <Button
-                    type="rounded"
-                    handleClick={handleClose}
-                    Icon={CloseIcon}
-                    className={styles.backButton}
-                    tooltipText={t('Go back to the globe')}
-                  />
-                )}
+
+                <Button
+                  type="rounded"
+                  handleClick={handleClose}
+                  Icon={CloseIcon}
+                  className={styles.backButton}
+                  tooltipText={t('Go back to the globe')}
+                />
+
                 <DummyBlurWorkaround />
                 <div className={styles.topRow}>
                   <div className={styles.nameWrapper}>
