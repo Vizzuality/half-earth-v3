@@ -100,11 +100,9 @@
 }
 
 .analyzeMenuContainer {
-  align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-
-
 
   .analyzeMenuTitle {
     @extend %bodyText;
@@ -119,19 +117,32 @@
     margin: 6px 0;
 
     .tabButton {
+      display: flex;
       height: 48px;
       padding: 12px;
-      width: 46px;
+      width: 97px;
 
       .tabIcon {
+        display: flex;
         height: 24px;
         fill: $white;
         margin-bottom: $paragraph-gutter;
+        margin-right: 8px;
         width: 24px;
       }
 
       .tabIconActive {
         fill: $dark-text;
+      }
+
+      .tabButtonCaption {
+        @extend %bodyText;
+        color: $white;
+        text-transform: capitalize;
+      }
+
+      .tabButtonCaptionActive {
+        color: $black;
       }
     }
 
