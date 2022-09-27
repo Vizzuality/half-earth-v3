@@ -1,15 +1,11 @@
 import React, { useMemo } from 'react';
 
+import { useT, useLocale } from '@transifex/react';
+
 import {
   roundRangeInArea,
   roundGlobalRange,
 } from 'utils/data-formatting-utils';
-
-import { useT, useLocale } from '@transifex/react';
-
-import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
-import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
-import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
@@ -22,6 +18,10 @@ import {
 } from 'constants/analyze-areas-constants';
 
 import styles from './styles.module.scss';
+
+import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
+import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
+import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 
@@ -98,7 +98,11 @@ function Component({
             <div>
               <div className={styles.speciesCarousel}>
                 {previousImage && (
+                  // eslint-disable-next-line max-len
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/control-has-associated-label
                   <div
+                    role="button"
+                    tabIndex={0}
                     className={`${styles.previousSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
                     onClick={handlePreviousSpeciesSelection}
                     style={{
@@ -119,7 +123,11 @@ function Component({
                   )}
                 </div>
                 {nextImage && (
+                  // eslint-disable-next-line max-len
+                  // eslint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/click-events-have-key-events
                   <div
+                    role="button"
+                    tabIndex={0}
                     className={`${styles.nextSpeciesImageWrapper} ${styles.speciesImageWrapper}`}
                     onClick={handleNextSpeciesSelection}
                     style={{
@@ -130,7 +138,11 @@ function Component({
               </div>
               <div className={styles.sliderControls}>
                 {showCarouselArrows && (
+                  // eslint-disable-next-line max-len
+                  // eslint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/click-events-have-key-events
                   <div
+                    role="button"
+                    tabIndex={0}
                     className={styles.arrow_icon_container}
                     onClick={handlePreviousSpeciesSelection}
                   >
@@ -153,7 +165,11 @@ function Component({
                   </span>
                 </div>
                 {showCarouselArrows && (
+                  // eslint-disable-next-line max-len
+                  // eslint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/click-events-have-key-events
                   <div
+                    role="button"
+                    tabIndex={0}
                     className={styles.arrow_icon_container}
                     onClick={handleNextSpeciesSelection}
                   >
@@ -163,7 +179,11 @@ function Component({
               </div>
             </div>
             <div className={styles.globalRangeArea}>
-              <span>{t('Area of habitat-suitable range for this species available globally')}</span>
+              <span>
+                {t(
+                  'Area of habitat-suitable range for this species available globally',
+                )}
+              </span>
               <p>
                 {`${roundGlobalRange(
                   individualSpeciesData.globaldRangeArea,
@@ -190,9 +210,7 @@ function Component({
               )}
             />
             <p className={styles.iucnStatus}>
-              {`${t('IUCN status')}: ${
-                individualSpeciesData.iucnCategory
-              }`}
+              {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}
             </p>
           </section>
         )}

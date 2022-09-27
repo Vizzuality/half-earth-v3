@@ -13,7 +13,7 @@ import { useLocale, useT } from '@transifex/react';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
-import { getSelectedAnalysisLayer, createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
+import { createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
 import { localeFormatting } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 
@@ -28,6 +28,7 @@ import {
 } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
 
+import { mapStateToProps } from './analyze-areas-sidebar-card-selectors';
 import Component from './component.jsx';
 
 const actions = {
@@ -93,6 +94,8 @@ function AnalyzeAreasContainer(props) {
     shapeUploadErrorAnalytics,
     shapeUploadSuccessfulAnalytics,
     shapeUploadTooBigAnalytics,
+    changeUI,
+    selectedAnalysisLayer,
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(precalculatedAOIOptions[0]);
@@ -104,12 +107,10 @@ function AnalyzeAreasContainer(props) {
   });
 
   useEffect(() => {
-    const activeOption = getSelectedAnalysisLayer(activeLayers);
-    if (activeOption) {
-      setSelectedOption(activeOption);
-    }
-    // Don't remove locale. Is here to recalculate the titles translation
-  }, [locale]);
+    setSelectedOption(precalculatedAOIOptions.find(
+      (option) => option.title === selectedAnalysisLayer,
+    ));
+  }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
 
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
@@ -267,7 +268,7 @@ function AnalyzeAreasContainer(props) {
 
   const handleOptionSelection = (option) => {
     handleLayerToggle(option.slug);
-    setSelectedOption(option);
+    changeUI({ selectedAnalysisLayer: option.slug });
     setTooltipIsVisible(false);
   };
 
@@ -300,4 +301,4 @@ function AnalyzeAreasContainer(props) {
   );
 }
 
-export default connect(null, actions)(AnalyzeAreasContainer);
+export default connect(mapStateToProps, actions)(AnalyzeAreasContainer);

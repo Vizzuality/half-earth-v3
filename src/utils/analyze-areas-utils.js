@@ -2,11 +2,8 @@ import { loadModules } from 'esri-loader';
 
 import { percentageFormat } from 'utils/data-formatting-utils';
 
-import intersectionBy from 'lodash/intersectionBy';
 import _pick from 'lodash/pick';
 import sha1 from 'sha1';
-
-import { getPrecalculatedAOIOptions } from 'constants/analyze-areas-constants';
 
 import amphibiansPlaceholder from 'images/no-amphibian.png';
 import birdsPlaceholder from 'images/no-bird.png';
@@ -29,11 +26,6 @@ export function roundUpPercentage(value) {
 export function calculateGeometryArea(geometry, geometryEngine) {
   const SQ_KM_WKID = 109414;
   return geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
-}
-
-export function getSelectedAnalysisLayer(activeLayers) {
-  const intersectionArray = intersectionBy(getPrecalculatedAOIOptions(), activeLayers, 'title');
-  return intersectionArray[0];
 }
 
 export function createHashFromGeometry(geometry) {
