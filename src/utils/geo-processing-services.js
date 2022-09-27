@@ -1,13 +1,11 @@
 import { loadModules } from 'esri-loader';
-import { LAYERS_URLS } from 'constants/layers-urls';
-import {
-  ELU_LOOKUP_TABLE,
-} from 'constants/layers-slugs';
-import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
-import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
+
 import EsriFeatureService from 'services/esri-feature-service';
 import { getCrfData } from 'services/geo-processing-services/biodiversity';
 import { getCrfData as getContextualData } from 'services/geo-processing-services/contextual-data';
+
+import { AOIS_HISTORIC } from 'constants/analyze-areas-constants';
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import {
   WDPA_LIST,
   WDPA_PERCENTAGE,
@@ -23,6 +21,10 @@ import {
   REPTILES,
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
+import {
+  ELU_LOOKUP_TABLE,
+} from 'constants/layers-slugs';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 export function getJobInfo(url, params) {
   return new Promise((resolve, reject) => {
@@ -40,6 +42,7 @@ export function jobTimeProfiling(jobStart) {
 }
 
 export function getEluData(data) {
+  // eslint-disable-next-line max-len
   const eluCode = data[CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS]].value.features[0].attributes.MAJORITY;
   return new Promise((resolve, reject) => {
     EsriFeatureService.getFeatures({
@@ -63,11 +66,13 @@ function getAreaPressures(data) {
   if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) return {};
   return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce((acc, value) => ({
     ...acc,
-    [landPressuresLookup[value.attributes.SliceNumber]]: value.attributes.percentage_land_encroachment,
+    [landPressuresLookup[value.attributes.SliceNumber]]:
+      value.attributes.percentage_land_encroachment,
   }), {});
 }
 
-const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes[COUNTRY_ATTRIBUTES.Pop2020_SUM];
+const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]]
+  .value.features[0].attributes[COUNTRY_ATTRIBUTES.Pop2020_SUM];
 
 const getProtectedAreasList = (data) => (
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map((f) => ({
@@ -81,7 +86,9 @@ const getProtectedAreasList = (data) => (
   }))
 );
 
-const getPercentage = (data) => data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0] && data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0].attributes.percentage_protected;
+const getPercentage = (data) => data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0]
+  && data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]]
+    .value.features[0].attributes.percentage_protected;
 
 export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
@@ -199,13 +206,19 @@ export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
   getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then((data) => setTaxaData(data));
 };
 
-const getAreaName = (data, ) => {
+const getAreaName = (data) => {
   if (data.NAME) return `${data.NAME}`;
   if (data.NAME_1) return `${data.NAME_1}, (${data.GID_0})`;
   if (!data.NAME_1) return `${data.NAME_0}`;
+  return undefined;
 };
 
-export const getPrecalculatedContextualData = (data, layerSlug, includeProtectedAreasList = false, includeAllData = false, areaName) => {
+export const getPrecalculatedContextualData = ({
+  data,
+  areaName,
+  includeProtectedAreasList = false,
+  includeAllData = false,
+}) => {
   const pressures = {};
   Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
     pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
@@ -221,6 +234,13 @@ export const getPrecalculatedContextualData = (data, layerSlug, includeProtected
     pressures,
     population: data.population_sum,
     ...(includeProtectedAreasList && { ...data.protectedAreasList }),
+    speciesNumbers: {
+      nspecies: data.nspecies,
+      birds: data.bird_nspecies,
+      mammals: data.mamm_nspecies,
+      reptiles: data.rept_nspecies,
+      amphibians: data.amph_nspecies,
+    },
     protectionPercentage: data.percentage_protected,
     ...(includeAllData && { ...data }),
   });

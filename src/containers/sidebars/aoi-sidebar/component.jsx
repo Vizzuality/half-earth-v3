@@ -83,9 +83,15 @@ function AOISidebar({
 
   const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 
-  const humanPressuresLandUse = useMemo(() => getHumanPressuresLandUse(), [locale]);
+  const humanPressuresLandUse = useMemo(
+    () => getHumanPressuresLandUse(),
+    [locale],
+  );
 
-  const aoiBiodiversityToggles = useMemo(() => getAOIBiodiversityToggles(), [locale]);
+  const aoiBiodiversityToggles = useMemo(
+    () => getAOIBiodiversityToggles(),
+    [locale],
+  );
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
@@ -145,7 +151,6 @@ function AOISidebar({
               }}
             >
               <section className={styles.headerCard}>
-
                 <Button
                   type="rounded"
                   handleClick={handleClose}
@@ -243,7 +248,11 @@ function AOISidebar({
                     </span>
                   </div>
                 </div>
-                <SpeciesCard area={area} speciesData={speciesData} />
+                <SpeciesCard
+                  area={area}
+                  speciesData={speciesData}
+                  contextualData={contextualData}
+                />
                 <SidebarCard
                   map={map}
                   toggleType="radio"
@@ -422,7 +431,11 @@ function AOISidebar({
               </span>
             </div>
           </div>
-          <SpeciesCard area={area} speciesData={speciesData} />
+          <SpeciesCard
+            area={area}
+            speciesData={speciesData}
+            contextualData={contextualData}
+          />
           <SidebarCard
             map={map}
             toggleType="radio"

@@ -1,23 +1,30 @@
 import React, { useEffect, useState, useMemo } from 'react';
+
 import { useT, useLocale } from '@transifex/react';
+
+import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
 
 import orderBy from 'lodash/orderBy';
 
 // constants
-import { getIUCNList } from 'constants/iucn-list';
+import MolService from 'services/mol';
 
 import { getSpeciesFilters } from 'constants/analyze-areas-constants';
+import { getIUCNList } from 'constants/iucn-list';
+
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
 // utils
-import { getPlaceholderSpeciesImage, getPlaceholderSpeciesText } from 'utils/analyze-areas-utils';
 // services
-import MolService from 'services/mol';
 
 // component
 import Component from './component';
 
 const SEARCH_RESULTS_SLUG = 'search-results';
+
+const {
+  REACT_APP_FEATURE_NEW_MENUS,
+} = process.env;
 
 function SpeciesCardContainer(props) {
   const locale = useLocale();
@@ -26,7 +33,7 @@ function SpeciesCardContainer(props) {
   const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
-  const { speciesData } = props;
+  const { speciesData, contextualData } = props;
   const { species } = speciesData;
 
   const language = locale !== '' ? locale : 'en';
@@ -72,11 +79,13 @@ function SpeciesCardContainer(props) {
 
   const handleSpeciesSearch = (value) => {
     const results = speciesToDisplay
-      .filter((species) => {
-        const nameFound = species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0;
+      .filter((_species) => {
+        const nameFound = _species.name.toLowerCase().indexOf(value.toLowerCase()) >= 0;
         let commonNameFound = false;
-        if (species.commonName) {
-          commonNameFound = species.commonName.findIndex((cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0) >= 0;
+        if (_species.commonName) {
+          commonNameFound = _species.commonName.findIndex(
+            (cnValue) => cnValue.toLowerCase().indexOf(value.toLowerCase()) >= 0,
+          ) >= 0;
         }
         return nameFound || commonNameFound;
       })
@@ -109,9 +118,11 @@ function SpeciesCardContainer(props) {
   };
 
   const handlePreviousSpeciesSelection = () => {
-    selectedSpeciesIndex === 0
-      ? setSelectedSpeciesIndex(speciesToDisplay.length - 1)
-      : setSelectedSpeciesIndex(selectedSpeciesIndex - 1);
+    if (selectedSpeciesIndex === 0) {
+      setSelectedSpeciesIndex(
+        selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1,
+      );
+    }
   };
 
   useEffect(() => {
@@ -124,16 +135,21 @@ function SpeciesCardContainer(props) {
     const filters = speciesFiltersSource.map((filter) => {
       switch (filter.slug) {
         case 'all':
-          return { slug: filter.slug, label: `${filter.label} (${species && species.length})` };
-        default:
-          const count = species && species.filter((sp) => sp.category === filter.slug).length;
+          return { slug: filter.slug, label: `${filter.label} (${species && species.length && contextualData.speciesNumbers.nspecies})` };
+        default: {
+          const count = REACT_APP_FEATURE_NEW_MENUS
+            ? contextualData.speciesNumbers && contextualData.speciesNumbers[filter.label]
+            : species && species.filter((sp) => sp.category === filter.slug).length;
           return { slug: filter.slug, label: `${filter.label} (${count})` };
+        }
       }
     });
     setFilterWithCount(filters);
 
     // update species count in selected filter
-    const tempLabel = speciesFiltersSource.find((sp) => sp.slug === selectedSpeciesFilter.slug).label;
+    const tempLabel = speciesFiltersSource.find(
+      (sp) => sp.slug === selectedSpeciesFilter.slug,
+    ).label;
     setSpeciesFilter({
       slug: selectedSpeciesFilter.slug,
       label: (selectedSpeciesFilter.slug === 'all')
@@ -184,7 +200,11 @@ function SpeciesCardContainer(props) {
         MolService.getSpecies(previousSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
-              setPreviousImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+              setPreviousImage(
+                results[0].image
+                  ? results[0].image.url
+                  : getPlaceholderSpeciesImage(results[0].taxa),
+              );
             } else {
               setPreviousImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
@@ -192,7 +212,9 @@ function SpeciesCardContainer(props) {
         MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
-              setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+              setNextImage(results[0].image
+                ? results[0].image.url
+                : getPlaceholderSpeciesImage(results[0].taxa));
             } else {
               setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
@@ -209,7 +231,11 @@ function SpeciesCardContainer(props) {
         MolService.getSpecies(nextSpeciesName, language)
           .then((results) => {
             if (results.length > 0) {
-              setNextImage(results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa));
+              setNextImage(
+                results[0].image
+                  ? results[0].image.url
+                  : getPlaceholderSpeciesImage(results[0].taxa),
+              );
             } else {
               setNextImage(DEFAULT_PLACEHOLDER_IMAGE);
             }
@@ -225,11 +251,17 @@ function SpeciesCardContainer(props) {
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
-            imageUrl: results[0].image ? results[0].image.url : getPlaceholderSpeciesImage(results[0].taxa),
+            imageUrl: results[0].image
+              ? results[0].image.url
+              : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
           });
-          results[0].image ? setPlaceholderText(null) : setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa));
+          if (results[0].image) {
+            setPlaceholderText(null);
+          } else {
+            setPlaceholderText(getPlaceholderSpeciesText(results[0].taxa));
+          }
         } else {
           handleNextSpeciesSelection();
         }

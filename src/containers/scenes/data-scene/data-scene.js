@@ -5,12 +5,12 @@ import mapTooltipActions from 'redux_modules/map-tooltip';
 
 import { AREA_OF_INTEREST } from 'router';
 
-import { useLocale, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
 
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
-import { getSelectedAnalysisLayer, createHashFromGeometry } from 'utils/analyze-areas-utils';
+import { createHashFromGeometry } from 'utils/analyze-areas-utils';
 import { getTooltipContent } from 'utils/tooltip-utils';
 
 import intersectionBy from 'lodash/intersectionBy';
@@ -31,7 +31,6 @@ import Component from './data-scene-component';
 import mapStateToProps from './data-scene-selectors';
 
 const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
-
 function Container(props) {
   const {
     mapTooltipData,
@@ -42,29 +41,28 @@ function Container(props) {
     changeUI,
     activeCategoryLayers,
     sidebarTabActive,
+    selectedAnalysisLayer,
   } = props;
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
-  const sidebarTabs = getSidebarTabs();
-  const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
+  const [mapLayerTab, analyzeAreasTab] = getSidebarTabs();
+
   const activeLayersWithoutAdmin = activeLayers
     .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
   const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayersWithoutAdmin);
 
   useEffect(() => {
-    const hasAdminLayer = !!updatedActiveLayers
+    const adminLayerIsActive = !!updatedActiveLayers
       .find((ual) => ual.title === ADMIN_AREAS_FEATURE_LAYER);
 
-    if (sidebarTabActive === sidebarTabs[0].slug && hasAdminLayer) {
-      const layersWithoutAdmin = updatedActiveLayers
-        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
-      setUpdatedActiveLayers(layersWithoutAdmin);
+    if (sidebarTabActive === mapLayerTab.slug && adminLayerIsActive) {
+      setUpdatedActiveLayers(updatedActiveLayers
+        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER));
     }
-    if (sidebarTabActive === sidebarTabs[1].slug && !hasAdminLayer) {
+    if (sidebarTabActive === analyzeAreasTab.slug && !adminLayerIsActive) {
       setUpdatedActiveLayers([...updatedActiveLayers, { title: ADMIN_AREAS_FEATURE_LAYER }]);
     }
-  }, [sidebarTabActive, updatedActiveLayers]);
+  }, [sidebarTabActive, updatedActiveLayers, setUpdatedActiveLayers]);
 
-  const locale = useLocale();
   const t = useT();
 
   useEffect(() => {
@@ -79,25 +77,25 @@ function Container(props) {
 
   const handleHighlightLayerFeatureClick = (features) => {
     if (features && features.length && selectedAnalysisLayer) {
-      const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer.slug];
+      const tooltipConfig = MAP_TOOLTIP_CONFIG[selectedAnalysisLayer];
 
       const { title, subtitle, id } = tooltipConfig;
       const { geometry, attributes } = features[0].graphic;
       let customId;
       let customTitle;
-      if (selectedAnalysisLayer.slug === HALF_EARTH_FUTURE_TILE_LAYER) {
+      if (selectedAnalysisLayer === HALF_EARTH_FUTURE_TILE_LAYER) {
         // Calculate sha-1 id for future places
         customId = createHashFromGeometry(geometry);
         customTitle = `Priority place ${attributes.cluster}`;
       }
-      if (selectedAnalysisLayer.slug === SPECIFIC_REGIONS_TILE_LAYER) {
+      if (selectedAnalysisLayer === SPECIFIC_REGIONS_TILE_LAYER) {
         // Calculate sha-1 id for specific regions
         customId = `region-${attributes.region}`;
       }
 
       const getPrecalculatedLayer = (precalculatedAttributes) => {
-        if (selectedAnalysisLayer.slug !== ADMIN_AREAS_FEATURE_LAYER) {
-          return selectedAnalysisLayer.slug;
+        if (selectedAnalysisLayer !== ADMIN_AREAS_FEATURE_LAYER) {
+          return selectedAnalysisLayer;
         }
         return precalculatedAttributes.GID_1
           ? GADM_1_ADMIN_AREAS_FEATURE_LAYER
@@ -127,16 +125,9 @@ function Container(props) {
     changeUI({ activeCategoryLayers: intersectionBy(updatedActiveLayers, CATEGORY_LAYERS, 'title') });
   };
 
-  useEffect(() => {
-    const activeOption = getSelectedAnalysisLayer(activeLayers);
-    setSelectedAnalysisLayer(activeOption);
-    // Don't remove locale. Is here to recalculate the titles translation
-  }, [activeLayers, locale]);
-
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <Component
-      selectedAnalysisLayer={selectedAnalysisLayer}
       handleTooltipActionButtonClick={handleTooltipActionButtonClick}
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
       updatedActiveLayers={updatedActiveLayers}

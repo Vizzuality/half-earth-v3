@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
+
+import { useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
@@ -24,13 +26,17 @@ function TabsSidebarComponent({
   sidebarTabActive,
   onTabClick = () => {},
 }) {
-  const sidebarTabs = getSidebarTabs();
+  const locale = useLocale();
+  const sidebarTabs = useMemo(() => getSidebarTabs(), [locale]);
 
   const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
-  && countedActiveLayers && sidebarTabActive !== slug && countedActiveLayers > 0;
+    && countedActiveLayers
+    && sidebarTabActive !== slug
+    && countedActiveLayers > 0;
 
   const displayMapLayersIcon = (slug) => slug === sidebarTabs[0].slug
-  && countedActiveLayers && (countedActiveLayers === 0 || sidebarTabActive === slug);
+    && countedActiveLayers
+    && (countedActiveLayers === 0 || sidebarTabActive === slug);
 
   const displayAnalyzeAreasIcon = (slug) => slug === sidebarTabs[1].slug;
 
@@ -57,10 +63,7 @@ function TabsSidebarComponent({
             return (
               <li role="presentation" key={`tab-${tabSlug}`}>
                 <motion.div
-                  className={cx(
-                    styles.tab,
-                    onboardingClassname,
-                  )}
+                  className={cx(styles.tab, onboardingClassname)}
                   role="tab"
                   aria-selected={slug === sidebarTabActive}
                   {...onboardingOverlay}
@@ -71,7 +74,6 @@ function TabsSidebarComponent({
                   }}
                 >
                   <div className={styles.titleContainer}>
-
                     {mapLayersCounterIsActive(slug) && countedActiveLayers && (
                       <div className={styles.layersIndicator}>
                         {countedActiveLayers}

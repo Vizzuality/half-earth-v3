@@ -55,6 +55,7 @@ export const getOnboardingType = createSelector(getUiSettings, (uiSettings) => u
 export const getOnboardingStep = createSelector(getUiSettings, (uiSettings) => uiSettings.onboardingStep);
 export const getOnWaitingInteraction = createSelector(getUiSettings, (uiSettings) => uiSettings.waitingInteraction);
 export const getAOIId = createSelector(getUiSettings, (uiSettings) => uiSettings.aoiId);
+export const getSelectedAnalysisLayer = createSelector(getUiSettings, (uiSettings) => uiSettings.selectedAnalysisLayer);
 
 export default createStructuredSelector({
   sceneSettings: getGlobeSettings,

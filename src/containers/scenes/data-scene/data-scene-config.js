@@ -59,6 +59,9 @@ export default {
     isFullscreenActive: false,
     activeCategory: '',
     sceneMode: 'data',
+    selectedAnalysisLayer: REACT_APP_FEATURE_NEW_MENUS
+      ? ADMIN_AREAS_FEATURE_LAYER
+      : GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   },
   listeners: false,
 };

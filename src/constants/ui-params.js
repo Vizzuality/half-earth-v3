@@ -1,5 +1,6 @@
-import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 import { t } from '@transifex/native';
+
+import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 
 export const LOCAL_SCENE_TABS_SLUGS = {
   OVERVIEW: 'overview',

@@ -44,8 +44,13 @@ const setFuturePlace = ({
     setGeometry(geometry);
     const areaName = `${t('Priority place')} ${attributes.cluster}`;
     setContextualData(getPrecalculatedContextualData({
-      ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId,
-    }, null, true, true, areaName));
+      data: {
+        ...attributes, jsonGeometry: JSON.stringify(geometry), areaName, aoiId,
+      },
+      includeProtectedAreasList: true,
+      includeAllData: true,
+      areaName,
+    }));
   });
 };
 
@@ -66,8 +71,13 @@ const setSpecificRegion = ({
     setPrecalculatedSpeciesData(attributes, setTaxaData);
     setGeometry(geometry);
     setContextualData(getPrecalculatedContextualData({
-      ...attributes, jsonGeometry: JSON.stringify(geometry), areaName: NAME, aoiId,
-    }, null, true, true, NAME));
+      data: {
+        ...attributes, jsonGeometry: JSON.stringify(geometry), areaName: NAME, aoiId,
+      },
+      includeProtectedAreasList: true,
+      includeAllData: true,
+      areaName: NAME,
+    }));
   });
 };
 
@@ -108,13 +118,17 @@ export const setPrecalculatedAOIs = ({
         returnGeometry: false,
       }).then((results) => {
         const { attributes: protectedAreaAttributes } = results[0];
-        setContextualData(getPrecalculatedContextualData(protectedAreaAttributes, precalculatedLayerSlug, true, true));
+        setContextualData(getPrecalculatedContextualData({
+          data: protectedAreaAttributes,
+          includeProtectedAreasList: true,
+          includeAllData: true,
+        }));
         setPrecalculatedSpeciesData(protectedAreaAttributes, setTaxaData);
       });
     };
 
     const setNationalOrSubnationalType = () => {
-      setContextualData(getPrecalculatedContextualData(attributes, precalculatedLayerSlug));
+      setContextualData(getPrecalculatedContextualData({ data: attributes }));
       setPrecalculatedSpeciesData(attributes, setTaxaData);
     };
 

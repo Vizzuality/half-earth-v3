@@ -22,7 +22,12 @@ import { ReactComponent as SearchIcon } from 'icons/search-menu.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 function SideMenu({
-  map, view, isNotMapsList, hidden, selectedOption, blur,
+  map,
+  view,
+  isNotMapsList,
+  hidden,
+  selectedAnalysisLayer,
+  blur,
 }) {
   const isOnMobile = useMobile();
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -50,7 +55,7 @@ function SideMenu({
             theme="dark"
             width="full"
             parentWidth="380px"
-            searchSourceLayerSlug={selectedOption.slug}
+            searchSourceLayerSlug={selectedAnalysisLayer}
             hasResetButton
             handleCloseButton={() => setSearcherOpen(false)}
             setSearcherOpen={setSearcherOpen}
