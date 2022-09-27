@@ -281,7 +281,7 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer',
   ],
   [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer/0',
-  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/4d23b29746e547deb9d4c1d61df8e0d4/rest/services/gadm1_precalculated_20220224_nspecies/FeatureServer/0',
+  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer/0',
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0_updated/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_updated/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: [
