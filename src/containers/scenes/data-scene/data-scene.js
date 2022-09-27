@@ -16,6 +16,7 @@ import { getTooltipContent } from 'utils/tooltip-utils';
 import intersectionBy from 'lodash/intersectionBy';
 import unionBy from 'lodash/unionBy';
 
+import { getSidebarTabs } from 'constants/aois';
 import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
@@ -40,11 +41,28 @@ function Container(props) {
     precomputedAoiAnalytics,
     changeUI,
     activeCategoryLayers,
+    sidebarTabActive,
   } = props;
-
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
+  const sidebarTabs = getSidebarTabs();
   const [selectedAnalysisLayer, setSelectedAnalysisLayer] = useState();
-  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayers);
+  const activeLayersWithoutAdmin = activeLayers
+    .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
+  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayersWithoutAdmin);
+
+  useEffect(() => {
+    const hasAdminLayer = !!updatedActiveLayers
+      .find((ual) => ual.title === ADMIN_AREAS_FEATURE_LAYER);
+
+    if (sidebarTabActive === sidebarTabs[0].slug && hasAdminLayer) {
+      const layersWithoutAdmin = updatedActiveLayers
+        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
+      setUpdatedActiveLayers(layersWithoutAdmin);
+    }
+    if (sidebarTabActive === sidebarTabs[1].slug && !hasAdminLayer) {
+      setUpdatedActiveLayers([...updatedActiveLayers, { title: ADMIN_AREAS_FEATURE_LAYER }]);
+    }
+  }, [sidebarTabActive, updatedActiveLayers]);
 
   const locale = useLocale();
   const t = useT();
