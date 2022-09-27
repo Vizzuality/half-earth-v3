@@ -1,17 +1,18 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
-
 import { useT, useLocale } from '@transifex/react';
 
+import { getLocaleNumber } from 'utils/data-formatting-utils';
+
 import cx from 'classnames';
-import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
 import AreaChart from 'components/charts/area-chart';
 import DonutChart from 'components/charts/donut-chart';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
+
+import { ReactComponent as BulbIcon } from 'icons/bulb.svg';
 
 import styles from './country-data-card-styles.module.scss';
 
@@ -124,9 +125,7 @@ function CountryDataCardComponent({
                 </b>
                 {t(', and the amount of these species that are')}
                 {' '}
-                <b>
-                  {t('endemic')}
-                </b>
+                <b>{t('endemic')}</b>
                 {' '}
                 {t('to that nation')}
                 {' '}
@@ -140,62 +139,62 @@ function CountryDataCardComponent({
             </div>
           </div>
           {coastal && (
-          <div className={styles.donutContainer}>
-            <DonutChart
-              chartXPosition={48}
-              chartYPosition={60}
-              colors={['#FFC01C', '#E9E9E9']}
-              data={[
-                { name: 'SPI Marine', value: SPI_mar },
-                { name: 'Rest', value: 100 - SPI_mar },
-              ]}
-              height={130}
-              innerRadius="80%"
-              legendXPosition={53}
-              legendYPosition={58}
-              legendValue={SPI_mar}
-              legendText={t('MARINE SPI')}
-              outerRadius="95%"
-              width={120}
-            />
-            <div>
-              <p className={styles.legendText}>
-                {t('The Marine SPI is based on the')}
-                {' '}
-                <b>
-                  {t('protected marine area')}
+            <div className={styles.donutContainer}>
+              <DonutChart
+                chartXPosition={48}
+                chartYPosition={60}
+                colors={['#FFC01C', '#E9E9E9']}
+                data={[
+                  { name: 'SPI Marine', value: SPI_mar },
+                  { name: 'Rest', value: 100 - SPI_mar },
+                ]}
+                height={130}
+                innerRadius="80%"
+                legendXPosition={53}
+                legendYPosition={58}
+                legendValue={SPI_mar}
+                legendText={t('MARINE SPI')}
+                outerRadius="95%"
+                width={120}
+              />
+              <div>
+                <p className={styles.legendText}>
+                  {t('The Marine SPI is based on the')}
                   {' '}
-                  (
-                  {`${prop_protected_mar && prop_protected_mar.toFixed()}%`}
-                  )
-                </b>
-                {t(', the total number of')}
-                {' '}
-                <b>
-                  {t('marine vertebrates')}
+                  <b>
+                    {t('protected marine area')}
+                    {' '}
+                    (
+                    {`${prop_protected_mar && prop_protected_mar.toFixed()}%`}
+                    )
+                  </b>
+                  {t(', the total number of')}
                   {' '}
-                  (
-                  {getLocaleNumber(nspecies_mar, locale)}
-                  )
-                </b>
-                {t(', and the amount of these species that are')}
-                {' '}
-                <b>
-                  {t('endemic')}
+                  <b>
+                    {t('marine vertebrates')}
+                    {' '}
+                    (
+                    {getLocaleNumber(nspecies_mar, locale)}
+                    )
+                  </b>
+                  {t(', and the amount of these species that are')}
                   {' '}
-                </b>
-                {' '}
-                {t('to that nation')}
-                {' '}
-                <b>
-                  (
-                  {getLocaleNumber(total_endemic_mar, locale)}
-                  )
-                </b>
-                .
-              </p>
+                  <b>
+                    {t('endemic')}
+                    {' '}
+                  </b>
+                  {' '}
+                  {t('to that nation')}
+                  {' '}
+                  <b>
+                    (
+                    {getLocaleNumber(total_endemic_mar, locale)}
+                    )
+                  </b>
+                  .
+                </p>
+              </div>
             </div>
-          </div>
           )}
           <div className={styles.switchAreaChart}>
             <p className={styles.switchAreaChartText}>{t('Trend of SPI')}</p>
@@ -278,9 +277,11 @@ function CountryDataCardComponent({
           </p>
         </div>
       </section>
-      <section className={styles.descriptionWrapper}>
-        <p>{`${countryDescription}`}</p>
-      </section>
+      {countryDescription && (
+        <section className={styles.descriptionWrapper}>
+          <p>{countryDescription}</p>
+        </section>
+      )}
     </div>
   );
 }
