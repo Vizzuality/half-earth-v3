@@ -111,6 +111,8 @@ function AnalyzeAreasContainer(props) {
     // Don't remove locale. Is here to recalculate the titles translation
   }, [locale]);
 
+  // Draw
+  const [drawWidgetRef, setDrawWidgetRef] = useState();
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
       view.map.remove(layer);
@@ -128,6 +130,23 @@ function AnalyzeAreasContainer(props) {
       browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
     }
   };
+
+  const {
+    sketchTool,
+    geometryArea,
+    handleSketchToolDestroy,
+    handleSketchToolActivation,
+  } = useSketchWidget(view, setDrawWidgetRef, { postDrawCallback });
+
+  const handleDrawClick = () => {
+    if (!sketchTool) {
+      handleSketchToolActivation();
+    } else {
+      handleSketchToolDestroy();
+    }
+  };
+
+  // Shape upload
 
   const onShapeUploadSuccess = (response) => {
     loadModules(['esri/geometry/Polygon', 'esri/geometry/geometryEngine'])
@@ -168,12 +187,7 @@ function AnalyzeAreasContainer(props) {
     shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
   };
 
-  const {
-    sketchTool,
-    geometryArea,
-    handleSketchToolDestroy,
-    handleSketchToolActivation,
-  } = useSketchWidget(view, { postDrawCallback });
+  // Tab change
 
   const handleLayerToggle = (newSelectedOption) => {
     const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
@@ -273,20 +287,12 @@ function AnalyzeAreasContainer(props) {
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 
-  const handleDrawClick = () => {
-    if (!sketchTool) {
-      handleSketchToolActivation();
-    } else {
-      handleSketchToolDestroy();
-    }
-  };
-
   return (
     <Component
       {...props}
       geometryArea={geometryArea}
       selectedOption={selectedOption}
-      isSketchToolActive={sketchTool}
+      isSketchToolActive={!!sketchTool}
       handleDrawClick={handleDrawClick}
       isPromptModalOpen={isPromptModalOpen}
       promptModalContent={promptModalContent}
@@ -296,6 +302,8 @@ function AnalyzeAreasContainer(props) {
       handleOptionSelection={handleOptionSelection}
       handleAnalysisTabClick={handleAnalysisTabClick}
       handlePromptModalToggle={handlePromptModalToggle}
+      drawWidgetRef={drawWidgetRef}
+      sketchTool={sketchTool}
     />
   );
 }

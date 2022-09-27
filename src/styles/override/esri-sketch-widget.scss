@@ -2,7 +2,6 @@
 @import 'styles/ui.module';
 
 .esri-sketch {
-  --calcite-ui-foreground-1: red;
   background-color: $firefly;
   position: absolute;
   left: 50%;
@@ -11,11 +10,14 @@
   border: 2px solid $brand-color-main;
 }
 
+// Hide pointer button
 .esri-sketch__tool-section:first-child {
   display: none;
 }
 
 .esri-sketch__button {
+  color: $brand-color-main;
+
   &:hover,
   &:focus {
     background-color: $firefly;
@@ -23,9 +25,14 @@
     outline:none;
   }
 
+  &:disabled  {
+    color: $logos-text
+  }
+
   &.esri-sketch__button--selected {
     background-color: $firefly;
     color: $brand-color-main;
+
     &:hover {
       background-color: $firefly;
       color: $brand-color-main;

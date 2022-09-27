@@ -33,6 +33,7 @@ import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg
 import { ReactComponent as InfoIcon } from 'icons/info.svg';
 
 import { TABS } from './constants';
+import DrawModifiedWidget from './draw-modified-widget';
 
 const { REACT_APP_FEATURE_NEW_MENUS } = process.env;
 
@@ -54,6 +55,8 @@ function AnalyzeAreasCardComponent({
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
   onboardingType,
+  drawWidgetRef,
+  sketchTool,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -156,6 +159,10 @@ function AnalyzeAreasCardComponent({
             )}
             {selectedAnalysisTab === 'draw' && (
               <div>
+                <DrawModifiedWidget
+                  sketchTool={sketchTool}
+                  drawWidgetRef={drawWidgetRef}
+                />
                 <p className={styles.sectionLabel}>
                   {t('Draw shape smaller than')}
                   {' '}
@@ -219,8 +226,11 @@ function AnalyzeAreasCardComponent({
                 label={t('Define region of interest')}
                 Icon={AoisDrawIcon}
                 active={selectedAnalysisTab === 'draw'}
-                handleClick={() => selectedAnalysisTab !== 'draw'
-                  && handleAnalysisTabClick('draw')}
+                handleClick={
+                  () => selectedAnalysisTab !== 'draw'
+                    && handleAnalysisTabClick('draw')
+                  // eslint-disable-next-line react/jsx-curly-newline
+                }
               />
             </div>
             {selectedAnalysisTab === 'click' && (
