@@ -213,15 +213,12 @@ const getAreaName = (data) => {
   return undefined;
 };
 
-export const getPrecalculatedContextualData = (
+export const getPrecalculatedContextualData = ({
   data,
-  layerSlug,
-  // eslint-disable-next-line default-param-last
-  includeProtectedAreasList = false,
-  // eslint-disable-next-line default-param-last
-  includeAllData = false,
   areaName,
-) => {
+  includeProtectedAreasList = false,
+  includeAllData = false,
+}) => {
   const pressures = {};
   Object.keys(LAND_PRESSURES_LABELS_SLUGS).forEach((key) => {
     pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
@@ -237,6 +234,13 @@ export const getPrecalculatedContextualData = (
     pressures,
     population: data.population_sum,
     ...(includeProtectedAreasList && { ...data.protectedAreasList }),
+    speciesNumbers: {
+      nspecies: data.nspecies,
+      birds: data.bird_nspecies,
+      mammals: data.mamm_nspecies,
+      reptiles: data.rept_nspecies,
+      amphibians: data.amph_nspecies,
+    },
     protectionPercentage: data.percentage_protected,
     ...(includeAllData && { ...data }),
   });

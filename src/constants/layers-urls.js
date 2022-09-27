@@ -110,7 +110,8 @@ import {
   SEARCH_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
 
-const { REACT_APP_VERCEL_ENV } = process.env;
+const { REACT_APP_VERCEL_ENV, REACT_APP_FEATURE_NEW_MENUS } = process.env;
+
 const isNotProduction = REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
 const COUNTRIES_DATA_URL = 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/NRC_final_20220623/FeatureServer';
@@ -127,6 +128,9 @@ export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/Ik
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/0c379c259996454fadfc96886deda07d/rest/services/Terrestrial_SPI_NRCs_20220107/FeatureServer/0';
 export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
+const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_NEW_MENUS
+  ? 'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer' : 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer';
+const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_NEW_MENUS ? 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer' : 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_EEZ/FeatureServer',
@@ -277,11 +281,10 @@ export const LAYERS_URLS = {
   [REPTILES_LOOKUP]: 'https://utility.arcgis.com/usrsvcs/servers/f0b987e051844fd78b05c813ba251548/rest/services/Test_Reptile_CRF_species_table/FeatureServer/0',
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
-    'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer',
-    'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer',
+    GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL, GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL,
   ],
-  [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer/0',
-  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer/0',
+  [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: `${GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL}/0`,
+  [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: `${GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL}/0`,
   [GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm0_updated/FeatureServer/0',
   [GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/wdpa_with_gadm1_updated/FeatureServer/0',
   [WDPA_OECM_FEATURE_LAYER]: [
@@ -289,7 +292,7 @@ export const LAYERS_URLS = {
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp90_nspecies/FeatureServer/0',
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_Ter_Simp99_nspecies/FeatureServer/0',
   ],
-  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/13de96b3f9494eb1baf31ab7067cd871/rest/services/wdpa_precal_with_contextual_nspecies/FeatureServer/0',
+  [WDPA_OECM_FEATURE_DATA_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/69cab813905c40e38be43c9b23353f63/rest/services/wdpa_precal_with_contextual_nspecies_all/FeatureServer/0',
   [HALF_EARTH_FUTURE_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/e1976b5ba3d2423f910172ccbb131824/rest/services/top_places_precalculated_nspecies/FeatureServer/0',
   [HALF_EARTH_FUTURE_WDPA_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/WDPA_with_20places_updated/FeatureServer/0',
   [SPECIFIC_REGIONS_TILE_LAYER]: 'https://utility.arcgis.com/usrsvcs/servers/c622d044b0a7447fb4b00de1c8ba066d/rest/services/SpecificRegions_precalculated/FeatureServer/0',

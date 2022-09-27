@@ -22,6 +22,10 @@ import Component from './component';
 
 const SEARCH_RESULTS_SLUG = 'search-results';
 
+const {
+  REACT_APP_FEATURE_NEW_MENUS,
+} = process.env;
+
 function SpeciesCardContainer(props) {
   const locale = useLocale();
   const t = useT();
@@ -29,7 +33,7 @@ function SpeciesCardContainer(props) {
   const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
-  const { speciesData } = props;
+  const { speciesData, contextualData } = props;
   const { species } = speciesData;
 
   const language = locale !== '' ? locale : 'en';
@@ -115,9 +119,9 @@ function SpeciesCardContainer(props) {
 
   const handlePreviousSpeciesSelection = () => {
     if (selectedSpeciesIndex === 0) {
-      setSelectedSpeciesIndex(speciesToDisplay.length - 1);
-    } else {
-      setSelectedSpeciesIndex(selectedSpeciesIndex - 1);
+      setSelectedSpeciesIndex(
+        selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1,
+      );
     }
   };
 
@@ -131,9 +135,11 @@ function SpeciesCardContainer(props) {
     const filters = speciesFiltersSource.map((filter) => {
       switch (filter.slug) {
         case 'all':
-          return { slug: filter.slug, label: `${filter.label} (${species && species.length})` };
+          return { slug: filter.slug, label: `${filter.label} (${species && species.length && contextualData.speciesNumbers.nspecies})` };
         default: {
-          const count = species && species.filter((sp) => sp.category === filter.slug).length;
+          const count = REACT_APP_FEATURE_NEW_MENUS
+            ? contextualData.speciesNumbers && contextualData.speciesNumbers[filter.label]
+            : species && species.filter((sp) => sp.category === filter.slug).length;
           return { slug: filter.slug, label: `${filter.label} (${count})` };
         }
       }

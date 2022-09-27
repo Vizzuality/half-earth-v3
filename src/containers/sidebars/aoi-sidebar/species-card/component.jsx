@@ -43,11 +43,13 @@ function Component({
   handleCloseSearch,
   selectedSearchOption,
   searchOptions,
+  contextualData,
 }) {
+  const { speciesNumbers } = contextualData;
+
   const t = useT();
   const locale = useLocale();
   const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
-
   return speciesData.species && speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
       <div className={styles.loaderBarContainer}>
@@ -63,7 +65,7 @@ function Component({
       <div>
         <p className={styles.title}>
           {sidebarCardsConfig[SPECIES_SLUG].title(
-            speciesData.species && speciesData.species.length,
+            speciesNumbers && speciesNumbers.nspecies
           )}
           <span
             className={styles.infoClue}
@@ -156,12 +158,11 @@ function Component({
                     className={styles.commonName}
                     href={individualSpeciesData.molLink}
                   >
-                    {individualSpeciesData.commonname
-                      || individualSpeciesData.name}
+                    {individualSpeciesData.commonname ||
+                      individualSpeciesData.name}
                   </a>
                   <span className={styles.scientificName}>
-                    {individualSpeciesData.name}
-                    {' '}
+                    {individualSpeciesData.name}{' '}
                   </span>
                 </div>
                 {showCarouselArrows && (
@@ -181,14 +182,14 @@ function Component({
             <div className={styles.globalRangeArea}>
               <span>
                 {t(
-                  'Area of habitat-suitable range for this species available globally',
+                  'Area of habitat-suitable range for this species available globally'
                 )}
               </span>
               <p>
                 {`${roundGlobalRange(
                   individualSpeciesData.globaldRangeArea,
                   locale,
-                  t,
+                  t
                 )}${t(' km')}`}
                 <sup>2</sup>
               </p>
@@ -206,7 +207,7 @@ function Component({
               className={styles.speciesBarContainer}
               percentage={capPercentage(individualSpeciesData.presenceInArea)}
               percentageLabel={roundRangeInArea(
-                capPercentage(individualSpeciesData.presenceInArea),
+                capPercentage(individualSpeciesData.presenceInArea)
               )}
             />
             <p className={styles.iucnStatus}>
