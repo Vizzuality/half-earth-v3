@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { tx } from '@transifex/native';
 import { useLanguages, useLocale } from '@transifex/react';
@@ -7,9 +7,18 @@ import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
+const { REACT_APP_FEATURE_ALLOWED_LANGUAGES } = process.env;
+
 function SideMenuLanguageSwitcher(props) {
   const { changeLang } = props;
   const languages = useLanguages();
+  const availableLanguages = useMemo(
+    () => languages.filter(
+      (l) => !REACT_APP_FEATURE_ALLOWED_LANGUAGES
+          || REACT_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code),
+    ),
+    [languages],
+  );
   const locale = useLocale();
   const localeValue = locale === '' ? 'en' : locale;
 
@@ -17,7 +26,7 @@ function SideMenuLanguageSwitcher(props) {
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    const options = languages.filter((l) => l.code !== localeValue);
+    const options = availableLanguages.filter((l) => l.code !== localeValue);
     setLanguageOptions(options);
   }, [localeValue, languages]);
 
@@ -27,10 +36,7 @@ function SideMenuLanguageSwitcher(props) {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <button
-        className={styles.switcherBtn}
-        type="button"
-      >
+      <button className={styles.switcherBtn} type="button">
         {localeValue}
       </button>
       <motion.div
