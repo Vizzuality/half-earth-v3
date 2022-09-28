@@ -133,29 +133,24 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
     const filters = speciesFiltersSource.map((filter) => {
+      const allSpeciesCount = REACT_APP_FEATURE_NEW_MENUS
+        ? contextualData.speciesNumbers && contextualData.speciesNumbers.nspecies
+        : species && species.length;
+      const taxaSpeciesCount = REACT_APP_FEATURE_NEW_MENUS
+        ? contextualData.speciesNumbers && contextualData.speciesNumbers[filter.label]
+        : species && species.filter((sp) => sp.category === filter.slug).length;
       switch (filter.slug) {
         case 'all':
-          return { slug: filter.slug, label: `${filter.label} (${species && species.length && contextualData.speciesNumbers.nspecies})` };
+          return { slug: filter.slug, label: `${filter.label} (${allSpeciesCount})` };
         default: {
-          const count = REACT_APP_FEATURE_NEW_MENUS
-            ? contextualData.speciesNumbers && contextualData.speciesNumbers[filter.label]
-            : species && species.filter((sp) => sp.category === filter.slug).length;
-          return { slug: filter.slug, label: `${filter.label} (${count})` };
+          return { slug: filter.slug, label: `${filter.label} (${taxaSpeciesCount})` };
         }
       }
     });
-    setFilterWithCount(filters);
 
-    // update species count in selected filter
-    const tempLabel = speciesFiltersSource.find(
-      (sp) => sp.slug === selectedSpeciesFilter.slug,
-    ).label;
-    setSpeciesFilter({
-      slug: selectedSpeciesFilter.slug,
-      label: (selectedSpeciesFilter.slug === 'all')
-        ? `${tempLabel} (${species && species.length})`
-        : `${tempLabel} (${species && species.filter((sp) => sp.category === selectedSpeciesFilter.slug).length})`,
-    });
+    setFilterWithCount(filters);
+    // Update species count in selected filter
+    setSpeciesFilter(filters.find((f) => f.slug === selectedSpeciesFilter.slug));
   }, [speciesData.species]);
 
   useEffect(() => {
@@ -180,6 +175,7 @@ function SpeciesCardContainer(props) {
     setSelectedSpeciesIndex(0);
   }, [selectedSpeciesFilter]);
 
+  // Get individual species info and image for slider
   useEffect(() => {
     if (selectedSpecies) {
       if (speciesToDisplay.length >= 3) {
