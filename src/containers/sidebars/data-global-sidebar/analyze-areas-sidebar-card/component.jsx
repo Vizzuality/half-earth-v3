@@ -94,14 +94,14 @@ function AnalyzeAreasCardComponent({
                   return (
                     <button
                       key={tab.label}
-                      active={selectedAnalysisTab === `${tab.label}`}
+                      active={selectedAnalysisTab === tab.label}
                       className={cx({
                         [styles.tabButton]: true,
                         [styles.tabButtonActive]:
-                          selectedAnalysisTab === `${tab.label}`,
+                          selectedAnalysisTab === tab.label,
                       })}
                       type="button"
-                      onClick={() => selectedAnalysisTab !== `${tab.label}`
+                      onClick={() => selectedAnalysisTab !== tab.label
                         && handleAnalysisTabClick(`${tab.label}`)}
                     >
                       <span>{tab.icon}</span>
@@ -111,7 +111,7 @@ function AnalyzeAreasCardComponent({
                         selectedAnalysisTab === `${tab.label}`,
                       })}
                       >
-                        {tab.label}
+                        {t(tab.label)}
                       </span>
                     </button>
                   );
@@ -149,7 +149,7 @@ function AnalyzeAreasCardComponent({
                 <p className={styles.sectionLabel}>
                   <b>{t('Search')}</b>
                   {' '}
-                  {t('a country, region or protected areas')}
+                  {t('a country, region or protected area')}
                 </p>
                 <SearchLocation
                   stacked
