@@ -117,8 +117,10 @@
     margin: 6px 0;
 
     .tabButton {
+      align-items: center;
       display: flex;
-      height: 48px;
+      flex-direction: column;
+      height: 68px;
       padding: 12px;
       width: 95px;
       &:last-of-type {
@@ -129,8 +131,7 @@
         display: flex;
         height: 24px;
         fill: $white;
-        margin-bottom: $paragraph-gutter;
-        margin-right: 8px;
+        margin-bottom: 3px;
         width: 24px;
       }
 
