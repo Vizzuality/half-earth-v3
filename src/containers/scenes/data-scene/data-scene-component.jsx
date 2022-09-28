@@ -73,9 +73,10 @@ function DataSceneComponent({
     ? selectedAnalysisLayer && sidebarTabActive === analyzeAreasTab.slug
     : selectedAnalysisLayer;
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea = mapTooltipData
-    && mapTooltipData.precalculatedLayerSlug
-      === PRECALCULATED_LAYERS_SLUG.protectedAreas;
+  const isProtectedArea =
+    mapTooltipData &&
+    mapTooltipData.precalculatedLayerSlug ===
+      PRECALCULATED_LAYERS_SLUG.protectedAreas;
 
   const updatedSceneSettings = useMemo(
     () => ({
@@ -86,7 +87,7 @@ function DataSceneComponent({
           : sceneSettings.center,
       ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType],
+    [isMobile, onboardingType]
   );
 
   return (
@@ -96,7 +97,6 @@ function DataSceneComponent({
       sceneSettings={updatedSceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       initialRotation
-      disabled={!!onboardingType}
       blur={activeGlobesMenu}
       className={cx({
         [uiStyles.blurScene]:
@@ -181,15 +181,15 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {FEATURE_NEW_MENUS
-        && activeGlobesMenu
-        && !isMobile
-        && !onboardingType && (
+      {FEATURE_NEW_MENUS &&
+        activeGlobesMenu &&
+        !isMobile &&
+        !onboardingType && (
           <GlobesMenu
             browsePage={browsePage}
             onMouseLeave={() => setActiveGlobesMenu(false)}
           />
-      )}
+        )}
     </Scene>
   );
 }
