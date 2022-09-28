@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 
 import { useT } from '@transifex/react';
@@ -19,7 +20,6 @@ function GroupedSelect({
   groupedOptions,
 }) {
   const t = useT();
-  const ref = useRef();
 
   const [selectedOption, setSelectedOption] = useState(null);
 
