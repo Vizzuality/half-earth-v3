@@ -1,14 +1,16 @@
 import React from 'react';
-import styles from './step-arcs-styles.module.scss';
+
 import cx from 'classnames';
 
-const StepsArcs = ({
+import styles from './step-arcs-styles.module.scss';
+
+function StepsArcs({
   numberOfArcs,
   currentStep,
   radius = 33,
   strokeWidth = 3,
-  handleClick,
-}) => {
+  // handleClick,
+}) {
   const polarToCartesian = (centerX, centerY, radius, angleInDegrees) => {
     const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
     return {
@@ -56,7 +58,8 @@ const StepsArcs = ({
         <path
           role="button"
           aria-pressed={currentStep === i}
-          onClick={(e) => handleClick(e, i)}
+          // TODO: Fix step click
+          // onClick={(e) => handleClick(e, i)}
           key={`$arc-${i}`}
           className={cx(styles.stepsArc, {
             [styles.active]: currentStep >= i,
@@ -67,6 +70,6 @@ const StepsArcs = ({
       ))}
     </svg>
   );
-};
+}
 
 export default StepsArcs;

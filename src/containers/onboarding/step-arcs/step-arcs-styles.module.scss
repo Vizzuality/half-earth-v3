@@ -12,9 +12,10 @@
     cursor: pointer;
     stroke: $dark-text;
 
-    &:hover {
-      stroke-width: 6px;
-    }
+    // TODO: Fix step click
+    // &:hover {
+    //   stroke-width: 6px;
+    // }
 
     &.active {
       stroke: $brand-color-main;
