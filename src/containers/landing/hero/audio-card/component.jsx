@@ -23,7 +23,7 @@ function AudioCard({
 
   return (
     <button
-      Type="button"
+      type="button"
       onClick={handleClick}
       className={cx(className, styles.container)}
     >
