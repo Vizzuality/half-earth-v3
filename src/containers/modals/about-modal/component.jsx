@@ -9,7 +9,6 @@ import ReactMarkdown from 'react-markdown/with-html';
 import styles from './styles.module';
 
 function AboutModal({ handleClose, isOpen, sections }) {
-  console.log(sections);
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.modalContainer}>
