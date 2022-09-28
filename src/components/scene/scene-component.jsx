@@ -8,9 +8,7 @@ import Spinner from 'components/spinner';
 
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const {
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
+const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
 
 function SceneComponent({
   map,
@@ -38,13 +36,15 @@ function SceneComponent({
         <Spinner spinnerWithOverlay initialLoading display={spinner} />
       </>
     );
-  } if (loadState === 'loaded') {
+  }
+  if (loadState === 'loaded') {
     return (
       <div
         className={cx(className, {
           [styles.sceneWrapper]: FEATURE_NEW_MENUS,
           [styles.sceneWrapperOLD]: !FEATURE_NEW_MENUS,
-          [styles.sceneWrapperBlur]: FEATURE_NEW_MENUS && blur && isGlobesMenuPages,
+          [styles.sceneWrapperBlur]:
+            FEATURE_NEW_MENUS && blur && isGlobesMenuPages,
           [styles.disabled]: disabled,
         })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}

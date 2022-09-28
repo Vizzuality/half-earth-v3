@@ -1,4 +1,6 @@
+/* eslint-disable max-len */
 import { createSelector, createStructuredSelector } from 'reselect';
+
 import { selectUiUrlState } from 'selectors/location-selectors';
 
 export const getOnboardingType = createSelector(selectUiUrlState, (uiState) => uiState && uiState.onboardingType);

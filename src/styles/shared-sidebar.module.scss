@@ -4,7 +4,7 @@
 
 .sharedSidebarCardContainer {
   width: calc(#{$sidebar-width} + #{$sidebar-border-width} + #{$sidebar-border-width});
-  margin-bottom: $cards-bottom-margin;
+  margin: 2px 2px $cards-bottom-margin;
   box-sizing: border-box;
   border: $sidebar-border;
   border-radius: $sidebar-border-radius;

@@ -13,7 +13,8 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
       onboardingType === 'national-report-cards' && onboardingStep === 0,
     nrcLandingSearch:
       onboardingType === 'national-report-cards' && onboardingStep === 1,
-    nrcLandingButton: false, // This tooltip wil be positioned on the country-entry-tooltip-component
+    // This tooltip wil be positioned on the country-entry-tooltip-component
+    nrcLandingButton: false,
     challenges:
       onboardingType === 'national-report-cards' && onboardingStep === 3,
     ranking: onboardingType === 'national-report-cards' && onboardingStep === 4,
@@ -35,14 +36,25 @@ export const useTooltipRefs = ({ changeUI, onboardingType, onboardingStep }) => 
 
   useEffect(() => {
     if (activeSlug && onboardingRefs.current[activeSlug]) {
-      const { top, width, left } = onboardingRefs.current[activeSlug].getBoundingClientRect();
+      const { offsetLeft } = onboardingRefs.current[activeSlug];
+      const { top, width } = onboardingRefs.current[activeSlug].getBoundingClientRect();
       changeUI({
         onboardingTooltipTop: top,
-        onboardingTooltipLeft: left + width,
+        onboardingTooltipLeft: offsetLeft + width,
       });
     }
-  }, [onboardingRefs, activeSlug]);
+  }, [
+    onboardingRefs.current,
+    activeSlug,
+  ]);
   return onboardingRefs;
+};
+
+export const resetTooltip = (changeUI) => {
+  changeUI({
+    onboardingTooltipTop: undefined,
+    onboardingTooltipLeft: undefined,
+  });
 };
 
 export const useOpenSection = ({
@@ -102,7 +114,10 @@ export const getOnboardingProps = ({
     repeat: Infinity,
   };
 
-  const getOutline = (animatedOnboardingStep) => onboardingStep === animatedOnboardingStep && outline;
+  const getOutline = (
+    animatedOnboardingStep,
+  ) => onboardingStep === animatedOnboardingStep && outline;
+
   return {
     biodiversity: {
       overlay: {
@@ -164,7 +179,8 @@ export const getOnboardingProps = ({
         transition,
       },
       onClick: {
-        onClick: () => onboardingStep === 0 && changeUI({ onboardingStep: 1, waitingInteraction: false }),
+        onClick: () => onboardingStep === 0
+          && changeUI({ onboardingStep: 1, waitingInteraction: false }),
       },
     },
     searchNRC: {

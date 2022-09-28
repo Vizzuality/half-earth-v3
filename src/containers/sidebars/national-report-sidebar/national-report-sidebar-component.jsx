@@ -1,38 +1,38 @@
 import React, { useState, useCallback } from 'react';
+
 import { useT, useLocale } from '@transifex/react';
-import { getCountryNames } from 'constants/translation-constants';
 
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
-import { ReactComponent as CloseIcon } from 'icons/closes.svg';
-import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
-
-import Tabs from 'components/tabs';
-import Button from 'components/button';
-import ShareModal from 'components/share-modal';
-import DummyBlurWorkaround from 'components/dummy-blur-workaround';
-
-import OverviewSidebar from './overview-sidebar';
-import ChallengesSidebar from './challenges-sidebar';
-import RankingSidebar from './ranking-sidebar';
-
-import animationStyles from 'styles/common-animations.module.scss';
-import uiStyles from 'styles/ui.module.scss';
-import styles from './national-report-sidebar-styles.module.scss';
 
 // Hooks
 import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 
+import Button from 'components/button';
+import DummyBlurWorkaround from 'components/dummy-blur-workaround';
+import ShareModal from 'components/share-modal';
+import Tabs from 'components/tabs';
+
+import { getCountryNames } from 'constants/translation-constants';
 import {
   LOCAL_SCENE_TABS_SLUGS,
   LOCAL_SCENE_DEFAULT_TAB,
 } from 'constants/ui-params';
 
-const NationalReportSidebarComponent = ({
+import animationStyles from 'styles/common-animations.module.scss';
+
+import { ReactComponent as CloseIcon } from 'icons/closes.svg';
+import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
+
+import ChallengesSidebar from './challenges-sidebar';
+import styles from './national-report-sidebar-styles.module.scss';
+import OverviewSidebar from './overview-sidebar';
+import RankingSidebar from './ranking-sidebar';
+
+function NationalReportSidebarComponent({
   chartData,
   className,
   countryISO,
@@ -50,7 +50,7 @@ const NationalReportSidebarComponent = ({
   onboardingType,
   waitingInteraction,
   changeUI,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
   const countryNames = useCallback(getCountryNames, [locale]);
@@ -83,7 +83,6 @@ const NationalReportSidebarComponent = ({
     <div
       className={cx(styles.container, className, {
         [animationStyles.leftHidden]: sidebarHidden,
-        [uiStyles.onboardingMode]: !!onboardingType,
       })}
     >
       <Button
@@ -174,6 +173,6 @@ const NationalReportSidebarComponent = ({
       )}
     </div>
   );
-};
+}
 
 export default NationalReportSidebarComponent;

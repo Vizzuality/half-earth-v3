@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { resetTooltip } from 'containers/onboarding/onboarding-hooks';
 import MapLayers from 'containers/sidebars/map-layers';
 import TabsSidebar from 'containers/sidebars/tabs-sidebar';
 
@@ -29,6 +30,7 @@ function DataGlobalSidebarComponent({
   waitingInteraction,
   sidebarTabActive,
   aoiId,
+  changeUI,
 }) {
   const sidebarTabs = getSidebarTabs();
   if (FEATURE_NEW_MENUS) {
@@ -38,55 +40,55 @@ function DataGlobalSidebarComponent({
           activeLayers={activeLayers}
           aoiId={aoiId}
           view={view}
-        />
-        <div
-          className={cx(styles.content, {
+          className={cx({
             [uiStyles.onboardingMode]: !!onboardingType,
           })}
-        >
+        />
+        <div className={styles.content}>
           <AnimatePresence exitBeforeEnter>
             {sidebarTabActive === sidebarTabs[1].slug && (
-            <motion.div
-              key={sidebarTabs[1].slug}
-              initial={{ opacity: 0, x: 160, width: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 160 }}
-              transition={{
-                duration: 0.25,
-                ease: 'easeInOut',
-              }}
-            >
-              <AnalyzeAreasSidebarCard
-                activeLayers={activeLayers}
-                view={view}
-                onboardingStep={onboardingStep}
-                onboardingType={onboardingType}
-              />
-            </motion.div>
+              <motion.div
+                key={sidebarTabs[1].slug}
+                initial={{ opacity: 0, x: 160, width: '100%' }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 160 }}
+                transition={{
+                  duration: 0.25,
+                  ease: 'easeInOut',
+                }}
+              >
+                <AnalyzeAreasSidebarCard
+                  activeLayers={activeLayers}
+                  view={view}
+                  onboardingStep={onboardingStep}
+                  onboardingType={onboardingType}
+                />
+              </motion.div>
             )}
             {sidebarTabActive === sidebarTabs[0].slug && (
-            <motion.div
-              className={styles.mapLayersContainer}
-              key={sidebarTabs[0].slug}
-              initial={{ opacity: 0, x: 160 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 160 }}
-              transition={{
-                duration: 0.25,
-                ease: 'easeInOut',
-              }}
-            >
-              <MapLayers
-                activeLayers={activeLayers}
-                activeCategory={activeCategory}
-                handleGlobeUpdating={handleGlobeUpdating}
-                map={map}
-                onboardingStep={onboardingStep}
-                onboardingType={onboardingType}
-                view={view}
-                waitingInteraction={waitingInteraction}
-              />
-            </motion.div>
+              <motion.div
+                className={styles.mapLayersContainer}
+                key={sidebarTabs[0].slug}
+                initial={{ opacity: 0, x: 160 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 160 }}
+                transition={{
+                  duration: 0.25,
+                  ease: 'easeInOut',
+                }}
+                onScroll={() => onboardingType && resetTooltip(changeUI)}
+              >
+                <MapLayers
+                  activeLayers={activeLayers}
+                  activeCategory={activeCategory}
+                  handleGlobeUpdating={handleGlobeUpdating}
+                  map={map}
+                  onboardingStep={onboardingStep}
+                  onboardingType={onboardingType}
+                  view={view}
+                  waitingInteraction={waitingInteraction}
+                />
+              </motion.div>
             )}
           </AnimatePresence>
         </div>

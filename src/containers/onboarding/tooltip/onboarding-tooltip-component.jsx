@@ -1,9 +1,12 @@
 import React from 'react';
-import cx from 'classnames';
+
 import { useT } from '@transifex/react';
+
+import cx from 'classnames';
+
 import styles from './onboarding-tooltip-styles.module.scss';
 
-const OnboardingTooltipComponent = ({
+function OnboardingTooltipComponent({
   placement = 'left',
   className,
   onboardingType,
@@ -11,17 +14,16 @@ const OnboardingTooltipComponent = ({
   tooltipTop,
   tooltipLeft,
   waitingInteraction,
-}) => {
+}) {
   const t = useT();
-  const getTooltipText = (onboardingType, onboardingStep) =>
-    onboardingType === 'national-report-cards' && onboardingStep === 1
-      ? t('Type here to continue')
-      : t('Click here to continue.');
+  const getTooltipText = (_onboardingType, _onboardingStep) => (_onboardingType === 'national-report-cards' && _onboardingStep === 1
+    ? t('Type here to continue')
+    : t('Click here to continue.'));
 
   if (
-    !waitingInteraction ||
-    typeof onboardingStep !== 'number' ||
-    !tooltipTop
+    !waitingInteraction
+    || typeof onboardingStep !== 'number'
+    || !tooltipTop
   ) {
     return null;
   }
@@ -49,6 +51,6 @@ const OnboardingTooltipComponent = ({
       </div>
     </div>
   );
-};
+}
 
 export default OnboardingTooltipComponent;
