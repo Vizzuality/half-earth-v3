@@ -85,12 +85,12 @@ function AOISidebar({
 
   const humanPressuresLandUse = useMemo(
     () => getHumanPressuresLandUse(),
-    [locale]
+    [locale],
   );
 
   const aoiBiodiversityToggles = useMemo(
     () => getAOIBiodiversityToggles(),
-    [locale]
+    [locale],
   );
 
   const [isEditingName, setIsEditingName] = useState(false);
@@ -112,7 +112,7 @@ function AOISidebar({
 
   const AOIContextualTranslations = useMemo(
     () => getAOIContextualData(),
-    [locale]
+    [locale],
   );
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
@@ -124,10 +124,9 @@ function AOISidebar({
     return () => {};
   }, [sidebarTabActive]);
 
-  const areaName =
-    updatedAreaName ||
-    countryNamesTranslations[contextualData.areaName] ||
-    contextualData.areaName;
+  const areaName = updatedAreaName
+    || countryNamesTranslations[contextualData.areaName]
+    || contextualData.areaName;
 
   if (FEATURE_NEW_MENUS) {
     return (
@@ -284,7 +283,7 @@ function AOISidebar({
                 <section className={styles.completeDatabaseWrapper}>
                   <p>
                     {t(
-                      'Do you have more information about this particular area?'
+                      'Do you have more information about this particular area?',
                     )}
                   </p>
                   <a
@@ -356,9 +355,9 @@ function AOISidebar({
                 />
               ) : (
                 <p className={styles.areaName}>
-                  {updatedAreaName ||
-                    countryNamesTranslations[contextualData.areaName] ||
-                    contextualData.areaName}
+                  {updatedAreaName
+                    || countryNamesTranslations[contextualData.areaName]
+                    || contextualData.areaName}
                 </p>
               )}
               {area && (
