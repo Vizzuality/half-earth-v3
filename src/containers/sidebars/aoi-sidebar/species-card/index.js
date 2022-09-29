@@ -114,11 +114,9 @@ function SpeciesCardContainer(props) {
   };
 
   const handlePreviousSpeciesSelection = () => {
-    if (selectedSpeciesIndex === 0) {
-      setSelectedSpeciesIndex(
-        selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1,
-      );
-    }
+    setSelectedSpeciesIndex(
+      selectedSpeciesIndex === 0 ? speciesToDisplay.length - 1 : selectedSpeciesIndex - 1,
+    );
   };
 
   useEffect(() => {
