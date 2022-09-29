@@ -1,7 +1,7 @@
 import { createStructuredSelector } from 'reselect';
 
-import { setSidebarTabActive } from 'selectors/aoi-selectors';
+import { getSidebarTabActive } from 'selectors/ui-selectors';
 
 export default createStructuredSelector({
-  sidebarTabActive: setSidebarTabActive,
+  sidebarTabActive: getSidebarTabActive,
 });

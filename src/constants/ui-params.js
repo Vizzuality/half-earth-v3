@@ -2,6 +2,11 @@ import { t } from '@transifex/native';
 
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
 
+export const getSidebarTabs = () => [
+  { slug: 'map-layers', title: t('Map Layers') },
+  { slug: 'analyze-areas', title: t('Analyze Areas') },
+];
+
 export const LOCAL_SCENE_TABS_SLUGS = {
   OVERVIEW: 'overview',
   CHALLENGES: 'challenges',

@@ -1,4 +1,4 @@
-import { getSidebarTabs } from 'constants/aois';
+import { getSidebarTabs } from 'constants/ui-params';
 
 import * as actions from './actions';
 

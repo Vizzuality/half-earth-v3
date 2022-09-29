@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { setSidebarTabActive } from 'selectors/aoi-selectors';
 import { selectUiUrlState } from 'selectors/location-selectors';
+import { getSidebarTabActive } from 'selectors/ui-selectors';
 
 import aoiSceneConfig from 'containers/scenes/aoi-scene/config';
 // Get every section layer count
@@ -40,7 +40,7 @@ const getCountedActiveCategoryLayers = createSelector([
       + carbonCountedActiveLayers);
 
 export default createStructuredSelector({
-  sidebarTabActive: setSidebarTabActive,
+  sidebarTabActive: getSidebarTabActive,
   activeCategoryLayers: getActiveCategoryLayers,
   countedActiveCategoryLayers: getCountedActiveCategoryLayers,
 });

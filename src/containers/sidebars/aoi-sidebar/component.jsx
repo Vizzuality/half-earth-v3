@@ -22,7 +22,6 @@ import {
   BIODIVERSITY_SLUG,
   PROTECTION_SLUG,
 } from 'constants/analyze-areas-constants';
-import { getSidebarTabs } from 'constants/aois';
 import { getAOIBiodiversityToggles } from 'constants/biodiversity-layers-constants';
 import { getHumanPressuresLandUse } from 'constants/human-pressures';
 import { PROTECTED_AREAS_VECTOR_TILE_LAYER } from 'constants/layers-slugs';
@@ -35,6 +34,7 @@ import {
   getAOIContextualData,
   getCountryNames,
 } from 'constants/translation-constants';
+import { getSidebarTabs } from 'constants/ui-params';
 
 import styles from './styles.module.scss';
 
@@ -75,7 +75,7 @@ function AOISidebar({
   onboardingStep,
   waitingInteraction,
 }) {
-  const sidebarTabs = getSidebarTabs();
+  const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
   const t = useT();
   const locale = useLocale();
 
@@ -83,12 +83,12 @@ function AOISidebar({
 
   const humanPressuresLandUse = useMemo(
     () => getHumanPressuresLandUse(),
-    [locale],
+    [locale]
   );
 
   const aoiBiodiversityToggles = useMemo(
     () => getAOIBiodiversityToggles(),
-    [locale],
+    [locale]
   );
 
   const [isEditingName, setIsEditingName] = useState(false);
@@ -110,21 +110,22 @@ function AOISidebar({
 
   const AOIContextualTranslations = useMemo(
     () => getAOIContextualData(),
-    [locale],
+    [locale]
   );
   const countryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
 
   const handleOnTabClick = useMemo(() => {
-    if (sidebarTabActive === sidebarTabs[0].slug) {
+    if (sidebarTabActive === mapLayersTab.slug) {
       if (!aoiId) return browsePage({ type: DATA });
       changeUI({ aoiId });
     }
     return () => {};
   }, [sidebarTabActive]);
 
-  const areaName = updatedAreaName
-    || countryNamesTranslations[contextualData.areaName]
-    || contextualData.areaName;
+  const areaName =
+    updatedAreaName ||
+    countryNamesTranslations[contextualData.areaName] ||
+    contextualData.areaName;
 
   return (
     <div className={styles.sidebarContainer}>
@@ -136,9 +137,9 @@ function AOISidebar({
       />
 
       <AnimatePresence exitBeforeEnter>
-        {sidebarTabActive === sidebarTabs[1].slug && (
+        {sidebarTabActive === analyzeAreasTab.slug && (
           <motion.div
-            key={sidebarTabs[1].slug}
+            key={analyzeAreasTab.slug}
             initial={{ opacity: 0, x: 160, width: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 160 }}
@@ -286,7 +287,7 @@ function AOISidebar({
               <section className={styles.completeDatabaseWrapper}>
                 <p>
                   {t(
-                    'Do you have more information about this particular area?',
+                    'Do you have more information about this particular area?'
                   )}
                 </p>
                 <a
@@ -305,10 +306,10 @@ function AOISidebar({
             </div>
           </motion.div>
         )}
-        {sidebarTabActive === sidebarTabs[0].slug && (
+        {sidebarTabActive === mapLayersTab.slug && (
           <motion.div
             className={styles.mapLayersContainer}
-            key={sidebarTabs[0].slug}
+            key={mapLayersTab.slug}
             initial={{ opacity: 0, x: 160 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 160 }}

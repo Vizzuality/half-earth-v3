@@ -1,6 +1,6 @@
 import { createStructuredSelector } from 'reselect';
 
-import { getSidebarTabActive } from 'selectors/ui-selectors';
+export const getSidebarTabActive = ({ ui }) => ui && ui.sidebarTabActive;
 
 export default createStructuredSelector({
   sidebarTabActive: getSidebarTabActive,

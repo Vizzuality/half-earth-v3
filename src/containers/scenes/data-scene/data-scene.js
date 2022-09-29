@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
+import uiActions from 'redux_modules/ui';
 
 import { AREA_OF_INTEREST } from 'router';
 
@@ -16,7 +17,6 @@ import { getTooltipContent } from 'utils/tooltip-utils';
 import intersectionBy from 'lodash/intersectionBy';
 import unionBy from 'lodash/unionBy';
 
-import { getSidebarTabs } from 'constants/aois';
 import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 import {
   HALF_EARTH_FUTURE_TILE_LAYER,
@@ -26,11 +26,18 @@ import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
+import { getSidebarTabs } from 'constants/ui-params';
 
 import Component from './data-scene-component';
 import mapStateToProps from './data-scene-selectors';
 
-const actions = { ...mapTooltipActions, ...urlActions, ...aoiAnalyticsActions };
+const actions = {
+  ...mapTooltipActions,
+  ...urlActions,
+  ...aoiAnalyticsActions,
+  ...uiActions,
+};
+
 function Container(props) {
   const {
     mapTooltipData,

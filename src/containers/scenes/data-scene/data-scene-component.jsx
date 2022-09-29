@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+/* eslint-disable max-len */
+import React, { useMemo, useState, useEffect } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -20,9 +21,9 @@ import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
-import { getSidebarTabs } from 'constants/aois';
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
+import { getSidebarTabs } from 'constants/ui-params';
 
 import animationStyles from 'styles/common-animations.module.scss';
 import uiStyles from 'styles/ui.module';
@@ -60,17 +61,19 @@ function DataSceneComponent({
   updatedActiveLayers,
   mapTooltipData,
   sidebarTabActive,
+  setSidebarTabActive,
 }) {
   const isMobile = useMobile();
-  const [, analyzeAreasTab] = getSidebarTabs();
+  const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
-  const analysisLayerHighlightEnabled = selectedAnalysisLayer
-    && sidebarTabActive === analyzeAreasTab.slug;
+  const analysisLayerHighlightEnabled =
+    selectedAnalysisLayer && sidebarTabActive === analyzeAreasTab.slug;
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea = mapTooltipData
-    && mapTooltipData.precalculatedLayerSlug
-      === PRECALCULATED_LAYERS_SLUG.protectedAreas;
+  const isProtectedArea =
+    mapTooltipData &&
+    mapTooltipData.precalculatedLayerSlug ===
+      PRECALCULATED_LAYERS_SLUG.protectedAreas;
 
   const updatedSceneSettings = useMemo(
     () => ({
@@ -81,8 +84,15 @@ function DataSceneComponent({
           : sceneSettings.center,
       ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType],
+    [isMobile, onboardingType]
   );
+
+  // Always show the first tab on onboarding mode
+  useEffect(() => {
+    if (onboardingType) {
+      setSidebarTabActive(mapLayersTab.slug);
+    }
+  }, [onboardingType]);
 
   return (
     <Scene

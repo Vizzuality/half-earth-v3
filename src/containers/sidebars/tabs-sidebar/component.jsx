@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
-import { getSidebarTabs } from 'constants/aois';
+import { getSidebarTabs } from 'constants/ui-params';
 
 import styles from './styles.module.scss';
 
@@ -27,18 +27,22 @@ function TabsSidebarComponent({
   onTabClick = () => {},
 }) {
   const locale = useLocale();
-  const sidebarTabs = useMemo(() => getSidebarTabs(), [locale]);
+  const [mapLayersTab, analyzeAreasTab] = useMemo(
+    () => getSidebarTabs(),
+    [locale]
+  );
+  const mapLayersCounterIsActive = (slug) =>
+    slug === mapLayersTab.slug &&
+    countedActiveLayers &&
+    sidebarTabActive !== slug &&
+    countedActiveLayers > 0;
 
-  const mapLayersCounterIsActive = (slug) => slug === sidebarTabs[0].slug
-    && countedActiveLayers
-    && sidebarTabActive !== slug
-    && countedActiveLayers > 0;
+  const displayMapLayersIcon = (slug) =>
+    slug === mapLayersTab.slug &&
+    countedActiveLayers &&
+    (countedActiveLayers === 0 || sidebarTabActive === slug);
 
-  const displayMapLayersIcon = (slug) => slug === sidebarTabs[0].slug
-    && countedActiveLayers
-    && (countedActiveLayers === 0 || sidebarTabActive === slug);
-
-  const displayAnalyzeAreasIcon = (slug) => slug === sidebarTabs[1].slug;
+  const displayAnalyzeAreasIcon = (slug) => slug === analyzeAreasTab.slug;
 
   const handleSidebarTabs = (tab) => {
     saveSidebarTab(tab);
@@ -49,7 +53,7 @@ function TabsSidebarComponent({
     <div className={cx(styles.sidebarTabsContainer, className)}>
       <div className={cx(styles.tabs, className)}>
         <ul className={styles.tabList} role="tablist">
-          {sidebarTabs.map((tab) => {
+          {[mapLayersTab, analyzeAreasTab].map((tab) => {
             const { slug, title } = tab;
             const tabSlug = slug || title;
             const {

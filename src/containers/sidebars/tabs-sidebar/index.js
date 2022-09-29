@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import aoisActions from 'redux_modules/aois';
+import uiActions from 'redux_modules/ui';
 
 import Component from './component';
 import mapStateToProps from './selectors';
 
 const actions = {
-  ...aoisActions,
+  ...uiActions,
 };
 
 function TabsSidebarContainer(props) {

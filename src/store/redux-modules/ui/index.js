@@ -5,6 +5,6 @@ import reducers, { initialState } from './reducers';
 
 const reduxConfig = { actions, reducers, initialState };
 
-reducerRegistry.registerModule('aois', reduxConfig);
+reducerRegistry.registerModule('ui', reduxConfig);
 
 export default actions;
