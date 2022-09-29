@@ -1,4 +1,5 @@
 import { format } from 'd3-format';
+
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 const intlLanguage = (l) => {

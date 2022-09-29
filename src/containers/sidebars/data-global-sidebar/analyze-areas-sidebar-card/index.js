@@ -14,7 +14,7 @@ import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
 import { createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
-import { localeFormatting } from 'utils/data-formatting-utils';
+import { getLocaleNumber } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 
 import { useSketchWidget } from 'hooks/esri';
@@ -42,7 +42,6 @@ const actions = {
 function AnalyzeAreasContainer(props) {
   const locale = useLocale();
   const t = useT();
-
   const WARNING_MESSAGES = {
     area: {
       title: t('Area size too big'),
@@ -50,12 +49,13 @@ function AnalyzeAreasContainer(props) {
       description: (size) => (
         <span>
           {t('The maximum size for on the fly area analysis is ')}
-          {localeFormatting(HIGHER_AREA_SIZE_LIMIT)}
+          {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)}
           {t(' km')}
           <sup>2</sup>
-          .
+          {'. '}
           {t('The area that you are trying to analyze has ')}
-          {localeFormatting(size)}
+          {' '}
+          {getLocaleNumber(size, locale)}
           {t(' km')}
           <sup>2</sup>
           .
