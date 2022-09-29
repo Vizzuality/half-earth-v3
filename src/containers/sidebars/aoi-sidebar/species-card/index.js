@@ -133,11 +133,12 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
     const filters = speciesFiltersSource.map((filter) => {
+      const speciesName = filter && filter.slug.split('_')[0];
       const allSpeciesCount = REACT_APP_FEATURE_NEW_MENUS
         ? contextualData.speciesNumbers && contextualData.speciesNumbers.nspecies
         : species && species.length;
       const taxaSpeciesCount = REACT_APP_FEATURE_NEW_MENUS
-        ? contextualData.speciesNumbers && contextualData.speciesNumbers[filter.label]
+        ? contextualData.speciesNumbers && contextualData.speciesNumbers[speciesName]
         : species && species.filter((sp) => sp.category === filter.slug).length;
       switch (filter.slug) {
         case 'all':
@@ -151,7 +152,7 @@ function SpeciesCardContainer(props) {
     setFilterWithCount(filters);
     // Update species count in selected filter
     setSpeciesFilter(filters.find((f) => f.slug === selectedSpeciesFilter.slug));
-  }, [speciesData.species]);
+  }, [speciesData.species, locale]);
 
   useEffect(() => {
     const sortSpecies = (s) => orderBy(s, ['has_image', 'presenceInArea', 'conservationConcern'], ['desc', 'desc', 'desc']);
