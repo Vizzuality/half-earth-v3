@@ -14,7 +14,6 @@ Current env variables
 NODE_ENV=
 # env variables on create react app should start with REACT_APP to be available
 # https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables#docsNav
-REACT_APP_MINIMAP_GLOBE_SCENE_ID= Esri Scene Id for the minimap globe
 REACT_APP_DATA_GLOBE_SCENE_ID= Esri Scene Id for the data globe
 REACT_APP_FEATURED_GLOBE_SCENE_ID= Esri Scene Id for the featured globe
 REACT_APP_ARGISJS_API_VERSION= ArcGis js version
@@ -29,7 +28,7 @@ REACT_APP_GA_MEASUREMENT_ID= Google analytics code
 
 SKIP_PREFLIGHT_CHECK=true keep true, CRA does'nt support different versions of eslint https://github.com/facebook/create-react-app/issues/5247
 
-REACT_APP_VERCEL_ENV=
+REACT_APP_VERCEL_ENV= Current environment, provided by vercel
 
 REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI= Show specific regions as an option in analyze areas
 REACT_APP_FEATURE_ALLOWED_LANGUAGES= Languages showing in language switcher
