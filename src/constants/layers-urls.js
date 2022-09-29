@@ -110,7 +110,7 @@ import {
   SEARCH_LOOKUP_TABLE,
 } from 'constants/layers-slugs';
 
-const { REACT_APP_VERCEL_ENV, REACT_APP_FEATURE_NEW_MENUS } = process.env;
+const { REACT_APP_VERCEL_ENV } = process.env;
 
 const isNotProduction = REACT_APP_VERCEL_ENV === 'development' || REACT_APP_VERCEL_ENV === 'preview';
 
@@ -128,9 +128,8 @@ export const COUNTRIES_GEOMETRIES_SERVICE_URL = 'https://services9.arcgis.com/Ik
 export const NRC_TERRESTRIAL_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/0c379c259996454fadfc96886deda07d/rest/services/Terrestrial_SPI_NRCs_20220107/FeatureServer/0';
 export const NRC_MARINE_SPI_DATA_LAYER = 'https://utility.arcgis.com/usrsvcs/servers/d1d8be859b4844658d9f567b9d6b4194/rest/services/Marine_Species_Protection_Index_by_Country_v2/FeatureServer/0';
 
-const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_NEW_MENUS
-  ? 'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer' : 'https://utility.arcgis.com/usrsvcs/servers/cf28a83fe840434ab2ce4d5a0f60404e/rest/services/gadm0_precalculated_20220224_nspecies/FeatureServer';
-const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL = REACT_APP_FEATURE_NEW_MENUS ? 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer' : 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
+const GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL = 'https://utility.arcgis.com/usrsvcs/servers/2ef989fc4c0b4d02a50482c64b71b1c3/rest/services/gadm0_precalculated_20220224_nspecies_translated/FeatureServer';
+const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL = 'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]: 'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_EEZ/FeatureServer',

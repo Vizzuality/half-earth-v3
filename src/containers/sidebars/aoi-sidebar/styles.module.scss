@@ -43,17 +43,6 @@ $sidebar-content-top: 180px;
   border: $sidebar-border;
 }
 
-.headerCardOLD {
-  @include backdropBlur();
-  position: fixed;
-  z-index: $bring-to-front;
-  top: $ui-left-top;
-  left: $site-gutter;
-  width: $sidebar-width;
-  padding: $sidebar-paddings;
-  border: $sidebar-border;
-}
-
 .content {
   @extend %verticalScrollbar;
   @include backdropBlur();
@@ -67,13 +56,6 @@ $sidebar-content-top: 180px;
   width: $sidebar-width;
   padding: $site-gutter;
   z-index: $bring-to-front;
-}
-
-
-.backButtonOLD {
-  position: absolute;
-  top: -$local-sidebar-top-margin;
-  left: calc(#{$local-sidebar-width}/2 - #{$rounded-button-size}/2);
 }
 
 .backButton {
@@ -105,13 +87,6 @@ $sidebar-content-top: 180px;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-}
-
-.topRowOLD {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-top: $site-gutter;
 }
 
 .nameWrapper {

@@ -8,8 +8,6 @@ import Spinner from 'components/spinner';
 
 import styles from 'styles/themes/scene-theme.module.scss';
 
-const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
-
 function SceneComponent({
   map,
   view,
@@ -40,11 +38,8 @@ function SceneComponent({
   if (loadState === 'loaded') {
     return (
       <div
-        className={cx(className, {
-          [styles.sceneWrapper]: FEATURE_NEW_MENUS,
-          [styles.sceneWrapperOLD]: !FEATURE_NEW_MENUS,
-          [styles.sceneWrapperBlur]:
-            FEATURE_NEW_MENUS && blur && isGlobesMenuPages,
+        className={cx(className, styles.sceneWrapper, {
+          [styles.sceneWrapperBlur]: blur && isGlobesMenuPages,
           [styles.disabled]: disabled,
         })}
         style={{ pointerEvents: interactionsDisabled ? 'none' : 'unset' }}
@@ -55,6 +50,7 @@ function SceneComponent({
           {React.Children.map(children || null, (child, i) => {
             return (
               child && (
+                // eslint-disable-next-line react/no-array-index-key
                 <child.type key={i} map={map} view={view} {...child.props} />
               )
             );

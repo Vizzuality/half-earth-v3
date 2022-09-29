@@ -27,10 +27,6 @@ import Component from './component';
 
 const actions = { ...mapTooltipActions, ...urlActions };
 
-const {
-  REACT_APP_FEATURE_NEW_MENUS,
-} = process.env;
-
 const getSearchedLayerData = (layerSlug, molId) => new Promise((resolve, reject) => {
   const url = Array.isArray(LAYERS_URLS[layerSlug])
     ? LAYERS_URLS[layerSlug][0]
@@ -69,14 +65,14 @@ function SearchLocationContainer(props) {
   const browseSelectedFeature = async ({ result }) => {
     const { setBatchTooltipData } = props;
     let searchResult;
-    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS) {
+    if (searchType === SEARCH_TYPES.full) {
       // We have to find the information of the layer with the lookup table info
       const { attributes } = result.feature;
       const { LAYERSLUG, MOL_ID } = attributes;
       searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
     }
 
-    const feature = searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS
+    const feature = searchType === SEARCH_TYPES.full
       ? searchResult && searchResult[0]
       : result.feature;
 
@@ -135,7 +131,7 @@ function SearchLocationContainer(props) {
       url, searchFields, suggestionTemplate, title,
     } = config;
 
-    if (searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS) {
+    if (searchType === SEARCH_TYPES.full) {
       url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
       searchFields = ['NAME'];
       suggestionTemplate = '{NAME}';
@@ -145,7 +141,7 @@ function SearchLocationContainer(props) {
       searchFields,
       suggestionTemplate,
       outFields: ['*'],
-      ...((searchType === SEARCH_TYPES.full && REACT_APP_FEATURE_NEW_MENUS)
+      ...((searchType === SEARCH_TYPES.full)
         ? { filter: { where: `LANGUAGES LIKE '%${locale || 'en'}%'` } }
         : {}
       ),

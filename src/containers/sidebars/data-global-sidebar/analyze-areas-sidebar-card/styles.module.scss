@@ -2,11 +2,6 @@
 @import 'styles/shared-sidebar.module';
 @import 'styles/typography-extends.scss';
 
-.sidebarCardContainerOLD {
-  @include backdropBlur();
-  @extend .sharedSidebarCardContainer;
-}
-
 .sidebarCardContainer {
   @include backdropBlur();
   @extend .sharedSidebarCardContainer;

@@ -39,8 +39,6 @@ const actions = {
   ...aoisActions,
 };
 
-const { REACT_APP_FEATURE_NEW_MENUS } = process.env;
-
 function AnalyzeAreasContainer(props) {
   const locale = useLocale();
   const t = useT();
@@ -171,7 +169,6 @@ function AnalyzeAreasContainer(props) {
 
   const {
     sketchTool,
-    geometryArea,
     handleSketchToolDestroy,
     handleSketchToolActivation,
   } = useSketchWidget(view, { postDrawCallback });
@@ -223,46 +220,16 @@ function AnalyzeAreasContainer(props) {
   };
 
   const handleAnalysisTabClick = (selectedTab) => {
-    if (REACT_APP_FEATURE_NEW_MENUS) {
-      switch (selectedTab) {
-        case 'draw':
-          setSelectedAnalysisTab('draw');
-          handleSketchToolActivation();
-          handleLayerToggle(precalculatedAOIOptions[0]);
-          break;
-        case 'search':
-          setSelectedAnalysisTab('search');
-          break;
-        case 'click':
-          setSelectedAnalysisTab('click');
-          handleLayerToggle(precalculatedAOIOptions[0]);
-          if (sketchTool) { handleSketchToolDestroy(); }
-          break;
-        case 'upload':
-          setSelectedAnalysisTab('upload');
-          break;
-        default:
-          setSelectedAnalysisTab('click');
-          handleSketchToolDestroy();
-          break;
-      }
+    setSelectedAnalysisTab(selectedTab || 'click');
+
+    if (selectedTab === 'draw') {
+      handleSketchToolActivation();
+    } else if (sketchTool) {
+      handleSketchToolDestroy();
     }
-    if (!REACT_APP_FEATURE_NEW_MENUS) {
-      switch (selectedTab) {
-        case 'draw':
-          setSelectedAnalysisTab('draw');
-          handleLayerToggle(precalculatedAOIOptions[0]);
-          break;
-        case 'click':
-          setSelectedAnalysisTab('click');
-          handleLayerToggle(precalculatedAOIOptions[0]);
-          if (sketchTool) { handleSketchToolDestroy(); }
-          break;
-        default:
-          setSelectedAnalysisTab('click');
-          handleSketchToolDestroy();
-          break;
-      }
+
+    if (selectedTab === 'click') {
+      handleLayerToggle(precalculatedAOIOptions[0]);
     }
   };
 
@@ -274,21 +241,10 @@ function AnalyzeAreasContainer(props) {
 
   const handlePromptModalToggle = () => setPromptModalOpen(!isPromptModalOpen);
 
-  const handleDrawClick = () => {
-    if (!sketchTool) {
-      handleSketchToolActivation();
-    } else {
-      handleSketchToolDestroy();
-    }
-  };
-
   return (
     <Component
       {...props}
-      geometryArea={geometryArea}
       selectedOption={selectedOption}
-      isSketchToolActive={sketchTool}
-      handleDrawClick={handleDrawClick}
       isPromptModalOpen={isPromptModalOpen}
       promptModalContent={promptModalContent}
       onShapeUploadError={onShapeUploadError}

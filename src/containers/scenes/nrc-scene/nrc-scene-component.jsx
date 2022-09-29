@@ -10,7 +10,6 @@ import LocalSceneViewManager from 'containers/managers/local-scene-view-manager'
 import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
-import Widgets from 'containers/widgets';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import FuturePlaceTooltip from 'components/future-place-tooltip';
@@ -24,10 +23,7 @@ import {
 import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
-const {
-  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function CountrySceneComponent({
   onMapLoad,
@@ -79,15 +75,8 @@ function CountrySceneComponent({
 
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {FEATURE_NEW_MENUS && isVisible && !isMobile && !onboardingType && (
+      {isVisible && !isMobile && !onboardingType && (
         <SideMenu
-          activeLayers={activeLayers}
-          openedModal={openedModal}
-          isFullscreenActive={isFullscreenActive}
-        />
-      )}
-      {!FEATURE_NEW_MENUS && isVisible && (
-        <Widgets
           activeLayers={activeLayers}
           openedModal={openedModal}
           isFullscreenActive={isFullscreenActive}

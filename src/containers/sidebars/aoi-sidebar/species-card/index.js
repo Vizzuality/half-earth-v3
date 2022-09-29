@@ -22,10 +22,6 @@ import Component from './component';
 
 const SEARCH_RESULTS_SLUG = 'search-results';
 
-const {
-  REACT_APP_FEATURE_NEW_MENUS,
-} = process.env;
-
 function SpeciesCardContainer(props) {
   const locale = useLocale();
   const t = useT();
@@ -134,12 +130,10 @@ function SpeciesCardContainer(props) {
   useEffect(() => {
     const filters = speciesFiltersSource.map((filter) => {
       const speciesName = filter && filter.slug.split('_')[0];
-      const allSpeciesCount = REACT_APP_FEATURE_NEW_MENUS
-        ? contextualData.speciesNumbers && contextualData.speciesNumbers.nspecies
-        : species && species.length;
-      const taxaSpeciesCount = REACT_APP_FEATURE_NEW_MENUS
-        ? contextualData.speciesNumbers && contextualData.speciesNumbers[speciesName]
-        : species && species.filter((sp) => sp.category === filter.slug).length;
+      const allSpeciesCount = contextualData.speciesNumbers
+        && contextualData.speciesNumbers.nspecies;
+      const taxaSpeciesCount = contextualData.speciesNumbers
+        && contextualData.speciesNumbers[speciesName];
       switch (filter.slug) {
         case 'all':
           return { slug: filter.slug, label: `${filter.label} (${allSpeciesCount})` };

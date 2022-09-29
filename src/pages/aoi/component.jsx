@@ -7,17 +7,12 @@ import cx from 'classnames';
 import AreaOfInterestScene from 'scenes/aoi-scene';
 
 import HalfEarthLogo from 'components/half-earth-logo';
-import MainMenu from 'components/main-menu';
 
 import uiStyles from 'styles/ui.module.scss';
 
 import styles from './styles.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-
-const {
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
 
 function AreaOfInterestPageComponent({
   activeCategory,
@@ -29,10 +24,9 @@ function AreaOfInterestPageComponent({
 }) {
   return (
     <>
-      <HalfEarthLogo className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)} />
-      {!FEATURE_NEW_MENUS && (
-        <MainMenu />
-      )}
+      <HalfEarthLogo
+        className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
+      />
       <AreaOfInterestScene
         activeCategory={activeCategory}
         handleGlobeUpdating={handleGlobeUpdating}

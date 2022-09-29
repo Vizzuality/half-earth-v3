@@ -16,8 +16,6 @@ import AnalyzeAreasSidebarCard from './analyze-areas-sidebar-card';
 import styles from './data-global-sidebar-styles.module.scss';
 import mapStateToProps from './selectors';
 
-const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
-
 function DataGlobalSidebarComponent({
   map,
   view,
@@ -33,95 +31,66 @@ function DataGlobalSidebarComponent({
   changeUI,
 }) {
   const sidebarTabs = getSidebarTabs();
-  if (FEATURE_NEW_MENUS) {
-    return (
-      <div className={cx(styles.container, className)}>
-        <TabsSidebar
-          activeLayers={activeLayers}
-          aoiId={aoiId}
-          view={view}
-          className={cx({
-            [uiStyles.onboardingMode]: !!onboardingType,
-          })}
-        />
-        <div className={styles.content}>
-          <AnimatePresence exitBeforeEnter>
-            {sidebarTabActive === sidebarTabs[1].slug && (
-              <motion.div
-                key={sidebarTabs[1].slug}
-                initial={{ opacity: 0, x: 160, width: '100%' }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 160 }}
-                transition={{
-                  duration: 0.25,
-                  ease: 'easeInOut',
-                }}
-              >
-                <AnalyzeAreasSidebarCard
-                  activeLayers={activeLayers}
-                  view={view}
-                  onboardingStep={onboardingStep}
-                  onboardingType={onboardingType}
-                />
-              </motion.div>
-            )}
-            {sidebarTabActive === sidebarTabs[0].slug && (
-              <motion.div
-                className={styles.mapLayersContainer}
-                key={sidebarTabs[0].slug}
-                initial={{ opacity: 0, x: 160 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 160 }}
-                transition={{
-                  duration: 0.25,
-                  ease: 'easeInOut',
-                }}
-                onScroll={() => onboardingType && resetTooltip(changeUI)}
-              >
-                <MapLayers
-                  activeLayers={activeLayers}
-                  activeCategory={activeCategory}
-                  handleGlobeUpdating={handleGlobeUpdating}
-                  map={map}
-                  onboardingStep={onboardingStep}
-                  onboardingType={onboardingType}
-                  view={view}
-                  waitingInteraction={waitingInteraction}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    );
-  }
-
-  if (!FEATURE_NEW_MENUS) {
-    return (
-      <div
-        className={cx(styles.container, className, {
+  return (
+    <div className={cx(styles.container, className)}>
+      <TabsSidebar
+        activeLayers={activeLayers}
+        aoiId={aoiId}
+        view={view}
+        className={cx({
           [uiStyles.onboardingMode]: !!onboardingType,
         })}
-      >
-        <AnalyzeAreasSidebarCard
-          activeLayers={activeLayers}
-          view={view}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-        />
-        <MapLayers
-          activeLayers={activeLayers}
-          activeCategory={activeCategory}
-          handleGlobeUpdating={handleGlobeUpdating}
-          map={map}
-          onboardingStep={onboardingStep}
-          onboardingType={onboardingType}
-          view={view}
-          waitingInteraction={waitingInteraction}
-        />
+      />
+      <div className={styles.content}>
+        <AnimatePresence exitBeforeEnter>
+          {sidebarTabActive === sidebarTabs[1].slug && (
+            <motion.div
+              key={sidebarTabs[1].slug}
+              initial={{ opacity: 0, x: 160, width: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 160 }}
+              transition={{
+                duration: 0.25,
+                ease: 'easeInOut',
+              }}
+            >
+              <AnalyzeAreasSidebarCard
+                activeLayers={activeLayers}
+                view={view}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
+              />
+            </motion.div>
+          )}
+          {sidebarTabActive === sidebarTabs[0].slug && (
+            <motion.div
+              className={styles.mapLayersContainer}
+              key={sidebarTabs[0].slug}
+              initial={{ opacity: 0, x: 160 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 160 }}
+              transition={{
+                duration: 0.25,
+                ease: 'easeInOut',
+              }}
+              onScroll={() => onboardingType && resetTooltip(changeUI)}
+            >
+              <MapLayers
+                activeLayers={activeLayers}
+                activeCategory={activeCategory}
+                handleGlobeUpdating={handleGlobeUpdating}
+                map={map}
+                onboardingStep={onboardingStep}
+                onboardingType={onboardingType}
+                view={view}
+                waitingInteraction={waitingInteraction}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default connect(mapStateToProps, null)(DataGlobalSidebarComponent);

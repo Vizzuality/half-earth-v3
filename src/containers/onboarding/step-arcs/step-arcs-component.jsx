@@ -11,11 +11,11 @@ function StepsArcs({
   strokeWidth = 3,
   // handleClick,
 }) {
-  const polarToCartesian = (centerX, centerY, radius, angleInDegrees) => {
+  const polarToCartesian = (centerX, centerY, _radius, angleInDegrees) => {
     const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
     return {
-      x: centerX + radius * Math.cos(angleInRadians),
-      y: centerY + radius * Math.sin(angleInRadians),
+      x: centerX + _radius * Math.cos(angleInRadians),
+      y: centerY + _radius * Math.sin(angleInRadians),
     };
   };
   const CIRCLE_PADDING = 3;
@@ -60,6 +60,7 @@ function StepsArcs({
           aria-pressed={currentStep === i}
           // TODO: Fix step click
           // onClick={(e) => handleClick(e, i)}
+          // eslint-disable-next-line react/no-array-index-key
           key={`$arc-${i}`}
           className={cx(styles.stepsArc, {
             [styles.active]: currentStep >= i,

@@ -29,18 +29,6 @@
   }
 }
 
-.sceneWrapperOLD {
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  &.disabled {
-    :global .esri-view-root {
-      pointer-events: none;
-    }
-  }
-}
-
 .sceneContainer {
   width: 100vw;
   height: calc(100vh - 65px) !important;

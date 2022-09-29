@@ -12,11 +12,9 @@ import GlobePageIndicator from 'containers/menus/globe-page-indicator';
 import GlobesMenu from 'containers/menus/globes-menu';
 import SideMenu from 'containers/menus/sidemenu';
 import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
-import Widgets from 'containers/widgets';
 
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import HalfEarthLogo from 'components/half-earth-logo';
-import MainMenu from 'components/main-menu';
 import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
@@ -29,10 +27,7 @@ import uiStyles from 'styles/ui.module';
 const InfoModal = loadable(() => import('components/modal-metadata'));
 const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
 
-const {
-  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function FeaturedGlobe({
   sceneSettings,
@@ -66,8 +61,6 @@ function FeaturedGlobe({
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      {!FEATURE_NEW_MENUS && <MainMenu />}
-
       <Scene
         sceneName="featured-scene"
         sceneSettings={sceneSettings}
@@ -78,8 +71,7 @@ function FeaturedGlobe({
         initialRotation
         blur={activeGlobesMenu}
         className={cx({
-          [uiStyles.blurScene]:
-            activeGlobesMenu && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
+          [uiStyles.blurScene]: activeGlobesMenu && !selectedFeaturedPlace,
         })}
       >
         {isGlobeUpdating && <Spinner floating />}
@@ -107,7 +99,7 @@ function FeaturedGlobe({
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
 
-        {FEATURE_NEW_MENUS && !isMobile && !selectedFeaturedPlace && (
+        {!isMobile && !selectedFeaturedPlace && (
           <SideMenu
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
@@ -118,25 +110,14 @@ function FeaturedGlobe({
           />
         )}
 
-        {FEATURE_NEW_MENUS && !selectedFeaturedPlace && !isMobile && (
+        {!selectedFeaturedPlace && !isMobile && (
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
-        )}
-
-        {!FEATURE_NEW_MENUS && (
-          <Widgets
-            activeLayers={activeLayers}
-            isFullscreenActive={isFullscreenActive}
-            hidden={esriWidgetsHidden}
-            openedModal={openedModal}
-            disableSettings
-          />
         )}
 
         {selectedFeaturedMap && (
           <SelectedFeaturedMapCard
             className={cx(uiStyles.uiTopLeft, {
-              [uiStyles.blur]:
-                activeGlobesMenu && !selectedFeaturedPlace && FEATURE_NEW_MENUS,
+              [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
             })}
             activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
@@ -168,14 +149,11 @@ function FeaturedGlobe({
           activeOption={activeOption}
         />
 
-        {FEATURE_NEW_MENUS
-          && activeGlobesMenu
-          && !selectedFeaturedPlace
-          && !isMobile && (
-            <GlobesMenu
-              browsePage={browsePage}
-              onMouseLeave={() => setActiveGlobesMenu(false)}
-            />
+        {activeGlobesMenu && !selectedFeaturedPlace && !isMobile && (
+          <GlobesMenu
+            browsePage={browsePage}
+            onMouseLeave={() => setActiveGlobesMenu(false)}
+          />
         )}
       </Scene>
       {hasMetadata && <InfoModal />}

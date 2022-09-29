@@ -207,7 +207,7 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
 
   return {
     sketchTool,
-    geometryArea,
+    geometryArea, // TODO: Not used for now. Remove if not needed
     handleSketchToolDestroy,
     handleSketchToolActivation,
   };

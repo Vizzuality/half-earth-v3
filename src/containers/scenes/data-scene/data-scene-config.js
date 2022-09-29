@@ -3,15 +3,10 @@ import {
   ALL_TAXA_PRIORITY,
   CITIES_LABELS_LAYER,
   ADMIN_AREAS_FEATURE_LAYER,
-  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
 } from 'constants/layers-slugs';
 import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
-
-const {
-  REACT_APP_FEATURE_NEW_MENUS,
-} = process.env;
 
 export default {
   globe: {
@@ -25,9 +20,7 @@ export default {
         opacity: DEFAULT_OPACITY,
         category: LAYERS_CATEGORIES.BIODIVERSITY,
       },
-      ...REACT_APP_FEATURE_NEW_MENUS
-        ? [{ title: ADMIN_AREAS_FEATURE_LAYER }]
-        : [{ title: GADM_0_ADMIN_AREAS_FEATURE_LAYER }],
+      { title: ADMIN_AREAS_FEATURE_LAYER },
     ],
     zoom: 3.8,
     center: [16.9515536, 0.116959],
@@ -59,9 +52,7 @@ export default {
     isFullscreenActive: false,
     activeCategory: '',
     sceneMode: 'data',
-    selectedAnalysisLayer: REACT_APP_FEATURE_NEW_MENUS
-      ? ADMIN_AREAS_FEATURE_LAYER
-      : GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+    selectedAnalysisLayer: ADMIN_AREAS_FEATURE_LAYER,
   },
   listeners: false,
 };

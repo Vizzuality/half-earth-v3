@@ -49,8 +49,6 @@ import mapStateToProps from './selectors';
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
 
-const { REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS } = process.env;
-
 function AOISidebar({
   activeCategory,
   aoiId,
@@ -128,371 +126,212 @@ function AOISidebar({
     || countryNamesTranslations[contextualData.areaName]
     || contextualData.areaName;
 
-  if (FEATURE_NEW_MENUS) {
-    return (
-      <div className={styles.sidebarContainer}>
-        <TabsSidebar
-          activeLayers={activeLayers}
-          view={view}
-          onTabClick={() => handleOnTabClick()}
-          aoiId={aoiId}
-        />
+  return (
+    <div className={styles.sidebarContainer}>
+      <TabsSidebar
+        activeLayers={activeLayers}
+        view={view}
+        onTabClick={() => handleOnTabClick()}
+        aoiId={aoiId}
+      />
 
-        <AnimatePresence exitBeforeEnter>
-          {sidebarTabActive === sidebarTabs[1].slug && (
-            <motion.div
-              key={sidebarTabs[1].slug}
-              initial={{ opacity: 0, x: 160, width: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 160 }}
-              transition={{
-                duration: 0.25,
-                ease: 'easeInOut',
-              }}
-            >
-              <section className={styles.headerCard}>
-                <Button
-                  type="rounded"
-                  handleClick={handleClose}
-                  Icon={CloseIcon}
-                  className={styles.backButton}
-                  tooltipText={t('Go back to the globe')}
-                />
+      <AnimatePresence exitBeforeEnter>
+        {sidebarTabActive === sidebarTabs[1].slug && (
+          <motion.div
+            key={sidebarTabs[1].slug}
+            initial={{ opacity: 0, x: 160, width: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 160 }}
+            transition={{
+              duration: 0.25,
+              ease: 'easeInOut',
+            }}
+          >
+            <section className={styles.headerCard}>
+              <Button
+                type="rounded"
+                handleClick={handleClose}
+                Icon={CloseIcon}
+                className={styles.backButton}
+                tooltipText={t('Go back to the globe')}
+              />
 
-                <DummyBlurWorkaround />
-                <div className={styles.topRow}>
-                  <div className={styles.nameWrapper}>
-                    {isEditingName ? (
-                      <input
-                        // eslint-disable-next-line jsx-a11y/no-autofocus
-                        autoFocus
-                        type="text"
-                        className={styles.areaNameEdit}
-                        onChange={(e) => setUpdatedAreaName(e.target.value)}
-                        placeholder={t('Type name')}
-                      />
-                    ) : (
-                      <p className={styles.areaName}>{areaName}</p>
-                    )}
-                    {area && (
-                      <p className={styles.area}>
-                        {`${area} `}
-                        <span>
-                          {t('km')}
-                          <sup>2</sup>
-                        </span>
-                      </p>
-                    )}
-                  </div>
+              <DummyBlurWorkaround />
+              <div className={styles.topRow}>
+                <div className={styles.nameWrapper}>
                   {isEditingName ? (
-                    <div className={styles.actionButtons}>
-                      <Button
-                        type="rectangular"
-                        className={styles.saveButton}
-                        handleClick={saveName}
-                        tooltipText={t('Save the area name')}
-                        label={t('SAVE')}
-                      />
-                    </div>
+                    <input
+                      // eslint-disable-next-line jsx-a11y/no-autofocus
+                      autoFocus
+                      type="text"
+                      className={styles.areaNameEdit}
+                      onChange={(e) => setUpdatedAreaName(e.target.value)}
+                      placeholder={t('Type name')}
+                    />
                   ) : (
-                    <div className={styles.actionButtons}>
-                      {contextualData.isCustom && (
-                        <Button
-                          Icon={EditIcon}
-                          type="icon-square"
-                          handleClick={() => setIsEditingName(true)}
-                          tooltipText={t('Edit area name')}
-                        />
-                      )}
-                    </div>
+                    <p className={styles.areaName}>{areaName}</p>
+                  )}
+                  {area && (
+                    <p className={styles.area}>
+                      {`${area} `}
+                      <span>
+                        {t('km')}
+                        <sup>2</sup>
+                      </span>
+                    </p>
                   )}
                 </div>
-              </section>
-              <div className={cx(styles.content, className)}>
-                <div className={styles.contextualDataRow}>
-                  <div
-                    className={styles.contextualIndicator}
-                    title="population"
-                  >
-                    <PopulationIcon />
-                    <span>{population}</span>
+                {isEditingName ? (
+                  <div className={styles.actionButtons}>
+                    <Button
+                      type="rectangular"
+                      className={styles.saveButton}
+                      handleClick={saveName}
+                      tooltipText={t('Save the area name')}
+                      label={t('SAVE')}
+                    />
                   </div>
-                  <div
-                    className={styles.contextualIndicator}
-                    title={`${t('land cover: ')}${
-                      AOIContextualTranslations[
-                        landCover && landCover.toLowerCase()
-                      ] || landCover
-                    }`}
-                  >
-                    <LandCoverIcon />
-                    <span>
-                      {AOIContextualTranslations[
-                        landCover && landCover.toLowerCase()
-                      ] || landCover}
-                    </span>
-                  </div>
-                  <div
-                    className={styles.contextualIndicator}
-                    title={`${t('climate regime: ')}${
-                      AOIContextualTranslations[
-                        climateRegime && climateRegime.toLowerCase()
-                      ] || climateRegime
-                    }`}
-                  >
-                    <ClimateRegimeIcon />
-                    <span>
-                      {AOIContextualTranslations[
-                        climateRegime && climateRegime.toLowerCase()
-                      ] || climateRegime}
-                    </span>
-                  </div>
-                </div>
-                <SpeciesCard
-                  area={area}
-                  speciesData={speciesData}
-                  contextualData={contextualData}
-                />
-                <SidebarCard
-                  map={map}
-                  toggleType="radio"
-                  activeLayers={activeLayers}
-                  contextualData={contextualData}
-                  cardCategory={BIODIVERSITY_SLUG}
-                  layers={aoiBiodiversityToggles}
-                  metadataSlug={ALL_TAXA_PRIORITY}
-                />
-                <SidebarCard
-                  map={map}
-                  layers={WDPALayers}
-                  toggleType="checkbox"
-                  activeLayers={activeLayers}
-                  cardCategory={PROTECTION_SLUG}
-                  contextualData={contextualData}
-                  metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
-                />
-                <SidebarCard
-                  map={map}
-                  toggleType="checkbox"
-                  activeLayers={activeLayers}
-                  layers={humanPressuresLandUse}
-                  contextualData={contextualData}
-                  cardCategory={LAND_HUMAN_PRESSURES_SLUG}
-                  metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
-                />
-                <section className={styles.completeDatabaseWrapper}>
-                  <p>
-                    {t(
-                      'Do you have more information about this particular area?',
+                ) : (
+                  <div className={styles.actionButtons}>
+                    {contextualData.isCustom && (
+                      <Button
+                        Icon={EditIcon}
+                        type="icon-square"
+                        handleClick={() => setIsEditingName(true)}
+                        tooltipText={t('Edit area name')}
+                      />
                     )}
-                  </p>
-                  <a
-                    className={styles.link}
-                    href="https://mol.org/upload"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {t(' help us complete our database')}
-                  </a>
-                </section>
-                <ShareModal
-                  isOpen={isShareModalOpen}
-                  setShareModalOpen={setShareModalOpen}
-                />
+                    {dataLoaded && (
+                      <Button
+                        Icon={ShareIcon}
+                        type="icon-square"
+                        handleClick={handleShareModalOpen}
+                        tooltipText={t('Share this area')}
+                        disabled
+                      />
+                    )}
+                  </div>
+                )}
               </div>
-            </motion.div>
-          )}
-          {sidebarTabActive === sidebarTabs[0].slug && (
-            <motion.div
-              className={styles.mapLayersContainer}
-              key={sidebarTabs[0].slug}
-              initial={{ opacity: 0, x: 160 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 160 }}
-              transition={{
-                duration: 0.25,
-                ease: 'easeInOut',
-              }}
-            >
-              <MapLayers
-                activeLayers={activeLayers}
-                activeCategory={activeCategory}
-                handleGlobeUpdating={handleGlobeUpdating}
-                map={map}
-                onboardingStep={onboardingStep}
-                onboardingType={onboardingType}
-                view={view}
-                waitingInteraction={waitingInteraction}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  }
-  if (!FEATURE_NEW_MENUS) {
-    return (
-      <>
-        <section className={styles.headerCardOLD}>
-          <Button
-            type="rounded"
-            handleClick={handleClose}
-            Icon={CloseIcon}
-            className={styles.backButtonOLD}
-            tooltipText={t('Go back to the globe')}
-          />
-          <DummyBlurWorkaround />
-          <div className={styles.topRowOLD}>
-            <div className={styles.nameWrapper}>
-              {isEditingName ? (
-                <input
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
-                  type="text"
-                  className={styles.areaNameEdit}
-                  onChange={(e) => setUpdatedAreaName(e.target.value)}
-                  placeholder={t('Type name')}
-                />
-              ) : (
-                <p className={styles.areaName}>
-                  {updatedAreaName
-                    || countryNamesTranslations[contextualData.areaName]
-                    || contextualData.areaName}
-                </p>
-              )}
-              {area && (
-                <p className={styles.area}>
-                  {`${area} `}
+            </section>
+            <div className={cx(styles.content, className)}>
+              <div className={styles.contextualDataRow}>
+                <div className={styles.contextualIndicator} title="population">
+                  <PopulationIcon />
+                  <span>{population}</span>
+                </div>
+                <div
+                  className={styles.contextualIndicator}
+                  title={`${t('land cover: ')}${
+                    AOIContextualTranslations[
+                      landCover && landCover.toLowerCase()
+                    ] || landCover
+                  }`}
+                >
+                  <LandCoverIcon />
                   <span>
-                    {t('km')}
-                    <sup>2</sup>
+                    {AOIContextualTranslations[
+                      landCover && landCover.toLowerCase()
+                    ] || landCover}
                   </span>
+                </div>
+                <div
+                  className={styles.contextualIndicator}
+                  title={`${t('climate regime: ')}${
+                    AOIContextualTranslations[
+                      climateRegime && climateRegime.toLowerCase()
+                    ] || climateRegime
+                  }`}
+                >
+                  <ClimateRegimeIcon />
+                  <span>
+                    {AOIContextualTranslations[
+                      climateRegime && climateRegime.toLowerCase()
+                    ] || climateRegime}
+                  </span>
+                </div>
+              </div>
+              <SpeciesCard
+                area={area}
+                speciesData={speciesData}
+                contextualData={contextualData}
+              />
+              <SidebarCard
+                map={map}
+                toggleType="radio"
+                activeLayers={activeLayers}
+                contextualData={contextualData}
+                cardCategory={BIODIVERSITY_SLUG}
+                layers={aoiBiodiversityToggles}
+                metadataSlug={ALL_TAXA_PRIORITY}
+              />
+              <SidebarCard
+                map={map}
+                layers={WDPALayers}
+                toggleType="checkbox"
+                activeLayers={activeLayers}
+                cardCategory={PROTECTION_SLUG}
+                contextualData={contextualData}
+                metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
+              />
+              <SidebarCard
+                map={map}
+                toggleType="checkbox"
+                activeLayers={activeLayers}
+                layers={humanPressuresLandUse}
+                contextualData={contextualData}
+                cardCategory={LAND_HUMAN_PRESSURES_SLUG}
+                metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
+              />
+              <section className={styles.completeDatabaseWrapper}>
+                <p>
+                  {t(
+                    'Do you have more information about this particular area?',
+                  )}
                 </p>
-              )}
+                <a
+                  className={styles.link}
+                  href="https://mol.org/upload"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t(' help us complete our database')}
+                </a>
+              </section>
+              <ShareModal
+                isOpen={isShareModalOpen}
+                setShareModalOpen={setShareModalOpen}
+              />
             </div>
-            {isEditingName ? (
-              <div className={styles.actionButtons}>
-                <Button
-                  type="rectangular"
-                  className={styles.saveButton}
-                  handleClick={saveName}
-                  tooltipText={t('Save the area name')}
-                  label={t('SAVE')}
-                />
-              </div>
-            ) : (
-              <div className={styles.actionButtons}>
-                {contextualData.isCustom && (
-                  <Button
-                    Icon={EditIcon}
-                    type="icon-square"
-                    handleClick={() => setIsEditingName(true)}
-                    tooltipText={t('Edit area name')}
-                  />
-                )}
-                {dataLoaded && (
-                  <Button
-                    Icon={ShareIcon}
-                    type="icon-square"
-                    handleClick={handleShareModalOpen}
-                    tooltipText={t('Share this area')}
-                    disabled
-                  />
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-        <div className={cx(styles.container, className)}>
-          <div className={styles.contextualDataRow}>
-            <div className={styles.contextualIndicator} title="population">
-              <PopulationIcon />
-              <span>{population}</span>
-            </div>
-            <div
-              className={styles.contextualIndicator}
-              title={`${t('land cover: ')}${
-                AOIContextualTranslations[
-                  landCover && landCover.toLowerCase()
-                ] || landCover
-              }`}
-            >
-              <LandCoverIcon />
-              <span>
-                {AOIContextualTranslations[
-                  landCover && landCover.toLowerCase()
-                ] || landCover}
-              </span>
-            </div>
-            <div
-              className={styles.contextualIndicator}
-              title={`${t('climate regime: ')}${
-                AOIContextualTranslations[
-                  climateRegime && climateRegime.toLowerCase()
-                ] || climateRegime
-              }`}
-            >
-              <ClimateRegimeIcon />
-              <span>
-                {AOIContextualTranslations[
-                  climateRegime && climateRegime.toLowerCase()
-                ] || climateRegime}
-              </span>
-            </div>
-          </div>
-          <SpeciesCard
-            area={area}
-            speciesData={speciesData}
-            contextualData={contextualData}
-          />
-          <SidebarCard
-            map={map}
-            toggleType="radio"
-            activeLayers={activeLayers}
-            contextualData={contextualData}
-            cardCategory={BIODIVERSITY_SLUG}
-            layers={aoiBiodiversityToggles}
-            metadataSlug={ALL_TAXA_PRIORITY}
-          />
-          <SidebarCard
-            map={map}
-            layers={WDPALayers}
-            toggleType="checkbox"
-            activeLayers={activeLayers}
-            cardCategory={PROTECTION_SLUG}
-            contextualData={contextualData}
-            metadataSlug={PROTECTED_AREAS_VECTOR_TILE_LAYER}
-          />
-          <SidebarCard
-            map={map}
-            toggleType="checkbox"
-            activeLayers={activeLayers}
-            layers={humanPressuresLandUse}
-            contextualData={contextualData}
-            cardCategory={LAND_HUMAN_PRESSURES_SLUG}
-            metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
-          />
-          <section className={styles.completeDatabaseWrapper}>
-            <p>
-              {t('Do you have more information about this particular area?')}
-            </p>
-            <a
-              className={styles.link}
-              href="https://mol.org/upload"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t(' help us complete our database')}
-            </a>
-          </section>
-          <ShareModal
-            isOpen={isShareModalOpen}
-            setShareModalOpen={setShareModalOpen}
-          />
-        </div>
-      </>
-    );
-  }
+          </motion.div>
+        )}
+        {sidebarTabActive === sidebarTabs[0].slug && (
+          <motion.div
+            className={styles.mapLayersContainer}
+            key={sidebarTabs[0].slug}
+            initial={{ opacity: 0, x: 160 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 160 }}
+            transition={{
+              duration: 0.25,
+              ease: 'easeInOut',
+            }}
+          >
+            <MapLayers
+              activeLayers={activeLayers}
+              activeCategory={activeCategory}
+              handleGlobeUpdating={handleGlobeUpdating}
+              map={map}
+              onboardingStep={onboardingStep}
+              onboardingType={onboardingType}
+              view={view}
+              waitingInteraction={waitingInteraction}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 export default connect(mapStateToProps, null)(AOISidebar);

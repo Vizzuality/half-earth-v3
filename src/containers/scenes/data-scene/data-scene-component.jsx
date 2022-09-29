@@ -13,7 +13,6 @@ import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
-import Widgets from 'containers/widgets';
 
 import MapTooltip from 'components/map-tooltip';
 import MenuFooter from 'components/mobile-only/menu-footer';
@@ -33,10 +32,7 @@ import styles from './data-scene-styles.module.scss';
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
-const {
-  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function DataSceneComponent({
   sceneMode,
@@ -69,14 +65,12 @@ function DataSceneComponent({
   const [, analyzeAreasTab] = getSidebarTabs();
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
-  const analysisLayerHighlightEnabled = FEATURE_NEW_MENUS
-    ? selectedAnalysisLayer && sidebarTabActive === analyzeAreasTab.slug
-    : selectedAnalysisLayer;
+  const analysisLayerHighlightEnabled = selectedAnalysisLayer
+    && sidebarTabActive === analyzeAreasTab.slug;
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea =
-    mapTooltipData &&
-    mapTooltipData.precalculatedLayerSlug ===
-      PRECALCULATED_LAYERS_SLUG.protectedAreas;
+  const isProtectedArea = mapTooltipData
+    && mapTooltipData.precalculatedLayerSlug
+      === PRECALCULATED_LAYERS_SLUG.protectedAreas;
 
   const updatedSceneSettings = useMemo(
     () => ({
@@ -87,7 +81,7 @@ function DataSceneComponent({
           : sceneSettings.center,
       ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType]
+    [isMobile, onboardingType],
   );
 
   return (
@@ -99,8 +93,7 @@ function DataSceneComponent({
       initialRotation
       blur={activeGlobesMenu}
       className={cx({
-        [uiStyles.blurScene]:
-          activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
+        [uiStyles.blurScene]: activeGlobesMenu && !onboardingType,
       })}
     >
       {!!onboardingType && <SoundButton />}
@@ -122,12 +115,9 @@ function DataSceneComponent({
         onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
         aoiId={aoiId}
-        className={cx({
-          [styles.sidebarContainer]: FEATURE_NEW_MENUS,
-          [styles.sidebarContainerOLD]: !FEATURE_NEW_MENUS,
+        className={cx(styles.sidebarContainer, {
           [animationStyles.leftHidden]: sidebarHidden,
-          [uiStyles.blur]:
-            activeGlobesMenu && !onboardingType && FEATURE_NEW_MENUS,
+          [uiStyles.blur]: activeGlobesMenu && !onboardingType,
         })}
       />
 
@@ -150,7 +140,7 @@ function DataSceneComponent({
         />
       )}
 
-      {FEATURE_NEW_MENUS && !isMobile && !onboardingType && (
+      {!isMobile && !onboardingType && (
         <SideMenu
           openedModal={openedModal}
           activeLayers={updatedActiveLayers}
@@ -160,17 +150,8 @@ function DataSceneComponent({
         />
       )}
 
-      {FEATURE_NEW_MENUS && !isMobile && (
+      {!isMobile && (
         <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
-      )}
-
-      {(!FEATURE_NEW_MENUS || isMobile) && (
-        <Widgets
-          openedModal={openedModal}
-          activeLayers={updatedActiveLayers}
-          isFullscreenActive={isFullscreenActive}
-          onboardingStep={onboardingStep}
-        />
       )}
 
       <MapTooltip
@@ -181,15 +162,12 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {FEATURE_NEW_MENUS &&
-        activeGlobesMenu &&
-        !isMobile &&
-        !onboardingType && (
-          <GlobesMenu
-            browsePage={browsePage}
-            onMouseLeave={() => setActiveGlobesMenu(false)}
-          />
-        )}
+      {activeGlobesMenu && !isMobile && !onboardingType && (
+        <GlobesMenu
+          browsePage={browsePage}
+          onMouseLeave={() => setActiveGlobesMenu(false)}
+        />
+      )}
     </Scene>
   );
 }

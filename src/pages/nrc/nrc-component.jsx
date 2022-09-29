@@ -10,7 +10,6 @@ import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
 
 import CountryChallengesChart from 'components/country-challenges-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
-import MainMenu from 'components/main-menu';
 import RankingChart from 'components/ranking-chart';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
@@ -18,10 +17,6 @@ import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 import uiStyles from 'styles/ui.module.scss';
 
 import styles from './nrc-styles.module.scss';
-
-const {
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
@@ -53,12 +48,6 @@ function NationalReportCard({
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      {!FEATURE_NEW_MENUS && (
-        <MainMenu
-          onBoardingStep={onboardingStep}
-          onboardingType={onboardingType}
-        />
-      )}
       <NationalReportSidebar
         chartData={chartData}
         countryISO={countryISO}

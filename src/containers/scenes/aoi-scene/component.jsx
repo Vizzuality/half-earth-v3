@@ -8,7 +8,6 @@ import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
 import SideMenu from 'containers/menus/sidemenu';
 import AoiSidebar from 'containers/sidebars/aoi-sidebar';
-import Widgets from 'containers/widgets';
 
 import FuturePlaceTooltip from 'components/future-place-tooltip';
 import Scene from 'components/scene';
@@ -16,10 +15,7 @@ import Scene from 'components/scene';
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
 import { useMobile } from 'constants/responsive';
 
-const {
-  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-  REACT_APP_FEATURE_NEW_MENUS: FEATURE_NEW_MENUS,
-} = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function AoiSceneComponent({
   activeCategory,
@@ -58,11 +54,7 @@ function AoiSceneComponent({
       />
 
       <LocalSceneViewManager localGeometry={geometry} />
-      {FEATURE_NEW_MENUS && !isMobile && (
-        <SideMenu activeLayers={activeLayers} />
-      )}
-
-      {!FEATURE_NEW_MENUS && <Widgets activeLayers={activeLayers} />}
+      {!isMobile && <SideMenu activeLayers={activeLayers} />}
 
       <TerrainExaggerationLayer />
 
