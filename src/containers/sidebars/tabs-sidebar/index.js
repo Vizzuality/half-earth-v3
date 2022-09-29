@@ -5,10 +5,6 @@ import uiActions from 'redux_modules/ui';
 import Component from './component';
 import mapStateToProps from './selectors';
 
-const actions = {
-  ...uiActions,
-};
-
 function TabsSidebarContainer(props) {
   const {
     setSidebarTabActive,
@@ -30,4 +26,4 @@ function TabsSidebarContainer(props) {
   );
 }
 
-export default connect(mapStateToProps, actions)(TabsSidebarContainer);
+export default connect(mapStateToProps, uiActions)(TabsSidebarContainer);

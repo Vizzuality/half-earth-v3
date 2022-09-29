@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -15,7 +14,6 @@ const actions = {
   ...mapTooltipActions,
   ...aoisGeometriesActions,
   ...aoiAnalyticsActions,
-  ...aoisActions,
 };
 
 function SideMenu(props) {

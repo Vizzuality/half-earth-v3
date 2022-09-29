@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -17,7 +16,7 @@ import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import Component from './future-place-tooltip-component';
 
 const actions = {
-  ...urlActions, ...aoisActions, ...aoisGeometriesActions, ...mapTooltipActions,
+  ...urlActions, ...aoisGeometriesActions, ...mapTooltipActions,
 };
 
 function FuturePlaceTooltipContainer(props) {

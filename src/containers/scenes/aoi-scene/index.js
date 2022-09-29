@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import aoisActions from 'redux_modules/aois';
 import aoisGeometriesActions from 'redux_modules/aois-geometries';
 
 import { loadModules } from 'esri-loader';
@@ -24,7 +23,7 @@ import { setPrecalculatedAOIs, recoverOrCreateNotPrecalculatedAoi } from './aoi-
 import Component from './component.jsx';
 import mapStateToProps from './selectors';
 
-const actions = { ...urlActions, ...aoisActions, ...aoisGeometriesActions };
+const actions = { ...urlActions, ...aoisGeometriesActions };
 
 // Protected areas are fetched on protected areas modal except for PA type AOIs
 function AOIScene(props) {
