@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import aoisActions from 'redux_modules/aois';
 
 import useDebounce from 'hooks/use-debounce';
 
@@ -13,8 +12,6 @@ import {
 
 import Component from './component';
 import mapStateToProps from './selectors';
-
-const actions = { ...aoisActions };
 
 function Container(props) {
   const { aoiId, contextualData, precalculatedLayerSlug } = props;
@@ -153,4 +150,4 @@ function Container(props) {
   );
 }
 
-export default connect(mapStateToProps, actions)(Container);
+export default connect(mapStateToProps, null)(Container);
