@@ -32,5 +32,4 @@ SKIP_PREFLIGHT_CHECK=true keep true, CRA does'nt support different versions of e
 REACT_APP_VERCEL_ENV=
 
 REACT_APP_FEATURE_SPECIFIC_REGIONS_AOI= Show specific regions as an option in analyze areas
-REACT_APP_FEATURE_TRANSLATION= Show transifex and contentful translation through the language selector
 REACT_APP_FEATURE_ALLOWED_LANGUAGES= Languages showing in language switcher

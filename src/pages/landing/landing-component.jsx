@@ -13,8 +13,6 @@ import { useMobile } from 'constants/responsive';
 
 import uiStyles from 'styles/ui.module.scss';
 
-const REACT_APP_FEATURE_TRANSLATION = process.env.REACT_APP_FEATURE_TRANSLATION === 'true';
-
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
 function LandingComponent({ hasMetadata, sceneSettings }) {
@@ -22,7 +20,7 @@ function LandingComponent({ hasMetadata, sceneSettings }) {
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
-      {REACT_APP_FEATURE_TRANSLATION && <LanguageSwitcher />}
+      <LanguageSwitcher />
       {!isMobile && <About />}
       <LandingScene sceneSettings={sceneSettings} />
       {hasMetadata && <InfoModal />}
