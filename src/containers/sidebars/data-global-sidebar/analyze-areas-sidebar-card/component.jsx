@@ -48,7 +48,7 @@ function AnalyzeAreasCardComponent({
   const locale = useLocale();
   const precalculatedAOIOptions = useMemo(
     () => getPrecalculatedAOIOptions(),
-    [locale],
+    [locale]
   );
 
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
@@ -83,8 +83,10 @@ function AnalyzeAreasCardComponent({
                   [styles.tabButtonActive]: selectedAnalysisTab === tab.label,
                 })}
                 type="button"
-                onClick={() => selectedAnalysisTab !== tab.label
-                  && handleAnalysisTabClick(`${tab.label}`)}
+                onClick={() =>
+                  selectedAnalysisTab !== tab.label &&
+                  handleAnalysisTabClick(`${tab.label}`)
+                }
               >
                 <span>{tab.icon}</span>
                 <span
@@ -104,9 +106,7 @@ function AnalyzeAreasCardComponent({
       {selectedAnalysisTab === 'click' && (
         <div>
           <p className={styles.sectionLabel}>
-            <b>{t('Click on the map')}</b>
-            {' '}
-            {t('to select:')}
+            <b>{t('Click on the map')}</b> {t('to select:')}
           </p>
 
           {precalculatedAOIOptions.map((option) => {
@@ -130,9 +130,7 @@ function AnalyzeAreasCardComponent({
       {selectedAnalysisTab === 'search' && (
         <div>
           <p className={styles.sectionLabel}>
-            <b>{t('Search')}</b>
-            {' '}
-            {t('a country, region or protected area')}
+            <b>{t('Search')}</b> {t('a country, region or protected area')}
           </p>
           <SearchLocation
             stacked
@@ -148,12 +146,9 @@ function AnalyzeAreasCardComponent({
       {selectedAnalysisTab === 'draw' && (
         <div>
           <p className={styles.sectionLabel}>
-            {t('Draw shape smaller than')}
-            {' '}
+            {t('Draw shape smaller than')}{' '}
             <b>
-              {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)}
-              {' '}
-              km
+              {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
               <sup>2</sup>
             </b>
             {t(', approximately the size of Belgium.')}
@@ -167,26 +162,21 @@ function AnalyzeAreasCardComponent({
       {selectedAnalysisTab === 'upload' && (
         <>
           <p className={styles.sectionLabel}>
-            {t('Upload your own shapefile. The shape should be smaller than')}
-            {' '}
+            {t('Upload your own shapefile. The shape should be smaller than')}{' '}
             <b>
-              {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)}
-              {' '}
-              km
+              {getLocaleNumber(HIGHER_AREA_SIZE_LIMIT, locale)} km
               <sup>2</sup>
-            </b>
-            {' '}
+            </b>{' '}
             {t('approximately the size of Belgium.')}
           </p>
 
           <p className={styles.sectionSubtitleLabel}>
             {t('Learn more about shape files')}
-            {' '}
             <a
               title={t('Shapefiles information')}
               href="https://enterprise.arcgis.com/es/portal/latest/use/shapefiles.htm"
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
             >
               {t('here')}
             </a>

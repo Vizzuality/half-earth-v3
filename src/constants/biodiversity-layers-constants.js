@@ -97,7 +97,7 @@ export const getLayersResolution = () => {
   });
 };
 
-export const DEFAULT_RESOLUTION = { [TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST' };
+export const DEFAULT_RESOLUTIONS = { [TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST' };
 
 export const getLayersToggleConfig = () => ({
   [PRIORITY]: {
@@ -556,7 +556,7 @@ const parseAllGroupLayers = (group, layers) => {
   return layers.filter((layer) => layer.group === group).map((layer) => {
     return {
       ...layer,
-      label: 'All groups',
+      label: 'All vertebrates',
     };
   });
 };

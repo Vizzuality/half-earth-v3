@@ -43,8 +43,8 @@ function BiodiversitySidebarCardComponent({
   handleCloseCard,
   map,
   handleTabSelection,
-  selectedResolution,
-  setSelectedResolution,
+  selectedResolutions,
+  setSelectedResolutions,
   biodiversityLayerVariant,
   cardMetadata,
   showCard,
@@ -72,14 +72,17 @@ function BiodiversitySidebarCardComponent({
     onboardingType,
     waitingInteraction,
   });
+
   const layerTogglesToDisplay = (category) => {
-    const resolutionsForSelectedCategory = layersToggleConfig[biodiversityLayerVariant][category];
-    const layersForSelectedResolution = resolutionsForSelectedCategory
-      && resolutionsForSelectedCategory[selectedResolution[category]];
+    const resolutionsForSelectedCategory =
+      layersToggleConfig[biodiversityLayerVariant][category];
+    const layersForSelectedResolution =
+      resolutionsForSelectedCategory &&
+      resolutionsForSelectedCategory[selectedResolutions[category]];
 
     if (resolutionsForSelectedCategory && layersForSelectedResolution) {
       const layerAll = layersForSelectedResolution.filter(
-        (l) => l.name === 'All',
+        (l) => l.name === 'All'
       );
       const layersStartingWithAll = layersForSelectedResolution
         .filter((l) => l.name.startsWith('All '))
@@ -90,7 +93,7 @@ function BiodiversitySidebarCardComponent({
         .sort((a, b) => a.name.localeCompare(b.name));
       const allLayersAlphabetically = layerAll.concat(
         layersStartingWithAll,
-        otherLayers,
+        otherLayers
       );
 
       return allLayersAlphabetically;
@@ -141,7 +144,7 @@ function BiodiversitySidebarCardComponent({
           {
             [styles.open]: isOpen,
             [styles.onboardingMode]: firstStep,
-          },
+          }
         )}
       >
         <SidebarLegend
@@ -173,14 +176,18 @@ function BiodiversitySidebarCardComponent({
         <div className={styles.togglesContainer}>
           <BiodiversityLayerToggle
             activeLayers={activeLayers}
-            disabled={layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2}
+            disabled={
+              layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2
+            }
             layers={layerTogglesToDisplay(TERRESTRIAL)}
             map={map}
             onChange={handleLayerToggle}
-            resolutionOptions={layersResolution[biodiversityLayerVariant][TERRESTRIAL]}
-            selectedOption={resolutions[selectedResolution[TERRESTRIAL]]}
-            selectedResolution={selectedResolution}
-            setSelectedResolution={setSelectedResolution}
+            resolutionOptions={
+              layersResolution[biodiversityLayerVariant][TERRESTRIAL]
+            }
+            selectedOption={resolutions[selectedResolutions[TERRESTRIAL]]}
+            selectedResolutions={selectedResolutions}
+            setSelectedResolutions={setSelectedResolutions}
             speciesType={TERRESTRIAL}
             themeCategorySlug={BIODIVERSITY_SLUG}
             type="radio"
@@ -199,14 +206,20 @@ function BiodiversitySidebarCardComponent({
             <div className={styles.togglesContainer}>
               <BiodiversityLayerToggle
                 activeLayers={activeLayers}
-                disabled={layersResolution[biodiversityLayerVariant][MARINE].length < 2}
+                disabled={
+                  layersResolution[biodiversityLayerVariant][MARINE].length < 2
+                }
                 layers={layerTogglesToDisplay(MARINE)}
                 map={map}
                 onChange={handleLayerToggle}
-                resolutionOptions={layersResolution[biodiversityLayerVariant][MARINE]}
-                selectedOption={layersResolution[biodiversityLayerVariant][MARINE][0]}
-                selectedResolution={selectedResolution}
-                setSelectedResolution={setSelectedResolution}
+                resolutionOptions={
+                  layersResolution[biodiversityLayerVariant][MARINE]
+                }
+                selectedOption={
+                  layersResolution[biodiversityLayerVariant][MARINE][0]
+                }
+                selectedResolutions={selectedResolutions}
+                setSelectedResolutions={setSelectedResolutions}
                 speciesType={MARINE}
                 themeCategorySlug={BIODIVERSITY_SLUG}
                 type="radio"

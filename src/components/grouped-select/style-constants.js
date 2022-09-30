@@ -1,4 +1,4 @@
-import variables from './styles.module.scss';
+import variables from './grouped-select-styles.module.scss';
 
 const getColorsFromSettings = (prefix, isArray) => {
   const colors = {};
@@ -41,8 +41,9 @@ export const customStyles = {
   }),
   groupHeading: () => ({
     color: COLORS.black,
+    fontFamily: FONT_FAMILIES['font-family-1'],
     fontWeight: FONT_WEIGHTS['font-weight-bold'],
-    paddingLeft: '10px',
+    padding: '10px 0 10px 10px',
     textTransform: 'capitalize',
   }),
   group: () => ({
@@ -72,7 +73,7 @@ export const customStyles = {
   option: (styles, { isDisabled, isSelected }) => ({
     ...styles,
     alignItems: 'center',
-    backgroundColor: isSelected && 'transparent',
+    backgroundColor: isSelected && COLORS.alto,
     color: COLORS.black,
     cursor: isDisabled ? 'not-allowed' : 'pointer',
     display: 'flex',

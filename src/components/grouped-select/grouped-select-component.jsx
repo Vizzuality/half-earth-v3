@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import Select from 'react-select';
@@ -9,23 +8,19 @@ import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
-import styles from './styles.module.scss';
-
 import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 
-import { customStyles } from './constants';
+import styles from './grouped-select-styles.module.scss';
+import { customStyles } from './style-constants';
 
-function GroupedSelect({
-  onSelect,
-  groupedOptions,
-}) {
+function GroupedSelect({ onSelect, groupedOptions }) {
   const t = useT();
 
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleChange = (value) => {
-    setSelectedOption(value);
-    onSelect(value);
+  const handleChange = (option) => {
+    setSelectedOption(option);
+    onSelect(option);
   };
 
   return (
@@ -34,20 +29,24 @@ function GroupedSelect({
       onChange={handleChange}
       options={groupedOptions}
       styles={customStyles}
-      placeholder={t('All Groups')}
+      // eslint-disable-next-line no-undef
       menuPortalTarget={document.body}
-      menuPosition="absolute"
+      menuPosition="fixed"
+      isOptionDisabled={(option) =>
+        selectedOption && option.name === selectedOption.name
+      }
       components={{
         IndicatorSeparator: () => null,
         SingleValue: (v) => {
           const { data } = v;
-          return (<p className={styles.singleValue}>{t(data.label)}</p>);
+          return <p className={styles.singleValue}>{t(data.label)}</p>;
         },
         DropdownIndicator: ({ selectProps: { menuIsOpen } }) => (
-          <IconArrow className={cx({
-            [styles.arrowIcon]: true,
-            [styles.arrowIconDropdownOpen]: menuIsOpen,
-          })}
+          <IconArrow
+            className={cx({
+              [styles.arrowIcon]: true,
+              [styles.arrowIconDropdownOpen]: menuIsOpen,
+            })}
           />
         ),
       }}
@@ -56,7 +55,7 @@ function GroupedSelect({
 }
 
 GroupedSelect.propTypes = {
-  groupedOptions: PropTypes.objectOf.isRequired,
+  groupedOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 
