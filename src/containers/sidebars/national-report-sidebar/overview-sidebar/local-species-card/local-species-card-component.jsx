@@ -79,11 +79,7 @@ function LocalSpeciesCardComponent({
             <div className={styles.chartLegendItem}>
               <EndemicOval />
               <div className={styles.chartLegendItemNameContainer}>
-                <span>
-                  {`${
-                    getLocaleNumber(endemicVertebratesCount, locale) || 0
-                  } ${endemicVertebratesSentence}`}
-                </span>
+                <span>{endemicVertebratesSentence}</span>
                 <span>{t('endemic')}</span>
               </div>
             </div>
@@ -97,12 +93,12 @@ function LocalSpeciesCardComponent({
               <div className={styles.legendNameContainer}>
                 <span className={styles.speciesName}>
                   {`${getLocaleNumber(amphibians, locale) || 0} ${t(
-                    ' amphibians',
+                    ' amphibians'
                   )}`}
                 </span>
                 <span>
                   {`${getLocaleNumber(amphibiansEndemic, locale) || 0} ${t(
-                    'endemic',
+                    'endemic'
                   )}`}
                 </span>
               </div>
@@ -118,7 +114,7 @@ function LocalSpeciesCardComponent({
                 </span>
                 <span>
                   {`${getLocaleNumber(reptilesEndemic || 0, locale)} ${t(
-                    'endemic',
+                    'endemic'
                   )}`}
                 </span>
               </div>
@@ -131,12 +127,12 @@ function LocalSpeciesCardComponent({
               <div className={styles.legendNameContainer}>
                 <span className={styles.speciesName}>
                   {`${getLocaleNumber(mammals || 0, locale)} ${t(
-                    'mammals (land)',
+                    'mammals (land)'
                   )}`}
                 </span>
                 <span>
                   {`${getLocaleNumber(mammalsEndemic || 0, locale)} ${t(
-                    'endemic',
+                    'endemic'
                   )}`}
                 </span>
               </div>
@@ -149,12 +145,12 @@ function LocalSpeciesCardComponent({
               <div className={styles.legendNameContainer}>
                 <span className={styles.speciesName}>
                   {`${getLocaleNumber(mammalsMar || 0, locale)} ${t(
-                    'mammals (sea)',
+                    'mammals (sea)'
                   )}`}
                 </span>
                 <span>
                   {`${getLocaleNumber(mammalsMarEndemic || 0, locale)} ${t(
-                    'endemic',
+                    'endemic'
                   )}`}
                 </span>
               </div>
@@ -170,7 +166,7 @@ function LocalSpeciesCardComponent({
                 </span>
                 <span>
                   {`${getLocaleNumber(birdsEndemic || 0, locale)} ${t(
-                    'endemic',
+                    'endemic'
                   )}`}
                 </span>
               </div>
@@ -186,7 +182,7 @@ function LocalSpeciesCardComponent({
                 </span>
                 <span>
                   {`${getLocaleNumber(fishesEndemic || 0, locale)}${t(
-                    'endemic',
+                    'endemic'
                   )}`}
                 </span>
               </div>
