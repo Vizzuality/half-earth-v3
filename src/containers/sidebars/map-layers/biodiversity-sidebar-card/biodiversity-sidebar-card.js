@@ -20,7 +20,6 @@ import usePrevious from 'hooks/use-previous';
 import ContentfulService from 'services/contentful';
 
 import {
-  GROUPED_OPTIONS,
   getLayersResolution,
   getLayersToggleConfig,
   getResolutionOptions,
@@ -29,7 +28,7 @@ import {
   MARINE,
   DEFAULT_RESOLUTIONS,
 } from 'constants/biodiversity-layers-constants';
-// import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
+import { ALL_TAXA_PRIORITY } from 'constants/layers-slugs';
 import { LAYERS_CATEGORIES, layersConfig } from 'constants/mol-layers-configs';
 
 import Component from './biodiversity-sidebar-card-component';
@@ -60,14 +59,15 @@ function BiodiversitySidebarCard(props) {
   });
 
   const [showCard, setShowCard] = useState(true);
-
-  const [selectedTerrestrialLayer, setSelectedTerrestrialLayer] = useState();
-  const [selectedMarineLayer, setSelectedMarineLayer] = useState();
-
+  const [selectedLayer, setSelectedLayer] = useState(ALL_TAXA_PRIORITY);
   const resolutionOptions = useMemo(() => getResolutionOptions(), [locale]);
 
   const [selectedResolutions, setSelectedResolutions] =
     useState(DEFAULT_RESOLUTIONS);
+
+  const handleResolutionSelection = (resolution, category) => {
+    setSelectedResolutions({ ...selectedResolutions, [category]: resolution });
+  };
 
   // Get biodiversity card metadata
   useEffect(() => {
@@ -85,24 +85,7 @@ function BiodiversitySidebarCard(props) {
     }
   }, [biodiversityLayerVariant, locale]);
 
-  // Default to default resolution if we don't have terrestrial one
-  useEffect(() => {
-    const resolutionExists = (category) =>
-      allLayersResolutions[biodiversityLayerVariant][category].some(
-        (res) => res.slug === selectedResolutions[category]
-      );
-    if (!resolutionExists(TERRESTRIAL)) {
-      setSelectedResolutions(DEFAULT_RESOLUTIONS);
-    }
-  }, [biodiversityLayerVariant, allLayersResolutions]);
-
-  const handleLayerToggle = (option, category) => {
-    const setSelectedLayer =
-      category === TERRESTRIAL
-        ? setSelectedTerrestrialLayer
-        : setSelectedMarineLayer;
-    const selectedLayer =
-      category === TERRESTRIAL ? selectedTerrestrialLayer : selectedMarineLayer;
+  const handleLayerToggle = (option) => {
     const layer = layersConfig[option.layer];
     if (selectedLayer === option.layer) {
       layerManagerToggle(
@@ -132,6 +115,19 @@ function BiodiversitySidebarCard(props) {
       setSelectedLayer(option.layer);
     }
   };
+
+  // Selected layer should default to all vertebrates at first and similar when we change
+
+  // When we change the tab (biodiversityLayerVariant)
+  // select default resolution if the selected resolution doesn't exist on terrestrial
+  useEffect(() => {
+    const selectedResolutionExists = allLayersResolutions[
+      biodiversityLayerVariant
+    ][TERRESTRIAL].some((res) => res.slug === selectedResolutions[TERRESTRIAL]);
+    if (!selectedResolutionExists) {
+      setSelectedResolutions(DEFAULT_RESOLUTIONS);
+    }
+  }, [biodiversityLayerVariant, allLayersResolutions]);
 
   // Select layers when we change resolutions
   useEffect(() => {
@@ -195,72 +191,21 @@ function BiodiversitySidebarCard(props) {
     setShowCard(false);
   };
 
-  // TODO: Refactor
-  const layerCategoryOptions = (category) => {
-    const parsedGroupOptions = (layerOptions) => {
-      const groupedOptions = GROUPED_OPTIONS(layerOptions);
-      const groupedOptionsMultiple = groupedOptions
-        .filter((o) => !!o.options.length)
-        .find((o) => o.options.length > 1);
-
-      if (!groupedOptionsMultiple) {
-        return groupedOptions.map((go) => {
-          return {
-            ...go,
-            label: null,
-          };
-        });
-      }
-      return groupedOptions;
-    };
-
-    const resolutionsForSelectedCategory =
-      layersToggleConfig[biodiversityLayerVariant][category];
-    const layersForSelectedResolution =
-      resolutionsForSelectedCategory &&
-      resolutionsForSelectedCategory[selectedResolutions[category]];
-
-    if (resolutionsForSelectedCategory && layersForSelectedResolution) {
-      const layerAll = layersForSelectedResolution.filter(
-        (l) => l.name === 'All'
-      );
-
-      const layersStartingWithAll = layersForSelectedResolution
-        .filter((l) => l.name.startsWith('All '))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      const otherLayers = layersForSelectedResolution
-        .filter((l) => l.name !== 'All')
-        .filter((l) => !l.name.startsWith('All '))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      const allLayersAlphabetically = layerAll.concat(
-        layersStartingWithAll,
-        otherLayers
-      );
-
-      return parsedGroupOptions(allLayersAlphabetically);
-    }
-    return [];
-  };
-
   return (
     <Component
       handleLayerToggle={handleLayerToggle}
+      handleResolutionSelection={handleResolutionSelection}
       selectedResolutionOptions={{
         [TERRESTRIAL]: resolutionOptions[selectedResolutions[TERRESTRIAL]],
         [MARINE]: resolutionOptions[selectedResolutions[MARINE]],
       }}
-      setSelectedResolutions={setSelectedResolutions}
+      selectedLayer={selectedLayer}
+      selectedResolutions={selectedResolutions}
       handleClearAndAddLayers={handleClearAndAddLayers}
       handleTabSelection={handleTabSelection}
       cardMetadata={cardMetadata[biodiversityLayerVariant]}
       showCard={showCard}
       handleCloseCard={handleCloseCard}
-      layerOptions={{
-        [TERRESTRIAL]: layerCategoryOptions(TERRESTRIAL),
-        [MARINE]: layerCategoryOptions(MARINE),
-      }}
       layersResolutionsOptions={layersResolution[biodiversityLayerVariant]}
       {...props}
     />

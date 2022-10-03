@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 
 import Dropdown from 'components/dropdown';
+import GroupedSelect from 'components/grouped-select';
 import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
 
@@ -25,8 +26,7 @@ function BiodiversityLayerToggle({
   handleBringToFrontClick,
   onOpacityClick,
   onLayerChange,
-  selectedLayer,
-  setSelectedLayer,
+  selectedLayerOption,
   resolutionOptions,
   selectedResolutionOption,
   handleResolutionSelection,
@@ -34,36 +34,49 @@ function BiodiversityLayerToggle({
 }) {
   const [isChecked, setIsChecked] = useState(false);
   useEffect(() => {
-    const newChecked = activeLayers.some(
-      (layer) => layer.title === selectedLayer.value
-    );
+    const newChecked =
+      selectedLayerOption &&
+      activeLayers.some((layer) => layer.title === selectedLayerOption.value);
     setIsChecked(newChecked);
     if (newChecked) {
-      layerToggleAnalytics(selectedLayer.value);
+      layerToggleAnalytics(selectedLayerOption.value);
     }
   }, [activeLayers]);
-
-  const key = `radio-button-${category}-${selectedLayer.value}`;
-
+  const defaultOption = useMemo(() => {
+    const defaultGroupedOption = groupedOptions.find((go) =>
+      go.options.find((o) => o.value === selectedLayerOption.value)
+    );
+    return (
+      defaultGroupedOption &&
+      defaultGroupedOption.options &&
+      defaultGroupedOption.options[0]
+    );
+  }, [groupedOptions]);
   return (
     <div
       className={cx(styles.container, styles.light, theme[BIODIVERSITY_SLUG], {
         [styles.checked]: isChecked,
       })}
     >
+      {/* Radio option with layer dropdown */}
       <div className={styles.radioOption}>
         <RadioButton
-          id={key}
+          id={`radio-button-${category}`}
           theme={theme.biodiversity}
           name={category}
-          option={selectedLayer}
+          option={selectedLayerOption}
           checked={isChecked}
           onChange={onLayerChange}
+          hideLabel
+        />
+        <GroupedSelect
+          defaultOption={defaultOption}
           groupedOptions={groupedOptions}
-          setSelectedLayer={setSelectedLayer}
+          onSelect={onLayerChange}
         />
       </div>
 
+      {/* Resolution dropdown */}
       <Dropdown
         theme="dark"
         parentWidth="170px"
@@ -77,7 +90,7 @@ function BiodiversityLayerToggle({
       />
 
       <LayerTools
-        option={selectedLayer}
+        option={selectedLayerOption}
         onInfoClick={handleInfoClick}
         activeLayers={activeLayers}
         onOpacityClick={onOpacityClick}

@@ -36,10 +36,11 @@ function BiodiversitySidebarCardComponent({
   handleLayerToggle,
   handleCloseCard,
   map,
-  layerOptions,
+  selectedLayer,
   layersResolutionsOptions,
   handleTabSelection,
   selectedResolutionOptions,
+  selectedResolutions,
   handleResolutionSelection,
   biodiversityLayerVariant,
   cardMetadata,
@@ -86,18 +87,15 @@ function BiodiversitySidebarCardComponent({
 
   const renderBiodiversityLayerToggle = (category) => {
     const categoryResolutionOptions = layersResolutionsOptions[category];
-    const [selectedLayer, setSelectedLayer] = useState(
-      layerOptions[category][0]
-    );
     return (
       <BiodiversityLayerToggle
         category={category}
+        biodiversityLayerVariant={biodiversityLayerVariant}
         map={map}
         activeLayers={activeLayers}
-        layerOptions={layerOptions[category]}
-        setSelectedLayer={setSelectedLayer}
         selectedLayer={selectedLayer}
-        onLayerChange={(layer) => handleLayerToggle(layer, category)}
+        onLayerChange={handleLayerToggle}
+        selectedResolutions={selectedResolutions}
         resolutionOptions={categoryResolutionOptions}
         disabledResolutionDropdown={categoryResolutionOptions.length < 2}
         selectedResolutionOption={selectedResolutionOptions[category]}
@@ -165,20 +163,13 @@ function BiodiversitySidebarCardComponent({
         <div className={styles.togglesContainer}>
           {renderBiodiversityLayerToggle(TERRESTRIAL)}
         </div>
-        {layerOptions[MARINE].length && (
-          <>
-            <hr className={hrTheme.dark} />
-            <div className={styles.dropdownContainer}>
-              <span className={styles.dropdownLabel}>
-                {t('Marine species')}
-              </span>
-            </div>
-
-            <div className={styles.togglesContainer}>
-              {renderBiodiversityLayerToggle(MARINE)}
-            </div>
-          </>
-        )}
+        <hr className={hrTheme.dark} />
+        <div className={styles.dropdownContainer}>
+          <span className={styles.dropdownLabel}>{t('Marine species')}</span>
+        </div>
+        <div className={styles.togglesContainer}>
+          {renderBiodiversityLayerToggle(MARINE)}
+        </div>
         <SourceAnnotation
           theme="light"
           className={styles.sourceContainer}

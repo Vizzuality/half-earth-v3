@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
 
@@ -8,6 +8,7 @@ import { layerToggleAnalytics } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 
+import mapStateToProps from './biodiversity-layer-toggle-selectors';
 import Component from './component';
 
 const actions = { ...metadataActions, layerToggleAnalytics };
@@ -47,4 +48,4 @@ function BiodiversityLayerToggle(props) {
   );
 }
 
-export default connect(null, actions)(BiodiversityLayerToggle);
+export default connect(mapStateToProps, actions)(BiodiversityLayerToggle);
