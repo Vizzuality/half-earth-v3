@@ -181,7 +181,7 @@ function BiodiversitySidebarCardComponent({
             }
             layers={layerTogglesToDisplay(TERRESTRIAL)}
             map={map}
-            onChange={handleLayerToggle}
+            onLayerChange={(layer) => handleLayerToggle(layer, TERRESTRIAL)}
             resolutionOptions={
               layersResolution[biodiversityLayerVariant][TERRESTRIAL]
             }
@@ -211,7 +211,7 @@ function BiodiversitySidebarCardComponent({
                 }
                 layers={layerTogglesToDisplay(MARINE)}
                 map={map}
-                onChange={handleLayerToggle}
+                onLayerChange={(layer) => handleLayerToggle(layer, MARINE)}
                 resolutionOptions={
                   layersResolution[biodiversityLayerVariant][MARINE]
                 }

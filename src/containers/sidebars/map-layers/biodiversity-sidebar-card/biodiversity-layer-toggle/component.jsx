@@ -24,7 +24,7 @@ function BiodiversityLayerToggle({
   handleBringToBackClick,
   handleBringToFrontClick,
   onOpacityClick,
-  onChange,
+  onLayerChange,
   resolutionOptions,
   selectedOption,
   selectedResolutions,
@@ -62,7 +62,7 @@ function BiodiversityLayerToggle({
           name={speciesType}
           option={selectedLayer}
           checked={isChecked}
-          onChange={onChange}
+          onChange={onLayerChange}
           groupedOptions={groupedOptions}
           setSelectedLayer={setSelectedLayer}
         />
@@ -104,7 +104,7 @@ BiodiversityLayerToggle.propTypes = {
   handleBringToBackClick: PropTypes.func.isRequired,
   handleBringToFrontClick: PropTypes.func.isRequired,
   onOpacityClick: PropTypes.func,
-  onChange: PropTypes.func.isRequired,
+  onLayerChange: PropTypes.func.isRequired,
   resolutionOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selectedResolutions: PropTypes.shape({}).isRequired,
   setSelectedResolutions: PropTypes.func.isRequired,
