@@ -8,6 +8,7 @@ import Dropdown from 'components/dropdown';
 import LayerTools from 'components/layer-toggle/layers-tools';
 import RadioButton from 'components/radio-button';
 
+import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
 import { TERRESTRIAL, MARINE } from 'constants/biodiversity-layers-constants';
 
 import theme from 'styles/themes/checkboxes-theme.module.scss';
@@ -16,24 +17,21 @@ import styles from './styles.module.scss';
 
 function BiodiversityLayerToggle({
   activeLayers,
-  disabled,
+  disabledResolutionDropdown,
   handleInfoClick,
-  layers,
   groupedOptions,
   layerToggleAnalytics,
   handleBringToBackClick,
   handleBringToFrontClick,
   onOpacityClick,
   onLayerChange,
+  selectedLayer,
+  setSelectedLayer,
   resolutionOptions,
-  selectedOption,
-  selectedResolutions,
-  setSelectedResolutions,
-  speciesType,
-  themeCategorySlug,
-  variant,
+  selectedResolutionOption,
+  handleResolutionSelection,
+  category,
 }) {
-  const [selectedLayer, setSelectedLayer] = useState(layers[0]);
   const [isChecked, setIsChecked] = useState(false);
   useEffect(() => {
     const newChecked = activeLayers.some(
@@ -45,13 +43,11 @@ function BiodiversityLayerToggle({
     }
   }, [activeLayers]);
 
-  const key = `radio-button-${speciesType}-${selectedLayer.value}-${variant}`;
+  const key = `radio-button-${category}-${selectedLayer.value}`;
 
   return (
     <div
-      className={cx(styles.container, {
-        [styles[variant]]: variant,
-        [theme[themeCategorySlug]]: themeCategorySlug,
+      className={cx(styles.container, styles.light, theme[BIODIVERSITY_SLUG], {
         [styles.checked]: isChecked,
       })}
     >
@@ -59,7 +55,7 @@ function BiodiversityLayerToggle({
         <RadioButton
           id={key}
           theme={theme.biodiversity}
-          name={speciesType}
+          name={category}
           option={selectedLayer}
           checked={isChecked}
           onChange={onLayerChange}
@@ -72,14 +68,11 @@ function BiodiversityLayerToggle({
         theme="dark"
         parentWidth="170px"
         options={resolutionOptions}
-        selectedOption={selectedOption}
-        handleOptionSelection={(op) =>
-          setSelectedResolutions({
-            ...selectedResolutions,
-            [speciesType]: op.slug,
-          })
+        selectedOption={selectedResolutionOption}
+        handleOptionSelection={(option) =>
+          handleResolutionSelection(option.slug)
         }
-        disabled={disabled}
+        disabled={disabledResolutionDropdown}
         className={styles.resolutionDropown}
       />
 
@@ -98,19 +91,15 @@ function BiodiversityLayerToggle({
 BiodiversityLayerToggle.propTypes = {
   activeLayers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   handleInfoClick: PropTypes.func.isRequired,
-  layers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   groupedOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   layerToggleAnalytics: PropTypes.func.isRequired,
   handleBringToBackClick: PropTypes.func.isRequired,
   handleBringToFrontClick: PropTypes.func.isRequired,
   onOpacityClick: PropTypes.func,
   onLayerChange: PropTypes.func.isRequired,
+  handleResolutionSelection: PropTypes.func.isRequired,
   resolutionOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedResolutions: PropTypes.shape({}).isRequired,
-  setSelectedResolutions: PropTypes.func.isRequired,
-  speciesType: PropTypes.oneOf([TERRESTRIAL, MARINE]).isRequired,
-  themeCategorySlug: PropTypes.string.isRequired,
-  variant: PropTypes.string.isRequired,
+  category: PropTypes.oneOf([TERRESTRIAL, MARINE]).isRequired,
 };
 BiodiversityLayerToggle.defaultProps = {
   onOpacityClick: undefined,

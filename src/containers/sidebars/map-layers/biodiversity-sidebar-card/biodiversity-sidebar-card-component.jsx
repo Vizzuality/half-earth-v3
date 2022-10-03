@@ -19,13 +19,7 @@ import SourceAnnotation from 'components/source-annotation';
 import Tabs from 'components/tabs';
 
 import { BIODIVERSITY_SLUG } from 'constants/analyze-areas-constants';
-import {
-  getLayersToggleConfig,
-  getLayersResolution,
-  TERRESTRIAL,
-  MARINE,
-  getResolutions,
-} from 'constants/biodiversity-layers-constants';
+import { TERRESTRIAL, MARINE } from 'constants/biodiversity-layers-constants';
 import { getBiodiversityTabs } from 'constants/ui-params';
 
 import hrTheme from 'styles/themes/hr-theme.module.scss';
@@ -42,9 +36,11 @@ function BiodiversitySidebarCardComponent({
   handleLayerToggle,
   handleCloseCard,
   map,
+  layerOptions,
+  layersResolutionsOptions,
   handleTabSelection,
-  selectedResolutions,
-  setSelectedResolutions,
+  selectedResolutionOptions,
+  handleResolutionSelection,
   biodiversityLayerVariant,
   cardMetadata,
   showCard,
@@ -56,9 +52,6 @@ function BiodiversitySidebarCardComponent({
   const t = useT();
   const locale = useLocale();
   const biodiversityTabs = useMemo(() => getBiodiversityTabs(), [locale]);
-  const resolutions = useMemo(() => getResolutions(), [locale]);
-  const layersResolution = useMemo(() => getLayersResolution(), [locale]);
-  const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
 
   const firstStep = onboardingStep === 0;
   const { title, description, source } = cardMetadata || {};
@@ -72,34 +65,6 @@ function BiodiversitySidebarCardComponent({
     onboardingType,
     waitingInteraction,
   });
-
-  const layerTogglesToDisplay = (category) => {
-    const resolutionsForSelectedCategory =
-      layersToggleConfig[biodiversityLayerVariant][category];
-    const layersForSelectedResolution =
-      resolutionsForSelectedCategory &&
-      resolutionsForSelectedCategory[selectedResolutions[category]];
-
-    if (resolutionsForSelectedCategory && layersForSelectedResolution) {
-      const layerAll = layersForSelectedResolution.filter(
-        (l) => l.name === 'All'
-      );
-      const layersStartingWithAll = layersForSelectedResolution
-        .filter((l) => l.name.startsWith('All '))
-        .sort((a, b) => a.name.localeCompare(b.name));
-      const otherLayers = layersForSelectedResolution
-        .filter((l) => l.name !== 'All')
-        .filter((l) => !l.name.startsWith('All '))
-        .sort((a, b) => a.name.localeCompare(b.name));
-      const allLayersAlphabetically = layerAll.concat(
-        layersStartingWithAll,
-        otherLayers
-      );
-
-      return allLayersAlphabetically;
-    }
-    return [];
-  };
 
   const tooltipRefs = useTooltipRefs({
     changeUI,
@@ -118,6 +83,30 @@ function BiodiversitySidebarCardComponent({
     onboardingStep,
     waitingInteraction,
   });
+
+  const renderBiodiversityLayerToggle = (category) => {
+    const categoryResolutionOptions = layersResolutionsOptions[category];
+    const [selectedLayer, setSelectedLayer] = useState(
+      layerOptions[category][0]
+    );
+    return (
+      <BiodiversityLayerToggle
+        category={category}
+        map={map}
+        activeLayers={activeLayers}
+        layerOptions={layerOptions[category]}
+        setSelectedLayer={setSelectedLayer}
+        selectedLayer={selectedLayer}
+        onLayerChange={(layer) => handleLayerToggle(layer, category)}
+        resolutionOptions={categoryResolutionOptions}
+        disabledResolutionDropdown={categoryResolutionOptions.length < 2}
+        selectedResolutionOption={selectedResolutionOptions[category]}
+        handleResolutionSelection={(slug) =>
+          handleResolutionSelection(slug, category)
+        }
+      />
+    );
+  };
 
   return (
     <motion.div
@@ -174,27 +163,9 @@ function BiodiversitySidebarCardComponent({
           </span>
         </div>
         <div className={styles.togglesContainer}>
-          <BiodiversityLayerToggle
-            activeLayers={activeLayers}
-            disabled={
-              layersResolution[biodiversityLayerVariant][TERRESTRIAL].length < 2
-            }
-            layers={layerTogglesToDisplay(TERRESTRIAL)}
-            map={map}
-            onLayerChange={(layer) => handleLayerToggle(layer, TERRESTRIAL)}
-            resolutionOptions={
-              layersResolution[biodiversityLayerVariant][TERRESTRIAL]
-            }
-            selectedOption={resolutions[selectedResolutions[TERRESTRIAL]]}
-            selectedResolutions={selectedResolutions}
-            setSelectedResolutions={setSelectedResolutions}
-            speciesType={TERRESTRIAL}
-            themeCategorySlug={BIODIVERSITY_SLUG}
-            type="radio"
-            variant="light"
-          />
+          {renderBiodiversityLayerToggle(TERRESTRIAL)}
         </div>
-        {layerTogglesToDisplay(MARINE).length && (
+        {layerOptions[MARINE].length && (
           <>
             <hr className={hrTheme.dark} />
             <div className={styles.dropdownContainer}>
@@ -204,27 +175,7 @@ function BiodiversitySidebarCardComponent({
             </div>
 
             <div className={styles.togglesContainer}>
-              <BiodiversityLayerToggle
-                activeLayers={activeLayers}
-                disabled={
-                  layersResolution[biodiversityLayerVariant][MARINE].length < 2
-                }
-                layers={layerTogglesToDisplay(MARINE)}
-                map={map}
-                onLayerChange={(layer) => handleLayerToggle(layer, MARINE)}
-                resolutionOptions={
-                  layersResolution[biodiversityLayerVariant][MARINE]
-                }
-                selectedOption={
-                  layersResolution[biodiversityLayerVariant][MARINE][0]
-                }
-                selectedResolutions={selectedResolutions}
-                setSelectedResolutions={setSelectedResolutions}
-                speciesType={MARINE}
-                themeCategorySlug={BIODIVERSITY_SLUG}
-                type="radio"
-                variant="light"
-              />
+              {renderBiodiversityLayerToggle(MARINE)}
             </div>
           </>
         )}

@@ -8,14 +8,12 @@ import { layerToggleAnalytics } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
 
-import { GROUPED_OPTIONS } from 'constants/biodiversity-layers-constants';
-
 import Component from './component';
 
 const actions = { ...metadataActions, layerToggleAnalytics };
 
 function BiodiversityLayerToggle(props) {
-  const { map, layers } = props;
+  const { map, layerOptions } = props;
   const locale = useLocale();
 
   const handleInfoClick = (option) => {
@@ -38,29 +36,12 @@ function BiodiversityLayerToggle(props) {
     bringLayerToFront(layer, map);
   };
 
-  const parsedGroupOptions = useMemo(() => {
-    const groupedOptions = GROUPED_OPTIONS(layers);
-    const groupedOptionsMultiple = groupedOptions
-      .filter((o) => !!o.options.length)
-      .find((o) => o.options.length > 1);
-
-    if (!groupedOptionsMultiple) {
-      return groupedOptions.map((go) => {
-        return {
-          ...go,
-          label: null,
-        };
-      });
-    }
-    return groupedOptions;
-  }, [layers]);
-
   return (
     <Component
       handleInfoClick={handleInfoClick}
       handleBringToBackClick={handleBringToBackClick}
       handleBringToFrontClick={handleBringToFrontClick}
-      groupedOptions={parsedGroupOptions}
+      groupedOptions={layerOptions}
       {...props}
     />
   );

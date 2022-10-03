@@ -72,7 +72,7 @@ const TAXA_DISTRIBUTION = {
 
 export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION;
 
-export const getResolutions = () => ({
+export const getResolutionOptions = () => ({
   LOWEST: { label: t('~55km2'), slug: 'LOWEST' },
   LOW: { label: t('~27km2'), slug: 'LOW' },
   HIGH: { label: t('~1km2'), slug: 'HIGH' },
@@ -80,8 +80,8 @@ export const getResolutions = () => ({
 });
 
 export const getLayersResolution = () => {
-  const resolutions = getResolutions();
-  return ({
+  const resolutions = getResolutionOptions();
+  return {
     [PRIORITY]: {
       [TERRESTRIAL]: [resolutions.LOW],
       [MARINE]: [resolutions.LOWEST],
@@ -94,7 +94,7 @@ export const getLayersResolution = () => {
       [TERRESTRIAL]: [resolutions.LOW, resolutions.HIGH],
       [MARINE]: [resolutions.LOWEST],
     },
-  });
+  };
 };
 
 export const DEFAULT_RESOLUTIONS = { [TERRESTRIAL]: 'LOW', [MARINE]: 'LOWEST' };
@@ -544,21 +544,25 @@ export const getAOIBiodiversityToggles = () => [
 ];
 
 const parseGroupLayers = (group, layers) => {
-  return layers.filter((layer) => layer.group === group).map((layer) => {
-    return {
-      ...layer,
-      label: layer.title,
-    };
-  });
+  return layers
+    .filter((layer) => layer.group === group)
+    .map((layer) => {
+      return {
+        ...layer,
+        label: layer.title,
+      };
+    });
 };
 
-const parseAllGroupLayers = (group, layers) => {
-  return layers.filter((layer) => layer.group === group).map((layer) => {
-    return {
-      ...layer,
-      label: 'All vertebrates',
-    };
-  });
+const parseAllGroupLayers = (group, allLayers) => {
+  return allLayers
+    .filter((layer) => layer.group === group)
+    .map((layer) => {
+      return {
+        ...layer,
+        label: 'All vertebrates',
+      };
+    });
 };
 
 export const GROUPED_OPTIONS = (layers) => [
@@ -608,5 +612,4 @@ export const GROUPED_OPTIONS = (layers) => [
     label: t('reptils'),
     options: parseGroupLayers(t('reptils'), layers),
   },
-
 ];
