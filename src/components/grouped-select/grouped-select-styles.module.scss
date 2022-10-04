@@ -44,6 +44,9 @@
 .singleValue {
   color: $white;
   margin: 0;
-  overflow: 'visible';
   padding: 0;
+  max-width: 119px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
