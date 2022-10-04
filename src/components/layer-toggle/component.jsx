@@ -1,12 +1,15 @@
 import React from 'react';
+
 import cx from 'classnames';
-import RadioTypeToggle from './radio-type';
-import CheckboxTypeToggle from './checkbox-type';
 
 import theme from 'styles/themes/checkboxes-theme.module.scss';
+
 import styles from './styles.module.scss';
 
-const LayerToggleComponent = ({
+import CheckboxTypeToggle from './checkbox-type';
+import RadioTypeToggle from './radio-type';
+
+function LayerToggleComponent({
   type,
   title,
   option,
@@ -21,7 +24,7 @@ const LayerToggleComponent = ({
   handleBringToBackClick,
   handleBringToFrontClick,
   className,
-}) => {
+}) {
   return type === 'radio' ? (
     <div
       className={cx(
@@ -31,7 +34,7 @@ const LayerToggleComponent = ({
           [theme[themeCategorySlug]]: themeCategorySlug,
           [styles.checked]: isChecked,
         },
-        className
+        className,
       )}
     >
       <RadioTypeToggle
@@ -57,7 +60,7 @@ const LayerToggleComponent = ({
           [styles.checked]: isChecked && !disabled,
           [styles.disabled]: disabled,
         },
-        className
+        className,
       )}
     >
       <CheckboxTypeToggle
@@ -75,6 +78,6 @@ const LayerToggleComponent = ({
       />
     </div>
   );
-};
+}
 
 export default LayerToggleComponent;

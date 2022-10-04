@@ -18,10 +18,8 @@ module.exports = {
     //   },
     // },
   },
-  extends: [
-    'airbnb',
-  ],
-  plugins: ['cypress', 'import'],
+  extends: ['airbnb', 'prettier'],
+  plugins: ['cypress', 'import', 'prettier'],
   rules: {
     // Place to specify ESLint rules.
     // Can be used to overwrite rules specified from the extended configs
@@ -36,6 +34,7 @@ module.exports = {
     'import/no-named-as-default': 0,
     'import/prefer-default-export': 0,
     'no-param-reassign': ['error', { props: false }],
+    'prettier/prettier': 'error',
     'import/order': [
       'warn',
       {
@@ -175,9 +174,7 @@ module.exports = {
             position: 'after',
           },
         ],
-        pathGroupsExcludedImportTypes: [
-          'react',
-        ],
+        pathGroupsExcludedImportTypes: ['react'],
       },
     ],
   },

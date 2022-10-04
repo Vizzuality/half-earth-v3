@@ -1,8 +1,11 @@
+/* eslint-disable max-len */
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
-import dataSceneConfig from 'scenes/nrc-landing-scene/scene-config';
+
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import { selectGlobeUrlState, selectListenersState, selectUiUrlState } from 'selectors/location-selectors';
+
+import dataSceneConfig from 'scenes/nrc-landing-scene/scene-config';
 
 const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
 const selectCountryExtent = ({ countryExtent }) => (countryExtent ? countryExtent.data : null);

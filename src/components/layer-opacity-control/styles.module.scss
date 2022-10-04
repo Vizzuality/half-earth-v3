@@ -20,7 +20,7 @@
 
 .icon {
   @extend %icon;
-  fill: inherit;
+  fill: $white;
   &.open {
     fill: $brand-color-main;
   }
