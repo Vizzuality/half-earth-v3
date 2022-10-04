@@ -49,23 +49,6 @@ const orderedLayers = (layers) => {
   return layerAll.concat(layersStartingWithAll, otherLayers);
 };
 
-const layerCategoryOptions = (
-  layersToggleConfig,
-  biodiversityLayerVariant,
-  category,
-  selectedResolutions
-) => {
-  const resolutionsForSelectedCategory =
-    layersToggleConfig[biodiversityLayerVariant][category];
-  const layersForSelectedResolution =
-    resolutionsForSelectedCategory &&
-    resolutionsForSelectedCategory[selectedResolutions[category]];
-
-  return layersForSelectedResolution
-    ? orderedLayers(layersForSelectedResolution)
-    : [];
-};
-
 const getCategoryLayerOptions = createSelector(
   [
     getCategory,
@@ -77,13 +60,16 @@ const getCategoryLayerOptions = createSelector(
   // eslint-disable-next-line no-unused-vars
   (category, biodiversityLayerVariant, selectedResolutions, locale) => {
     const layersToggleConfig = getLayersToggleConfig();
+    const resolutionsForSelectedCategory =
+      layersToggleConfig[biodiversityLayerVariant][category];
 
-    return layerCategoryOptions(
-      layersToggleConfig,
-      biodiversityLayerVariant,
-      category,
-      selectedResolutions
-    );
+    const layersForSelectedResolution =
+      resolutionsForSelectedCategory &&
+      resolutionsForSelectedCategory[selectedResolutions[category]];
+
+    return layersForSelectedResolution
+      ? orderedLayers(layersForSelectedResolution)
+      : [];
   }
 );
 
@@ -94,8 +80,12 @@ const getGroupedLayerOptions = createSelector(
 
 const getSelectedLayerOption = createSelector(
   [getCategoryLayerOptions, getSelectedLayer],
-  (options, selectedLayer) =>
-    options.find((l) => l.value === selectedLayer) || options[0]
+  (options, selectedLayer) => {
+    const optionsSelectedLayer =
+      options.find((l) => l.value === selectedLayer) || options[0];
+    // label is needed for grouped layer option
+    return { ...optionsSelectedLayer, label: optionsSelectedLayer.name };
+  }
 );
 
 export default createStructuredSelector({

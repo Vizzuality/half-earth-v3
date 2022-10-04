@@ -13,25 +13,25 @@ import { ReactComponent as IconArrow } from 'icons/arrow_right.svg';
 import styles from './grouped-select-styles.module.scss';
 import { customStyles } from './style-constants';
 
-function GroupedSelect({ onSelect, groupedOptions, defaultOption }) {
+function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
   const t = useT();
 
-  const [selectedOption, setSelectedOption] = useState(null);
   const handleChange = (option) => {
-    setSelectedOption(option);
     onSelect(option);
   };
-  const selected = selectedOption || defaultOption;
+
   return (
     <Select
-      value={selected}
+      value={selectedOption}
       onChange={handleChange}
       options={groupedOptions}
       styles={customStyles}
       // eslint-disable-next-line no-undef
       menuPortalTarget={document.body}
       menuPosition="fixed"
-      isOptionDisabled={(option) => selected && option.name === selected.name}
+      isOptionDisabled={(option) =>
+        selectedOption && option.name === selectedOption.name
+      }
       components={{
         IndicatorSeparator: () => null,
         SingleValue: (v) => {

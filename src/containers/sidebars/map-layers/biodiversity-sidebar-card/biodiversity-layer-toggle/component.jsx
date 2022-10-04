@@ -42,16 +42,6 @@ function BiodiversityLayerToggle({
       layerToggleAnalytics(selectedLayerOption.value);
     }
   }, [activeLayers]);
-  const defaultOption = useMemo(() => {
-    const defaultGroupedOption = groupedOptions.find((go) =>
-      go.options.find((o) => o.value === selectedLayerOption.value)
-    );
-    return (
-      defaultGroupedOption &&
-      defaultGroupedOption.options &&
-      defaultGroupedOption.options[0]
-    );
-  }, [groupedOptions]);
   return (
     <div
       className={cx(styles.container, styles.light, theme[BIODIVERSITY_SLUG], {
@@ -70,7 +60,7 @@ function BiodiversityLayerToggle({
           hideLabel
         />
         <GroupedSelect
-          defaultOption={defaultOption}
+          selectedOption={selectedLayerOption}
           groupedOptions={groupedOptions}
           onSelect={onLayerChange}
         />
@@ -103,8 +93,10 @@ function BiodiversityLayerToggle({
 
 BiodiversityLayerToggle.propTypes = {
   activeLayers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  disabledResolutionDropdown: PropTypes.bool,
   handleInfoClick: PropTypes.func.isRequired,
   groupedOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedLayerOption: PropTypes.shape({}).isRequired,
   layerToggleAnalytics: PropTypes.func.isRequired,
   handleBringToBackClick: PropTypes.func.isRequired,
   handleBringToFrontClick: PropTypes.func.isRequired,
@@ -112,9 +104,12 @@ BiodiversityLayerToggle.propTypes = {
   onLayerChange: PropTypes.func.isRequired,
   handleResolutionSelection: PropTypes.func.isRequired,
   resolutionOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedResolutionOption: PropTypes.shape({}).isRequired,
   category: PropTypes.oneOf([TERRESTRIAL, MARINE]).isRequired,
 };
+
 BiodiversityLayerToggle.defaultProps = {
+  disabledResolutionDropdown: false,
   onOpacityClick: undefined,
 };
 

@@ -88,6 +88,7 @@ function BiodiversitySidebarCard(props) {
   const handleLayerToggle = (option) => {
     const layer = layersConfig[option.layer];
     if (selectedLayer === option.layer) {
+      // Remove selected layer
       layerManagerToggle(
         option.layer,
         activeLayers,
@@ -96,6 +97,7 @@ function BiodiversitySidebarCard(props) {
       );
       setSelectedLayer(null);
     } else if (selectedLayer) {
+      // Update selected layer
       if (layer.bbox) flyToLayerExtent(layer.bbox, view);
       batchToggleLayers(
         [selectedLayer, option.layer],
@@ -105,6 +107,7 @@ function BiodiversitySidebarCard(props) {
       );
       setSelectedLayer(option.layer);
     } else {
+      // Add selected layer
       if (layer.bbox) flyToLayerExtent(layer.bbox, view);
       layerManagerToggle(
         option.layer,
@@ -129,9 +132,13 @@ function BiodiversitySidebarCard(props) {
     }
   }, [biodiversityLayerVariant, allLayersResolutions]);
 
-  // Select layers when we change resolutions
+  // Select layers when we change resolutions or tabs (only terrestrial)
   useEffect(() => {
-    if (!previousBiodiversityLayerVariant) return;
+    if (
+      !previousBiodiversityLayerVariant ||
+      previousBiodiversityLayerVariant === biodiversityLayerVariant
+    )
+      return;
     const activeBiodiversityLayers = activeLayers
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
