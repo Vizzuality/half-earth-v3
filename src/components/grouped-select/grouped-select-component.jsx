@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-select';
 
 import { useT } from '@transifex/react';
