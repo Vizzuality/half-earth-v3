@@ -1,32 +1,38 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import cx from 'classnames';
+import { Virtuoso } from 'react-virtuoso';
+
 import { useLocale, useT } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
+
+import cx from 'classnames';
+import { Loading } from 'he-components';
+import capitalize from 'lodash/capitalize';
+
+import useEventListener from 'hooks/use-event-listener';
+import useWindowSize from 'hooks/use-window-size';
+
+import HeaderItem from 'components/header-item';
+import Tabs from 'components/tabs';
+
 import {
   getCountryNames,
   getSpeciesGroup,
 } from 'constants/translation-constants';
 
-import useEventListener from 'hooks/use-event-listener';
+import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as SearchIcon } from 'icons/search.svg';
-import { ReactComponent as ArrowIcon } from 'icons/arrow_right.svg';
-import { Virtuoso } from 'react-virtuoso';
-import { Loading } from 'he-components';
-import HeaderItem from 'components/header-item';
-import Tabs from 'components/tabs';
-import useWindowSize from 'hooks/use-window-size';
+
 import ExpandedInfo from './expanded-info';
-import styles from './species-modal-styles.module.scss';
-import capitalize from 'lodash/capitalize';
 import {
   getVertebrateTabs,
   SPECIES_GROUP_STYLE_CLASS_DICTIONARY,
 } from './species-modal-constants';
+import styles from './species-modal-styles.module.scss';
 
-const SpeciesModalComponent = ({
+function SpeciesModalComponent({
   handleModalClose,
   countryData,
   open,
@@ -37,7 +43,7 @@ const SpeciesModalComponent = ({
   speciesList,
   searchTerm,
   vertebrateType,
-}) => {
+}) {
   const t = useT();
 
   const locale = useLocale();
@@ -75,6 +81,7 @@ const SpeciesModalComponent = ({
         />
         <div className={styles.tableRow}>
           <button
+            type="button"
             className={styles.expandButton}
             onClick={() => toggleExpand(index)}
           >
@@ -141,12 +148,16 @@ const SpeciesModalComponent = ({
       return `${getLocaleNumber(speciesList.length, locale)} ${t(
         'of'
       )} ${getLocaleNumber(speciesNumber, locale)} ${
-        vertebrateType === vertebrateTabs[0].slug ? t('Land') : t('Marine')
-      } ${t('vertebrate species')}`;
+        vertebrateType === vertebrateTabs[0].slug
+          ? t('Land vertebrate species')
+          : t('Marine vertebrate species')
+      }`;
     }
     return `${getLocaleNumber(speciesNumber, locale)} ${
-      vertebrateType === vertebrateTabs[0].slug ? t('Land') : t('Marine')
-    } ${t('vertebrate species')}`;
+      vertebrateType === vertebrateTabs[0].slug
+        ? t('Land vertebrate species')
+        : t('Marine vertebrate species')
+    }`;
   }, [countryData, vertebrateType, speciesList, locale]);
 
   const renderSpeciesModal = (
@@ -215,7 +226,7 @@ const SpeciesModalComponent = ({
             />
           )}
         </div>
-        <section></section>
+        <section />
       </div>
       <button className={styles.closeButton} onClick={handleModalClose}>
         <CloseIcon />
@@ -228,6 +239,6 @@ const SpeciesModalComponent = ({
     renderSpeciesModal,
     document.getElementById('root')
   );
-};
+}
 
 export default SpeciesModalComponent;
