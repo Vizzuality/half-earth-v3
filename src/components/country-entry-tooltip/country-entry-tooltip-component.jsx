@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useState, useRef, useCallback,
-} from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 
 import { loadModules } from 'esri-loader';
 
@@ -81,7 +79,8 @@ function CountryEntryTooltipComponent({
         camera.position.latitude += 5;
         view.goTo(camera, { speedFactor: 0.5, easing: 'in-cubic' }).then(() => {
           if (onboardingStep === 2 && onboardingButtonReference.current) {
-            const { y, x, width } = onboardingButtonReference.current.getBoundingClientRect();
+            const { y, x, width } =
+              onboardingButtonReference.current.getBoundingClientRect();
             changeUI({
               onboardingTooltipTop: y,
               onboardingTooltipLeft: x + width + 10,
@@ -121,7 +120,7 @@ function CountryEntryTooltipComponent({
           <img
             className={styles.tooltipFlag}
             src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-            alt=""
+            alt="country flag"
           />
           <span className={styles.tooltipName}>
             {countryNames[countryName] || countryName}
@@ -165,19 +164,16 @@ function CountryEntryTooltipComponent({
           <span className={styles.text}>
             {landTab
               ? t('land vertebrate species of which')
-              : t('marine vertebrate species of which')}
-            {' '}
+              : t('marine vertebrate species of which')}{' '}
             <span className={styles.endemic}>
               {landTab ? endemicLand : endemicMar}
-            </span>
-            {' '}
+            </span>{' '}
             {t('are endemic')}
           </span>
         </div>
         <div className={styles.infoPill}>
           <span className={styles.numeric}>
-            {landTab ? protectionLand : protectionMar}
-            %
+            {landTab ? protectionLand : protectionMar}%
           </span>
           <span className={styles.text}>
             {landTab
@@ -187,8 +183,7 @@ function CountryEntryTooltipComponent({
         </div>
         <div className={styles.infoPill}>
           <span className={styles.numeric}>
-            {landTab ? protectionNeededLand : protectionNeededMar}
-            %
+            {landTab ? protectionNeededLand : protectionNeededMar}%
           </span>
           <span className={styles.text}>
             {landTab

@@ -15,35 +15,41 @@ import { useSearchWidgetLogic } from 'hooks/esri';
 import EsriFeatureService from 'services/esri-feature-service';
 
 import {
-  SEARCH_LOOKUP_TABLE, WDPA_OECM_FEATURE_LAYER, GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  SEARCH_LOOKUP_TABLE,
+  WDPA_OECM_FEATURE_LAYER,
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
-import { SEARCH_SOURCES_CONFIG, SEARCH_TYPES } from 'constants/search-location-constants';
+import {
+  SEARCH_SOURCES_CONFIG,
+  SEARCH_TYPES,
+} from 'constants/search-location-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
 import Component from './component';
 
 const actions = { ...mapTooltipActions, ...urlActions };
 
-const getSearchedLayerData = (layerSlug, molId) => new Promise((resolve, reject) => {
-  const url = Array.isArray(LAYERS_URLS[layerSlug])
-    ? LAYERS_URLS[layerSlug][0]
-    : LAYERS_URLS[layerSlug];
-  EsriFeatureService.getFeatures({
-    url,
-    returnGeometry: true,
-    whereClause: `MOL_ID = '${molId}'`,
-  }).then((features) => {
-    resolve(features);
-  }).catch((error) => reject(error));
-});
+const getSearchedLayerData = (layerSlug, molId) =>
+  new Promise((resolve, reject) => {
+    const url = Array.isArray(LAYERS_URLS[layerSlug])
+      ? LAYERS_URLS[layerSlug][0]
+      : LAYERS_URLS[layerSlug];
+    EsriFeatureService.getFeatures({
+      url,
+      returnGeometry: true,
+      whereClause: `MOL_ID = '${molId}'`,
+    })
+      .then((features) => {
+        resolve(features);
+      })
+      .catch((error) => reject(error));
+  });
 
 function SearchLocationContainer(props) {
-  const {
-    view, searchSourceLayerSlug, changeGlobe, searchType,
-  } = props;
+  const { view, searchSourceLayerSlug, changeGlobe, searchType } = props;
 
   const [searchResults, setSearchResults] = useState(false);
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
@@ -72,14 +78,13 @@ function SearchLocationContainer(props) {
       searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
     }
 
-    const feature = searchType === SEARCH_TYPES.full
-      ? searchResult && searchResult[0]
-      : result.feature;
+    const feature =
+      searchType === SEARCH_TYPES.full
+        ? searchResult && searchResult[0]
+        : result.feature;
 
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
-    const {
-      title, subtitle, id, iso,
-    } = tooltipConfig;
+    const { title, subtitle, id, iso } = tooltipConfig;
     const { geometry, attributes } = feature;
 
     // TODO: Check this when we merge the administrative options
@@ -96,7 +101,8 @@ function SearchLocationContainer(props) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
-        precalculatedLayerSlug: result.feature.attributes.LAYERSLUG || getPrecalculatedLayer(),
+        precalculatedLayerSlug:
+          result.feature.attributes.LAYERSLUG || getPrecalculatedLayer(),
         content: getTooltipContent(t, attributes, id, title, subtitle),
       });
     }
@@ -122,14 +128,20 @@ function SearchLocationContainer(props) {
   };
 
   const {
-    updateSources, handleOpenSearch, handleSearchInputChange, handleSearchSuggestionClick,
-  } = useSearchWidgetLogic(view, () => { }, searchWidgetConfig, searchType === SEARCH_TYPES.simple);
+    updateSources,
+    handleOpenSearch,
+    handleSearchInputChange,
+    handleSearchSuggestionClick,
+  } = useSearchWidgetLogic(
+    view,
+    () => {},
+    searchWidgetConfig,
+    searchType === SEARCH_TYPES.simple
+  );
 
   useEffect(() => {
     const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    let {
-      url, searchFields, suggestionTemplate, title,
-    } = config;
+    let { url, searchFields, suggestionTemplate, title } = config;
 
     if (searchType === SEARCH_TYPES.full) {
       url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
@@ -137,20 +149,21 @@ function SearchLocationContainer(props) {
       suggestionTemplate = '{NAME}';
       title = SEARCH_LOOKUP_TABLE;
     }
-    const getSearchSources = (FeatureLayer) => [{
-      searchFields,
-      suggestionTemplate,
-      outFields: ['*'],
-      ...((searchType === SEARCH_TYPES.full)
-        ? { filter: { where: `LANGUAGES LIKE '%${locale || 'en'}%'` } }
-        : {}
-      ),
-      layer: new FeatureLayer({
-        url,
-        title,
+    const getSearchSources = (FeatureLayer) => [
+      {
+        searchFields,
+        suggestionTemplate,
         outFields: ['*'],
-      }),
-    }];
+        ...(searchType === SEARCH_TYPES.full
+          ? { filter: { where: `LANGUAGES LIKE '%${locale || 'en'}%'` } }
+          : {}),
+        layer: new FeatureLayer({
+          url,
+          title,
+          outFields: ['*'],
+        }),
+      },
+    ];
 
     setSearchWidgetConfig({
       searchResultsCallback: getSearchResults,
