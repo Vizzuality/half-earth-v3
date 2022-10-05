@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as urlActions from 'actions/url-actions';
-import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
 import mapTooltipActions from 'redux_modules/map-tooltip';
-import Component from './component';
+
 import mapStateToProps from 'selectors/map-tooltip-selectors';
 
-const actions = { exploreCountryFromTooltipAnalyticsEvent, ...urlActions, ...mapTooltipActions };
+import { exploreCountryFromTooltipAnalyticsEvent } from 'actions/google-analytics-actions';
+import * as urlActions from 'actions/url-actions';
+
+import Component from './component';
+
+const actions = {
+  exploreCountryFromTooltipAnalyticsEvent,
+  ...urlActions,
+  ...mapTooltipActions,
+};
 
 function MapTooltipContainer(props) {
   const {
-    mapTooltipGeometry, mapTooltipContent, mapTooltipIsVisible, setBatchTooltipData,
+    mapTooltipGeometry,
+    mapTooltipContent,
+    mapTooltipIsVisible,
+    setBatchTooltipData,
   } = props;
   const [tooltipPosition, setTooltipPosition] = useState(null);
 
