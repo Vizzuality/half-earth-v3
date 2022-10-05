@@ -560,7 +560,7 @@ const parseAllGroupLayers = (group, allLayers) => {
     .map((layer) => {
       return {
         ...layer,
-        label: 'All vertebrates',
+        label: t('All vertebrates'),
       };
     });
 };
