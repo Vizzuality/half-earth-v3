@@ -3,7 +3,8 @@ export const removeURLParameter = (url, parameter) => {
   if (urlparts.length >= 2) {
     const prefix = `${encodeURIComponent(parameter)}=`;
     const pars = urlparts[1].split(/[&;]/g);
-    for (let i = pars.length; i-- > 0;) {
+    // eslint-disable-next-line no-plusplus
+    for (let i = pars.length; i-- > 0; ) {
       // idiom for string.startsWith
       if (pars[i].lastIndexOf(prefix, 0) !== -1) {
         pars.splice(i, 1);

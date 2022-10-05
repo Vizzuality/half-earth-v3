@@ -29,16 +29,18 @@ function TabsSidebarComponent({
   const locale = useLocale();
   const [mapLayersTab, analyzeAreasTab] = useMemo(
     () => getSidebarTabs(),
-    [locale],
+    [locale]
   );
-  const mapLayersCounterIsActive = (slug) => slug === mapLayersTab.slug
-    && countedActiveLayers
-    && sidebarTabActive !== slug
-    && countedActiveLayers > 0;
+  const mapLayersCounterIsActive = (slug) =>
+    slug === mapLayersTab.slug &&
+    countedActiveLayers &&
+    sidebarTabActive !== slug &&
+    countedActiveLayers > 0;
 
-  const displayMapLayersIcon = (slug) => slug === mapLayersTab.slug
-    && countedActiveLayers
-    && (countedActiveLayers === 0 || sidebarTabActive === slug);
+  const displayMapLayersIcon = (slug) =>
+    slug === mapLayersTab.slug &&
+    countedActiveLayers &&
+    (countedActiveLayers === 0 || sidebarTabActive === slug);
 
   const displayAnalyzeAreasIcon = (slug) => slug === analyzeAreasTab.slug;
 

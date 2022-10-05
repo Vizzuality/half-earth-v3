@@ -27,9 +27,18 @@ export const getBiodiversityTabs = () => {
   };
 
   return [
-    { slug: BIODIVERSITY_TABS_SLUGS.PRIORITY, title: LAYER_VARIANTS_LABELS.PRIORITY },
-    { slug: BIODIVERSITY_TABS_SLUGS.RICHNESS, title: LAYER_VARIANTS_LABELS.RICHNESS },
-    { slug: BIODIVERSITY_TABS_SLUGS.RARITY, title: LAYER_VARIANTS_LABELS.RARITY },
+    {
+      slug: BIODIVERSITY_TABS_SLUGS.PRIORITY,
+      title: LAYER_VARIANTS_LABELS.PRIORITY,
+    },
+    {
+      slug: BIODIVERSITY_TABS_SLUGS.RICHNESS,
+      title: LAYER_VARIANTS_LABELS.RICHNESS,
+    },
+    {
+      slug: BIODIVERSITY_TABS_SLUGS.RARITY,
+      title: LAYER_VARIANTS_LABELS.RARITY,
+    },
   ];
 };
 

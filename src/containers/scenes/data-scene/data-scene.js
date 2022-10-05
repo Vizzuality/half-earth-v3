@@ -53,20 +53,30 @@ function Container(props) {
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
   const [mapLayerTab, analyzeAreasTab] = getSidebarTabs();
 
-  const activeLayersWithoutAdmin = activeLayers
-    .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER);
-  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(activeLayersWithoutAdmin);
+  const activeLayersWithoutAdmin = activeLayers.filter(
+    (ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER
+  );
+  const [updatedActiveLayers, setUpdatedActiveLayers] = useState(
+    activeLayersWithoutAdmin
+  );
 
   useEffect(() => {
-    const adminLayerIsActive = !!updatedActiveLayers
-      .find((ual) => ual.title === ADMIN_AREAS_FEATURE_LAYER);
+    const adminLayerIsActive = !!updatedActiveLayers.find(
+      (ual) => ual.title === ADMIN_AREAS_FEATURE_LAYER
+    );
 
     if (sidebarTabActive === mapLayerTab.slug && adminLayerIsActive) {
-      setUpdatedActiveLayers(updatedActiveLayers
-        .filter((ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER));
+      setUpdatedActiveLayers(
+        updatedActiveLayers.filter(
+          (ual) => ual.title !== ADMIN_AREAS_FEATURE_LAYER
+        )
+      );
     }
     if (sidebarTabActive === analyzeAreasTab.slug && !adminLayerIsActive) {
-      setUpdatedActiveLayers([...updatedActiveLayers, { title: ADMIN_AREAS_FEATURE_LAYER }]);
+      setUpdatedActiveLayers([
+        ...updatedActiveLayers,
+        { title: ADMIN_AREAS_FEATURE_LAYER },
+      ]);
     }
   }, [sidebarTabActive, updatedActiveLayers, setUpdatedActiveLayers]);
 
@@ -75,7 +85,9 @@ function Container(props) {
   useEffect(() => {
     // Add temporary activeCategoryLayers to activeLayers at render and reset the param
     if (activeCategoryLayers) {
-      setUpdatedActiveLayers(unionBy(activeCategoryLayers, activeLayers, 'title'));
+      setUpdatedActiveLayers(
+        unionBy(activeCategoryLayers, activeLayers, 'title')
+      );
       changeUI({ activeCategoryLayers: undefined });
     } else {
       setUpdatedActiveLayers(activeLayers);
@@ -113,7 +125,15 @@ function Container(props) {
         isVisible: true,
         geometry,
         precalculatedLayerSlug: getPrecalculatedLayer(attributes),
-        content: getTooltipContent(t, attributes, id, title, subtitle, customId, customTitle),
+        content: getTooltipContent(
+          t,
+          attributes,
+          id,
+          title,
+          subtitle,
+          customId,
+          customTitle
+        ),
       });
     }
   };
@@ -129,7 +149,13 @@ function Container(props) {
         OBJECTID: mapTooltipContent.objectId,
       },
     });
-    changeUI({ activeCategoryLayers: intersectionBy(updatedActiveLayers, CATEGORY_LAYERS, 'title') });
+    changeUI({
+      activeCategoryLayers: intersectionBy(
+        updatedActiveLayers,
+        CATEGORY_LAYERS,
+        'title'
+      ),
+    });
   };
 
   return (
