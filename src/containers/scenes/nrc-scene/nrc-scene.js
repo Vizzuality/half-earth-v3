@@ -19,7 +19,9 @@ import Component from './nrc-scene-component';
 import mapStateToProps from './nrc-scene-selectors';
 
 const actions = {
-  ...countriesGeometriesActions, ...urlActions, visitCountryReportCardAnalyticsEvent: visitAction,
+  ...countriesGeometriesActions,
+  ...urlActions,
+  visitCountryReportCardAnalyticsEvent: visitAction,
 };
 function NrcSceneContainer(props) {
   const {
@@ -35,14 +37,19 @@ function NrcSceneContainer(props) {
       url: EEZ_MARINE_GEOMETRY_BORDERS_URL,
       whereClause: `GID_0 = '${countryISO}'`,
       returnGeometry: true,
-    }).then((features) => {
-      const { geometry } = features[0];
-      setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
-    }).catch((error) => {
-      console.error('Inexistent country ISO code on the URL. Redirected to main page', error);
-      const { browsePage } = props;
-      browsePage({ type: DATA });
-    });
+    })
+      .then((features) => {
+        const { geometry } = features[0];
+        setCountryBorderReady({ iso: countryISO, borderGraphic: geometry });
+      })
+      .catch((error) => {
+        console.error(
+          'Inexistent country ISO code on the URL. Redirected to main page',
+          error
+        );
+        const { browsePage } = props;
+        browsePage({ type: DATA });
+      });
   }, [countryISO]);
 
   useEffect(() => {
@@ -50,7 +57,7 @@ function NrcSceneContainer(props) {
   }, [countryISO]);
 
   const handleAreaClick = (results) => {
-    const { graphic } = results[0] || {};
+    const { graphic } = (results && results[0]) || {};
     if (!graphic) return;
     // TODO: Find a better way to discern the Future places from countries
     const isFuturePlace = graphic.attributes && graphic.attributes.AREA_KM2;
