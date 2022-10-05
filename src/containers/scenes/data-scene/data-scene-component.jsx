@@ -72,11 +72,6 @@ function DataSceneComponent({
     selectedAnalysisTab === 'click' &&
     sidebarTabActive === analyzeAreasTab.slug;
   const sidebarHidden = isFullscreenActive || isMobile;
-  const isProtectedArea =
-    mapTooltipData &&
-    mapTooltipData.precalculatedLayerSlug ===
-      PRECALCULATED_LAYERS_SLUG.protectedAreas;
-
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -169,7 +164,9 @@ function DataSceneComponent({
       <MapTooltip
         onActionButtonClick={handleTooltipActionButtonClick}
         speciesData={speciesData}
-        isProtectedArea={isProtectedArea}
+        precalculatedLayerSlug={
+          mapTooltipData && mapTooltipData.precalculatedLayerSlug
+        }
       />
 
       <LabelsLayer activeLayers={updatedActiveLayers} />

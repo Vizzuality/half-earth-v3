@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useState, useRef, useMemo,
-} from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 
 import { loadModules } from 'esri-loader';
 
@@ -8,6 +6,7 @@ import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { useMobile } from 'constants/responsive';
 import {
   getCountryNames,
@@ -23,12 +22,17 @@ function MapTooltipComponent({
   view,
   content,
   isVisible,
-  isProtectedArea,
   tooltipPosition,
   onCloseButtonClick,
   onActionButtonClick,
+  precalculatedLayerSlug,
 }) {
   const t = useT();
+  const isProtectedArea =
+    precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas;
+  const isNational =
+    precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.national;
+
   const locale = useLocale();
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
   const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
@@ -87,7 +91,7 @@ function MapTooltipComponent({
                   {translateInfo(content.description)}
                 </span>
               )}
-              {!isProtectedArea && (
+              {!isProtectedArea && !isNational && (
                 <span className={styles.subtitle}>
                   {translateCountry(content.subtitle)}
                 </span>
@@ -103,10 +107,8 @@ function MapTooltipComponent({
                 )}
                 <div className={styles.content}>
                   <p className={styles.contentData}>
-                    {content.percentage_protected}
-                    %
-                  </p>
-                  {' '}
+                    {content.percentage_protected}%
+                  </p>{' '}
                   {t('land is protected')}
                 </div>
                 {isProtectedArea && (
