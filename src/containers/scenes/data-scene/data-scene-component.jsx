@@ -62,13 +62,15 @@ function DataSceneComponent({
   mapTooltipData,
   sidebarTabActive,
   setSidebarTabActive,
+  selectedAnalysisTab,
 }) {
   const isMobile = useMobile();
   const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
-
   const analysisLayerHighlightEnabled =
-    selectedAnalysisLayer && sidebarTabActive === analyzeAreasTab.slug;
+    selectedAnalysisLayer &&
+    selectedAnalysisTab === 'click' &&
+    sidebarTabActive === analyzeAreasTab.slug;
   const sidebarHidden = isFullscreenActive || isMobile;
   const isProtectedArea =
     mapTooltipData &&

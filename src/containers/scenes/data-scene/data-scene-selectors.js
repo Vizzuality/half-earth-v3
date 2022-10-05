@@ -5,23 +5,24 @@ import { selectUiUrlState } from 'selectors/location-selectors';
 import { selectTooltipData } from 'selectors/map-tooltip-selectors';
 import { getSidebarTabActive } from 'selectors/ui-selectors';
 
-import { getSelectedAnalysisLayer } from 'pages/data-globe/data-globe-selectors.js';
+import {
+  getSelectedAnalysisLayer,
+  getSelectedAnalysisTab,
+} from 'pages/data-globe/data-globe-selectors';
 
 import aoiSceneConfig from 'containers/scenes/aoi-scene/config';
 
-const getUiSettings = createSelector(
-  selectUiUrlState,
-  (uiUrlState) => {
-    return {
-      ...aoiSceneConfig.ui,
-      ...uiUrlState,
-    };
-  },
-);
+const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
+  return {
+    ...aoiSceneConfig.ui,
+    ...uiUrlState,
+  };
+});
 
-const getActiveCategoryLayers = createSelector(getUiSettings, (
-  uiSettings,
-) => uiSettings.activeCategoryLayers);
+const getActiveCategoryLayers = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.activeCategoryLayers
+);
 
 export default createStructuredSelector({
   aoiId: selectAoiId,
@@ -29,4 +30,5 @@ export default createStructuredSelector({
   mapTooltipData: selectTooltipData,
   sidebarTabActive: getSidebarTabActive,
   selectedAnalysisLayer: getSelectedAnalysisLayer,
+  selectedAnalysisTab: getSelectedAnalysisTab,
 });

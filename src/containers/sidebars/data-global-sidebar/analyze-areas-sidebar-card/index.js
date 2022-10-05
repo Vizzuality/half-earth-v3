@@ -12,13 +12,19 @@ import { useLocale, useT } from '@transifex/react';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import urlActions from 'actions/url-actions';
 
-import { createHashFromGeometry, calculateGeometryArea } from 'utils/analyze-areas-utils';
+import {
+  createHashFromGeometry,
+  calculateGeometryArea,
+} from 'utils/analyze-areas-utils';
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 import { batchToggleLayers } from 'utils/layer-manager-utils';
 
 import { useSketchWidget } from 'hooks/esri';
 
-import { getPrecalculatedAOIOptions, HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
+import {
+  getPrecalculatedAOIOptions,
+  HIGHER_AREA_SIZE_LIMIT,
+} from 'constants/analyze-areas-constants';
 import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
   COMMUNITY_AREAS_VECTOR_TILE_LAYER,
@@ -51,32 +57,39 @@ function AnalyzeAreasContainer(props) {
           {t(' km')}
           <sup>2</sup>
           {'. '}
-          {t('The area that you are trying to analyze has ')}
-          {' '}
+          {t('The area that you are trying to analyze has ')}{' '}
           {getLocaleNumber(size, locale)}
           {t(' km')}
-          <sup>2</sup>
-          .
-          {' '}
+          <sup>2</sup>.{' '}
           {t('Please select a smaller area to trigger the analysis.')}
         </span>
       ),
     },
     file: {
       title: t('Something went wrong with your upload'),
-      description: () => t('Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.'),
+      description: () =>
+        t(
+          'Please verify that the .zip file contains at least the .shp, .shx, .dbf, and .prj files components and that the file as a maximum of 2MB.'
+        ),
     },
     400: {
       title: t('File too big'),
-      description: () => t('File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.'),
+      description: () =>
+        t(
+          'File exceeds the max size allowed of 2MB. Please provide a smaller file to trigger the analysis.'
+        ),
     },
     500: {
       title: t('Server error'),
-      description: () => t('An error ocurred during the file upload. Please try again'),
+      description: () =>
+        t('An error ocurred during the file upload. Please try again'),
     },
   };
 
-  const precalculatedAOIOptions = useMemo(() => getPrecalculatedAOIOptions(), [locale]);
+  const precalculatedAOIOptions = useMemo(
+    () => getPrecalculatedAOIOptions(),
+    [locale]
+  );
 
   const {
     browsePage,
@@ -92,10 +105,12 @@ function AnalyzeAreasContainer(props) {
     shapeUploadTooBigAnalytics,
     changeUI,
     selectedAnalysisLayer,
+    selectedAnalysisTab,
   } = props;
 
-  const [selectedOption, setSelectedOption] = useState(precalculatedAOIOptions[0]);
-  const [selectedAnalysisTab, setSelectedAnalysisTab] = useState('click');
+  const [selectedOption, setSelectedOption] = useState(
+    precalculatedAOIOptions[0]
+  );
   const [isPromptModalOpen, setPromptModalOpen] = useState(false);
   const [promptModalContent, setPromptModalContent] = useState({
     title: '',
@@ -103,9 +118,11 @@ function AnalyzeAreasContainer(props) {
   });
 
   useEffect(() => {
-    setSelectedOption(precalculatedAOIOptions.find(
-      (option) => option.title === selectedAnalysisLayer,
-    ));
+    setSelectedOption(
+      precalculatedAOIOptions.find(
+        (option) => option.title === selectedAnalysisLayer
+      )
+    );
   }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
 
   const postDrawCallback = (layer, graphic, area) => {
@@ -127,10 +144,11 @@ function AnalyzeAreasContainer(props) {
   };
 
   const onShapeUploadSuccess = (response) => {
-    loadModules(['esri/geometry/Polygon', 'esri/geometry/geometryEngine'])
-      .then(([Polygon, geometryEngine]) => {
-        const featureSetGeometry = response.data.featureCollection.layers[0]
-          .featureSet.features[0].geometry;
+    loadModules(['esri/geometry/Polygon', 'esri/geometry/geometryEngine']).then(
+      ([Polygon, geometryEngine]) => {
+        const featureSetGeometry =
+          response.data.featureCollection.layers[0].featureSet.features[0]
+            .geometry;
         const area = calculateGeometryArea(featureSetGeometry, geometryEngine);
         if (area > HIGHER_AREA_SIZE_LIMIT) {
           setPromptModalContent({
@@ -146,7 +164,8 @@ function AnalyzeAreasContainer(props) {
           shapeUploadSuccessfulAnalytics();
           browsePage({ type: AREA_OF_INTEREST, payload: { id: hash } });
         }
-      });
+      }
+    );
   };
 
   const onShapeUploadError = (error) => {
@@ -165,19 +184,19 @@ function AnalyzeAreasContainer(props) {
     shapeUploadErrorAnalytics(WARNING_MESSAGES[error.details.httpStatus].title);
   };
 
-  const {
-    sketchTool,
-    handleSketchToolDestroy,
-    handleSketchToolActivation,
-  } = useSketchWidget(view, { postDrawCallback });
+  const { sketchTool, handleSketchToolDestroy, handleSketchToolActivation } =
+    useSketchWidget(view, { postDrawCallback });
 
   const handleLayerToggle = (newSelectedOption) => {
-    const protectedAreasSelected = newSelectedOption === WDPA_OECM_FEATURE_LAYER;
+    const protectedAreasSelected =
+      newSelectedOption === WDPA_OECM_FEATURE_LAYER;
 
     const getLayersToToggle = () => {
       const formerSelectedSlug = selectedOption.slug;
-      const newLayerCategory = newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER
-        ? LAYERS_CATEGORIES.PROTECTION : undefined;
+      const newLayerCategory =
+        newSelectedOption === HALF_EARTH_FUTURE_TILE_LAYER
+          ? LAYERS_CATEGORIES.PROTECTION
+          : undefined;
 
       let layersToToggle = [
         { layerId: formerSelectedSlug },
@@ -191,7 +210,10 @@ function AnalyzeAreasContainer(props) {
         ];
         additionalProtectedAreasLayers.forEach((layer) => {
           if (!activeLayers.some((l) => l.title === layer)) {
-            layersToToggle.push({ layerId: layer, category: LAYERS_CATEGORIES.PROTECTION });
+            layersToToggle.push({
+              layerId: layer,
+              category: LAYERS_CATEGORIES.PROTECTION,
+            });
           }
         });
       }
@@ -199,11 +221,16 @@ function AnalyzeAreasContainer(props) {
       // Never toggle (remove) future places layer if its active
       // Future places layer will be activated if we select it at some point
       // and never toggled unless we do it from the protection checkbox
-      const futureLayerIsActive = activeLayers
-        .some((l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER);
-      if (futureLayerIsActive
-        && layersToToggle.some((l) => l.layerId === HALF_EARTH_FUTURE_TILE_LAYER)) {
-        layersToToggle = layersToToggle.filter((l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER);
+      const futureLayerIsActive = activeLayers.some(
+        (l) => l.title === HALF_EARTH_FUTURE_TILE_LAYER
+      );
+      if (
+        futureLayerIsActive &&
+        layersToToggle.some((l) => l.layerId === HALF_EARTH_FUTURE_TILE_LAYER)
+      ) {
+        layersToToggle = layersToToggle.filter(
+          (l) => l.layerId !== HALF_EARTH_FUTURE_TILE_LAYER
+        );
       }
 
       return layersToToggle;
@@ -214,11 +241,16 @@ function AnalyzeAreasContainer(props) {
       acc[layer.layerId] = layer.category;
       return acc;
     }, {});
-    batchToggleLayers(layersToToggle.map((l) => l.layerId), activeLayers, changeGlobe, categories);
+    batchToggleLayers(
+      layersToToggle.map((l) => l.layerId),
+      activeLayers,
+      changeGlobe,
+      categories
+    );
   };
 
   const handleAnalysisTabClick = (selectedTab) => {
-    setSelectedAnalysisTab(selectedTab || 'click');
+    changeUI({ selectedAnalysisTab: selectedTab || 'click' });
 
     if (selectedTab === 'draw') {
       handleSketchToolActivation();
