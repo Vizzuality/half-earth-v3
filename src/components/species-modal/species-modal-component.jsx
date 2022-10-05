@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { Virtuoso } from 'react-virtuoso';
 
@@ -48,11 +48,12 @@ function SpeciesModalComponent({
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
-  const countryNames = useCallback(getCountryNames, [locale]);
-  const translatedSpeciesGroup = useCallback(getSpeciesGroup, [locale]);
+  const countryNames = useMemo(getCountryNames, [locale]);
+  const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
   const keyEscapeEventListener = (evt) => {
+    // eslint-disable-next-line no-param-reassign
     evt = evt || window.event;
     if (evt.keyCode === 27) {
       handleModalClose();
@@ -228,7 +229,11 @@ function SpeciesModalComponent({
         </div>
         <section />
       </div>
-      <button className={styles.closeButton} onClick={handleModalClose}>
+      <button
+        type="button"
+        className={styles.closeButton}
+        onClick={handleModalClose}
+      >
         <CloseIcon />
       </button>
     </div>
@@ -237,6 +242,7 @@ function SpeciesModalComponent({
 
   return ReactDOM.createPortal(
     renderSpeciesModal,
+    // eslint-disable-next-line no-undef
     document.getElementById('root')
   );
 }

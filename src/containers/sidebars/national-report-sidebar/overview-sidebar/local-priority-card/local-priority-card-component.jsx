@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
@@ -48,7 +48,7 @@ function LocalPriorityCardComponent(props) {
   const t = useT();
   const locale = useLocale();
 
-  const countryNames = useCallback(getCountryNames, [locale]);
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   const { Marine } = countryData;
 

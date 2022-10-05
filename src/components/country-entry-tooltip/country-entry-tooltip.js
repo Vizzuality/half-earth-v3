@@ -49,13 +49,20 @@ function CountryEntryTooltipContainer(props) {
             coastal: attributes.Marine === 'True',
             spiLand: attributes[COUNTRY_ATTRIBUTES.SPI_ter],
             spiMar: attributes.SPI_mar,
-            landVertebrates: getLocaleNumber(attributes[COUNTRY_ATTRIBUTES.nspecies_ter], locale),
+            landVertebrates: getLocaleNumber(
+              attributes[COUNTRY_ATTRIBUTES.nspecies_ter],
+              locale
+            ),
             marVertebrates: getLocaleNumber(attributes.nspecies_mar, locale),
-            endemicLand: getLocaleNumber(attributes[COUNTRY_ATTRIBUTES.total_endemic_ter], locale),
+            endemicLand: getLocaleNumber(
+              attributes[COUNTRY_ATTRIBUTES.total_endemic_ter],
+              locale
+            ),
             endemicMar: getLocaleNumber(attributes.total_endemic_mar, locale),
             protectionLand: attributes[COUNTRY_ATTRIBUTES.prop_protected_ter],
             protectionMar: attributes.prop_protected_mar,
-            protectionNeededLand: attributes[COUNTRY_ATTRIBUTES.protection_needed_ter],
+            protectionNeededLand:
+              attributes[COUNTRY_ATTRIBUTES.protection_needed_ter],
             protectionNeededMar: attributes.protection_needed_mar,
           });
         }
@@ -71,15 +78,25 @@ function CountryEntryTooltipContainer(props) {
 
   const handleExploreCountryClick = () => {
     const {
-      setTooltipIsVisible, countryISO: _countryISO, setTooltipContent, browsePage,
-      countryName, enterNrcAnalytics: _enterNrcAnalytics, onboardingStep, onboardingType,
+      setTooltipIsVisible,
+      countryISO: _countryISO,
+      setTooltipContent,
+      browsePage,
+      countryName,
+      enterNrcAnalytics: _enterNrcAnalytics,
+      onboardingStep,
+      onboardingType,
     } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
     _enterNrcAnalytics(countryName);
     browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: _countryISO } });
     if (onboardingStep && onboardingType) {
-      changeUI({ onboardingType: 'national-report-cards', onboardingStep: 3, waitingInteraction: false });
+      changeUI({
+        onboardingType: 'national-report-cards',
+        onboardingStep: 3,
+        waitingInteraction: false,
+      });
     }
   };
 

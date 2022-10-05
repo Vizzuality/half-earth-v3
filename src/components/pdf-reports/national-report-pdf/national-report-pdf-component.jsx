@@ -1,16 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
+
 import { useT, useLocale } from '@transifex/react';
-import styles from './national-report-pdf.module.scss';
+
+import HalfEarthLogo from 'components/half-earth-logo';
+import HighLightedSpeciesList from 'components/highlighted-species-list';
+
 import { getCountryNames } from 'constants/translation-constants';
 
-import HighLightedSpeciesList from 'components/highlighted-species-list';
-import HalfEarthLogo from 'components/half-earth-logo';
-import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
-import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
-import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
+import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
+import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
+import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
-const NationalReportPdf = ({
+import styles from './national-report-pdf.module.scss';
+
+function NationalReportPdf({
   SPI,
   birds,
   nrcUrl,
@@ -32,10 +36,10 @@ const NationalReportPdf = ({
   endemicVertebratesCount,
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
-  const countryNames = useCallback(getCountryNames, [locale]);
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   return (
     <div className={styles.container}>
@@ -181,6 +185,6 @@ const NationalReportPdf = ({
       </section>
     </div>
   );
-};
+}
 
 export default NationalReportPdf;

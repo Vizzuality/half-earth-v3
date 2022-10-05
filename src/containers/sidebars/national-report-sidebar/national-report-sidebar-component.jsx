@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 import { Loading } from 'he-components';
 
-import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
-
-// Hooks
-import { useTooltipRefs } from 'containers/onboarding/onboarding-hooks';
+import {
+  getOnboardingProps,
+  useTooltipRefs,
+} from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
@@ -53,7 +53,7 @@ function NationalReportSidebarComponent({
 }) {
   const t = useT();
   const locale = useLocale();
-  const countryNames = useCallback(getCountryNames, [locale]);
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   const LOCAL_SCENE_TABS = [
     { slug: LOCAL_SCENE_TABS_SLUGS.OVERVIEW, title: t('overview') },

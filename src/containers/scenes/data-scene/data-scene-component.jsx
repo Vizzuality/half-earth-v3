@@ -20,7 +20,6 @@ import MenuFooter from 'components/mobile-only/menu-footer';
 import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 
-import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { MobileOnly, useMobile } from 'constants/responsive';
 import { getSidebarTabs } from 'constants/ui-params';

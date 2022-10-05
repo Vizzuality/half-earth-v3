@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 
 import { loadModules } from 'esri-loader';
 
@@ -36,8 +36,7 @@ function CountryEntryTooltipComponent({
   const t = useT();
   const locale = useLocale();
 
-  const countryNames = useCallback(getCountryNames, [locale]);
-
+  const countryNames = useMemo(getCountryNames, [locale]);
   const tooltipref = useRef(null);
   const onboardingButtonReference = useRef(null);
   const [tooltip, setTooltip] = useState(null);
@@ -113,6 +112,7 @@ function CountryEntryTooltipComponent({
 
   const landTab = activeTab === LAND_MARINE.land;
   if (!tooltipPosition || !tooltip) return null;
+
   return (
     <div ref={tooltipref} className={styles.tooltipContainer}>
       <section className={styles.tooltipSection}>

@@ -1,21 +1,25 @@
-import React, {
-  useEffect, useState, useCallback, useMemo,
-} from 'react';
-import { useLocale } from '@transifex/react';
-import { useFeatureLayer } from 'hooks/esri';
-import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
-import { LAND_MARINE } from 'constants/country-mode-constants';
-import { SORT } from 'components/header-item';
-import Component from './species-modal-component';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { connect } from 'react-redux';
+
+import { useLocale } from '@transifex/react';
+
+import * as urlActions from 'actions/url-actions';
+
+import { useFeatureLayer } from 'hooks/esri';
+
+import { SORT } from 'components/header-item';
+
+import { LAND_MARINE } from 'constants/country-mode-constants';
+import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
+
+import Component from './species-modal-component';
+import { getVertebrateTabs } from './species-modal-constants';
 import {
   getCountryData,
   getSearchTerm,
   getSpeciesModalSort,
   getSortedSpeciesList,
 } from './species-modal-selectors';
-import * as urlActions from 'actions/url-actions';
-import { getVertebrateTabs } from './species-modal-constants';
 
 const actions = { ...urlActions };
 
@@ -27,9 +31,7 @@ const mapStateToProps = (state) => ({
 });
 
 function SpeciesModalContainer(props) {
-  const {
-    changeUI, countryData, speciesModalSort, state,
-  } = props;
+  const { changeUI, countryData, speciesModalSort, state } = props;
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
@@ -42,8 +44,7 @@ function SpeciesModalContainer(props) {
 
   useEffect(() => {
     const layer = vertebrateType === LAND_MARINE.land ? landLayer : marineLayer;
-    if (layer && countryData.iso
-    ) {
+    if (layer && countryData.iso) {
       const getFeatures = async () => {
         const query = await layer.createQuery();
         query.where = `iso3 = '${countryData.iso}'`;
@@ -67,13 +68,16 @@ function SpeciesModalContainer(props) {
   const handleSortClick = (category) => {
     const sortedCategory = speciesModalSort && speciesModalSort.split('-')[0];
     const direction = speciesModalSort && speciesModalSort.split('-')[1];
-    const sortDirection = sortedCategory === category && direction === SORT.DESC
-      ? SORT.ASC
-      : SORT.DESC;
+    const sortDirection =
+      sortedCategory === category && direction === SORT.DESC
+        ? SORT.ASC
+        : SORT.DESC;
     changeUI({ speciesModalSort: `${category}-${sortDirection}` });
   };
 
-  const handleVertebrateChange = useCallback((tabSlug) => { setVertebrateType(tabSlug); }, []);
+  const handleVertebrateChange = useCallback((tabSlug) => {
+    setVertebrateType(tabSlug);
+  }, []);
 
   return (
     <Component

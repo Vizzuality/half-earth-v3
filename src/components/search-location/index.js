@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
@@ -50,7 +50,7 @@ function SearchLocationContainer(props) {
   const t = useT();
   const locale = useLocale();
 
-  const countryNames = useCallback(getCountryNames, [locale]);
+  const countryNames = useMemo(getCountryNames, [locale]);
 
   useEffect(() => {
     if (searchResults && searchResults.length !== 0) {
