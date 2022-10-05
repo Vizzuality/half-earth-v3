@@ -6,11 +6,17 @@ import { useLocale } from '@transifex/react';
 
 import * as urlActions from 'actions/url-actions';
 
-import { layerManagerToggle, batchToggleLayers } from 'utils/layer-manager-utils';
+import {
+  layerManagerToggle,
+  batchToggleLayers,
+} from 'utils/layer-manager-utils';
 
 import ContentfulService from 'services/contentful';
 
-import { AOI_LEGEND_CATEGORIES, getSidebarCardsConfig } from 'constants/analyze-areas-constants';
+import {
+  AOI_LEGEND_CATEGORIES,
+  getSidebarCardsConfig,
+} from 'constants/analyze-areas-constants';
 import metadataConfig from 'constants/metadata';
 
 import Component from './component';
@@ -28,7 +34,10 @@ function Container(props) {
   } = props;
 
   const locale = useLocale();
-  const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
+  const sidebarCardsConfig = useMemo(
+    () => getSidebarCardsConfig(locale),
+    [locale]
+  );
 
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
@@ -56,7 +65,11 @@ function Container(props) {
       layerManagerToggle(option.slug, activeLayers, changeGlobe);
       setSelectedLayer(null);
     } else if (selectedLayer) {
-      batchToggleLayers([selectedLayer, option.slug], activeLayers, changeGlobe);
+      batchToggleLayers(
+        [selectedLayer, option.slug],
+        activeLayers,
+        changeGlobe
+      );
       setSelectedLayer(option.slug);
     } else {
       layerManagerToggle(option.slug, activeLayers, changeGlobe);

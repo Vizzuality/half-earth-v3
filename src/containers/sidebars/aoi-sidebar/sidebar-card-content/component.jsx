@@ -47,7 +47,10 @@ function SidebarCard({
 }) {
   const t = useT();
   const locale = useLocale();
-  const sidebarCardsConfig = useMemo(() => getSidebarCardsConfig(), [locale]);
+  const sidebarCardsConfig = useMemo(
+    () => getSidebarCardsConfig(locale),
+    [locale]
+  );
 
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
