@@ -14,18 +14,10 @@ import { useSearchWidgetLogic } from 'hooks/esri';
 
 import EsriFeatureService from 'services/esri-feature-service';
 
-import {
-  SEARCH_LOOKUP_TABLE,
-  WDPA_OECM_FEATURE_LAYER,
-  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
-  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
-} from 'constants/layers-slugs';
+import { SEARCH_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
-import {
-  SEARCH_SOURCES_CONFIG,
-  SEARCH_TYPES,
-} from 'constants/search-location-constants';
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
 import Component from './component';
@@ -70,39 +62,22 @@ function SearchLocationContainer(props) {
 
   const browseSelectedFeature = async ({ result }) => {
     const { setBatchTooltipData } = props;
-    let searchResult;
-    if (searchType === SEARCH_TYPES.full) {
-      // We have to find the information of the layer with the lookup table info
-      const { attributes } = result.feature;
-      const { LAYERSLUG, MOL_ID } = attributes;
-      searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
-    }
+    const {
+      attributes: { LAYERSLUG, MOL_ID },
+    } = result.feature;
+    const searchResult = await getSearchedLayerData(LAYERSLUG, MOL_ID);
 
-    const feature =
-      searchType === SEARCH_TYPES.full
-        ? searchResult && searchResult[0]
-        : result.feature;
+    const feature = searchResult && searchResult[0];
 
     const tooltipConfig = MAP_TOOLTIP_CONFIG[searchSourceLayerSlug];
     const { title, subtitle, id, iso } = tooltipConfig;
     const { geometry, attributes } = feature;
 
-    // TODO: Check this when we merge the administrative options
-    const getPrecalculatedLayer = () => {
-      if (attributes.DESIG_T) {
-        return WDPA_OECM_FEATURE_LAYER;
-      }
-      return attributes.GID_1
-        ? GADM_1_ADMIN_AREAS_FEATURE_LAYER
-        : GADM_0_ADMIN_AREAS_FEATURE_LAYER;
-    };
-
     if (searchType !== SEARCH_TYPES.simple) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
-        precalculatedLayerSlug:
-          result.feature.attributes.LAYERSLUG || getPrecalculatedLayer(),
+        precalculatedLayerSlug: result.feature.attributes.LAYERSLUG,
         content: getTooltipContent(t, attributes, id, title, subtitle),
       });
     }
@@ -140,22 +115,26 @@ function SearchLocationContainer(props) {
   );
 
   useEffect(() => {
-    const config = SEARCH_SOURCES_CONFIG[searchSourceLayerSlug];
-    let { url, searchFields, suggestionTemplate, title } = config;
+    const url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
+    const searchFields = ['NAME'];
+    const suggestionTemplate = '{NAME}';
+    const title = SEARCH_LOOKUP_TABLE;
 
-    if (searchType === SEARCH_TYPES.full) {
-      url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
-      searchFields = ['NAME'];
-      suggestionTemplate = '{NAME}';
-      title = SEARCH_LOOKUP_TABLE;
-    }
     const getSearchSources = (FeatureLayer) => [
       {
         searchFields,
         suggestionTemplate,
         outFields: ['*'],
-        ...(searchType === SEARCH_TYPES.full
-          ? { filter: { where: `LANGUAGES LIKE '%${locale || 'en'}%'` } }
+        ...(searchType !== SEARCH_TYPES.simple
+          ? {
+              filter: {
+                where: `LANGUAGES LIKE '%${locale || 'en'}%'${
+                  searchType === SEARCH_TYPES.country
+                    ? `AND LAYERSLUG = 'gadm-0-admin-areas-feature-layer'`
+                    : ''
+                }`,
+              },
+            }
           : {}),
         layer: new FeatureLayer({
           url,

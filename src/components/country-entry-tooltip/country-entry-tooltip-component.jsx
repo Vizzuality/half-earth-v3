@@ -120,7 +120,7 @@ function CountryEntryTooltipComponent({
           <img
             className={styles.tooltipFlag}
             src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-            alt="country flag"
+            alt=""
           />
           <span className={styles.tooltipName}>
             {countryNames[countryName] || countryName}
