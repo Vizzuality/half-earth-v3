@@ -36,17 +36,23 @@ export const useSearchWidgetLogic = (
   view,
   searchTermsAnalyticsEvent,
   searchWidgetConfig,
-  isSimpleSearch,
+  isSimpleSearch
 ) => {
   const [searchWidget, setSearchWidget] = useState(null);
-  const { searchSources, postSearchCallback, searchResultsCallback } = searchWidgetConfig || {};
+  const { searchSources, postSearchCallback, searchResultsCallback } =
+    searchWidgetConfig || {};
   const [esriConstructors, setEsriConstructors] = useState();
 
   useEffect(() => {
-    loadModules(['esri/widgets/Search', 'esri/layers/FeatureLayer', 'esri/tasks/Locator'])
+    loadModules([
+      'esri/widgets/Search',
+      'esri/layers/FeatureLayer',
+      'esri/tasks/Locator',
+    ])
       .then(([Search, FeatureLayer, Locator]) => {
         setEsriConstructors({ Search, FeatureLayer, Locator });
-      }).catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   const handleOpenSearch = () => {
@@ -116,7 +122,10 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   const [geometryArea, setGeometryArea] = useState(0);
 
   useEffect(() => {
-    loadModules(['esri/widgets/Sketch/SketchViewModel', 'esri/geometry/geometryEngine']).then(([SketchViewModel, geometryEngine]) => {
+    loadModules([
+      'esri/widgets/Sketch/SketchViewModel',
+      'esri/geometry/geometryEngine',
+    ]).then(([SketchViewModel, geometryEngine]) => {
       setConstructors({
         geometryEngine,
         SketchViewModel,
@@ -125,40 +134,40 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   }, []);
 
   const handleSketchToolActivation = () => {
-    loadModules(['esri/widgets/Sketch', 'esri/widgets/Sketch/SketchViewModel', 'esri/layers/GraphicsLayer']).then(
-      (
-        [
-          Sketch,
-          SketchViewModel,
-          GraphicsLayer,
-        ],
-      ) => {
-        const _sketchLayer = new GraphicsLayer({ elevationInfo: { mode: 'on-the-ground' } });
-        setSketchLayer(_sketchLayer);
-        view.map.add(_sketchLayer);
-        const _sketchTool = new Sketch({
+    loadModules([
+      'esri/widgets/Sketch',
+      'esri/widgets/Sketch/SketchViewModel',
+      'esri/layers/GraphicsLayer',
+    ]).then(([Sketch, SketchViewModel, GraphicsLayer]) => {
+      const _sketchLayer = new GraphicsLayer({
+        elevationInfo: { mode: 'on-the-ground' },
+      });
+      setSketchLayer(_sketchLayer);
+      view.map.add(_sketchLayer);
+      const _sketchTool = new Sketch({
+        view,
+        layer: _sketchLayer,
+        visibleElements: {
+          settingsMenu: false,
+        },
+        availableCreateTools: ['polygon', 'rectangle', 'circle'],
+        viewModel: new SketchViewModel({
           view,
           layer: _sketchLayer,
-          availableCreateTools: ['polygon', 'rectangle', 'circle'],
           defaultCreateOptions: { hasZ: false },
           defaultUpdateOptions: {
-            enableZ: false, multipleSelectionEnabled: false, toggleToolOnClick: true,
+            enableZ: false,
+            multipleSelectionEnabled: false,
+            toggleToolOnClick: true,
           },
-          visibleElements: {
-            settingsMenu: false,
+          polygonSymbol: {
+            type: 'simple-fill',
+            color: [147, 255, 95, 0.2],
           },
-          viewModel: new SketchViewModel({
-            view,
-            layer: _sketchLayer,
-            polygonSymbol: {
-              type: 'simple-fill',
-              color: [147, 255, 95, 0.2],
-            },
-          }),
-        });
-        setSketchTool(_sketchTool);
-      },
-    );
+        }),
+      });
+      setSketchTool(_sketchTool);
+    });
   };
 
   const addWidgetToTheUi = () => {
@@ -179,12 +188,14 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
   useEffect(() => {
     if (sketchTool) {
       addWidgetToTheUi();
-
       sketchTool.on('create', (event) => {
         if (event.state === 'active') {
           if (event.graphic.geometry.rings[0].length > 3) {
             setGeometryArea(
-              calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine),
+              calculateGeometryArea(
+                event.graphic.geometry,
+                Constructors.geometryEngine
+              )
             );
           }
         } else if (event.state === 'complete') {
@@ -192,7 +203,10 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
           postDrawCallback(
             sketchLayer,
             event.graphic,
-            calculateGeometryArea(event.graphic.geometry, Constructors.geometryEngine),
+            calculateGeometryArea(
+              event.graphic.geometry,
+              Constructors.geometryEngine
+            )
           );
         }
       });
