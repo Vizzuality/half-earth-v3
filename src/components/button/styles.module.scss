@@ -14,6 +14,21 @@
   }
 }
 
+.rectangular-primary {
+  @extend %title;
+  width: 100%;
+  height: 40px;
+  color: $dark-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius-desktop;
+  background-color: $brand-color-main;
+  &:hover {
+    background-color: $white;
+  }
+}
+
 .rectangular {
   @extend %title;
   width: 100%;

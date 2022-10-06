@@ -1,0 +1,58 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.modal {
+  width: 90% !important;
+  max-width: 90% !important;
+  height: auto !important;
+
+  @media #{$tablet-landscape} {
+    max-width: 620px !important;
+    width: 600px !important;
+  }
+}
+
+.modalContent {
+  padding: 0 !important;
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: $brand-color-secondary;
+}
+
+.closeBtn {
+  // TODO: Remove button when we stop using half-earth-components
+  display: none;
+}
+
+.title {
+  @extend %headline;
+  margin-bottom: 8px;
+}
+
+.buttonContainer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  max-width: 100px;
+}
+
+.paragraph {
+  @extend %bodyText;
+  margin: 0 0 8px 0;
+
+  &.bold {
+    font-weight: $font-weight-bold;
+  }
+}
+
+.icon {
+  margin-bottom: 16px;
+}
