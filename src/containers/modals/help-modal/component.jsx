@@ -5,13 +5,14 @@ import { useT } from '@transifex/react';
 import PropTypes from 'prop-types';
 
 import { Modal } from 'he-components';
+
+import styles from './styles.module';
+
 import { ReactComponent as GlobeIcon } from 'icons/globe.svg';
 import { ReactComponent as LandscapeIcon } from 'icons/landscape.svg';
 import { ReactComponent as PanMouseIcon } from 'icons/pan_mouse.svg';
 import { ReactComponent as RotateMouseIcon } from 'icons/rotate_mouse.svg';
 import { ReactComponent as ZoomMouseIcon } from 'icons/zoom_mouse.svg';
-
-import styles from './styles.module';
 
 function HelpModal({ handleClose, isOpen }) {
   const t = useT();
@@ -24,29 +25,21 @@ function HelpModal({ handleClose, isOpen }) {
   };
 
   const storyTitles = {
-    firstStep: t(
-      'Map Layers',
-    ),
-    secondStep: t(
-      'Analyze Areas',
-    ),
+    firstStep: t('Map Layers'),
+    secondStep: t('Analyze Areas'),
   };
 
   const storyDescriptions = {
     firstStep: t(
-      'At higher zoom levels, the map enables you to view datasets at a global scale.',
+      'At higher zoom levels, the map enables you to view datasets at a global scale.'
     ),
     secondStep: t(
-      'Search for a place using the search bar at the bottom of the left-hand report card or find a country or region by manually zooming on the globe. Once selected, the left side panel will display fine detail at a local scale.',
+      'Search for a place using the search bar at the bottom of the left-hand report card or find a country or region by manually zooming on the globe. Once selected, the left side panel will display fine detail at a local scale.'
     ),
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={handleClose}
-      theme={styles}
-    >
+    <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.modalContainer}>
         <div className={styles.wrapper}>
           <div className={styles.header}>

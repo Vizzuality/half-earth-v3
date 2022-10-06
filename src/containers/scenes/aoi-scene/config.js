@@ -6,7 +6,7 @@ import {
   PROTECTED_AREAS_VECTOR_TILE_LAYER,
 } from 'constants/layers-slugs';
 
-// ! All the map layers tab layers should have a category attribute
+// ! All the 'map layers tab' layers should have a category attribute
 export default {
   activeLayers: [
     { title: MASK_LAYER },

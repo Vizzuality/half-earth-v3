@@ -5,7 +5,7 @@ import LabelsLayer from 'containers/layers/labels-layer';
 import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
+import ZoomIntoGeometryManager from 'containers/managers/zoom-into-geometry-manager';
 import SideMenu from 'containers/menus/sidemenu';
 import AoiSidebar from 'containers/sidebars/aoi-sidebar';
 
@@ -53,7 +53,7 @@ function AoiSceneComponent({
         onFeatureClick={handleFuturePlaceClick}
       />
 
-      <LocalSceneViewManager localGeometry={geometry} />
+      <ZoomIntoGeometryManager localGeometry={geometry} />
       {!isMobile && <SideMenu activeLayers={activeLayers} />}
 
       <TerrainExaggerationLayer />

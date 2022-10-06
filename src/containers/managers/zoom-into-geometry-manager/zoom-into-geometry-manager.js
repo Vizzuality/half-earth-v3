@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
+
 import PropTypes from 'prop-types';
+
 import { flyToCentroid } from 'utils/globe-events-utils';
 
-function LocalSceneViewManager({
-  view,
-  localGeometry,
-}) {
+function ZoomIntoGeometryManager({ view, localGeometry }) {
   useEffect(() => {
     if (view && localGeometry) {
       const { extent } = localGeometry;
@@ -17,9 +16,11 @@ function LocalSceneViewManager({
   return null;
 }
 
-LocalSceneViewManager.propTypes = {
-  view: PropTypes.object,
-  localGeometry: PropTypes.object,
+ZoomIntoGeometryManager.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  view: PropTypes.shape({}),
+  // eslint-disable-next-line react/require-default-props
+  localGeometry: PropTypes.shape({}),
 };
 
-export default LocalSceneViewManager;
+export default ZoomIntoGeometryManager;

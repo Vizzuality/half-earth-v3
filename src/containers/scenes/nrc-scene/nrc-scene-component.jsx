@@ -6,7 +6,7 @@ import FeatureHighlightLayer from 'containers/layers/feature-highlight-layer';
 import LabelsLayer from 'containers/layers/labels-layer';
 import TerrainExaggerationLayer from 'containers/layers/terrain-exaggeration-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import LocalSceneViewManager from 'containers/managers/local-scene-view-manager';
+import ZoomIntoGeometryManager from 'containers/managers/zoom-into-geometry-manager';
 import SideMenu from 'containers/menus/sidemenu';
 import SoundButton from 'containers/onboarding/sound-btn';
 import OnboardingTooltip from 'containers/onboarding/tooltip';
@@ -53,7 +53,7 @@ function CountrySceneComponent({
     >
       {onboardingType && <SoundButton />}
       {countryData && <OnboardingTooltip />}
-      <LocalSceneViewManager localGeometry={countryBorder} />
+      <ZoomIntoGeometryManager localGeometry={countryBorder} />
       <ArcgisLayerManager activeLayers={activeLayers} />
       <CountryMaskLayer
         countryISO={countryISO}

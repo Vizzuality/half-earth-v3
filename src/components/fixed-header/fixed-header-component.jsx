@@ -34,7 +34,7 @@ function FixedHeader({
       className={cx(
         styles.header,
         { [styles.higherHeader]: isHigherHeader },
-        { [styles.autoHeightHeader]: autoHeight },
+        { [styles.autoHeightHeader]: autoHeight }
       )}
     >
       {!isOnMobile && (
