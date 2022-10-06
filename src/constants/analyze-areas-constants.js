@@ -106,13 +106,16 @@ const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
 // Custom AOIs on the PROTECTION_SLUG rely on percentage instead of protectionPercentage
 export const getSidebarCardsConfig = (locale) => ({
   [SPECIES_SLUG]: {
-    title: (speciesCount) => (
-      <span>
-        {t('This area has')}
-        {!locale || (locale === 'en' && <br />)} {t('up to')}
-        <span> {speciesCount}</span>
-      </span>
-    ),
+    title: (speciesCount) =>
+      !locale || locale === 'en' ? (
+        <>
+          {t('This area has')} <br /> {t('up to')} {speciesCount}{' '}
+        </>
+      ) : (
+        <>
+          {t('This area has')} {t('up to')} {speciesCount}{' '}
+        </>
+      ),
     hint: t(
       'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.'
     ),
