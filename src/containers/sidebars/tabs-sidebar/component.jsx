@@ -31,16 +31,17 @@ function TabsSidebarComponent({
     () => getSidebarTabs(),
     [locale]
   );
+
+  const hasCountedActiveLayers =
+    !!countedActiveLayers && countedActiveLayers > 0;
   const mapLayersCounterIsActive = (slug) =>
     slug === mapLayersTab.slug &&
-    countedActiveLayers &&
-    sidebarTabActive !== slug &&
-    countedActiveLayers > 0;
+    hasCountedActiveLayers &&
+    sidebarTabActive !== slug;
 
   const displayMapLayersIcon = (slug) =>
     slug === mapLayersTab.slug &&
-    countedActiveLayers &&
-    (countedActiveLayers === 0 || sidebarTabActive === slug);
+    (!hasCountedActiveLayers || sidebarTabActive === slug);
 
   const displayAnalyzeAreasIcon = (slug) => slug === analyzeAreasTab.slug;
 
@@ -83,15 +84,12 @@ function TabsSidebarComponent({
                         {countedActiveLayers}
                       </div>
                     )}
-
                     {displayMapLayersIcon(slug) && (
                       <MapLayersIcon className={styles.tabIcon} />
                     )}
-
                     {displayAnalyzeAreasIcon(slug) && !aoiId && (
                       <AnalyzeAreasIcon className={styles.tabIcon} />
                     )}
-
                     {displayAnalyzeAreasIcon(slug) && aoiId && (
                       <div className={styles.analyzeAreaSelectedIconContainer}>
                         <AnalyzeAreasSelectedIcon className={styles.tabIcon} />
