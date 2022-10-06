@@ -21,17 +21,17 @@ import {
   REPTILES,
   AMPHIBIANS,
 } from 'constants/geo-processing-services';
-import {
-  ELU_LOOKUP_TABLE,
-} from 'constants/layers-slugs';
+import { ELU_LOOKUP_TABLE } from 'constants/layers-slugs';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 export function getJobInfo(url, params) {
   return new Promise((resolve, reject) => {
-    loadModules(['esri/rest/geoprocessor']).then(async ([geoprocessor]) => {
-      const jobInfo = await geoprocessor.submitJob(url, params);
-      resolve(jobInfo);
-    }).catch((error) => reject(error));
+    loadModules(['esri/rest/geoprocessor'])
+      .then(async ([geoprocessor]) => {
+        const jobInfo = await geoprocessor.submitJob(url, params);
+        resolve(jobInfo);
+      })
+      .catch((error) => reject(error));
   });
 }
 
@@ -43,18 +43,22 @@ export function jobTimeProfiling(jobStart) {
 
 export function getEluData(data) {
   // eslint-disable-next-line max-len
-  const eluCode = data[CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS]].value.features[0].attributes.MAJORITY;
+  const eluCode =
+    data[CONTEXTUAL_DATA_TABLES[ECOLOGICAL_LAND_UNITS]].value.features[0]
+      .attributes.MAJORITY;
   return new Promise((resolve, reject) => {
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[ELU_LOOKUP_TABLE],
       whereClause: `elu_code = '${eluCode}'`,
-    }).then((features) => {
-      const eluData = features[0].attributes;
-      const { lc_type: landCover, cr_type: climateRegime } = eluData;
-      resolve({ landCover, climateRegime });
-    }).catch((getFeaturesError) => {
-      reject(getFeaturesError);
-    });
+    })
+      .then((features) => {
+        const eluData = features[0].attributes;
+        const { lc_type: landCover, cr_type: climateRegime } = eluData;
+        resolve({ landCover, climateRegime });
+      })
+      .catch((getFeaturesError) => {
+        reject(getFeaturesError);
+      });
   });
 }
 
@@ -63,18 +67,24 @@ const landPressuresLookup = LAND_PRESSURES_LOOKUP.reduce((acc, current, i) => {
   return acc;
 }, {});
 function getAreaPressures(data) {
-  if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1) return {};
-  return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce((acc, value) => ({
-    ...acc,
-    [landPressuresLookup[value.attributes.SliceNumber]]:
-      value.attributes.percentage_land_encroachment,
-  }), {});
+  if (data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.length < 1)
+    return {};
+  return data[CONTEXTUAL_DATA_TABLES[HUMAN_PRESSURES]].value.features.reduce(
+    (acc, value) => ({
+      ...acc,
+      [landPressuresLookup[value.attributes.SliceNumber]]:
+        value.attributes.percentage_land_encroachment,
+    }),
+    {}
+  );
 }
 
-const getAreaPopulation = (data) => data[CONTEXTUAL_DATA_TABLES[POPULATION]]
-  .value.features[0].attributes[COUNTRY_ATTRIBUTES.Pop2020_SUM];
+const getAreaPopulation = (data) =>
+  data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes[
+    COUNTRY_ATTRIBUTES.Pop2020_SUM
+  ];
 
-const getProtectedAreasList = (data) => (
+const getProtectedAreasList = (data) =>
   data[CONTEXTUAL_DATA_TABLES[WDPA_LIST]].value.features.map((f) => ({
     NAME: f.attributes.ORIG_NA,
     NAME_0: f.attributes.NAME_0,
@@ -83,31 +93,33 @@ const getProtectedAreasList = (data) => (
     DESIG: f.attributes.DESIG_E,
     IUCN_CA: f.attributes.IUCN_CA,
     DESIG_T: f.attributes.DESIG_T,
-  }))
-);
+  }));
 
-const getPercentage = (data) => data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0]
-  && data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]]
-    .value.features[0].attributes.percentage_protected;
+const getPercentage = (data) =>
+  data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0] &&
+  data[CONTEXTUAL_DATA_TABLES[WDPA_PERCENTAGE]].value.features[0].attributes
+    .percentage_protected;
 
 export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
-    getContextualData(geometry).then(async (data) => {
-      const pressures = getAreaPressures(data);
-      const population = getAreaPopulation(data);
-      const elu = await getEluData(data);
-      const protectedAreasList = getProtectedAreasList(data);
-      const percentage = getPercentage(data);
-      resolve({
-        elu,
-        pressures,
-        population,
-        protectedAreasList,
-        percentage,
+    getContextualData(geometry)
+      .then(async (data) => {
+        const pressures = getAreaPressures(data);
+        const population = getAreaPopulation(data);
+        const elu = await getEluData(data);
+        const protectedAreasList = getProtectedAreasList(data);
+        const percentage = getPercentage(data);
+        resolve({
+          elu,
+          pressures,
+          population,
+          protectedAreasList,
+          percentage,
+        });
+      })
+      .catch((error) => {
+        reject(error);
       });
-    }).catch((error) => {
-      reject(error);
-    });
   });
 }
 
@@ -115,45 +127,51 @@ const parseCommonName = (f) => {
   return f.attributes.common_name && f.attributes.common_name.split(',');
 };
 
-export function getSpeciesData(crfName, geometry) {
+export function getCustomAOISpeciesData(crfName, geometry) {
   return new Promise((resolve, reject) => {
     getCrfData({
       dataset: crfName,
       aoiFeatureGeometry: geometry,
     }).then((response) => {
       const { data } = response;
-      const crfSlices = data.value.features.reduce((acc, f) => ({
-        ...acc,
-        [f.attributes.SliceNumber]: {
-          sliceNumber: f.attributes.SliceNumber,
-          presencePercentage: f.attributes.per_global,
-        },
-      }), {});
+      const crfSlices = data.value.features.reduce(
+        (acc, f) => ({
+          ...acc,
+          [f.attributes.SliceNumber]: {
+            sliceNumber: f.attributes.SliceNumber,
+            presencePercentage: f.attributes.per_global,
+          },
+        }),
+        {}
+      );
       const ids = data.value.features.map((f) => f.attributes.SliceNumber);
       EsriFeatureService.getFeatures({
         url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
         whereClause: `SliceNumber IN (${ids.toString()})`,
-      }).then((features) => {
-        const result = features
-          .map((f) => ({
-            category: crfName,
-            has_image: f.attributes.has_image,
-            isFlagship: f.attributes.is_flagship,
-            sliceNumber: f.attributes.SliceNumber,
-            name: f.attributes.scientific_name,
-            commonName: parseCommonName(f),
-            globalProtectedArea: f.attributes.wdpa_km2,
-            globaldRangeArea: f.attributes.range_area_km2,
-            globalProtectedPercentage: f.attributes.percent_protected,
-            protectionTarget: f.attributes.conservation_target,
-            conservationConcern: f.attributes.conservation_concern || 0,
-            presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage,
-          }))
-          .filter((f) => f.name !== null);
-        resolve(result);
-      }).catch((error) => {
-        reject(error);
-      });
+      })
+        .then((features) => {
+          const result = features
+            .map((f) => ({
+              category: crfName,
+              has_image: f.attributes.has_image,
+              isFlagship: f.attributes.is_flagship,
+              sliceNumber: f.attributes.SliceNumber,
+              name: f.attributes.scientific_name,
+              commonName: parseCommonName(f),
+              globalProtectedArea: f.attributes.wdpa_km2,
+              globaldRangeArea: f.attributes.range_area_km2,
+              globalProtectedPercentage: f.attributes.percent_protected,
+              protectionTarget: f.attributes.conservation_target,
+              conservationConcern: f.attributes.conservation_concern || 0,
+              presenceInArea:
+                crfSlices[f.attributes.SliceNumber].presencePercentage,
+            }))
+            .filter((f) => f.name !== null);
+          resolve(result);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   });
 }
@@ -161,49 +179,63 @@ export function getSpeciesData(crfName, geometry) {
 const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
   const data = JSON.parse(jsonSlices);
   return new Promise((resolve, reject) => {
-    const crfSlices = data.reduce((acc, f) => ({
-      ...acc,
-      [f.SliceNumber]: {
-        sliceNumber: f.SliceNumber,
-        presencePercentage: f.per_global,
-      },
-    }), {});
+    const crfSlices = data.reduce(
+      (acc, f) => ({
+        ...acc,
+        [f.SliceNumber]: {
+          sliceNumber: f.SliceNumber,
+          presencePercentage: f.per_global,
+        },
+      }),
+      {}
+    );
     const ids = data.map((f) => f.SliceNumber);
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
       whereClause: `SliceNumber IN (${ids.toString()})`,
-    }).then((features) => {
-      const result = features
-        .map((f) => ({
-          category: crfName,
-          isFlagship: f.attributes.is_flagship,
-          has_image: f.attributes.has_image,
-          sliceNumber: f.attributes.SliceNumber,
-          name: f.attributes.scientific_name,
-          commonName: parseCommonName(f),
-          globalProtectedArea: f.attributes.wdpa_km2,
-          globaldRangeArea: f.attributes.range_area_km2,
-          globalProtectedPercentage: f.attributes.percent_protected,
-          protectionTarget: f.attributes.conservation_target,
-          conservationConcern: f.attributes.conservation_concern,
-          presenceInArea: crfSlices[f.attributes.SliceNumber].presencePercentage,
-        }))
-        .filter((f) => f.name !== null);
-      resolve(result);
-    }).catch((error) => {
-      reject(error);
-    });
+    })
+      .then((features) => {
+        const result = features
+          .map((f) => ({
+            category: crfName,
+            isFlagship: f.attributes.is_flagship,
+            has_image: f.attributes.has_image,
+            sliceNumber: f.attributes.SliceNumber,
+            name: f.attributes.scientific_name,
+            commonName: parseCommonName(f),
+            globalProtectedArea: f.attributes.wdpa_km2,
+            globaldRangeArea: f.attributes.range_area_km2,
+            globalProtectedPercentage: f.attributes.percent_protected,
+            protectionTarget: f.attributes.conservation_target,
+            conservationConcern: f.attributes.conservation_concern,
+            presenceInArea:
+              crfSlices[f.attributes.SliceNumber].presencePercentage,
+          }))
+          .filter((f) => f.name !== null);
+        resolve(result);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
 export const setPrecalculatedSpeciesData = (attributes, setTaxaData) => {
-  getPrecalculatedSpeciesData(BIRDS, attributes.birds).then((data) => setTaxaData(data));
+  getPrecalculatedSpeciesData(BIRDS, attributes.birds).then((data) =>
+    setTaxaData(data)
+  );
   getPrecalculatedSpeciesData(MAMMALS, attributes.mammals).then((data) => {
     // WHALES IDS NEED TO BE TEMPORARILY DISCARDED (2954, 2955)
-    setTaxaData(data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955));
+    setTaxaData(
+      data.filter((sp) => sp.sliceNumber !== 2954 && sp.sliceNumber !== 2955)
+    );
   });
-  getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then((data) => setTaxaData(data));
-  getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then((data) => setTaxaData(data));
+  getPrecalculatedSpeciesData(REPTILES, attributes.reptiles).then((data) =>
+    setTaxaData(data)
+  );
+  getPrecalculatedSpeciesData(AMPHIBIANS, attributes.amphibians).then((data) =>
+    setTaxaData(data)
+  );
 };
 
 const getAreaName = (data) => {
@@ -224,7 +256,7 @@ export const getPrecalculatedContextualData = ({
     pressures[key] = data[LAND_PRESSURES_LABELS_SLUGS[key]];
   });
 
-  return ({
+  return {
     elu: {
       climateRegime: data.climate_regime_majority,
       landCover: data.land_cover_majority,
@@ -243,7 +275,7 @@ export const getPrecalculatedContextualData = ({
     },
     protectionPercentage: data.percentage_protected,
     ...(includeAllData && { ...data }),
-  });
+  };
 };
 
 export const getAoiFromDataBase = (id) => {
@@ -252,9 +284,11 @@ export const getAoiFromDataBase = (id) => {
       url: LAYERS_URLS[AOIS_HISTORIC],
       returnGeometry: true,
       whereClause: `aoiId = '${id}'`,
-    }).then((features) => {
-      resolve(features);
-    }).catch((error) => reject(error));
+    })
+      .then((features) => {
+        resolve(features);
+      })
+      .catch((error) => reject(error));
   });
 };
 
@@ -266,9 +300,11 @@ export const postAoiToDataBase = (geometry, attributes) => {
         geometry,
         attributes,
       },
-    }).then((features) => {
-      resolve(features);
-    }).catch((error) => reject(error));
+    })
+      .then((features) => {
+        resolve(features);
+      })
+      .catch((error) => reject(error));
   });
 };
 
