@@ -1,1 +1,5 @@
-export const STRINGIFIED_ATTRIBUTES = ['elu', 'pressures', 'protectedAreasList'];
+export const STRINGIFIED_ATTRIBUTES = [
+  'elu',
+  'pressures',
+  'protectedAreasList',
+];

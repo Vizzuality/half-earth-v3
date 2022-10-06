@@ -192,8 +192,8 @@ export const createLayer = (layerConfig) => {
   const { url, slug, type, opacity, renderer } = layerConfig;
   const layerType = type || 'WebTileLayer';
 
-  return loadModules([`esri/layers/${layerType}`]).then(([layer]) => {
-    const newLayer = new layer({
+  return loadModules([`esri/layers/${layerType}`]).then(([Layer]) => {
+    const newLayer = new Layer({
       url,
       urlTemplate: url,
       title: slug,
@@ -210,7 +210,7 @@ export const createLayer = (layerConfig) => {
   });
 };
 export const addLayerToMap = (mapLayer, map) =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     map.add(mapLayer);
     resolve(mapLayer);
   });
@@ -250,10 +250,10 @@ const handleLayerCreation = async (layerConfig, map) => {
   }
 };
 
-export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
+export const addActiveLayersToScene = (activeLayers, _layersConfig, map) => {
   if (activeLayers && activeLayers.length) {
     activeLayers.forEach((layer) => {
-      const layerConfig = layersConfig[layer.title];
+      const layerConfig = _layersConfig[layer.title];
       handleLayerCreation(layerConfig, map);
     });
   }
@@ -262,7 +262,7 @@ export const addActiveLayersToScene = (activeLayers, layersConfig, map) => {
 export const setBasemap = async ({ map, surfaceColor, layersArray }) => {
   map.ground.surfaceColor = surfaceColor || '#0A212E'; // set surface color, before basemap is loaded
   const baseLayers = await Promise.all(
-    layersArray.map(async (layer) => await createLayer(layersConfig[layer]))
+    layersArray.map(async (layer) => createLayer(layersConfig[layer]))
   );
   loadModules(['esri/Basemap']).then(([Basemap]) => {
     const basemap = new Basemap({
@@ -323,8 +323,10 @@ export const batchLayerManagerToggle = (
       addLayerAnalyticsEvent({ slug: title });
       return { title, category, opacity: DEFAULT_OPACITY };
     });
-    activeLayers
-      ? callback({ activeLayers: layersToAdd.concat(activeLayers) })
-      : callback({ activeLayers: layersToAdd });
+    if (activeLayers) {
+      callback({ activeLayers: layersToAdd.concat(activeLayers) });
+    } else {
+      callback({ activeLayers: layersToAdd });
+    }
   }
 };

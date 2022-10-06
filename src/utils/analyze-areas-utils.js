@@ -11,12 +11,11 @@ import mammalsPlaceholder from 'images/no-mammal.png';
 import reptilesPlaceholder from 'images/no-reptile.png';
 
 export function logGeometryArea(geometry) {
-  loadModules(['esri/geometry/geometryEngine'])
-    .then(([geometryEngine]) => {
-      const SQ_KM_WKID = 109414;
-      const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
-      console.info('AREA', area, 'KM2');
-    });
+  loadModules(['esri/geometry/geometryEngine']).then(([geometryEngine]) => {
+    const SQ_KM_WKID = 109414;
+    const area = geometryEngine.geodesicArea(geometry, SQ_KM_WKID);
+    console.info('AREA', area, 'KM2');
+  });
 }
 
 export function roundUpPercentage(value) {
@@ -42,17 +41,19 @@ export function featureCollectionFromShape(input, view, onSucces, onError) {
     }),
     f: 'json',
   };
-  loadModules(['esri/request'])
-    .then(([esriRequest]) => {
-      esriRequest('https://www.arcgis.com/sharing/rest/content/features/generate', {
+  loadModules(['esri/request']).then(([esriRequest]) => {
+    esriRequest(
+      'https://www.arcgis.com/sharing/rest/content/features/generate',
+      {
         query: generateRequestParams,
         body: input,
         method: 'post',
         responseType: 'json',
-      })
-        .then((response) => onSucces(response))
-        .catch((error) => onError(error));
-    });
+      }
+    )
+      .then((response) => onSucces(response))
+      .catch((error) => onError(error));
+  });
 }
 
 export const getTotalPressures = (pressures) => {
@@ -60,16 +61,18 @@ export const getTotalPressures = (pressures) => {
   let total = Object.keys(pressures).reduce((acc, key) => {
     return pressures[key] ? acc + parseFloat(pressures[key]) : acc;
   }, 0);
-  total = (total > 100) ? 100 : total;
+  total = total > 100 ? 100 : total;
   return percentageFormat(total);
 };
 
 export const getMainPressure = (pressures) => {
   if (!pressures) return null;
-  const existingPressures = Object.keys(pressures).filter((key) => pressures[key] !== null);
+  const existingPressures = Object.keys(pressures).filter(
+    (key) => pressures[key] !== null
+  );
   const cleanedPressures = _pick(pressures, existingPressures);
   const sorted = Object.keys(cleanedPressures).sort(
-    (a, b) => parseFloat(pressures[b]) - parseFloat(pressures[a]),
+    (a, b) => parseFloat(pressures[b]) - parseFloat(pressures[a])
   );
   return sorted[0];
 };
@@ -96,6 +99,9 @@ export const getPlaceholderSpeciesText = (taxa) => {
     case null:
       return 'Photo not available for this animal';
     default:
-      return `Photo not available for this ${taxa.substring(0, taxa.length - 1)}`;
+      return `Photo not available for this ${taxa.substring(
+        0,
+        taxa.length - 1
+      )}`;
   }
 };
