@@ -7,7 +7,6 @@ import { useT, useLocale } from '@transifex/react';
 import cx from 'classnames';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
-import { useMobile } from 'constants/responsive';
 import {
   getCountryNames,
   getWDPATranslations,
@@ -75,7 +74,6 @@ function MapTooltipComponent({
       ref={tooltipref}
       className={cx(styles.tooltipContainer, {
         [styles.isVisible]: isVisible,
-        [styles.isMobile]: useMobile(),
       })}
     >
       {content && (

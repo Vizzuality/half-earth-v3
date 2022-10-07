@@ -16,12 +16,9 @@ import OnboardingTooltip from 'containers/onboarding/tooltip';
 import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 
 import MapTooltip from 'components/map-tooltip';
-import MenuFooter from 'components/mobile-only/menu-footer';
-import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 
 import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
-import { MobileOnly, useMobile } from 'constants/responsive';
 import { getSidebarTabs } from 'constants/ui-params';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -63,14 +60,13 @@ function DataSceneComponent({
   setSidebarTabActive,
   selectedAnalysisTab,
 }) {
-  const isMobile = useMobile();
   const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
   const analysisLayerHighlightEnabled =
     selectedAnalysisLayer &&
     selectedAnalysisTab === 'click' &&
     sidebarTabActive === analyzeAreasTab.slug;
-  const sidebarHidden = isFullscreenActive || isMobile;
+  const sidebarHidden = isFullscreenActive;
   const updatedSceneSettings = useMemo(
     () => ({
       ...sceneSettings,
@@ -78,9 +74,8 @@ function DataSceneComponent({
         onboardingType === 'priority-places'
           ? ONBOARDING_TYPE_CENTER['priority-places']
           : sceneSettings.center,
-      ...(isMobile && { padding: { left: 0 } }),
     }),
-    [isMobile, onboardingType]
+    [onboardingType]
   );
 
   // Always show the first tab on onboarding mode
@@ -127,11 +122,6 @@ function DataSceneComponent({
         })}
       />
 
-      <MobileOnly>
-        <MenuFooter activeOption={activeOption} isSidebarOpen={isSidebarOpen} />
-        <MenuSettings activeOption={activeOption} openedModal={openedModal} />
-      </MobileOnly>
-
       <CountryLabelsLayer
         sceneMode={sceneMode}
         countryISO={countryISO}
@@ -146,7 +136,7 @@ function DataSceneComponent({
         />
       )}
 
-      {!isMobile && !onboardingType && (
+      {!onboardingType && (
         <SideMenu
           openedModal={openedModal}
           activeLayers={updatedActiveLayers}
@@ -156,9 +146,7 @@ function DataSceneComponent({
         />
       )}
 
-      {!isMobile && (
-        <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
-      )}
+      <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
 
       <MapTooltip
         onActionButtonClick={handleTooltipActionButtonClick}
@@ -170,7 +158,7 @@ function DataSceneComponent({
 
       <LabelsLayer activeLayers={updatedActiveLayers} />
 
-      {activeGlobesMenu && !isMobile && !onboardingType && (
+      {activeGlobesMenu && !onboardingType && (
         <GlobesMenu
           browsePage={browsePage}
           onMouseLeave={() => setActiveGlobesMenu(false)}

@@ -12,7 +12,6 @@ import SearchLocation from 'components/search-location';
 import ShareModal from 'components/share-modal';
 import SideMenuLanguageSwitcher from 'components/sidemenu-language-switcher';
 
-import { useMobile } from 'constants/responsive';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module';
@@ -29,12 +28,11 @@ function SideMenu({
   selectedAnalysisLayer,
   blur,
 }) {
-  const isOnMobile = useMobile();
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [isSearcherOpen, setSearcherOpen] = useState(false);
   const [isHelpModalOpen, setHelpModalOpen] = useState(false);
 
-  const hiddenWidget = hidden || isOnMobile;
+  const hiddenWidget = hidden;
   return (
     <div
       className={cx(styles.menuContainer, {

@@ -9,8 +9,6 @@ import Button from 'components/button';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
-import { useMobile } from 'constants/responsive';
-
 import animationStyles from 'styles/common-animations.module.scss';
 
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
@@ -30,9 +28,7 @@ function FeaturedPlaceCardComponent({
 }) {
   const t = useT();
 
-  const isOnMobile = useMobile();
   const isOnScreen = selectedFeaturedPlace && !isFullscreenActive;
-  const visibleOnMobile = isOnMobile && selectedFeaturedPlace;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   const contentWrapper = useRef();
@@ -41,24 +37,19 @@ function FeaturedPlaceCardComponent({
   }, [featuredPlace]);
 
   return (
-    <div
-      className={cx(styles.container, {
-        [animationStyles.bottomHidden]: !visibleOnMobile && isOnMobile,
-      })}
-    >
+    <div className={styles.container}>
       <div
         className={cx(
           styles.content,
           animationStyles.transformOpacityWithDelay,
-          { [animationStyles.bottomUp]: !isOnScreen && !isOnMobile },
+          { [animationStyles.bottomUp]: !isOnScreen }
         )}
       >
-
         <section className={styles.cardGrid}>
           <div className={styles.breadcrumb}>
-            {hotspotsNumbers
-              && `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
-                'Hotspots',
+            {hotspotsNumbers &&
+              `${hotspotsNumbers.position} / ${hotspotsNumbers.size} ${t(
+                'Hotspots'
               )}`}
           </div>
           <nav className={styles.navigation}>
@@ -84,9 +75,6 @@ function FeaturedPlaceCardComponent({
           </nav>
           {featuredPlace && (
             <>
-              {isOnMobile && (
-                <h2 className={styles.title}>{featuredPlace.title}</h2>
-              )}
               <div className={styles.pictureContainer}>
                 <ShareModalButton
                   theme={{ shareButton: styles.shareButton }}
@@ -105,12 +93,10 @@ function FeaturedPlaceCardComponent({
                 )}
               </div>
               <div className={styles.contentContainer} ref={contentWrapper}>
-                {!isOnMobile && (
-                  <h2 className={styles.title}>
-                    {hotspotsNumbers && `${hotspotsNumbers.position}. `}
-                    {featuredPlace.title}
-                  </h2>
-                )}
+                <h2 className={styles.title}>
+                  {hotspotsNumbers && `${hotspotsNumbers.position}. `}
+                  {featuredPlace.title}
+                </h2>
                 <div>
                   <p
                     className={styles.text}
@@ -121,11 +107,7 @@ function FeaturedPlaceCardComponent({
                   />
                   {featuredMap && featuredMap.sourceText && (
                     <span className={styles.sourceText}>
-                      (
-                      {t('Source:')}
-                      {' '}
-                      <i>{featuredMap.sourceText}</i>
-                      )
+                      ({t('Source:')} <i>{featuredMap.sourceText}</i>)
                     </span>
                   )}
                 </div>

@@ -4,7 +4,6 @@ import { useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 
-import { useMobile } from 'constants/responsive';
 import getTaxaCategories from 'constants/taxa-selector-categories';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -19,14 +18,14 @@ function FeaturedTaxaSelectorComponent({
   selectedFeaturedPlace,
   handleTaxaButtonClick,
 }) {
-  const isOnMobile = useMobile();
   const locale = useLocale();
   const taxaCategories = useMemo(() => getTaxaCategories(), [locale]);
 
-  const isOnScreen = selectedFeaturedMap === 'priorPlaces'
-    && !isMapsList
-    && !selectedFeaturedPlace
-    && !isFullscreenActive;
+  const isOnScreen =
+    selectedFeaturedMap === 'priorPlaces' &&
+    !isMapsList &&
+    !selectedFeaturedPlace &&
+    !isFullscreenActive;
   return (
     <div className={styles.wrapper}>
       <div
@@ -34,8 +33,8 @@ function FeaturedTaxaSelectorComponent({
           styles.container,
           animationStyles.transformOpacityWithDelay,
           {
-            [animationStyles.bottomUp]: isOnMobile || !isOnScreen,
-          },
+            [animationStyles.bottomUp]: !isOnScreen,
+          }
         )}
       >
         {taxaCategories.map((t) => (

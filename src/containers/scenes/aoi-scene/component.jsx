@@ -13,7 +13,6 @@ import FuturePlaceTooltip from 'components/future-place-tooltip';
 import Scene from 'components/scene';
 
 import { HALF_EARTH_FUTURE_TILE_LAYER } from 'constants/layers-slugs';
-import { useMobile } from 'constants/responsive';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -35,8 +34,6 @@ function AoiSceneComponent({
   waitingInteraction,
   activeLayers,
 }) {
-  const isMobile = useMobile();
-
   return (
     <Scene
       sceneName="aoi-scene"
@@ -54,7 +51,7 @@ function AoiSceneComponent({
       />
 
       <ZoomIntoGeometryManager localGeometry={geometry} />
-      {!isMobile && <SideMenu activeLayers={activeLayers} />}
+      <SideMenu activeLayers={activeLayers} />
 
       <TerrainExaggerationLayer />
 
