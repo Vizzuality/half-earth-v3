@@ -76,7 +76,7 @@ function HeroComponent({ className, changeUI, browsePage }) {
               gif={AUDIO_CARD_1_GIF}
               title={t('Priority Areas')}
               description={t(
-                'Learn about priority areas for preserving global vertebrate biodiversity.',
+                'Learn about priority areas for preserving global vertebrate biodiversity.'
               )}
               handleClick={() => {
                 browsePage({ type: DATA });
@@ -102,7 +102,7 @@ function HeroComponent({ className, changeUI, browsePage }) {
               gif={AUDIO_CARD_2_GIF}
               title={t('National Report Cards')}
               description={t(
-                'Analyze the current status of conservation efforts in each nation or area of interest and download reports to share with others.',
+                'Analyze the current status of conservation efforts in each nation or area of interest and download reports to share with others.'
               )}
               handleClick={() => {
                 browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
