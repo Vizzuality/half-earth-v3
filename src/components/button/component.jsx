@@ -24,6 +24,7 @@ function Component({
       title={tooltipText}
       className={cx(className, {
         [styles[type]]: type,
+        [styles.iconSquare]: type === 'icon-square',
         [styles.active]: active,
       })}
     >
