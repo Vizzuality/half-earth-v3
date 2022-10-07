@@ -17,7 +17,6 @@ import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
 
-import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import uiStyles from 'styles/ui.module';
@@ -44,8 +43,6 @@ function NrcLandingComponent({
   waitingInteraction,
   browsePage,
 }) {
-  const isMobile = useMobile();
-
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
   return (
@@ -83,7 +80,7 @@ function NrcLandingComponent({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
-      {!isMobile && !onboardingType && (
+      {!onboardingType && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}
@@ -92,9 +89,7 @@ function NrcLandingComponent({
         />
       )}
 
-      {!isMobile && (
-        <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
-      )}
+      <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
 
       <CountryEntryTooltip
         countryISO={countryISO}
@@ -117,7 +112,7 @@ function NrcLandingComponent({
 
       <LabelsLayer activeLayers={activeLayers} />
 
-      {activeGlobesMenu && !isMobile && !onboardingType && (
+      {activeGlobesMenu && !onboardingType && (
         <GlobesMenu
           browsePage={browsePage}
           onMouseLeave={() => setActiveGlobesMenu(false)}

@@ -10,9 +10,17 @@ import { readStoryAnalytics } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
 import {
-  hitResults, setAvatarImage, removeAvatarImage, setSelectedFeaturedPlace, setCursor,
+  hitResults,
+  setAvatarImage,
+  removeAvatarImage,
+  setSelectedFeaturedPlace,
+  setCursor,
 } from 'utils/globe-events-utils';
-import { layerManagerToggle, activateLayersOnLoad, setBasemap } from 'utils/layer-manager-utils';
+import {
+  layerManagerToggle,
+  activateLayersOnLoad,
+  setBasemap,
+} from 'utils/layer-manager-utils';
 
 import {
   FEATURED_PLACES_LAYER,
@@ -20,7 +28,6 @@ import {
   SATELLITE_BASEMAP_LAYER,
 } from 'constants/layers-slugs';
 import { layersConfig } from 'constants/mol-layers-configs';
-import { useMobile } from 'constants/responsive';
 
 import Component from './featured-globe-component';
 import mapStateToProps from './featured-globe-selectors';
@@ -29,12 +36,16 @@ const actions = { ...featuredMapsActions, ...urlActions, readStoryAnalytics };
 
 const featuredGlobeContainer = (props) => {
   const [handle, setHandle] = useState(null);
-  const isOnMobile = useMobile();
   const locale = useLocale();
 
   const {
-    activeLayers, changeUI, changeGlobe, featuredMapPlaces, selectedFeaturedMap,
-    isFeaturedPlaceCard, isFullscreenActive,
+    activeLayers,
+    changeUI,
+    changeGlobe,
+    featuredMapPlaces,
+    selectedFeaturedMap,
+    isFeaturedPlaceCard,
+    isFullscreenActive,
   } = props;
 
   const handleMarkerClick = (viewPoint) => {
@@ -44,13 +55,17 @@ const featuredGlobeContainer = (props) => {
       removeAvatarImage();
     }
   };
+
   const handleMarkerHover = (viewPoint, view) => {
-    if (!isOnMobile) {
-      const layerFeatures = hitResults(viewPoint, FEATURED_PLACES_LAYER);
-      setCursor(layerFeatures);
-      if (!isFeaturedPlaceCard) {
-        setAvatarImage(view, layerFeatures, selectedFeaturedMap, featuredMapPlaces);
-      }
+    const layerFeatures = hitResults(viewPoint, FEATURED_PLACES_LAYER);
+    setCursor(layerFeatures);
+    if (!isFeaturedPlaceCard) {
+      setAvatarImage(
+        view,
+        layerFeatures,
+        selectedFeaturedMap,
+        featuredMapPlaces
+      );
     }
   };
 
@@ -60,7 +75,10 @@ const featuredGlobeContainer = (props) => {
   }, [locale]);
 
   const handleMapLoad = (map, _activeLayers) => {
-    setBasemap({ map, layersArray: [SATELLITE_BASEMAP_LAYER, VIBRANT_BASEMAP_LAYER] });
+    setBasemap({
+      map,
+      layersArray: [SATELLITE_BASEMAP_LAYER, VIBRANT_BASEMAP_LAYER],
+    });
     activateLayersOnLoad(map, _activeLayers, layersConfig);
   };
 
@@ -76,16 +94,14 @@ const featuredGlobeContainer = (props) => {
       setHandle(spinningGlobe);
     });
   };
-  const handleGlobeUpdating = (updating) => props.changeGlobe({ isGlobeUpdating: updating });
-  const toggleLayer = (layerId) => layerManagerToggle(layerId, props.activeLayers, changeGlobe);
+  const handleGlobeUpdating = (updating) =>
+    props.changeGlobe({ isGlobeUpdating: updating });
+  const toggleLayer = (layerId) =>
+    layerManagerToggle(layerId, props.activeLayers, changeGlobe);
   // Array of funtions to be triggered on scene click
-  const clickCallbacksArray = [
-    handleMarkerClick,
-  ];
+  const clickCallbacksArray = [handleMarkerClick];
 
-  const mouseMoveCallbacksArray = [
-    handleMarkerHover,
-  ];
+  const mouseMoveCallbacksArray = [handleMarkerHover];
 
   const setVibrantLayerMaxScale = ({ layer }) => {
     if (layer.title === VIBRANT_BASEMAP_LAYER) {

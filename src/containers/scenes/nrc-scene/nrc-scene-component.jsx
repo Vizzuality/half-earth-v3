@@ -20,7 +20,6 @@ import {
   HALF_EARTH_FUTURE_TILE_LAYER,
   EEZ_MARINE_BORDERS,
 } from 'constants/layers-slugs';
-import { useMobile } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
@@ -42,7 +41,6 @@ function CountrySceneComponent({
   onboardingType,
   countryData,
 }) {
-  const isMobile = useMobile();
   return (
     <Scene
       sceneName="nrc-scene"
@@ -75,7 +73,7 @@ function CountrySceneComponent({
 
       <TerrainExaggerationLayer />
       <LabelsLayer activeLayers={activeLayers} countryISO={countryISO} />
-      {isVisible && !isMobile && !onboardingType && (
+      {isVisible && !onboardingType && (
         <SideMenu
           activeLayers={activeLayers}
           openedModal={openedModal}

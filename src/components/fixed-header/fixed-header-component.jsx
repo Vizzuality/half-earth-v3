@@ -10,8 +10,6 @@ import cx from 'classnames';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
-import { useMobile } from 'constants/responsive';
-
 import styles from './fixed-header-styles.module.scss';
 
 const differentFixedHeaderHeights = ['Protection', 'Human pressures'];
@@ -26,7 +24,6 @@ function FixedHeader({
   const t = useT();
   const isHigherHeader = differentFixedHeaderHeights.includes(title);
   const flipToggleSwitch = noBackClick;
-  const isOnMobile = useMobile();
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   return (
@@ -37,19 +34,15 @@ function FixedHeader({
         { [styles.autoHeightHeader]: autoHeight }
       )}
     >
-      {!isOnMobile && (
-        <>
-          <ShareModalButton
-            theme={{ shareButton: styles.shareButton }}
-            setShareModalOpen={setShareModalOpen}
-          />
-          <ShareModal
-            theme={{ shareButton: styles.shareButton }}
-            isOpen={isShareModalOpen}
-            setShareModalOpen={setShareModalOpen}
-          />
-        </>
-      )}
+      <ShareModalButton
+        theme={{ shareButton: styles.shareButton }}
+        setShareModalOpen={setShareModalOpen}
+      />
+      <ShareModal
+        theme={{ shareButton: styles.shareButton }}
+        isOpen={isShareModalOpen}
+        setShareModalOpen={setShareModalOpen}
+      />
       {!noBackClick && (
         <button type="button" className={styles.button} onClick={closeSidebar}>
           <div className={styles.icon} />

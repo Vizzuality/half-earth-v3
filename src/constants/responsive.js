@@ -15,7 +15,8 @@ export const remBreakpoints = {
   landscape: getRems(pixelBreakpoints.landscape),
   desktop: getRems(pixelBreakpoints.desktop),
 };
-export const useMobile = () => useMediaQuery({ maxWidth: remBreakpoints.mobile });
+export const useMobile = () =>
+  useMediaQuery({ maxWidth: remBreakpoints.mobile });
 
 export function Desktop(props) {
   return <Responsive {...props} minWidth={remBreakpoints.desktop} />;
@@ -33,10 +34,14 @@ export function TabletLandscapeOnly(props) {
   return <Responsive {...props} maxWidth={remBreakpoints.desktop} />;
 }
 export function MobileOnly(props) {
+  const { children, view, map } = props;
   return (
     <Responsive {...props} maxWidth={remBreakpoints.mobile}>
-      {React.Children.map(props.children || null, (child, i) => {
-        return child && <child.type {...child.props} key={i} view={props.view} map={props.map} />;
+      {React.Children.map(children || null, (child, i) => {
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          child && <child.type {...child.props} key={i} view={view} map={map} />
+        );
       })}
     </Responsive>
   );

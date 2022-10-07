@@ -10,12 +10,13 @@ import Proptypes from 'prop-types';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
-import { ReactComponent as IconSearch } from 'icons/search.svg';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import styles from './styles.module.scss';
+
+import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
+import { ReactComponent as IconSearch } from 'icons/search.svg';
 
 function SearchLocation({
   width,
@@ -44,7 +45,7 @@ function SearchLocation({
   const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
-    popperElement,
+    popperElement
   );
 
   const onNextonboardingStep = useCallback((countryValue) => {
@@ -88,8 +89,8 @@ function SearchLocation({
           [className.placeholderIcon]: className.placeholderIcon,
         })}
       />
-      {isSearchResultVisible
-        && createPortal(
+      {isSearchResultVisible &&
+        createPortal(
           <div
             ref={setPopperElement}
             style={{ ...popperStyles.popper, width: parentWidth }}
@@ -119,7 +120,7 @@ function SearchLocation({
             </ul>
           </div>,
           // eslint-disable-next-line no-undef
-          document.getElementById('root'),
+          document.getElementById('root')
         )}
       {hasResetButton && (
         <button type="button" onClick={handleCloseButton}>

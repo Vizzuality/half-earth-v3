@@ -176,9 +176,12 @@ export function getCustomAOISpeciesData(crfName, geometry) {
   });
 }
 
-const getPrecalculatedSpeciesData = (crfName, jsonSlices) => {
-  const data = JSON.parse(jsonSlices);
+const getPrecalculatedSpeciesData = (crfName, jsonTaxaData) => {
+  const data = JSON.parse(jsonTaxaData);
   return new Promise((resolve, reject) => {
+    if (!data) {
+      resolve([]);
+    }
     const crfSlices = data.reduce(
       (acc, f) => ({
         ...acc,

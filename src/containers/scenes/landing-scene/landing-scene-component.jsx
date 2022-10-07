@@ -13,9 +13,7 @@ import { useMobile } from 'constants/responsive';
 
 import styles from './landing-scene-styles.module.scss';
 
-const {
-  REACT_APP_ARGISJS_API_VERSION: API_VERSION,
-} = process.env;
+const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function LandingSceneComponent({ sceneSettings, browsePage }) {
   const isMobile = useMobile();

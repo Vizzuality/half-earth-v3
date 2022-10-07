@@ -15,17 +15,15 @@ import SelectedFeaturedMapCard from 'containers/sidebars/featured-map-card';
 
 import FeaturedTaxaSelector from 'components/featured-taxa-selector';
 import HalfEarthLogo from 'components/half-earth-logo';
-import MenuFooter from 'components/mobile-only/menu-footer';
-import MenuSettings from 'components/mobile-only/menu-settings';
 import Scene from 'components/scene';
 import Spinner from 'components/spinner';
-
-import { MobileOnly, useMobile } from 'constants/responsive';
 
 import uiStyles from 'styles/ui.module';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
-const FeaturedPlaceCard = loadable(() => import('containers/sidebars/featured-place-card'));
+const FeaturedPlaceCard = loadable(() =>
+  import('containers/sidebars/featured-place-card')
+);
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
@@ -51,12 +49,10 @@ function FeaturedGlobe({
   openedModal,
   browsePage,
 }) {
-  const isMobile = useMobile();
-
   const [activeGlobesMenu, setActiveGlobesMenu] = useState(false);
 
   const isFeaturedPlaceCard = selectedFeaturedPlace;
-  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard || isMobile;
+  const esriWidgetsHidden = isMapsList || isFeaturedPlaceCard;
 
   return (
     <>
@@ -66,7 +62,7 @@ function FeaturedGlobe({
         sceneSettings={sceneSettings}
         loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
         onMapLoad={onMapLoad}
-        interactionsDisabled={(isMapsList || isFeaturedPlaceCard) && !isMobile}
+        interactionsDisabled={isMapsList || isFeaturedPlaceCard}
         urlParamsUpdateDisabled
         initialRotation
         blur={activeGlobesMenu}
@@ -75,16 +71,6 @@ function FeaturedGlobe({
         })}
       >
         {isGlobeUpdating && <Spinner floating />}
-
-        <MobileOnly>
-          <MenuFooter
-            featured
-            selectedSidebar={selectedSidebar}
-            selectedFeaturedMap={selectedFeaturedMap}
-            activeOption={activeOption}
-          />
-          <MenuSettings activeOption={activeOption} openedModal={openedModal} />
-        </MobileOnly>
 
         <ArcgisLayerManager
           activeLayers={activeLayers}
@@ -99,7 +85,7 @@ function FeaturedGlobe({
           selectedFeaturedPlace={selectedFeaturedPlace}
         />
 
-        {!isMobile && !selectedFeaturedPlace && (
+        {!selectedFeaturedPlace && (
           <SideMenu
             activeLayers={activeLayers}
             isFullscreenActive={isFullscreenActive}
@@ -110,7 +96,7 @@ function FeaturedGlobe({
           />
         )}
 
-        {!selectedFeaturedPlace && !isMobile && (
+        {!selectedFeaturedPlace && (
           <GlobePageIndicator onMouseEnter={() => setActiveGlobesMenu(true)} />
         )}
 
@@ -149,7 +135,7 @@ function FeaturedGlobe({
           activeOption={activeOption}
         />
 
-        {activeGlobesMenu && !selectedFeaturedPlace && !isMobile && (
+        {activeGlobesMenu && !selectedFeaturedPlace && (
           <GlobesMenu
             browsePage={browsePage}
             onMouseLeave={() => setActiveGlobesMenu(false)}

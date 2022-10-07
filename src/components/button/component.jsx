@@ -23,11 +23,8 @@ function Component({
       onClick={handleClick}
       title={tooltipText}
       className={cx(className, {
-        [styles.rectangular]: type === 'rectangular',
+        [styles[type]]: type,
         [styles.iconSquare]: type === 'icon-square',
-        [styles.rounded]: type === 'rounded',
-        [styles.compound]: type === 'compound',
-        [styles.square]: type === 'square',
         [styles.active]: active,
       })}
     >
