@@ -11,22 +11,24 @@ import { motion } from 'framer-motion';
 
 import Globe from 'containers/landing/globe';
 
+import { useMobile } from 'constants/responsive';
+
 import styles from './styles.module';
 
 import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
 
-function GlobesMenu({
-  browsePage, className, landing = false, onMouseLeave,
-}) {
+function GlobesMenu({ browsePage, className, landing = false, onMouseLeave }) {
   const t = useT();
+  const isMobile = useMobile();
 
   return (
     <motion.div
       className={cx(className, {
         [styles.globesContainerLanding]: landing,
         [styles.globesContainer]: !landing,
+        [styles.isMobile]: isMobile,
       })}
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
@@ -39,7 +41,7 @@ function GlobesMenu({
       <Globe
         title={t('Discover stories')}
         description={t(
-          'Learn about important places of great biodiversity, what sets them apart from the rest of the world and what challenges they face today.',
+          'Learn about important places of great biodiversity, what sets them apart from the rest of the world and what challenges they face today.'
         )}
         globeImage={globeDiscover}
         handleClick={() => browsePage({ type: FEATURED })}
@@ -47,7 +49,7 @@ function GlobesMenu({
       <Globe
         title={t('Explore data')}
         description={t(
-          'Explore areas of interest, the vertebrate species that live there, the human pressures that exist, and the current conservation efforts and those that are needed to safeguard enough habitat to preserve global biodiversity.',
+          'Explore areas of interest, the vertebrate species that live there, the human pressures that exist, and the current conservation efforts and those that are needed to safeguard enough habitat to preserve global biodiversity.'
         )}
         globeImage={globeExplore}
         center
@@ -56,7 +58,7 @@ function GlobesMenu({
       <Globe
         title={t('National Report Cards')}
         description={t(
-          'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species and critical land area',
+          'Analyze and compare how countries are contributing to preserving global biodiversity and where they can go further to protect species and critical land area'
         )}
         globeImage={globeNRC}
         handleClick={() => browsePage({ type: NATIONAL_REPORT_CARD_LANDING })}

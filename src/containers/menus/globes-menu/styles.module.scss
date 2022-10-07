@@ -2,14 +2,17 @@
 
 .globesContainerLanding {
   align-content: end;
-  margin: auto 0 0 0;
   padding: 0 15px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
 
   @media #{$tablet-landscape} {
+    margin: auto 0 0 0;
     padding: 0 45px;
+  }
+  &.isMobile {
+    margin: auto;
   }
 }
 
