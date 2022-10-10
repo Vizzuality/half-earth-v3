@@ -45,8 +45,21 @@
   color: $white;
   margin: 0;
   padding: 0;
-  max-width: 119px;
+  max-width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.hidden {
+  width: 0;
+}
+
+.groupHeading {
+  color: $black;
+  font-family: $font-family-1;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-sm;
+  padding-left: 10px;
+  text-transform: capitalize;
 }

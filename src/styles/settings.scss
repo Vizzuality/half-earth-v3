@@ -154,7 +154,7 @@
   $sidebar-cards-padding: 25px;
   $sidebar-border-width: 2px;
   $sidebar-border: $sidebar-border-width solid $brand-color-secondary;
-  ;
+
   $sidebar-border-radius: 4px;
 
   $mobile-sidebar-side-paddings: 32px;
@@ -208,4 +208,3 @@
   $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
   $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
   $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
-

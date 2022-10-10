@@ -1,8 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
-import Select from 'react-select';
-
-import { useT } from '@transifex/react';
+import React, { useState } from 'react';
+import Select, { components } from 'react-select';
 
 import PropTypes from 'prop-types';
 
@@ -14,15 +12,27 @@ import styles from './grouped-select-styles.module.scss';
 import { customStyles } from './style-constants';
 
 function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
-  const t = useT();
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleChange = (option) => {
     onSelect(option);
   };
 
+  function SingleValue({ children, ...props }) {
+    return (
+      <components.SingleValue
+        {...props}
+        className={cx(styles.singleValue, { 'visually-hidden': isMenuOpen })}
+      >
+        {children}
+      </components.SingleValue>
+    );
+  }
+
   return (
     <Select
       value={selectedOption}
+      onMenuOpen={() => setIsMenuOpen(true)}
+      onMenuClose={() => setIsMenuOpen(false)}
       onChange={handleChange}
       options={groupedOptions}
       styles={customStyles}
@@ -33,19 +43,27 @@ function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
         selectedOption && option.name === selectedOption.name
       }
       components={{
-        IndicatorSeparator: () => null,
-        SingleValue: (v) => {
-          const { data } = v;
-          return <p className={styles.singleValue}>{t(data.label)}</p>;
+        GroupHeading: (props) => {
+          const { data } = props;
+          return data.label ? (
+            <p className={styles.groupHeading}>{data.label}</p>
+          ) : null;
         },
-        DropdownIndicator: ({ selectProps: { menuIsOpen } }) => (
-          <IconArrow
-            className={cx({
-              [styles.arrowIcon]: true,
-              [styles.arrowIconDropdownOpen]: menuIsOpen,
-            })}
-          />
-        ),
+        IndicatorSeparator: () => null,
+        SingleValue,
+        DropdownIndicator: (props) => {
+          const {
+            selectProps: { menuIsOpen },
+          } = props;
+          return (
+            <IconArrow
+              className={cx({
+                [styles.arrowIcon]: true,
+                [styles.arrowIconDropdownOpen]: menuIsOpen,
+              })}
+            />
+          );
+        },
       }}
     />
   );

@@ -13,7 +13,6 @@ const getColorsFromSettings = (prefix, isArray) => {
 
 const COLORS = getColorsFromSettings('colors');
 const FONT_SIZES = getColorsFromSettings('fontSizes');
-const FONT_WEIGHTS = getColorsFromSettings('fontWeights');
 const FONT_FAMILIES = getColorsFromSettings('fontFamily');
 
 export const customStyles = {
@@ -36,15 +35,9 @@ export const customStyles = {
     pointerEvents: state.selectProps.disabled && 'none',
     transition: 'all .2s ease-in-out',
     ':hover': {
-      border: (state.isFocused || state.selectProps.error) && '1px solid transparent',
+      border:
+        (state.isFocused || state.selectProps.error) && '1px solid transparent',
     },
-  }),
-  groupHeading: () => ({
-    color: COLORS.black,
-    fontFamily: FONT_FAMILIES['font-family-1'],
-    fontWeight: FONT_WEIGHTS['font-weight-bold'],
-    padding: '10px 0 10px 10px',
-    textTransform: 'capitalize',
   }),
   group: () => ({
     padding: 0,
@@ -53,7 +46,8 @@ export const customStyles = {
     ...styles,
     boxSizing: 'border-box',
     marginTop: 0,
-    caretColor: 'transparent',
+    caretColor: COLORS.white,
+    color: COLORS.white,
   }),
   menu: (provided) => ({
     ...provided,
