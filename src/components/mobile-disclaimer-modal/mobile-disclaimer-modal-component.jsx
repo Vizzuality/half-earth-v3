@@ -33,7 +33,7 @@ function Disclaimer() {
         <div className={styles.title}>{t('Limited mobile version')}</div>
         <p className={styles.paragraph}>
           {t(
-            'The mobile version of Half-Earth map has limited funcionalities, for that reason we recomend you to use the desktop version.'
+            'The mobile version of Half-Earth map has limited functionalities, for that reason we recommend you to use the desktop version.'
           )}
         </p>
         <p className={cx(styles.paragraph, styles.bold)}>
