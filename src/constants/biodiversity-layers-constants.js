@@ -264,10 +264,10 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: REPTILES_RICHNESS_1KM,
-          name: t('reptils'),
-          title: t('reptils'),
+          name: t('reptiles'),
+          title: t('reptiles'),
           layer: REPTILES_RICHNESS_1KM,
-          group: t('reptils'),
+          group: t('reptiles'),
         },
         {
           value: RESTIO_RICHNESS_1KM,
@@ -402,10 +402,10 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: REPTILES_RARITY,
-          name: t('reptils'),
-          title: t('reptils'),
+          name: t('reptiles'),
+          title: t('reptiles'),
           layer: REPTILES_RARITY,
-          group: t('reptils'),
+          group: t('reptiles'),
         },
       ],
       HIGH: [
@@ -453,10 +453,10 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: REPTILES_RARITY_1KM,
-          name: t('reptils'),
-          title: t('reptils'),
+          name: t('reptiles'),
+          title: t('reptiles'),
           layer: REPTILES_RARITY_1KM,
-          group: t('reptils'),
+          group: t('reptiles'),
         },
         {
           value: RESTIO_RARITY_1KM,
@@ -615,7 +615,7 @@ export const GROUPED_OPTIONS = (layers) => [
     options: parseGroupLayers(t('plants'), layers),
   },
   {
-    label: t('reptils'),
-    options: parseGroupLayers(t('reptils'), layers),
+    label: t('reptiles'),
+    options: parseGroupLayers(t('reptiles'), layers),
   },
 ];
