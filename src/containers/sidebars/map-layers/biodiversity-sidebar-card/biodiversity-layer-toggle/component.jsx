@@ -69,7 +69,7 @@ function BiodiversityLayerToggle({
       {/* Resolution dropdown */}
       <Dropdown
         theme="dark"
-        parentWidth="170px"
+        parentWidth="100px"
         options={resolutionOptions}
         selectedOption={selectedResolutionOption}
         handleOptionSelection={(option) =>

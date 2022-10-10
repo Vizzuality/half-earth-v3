@@ -73,10 +73,10 @@ const TAXA_DISTRIBUTION = {
 export const { TERRESTRIAL, MARINE } = TAXA_DISTRIBUTION;
 
 export const getResolutionOptions = () => ({
-  LOWEST: { label: t('~55km2'), slug: 'LOWEST' },
-  LOW: { label: t('~27km2'), slug: 'LOW' },
-  HIGH: { label: t('~1km2'), slug: 'HIGH' },
-  COUNTRY: { label: t('Country'), slug: 'COUNTRY' },
+  LOWEST: { label: `${t('~55km2')} ${t('resolution')}`, slug: 'LOWEST' },
+  LOW: { label: `${t('~27km2')} ${t('resolution')}`, slug: 'LOW' },
+  HIGH: { label: `${t('~1km2')} ${t('resolution')}`, slug: 'HIGH' },
+  COUNTRY: { label: `${t('Country')} ${t('resolution')}`, slug: 'COUNTRY' },
 });
 
 export const getLayersResolution = () => {
@@ -105,8 +105,8 @@ export const getLayersToggleConfig = () => ({
       LOW: [
         {
           value: ALL_TAXA_PRIORITY,
-          name: t('All terrestrial vertebrates'),
-          title: t('All terrestrial vertebrates'),
+          name: t('All vertebrates'),
+          title: t('All vertebrates'),
           layer: ALL_TAXA_PRIORITY,
           group: ALL_TAXA_PRIORITY,
         },
@@ -144,8 +144,8 @@ export const getLayersToggleConfig = () => ({
       LOWEST: [
         {
           value: ALL_MARINE_VERTEBRATES_PRIORITY,
-          name: t('All marine vertebrates'),
-          title: t('All marine vertebrates'),
+          name: t('All vertebrates'),
+          title: t('All vertebrates'),
           layer: ALL_MARINE_VERTEBRATES_PRIORITY,
           group: ALL_MARINE_VERTEBRATES_PRIORITY,
         },
@@ -333,8 +333,8 @@ export const getLayersToggleConfig = () => ({
       LOWEST: [
         {
           value: ALL_MARINE_VERTEBRATES_RICHNESS,
-          name: t('all marine vertebrates'),
-          title: t('all marine vertebrates'),
+          name: t('all vertebrates'),
+          title: t('all vertebrates'),
           layer: ALL_MARINE_VERTEBRATES_RICHNESS,
           group: ALL_MARINE_VERTEBRATES_RICHNESS,
         },
@@ -492,8 +492,8 @@ export const getLayersToggleConfig = () => ({
       LOWEST: [
         {
           value: ALL_MARINE_VERTEBRATES_RARITY,
-          name: t('all marine vertebrates'),
-          title: t('all marine vertebrates'),
+          name: t('all vertebrates'),
+          title: t('all vertebrates'),
           layer: ALL_MARINE_VERTEBRATES_RARITY,
           group: ALL_MARINE_VERTEBRATES_RARITY,
         },
