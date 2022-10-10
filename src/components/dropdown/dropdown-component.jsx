@@ -41,11 +41,13 @@ function Component({
   const [popperElement, setPopperElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
-    popperElement,
+    popperElement
   );
 
-  const showDropdown = !searchMode || (searchMode && options && options.length > 0);
-  const showSearchInput = searchMode && (!options || (options && options.length === 0));
+  const showDropdown =
+    !searchMode || (searchMode && options && options.length > 0);
+  const showSearchInput =
+    searchMode && (!options || (options && options.length === 0));
   const showCloseButton = searchMode && options && options.length > 0;
 
   const renderFilters = () => {
@@ -56,6 +58,7 @@ function Component({
       return filteredOptions
         .filter((option) => option.group === groupFilter)
         .map((option) => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
           <li
             className={cx(styles.option, {
               [styles.selectedOption]:
@@ -71,10 +74,10 @@ function Component({
 
     return groups
       ? groups.map((group) => (
-        <li className={cx(styles.group)} key={group}>
-          <ul className={styles.groupList}>{renderOptions(group)}</ul>
-        </li>
-      ))
+          <li className={cx(styles.group)} key={group}>
+            <ul className={styles.groupList}>{renderOptions(group)}</ul>
+          </li>
+        ))
       : renderOptions();
   };
 
@@ -104,6 +107,7 @@ function Component({
         </div>
       )}
       {showDropdown && (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           className={cx(styles.toggleContainer, {
             [styles.fullWidth]: width === 'full',
@@ -136,8 +140,8 @@ function Component({
           )}
         </div>
       )}
-      {dropdownOpen
-        && createPortal(
+      {dropdownOpen &&
+        createPortal(
           <div
             ref={setPopperElement}
             style={{ ...popperStyles.popper, width: parentWidth, zIndex: 10 }}
@@ -146,6 +150,7 @@ function Component({
             <ul
               className={cx(styles.optionsList, {
                 [styles.fullWidth]: width === 'full',
+                [styles[`${theme}OptionsList`]]: theme,
               })}
               name="filters"
               id="filters"
@@ -153,7 +158,8 @@ function Component({
               {renderFilters()}
             </ul>
           </div>,
-          document.getElementById('root'),
+          // eslint-disable-next-line no-undef
+          document.getElementById('root')
         )}
     </div>
   );
@@ -167,7 +173,7 @@ Component.propTypes = {
       label: PropTypes.string,
       slug: PropTypes.string,
       group: PropTypes.string,
-    }),
+    })
   ),
   placeholderText: PropTypes.string,
   dropdownOpen: PropTypes.bool,
@@ -177,12 +183,20 @@ Component.propTypes = {
   onOptionSelection: PropTypes.func.isRequired,
   onSearch: PropTypes.func,
   width: PropTypes.oneOf(['fluid', 'full']),
+  parentWidth: PropTypes.string,
   theme: PropTypes.oneOf(['light', 'dark']),
   searchMode: PropTypes.bool,
 };
 
 Component.defaultProps = {
+  options: [],
+  placeholderText: undefined,
   width: 'fluid',
   theme: 'light',
   searchMode: false,
+  dropdownOpen: false,
+  hasGroups: false,
+  parentWidth: undefined,
+  selectedOption: undefined,
+  onSearch: undefined,
 };

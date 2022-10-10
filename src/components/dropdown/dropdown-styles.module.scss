@@ -129,6 +129,10 @@
   }
 }
 
+.darkOptionsList {
+  text-transform: unset;
+}
+
 .dark {
   background-color: transparent;
   border: 1px solid $white-opacity;
@@ -136,10 +140,27 @@
   &.open {
     background-color: $white-opacity;
   }
+
+  .option {
+    padding: 5px
+  }
+
   .selectedOptionLabel {
     color: $white;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
+  .selectedOption {
+    text-transform: unset;
+  }
+
   .arrowIcon {
+    height: 12px;
+    width: 16px;
+
     path {
       fill: $white;
       stroke: $white;
