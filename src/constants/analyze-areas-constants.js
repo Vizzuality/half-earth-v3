@@ -139,8 +139,10 @@ export const getSidebarCardsConfig = (locale) => ({
   },
   [PROTECTION_SLUG]: {
     title: t('Current protection status'),
-    description: ({ protectionPercentage, percentage }) =>
-      `${t('Of the current area,')} __${
+    description: ({ protectionPercentage, percentage, DESIG }) => {
+      const isProtectedArea = !!DESIG;
+      if (isProtectedArea) return null;
+      return `${t('Of the current area,')} __${
         protectionPercentage || percentage
           ? roundUpPercentage(
               percentageFormat(
@@ -148,7 +150,8 @@ export const getSidebarCardsConfig = (locale) => ({
               )
             )
           : '0'
-      }${t('% of land is under formal protection__.')}`,
+      }${t('% of land is under formal protection__.')}`;
+    },
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {

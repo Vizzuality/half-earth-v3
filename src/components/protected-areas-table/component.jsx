@@ -1,5 +1,6 @@
-
+/* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
+
 import { useT, useLocale } from '@transifex/react';
 
 import {
@@ -12,13 +13,13 @@ import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
 
 import styles from './protected-areas-table-styles.module.scss';
 
-const ProtectedAreasTable = ({ data, handleSortChange }) => {
+function ProtectedAreasTable({ data, handleSortChange }) {
   const t = useT();
   const locale = useLocale();
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
   const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
-  const translateString = (data) => WDPATranslations[data] || data;
-  const translateCountry = (data) => CountryNamesTranslations[data] || data;
+  const translateString = (d) => WDPATranslations[d] || d;
+  const translateCountry = (d) => CountryNamesTranslations[d] || d;
   return (
     <table className={styles.protectedAreasTable}>
       <thead>
@@ -184,6 +185,7 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
       <tbody>
         {data &&
           data.map((row, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <tr key={`wdpa-row-${row.NAME}-${index}`}>
               <td className={styles.firstColumn}>{row.NAME}</td>
               <td>{translateString(row.GOV_TYP)}</td>
@@ -194,7 +196,10 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
               <td>{translateString(row.IUCN_CA)}</td>
               <td>{translateCountry(row.NAME_0)}</td>
               <td className={styles.lastColumn}>
-                {`${Math.round(row.AREA_KM)}km`}
+                {`${
+                  console.log(row, row.AREA_KM, Math.round(row.AREA_KM)) ||
+                  Math.round(row.AREA_KM)
+                }km`}
                 <sup>2</sup>
               </td>
             </tr>
@@ -202,6 +207,6 @@ const ProtectedAreasTable = ({ data, handleSortChange }) => {
       </tbody>
     </table>
   );
-};
+}
 
 export default ProtectedAreasTable;
