@@ -81,7 +81,7 @@ function getAreaPressures(data) {
 
 const getAreaPopulation = (data) =>
   data[CONTEXTUAL_DATA_TABLES[POPULATION]].value.features[0].attributes[
-    COUNTRY_ATTRIBUTES.Pop2020_SUM
+    COUNTRY_ATTRIBUTES.populationSum
   ];
 
 const getProtectedAreasList = (data) =>
@@ -104,6 +104,7 @@ export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
     getContextualData(geometry)
       .then(async (data) => {
+        console.log(data);
         const pressures = getAreaPressures(data);
         const population = getAreaPopulation(data);
         const elu = await getEluData(data);

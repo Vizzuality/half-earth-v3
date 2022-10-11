@@ -12,7 +12,7 @@ export const COUNTRY_ATTRIBUTES = {
   Area_Country: 'Area_Country',
   SPI_ter: 'SPI_ter',
   Global_SPI_ter: 'Global_SPI_ter',
-  Pop2020_SUM: 'Pop2020',
+  populationSum: 'SUM',
   GID_0: 'GID_0',
   similar_ter: 'similar_ter',
   prop_hm_very_high_ter: 'prop_hm_very_high_ter',

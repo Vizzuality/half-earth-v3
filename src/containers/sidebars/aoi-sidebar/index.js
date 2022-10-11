@@ -23,7 +23,12 @@ const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function AoiSidebarContainer(props) {
   const {
-    speciesData, contextualData, geometry, browsePage, changeUI, activeLayers,
+    speciesData,
+    contextualData,
+    geometry,
+    browsePage,
+    changeUI,
+    activeLayers,
   } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
@@ -33,14 +38,20 @@ function AoiSidebarContainer(props) {
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
       // Custom AOIs rely on percentage instead of protectionPercentage
-      const percentage = contextualData.protectionPercentage || contextualData.percentage;
+      const percentage =
+        contextualData.protectionPercentage || contextualData.percentage;
       setFormattedValues({
         landCover: contextualData.elu && contextualData.elu.landCover,
         area: getLocaleNumber(contextualData.area, locale),
         climateRegime: contextualData.elu && contextualData.elu.climateRegime,
-        population: contextualData.population && getLocaleNumber(contextualData.population, locale),
-        mainPressure: contextualData.pressures && getMainPressure(contextualData.pressures),
-        totalPressures: contextualData.pressures && getTotalPressures(contextualData.pressures),
+        population:
+          contextualData.population &&
+          getLocaleNumber(contextualData.population, locale),
+        mainPressure:
+          contextualData.pressures && getMainPressure(contextualData.pressures),
+        totalPressures:
+          contextualData.pressures &&
+          getTotalPressures(contextualData.pressures),
         protectionPercentage: percentage && percentageFormat(percentage),
       });
     }
@@ -69,7 +80,13 @@ function AoiSidebarContainer(props) {
 
   const handleClose = () => {
     browsePage({ type: DATA });
-    changeUI({ activeCategoryLayers: intersectionBy(activeLayers, CATEGORY_LAYERS, 'title') });
+    changeUI({
+      activeCategoryLayers: intersectionBy(
+        activeLayers,
+        CATEGORY_LAYERS,
+        'title'
+      ),
+    });
   };
 
   return (
