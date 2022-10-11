@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 
 import { useT } from '@transifex/react';
 
-import cx from 'classnames';
 import { Modal } from 'he-components';
 
 import useEventListener from 'hooks/use-event-listener';
 
 import Button from 'components/button';
-
-import { ReactComponent as IconWarning } from 'icons/warning-icon.svg';
 
 import styles from './mobile-disclaimer-modal-styles.module.scss';
 
@@ -29,15 +26,13 @@ function Disclaimer() {
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.modalContainer}>
-        <IconWarning className={styles.icon} />
-        <div className={styles.title}>{t('Limited mobile version')}</div>
+        <div className={styles.title}>
+          {t('Welcome to the Half-Earth Map.')}
+        </div>
         <p className={styles.paragraph}>
           {t(
-            'The mobile version of Half-Earth map has limited functionalities, for that reason we recommend you to use the desktop version.'
+            'For an improved experience, we recommend you to check the computer version.'
           )}
-        </p>
-        <p className={cx(styles.paragraph, styles.bold)}>
-          {t('Either way, you can continue to explore the mobile version.')}
         </p>
         <div className={styles.buttonContainer}>
           <Button
