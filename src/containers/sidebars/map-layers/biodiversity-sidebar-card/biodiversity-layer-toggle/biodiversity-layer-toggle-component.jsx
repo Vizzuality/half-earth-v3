@@ -14,7 +14,7 @@ import { TERRESTRIAL, MARINE } from 'constants/biodiversity-layers-constants';
 
 import theme from 'styles/themes/checkboxes-theme.module.scss';
 
-import styles from './styles.module.scss';
+import styles from './biodiversity-layer-toggle.module.scss';
 
 function BiodiversityLayerToggle({
   activeLayers,
@@ -50,43 +50,49 @@ function BiodiversityLayerToggle({
     >
       {/* Radio option with layer dropdown */}
       <div className={styles.radioOption}>
-        <RadioButton
-          id={`radio-button-${category}`}
-          theme={theme.biodiversity}
-          name={category}
-          option={selectedLayerOption}
-          checked={isChecked}
-          onChange={onLayerChange}
-          hideLabel
-        />
-        <GroupedSelect
-          selectedOption={selectedLayerOption}
-          groupedOptions={groupedOptions}
-          onSelect={onLayerChange}
-        />
+        {selectedLayerOption && (
+          <RadioButton
+            id={`radio-button-${category}`}
+            theme={theme.biodiversity}
+            name={category}
+            option={selectedLayerOption}
+            checked={isChecked}
+            onChange={onLayerChange}
+            hideLabel
+          />
+        )}
+        {selectedLayerOption && (
+          <GroupedSelect
+            selectedOption={selectedLayerOption}
+            groupedOptions={groupedOptions}
+            onSelect={onLayerChange}
+          />
+        )}
       </div>
-
       {/* Resolution dropdown */}
-      <Dropdown
-        theme="dark"
-        parentWidth="100px"
-        options={resolutionOptions}
-        selectedOption={selectedResolutionOption}
-        handleOptionSelection={(option) =>
-          handleResolutionSelection(option.slug)
-        }
-        disabled={disabledResolutionDropdown}
-        className={styles.resolutionDropown}
-      />
-
-      <LayerTools
-        option={selectedLayerOption}
-        onInfoClick={handleInfoClick}
-        activeLayers={activeLayers}
-        onOpacityClick={onOpacityClick}
-        onBringToBackClick={handleBringToBackClick}
-        onBringToFrontClick={handleBringToFrontClick}
-      />
+      {selectedLayerOption && (
+        <Dropdown
+          theme="dark"
+          parentWidth="100px"
+          options={resolutionOptions}
+          selectedOption={selectedResolutionOption}
+          handleOptionSelection={(option) =>
+            handleResolutionSelection(option.slug)
+          }
+          disabled={disabledResolutionDropdown}
+          className={styles.resolutionDropown}
+        />
+      )}
+      {selectedLayerOption && (
+        <LayerTools
+          option={selectedLayerOption}
+          onInfoClick={handleInfoClick}
+          activeLayers={activeLayers}
+          onOpacityClick={onOpacityClick}
+          onBringToBackClick={handleBringToBackClick}
+          onBringToFrontClick={handleBringToFrontClick}
+        />
+      )}
     </div>
   );
 }

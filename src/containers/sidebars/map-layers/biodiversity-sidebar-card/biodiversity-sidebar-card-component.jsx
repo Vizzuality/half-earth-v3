@@ -33,9 +33,10 @@ function BiodiversitySidebarCardComponent({
   activeLayers,
   countedActiveLayers,
   className,
-  handleLayerToggle,
+  setSelectedLayer,
   handleCloseCard,
   map,
+  view,
   selectedLayer,
   layersResolutionsOptions,
   handleTabSelection,
@@ -92,9 +93,10 @@ function BiodiversitySidebarCardComponent({
         category={category}
         biodiversityLayerVariant={biodiversityLayerVariant}
         map={map}
+        view={view}
         activeLayers={activeLayers}
         selectedLayer={selectedLayer}
-        onLayerChange={handleLayerToggle}
+        setSelectedLayer={setSelectedLayer}
         selectedResolutions={selectedResolutions}
         resolutionOptions={categoryResolutionOptions}
         disabledResolutionDropdown={categoryResolutionOptions.length < 2}

@@ -2,6 +2,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import { selectLangUrlState } from 'selectors/location-selectors';
 
+import { getAllBiodiversityActiveLayers } from 'containers/sidebars/map-layers/biodiversity-sidebar-card/biodiversity-sidebar-card-selectors';
+
 import {
   GROUPED_OPTIONS,
   getLayersToggleConfig,
@@ -93,4 +95,5 @@ const getSelectedLayerOption = createSelector(
 export default createStructuredSelector({
   layerOptions: getGroupedLayerOptions,
   selectedLayerOption: getSelectedLayerOption,
+  allActiveLayers: getAllBiodiversityActiveLayers,
 });

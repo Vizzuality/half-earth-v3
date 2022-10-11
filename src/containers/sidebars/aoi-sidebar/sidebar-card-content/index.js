@@ -17,6 +17,10 @@ import {
   AOI_LEGEND_CATEGORIES,
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
+import {
+  ALL_TAXA_LAYER_VARIANTS,
+  LAYER_VARIANTS,
+} from 'constants/biodiversity-layers-constants';
 import metadataConfig from 'constants/metadata';
 
 import Component from './component';
@@ -28,9 +32,11 @@ function Container(props) {
     contextualData,
     toggleType,
     changeGlobe,
+    changeUI,
     activeLayers,
     cardCategory,
     metadataSlug,
+    layers,
   } = props;
 
   const locale = useLocale();
@@ -38,8 +44,15 @@ function Container(props) {
     () => getSidebarCardsConfig(locale),
     [locale]
   );
+  const layerSlugs = useMemo(() => layers.map((l) => l.slug), [layers]);
+  const selectedActiveLayers = useMemo(
+    () =>
+      activeLayers.filter((activeLayer) =>
+        layerSlugs.includes(activeLayer.title)
+      ),
+    [layerSlugs, activeLayers]
+  );
 
-  const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
   const { description: getDescription, title } =
@@ -62,20 +75,40 @@ function Container(props) {
   }, [contextualData, locale]);
 
   const radioTypeToggle = (option) => {
-    if (selectedLayer === option.slug) {
+    const selectedActiveLayerTitles =
+      selectedActiveLayers &&
+      selectedActiveLayers.length &&
+      selectedActiveLayers.map((l) => l.title);
+
+    if (!selectedActiveLayerTitles) {
+      // Add layer to empty selection
       layerManagerToggle(option.slug, activeLayers, changeGlobe);
-      setSelectedLayer(null);
-    } else if (selectedLayer) {
-      batchToggleLayers(
-        [selectedLayer, option.slug],
-        activeLayers,
-        changeGlobe
-      );
-      setSelectedLayer(option.slug);
-    } else {
-      layerManagerToggle(option.slug, activeLayers, changeGlobe);
-      setSelectedLayer(option.slug);
+      // Sync with map layers tab
+      changeUI({
+        biodiversityLayerVariant: ALL_TAXA_LAYER_VARIANTS[option.slug],
+      });
+      return;
     }
+    if (selectedActiveLayerTitles.includes(option.slug)) {
+      // Remove selected layer
+      layerManagerToggle(option.slug, activeLayers, changeGlobe);
+      // Default to priority map layers tab
+      changeUI({
+        biodiversityLayerVariant: LAYER_VARIANTS.PRIORITY,
+      });
+
+      return;
+    }
+    // Add layer and toggle the rest
+    batchToggleLayers(
+      [...selectedActiveLayerTitles, option.slug],
+      activeLayers,
+      changeGlobe
+    );
+    // Sync with map layers tab
+    changeUI({
+      biodiversityLayerVariant: ALL_TAXA_LAYER_VARIANTS[option.slug],
+    });
   };
 
   const checkboxTypeToggle = (option) => {

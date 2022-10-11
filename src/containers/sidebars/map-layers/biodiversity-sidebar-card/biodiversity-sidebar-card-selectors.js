@@ -14,7 +14,7 @@ export const getLayerVariant = createSelector(
     (uiState && uiState.biodiversityLayerVariant) || BIODIVERSITY_DEFAULT_TAB
 );
 
-export const getBiodiversityCountedActiveLayers = createSelector(
+export const getAllBiodiversityActiveLayers = createSelector(
   [
     // eslint-disable-next-line no-unused-vars
     (state, props) => props && props.activeLayers,
@@ -36,9 +36,19 @@ export const getBiodiversityCountedActiveLayers = createSelector(
       )
       .flat(3);
     return activeLayers
-      .map((l) => l.title)
-      .reduce((acc, l) => (allLayers.includes(l) ? acc + 1 : acc), 0);
+      .map((l) => (allLayers.includes(l.title) ? l.title : null))
+      .filter(Boolean);
   }
+);
+export const getBiodiversityCountedActiveLayers = createSelector(
+  getAllBiodiversityActiveLayers,
+  (activeLayers) =>
+    activeLayers && activeLayers.length
+      ? activeLayers.reduce(
+          (acc, l) => (activeLayers.includes(l) ? acc + 1 : acc),
+          0
+        )
+      : 0
 );
 
 export default createStructuredSelector({
