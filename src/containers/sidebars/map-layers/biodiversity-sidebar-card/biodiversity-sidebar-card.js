@@ -52,6 +52,7 @@ function BiodiversitySidebarCard(props) {
   const previousBiodiversityLayerVariant = usePrevious(
     biodiversityLayerVariant
   );
+
   const [cardMetadata, setCardMetadata] = useState({
     [PRIORITY]: {},
     [RICHNESS]: {},
@@ -64,6 +65,7 @@ function BiodiversitySidebarCard(props) {
 
   const [selectedResolutions, setSelectedResolutions] =
     useState(DEFAULT_RESOLUTIONS);
+  const previousSelectedResolutions = usePrevious(selectedResolutions);
 
   const handleResolutionSelection = (resolution, category) => {
     setSelectedResolutions({ ...selectedResolutions, [category]: resolution });
@@ -136,9 +138,15 @@ function BiodiversitySidebarCard(props) {
   useEffect(() => {
     if (
       !previousBiodiversityLayerVariant ||
-      previousBiodiversityLayerVariant === biodiversityLayerVariant
-    )
+      !previousSelectedResolutions ||
+      (previousBiodiversityLayerVariant === biodiversityLayerVariant &&
+        previousSelectedResolutions[TERRESTRIAL] ===
+          selectedResolutions[TERRESTRIAL] &&
+        previousSelectedResolutions[MARINE] === selectedResolutions[MARINE])
+    ) {
       return;
+    }
+
     const activeBiodiversityLayers = activeLayers
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
@@ -173,6 +181,7 @@ function BiodiversitySidebarCard(props) {
     biodiversityLayerVariant,
     selectedResolutions,
     previousBiodiversityLayerVariant,
+    previousSelectedResolutions,
     layersToggleConfig,
   ]);
 

@@ -104,7 +104,6 @@ export function getContextData(geometry) {
   return new Promise((resolve, reject) => {
     getContextualData(geometry)
       .then(async (data) => {
-        console.log(data);
         const pressures = getAreaPressures(data);
         const population = getAreaPopulation(data);
         const elu = await getEluData(data);
