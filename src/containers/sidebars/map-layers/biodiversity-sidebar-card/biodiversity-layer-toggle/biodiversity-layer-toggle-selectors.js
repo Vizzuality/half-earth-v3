@@ -83,6 +83,8 @@ const getSelectedLayerOption = createSelector(
   (options, selectedLayer) => {
     const optionsSelectedLayer =
       options.find((l) => l.value === selectedLayer) || options[0];
+    if (!optionsSelectedLayer) return null;
+
     // label is needed for grouped layer option
     return { ...optionsSelectedLayer, label: optionsSelectedLayer.name };
   }

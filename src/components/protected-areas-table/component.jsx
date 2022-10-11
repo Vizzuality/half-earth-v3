@@ -196,10 +196,7 @@ function ProtectedAreasTable({ data, handleSortChange }) {
               <td>{translateString(row.IUCN_CA)}</td>
               <td>{translateCountry(row.NAME_0)}</td>
               <td className={styles.lastColumn}>
-                {`${
-                  console.log(row, row.AREA_KM, Math.round(row.AREA_KM)) ||
-                  Math.round(row.AREA_KM)
-                }km`}
+                {`${row.AREA_KM && Math.round(row.AREA_KM)}km`}
                 <sup>2</sup>
               </td>
             </tr>

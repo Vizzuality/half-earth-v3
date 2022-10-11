@@ -42,7 +42,8 @@ function Container(props) {
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
-  const { description, title } = sidebarCardsConfig[cardCategory];
+  const { description: getDescription, title } =
+    sidebarCardsConfig[cardCategory];
   const [metadata, setMetadata] = useState(null);
 
   // Just to get the sources of each card
@@ -55,7 +56,7 @@ function Container(props) {
 
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
-      setCardDescription(description(contextualData));
+      setCardDescription(getDescription(contextualData));
     }
     // Don't remove locale. Is here to recalculate the description translation
   }, [contextualData, locale]);

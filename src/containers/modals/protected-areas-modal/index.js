@@ -38,13 +38,17 @@ function Container(props) {
 
   useEffect(() => {
     if (search && search !== '') {
-      setFilteredData([...data.filter((row) => {
-        const searchLowerCase = search.toLowerCase();
-        return row.NAME.toLowerCase().includes(searchLowerCase)
-          || row.GOV_TYP.toLowerCase().includes(searchLowerCase)
-          || row.IUCN_CA.toLowerCase().includes(searchLowerCase)
-          || row.DESIG.toLowerCase().includes(searchLowerCase);
-      })]);
+      setFilteredData([
+        ...data.filter((row) => {
+          const searchLowerCase = search.toLowerCase();
+          return (
+            row.NAME.toLowerCase().includes(searchLowerCase) ||
+            row.GOV_TYP.toLowerCase().includes(searchLowerCase) ||
+            row.IUCN_CA.toLowerCase().includes(searchLowerCase) ||
+            row.DESIG.toLowerCase().includes(searchLowerCase)
+          );
+        }),
+      ]);
     } else {
       setFilteredData([...data]);
     }
@@ -57,7 +61,8 @@ function Container(props) {
   }, [sorting]);
 
   useEffect(() => {
-    const url = PRECALCULATED_LAYERS_PROTECTED_AREAS_DATA_URL[precalculatedLayerSlug];
+    const url =
+      PRECALCULATED_LAYERS_PROTECTED_AREAS_DATA_URL[precalculatedLayerSlug];
 
     // ---------------- CUSTOM AOIS SPECIAL CASE -----------------
     if (!precalculatedLayerSlug) {
@@ -67,8 +72,10 @@ function Container(props) {
         setFilteredData([...protectedAreas]);
         setLoading(false);
       }
-    // --------------- FUTURE PLACES SPECIAL CASE --------------
-    } else if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.futurePlaces) {
+      // --------------- FUTURE PLACES SPECIAL CASE --------------
+    } else if (
+      precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.futurePlaces
+    ) {
       EsriFeatureService.getFeatures({
         url,
         whereClause: `places = '${contextualData.cluster}'`,
@@ -85,9 +92,12 @@ function Container(props) {
         }
         setLoading(false);
       });
-    } else if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.specificRegions) {
+    } else if (
+      precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.specificRegions
+    ) {
       // --------------- SPECIFIC REGIONS SPECIAL CASE --------------
-      const region = contextualData.aoiId && contextualData.aoiId.replace('region-', '');
+      const region =
+        contextualData.aoiId && contextualData.aoiId.replace('region-', '');
       EsriFeatureService.getFeatures({
         url,
         whereClause: `region = '${region}'`,
@@ -104,12 +114,14 @@ function Container(props) {
         }
         setLoading(false);
       });
-    } else if (precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas) {
+    } else if (
+      precalculatedLayerSlug === PRECALCULATED_LAYERS_SLUG.protectedAreas
+    ) {
       // --------------- PROTECTED AREA SPECIAL CASE --------------
       const areaValue = {
         DESIG: contextualData.DESIG_E,
         DESIG_T: contextualData.DESIG_T,
-        AREA_KM: contextualData.AREA_KM,
+        AREA_KM: contextualData.AREA_KM2 || contextualData.AREA_KM,
         IUCN_CA: contextualData.IUCN_CA,
         NAME: contextualData.NAME,
         NAME_0: contextualData.ISO3,
@@ -119,7 +131,7 @@ function Container(props) {
       setFilteredData([areaValue]);
       setLoading(false);
     } else if (aoiId) {
-    // ---------------- REST OF CASES ------------------
+      // ---------------- REST OF CASES ------------------
       EsriFeatureService.getFeatures({
         url,
         whereClause: `MOL_IDg = '${aoiId}'`,
