@@ -6,7 +6,10 @@ import {
   COUNTRIES_LABELS_FEATURE_LAYER,
   LANDSCAPE_FEATURES_LABELS_LAYER,
 } from 'constants/layers-slugs';
-import { DEFAULT_OPACITY, LAYERS_CATEGORIES } from 'constants/mol-layers-configs';
+import {
+  DEFAULT_OPACITY,
+  LAYERS_CATEGORIES,
+} from 'constants/mol-layers-configs';
 
 export default {
   globe: {
