@@ -39,7 +39,6 @@ function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
       // eslint-disable-next-line no-undef
       menuPortalTarget={document.getElementById('groupDropdownScrollContainer')}
       menuPosition="fixed"
-      // menuShouldBlockScroll
       closeMenuOnScroll={(event) => {
         return event.target.id === 'groupDropdownScrollContainer';
       }}

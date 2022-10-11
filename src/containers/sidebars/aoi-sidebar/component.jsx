@@ -317,6 +317,7 @@ function AOISidebar({
               duration: 0.25,
               ease: 'easeInOut',
             }}
+            id="groupDropdownScrollContainer"
           >
             <MapLayers
               activeLayers={activeLayers}
