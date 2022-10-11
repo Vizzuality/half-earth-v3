@@ -54,6 +54,7 @@ function DataGlobalSidebarComponent({
                 duration: 0.25,
                 ease: 'easeInOut',
               }}
+              id="groupDropdownScrollContainer"
               onScroll={() => onboardingType && resetTooltip(changeUI)}
             >
               <MapLayers

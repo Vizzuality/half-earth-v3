@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 
 import PropTypes from 'prop-types';
 
@@ -19,12 +19,12 @@ function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
 
   function SingleValue({ children, ...props }) {
     return (
-      <components.SingleValue
+      <p
         {...props}
         className={cx(styles.singleValue, { 'visually-hidden': isMenuOpen })}
       >
         {children}
-      </components.SingleValue>
+      </p>
     );
   }
 
@@ -37,8 +37,12 @@ function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
       options={groupedOptions}
       styles={customStyles}
       // eslint-disable-next-line no-undef
-      menuPortalTarget={document.body}
+      menuPortalTarget={document.getElementById('groupDropdownScrollContainer')}
       menuPosition="fixed"
+      // menuShouldBlockScroll
+      closeMenuOnScroll={(event) => {
+        return event.target.id === 'groupDropdownScrollContainer';
+      }}
       isOptionDisabled={(option) =>
         selectedOption && option.name === selectedOption.name
       }
