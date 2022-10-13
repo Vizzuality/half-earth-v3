@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 
 import { useT } from '@transifex/react';
 
 import Proptypes from 'prop-types';
+
+import { useClickOutside } from 'utils/ui-utils';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
@@ -39,6 +41,7 @@ function SearchLocation({
   parentWidth,
   searchResults,
   handleOpenSearch,
+  handleCloseOptionList,
   onOptionSelection,
   handleInputChange,
   isSearchResultVisible,
@@ -53,13 +56,16 @@ function SearchLocation({
   setSearcherOpen,
 }) {
   const t = useT();
+  const searchOptionsListRef = useRef();
+  const inputRef = useRef();
 
   const [popperElement, setPopperElement] = useState(null);
-  const [referenceElement, setReferenceElement] = useState(null);
   const { styles: popperStyles, attributes } = usePopper(
-    referenceElement,
+    inputRef && inputRef.current,
     popperElement
   );
+
+  useClickOutside(searchOptionsListRef, handleCloseOptionList, inputRef);
 
   const onNextonboardingStep = useCallback((countryValue) => {
     if (countryValue && onboardingStep !== null) {
@@ -89,6 +95,7 @@ function SearchLocation({
       </div>
     );
   };
+
   return (
     <motion.div
       ref={reference}
@@ -105,7 +112,7 @@ function SearchLocation({
         type="text"
         placeholder={t('search')}
         className={styles.input}
-        ref={setReferenceElement}
+        ref={inputRef}
         onClick={handleOpenSearch}
         onChange={handleInputChange}
       />
@@ -127,22 +134,31 @@ function SearchLocation({
               className={cx(styles.optionsList, {
                 [styles.fullWidth]: width === 'full',
               })}
+              ref={searchOptionsListRef}
             >
-              {searchResults.map((option) => (
-                <li
-                  className={styles.option}
-                  key={option.key}
-                  onClick={() => {
-                    onOptionSelection(option);
-                    if (setSearcherOpen) {
-                      setSearcherOpen(false);
-                    }
-                    onNextonboardingStep(option);
-                  }}
-                >
-                  {renderSuggestion(option.text)}
+              {searchResults.length > 0 ? (
+                searchResults.map((option) => (
+                  <li
+                    className={styles.option}
+                    key={option.key}
+                    onClick={() => {
+                      onOptionSelection(option);
+                      if (setSearcherOpen) {
+                        setSearcherOpen(false);
+                      }
+                      onNextonboardingStep(option);
+                    }}
+                  >
+                    {renderSuggestion(option.text)}
+                  </li>
+                ))
+              ) : (
+                <li className={styles.emptyOption}>
+                  {t(
+                    'No results found. Please search another place or draw a custom area.'
+                  )}
                 </li>
-              ))}
+              )}
             </ul>
           </div>,
           // eslint-disable-next-line no-undef

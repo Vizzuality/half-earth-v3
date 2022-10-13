@@ -53,7 +53,6 @@
 .optionsList {
   @extend %bodyText;
   color: $dark-text;
-  cursor: pointer;
   background-color: $white;
   list-style: none;
   margin: 0;
@@ -67,10 +66,17 @@
 
   .option {
     padding: 5px $sidebar-paddings;
+    cursor: pointer;
 
     &:hover {
       background-color: $dark-opacity;
     }
+  }
+
+  .emptyOption {
+    padding: 5px $sidebar-paddings;
+    color: $grey-text;
+    cursor: default;
   }
 
   .suggestion {

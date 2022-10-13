@@ -4,36 +4,14 @@ import { loadModules } from 'esri-loader';
 
 import { useT } from '@transifex/react';
 
+import { useClickOutside } from 'utils/ui-utils';
+
 import cx from 'classnames';
 import { format } from 'd3-format';
 
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
 
 import styles from './future-place-tooltip-styles.module.scss';
-
-function useClickOutside(ref, callback, exceptionRef) {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        ref &&
-        ref.current &&
-        !ref.current.contains(event.target) &&
-        exceptionRef &&
-        exceptionRef.current &&
-        !exceptionRef.current.contains(event.target)
-      ) {
-        callback();
-      }
-    }
-
-    // eslint-disable-next-line no-undef
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // eslint-disable-next-line no-undef
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
-}
 
 function AOIEntryTooltipComponent({
   view,

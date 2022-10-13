@@ -52,14 +52,6 @@ function SearchLocationContainer(props) {
 
   const countryNames = useMemo(getCountryNames, [locale]);
 
-  useEffect(() => {
-    if (searchResults && searchResults.length !== 0) {
-      setIsSearchResultsVisible(true);
-    } else {
-      setIsSearchResultsVisible(false);
-    }
-  }, [searchResults]);
-
   const browseSelectedFeature = async ({ result }) => {
     const { setBatchTooltipData } = props;
     const {
@@ -95,10 +87,12 @@ function SearchLocationContainer(props) {
   };
 
   const getSearchResults = (e) => {
-    const { results } = e;
+    const { results, searchTerm } = e;
     setSearchResults(results[0].results);
-    if (!isSearchResultVisible) {
+    if (!isSearchResultVisible && searchTerm && searchTerm !== '') {
       setIsSearchResultsVisible(true);
+    } else {
+      setIsSearchResultsVisible(false);
     }
   };
 
@@ -157,12 +151,14 @@ function SearchLocationContainer(props) {
     handleSearchSuggestionClick(selectedOption);
     setIsSearchResultsVisible(false);
   };
+  const handleCloseOptionList = () => setIsSearchResultsVisible(false);
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <Component
       searchResults={searchResults}
       handleOpenSearch={handleOpenSearch}
+      handleCloseOptionList={handleCloseOptionList}
       onOptionSelection={onOptionSelection}
       handleInputChange={handleSearchInputChange}
       isSearchResultVisible={isSearchResultVisible}
