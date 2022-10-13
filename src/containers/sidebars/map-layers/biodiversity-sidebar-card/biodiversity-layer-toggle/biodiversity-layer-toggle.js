@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import metadataActions from 'redux_modules/metadata';
 
@@ -39,11 +39,23 @@ function BiodiversityLayerToggle(props) {
     activeLayers,
     biodiversityLayerVariant,
     selectedResolutions,
+    selectedLayerOption,
     setSelectedLayer,
-    allActiveLayers,
+    allActiveLayerTitles,
+    category,
   } = props;
   const locale = useLocale();
   const layersToggleConfig = useMemo(() => getLayersToggleConfig(), [locale]);
+  const [isChecked, setIsChecked] = useState(false);
+  useEffect(() => {
+    const newChecked =
+      selectedLayerOption &&
+      activeLayers.some((layer) => layer.title === selectedLayerOption.value);
+    setIsChecked(newChecked);
+    if (newChecked) {
+      layerToggleAnalytics(selectedLayerOption.value);
+    }
+  }, [activeLayers]);
 
   const previousBiodiversityLayerVariant = usePrevious(
     biodiversityLayerVariant
@@ -52,7 +64,7 @@ function BiodiversityLayerToggle(props) {
 
   const handleLayerToggle = (option) => {
     const layer = layersConfig[option.layer];
-    if (!allActiveLayers) {
+    if (!allActiveLayerTitles) {
       // Add layer to empty selection
       if (layer.bbox) flyToLayerExtent(layer.bbox, view);
       layerManagerToggle(
@@ -64,10 +76,9 @@ function BiodiversityLayerToggle(props) {
       setSelectedLayer(option.layer);
       return;
     }
-
     if (
-      allActiveLayers.length === 1 &&
-      allActiveLayers.includes(option.layer)
+      allActiveLayerTitles.length === 1 &&
+      allActiveLayerTitles.includes(option.layer)
     ) {
       // Remove selected layer
       layerManagerToggle(
@@ -87,7 +98,7 @@ function BiodiversityLayerToggle(props) {
 
     // Add layer and toggle the rest
     batchToggleLayers(
-      [...allActiveLayers, option.layer],
+      [...allActiveLayerTitles, option.layer],
       activeLayers,
       changeGlobe,
       LAYERS_CATEGORIES.BIODIVERSITY
@@ -95,15 +106,21 @@ function BiodiversityLayerToggle(props) {
     setSelectedLayer(option.layer);
   };
 
-  // Select layers when we change resolutions or tabs (only terrestrial)
+  // Select layers when we change resolutions or tabs
   useEffect(() => {
+    const resolutionsHaventChanged =
+      previousSelectedResolutions &&
+      previousSelectedResolutions[TERRESTRIAL] ===
+        selectedResolutions[TERRESTRIAL] &&
+      previousSelectedResolutions[MARINE] === selectedResolutions[MARINE];
+    const biodiversityLayerHasntChanged =
+      previousBiodiversityLayerVariant &&
+      previousBiodiversityLayerVariant === biodiversityLayerVariant;
+
     if (
       !previousBiodiversityLayerVariant ||
       !previousSelectedResolutions ||
-      (previousBiodiversityLayerVariant === biodiversityLayerVariant &&
-        previousSelectedResolutions[TERRESTRIAL] ===
-          selectedResolutions[TERRESTRIAL] &&
-        previousSelectedResolutions[MARINE] === selectedResolutions[MARINE])
+      (biodiversityLayerHasntChanged && resolutionsHaventChanged)
     ) {
       return;
     }
@@ -118,6 +135,7 @@ function BiodiversityLayerToggle(props) {
       ];
     const availableLayers =
       layersToggleConfig[biodiversityLayerVariant][TERRESTRIAL][resolution];
+
     const layerTaxa = activeBiodiversityLayers.length
       ? activeBiodiversityLayers[0].slice(
           0,
@@ -174,6 +192,8 @@ function BiodiversityLayerToggle(props) {
       groupedOptions={layerOptions}
       onLayerChange={handleLayerToggle}
       setSelectedLayer={setSelectedLayer}
+      isChecked={isChecked}
+      setIsChecked={setIsChecked}
       {...props}
     />
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -21,7 +21,6 @@ function BiodiversityLayerToggle({
   disabledResolutionDropdown,
   handleInfoClick,
   groupedOptions,
-  layerToggleAnalytics,
   handleBringToBackClick,
   handleBringToFrontClick,
   onOpacityClick,
@@ -31,17 +30,8 @@ function BiodiversityLayerToggle({
   selectedResolutionOption,
   handleResolutionSelection,
   category,
+  isChecked,
 }) {
-  const [isChecked, setIsChecked] = useState(false);
-  useEffect(() => {
-    const newChecked =
-      selectedLayerOption &&
-      activeLayers.some((layer) => layer.title === selectedLayerOption.value);
-    setIsChecked(newChecked);
-    if (newChecked) {
-      layerToggleAnalytics(selectedLayerOption.value);
-    }
-  }, [activeLayers]);
   return (
     <div
       className={cx(styles.container, styles.light, theme[BIODIVERSITY_SLUG], {
@@ -103,7 +93,6 @@ BiodiversityLayerToggle.propTypes = {
   handleInfoClick: PropTypes.func.isRequired,
   groupedOptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selectedLayerOption: PropTypes.shape({}).isRequired,
-  layerToggleAnalytics: PropTypes.func.isRequired,
   handleBringToBackClick: PropTypes.func.isRequired,
   handleBringToFrontClick: PropTypes.func.isRequired,
   onOpacityClick: PropTypes.func,

@@ -26,8 +26,14 @@ import hrTheme from 'styles/themes/hr-theme.module.scss';
 
 import BiodiversityThumbnail from 'images/biodiversity.png';
 
-import BiodiversityLayerToggle from './biodiversity-layer-toggle';
+import BiodiversityLayerToggle from './biodiversity-layer-toggle/biodiversity-layer-toggle';
 import styles from './biodiversity-sidebar-card-styles.module.scss';
+
+// We have several variables on this selection:
+// Tabs (Priority, Richness, Rarity) A.K.A biodiversityLayerVariant
+// Resolutions (1km2, 27km2, ...) Selected on the second dropdown on the biodiversity toggle
+// Layers (Mammals, All vertebrates) Selected on the first dropdown on the biodiversity togglesContainer
+// Category (Terrestrial, Marine) Two different toggles. Only one can be selected at the time
 
 function BiodiversitySidebarCardComponent({
   activeLayers,

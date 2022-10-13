@@ -42,13 +42,7 @@ export const getAllBiodiversityActiveLayers = createSelector(
 );
 export const getBiodiversityCountedActiveLayers = createSelector(
   getAllBiodiversityActiveLayers,
-  (activeLayers) =>
-    activeLayers && activeLayers.length
-      ? activeLayers.reduce(
-          (acc, l) => (activeLayers.includes(l) ? acc + 1 : acc),
-          0
-        )
-      : 0
+  (activeLayers) => (activeLayers ? activeLayers.length : 0)
 );
 
 export default createStructuredSelector({

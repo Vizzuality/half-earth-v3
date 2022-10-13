@@ -95,5 +95,5 @@ const getSelectedLayerOption = createSelector(
 export default createStructuredSelector({
   layerOptions: getGroupedLayerOptions,
   selectedLayerOption: getSelectedLayerOption,
-  allActiveLayers: getAllBiodiversityActiveLayers,
+  allActiveLayerTitles: getAllBiodiversityActiveLayers,
 });
