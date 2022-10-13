@@ -1,13 +1,20 @@
 // Protected areas layers.
-export const PROTECTED_AREAS_VECTOR_TILE_LAYER = 'protected_areas_vector_tile_layer';
+export const PROTECTED_AREAS_VECTOR_TILE_LAYER =
+  'protected_areas_vector_tile_layer';
 
-export const TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER = 'terrestrial_protected_areas_vector_tile_layer';
-export const MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER = 'marine_protected_areas_vector_tile_layer';
+export const TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER =
+  'terrestrial_protected_areas_vector_tile_layer';
+export const MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER =
+  'marine_protected_areas_vector_tile_layer';
 
-export const COMMUNITY_AREAS_VECTOR_TILE_LAYER = 'community_areas_vector_tile_layer';
-export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE = 'grid_cells_protected_areas_percentage';
-export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER = 'grid_cells_focal_species';
-export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE = 'grid_cells_land_human_pressures_percentage';
+export const COMMUNITY_AREAS_VECTOR_TILE_LAYER =
+  'community_areas_vector_tile_layer';
+export const GRID_CELLS_PROTECTED_AREAS_PERCENTAGE =
+  'grid_cells_protected_areas_percentage';
+export const GRID_CELLS_FOCAL_SPECIES_FEATURE_LAYER =
+  'grid_cells_focal_species';
+export const GRID_CELLS_LAND_HUMAN_PRESSURES_PERCENTAGE =
+  'grid_cells_land_human_pressures_percentage';
 export const RAISIG_AREAS_VECTOR_TILE_LAYER = 'RAISIG_areas_vector_tile_layer';
 
 // Biodiversity facets layer. Disolved layer created
@@ -21,7 +28,8 @@ export const LAND_COUNTRY_PRIORITY_LAYER = 'land_country_priority_layer';
 export const MARINE_COUNTRY_PRIORITY_LAYER = 'marine_country_priority_layer';
 
 // Terrestrial human pressures tiled layers.
-export const MARINE_AND_LAND_HUMAN_PRESSURES = 'marine_and_land_human_pressures';
+export const MARINE_AND_LAND_HUMAN_PRESSURES =
+  'marine_and_land_human_pressures';
 export const LAND_HUMAN_PRESSURES = 'land_human_pressures';
 export const MARINE_HUMAN_PRESSURES = 'marine_human_pressures';
 // Land human pressures
@@ -31,10 +39,14 @@ export const RAINFED_HUMAN_PRESSURES_TILE_LAYER = 'rainfed_human_pressures';
 export const RANGELAND_HUMAN_PRESSURES_TILE_LAYER = 'rangeland_human_pressures';
 export const MERGED_LAND_HUMAN_PRESSURES = 'merged_land_human_pressures';
 // Marine human pressures tiled layers.
-export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_land_drivers_human_pressures';
-export const MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER = 'marine_ocean_drivers_human_pressures';
-export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'commercial_fishing_human_pressures';
-export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER = 'artisanal_fishing_human_pressures';
+export const MARINE_LAND_DRIVERS_HUMAN_PRESSURES_TILE_LAYER =
+  'marine_land_drivers_human_pressures';
+export const MARINE_OCEAN_DRIVERS_HUMAN_PRESSURES_TILE_LAYER =
+  'marine_ocean_drivers_human_pressures';
+export const COMMERCIAL_FISHING_HUMAN_PRESSURES_TILE_LAYER =
+  'commercial_fishing_human_pressures';
+export const ARTISANAL_FISHING_HUMAN_PRESSURES_TILE_LAYER =
+  'artisanal_fishing_human_pressures';
 /// ///
 export const GRAPHIC_LAYER = 'graphic_layer';
 export const MASK_LAYER = 'mask-layer';
@@ -62,7 +74,8 @@ export const PLEDGES_LAYER = 'signed_pledges';
 export const EDUCATOR_AMBASSADORS_LAYER = 'educator_ambassadors';
 export const SIGNED_PLEDGE_GRAPHIC_LAYER = 'signed_pledges_graphic_layer';
 // Labels for mountains and rivers
-export const LANDSCAPE_FEATURES_LABELS_LAYER = 'landscape_features_labels_layer';
+export const LANDSCAPE_FEATURES_LABELS_LAYER =
+  'landscape_features_labels_layer';
 // human settlements labels
 export const CITIES_LABELS_LAYER = 'cities_labels_layer';
 // layer with countries data and borders geometries
@@ -70,7 +83,8 @@ export const COUNTRIES_LABELS_FEATURE_LAYER = 'countries_labels_layer';
 export const COUNTRY_BORDERS_GRAPHIC_LAYER = 'country_borders_graphic_layer';
 export const COUNTRIES_DATA_FEATURE_LAYER = 'countries_data_layer';
 export const PRIORITY_PLACES_POLYGONS = 'priority_places_polygons';
-export const PRIORITY_POLYGONS_GRAPHIC_LAYER = 'priority_polygons_graphic_layer';
+export const PRIORITY_POLYGONS_GRAPHIC_LAYER =
+  'priority_polygons_graphic_layer';
 
 // Carbon Layer
 export const CARBON_LAYER = 'carbon-layer-land';
@@ -81,8 +95,10 @@ export const ALL_TAXA_PRIORITY = 'all-taxa-priority';
 export const ALL_TAXA_RARITY = 'all-taxa-rarity';
 export const ALL_TAXA_RICHNESS = 'all-taxa-richness';
 
-export const ALL_MARINE_VERTEBRATES_PRIORITY = 'all-marine-vertebrates-priority';
-export const ALL_MARINE_VERTEBRATES_RICHNESS = 'all-marine-vertebrates-richness';
+export const ALL_MARINE_VERTEBRATES_PRIORITY =
+  'all-marine-vertebrates-priority';
+export const ALL_MARINE_VERTEBRATES_RICHNESS =
+  'all-marine-vertebrates-richness';
 export const ALL_MARINE_VERTEBRATES_RARITY = 'all-marine-vertebrates-rarity';
 
 export const FISHES_PRIORITY = 'fishes-priority';
@@ -145,11 +161,15 @@ export const MARINE_SPECIES_LIST = 'marine-species-list';
 
 // AOIs precalculated layers
 export const ADMIN_AREAS_FEATURE_LAYER = 'admin_areas_feature_layer';
-export const GADM_0_ADMIN_AREAS_FEATURE_LAYER = 'gadm-0-admin-areas-feature-layer';
-export const GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-0-admin-areas-with-wdpas-feature-layer';
+export const GADM_0_ADMIN_AREAS_FEATURE_LAYER =
+  'gadm-0-admin-areas-feature-layer';
+export const GADM_0_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER =
+  'gadm-0-admin-areas-with-wdpas-feature-layer';
 
-export const GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER = 'gadm-1-admin-areas-with-wdpas-feature-layer';
-export const GADM_1_ADMIN_AREAS_FEATURE_LAYER = 'gadm-1-admin-areas-feature-layer';
+export const GADM_1_ADMIN_AREAS_WITH_WDPAS_FEATURE_LAYER =
+  'gadm-1-admin-areas-with-wdpas-feature-layer';
+export const GADM_1_ADMIN_AREAS_FEATURE_LAYER =
+  'gadm-1-admin-areas-feature-layer';
 
 export const WDPA_OECM_FEATURE_LAYER = 'wdpa-oecm-feature-layer';
 export const WDPA_OECM_FEATURE_DATA_LAYER = 'wdpa-oecm-feature-data-layer';
