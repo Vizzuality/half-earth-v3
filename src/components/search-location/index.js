@@ -117,7 +117,7 @@ function SearchLocationContainer(props) {
   useEffect(() => {
     const url = LAYERS_URLS[SEARCH_LOOKUP_TABLE];
     const searchFields = ['NAME'];
-    const suggestionTemplate = '{NAME}';
+    const suggestionTemplate = '{NAME}|{LAYERSLUG}'; // Add a | to split the data as we can't get it otherwise
     const title = SEARCH_LOOKUP_TABLE;
 
     const getSearchSources = (FeatureLayer) => [

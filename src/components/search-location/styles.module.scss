@@ -72,6 +72,16 @@
       background-color: $dark-opacity;
     }
   }
+
+  .suggestion {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .suggestionLayerType {
+    min-width: 97px;
+    color: $grey-text;
+  }
 }
 
 .dark {

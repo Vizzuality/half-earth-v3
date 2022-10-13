@@ -13,10 +13,23 @@ import { motion } from 'framer-motion';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
+import {
+  GADM_0_ADMIN_AREAS_FEATURE_LAYER,
+  GADM_1_ADMIN_AREAS_FEATURE_LAYER,
+  WDPA_OECM_FEATURE_LAYER,
+} from 'constants/layers-slugs';
+
 import styles from './styles.module.scss';
 
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
+
+const getLayerTypeText = (layer, _t) =>
+  ({
+    [GADM_0_ADMIN_AREAS_FEATURE_LAYER]: _t('Political boundary'),
+    [GADM_1_ADMIN_AREAS_FEATURE_LAYER]: _t('Political boundary'),
+    [WDPA_OECM_FEATURE_LAYER]: _t('Protected area'),
+  }[layer]);
 
 function SearchLocation({
   width,
@@ -63,6 +76,19 @@ function SearchLocation({
     onboardingStep,
     waitingInteraction,
   });
+
+  const renderSuggestion = (text) => {
+    const [name, layer] = text.split('|');
+    const layerTypeText = layer && getLayerTypeText(layer, t);
+    return (
+      <div className={styles.suggestion}>
+        <span>{name}</span>
+        {layer && (
+          <span className={styles.suggestionLayerType}>{layerTypeText}</span>
+        )}
+      </div>
+    );
+  };
   return (
     <motion.div
       ref={reference}
@@ -114,7 +140,7 @@ function SearchLocation({
                     onNextonboardingStep(option);
                   }}
                 >
-                  {option.text}
+                  {renderSuggestion(option.text)}
                 </li>
               ))}
             </ul>
