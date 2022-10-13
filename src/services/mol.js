@@ -1,5 +1,5 @@
 const config = {
-  url: 'https://api.mol.org/1.x/species/info',
+  url: 'https://api.mol.org/2.x/species/info',
   query: '?scientificname=',
   lang: '&lang=',
 };
