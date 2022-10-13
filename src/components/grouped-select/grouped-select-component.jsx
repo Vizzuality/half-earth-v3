@@ -17,12 +17,9 @@ function GroupedSelect({ onSelect, groupedOptions, selectedOption }) {
     onSelect(option);
   };
 
-  function SingleValue({ children, ...props }) {
+  function SingleValue({ children }) {
     return (
-      <p
-        {...props}
-        className={cx(styles.singleValue, { 'visually-hidden': isMenuOpen })}
-      >
+      <p className={cx(styles.singleValue, { 'visually-hidden': isMenuOpen })}>
         {children}
       </p>
     );
