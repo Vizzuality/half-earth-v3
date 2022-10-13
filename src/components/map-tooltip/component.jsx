@@ -105,7 +105,7 @@ function MapTooltipComponent({
                 )}
                 <div className={styles.content}>
                   <p className={styles.contentData}>
-                    {content.percentage_protected}%
+                    {isProtectedArea ? '100' : content.percentage_protected}%
                   </p>{' '}
                   {t('land is protected')}
                 </div>
