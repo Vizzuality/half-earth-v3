@@ -117,6 +117,10 @@ function BiodiversityLayerToggle(props) {
       previousBiodiversityLayerVariant &&
       previousBiodiversityLayerVariant === biodiversityLayerVariant;
 
+    // Also if category is terrestrial and is not checked but we have a active biodiversityLayers = marine
+    const marineLayerIsActive =
+      category === TERRESTRIAL && !isChecked && allActiveLayerTitles.length > 0;
+
     if (
       !previousBiodiversityLayerVariant ||
       !previousSelectedResolutions ||
@@ -125,16 +129,33 @@ function BiodiversityLayerToggle(props) {
       return;
     }
 
+    // is MARINE toggle and not checked => Don't do anything (will do on the terrestrial toggle)
+    // is MARINE toggle and checked => select marine available layers on the new tab for marine
+
+    // is TERRESTRIAL toggle and not checked and marine checked => Don't do anything (will do on the marine toggle)
+    // is TERRESTRIAL toggle and checked
+    // or is TERRESTRIAL toggle and not checked (no selection checked) =>
+    //   select terrestrial available layers on the new tab for terrestrial
+
+    if (
+      (category === MARINE && !isChecked) ||
+      (category === TERRESTRIAL && marineLayerIsActive)
+    ) {
+      return;
+    }
+    const currentResolution = category;
     const activeBiodiversityLayers = activeLayers
       .filter((l) => l.category === LAYERS_CATEGORIES.BIODIVERSITY)
       .map((l) => l.title);
-    const resolution = selectedResolutions[TERRESTRIAL];
+    const resolution = selectedResolutions[currentResolution];
     const defaultResolutionLayers =
-      layersToggleConfig[biodiversityLayerVariant][TERRESTRIAL][
-        DEFAULT_RESOLUTIONS[TERRESTRIAL]
+      layersToggleConfig[biodiversityLayerVariant][currentResolution][
+        DEFAULT_RESOLUTIONS[currentResolution]
       ];
     const availableLayers =
-      layersToggleConfig[biodiversityLayerVariant][TERRESTRIAL][resolution];
+      layersToggleConfig[biodiversityLayerVariant][currentResolution][
+        resolution
+      ];
 
     const layerTaxa = activeBiodiversityLayers.length
       ? activeBiodiversityLayers[0].slice(
