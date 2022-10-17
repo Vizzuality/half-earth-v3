@@ -125,6 +125,8 @@ function AnalyzeAreasContainer(props) {
     );
   }, [selectedAnalysisLayer, precalculatedAOIOptions, setSelectedOption]);
 
+  const [drawWidgetRef, setDrawWidgetRef] = useState();
+
   const postDrawCallback = (layer, graphic, area) => {
     if (area > HIGHER_AREA_SIZE_LIMIT) {
       view.map.remove(layer);
@@ -185,7 +187,15 @@ function AnalyzeAreasContainer(props) {
   };
 
   const { sketchTool, handleSketchToolDestroy, handleSketchToolActivation } =
-    useSketchWidget(view, { postDrawCallback });
+    useSketchWidget(view, setDrawWidgetRef, { postDrawCallback });
+
+  const handleDrawClick = () => {
+    if (!sketchTool) {
+      handleSketchToolActivation();
+    } else {
+      handleSketchToolDestroy();
+    }
+  };
 
   const handleLayerToggle = (newSelectedOption) => {
     const protectedAreasSelected =
@@ -281,8 +291,11 @@ function AnalyzeAreasContainer(props) {
       selectedAnalysisTab={selectedAnalysisTab}
       onShapeUploadSuccess={onShapeUploadSuccess}
       handleOptionSelection={handleOptionSelection}
+      handleDrawClick={handleDrawClick}
       handleAnalysisTabClick={handleAnalysisTabClick}
       handlePromptModalToggle={handlePromptModalToggle}
+      drawWidgetRef={drawWidgetRef}
+      sketchTool={sketchTool}
     />
   );
 }

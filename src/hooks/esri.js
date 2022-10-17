@@ -114,7 +114,11 @@ export const useSearchWidgetLogic = (
   };
 };
 
-export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
+export const useSketchWidget = (
+  view,
+  setDrawWidgetRef,
+  sketchWidgetConfig = {}
+) => {
   const [sketchTool, setSketchTool] = useState(null);
   const [sketchLayer, setSketchLayer] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
@@ -150,6 +154,9 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
         visibleElements: {
           settingsMenu: false,
         },
+        createTools: {
+          point: false,
+        },
         availableCreateTools: ['polygon', 'rectangle', 'circle'],
         viewModel: new SketchViewModel({
           view,
@@ -172,6 +179,15 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
 
   const addWidgetToTheUi = () => {
     view.ui.add(sketchTool, 'manual');
+    sketchTool.when(() => {
+      const widgetRef =
+        // eslint-disable-next-line no-undef
+        document.getElementsByClassName('esri-sketch__panel') &&
+        // eslint-disable-next-line no-undef
+        document.getElementsByClassName('esri-sketch__panel')[0];
+      setDrawWidgetRef(widgetRef);
+    });
+
     // eslint-disable-next-line no-undef
     const container = document.createElement('div');
     // eslint-disable-next-line no-undef
