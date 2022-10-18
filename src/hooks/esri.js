@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 
@@ -5,6 +6,7 @@ import { loadModules } from 'esri-loader';
 
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 
+import { HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 // Load watchUtils module to follow esri map changes
@@ -116,12 +118,19 @@ export const useSearchWidgetLogic = (
 
 export const useSketchWidget = (
   view,
-  setDrawWidgetRef,
-  sketchWidgetConfig = {}
+  // eslint-disable-next-line default-param-last
+  sketchWidgetConfig = {},
+  sketchWidgetMode,
+  setSketchWidgetMode,
+  setPromptModalOpen,
+  setPromptModalContent,
+  warningMessages,
+  shapeDrawTooBigAnalytics
 ) => {
   const [sketchTool, setSketchTool] = useState(null);
   const [sketchLayer, setSketchLayer] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
+
   const [Constructors, setConstructors] = useState(null);
   const [geometryArea, setGeometryArea] = useState(0);
 
@@ -177,24 +186,6 @@ export const useSketchWidget = (
     });
   };
 
-  const addWidgetToTheUi = () => {
-    view.ui.add(sketchTool, 'manual');
-    sketchTool.when(() => {
-      const widgetRef =
-        // eslint-disable-next-line no-undef
-        document.getElementsByClassName('esri-sketch__panel') &&
-        // eslint-disable-next-line no-undef
-        document.getElementsByClassName('esri-sketch__panel')[0];
-      setDrawWidgetRef(widgetRef);
-    });
-
-    // eslint-disable-next-line no-undef
-    const container = document.createElement('div');
-    // eslint-disable-next-line no-undef
-    const rootNode = document.getElementById('root');
-    rootNode.appendChild(container);
-  };
-
   const handleSketchToolDestroy = () => {
     view.ui.remove(sketchTool);
     setSketchTool(null);
@@ -203,7 +194,6 @@ export const useSketchWidget = (
 
   useEffect(() => {
     if (sketchTool) {
-      addWidgetToTheUi();
       sketchTool.on('create', (event) => {
         if (event.state === 'active') {
           if (event.graphic.geometry.rings[0].length > 3) {
@@ -214,16 +204,13 @@ export const useSketchWidget = (
               )
             );
           }
-        } else if (event.state === 'complete') {
-          setGeometryArea(0);
-          postDrawCallback(
-            sketchLayer,
-            event.graphic,
-            calculateGeometryArea(
-              event.graphic.geometry,
-              Constructors.geometryEngine
-            )
-          );
+        } else if (
+          event.state === 'complete' &&
+          sketchWidgetMode === 'create'
+        ) {
+          setSketchWidgetMode('edit');
+          view.goTo(event.graphic.geometry);
+          sketchTool.update([event.graphic], { tool: 'reshape' });
         }
       });
     }
@@ -235,6 +222,31 @@ export const useSketchWidget = (
     };
   }, [sketchTool]);
 
+  useEffect(() => {
+    if (sketchWidgetMode === 'finished') {
+      const graphic =
+        sketchLayer.graphics.items && sketchLayer.graphics.items[0];
+      const area = calculateGeometryArea(
+        graphic.geometry,
+        Constructors.geometryEngine
+      );
+      if (area > HIGHER_AREA_SIZE_LIMIT) {
+        setPromptModalContent({
+          title: warningMessages.area.title,
+          description: warningMessages.area.description(area),
+        });
+        setPromptModalOpen(true);
+        shapeDrawTooBigAnalytics();
+        sketchTool.update([graphic], { tool: 'reshape' });
+        setSketchWidgetMode('edit');
+      } else {
+        // Finish creation of area and trigger postDrawCallback
+        setGeometryArea(0);
+        postDrawCallback(graphic.geometry);
+        setSketchWidgetMode('create');
+      }
+    }
+  }, [sketchWidgetMode, warningMessages]);
   return {
     sketchTool,
     geometryArea, // TODO: Not used for now. Remove if not needed

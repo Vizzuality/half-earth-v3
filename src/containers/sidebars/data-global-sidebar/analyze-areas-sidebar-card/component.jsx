@@ -27,7 +27,7 @@ import styles from './styles.module.scss';
 import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
 
 import { TABS } from './constants';
-import DrawModifiedWidget from './draw-modified-widget/draw-modified-widget';
+import SketchWidget from './sketch-widget/sketch-widget';
 
 function AnalyzeAreasCardComponent({
   view,
@@ -44,8 +44,9 @@ function AnalyzeAreasCardComponent({
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
   onboardingType,
-  drawWidgetRef,
   sketchTool,
+  sketchWidgetMode,
+  setSketchWidgetMode,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -148,9 +149,10 @@ function AnalyzeAreasCardComponent({
       )}
       {selectedAnalysisTab === 'draw' && (
         <div>
-          <DrawModifiedWidget
+          <SketchWidget
             sketchTool={sketchTool}
-            drawWidgetRef={drawWidgetRef}
+            sketchWidgetMode={sketchWidgetMode}
+            setSketchWidgetMode={setSketchWidgetMode}
           />
           <p className={styles.sectionLabel}>
             {t('Draw shape smaller than')}{' '}
