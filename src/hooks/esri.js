@@ -116,19 +116,19 @@ export const useSearchWidgetLogic = (
   };
 };
 
-export const useSketchWidget = (
+export const useSketchWidget = ({
   view,
-  // eslint-disable-next-line default-param-last
-  sketchWidgetConfig = {},
   sketchWidgetMode,
   setSketchWidgetMode,
   setPromptModalOpen,
   setPromptModalContent,
   warningMessages,
-  shapeDrawTooBigAnalytics
-) => {
+  shapeDrawTooBigAnalytics,
+  sketchWidgetConfig = {},
+}) => {
   const [sketchTool, setSketchTool] = useState(null);
   const [sketchLayer, setSketchLayer] = useState(null);
+  const [updatedGeometry, setUpdatedGeometry] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
 
   const [Constructors, setConstructors] = useState(null);
@@ -188,6 +188,7 @@ export const useSketchWidget = (
 
   const handleSketchToolDestroy = () => {
     view.ui.remove(sketchTool);
+    setUpdatedGeometry(null);
     setSketchTool(null);
     sketchTool.destroy();
   };
@@ -211,7 +212,19 @@ export const useSketchWidget = (
           setSketchWidgetMode('edit');
           view.goTo(event.graphic.geometry);
           sketchTool.update([event.graphic], { tool: 'reshape' });
+          setUpdatedGeometry(event.graphic.geometry);
         }
+      });
+
+      sketchTool.on('update', (event) => {
+        const { toolEventInfo, graphics } = event;
+        if (graphics && toolEventInfo && toolEventInfo.type.endsWith('-stop')) {
+          setUpdatedGeometry(graphics[0].geometry);
+        }
+      });
+
+      sketchTool.on('delete', () => {
+        setUpdatedGeometry(null);
       });
     }
 
@@ -249,6 +262,7 @@ export const useSketchWidget = (
   }, [sketchWidgetMode, warningMessages]);
   return {
     sketchTool,
+    updatedGeometry,
     geometryArea, // TODO: Not used for now. Remove if not needed
     handleSketchToolDestroy,
     handleSketchToolActivation,

@@ -178,17 +178,21 @@ function AnalyzeAreasContainer(props) {
     setPromptModalOpen(true);
     shapeUploadErrorAnalytics(warningMessages[error.details.httpStatus].title);
   };
-  const { sketchTool, handleSketchToolDestroy, handleSketchToolActivation } =
-    useSketchWidget(
-      view,
-      { postDrawCallback },
-      sketchWidgetMode,
-      setSketchWidgetMode,
-      setPromptModalOpen,
-      setPromptModalContent,
-      warningMessages,
-      shapeDrawTooBigAnalytics
-    );
+  const {
+    sketchTool,
+    handleSketchToolDestroy,
+    handleSketchToolActivation,
+    updatedGeometry,
+  } = useSketchWidget({
+    view,
+    sketchWidgetMode,
+    setSketchWidgetMode,
+    setPromptModalOpen,
+    setPromptModalContent,
+    warningMessages,
+    shapeDrawTooBigAnalytics,
+    sketchWidgetConfig: { postDrawCallback },
+  });
 
   const handleDrawClick = () => {
     if (!sketchTool) {
@@ -299,6 +303,7 @@ function AnalyzeAreasContainer(props) {
       sketchTool={sketchTool}
       sketchWidgetMode={sketchWidgetMode}
       setSketchWidgetMode={setSketchWidgetMode}
+      updatedGeometry={updatedGeometry}
     />
   );
 }

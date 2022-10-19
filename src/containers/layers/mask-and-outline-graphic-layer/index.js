@@ -9,16 +9,24 @@ import { MASK_LAYER } from 'constants/layers-slugs';
 
 function MaskAndOutlineGraphicLayer(props) {
   const { view, geometry } = props;
+
   const [graphicsLayer, setGraphicsLayer] = useState(null);
   // Create graphic layer to store the mask and outline
   useEffect(() => {
-    loadModules(['esri/layers/GraphicsLayer']).then(([GraphicsLayer]) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const _graphicsLayer = createGraphicLayer(GraphicsLayer, [], MASK_LAYER);
-      setGraphicsLayer(_graphicsLayer);
-      view.map.layers.add(_graphicsLayer);
-    });
-  }, []);
+    if (!graphicsLayer) {
+      loadModules(['esri/layers/GraphicsLayer']).then(([GraphicsLayer]) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const _graphicsLayer = createGraphicLayer(
+          GraphicsLayer,
+          [],
+          MASK_LAYER
+        );
+        setGraphicsLayer(_graphicsLayer);
+        view.map.layers.add(_graphicsLayer);
+      });
+    }
+    return () => view.map.remove(graphicsLayer);
+  }, [graphicsLayer]);
 
   useEffect(() => {
     if (graphicsLayer && geometry) {

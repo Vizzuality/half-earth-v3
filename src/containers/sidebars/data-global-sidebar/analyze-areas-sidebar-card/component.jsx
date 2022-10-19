@@ -47,6 +47,7 @@ function AnalyzeAreasCardComponent({
   sketchTool,
   sketchWidgetMode,
   setSketchWidgetMode,
+  updatedGeometry,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -54,7 +55,6 @@ function AnalyzeAreasCardComponent({
     () => getPrecalculatedAOIOptions(),
     [locale]
   );
-
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
   const handleAoiModalToggle = () => {
     if (!isAoiHistoryModalOpen) {
@@ -153,6 +153,8 @@ function AnalyzeAreasCardComponent({
             sketchTool={sketchTool}
             sketchWidgetMode={sketchWidgetMode}
             setSketchWidgetMode={setSketchWidgetMode}
+            updatedGeometry={updatedGeometry}
+            view={view}
           />
           <p className={styles.sectionLabel}>
             {t('Draw shape smaller than')}{' '}

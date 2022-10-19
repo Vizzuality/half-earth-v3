@@ -5,16 +5,20 @@ import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 
+import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';
+
 import Button from 'components/button';
 
 import { ReactComponent as CheckIcon } from 'icons/check.svg';
 
 import styles from './sketch-widget.styles.module.scss';
 
-function DrawModifiedWidget({
+function SketchWidget({
   sketchTool,
   setSketchWidgetMode,
   sketchWidgetMode,
+  view,
+  updatedGeometry,
 }) {
   if (!sketchTool) return null;
   const t = useT();
@@ -28,6 +32,7 @@ function DrawModifiedWidget({
     { type: 'undo', label: t('undo'), icon: 'undo' },
     { type: 'redo', label: t('redo'), icon: 'redo' },
   ];
+
   const renderCreateButton = (buttonType, buttonLabel, icon) => (
     <button
       aria-label={`Draw a ${buttonLabel}`}
@@ -97,6 +102,9 @@ function DrawModifiedWidget({
         [styles.edit]: sketchWidgetMode === 'edit',
       })}
     >
+      {updatedGeometry && (
+        <MaskAndOutlineGraphicLayer geometry={updatedGeometry} view={view} />
+      )}
       {sketchWidgetMode === 'create' ? (
         <>
           <div
@@ -148,6 +156,7 @@ function DrawModifiedWidget({
       )}
     </div>
   );
+
   return ReactDOM.createPortal(
     renderPanel,
     // eslint-disable-next-line no-undef
@@ -155,4 +164,4 @@ function DrawModifiedWidget({
   );
 }
 
-export default DrawModifiedWidget;
+export default SketchWidget;
