@@ -14,7 +14,7 @@ function ZoomControls({ zoomWidget }) {
       <button
         className={styles.zoomButton}
         type="button"
-        onClick={() => zoomWidget.zoomIn()}
+        onClick={() => zoomWidget && zoomWidget.zoomIn()}
       >
         <ZoomInIcon />
       </button>
@@ -22,7 +22,7 @@ function ZoomControls({ zoomWidget }) {
       <button
         className={styles.zoomButton}
         type="button"
-        onClick={() => zoomWidget.zoomOut()}
+        onClick={() => zoomWidget && zoomWidget.zoomOut()}
       >
         <ZoomOutIcon />
       </button>
