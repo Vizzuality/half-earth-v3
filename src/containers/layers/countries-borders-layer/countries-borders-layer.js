@@ -2,19 +2,27 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import { loadModules } from 'esri-loader';
+
 import * as urlActions from 'actions/url-actions';
 
 import {
-  hitResults, setCursor, drawGeometry, flyToGeometry, toggleCountryTooltip,
+  hitResults,
+  setCursor,
+  drawGeometry,
+  flyToLayerGeometry,
+  toggleCountryTooltip,
 } from 'utils/globe-events-utils';
 import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
 
-import { loadModules } from 'esri-loader';
 import debounce from 'lodash/debounce';
 
 // CONSTANTS
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
-import { GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'constants/layers-slugs';
+import {
+  GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle,
+  GRAPHIC_LAYER,
+} from 'constants/layers-slugs';
 
 // UTILS
 
@@ -23,38 +31,52 @@ import { GLOBAL_SPI_FEATURE_LAYER as bordersLayerTitle, GRAPHIC_LAYER } from 'co
 const actions = { ...urlActions };
 
 function CountriesBordersLayerContainer(props) {
-  const {
-    view, changeGlobe, countryISO,
-  } = props;
+  const { view, changeGlobe, countryISO } = props;
 
-  const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
-  const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] = useState(null);
+  const [selectedCountryBorderGraphic, setSelectedCountryGraphic] =
+    useState(null);
+  const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] =
+    useState(null);
 
   // Create the graphics layer on mount
   useEffect(() => {
-    loadModules(['esri/Graphic', 'esri/layers/GraphicsLayer']).then(([Graphic, GraphicsLayer]) => {
-      const _selectedCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
-      const _hoveredCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
-      const graphicsLayer = createGraphicLayer(
-        GraphicsLayer,
-        [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic],
-        GRAPHIC_LAYER,
-      );
-      setSelectedCountryGraphic(_selectedCountryBorderGraphic);
-      setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
-      view.map.add(graphicsLayer);
-    });
+    loadModules(['esri/Graphic', 'esri/layers/GraphicsLayer']).then(
+      ([Graphic, GraphicsLayer]) => {
+        const _selectedCountryBorderGraphic = createGraphic(
+          Graphic,
+          GRID_CELL_STYLES
+        );
+        const _hoveredCountryBorderGraphic = createGraphic(
+          Graphic,
+          GRID_CELL_STYLES
+        );
+        const graphicsLayer = createGraphicLayer(
+          GraphicsLayer,
+          [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic],
+          GRAPHIC_LAYER
+        );
+        setSelectedCountryGraphic(_selectedCountryBorderGraphic);
+        setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
+        view.map.add(graphicsLayer);
+      }
+    );
   }, []);
 
   useEffect(() => {
     if (selectedCountryBorderGraphic) {
-      if (!countryISO) { selectedCountryBorderGraphic.geometry = null; }
+      if (!countryISO) {
+        selectedCountryBorderGraphic.geometry = null;
+      }
     }
   }, [countryISO, selectedCountryBorderGraphic]);
 
   const onClickHandler = (bordersLayerFeatures) => {
-    flyToGeometry(view, bordersLayerFeatures);
-    toggleCountryTooltip({ layerFeatures: bordersLayerFeatures, changeGlobe, countryISO });
+    flyToLayerGeometry(view, bordersLayerFeatures);
+    toggleCountryTooltip({
+      layerFeatures: bordersLayerFeatures,
+      changeGlobe,
+      countryISO,
+    });
     drawGeometry(bordersLayerFeatures, selectedCountryBorderGraphic);
   };
 
@@ -96,7 +118,7 @@ function CountriesBordersLayerContainer(props) {
     if (hoveredCountryBorderGraphic) {
       eventHandler = view.on(
         'pointer-move',
-        debounce(onLabelEvent, 35, { leading: true, trailing: true }),
+        debounce(onLabelEvent, 35, { leading: true, trailing: true })
       );
     }
     return function cleanUp() {
