@@ -79,7 +79,15 @@ function AoiSidebarContainer(props) {
   }, [isShareModalOpen]);
 
   const handleClose = () => {
-    browsePage({ type: DATA });
+    browsePage({
+      type: DATA,
+      query: {
+        coordsToCenter: [
+          geometry && geometry.extent.center.longitude,
+          geometry && geometry.extent.center.latitude,
+        ],
+      },
+    });
     changeUI({
       activeCategoryLayers: intersectionBy(
         activeLayers,

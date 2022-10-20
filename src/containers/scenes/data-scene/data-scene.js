@@ -26,6 +26,7 @@ import {
   GADM_1_ADMIN_AREAS_FEATURE_LAYER,
 } from 'constants/layers-slugs';
 import MAP_TOOLTIP_CONFIG from 'constants/map-tooltip-constants';
+import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { getSidebarTabs } from 'constants/ui-params';
 
 import Component from './data-scene-component';
@@ -46,10 +47,30 @@ function Container(props) {
     browsePage,
     precomputedAoiAnalytics,
     changeUI,
+    cleanURLParam,
     activeCategoryLayers,
     sidebarTabActive,
     selectedAnalysisLayer,
+    sceneSettings,
+    coordsToCenter,
+    onboardingType,
   } = props;
+
+  const [updatedSceneSettings, setUpdatedSceneSettings] =
+    useState(sceneSettings);
+
+  useEffect(() => {
+    const updatedSceneSettingsCenter = coordsToCenter || sceneSettings.center;
+
+    setUpdatedSceneSettings({
+      ...sceneSettings,
+      center:
+        onboardingType === 'priority-places'
+          ? ONBOARDING_TYPE_CENTER['priority-places']
+          : updatedSceneSettingsCenter,
+    });
+  }, [onboardingType, coordsToCenter]);
+
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
   const [mapLayerTab, analyzeAreasTab] = getSidebarTabs();
 
@@ -165,6 +186,7 @@ function Container(props) {
       handleHighlightLayerFeatureClick={handleHighlightLayerFeatureClick}
       updatedActiveLayers={updatedActiveLayers}
       {...props}
+      sceneSettings={updatedSceneSettings}
     />
   );
 }

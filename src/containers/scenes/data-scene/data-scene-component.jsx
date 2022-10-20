@@ -18,7 +18,6 @@ import DataGlobalSidebar from 'containers/sidebars/data-global-sidebar';
 import MapTooltip from 'components/map-tooltip';
 import Scene from 'components/scene';
 
-import { ONBOARDING_TYPE_CENTER } from 'constants/onboarding-constants';
 import { getSidebarTabs } from 'constants/ui-params';
 
 import animationStyles from 'styles/common-animations.module.scss';
@@ -67,16 +66,6 @@ function DataSceneComponent({
     selectedAnalysisTab === 'click' &&
     sidebarTabActive === analyzeAreasTab.slug;
   const sidebarHidden = isFullscreenActive;
-  const updatedSceneSettings = useMemo(
-    () => ({
-      ...sceneSettings,
-      center:
-        onboardingType === 'priority-places'
-          ? ONBOARDING_TYPE_CENTER['priority-places']
-          : sceneSettings.center,
-    }),
-    [onboardingType]
-  );
 
   // Always show the first tab on onboarding mode
   useEffect(() => {
@@ -89,7 +78,7 @@ function DataSceneComponent({
     <Scene
       onMapLoad={onMapLoad}
       sceneName="data-scene"
-      sceneSettings={updatedSceneSettings}
+      sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       initialRotation
       blur={activeGlobesMenu}
