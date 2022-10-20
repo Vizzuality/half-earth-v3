@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useT } from '@transifex/react';
@@ -17,12 +17,16 @@ function SketchWidget({
   sketchTool,
   setSketchWidgetMode,
   sketchWidgetMode,
+  setSketchTooltipType,
   view,
   updatedGeometry,
 }) {
   if (!sketchTool) return null;
   const t = useT();
-  const [selectedTool, setSelectedTool] = useState(null);
+  const [selectedTool, setSelectedTool] = useState('polygon');
+  useEffect(() => {
+    sketchTool.create('polygon');
+  }, []);
   const createButtons = [
     { type: 'polygon', label: t('polygon'), icon: 'polygon' },
     { type: 'rectangle', label: t('rectangle'), icon: 'checkbox-unchecked' },
@@ -53,6 +57,7 @@ function SketchWidget({
       type="button"
       onClick={() => {
         setSelectedTool(buttonType);
+        setSketchTooltipType(buttonType);
         sketchTool.delete();
         setSketchWidgetMode('create');
         sketchTool.create(buttonType);
@@ -82,6 +87,7 @@ function SketchWidget({
           sketchTool.delete();
           sketchTool.cancel();
           setSketchWidgetMode('create');
+          setSketchTooltipType(selectedTool);
           if (selectedTool) {
             sketchTool.create(selectedTool);
           }

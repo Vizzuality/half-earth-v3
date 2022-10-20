@@ -11,6 +11,7 @@
   border-radius: 2px;
   border: 2px solid $brand-color-main;
   height: 40px;
+  z-index: $default-z-index;
 
   &.edit {
     background-color: $space-background;

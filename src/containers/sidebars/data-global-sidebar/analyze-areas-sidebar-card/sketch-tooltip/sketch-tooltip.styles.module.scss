@@ -1,0 +1,24 @@
+@import 'styles/settings';
+@import 'styles/typography-extends.scss';
+@import 'styles/shared-sidebar.module';
+@import 'styles/mixins';
+
+.sketchTooltip {
+  @extend %bodyText;
+  font-size: $font-size-xs;
+  position: absolute;
+  background-color: $white;
+  line-height: normal;
+  border-radius: 2px;
+  z-index: $send-to-back;
+  padding: 2px 10px;
+  text-align: center;
+  pointer-events: none;
+
+  .arrow {
+    position: absolute;
+    bottom: -20px;
+    left: 35px;
+    @include caret($white, 'up');
+  }
+}

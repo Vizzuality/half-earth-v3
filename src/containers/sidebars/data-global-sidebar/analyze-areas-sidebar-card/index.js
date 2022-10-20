@@ -183,6 +183,8 @@ function AnalyzeAreasContainer(props) {
     handleSketchToolDestroy,
     handleSketchToolActivation,
     updatedGeometry,
+    sketchTooltipType,
+    setSketchTooltipType,
   } = useSketchWidget({
     view,
     sketchWidgetMode,
@@ -303,6 +305,8 @@ function AnalyzeAreasContainer(props) {
       sketchTool={sketchTool}
       sketchWidgetMode={sketchWidgetMode}
       setSketchWidgetMode={setSketchWidgetMode}
+      sketchTooltipType={sketchTooltipType}
+      setSketchTooltipType={setSketchTooltipType}
       updatedGeometry={updatedGeometry}
     />
   );

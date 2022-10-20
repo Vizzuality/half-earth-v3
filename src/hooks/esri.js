@@ -128,6 +128,7 @@ export const useSketchWidget = ({
 }) => {
   const [sketchTool, setSketchTool] = useState(null);
   const [sketchLayer, setSketchLayer] = useState(null);
+  const [sketchTooltipType, setSketchTooltipType] = useState(null);
   const [updatedGeometry, setUpdatedGeometry] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
 
@@ -157,6 +158,7 @@ export const useSketchWidget = ({
       });
       setSketchLayer(_sketchLayer);
       view.map.add(_sketchLayer);
+
       const _sketchTool = new Sketch({
         view,
         layer: _sketchLayer,
@@ -178,11 +180,12 @@ export const useSketchWidget = ({
           },
           polygonSymbol: {
             type: 'simple-fill',
-            color: [147, 255, 95, 0.2],
+            color: [255, 255, 255, 0],
           },
         }),
       });
       setSketchTool(_sketchTool);
+      setSketchTooltipType('polygon');
     });
   };
 
@@ -196,23 +199,35 @@ export const useSketchWidget = ({
   useEffect(() => {
     if (sketchTool) {
       sketchTool.on('create', (event) => {
-        if (event.state === 'active') {
-          if (event.graphic.geometry.rings[0].length > 3) {
+        const { state, tool, toolEventInfo, graphic } = event;
+        if (state === 'active') {
+          setSketchTooltipType(tool);
+          if (tool === 'polygon' && toolEventInfo.type === 'cursor-update') {
+            const firstPoint = graphic.geometry.rings[0][0];
+
+            if (
+              toolEventInfo.coordinates &&
+              firstPoint &&
+              toolEventInfo.coordinates[0] === firstPoint[0] &&
+              toolEventInfo.coordinates[1] === firstPoint[1]
+            ) {
+              setSketchTooltipType('polygon-close');
+            }
+          }
+          if (graphic.geometry.rings[0].length > 3) {
             setGeometryArea(
               calculateGeometryArea(
-                event.graphic.geometry,
+                graphic.geometry,
                 Constructors.geometryEngine
               )
             );
           }
-        } else if (
-          event.state === 'complete' &&
-          sketchWidgetMode === 'create'
-        ) {
+        } else if (state === 'complete' && sketchWidgetMode === 'create') {
+          setSketchTooltipType(null);
           setSketchWidgetMode('edit');
-          view.goTo(event.graphic.geometry);
-          sketchTool.update([event.graphic], { tool: 'reshape' });
-          setUpdatedGeometry(event.graphic.geometry);
+          view.goTo(graphic.geometry);
+          sketchTool.update([graphic], { tool: 'reshape' });
+          setUpdatedGeometry(graphic.geometry);
         }
       });
 
@@ -266,5 +281,7 @@ export const useSketchWidget = ({
     geometryArea, // TODO: Not used for now. Remove if not needed
     handleSketchToolDestroy,
     handleSketchToolActivation,
+    sketchTooltipType,
+    setSketchTooltipType,
   };
 };
