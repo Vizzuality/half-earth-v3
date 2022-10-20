@@ -1,0 +1,75 @@
+@import 'styles/settings';
+@import 'styles/typography-extends.scss';
+@import 'styles/shared-sidebar.module';
+
+.sketchWidget {
+  display: flex;
+  background-color: $firefly;
+  position: absolute;
+  left: 50%;
+  top: $nav-bar-height;
+  border-radius: 2px;
+  border: 2px solid $brand-color-main;
+  height: 40px;
+  z-index: $default-z-index;
+
+  &.edit {
+    background-color: $space-background;
+    @include backdropBlur();
+    height: 56px;
+  }
+}
+
+.sketchButton {
+  color: $white;
+
+  &:hover,
+  &:focus {
+    background-color: $firefly;
+    color: $brand-color-main;
+    outline: none;
+  }
+
+  &:disabled  {
+    color: $logos-text;
+  }
+
+  &.esri-button-create &:not(.esri-sketch__button--selected) {
+    color: $white;
+  }
+
+  &.esri-sketch__button--selected {
+    background-color: $firefly;
+    color: $brand-color-main !important;
+
+    &:hover {
+      color: $brand-color-main;
+    }
+  }
+}
+
+.buttonTitle {
+  @extend %title;
+
+  margin-left: 10px;
+}
+
+.editDelete {
+  background-color: $firefly;
+  height: 40px;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: $space-background;
+    color: $white;
+  }
+}
+
+.editDelete,
+.editAnalyzeButton {
+  min-width: 170px;
+}
+
+.editAnalyzeButton {
+  margin-left: 5px;
+}

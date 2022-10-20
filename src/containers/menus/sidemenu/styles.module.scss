@@ -5,6 +5,7 @@
   position: absolute;
   top: 32px;
   right: 15px;
+  z-index: $default-z-index;
 
   .searchBtn {
     height: 32px;

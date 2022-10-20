@@ -27,6 +27,8 @@ import styles from './styles.module.scss';
 import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
 
 import { TABS } from './constants';
+import SketchTooltip from './sketch-tooltip';
+import SketchWidget from './sketch-widget';
 
 function AnalyzeAreasCardComponent({
   view,
@@ -43,6 +45,12 @@ function AnalyzeAreasCardComponent({
   aoiHistoryModalOpenAnalytics,
   onboardingStep,
   onboardingType,
+  sketchTool,
+  sketchWidgetMode,
+  setSketchWidgetMode,
+  setSketchTooltipType,
+  sketchTooltipType,
+  updatedGeometry,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -50,7 +58,6 @@ function AnalyzeAreasCardComponent({
     () => getPrecalculatedAOIOptions(),
     [locale]
   );
-
   const [isAoiHistoryModalOpen, setAoiHistoryModalOpen] = useState(false);
   const handleAoiModalToggle = () => {
     if (!isAoiHistoryModalOpen) {
@@ -145,6 +152,15 @@ function AnalyzeAreasCardComponent({
       )}
       {selectedAnalysisTab === 'draw' && (
         <div>
+          <SketchWidget
+            sketchTool={sketchTool}
+            sketchWidgetMode={sketchWidgetMode}
+            setSketchWidgetMode={setSketchWidgetMode}
+            setSketchTooltipType={setSketchTooltipType}
+            updatedGeometry={updatedGeometry}
+            view={view}
+          />
+          <SketchTooltip sketchTooltipType={sketchTooltipType} />
           <p className={styles.sectionLabel}>
             {t('Draw shape smaller than')}{' '}
             <b>

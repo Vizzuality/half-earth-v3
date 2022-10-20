@@ -9,6 +9,7 @@
   height: 32px;
   align-items: center;
   justify-content: center;
+
   &:hover {
     background-color: $brand-color-secondary-hover;
   }
@@ -24,6 +25,7 @@
   justify-content: center;
   border-radius: $border-radius-desktop;
   background-color: $brand-color-main;
+
   &:hover {
     background-color: $white;
   }
@@ -39,8 +41,13 @@
   align-items: center;
   justify-content: center;
   border-radius: $border-radius-desktop;
+
   &:hover {
     background-color: $brand-color-main;
+  }
+
+  .icon {
+    margin-right: 10px;
   }
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 
@@ -5,6 +6,7 @@ import { loadModules } from 'esri-loader';
 
 import { calculateGeometryArea } from 'utils/analyze-areas-utils';
 
+import { HIGHER_AREA_SIZE_LIMIT } from 'constants/analyze-areas-constants';
 import { LAYERS_URLS } from 'constants/layers-urls';
 
 // Load watchUtils module to follow esri map changes
@@ -114,10 +116,22 @@ export const useSearchWidgetLogic = (
   };
 };
 
-export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
+export const useSketchWidget = ({
+  view,
+  sketchWidgetMode,
+  setSketchWidgetMode,
+  setPromptModalOpen,
+  setPromptModalContent,
+  warningMessages,
+  shapeDrawTooBigAnalytics,
+  sketchWidgetConfig = {},
+}) => {
   const [sketchTool, setSketchTool] = useState(null);
   const [sketchLayer, setSketchLayer] = useState(null);
+  const [sketchTooltipType, setSketchTooltipType] = useState(null);
+  const [updatedGeometry, setUpdatedGeometry] = useState(null);
   const { postDrawCallback } = sketchWidgetConfig;
+
   const [Constructors, setConstructors] = useState(null);
   const [geometryArea, setGeometryArea] = useState(0);
 
@@ -144,11 +158,15 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
       });
       setSketchLayer(_sketchLayer);
       view.map.add(_sketchLayer);
+
       const _sketchTool = new Sketch({
         view,
         layer: _sketchLayer,
         visibleElements: {
           settingsMenu: false,
+        },
+        createTools: {
+          point: false,
         },
         availableCreateTools: ['polygon', 'rectangle', 'circle'],
         viewModel: new SketchViewModel({
@@ -162,53 +180,66 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
           },
           polygonSymbol: {
             type: 'simple-fill',
-            color: [147, 255, 95, 0.2],
+            color: [255, 255, 255, 0],
           },
         }),
       });
       setSketchTool(_sketchTool);
+      setSketchTooltipType('polygon');
     });
-  };
-
-  const addWidgetToTheUi = () => {
-    view.ui.add(sketchTool, 'manual');
-    // eslint-disable-next-line no-undef
-    const container = document.createElement('div');
-    // eslint-disable-next-line no-undef
-    const rootNode = document.getElementById('root');
-    rootNode.appendChild(container);
   };
 
   const handleSketchToolDestroy = () => {
     view.ui.remove(sketchTool);
+    setUpdatedGeometry(null);
     setSketchTool(null);
     sketchTool.destroy();
   };
 
   useEffect(() => {
     if (sketchTool) {
-      addWidgetToTheUi();
       sketchTool.on('create', (event) => {
-        if (event.state === 'active') {
-          if (event.graphic.geometry.rings[0].length > 3) {
+        const { state, tool, toolEventInfo, graphic } = event;
+        if (state === 'active') {
+          setSketchTooltipType(tool);
+          if (tool === 'polygon' && toolEventInfo.type === 'cursor-update') {
+            const firstPoint = graphic.geometry.rings[0][0];
+
+            if (
+              toolEventInfo.coordinates &&
+              firstPoint &&
+              toolEventInfo.coordinates[0] === firstPoint[0] &&
+              toolEventInfo.coordinates[1] === firstPoint[1]
+            ) {
+              setSketchTooltipType('polygon-close');
+            }
+          }
+          if (graphic.geometry.rings[0].length > 3) {
             setGeometryArea(
               calculateGeometryArea(
-                event.graphic.geometry,
+                graphic.geometry,
                 Constructors.geometryEngine
               )
             );
           }
-        } else if (event.state === 'complete') {
-          setGeometryArea(0);
-          postDrawCallback(
-            sketchLayer,
-            event.graphic,
-            calculateGeometryArea(
-              event.graphic.geometry,
-              Constructors.geometryEngine
-            )
-          );
+        } else if (state === 'complete' && sketchWidgetMode === 'create') {
+          setSketchTooltipType(null);
+          setSketchWidgetMode('edit');
+          view.goTo(graphic.geometry);
+          sketchTool.update([graphic], { tool: 'reshape' });
+          setUpdatedGeometry(graphic.geometry);
         }
+      });
+
+      sketchTool.on('update', (event) => {
+        const { toolEventInfo, graphics } = event;
+        if (graphics && toolEventInfo && toolEventInfo.type.endsWith('-stop')) {
+          setUpdatedGeometry(graphics[0].geometry);
+        }
+      });
+
+      sketchTool.on('delete', () => {
+        setUpdatedGeometry(null);
       });
     }
 
@@ -219,10 +250,38 @@ export const useSketchWidget = (view, sketchWidgetConfig = {}) => {
     };
   }, [sketchTool]);
 
+  useEffect(() => {
+    if (sketchWidgetMode === 'finished') {
+      const graphic =
+        sketchLayer.graphics.items && sketchLayer.graphics.items[0];
+      const area = calculateGeometryArea(
+        graphic.geometry,
+        Constructors.geometryEngine
+      );
+      if (area > HIGHER_AREA_SIZE_LIMIT) {
+        setPromptModalContent({
+          title: warningMessages.area.title,
+          description: warningMessages.area.description(area),
+        });
+        setPromptModalOpen(true);
+        shapeDrawTooBigAnalytics();
+        sketchTool.update([graphic], { tool: 'reshape' });
+        setSketchWidgetMode('edit');
+      } else {
+        // Finish creation of area and trigger postDrawCallback
+        setGeometryArea(0);
+        postDrawCallback(graphic.geometry);
+        setSketchWidgetMode('create');
+      }
+    }
+  }, [sketchWidgetMode, warningMessages]);
   return {
     sketchTool,
+    updatedGeometry,
     geometryArea, // TODO: Not used for now. Remove if not needed
     handleSketchToolDestroy,
     handleSketchToolActivation,
+    sketchTooltipType,
+    setSketchTooltipType,
   };
 };
