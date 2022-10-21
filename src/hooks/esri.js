@@ -120,8 +120,9 @@ const createSymbol = (outlineColor) => {
   return {
     type: 'simple-fill',
     style: 'solid',
-    color: [0, 0, 0, 0],
+    color: [255, 255, 255, 0],
     outline: {
+      style: 'solid',
       color: outlineColor,
       width: 4,
     },
@@ -191,12 +192,10 @@ export const useSketchWidget = ({
             multipleSelectionEnabled: false,
             toggleToolOnClick: true,
           },
-          polygonSymbol: {
-            type: 'simple-fill',
-            color: [255, 255, 255, 0],
-          },
+          polygonSymbol: VALID_SYMBOL,
         }),
       });
+
       setSketchTool(_sketchTool);
       setSketchTooltipType('polygon');
     });
