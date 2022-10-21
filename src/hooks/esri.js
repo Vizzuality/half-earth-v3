@@ -116,6 +116,21 @@ export const useSearchWidgetLogic = (
   };
 };
 
+const createSymbol = (outlineColor) => {
+  return {
+    type: 'simple-fill',
+    style: 'solid',
+    color: [0, 0, 0, 0],
+    outline: {
+      color: outlineColor,
+      width: 4,
+    },
+  };
+};
+
+const INVALID_SYMBOL = createSymbol([255, 0, 0, 255]);
+const VALID_SYMBOL = createSymbol([255, 255, 255, 0]);
+
 export const useSketchWidget = ({
   view,
   sketchWidgetMode,
@@ -133,8 +148,6 @@ export const useSketchWidget = ({
   const { postDrawCallback } = sketchWidgetConfig;
 
   const [Constructors, setConstructors] = useState(null);
-  const [geometryArea, setGeometryArea] = useState(0);
-
   useEffect(() => {
     loadModules([
       'esri/widgets/Sketch/SketchViewModel',
@@ -196,49 +209,74 @@ export const useSketchWidget = ({
     sketchTool.destroy();
   };
 
+  const hasInvalidStyle = (graphic) =>
+    graphic.symbol &&
+    graphic.symbol.outline &&
+    JSON.stringify(graphic.symbol.outline.color) ===
+      JSON.stringify(INVALID_SYMBOL.outline.color);
+
   useEffect(() => {
+    const checkAndMarkValidArea = (graphic) => {
+      const area = calculateGeometryArea(
+        graphic.geometry,
+        Constructors.geometryEngine
+      );
+
+      if (area > HIGHER_AREA_SIZE_LIMIT) {
+        graphic.symbol = INVALID_SYMBOL;
+        setSketchTooltipType('too-big');
+      } else if (hasInvalidStyle(graphic)) {
+        setSketchTooltipType(null);
+        graphic.symbol = VALID_SYMBOL;
+      }
+    };
+
     if (sketchTool) {
       sketchTool.on('create', (event) => {
         const { state, tool, toolEventInfo, graphic } = event;
         if (state === 'active') {
           setSketchTooltipType(tool);
-          if (tool === 'polygon' && toolEventInfo.type === 'cursor-update') {
-            const firstPoint = graphic.geometry.rings[0][0];
 
-            if (
+          if (tool === 'circle' || tool === 'rectangle') {
+            checkAndMarkValidArea(graphic);
+          }
+
+          if (tool === 'polygon' && toolEventInfo.type === 'cursor-update') {
+            checkAndMarkValidArea(graphic);
+
+            const firstPoint = graphic.geometry.rings[0][0];
+            const isClosingGeometry =
               toolEventInfo.coordinates &&
               firstPoint &&
               toolEventInfo.coordinates[0] === firstPoint[0] &&
-              toolEventInfo.coordinates[1] === firstPoint[1]
-            ) {
+              toolEventInfo.coordinates[1] === firstPoint[1];
+
+            if (isClosingGeometry) {
               setSketchTooltipType('polygon-close');
             }
           }
-          if (graphic.geometry.rings[0].length > 3) {
-            setGeometryArea(
-              calculateGeometryArea(
-                graphic.geometry,
-                Constructors.geometryEngine
-              )
-            );
-          }
         } else if (state === 'complete' && sketchWidgetMode === 'create') {
+          // Go to edit
           setSketchTooltipType(null);
           setSketchWidgetMode('edit');
           view.goTo(graphic.geometry);
+          checkAndMarkValidArea(graphic);
           sketchTool.update([graphic], { tool: 'reshape' });
           setUpdatedGeometry(graphic.geometry);
         }
       });
 
       sketchTool.on('update', (event) => {
+        console.log('update', event);
         const { toolEventInfo, graphics } = event;
         if (graphics && toolEventInfo && toolEventInfo.type.endsWith('-stop')) {
+          checkAndMarkValidArea(graphics[0]);
           setUpdatedGeometry(graphics[0].geometry);
         }
       });
 
       sketchTool.on('delete', () => {
+        console.log('deeee');
         setUpdatedGeometry(null);
       });
     }
@@ -269,16 +307,16 @@ export const useSketchWidget = ({
         setSketchWidgetMode('edit');
       } else {
         // Finish creation of area and trigger postDrawCallback
-        setGeometryArea(0);
         postDrawCallback(graphic.geometry);
         setSketchWidgetMode('create');
       }
     }
-  }, [sketchWidgetMode, warningMessages]);
+  }, [sketchWidgetMode, warningMessages, setSketchTooltipType]);
   return {
     sketchTool,
+    // Only export for 'Esc' exception
+    setUpdatedGeometry,
     updatedGeometry,
-    geometryArea, // TODO: Not used for now. Remove if not needed
     handleSketchToolDestroy,
     handleSketchToolActivation,
     sketchTooltipType,

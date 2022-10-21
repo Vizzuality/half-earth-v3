@@ -51,6 +51,7 @@ function AnalyzeAreasCardComponent({
   setSketchTooltipType,
   sketchTooltipType,
   updatedGeometry,
+  setUpdatedGeometry,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -157,6 +158,7 @@ function AnalyzeAreasCardComponent({
             sketchWidgetMode={sketchWidgetMode}
             setSketchWidgetMode={setSketchWidgetMode}
             setSketchTooltipType={setSketchTooltipType}
+            setUpdatedGeometry={setUpdatedGeometry}
             updatedGeometry={updatedGeometry}
             view={view}
           />

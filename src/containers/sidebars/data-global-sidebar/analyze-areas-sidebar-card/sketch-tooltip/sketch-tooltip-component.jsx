@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 // import cx from 'classnames';
 
@@ -13,6 +13,7 @@ const TOOLTIP_HEIGHT = 16;
 function SketchTooltip({ sketchTooltipType }) {
   if (!sketchTooltipType) return null;
   const t = useT();
+  const locale = useLocale();
   const [mouseCoords, setMouseCoords] = useState(null);
 
   useEffect(() => {
@@ -28,6 +29,17 @@ function SketchTooltip({ sketchTooltipType }) {
       window.removeEventListener('mousemove', handleWindowMouseMove);
     };
   }, []);
+  const label = useMemo(
+    () =>
+      ({
+        polygon: t('Add point'),
+        'polygon-close': t('Close shape'),
+        'too-big': t('Area too big'),
+        circle: t('Drag circle'),
+        rectangle: t('Drag rectangle'),
+      }[sketchTooltipType]),
+    [sketchTooltipType, locale]
+  );
 
   // The points are not drawn out of the esri-ui
   const uiElements = useMemo(
@@ -36,16 +48,13 @@ function SketchTooltip({ sketchTooltipType }) {
     []
   );
   const uiElement = uiElements && uiElements[0];
-  if (!mouseCoords || (uiElement && mouseCoords.x < uiElement.offsetLeft)) {
+  if (
+    !label ||
+    !mouseCoords ||
+    (uiElement && mouseCoords.x < uiElement.offsetLeft)
+  ) {
     return null;
   }
-
-  const label = {
-    polygon: t('Add point'),
-    'polygon-close': t('Close shape'),
-    circle: t('Drag circle'),
-    rectangle: t('Drag rectangle'),
-  }[sketchTooltipType];
 
   const renderTooltip = (
     <div

@@ -5,6 +5,8 @@ import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 
+import useEventListener from 'hooks/use-event-listener';
+
 import MaskAndOutlineGraphicLayer from 'containers/layers/mask-and-outline-graphic-layer';
 
 import Button from 'components/button';
@@ -18,6 +20,7 @@ function SketchWidget({
   setSketchWidgetMode,
   sketchWidgetMode,
   setSketchTooltipType,
+  setUpdatedGeometry,
   view,
   updatedGeometry,
 }) {
@@ -27,6 +30,26 @@ function SketchWidget({
   useEffect(() => {
     sketchTool.create('polygon');
   }, []);
+
+  const handleCancel = () => {
+    // only for 'Esc' it was not clearing the layer
+    setUpdatedGeometry(null);
+    sketchTool.delete();
+    sketchTool.cancel();
+    setSketchWidgetMode('create');
+    if (selectedTool) {
+      setSketchTooltipType(selectedTool);
+      sketchTool.create(selectedTool);
+    }
+  };
+
+  // Override default esc press to reselect the tool when canceling
+  const keyEscapeEventListener = (evt) => {
+    const event = evt;
+    if (event.keyCode === 27) handleCancel();
+  };
+  useEventListener('keydown', keyEscapeEventListener);
+
   const createButtons = [
     { type: 'polygon', label: t('polygon'), icon: 'polygon' },
     { type: 'rectangle', label: t('rectangle'), icon: 'checkbox-unchecked' },
@@ -84,13 +107,7 @@ function SketchWidget({
       type="button"
       onClick={() => {
         if (buttonType === 'delete') {
-          sketchTool.delete();
-          sketchTool.cancel();
-          setSketchWidgetMode('create');
-          setSketchTooltipType(selectedTool);
-          if (selectedTool) {
-            sketchTool.create(selectedTool);
-          }
+          handleCancel();
         } else if (buttonType === 'undo') {
           sketchTool.undo();
         } else if (buttonType === 'redo') {
