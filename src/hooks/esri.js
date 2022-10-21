@@ -267,7 +267,6 @@ export const useSketchWidget = ({
       });
 
       sketchTool.on('update', (event) => {
-        console.log('update', event);
         const { toolEventInfo, graphics } = event;
         if (graphics && toolEventInfo && toolEventInfo.type.endsWith('-stop')) {
           checkAndMarkValidArea(graphics[0]);
@@ -276,7 +275,6 @@ export const useSketchWidget = ({
       });
 
       sketchTool.on('delete', () => {
-        console.log('deeee');
         setUpdatedGeometry(null);
       });
     }
