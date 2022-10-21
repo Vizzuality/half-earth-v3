@@ -32,7 +32,11 @@ function SketchWidget({
   }, []);
 
   const handleCancel = () => {
-    // only for 'Esc' it was not clearing the layer
+    if (sketchTool.layer) {
+      // Remove geometry for 'Esc' press
+      sketchTool.layer.remove(sketchTool.layer.graphics.items[0]);
+    }
+    // Remove mask
     setUpdatedGeometry(null);
     sketchTool.delete();
     sketchTool.cancel();

@@ -216,13 +216,15 @@ export const useSketchWidget = ({
       JSON.stringify(INVALID_SYMBOL.outline.color);
 
   useEffect(() => {
-    const checkAndMarkValidArea = (graphic) => {
-      const area = calculateGeometryArea(
-        graphic.geometry,
-        Constructors.geometryEngine
-      );
+    const isNotValidArea = (graphic) => {
+      const area =
+        graphic &&
+        calculateGeometryArea(graphic.geometry, Constructors.geometryEngine);
+      return area > HIGHER_AREA_SIZE_LIMIT;
+    };
 
-      if (area > HIGHER_AREA_SIZE_LIMIT) {
+    const checkAndMarkValidArea = (graphic) => {
+      if (isNotValidArea(graphic)) {
         graphic.symbol = INVALID_SYMBOL;
         setSketchTooltipType('too-big');
       } else if (hasInvalidStyle(graphic)) {
@@ -255,14 +257,22 @@ export const useSketchWidget = ({
               setSketchTooltipType('polygon-close');
             }
           }
-        } else if (state === 'complete' && sketchWidgetMode === 'create') {
-          // Go to edit
-          setSketchTooltipType(null);
-          setSketchWidgetMode('edit');
-          view.goTo(graphic.geometry);
-          checkAndMarkValidArea(graphic);
-          sketchTool.update([graphic], { tool: 'reshape' });
-          setUpdatedGeometry(graphic.geometry);
+        }
+        if (state === 'complete' && sketchWidgetMode === 'create') {
+          if (isNotValidArea(graphic)) {
+            // Remove geometry if too big
+            sketchTool.layer.remove(graphic);
+            sketchTool.create(tool);
+            setSketchTooltipType(tool);
+          } else {
+            // Go to edit
+            setSketchTooltipType(null);
+            setSketchWidgetMode('edit');
+            view.goTo(graphic.geometry);
+            checkAndMarkValidArea(graphic);
+            sketchTool.update([graphic], { tool: 'reshape' });
+            setUpdatedGeometry(graphic.geometry);
+          }
         }
       });
 
