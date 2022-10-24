@@ -47,12 +47,11 @@ function Container(props) {
     browsePage,
     precomputedAoiAnalytics,
     changeUI,
-    cleanURLParam,
     activeCategoryLayers,
     sidebarTabActive,
     selectedAnalysisLayer,
     sceneSettings,
-    coordsToCenter,
+    centerOn,
     onboardingType,
   } = props;
 
@@ -60,16 +59,17 @@ function Container(props) {
     useState(sceneSettings);
 
   useEffect(() => {
-    const updatedSceneSettingsCenter = coordsToCenter || sceneSettings.center;
-
+    const updatedSceneSettingsCenter =
+      (centerOn && centerOn.coords) || sceneSettings.center;
     setUpdatedSceneSettings({
       ...sceneSettings,
+      ...(centerOn && centerOn.zoom ? { zoom: centerOn.zoom } : {}),
       center:
         onboardingType === 'priority-places'
           ? ONBOARDING_TYPE_CENTER['priority-places']
           : updatedSceneSettingsCenter,
     });
-  }, [onboardingType, coordsToCenter]);
+  }, [onboardingType, centerOn]);
 
   const { content: mapTooltipContent, precalculatedLayerSlug } = mapTooltipData;
   const [mapLayerTab, analyzeAreasTab] = getSidebarTabs();

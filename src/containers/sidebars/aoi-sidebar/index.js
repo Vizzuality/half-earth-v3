@@ -29,6 +29,7 @@ function AoiSidebarContainer(props) {
     browsePage,
     changeUI,
     activeLayers,
+    view,
   } = props;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
@@ -82,10 +83,13 @@ function AoiSidebarContainer(props) {
     browsePage({
       type: DATA,
       query: {
-        coordsToCenter: [
-          geometry && geometry.extent.center.longitude,
-          geometry && geometry.extent.center.latitude,
-        ],
+        centerOn: {
+          coords: [
+            geometry && view.center.longitude,
+            geometry && view.extent.center.latitude,
+          ],
+          zoom: view.zoom,
+        },
       },
     });
     changeUI({

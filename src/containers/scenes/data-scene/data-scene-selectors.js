@@ -13,8 +13,8 @@ import {
 
 import aoiSceneConfig from 'containers/scenes/aoi-scene/config';
 
-const selectTemporaryCenterCoords = ({ location }) =>
-  (location.query && location.query.coordsToCenter) || null;
+const selectTemporaryPosition = ({ location }) =>
+  (location.query && location.query.centerOn) || null;
 
 const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
   return {
@@ -35,6 +35,6 @@ export default createStructuredSelector({
   sidebarTabActive: getSidebarTabActive,
   selectedAnalysisLayer: getSelectedAnalysisLayer,
   selectedAnalysisTab: getSelectedAnalysisTab,
-  coordsToCenter: selectTemporaryCenterCoords,
+  centerOn: selectTemporaryPosition,
   view: selectSceneView,
 });
