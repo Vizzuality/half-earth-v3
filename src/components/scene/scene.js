@@ -16,7 +16,11 @@ const actions = { ...urlActions, ...sceneActions };
 
 function InitialRotation(props) {
   const {
-    rotationKey, setRotationActive, view, animationRotatedDegrees, setAnimationRotatedDegrees,
+    rotationKey,
+    setRotationActive,
+    view,
+    animationRotatedDegrees,
+    setAnimationRotatedDegrees,
   } = props;
 
   // Rotate globe once on start
@@ -25,17 +29,18 @@ function InitialRotation(props) {
     const rotate = () => {
       if ((view && view.interacting) || animationRotatedDegrees > 360) {
         setRotationActive(false);
+        // eslint-disable-next-line no-undef
         localStorage.setItem(rotationKey, true);
       } else {
         const camera = view.camera.clone();
         camera.position.longitude -= ROTATION_SPEED;
-        view.goTo(camera, { animate: false })
-          .then(() => {
-            setAnimationRotatedDegrees(animationRotatedDegrees + ROTATION_SPEED);
-          });
+        view.goTo(camera, { animate: false }).then(() => {
+          setAnimationRotatedDegrees(animationRotatedDegrees + ROTATION_SPEED);
+        });
       }
     };
 
+    // eslint-disable-next-line no-undef
     requestAnimationFrame(rotate);
   }, [view, animationRotatedDegrees, setRotationActive]);
 
@@ -54,6 +59,7 @@ function SceneContainer(props) {
     sceneSettings,
     urlParamsUpdateDisabled,
     initialRotation,
+    centerOn,
   } = props;
 
   const [map, setMap] = useState(null);
@@ -63,20 +69,24 @@ function SceneContainer(props) {
   const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
 
-  const rotationKey = useMemo(() => initialRotation && `${sceneName}HasRotated`, []);
+  const rotationKey = useMemo(
+    () => initialRotation && `${sceneName}HasRotated`,
+    []
+  );
+  // eslint-disable-next-line no-undef
   const hasSceneRotated = useMemo(() => localStorage.getItem(rotationKey), []);
 
   useEffect(() => {
-    loadModules([
-      'esri/Map',
-    ], loaderOptions)
+    loadModules(['esri/Map'], loaderOptions)
       .then(([Map]) => {
         const _map = new Map({
           basemap: SATELLITE_BASEMAP_LAYER,
         });
 
         setMap(_map);
-        onMapLoad && onMapLoad(_map);
+        if (onMapLoad) {
+          onMapLoad(_map);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -103,7 +113,9 @@ function SceneContainer(props) {
   useEffect(() => {
     if (map && view) {
       setLoadState('loaded');
-      onViewLoad && onViewLoad(map, view);
+      if (onViewLoad) {
+        onViewLoad(map, view);
+      }
       setSceneMap(map);
       setSceneView(view);
     }
@@ -122,17 +134,34 @@ function SceneContainer(props) {
     }
 
     return function cleanUp() {
-      watchHandle && watchHandle.remove();
+      if (watchHandle) {
+        watchHandle.remove();
+      }
     };
   }, [view, rotationActive]);
 
   // Start rotation when loaded
   useEffect(() => {
-    if (initialRotation && !hasSceneRotated && view && view.camera && !hasSetRotationActive) {
+    if (
+      initialRotation &&
+      !hasSceneRotated &&
+      // Don't rotate if we come from an AOI and we are centered to some coordinates
+      !centerOn &&
+      view &&
+      view.camera &&
+      !hasSetRotationActive
+    ) {
       setRotationActive(true);
       setHasSetRotationActive(true);
     }
-  }, [view, view && view.camera, initialRotation, hasSceneRotated, hasSetRotationActive]);
+  }, [
+    view,
+    view && view.camera,
+    initialRotation,
+    hasSceneRotated,
+    centerOn,
+    hasSetRotationActive,
+  ]);
 
   return (
     <>
@@ -143,8 +172,7 @@ function SceneContainer(props) {
         handleSceneClick={() => setRotationActive(false)}
         {...props}
       />
-      {initialRotation && rotationActive
-        && (
+      {initialRotation && rotationActive && (
         <InitialRotation
           rotationKey={rotationKey}
           setRotationActive={setRotationActive}
@@ -152,7 +180,7 @@ function SceneContainer(props) {
           animationRotatedDegrees={animationRotatedDegrees}
           setAnimationRotatedDegrees={setAnimationRotatedDegrees}
         />
-        )}
+      )}
     </>
   );
 }
