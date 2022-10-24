@@ -24,7 +24,6 @@ const SEARCH_RESULTS_SLUG = 'search-results';
 function SpeciesCardContainer(props) {
   const locale = useLocale();
   const t = useT();
-  console.log('p', props);
   const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
