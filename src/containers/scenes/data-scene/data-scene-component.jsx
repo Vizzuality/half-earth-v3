@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import loadable from '@loadable/component';
 
