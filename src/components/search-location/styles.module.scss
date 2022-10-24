@@ -14,10 +14,10 @@
     pointer-events: none;
     cursor: not-allowed;
   }
+}
 
-  .searchResultsList {
-    z-index: $bring-to-front;
-  }
+.searchResultsList {
+  z-index: $bring-to-front;
 }
 
 .placeholderIcon {
