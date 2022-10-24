@@ -45,7 +45,6 @@ function FeaturedGlobe({
   customFunctions,
   clickCallbacksArray,
   mouseMoveCallbacksArray,
-  activeOption,
   openedModal,
   browsePage,
 }) {
@@ -105,7 +104,6 @@ function FeaturedGlobe({
             className={cx(uiStyles.uiTopLeft, {
               [uiStyles.blur]: activeGlobesMenu && !selectedFeaturedPlace,
             })}
-            activeOption={activeOption}
             selectedFeaturedMap={selectedFeaturedMap}
             selectedSidebar={selectedSidebar}
             isFullscreenActive={isFullscreenActive}
@@ -125,14 +123,12 @@ function FeaturedGlobe({
           selectedFeaturedMap={selectedFeaturedMap}
           isFullscreenActive={isFullscreenActive}
           selectedFeaturedPlace={selectedFeaturedPlace}
-          activeOption={activeOption}
         />
         <FeaturedPlaceCard
           isFullscreenActive={isFullscreenActive}
           selectedFeaturedPlace={selectedFeaturedPlace}
           selectedFeaturedMap={selectedFeaturedMap}
           selectedTaxa={selectedTaxa}
-          activeOption={activeOption}
         />
 
         {activeGlobesMenu && !selectedFeaturedPlace && (

@@ -17,7 +17,6 @@ function DataGlobeComponent({
   hasMetadata,
   openedModal,
   activeLayers,
-  activeOption,
   handleMapLoad,
   sceneSettings,
   isSidebarOpen,
@@ -41,7 +40,6 @@ function DataGlobeComponent({
         countryISO={countryISO}
         countryName={countryName}
         openedModal={openedModal}
-        activeOption={activeOption}
         activeLayers={activeLayers}
         sceneSettings={sceneSettings}
         isSidebarOpen={isSidebarOpen}

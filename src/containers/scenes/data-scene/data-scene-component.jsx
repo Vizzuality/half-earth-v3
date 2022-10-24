@@ -36,7 +36,6 @@ function DataSceneComponent({
   countryISO,
   countryName,
   openedModal,
-  activeOption,
   sceneSettings,
   isSidebarOpen,
   activeCategory,
@@ -95,7 +94,6 @@ function DataSceneComponent({
 
       <DataGlobalSidebar
         activeLayers={updatedActiveLayers}
-        activeOption={activeOption}
         isSidebarOpen={isSidebarOpen}
         activeCategory={activeCategory}
         isFullscreenActive={isFullscreenActive}

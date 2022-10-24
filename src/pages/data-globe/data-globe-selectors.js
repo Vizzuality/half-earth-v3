@@ -78,10 +78,6 @@ const getActiveCategory = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.activeCategory
 );
-const getActiveOption = createSelector(
-  getUiSettings,
-  (uiSettings) => uiSettings.activeOption
-);
 const getHalfEarthModalOpen = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.openedModal
@@ -142,7 +138,6 @@ export default createStructuredSelector({
   listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,
   openedModal: getHalfEarthModalOpen,
-  activeOption: getActiveOption, // mobile
   sceneMode: getSceneMode,
   countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
