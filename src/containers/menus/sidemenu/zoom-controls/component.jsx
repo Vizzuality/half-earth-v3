@@ -31,7 +31,14 @@ function ZoomControls({ zoomWidget }) {
 }
 
 ZoomControls.propTypes = {
-  zoomWidget: PropTypes.shape().isRequired,
+  zoomWidget: PropTypes.shape(),
+};
+
+ZoomControls.defaultProps = {
+  zoomWidget: {
+    zoomIn: () => {},
+    zoomOut: () => {},
+  },
 };
 
 export default ZoomControls;

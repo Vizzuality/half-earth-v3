@@ -66,6 +66,7 @@ function SketchWidget({
 
   const renderCreateButton = (buttonType, buttonLabel, icon) => (
     <button
+      key={`button-${buttonLabel}`}
       aria-label={`Draw a ${buttonLabel}`}
       title={`Draw a ${buttonLabel}`}
       className={cx(
@@ -100,6 +101,7 @@ function SketchWidget({
     className
   ) => (
     <button
+      key={`button-${buttonLabel}`}
       aria-label={`${buttonLabel} selection`}
       className={cx(
         'esri-sketch__button',

@@ -17,10 +17,6 @@ import { getIUCNList } from 'constants/iucn-list';
 
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
-// utils
-// services
-
-// component
 import Component from './component';
 
 const SEARCH_RESULTS_SLUG = 'search-results';
@@ -28,12 +24,14 @@ const SEARCH_RESULTS_SLUG = 'search-results';
 function SpeciesCardContainer(props) {
   const locale = useLocale();
   const t = useT();
-
+  console.log('p', props);
   const speciesFiltersSource = useMemo(() => getSpeciesFilters(), [locale]);
   const iucnList = useMemo(() => getIUCNList(), [locale]);
 
   const { speciesData, contextualData } = props;
   const { species } = speciesData;
+
+  if (!species) return null;
 
   const language = locale !== '' ? locale : 'en';
 
@@ -152,7 +150,7 @@ function SpeciesCardContainer(props) {
 
   useEffect(() => {
     const filters = speciesFiltersSource.map((filter) => {
-      const speciesName = filter && filter.slug.split('_')[0];
+      const speciesName = filter && filter.slug && filter.slug.split('_')[0];
       const allSpeciesCount =
         contextualData.speciesNumbers && contextualData.speciesNumbers.nspecies;
       const taxaSpeciesCount =
@@ -178,7 +176,7 @@ function SpeciesCardContainer(props) {
     setSpeciesFilter(
       filters.find((f) => f.slug === selectedSpeciesFilter.slug)
     );
-  }, [speciesData.species, locale, contextualData.speciesNumbers]);
+  }, [species, locale, contextualData.speciesNumbers]);
 
   useEffect(() => {
     const sortSpecies = (s) =>
@@ -188,12 +186,12 @@ function SpeciesCardContainer(props) {
         ['desc', 'desc', 'desc']
       );
     const speciesSorted =
-      speciesData.species &&
+      species &&
       sortSpecies(
         selectedSpeciesFilter.slug === 'all'
-          ? [...speciesData.species]
+          ? [...species]
           : [
-              ...speciesData.species.filter(
+              ...species.filter(
                 (sp) => sp.category === selectedSpeciesFilter.slug
               ),
             ]
@@ -203,7 +201,7 @@ function SpeciesCardContainer(props) {
       setSpeciesToDisplay(speciesSorted);
       setSpeciesToDisplayBackUp([...speciesSorted]);
     }
-  }, [speciesData.species, selectedSpeciesFilter]);
+  }, [species, selectedSpeciesFilter]);
 
   useEffect(() => {
     setSelectedSpecies(speciesToDisplay[selectedSpeciesIndex]);

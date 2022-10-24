@@ -53,6 +53,8 @@ function Component({
     () => getSidebarCardsConfig(locale),
     [locale]
   );
+  if (!speciesData.species) return null;
+
   return speciesData.species && speciesData.species.length === 0 ? (
     <section className={styles.loaderCard}>
       <div className={styles.loaderBarContainer}>
