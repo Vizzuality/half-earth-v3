@@ -223,9 +223,9 @@ const createNewCustomAOI = ({
     setContextualData({ ...data, ...contextualData });
   });
   const taxas = [BIRDS, MAMMALS, REPTILES, AMPHIBIANS];
-  const promises = taxas.map((taxa) =>
-    getCustomAOISpeciesData(taxa, aoiStoredGeometry)
-  );
+  const promises = taxas
+    .map((taxa) => getCustomAOISpeciesData(taxa, aoiStoredGeometry))
+    .filter(Boolean);
   Promise.all(promises).then((allTaxaData) => {
     allTaxaData.forEach((taxaData, i) => {
       const taxaName = taxas[i];

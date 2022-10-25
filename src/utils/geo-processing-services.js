@@ -145,33 +145,35 @@ export function getCustomAOISpeciesData(crfName, geometry) {
         {}
       );
       const ids = data.value.features.map((f) => f.attributes.SliceNumber);
-      EsriFeatureService.getFeatures({
-        url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
-        whereClause: `SliceNumber IN (${ids.toString()})`,
-      })
-        .then((features) => {
-          const result = features
-            .map((f) => ({
-              category: crfName,
-              has_image: f.attributes.has_image,
-              isFlagship: f.attributes.is_flagship,
-              sliceNumber: f.attributes.SliceNumber,
-              name: f.attributes.scientific_name,
-              commonName: parseCommonName(f),
-              globalProtectedArea: f.attributes.wdpa_km2,
-              globaldRangeArea: f.attributes.range_area_km2,
-              globalProtectedPercentage: f.attributes.percent_protected,
-              protectionTarget: f.attributes.conservation_target,
-              conservationConcern: f.attributes.conservation_concern || 0,
-              presenceInArea:
-                crfSlices[f.attributes.SliceNumber].presencePercentage,
-            }))
-            .filter((f) => f.name !== null);
-          resolve(result);
+      if (ids && ids.length > 0) {
+        EsriFeatureService.getFeatures({
+          url: LAYERS_URLS[LOOKUP_TABLES[crfName]],
+          whereClause: `SliceNumber IN (${ids.toString()})`,
         })
-        .catch((error) => {
-          reject(error);
-        });
+          .then((features) => {
+            const result = features
+              .map((f) => ({
+                category: crfName,
+                has_image: f.attributes.has_image,
+                isFlagship: f.attributes.is_flagship,
+                sliceNumber: f.attributes.SliceNumber,
+                name: f.attributes.scientific_name,
+                commonName: parseCommonName(f),
+                globalProtectedArea: f.attributes.wdpa_km2,
+                globaldRangeArea: f.attributes.range_area_km2,
+                globalProtectedPercentage: f.attributes.percent_protected,
+                protectionTarget: f.attributes.conservation_target,
+                conservationConcern: f.attributes.conservation_concern || 0,
+                presenceInArea:
+                  crfSlices[f.attributes.SliceNumber].presencePercentage,
+              }))
+              .filter((f) => f.name !== null);
+            resolve(result);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
     });
   });
 }
