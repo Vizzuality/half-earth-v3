@@ -1,8 +1,10 @@
 import { useRef, useEffect, useMemo } from 'react';
 
+import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
+
 import uiStyles from 'styles/ui.module.scss';
 
-export const useTooltipRefs = ({
+export const useOnboardingTooltipRefs = ({
   changeUI,
   onboardingType,
   onboardingStep,
@@ -60,37 +62,61 @@ export const resetTooltip = (changeUI) => {
   });
 };
 
-export const useOpenSection = ({
+export const useOnboardingOpenSection = ({
   section,
   setOpen,
   onboardingStep,
   onboardingType,
   waitingInteraction,
+  changeUI,
 }) => {
-  const sections = {
+  // Eg. section: priority, onboarding steps to be opened: [1, 2, 3]
+  const sectionSteps = {
     priority: [1, 2, 3],
     protection: [4],
     humanPressures: [5],
     nrc: [2, 4, 5],
   };
+
+  // When we arrive on the waiting for interaction close the prior section
   const waitingInteractionsClose = {
     priority: [3],
     protection: [4],
   };
-  const stepsToOpen = sections[section];
+
+  // Biodiversity tabs change
+  const stepsToBiodiversityLayerVariants = {
+    1: LAYER_VARIANTS.PRIORITY,
+    2: LAYER_VARIANTS.RICHNESS,
+    3: LAYER_VARIANTS.RARITY,
+  };
+
+  const stepsToOpen = sectionSteps[section];
   const waitingInteractionClose = waitingInteractionsClose[section];
 
   useEffect(() => {
-    if (
-      waitingInteraction &&
-      waitingInteractionClose &&
-      waitingInteractionClose.includes(onboardingStep)
-    ) {
-      setOpen(false);
-    } else if (stepsToOpen.includes(onboardingStep) && !!onboardingType) {
-      setOpen(true);
+    if (onboardingType) {
+      if (
+        (waitingInteraction &&
+          waitingInteractionClose &&
+          waitingInteractionClose.includes(onboardingStep)) ||
+        !stepsToOpen.includes(onboardingStep)
+      ) {
+        setOpen(false);
+      } else {
+        setOpen(true);
+      }
+
+      // Biodiversity tabs
+      const biodiversityLayerVariantToOpen =
+        stepsToBiodiversityLayerVariants[onboardingStep];
+      if (biodiversityLayerVariantToOpen) {
+        changeUI({
+          biodiversityLayerVariant: biodiversityLayerVariantToOpen,
+        });
+      }
     }
-  }, [onboardingStep, setOpen, waitingInteraction]);
+  }, [onboardingStep, setOpen, waitingInteraction, onboardingType]);
 };
 
 export const getOnboardingProps = ({

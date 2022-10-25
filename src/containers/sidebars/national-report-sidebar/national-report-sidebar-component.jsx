@@ -7,7 +7,7 @@ import { Loading } from 'he-components';
 
 import {
   getOnboardingProps,
-  useTooltipRefs,
+  useOnboardingTooltipRefs,
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
@@ -64,7 +64,7 @@ function NationalReportSidebarComponent({
   const sidebarHidden = isFullscreenActive;
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
-  const tooltipRefs = useTooltipRefs({
+  const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,

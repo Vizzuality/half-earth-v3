@@ -32,6 +32,7 @@ function MapLayers({
         handleGlobeUpdating={handleGlobeUpdating}
         map={map}
         onboardingStep={onboardingStep}
+        onboardingType={onboardingType}
         waitingInteraction={waitingInteraction}
       />
       <HumanImpactSidebarCard
