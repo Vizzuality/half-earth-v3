@@ -61,6 +61,8 @@ function NRCLandingSidebar({
   const averageLoaded =
     landAverage !== undefined || marineAverage !== undefined;
 
+  // --- Onboarding
+
   const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
@@ -76,6 +78,9 @@ function NRCLandingSidebar({
       onboardingStep,
       waitingInteraction,
     });
+
+  // ---
+
   return (
     <motion.div
       ref={(ref) => {

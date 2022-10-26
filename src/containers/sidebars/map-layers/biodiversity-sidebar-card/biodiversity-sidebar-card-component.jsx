@@ -68,6 +68,12 @@ function BiodiversitySidebarCardComponent({
 
   // --- Onboarding
 
+  const tooltipRefs = useOnboardingTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
+
   useOnboardingOpenSection({
     section: 'priority',
     setOpen,
@@ -75,12 +81,6 @@ function BiodiversitySidebarCardComponent({
     onboardingType,
     waitingInteraction,
     changeUI,
-  });
-
-  const tooltipRefs = useOnboardingTooltipRefs({
-    changeUI,
-    onboardingType,
-    onboardingStep,
   });
 
   const {

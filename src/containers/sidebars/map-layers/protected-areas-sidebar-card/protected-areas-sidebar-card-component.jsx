@@ -67,6 +67,7 @@ function ProtectedAreasSidebarCardComponent({
     waitingInteraction,
     changeUI,
   });
+
   const {
     overlay: onboardingOverlay,
     onClick: onboardingOnClick,

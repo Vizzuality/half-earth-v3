@@ -85,6 +85,7 @@ function HumanImpactSidebarCardComponent({
     onboardingType,
     onboardingStep,
   });
+
   useOnboardingOpenSection({
     section: 'humanPressures',
     setOpen,
@@ -93,6 +94,7 @@ function HumanImpactSidebarCardComponent({
     waitingInteraction,
     changeUI,
   });
+
   const {
     overlay: onboardingOverlay,
     onClick: onboardingOnClick,
