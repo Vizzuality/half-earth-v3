@@ -6,9 +6,9 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import {
-  useTooltipRefs,
+  useOnboardingTooltipRefs,
   getOnboardingProps,
-  useOpenSection,
+  useOnboardingOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
@@ -53,12 +53,12 @@ function HumanImpactSidebarCardComponent({
 
   const humanPressuresLandUse = useMemo(
     () => getHumanPressuresLandUse(),
-    [locale],
+    [locale]
   );
 
   const humanPressuresMarine = useMemo(
     () => getHumanPressuresMarine(),
-    [locale],
+    [locale]
   );
 
   const texts = {
@@ -66,29 +66,35 @@ function HumanImpactSidebarCardComponent({
     marineLayersTitle: t('Marine use pressures'),
     terrestrialLayersTitle: t('Land use pressures'),
     description: t(
-      'Global human pressures causing habitat loss and accelerating species extinction.',
+      'Global human pressures causing habitat loss and accelerating species extinction.'
     ),
   };
 
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
   const activeLayersTitles = activeLayers.map((l) => l.title);
-  const areAllSelected = (layers) => layers.every((l) => activeLayersTitles.includes(l.value));
+  const areAllSelected = (layers) =>
+    layers.every((l) => activeLayersTitles.includes(l.value));
   const allHumanPressuresSelected = areAllSelected(humanPressuresLandUse);
   const allMarinePressuresSelected = areAllSelected(humanPressuresMarine);
-  // Onboarding
-  const tooltipRefs = useTooltipRefs({
+
+  // --- Onboarding
+
+  const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
   });
-  useOpenSection({
+
+  useOnboardingOpenSection({
     section: 'humanPressures',
     setOpen,
     onboardingStep,
     onboardingType,
     waitingInteraction,
+    changeUI,
   });
+
   const {
     overlay: onboardingOverlay,
     onClick: onboardingOnClick,
@@ -101,6 +107,8 @@ function HumanImpactSidebarCardComponent({
     onboardingStep,
     waitingInteraction,
   });
+
+  /// ---
 
   return (
     <motion.div
@@ -146,18 +154,22 @@ function HumanImpactSidebarCardComponent({
               activeLayers={activeLayers}
               themeCategorySlug={LAND_HUMAN_PRESSURES_SLUG}
               theme={checkboxTheme.landPressures}
-              onChange={(option) => handleLayerToggle(option, LAND_HUMAN_PRESSURES)}
+              onChange={(option) =>
+                handleLayerToggle(option, LAND_HUMAN_PRESSURES)
+              }
             />
           ))}
           <button
             type="button"
             className={styles.allButton}
-            onClick={() => handleLayerToggle(
-              {
-                layer: allHumanPressuresSelected ? 'none' : 'all',
-              },
-              LAND_HUMAN_PRESSURES,
-            )}
+            onClick={() =>
+              handleLayerToggle(
+                {
+                  layer: allHumanPressuresSelected ? 'none' : 'all',
+                },
+                LAND_HUMAN_PRESSURES
+              )
+            }
           >
             {allHumanPressuresSelected ? t('Unselect all') : t('Select all')}
           </button>
@@ -179,18 +191,22 @@ function HumanImpactSidebarCardComponent({
               activeLayers={activeLayers}
               themeCategorySlug={MARINE_HUMAN_PRESSURES_SLUG}
               theme={checkboxTheme.marinePressures}
-              onChange={(option) => handleLayerToggle(option, MARINE_HUMAN_PRESSURES)}
+              onChange={(option) =>
+                handleLayerToggle(option, MARINE_HUMAN_PRESSURES)
+              }
             />
           ))}
           <button
             type="button"
             className={styles.allButton}
-            onClick={() => handleLayerToggle(
-              {
-                layer: allMarinePressuresSelected ? 'none' : 'all',
-              },
-              MARINE_HUMAN_PRESSURES,
-            )}
+            onClick={() =>
+              handleLayerToggle(
+                {
+                  layer: allMarinePressuresSelected ? 'none' : 'all',
+                },
+                MARINE_HUMAN_PRESSURES
+              )
+            }
           >
             {allMarinePressuresSelected ? t('Unselect all') : t('Select all')}
           </button>

@@ -43,7 +43,6 @@ export default {
   },
   ui: {
     isSidebarOpen: false,
-    activeOption: 'add_layer', // mobile
     isFullscreenActive: false,
     activeCategory: '',
     sceneMode: 'data',

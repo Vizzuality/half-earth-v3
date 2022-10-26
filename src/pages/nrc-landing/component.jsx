@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 
+import { NATIONAL_REPORT_CARD_LANDING } from 'router';
+
 import loadable from '@loadable/component';
 
 import NationalReportCardLandingScene from 'scenes/nrc-landing-scene';
+
+import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
 
 import HalfEarthLogo from 'components/half-earth-logo';
 
@@ -23,8 +27,23 @@ function NationalReportCardLanding({
   onboardingStep,
   waitingInteraction,
   browsePage,
+  changeUI,
+  changeGlobe,
 }) {
   const [map, setMap] = useState();
+
+  useOnboardingOpenSection({
+    onboardingStep,
+    onboardingType,
+    waitingInteraction,
+    browsePage,
+    changeUI,
+    locationRoute: NATIONAL_REPORT_CARD_LANDING,
+    countryISO,
+    countryName,
+    changeGlobe,
+  });
+
   return (
     <>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />

@@ -1,6 +1,9 @@
 import {
-  CITIES_LABELS_LAYER, FEATURED_PLACES_LAYER, GRAPHIC_LAYER,
-  LANDSCAPE_FEATURES_LABELS_LAYER, PRIORITY_POLYGONS_GRAPHIC_LAYER,
+  CITIES_LABELS_LAYER,
+  FEATURED_PLACES_LAYER,
+  GRAPHIC_LAYER,
+  LANDSCAPE_FEATURES_LABELS_LAYER,
+  PRIORITY_POLYGONS_GRAPHIC_LAYER,
 } from 'constants/layers-slugs';
 
 export default {
@@ -44,7 +47,6 @@ export default {
     selectedTaxa: 'all',
     selectedFeaturedPlace: null,
     isFullscreenActive: false,
-    activeOption: 'add_layer', // mobile
   },
   listeners: false,
 };

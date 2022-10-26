@@ -54,6 +54,7 @@ function SearchLocation({
   handleCloseButton,
   className = {},
   setSearcherOpen,
+  searchType,
 }) {
   const t = useT();
   const searchOptionsListRef = useRef();
@@ -95,7 +96,6 @@ function SearchLocation({
       </div>
     );
   };
-
   return (
     <motion.div
       ref={reference}
@@ -154,9 +154,11 @@ function SearchLocation({
                 ))
               ) : (
                 <li className={styles.emptyOption}>
-                  {t(
-                    'No results found. Please search another place or draw a custom area.'
-                  )}
+                  {searchType === 'full'
+                    ? t(
+                        'No results found. Please search another place or draw a custom area.'
+                      )
+                    : t('No results found. Please search another place.')}
                 </li>
               )}
             </ul>

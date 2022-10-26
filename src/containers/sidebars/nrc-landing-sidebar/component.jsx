@@ -7,7 +7,7 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import {
-  useTooltipRefs,
+  useOnboardingTooltipRefs,
   getOnboardingProps,
 } from 'containers/onboarding/onboarding-hooks';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
@@ -58,22 +58,29 @@ function NRCLandingSidebar({
   ];
 
   const { landAverage, marineAverage } = globalAverage;
-  const averageLoaded = landAverage !== undefined || marineAverage !== undefined;
+  const averageLoaded =
+    landAverage !== undefined || marineAverage !== undefined;
 
-  const tooltipRefs = useTooltipRefs({
+  // --- Onboarding
+
+  const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
     waitingInteraction,
   });
 
-  const { overlay: onboardingOverlay, onClick: onboardingOnClick } = getOnboardingProps({
-    section: 'nrcLandingSidebar',
-    styles,
-    changeUI,
-    onboardingStep,
-    waitingInteraction,
-  });
+  const { overlay: onboardingOverlay, onClick: onboardingOnClick } =
+    getOnboardingProps({
+      section: 'nrcLandingSidebar',
+      styles,
+      changeUI,
+      onboardingStep,
+      waitingInteraction,
+    });
+
+  // ---
+
   return (
     <motion.div
       ref={(ref) => {
@@ -106,9 +113,10 @@ function NRCLandingSidebar({
         <div className={styles.togglesContainer}>
           {NRCLandingLayers.map((layer) => {
             const { name, slug } = layer;
-            const nameUpdated = name && slug === GLOBAL_SPI_FEATURE_LAYER
-              ? `${t('Land SPI (Global average:')} ${landAverage})`
-              : `${t('Marine SPI (Global average:')} ${marineAverage})`;
+            const nameUpdated =
+              name && slug === GLOBAL_SPI_FEATURE_LAYER
+                ? `${t('Land SPI (Global average:')} ${landAverage})`
+                : `${t('Marine SPI (Global average:')} ${marineAverage})`;
             const layerUpdated = { ...layer, name: nameUpdated };
             return (
               <LayerToggle

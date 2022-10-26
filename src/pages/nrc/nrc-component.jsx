@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
+import { NATIONAL_REPORT_CARD } from 'router';
+
 import loadable from '@loadable/component';
 
 import cx from 'classnames';
 
 import NationalReportCardScene from 'scenes/nrc-scene';
 
+import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
 import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
 
 import CountryChallengesChart from 'components/country-challenges-chart';
@@ -37,8 +40,23 @@ function NationalReportCard({
   onboardingType,
   onboardingStep,
   waitingInteraction,
+  browsePage,
+  changeUI,
+  changeGlobe,
 }) {
   const [map, setMap] = useState();
+
+  useOnboardingOpenSection({
+    onboardingStep,
+    onboardingType,
+    waitingInteraction,
+    browsePage,
+    changeUI,
+    changeGlobe,
+    countryISO,
+    locationRoute: NATIONAL_REPORT_CARD,
+    localSceneActiveTab,
+  });
 
   const { marine } = chartData;
   const coastal = !!marine;

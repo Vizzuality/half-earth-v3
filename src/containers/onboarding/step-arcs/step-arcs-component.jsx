@@ -9,7 +9,7 @@ function StepsArcs({
   currentStep,
   radius = 33,
   strokeWidth = 3,
-  // handleClick,
+  handleClick,
 }) {
   const polarToCartesian = (centerX, centerY, _radius, angleInDegrees) => {
     const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
@@ -58,8 +58,7 @@ function StepsArcs({
         <path
           role="button"
           aria-pressed={currentStep === i}
-          // TODO: Fix step click
-          // onClick={(e) => handleClick(e, i)}
+          onClick={(e) => handleClick(e, i)}
           // eslint-disable-next-line react/no-array-index-key
           key={`$arc-${i}`}
           className={cx(styles.stepsArc, {

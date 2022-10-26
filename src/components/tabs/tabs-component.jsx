@@ -1,8 +1,9 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import PropTypes from 'prop-types';
 
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
@@ -10,7 +11,7 @@ import styles from './tabs-styles.module.scss';
 
 const getSelectedTabIndex = (tabs, defaultTabSlug) => {
   const selectedTab = tabs.find(
-    (t) => t.slug === defaultTabSlug || t.title === defaultTabSlug,
+    (t) => t.slug === defaultTabSlug || t.title === defaultTabSlug
   );
   const selectedTabIndex = tabs.indexOf(selectedTab);
   return selectedTabIndex > -1 ? selectedTabIndex : 0;
@@ -33,17 +34,15 @@ function Tabs({
         {tabs.map((tab, i) => {
           const { slug, title } = tab;
           const tabSlug = slug || title;
-          const {
-            overlay: onboardingOverlay,
-            className: onboardingClassname,
-          } = getOnboardingProps({
-            section: 'tabs',
-            slug: tabSlug,
-            styles,
-            onboardingType,
-            onboardingStep,
-            waitingInteraction,
-          });
+          const { overlay: onboardingOverlay, className: onboardingClassname } =
+            getOnboardingProps({
+              section: 'tabs',
+              slug: tabSlug,
+              styles,
+              onboardingType,
+              onboardingStep,
+              waitingInteraction,
+            });
           return (
             <li role="presentation" key={`tab-${tabSlug}`}>
               <motion.div
@@ -52,11 +51,9 @@ function Tabs({
                     tabButtonsRef.current[tabSlug] = ref;
                   }
                 }}
-                className={cx(
-                  styles.tab,
-                  onboardingClassname,
-                  { [styles.disabled]: disabled },
-                )}
+                className={cx(styles.tab, onboardingClassname, {
+                  [styles.disabled]: disabled,
+                })}
                 role="tab"
                 aria-selected={slug === defaultTabSlug}
                 {...onboardingOverlay}
@@ -73,10 +70,10 @@ function Tabs({
                     { [styles.first]: i === 0 },
                     {
                       [styles.hasBorder]:
-                        slug !== defaultTabSlug
-                        && i !== getSelectedTabIndex(tabs, defaultTabSlug) + 1
-                        && i !== getSelectedTabIndex(tabs, defaultTabSlug) - 1,
-                    },
+                        slug !== defaultTabSlug &&
+                        i !== getSelectedTabIndex(tabs, defaultTabSlug) + 1 &&
+                        i !== getSelectedTabIndex(tabs, defaultTabSlug) - 1,
+                    }
                   )}
                 >
                   {title}
@@ -95,7 +92,7 @@ Tabs.propTypes = {
     PropTypes.shape({
       slug: PropTypes.string,
       title: PropTypes.string.isRequired,
-    }),
+    })
   ),
   onClick: PropTypes.func.isRequired,
   defaultTabSlug: PropTypes.string,

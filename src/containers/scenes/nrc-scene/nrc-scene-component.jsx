@@ -24,7 +24,7 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-function CountrySceneComponent({
+function NrcScene({
   onMapLoad,
   isVisible,
   countryISO,
@@ -85,4 +85,4 @@ function CountrySceneComponent({
   );
 }
 
-export default CountrySceneComponent;
+export default NrcScene;

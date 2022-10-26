@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
+import { LANDING } from 'router';
+
 import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import { ReactComponent as CloseIcon } from 'icons/close.svg';
-import { ReactComponent as DotsIcon } from 'icons/dots.svg';
-import { ReactComponent as MuteIcon } from 'icons/mute.svg';
-import { ReactComponent as MutedIcon } from 'icons/muted.svg';
-import { ReactComponent as PauseIcon } from 'icons/pause.svg';
-import { ReactComponent as PlayIcon } from 'icons/play.svg';
-import { LANDING } from 'router';
 import priorityPlaces01 from 'sounds/tour1-track1-intro.mp3';
 import priorityPlaces02 from 'sounds/tour1-track2-priority.mp3';
 import priorityPlaces03 from 'sounds/tour1-track3-richness.mp3';
@@ -32,6 +27,13 @@ import {
   getScripts,
   NO_INTERACTION_STEPS,
 } from 'constants/onboarding-constants';
+
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
+import { ReactComponent as DotsIcon } from 'icons/dots.svg';
+import { ReactComponent as MuteIcon } from 'icons/mute.svg';
+import { ReactComponent as MutedIcon } from 'icons/muted.svg';
+import { ReactComponent as PauseIcon } from 'icons/pause.svg';
+import { ReactComponent as PlayIcon } from 'icons/play.svg';
 
 import StepsArcs from '../step-arcs';
 
@@ -59,6 +61,41 @@ const files = {
   ],
 };
 
+const renderAudioBars = (setPauseIcon) => (
+  <div className={styles.audioBars} onMouseEnter={() => setPauseIcon(true)}>
+    <motion.div
+      className={styles.audioBar}
+      animate={{
+        scaleY: [1, 3, 1, 1, 3, 1],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+      }}
+    />
+    <motion.div
+      className={styles.audioBar}
+      animate={{
+        scaleY: [3, 1, 3, 1, 1, 3],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+      }}
+    />
+    <motion.div
+      className={styles.audioBar}
+      animate={{
+        scaleY: [1, 3, 1, 1, 3, 1],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+      }}
+    />
+  </div>
+);
+
 function ButtonIcon({
   waitingStartAudioClick,
   waitingInteraction,
@@ -72,41 +109,24 @@ function ButtonIcon({
   setPausedTime,
   playedSeconds,
   changeUI,
+  onboardingType,
 }) {
-  const renderAudioBars = () => (
-    <div className={styles.audioBars} onMouseEnter={() => setPauseIcon(true)}>
-      <motion.div
-        className={styles.audioBar}
-        animate={{
-          scaleY: [1, 3, 1, 1, 3, 1],
+  const renderIdle = () =>
+    pauseIcon ? (
+      <button
+        type="button"
+        className={styles.pauseButton}
+        onMouseLeave={() => setPauseIcon(false)}
+        onClick={() => {
+          setPlaying(false);
+          setPausedTime(playedSeconds);
         }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-        }}
-      />
-      <motion.div
-        className={styles.audioBar}
-        animate={{
-          scaleY: [3, 1, 3, 1, 1, 3],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-        }}
-      />
-      <motion.div
-        className={styles.audioBar}
-        animate={{
-          scaleY: [1, 3, 1, 1, 3, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-        }}
-      />
-    </div>
-  );
+      >
+        <PauseIcon className={styles.pauseIcon} />
+      </button>
+    ) : (
+      renderAudioBars(setPauseIcon)
+    );
 
   return (
     <>
@@ -121,26 +141,15 @@ function ButtonIcon({
         }}
       />
       {!waitingInteraction && (waitingStartAudioClick || !playing) ? (
-        <button onClick={handlePlay} className={styles.playButton}>
+        <button
+          type="button"
+          onClick={handlePlay}
+          className={styles.playButton}
+        >
           <PlayIcon className={styles.playIcon} />
         </button>
       ) : (
-        <>
-          {pauseIcon ? (
-            <button
-              className={styles.pauseButton}
-              onMouseLeave={() => setPauseIcon(false)}
-              onClick={() => {
-                setPlaying(false);
-                setPausedTime(playedSeconds);
-              }}
-            >
-              <PauseIcon className={styles.pauseIcon} />
-            </button>
-          ) : (
-            renderAudioBars()
-          )}
-        </>
+        renderIdle()
       )}
     </>
   );
@@ -185,9 +194,10 @@ function SoundButtonComponent({
     setPlaying(true);
   };
 
-  const script = onboardingType
-    && scripts[onboardingType]
-    && Object.values(scripts[onboardingType])[onboardingStep];
+  const script =
+    onboardingType &&
+    scripts[onboardingType] &&
+    Object.values(scripts[onboardingType])[onboardingStep];
   const file = files[onboardingType][onboardingStep];
 
   const handleBack = () => {
@@ -221,7 +231,7 @@ function SoundButtonComponent({
     setTextMark(0);
 
     const dontWaitStep = NO_INTERACTION_STEPS[onboardingType].includes(
-      Object.keys(scripts[onboardingType])[onboardingStep],
+      Object.keys(scripts[onboardingType])[onboardingStep]
     );
 
     if (dontWaitStep) {
@@ -244,7 +254,8 @@ function SoundButtonComponent({
   const startTime = script && script[textMark] && script[textMark].startTime;
   const endTime = script && script[textMark] && script[textMark].endTime;
   const text = script && script[textMark] && script[textMark].text;
-  const stepsNumber = scripts[onboardingType] && Object.keys(scripts[onboardingType]).length;
+  const stepsNumber =
+    scripts[onboardingType] && Object.keys(scripts[onboardingType]).length;
 
   const renderTooltipText = () => {
     if (!waitingInteraction && waitingStartAudioClick) {
@@ -254,7 +265,11 @@ function SoundButtonComponent({
       <DotsIcon />
     ) : (
       <div className={styles.textContainer}>
-        <button className={styles.muteButton} onClick={toggleMuted}>
+        <button
+          type="button"
+          className={styles.muteButton}
+          onClick={toggleMuted}
+        >
           {muted ? (
             <MutedIcon className={styles.muteIcon} />
           ) : (
@@ -277,7 +292,11 @@ function SoundButtonComponent({
         {renderTooltipText()}
       </div>
       <div className={styles.rightColumn}>
-        <button className={styles.closeButton} onClick={handleFinishOnBoarding}>
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={handleFinishOnBoarding}
+        >
           <CloseIcon />
           <p>QUIT</p>
         </button>
@@ -316,6 +335,7 @@ function SoundButtonComponent({
               setPausedTime,
               playedSeconds,
               changeUI,
+              onboardingType,
             }}
           />
         </div>
@@ -324,7 +344,7 @@ function SoundButtonComponent({
         isOpen={finishModal}
         title={t('What would you like to do next?')}
         description={t(
-          'You just finished the audio tour. You can either take a new tour or explore the Half-Earth Project Map on your own.',
+          'You just finished the audio tour. You can either take a new tour or explore the Half-Earth Project Map on your own.'
         )}
         handleBack={handleBack}
         handleClose={handleSwitchMode}

@@ -6,9 +6,9 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import {
-  useTooltipRefs,
+  useOnboardingTooltipRefs,
   getOnboardingProps,
-  useOpenSection,
+  useOnboardingOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
 import SidebarCardContent from 'containers/sidebars/sidebar-card-content';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
@@ -66,18 +66,21 @@ function BiodiversitySidebarCardComponent({
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
-  useOpenSection({
+  // --- Onboarding
+
+  const tooltipRefs = useOnboardingTooltipRefs({
+    changeUI,
+    onboardingType,
+    onboardingStep,
+  });
+
+  useOnboardingOpenSection({
     section: 'priority',
     setOpen,
     onboardingStep,
     onboardingType,
     waitingInteraction,
-  });
-
-  const tooltipRefs = useTooltipRefs({
     changeUI,
-    onboardingType,
-    onboardingStep,
   });
 
   const {
@@ -91,6 +94,8 @@ function BiodiversitySidebarCardComponent({
     onboardingStep,
     waitingInteraction,
   });
+
+  // ---
 
   const renderBiodiversityLayerToggle = (category) => {
     const categoryResolutionOptions = layersResolutionsOptions[category];

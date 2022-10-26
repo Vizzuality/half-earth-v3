@@ -6,9 +6,9 @@ import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import {
-  useTooltipRefs,
+  useOnboardingTooltipRefs,
   getOnboardingProps,
-  useOpenSection,
+  useOnboardingOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
 
 import CategoryBox from 'components/category-box';
@@ -51,18 +51,23 @@ function ProtectedAreasSidebarCardComponent({
   const [isOpen, setOpen] = useState(false);
   const handleBoxClick = () => setOpen(!isOpen);
 
-  const tooltipRefs = useTooltipRefs({
+  // --- Onboarding
+
+  const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
   });
-  useOpenSection({
+
+  useOnboardingOpenSection({
     section: 'protection',
     setOpen,
     onboardingStep,
     onboardingType,
     waitingInteraction,
+    changeUI,
   });
+
   const {
     overlay: onboardingOverlay,
     onClick: onboardingOnClick,
@@ -76,11 +81,13 @@ function ProtectedAreasSidebarCardComponent({
     waitingInteraction,
   });
 
+  // ---
+
   const texts = {
     categoryTitle: t('Protection'),
     layersTitle: t('Conservation areas'),
     description: t(
-      'Global protections classified according to their management objectives.',
+      'Global protections classified according to their management objectives.'
     ),
   };
 
