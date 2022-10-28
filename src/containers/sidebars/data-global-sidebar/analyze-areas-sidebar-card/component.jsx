@@ -26,7 +26,7 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as AreasHistoryIcon } from 'icons/areas_history_icon.svg';
 
-import { TABS } from './constants';
+import { getTabs } from './constants';
 import SketchTooltip from './sketch-tooltip';
 import SketchWidget from './sketch-widget';
 
@@ -55,6 +55,7 @@ function AnalyzeAreasCardComponent({
 }) {
   const t = useT();
   const locale = useLocale();
+  const tabs = useMemo(() => getTabs(), [locale]);
   const precalculatedAOIOptions = useMemo(
     () => getPrecalculatedAOIOptions(),
     [locale]
@@ -81,7 +82,7 @@ function AnalyzeAreasCardComponent({
       <div className={styles.analyzeMenuContainer}>
         <p className={styles.analyzeMenuTitle}>{t('Selection Type')}</p>
         <div className={styles.analyzeMenuTabsContainer}>
-          {TABS(selectedAnalysisTab).map((tab) => {
+          {tabs(selectedAnalysisTab).map((tab) => {
             return (
               <button
                 key={tab.label}
