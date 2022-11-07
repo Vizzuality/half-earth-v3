@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { useT } from '@transifex/react';
 
-import { ReactComponent as SearchIcon } from 'icons/search.svg';
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
+
+import { ReactComponent as SearchIcon } from 'icons/search.svg';
+
 import styles from './search-input-styles.module';
 
-const SearchInput = ({ placeholder, onChange, value, type, className }) => {
+function SearchInput({ placeholder, onChange, value, type, className }) {
   const t = useT();
 
   return (
@@ -27,18 +31,20 @@ const SearchInput = ({ placeholder, onChange, value, type, className }) => {
       />
     </div>
   );
-};
+}
 
 SearchInput.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 SearchInput.defaultProps = {
   value: '',
+  type: undefined,
+  className: undefined,
 };
 
 export default SearchInput;

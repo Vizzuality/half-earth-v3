@@ -177,9 +177,11 @@ const getIndexStatement = createSelector(
   // eslint-disable-next-line no-unused-vars
   (SPI, SPIMean, locale) => {
     if (!SPI || !SPIMean) return null;
-    const comparation = SPI >= SPIMean ? t('higher') : t('lower');
-    return `${t('THE SPI OF THIS COUNTRY IS ')}${comparation} ${t(
-      'than the national average: '
+    const comparation = SPI >= SPIMean ? t('HIGHER') : t('LOWER');
+
+    return `${t(
+      'THE SPI OF THIS COUNTRY IS {comparation} THAN THE NATIONAL AVERAGE: ',
+      { comparation }
     )}${SPIMean} `;
   }
 );

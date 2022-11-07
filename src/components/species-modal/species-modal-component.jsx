@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { Virtuoso } from 'react-virtuoso';
 
-import { useLocale, useT } from '@transifex/react';
+import { T, useLocale, useT } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
@@ -105,9 +105,11 @@ function SpeciesModalComponent({
                   [styles.bold]: stewardship === 1,
                 })}
               >
-                {stewardship === 1
-                  ? t('Endemic')
-                  : `${stewardship} ${t('countries')}`}
+                {stewardship === 1 ? (
+                  t('Endemic')
+                ) : (
+                  <T _str="{stewardship} countries" stewardship={stewardship} />
+                )}
               </div>
               <ArrowIcon
                 className={cx(styles.arrowIcon, {
@@ -146,27 +148,38 @@ function SpeciesModalComponent({
 
     // the list has been filtered
     if (speciesList.length < speciesNumber) {
-      return `${getLocaleNumber(speciesList.length, locale)} ${t(
-        'of'
-      )} ${getLocaleNumber(speciesNumber, locale)} ${
-        vertebrateType === vertebrateTabs[0].slug
-          ? t('Land vertebrate species')
-          : t('Marine vertebrate species')
-      }`;
+      return (
+        <T
+          _str={
+            vertebrateType === vertebrateTabs[0].slug
+              ? '{number} of {totalNumber} land vertebrate species'
+              : '{number} of {totalNumber} marine vertebrate species'
+          }
+          totalNumber={getLocaleNumber(speciesNumber, locale)}
+          number={getLocaleNumber(speciesList.length, locale)}
+        />
+      );
     }
-    return `${getLocaleNumber(speciesNumber, locale)} ${
-      vertebrateType === vertebrateTabs[0].slug
-        ? t('Land vertebrate species')
-        : t('Marine vertebrate species')
-    }`;
+    return (
+      <T
+        _str={
+          vertebrateType === vertebrateTabs[0].slug
+            ? '{number} land vertebrate species'
+            : '{number} marine vertebrate species'
+        }
+        number={getLocaleNumber(speciesNumber, locale)}
+      />
+    );
   }, [countryData, vertebrateType, speciesList, locale]);
 
   const renderSpeciesModal = (
     <div className={styles.speciesModal}>
       <div className={styles.grid}>
         <h1 className={styles.title}>
-          {t('Vertebrates in ')}
-          {countryNames[countryData.name] || countryData.name}
+          <T
+            _str="Vertebrates in {country}"
+            country={countryNames[countryData.name] || countryData.name}
+          />
         </h1>
         <section className={styles.section}>
           <div className={styles.search}>

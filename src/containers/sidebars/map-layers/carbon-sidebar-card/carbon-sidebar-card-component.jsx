@@ -1,33 +1,39 @@
 // Dependencies
 import React, { useState, useMemo } from 'react';
-import cx from 'classnames';
-import { motion } from 'framer-motion';
+
 import { useT, useLocale } from '@transifex/react';
 
+import cx from 'classnames';
+import { motion } from 'framer-motion';
+
 // Components
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
 import CategoryBox from 'components/category-box';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
-import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
 // Constants
-import { CARBON_LAYER } from 'constants/layers-slugs';
 import { getCarbonLayer } from 'constants/carbon-layer';
+import { CARBON_LAYER } from 'constants/layers-slugs';
 
 // Hooks
 // Styles
-import styles from './carbon-sidebar-card-styles.module.scss';
 import checkboxTheme from 'styles/themes/checkboxes-theme.module.scss';
-// Assets
+
 import CarbonThumbnail from 'images/carbon.png';
 
-const CarbonSidebarCardComponent = ({
+import styles from './carbon-sidebar-card-styles.module.scss';
+// Assets
+
+function CarbonSidebarCardComponent({
   map,
   source,
   activeLayers,
   className,
   handleLayerToggle,
   countedActiveLayers,
-}) => {
+}) {
   const t = useT();
   const locale = useLocale();
 
@@ -84,6 +90,6 @@ const CarbonSidebarCardComponent = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default CarbonSidebarCardComponent;

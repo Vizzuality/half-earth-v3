@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { t } from '@transifex/native';
+import { T } from '@transifex/react';
 
 import {
   getTotalPressures,
@@ -108,23 +109,25 @@ export const getSidebarCardsConfig = (locale) => ({
   [SPECIES_SLUG]: {
     title: (speciesCount) =>
       !locale || locale === 'en' ? (
-        <>
-          {t('This area has')} <br /> {t('up to')} {speciesCount}{' '}
-        </>
+        <T
+          _str="This area has {br} up to {speciesCount}"
+          br={<br />}
+          speciesCount={speciesCount}
+        />
       ) : (
-        <>
-          {t('This area has')} {t('up to')} {speciesCount}{' '}
-        </>
+        <T
+          _str="This area has up to {speciesCount}"
+          speciesCount={speciesCount}
+        />
       ),
     hint: t(
       'Global high-resolution data is presently available for terrestrial vertebrates. The Half-Earth Project is actively engaged in expanding our taxonomic coverage to other species groups such as ants, bees, butterflies, dragonflies, vascular plants, marine and freshwater fishes, and marine crustaceans.'
     ),
     warning: (
-      <span>
-        {t('Species summaries are less reliable for areas under 1,000 km')}
-        <sup>2</sup>
-        {t('; only a portion of these species will be found here.')}
-      </span>
+      <T
+        _str="Species summaries are less reliable for areas under 1,000 km{sup}; only a portion of these species will be found here."
+        sup={<sup>2</sup>}
+      />
     ),
   },
   [BIODIVERSITY_SLUG]: {
@@ -133,8 +136,11 @@ export const getSidebarCardsConfig = (locale) => ({
       t(
         'The species range maps are summarized by biodiversity richness and rarity.  By combining richness and rarity, these maps inform the __Half-Earth Project’s__ prioritization for conservation efforts. These three layers (richness, rarity, and priority) can be visualized below.'
       ),
-    warning: t(
-      'Biodiversity patterns not available for areas under __1,000 km2__.'
+    warning: (
+      <T
+        _str="Biodiversity patterns not available for areas under __1,000 km{sup}__."
+        sup={<sup>2</sup>}
+      />
     ),
   },
   [PROTECTION_SLUG]: {
@@ -142,15 +148,20 @@ export const getSidebarCardsConfig = (locale) => ({
     description: ({ protectionPercentage, percentage, DESIG }) => {
       const isProtectedArea = !!DESIG;
       if (isProtectedArea) return null;
-      return `${t('Of the current area,')} __${
-        protectionPercentage || percentage
-          ? roundUpPercentage(
-              percentageFormat(
-                capPercentage(protectionPercentage || percentage)
-              )
-            )
-          : '0'
-      }${t('% of land is under formal protection__.')}`;
+      return (
+        <T
+          _str="Of the current area, __{percentage}% of land is under formal protection__."
+          percentage={
+            protectionPercentage || percentage
+              ? roundUpPercentage(
+                  percentageFormat(
+                    capPercentage(protectionPercentage || percentage)
+                  )
+                )
+              : '0'
+          }
+        />
+      );
     },
     warning: null,
   },

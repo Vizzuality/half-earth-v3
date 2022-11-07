@@ -28,7 +28,6 @@ export const getWDPALayers = () => [
     slug: COMMUNITY_AREAS_VECTOR_TILE_LAYER,
     groupedLayer: true,
     metadataTitle: t('Community-based protected areas'),
-
   },
 ];
 

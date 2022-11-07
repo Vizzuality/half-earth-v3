@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 
 import { loadModules } from 'esri-loader';
 
-import { useT, useLocale } from '@transifex/react';
+import { T, useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
@@ -162,13 +162,18 @@ function CountryEntryTooltipComponent({
             {landTab ? landVertebrates : marVertebrates}
           </span>
           <span className={styles.text}>
-            {landTab
-              ? t('land vertebrate species of which')
-              : t('marine vertebrate species of which')}{' '}
-            <span className={styles.endemic}>
-              {landTab ? endemicLand : endemicMar}
-            </span>{' '}
-            {t('are endemic')}
+            <T
+              _str={
+                landTab
+                  ? 'land vertebrate species of which {number} are endemic'
+                  : 'marine vertebrate species of which {number} are endemic'
+              }
+              number={
+                <span className={styles.endemic}>
+                  {landTab ? endemicLand : endemicMar}
+                </span>
+              }
+            />
           </span>
         </div>
         <div className={styles.infoPill}>

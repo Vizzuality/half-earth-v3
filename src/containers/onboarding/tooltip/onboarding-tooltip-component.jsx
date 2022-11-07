@@ -16,14 +16,15 @@ function OnboardingTooltipComponent({
   waitingInteraction,
 }) {
   const t = useT();
-  const getTooltipText = (_onboardingType, _onboardingStep) => (_onboardingType === 'national-report-cards' && _onboardingStep === 1
-    ? t('Type here to continue')
-    : t('Click here to continue.'));
+  const getTooltipText = (_onboardingType, _onboardingStep) =>
+    _onboardingType === 'national-report-cards' && _onboardingStep === 1
+      ? t('Type here to continue')
+      : t('Click here to continue.');
 
   if (
-    !waitingInteraction
-    || typeof onboardingStep !== 'number'
-    || !tooltipTop
+    !waitingInteraction ||
+    typeof onboardingStep !== 'number' ||
+    !tooltipTop
   ) {
     return null;
   }

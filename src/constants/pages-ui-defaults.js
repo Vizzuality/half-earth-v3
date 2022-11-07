@@ -1,8 +1,8 @@
+import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import {
   LOCAL_SCENE_TABS_SLUGS,
   BIODIVERSITY_DEFAULT_TAB,
 } from 'constants/ui-params';
-import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 
 export const NRC_UI_DEFAULTS = {
   sceneMode: 'local',

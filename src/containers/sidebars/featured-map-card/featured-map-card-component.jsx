@@ -71,8 +71,8 @@ function FeaturedMapCardComponent({
           </>
         )}
       </div>
-    ))
-    || null
+    )) ||
+    null
   );
 }
 

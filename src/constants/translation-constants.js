@@ -196,8 +196,12 @@ export const getCountryNames = () => ({
   Sudan: t('Sudan'),
   Senegal: t('Senegal'),
   Singapore: t('Singapore'),
-  'South Georgia and the South Sandwich Islands': t('South Georgia and the South Sandwich Islands'),
-  'Saint Helena, Ascension and Tristan da Cunha': t('Saint Helena, Ascension and Tristan da Cunha'),
+  'South Georgia and the South Sandwich Islands': t(
+    'South Georgia and the South Sandwich Islands'
+  ),
+  'Saint Helena, Ascension and Tristan da Cunha': t(
+    'Saint Helena, Ascension and Tristan da Cunha'
+  ),
   'Svalbard and Jan Mayen': t('Svalbard and Jan Mayen'),
   'Solomon Islands': t('Solomon Islands'),
   'Sierra Leone': t('Sierra Leone'),
@@ -233,7 +237,9 @@ export const getCountryNames = () => ({
   Tanzania: t('Tanzania'),
   Uganda: t('Uganda'),
   Ukraine: t('Ukraine'),
-  'United States Minor Outlying Islands': t('United States Minor Outlying Islands'),
+  'United States Minor Outlying Islands': t(
+    'United States Minor Outlying Islands'
+  ),
   Uruguay: t('Uruguay'),
   'United States': t('United States'),
   Uzbekistan: t('Uzbekistan'),
@@ -311,7 +317,9 @@ export const getWDPATranslations = () => ({
   // IUCN CATEGORY
   'Not Reported': t('Not Reported'),
   // GOVERNANCE
-  'Federal or national ministry or agency': t('Federal or national ministry or agency'),
+  'Federal or national ministry or agency': t(
+    'Federal or national ministry or agency'
+  ),
   'Collaborative governance': t('Collaborative governance'),
   // 'Not Reported': t('Not Reported'),
   'Sub-national ministry or agency': t('Sub-national ministry or agency'),

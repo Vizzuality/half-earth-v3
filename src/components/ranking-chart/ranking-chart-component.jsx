@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { Tooltip } from 'react-tippy';
+
 import { useT, useLocale } from '@transifex/react';
 
-import { Tooltip } from 'react-tippy';
-import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
-import SearchInput from 'components/search-input';
+import PropTypes from 'prop-types';
+
+import cx from 'classnames';
+
 import Dropdown from 'components/dropdown';
-import styles from './ranking-chart-styles.module.scss';
+import SearchInput from 'components/search-input';
+
 import {
   SORT_GROUPS,
   getSortOptions,
@@ -15,8 +17,12 @@ import {
   SORT_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
 
+import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
+
+import styles from './ranking-chart-styles.module.scss';
+
 const categories = Object.keys(SORT_GROUPS_SLUGS);
-const RankingChart = ({
+function RankingChart({
   data,
   coastal,
   className,
@@ -30,7 +36,7 @@ const RankingChart = ({
   landMarineOptions,
   selectedLandMarineOption,
   handleLandMarineSelection,
-}) => {
+}) {
   const [hasScrolled, changeHasScrolled] = useState(false);
   const t = useT();
   const locale = useLocale();
@@ -170,6 +176,7 @@ const RankingChart = ({
                 key={d.name}
               >
                 <button
+                  type="button"
                   className={styles.spiCountryButton}
                   onClick={() => handleCountryClick(d.iso, d.name)}
                 >
@@ -215,15 +222,21 @@ const RankingChart = ({
       ) : null}
     </div>
   );
-};
+}
 
 RankingChart.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.array,
   className: PropTypes.string,
   searchTerm: PropTypes.string,
-  scrollIndex: PropTypes.number,
-  sortRankingCategory: PropTypes.string,
+  scrollIndex: PropTypes.number.isRequired,
   handleCountryClick: PropTypes.func.isRequired,
+};
+
+RankingChart.defaultProps = {
+  data: null,
+  className: undefined,
+  searchTerm: undefined,
 };
 
 export default RankingChart;

@@ -28,8 +28,12 @@ export const getTexts = () => ({
   partners: {
     title: t('Half-Earth Project Map - Core Team'),
     content: [
-      `${t('The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to identify the best opportunities to conserve species biodiversity. Vizzuality brings this information to life')}`,
-      `<p style="margin-bottom: 0px;">${t('Click here to know more about the core team of Half-Earth:')}</p>`,
+      `${t(
+        'The Half-Earth Project is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to identify the best opportunities to conserve species biodiversity. Vizzuality brings this information to life'
+      )}`,
+      `<p style="margin-bottom: 0px;">${t(
+        'Click here to know more about the core team of Half-Earth:'
+      )}</p>`,
       '<a target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/">www.half-earthproject.org/half-earth-project-team-members</a>',
     ],
   },
@@ -153,19 +157,27 @@ export const getResearchPartners = () => [
   },
 ];
 
-export const getSponsors = () => [{
-  href: 'https://www.esri.com/en-us/home',
-  image: { src: esriLogo, alt: t('Esri') },
-},
-{
-  href: 'https://www.moore.org/',
-  image: { src: mooreFoundationLogo, alt: t('Gordon and Betty Moore Foundation') },
-},
-{
-  href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-  image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundation'), className: 'bbees' },
-},
-{
-  label: 'Jeff and Laurie Ubben',
-},
+export const getSponsors = () => [
+  {
+    href: 'https://www.esri.com/en-us/home',
+    image: { src: esriLogo, alt: t('Esri') },
+  },
+  {
+    href: 'https://www.moore.org/',
+    image: {
+      src: mooreFoundationLogo,
+      alt: t('Gordon and Betty Moore Foundation'),
+    },
+  },
+  {
+    href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
+    image: {
+      src: burtsLogo,
+      alt: t('Burt’s Bees Greater Good Foundation'),
+      className: 'bbees',
+    },
+  },
+  {
+    label: 'Jeff and Laurie Ubben',
+  },
 ];

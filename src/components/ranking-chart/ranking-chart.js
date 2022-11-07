@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import metadataActions from 'redux_modules/metadata';
+
+import { NATIONAL_REPORT_CARD } from 'router';
+
+import * as urlActions from 'actions/url-actions';
+
+import useDebounce from 'hooks/use-debounce';
+
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+
 import Component from './ranking-chart-component';
 import mapStateToProps from './ranking-chart-selectors';
-import useDebounce from 'hooks/use-debounce';
-import * as urlActions from 'actions/url-actions';
-import metadataActions from 'redux_modules/metadata';
-import { NATIONAL_REPORT_CARD } from 'router';
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 const actions = { ...metadataActions, ...urlActions };
 
@@ -17,14 +22,16 @@ function RankingChartContainer(props) {
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
 
   useEffect(() => {
-    const { countryISO, data } = props;
-    const newIndex = data.findIndex((d) => d.iso === countryISO);
+    const { countryISO, data: _data } = props;
+    const newIndex = _data.findIndex((d) => d.iso === countryISO);
     setScrollIndex(newIndex);
   }, []);
 
   useEffect(() => {
     if (data && searchTerm) {
-      const newIndex = data.findIndex((d) => d.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
+      const newIndex = data.findIndex((d) =>
+        d.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+      );
       setScrollIndex(newIndex);
     }
     return undefined;
@@ -37,7 +44,10 @@ function RankingChartContainer(props) {
 
   const handleCountryClick = (countryISO) => {
     const { browsePage } = props;
-    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.RANKING } });
+    browsePage({
+      type: NATIONAL_REPORT_CARD,
+      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.RANKING },
+    });
   };
 
   const handleSearchChange = (event) => {

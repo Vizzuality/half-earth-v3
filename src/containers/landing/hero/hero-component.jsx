@@ -40,9 +40,10 @@ function HeroComponent({ className, changeUI, browsePage }) {
           delay: 0.5,
         }}
       >
-        <T _str="Explore where species conservation" />
-        <br />
-        <T _str="activities are most needed" />
+        <T
+          _str="Explore where species conservation {br} activities are the most needed"
+          br={<br />}
+        />
       </motion.h1>
 
       <motion.p

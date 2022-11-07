@@ -1,15 +1,18 @@
-import { Modal } from 'he-components';
 import React from 'react';
-import styles from './styles.module';
+
 import { T } from '@transifex/react';
 
-export const OnBoardingModalComponent = ({
+import { Modal } from 'he-components';
+
+import styles from './styles.module';
+
+export function OnBoardingModalComponent({
   isOpen,
   title,
   description,
   handleBack,
   handleClose,
-}) => {
+}) {
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} theme={styles}>
       <div className={styles.modalContainer}>
@@ -30,6 +33,6 @@ export const OnBoardingModalComponent = ({
       </div>
     </Modal>
   );
-};
+}
 
 export default OnBoardingModalComponent;
