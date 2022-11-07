@@ -1,13 +1,15 @@
 import React from 'react';
-import { ReactComponent as MouseRightClickIcon } from 'icons/mouseRightClick.svg';
-import { ReactComponent as MouseMiddleClickIcon } from 'icons/mouseMiddleClick.svg';
+
+import { useT } from '@transifex/react';
+
 import { ReactComponent as GlobeIcon } from 'icons/globe.svg';
 import { ReactComponent as LandscapeIcon } from 'icons/landscape.svg';
-import { useT } from '@transifex/react';
+import { ReactComponent as MouseMiddleClickIcon } from 'icons/mouseMiddleClick.svg';
+import { ReactComponent as MouseRightClickIcon } from 'icons/mouseRightClick.svg';
 
 import styles from './map-instructions-styles.module.scss';
 
-const MouseNavigatonSection = () => {
+function MouseNavigatonSection() {
   const t = useT();
   const mouseClickLabels = {
     leftClick: t('ROTATE VIEW'),
@@ -31,9 +33,9 @@ const MouseNavigatonSection = () => {
       </div>
     </div>
   );
-};
+}
 
-const StorySection = () => {
+function StorySection() {
   const t = useT();
   const storyDescriptions = {
     firstStep: t(
@@ -56,9 +58,9 @@ const StorySection = () => {
       </div>
     </div>
   );
-};
+}
 
-const MapInstructionsComponent = () => {
+function MapInstructionsComponent() {
   const t = useT();
   const title = t('How to navigate the map');
 
@@ -69,6 +71,6 @@ const MapInstructionsComponent = () => {
       <StorySection />
     </div>
   );
-};
+}
 
 export default MapInstructionsComponent;
