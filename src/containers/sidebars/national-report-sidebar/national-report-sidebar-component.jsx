@@ -125,7 +125,7 @@ function NationalReportSidebarComponent({
                 type="icon-square"
                 Icon={DownloadIcon}
                 handleClick={handlePrintReport}
-                tooltipText={t('Download national data report')}
+                tooltipText={t('Download national report')}
               />
             )}
           </div>

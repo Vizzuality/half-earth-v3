@@ -33,11 +33,11 @@ export const getWDPALayers = () => [
 
 export const getConserveNextLayers = () => [
   {
-    name: t('Places for a Half-Earth future'),
+    name: t('Places for a Half-Earth Future'),
     value: HALF_EARTH_FUTURE_TILE_LAYER,
     id: HALF_EARTH_FUTURE_TILE_LAYER,
     title: HALF_EARTH_FUTURE_TILE_LAYER,
     slug: HALF_EARTH_FUTURE_METADATA_SLUG,
-    metadataTitle: t('Places for a Half-Earth future'),
+    metadataTitle: t('Places for a Half-Earth Future'),
   },
 ];

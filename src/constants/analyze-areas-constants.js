@@ -93,7 +93,7 @@ export const getPrecalculatedAOIOptions = () => [
   {
     title: FUTURE_PLACES,
     slug: FUTURE_PLACES,
-    label: t('Places for a Half-Earth future'),
+    label: t('Places for a Half-Earth Future'),
   },
 ];
 

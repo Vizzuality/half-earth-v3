@@ -52,7 +52,7 @@ The services for the precalculated data are hosted in AGOL in folder `#6 precalc
 
 
 ## Precalculated processing:
-**NOTE** The precalculated biodiversity data for these AOIs was done mostly manually, going step by step with the Geoprocessing Tools in ArcGis Pro. Note that since the geometries are very big, it's necessary to subdivide the polygons before running the sample tool. For precalculated contextual data, we used specific models to retrieve information from each contextual layer. The project SpecificRegions in saved in the Virtual Machine Viz2 provides an example of the steps that need to be followed to precalculate both biodiversity and contextual data. 
+**NOTE** The precalculated biodiversity data for these AOIs was done mostly manually, going step by step with the Geoprocessing Tools in ArcGis Pro. Note that since the geometries are very big, it's necessary to subdivide the polygons before running the sample tool. For precalculated contextual data, we used specific models to retrieve information from each contextual layer. The project SpecificRegions in saved in the Virtual Machine Viz2 provides an example of the steps that need to be followed to precalculate both biodiversity and contextual data.
 
 The on-the-fly calculations, however, use models that were published as a geoprocessing services. There are four models for the biodiversity data, one for each taxonomic group, and one general model that retrieves data from all the contextual layers together. This model could be used for future precalculations, but have in mind that it was created to deal only with one geometry (either drawn by the user or uploaded in a shapefile). Therefore, there are parts of this general contextual model (particularly the calculation of the protection percentage or the land encroachment percentage) that require some modification to be used with layers that have more than one geometry.
 
@@ -73,7 +73,7 @@ These tables have a unique field names `MOL_ID` that will be used throughout the
 * [**Terrestrial WDPA simplified 2**)](https://eowilson.maps.arcgis.com/home/item.html?id=01830ac50a864fe08fc31c2491d3333b)
 * [**Terrestrial WDPA simplified 3**](https://eowilson.maps.arcgis.com/home/item.html?id=f238cff91e974b85ab834a2cd5efba08)
 * [**Terrestrial + Marine WDPA raw**](https://eowilson.maps.arcgis.com/home/item.html?id=17659b62323646b8ae622680dab49952)
-* [**Places for a Half-Earth future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
+* [**Places for a Half-Earth Future raw**](https://eowilson.maps.arcgis.com/home/item.html?id=358f2419c967453195ec72e4d910fd6e)
 
 #### 2. **Biodiversity CRFs**
 There is one biodiversity data cube per terrestrial taxa (in the future there will also be marine taxa: fish and mammals).
@@ -105,8 +105,8 @@ This is the summary of the general steps that we need to follow to precalculate 
 - Precalculate Contextual data in ArcGIS Pro (explained in more detail below)
 - Merge in Python: the biodiversity data needs to be stored in a particular format to be used by the front-end, so this process needs to be carried out in Python using the following notebooks.
 
-   1. **Original notebook**.  This [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_AOI_tables.ipynb) was originally used for gadm0 and gadm1. However, the method used here is not efficient, especially when dealing with large databases like the WDPAs. Therefore, the next precalculations were done following a more efficient method, and gadm0 and gadm1 were also rerun using the new script to solve errores detected in the previous precalculations. **This process is therefore deprecated** 
-   
+   1. **Original notebook**.  This [notebook](https://github.com/Vizzuality/he-scratchfolder/blob/master/Precalculated_AOI_tables.ipynb) was originally used for gadm0 and gadm1. However, the method used here is not efficient, especially when dealing with large databases like the WDPAs. Therefore, the next precalculations were done following a more efficient method, and gadm0 and gadm1 were also rerun using the new script to solve errores detected in the previous precalculations. **This process is therefore deprecated**
+
    2. **Efficient method**. The new method was used in different notebooks, one for each of the layers with precalculated data:
    * [WDPA](https://github.com/Vizzuality/he-scratchfolder/blob/main/Precalculated_WDPA.ipynb)
    * [Future Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)
@@ -141,7 +141,7 @@ Basically, the steps to follow are the following:
 
 #### **Steps precalculate contextual data:**
 In this case we are using models created with Model Builder to process the data. The models are available in the ArcGIS Pro Project `Contextual_precalculations`. For more clarity, the toolbox in the project `SpecifiRegions` provides a better understanding of the models that we used for the contextual precalculations. The models used can be accessed from the Catalog panel, Toolboxes > Contextual_precalculations.tbx.
-As in the biodiversity precalculations, we need to input two parameters: a feature layer containing the geometries and a crf with the contextual data (population, land encroachment, climate regime). 
+As in the biodiversity precalculations, we need to input two parameters: a feature layer containing the geometries and a crf with the contextual data (population, land encroachment, climate regime).
 
 To get the contextual data, we perform Zonal Statistics to get the summary values of each crf inside each geometry. The field `MOL_ID` identifies each unique geometry. Once we have the output tables of each type of data, we export them as csvs and process them in python using any of the notebooks that follow the [efficient method](https://github.com/Vizzuality/he-scratchfolder/blob/master/SpecificRegions_Precalculation.ipynb) mentioned above.
 
@@ -198,7 +198,7 @@ In this section we provide a summary of how the data for the Places for the HE F
   - Add the WDPA_Mercator layer (only terrestrial) (in the Catalog panel, Add to Database: ArcGIS > Projects > Contextual precalculations.gdb and select the layer `WDPA_Mercator`)
 6. Format and merge data in python ([notebook for HE Places](https://github.com/Vizzuality/he-scratchfolder/blob/main/Places_HE_Future.ipynb)). Export file as geojson and upload it in AGOL.
 7. For Protected Areas data
-   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for a Half-Earth future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
+   - In ArcGIS Pro perform a spatial join between the layer containing the original geometries of the [WDPAs](https://eowilson.maps.arcgis.com/home/item.html?id=abfea4a91726464baca51a07ac2cd486) and the geometries for the [Places for a Half-Earth Future](https://eowilson.maps.arcgis.com/home/item.html?id=4848c6b08fac4fa5bff40e9331b6d291). (Remember to remove those 4 geometries that caused errors).
    - Create a csv with only the relevant fields (exclude geometry) using the Table to Table tool.
    - Upload the table in AGOL as a [hosted table](https://eowilson.maps.arcgis.com/home/item.html?id=ec40de8083304b279d416685a5b98209). The resulting table contains only WDPAs that intersect the geometries for the 20 places for Half-Earth Future.
 

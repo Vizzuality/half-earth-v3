@@ -106,35 +106,19 @@ function CountryDataCardComponent({
             />
             <div>
               <p className={styles.legendText}>
-                {t('The Land SPI is calculated based on the')}
-                {' '}
+                {t('The Land SPI is calculated based on the')}{' '}
                 <b>
-                  {t('protected land area')}
-                  {' '}
-                  (
-                  {`${prop_protected_ter && prop_protected_ter.toFixed()}%`}
-                  )
+                  {t('protected land area')} (
+                  {`${prop_protected_ter && prop_protected_ter.toFixed()}%`})
                 </b>
-                {t(', the total number of')}
-                {' '}
+                {t(', the total number of')}{' '}
                 <b>
-                  {t('terrestrial vertebrates ')}
-                  (
-                  {getLocaleNumber(nspecies_ter, locale)}
-                  )
+                  {t('terrestrial vertebrates ')}(
+                  {getLocaleNumber(nspecies_ter, locale)})
                 </b>
-                {t(', and the amount of these species that are')}
-                {' '}
-                <b>{t('endemic')}</b>
-                {' '}
-                {t('to that nation')}
-                {' '}
-                <b>
-                  (
-                  {getLocaleNumber(total_endemic_ter, locale)}
-                  )
-                </b>
-                .
+                {t(', and the amount of these species that are')}{' '}
+                <b>{t('endemic')}</b> {t('to that nation')}{' '}
+                <b>({getLocaleNumber(total_endemic_ter, locale)})</b>.
               </p>
             </div>
           </div>
@@ -159,39 +143,19 @@ function CountryDataCardComponent({
               />
               <div>
                 <p className={styles.legendText}>
-                  {t('The Marine SPI is based on the')}
-                  {' '}
+                  {t('The Marine SPI is based on the')}{' '}
                   <b>
-                    {t('protected marine area')}
-                    {' '}
-                    (
-                    {`${prop_protected_mar && prop_protected_mar.toFixed()}%`}
-                    )
+                    {t('protected marine area')} (
+                    {`${prop_protected_mar && prop_protected_mar.toFixed()}%`})
                   </b>
-                  {t(', the total number of')}
-                  {' '}
+                  {t(', the total number of')}{' '}
                   <b>
-                    {t('marine vertebrates')}
-                    {' '}
-                    (
-                    {getLocaleNumber(nspecies_mar, locale)}
-                    )
+                    {t('marine vertebrates')} (
+                    {getLocaleNumber(nspecies_mar, locale)})
                   </b>
-                  {t(', and the amount of these species that are')}
-                  {' '}
-                  <b>
-                    {t('endemic')}
-                    {' '}
-                  </b>
-                  {' '}
-                  {t('to that nation')}
-                  {' '}
-                  <b>
-                    (
-                    {getLocaleNumber(total_endemic_mar, locale)}
-                    )
-                  </b>
-                  .
+                  {t(', and the amount of these species that are')}{' '}
+                  <b>{t('endemic')} </b> {t('to that nation')}{' '}
+                  <b>({getLocaleNumber(total_endemic_mar, locale)})</b>.
                 </p>
               </div>
             </div>
@@ -260,8 +224,7 @@ function CountryDataCardComponent({
             </div>
           </div>
           <p className={styles.areaChartLegendText}>
-            {t('Source: Map Of Life, (Yale University)')}
-            .
+            {t('Source: Map of Life, (Yale University)')}.
           </p>
         </div>
         <div className={styles.hint}>
