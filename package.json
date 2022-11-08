@@ -75,6 +75,7 @@
     "docs:serve": "bundle exec jekyll serve",
     "eject": "react-scripts eject",
     "transifex:push": "dotenv cross-var ./node_modules/.bin/txjs-cli push src/ --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
+    "transifex:purge": "dotenv cross-var npx txjs-cli push src/ --purge --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
     "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },

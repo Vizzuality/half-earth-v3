@@ -106,7 +106,6 @@
   margin-bottom: 10px;
 
   .infoPill {
-    display: flex;
     padding-bottom: $site-gutter;
 
     &:last-child() {
@@ -117,6 +116,7 @@
       @extend %title;
       flex-grow: 1;
       font-weight: bold;
+      margin-right: 28px;
     }
 
     .endemic {
@@ -125,8 +125,8 @@
 
     .text {
       @extend %annotation;
-      text-align: left;
-      width: 65%;
+      display: flex;
+      width: 100%;
     }
   }
 }

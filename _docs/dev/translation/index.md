@@ -16,6 +16,16 @@ The aplication is translated with the [transifex native](https://www.transifex.c
 
 Transifex is initialized on the App.jsx file. A PseudoTranslationPolicy is provided on the development environment so we can see what translations are missing on the different languages directly on the platform on development.
 
+## Scripts
+
+There are three different scripts that use the transifex cli:
+
+`yarn transifex:push` Pushes the strings that are used in the code to transifex. This runs on every deploy
+`yarn transifex:refresh` Refreshes the strings translated on transifex to show them on develop. It can take a couple minutes to show the changes.
+`yarn transifex:purge` This command purges the strings on transifex so we only have the ones present on the code. The he strings no used anymore will be deleted.
+
+
+
 ## Selecting the translation locale
 
 There is a language switcher component available on the menu and home page.
