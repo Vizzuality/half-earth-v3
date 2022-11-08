@@ -158,64 +158,42 @@ function CountryEntryTooltipComponent({
       </section>
       <section className={styles.countryInfo}>
         <div className={styles.infoPill}>
+          <span className={styles.numeric}>
+            {landTab ? landVertebrates : marVertebrates}
+          </span>
           <span className={styles.text}>
-            {landTab
-              ? t(
-                  '{number} land vertebrate species of which {endemicNumber} are endemic',
-                  {
-                    number: (
-                      <span className={styles.numeric}>{landVertebrates}</span>
-                    ),
-                    endemicNumber: (
-                      <span className={styles.endemic}>{endemicLand}</span>
-                    ),
-                  }
-                )
-              : t(
-                  '{number} marine vertebrate species of which {endemicNumber} are endemic',
-                  {
-                    number: (
-                      <span className={styles.numeric}>{marVertebrates}%</span>
-                    ),
-                    endemicNumber: (
-                      <span className={styles.endemic}>{endemicMar}</span>
-                    ),
-                  }
-                )}
+            <T
+              _str={
+                landTab
+                  ? 'land vertebrate species of which {number} are endemic'
+                  : 'marine vertebrate species of which {number} are endemic'
+              }
+              number={
+                <span className={styles.endemic}>
+                  {landTab ? endemicLand : endemicMar}
+                </span>
+              }
+            />
           </span>
         </div>
         <div className={styles.infoPill}>
+          <span className={styles.numeric}>
+            {landTab ? protectionLand : protectionMar}%
+          </span>
           <span className={styles.text}>
             {landTab
-              ? t('{number} land area is protected', {
-                  number: (
-                    <span className={styles.numeric}>{protectionLand}%</span>
-                  ),
-                })
-              : t('{number} marine area is protected', {
-                  number: (
-                    <span className={styles.numeric}>{protectionMar}%</span>
-                  ),
-                })}
+              ? t('land area is protected')
+              : t('marine area is protected')}
           </span>
         </div>
         <div className={styles.infoPill}>
+          <span className={styles.numeric}>
+            {landTab ? protectionNeededLand : protectionNeededMar}%
+          </span>
           <span className={styles.text}>
             {landTab
-              ? t('{number} of additional land protection is needed', {
-                  number: (
-                    <span className={styles.numeric}>
-                      {protectionNeededLand}%
-                    </span>
-                  ),
-                })
-              : t('{number} of additional marine protection is needed', {
-                  number: (
-                    <span className={styles.numeric}>
-                      {protectionNeededLand}%
-                    </span>
-                  ),
-                })}
+              ? t('of additional land protection is needed')
+              : t('of additional marine protection is needed')}
           </span>
         </div>
       </section>
