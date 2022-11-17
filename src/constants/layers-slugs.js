@@ -145,6 +145,12 @@ export const MAMMALS_RICHNESS_1KM = 'mammals-rarity-1km';
 export const MAMMALS_RARITY_1KM = 'mammals-richness-1km';
 export const SUMMER_BIRDS_RARITY_1KM = 'summer-birds-rarity-1km';
 export const WINTER_BIRDS_RARITY_1KM = 'winter-birds-rarity-1km';
+export const RESIDENT_BIRDS_RICHNESS_1KM = 'resident-birds-richness-1km';
+export const RESIDENT_BIRDS_RARITY_1KM = 'resident-birds-rarity-1km';
+export const ODONATES_RICHNESS_1KM = 'odonates-richness-1km';
+export const ODONATES_RARITY_1KM = 'odonates-rarity-1km';
+export const ANTS_RARITY_1KM = 'ants-rarity-1km';
+export const ANTS_RICHNESS_1KM = 'ants-richness-1km';
 
 export const ANTS_RICHNESS = 'ants-richness';
 export const BUTTERFLIES_RICHNESS = 'butterflies-richness';

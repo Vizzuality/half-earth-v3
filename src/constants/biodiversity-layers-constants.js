@@ -19,6 +19,12 @@ import {
   MAMMALS_RARITY_1KM,
   SUMMER_BIRDS_RARITY_1KM,
   WINTER_BIRDS_RARITY_1KM,
+  RESIDENT_BIRDS_RICHNESS_1KM,
+  RESIDENT_BIRDS_RARITY_1KM,
+  ODONATES_RARITY_1KM,
+  ODONATES_RICHNESS_1KM,
+  ANTS_RARITY_1KM,
+  ANTS_RICHNESS_1KM,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -227,6 +233,13 @@ export const getLayersToggleConfig = () => ({
       ],
       HIGH: [
         {
+          value: ANTS_RICHNESS_1KM,
+          name: t('ants'),
+          title: t('ants'),
+          layer: ANTS_RICHNESS_1KM,
+          group: t('invertebrates'),
+        },
+        {
           value: AMPHIB_RICHNESS_1KM,
           name: t('amphibians'),
           title: t('amphibians'),
@@ -288,6 +301,20 @@ export const getLayersToggleConfig = () => ({
           title: t('mammals'),
           layer: MAMMALS_RICHNESS_1KM,
           group: t('mammals'),
+        },
+        {
+          value: ODONATES_RICHNESS_1KM,
+          name: t('odonates'),
+          title: t('odonates'),
+          layer: ODONATES_RICHNESS_1KM,
+          group: t('invertebrates'),
+        },
+        {
+          value: RESIDENT_BIRDS_RICHNESS_1KM,
+          name: t('resident birds'),
+          title: t('resident birds'),
+          layer: RESIDENT_BIRDS_RICHNESS_1KM,
+          group: t('birds'),
         },
         {
           value: SUMMER_BIRDS_RICHNESS_1KM,
@@ -416,6 +443,13 @@ export const getLayersToggleConfig = () => ({
       ],
       HIGH: [
         {
+          value: ANTS_RARITY_1KM,
+          name: t('ants'),
+          title: t('ants'),
+          layer: ANTS_RARITY_1KM,
+          group: t('invertebrates'),
+        },
+        {
           value: AMPHIB_RARITY_1KM,
           name: t('amphibians'),
           title: t('amphibians'),
@@ -451,6 +485,13 @@ export const getLayersToggleConfig = () => ({
           group: t('birds'),
         },
         {
+          value: ODONATES_RARITY_1KM,
+          name: t('odonates'),
+          title: t('odonates'),
+          layer: ODONATES_RARITY_1KM,
+          group: t('invertebrates'),
+        },
+        {
           value: PROTEA_RARITY_1KM,
           name: t('protea'),
           title: t('protea'),
@@ -477,6 +518,13 @@ export const getLayersToggleConfig = () => ({
           title: t('mammals'),
           layer: MAMMALS_RARITY_1KM,
           group: t('mammals'),
+        },
+        {
+          value: RESIDENT_BIRDS_RARITY_1KM,
+          name: t('resident birds'),
+          title: t('resident birds'),
+          layer: RESIDENT_BIRDS_RARITY_1KM,
+          group: t('birds'),
         },
         {
           value: SUMMER_BIRDS_RARITY_1KM,

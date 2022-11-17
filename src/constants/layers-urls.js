@@ -50,6 +50,12 @@ import {
   MAMMALS_RARITY_1KM,
   SUMMER_BIRDS_RARITY_1KM,
   WINTER_BIRDS_RARITY_1KM,
+  RESIDENT_BIRDS_RICHNESS_1KM,
+  RESIDENT_BIRDS_RARITY_1KM,
+  ODONATES_RARITY_1KM,
+  ODONATES_RICHNESS_1KM,
+  ANTS_RARITY_1KM,
+  ANTS_RICHNESS_1KM,
   AMPHIB_PRIORITY,
   AMPHIB_RARITY,
   AMPHIB_RICHNESS,
@@ -261,6 +267,12 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_of_Breeding_Bird_Species_of_North_America/MapServer',
   [WINTER_BIRDS_RICHNESS_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Nonbreeding_Bird_Species_of_North_America/MapServer',
+  [RESIDENT_BIRDS_RICHNESS_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Resident_bird_richness_North_America/MapServer',
+  [ODONATES_RICHNESS_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Odonates_Richness_North_America/MapServer',
+  [ANTS_RICHNESS_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/North_America_Ants_Richness_v2/MapServer',
   [MAMMALS_RARITY_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Mammal_Species_of_North_America/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rar_sa_tif/MapServer',
@@ -269,6 +281,12 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Breeding_Bird_Species_of_North_America/MapServer',
   [WINTER_BIRDS_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Nonbreeding_Birds_of_North_America/MapServer',
+  [RESIDENT_BIRDS_RARITY_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Resident_bird_of_North_America/MapServer',
+  [ODONATES_RARITY_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Odonates_North_America_Mean_Rarity/MapServer',
+  [ANTS_RARITY_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/North_America_Ants_Mean_Rarity_v2_2_1/MapServer',
   // Global biodiversity services
   /// / Terrestrial Priority services
   [ALL_TAXA_PRIORITY]:

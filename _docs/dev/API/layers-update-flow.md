@@ -64,6 +64,14 @@ These are the layer types we are currently using in the platform:
       bbox: [-164,-40,-35,56]
     }
     ```
+- Add the metadata slug (usually the same layer slug) to the `constants/metadata.js` file
+´´´js
+  ...
+  [RESIDENT_BIRDS_RICHNESS_1KM]: {
+    slug: RESIDENT_BIRDS_RICHNESS_1KM,
+  },
+  ...
+```
 
 - If the layers are going to show on the map layers tab be sure to add a count of the layers on the respective section E.g. `getLayersToggleConfig` on `biodiversity-layers-constants` > `getBiodiversityCountedActiveLayer` on `biodiversity-sidebar-card-selectors`
 
