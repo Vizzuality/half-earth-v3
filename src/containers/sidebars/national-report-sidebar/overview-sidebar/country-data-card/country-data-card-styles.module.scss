@@ -194,9 +194,9 @@
 .areaChartLegendText {
   @extend %subtitle;
   color: $_temporary-dark-text;
-  text-transform: capitalize;
   text-align: start;
   margin: 0 auto 0 0;
+  text-transform: none;
   padding: 0;
 }
 
