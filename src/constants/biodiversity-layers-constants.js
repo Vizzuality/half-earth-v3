@@ -21,8 +21,6 @@ import {
   WINTER_BIRDS_RARITY_1KM,
   RESIDENT_BIRDS_RICHNESS_1KM,
   RESIDENT_BIRDS_RARITY_1KM,
-  ODONATES_RARITY_1KM,
-  ODONATES_RICHNESS_1KM,
   ANTS_RARITY_1KM,
   ANTS_RICHNESS_1KM,
   AMPHIB_PRIORITY,
@@ -262,8 +260,8 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: DRAGONFLIES_RICHNESS_1KM,
-          name: t('dragonflies'),
-          title: t('dragonflies'),
+          name: t('Dragonflies and Damselflies'),
+          title: t('Dragonflies and Damselflies'),
           layer: DRAGONFLIES_RICHNESS_1KM,
           group: t('invertebrates'),
         },
@@ -301,13 +299,6 @@ export const getLayersToggleConfig = () => ({
           title: t('mammals'),
           layer: MAMMALS_RICHNESS_1KM,
           group: t('mammals'),
-        },
-        {
-          value: ODONATES_RICHNESS_1KM,
-          name: t('odonates'),
-          title: t('odonates'),
-          layer: ODONATES_RICHNESS_1KM,
-          group: t('invertebrates'),
         },
         {
           value: RESIDENT_BIRDS_RICHNESS_1KM,
@@ -472,8 +463,8 @@ export const getLayersToggleConfig = () => ({
         },
         {
           value: DRAGONFLIES_RARITY_1KM,
-          name: t('dragonflies'),
-          title: t('dragonflies'),
+          name: t('Dragonflies and Damselflies'),
+          title: t('Dragonflies and Damselflies'),
           layer: DRAGONFLIES_RARITY_1KM,
           group: t('invertebrates'),
         },
@@ -483,13 +474,6 @@ export const getLayersToggleConfig = () => ({
           title: t('hummingbirds'),
           layer: HUMMINGBIRDS_RARITY,
           group: t('birds'),
-        },
-        {
-          value: ODONATES_RARITY_1KM,
-          name: t('odonates'),
-          title: t('odonates'),
-          layer: ODONATES_RARITY_1KM,
-          group: t('invertebrates'),
         },
         {
           value: PROTEA_RARITY_1KM,

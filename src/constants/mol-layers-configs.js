@@ -57,8 +57,6 @@ import {
   WINTER_BIRDS_RARITY_1KM,
   RESIDENT_BIRDS_RICHNESS_1KM,
   RESIDENT_BIRDS_RARITY_1KM,
-  ODONATES_RARITY_1KM,
-  ODONATES_RICHNESS_1KM,
   ANTS_RARITY_1KM,
   ANTS_RICHNESS_1KM,
   AMPHIB_PRIORITY,
@@ -121,10 +119,10 @@ export const LAYERS_CATEGORIES = {
   MARINE_HUMAN_PRESSURES: 'Marine use pressures',
 };
 
-// const defaultBbox = [-48, -52, 59, 66];
+const defaultBbox = [-141.32, -38.82, 64.68, 72.62];
 
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
-const AmericaCenteredBbox = [-237.285547, -59.589424, 77.011328, 66.818301];
+const AmericaCenteredBbox = [-237.28, -59.58, 77.01, 66.81];
 
 export const layersConfig = {
   [PLEDGES_LAYER]: {
@@ -426,14 +424,14 @@ export const layersConfig = {
     slug: DRAGONFLIES_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[DRAGONFLIES_RARITY_1KM],
-    bbox: [13, -37, 34, -27.7],
+    bbox: defaultBbox,
   },
   [DRAGONFLIES_RICHNESS_1KM]: {
     title: DRAGONFLIES_RICHNESS_1KM,
     slug: DRAGONFLIES_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[DRAGONFLIES_RICHNESS_1KM],
-    bbox: [13, -37, 34, -27.7],
+    bbox: defaultBbox,
   },
   [BIRDS_RARITY_1KM]: {
     title: BIRDS_RARITY_1KM,
@@ -559,20 +557,6 @@ export const layersConfig = {
     slug: RESIDENT_BIRDS_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[RESIDENT_BIRDS_RARITY_1KM],
-    bbox: USCenteredBbox,
-  },
-  [ODONATES_RARITY_1KM]: {
-    title: ODONATES_RARITY_1KM,
-    slug: ODONATES_RARITY_1KM,
-    type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[ODONATES_RARITY_1KM],
-    bbox: USCenteredBbox,
-  },
-  [ODONATES_RICHNESS_1KM]: {
-    title: ODONATES_RICHNESS_1KM,
-    slug: ODONATES_RICHNESS_1KM,
-    type: LAYER_TYPES.TILE_LAYER,
-    url: LAYERS_URLS[ODONATES_RICHNESS_1KM],
     bbox: USCenteredBbox,
   },
   [ANTS_RARITY_1KM]: {

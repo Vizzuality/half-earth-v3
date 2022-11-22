@@ -52,8 +52,6 @@ import {
   WINTER_BIRDS_RARITY_1KM,
   RESIDENT_BIRDS_RICHNESS_1KM,
   RESIDENT_BIRDS_RARITY_1KM,
-  ODONATES_RARITY_1KM,
-  ODONATES_RICHNESS_1KM,
   ANTS_RARITY_1KM,
   ANTS_RICHNESS_1KM,
   AMPHIB_PRIORITY,
@@ -231,10 +229,14 @@ export const LAYERS_URLS = {
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/amph_rich_sa_tif/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Amphibian_Species/MapServer',
   ],
-  [DRAGONFLIES_RARITY_1KM]:
+  [DRAGONFLIES_RARITY_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/df_rar_sa_tif/MapServer',
-  [DRAGONFLIES_RICHNESS_1KM]:
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Odanates_mean_rarity_tif/MapServer',
+  ],
+  [DRAGONFLIES_RICHNESS_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/df_rich_sa_tif/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Odanates_richness_tif/MapServer',
+  ],
   [BIRDS_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/birds_rar_sa_tif/MapServer',
   [BIRDS_RICHNESS_1KM]:
@@ -268,11 +270,9 @@ export const LAYERS_URLS = {
   [WINTER_BIRDS_RICHNESS_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Richness_Patterns_for_Nonbreeding_Bird_Species_of_North_America/MapServer',
   [RESIDENT_BIRDS_RICHNESS_1KM]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Resident_bird_richness_North_America/MapServer',
-  [ODONATES_RICHNESS_1KM]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Odonates_Richness_North_America/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Resident_Bird_Richness_tif/MapServerhttps://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Resident_Bird_Richness_tif/MapServer',
   [ANTS_RICHNESS_1KM]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/North_America_Ants_Richness_v2/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Ants_richness_v2_tif/MapServer',
   [MAMMALS_RARITY_1KM]: [
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Mammal_Species_of_North_America/MapServer',
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/mamm_rar_sa_tif/MapServer',
@@ -282,11 +282,9 @@ export const LAYERS_URLS = {
   [WINTER_BIRDS_RARITY_1KM]:
     'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Patterns_for_Nonbreeding_Birds_of_North_America/MapServer',
   [RESIDENT_BIRDS_RARITY_1KM]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Rarity_Resident_bird_of_North_America/MapServer',
-  [ODONATES_RARITY_1KM]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/Odonates_North_America_Mean_Rarity/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Resident_Bird_Rarity_tif/MapServer',
   [ANTS_RARITY_1KM]:
-    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/North_America_Ants_Mean_Rarity_v2_2_1/MapServer',
+    'https://tiles.arcgis.com/tiles/IkktFdUAcY3WrH25/arcgis/rest/services/NA_Ants_mean_rarity_v2_2_1_tif/MapServer',
   // Global biodiversity services
   /// / Terrestrial Priority services
   [ALL_TAXA_PRIORITY]:
