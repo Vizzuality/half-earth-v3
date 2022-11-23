@@ -119,8 +119,6 @@ export const LAYERS_CATEGORIES = {
   MARINE_HUMAN_PRESSURES: 'Marine use pressures',
 };
 
-const defaultBbox = [-141.32, -38.82, 64.68, 72.62];
-
 const USCenteredBbox = [-176.3, 20.2, -46.3, 75.2];
 const AmericaCenteredBbox = [-237.28, -59.58, 77.01, 66.81];
 
@@ -424,14 +422,14 @@ export const layersConfig = {
     slug: DRAGONFLIES_RARITY_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[DRAGONFLIES_RARITY_1KM],
-    bbox: defaultBbox,
+    bbox: USCenteredBbox,
   },
   [DRAGONFLIES_RICHNESS_1KM]: {
     title: DRAGONFLIES_RICHNESS_1KM,
     slug: DRAGONFLIES_RICHNESS_1KM,
     type: LAYER_TYPES.TILE_LAYER,
     url: LAYERS_URLS[DRAGONFLIES_RICHNESS_1KM],
-    bbox: defaultBbox,
+    bbox: USCenteredBbox,
   },
   [BIRDS_RARITY_1KM]: {
     title: BIRDS_RARITY_1KM,
