@@ -70,7 +70,6 @@ export const customStyles = {
     color: COLORS.black,
     cursor: isDisabled ? 'not-allowed' : 'pointer',
     display: 'flex',
-    height: '36px',
     margin: 0,
     fontFamily: FONT_FAMILIES['font-family-1'],
     fontSize: '14px',
