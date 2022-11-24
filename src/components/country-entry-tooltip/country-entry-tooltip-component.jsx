@@ -162,18 +162,17 @@ function CountryEntryTooltipComponent({
             {landTab ? landVertebrates : marVertebrates}
           </span>
           <span className={styles.text}>
-            <T
-              _str={
-                landTab
-                  ? 'land vertebrate species of which {number} are endemic'
-                  : 'marine vertebrate species of which {number} are endemic'
-              }
-              number={
-                <span className={styles.endemic}>
-                  {landTab ? endemicLand : endemicMar}
-                </span>
-              }
-            />
+            {landTab ? (
+              <T
+                _str="land vertebrate species of which {number} are endemic"
+                number={<span className={styles.endemic}>{endemicLand}</span>}
+              />
+            ) : (
+              <T
+                _str="marine vertebrate species of which {number} are endemic"
+                number={<span className={styles.endemic}>{endemicMar}</span>}
+              />
+            )}
           </span>
         </div>
         <div className={styles.infoPill}>
