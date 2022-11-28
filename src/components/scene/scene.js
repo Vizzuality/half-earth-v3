@@ -8,6 +8,7 @@ import { loadModules } from 'esri-loader';
 import urlActions from 'actions/url-actions';
 
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
+import { useMobile } from 'constants/responsive';
 
 import Component from './scene-component';
 import mapStateToProps from './selectors';
@@ -46,6 +47,9 @@ function InitialRotation(props) {
 
   return null;
 }
+
+const { REACT_APP_FEATURE_MOBILE_MAP } = process.env;
+
 function SceneContainer(props) {
   const {
     sceneId,
@@ -68,6 +72,7 @@ function SceneContainer(props) {
   const [hasSetRotationActive, setHasSetRotationActive] = useState(false);
   const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
+  const isMobile = useMobile();
 
   const rotationKey = useMemo(
     () => initialRotation && `${sceneName}HasRotated`,
@@ -95,7 +100,14 @@ function SceneContainer(props) {
 
   useEffect(() => {
     if (map) {
-      loadModules(['esri/views/SceneView'], loaderOptions)
+      loadModules(
+        [
+          isMobile && REACT_APP_FEATURE_MOBILE_MAP
+            ? 'esri/views/MapView'
+            : 'esri/views/SceneView',
+        ],
+        loaderOptions
+      )
         .then(([SceneView]) => {
           const _view = new SceneView({
             map,
