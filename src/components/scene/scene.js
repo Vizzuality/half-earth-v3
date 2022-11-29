@@ -97,23 +97,55 @@ function SceneContainer(props) {
         console.error(err);
       });
   }, []);
+  const customPan = (mapView) => {
+    const pointers = new Map(); // javascript map
+    mapView.on('pointer-down', (event) => {
+      if (event.pointerType === 'touch') {
+        pointers.set(event.pointerId, { x: event.x, y: event.y });
+      }
+    });
+
+    mapView.on(['pointer-up', 'pointer-leave'], (event) => {
+      if (event.pointerType === 'touch') {
+        pointers.delete(event.pointerId);
+      }
+    });
+
+    mapView.on('pointer-move', (event) => {
+      if (event.pointerType === 'touch') {
+        if (pointers.size !== 1) {
+          return;
+        }
+        const distanceLon = event.x - pointers.get(event.pointerId).x;
+        const distanceLat = event.y - pointers.get(event.pointerId).y;
+        const camera = mapView.camera.clone();
+        const { zoom } = mapView;
+        const zoomRatio = (z) => (z > 5 ? z ** 2 / 5 : z ** 2 / 10);
+        camera.position.longitude -= distanceLon / zoomRatio(zoom);
+        camera.position.latitude += distanceLat / zoomRatio(zoom);
+        mapView.goTo(camera, { animate: true });
+      }
+    });
+  };
 
   useEffect(() => {
     if (map) {
-      loadModules(
-        [
-          isMobile && REACT_APP_FEATURE_MOBILE_MAP
-            ? 'esri/views/MapView'
-            : 'esri/views/SceneView',
-        ],
-        loaderOptions
-      )
+      loadModules(['esri/views/SceneView'], loaderOptions)
         .then(([SceneView]) => {
           const _view = new SceneView({
             map,
             container: `scene-container-${sceneName || sceneId}`,
+            navigation: {
+              browserTouchPanEnabled: false,
+            },
             ...sceneSettings,
+            ...(isMobile && REACT_APP_FEATURE_MOBILE_MAP
+              ? { viewingMode: 'local' }
+              : {}),
           });
+
+          // disable browserTouchPan and create a custom pan as it was not working properly
+          customPan(_view);
           setView(_view);
         })
         .catch((err) => {
