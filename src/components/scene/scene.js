@@ -120,7 +120,7 @@ function SceneContainer(props) {
         const distanceLat = event.y - pointers.get(event.pointerId).y;
         const camera = mapView.camera.clone();
         const { zoom } = mapView;
-        const zoomRatio = (z) => (z > 5 ? z ** 2 / 5 : z ** 2 / 10);
+        const zoomRatio = (z) => z ** 2 / (z > 5 ? 2 : 5);
         camera.position.longitude -= distanceLon / zoomRatio(zoom);
         camera.position.latitude += distanceLat / zoomRatio(zoom);
         mapView.goTo(camera, { animate: true });
