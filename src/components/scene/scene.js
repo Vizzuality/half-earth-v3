@@ -140,7 +140,7 @@ function SceneContainer(props) {
             },
             ...sceneSettings,
             ...(isMobile && REACT_APP_FEATURE_MOBILE_MAP
-              ? { viewingMode: 'local' }
+              ? { viewingMode: 'local', qualityProfile: 'low' }
               : {}),
           });
 
