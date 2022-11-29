@@ -146,6 +146,7 @@ function SceneContainer(props) {
 
           // disable browserTouchPan and create a custom pan as it was not working properly
           customPan(_view);
+
           setView(_view);
         })
         .catch((err) => {
@@ -189,6 +190,7 @@ function SceneContainer(props) {
     if (
       initialRotation &&
       !hasSceneRotated &&
+      !(isMobile && REACT_APP_FEATURE_MOBILE_MAP) &&
       // Don't rotate if we come from an AOI and we are centered to some coordinates
       !centerOn &&
       view &&
