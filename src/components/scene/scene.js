@@ -48,8 +48,6 @@ function InitialRotation(props) {
   return null;
 }
 
-const { REACT_APP_FEATURE_MOBILE_MAP } = process.env;
-
 function SceneContainer(props) {
   const {
     sceneId,
@@ -72,7 +70,7 @@ function SceneContainer(props) {
   const [hasSetRotationActive, setHasSetRotationActive] = useState(false);
   const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
-  const isMobile = true || useMobile();
+  const isMobile = useMobile();
 
   const rotationKey = useMemo(
     () => initialRotation && `${sceneName}HasRotated`,
@@ -97,7 +95,7 @@ function SceneContainer(props) {
         console.error(err);
       });
   }, []);
-  const customPan = (mapView) => {
+  const mobileCustomPan = (mapView) => {
     const pointers = new Map(); // javascript map
     mapView.on('pointer-down', (event) => {
       if (event.pointerType === 'touch') {
@@ -139,13 +137,11 @@ function SceneContainer(props) {
               browserTouchPanEnabled: false,
             },
             ...sceneSettings,
-            ...(isMobile && REACT_APP_FEATURE_MOBILE_MAP
-              ? { qualityProfile: 'low' }
-              : {}),
+            ...(isMobile ? { qualityProfile: 'low' } : {}),
           });
 
-          // disable browserTouchPan and create a custom pan as it was not working properly
-          customPan(_view);
+          // disable browserTouchPan and create a custom pan as it was not working properly for touch interaction
+          mobileCustomPan(_view);
 
           setView(_view);
         })
@@ -190,7 +186,6 @@ function SceneContainer(props) {
     if (
       initialRotation &&
       !hasSceneRotated &&
-      !(isMobile && REACT_APP_FEATURE_MOBILE_MAP) &&
       // Don't rotate if we come from an AOI and we are centered to some coordinates
       !centerOn &&
       view &&
