@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useWatchUtils } from 'hooks/esri';
-import Component from './national-report-pdf-component';
 import { connect } from 'react-redux';
+
+import { useWatchUtils } from 'hooks/esri';
+
 import mapStateToProps from 'containers/sidebars/national-report-sidebar/national-report-sidebar-selectors';
+
+import Component from './national-report-pdf-component';
 
 const NationalReportPdfContainer = (props) => {
   let watchHandle;
@@ -16,15 +19,6 @@ const NationalReportPdfContainer = (props) => {
     setNrcUrl(`${window.location.origin}${window.location.pathname}`);
   }, [countryISO]);
 
-  useEffect(() => {
-    watchHandle = watchUtils && watchUtils.whenFalseOnce(view, 'updating', (updating) => {
-      getSceneImageUrl();
-    });
-    return function cleanUp() {
-      watchHandle && watchHandle.remove();
-    };
-  }, [watchUtils, countryISO]);
-
   const getSceneImageUrl = () => {
     const options = {
       width: 430,
@@ -34,15 +28,27 @@ const NationalReportPdfContainer = (props) => {
     });
   };
 
-  return (
-    ReactDOM.createPortal(
-      <Component
-        nrcUrl={nrcUrl}
-        sceneScreenshotUrl={sceneScreenshotUrl}
-        {...props}
-      />,
-      document.getElementById('root'),
-    )
+  useEffect(() => {
+    watchHandle =
+      watchUtils &&
+      watchUtils.whenFalseOnce(view, 'updating', () => {
+        getSceneImageUrl();
+      });
+    return function cleanUp() {
+      if (watchHandle) {
+        watchHandle.remove();
+      }
+    };
+  }, [watchUtils, countryISO]);
+
+  return ReactDOM.createPortal(
+    <Component
+      nrcUrl={nrcUrl}
+      sceneScreenshotUrl={sceneScreenshotUrl}
+      {...props}
+    />,
+    // eslint-disable-next-line no-undef
+    document.getElementById('root')
   );
 };
 

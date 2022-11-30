@@ -243,13 +243,13 @@ $gap: 20pt;
     .datasetWrapper {
       display: flex;
     }
-    
+
     .wdpaIcon,
     .priorityIcon {
       min-width: 10pt;
       margin-right: 10pt;
     }
-    
+
     .wdpaIcon {
       width: 12pt;
       height: 12pt;
@@ -257,7 +257,14 @@ $gap: 20pt;
       border-radius: 2px;
       background-color: #008604;
     }
-    
+
+    .speciesIcon {
+      svg {
+        width: 12pt;
+        height: 12pt;
+      }
+    }
+
     .priorityIcon {
       height: 100pt;
       width: 12pt;
@@ -267,7 +274,7 @@ $gap: 20pt;
     .legendTag {
       margin: 5pt 0;
     }
-    
+
     .priorityLegend {
       .datasetWrapper {
         padding: 5pt 0;

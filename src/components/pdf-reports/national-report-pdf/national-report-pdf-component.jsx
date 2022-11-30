@@ -102,7 +102,7 @@ function NationalReportPdf({
       <section className={styles.speciesComposition}>
         <p className={styles.title}>{t('species composition:')}</p>
         <p className={styles.speciesCount}>
-          <span className={styles.amphibiansIcon}>
+          <span className={styles.speciesIcon}>
             <AmphibiansIcon />
           </span>{' '}
           {`${amphibians} ${t('amphibians')} (${amphibiansEndemic} ${t(
@@ -110,19 +110,19 @@ function NationalReportPdf({
           )}`}
         </p>
         <p className={styles.speciesCount}>
-          <span className={styles.birdsIcon}>
+          <span className={styles.speciesIcon}>
             <BirdsIcon />
           </span>{' '}
           {`${birds} ${t('birds')} (${birdsEndemic} ${t('endemic')})`}
         </p>
         <p className={styles.speciesCount}>
-          <span className={styles.mammalsIcon}>
+          <span className={styles.speciesIcon}>
             <MammalsIcon />
           </span>{' '}
           {`${mammals} ${t('mammals')} (${mammalsEndemic} ${t('endemic')})`}
         </p>
         <p className={styles.speciesCount}>
-          <span className={styles.reptilesIcon}>
+          <span className={styles.speciesIcon}>
             <ReptilesIcon />
           </span>{' '}
           {`${reptiles} ${t('reptiles')} (${reptilesEndemic} ${t('endemic')})`}
