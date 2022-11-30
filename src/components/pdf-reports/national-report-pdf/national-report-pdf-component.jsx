@@ -141,7 +141,7 @@ function NationalReportPdf({
               nature.`)}
             </span>
             <p className={styles.datasetSource}>
-              Source: WDPA (Jan 2020), OECM (Jan 2020) & RAISG (2019).
+              {t('Source:')} WDPA (Jan 2020), OECM (Jan 2020) & RAISG (2019).
             </p>
           </div>
         </div>
@@ -150,7 +150,7 @@ function NationalReportPdf({
         <h3 className={styles.legendTitle}>{`${t(
           'Additional protection needed:'
         )} ${protectionNeeded}%`}</h3>
-        <p className={styles.legendTag}>higher priority</p>
+        <p className={styles.legendTag}>{t('higher priority')}</p>
         <div className={styles.datasetWrapper}>
           <div className={styles.priorityIcon} />
           <div className={styles.datasetMetadata}>
