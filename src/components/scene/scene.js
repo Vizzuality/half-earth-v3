@@ -72,7 +72,7 @@ function SceneContainer(props) {
   const [hasSetRotationActive, setHasSetRotationActive] = useState(false);
   const [animationRotatedDegrees, setAnimationRotatedDegrees] = useState(0);
   const [loadState, setLoadState] = useState('loading');
-  const isMobile = useMobile();
+  const isMobile = true || useMobile();
 
   const rotationKey = useMemo(
     () => initialRotation && `${sceneName}HasRotated`,
@@ -140,7 +140,7 @@ function SceneContainer(props) {
             },
             ...sceneSettings,
             ...(isMobile && REACT_APP_FEATURE_MOBILE_MAP
-              ? { viewingMode: 'local', qualityProfile: 'low' }
+              ? { qualityProfile: 'low' }
               : {}),
           });
 
