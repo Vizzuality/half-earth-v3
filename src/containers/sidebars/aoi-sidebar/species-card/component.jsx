@@ -77,6 +77,7 @@ function Component({
               className={styles.infoClue}
               title={sidebarCardsConfig[SPECIES_SLUG].hint}
             >
+              {' '}
               {t('land vertebrate species')}
             </span>
           </p>
