@@ -42,3 +42,9 @@
 .blur {
   filter: blur($bottom-menu-blur);
 }
+
+@media print {
+  .menuContainer {
+    display: none;
+  }
+}
