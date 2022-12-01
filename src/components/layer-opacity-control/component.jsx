@@ -1,10 +1,14 @@
 import React, { useState, forwardRef, useEffect } from 'react';
+
 import { useT } from '@transifex/react';
+
+import Tooltip, { useSingleton } from '@tippyjs/react';
 import cx from 'classnames';
 import Slider from 'rc-slider';
-import Tooltip, { useSingleton } from '@tippyjs/react';
-import { ReactComponent as OpacityIcon } from 'icons/opacity.svg';
+
 import styles from './styles.module.scss';
+
+import { ReactComponent as OpacityIcon } from 'icons/opacity.svg';
 
 const railStyle = {
   backgroundColor: 'rgba(255,255,255,0.3)',
@@ -44,7 +48,7 @@ const OpacityButton = forwardRef(({ isOpen }, ref) => {
   );
 });
 
-const TooltipContent = (value, setValue, onOpacityChange) => {
+function TooltipContent(value, setValue, onOpacityChange) {
   const t = useT();
   return (
     <div className={styles.sliderContainer}>
@@ -68,9 +72,9 @@ const TooltipContent = (value, setValue, onOpacityChange) => {
       </div>
     </div>
   );
-};
+}
 
-const Component = ({ onOpacityChange, initialOpacityValue }) => {
+function Component({ onOpacityChange, initialOpacityValue }) {
   const [value, setValue] = useState(initialOpacityValue);
   const [isOpen, setIsOpen] = useState(false);
   const [source, target] = useSingleton();
@@ -90,7 +94,7 @@ const Component = ({ onOpacityChange, initialOpacityValue }) => {
         interactive
         trigger="click"
         placement="top-end"
-        hideOnClick={true}
+        hideOnClick
         delay={[0, 0]}
         onTrigger={toggleOpen}
         onHidden={toggleOpen}
@@ -103,6 +107,6 @@ const Component = ({ onOpacityChange, initialOpacityValue }) => {
       </Tooltip>
     </>
   );
-};
+}
 
 export default Component;

@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import { Tooltip } from 'react-tippy';
 
 import { useT } from '@transifex/react';
+
+import Tooltip from '@tippyjs/react';
 
 import LayerOpacityControl from 'components/layer-opacity-control';
 
@@ -31,9 +32,9 @@ function LayersTools({
         onClick={(e) => onBringToFrontClick(e, option.value)}
       >
         <Tooltip
-          html={<div className={styles.tooltip}>{t('Bring to front')}</div>}
+          content={<div className={styles.tooltip}>{t('Bring to front')}</div>}
           animation="none"
-          position="top"
+          placement="top"
         >
           <BringToFrontIcon className={styles.icon} />
         </Tooltip>
@@ -43,17 +44,17 @@ function LayersTools({
         onClick={(e) => onBringToBackClick(e, option.value)}
       >
         <Tooltip
-          html={<div className={styles.tooltip}>{t('Send to back')}</div>}
+          content={<div className={styles.tooltip}>{t('Send to back')}</div>}
           animation="none"
-          position="top"
+          placement="top"
         >
           <BringToBackIcon className={styles.icon} />
         </Tooltip>
       </span>
       <Tooltip
-        html={<div className={styles.tooltip}>{t('Change opacity')}</div>}
+        content={<div className={styles.tooltip}>{t('Change opacity')}</div>}
         animation="none"
-        position="top"
+        placement="top"
       >
         <LayerOpacityControl
           layer={option}
@@ -64,9 +65,9 @@ function LayersTools({
       </Tooltip>
       <span className={styles.iconWrapper} onClick={() => onInfoClick(option)}>
         <Tooltip
-          html={<div className={styles.tooltip}>{t('More info')}</div>}
+          content={<div className={styles.tooltip}>{t('More info')}</div>}
           animation="none"
-          position="top"
+          placement="top"
         >
           <InfoIcon className={styles.icon} />
         </Tooltip>

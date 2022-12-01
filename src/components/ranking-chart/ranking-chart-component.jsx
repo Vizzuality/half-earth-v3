@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Tooltip } from 'react-tippy';
 
 import { useT, useLocale } from '@transifex/react';
 
 import PropTypes from 'prop-types';
 
+import Tooltip, { useSingleton } from '@tippyjs/react';
 import cx from 'classnames';
 
 import Dropdown from 'components/dropdown';
@@ -42,6 +42,7 @@ function RankingChart({
   const locale = useLocale();
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
   const sortOptions = useMemo(() => getSortOptions(), [locale]);
+  const [source, target] = useSingleton();
   const RANKING_HEADER_LABELS = {
     [SORT_GROUPS_SLUGS.species]: t('species'),
     [SORT_GROUPS_SLUGS.humanModification]: t('human modification'),
@@ -63,8 +64,8 @@ function RankingChart({
     }
   };
 
-  const barTooltip = (d, name) => (
-    <div className={styles.tooltip}>
+  const barTooltip = (d, name, attrs) => (
+    <div className={styles.tooltip} {...attrs}>
       <div className={styles.labels}>
         {Object.keys(d[name]).map((key) => (
           <div key={`legend-${key}`}> {rankingLegend[name][key]}: </div>
@@ -88,27 +89,27 @@ function RankingChart({
 
   const renderBar = (name, d) =>
     !d || !d[name] ? null : (
-      <Tooltip
-        html={barTooltip(d, name)}
-        animation="none"
-        delay={50}
-        position="right"
-        className={styles.barContainer}
-        key={`tooltip-bar-${name}`}
-      >
-        <div className={styles.fullBar}>
-          {Object.keys(d[name]).map((k) => (
-            <span
-              className={cx(styles.bar, styles[k])}
-              style={{ width: `${d[name][k] || '0'}%` }}
-              key={`tooltip-${k}`}
-            />
-          ))}
-        </div>
-      </Tooltip>
+      <div className={styles.barContainer}>
+        <Tooltip
+          render={(attrs) => barTooltip(d, name, attrs)}
+          singleton={target}
+          key={`tooltip-bar-${name}`}
+        >
+          <div className={styles.fullBar}>
+            {Object.keys(d[name]).map((k) => (
+              <span
+                className={cx(styles.bar, styles[k])}
+                style={{ width: `${d[name][k] || '0'}%` }}
+                key={`tooltip-${k}`}
+              />
+            ))}
+          </div>
+        </Tooltip>
+      </div>
     );
   return (
     <div className={className}>
+      <Tooltip singleton={source} placement="right" />
       <div className={styles.chartTitleContainer}>
         <span className={styles.chartTitle}>{t('Show')}</span>
         <div className={styles.landMarineDropdownWrapper}>
