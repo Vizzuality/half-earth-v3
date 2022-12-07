@@ -50,7 +50,6 @@
     "recharts": "^2.1.9",
     "redux": "^4.0.1",
     "redux-first-router": "0.0.9-rudy",
-    "redux-saga": "^1.0.2",
     "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",

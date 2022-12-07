@@ -27,7 +27,6 @@ module.exports = function override(config, env) {
       redux_modules: path.resolve(__dirname, 'src/store/redux-modules'),
       services: path.resolve(__dirname, 'src/services'),
       reducerRegistry: path.resolve(__dirname, 'src/store/reducerRegistry'),
-      sagaRegistry: path.resolve(__dirname, 'src/store/sagaRegistry'),
       sceneConfigs: path.resolve(__dirname, 'src/sceneConfigs'),
       hooks: path.resolve(__dirname, 'src/hooks'),
       images: path.resolve(__dirname, 'src/assets/images'),

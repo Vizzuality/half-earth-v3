@@ -1,7 +1,7 @@
 if (typeof importScripts === 'function') {
   /* global importScripts */
   importScripts(
-    'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js',
+    'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js'
   );
   /* global workbox */
   if (workbox) {
@@ -31,7 +31,7 @@ if (typeof importScripts === 'function') {
             maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
           }),
         ],
-      }),
+      })
     );
 
     // Cache own fonts
@@ -44,7 +44,7 @@ if (typeof importScripts === 'function') {
             maxAgeSeconds: 120 * 24 * 60 * 60, // 120 Days
           }),
         ],
-      }),
+      })
     );
 
     // Cache arcgis js API
