@@ -18,7 +18,7 @@ const actions = { ...metadataActions, ...urlActions };
 function RankingChartContainer(props) {
   const { data } = props;
   const [searchTerm, setSearchTerm] = useState();
-  const [scrollIndex, setScrollIndex] = useState();
+  const [scrollIndex, setScrollIndex] = useState(0);
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
 
   useEffect(() => {
