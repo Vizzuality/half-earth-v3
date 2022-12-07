@@ -61,8 +61,8 @@ function TooltipContent(value, setValue, onOpacityChange) {
           value={value}
           startPoint={value}
           className={styles.slider}
-          onChange={(value) => setValue(value)}
-          onAfterChange={(value) => onOpacityChange(value)}
+          onChange={setValue}
+          onAfterChange={onOpacityChange}
           railStyle={railStyle}
           handleStyle={handleStyle}
           formatValue={formatValue}

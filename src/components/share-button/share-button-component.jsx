@@ -1,15 +1,19 @@
 import React from 'react';
-import { useT } from '@transifex/react';
-import PropTypes from 'prop-types';
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
-import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
+
+import { useT } from '@transifex/react';
+
+import PropTypes from 'prop-types';
+
+import cx from 'classnames';
+
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import styles from './share-button-styles.module';
 
-const ShareButtonComponent = (props) => {
+function ShareButtonComponent(props) {
   const t = useT();
-  const { theme, variant = 'icon', setShareModalOpen } = props;
+  const { theme, variant, setShareModalOpen } = props;
 
   const tooltipId = {
     'data-tip': 'data-tip',
@@ -25,52 +29,22 @@ const ShareButtonComponent = (props) => {
     openShareModalAnalyticsEvent(viewMode);
   };
 
-  const shareButton = (withClickAndTooltip) => {
-    const tooltip = withClickAndTooltip ? { ...tooltipId } : {};
-    return (
+  return (
+    <>
       <button
+        type="button"
         className={cx(styles[`${variant}ShareButton`], theme.shareButton)}
-        onClick={withClickAndTooltip ? handleOpenShareModal : () => {}}
-        {...tooltip}
+        onClick={handleOpenShareModal}
+        {...tooltipId}
       >
         <ShareIcon className={styles.icon} />
       </button>
-    );
-  };
-
-  return (
-    <>
-      {variant === 'shortText' && (
-        <div
-          className={cx(styles.share, theme.share)}
-          onClick={handleOpenShareModal}
-          {...tooltipId}
-        >
-          <span className={cx(styles.shareText, theme.shareText)}>
-            {t('Share')}
-          </span>
-          {shareButton(false)}
-        </div>
-      )}
-      {variant === 'longText' && (
-        <div
-          className={cx(styles.share, theme.share)}
-          onClick={handleOpenShareModal}
-          {...tooltipId}
-        >
-          {shareButton(false)}
-          <span className={cx(styles.shareText, theme.shareText)}>
-            {t('Share this info')}
-          </span>
-        </div>
-      )}
-      {variant === 'icon' && shareButton(true)}
       <ReactTooltip id="shareButtonId" className="infoTooltipStyle">
         {t('Click to share')}
       </ReactTooltip>
     </>
   );
-};
+}
 
 ShareButtonComponent.propTypes = {
   variant: PropTypes.string,
@@ -82,6 +56,7 @@ ShareButtonComponent.propTypes = {
 
 ShareButtonComponent.defaultProps = {
   theme: {},
+  variant: 'icon',
 };
 
 export default ShareButtonComponent;

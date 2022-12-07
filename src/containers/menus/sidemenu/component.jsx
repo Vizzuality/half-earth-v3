@@ -83,7 +83,7 @@ function SideMenu({
         Icon={ShareIcon}
         type="icon-square"
         className={styles.menuBtn}
-        handleClick={setShareModalOpen}
+        handleClick={() => setShareModalOpen(true)}
       />
       <SideMenuLanguageSwitcher />
       <ShareModal
