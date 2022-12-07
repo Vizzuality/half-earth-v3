@@ -48,5 +48,4 @@ export default {
     selectedFeaturedPlace: null,
     isFullscreenActive: false,
   },
-  listeners: false,
 };

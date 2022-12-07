@@ -28,7 +28,6 @@
     "localforage": "^1.10.0",
     "lodash": "4.17.21",
     "node-sass": "yarn:sass",
-    "post-robot": "8.0.28",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
     "rc-slider": "^9.7.2",

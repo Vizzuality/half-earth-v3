@@ -56,5 +56,4 @@ export default {
     sceneMode: 'data',
     selectedAnalysisLayer: ADMIN_AREAS_FEATURE_LAYER,
   },
-  listeners: false,
 };

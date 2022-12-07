@@ -24,10 +24,6 @@ export const routes = {
     path: '/featuredGlobe',
     page: 'featured-globe',
   },
-  [MAP_IFRAME]: {
-    path: '/map',
-    page: 'map-iframe',
-  },
   [NATIONAL_REPORT_CARD]: {
     path: '/nrc/:iso/:view?',
     page: 'nrc',

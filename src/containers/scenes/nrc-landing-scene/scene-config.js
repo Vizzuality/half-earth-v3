@@ -47,5 +47,4 @@ export default {
     activeCategory: '',
     sceneMode: 'data',
   },
-  listeners: false,
 };

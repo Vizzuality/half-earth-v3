@@ -5,7 +5,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import {
   selectGlobeUrlState,
-  selectListenersState,
   selectUiUrlState,
 } from 'selectors/location-selectors';
 
@@ -34,13 +33,6 @@ const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
     ...uiUrlState,
   };
 });
-
-const getListenersSetting = createSelector(
-  selectListenersState,
-  (listenersUrlState) => {
-    return listenersUrlState || false;
-  }
-);
 
 export const getActiveLayers = createSelector(
   getGlobeSettings,
@@ -135,7 +127,6 @@ export default createStructuredSelector({
   activeCategory: getActiveCategory,
   speciesCategories: selectBiodiversityData,
   hasMetadata: selectMetadataData,
-  listeners: getListenersSetting,
   selectedSpecies: getSelectedSpecies,
   openedModal: getHalfEarthModalOpen,
   sceneMode: getSceneMode,
