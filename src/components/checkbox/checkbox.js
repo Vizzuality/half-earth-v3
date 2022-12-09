@@ -1,8 +1,10 @@
 import React from 'react';
-import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import Component from './checkbox-component';
 import metadataActions from 'redux_modules/metadata';
+
+import { useLocale } from '@transifex/react';
+
+import Component from './checkbox-component';
 
 function CheckboxContainer(props) {
   const locale = useLocale();
@@ -16,12 +18,7 @@ function CheckboxContainer(props) {
       isOpen: true,
     });
   };
-  return (
-    <Component
-      handleInfoClick={handleInfoClick}
-      {...props}
-    />
-  );
+  return <Component handleInfoClick={handleInfoClick} {...props} />;
 }
 
 export default connect(null, metadataActions)(CheckboxContainer);

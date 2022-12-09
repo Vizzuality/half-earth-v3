@@ -6,11 +6,8 @@ import Component from './component';
 import mapStateToProps from './selectors';
 
 function TabsSidebarContainer(props) {
-  const {
-    setSidebarTabActive,
-    onTabClick,
-    countedActiveCategoryLayers,
-  } = props;
+  const { setSidebarTabActive, onTabClick, countedActiveCategoryLayers } =
+    props;
 
   const saveSidebarTab = (selectedTab) => {
     setSidebarTabActive(selectedTab);

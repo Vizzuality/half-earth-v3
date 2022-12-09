@@ -10,12 +10,22 @@ export const initialState = {
   error: false,
 };
 
-const setModalMetadataParams = (state, { payload }) => ({ ...state, ...payload });
+const setModalMetadataParams = (state, { payload }) => ({
+  ...state,
+  ...payload,
+});
 
-const fetchModalMetaData = (state) => ({ ...state, loading: true, loaded: false });
+const fetchModalMetaData = (state) => ({
+  ...state,
+  loading: true,
+  loaded: false,
+});
 
 const fetchModalMetaDataFail = (state, { payload }) => ({
-  ...state, loading: false, loaded: false, error: payload,
+  ...state,
+  loading: false,
+  loaded: false,
+  error: payload,
 });
 
 const fetchModalMetaDataReady = (state, { payload }) => ({

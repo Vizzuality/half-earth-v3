@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import Component from './component.jsx';
 
 function Container(props) {
@@ -15,11 +16,7 @@ function Container(props) {
     setIsClosed(false);
   }, [children]);
   return (
-    <Component
-      isClosed={isClosed}
-      onCardClose={handleCardClose}
-      {...props}
-    />
+    <Component isClosed={isClosed} onCardClose={handleCardClose} {...props} />
   );
 }
 

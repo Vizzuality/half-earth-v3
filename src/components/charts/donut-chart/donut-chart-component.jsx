@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { PieChart, Pie, Cell } from 'recharts';
 
-const DonutChart = ({
+function DonutChart({
   chartXPosition,
   chartYPosition,
   colors,
@@ -14,7 +15,7 @@ const DonutChart = ({
   legendText,
   outerRadius,
   width,
-}) => {
+}) {
   return (
     <PieChart width={width} height={height}>
       {/* Background pie added to avoid corner radius on total value */}
@@ -27,7 +28,7 @@ const DonutChart = ({
         stroke="none"
         isAnimationActive={false}
       >
-        <Cell fill={'#E9E9E9'} />
+        <Cell fill="#E9E9E9" />
       </Pie>
       <Pie
         data={data}
@@ -42,13 +43,14 @@ const DonutChart = ({
         endAngle={-90}
       >
         {data.map((entry, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
         ))}
       </Pie>
       <text
-        font-family="ivypresto-display"
-        font-size="32"
-        font-weight={400}
+        fontFamily="ivypresto-display"
+        fontSize="32"
+        fontWeight={400}
         x={legendXPosition}
         y={legendYPosition}
         textAnchor="middle"
@@ -58,9 +60,9 @@ const DonutChart = ({
           legendValue.toFixed(legendValue > 1 || legendValue === 0 ? 0 : 1)}
       </text>
       <text
-        font-family="Inter"
-        font-size="12"
-        font-weight={300}
+        fontFamily="Inter"
+        fontSize="12"
+        fontWeight={300}
         x={legendXPosition}
         y={legendYPosition + 25}
         textAnchor="middle"
@@ -70,6 +72,6 @@ const DonutChart = ({
       </text>
     </PieChart>
   );
-};
+}
 
 export default DonutChart;

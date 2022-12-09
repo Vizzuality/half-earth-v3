@@ -16,13 +16,13 @@ import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import Component from './future-place-tooltip-component';
 
 const actions = {
-  ...urlActions, ...aoisGeometriesActions, ...mapTooltipActions,
+  ...urlActions,
+  ...aoisGeometriesActions,
+  ...mapTooltipActions,
 };
 
 function FuturePlaceTooltipContainer(props) {
-  const {
-    mapTooltipIsVisible, setTooltipInfo, tooltipInfo,
-  } = props;
+  const { mapTooltipIsVisible, setTooltipInfo, tooltipInfo } = props;
 
   const handleTooltipClose = () => {
     setTooltipInfo(null);
@@ -38,8 +38,7 @@ function FuturePlaceTooltipContainer(props) {
     browsePage({
       type: AREA_OF_INTEREST,
       payload: { id: aoiId },
-      query:
-      {
+      query: {
         precalculatedLayerSlug: PRECALCULATED_LAYERS_SLUG.protectedAreas,
         OBJECTID: attributes.OBJECTID,
       },

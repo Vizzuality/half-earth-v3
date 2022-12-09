@@ -16,6 +16,22 @@ import metadataConfig, { RANKING_CHART } from 'constants/metadata';
 
 import styles from './styles.module.scss';
 
+function LegendBlock({ legendItems }) {
+  return (
+    <div className={styles.legendBlock}>
+      {Object.keys(legendItems).map((slug) => (
+        <div key={`${RANKING_COLORS[slug]}`} className={styles.legendItem}>
+          <span
+            className={styles.color}
+            style={{ backgroundColor: `${RANKING_COLORS[slug]}` }}
+          />
+          <span className={styles.label}>{legendItems[slug]}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Component() {
   const t = useT();
 
@@ -29,22 +45,6 @@ function Component() {
       setMetadata(data);
     });
   }, [locale]);
-
-  function LegendBlock({ legendItems }) {
-    return (
-      <div className={styles.legendBlock}>
-        {Object.keys(legendItems).map((slug) => (
-          <div key={`${RANKING_COLORS[slug]}`} className={styles.legendItem}>
-            <span
-              className={styles.color}
-              style={{ backgroundColor: `${RANKING_COLORS[slug]}` }}
-            />
-            <span className={styles.label}>{legendItems[slug]}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
 
   return (
     <>

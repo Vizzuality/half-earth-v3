@@ -1,7 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-export const selectFeaturedGlobeSpec = ({ featuredGlobeSpec }) => featuredGlobeSpec && (featuredGlobeSpec.data || null);
-export const selectDataGlobeSpec = ({ dataGlobeSpec }) => dataGlobeSpec && (dataGlobeSpec.data || null);
+export const selectFeaturedGlobeSpec = ({ featuredGlobeSpec }) =>
+  featuredGlobeSpec && (featuredGlobeSpec.data || null);
+export const selectDataGlobeSpec = ({ dataGlobeSpec }) =>
+  dataGlobeSpec && (dataGlobeSpec.data || null);
 
 export const getFeaturedGlobeLayers = createSelector(
   selectFeaturedGlobeSpec,
@@ -11,7 +13,7 @@ export const getFeaturedGlobeLayers = createSelector(
       id: l.id,
       title: l.title,
     }));
-  },
+  }
 );
 
 export const getDataGlobeLayers = createSelector(
@@ -22,7 +24,7 @@ export const getDataGlobeLayers = createSelector(
       id: l.id,
       title: l.title,
     }));
-  },
+  }
 );
 
 export default createStructuredSelector({

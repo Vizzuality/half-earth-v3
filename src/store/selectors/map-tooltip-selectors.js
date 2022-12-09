@@ -1,9 +1,12 @@
 import { createStructuredSelector } from 'reselect';
 
 export const selectTooltipData = ({ mapTooltip }) => mapTooltip;
-export const selectTooltipContent = ({ mapTooltip }) => mapTooltip && mapTooltip.content;
-export const selectTooltipGeometry = ({ mapTooltip }) => mapTooltip && mapTooltip.geometry;
-export const selectTooltipIsVisible = ({ mapTooltip }) => mapTooltip && mapTooltip.isVisible;
+export const selectTooltipContent = ({ mapTooltip }) =>
+  mapTooltip && mapTooltip.content;
+export const selectTooltipGeometry = ({ mapTooltip }) =>
+  mapTooltip && mapTooltip.geometry;
+export const selectTooltipIsVisible = ({ mapTooltip }) =>
+  mapTooltip && mapTooltip.isVisible;
 
 export default createStructuredSelector({
   mapTooltipContent: selectTooltipContent,

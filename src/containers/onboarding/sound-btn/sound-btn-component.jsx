@@ -109,7 +109,6 @@ function ButtonIcon({
   setPausedTime,
   playedSeconds,
   changeUI,
-  onboardingType,
 }) {
   const renderIdle = () =>
     pauseIcon ? (
@@ -223,6 +222,7 @@ function SoundButtonComponent({
     setFinishModal(true);
   };
 
+  // eslint-disable-next-line consistent-return
   const handleEndOfStep = () => {
     if (!Object.keys(scripts[onboardingType])[onboardingStep + 1]) {
       return handleFinishOnBoarding();

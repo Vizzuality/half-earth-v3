@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
+
 import { useT } from '@transifex/react';
+
 import cx from 'classnames';
 import { Loading } from 'he-components';
+
 import styles from './expanded-info-styles.module.scss';
 
-const ExpandedInfo = (props) => {
+function Image(props) {
+  const { className, alt, src } = props;
+  const [hasError, setHasError] = useState(false);
+
+  if (!src) return null;
+
+  return (
+    <img
+      className={cx(className, [hasError])}
+      onError={() => setHasError(true)}
+      alt={alt}
+      {...props}
+    />
+  );
+}
+
+function ExpandedInfo(props) {
   const t = useT();
 
   const { data, error, speciesName } = props;
@@ -19,22 +38,6 @@ const ExpandedInfo = (props) => {
       </div>
     );
   }
-
-  const Image = (props) => {
-    const { className, alt, src } = props;
-    const [hasError, setHasError] = useState(false);
-
-    if (!src) return null;
-
-    return (
-      <img
-        className={cx(className, [hasError])}
-        onError={() => setHasError(true)}
-        alt={alt}
-        {...props}
-      />
-    );
-  };
 
   const { rangemap, image, info, scientificname } = data[0];
 
@@ -71,6 +74,6 @@ const ExpandedInfo = (props) => {
       </div>
     </div>
   );
-};
+}
 
 export default ExpandedInfo;

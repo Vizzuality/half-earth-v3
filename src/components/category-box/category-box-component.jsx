@@ -8,9 +8,7 @@ import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
 
 import styles from './category-box-styles.module.scss';
 
-function CategoryBox({
-  image, title, Icon, handleBoxClick, counter, isOpen,
-}) {
+function CategoryBox({ image, title, Icon, handleBoxClick, counter, isOpen }) {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div

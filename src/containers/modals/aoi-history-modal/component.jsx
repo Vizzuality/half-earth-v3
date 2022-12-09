@@ -1,7 +1,13 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useRef } from 'react';
-import { useT } from '@transifex/react';
-import cx from 'classnames';
+
 import loadable from '@loadable/component';
+
+import { useT } from '@transifex/react';
+
+import { timestampAoiFormatting } from 'utils/data-formatting-utils';
+
+import cx from 'classnames';
 import { Modal } from 'he-components';
 
 // components
@@ -10,20 +16,34 @@ import ShareInput from 'components/share-input';
 import ShareSocialIcons from 'components/share-social-icons';
 
 // icons
-import { ReactComponent as ShareIcon } from 'icons/share.svg';
-import { ReactComponent as EditIcon } from 'icons/edit.svg';
-import { ReactComponent as BinIcon } from 'icons/bin.svg';
-
-// utils
-import { timestampAoiFormatting } from 'utils/data-formatting-utils';
-
-// styles
 import styles from './styles.module';
+
+import { ReactComponent as BinIcon } from 'icons/bin.svg';
+import { ReactComponent as EditIcon } from 'icons/edit.svg';
+import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 // Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 
-const AoiHistoryModalComponent = ({
+function AoiInfoComponent({ id, areaName, timestamp, handleAoiClick }) {
+  return (
+    <>
+      <span
+        role="button"
+        tabIndex={0}
+        className={styles.aoiName}
+        onClick={() => handleAoiClick(id)}
+      >
+        {areaName}
+      </span>
+      <span className={styles.timestamp}>
+        {timestampAoiFormatting(timestamp)}
+      </span>
+    </>
+  );
+}
+
+function AoiHistoryModalComponent({
   isOpen,
   editAoiId,
   shareAoiId,
@@ -38,7 +58,7 @@ const AoiHistoryModalComponent = ({
   handleRemoveAoiFromLocal,
   handleRemoveAllLocalAoiRecords,
   loading,
-}) => {
+}) {
   const t = useT();
 
   const activeInputRef = useRef();
@@ -49,16 +69,6 @@ const AoiHistoryModalComponent = ({
     }
   }, [editAoiId, activeInputRef]);
 
-  const AoiInfoComponent = ({ id, areaName, timestamp }) => (
-    <>
-      <span className={styles.aoiName} onClick={() => handleAoiClick(id)}>
-        {areaName}
-      </span>
-      <span className={styles.timestamp}>
-        {timestampAoiFormatting(timestamp)}
-      </span>
-    </>
-  );
   return (
     <Modal isOpen={isOpen} onRequestClose={handleModalClose} theme={styles}>
       <div className={styles.modalContainer}>
@@ -99,6 +109,7 @@ const AoiHistoryModalComponent = ({
                       id={id}
                       areaName={areaName}
                       timestamp={timestamp}
+                      handleAoiClick={handleAoiClick}
                     />
                   )}
                 </div>
@@ -158,6 +169,6 @@ const AoiHistoryModalComponent = ({
       </div>
     </Modal>
   );
-};
+}
 
 export default AoiHistoryModalComponent;

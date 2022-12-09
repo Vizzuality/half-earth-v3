@@ -1,16 +1,19 @@
 import React from 'react';
-import cx from 'classnames';
 import ReactMarkdown from 'react-markdown';
-import styles from './styles.module.scss';
+
 import { useT } from '@transifex/react';
 
-const Component = ({
+import cx from 'classnames';
+
+import styles from './styles.module.scss';
+
+function Component({
   theme,
   sources,
   className,
   metaDataSources,
   isJSX = false,
-}) => {
+}) {
   const t = useT();
 
   const lastSource = sources && sources.length - 1;
@@ -32,8 +35,9 @@ const Component = ({
                   </a>
                 ),
               }}
-              children={`${t('Source: ')}${metaDataSources}`}
-            />
+            >
+              {`${t('Source: ')}${metaDataSources}`}
+            </ReactMarkdown>
           )}
           {isJSX && (
             <span>
@@ -58,6 +62,6 @@ const Component = ({
       )}
     </section>
   );
-};
+}
 
 export default Component;

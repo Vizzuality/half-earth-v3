@@ -1,7 +1,7 @@
 import localforage from 'localforage';
 
 export function writeToForageItem(itemKey, newValues) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     localforage.getItem(itemKey).then((storedValues) => {
       if (!storedValues) {
         localforage.setItem(itemKey, { ...newValues });
@@ -19,16 +19,20 @@ export function writeToForageItem(itemKey, newValues) {
 
 export function getAoiHistory() {
   return new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-underscore-dangle
     const _aoiHistory = [];
-    localforage.iterate((value, key) => {
-      _aoiHistory.push({
-        id: key,
-        areaName: value.areaName,
-        timestamp: value.timestamp,
-      });
-    }).then(() => {
-      resolve(_aoiHistory);
-    }).catch((error) => reject(error));
+    localforage
+      .iterate((value, key) => {
+        _aoiHistory.push({
+          id: key,
+          areaName: value.areaName,
+          timestamp: value.timestamp,
+        });
+      })
+      .then(() => {
+        resolve(_aoiHistory);
+      })
+      .catch((error) => reject(error));
   });
 }
 

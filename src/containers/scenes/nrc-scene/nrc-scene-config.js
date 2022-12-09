@@ -23,7 +23,10 @@ export default {
     { title: LAND_COUNTRY_PRIORITY_LAYER, opacity: DEFAULT_OPACITY },
     { title: MARINE_COUNTRY_PRIORITY_LAYER, opacity: DEFAULT_OPACITY },
     { title: TERRESTRIAL_PROTECTED_AREAS_TILE_LAYER, opacity: DEFAULT_OPACITY },
-    { title: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER, opacity: DEFAULT_OPACITY },
+    {
+      title: MARINE_PROTECTED_AREAS_VECTOR_TILE_LAYER,
+      opacity: DEFAULT_OPACITY,
+    },
   ],
   zoom: 3.8,
   center: [16.9515536, 0.116959],

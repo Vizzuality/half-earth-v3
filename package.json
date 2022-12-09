@@ -42,7 +42,7 @@
     "react-popper": "^2.2.5",
     "react-redux": "^6.0.1",
     "react-responsive": "^8.0.1",
-    "react-scripts": "2.1.8",
+    "react-scripts": "4.0.3",
     "react-select": "^5.4.0",
     "react-tooltip": "^3.10.0",
     "react-virtuoso": "^0.20.0",

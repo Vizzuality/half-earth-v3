@@ -1,19 +1,22 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+
+import { useT } from '@transifex/react';
+
 import PropTypes from 'prop-types';
 
 import { Modal, Loading } from 'he-components';
 import MolLogo from 'logos/mol.png';
-import ReactMarkdown from 'react-markdown';
-import styles from './modal-metadata-styles.module.scss';
-import { useT } from '@transifex/react';
 
-const ModalMetadata = ({
+import styles from './modal-metadata-styles.module.scss';
+
+function ModalMetadata({
   isOpen,
   handleClose,
   loading,
   metadata,
   additionalContent,
-}) => {
+}) {
   const t = useT();
   return (
     <Modal onRequestClose={handleClose} isOpen={isOpen} theme={styles}>
@@ -63,8 +66,9 @@ const ModalMetadata = ({
                     </a>
                   ),
                 }}
-                children={`${t('Source: ')}${metadata.source}`}
-              />
+              >
+                {`${t('Source: ')}${metadata.source}`}
+              </ReactMarkdown>
             </div>
           )}
           {metadata && metadata.molLogo === 'TRUE' && (
@@ -86,17 +90,22 @@ const ModalMetadata = ({
       )}
     </Modal>
   );
-};
+}
 
 ModalMetadata.propTypes = {
   title: PropTypes.string,
   loading: PropTypes.bool,
-  metadata: PropTypes.object,
+  metadata: PropTypes.shape(),
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   additionalContent: PropTypes.node,
 };
 
-ModalMetadata.defaultProps = { title: '', loading: false, metadata: undefined };
+ModalMetadata.defaultProps = {
+  title: '',
+  loading: false,
+  metadata: undefined,
+  additionalContent: undefined,
+};
 
 export default ModalMetadata;

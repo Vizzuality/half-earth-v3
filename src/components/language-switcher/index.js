@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import Component from './component.jsx';
+
 import urlActions from 'actions/url-actions';
+
+import Component from './component.jsx';
 
 const mapStateToProps = ({ location }) => ({
   route: location.routesMap[location.type],

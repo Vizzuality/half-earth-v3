@@ -40,7 +40,10 @@ function setCountryMaskReady(state, { payload }) {
 
 function setCountryGeometryError(state, { payload }) {
   return {
-    ...state, loading: false, data: null, error: payload,
+    ...state,
+    loading: false,
+    data: null,
+    error: payload,
   };
 }
 

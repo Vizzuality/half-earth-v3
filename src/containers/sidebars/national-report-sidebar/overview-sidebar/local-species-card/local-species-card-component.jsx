@@ -41,7 +41,6 @@ function LocalSpeciesCardComponent({
   mammalsEndemic,
   reptilesEndemic,
   vertebratesCount,
-  endemicVertebratesCount,
   amphibiansEndemic,
   endemicVertebratesSentence,
   highlightedSpeciesSentence,

@@ -1,13 +1,19 @@
 import React, { useMemo } from 'react';
 
-import {
-  getTexts, getPartners, getPlatformPartners, getDataPartners, getResearchPartners, getSponsors,
-} from 'utils/partners-utils';
-
 import { useLocale } from '@transifex/react';
 
-import Component from './component';
+import {
+  getTexts,
+  getPartners,
+  getPlatformPartners,
+  getDataPartners,
+  getResearchPartners,
+  getSponsors,
+} from 'utils/partners-utils';
+
 import styles from './styles.module.scss';
+
+import Component from './component';
 
 function AboutModalContainer(props) {
   const { setAboutModalOpen } = props;
@@ -30,7 +36,6 @@ function AboutModalContainer(props) {
       title: texts.platformPartners.title,
       content: platformPartners,
       theme: styles.platformPartners,
-
     },
     {
       title: texts.sponsors.title,

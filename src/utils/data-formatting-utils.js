@@ -12,7 +12,9 @@ const intlLanguage = (l) => {
 };
 
 export const getLocaleNumber = (value, locale) => {
-  const formattedNumber = new Intl.NumberFormat(intlLanguage(locale)).format(value);
+  const formattedNumber = new Intl.NumberFormat(intlLanguage(locale)).format(
+    value
+  );
   return formattedNumber;
 };
 
@@ -21,32 +23,42 @@ export const localeFormatting = format(',.0f');
 export const percentageFormat = format('.0f');
 export const timestampAoiFormatting = (timestamp) => {
   if (!timestamp) return null;
-  return (
-    Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: 'numeric',
-      hour12: false,
-    }).format(new Date(timestamp))
-  );
+  return Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: 'numeric',
+    hour12: false,
+  }).format(new Date(timestamp));
 };
 
 export const roundGlobalRange = (value, locale, t) => {
   if (value < 500) {
     return '<500';
-  } if (value < 1000) {
+  }
+  if (value < 1000) {
     return `500-${getLocaleNumber(1000, locale)}`;
-  } if (value < 5000) {
+  }
+  if (value < 5000) {
     return `${getLocaleNumber(1000, locale)}-${getLocaleNumber(5000, locale)}`;
-  } if (value < 10000) {
+  }
+  if (value < 10000) {
     return `${getLocaleNumber(5000, locale)}-${getLocaleNumber(10000, locale)}`;
-  } if (value < 50000) {
-    return `${getLocaleNumber(10000, locale)}-${getLocaleNumber(50000, locale)}`;
-  } if (value < 100000) {
-    return `${getLocaleNumber(50000, locale)}-${getLocaleNumber(100000, locale)}`;
-  } if (value < 1000000) {
+  }
+  if (value < 50000) {
+    return `${getLocaleNumber(10000, locale)}-${getLocaleNumber(
+      50000,
+      locale
+    )}`;
+  }
+  if (value < 100000) {
+    return `${getLocaleNumber(50000, locale)}-${getLocaleNumber(
+      100000,
+      locale
+    )}`;
+  }
+  if (value < 1000000) {
     return `${getLocaleNumber(100000, locale)} - 1 ${t('million')}`;
   }
   return format('.2s')(value).replace('M', `${t('million')}`);
@@ -69,8 +81,10 @@ export const countryChallengesChartFormats = {
   [COUNTRY_ATTRIBUTES.Pop2020]: (value) => localeFormatting(value),
   GNI_PPP: (value) => `${currencyFormatting(value)} B`,
   [COUNTRY_ATTRIBUTES.hm_vh_ter]: (value) => `${percentageFormat(value)}%`,
-  [COUNTRY_ATTRIBUTES.prop_protected_ter]: (value) => `${percentageFormat(value)}%`,
-  [COUNTRY_ATTRIBUTES.protection_needed_ter]: (value) => `${percentageFormat(value)}%`,
+  [COUNTRY_ATTRIBUTES.prop_protected_ter]: (value) =>
+    `${percentageFormat(value)}%`,
+  [COUNTRY_ATTRIBUTES.protection_needed_ter]: (value) =>
+    `${percentageFormat(value)}%`,
   [COUNTRY_ATTRIBUTES.total_endemic_ter]: (value) => localeFormatting(value),
   [COUNTRY_ATTRIBUTES.nspecies_ter]: (value) => localeFormatting(value),
 };

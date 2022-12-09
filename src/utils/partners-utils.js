@@ -28,8 +28,14 @@ export const getTexts = () => ({
   partners: {
     title: t('Half-Earth Project Map - Core Team'),
     content: [
-      `<a style="text-decoration: underline; color: white" target="_blank" href="https://www.half-earthproject.org">${t('The Half-Earth Project')}</a> ${t(' is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life')}`,
-      `<a style="text-decoration: underline;" target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/"> ${t('More about the core team of Half-Earth')} </a>`,
+      `<a style="text-decoration: underline; color: white" target="_blank" href="https://www.half-earthproject.org">${t(
+        'The Half-Earth Project'
+      )}</a> ${t(
+        ' is an initiative of the E.O. Wilson Biodiversity Foundation. Map of Life utilizes geospatial species distribution data and analytics to guide where we have the best opportunity to conserve the most species. Vizzuality brings this information to life'
+      )}`,
+      `<a style="text-decoration: underline;" target="_blank" href="https://www.half-earthproject.org/half-earth-project-team-members/"> ${t(
+        'More about the core team of Half-Earth'
+      )} </a>`,
     ],
   },
   platformPartners: {
@@ -188,12 +194,19 @@ export const getSponsors = () => [
   {
     index: 1,
     href: 'https://www.moore.org/',
-    image: { src: mooreFoundationLogo, alt: t('Gordon and Betty Moore Foundation') },
+    image: {
+      src: mooreFoundationLogo,
+      alt: t('Gordon and Betty Moore Foundation'),
+    },
   },
   {
     index: 2,
     href: 'https://www.burtsbees.com/content/outreach/out-reach-asset.html',
-    image: { src: burtsLogo, alt: t('Burt’s Bees Greater Good Foundation'), className: 'bbees' },
+    image: {
+      src: burtsLogo,
+      alt: t('Burt’s Bees Greater Good Foundation'),
+      className: 'bbees',
+    },
   },
   {
     index: 3,

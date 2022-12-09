@@ -1,24 +1,28 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 import cx from 'classnames';
+
 import { SORT } from './header-item';
 import styles from './header-item.module.scss';
 
-const HeaderItem = ({
+function HeaderItem({
   title,
   isSortSelected,
   sortDirection,
   handleSortClick,
-  theme
-}) => {
+  theme,
+}) {
   const highlightAsc = isSortSelected && sortDirection === SORT.ASC;
   const highlightDesc = isSortSelected && sortDirection === SORT.DESC;
   return (
     <button
+      type="button"
       className={cx(
         styles.headerItem,
         {
-          [styles.highlightCategory]: isSortSelected
+          [styles.highlightCategory]: isSortSelected,
         },
         theme.headerItem
       )}
@@ -31,7 +35,7 @@ const HeaderItem = ({
           className={cx(
             styles.arrowUp,
             {
-              [styles.highlightedSort]: highlightAsc
+              [styles.highlightedSort]: highlightAsc,
             },
             theme.arrowUp
           )}
@@ -40,7 +44,7 @@ const HeaderItem = ({
           className={cx(
             styles.arrowDown,
             {
-              [styles.highlightedSort]: highlightDesc
+              [styles.highlightedSort]: highlightDesc,
             },
             theme.arrowDown
           )}
@@ -48,19 +52,21 @@ const HeaderItem = ({
       </span>
     </button>
   );
-};
+}
 
 HeaderItem.propTypes = {
   title: PropTypes.string.isRequired,
-  className: PropTypes.string,
   isSortSelected: PropTypes.bool,
   sortDirection: PropTypes.string,
   handleSortClick: PropTypes.func.isRequired,
-  theme: PropTypes.object
+  // eslint-disable-next-line react/forbid-prop-types
+  theme: PropTypes.object,
 };
 
 HeaderItem.defaultProps = {
-  theme: {}
+  theme: {},
+  isSortSelected: undefined,
+  sortDirection: undefined,
 };
 
 export default HeaderItem;

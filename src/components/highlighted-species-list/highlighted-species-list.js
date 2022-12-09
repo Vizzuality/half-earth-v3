@@ -15,7 +15,8 @@ function HighlightedSpeciesContainer(props) {
   const locale = useLocale();
   const language = locale !== '' ? locale : 'en';
 
-  const [highlightedSpeciesInitial, setHiglightedSpeciesInitial] = useState(null);
+  const [highlightedSpeciesInitial, setHiglightedSpeciesInitial] =
+    useState(null);
   const [highlightedSpecies, setHiglightedSpecies] = useState(null);
 
   useEffect(() => {
@@ -36,27 +37,22 @@ function HighlightedSpeciesContainer(props) {
 
   useEffect(() => {
     if (highlightedSpeciesInitial) {
-      const speciesNames = highlightedSpeciesInitial.map((species) => species.scientificName);
+      const speciesNames = highlightedSpeciesInitial.map(
+        (species) => species.scientificName
+      );
       MolService.getSpecies(speciesNames, language).then((results) => {
         // eslint-disable-next-line no-underscore-dangle
-        const _highlightedSpecies = results.map((species, index) => (
-          {
-            ...highlightedSpeciesInitial[index],
-            name: species.commonname,
-            imageUrl: species.image && species.image.url,
-          }
-        ));
+        const _highlightedSpecies = results.map((species, index) => ({
+          ...highlightedSpeciesInitial[index],
+          name: species.commonname,
+          imageUrl: species.image && species.image.url,
+        }));
         setHiglightedSpecies(_highlightedSpecies);
       });
     }
   }, [highlightedSpeciesInitial, locale]);
 
-  return (
-    <Component
-      highlightedSpecies={highlightedSpecies}
-      {...props}
-    />
-  );
+  return <Component highlightedSpecies={highlightedSpecies} {...props} />;
 }
 
 export default HighlightedSpeciesContainer;

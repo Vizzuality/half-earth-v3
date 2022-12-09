@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import actions from 'redux_modules/metadata';
 
 import ModalMetadataComponent from './modal-metadata-component';
 import { mapStateToProps } from './modal-metadata-selectors';
-import actions from 'redux_modules/metadata';
 
 function ModalMetadataContainer(props) {
   const handleModalClose = () => {
@@ -13,9 +13,7 @@ function ModalMetadataContainer(props) {
     });
   };
 
-  return (
-    <ModalMetadataComponent {...props} handleClose={handleModalClose} />
-  );
+  return <ModalMetadataComponent {...props} handleClose={handleModalClose} />;
 }
 
 export default connect(mapStateToProps, actions)(ModalMetadataContainer);

@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 import {
   AreaChart,
   Area,
@@ -6,10 +7,10 @@ import {
   YAxis,
   ReferenceLine,
   Tooltip,
-  ResponsiveContainer
-} from "recharts";
+  ResponsiveContainer,
+} from 'recharts';
 
-const AreaChartComponent = ({
+function AreaChartComponent({
   area1,
   area2,
   data,
@@ -18,10 +19,9 @@ const AreaChartComponent = ({
   tooltip = false,
   height,
   width,
-}) => {
-
+}) {
   return (
-    <div style={{ width: width, height: height, margin: 0 }}>
+    <div style={{ width, height, margin: 0 }}>
       <ResponsiveContainer>
         <AreaChart
           data={data}
@@ -29,31 +29,78 @@ const AreaChartComponent = ({
             top: 0,
             right: 0,
             left: -30,
-            bottom: 0
+            bottom: 0,
           }}
         >
           {area1 && (
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="20%" stopColor={area1.fill[0]} stopOpacity={area1.fillOpacity} />
-                <stop offset="35%" stopColor={area1.fill[1]} stopOpacity={area1.fillOpacity} />
-                <stop offset="45%" stopColor={area1.fill[2]} stopOpacity={area1.fillOpacity} />
-                <stop offset="55%" stopColor={area1.fill[3]} stopOpacity={area1.fillOpacity} />
-                <stop offset="65%" stopColor={area1.fill[4]} stopOpacity={area1.fillOpacity} />
-                <stop offset="75%" stopColor={area1.fill[5]} stopOpacity={area1.fillOpacity} />
-                <stop offset="90%" stopColor={area1.fill[6]} stopOpacity={area1.fillOpacity} />
+                <stop
+                  offset="20%"
+                  stopColor={area1.fill[0]}
+                  stopOpacity={area1.fillOpacity}
+                />
+                <stop
+                  offset="35%"
+                  stopColor={area1.fill[1]}
+                  stopOpacity={area1.fillOpacity}
+                />
+                <stop
+                  offset="45%"
+                  stopColor={area1.fill[2]}
+                  stopOpacity={area1.fillOpacity}
+                />
+                <stop
+                  offset="55%"
+                  stopColor={area1.fill[3]}
+                  stopOpacity={area1.fillOpacity}
+                />
+                <stop
+                  offset="65%"
+                  stopColor={area1.fill[4]}
+                  stopOpacity={area1.fillOpacity}
+                />
+                <stop
+                  offset="75%"
+                  stopColor={area1.fill[5]}
+                  stopOpacity={area1.fillOpacity}
+                />
+                <stop
+                  offset="90%"
+                  stopColor={area1.fill[6]}
+                  stopOpacity={area1.fillOpacity}
+                />
               </linearGradient>
             </defs>
           )}
-          <ReferenceLine y={60} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
-          <ReferenceLine y={45} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
-          <ReferenceLine y={30} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
-          <ReferenceLine y={15} stroke={gridStrokeColor} strokeDasharray={strokeDasharray} />
-          <XAxis dataKey="year" fontSize={9} tickLine={false} strokeWidth={0.5} />
+          <ReferenceLine
+            y={60}
+            stroke={gridStrokeColor}
+            strokeDasharray={strokeDasharray}
+          />
+          <ReferenceLine
+            y={45}
+            stroke={gridStrokeColor}
+            strokeDasharray={strokeDasharray}
+          />
+          <ReferenceLine
+            y={30}
+            stroke={gridStrokeColor}
+            strokeDasharray={strokeDasharray}
+          />
+          <ReferenceLine
+            y={15}
+            stroke={gridStrokeColor}
+            strokeDasharray={strokeDasharray}
+          />
+          <XAxis
+            dataKey="year"
+            fontSize={9}
+            tickLine={false}
+            strokeWidth={0.5}
+          />
           <YAxis axisLine={false} fontSize={9} tickLine={false} />
-          {tooltip && (
-            <Tooltip />
-          )}
+          {tooltip && <Tooltip />}
           <Area
             type="monotone"
             dataKey={area1.key}
@@ -72,7 +119,6 @@ const AreaChartComponent = ({
         </AreaChart>
       </ResponsiveContainer>
     </div>
-
   );
 }
 

@@ -17,10 +17,7 @@ function FeaturedTaxaSelectorContainer(props) {
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension
-    <Component
-      handleTaxaButtonClick={handleTaxaButtonClick}
-      {...props}
-    />
+    <Component handleTaxaButtonClick={handleTaxaButtonClick} {...props} />
   );
 }
 

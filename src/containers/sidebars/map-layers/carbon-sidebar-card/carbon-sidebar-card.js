@@ -20,10 +20,7 @@ import mapStateToProps from './carbon-sidebar-card-selectors';
 const actions = { ...metadataActions, ...urlActions };
 
 function CarbonSidebarCardContainer(props) {
-  const {
-    activeLayers,
-    changeGlobe,
-  } = props;
+  const { activeLayers, changeGlobe } = props;
 
   const locale = useLocale();
 

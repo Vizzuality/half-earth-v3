@@ -86,6 +86,7 @@ function AnalyzeAreasCardComponent({
             return (
               <button
                 key={tab.label}
+                // eslint-disable-next-line react/no-unknown-property
                 active={selectedAnalysisTab === tab.label}
                 className={cx({
                   [styles.tabButton]: true,

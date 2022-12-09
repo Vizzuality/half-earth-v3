@@ -1,50 +1,78 @@
+/* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
-import { loadModules } from 'esri-loader';
 import { connect } from 'react-redux';
+import mapTooltipActions from 'redux_modules/map-tooltip';
+
+import { loadModules } from 'esri-loader';
+
+import * as urlActions from 'actions/url-actions';
+
+import {
+  hitResults,
+  setCursor,
+  drawGeometry,
+  flyToCentroid,
+} from 'utils/globe-events-utils';
+import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
+
 import debounce from 'lodash/debounce';
+
 // CONSTANTS
 import { GRID_CELL_STYLES } from 'constants/graphic-styles';
 import { GRAPHIC_LAYER } from 'constants/layers-slugs';
 // UTILS
-import { createGraphic, createGraphicLayer } from 'utils/graphic-layer-utils';
-import {
-  hitResults, setCursor, drawGeometry, flyToCentroid,
-} from 'utils/globe-events-utils';
+
 // ACTIONS
-import * as urlActions from 'actions/url-actions';
-import mapTooltipActions from 'redux_modules/map-tooltip';
 
 const actions = { ...urlActions, ...mapTooltipActions };
 
 function FeatureHighlightLayerContainer(props) {
   const { view, featureLayerSlugs, onFeatureClick } = props;
 
-  const [selectedCountryBorderGraphic, setSelectedCountryGraphic] = useState(null);
-  const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] = useState(null);
+  const [selectedCountryBorderGraphic, setSelectedCountryGraphic] =
+    useState(null);
+  const [hoveredCountryBorderGraphic, setHoveredCountryGraphic] =
+    useState(null);
   const [graphicsLayer, setGraphicsLayer] = useState(null);
 
   // Create the graphics layer on mount
   useEffect(() => {
     if (!graphicsLayer) {
-      loadModules(['esri/Graphic', 'esri/layers/GraphicsLayer']).then(([Graphic, GraphicsLayer]) => {
-        const _selectedCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
-        const _hoveredCountryBorderGraphic = createGraphic(Graphic, GRID_CELL_STYLES);
-        const _graphicsLayer = createGraphicLayer(GraphicsLayer, [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic], GRAPHIC_LAYER);
-        setGraphicsLayer(_graphicsLayer);
-        setSelectedCountryGraphic(_selectedCountryBorderGraphic);
-        setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
-        view.map.add(_graphicsLayer);
-      });
+      loadModules(['esri/Graphic', 'esri/layers/GraphicsLayer']).then(
+        ([Graphic, GraphicsLayer]) => {
+          const _selectedCountryBorderGraphic = createGraphic(
+            Graphic,
+            GRID_CELL_STYLES
+          );
+          const _hoveredCountryBorderGraphic = createGraphic(
+            Graphic,
+            GRID_CELL_STYLES
+          );
+          const _graphicsLayer = createGraphicLayer(
+            GraphicsLayer,
+            [_selectedCountryBorderGraphic, _hoveredCountryBorderGraphic],
+            GRAPHIC_LAYER
+          );
+          setGraphicsLayer(_graphicsLayer);
+          setSelectedCountryGraphic(_selectedCountryBorderGraphic);
+          setHoveredCountryGraphic(_hoveredCountryBorderGraphic);
+          view.map.add(_graphicsLayer);
+        }
+      );
     }
     return function cleanUp() {
-      if (selectedCountryBorderGraphic) selectedCountryBorderGraphic.geometry = null;
-      if (hoveredCountryBorderGraphic) hoveredCountryBorderGraphic.geometry = null;
+      if (selectedCountryBorderGraphic)
+        selectedCountryBorderGraphic.geometry = null;
+      if (hoveredCountryBorderGraphic)
+        hoveredCountryBorderGraphic.geometry = null;
     };
   }, [featureLayerSlugs]);
 
   const onClickHandler = (features) => {
     if (features && features[0]) {
-      const { graphic: { geometry } } = features[0];
+      const {
+        graphic: { geometry },
+      } = features[0];
       flyToCentroid(view, geometry);
     }
     onFeatureClick(features);
@@ -77,7 +105,9 @@ function FeatureHighlightLayerContainer(props) {
       eventHandler = view.on('click', onLabelEvent);
     }
     return function cleanUp() {
-      eventHandler && eventHandler.remove();
+      if (eventHandler) {
+        eventHandler.remove();
+      }
     };
   }, [featureLayerSlugs, selectedCountryBorderGraphic]);
 
@@ -86,11 +116,13 @@ function FeatureHighlightLayerContainer(props) {
     if (hoveredCountryBorderGraphic) {
       eventHandler = view.on(
         'pointer-move',
-        debounce(onLabelEvent, 35, { leading: true, trailing: true }),
+        debounce(onLabelEvent, 35, { leading: true, trailing: true })
       );
     }
     return function cleanUp() {
-      eventHandler && eventHandler.remove();
+      if (eventHandler) {
+        eventHandler.remove();
+      }
     };
   }, [featureLayerSlugs, hoveredCountryBorderGraphic]);
 

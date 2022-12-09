@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import localforage from 'localforage';
-import { getAoiHistory, sortByDate, writeToForageItem } from 'utils/local-forage-utils';
-import Component from './component';
-// ACTIONS
+
 import { AREA_OF_INTEREST } from 'router';
+
 import urlActions from 'actions/url-actions';
+
+import {
+  getAoiHistory,
+  sortByDate,
+  writeToForageItem,
+} from 'utils/local-forage-utils';
+
+import localforage from 'localforage';
+
+import Component from './component';
+
+// ACTIONS
 
 function Container(props) {
   const { isOpen, handleClose, browsePage } = props;
@@ -61,10 +71,9 @@ function Container(props) {
   };
 
   const handleRemoveAoiFromLocal = (id) => {
-    localforage.removeItem(id)
-      .then(() => {
-        getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
-      });
+    localforage.removeItem(id).then(() => {
+      getAoiHistory().then((aois) => setAoiHistory(aois.sort(sortByDate)));
+    });
   };
 
   const handleRemoveAllLocalAoiRecords = () => {

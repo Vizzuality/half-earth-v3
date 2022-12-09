@@ -6,9 +6,7 @@ import cx from 'classnames';
 
 import styles from './checkbox-styles.module.scss';
 
-function Checkbox({
-  option, onChange, checked, theme, className, disabled,
-}) {
+function Checkbox({ option, onChange, checked, theme, className, disabled }) {
   return (
     <div
       key={option.value}

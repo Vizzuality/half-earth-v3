@@ -1,7 +1,11 @@
-import {
-  getCurrentProtection, getCurrentMarineProtection, getProtectionNeeded, getMarineProtectionNeeded,
-} from 'containers/sidebars/national-report-sidebar/national-report-sidebar-selectors';
 import { createStructuredSelector } from 'reselect';
+
+import {
+  getCurrentProtection,
+  getCurrentMarineProtection,
+  getProtectionNeeded,
+  getMarineProtectionNeeded,
+} from 'containers/sidebars/national-report-sidebar/national-report-sidebar-selectors';
 
 const mapStateToProps = createStructuredSelector({
   currentProtection: getCurrentProtection,

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { handleModule } from 'redux-tools';
 
 // As seen in http://nicolasgallagher.com/redux-modules-and-code-splitting/

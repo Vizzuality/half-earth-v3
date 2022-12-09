@@ -7,19 +7,26 @@ export const initialState = {
   error: false,
 };
 
-const fetchFeaturedMapsListData = (state) => ({ ...state, loading: true, loaded: false });
+const fetchFeaturedMapsListData = (state) => ({
+  ...state,
+  loading: true,
+  loaded: false,
+});
 
 const fetchFeaturedMapsListDataFail = (state, { payload }) => ({
-  ...state, loading: false, loaded: false, error: payload,
+  ...state,
+  loading: false,
+  loaded: false,
+  error: payload,
 });
 
 const fetchFeaturedMapsListDataReady = (state, { payload }) => {
-  return ({
+  return {
     ...state,
     loading: false,
     loaded: true,
     data: payload.data,
-  });
+  };
 };
 
 export default {

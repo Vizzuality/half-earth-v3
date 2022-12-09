@@ -15,6 +15,7 @@ const useEventListener = (eventName, handler, element = global) => {
     const eventListener = (event) => savedHandler.current(event);
     element.addEventListener(eventName, eventListener);
 
+    // eslint-disable-next-line consistent-return
     return () => {
       element.removeEventListener(eventName, eventListener);
     };

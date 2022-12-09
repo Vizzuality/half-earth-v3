@@ -18,13 +18,19 @@ function setCountryDataReady(state, { payload }) {
     };
   }, {});
   return {
-    ...state, error: false, loading: false, data: { ...state.data, ...countriesData },
+    ...state,
+    error: false,
+    loading: false,
+    data: { ...state.data, ...countriesData },
   };
 }
 
 function setCountryDataError(state, { payload }) {
   return {
-    ...state, loading: false, data: null, error: payload,
+    ...state,
+    loading: false,
+    data: null,
+    error: payload,
   };
 }
 

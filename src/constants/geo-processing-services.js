@@ -26,8 +26,14 @@ export const CRF_DATA_CATEGORIES = {
 };
 
 export const {
-  BIRDS, AMPHIBIANS, MAMMALS, REPTILES, ECOLOGICAL_LAND_UNITS,
-  POPULATION, HUMAN_PRESSURES, PROTECTED_AREA_PERCENTAGE,
+  BIRDS,
+  AMPHIBIANS,
+  MAMMALS,
+  REPTILES,
+  ECOLOGICAL_LAND_UNITS,
+  POPULATION,
+  HUMAN_PRESSURES,
+  PROTECTED_AREA_PERCENTAGE,
 } = CRF_NAMES;
 
 export const CONTEXTUAL_DATA_TABLES = {
@@ -104,9 +110,14 @@ export const BIODIVERSITY_CRFS_CONFIG = {
 };
 
 export const GEOPROCESSING_SERVICES_URLS = {
-  [BIRDS]: 'https://heportal.esri.com/server/rest/services/SampleBirdsProd20220131/GPServer/SampleBirdsProdRange',
-  [REPTILES]: 'https://heportal.esri.com/server/rest/services/SampleReptProd20220131/GPServer/SampleReptProdRange',
-  [MAMMALS]: 'https://heportal.esri.com/server/rest/services/SampleMamProd20220131/GPServer/SampleMamProdRange',
-  [AMPHIBIANS]: 'https://heportal.esri.com/server/rest/services/SampleAmphProd20220131/GPServer/SampleAmphProdRange',
-  [CONTEXTUAL_DATA]: 'https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd',
+  [BIRDS]:
+    'https://heportal.esri.com/server/rest/services/SampleBirdsProd20220131/GPServer/SampleBirdsProdRange',
+  [REPTILES]:
+    'https://heportal.esri.com/server/rest/services/SampleReptProd20220131/GPServer/SampleReptProdRange',
+  [MAMMALS]:
+    'https://heportal.esri.com/server/rest/services/SampleMamProd20220131/GPServer/SampleMamProdRange',
+  [AMPHIBIANS]:
+    'https://heportal.esri.com/server/rest/services/SampleAmphProd20220131/GPServer/SampleAmphProdRange',
+  [CONTEXTUAL_DATA]:
+    'https://heportal.esri.com/server/rest/services/ContextualLayersProd20220131/GPServer/ContextualLayersProd',
 };
