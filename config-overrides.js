@@ -2,11 +2,24 @@ const path = require('path');
 const rewireReactHotLoader = require('react-app-rewire-hot-loader');
 
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
+const dotenv = require('dotenv').config({
+  path: '.env',
+});
+// eslint-disable-next-line import/no-extraneous-dependencies
+const webpack = require('webpack');
+
+// Add all env variables on .env to app
+const webpackEnv = {};
+Object.keys(dotenv.parsed).forEach((key) => {
+  webpackEnv[`process.env.${key}`] = JSON.stringify(dotenv.parsed[key]);
+});
+
 // Hot reload without eject
 // docs on: https://github.com/cdharris/react-app-rewire-hot-loader
 
 module.exports = function override(config, env) {
-  config.resolve = {
+  const updatedConfig = { ...config };
+  updatedConfig.resolve = {
     extensions: ['.js', '.jsx', '.scss'],
     plugins: [new DirectoryNamedWebpackPlugin()],
     alias: {
@@ -33,9 +46,44 @@ module.exports = function override(config, env) {
       gifs: path.resolve(__dirname, 'src/assets/gifs'),
       sounds: path.resolve(__dirname, 'src/assets/sounds'),
       'store-middleware': path.resolve(__dirname, 'src/store/store-middleware'),
+      process: 'process/browser',
+    },
+    // Needed for Webpack 5
+    fallback: {
+      fs: false,
+      tls: false,
+      tty: false,
+      net: false,
+      path: false,
+      zlib: false,
+      http: false,
+      https: false,
+      stream: false,
+      crypto: false,
+      os: false,
+      process: false,
+      assert: require.resolve('assert'),
     },
   };
-  // eslint-disable-next-line no-param-reassign
-  config = rewireReactHotLoader(config, env);
-  return config;
+  // Needed for create-react-app
+  config.module.rules = [
+    ...config.module.rules,
+    {
+      test: /\.js$/,
+      enforce: 'pre',
+      exclude: /node_modules/,
+      use: ['source-map-loader'],
+    },
+  ];
+
+  // Needed for the env variables import
+  // process is no longer available in create-react-app (Webpack) 5
+  config.plugins.push(
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    new webpack.DefinePlugin(webpackEnv)
+  );
+
+  return rewireReactHotLoader(updatedConfig, env);
 };

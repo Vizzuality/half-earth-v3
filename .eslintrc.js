@@ -8,6 +8,10 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
+  env: {
+    browser: true,
+    node: true,
+  },
   settings: {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
