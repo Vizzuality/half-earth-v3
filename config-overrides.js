@@ -10,9 +10,11 @@ const webpack = require('webpack');
 
 // Add all env variables on .env to app
 const webpackEnv = {};
-Object.keys(dotenv.parsed).forEach((key) => {
-  webpackEnv[`process.env.${key}`] = JSON.stringify(dotenv.parsed[key]);
-});
+if (dotenv.parsed) {
+  Object.keys(dotenv.parsed).forEach((key) => {
+    webpackEnv[`process.env.${key}`] = JSON.stringify(dotenv.parsed[key]);
+  });
+}
 
 // Hot reload without eject
 // docs on: https://github.com/cdharris/react-app-rewire-hot-loader
