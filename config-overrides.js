@@ -1,19 +1,8 @@
 const path = require('path');
 
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
-const dotenv = require('dotenv').config({
-  path: '.env',
-});
 // eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
-
-// Add all env variables on .env to app
-const webpackEnv = {};
-if (dotenv.parsed) {
-  Object.keys(dotenv.parsed).forEach((key) => {
-    webpackEnv[`process.env.${key}`] = JSON.stringify(dotenv.parsed[key]);
-  });
-}
 
 module.exports = function override(config) {
   const updatedConfig = { ...config };
@@ -63,7 +52,7 @@ module.exports = function override(config) {
       assert: require.resolve('assert'),
     },
   };
-  // Needed for create-react-app
+  // Needed for create-react-app 5
   updatedConfig.module.rules = [
     ...config.module.rules,
     {
@@ -79,8 +68,7 @@ module.exports = function override(config) {
   updatedConfig.plugins.push(
     new webpack.ProvidePlugin({
       process: 'process/browser',
-    }),
-    new webpack.DefinePlugin(webpackEnv)
+    })
   );
 
   return updatedConfig;
