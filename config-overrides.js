@@ -63,8 +63,7 @@ module.exports = function override(config) {
     },
   ];
 
-  // Needed for the env variables import
-  // process is no longer available in create-react-app (Webpack) 5
+  // Process is no longer available in create-react-app (Webpack) 5
   updatedConfig.plugins.push(
     new webpack.ProvidePlugin({
       process: 'process/browser',
