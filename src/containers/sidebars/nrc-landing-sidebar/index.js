@@ -17,10 +17,7 @@ import Component from './component';
 const actions = { ...metadataActions, ...urlActions };
 
 function Container(props) {
-  const {
-    changeGlobe,
-    activeLayers,
-  } = props;
+  const { changeGlobe, activeLayers } = props;
 
   const [selectedLayers, setSelectedLayers] = useState([]);
   const [globalAverage, setGlobalAverage] = useState({});
@@ -33,12 +30,12 @@ function Container(props) {
     }).then((features) => {
       const { attributes } = features[0];
       const { Global_SPI_ter, Global_SPI_mar } = attributes;
-      const formatValue = (value) => (
-        value > 1 || value === 0 ? value.toFixed() : value.toFixed(1)
-      );
+      const formatValue = (value) =>
+        value > 1 || value === 0 ? value.toFixed() : value.toFixed(1);
       setGlobalAverage({
         landAverage: Global_SPI_ter && formatValue(parseFloat(Global_SPI_ter)),
-        marineAverage: Global_SPI_mar && formatValue(parseFloat(Global_SPI_mar)),
+        marineAverage:
+          Global_SPI_mar && formatValue(parseFloat(Global_SPI_mar)),
       });
     });
   }, []);
@@ -49,11 +46,18 @@ function Container(props) {
       // changeGlobe, LAYERS_CATEGORIES.BIODIVERSITY)
     } else {
       if (selectedLayers.find((layer) => layer === option.value)) {
-        setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value));
+        setSelectedLayers(
+          selectedLayers.filter((layer) => layer !== option.value)
+        );
       } else {
         setSelectedLayers([...selectedLayers, option.value]);
       }
-      layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
+      layerManagerToggle(
+        option.value,
+        activeLayers,
+        changeGlobe,
+        LAYERS_CATEGORIES.PROTECTION
+      );
     }
   };
 

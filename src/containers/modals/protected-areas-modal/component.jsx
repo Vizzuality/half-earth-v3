@@ -41,8 +41,8 @@ function ProtectedAreasModal({
         {loading && <Spinner floating />}
         <h1>
           {t('Protected areas in ')}
-          {CountryNamesTranslations[contextualData.areaName]
-            || contextualData.areaName}
+          {CountryNamesTranslations[contextualData.areaName] ||
+            contextualData.areaName}
         </h1>
         <div className={styles.searchContainer}>
           <div className={styles.searchInput}>

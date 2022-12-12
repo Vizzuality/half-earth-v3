@@ -14,21 +14,25 @@ import mapStateToProps from './protected-areas-sidebar-card-selectors';
 const actions = { ...metadataActions, ...urlActions };
 
 function Container(props) {
-  const {
-    activeLayers,
-    changeGlobe,
-  } = props;
+  const { activeLayers, changeGlobe } = props;
 
   const [selectedLayers, setSelectedLayers] = useState([]);
 
   const handleLayerToggle = (option) => {
     if (selectedLayers.find((layer) => layer === option.value)) {
-      setSelectedLayers(selectedLayers.filter((layer) => layer !== option.value));
+      setSelectedLayers(
+        selectedLayers.filter((layer) => layer !== option.value)
+      );
     } else {
       setSelectedLayers([...selectedLayers, option.value]);
     }
 
-    layerManagerToggle(option.value, activeLayers, changeGlobe, LAYERS_CATEGORIES.PROTECTION);
+    layerManagerToggle(
+      option.value,
+      activeLayers,
+      changeGlobe,
+      LAYERS_CATEGORIES.PROTECTION
+    );
   };
 
   return (

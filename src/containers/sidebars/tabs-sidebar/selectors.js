@@ -10,34 +10,36 @@ import { getCarbonCountedActiveLayers } from 'containers/sidebars/map-layers/car
 import { getHumanCountedActiveLayers } from 'containers/sidebars/map-layers/human-impact-sidebar-card/human-impact-sidebar-card-selectors';
 import { getProtectionCountedActiveLayers } from 'containers/sidebars/map-layers/protected-areas-sidebar-card/protected-areas-sidebar-card-selectors';
 
-const getUiSettings = createSelector(
-  selectUiUrlState,
-  (uiUrlState) => {
-    return {
-      ...aoiSceneConfig.ui,
-      ...uiUrlState,
-    };
-  },
+const getUiSettings = createSelector(selectUiUrlState, (uiUrlState) => {
+  return {
+    ...aoiSceneConfig.ui,
+    ...uiUrlState,
+  };
+});
+
+const getActiveCategoryLayers = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.activeCategoryLayers
 );
 
-const getActiveCategoryLayers = createSelector(getUiSettings, (
-  uiSettings,
-) => uiSettings.activeCategoryLayers);
-
-const getCountedActiveCategoryLayers = createSelector([
-  getBiodiversityCountedActiveLayers,
-  getProtectionCountedActiveLayers,
-  getHumanCountedActiveLayers,
-  getCarbonCountedActiveLayers,
-], (
-  biodiversityCountedActiveLayers,
-  protectionCountedActiveLayers,
-  humanCountedActiveLayers,
-  carbonCountedActiveLayers,
-) => biodiversityCountedActiveLayers
-      + protectionCountedActiveLayers
-      + humanCountedActiveLayers
-      + carbonCountedActiveLayers);
+const getCountedActiveCategoryLayers = createSelector(
+  [
+    getBiodiversityCountedActiveLayers,
+    getProtectionCountedActiveLayers,
+    getHumanCountedActiveLayers,
+    getCarbonCountedActiveLayers,
+  ],
+  (
+    biodiversityCountedActiveLayers,
+    protectionCountedActiveLayers,
+    humanCountedActiveLayers,
+    carbonCountedActiveLayers
+  ) =>
+    biodiversityCountedActiveLayers +
+    protectionCountedActiveLayers +
+    humanCountedActiveLayers +
+    carbonCountedActiveLayers
+);
 
 export default createStructuredSelector({
   sidebarTabActive: getSidebarTabActive,

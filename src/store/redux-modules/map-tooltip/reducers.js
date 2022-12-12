@@ -1,7 +1,10 @@
 import * as actions from './actions';
 
 export const initialState = {
-  isVisible: false, precalculatedLayerSlug: null, content: null, geometry: null,
+  isVisible: false,
+  precalculatedLayerSlug: null,
+  content: null,
+  geometry: null,
 };
 
 function setTooltipContent(state, { payload }) {
@@ -15,14 +18,13 @@ function setTooltipFeatureGeometry(state, { payload }) {
 }
 function setBatchTooltipData(
   state,
-  {
-    payload: {
-      isVisible, precalculatedLayerSlug, content, geometry,
-    },
-  },
+  { payload: { isVisible, precalculatedLayerSlug, content, geometry } }
 ) {
   return {
-    isVisible, precalculatedLayerSlug, content, geometry,
+    isVisible,
+    precalculatedLayerSlug,
+    content,
+    geometry,
   };
 }
 

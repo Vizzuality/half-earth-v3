@@ -1,5 +1,6 @@
-import qs from 'qs';
 import { omit } from 'lodash';
+
+import qs from 'qs';
 
 export const decodeUrlForState = (url) => {
   const paramsParsed = {};
@@ -26,10 +27,10 @@ export const encodeStateForUrl = (params) => {
   return qs.stringify(paramsParsed);
 };
 
-export const setComponentStateToUrl = ({
-  key, subKey, change, state,
-}) => {
-  const { location: { query, payload, type } } = state();
+export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
+  const {
+    location: { query, payload, type },
+  } = state();
   let params = change;
   if (query && query[subKey || key] && !!change && typeof change === 'object') {
     params = {
@@ -39,7 +40,8 @@ export const setComponentStateToUrl = ({
   }
 
   // if a false value if sent we should remove the key from the url
-  const cleanLocationQuery = !change && query ? omit(query, [subKey || key]) : query;
+  const cleanLocationQuery =
+    !change && query ? omit(query, [subKey || key]) : query;
   return {
     key,
     type,

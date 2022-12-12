@@ -1,10 +1,12 @@
 import React from 'react';
-import speciesPlaceholder from 'images/speciesPlaceholder.svg';
+
 import { useT } from '@transifex/react';
+
+import speciesPlaceholder from 'images/speciesPlaceholder.svg';
 
 import styles from './highlighted-species-list-styles.module.scss';
 
-const HighlightedSpeciesListComponent = ({ highlightedSpecies }) => {
+function HighlightedSpeciesListComponent({ highlightedSpecies }) {
   const t = useT();
 
   return (
@@ -29,6 +31,6 @@ const HighlightedSpeciesListComponent = ({ highlightedSpecies }) => {
         ))}
     </div>
   );
-};
+}
 
 export default HighlightedSpeciesListComponent;

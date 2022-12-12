@@ -15,8 +15,14 @@ import mapStateToProps from './featured-place-card-selectors';
 
 function FeaturedPlaceCardContainer(props) {
   const {
-    view, map, featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace,
-    selectedTaxa, changeUI, featuredMapPlaces,
+    view,
+    map,
+    featuredMapsList,
+    selectedFeaturedMap,
+    selectedFeaturedPlace,
+    selectedTaxa,
+    changeUI,
+    featuredMapPlaces,
   } = props;
   const [featuredPlacesList, setFeaturedPlacesList] = useState(null);
   const [featuredMap, setFeaturedMap] = useState(null);
@@ -38,13 +44,17 @@ function FeaturedPlaceCardContainer(props) {
 
   useEffect(() => {
     if (featuredMapPlaces && selectedFeaturedMap && selectedFeaturedPlace) {
-      setFeaturedPlace({ ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace] });
+      setFeaturedPlace({
+        ...featuredMapPlaces[selectedFeaturedMap][selectedFeaturedPlace],
+      });
     }
   }, [selectedFeaturedPlace, selectedFeaturedMap, featuredMapPlaces]);
 
   useEffect(() => {
     if (featuredMapsList) {
-      const updatedFeaturedMap = featuredMapsList.find((m) => m.slug === selectedFeaturedMap);
+      const updatedFeaturedMap = featuredMapsList.find(
+        (m) => m.slug === selectedFeaturedMap
+      );
       setFeaturedMap(updatedFeaturedMap);
     }
   }, [featuredMapsList, selectedFeaturedMap, selectedFeaturedPlace]);
@@ -53,24 +63,35 @@ function FeaturedPlaceCardContainer(props) {
   useEffect(() => {
     if (featuredPlacesLayer) {
       const queryParams = featuredPlacesLayer.createQuery();
-      queryParams.where = selectedFeaturedMap === 'priorPlaces' ? `taxa_slg = '${selectedTaxa}'` : `ftr_slg = '${selectedFeaturedMap}'`;
+      queryParams.where =
+        selectedFeaturedMap === 'priorPlaces'
+          ? `taxa_slg = '${selectedTaxa}'`
+          : `ftr_slg = '${selectedFeaturedMap}'`;
       featuredPlacesLayer.queryFeatures(queryParams).then((results) => {
         const { features } = results;
-        const list = orderBy(features, (place) => place.geometry.longitude)
-          .map((place) => place.attributes.nam_slg);
+        const list = orderBy(features, (place) => place.geometry.longitude).map(
+          (place) => place.attributes.nam_slg
+        );
         setFeaturedPlacesList(list);
       });
     }
-  }, [featuredPlacesLayer, selectedFeaturedMap, selectedTaxa, featuredMapPlaces]);
+  }, [
+    featuredPlacesLayer,
+    selectedFeaturedMap,
+    selectedTaxa,
+    featuredMapPlaces,
+  ]);
 
   const handleNextPlaceClick = (place) => {
     const index = featuredPlacesList.indexOf(place);
-    const nextPlaceIndex = (index + 1) < featuredPlacesList.length ? index + 1 : 0;
+    const nextPlaceIndex =
+      index + 1 < featuredPlacesList.length ? index + 1 : 0;
     changeUI({ selectedFeaturedPlace: featuredPlacesList[nextPlaceIndex] });
   };
   const handlePrevPlaceClick = (place) => {
     const index = featuredPlacesList.indexOf(place);
-    const prevPlaceIndex = (index - 1) < 0 ? featuredPlacesList.length - 1 : index - 1;
+    const prevPlaceIndex =
+      index - 1 < 0 ? featuredPlacesList.length - 1 : index - 1;
     changeUI({ selectedFeaturedPlace: featuredPlacesList[prevPlaceIndex] });
   };
 

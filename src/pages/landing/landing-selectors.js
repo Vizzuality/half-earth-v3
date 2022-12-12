@@ -6,7 +6,8 @@ import { selectGlobeUrlState } from 'selectors/location-selectors';
 
 import dataSceneConfig from 'scenes/landing-scene/landing-scene-config';
 
-const selectMetadataData = ({ metadata }) => metadata && (!isEmpty(metadata.data) || null);
+const selectMetadataData = ({ metadata }) =>
+  metadata && (!isEmpty(metadata.data) || null);
 
 const getGlobeSettings = createSelector(
   selectGlobeUrlState,
@@ -15,7 +16,7 @@ const getGlobeSettings = createSelector(
       ...dataSceneConfig.globe,
       ...globeUrlState,
     };
-  },
+  }
 );
 
 export default createStructuredSelector({

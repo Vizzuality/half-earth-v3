@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Component from './country-challenges-chart-component';
+import metadataActions from 'redux_modules/metadata';
 
-import mapStateToProps from './country-challenges-chart-selectors';
 import { NATIONAL_REPORT_CARD } from 'router';
 
 import * as urlActions from 'actions/url-actions';
-import metadataActions from 'redux_modules/metadata';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+
+import Component from './country-challenges-chart-component';
+import mapStateToProps from './country-challenges-chart-selectors';
 
 const actions = { ...metadataActions, ...urlActions };
 
@@ -29,13 +30,21 @@ function CountryChallengesChartContainer(props) {
     if (currentIndex > 0) {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex - 1] });
     } else {
-      changeUI({ countryChallengesSelectedKey: xAxisKeys[xAxisKeys.length - 1] });
+      changeUI({
+        countryChallengesSelectedKey: xAxisKeys[xAxisKeys.length - 1],
+      });
     }
   };
 
   const handleBubbleClick = ({ countryISO }) => {
     const { browsePage, selectedFilterOption } = props;
-    browsePage({ type: NATIONAL_REPORT_CARD, payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES }, query: { ui: { countryChallengesSelectedFilter: selectedFilterOption.slug } } });
+    browsePage({
+      type: NATIONAL_REPORT_CARD,
+      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES },
+      query: {
+        ui: { countryChallengesSelectedFilter: selectedFilterOption.slug },
+      },
+    });
   };
 
   const handleFilterSelection = (selectedFilter) => {
@@ -60,4 +69,7 @@ function CountryChallengesChartContainer(props) {
   );
 }
 
-export default connect(mapStateToProps, actions)(CountryChallengesChartContainer);
+export default connect(
+  mapStateToProps,
+  actions
+)(CountryChallengesChartContainer);

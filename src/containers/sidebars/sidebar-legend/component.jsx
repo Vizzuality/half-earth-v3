@@ -1,10 +1,14 @@
 import React from 'react';
-import cx from 'classnames';
+
 import { useT } from '@transifex/react';
-import styles from './styles.module.scss';
+
 import PropTypes from 'prop-types';
 
-const SidebarLegend = ({ legendItem, className, theme }) => {
+import cx from 'classnames';
+
+import styles from './styles.module.scss';
+
+function SidebarLegend({ legendItem, className, theme }) {
   const t = useT();
   return (
     <div className={cx(className, styles.container)}>
@@ -21,10 +25,12 @@ const SidebarLegend = ({ legendItem, className, theme }) => {
       </div>
     </div>
   );
-};
+}
 
 SidebarLegend.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   legendItem: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
   className: PropTypes.string,
   theme: PropTypes.string,
 };

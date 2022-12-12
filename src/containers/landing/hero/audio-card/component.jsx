@@ -28,10 +28,7 @@ function AudioCard({
       className={cx(className, styles.container)}
     >
       <div className={styles.numberContainer}>
-        <p className={styles.number}>
-          {number}
-          .
-        </p>
+        <p className={styles.number}>{number}.</p>
         <img className={styles.gif} src={gif} alt={title} />
       </div>
 

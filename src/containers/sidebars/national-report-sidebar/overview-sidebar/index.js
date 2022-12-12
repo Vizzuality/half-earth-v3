@@ -11,15 +11,12 @@ const actions = { visitNrcOverviewAnalytics };
 
 function OverviewSidebar(props) {
   useEffect(() => {
-    const { visitNrcOverviewAnalytics } = props;
-    visitNrcOverviewAnalytics();
+    const { visitNrcOverviewAnalytics: visitNrcChallengesAnalyticsAction } =
+      props;
+    visitNrcChallengesAnalyticsAction();
   }, []);
 
-  return (
-    <Component
-      {...props}
-    />
-  );
+  return <Component {...props} />;
 }
 
 export default connect(mapStateToProps, actions)(OverviewSidebar);

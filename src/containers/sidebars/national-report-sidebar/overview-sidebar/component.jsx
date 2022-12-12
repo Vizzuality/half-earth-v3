@@ -4,7 +4,7 @@ import CountryDataCard from './country-data-card';
 import LocalPriorityCard from './local-priority-card';
 import LocalSpeciesCard from './local-species-card';
 
-const OverviewSidebarComponent = ({
+function OverviewSidebarComponent({
   map,
   activeLayers,
   mean,
@@ -38,7 +38,7 @@ const OverviewSidebarComponent = ({
   endemicVertebratesSentence,
   highlightedSpeciesSentence,
   highlightedSpeciesRandomNumber,
-}) => {
+}) {
   return (
     <>
       <CountryDataCard
@@ -88,6 +88,6 @@ const OverviewSidebarComponent = ({
       />
     </>
   );
-};
+}
 
 export default OverviewSidebarComponent;

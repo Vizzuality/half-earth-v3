@@ -1,17 +1,16 @@
 import React from 'react';
 
+import { routes, DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING } from 'router';
+
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
-import {
-  routes, DATA, FEATURED, NATIONAL_REPORT_CARD_LANDING,
-} from 'router';
+
+import styles from './styles.module';
 
 import globeDiscover from 'images/globe-discover.png';
 import globeExplore from 'images/globe-explore.png';
 import globeNRC from 'images/globe-NRC.png';
-
-import styles from './styles.module';
 
 function GlobePageIndicator({ onMouseEnter, pathname }) {
   return (
@@ -42,8 +41,10 @@ function GlobePageIndicator({ onMouseEnter, pathname }) {
       </div>
       <div
         className={cx({
-          [styles.globeHighlight]: pathname === routes[NATIONAL_REPORT_CARD_LANDING].path,
-          [styles.globeHidden]: pathname !== routes[NATIONAL_REPORT_CARD_LANDING].path,
+          [styles.globeHighlight]:
+            pathname === routes[NATIONAL_REPORT_CARD_LANDING].path,
+          [styles.globeHidden]:
+            pathname !== routes[NATIONAL_REPORT_CARD_LANDING].path,
         })}
       >
         <img

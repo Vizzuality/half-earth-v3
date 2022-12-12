@@ -1,12 +1,15 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
-import { useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-
-import Component from './component';
 import metadataActions from 'redux_modules/metadata';
+
+import { useLocale } from '@transifex/react';
+
 import { layerToggleAnalytics } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
+
+import Component from './component';
 
 const actions = { ...metadataActions, layerToggleAnalytics };
 
@@ -15,12 +18,12 @@ function LayerToggle(props) {
   const [isChecked, setIsChecked] = useState(false);
   const locale = useLocale();
 
-  const handleInfoClick = (option) => {
+  const handleInfoClick = (o) => {
     const { setModalMetadata } = props;
     setModalMetadata({
-      slug: `${option.slug || option.value}`,
+      slug: `${o.slug || o.value}`,
       locale,
-      title: `${option.metadataTitle || option.name} metadata`,
+      title: `${o.metadataTitle || o.name} metadata`,
       isOpen: true,
     });
   };
@@ -36,9 +39,14 @@ function LayerToggle(props) {
   };
 
   useEffect(() => {
-    const _isChecked = activeLayers.some((layer) => layer.title === option.value);
+    const _isChecked = activeLayers.some(
+      (layer) => layer.title === option.value
+    );
     setIsChecked(_isChecked);
-    if (_isChecked) { props.layerToggleAnalytics(option.value); }
+    const { layerToggleAnalytics: layerToggleAnalyticsAction } = props;
+    if (_isChecked) {
+      layerToggleAnalyticsAction(option.value);
+    }
   }, [activeLayers]);
 
   return (

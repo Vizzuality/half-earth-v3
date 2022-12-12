@@ -26,6 +26,8 @@ REACT_APP_CONTENTFUL_TOKEN= Contentful token
 REACT_APP_GA_MEASUREMENT_ID= Google analytics code
 
 SKIP_PREFLIGHT_CHECK=true keep true, CRA does'nt support different versions of eslint https://github.com/facebook/create-react-app/issues/5247
+GENERATE_SOURCEMAP=false keep false. This is a fix for a problem with react-scripts 5 not handling the sourcemaps correctly and having some warnings
+
 
 REACT_APP_VERCEL_ENV= Current environment, provided by vercel
 

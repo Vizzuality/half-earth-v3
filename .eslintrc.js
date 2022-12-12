@@ -8,6 +8,10 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
+  env: {
+    browser: true,
+    node: true,
+  },
   settings: {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
@@ -33,8 +37,10 @@ module.exports = {
     'arrow-body-style': 0,
     'import/no-named-as-default': 0,
     'import/prefer-default-export': 0,
+    'import/no-cycle': 0,
     'no-param-reassign': ['error', { props: false }],
-    'prettier/prettier': 'error',
+    'prettier/prettier': 1,
+    'no-restricted-exports': 0,
     'import/order': [
       'warn',
       {

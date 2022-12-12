@@ -13,11 +13,13 @@ function SideMenuLanguageSwitcher(props) {
   const { changeLang } = props;
   const languages = useLanguages();
   const availableLanguages = useMemo(
-    () => languages.filter(
-      (l) => !REACT_APP_FEATURE_ALLOWED_LANGUAGES
-          || REACT_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code),
-    ),
-    [languages],
+    () =>
+      languages.filter(
+        (l) =>
+          !REACT_APP_FEATURE_ALLOWED_LANGUAGES ||
+          REACT_APP_FEATURE_ALLOWED_LANGUAGES.split(',').includes(l.code)
+      ),
+    [languages]
   );
   const locale = useLocale();
   const localeValue = locale === '' ? 'en' : locale;

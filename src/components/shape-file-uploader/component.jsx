@@ -9,9 +9,7 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as AddShapeIcon } from 'icons/add_shape_icon.svg';
 
-function ShapeFileUploader({
-  sizeWarning, view, onError, onSuccess,
-}) {
+function ShapeFileUploader({ sizeWarning, view, onError, onSuccess }) {
   const t = useT();
 
   const { getRootProps, getInputProps, rootRef } = useDropzone({

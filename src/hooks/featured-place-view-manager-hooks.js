@@ -5,7 +5,11 @@ import { findLayerInMap } from 'utils/layer-manager-utils';
 
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
-export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlace) {
+export function useFeaturedPlaceViewCameraChange(
+  map,
+  view,
+  selectedFeaturedPlace
+) {
   const [coords, setCoords] = useState(null);
   const [featuredPlacesLayer, setFeaturedPlacesLayer] = useState(null);
   useEffect(() => {
@@ -32,19 +36,21 @@ export function useFeaturedPlaceViewCameraChange(map, view, selectedFeaturedPlac
       const zoom = 6;
       const target = coords;
       const featuredPlace = {
-        target, zoom, tilt, heading,
+        target,
+        zoom,
+        tilt,
+        heading,
       };
       const options = {
         speedFactor: 0.5,
         duration: 1000,
       };
-      view.goTo(featuredPlace, options)
-        .catch((error) => {
-          // Avoid displaying console errors when transition is aborted by user interacions
-          if (error.name !== 'AbortError') {
-            console.error(error);
-          }
-        });
+      view.goTo(featuredPlace, options).catch((error) => {
+        // Avoid displaying console errors when transition is aborted by user interacions
+        if (error.name !== 'AbortError') {
+          console.error(error);
+        }
+      });
     }
   }, [coords]);
 }

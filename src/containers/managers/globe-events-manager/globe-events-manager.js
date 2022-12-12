@@ -1,10 +1,15 @@
 function GlobeEventsManager({
-  view, clickCallbacksArray, selectedFeaturedMap, mouseMoveCallbacksArray,
+  view,
+  clickCallbacksArray,
+  selectedFeaturedMap,
+  mouseMoveCallbacksArray,
 }) {
   view.on('pointer-down', (event) => {
     event.stopPropagation();
     view.hitTest(event).then((response) => {
-      clickCallbacksArray.forEach((cb) => cb(response, view, selectedFeaturedMap));
+      clickCallbacksArray.forEach((cb) =>
+        cb(response, view, selectedFeaturedMap)
+      );
     });
   });
 

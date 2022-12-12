@@ -1,9 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
 import App from './App.jsx';
-import store from './store';
 import * as serviceWorker from './serviceWorker';
+import store from './store';
 import 'styles/base';
 
 function Root() {
@@ -14,5 +15,6 @@ function Root() {
   );
 }
 
+// eslint-disable-next-line no-undef
 ReactDOM.render(<Root />, document.getElementById('root'));
 serviceWorker.register();

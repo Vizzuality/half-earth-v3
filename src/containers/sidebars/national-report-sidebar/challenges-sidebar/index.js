@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useT, useLocale } from '@transifex/react';
 import { connect } from 'react-redux';
-import Component from './component.jsx';
-import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
-import ContentfulService from 'services/contentful';
+
+import { useT, useLocale } from '@transifex/react';
+
 import { visitNrcChallengesAnalytics } from 'actions/google-analytics-actions';
+
+import ContentfulService from 'services/contentful';
+
+import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
+
+import Component from './component.jsx';
 
 const actions = { visitNrcChallengesAnalytics };
 
@@ -21,8 +26,9 @@ function Container(props) {
   }, []);
 
   useEffect(() => {
-    const { visitNrcChallengesAnalytics } = props;
-    visitNrcChallengesAnalytics();
+    const { visitNrcChallengesAnalytics: visitNrcChallengesAnalyticsAction } =
+      props;
+    visitNrcChallengesAnalyticsAction();
   }, []);
 
   return (

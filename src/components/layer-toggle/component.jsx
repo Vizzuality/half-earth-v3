@@ -34,7 +34,7 @@ function LayerToggleComponent({
           [theme[themeCategorySlug]]: themeCategorySlug,
           [styles.checked]: isChecked,
         },
-        className,
+        className
       )}
     >
       <RadioTypeToggle
@@ -60,7 +60,7 @@ function LayerToggleComponent({
           [styles.checked]: isChecked && !disabled,
           [styles.disabled]: disabled,
         },
-        className,
+        className
       )}
     >
       <CheckboxTypeToggle

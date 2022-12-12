@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Component from './audio-player-component';
 
 function areEqual(prevProps, nextProps) {

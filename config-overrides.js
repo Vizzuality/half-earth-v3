@@ -1,12 +1,23 @@
 const path = require('path');
-const rewireReactHotLoader = require('react-app-rewire-hot-loader');
 
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
-// Hot reload without eject
-// docs on: https://github.com/cdharris/react-app-rewire-hot-loader
+const dotenv = require('dotenv').config({
+  path: '.env',
+});
+// eslint-disable-next-line import/no-extraneous-dependencies
+const webpack = require('webpack');
 
-module.exports = function override(config, env) {
-  config.resolve = {
+// Add all env variables on .env to app
+const webpackEnv = {};
+if (dotenv.parsed) {
+  Object.keys(dotenv.parsed).forEach((key) => {
+    webpackEnv[`process.env.${key}`] = JSON.stringify(dotenv.parsed[key]);
+  });
+}
+
+module.exports = function override(config) {
+  const updatedConfig = { ...config };
+  updatedConfig.resolve = {
     extensions: ['.js', '.jsx', '.scss'],
     plugins: [new DirectoryNamedWebpackPlugin()],
     alias: {
@@ -33,9 +44,44 @@ module.exports = function override(config, env) {
       gifs: path.resolve(__dirname, 'src/assets/gifs'),
       sounds: path.resolve(__dirname, 'src/assets/sounds'),
       'store-middleware': path.resolve(__dirname, 'src/store/store-middleware'),
+      process: 'process/browser',
+    },
+    // Needed for Webpack 5
+    fallback: {
+      fs: false,
+      tls: false,
+      tty: false,
+      net: false,
+      path: false,
+      zlib: false,
+      http: false,
+      https: false,
+      stream: false,
+      crypto: false,
+      os: false,
+      process: false,
+      assert: require.resolve('assert'),
     },
   };
-  // eslint-disable-next-line no-param-reassign
-  config = rewireReactHotLoader(config, env);
-  return config;
+  // Needed for create-react-app
+  updatedConfig.module.rules = [
+    ...config.module.rules,
+    {
+      test: /\.js$/,
+      enforce: 'pre',
+      exclude: /node_modules/,
+      use: ['source-map-loader'],
+    },
+  ];
+
+  // Needed for the env variables import
+  // process is no longer available in create-react-app (Webpack) 5
+  updatedConfig.plugins.push(
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    new webpack.DefinePlugin(webpackEnv)
+  );
+
+  return updatedConfig;
 };

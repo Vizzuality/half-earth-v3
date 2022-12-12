@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
+import PropTypes from 'prop-types';
+
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
@@ -15,6 +16,10 @@ function Globe({
   handleClick,
 }) {
   const [isHovered, setHovered] = useState(false);
+  const getImageY = () => {
+    if (isHovered && center) return -10;
+    return isHovered && !center ? -30 : 0;
+  };
   return (
     <button
       type="button"
@@ -66,7 +71,7 @@ function Globe({
         src={globeImage}
         initial={false}
         animate={{
-          y: isHovered && center ? -10 : isHovered && !center ? -30 : 0,
+          y: getImageY(),
         }}
         transition={{
           duration: 0.4,
@@ -84,9 +89,17 @@ Globe.propTypes = {
   className: PropTypes.string,
   description: PropTypes.string,
   title: PropTypes.string,
-  handleClick: PropTypes.func,
+  handleClick: PropTypes.func.isRequired,
   globeImage: PropTypes.string,
   center: PropTypes.bool,
+};
+
+Globe.defaultProps = {
+  className: undefined,
+  description: undefined,
+  title: undefined,
+  globeImage: undefined,
+  center: undefined,
 };
 
 export default Globe;
