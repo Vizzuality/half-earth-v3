@@ -1,5 +1,4 @@
 const path = require('path');
-const rewireReactHotLoader = require('react-app-rewire-hot-loader');
 
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const dotenv = require('dotenv').config({
@@ -16,10 +15,7 @@ if (dotenv.parsed) {
   });
 }
 
-// Hot reload without eject
-// docs on: https://github.com/cdharris/react-app-rewire-hot-loader
-
-module.exports = function override(config, env) {
+module.exports = function override(config) {
   const updatedConfig = { ...config };
   updatedConfig.resolve = {
     extensions: ['.js', '.jsx', '.scss'],
@@ -68,7 +64,7 @@ module.exports = function override(config, env) {
     },
   };
   // Needed for create-react-app
-  config.module.rules = [
+  updatedConfig.module.rules = [
     ...config.module.rules,
     {
       test: /\.js$/,
@@ -80,12 +76,12 @@ module.exports = function override(config, env) {
 
   // Needed for the env variables import
   // process is no longer available in create-react-app (Webpack) 5
-  config.plugins.push(
+  updatedConfig.plugins.push(
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),
     new webpack.DefinePlugin(webpackEnv)
   );
 
-  return rewireReactHotLoader(updatedConfig, env);
+  return updatedConfig;
 };

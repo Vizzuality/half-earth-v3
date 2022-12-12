@@ -1,6 +1,5 @@
 import 'he-components/dist/main.css';
 import React, { useEffect } from 'react';
-import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 
 import loadable from '@loadable/component';
@@ -81,6 +80,4 @@ function App(props) {
   );
 }
 
-export default process.env.NODE_ENV === 'development'
-  ? hot(module)(connect(mapStateToProps, null)(App))
-  : connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, null)(App);
