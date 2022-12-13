@@ -85,17 +85,17 @@ function AnalyzeAreasCardComponent({
           {tabs(selectedAnalysisTab).map((tab) => {
             return (
               <button
-                key={tab.label}
+                key={tab.slug}
                 // eslint-disable-next-line react/no-unknown-property
-                active={selectedAnalysisTab === tab.label}
+                active={selectedAnalysisTab === tab.slug}
                 className={cx({
                   [styles.tabButton]: true,
-                  [styles.tabButtonActive]: selectedAnalysisTab === tab.label,
+                  [styles.tabButtonActive]: selectedAnalysisTab === tab.slug,
                 })}
                 type="button"
                 onClick={() =>
-                  selectedAnalysisTab !== tab.label &&
-                  handleAnalysisTabClick(`${tab.label}`)
+                  selectedAnalysisTab !== tab.slug &&
+                  handleAnalysisTabClick(`${tab.slug}`)
                 }
               >
                 <span>{tab.icon}</span>
@@ -103,7 +103,7 @@ function AnalyzeAreasCardComponent({
                   className={cx({
                     [styles.tabButtonCaption]: true,
                     [styles.tabButtonCaptionActive]:
-                      selectedAnalysisTab === `${tab.label}`,
+                      selectedAnalysisTab === `${tab.slug}`,
                   })}
                 >
                   {t(tab.label)}

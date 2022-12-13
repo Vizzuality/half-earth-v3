@@ -14,6 +14,7 @@ import { ReactComponent as AoisUploadIcon } from 'icons/aois_upload.svg';
 export const getTabs = () => (tab) =>
   [
     {
+      slug: 'click',
       label: t('click'),
       icon: (
         <AoisClickIcon
@@ -25,6 +26,7 @@ export const getTabs = () => (tab) =>
       ),
     },
     {
+      slug: 'search',
       label: t('search'),
       icon: (
         <AoisSearchIcon
@@ -36,6 +38,7 @@ export const getTabs = () => (tab) =>
       ),
     },
     {
+      slug: 'draw',
       label: t('draw'),
       icon: (
         <AoisDrawIcon
@@ -47,6 +50,7 @@ export const getTabs = () => (tab) =>
       ),
     },
     {
+      slug: 'upload',
       label: t('upload'),
       icon: (
         <AoisUploadIcon
