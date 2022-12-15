@@ -10,11 +10,14 @@
   height: calc(100vh - #{$nav-bar-height});
   position: absolute;
   top: $nav-bar-height;
-  overflow: auto;
 
   @media #{$tablet-landscape} {
     overflow: hidden;
     font-size: 45px;
+  }
+
+  @media screen and (max-height: 670px) {
+    overflow: auto;
   }
 
   .globesContainer {
