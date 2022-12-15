@@ -14,13 +14,21 @@
   padding-bottom: 3px;
 }
 
-.esri-popup__main-container,
-.esri-feature__content-node {
-  background-color: $firefly;
-  color: $white;
+.esri-popup__main-container {
   max-width: 285px;
   max-height: 500px !important;
   border-radius: 2px;
+  background-color: $firefly;
+}
+
+.esri-popup__content {
+  margin: 0;
+}
+
+.esri-feature__content-node {
+  background-color: $firefly;
+  color: $white;
+  padding: 16px;
 }
 
 .esri-popup__pointer-direction {
