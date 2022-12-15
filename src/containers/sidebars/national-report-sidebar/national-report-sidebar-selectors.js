@@ -89,7 +89,7 @@ const getSpeciesProtectionIndex = createSelector(
   getCountryData,
   (countryData) => {
     if (!countryData) return null;
-    return countryData[COUNTRY_ATTRIBUTES.SPI_ter];
+    return Math.round(countryData[COUNTRY_ATTRIBUTES.SPI_ter] * 100) / 100;
   }
 );
 

@@ -6,6 +6,8 @@ import { findLayerInMap } from 'utils/layer-manager-utils';
 
 import { FEATURED_PLACES_LAYER } from 'constants/layers-slugs';
 
+const { REACT_APP_ARGISJS_API_VERSION } = process.env;
+
 function FeaturedMapLayer({
   map,
   view,
@@ -33,18 +35,21 @@ function FeaturedMapLayer({
   // display only the places belonging to the selected featured map
   useEffect(() => {
     if (featuredPlacesLayerView) {
-      const whereClause =
-        selectedFeaturedMap === 'priorPlaces'
-          ? `taxa_slg = '${selectedTaxa}'`
-          : `ftr_slg = '${selectedFeaturedMap}'`;
-      loadModules(['esri/views/layers/support/FeatureFilter']).then(
-        ([FeatureFilter]) => {
-          const filter = new FeatureFilter({
-            where: whereClause,
-          });
-          featuredPlacesLayerView.filter = filter;
-        }
-      );
+      loadModules([
+        REACT_APP_ARGISJS_API_VERSION &&
+        parseFloat(REACT_APP_ARGISJS_API_VERSION) > 4.21
+          ? 'esri/layers/support/FeatureFilter'
+          : 'esri/views/layers/support/FeatureFilter',
+      ]).then(([FeatureFilter]) => {
+        const whereClause =
+          selectedFeaturedMap === 'priorPlaces'
+            ? `taxa_slg = '${selectedTaxa}'`
+            : `ftr_slg = '${selectedFeaturedMap}'`;
+
+        featuredPlacesLayerView.filter = new FeatureFilter({
+          where: whereClause,
+        });
+      });
     }
   }, [featuredPlacesLayerView, selectedFeaturedMap, selectedTaxa]);
 

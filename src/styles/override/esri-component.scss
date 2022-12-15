@@ -6,3 +6,9 @@
 .esri-view .esri-view-surface--inset-outline:focus::after {
   outline: none;
 }
+
+// TODO: Is there another way to make this full height? Changes on Arcgis js 4.24
+.esri-view-root,
+.esri-view-surface {
+  height: 100%;
+}
