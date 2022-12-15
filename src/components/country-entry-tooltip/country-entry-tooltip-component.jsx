@@ -151,7 +151,9 @@ function CountryEntryTooltipComponent({
         }}
       />
       <section className={styles.spiInfo}>
-        <p className={styles.spi}>{landTab ? spiLand : spiMar}</p>
+        <p className={styles.spi}>
+          {landTab ? Math.round(spiLand) : Math.round(spiMar)}
+        </p>
         <p className={styles.subtitle}>
           {t('National species protection index')}
         </p>
@@ -177,7 +179,7 @@ function CountryEntryTooltipComponent({
         </div>
         <div className={styles.infoPill}>
           <span className={styles.numeric}>
-            {landTab ? protectionLand : protectionMar}%
+            {landTab ? Math.round(protectionLand) : Math.round(protectionMar)}%
           </span>
           <span className={styles.text}>
             {landTab
@@ -187,7 +189,10 @@ function CountryEntryTooltipComponent({
         </div>
         <div className={styles.infoPill}>
           <span className={styles.numeric}>
-            {landTab ? protectionNeededLand : protectionNeededMar}%
+            {landTab
+              ? Math.round(protectionNeededLand)
+              : Math.round(protectionNeededMar)}
+            %
           </span>
           <span className={styles.text}>
             {landTab
