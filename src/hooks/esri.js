@@ -40,6 +40,8 @@ export const useSearchWidgetLogic = (
   searchWidgetConfig,
   isSimpleSearch
 ) => {
+  const { REACT_APP_ARGISJS_API_VERSION } = process.env;
+
   const [searchWidget, setSearchWidget] = useState(null);
   const { searchSources, postSearchCallback, searchResultsCallback } =
     searchWidgetConfig || {};
@@ -49,7 +51,10 @@ export const useSearchWidgetLogic = (
     loadModules([
       'esri/widgets/Search',
       'esri/layers/FeatureLayer',
-      'esri/tasks/Locator',
+      REACT_APP_ARGISJS_API_VERSION &&
+      parseFloat(REACT_APP_ARGISJS_API_VERSION) > 4.21
+        ? 'esri/rest/locator'
+        : 'esri/tasks/Locator',
     ])
       .then(([Search, FeatureLayer, Locator]) => {
         setEsriConstructors({ Search, FeatureLayer, Locator });
