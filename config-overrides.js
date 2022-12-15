@@ -7,7 +7,7 @@ const webpack = require('webpack');
 module.exports = function override(config) {
   const updatedConfig = { ...config };
   updatedConfig.resolve = {
-    extensions: ['.js', '.jsx', '.scss'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss'],
     plugins: [new DirectoryNamedWebpackPlugin()],
     alias: {
       components: path.resolve(__dirname, 'src/components'),
