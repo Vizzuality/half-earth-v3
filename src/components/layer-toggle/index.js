@@ -8,6 +8,7 @@ import { useLocale } from '@transifex/react';
 import { layerToggleAnalytics } from 'actions/google-analytics-actions';
 
 import { bringLayerToFront, bringLayerToBack } from 'utils/layer-manager-utils';
+import { handleMetadataClick } from 'utils/metadata-utils';
 
 import Component from './component';
 
@@ -20,12 +21,7 @@ function LayerToggle(props) {
 
   const handleInfoClick = (o) => {
     const { setModalMetadata } = props;
-    setModalMetadata({
-      slug: `${o.slug || o.value}`,
-      locale,
-      title: `${o.metadataTitle || o.name} metadata`,
-      isOpen: true,
-    });
+    handleMetadataClick({ option: o, setModalMetadata, locale });
   };
 
   const handleBringToBackClick = (e, layer) => {

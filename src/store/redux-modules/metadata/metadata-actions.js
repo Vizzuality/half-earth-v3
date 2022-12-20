@@ -9,11 +9,17 @@ export const fetchModalMetaDataReady = createAction('fetchModalMetaDataReady');
 
 export const fetchModalMetaData = createThunkAction(
   'fetchModalMetaData',
-  ({ slug, locale }) =>
+  ({ slug, locale, title }) =>
     async (dispatch) => {
       try {
         const data = await ContentfulService.getMetadata(slug, locale);
-        dispatch(fetchModalMetaDataReady({ slug, data }));
+        dispatch(
+          fetchModalMetaDataReady({
+            slug,
+            // Don't override title if we have one
+            data: { ...data, title: title || data.title },
+          })
+        );
       } catch (e) {
         console.warn(e);
         dispatch(fetchModalMetaDataFail(e));
@@ -30,7 +36,11 @@ export const setModalMetadata = createThunkAction(
 
     if (payload.slug) {
       dispatch(
-        fetchModalMetaData({ slug: payload.slug, locale: payload.locale })
+        fetchModalMetaData({
+          slug: payload.slug,
+          locale: payload.locale,
+          title: payload.title,
+        })
       );
     }
   }

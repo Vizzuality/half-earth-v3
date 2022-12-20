@@ -27,12 +27,13 @@ function CarbonSidebarCardContainer(props) {
   const [metadataSource, setMetadataSource] = useState(null);
 
   useEffect(() => {
-    const md = metadataConfig[CARBON_LAYER];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
-      if (data) {
-        setMetadataSource(data.source);
+    ContentfulService.getMetadata(metadataConfig[CARBON_LAYER], locale).then(
+      (data) => {
+        if (data) {
+          setMetadataSource(data.source);
+        }
       }
-    });
+    );
   }, [locale]);
 
   const handleLayerToggle = (option, category) => {

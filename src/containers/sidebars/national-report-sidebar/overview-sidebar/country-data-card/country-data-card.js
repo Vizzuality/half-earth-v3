@@ -23,9 +23,8 @@ function CountryDataCardContainer(props) {
       checkSpiInfoAnalytics: checkSpiInfoAnalyticsAction,
     } = props;
     checkSpiInfoAnalyticsAction('Species Protection Index');
-    const md = metadataConfig[SPECIES_PROTECTION_INDEX];
     setModalMetadata({
-      slug: md.slug,
+      slug: metadataConfig[SPECIES_PROTECTION_INDEX],
       locale,
       isOpen: true,
     });

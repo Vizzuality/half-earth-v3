@@ -4,6 +4,8 @@ import metadataActions from 'redux_modules/metadata';
 
 import { useLocale } from '@transifex/react';
 
+import { handleMetadataClick } from 'utils/metadata-utils';
+
 import Component from './checkbox-component';
 
 function CheckboxContainer(props) {
@@ -11,12 +13,7 @@ function CheckboxContainer(props) {
 
   const handleInfoClick = (option) => {
     const { setModalMetadata } = props;
-    setModalMetadata({
-      slug: `${option.slug}`,
-      locale,
-      title: `${option.metadataTitle || option.name} metadata`,
-      isOpen: true,
-    });
+    handleMetadataClick({ option, setModalMetadata, locale });
   };
   return <Component handleInfoClick={handleInfoClick} {...props} />;
 }

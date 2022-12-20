@@ -29,15 +29,19 @@ function LocalPriorityCardContainer(props) {
   };
 
   useEffect(() => {
-    const md = metadataConfig[COUNTRY_PRIORITY];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
+    ContentfulService.getMetadata(
+      metadataConfig[COUNTRY_PRIORITY],
+      locale
+    ).then((data) => {
       setPriorityMetadata(data);
     });
   }, [locale]);
 
   useEffect(() => {
-    const md = metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
+    ContentfulService.getMetadata(
+      metadataConfig[HALF_EARTH_FUTURE_TILE_LAYER],
+      locale
+    ).then((data) => {
       setFuturePlacesMetadata(data);
     });
   }, [locale]);

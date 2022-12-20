@@ -61,10 +61,11 @@ function Container(props) {
 
   // Just to get the sources of each card
   useEffect(() => {
-    const md = metadataConfig[metadataSlug];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
-      setMetadata(data);
-    });
+    ContentfulService.getMetadata(metadataConfig[metadataSlug], locale).then(
+      (data) => {
+        setMetadata(data);
+      }
+    );
   }, [locale]);
 
   useEffect(() => {

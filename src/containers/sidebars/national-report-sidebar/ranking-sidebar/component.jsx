@@ -40,10 +40,11 @@ function Component() {
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
 
   useEffect(() => {
-    const md = metadataConfig[RANKING_CHART];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
-      setMetadata(data);
-    });
+    ContentfulService.getMetadata(metadataConfig[RANKING_CHART], locale).then(
+      (data) => {
+        setMetadata(data);
+      }
+    );
   }, [locale]);
 
   return (

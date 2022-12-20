@@ -30,8 +30,10 @@ function Container(props) {
   const locale = useLocale();
 
   useEffect(() => {
-    const md = metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES];
-    ContentfulService.getMetadata(md.slug, locale).then((data) => {
+    ContentfulService.getMetadata(
+      metadataConfig[MARINE_AND_LAND_HUMAN_PRESSURES],
+      locale
+    ).then((data) => {
       if (data) {
         setMetadataSource(data.source);
       }

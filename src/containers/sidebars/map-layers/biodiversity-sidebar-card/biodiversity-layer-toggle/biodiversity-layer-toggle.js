@@ -14,6 +14,7 @@ import {
   batchToggleLayers,
   flyToLayerExtent,
 } from 'utils/layer-manager-utils';
+import { handleMetadataClick } from 'utils/metadata-utils';
 
 import usePrevious from 'hooks/use-previous';
 
@@ -187,12 +188,7 @@ function BiodiversityLayerToggle(props) {
 
   const handleInfoClick = (option) => {
     const { setModalMetadata } = props;
-    setModalMetadata({
-      slug: `${option.slug || option.value}`,
-      locale,
-      title: `${option.metadataTitle || option.name} metadata`,
-      isOpen: true,
-    });
+    handleMetadataClick({ option, setModalMetadata, locale });
   };
 
   const handleBringToBackClick = (e, layer) => {
