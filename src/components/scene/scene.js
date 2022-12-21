@@ -166,7 +166,7 @@ function SceneContainer(props) {
   useEffect(() => {
     let watchHandle;
     if (view && view.center && !urlParamsUpdateDisabled && !rotationActive) {
-      loadModules(['esri/core/watchUtils']).then(([watchUtils]) => {
+      loadModules(['esri/core/reactiveUtils']).then(([watchUtils]) => {
         watchHandle = watchUtils.whenTrue(view, 'stationary', () => {
           const { longitude, latitude } = view.center;
           changeGlobe({ center: [longitude, latitude], zoom: view.zoom });

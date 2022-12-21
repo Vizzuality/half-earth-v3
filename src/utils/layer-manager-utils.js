@@ -209,6 +209,7 @@ export const createLayer = (layerConfig) => {
     return newLayer;
   });
 };
+
 export const addLayerToMap = (mapLayer, map) =>
   new Promise((resolve) => {
     map.add(mapLayer);
@@ -217,9 +218,24 @@ export const addLayerToMap = (mapLayer, map) =>
 export const isLayerInMap = (layerConfig, map) =>
   map.layers.items.some((l) => l.title === layerConfig.slug);
 
-const createAndAddLayer = async (layerConfig, map) => {
+const logUpdatedLayer = (layer, view, watchUtils) => {
+  if (view && watchUtils) {
+    view.whenLayerView(layer).then((layerView) => {
+      if (layerView) {
+        watchUtils
+          .whenOnce(() => !layerView.updating)
+          .then(() => {
+            console.log('loaded', layerView.layer.title);
+          })
+          .catch(() => {
+            // An error occurred during the layerview creation
+          });
+      }
+    });
+  }
+};
+const createAndAddLayer = async (layerConfig, map, view, watchUtils) => {
   const isUrlArray = Array.isArray(layerConfig.url);
-
   if (isUrlArray) {
     const promises = layerConfig.url.map((url) =>
       createLayer({ ...layerConfig, url }, map)
@@ -227,10 +243,12 @@ const createAndAddLayer = async (layerConfig, map) => {
     const newLayers = await Promise.all(promises);
     newLayers.forEach((newLayer) => {
       addLayerToMap(newLayer, map);
+      logUpdatedLayer(newLayer, view, watchUtils);
     });
   } else {
     const newLayer = await createLayer(layerConfig, map);
     addLayerToMap(newLayer, map);
+    logUpdatedLayer(newLayer, view, watchUtils);
   }
 };
 
@@ -244,17 +262,23 @@ export const activateLayersOnLoad = (map, activeLayers, config) => {
   });
 };
 
-const handleLayerCreation = async (layerConfig, map) => {
+const handleLayerCreation = async (layerConfig, map, view, watchUtils) => {
   if (layerConfig && !isLayerInMap(layerConfig, map)) {
-    createAndAddLayer(layerConfig, map);
+    createAndAddLayer(layerConfig, map, view, watchUtils);
   }
 };
 
-export const addActiveLayersToScene = (activeLayers, _layersConfig, map) => {
+export const addActiveLayersToScene = (
+  activeLayers,
+  _layersConfig,
+  map,
+  view,
+  watchUtils
+) => {
   if (activeLayers && activeLayers.length) {
     activeLayers.forEach((layer) => {
       const layerConfig = _layersConfig[layer.title];
-      handleLayerCreation(layerConfig, map);
+      handleLayerCreation(layerConfig, map, view, watchUtils);
     });
   }
 };
