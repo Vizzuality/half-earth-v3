@@ -2,6 +2,10 @@
 @import 'styles/common-animations.module';
 @import 'styles/ui.module';
 
+.background {
+  width: 100vw;
+}
+
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;
@@ -16,26 +20,36 @@
   bottom: 30px;
 }
 
-.challengesViewContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: $challenges-view-background;
-  width: 100vw;
-  height: 100vh;
-}
-
-
 .challengesChart {
   position: relative;
-  left: calc(#{$sidebar-width} + 120px);
-  top: 50px;
+}
+
+.nrcContentContainer {
+  position: absolute;
+  left: calc($site-gutter + 30vw);
+  top: 56px;
+  background-color: rgba($navy-he, 0.8);
+  border: 1px solid $navy-he;
+  width: calc(100vw - $site-gutter - 30vw - 24px);
+  height: 100vh;
+  border-radius: 6px;
+}
+
+.rankingContainer {
+  position: absolute;
+  top: 92px;
+  bottom: 36px;
+  left: $site-gutter;
+  width: 30vw;
+  border: 1px solid $navy-he;
+  height: calc(100vh - 92px - 36px);
+  overflow: hidden;
 }
 
 .rankingChart {
+  padding: 16px 24px;
   position: relative;
-  left: calc(#{$sidebar-width} + 83px);
-  top: 50px;
+  width: 30vw;
 }
 
 @media print {

@@ -7,7 +7,7 @@ export const getOnboardingType = createSelector(
   selectUiUrlState,
   (uiState) => uiState && uiState.onboardingType
 );
-const getOnboardingStep = createSelector(
+export const getOnboardingStep = createSelector(
   selectUiUrlState,
   (uiState) => uiState && uiState.onboardingStep
 );

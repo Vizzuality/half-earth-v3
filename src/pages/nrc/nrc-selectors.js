@@ -1,13 +1,7 @@
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getDataGlobeLayers } from 'selectors/layers-selectors';
-import {
-  selectGlobeUrlState,
-  selectUiUrlState,
-} from 'selectors/location-selectors';
-
-import nrcSceneConfig from 'scenes/nrc-scene/nrc-scene-config';
+import { selectUiUrlState } from 'selectors/location-selectors';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
@@ -16,21 +10,12 @@ const selectBiodiversityData = ({ biodiversityData }) =>
   biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) =>
   metadata && (!isEmpty(metadata.data) || null);
-const selectCountryExtent = ({ countryExtent }) =>
-  countryExtent ? countryExtent.data : null;
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+const selectCountriesData = ({ countryData }) =>
+  countryData && countryData.data;
+
 const selectActiveView = ({ location }) =>
   location.payload.view || NRC_UI_DEFAULTS.view;
-
-const getGlobeSettings = createSelector(
-  [selectGlobeUrlState],
-  (globeUrlState) => {
-    return {
-      ...nrcSceneConfig,
-      ...globeUrlState,
-    };
-  }
-);
 
 const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
   return {
@@ -39,18 +24,6 @@ const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
   };
 });
 
-export const getActiveLayers = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.activeLayers
-);
-export const getCountryTooltipDisplayFor = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.countryTooltipDisplayFor
-);
-const getGlobeUpdating = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.isGlobeUpdating
-);
 const getHalfEarthModalOpen = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.openedModal
@@ -71,9 +44,15 @@ export const getLandMarineSelected = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.landMarineSelection || LAND_MARINE.land
 );
+
 const getCountryName = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.countryName
+  [selectCountriesData, selectCountryIso],
+  (countriesData, countryISO) => {
+    if (!countriesData || !countryISO) {
+      return null;
+    }
+    return countriesData[countryISO] && countriesData[countryISO].NAME_0;
+  }
 );
 export const getOnboardingType = createSelector(
   getUiSettings,
@@ -91,16 +70,10 @@ export const getOnWaitingInteraction = createSelector(
 export default createStructuredSelector({
   countryISO: selectCountryIso,
   countryName: getCountryName,
-  sceneLayers: getDataGlobeLayers,
   openedModal: getHalfEarthModalOpen,
   hasMetadata: selectMetadataData,
-  activeLayers: getActiveLayers,
-  sceneSettings: getGlobeSettings,
-  countryExtent: selectCountryExtent,
-  isGlobeUpdating: getGlobeUpdating,
   speciesCategories: selectBiodiversityData,
   localSceneActiveTab: selectActiveView,
-  countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
