@@ -16,6 +16,7 @@ import MobileDisclaimer from './components/mobile-disclaimer-modal';
 const Landing = loadable(() => import('pages/landing'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
+const NationalReportCardLegacy = loadable(() => import('pages/nrc-legacy'));
 const NationalReportCard = loadable(() => import('pages/nrc'));
 const NationalReportCardLanding = loadable(() => import('pages/nrc-landing'));
 const AreaOfInterest = loadable(() => import('pages/aoi'));
@@ -25,7 +26,8 @@ const mapStateToProps = ({ location }) => ({
   lang: location.query && location.query.lang,
 });
 
-const { REACT_APP_TRANSIFEX_TOKEN } = process.env;
+const { REACT_APP_TRANSIFEX_TOKEN, REACT_APP_FEATURE_NEW_NRC_PAGE } =
+  process.env;
 
 function AppLayout(props) {
   const { route } = props;
@@ -36,7 +38,11 @@ function AppLayout(props) {
     case 'featured-globe':
       return <FeaturedGlobe />;
     case 'nrc':
-      return <NationalReportCard />;
+      return REACT_APP_FEATURE_NEW_NRC_PAGE ? (
+        <NationalReportCard />
+      ) : (
+        <NationalReportCardLegacy />
+      );
     case 'nrc-landing':
       return <NationalReportCardLanding />;
     case 'aoi':
