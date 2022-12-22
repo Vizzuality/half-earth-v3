@@ -167,10 +167,12 @@ function SceneContainer(props) {
     let watchHandle;
     if (view && view.center && !urlParamsUpdateDisabled && !rotationActive) {
       loadModules(['esri/core/reactiveUtils']).then(([watchUtils]) => {
-        watchHandle = watchUtils.whenTrue(view, 'stationary', () => {
-          const { longitude, latitude } = view.center;
-          changeGlobe({ center: [longitude, latitude], zoom: view.zoom });
-        });
+        watchHandle = watchUtils
+          .whenOnce(() => view.stationary)
+          .then(() => {
+            const { longitude, latitude } = view.center;
+            changeGlobe({ center: [longitude, latitude], zoom: view.zoom });
+          });
       });
     }
 

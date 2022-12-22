@@ -31,9 +31,11 @@ const NationalReportPdfContainer = (props) => {
   useEffect(() => {
     watchHandle =
       watchUtils &&
-      watchUtils.whenFalseOnce(view, 'updating', () => {
-        getSceneImageUrl();
-      });
+      watchUtils
+        .whenOnce(() => !view.updating)
+        .then(() => {
+          getSceneImageUrl();
+        });
     return function cleanUp() {
       if (watchHandle) {
         watchHandle.remove();
