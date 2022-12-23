@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -10,7 +10,9 @@ import {
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
+import ShareModal from 'components/share-modal';
 
+import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
@@ -25,16 +27,16 @@ function NrcContent({
   handleClose,
   countryISO,
   countryName,
-  setShareModalOpen,
   handlePrintReport,
+  goToAnalyzeAreas,
 }) {
   const t = useT();
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
     onboardingStep,
   });
-
   const { overlay: onboardingOverlay, className: onboardingClassName } =
     getOnboardingProps({
       section: 'closure',
@@ -69,6 +71,13 @@ function NrcContent({
         <div className={styles.actionButtons}>
           <Button
             type="icon-square"
+            Icon={AnalyzeAreasIcon}
+            className={styles.actionButton}
+            handleClick={goToAnalyzeAreas}
+            tooltipText={t('Go to analyze area')}
+          />
+          <Button
+            type="icon-square"
             Icon={ShareIcon}
             className={styles.actionButton}
             handleClick={setShareModalOpen}
@@ -82,6 +91,10 @@ function NrcContent({
           />
         </div>
       </header>
+      <ShareModal
+        isOpen={isShareModalOpen}
+        setShareModalOpen={setShareModalOpen}
+      />
     </div>
   );
 }

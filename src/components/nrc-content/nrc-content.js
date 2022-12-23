@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
 
-import { NATIONAL_REPORT_CARD_LANDING } from 'router';
+import { NATIONAL_REPORT_CARD_LANDING, AREA_OF_INTEREST } from 'router';
 
 import { useLocale } from '@transifex/react';
 
 import { downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
+import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
 import Component from './nrc-content-component';
@@ -23,7 +24,7 @@ const actions = {
 };
 
 function NrcContainer(props) {
-  const { browsePage, onboardingType, countryName } = props;
+  const { browsePage, onboardingType, countryName, countryId } = props;
 
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
@@ -37,6 +38,16 @@ function NrcContainer(props) {
         onboardingStep: 6,
         waitingInteraction: false,
       });
+  };
+
+  const goToAnalyzeAreas = () => {
+    browsePage({
+      type: AREA_OF_INTEREST,
+      payload: { id: countryId },
+      query: {
+        precalculatedLayerSlug: PRECALCULATED_LAYERS_SLUG.national,
+      },
+    });
   };
 
   const handlePrintReport = () => {
@@ -60,6 +71,7 @@ function NrcContainer(props) {
       {...props}
       handleClose={handleClose}
       handlePrintReport={handlePrintReport}
+      goToAnalyzeAreas={goToAnalyzeAreas}
       countryName={localizedCountryName}
     />
   );

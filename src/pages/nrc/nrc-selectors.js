@@ -45,15 +45,30 @@ export const getLandMarineSelected = createSelector(
   (uiSettings) => uiSettings.landMarineSelection || LAND_MARINE.land
 );
 
-const getCountryName = createSelector(
+const getCountryData = createSelector(
   [selectCountriesData, selectCountryIso],
   (countriesData, countryISO) => {
     if (!countriesData || !countryISO) {
       return null;
     }
-    return countriesData[countryISO] && countriesData[countryISO].NAME_0;
+    return countriesData[countryISO];
   }
 );
+
+const getCountryName = createSelector([getCountryData], (countryData) => {
+  if (!countryData) {
+    return null;
+  }
+  return countryData.NAME_0;
+});
+
+const getCountryId = createSelector([getCountryData], (countryData) => {
+  if (!countryData) {
+    return null;
+  }
+  return countryData.ObjectId;
+});
+
 export const getOnboardingType = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.onboardingType
@@ -69,6 +84,7 @@ export const getOnWaitingInteraction = createSelector(
 
 export default createStructuredSelector({
   countryISO: selectCountryIso,
+  countryId: getCountryId,
   countryName: getCountryName,
   openedModal: getHalfEarthModalOpen,
   hasMetadata: selectMetadataData,

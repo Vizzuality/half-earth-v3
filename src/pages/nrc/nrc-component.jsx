@@ -34,6 +34,7 @@ function NationalReportCard({
   browsePage,
   changeUI,
   changeGlobe,
+  countryId,
 }) {
   useOnboardingOpenSection({
     onboardingStep,
@@ -65,7 +66,11 @@ function NationalReportCard({
           [uiStyles.onboardingMode]: !!onboardingType,
         })}
       >
-        <NrcContent countryISO={countryISO} countryName={countryName} />
+        <NrcContent
+          countryISO={countryISO}
+          countryName={countryName}
+          countryId={countryId}
+        />
       </div>
       <div
         className={cx(styles.hideOnPrint, styles.rankingContainer, {
