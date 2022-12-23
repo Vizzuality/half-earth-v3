@@ -24,23 +24,59 @@
   position: relative;
 }
 
-.nrcContentContainer {
+.container {
   position: absolute;
-  left: calc($site-gutter + 30vw);
-  top: 56px;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  display: flex;
+}
+
+.nrcContentContainer {
+  position: relative;
+  flex: 1;
+  margin: 56px 24px 0 0;
   background-color: rgba($navy-he, 0.8);
   border: 1px solid $navy-he;
-  width: calc(100vw - $site-gutter - 30vw - 24px);
   height: 100vh;
   border-radius: 6px;
 }
 
-.rankingContainer {
+.fullRankingButtonContainer {
   position: absolute;
-  top: 92px;
-  bottom: 36px;
-  left: $site-gutter;
-  width: 30vw;
+  top: calc(50% - 140px / 2);
+
+  .fullRankingButton {
+    width: 24px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    background-color: $black;
+    color: $brand-color-main;
+    padding-bottom: 8px;
+
+    span {
+      letter-spacing: 0.2em;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+    }
+  }
+
+  &.fullRanking {
+    .fullRankingButton {
+      background-color: rgba($navy-he, 0.8);
+      transform: rotate(180deg);
+      padding-bottom: 0;
+    }
+  }
+}
+
+
+.rankingContainer {
+  position: relative;
+  margin-top: 92px;
+  margin-bottom: 36px;
+  margin-left: $site-gutter;
   border: 1px solid $navy-he;
   height: calc(100vh - 92px - 36px);
   overflow: hidden;
