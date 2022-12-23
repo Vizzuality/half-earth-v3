@@ -14,6 +14,7 @@ import MapLayers from 'containers/sidebars/map-layers';
 import TabsSidebar from 'containers/sidebars/tabs-sidebar';
 
 import Button from 'components/button';
+import CloseButton from 'components/close-button';
 import DummyBlurWorkaround from 'components/dummy-blur-workaround';
 import ShareModal from 'components/share-modal';
 
@@ -39,7 +40,6 @@ import { getSidebarTabs } from 'constants/ui-params';
 import styles from './styles.module.scss';
 
 import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
-import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
@@ -149,14 +149,12 @@ function AOISidebar({
             }}
           >
             <section className={styles.headerCard}>
-              <Button
+              <CloseButton
                 type="rounded"
-                handleClick={handleClose}
-                Icon={CloseIcon}
+                handleClose={handleClose}
                 className={styles.backButton}
                 tooltipText={t('Go back to the globe')}
               />
-
               <DummyBlurWorkaround />
               <div className={styles.topRow}>
                 <div className={styles.nameWrapper}>

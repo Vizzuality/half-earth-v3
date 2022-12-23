@@ -10,11 +10,11 @@ import {
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
+import CloseButton from 'components/close-button';
 import ShareModal from 'components/share-modal';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import styles from './nrc-content-styles.module.scss';
@@ -48,13 +48,11 @@ function NrcContent({
     });
   return (
     <div className={styles.nrcContent}>
-      <Button
+      <CloseButton
         reference={(ref) => {
           tooltipRefs.current.closure = ref;
         }}
-        type="rounded"
-        handleClick={handleClose}
-        Icon={CloseIcon}
+        handleClose={handleClose}
         className={cx(styles.closeButton, onboardingClassName)}
         tooltipText={t('Go back to the globe')}
         onboardingOverlay={onboardingOverlay}

@@ -5,14 +5,13 @@ import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 
-import Button from 'components/button';
+import CloseButton from 'components/close-button';
 import ShareModalButton from 'components/share-button';
 import ShareModal from 'components/share-modal';
 
 import animationStyles from 'styles/common-animations.module.scss';
 
 import { ReactComponent as ChevronIcon } from 'icons/arrow_right.svg';
-import { ReactComponent as CloseIcon } from 'icons/closes.svg';
 
 import styles from './featured-place-card-styles.module';
 
@@ -114,10 +113,8 @@ function FeaturedPlaceCardComponent({
               </div>
             </>
           )}
-          <Button
-            type="rounded"
-            handleClick={handleClose}
-            Icon={CloseIcon}
+          <CloseButton
+            handleClose={handleClose}
             className={styles.backButton}
             tooltipText={t('Go back to the globe')}
           />

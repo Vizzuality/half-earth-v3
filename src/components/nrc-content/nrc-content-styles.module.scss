@@ -2,24 +2,9 @@
 @import 'styles/typography-extends';
 
 .closeButton {
-  height: 32px;
   top: $local-sidebar-top-margin;
   right: -16px;
   position: absolute;
-  width: 32px;
-  color: black;
-  transform: rotate(0deg);
-  transition: .5s cubic-bezier(0.6, 0.2, 0, 0.8);
-
-  &:hover {
-    color: $brand-color-main;
-    transform: rotate(90deg);
-  }
-
-  svg path {
-    stroke: currentColor;
-    fill: currentColor;
-  }
 }
 
 .header {
