@@ -16,6 +16,28 @@
   border-bottom: 1px solid $navy-he;
 }
 
+.countryDescriptionContainer {
+  column-count: 2;
+  padding: $local-sidebar-top-margin;
+  .countryDescription {
+    @extend %bodyText;
+    color: $grey-text;
+    margin: 0;
+  }
+}
+
+.indicatorCardsContainer {
+  display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-gap: 10px;
+  padding-left: $local-sidebar-top-margin;
+  padding-right: $local-sidebar-top-margin;
+  .bar {
+    height: 17px;
+    width: 100%;
+  }
+}
+
 .actionButtons {
   display: flex;
   margin-right: 30px;

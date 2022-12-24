@@ -1,12 +1,8 @@
-/* eslint-disable camelcase */
 import React, { useState } from 'react';
 
 import { useT } from '@transifex/react';
 
-import { getLocaleNumber } from 'utils/data-formatting-utils';
-
 import cx from 'classnames';
-import 'styles/settings';
 
 import {
   useOnboardingTooltipRefs,
@@ -15,7 +11,6 @@ import {
 
 import Button from 'components/button';
 import CloseButton from 'components/close-button';
-import IndicatorCard from 'components/nrc-content/indicator-card';
 import ShareModal from 'components/share-modal';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
@@ -38,14 +33,6 @@ function NrcContent({
   countryDescription,
 }) {
   const t = useT();
-
-  const {
-    SPI_ter,
-    total_endemic_ter,
-    prop_protected_ter,
-    nspecies_ter,
-    protection_needed_ter,
-  } = countryData || {};
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
@@ -108,52 +95,7 @@ function NrcContent({
       <div className={styles.countryDescriptionContainer}>
         <p className={styles.countryDescription}>{countryDescription}</p>
       </div>
-      <div className={styles.indicatorCardsContainer}>
-        <IndicatorCard
-          indicator={getLocaleNumber(SPI_ter) || ''}
-          description={<p>{t('Land Species Protection Index (SPI)')}</p>}
-        />
-        <IndicatorCard
-          color="#F8D300"
-          indicator={getLocaleNumber(total_endemic_ter) || ''}
-          description={
-            <p>
-              <b>{t('are endemic')}</b>{' '}
-              {t('land vertebrate species of a total of')}{' '}
-              {getLocaleNumber(nspecies_ter)} {t('land vertebrates')}
-            </p>
-          }
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: `linear-gradient(to right,
-                #F8D300,
-                #F8D300 ${(total_endemic_ter * 100) / nspecies_ter}%,
-                #FFFFFF0F ${(total_endemic_ter * 100) / nspecies_ter}%,
-                #FFFFFF0F 100%`,
-            }}
-          />
-        </IndicatorCard>
-        <IndicatorCard
-          color="#008604"
-          indicator={`${Math.round(prop_protected_ter)}%` || ''}
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: `linear-gradient(to right,
-                #008604,
-                #008604 ${prop_protected_ter}%,
-                #B3E74B, ${prop_protected_ter}%,
-                #B3E74B, ${prop_protected_ter + protection_needed_ter}%,
-                #FFFFFF0F ${prop_protected_ter + protection_needed_ter}%,
-                #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
-            }}
-          />
-        </IndicatorCard>
-        <IndicatorCard color="#7D2EFC" indicator="46%" />
-      </div>
+      <div>SPI</div>
       <ShareModal
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}

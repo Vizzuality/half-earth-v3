@@ -1,0 +1,42 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  background: #09141A73;
+  border: 1px solid $elephant;
+  border-radius: 8px;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 26px 17px;
+  position: relative;
+  width: auto;
+
+  .indicator {
+    @extend %display1;
+    font-weight: 100;
+    margin: 0;
+  }
+
+  .description {
+    @extend %bodyText;
+  }
+
+  .children {
+    margin-top: auto;
+  }
+
+  .iconWrapper {
+    position: absolute;
+    top: 17px;
+    right: 24px;
+    .icon {
+      height: 15px;
+      width: 15px;
+    }
+    .tooltip {
+      color: $white;
+    }
+  }
+}
