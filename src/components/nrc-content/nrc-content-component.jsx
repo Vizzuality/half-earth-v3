@@ -110,12 +110,18 @@ function NrcContent({
       </div>
       <div className={styles.indicatorCardsContainer}>
         <IndicatorCard
-          indicator={getLocaleNumber(SPI_ter) || ''}
+          indicator={SPI_ter && getLocaleNumber(SPI_ter)}
           description={<p>{t('Land Species Protection Index (SPI)')}</p>}
-        />
+        >
+          <div>
+            <p className={styles.spiAverageText}>
+              {'>'} Global SPI average: 41
+            </p>
+          </div>
+        </IndicatorCard>
         <IndicatorCard
           color="#F8D300"
-          indicator={getLocaleNumber(total_endemic_ter) || ''}
+          indicator={total_endemic_ter && getLocaleNumber(total_endemic_ter)}
           description={
             <p>
               <b>{t('are endemic')}</b>{' '}
@@ -137,7 +143,13 @@ function NrcContent({
         </IndicatorCard>
         <IndicatorCard
           color="#008604"
-          indicator={`${Math.round(prop_protected_ter)}%` || ''}
+          indicator={prop_protected_ter && `${Math.round(prop_protected_ter)}%`}
+          description={
+            <p>
+              {t('of')} <b>{t('land is protected')}</b> {t('and')}{' '}
+              {getLocaleNumber(protection_needed_ter)}% {t('needs protection')}
+            </p>
+          }
         >
           <div
             className={styles.bar}
@@ -152,7 +164,29 @@ function NrcContent({
             }}
           />
         </IndicatorCard>
-        <IndicatorCard color="#7D2EFC" indicator="46%" />
+        <IndicatorCard
+          color="#7D2EFC"
+          indicator="46%"
+          description={
+            <p>
+              {t('of land has very')} <b>{t('high human modification')}</b>{' '}
+              {t('and 5% has some modification')}
+            </p>
+          }
+        >
+          <div
+            className={styles.bar}
+            style={{
+              backgroundImage: `linear-gradient(to right,
+                #7D2EFC,
+                #7D2EFC 65%,
+                #B284FD, 65%,
+                #B284FD, 70%,
+                #FFFFFF0F 70%,
+                #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
+            }}
+          />
+        </IndicatorCard>
       </div>
       <ShareModal
         isOpen={isShareModalOpen}

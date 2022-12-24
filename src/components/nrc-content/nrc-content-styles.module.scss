@@ -36,6 +36,11 @@
     height: 17px;
     width: 100%;
   }
+  .spiAverageText {
+    @extend %annotation;
+    color: $grey-text;
+    margin: 0;
+  }
 }
 
 .actionButtons {
