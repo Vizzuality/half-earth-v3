@@ -1,6 +1,10 @@
 import { createStructuredSelector } from 'reselect';
 
-import { getCountryData, getDescription } from 'selectors/nrc-selectors';
+import {
+  getCountryData,
+  getDescription,
+  getLandMarineSelected,
+} from 'selectors/nrc-selectors';
 
 import {
   getOnboardingType,
@@ -11,6 +15,7 @@ import {
 export default createStructuredSelector({
   countryData: getCountryData,
   countryDescription: getDescription,
+  landMarineSelection: getLandMarineSelected,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,

@@ -40,6 +40,7 @@ function NrcContent({
   goToAnalyzeAreas,
   countryData,
   countryDescription,
+  landMarineSelection,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -54,11 +55,28 @@ function NrcContent({
     endemic_mammals,
     endemic_reptiles,
     SPI_ter,
+    SPI_mar,
+    total_endemic_mar,
     total_endemic_ter,
     prop_protected_ter,
+    prop_protected_mar,
     nspecies_ter,
+    nspecies_mar,
     protection_needed_ter,
+    protection_needed_mar,
+    Global_SPI_ter,
+    Global_SPI_mar,
   } = countryData || {};
+  const land = landMarineSelection === 'land';
+  const textLandMarineSelection = land ? 'land' : 'marine';
+  const SPI = land ? SPI_ter : SPI_mar;
+  const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
+  const total_endemic = land ? total_endemic_ter : total_endemic_mar;
+  const prop_protected = land ? prop_protected_ter : prop_protected_mar;
+  const nspecies = land ? nspecies_ter : nspecies_mar;
+  const protection_needed = land
+    ? protection_needed_ter
+    : protection_needed_mar;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
@@ -151,25 +169,36 @@ function NrcContent({
       </div>
       <div className={styles.indicatorCardsContainer}>
         <IndicatorCard
-          indicator={SPI_ter && getLocaleNumber(SPI_ter, locale)}
-          description={<p>{t('Land Species Protection Index (SPI)')}</p>}
+          indicator={getLocaleNumber(SPI, locale) || 0}
+          description={
+            <p>
+              {t(
+                `${
+                  textLandMarineSelection.charAt(0).toUpperCase() +
+                  textLandMarineSelection.slice(1)
+                } Species Protection Index (SPI)`
+              )}
+            </p>
+          }
         >
           <div>
             <p className={styles.spiAverageText}>
-              {'>'} Global SPI average: 41
+              {'>'} Global SPI average:{' '}
+              {getLocaleNumber(Global_SPI, locale) || 0}
             </p>
           </div>
         </IndicatorCard>
         <IndicatorCard
           color="#F8D300"
           indicator={
-            total_endemic_ter && getLocaleNumber(total_endemic_ter, locale)
+            total_endemic_ter && getLocaleNumber(total_endemic, locale)
           }
           description={
             <p>
               <b>{t('are endemic')}</b>{' '}
-              {t('land vertebrate species of a total of')}{' '}
-              {getLocaleNumber(nspecies_ter, locale)} {t('land vertebrates')}
+              {t(`${textLandMarineSelection} vertebrate species of a total of`)}{' '}
+              {getLocaleNumber(nspecies, locale)}{' '}
+              {t(`${textLandMarineSelection} vertebrates`)}
             </p>
           }
         >
@@ -178,19 +207,19 @@ function NrcContent({
             style={{
               backgroundImage: `linear-gradient(to right,
                 #F8D300,
-                #F8D300 ${(total_endemic_ter * 100) / nspecies_ter}%,
-                #FFFFFF0F ${(total_endemic_ter * 100) / nspecies_ter}%,
+                #F8D300 ${(total_endemic * 100) / nspecies}%,
+                #FFFFFF0F ${(total_endemic * 100) / nspecies}%,
                 #FFFFFF0F 100%`,
             }}
           />
         </IndicatorCard>
         <IndicatorCard
           color="#008604"
-          indicator={prop_protected_ter && `${Math.round(prop_protected_ter)}%`}
+          indicator={prop_protected && `${Math.round(prop_protected)}%`}
           description={
             <p>
-              {t('of')} <b>{t('land is protected')}</b> {t('and')}{' '}
-              {getLocaleNumber(protection_needed_ter, locale)}%{' '}
+              {t('of')} <b>{t(`${textLandMarineSelection} is protected`)}</b>{' '}
+              {t('and')} {getLocaleNumber(protection_needed, locale)}%{' '}
               {t('needs protection')}
             </p>
           }
@@ -200,10 +229,10 @@ function NrcContent({
             style={{
               backgroundImage: `linear-gradient(to right,
                 #008604,
-                #008604 ${prop_protected_ter}%,
-                #B3E74B, ${prop_protected_ter}%,
-                #B3E74B, ${prop_protected_ter + protection_needed_ter}%,
-                #FFFFFF0F ${prop_protected_ter + protection_needed_ter}%,
+                #008604 ${prop_protected}%,
+                #B3E74B, ${prop_protected}%,
+                #B3E74B, ${prop_protected + protection_needed}%,
+                #FFFFFF0F ${prop_protected + protection_needed}%,
                 #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
             }}
           />
@@ -213,7 +242,8 @@ function NrcContent({
           indicator="46%"
           description={
             <p>
-              {t('of land has very')} <b>{t('high human modification')}</b>{' '}
+              {t(`of ${textLandMarineSelection} has very`)}{' '}
+              <b>{t('high human modification')}</b>{' '}
               {t('and 5% has some modification')}
             </p>
           }

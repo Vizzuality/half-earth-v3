@@ -1,6 +1,12 @@
 import { createSelector } from 'reselect';
 
-import { selectLangUrlState } from 'selectors/location-selectors';
+import {
+  selectLangUrlState,
+  selectUiUrlState,
+} from 'selectors/location-selectors';
+
+import { LAND_MARINE } from 'constants/country-mode-constants';
+import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 
@@ -23,4 +29,16 @@ export const getDescription = createSelector(
       ? countryData[`sentence_${locale}`]
       : countryData.sentence;
   }
+);
+
+const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
+  return {
+    ...NRC_UI_DEFAULTS,
+    ...uiUrlState,
+  };
+});
+
+export const getLandMarineSelected = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.landMarineSelection || LAND_MARINE.land
 );
