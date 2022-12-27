@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 
-import { useT } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
@@ -21,6 +21,10 @@ import ShareModal from 'components/share-modal';
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
+import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
+import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
+import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
+import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import styles from './nrc-content-styles.module.scss';
 
@@ -38,8 +42,17 @@ function NrcContent({
   countryDescription,
 }) {
   const t = useT();
+  const locale = useLocale();
 
   const {
+    amphibians,
+    birds,
+    mammals,
+    reptiles,
+    endemic_amphibians,
+    endemic_birds,
+    endemic_mammals,
+    endemic_reptiles,
     SPI_ter,
     total_endemic_ter,
     prop_protected_ter,
@@ -62,6 +75,34 @@ function NrcContent({
       onboardingStep,
       waitingInteraction,
     });
+
+  const SPECIES_COMPOSITION = [
+    {
+      specie: 'amphibians',
+      endemic: endemic_amphibians,
+      total: amphibians,
+      icon: AmphibiansIcon,
+    },
+    {
+      specie: 'birds',
+      endemic: endemic_birds,
+      total: birds,
+      icon: BirdsIcon,
+    },
+    {
+      specie: 'reptiles',
+      endemic: endemic_reptiles,
+      total: reptiles,
+      icon: ReptilesIcon,
+    },
+    {
+      specie: 'mammals',
+      endemic: endemic_mammals,
+      total: mammals,
+      icon: MammalsIcon,
+    },
+  ];
+
   return (
     <div className={styles.nrcContent}>
       <CloseButton
@@ -110,7 +151,7 @@ function NrcContent({
       </div>
       <div className={styles.indicatorCardsContainer}>
         <IndicatorCard
-          indicator={SPI_ter && getLocaleNumber(SPI_ter)}
+          indicator={SPI_ter && getLocaleNumber(SPI_ter, locale)}
           description={<p>{t('Land Species Protection Index (SPI)')}</p>}
         >
           <div>
@@ -121,12 +162,14 @@ function NrcContent({
         </IndicatorCard>
         <IndicatorCard
           color="#F8D300"
-          indicator={total_endemic_ter && getLocaleNumber(total_endemic_ter)}
+          indicator={
+            total_endemic_ter && getLocaleNumber(total_endemic_ter, locale)
+          }
           description={
             <p>
               <b>{t('are endemic')}</b>{' '}
               {t('land vertebrate species of a total of')}{' '}
-              {getLocaleNumber(nspecies_ter)} {t('land vertebrates')}
+              {getLocaleNumber(nspecies_ter, locale)} {t('land vertebrates')}
             </p>
           }
         >
@@ -147,7 +190,8 @@ function NrcContent({
           description={
             <p>
               {t('of')} <b>{t('land is protected')}</b> {t('and')}{' '}
-              {getLocaleNumber(protection_needed_ter)}% {t('needs protection')}
+              {getLocaleNumber(protection_needed_ter, locale)}%{' '}
+              {t('needs protection')}
             </p>
           }
         >
@@ -187,6 +231,28 @@ function NrcContent({
             }}
           />
         </IndicatorCard>
+      </div>
+      <div className={styles.vertebratesContainer}>
+        <div className={styles.endemicCardsContainer}>
+          {SPECIES_COMPOSITION.map((s) => (
+            <div className={styles.endemicCard}>
+              <s.icon className={styles.endemicIcon} />
+              <p>
+                <b>
+                  {getLocaleNumber(s.endemic || 0, locale)} {t('endemic')}
+                </b>
+                <br />
+                {t(`${s.specie} of`)} {getLocaleNumber(s.total, locale)}
+              </p>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="compound"
+          handleClick={() => console.log('toggleModal')}
+          label={t('All vertebrates')}
+          tooltipText={t('Open vertebrates list modal')}
+        />
       </div>
       <ShareModal
         isOpen={isShareModalOpen}

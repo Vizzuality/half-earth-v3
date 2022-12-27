@@ -43,6 +43,48 @@
   }
 }
 
+.vertebratesContainer {
+  background: #09141A73;
+  border-radius: 8px;
+  color: $white;
+  display: flex;
+  justify-content: space-between;
+  margin: 8px $local-sidebar-top-margin;
+  padding: 10px 16px;
+
+  .endemicCardsContainer {
+    @extend %bodyText;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .endemicCard {
+      align-items: center;
+      display: flex;
+      margin-right: 15px;
+    }
+
+    .endemicIcon {
+      background-color: $white;
+      border-radius: 50%;
+      padding: 1px;
+      height: 32px;
+      width: 32px;
+      margin-right: 8px;
+    }
+  }
+  p {
+    margin: 0;
+  }
+
+  button {
+    border-radius: $border-radius-desktop;
+    margin-left: 20px;
+    padding: 10px 32px;
+    white-space: nowrap;
+  }
+}
+
 .actionButtons {
   display: flex;
   margin-right: 30px;
