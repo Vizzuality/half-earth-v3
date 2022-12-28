@@ -60,6 +60,7 @@
 
   .vertebratesContainer {
     background: $dark;
+    border: 1px solid $elephant;
     border-radius: 8px;
     color: $white;
     display: flex;
@@ -102,7 +103,8 @@
 
   .areaChartContainer {
     background: $dark;
-    border-radius: $border-radius-desktop;
+    border: 1px solid $elephant;
+    border-radius: 6px;
     margin: 8px 40px;
     position: relative;
     width: auto;
@@ -124,7 +126,8 @@
 
   .scatterPlotContainer {
     background: $dark;
-    border-radius: $border-radius-desktop;
+    border: 1px solid $elephant;
+    border-radius: 6px;
     margin: 8px 40px;
     position: relative;
     width: auto;
@@ -139,6 +142,42 @@
     margin-right: 8px;
   }
 
+  .sourceText {
+    @extend %annotation;
+    color: $grey-text;
+    margin: 0 40px;
+    border-bottom: 1px solid $grey-text;
+    padding: 12px 0;
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  .footer {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 40px 0 40px;
+    .footerText {
+      @extend %annotation;
+      color: $white;
+    }
+
+    .analyzeBtn {
+      background-color: $white;
+      white-space: nowrap;
+      padding: 5px 15px;
+      width: auto;
+      svg {
+        stroke: $dark-text;
+        margin-right: 10px;
+      }
+      &:hover {
+        background-color: $brand-color-main;
+      }
+
+    }
+  }
   .countryName {
     @extend %display2;
     margin: 0;

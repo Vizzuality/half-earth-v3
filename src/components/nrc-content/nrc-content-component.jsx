@@ -42,6 +42,7 @@ function NrcContent({
   countryName,
   handlePrintReport,
   goToAnalyzeAreas,
+  goToExploreData,
   handleBubbleClick,
   countryData,
   countryDescription,
@@ -348,6 +349,29 @@ function NrcContent({
             yAxisTicks={yAxisTicks}
             onBubbleClick={handleBubbleClick}
             countryChallengesSelectedKey={countryChallengesSelectedKey}
+          />
+        </div>
+        <p className={styles.sourceText}>
+          {t('Source:')} <span>{t('Gross National Income')}</span>,{' '}
+          <span>{t('Population')}</span>,{' '}
+          <span>{t('proportion of very high human modification')}</span>,{' '}
+          <span>{t('number of endemic vertebrates')}</span>,{' '}
+          <span>{t('total number of vertebrate species and SPI')}</span>.
+        </p>
+
+        <div className={styles.footer}>
+          <p className={styles.footerText}>
+            {t(
+              'For a detailed analyzes check the country analyses of the Explore Data section.'
+            )}
+          </p>
+          <Button
+            type="icon-square"
+            Icon={AnalyzeAreasIcon}
+            handleClick={goToExploreData}
+            className={styles.analyzeBtn}
+            tooltipText={t('Go to Explore Data section')}
+            label={t('ANALYZE AREA')}
           />
         </div>
       </div>
