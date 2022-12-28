@@ -1,109 +1,151 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-.closeButton {
-  top: $local-sidebar-top-margin;
-  right: -16px;
-  position: absolute;
-}
-
-.header {
-  padding-top: $local-sidebar-top-margin;
-  padding-left: 40px;
-  display: flex;
-  justify-content: space-between;
+.nrcContent {
   width: 100%;
-  border-bottom: 1px solid $navy-he;
-}
+  height: 90vh;
+  overflow: hidden;
+  position: relative;
 
-.countryDescriptionContainer {
-  column-count: 2;
-  padding: $local-sidebar-top-margin 40px;
-  .countryDescription {
-    @extend %bodyText;
-    color: $grey-text;
-    margin: 0;
+  .scrolleableArea {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+    overflow-y: scroll;
   }
-}
 
-.indicatorCardsContainer {
-  display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	grid-gap: 10px;
-  padding-left: 40px;
-  padding-right: 40px;
-    .bar {
-      height: 17px;
-      width: 100%;
-    }
-    .spiAverageText {
-      @extend %annotation;
+  .closeButton {
+    top: $local-sidebar-top-margin;
+    right: -16px;
+    position: absolute;
+  }
+
+  .header {
+    padding-top: $local-sidebar-top-margin;
+    padding-left: 40px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid $navy-he;
+  }
+
+  .countryDescriptionContainer {
+    column-count: 2;
+    padding: $local-sidebar-top-margin 40px;
+    .countryDescription {
+      @extend %bodyText;
       color: $grey-text;
       margin: 0;
     }
   }
 
-.vertebratesContainer {
-  background: $dark;
-  border-radius: 8px;
-  color: $white;
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 40px;
-  padding: 10px 16px;
-
-  .endemicCardsContainer {
-    @extend %bodyText;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    .endemicCard {
-      align-items: center;
-      display: flex;
-      margin-right: 15px;
+  .indicatorCardsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+      .bar {
+        height: 17px;
+        width: 100%;
+      }
+      .spiAverageText {
+        @extend %annotation;
+        color: $grey-text;
+        margin: 0;
+      }
     }
 
-    .endemicIcon {
-      background-color: $white;
-      border-radius: 50%;
-      padding: 1px;
-      height: 32px;
-      width: 32px;
-      margin-right: 8px;
-    }
-  }
-  p {
-    margin: 0;
-  }
-
-  button {
-    border-radius: $border-radius-desktop;
-    margin-left: 20px;
-    padding: 10px 32px;
-    white-space: nowrap;
-  }
-}
-
-.areaChartContainer {
-  background: $dark;
-  border-radius: $border-radius-desktop;
-  margin: 8px 40px;
-  position: relative;
-  width: auto;
-
-  .areaChartHeader {
-    align-items: center;
+  .vertebratesContainer {
+    background: $dark;
+    border-radius: 8px;
+    color: $white;
     display: flex;
     justify-content: space-between;
-    padding: 16px;
-    margin: 0;
+    margin: 8px 40px;
+    padding: 10px 16px;
 
-    .areaChartTitle {
+    .endemicCardsContainer {
       @extend %bodyText;
-      color: $white;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .endemicCard {
+        align-items: center;
+        display: flex;
+        margin-right: 15px;
+      }
+
+      .endemicIcon {
+        background-color: $white;
+        border-radius: 50%;
+        padding: 1px;
+        height: 32px;
+        width: 32px;
+        margin-right: 8px;
+      }
+    }
+    p {
       margin: 0;
     }
+
+    button {
+      border-radius: $border-radius-desktop;
+      margin-left: 20px;
+      padding: 10px 32px;
+      white-space: nowrap;
+    }
+  }
+
+  .areaChartContainer {
+    background: $dark;
+    border-radius: $border-radius-desktop;
+    margin: 8px 40px;
+    position: relative;
+    width: auto;
+
+    .areaChartHeader {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      margin: 0;
+
+      .areaChartTitle {
+        @extend %bodyText;
+        color: $white;
+        margin: 0;
+      }
+    }
+  }
+
+  .actionButtons {
+    display: flex;
+    margin-right: 30px;
+  }
+
+  .actionButton {
+    margin-right: 8px;
+  }
+
+  .countryName {
+    @extend %display2;
+    margin: 0;
+    padding-left: $site-gutter;
+    color: $white;
+  }
+
+  .flagWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .flag {
+    width: 30px;
+    position: relative;
   }
 }
 
@@ -128,30 +170,4 @@
   border-width: 5px;
   border-style: solid;
   border-color: white transparent transparent transparent;
-}
-
-.actionButtons {
-  display: flex;
-  margin-right: 30px;
-}
-
-.actionButton {
-  margin-right: 8px;
-}
-
-.countryName {
-  @extend %display2;
-  margin: 0;
-  padding-left: $site-gutter;
-  color: $white;
-}
-
-.flagWrapper {
-  display: flex;
-  align-items: center;
-}
-
-.flag {
-  width: 30px;
-  position: relative;
 }

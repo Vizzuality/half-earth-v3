@@ -170,163 +170,170 @@ function NrcContent({
           />
         </div>
       </header>
-      <div className={styles.countryDescriptionContainer}>
-        <p className={styles.countryDescription}>{countryDescription}</p>
-      </div>
-      <div className={styles.indicatorCardsContainer}>
-        <IndicatorCard
-          indicator={getLocaleNumber(SPI, locale) || 0}
-          description={
-            <p>
-              {t(
-                `${
-                  textLandMarineSelection.charAt(0).toUpperCase() +
-                  textLandMarineSelection.slice(1)
-                } Species Protection Index (SPI)`
-              )}
-            </p>
-          }
-        >
-          <div>
-            <p className={styles.spiAverageText}>
-              {'>'} Global SPI average:{' '}
-              {getLocaleNumber(Global_SPI, locale) || 0}
-            </p>
-          </div>
-        </IndicatorCard>
-        <IndicatorCard
-          color="#F8D300"
-          indicator={
-            total_endemic_ter && getLocaleNumber(total_endemic, locale)
-          }
-          description={
-            <p>
-              <b>{t('are endemic')}</b>{' '}
-              {t(`${textLandMarineSelection} vertebrate species of a total of`)}{' '}
-              {getLocaleNumber(nspecies, locale)}{' '}
-              {t(`${textLandMarineSelection} vertebrates`)}
-            </p>
-          }
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: `linear-gradient(to right,
+
+      <div className={styles.scrolleableArea}>
+        <div className={styles.countryDescriptionContainer}>
+          <p className={styles.countryDescription}>{countryDescription}</p>
+        </div>
+        <div className={styles.indicatorCardsContainer}>
+          <IndicatorCard
+            indicator={getLocaleNumber(SPI, locale) || 0}
+            description={
+              <p>
+                {t(
+                  `${
+                    textLandMarineSelection.charAt(0).toUpperCase() +
+                    textLandMarineSelection.slice(1)
+                  } Species Protection Index (SPI)`
+                )}
+              </p>
+            }
+          >
+            <div>
+              <p className={styles.spiAverageText}>
+                {'>'} Global SPI average:{' '}
+                {getLocaleNumber(Global_SPI, locale) || 0}
+              </p>
+            </div>
+          </IndicatorCard>
+          <IndicatorCard
+            color="#F8D300"
+            indicator={
+              total_endemic_ter && getLocaleNumber(total_endemic, locale)
+            }
+            description={
+              <p>
+                <b>{t('are endemic')}</b>{' '}
+                {t(
+                  `${textLandMarineSelection} vertebrate species of a total of`
+                )}{' '}
+                {getLocaleNumber(nspecies, locale)}{' '}
+                {t(`${textLandMarineSelection} vertebrates`)}
+              </p>
+            }
+          >
+            <div
+              className={styles.bar}
+              style={{
+                backgroundImage: `linear-gradient(to right,
                 #F8D300,
                 #F8D300 ${(total_endemic * 100) / nspecies}%,
                 #FFFFFF0F ${(total_endemic * 100) / nspecies}%,
                 #FFFFFF0F 100%`,
-            }}
-          />
-        </IndicatorCard>
-        <IndicatorCard
-          color="#008604"
-          indicator={prop_protected && `${Math.round(prop_protected)}%`}
-          description={
-            <p>
-              {t('of')} <b>{t(`${textLandMarineSelection} is protected`)}</b>{' '}
-              {t('and')} {getLocaleNumber(protection_needed, locale)}%{' '}
-              {t('needs protection')}
-            </p>
-          }
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: `linear-gradient(to right,
+              }}
+            />
+          </IndicatorCard>
+          <IndicatorCard
+            color="#008604"
+            indicator={prop_protected && `${Math.round(prop_protected)}%`}
+            description={
+              <p>
+                {t('of')} <b>{t(`${textLandMarineSelection} is protected`)}</b>{' '}
+                {t('and')} {getLocaleNumber(protection_needed, locale)}%{' '}
+                {t('needs protection')}
+              </p>
+            }
+          >
+            <div
+              className={styles.bar}
+              style={{
+                backgroundImage: `linear-gradient(to right,
                 #008604,
                 #008604 ${prop_protected}%,
                 #B3E74B, ${prop_protected}%,
                 #B3E74B, ${prop_protected + protection_needed}%,
                 #FFFFFF0F ${prop_protected + protection_needed}%,
                 #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
-            }}
-          />
-        </IndicatorCard>
-        <IndicatorCard
-          color="#7D2EFC"
-          indicator="46%"
-          description={
-            <p>
-              {t(`of ${textLandMarineSelection} has very`)}{' '}
-              <b>{t('high human modification')}</b>{' '}
-              {t('and 5% has some modification')}
-            </p>
-          }
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: `linear-gradient(to right,
+              }}
+            />
+          </IndicatorCard>
+          <IndicatorCard
+            color="#7D2EFC"
+            indicator="46%"
+            description={
+              <p>
+                {t(`of ${textLandMarineSelection} has very`)}{' '}
+                <b>{t('high human modification')}</b>{' '}
+                {t('and 5% has some modification')}
+              </p>
+            }
+          >
+            <div
+              className={styles.bar}
+              style={{
+                backgroundImage: `linear-gradient(to right,
                 #7D2EFC,
                 #7D2EFC 65%,
                 #B284FD, 65%,
                 #B284FD, 70%,
                 #FFFFFF0F 70%,
                 #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
-            }}
+              }}
+            />
+          </IndicatorCard>
+        </div>
+        <div className={styles.vertebratesContainer}>
+          <div className={styles.endemicCardsContainer}>
+            {SPECIES_COMPOSITION.map((s) => (
+              <div className={styles.endemicCard}>
+                <s.icon className={styles.endemicIcon} />
+                <p>
+                  <b>
+                    {getLocaleNumber(s.endemic || 0, locale)} {t('endemic')}
+                  </b>
+                  <br />
+                  {t(`${s.specie} of`)} {getLocaleNumber(s.total, locale)}
+                </p>
+              </div>
+            ))}
+          </div>
+          <Button
+            type="compound"
+            handleClick={() => console.log('toggleModal')}
+            label={t('All vertebrates')}
+            tooltipText={t('Open vertebrates list modal')}
           />
-        </IndicatorCard>
-      </div>
-      <div className={styles.vertebratesContainer}>
-        <div className={styles.endemicCardsContainer}>
-          {SPECIES_COMPOSITION.map((s) => (
-            <div className={styles.endemicCard}>
-              <s.icon className={styles.endemicIcon} />
-              <p>
-                <b>
-                  {getLocaleNumber(s.endemic || 0, locale)} {t('endemic')}
-                </b>
-                <br />
-                {t(`${s.specie} of`)} {getLocaleNumber(s.total, locale)}
-              </p>
-            </div>
-          ))}
         </div>
-        <Button
-          type="compound"
-          handleClick={() => console.log('toggleModal')}
-          label={t('All vertebrates')}
-          tooltipText={t('Open vertebrates list modal')}
-        />
-      </div>
-      <div className={styles.areaChartContainer}>
-        <div className={styles.areaChartHeader}>
-          <p className={styles.areaChartTitle}>{t('Trend of the land SPI')}</p>
-          <span>
-            <Tooltip
-              content={
-                <div className={styles.titleTooltip}>
-                  {t(
-                    'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
-                  )}
-                </div>
-              }
-              delay={100}
-              placement="top"
-            >
-              <InfoIcon className={styles.icon} />
-            </Tooltip>
-          </span>
+        <div className={styles.areaChartContainer}>
+          <div className={styles.areaChartHeader}>
+            <p className={styles.areaChartTitle}>
+              {t('Trend of the land SPI')}
+            </p>
+            <span>
+              <Tooltip
+                content={
+                  <div className={styles.titleTooltip}>
+                    {t(
+                      'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
+                    )}
+                  </div>
+                }
+                delay={100}
+                placement="top"
+              >
+                <InfoIcon className={styles.icon} />
+              </Tooltip>
+            </span>
+          </div>
+          <AreaChart
+            area1={{
+              key: 'spi',
+              stroke: '#FFFFFF',
+              strokeWidth: 0.5,
+            }}
+            area2={{
+              key: 'protected',
+              stroke: '#FFFFFF',
+              strokeWidth: 0.7,
+              strokeDasharray: '3 3 3 3',
+            }}
+            data={land ? landData : marineData}
+            height={240}
+            width="98%"
+            tooltip
+            tooltipContent={<AreaChartToooltip />}
+          />
         </div>
-        <AreaChart
-          area1={{
-            key: 'spi',
-            stroke: '#FFFFFF',
-            strokeWidth: 0.5,
-          }}
-          area2={{
-            key: 'protected',
-            stroke: '#FFFFFF',
-            strokeWidth: 0.7,
-            strokeDasharray: '3 3 3 3',
-          }}
-          data={land ? landData : marineData}
-          height={240}
-          width="98%"
-          tooltip
-          tooltipContent={<AreaChartToooltip />}
-        />
       </div>
       <ShareModal
         isOpen={isShareModalOpen}

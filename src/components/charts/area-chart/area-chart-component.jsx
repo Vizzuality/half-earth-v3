@@ -52,6 +52,7 @@ function AreaChartComponent({
           {tooltip && (
             <RechartsTooltip
               content={tooltipContent}
+              cursor={{ strokeDasharray: 1 }}
               offset={0}
               position={{ y: 0 }}
             />
