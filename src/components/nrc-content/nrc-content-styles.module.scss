@@ -56,7 +56,7 @@
         color: $grey-text;
         margin: 0;
       }
-    }
+  }
 
   .vertebratesContainer {
     background: $dark;
@@ -120,6 +120,14 @@
         margin: 0;
       }
     }
+  }
+
+  .scatterPlotContainer {
+    background: $dark;
+    border-radius: $border-radius-desktop;
+    margin: 8px 40px;
+    position: relative;
+    width: auto;
   }
 
   .actionButtons {

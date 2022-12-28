@@ -7,9 +7,10 @@ $chart-margin: 14px;
 .scatterPlotContainer {
   border-left: 3px solid $elephant;
   border-bottom: 3px solid $elephant;
-  width: $country-scene-chart-width;
   height: 60vh;
+  width: 90%;
   position: relative;
+  margin: 30px;
 }
 
 .bubbleTextContainer {

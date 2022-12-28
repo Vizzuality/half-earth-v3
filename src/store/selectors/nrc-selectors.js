@@ -42,3 +42,8 @@ export const getLandMarineSelected = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.landMarineSelection || LAND_MARINE.land
 );
+
+export const getCountryChallengesSelectedFilter = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.countryChallengesSelectedFilter
+);

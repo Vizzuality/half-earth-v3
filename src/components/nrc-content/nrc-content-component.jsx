@@ -15,6 +15,7 @@ import {
 
 import Button from 'components/button';
 import AreaChart from 'components/charts/area-chart';
+import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
 import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
@@ -41,10 +42,15 @@ function NrcContent({
   countryName,
   handlePrintReport,
   goToAnalyzeAreas,
+  handleBubbleClick,
   countryData,
   countryDescription,
   landMarineSelection,
   areaChartData,
+  xAxisTicks,
+  yAxisTicks,
+  countryChallengesSelectedKey,
+  scatterPlotData,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -332,6 +338,16 @@ function NrcContent({
             width="98%"
             tooltip
             tooltipContent={<AreaChartToooltip />}
+          />
+        </div>
+        <div className={styles.scatterPlotContainer}>
+          <ScatterPlot
+            data={scatterPlotData}
+            countryISO={countryISO}
+            xAxisTicks={xAxisTicks}
+            yAxisTicks={yAxisTicks}
+            onBubbleClick={handleBubbleClick}
+            countryChallengesSelectedKey={countryChallengesSelectedKey}
           />
         </div>
       </div>

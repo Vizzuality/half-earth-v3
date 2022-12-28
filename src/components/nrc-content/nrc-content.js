@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
 
-import { NATIONAL_REPORT_CARD_LANDING, AREA_OF_INTEREST } from 'router';
+import {
+  NATIONAL_REPORT_CARD,
+  NATIONAL_REPORT_CARD_LANDING,
+  AREA_OF_INTEREST,
+} from 'router';
 
 import { useLocale } from '@transifex/react';
 
@@ -12,6 +16,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { getCountryNames } from 'constants/translation-constants';
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import Component from './nrc-content-component';
 import mapStateToProps from './nrc-content-selectors';
@@ -38,6 +43,17 @@ function NrcContainer(props) {
         onboardingStep: 6,
         waitingInteraction: false,
       });
+  };
+
+  const handleBubbleClick = ({ countryISO }) => {
+    const { selectedFilterOption } = props;
+    browsePage({
+      type: NATIONAL_REPORT_CARD,
+      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES },
+      query: {
+        ui: { countryChallengesSelectedFilter: selectedFilterOption.slug },
+      },
+    });
   };
 
   const goToAnalyzeAreas = () => {
@@ -70,6 +86,7 @@ function NrcContainer(props) {
     <Component
       {...props}
       handleClose={handleClose}
+      handleBubbleClick={handleBubbleClick}
       handlePrintReport={handlePrintReport}
       goToAnalyzeAreas={goToAnalyzeAreas}
       countryName={localizedCountryName}
