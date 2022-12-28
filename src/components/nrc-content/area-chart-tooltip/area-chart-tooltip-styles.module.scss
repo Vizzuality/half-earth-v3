@@ -1,0 +1,26 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  @extend %bodyText;
+  font-size: 10px;
+
+  .SPIcontainer {
+    background: $white;
+    color: $dark-text;
+    display: inline-block;
+    height: 22px;
+    margin: 0;
+    padding: 0 5px;
+    p { margin: 0; }
+  }
+
+  .protectedAreasContainer {
+    background: #FFFFFF0F;
+    color: $white;
+    height: 22px;
+    margin: 0;
+    padding: 0 5px;
+    p { margin: 0; }
+  }
+}

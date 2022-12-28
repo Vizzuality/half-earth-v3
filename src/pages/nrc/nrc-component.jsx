@@ -105,6 +105,7 @@ function NationalReportCard({
             />
           </motion.div>
           <NrcContent
+            chartData={chartData}
             countryISO={countryISO}
             countryName={countryName}
             countryId={countryId}

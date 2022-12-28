@@ -5,8 +5,8 @@ import { useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
+import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
-import 'styles/settings';
 
 import {
   useOnboardingTooltipRefs,
@@ -14,12 +14,15 @@ import {
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
+import AreaChart from 'components/charts/area-chart';
 import CloseButton from 'components/close-button';
+import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import ShareModal from 'components/share-modal';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
+import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
@@ -41,10 +44,10 @@ function NrcContent({
   countryData,
   countryDescription,
   landMarineSelection,
+  areaChartData,
 }) {
   const t = useT();
   const locale = useLocale();
-
   const {
     amphibians,
     birds,
@@ -67,6 +70,9 @@ function NrcContent({
     Global_SPI_ter,
     Global_SPI_mar,
   } = countryData || {};
+
+  const { land: landData, marine: marineData } = areaChartData;
+
   const land = landMarineSelection === 'land';
   const textLandMarineSelection = land ? 'land' : 'marine';
   const SPI = land ? SPI_ter : SPI_mar;
@@ -282,6 +288,44 @@ function NrcContent({
           handleClick={() => console.log('toggleModal')}
           label={t('All vertebrates')}
           tooltipText={t('Open vertebrates list modal')}
+        />
+      </div>
+      <div className={styles.areaChartContainer}>
+        <div className={styles.areaChartHeader}>
+          <p className={styles.areaChartTitle}>{t('Trend of the land SPI')}</p>
+          <span>
+            <Tooltip
+              content={
+                <div className={styles.titleTooltip}>
+                  {t(
+                    'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
+                  )}
+                </div>
+              }
+              delay={100}
+              placement="top"
+            >
+              <InfoIcon className={styles.icon} />
+            </Tooltip>
+          </span>
+        </div>
+        <AreaChart
+          area1={{
+            key: 'spi',
+            stroke: '#FFFFFF',
+            strokeWidth: 0.5,
+          }}
+          area2={{
+            key: 'protected',
+            stroke: '#FFFFFF',
+            strokeWidth: 0.7,
+            strokeDasharray: '3 3 3 3',
+          }}
+          data={land ? landData : marineData}
+          height={240}
+          width="98%"
+          tooltip
+          tooltipContent={<AreaChartToooltip />}
         />
       </div>
       <ShareModal
