@@ -8,7 +8,13 @@ import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
 import styles from './indicator-card-styles.module.scss';
 
-function IndicatorCard({ color, indicator, description, children }) {
+function IndicatorCard({
+  color,
+  indicator,
+  description,
+  tooltipInfo,
+  children,
+}) {
   const t = useT();
   return (
     <div className={styles.container}>
@@ -19,8 +25,8 @@ function IndicatorCard({ color, indicator, description, children }) {
       <div className={styles.children}>{children}</div>
       <span className={styles.iconWrapper}>
         <Tooltip
-          content={<div className={styles.tooltip}>{t('More info')}</div>}
-          animation="none"
+          content={<div className={styles.tooltip}>{t(tooltipInfo)}</div>}
+          delay={100}
           placement="top"
         >
           <InfoIcon className={styles.icon} />

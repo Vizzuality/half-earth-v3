@@ -195,6 +195,7 @@ function NrcContent({
                 )}
               </p>
             }
+            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
           >
             <div>
               <p className={styles.spiAverageText}>
@@ -218,6 +219,7 @@ function NrcContent({
                 {t(`${textLandMarineSelection} vertebrates`)}
               </p>
             }
+            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
           >
             <div
               className={styles.bar}
@@ -240,6 +242,7 @@ function NrcContent({
                 {t('needs protection')}
               </p>
             }
+            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
           >
             <div
               className={styles.bar}
@@ -264,6 +267,7 @@ function NrcContent({
                 {t('and 5% has some modification')}
               </p>
             }
+            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
           >
             <div
               className={styles.bar}
