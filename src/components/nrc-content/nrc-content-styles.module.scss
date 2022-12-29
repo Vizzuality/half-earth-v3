@@ -12,7 +12,7 @@
     bottom: 0;
     left: 20px;
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
-    z-index: 0;
+    overflow-y: scroll;
   }
 
   .scrolleableArea::-webkit-scrollbar {
