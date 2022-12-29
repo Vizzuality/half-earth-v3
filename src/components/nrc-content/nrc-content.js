@@ -7,7 +7,6 @@ import {
   NATIONAL_REPORT_CARD,
   NATIONAL_REPORT_CARD_LANDING,
   AREA_OF_INTEREST,
-  DATA,
 } from 'router';
 
 import { useLocale } from '@transifex/react';
@@ -84,13 +83,6 @@ function NrcContainer(props) {
     });
   };
 
-  const goToExploreData = () => {
-    browsePage({
-      type: DATA,
-      payload: { id: countryId },
-    });
-  };
-
   const handlePrintReport = () => {
     const today = new Date();
     const date = Intl.DateTimeFormat('en-US', {
@@ -114,7 +106,6 @@ function NrcContainer(props) {
       handleBubbleClick={handleBubbleClick}
       handlePrintReport={handlePrintReport}
       goToAnalyzeAreas={goToAnalyzeAreas}
-      goToExploreData={goToExploreData}
       toggleModal={toggleModal}
       countryName={localizedCountryName}
     />

@@ -71,7 +71,7 @@ function NationalReportCard({
       <div className={styles.container}>
         <motion.div
           initial={{ width: 320 }}
-          animate={{ width: fullRanking ? '70vw' : 320 }}
+          animate={{ width: fullRanking ? '64vw' : '22vw' }}
           transition={{ duration: 0.5 }}
           className={cx(styles.hideOnPrint, styles.rankingContainer, {
             [uiStyles.onboardingMode]: !!onboardingType,
@@ -100,10 +100,7 @@ function NationalReportCard({
               type="rectangular-primary"
               Icon={ArrowExpandIcon}
               className={styles.fullRankingButton}
-              handleClick={() => {
-                setFullRanking(!fullRanking);
-                console.log('Hola');
-              }}
+              handleClick={() => setFullRanking(!fullRanking)}
               label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
             />
           </motion.div>
@@ -112,6 +109,7 @@ function NationalReportCard({
             countryISO={countryISO}
             countryName={countryName}
             countryId={countryId}
+            fullRanking={fullRanking}
           />
         </motion.div>
       </div>

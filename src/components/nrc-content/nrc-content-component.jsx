@@ -45,7 +45,6 @@ function NrcContent({
   countryName,
   handlePrintReport,
   goToAnalyzeAreas,
-  goToExploreData,
   handleBubbleClick,
   countryData,
   countryDescription,
@@ -55,6 +54,7 @@ function NrcContent({
   yAxisTicks,
   countryChallengesSelectedKey,
   scatterPlotData,
+  fullRanking,
   toggleModal,
   // openedModal,
 }) {
@@ -184,10 +184,20 @@ function NrcContent({
       </header>
 
       <div className={styles.scrolleableArea}>
-        <div className={styles.countryDescriptionContainer}>
+        <div
+          className={cx({
+            [styles.countryDescriptionContainer]: true,
+            [styles.countryDescriptionContainerShrunken]: fullRanking,
+          })}
+        >
           <p className={styles.countryDescription}>{countryDescription}</p>
         </div>
-        <div className={styles.indicatorCardsContainer}>
+        <div
+          className={cx({
+            [styles.indicatorCardsContainer]: true,
+            [styles.indicatorCardsContainerShrunken]: fullRanking,
+          })}
+        >
           <IndicatorCard
             indicator={getLocaleNumber(SPI, locale) || 0}
             description={
@@ -288,7 +298,12 @@ function NrcContent({
             />
           </IndicatorCard>
         </div>
-        <div className={styles.vertebratesContainer}>
+        <div
+          className={cx({
+            [styles.vertebratesContainer]: true,
+            [styles.vertebratesContainerShrunken]: fullRanking,
+          })}
+        >
           <div className={styles.endemicCardsContainer}>
             {SPECIES_COMPOSITION.map((s) => (
               <div className={styles.endemicCard} key={s.specie}>
@@ -365,10 +380,16 @@ function NrcContent({
           <span>{t('Population')}</span>,{' '}
           <span>{t('proportion of very high human modification')}</span>,{' '}
           <span>{t('number of endemic vertebrates')}</span>,{' '}
-          <span>{t('total number of vertebrate species and SPI')}</span>.
+          <span>{t('total number of vertebrate species')}</span> {t('and')}{' '}
+          <span>{t('SPI')}</span>.
         </p>
 
-        <div className={styles.footer}>
+        <div
+          className={cx({
+            [styles.footer]: true,
+            [styles.footerShrunken]: fullRanking,
+          })}
+        >
           <p className={styles.footerText}>
             {t(
               'For a detailed analyzes check the country analyses of the Explore Data section.'
@@ -377,7 +398,7 @@ function NrcContent({
           <Button
             type="icon-square"
             Icon={AnalyzeAreasIcon}
-            handleClick={goToExploreData}
+            handleClick={goToAnalyzeAreas}
             className={styles.analyzeBtn}
             tooltipText={t('Go to Explore Data section')}
             label={t('ANALYZE AREA')}
