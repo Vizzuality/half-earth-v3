@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
+import { selectUiUrlState } from 'selectors/location-selectors';
 import {
   getCountryData,
   getDescription,
@@ -29,6 +30,7 @@ import {
   LAND_MARINE,
   LAND_MARINE_COUNTRY_ATTRIBUTES,
 } from 'constants/country-mode-constants';
+import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
 const getChartData = (state, { chartData }) => chartData;
 
@@ -173,6 +175,18 @@ const getYAxisTicks = createSelector([getFilteredData], (plotData) => {
   return [0, 100];
 });
 
+const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
+  return {
+    ...NRC_UI_DEFAULTS,
+    ...uiUrlState,
+  };
+});
+
+const getHalfEarthModalOpen = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.openedModal
+);
+
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
   countryData: getCountryData,
@@ -181,6 +195,7 @@ export default createStructuredSelector({
   landMarineSelection: getLandMarineSelected,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
+  openedModal: getHalfEarthModalOpen,
   scatterPlotData: getFilteredData,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,

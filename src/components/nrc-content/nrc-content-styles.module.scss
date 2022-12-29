@@ -3,7 +3,7 @@
 
 .nrcContent {
   width: 100%;
-  height: 90vh;
+  height: 80vh;
   overflow: hidden;
 
   .scrolleableArea {
@@ -161,10 +161,11 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    margin: 10px 40px 0 40px;
+    margin: 10px 40px;
     .footerText {
       @extend %annotation;
       color: $white;
+      font-size: 14px;
     }
 
     .analyzeBtn {

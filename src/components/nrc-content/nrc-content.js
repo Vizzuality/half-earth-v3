@@ -12,12 +12,15 @@ import {
 
 import { useLocale } from '@transifex/react';
 
-import { downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
+import {
+  downloadNrcPdfAnalytics,
+  openSpeciesListAnalytics,
+} from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { getCountryNames } from 'constants/translation-constants';
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+import { MODALS, LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import Component from './nrc-content-component';
 import mapStateToProps from './nrc-content-selectors';
@@ -30,13 +33,27 @@ const actions = {
 };
 
 function NrcContainer(props) {
-  const { browsePage, onboardingType, countryName, countryId } = props;
+  const {
+    browsePage,
+    onboardingType,
+    countryName,
+    countryId,
+    changeUI,
+    openedModal,
+  } = props;
 
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
   const localizedCountryName = countryNames[countryName] || countryName;
+
+  const toggleModal = () => {
+    changeUI({ openedModal: !openedModal ? MODALS.SPECIES : null });
+    if (!openedModal) {
+      openSpeciesListAnalytics();
+    }
+  };
+
   const handleClose = () => {
-    const { changeUI } = props;
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
     if (onboardingType)
       changeUI({
@@ -98,6 +115,7 @@ function NrcContainer(props) {
       handlePrintReport={handlePrintReport}
       goToAnalyzeAreas={goToAnalyzeAreas}
       goToExploreData={goToExploreData}
+      toggleModal={toggleModal}
       countryName={localizedCountryName}
     />
   );

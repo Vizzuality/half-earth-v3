@@ -20,6 +20,9 @@ import CloseButton from 'components/close-button';
 import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import ShareModal from 'components/share-modal';
+// import SpeciesModal from 'components/species-modal';
+
+// import { MODALS } from 'constants/ui-params';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
@@ -52,6 +55,8 @@ function NrcContent({
   yAxisTicks,
   countryChallengesSelectedKey,
   scatterPlotData,
+  toggleModal,
+  // openedModal,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -184,7 +189,7 @@ function NrcContent({
         </div>
         <div className={styles.indicatorCardsContainer}>
           <IndicatorCard
-            indicator={getLocaleNumber(SPI, locale) || 0}
+            indicator={!!getLocaleNumber(SPI, locale) || 0}
             description={
               <p>
                 {t(
@@ -286,7 +291,7 @@ function NrcContent({
         <div className={styles.vertebratesContainer}>
           <div className={styles.endemicCardsContainer}>
             {SPECIES_COMPOSITION.map((s) => (
-              <div className={styles.endemicCard}>
+              <div className={styles.endemicCard} key={s.specie}>
                 <s.icon className={styles.endemicIcon} />
                 <p>
                   <b>
@@ -300,7 +305,7 @@ function NrcContent({
           </div>
           <Button
             type="compound"
-            handleClick={() => console.log('toggleModal')}
+            handleClick={toggleModal}
             label={t('All vertebrates')}
             tooltipText={t('Open vertebrates list modal')}
           />
@@ -383,6 +388,10 @@ function NrcContent({
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}
       />
+      {/* <SpeciesModal
+        open={openedModal === MODALS.SPECIES}
+        handleModalClose={toggleModal}
+      /> */}
     </div>
   );
 }
