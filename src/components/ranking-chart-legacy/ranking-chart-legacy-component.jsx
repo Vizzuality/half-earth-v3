@@ -7,19 +7,19 @@ import PropTypes from 'prop-types';
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 
-// import Dropdown from 'components/dropdown';
+import Dropdown from 'components/dropdown';
 import SearchInput from 'components/search-input';
 
 import {
-  // SORT_GROUPS,
-  // getSortOptions,
+  SORT_GROUPS,
+  getSortOptions,
   getRankingLegend,
   SORT_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
 
 import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
 
-import styles from './ranking-chart-styles.module.scss';
+import styles from './ranking-chart-legacy-styles.module.scss';
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
 function RankingChart({
@@ -27,35 +27,26 @@ function RankingChart({
   coastal,
   className,
   countryISO,
-  // handleFilterSelection,
-  // selectedFilterOption,
+  handleFilterSelection,
+  selectedFilterOption,
   handleSearchChange,
   handleCountryClick,
   scrollIndex,
   searchTerm,
+  landMarineOptions,
   selectedLandMarineOption,
   handleLandMarineSelection,
 }) {
+  const [hasScrolled, changeHasScrolled] = useState(false);
   const t = useT();
   const locale = useLocale();
-  const [hasScrolled, changeHasScrolled] = useState(false);
-
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
-  // const sortOptions = useMemo(() => getSortOptions(), [locale]);
+  const sortOptions = useMemo(() => getSortOptions(), [locale]);
   const RANKING_HEADER_LABELS = {
     [SORT_GROUPS_SLUGS.species]: t('species'),
     [SORT_GROUPS_SLUGS.humanModification]: t('human modification'),
     [SORT_GROUPS_SLUGS.protection]: t('protection'),
     [SORT_GROUPS_SLUGS.spi]: t('spi'),
-  };
-
-  const tabsData = {
-    land: {
-      text: t('Land SPI'),
-    },
-    marine: {
-      text: t('Marine SPI'),
-    },
   };
 
   const tableRef = useRef();
@@ -123,26 +114,17 @@ function RankingChart({
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        <span className={styles.chartTitle}>{t('Ranking by')}</span>
-        <div>
-          {Object.keys(tabsData).map((key) => (
-            <button
-              key={key}
-              disabled={!coastal}
-              type="button"
-              className={cx({
-                [styles.switchDataButton]: true,
-                [styles.switchDataActiveButton]:
-                  selectedLandMarineOption.slug === key,
-              })}
-              onClick={() => handleLandMarineSelection(key)}
-            >
-              {tabsData[key].text}
-            </button>
-          ))}
+        <span className={styles.chartTitle}>{t('Show')}</span>
+        <div className={styles.landMarineDropdownWrapper}>
+          <Dropdown
+            disabled={!coastal}
+            width="full"
+            parentWidth="130px"
+            options={landMarineOptions}
+            selectedOption={selectedLandMarineOption}
+            handleOptionSelection={handleLandMarineSelection}
+          />
         </div>
-
-        {/*
         <span className={cx(styles.chartTitle, styles.filterTitle)}>
           {t('sort countries')}
         </span>
@@ -155,7 +137,7 @@ function RankingChart({
             selectedOption={selectedFilterOption}
             handleOptionSelection={handleFilterSelection}
           />
-        </div> */}
+        </div>
       </div>
       <div className={styles.header}>
         <SearchInput

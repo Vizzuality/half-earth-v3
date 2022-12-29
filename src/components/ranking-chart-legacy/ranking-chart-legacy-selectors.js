@@ -117,6 +117,7 @@ const mapStateToProps = createStructuredSelector({
   data: getSortedData,
   selectedFilterOption: getSelectedFilterOption,
   selectedLandMarineOption: getSelectedLandMarineOption,
+  landMarineOptions: getCalculatedlandMarineOptions,
 });
 
 export default mapStateToProps;

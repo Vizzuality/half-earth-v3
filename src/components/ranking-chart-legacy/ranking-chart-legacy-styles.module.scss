@@ -3,10 +3,9 @@
 @import 'styles/ui.module';
 
 .chartTitle {
-  @extend %bodyText;
-  color: $white;
+  @extend %headline;
+  color: $grey-text;
   margin-right: 1rem;
-  font-weight: 600;
 
   &.filterTitle {
     margin-left: 1rem;
@@ -17,27 +16,10 @@
   margin-bottom: 3rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
+}
 
-  .switchDataButton {
-    @extend %subtitle;
-    border: 1px solid $white;
-    color: $white;
-    padding: 6px 16px;
-    text-transform: capitalize;
-    width: auto;
-
-    &:disabled {
-      cursor: not-allowed;
-    }
-  }
-
-  .switchDataActiveButton {
-    @extend %subtitle;
-    background-color: $white;
-    color: $_temporary-dark-text;
-  }
+.landMarineDropdownWrapper {
+  width: 130px;
 }
 
 .dropdownWrapper {

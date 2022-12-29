@@ -10,8 +10,8 @@ import useDebounce from 'hooks/use-debounce';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
-import Component from './ranking-chart-component';
-import mapStateToProps from './ranking-chart-selectors';
+import Component from './ranking-chart-legacy-component';
+import mapStateToProps from './ranking-chart-legacy-selectors';
 
 const actions = { ...metadataActions, ...urlActions };
 
@@ -57,7 +57,7 @@ function RankingChartContainer(props) {
 
   const handleLandMarineSelection = (selectedFilter) => {
     const { changeUI } = props;
-    changeUI({ landMarineSelection: selectedFilter });
+    changeUI({ landMarineSelection: selectedFilter.slug });
   };
 
   return (
