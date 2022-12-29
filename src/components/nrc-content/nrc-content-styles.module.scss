@@ -45,10 +45,6 @@
     }
   }
 
-  .countryDescriptionContainerShrunken {
-    column-count: 1;
-  }
-
   .indicatorCardsContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -64,11 +60,6 @@
         color: $grey-text;
         margin: 0;
       }
-  }
-
-  .indicatorCardsContainerShrunken {
-    display: flex;
-    flex-direction: column;
   }
 
   .vertebratesContainer {
@@ -111,24 +102,6 @@
       margin-left: 20px;
       padding: 10px 32px;
       white-space: nowrap;
-    }
-  }
-
-  .vertebratesContainerShrunken {
-    flex-direction: column;
-    .endemicCardsContainer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 20px;
-      .endemicCard {
-        margin-right: 5px;
-      }
-    }
-    button {
-      display: flex;
-      justify-content: center;
-      margin-left: 0;
-      margin-top: 15px;
     }
   }
 
@@ -211,16 +184,6 @@
     }
   }
 
-  .footerShrunken {
-    flex-direction: column;
-    .footerText {
-      font-size: 12px;
-    }
-    .analyzeBtn {
-      width: 100%;
-    }
-  }
-
   .countryName {
     @extend %display2;
     margin: 0;
@@ -236,6 +199,45 @@
   .flag {
     width: 30px;
     position: relative;
+  }
+}
+
+.nrcContentShrunken {
+  .countryDescriptionContainer {
+    column-count: 1;
+  }
+
+  .indicatorCardsContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vertebratesContainer {
+    flex-direction: column;
+    .endemicCardsContainer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+      .endemicCard {
+        margin-right: 5px;
+      }
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      margin-left: 0;
+      margin-top: 15px;
+    }
+  }
+
+  .footer {
+    flex-direction: column;
+    .footerText {
+      font-size: 12px;
+    }
+    .analyzeBtn {
+      width: 100%;
+    }
   }
 }
 

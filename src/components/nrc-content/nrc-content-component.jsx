@@ -140,7 +140,12 @@ function NrcContent({
   ];
 
   return (
-    <div className={styles.nrcContent}>
+    <div
+      className={cx({
+        [styles.nrcContent]: true,
+        [styles.nrcContentShrunken]: fullRanking,
+      })}
+    >
       <CloseButton
         reference={(ref) => {
           tooltipRefs.current.closure = ref;
@@ -184,20 +189,10 @@ function NrcContent({
       </header>
 
       <div className={styles.scrolleableArea}>
-        <div
-          className={cx({
-            [styles.countryDescriptionContainer]: true,
-            [styles.countryDescriptionContainerShrunken]: fullRanking,
-          })}
-        >
+        <div className={styles.countryDescriptionContainer}>
           <p className={styles.countryDescription}>{countryDescription}</p>
         </div>
-        <div
-          className={cx({
-            [styles.indicatorCardsContainer]: true,
-            [styles.indicatorCardsContainerShrunken]: fullRanking,
-          })}
-        >
+        <div className={styles.indicatorCardsContainer}>
           <IndicatorCard
             indicator={getLocaleNumber(SPI, locale) || 0}
             description={
@@ -298,12 +293,7 @@ function NrcContent({
             />
           </IndicatorCard>
         </div>
-        <div
-          className={cx({
-            [styles.vertebratesContainer]: true,
-            [styles.vertebratesContainerShrunken]: fullRanking,
-          })}
-        >
+        <div className={styles.vertebratesContainer}>
           <div className={styles.endemicCardsContainer}>
             {SPECIES_COMPOSITION.map((s) => (
               <div className={styles.endemicCard} key={s.specie}>
@@ -384,12 +374,7 @@ function NrcContent({
           <span>{t('SPI')}</span>.
         </p>
 
-        <div
-          className={cx({
-            [styles.footer]: true,
-            [styles.footerShrunken]: fullRanking,
-          })}
-        >
+        <div className={styles.footer}>
           <p className={styles.footerText}>
             {t(
               'For a detailed analyzes check the country analyses of the Explore Data section.'
