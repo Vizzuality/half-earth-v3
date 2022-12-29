@@ -100,7 +100,10 @@ function NationalReportCard({
               type="rectangular-primary"
               Icon={ArrowExpandIcon}
               className={styles.fullRankingButton}
-              handleClick={() => setFullRanking(!fullRanking)}
+              handleClick={() => {
+                setFullRanking(!fullRanking);
+                console.log('Hola');
+              }}
               label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
             />
           </motion.div>

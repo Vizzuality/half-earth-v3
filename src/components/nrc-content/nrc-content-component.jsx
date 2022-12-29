@@ -189,7 +189,7 @@ function NrcContent({
         </div>
         <div className={styles.indicatorCardsContainer}>
           <IndicatorCard
-            indicator={!!getLocaleNumber(SPI, locale) || 0}
+            indicator={getLocaleNumber(SPI, locale) || 0}
             description={
               <p>
                 {t(

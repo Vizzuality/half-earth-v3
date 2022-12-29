@@ -10,9 +10,9 @@
     position: absolute;
     top: 60px;
     bottom: 0;
-    left: 0;
+    left: 20px;
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
-    overflow-y: scroll;
+    z-index: 0;
   }
 
   .scrolleableArea::-webkit-scrollbar {
@@ -37,7 +37,7 @@
 
   .countryDescriptionContainer {
     column-count: 2;
-    padding: $local-sidebar-top-margin 40px;
+    padding: $local-sidebar-top-margin 40px $local-sidebar-top-margin 20px;
     .countryDescription {
       @extend %bodyText;
       color: $grey-text;
@@ -49,7 +49,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 10px;
-    padding-left: 40px;
+    padding-left: 20px;
     padding-right: 40px;
       .bar {
         height: 17px;
@@ -69,7 +69,7 @@
     color: $white;
     display: flex;
     justify-content: space-between;
-    margin: 8px 40px;
+    margin: 8px 40px 8px 20px;
     padding: 10px 16px;
 
     .endemicCardsContainer {
@@ -109,7 +109,7 @@
     background: $dark;
     border: 1px solid $elephant;
     border-radius: 6px;
-    margin: 8px 40px;
+    margin: 8px 40px 8px 20px;
     position: relative;
     width: auto;
 
@@ -132,7 +132,7 @@
     background: $dark;
     border: 1px solid $elephant;
     border-radius: 6px;
-    margin: 8px 40px;
+    margin: 8px 40px 8px 20px;
     position: relative;
     width: auto;
   }
@@ -149,7 +149,7 @@
   .sourceText {
     @extend %annotation;
     color: $grey-text;
-    margin: 0 40px;
+    margin: 0 40px 0 20px;
     border-bottom: 1px solid $grey-text;
     padding: 12px 0;
     span {
@@ -161,7 +161,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    margin: 10px 40px;
+    margin: 10px 40px 10px 20px;
     .footerText {
       @extend %annotation;
       color: $white;
