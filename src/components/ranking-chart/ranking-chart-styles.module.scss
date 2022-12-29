@@ -27,6 +27,15 @@
     padding: 6px 16px;
     text-transform: capitalize;
     width: auto;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+
+    &:last-of-type {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
 
     &:disabled {
       cursor: not-allowed;
@@ -141,32 +150,8 @@ $scroll-bar-width: 7px;
   @extend %verticalScrollbar;
 
   padding-bottom: 2rem;
-  height: calc(100vh - 250px);
+  height: calc(80vh - 250px);
   flex-direction: column;
-}
-
-.scrollHint {
-  position: absolute;
-  bottom: 0;
-  width: 80%;
-  height: 55px;
-  padding-left: 15px;
-  color: $white;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(rgba(9, 20, 26, 0) 0%, rgba(9, 20, 26, .9) 80%);
-  pointer-events: none;
-  opacity: 1;
-
-  .arrow {
-    transform: rotate(90deg);
-    fill: $grey-text;
-    margin-right: 1rem;
-  }
-
-  &.fade {
-    opacity: 0;
-  }
 }
 
 .row {
@@ -244,4 +229,33 @@ $scroll-bar-width: 7px;
 
 .noModification {
   background-color: $non-human-modification;
+}
+
+.legendContainer {
+  height: 8vh;
+  margin: 0;
+  padding: 0;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 20px 0 0 auto;
+  width: 39vw;
+
+  .legendItem {
+    @extend %annotation;
+    align-items: center;
+    color: $grey-text;
+    display: flex;
+    width: 39vw / 3;
+
+    .legendColor {
+      height: 16px;
+      width: 8px;
+      margin-right: 4px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
 }

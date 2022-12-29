@@ -8,6 +8,7 @@ import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 
 // import Dropdown from 'components/dropdown';
+
 import SearchInput from 'components/search-input';
 
 import {
@@ -17,8 +18,7 @@ import {
   SORT_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
 
-import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
-
+import { LEGEND_ITEMS } from './ranking-chart-constants';
 import styles from './ranking-chart-styles.module.scss';
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
@@ -234,14 +234,19 @@ function RankingChart({
               </div>
             ))}
           </div>
-          <div
-            className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
-          >
-            <Arrow className={styles.arrow} />
-            {t('Scroll')}
-          </div>
         </div>
       ) : null}
+      <div className={styles.legendContainer}>
+        {LEGEND_ITEMS.map((i) => (
+          <div className={styles.legendItem}>
+            <div
+              className={styles.legendColor}
+              style={{ background: i.color }}
+            />
+            <p>{i.legend}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

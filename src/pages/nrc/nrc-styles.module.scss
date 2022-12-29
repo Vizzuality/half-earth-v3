@@ -71,7 +71,6 @@
   }
 }
 
-
 .rankingContainer {
   position: relative;
   margin-top: 92px;
@@ -85,7 +84,8 @@
 .rankingChart {
   padding: 16px 24px;
   position: relative;
-  width: 60vw;
+  width: 63vw;
+  max-height: 100vh;
 }
 
 @media print {
