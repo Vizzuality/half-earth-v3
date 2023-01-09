@@ -377,7 +377,7 @@ function NrcContent({
         <div className={styles.footer}>
           <p className={styles.footerText}>
             {t(
-              'For a detailed analyzes check the country analyses of the Explore Data section.'
+              'For a detailed analysis check the country analysis of the Explore Data section.'
             )}
           </p>
           <Button
