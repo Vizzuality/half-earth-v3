@@ -112,19 +112,19 @@
     margin: 8px 40px 8px 20px;
     position: relative;
     width: auto;
+  }
 
-    .areaChartHeader {
-      align-items: center;
-      display: flex;
-      justify-content: space-between;
-      padding: 16px;
+  .chartHeader {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    margin: 0;
+
+    .chartTitle {
+      @extend %bodyText;
+      color: $white;
       margin: 0;
-
-      .areaChartTitle {
-        @extend %bodyText;
-        color: $white;
-        margin: 0;
-      }
     }
   }
 
@@ -152,8 +152,12 @@
     margin: 0 40px 0 20px;
     border-bottom: 1px solid $grey-text;
     padding: 12px 0;
-    span {
+    a {
+      color: $grey-text;
       text-decoration: underline;
+      &:hover {
+        color: $white;
+      }
     }
   }
 
