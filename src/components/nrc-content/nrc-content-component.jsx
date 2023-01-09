@@ -142,6 +142,23 @@ function NrcContent({
 
   const getSpecieText = (txt) => `${txt}`;
 
+  const getBarStyles = (color1, value1, color2, value2) => {
+    const str = color2
+      ? `linear-gradient(to right,
+      ${color1},
+      ${color1} ${value1}%,
+      ${color2} ${value1}%,
+      ${color2} ${value2}%,
+      ${COLORS['white-opacity']} ${value2}%,
+      ${COLORS['white-opacity']} 100%`
+      : `linear-gradient(to right,
+        ${color1},
+        ${color1} ${value1}%,
+        ${COLORS['white-opacity']} ${value1}%,
+        ${COLORS['white-opacity']} 100%`;
+    return str;
+  };
+
   return (
     <div
       className={cx({
@@ -245,12 +262,18 @@ function NrcContent({
           >
             <div
               className={styles.bar}
+              // style={{
+              //   backgroundImage: `linear-gradient(to right,
+              //   ${COLORS.gold},
+              //   ${COLORS.gold} ${(total_endemic * 100) / nspecies}%,
+              //   ${COLORS['white-opacity']} ${(total_endemic * 100) / nspecies}%,
+              //   ${COLORS['white-opacity']} 100%`,
+              // }}
               style={{
-                backgroundImage: `linear-gradient(to right,
-                ${COLORS.gold},
-                ${COLORS.gold} ${(total_endemic * 100) / nspecies}%,
-                ${COLORS['white-opacity']} ${(total_endemic * 100) / nspecies}%,
-                ${COLORS['white-opacity']} 100%`,
+                backgroundImage: getBarStyles(
+                  COLORS.gold,
+                  (total_endemic * 100) / nspecies
+                ),
               }}
             />
           </IndicatorCard>
@@ -283,19 +306,12 @@ function NrcContent({
             <div
               className={styles.bar}
               style={{
-                backgroundImage: `linear-gradient(to right,
-                ${COLORS['protected-areas']},
-                ${COLORS['protected-areas']} ${prop_protected}%,
-                ${COLORS['protection-needed']}, ${prop_protected}%,
-                ${COLORS['protection-needed']}, ${
+                backgroundImage: getBarStyles(
+                  COLORS['protected-areas'],
+                  prop_protected,
+                  COLORS['protection-needed'],
                   prop_protected + protection_needed
-                }%,
-                ${COLORS['white-opacity']} ${
-                  prop_protected + protection_needed
-                }%,
-                ${
-                  COLORS['white-opacity']
-                } 100%                                                                                                                                                                                                                                                  `,
+                ),
               }}
             />
           </IndicatorCard>
@@ -322,13 +338,12 @@ function NrcContent({
             <div
               className={styles.bar}
               style={{
-                backgroundImage: `linear-gradient(to right,
-                 ${COLORS['high-modification']},
-                 ${COLORS['high-modification']} 65%,
-                ${COLORS['some-modification']}, 65%,
-                ${COLORS['some-modification']}, 70%,
-                ${COLORS['white-opacity']} 70%,
-                ${COLORS['white-opacity']} 100%                                                                                                                                                                                                                                                  `,
+                backgroundImage: getBarStyles(
+                  COLORS['high-modification'],
+                  65,
+                  COLORS['some-modification'],
+                  70
+                ),
               }}
             />
           </IndicatorCard>
