@@ -18,6 +18,8 @@ import { LEGEND_ITEMS } from './ranking-chart-constants';
 import styles from './ranking-chart-styles.module.scss';
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
+const ROW_HEIGHT = 20;
+
 function RankingChart({
   data,
   className,
@@ -26,6 +28,7 @@ function RankingChart({
   handleCountryClick,
   scrollIndex,
   searchTerm,
+  selectedLandMarineOption,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -41,11 +44,18 @@ function RankingChart({
 
   const tableRef = useRef();
   useEffect(() => {
-    const ROW_HEIGHT = 23;
     if (scrollIndex > -1 && tableRef.current) {
       tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
     }
   }, [scrollIndex, tableRef]);
+
+  useEffect(() => {
+    const selectedCountry = data.find((d) => d.iso === countryISO);
+    if (selectedCountry) {
+      const PADDING = 30;
+      tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
+    }
+  }, [selectedLandMarineOption]);
 
   const onScroll = () => {
     if (!hasScrolled) {
@@ -100,7 +110,6 @@ function RankingChart({
         </Tooltip>
       </div>
     );
-
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
@@ -120,12 +129,9 @@ function RankingChart({
               [styles.spiHeader]: category === 'spi',
             })}
           >
-            {RANKING_HEADER_LABELS[category].split(' ').map((word) => (
-              <p
-                key={word}
-                className={styles.titleText}
-              >{`${word.toUpperCase()}`}</p>
-            ))}
+            <p className={styles.titleText}>{`${RANKING_HEADER_LABELS[
+              category
+            ].toUpperCase()}`}</p>
           </div>
         ))}
       </div>

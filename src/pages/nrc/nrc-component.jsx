@@ -54,7 +54,6 @@ function NationalReportCard({
   });
   const t = useT();
   const { marine } = chartData;
-  const coastal = !!marine;
   const [fullRanking, setFullRanking] = useState(false);
 
   const tabsData = {
@@ -71,7 +70,7 @@ function NationalReportCard({
       {Object.keys(tabsData).map((key) => (
         <button
           key={key}
-          disabled={!coastal}
+          disabled={!marine}
           type="button"
           className={cx({
             [styles.switchDataButton]: true,
@@ -109,6 +108,7 @@ function NationalReportCard({
           <RankingChart
             countryISO={countryISO}
             className={styles.rankingChart}
+            selectedLandMarineOption={selectedLandMarineOption}
           />
           {renderLandMarineSwitch()}
         </motion.div>

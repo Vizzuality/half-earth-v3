@@ -8,15 +8,13 @@ import * as urlActions from 'actions/url-actions';
 
 import useDebounce from 'hooks/use-debounce';
 
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
-
 import Component from './ranking-chart-component';
 import mapStateToProps from './ranking-chart-selectors';
 
 const actions = { ...metadataActions, ...urlActions };
 
 function RankingChartContainer(props) {
-  const { data } = props;
+  const { data, selectedLandMarineOption } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState(0);
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
@@ -38,15 +36,20 @@ function RankingChartContainer(props) {
   }, [debouncedSearchTerm]);
 
   // const handleFilterSelection = (selectedFilter) => {
-  //   const { changeUI } = props;
+  // const { changeUI } = props;
   //   changeUI({ sortRankingCategory: selectedFilter });
   // };
 
   const handleCountryClick = (countryISO) => {
-    const { browsePage } = props;
+    const { browsePage, changeUI } = props;
     browsePage({
       type: NATIONAL_REPORT_CARD,
-      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.RANKING },
+      payload: {
+        iso: countryISO,
+      },
+    });
+    changeUI({
+      landMarineSelection: selectedLandMarineOption.slug,
     });
   };
 

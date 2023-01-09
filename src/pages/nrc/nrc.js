@@ -56,9 +56,9 @@ function NrcContainer(props) {
         whereClause: `GID_0 = '${countryISO}'`,
         returnGeometry: false,
       }).then((data) => {
-        if (data && data.length > 0) {
-          setChartMarineData(data.map((r) => r.attributes));
-        }
+        setChartMarineData(
+          data && data.length > 0 ? data.map((r) => r.attributes) : null
+        );
       });
     }
   }, [countryISO]);
