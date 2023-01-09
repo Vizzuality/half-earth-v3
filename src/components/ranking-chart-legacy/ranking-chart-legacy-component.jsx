@@ -8,7 +8,7 @@ import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 
 import Dropdown from 'components/dropdown';
-import SearchInput from 'components/search-input';
+import SearchInput from 'components/search-input-legacy';
 
 import {
   SORT_GROUPS,
@@ -145,7 +145,6 @@ function RankingChart({
           placeholder={t('Search country')}
           onChange={handleSearchChange}
           value={searchTerm}
-          type="transparent"
         />
         {categories.map((category) => (
           <div

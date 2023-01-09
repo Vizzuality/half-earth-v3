@@ -32,8 +32,6 @@ function NationalReportCard({
   chartData,
   // openedModal,
   hasMetadata,
-  // isFullscreenActive,
-  // countryChallengesSelectedKey,
   onboardingType,
   onboardingStep,
   waitingInteraction,
@@ -41,6 +39,8 @@ function NationalReportCard({
   changeUI,
   changeGlobe,
   countryId,
+  handleLandMarineSelection,
+  selectedLandMarineOption,
 }) {
   useOnboardingOpenSection({
     onboardingStep,
@@ -56,6 +56,35 @@ function NationalReportCard({
   const { marine } = chartData;
   const coastal = !!marine;
   const [fullRanking, setFullRanking] = useState(false);
+
+  const tabsData = {
+    land: {
+      text: t('Land SPI'),
+    },
+    marine: {
+      text: t('Marine SPI'),
+    },
+  };
+
+  const renderLandMarineSwitch = () => (
+    <div className={styles.switchDataButtons}>
+      {Object.keys(tabsData).map((key) => (
+        <button
+          key={key}
+          disabled={!coastal}
+          type="button"
+          className={cx({
+            [styles.switchDataButton]: true,
+            [styles.switchDataActiveButton]:
+              selectedLandMarineOption.slug === key,
+          })}
+          onClick={() => handleLandMarineSelection(key)}
+        >
+          {tabsData[key].text}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -78,10 +107,10 @@ function NationalReportCard({
           })}
         >
           <RankingChart
-            coastal={coastal}
             countryISO={countryISO}
             className={styles.rankingChart}
           />
+          {renderLandMarineSwitch()}
         </motion.div>
         <motion.div
           className={cx(styles.hideOnPrint, styles.nrcContentContainer, {

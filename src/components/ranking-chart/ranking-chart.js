@@ -37,10 +37,10 @@ function RankingChartContainer(props) {
     return undefined;
   }, [debouncedSearchTerm]);
 
-  const handleFilterSelection = (selectedFilter) => {
-    const { changeUI } = props;
-    changeUI({ sortRankingCategory: selectedFilter });
-  };
+  // const handleFilterSelection = (selectedFilter) => {
+  //   const { changeUI } = props;
+  //   changeUI({ sortRankingCategory: selectedFilter });
+  // };
 
   const handleCountryClick = (countryISO) => {
     const { browsePage } = props;
@@ -55,17 +55,11 @@ function RankingChartContainer(props) {
     setSearchTerm(value);
   };
 
-  const handleLandMarineSelection = (selectedFilter) => {
-    const { changeUI } = props;
-    changeUI({ landMarineSelection: selectedFilter });
-  };
-
   return (
     <Component
       handleCountryClick={handleCountryClick}
       handleSearchChange={handleSearchChange}
-      handleFilterSelection={handleFilterSelection}
-      handleLandMarineSelection={handleLandMarineSelection}
+      // handleFilterSelection={handleFilterSelection}
       scrollIndex={scrollIndex}
       searchTerm={searchTerm}
       {...props}

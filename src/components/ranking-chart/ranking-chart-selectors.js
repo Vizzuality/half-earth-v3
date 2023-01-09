@@ -11,7 +11,6 @@ import {
   RANKING_INDICATORS,
   RANKING_GROUPS_SLUGS,
   RANKING_INDICATOR_GROUPS,
-  getLandMarineOptions,
   LAND_MARINE_COUNTRY_ATTRIBUTES,
 } from 'constants/country-mode-constants';
 
@@ -100,23 +99,9 @@ const getSelectedFilterOption = createSelector(
   }
 );
 
-// locale is here to recompute landmarineOptions
-const getCalculatedlandMarineOptions = createSelector(
-  selectLangUrlState,
-  // eslint-disable-next-line no-unused-vars
-  (locale) => getLandMarineOptions()
-);
-
-const getSelectedLandMarineOption = createSelector(
-  [getLandMarineSelected, getCalculatedlandMarineOptions],
-  (landMarineSelection, landMarine) =>
-    landMarine.find((option) => option.slug === landMarineSelection)
-);
-
 const mapStateToProps = createStructuredSelector({
   data: getSortedData,
   selectedFilterOption: getSelectedFilterOption,
-  selectedLandMarineOption: getSelectedLandMarineOption,
 });
 
 export default mapStateToProps;

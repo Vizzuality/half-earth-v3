@@ -4,15 +4,15 @@
 .searchInputContainer {
   display: flex;
   align-items: flex-start;
-  margin-left: 4px;
 
   .searchInput {
-    @extend %subtitle;
+    @extend %title;
     border: none;
     margin-left: 25px;
     background-color: transparent;
     color: $white;
     min-width: 150px;
+    margin-bottom: 9px;
   }
 
   .searchIcon {
@@ -20,6 +20,5 @@
     fill: currentColor;
     height: 14px;
     width: 14px;
-    margin-top: 4px;
   }
 }

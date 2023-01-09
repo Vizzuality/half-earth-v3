@@ -63,10 +63,16 @@ function NrcContainer(props) {
     }
   }, [countryISO]);
 
+  const handleLandMarineSelection = (landMarineSelection) => {
+    const { changeUI } = props;
+    changeUI({ landMarineSelection });
+  };
+
   return (
     <NrcComponent
-      chartData={{ land: chartLandData, marine: chartMarineData }}
       {...props}
+      chartData={{ land: chartLandData, marine: chartMarineData }}
+      handleLandMarineSelection={handleLandMarineSelection}
     />
   );
 }

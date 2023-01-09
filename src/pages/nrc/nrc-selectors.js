@@ -1,9 +1,15 @@
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { selectUiUrlState } from 'selectors/location-selectors';
+import {
+  selectUiUrlState,
+  selectLangUrlState,
+} from 'selectors/location-selectors';
 
-import { LAND_MARINE } from 'constants/country-mode-constants';
+import {
+  LAND_MARINE,
+  getLandMarineOptions,
+} from 'constants/country-mode-constants';
 import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
 const selectBiodiversityData = ({ biodiversityData }) =>
@@ -82,6 +88,19 @@ export const getOnWaitingInteraction = createSelector(
   (uiSettings) => uiSettings.waitingInteraction
 );
 
+// locale is here to recompute landmarineOptions
+const getCalculatedlandMarineOptions = createSelector(
+  selectLangUrlState,
+  // eslint-disable-next-line no-unused-vars
+  (locale) => getLandMarineOptions()
+);
+
+const getSelectedLandMarineOption = createSelector(
+  [getLandMarineSelected, getCalculatedlandMarineOptions],
+  (landMarineSelection, landMarine) =>
+    landMarine.find((option) => option.slug === landMarineSelection)
+);
+
 export default createStructuredSelector({
   countryISO: selectCountryIso,
   countryId: getCountryId,
@@ -94,4 +113,5 @@ export default createStructuredSelector({
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
+  selectedLandMarineOption: getSelectedLandMarineOption,
 });

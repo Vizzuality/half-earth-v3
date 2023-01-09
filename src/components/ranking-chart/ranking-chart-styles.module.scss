@@ -5,7 +5,7 @@
 .chartTitle {
   @extend %bodyText;
   color: $white;
-  margin-right: 1rem;
+  margin: 0.4rem 1rem 0 0;
   font-weight: 600;
 
   &.filterTitle {
@@ -14,39 +14,11 @@
 }
 
 .chartTitleContainer {
-  margin-bottom: 3rem;
+  margin: 0 0 8px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
-  .switchDataButton {
-    @extend %subtitle;
-    border: 1px solid $white;
-    color: $white;
-    padding: 6px 16px;
-    text-transform: capitalize;
-    width: auto;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-
-    &:last-of-type {
-      border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-    }
-  }
-
-  .switchDataActiveButton {
-    @extend %subtitle;
-    background-color: $white;
-    color: $_temporary-dark-text;
-  }
 }
 
 .dropdownWrapper {
@@ -54,7 +26,7 @@
 }
 
 .titleText {
-  @extend %title;
+  @extend %subtitle;
   color: $grey-text;
   margin: 0;
 }
@@ -64,11 +36,12 @@ $scroll-bar-width: 7px;
 
 %tableItem {
   margin-right: 2rem;
-  min-width: calc(100vw - #{$sidebar-width} - 100px);
-  max-width: calc(100vw - #{$sidebar-width} - 100px);
+  min-width: calc(100vw - #{$sidebar-width} - 60px);
+  max-width: calc(100vw - #{$sidebar-width} - 60px);
 }
 
 .header {
+  margin-left: 24px;
   width: $chart-width-without-legend;
   padding-right: $scroll-bar-width;
   display: flex;
@@ -78,11 +51,16 @@ $scroll-bar-width: 7px;
   .headerItem {
     width: 19%;
     margin-right: 7px;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
     text-align: left;
     padding: 0;
     align-items: baseline;
     cursor: default;
+
+    .titleText {
+      color: $white;
+      letter-spacing: 0.06em;
+    }
   }
 
   .spiHeader {
@@ -91,7 +69,7 @@ $scroll-bar-width: 7px;
   }
 
   .searchInput {
-    width: 25%;
+    width: calc(25% - 5px);
   }
 }
 
@@ -103,11 +81,15 @@ $scroll-bar-width: 7px;
 .fullBar {
   width: 100%;
   cursor: default;
+
+  // To avoid overflow - Remove it to check errors
+  display: flex;
 }
 
 .bar {
   display: inline-block;
-  height: 19px;
+  height: 16px;
+  margin-top: 2px;
 }
 
 .spiIndex {
@@ -121,7 +103,8 @@ $scroll-bar-width: 7px;
 }
 
 .spiCountryButton {
-  @extend %title;
+  @extend %subtitle;
+  line-height: $line-height;
   color: $grey-text;
   text-align: left;
   width: 25%;
@@ -150,13 +133,14 @@ $scroll-bar-width: 7px;
   @extend %verticalScrollbar;
 
   padding-bottom: 2rem;
-  height: calc(80vh - 250px);
+  height: calc(100vh - 250px);
   flex-direction: column;
 }
 
 .row {
+  padding-left: 24px;
   display: flex;
-  align-items: flex-end;
+  height: 20px;
 }
 
 .found {
@@ -164,8 +148,14 @@ $scroll-bar-width: 7px;
 }
 
 .selectedCountry {
-  color: $brand-color-main;
-  font-weight: bold;
+  color: $white;
+  font-weight: $font-weight-bold;
+  background-color: $white-opacity;
+
+  .titleText, .spiCountryIndex, .spiCountryName {
+    color: $white;
+    font-weight: $font-weight-bold;
+  }
 }
 
 .tooltip {
