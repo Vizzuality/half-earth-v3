@@ -184,11 +184,6 @@ const getYAxisTicks = createSelector([getFilteredData], (plotData) => {
   return [0, 100];
 });
 
-const getHalfEarthModalOpen = createSelector(
-  getUiSettings,
-  (uiSettings) => uiSettings.openedModal
-);
-
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
   countryData: getCountryData,
@@ -197,7 +192,6 @@ export default createStructuredSelector({
   landMarineSelection: getLandMarineSelected,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
-  openedModal: getHalfEarthModalOpen,
   scatterPlotData: getFilteredData,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,

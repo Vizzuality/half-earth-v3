@@ -20,13 +20,12 @@ import CloseButton from 'components/close-button';
 import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import ShareModal from 'components/share-modal';
-import SpeciesModal from 'components/species-modal';
-
-import { MODALS } from 'constants/ui-params';
+import SpeciesTable from 'components/species-table';
 
 import COLORS from 'styles/settings';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
+import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
@@ -58,8 +57,6 @@ function NrcContent({
   countryChallengesSelectedKey,
   scatterPlotData,
   fullRanking,
-  toggleModal,
-  openedModal,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -105,6 +102,7 @@ function NrcContent({
   const hm = land ? hm_ter : hm_mar;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [view, setView] = useState('main');
   const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
@@ -165,346 +163,367 @@ function NrcContent({
         tooltipText={t('Go back to the globe')}
         onboardingOverlay={onboardingOverlay}
       />
-      <header className={styles.header}>
-        <div className={styles.flagWrapper}>
-          <img
-            className={styles.flag}
-            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-            alt=""
-          />
-          {countryName && <p className={styles.countryName}>{countryName}</p>}
-        </div>
-        <div className={styles.actionButtons}>
-          <Button
-            type="icon-square"
-            Icon={AnalyzeAreasIcon}
-            className={styles.actionButton}
-            handleClick={goToAnalyzeAreas}
-            tooltipText={t('Go to analyze area')}
-          />
-          <Button
-            type="icon-square"
-            Icon={ShareIcon}
-            className={styles.actionButton}
-            handleClick={setShareModalOpen}
-            tooltipText={t('Share the URL to this view')}
-          />
-          <Button
-            type="icon-square"
-            Icon={DownloadIcon}
-            handleClick={handlePrintReport}
-            tooltipText={t('Download national report')}
-          />
-        </div>
-      </header>
-
-      <div className={styles.scrolleableArea}>
-        <div className={styles.countryDescriptionContainer}>
-          <p className={styles.countryDescription}>{countryDescription}</p>
-        </div>
-        <div className={styles.indicatorCardsContainer}>
-          <IndicatorCard
-            indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
-            description={
-              <p>
-                <T
-                  _str="{landMarineSelection} Species Protection Index (SPI)"
-                  landMarineSelection={land ? 'Land' : 'Marine'}
-                />
-              </p>
-            }
-            tooltipInfo={t(
-              'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all endemic species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
-            )}
-          >
-            <div>
-              <p className={styles.spiAverageText}>
-                <T
-                  _str="{more} Global SPI average: {spiAverage}"
-                  more=">"
-                  spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
-                />
-              </p>
+      {view === 'main' && (
+        <>
+          <header className={styles.header}>
+            <div className={styles.flagWrapper}>
+              <img
+                className={styles.flag}
+                src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+                alt=""
+              />
+              {countryName && (
+                <p className={styles.countryName}>{countryName}</p>
+              )}
             </div>
-          </IndicatorCard>
-          <IndicatorCard
-            color={COLORS.gold}
-            indicator={
-              total_endemic_ter && getLocaleNumber(total_endemic, locale)
-            }
-            description={
-              <p>
-                <T
-                  _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
-                  bold={
-                    <b>
-                      <T _str="are endemic" />
-                    </b>
-                  }
-                  landMarineSelection={land ? 'land' : 'marine'}
-                  totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+            <div className={styles.actionButtons}>
+              <Button
+                type="icon-square"
+                Icon={AnalyzeAreasIcon}
+                className={styles.actionButton}
+                handleClick={goToAnalyzeAreas}
+                tooltipText={t('Go to analyze area')}
+              />
+              <Button
+                type="icon-square"
+                Icon={ShareIcon}
+                className={styles.actionButton}
+                handleClick={setShareModalOpen}
+                tooltipText={t('Share the URL to this view')}
+              />
+              <Button
+                type="icon-square"
+                Icon={DownloadIcon}
+                handleClick={handlePrintReport}
+                tooltipText={t('Download national report')}
+              />
+            </div>
+          </header>
+
+          <div className={styles.scrolleableArea}>
+            <div className={styles.countryDescriptionContainer}>
+              <p className={styles.countryDescription}>{countryDescription}</p>
+            </div>
+            <div className={styles.indicatorCardsContainer}>
+              <IndicatorCard
+                indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
+                description={
+                  <p>
+                    <T
+                      _str="{landMarineSelection} Species Protection Index (SPI)"
+                      landMarineSelection={land ? 'Land' : 'Marine'}
+                    />
+                  </p>
+                }
+                tooltipInfo={t(
+                  'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all endemic species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
+                )}
+              >
+                <div>
+                  <p className={styles.spiAverageText}>
+                    <T
+                      _str="{more} Global SPI average: {spiAverage}"
+                      more=">"
+                      spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
+                    />
+                  </p>
+                </div>
+              </IndicatorCard>
+              <IndicatorCard
+                color={COLORS.gold}
+                indicator={
+                  total_endemic_ter && getLocaleNumber(total_endemic, locale)
+                }
+                description={
+                  <p>
+                    <T
+                      _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
+                      bold={
+                        <b>
+                          <T _str="are endemic" />
+                        </b>
+                      }
+                      landMarineSelection={land ? 'land' : 'marine'}
+                      totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                    />
+                  </p>
+                }
+                tooltipInfo={t(
+                  'Endemic species are species unique to the region. A high number of endemic species involves more effort and highly customized networks of protected places.'
+                )}
+              >
+                <div
+                  className={styles.bar}
+                  style={{
+                    backgroundImage: getBarStyles(
+                      COLORS.gold,
+                      (total_endemic * 100) / nspecies
+                    ),
+                  }}
                 />
-              </p>
-            }
-            tooltipInfo={t(
-              'Endemic species are species unique to the region. A high number of endemic species involves more effort and highly customized networks of protected places.'
-            )}
-          >
-            <div
-              className={styles.bar}
-              style={{
-                backgroundImage: getBarStyles(
-                  COLORS.gold,
-                  (total_endemic * 100) / nspecies
-                ),
-              }}
-            />
-          </IndicatorCard>
-          <IndicatorCard
-            color={COLORS['protected-areas']}
-            indicator={prop_protected && `${Math.round(prop_protected)}%`}
-            description={
-              <p>
-                <T
-                  _str="of {bold} and {needsProtectionNumber}% needs protection"
-                  bold={
-                    <b>
-                      <T
-                        _str="{landMarineSelection} is protected"
-                        landMarineSelection={land ? 'land' : 'marine'}
-                      />
-                    </b>
-                  }
-                  needsProtectionNumber={getLocaleNumber(
-                    protection_needed,
-                    locale
-                  )}
-                />
-              </p>
-            }
-            tooltipInfo={t(
-              'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI.'
-            )}
-          >
-            <div
-              className={styles.bar}
-              style={{
-                backgroundImage: getBarStyles(
-                  COLORS['protected-areas'],
-                  prop_protected,
-                  COLORS['protection-needed'],
-                  prop_protected + protection_needed
-                ),
-              }}
-            />
-          </IndicatorCard>
-          <IndicatorCard
-            color={COLORS['high-modification']}
-            indicator={`${Math.round(hm_vh)}%`}
-            description={
-              <p>
-                <T
-                  _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
-                  bold={
-                    <b>
-                      <T _str="high human modification" />
-                    </b>
-                  }
-                  landMarineSelection={land ? 'land' : 'marine'}
-                  someModificationNumber={Math.round(hm)}
-                />
-              </p>
-            }
-            tooltipInfo={t(
-              'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
-            )}
-          >
-            <div
-              className={styles.bar}
-              style={{
-                backgroundImage: getBarStyles(
-                  COLORS['high-modification'],
-                  65,
-                  COLORS['some-modification'],
-                  70
-                ),
-              }}
-            />
-          </IndicatorCard>
-        </div>
-        <div className={styles.vertebratesContainer}>
-          <div className={styles.endemicCardsContainer}>
-            {SPECIES_COMPOSITION.map((s) => (
-              <div className={styles.endemicCard} key={s.specie}>
-                <s.icon className={styles.endemicIcon} />
-                <p>
-                  <T
-                    _str="{bold} {specie} of {totalNumber}"
-                    endemicNumber={getLocaleNumber(s.endemic || 0, locale)}
-                    specie={getSpecieText(s.specie)}
-                    totalNumber={getLocaleNumber(s.total || 0, locale)}
-                    bold={
-                      <>
+              </IndicatorCard>
+              <IndicatorCard
+                color={COLORS['protected-areas']}
+                indicator={prop_protected && `${Math.round(prop_protected)}%`}
+                description={
+                  <p>
+                    <T
+                      _str="of {bold} and {needsProtectionNumber}% needs protection"
+                      bold={
                         <b>
                           <T
-                            _str={`${getLocaleNumber(
-                              s.endemic || 0,
-                              locale
-                            )} endemic`}
+                            _str="{landMarineSelection} is protected"
+                            landMarineSelection={land ? 'land' : 'marine'}
                           />
                         </b>
-                        <br />
-                      </>
-                    }
+                      }
+                      needsProtectionNumber={getLocaleNumber(
+                        protection_needed,
+                        locale
+                      )}
+                    />
+                  </p>
+                }
+                tooltipInfo={t(
+                  'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI.'
+                )}
+              >
+                <div
+                  className={styles.bar}
+                  style={{
+                    backgroundImage: getBarStyles(
+                      COLORS['protected-areas'],
+                      prop_protected,
+                      COLORS['protection-needed'],
+                      prop_protected + protection_needed
+                    ),
+                  }}
+                />
+              </IndicatorCard>
+              <IndicatorCard
+                color={COLORS['high-modification']}
+                indicator={`${Math.round(hm_vh)}%`}
+                description={
+                  <p>
+                    <T
+                      _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
+                      bold={
+                        <b>
+                          <T _str="high human modification" />
+                        </b>
+                      }
+                      landMarineSelection={land ? 'land' : 'marine'}
+                      someModificationNumber={Math.round(hm)}
+                    />
+                  </p>
+                }
+                tooltipInfo={t(
+                  'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
+                )}
+              >
+                <div
+                  className={styles.bar}
+                  style={{
+                    backgroundImage: getBarStyles(
+                      COLORS['high-modification'],
+                      65,
+                      COLORS['some-modification'],
+                      70
+                    ),
+                  }}
+                />
+              </IndicatorCard>
+            </div>
+            <div className={styles.vertebratesContainer}>
+              <div className={styles.endemicCardsContainer}>
+                {SPECIES_COMPOSITION.map((s) => (
+                  <div className={styles.endemicCard} key={s.specie}>
+                    <s.icon className={styles.endemicIcon} />
+                    <p>
+                      <T
+                        _str="{bold} {specie} of {totalNumber}"
+                        endemicNumber={getLocaleNumber(s.endemic || 0, locale)}
+                        specie={getSpecieText(s.specie)}
+                        totalNumber={getLocaleNumber(s.total || 0, locale)}
+                        bold={
+                          <>
+                            <b>
+                              <T
+                                _str={`${getLocaleNumber(
+                                  s.endemic || 0,
+                                  locale
+                                )} endemic`}
+                              />
+                            </b>
+                            <br />
+                          </>
+                        }
+                      />
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <Button
+                type="compound"
+                handleClick={() => setView('vertebrates')}
+                label={t('All vertebrates')}
+                tooltipText={t('Open vertebrates list modal')}
+              />
+            </div>
+            <div className={styles.areaChartContainer}>
+              <div className={styles.chartHeader}>
+                <p className={styles.chartTitle}>
+                  <T
+                    _str="Trend of the {landMarineSelection} SPI"
+                    landMarineSelection={land ? 'Land' : 'Marine'}
                   />
                 </p>
+                <span>
+                  <Tooltip
+                    content={
+                      <div className={styles.titleTooltip}>
+                        {t(
+                          'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
+                        )}
+                      </div>
+                    }
+                    delay={100}
+                    placement="top"
+                  >
+                    <InfoIcon className={styles.icon} />
+                  </Tooltip>
+                </span>
               </div>
-            ))}
-          </div>
-          <Button
-            type="compound"
-            handleClick={toggleModal}
-            label={t('All vertebrates')}
-            tooltipText={t('Open vertebrates list modal')}
-          />
-        </div>
-        <div className={styles.areaChartContainer}>
-          <div className={styles.chartHeader}>
-            <p className={styles.chartTitle}>
+              <AreaChart
+                area1={{
+                  key: 'spi',
+                  stroke: COLORS.white,
+                  strokeWidth: 0.5,
+                }}
+                area2={{
+                  key: 'protected',
+                  stroke: COLORS.white,
+                  strokeWidth: 0.7,
+                  strokeDasharray: '3 3 3 3',
+                }}
+                data={land ? landData : marineData}
+                height={240}
+                width="98%"
+                tooltip
+                tooltipContent={<AreaChartToooltip />}
+              />
+            </div>
+            <div className={styles.scatterPlotContainer}>
+              <div className={styles.chartHeader}>
+                <p className={styles.chartTitle}>
+                  <T
+                    _str="{landMarineSelection} SPI"
+                    landMarineSelection={land ? 'Land' : 'Marine'}
+                  />
+                </p>
+                <span>
+                  <Tooltip
+                    content={
+                      <div className={styles.titleTooltip}>
+                        {t(
+                          'The scatter plots illustrate some of the differences among countries, and the social challenges that must be considered to ensure equitable global biodiversity conservation.'
+                        )}
+                      </div>
+                    }
+                    delay={100}
+                    placement="top"
+                  >
+                    <InfoIcon className={styles.icon} />
+                  </Tooltip>
+                </span>
+              </div>
+              <ScatterPlot
+                data={scatterPlotData}
+                countryISO={countryISO}
+                xAxisTicks={xAxisTicks}
+                yAxisTicks={yAxisTicks}
+                onBubbleClick={handleBubbleClick}
+                countryChallengesSelectedKey={countryChallengesSelectedKey}
+              />
+            </div>
+            <p className={styles.sourceText}>
               <T
-                _str="Trend of the {landMarineSelection} SPI"
-                landMarineSelection={land ? 'Land' : 'Marine'}
+                _str="Source:  {link1}, {link2}, {link3}, {link4}, {link5} and {link6}"
+                link1={
+                  <a href="/">
+                    <T _str="Gross National Income" />
+                  </a>
+                }
+                link2={
+                  <a href="/">
+                    <T _str="Population" />
+                  </a>
+                }
+                link3={
+                  <a href="/">
+                    <T _str="proportion of very high human modification" />
+                  </a>
+                }
+                link4={
+                  <a href="/">
+                    <T _str="number of endemic vertebrates" />
+                  </a>
+                }
+                link5={
+                  <a href="/">
+                    <T _str="total number of vertebrate species" />
+                  </a>
+                }
+                link6={
+                  <a href="/">
+                    <T _str="SPI" />
+                  </a>
+                }
               />
             </p>
-            <span>
-              <Tooltip
-                content={
-                  <div className={styles.titleTooltip}>
-                    {t(
-                      'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
-                    )}
-                  </div>
-                }
-                delay={100}
-                placement="top"
-              >
-                <InfoIcon className={styles.icon} />
-              </Tooltip>
-            </span>
-          </div>
-          <AreaChart
-            area1={{
-              key: 'spi',
-              stroke: COLORS.white,
-              strokeWidth: 0.5,
-            }}
-            area2={{
-              key: 'protected',
-              stroke: COLORS.white,
-              strokeWidth: 0.7,
-              strokeDasharray: '3 3 3 3',
-            }}
-            data={land ? landData : marineData}
-            height={240}
-            width="98%"
-            tooltip
-            tooltipContent={<AreaChartToooltip />}
-          />
-        </div>
-        <div className={styles.scatterPlotContainer}>
-          <div className={styles.chartHeader}>
-            <p className={styles.chartTitle}>
-              <T
-                _str="{landMarineSelection} SPI"
-                landMarineSelection={land ? 'Land' : 'Marine'}
-              />
-            </p>
-            <span>
-              <Tooltip
-                content={
-                  <div className={styles.titleTooltip}>
-                    {t(
-                      'The scatter plots illustrate some of the differences among countries, and the social challenges that must be considered to ensure equitable global biodiversity conservation.'
-                    )}
-                  </div>
-                }
-                delay={100}
-                placement="top"
-              >
-                <InfoIcon className={styles.icon} />
-              </Tooltip>
-            </span>
-          </div>
-          <ScatterPlot
-            data={scatterPlotData}
-            countryISO={countryISO}
-            xAxisTicks={xAxisTicks}
-            yAxisTicks={yAxisTicks}
-            onBubbleClick={handleBubbleClick}
-            countryChallengesSelectedKey={countryChallengesSelectedKey}
-          />
-        </div>
-        <p className={styles.sourceText}>
-          <T
-            _str="Source:  {link1}, {link2}, {link3}, {link4}, {link5} and {link6}"
-            link1={
-              <a href="/">
-                <T _str="Gross National Income" />
-              </a>
-            }
-            link2={
-              <a href="/">
-                <T _str="Population" />
-              </a>
-            }
-            link3={
-              <a href="/">
-                <T _str="proportion of very high human modification" />
-              </a>
-            }
-            link4={
-              <a href="/">
-                <T _str="number of endemic vertebrates" />
-              </a>
-            }
-            link5={
-              <a href="/">
-                <T _str="total number of vertebrate species" />
-              </a>
-            }
-            link6={
-              <a href="/">
-                <T _str="SPI" />
-              </a>
-            }
-          />
-        </p>
 
-        <div className={styles.footer}>
-          <p className={styles.footerText}>
-            {t(
-              'For a detailed analysis check the country analysis of the Explore Data section.'
-            )}
-          </p>
-          <Button
-            type="icon-square"
-            Icon={AnalyzeAreasIcon}
-            handleClick={goToAnalyzeAreas}
-            className={styles.analyzeBtn}
-            tooltipText={t('Go to Explore Data section')}
-            label={t('ANALYZE AREA')}
+            <div className={styles.footer}>
+              <p className={styles.footerText}>
+                {t(
+                  'For a detailed analysis check the country analysis of the Explore Data section.'
+                )}
+              </p>
+              <Button
+                type="icon-square"
+                Icon={AnalyzeAreasIcon}
+                handleClick={goToAnalyzeAreas}
+                className={styles.analyzeBtn}
+                tooltipText={t('Go to Explore Data section')}
+                label={t('ANALYZE AREA')}
+              />
+            </div>
+          </div>
+          <ShareModal
+            isOpen={isShareModalOpen}
+            setShareModalOpen={setShareModalOpen}
           />
-        </div>
-      </div>
-      <ShareModal
-        isOpen={isShareModalOpen}
-        setShareModalOpen={setShareModalOpen}
-      />
-      {countryData && (
-        <SpeciesModal
-          open={openedModal === MODALS.SPECIES}
-          handleModalClose={toggleModal}
-        />
+        </>
+      )}
+      {view === 'vertebrates' && (
+        <>
+          <header className={styles.header}>
+            <div className={styles.titleWrapper}>
+              <button
+                className={styles.backBtn}
+                type="button"
+                onClick={() => setView('main')}
+              >
+                <BackArrowIcon className={styles.arrowIcon} />
+              </button>
+              {countryName && (
+                <p className={styles.title}>
+                  {t('Vertebrates in')} {countryName}
+                </p>
+              )}
+            </div>
+          </header>
+          <SpeciesTable />
+        </>
       )}
     </div>
   );
