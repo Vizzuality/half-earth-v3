@@ -12,14 +12,14 @@ import { SORT } from 'components/header-item';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 
-import Component from './species-modal-component';
-import { getVertebrateTabs } from './species-modal-constants';
+import Component from './species-modal-legacy-component';
+import { getVertebrateTabs } from './species-modal-legacy-constants';
 import {
   getCountryData,
   getSearchTerm,
   getSpeciesModalSort,
   getSortedSpeciesList,
-} from './species-modal-selectors';
+} from './species-modal-legacy-selectors';
 
 const actions = { ...urlActions };
 
@@ -31,7 +31,6 @@ const mapStateToProps = (state) => ({
 });
 
 function SpeciesModalContainer(props) {
-  console.log({ props });
   const { changeUI, countryData, speciesModalSort, state } = props;
 
   const locale = useLocale();
@@ -43,7 +42,6 @@ function SpeciesModalContainer(props) {
   const landLayer = useFeatureLayer({ layerSlug: SPECIES_LIST });
   const marineLayer = useFeatureLayer({ layerSlug: MARINE_SPECIES_LIST });
 
-  console.log(countryData, landLayer, marineLayer);
   useEffect(() => {
     const layer = vertebrateType === LAND_MARINE.land ? landLayer : marineLayer;
     if (layer && countryData.iso) {

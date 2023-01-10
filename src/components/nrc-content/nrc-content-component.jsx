@@ -262,13 +262,6 @@ function NrcContent({
           >
             <div
               className={styles.bar}
-              // style={{
-              //   backgroundImage: `linear-gradient(to right,
-              //   ${COLORS.gold},
-              //   ${COLORS.gold} ${(total_endemic * 100) / nspecies}%,
-              //   ${COLORS['white-opacity']} ${(total_endemic * 100) / nspecies}%,
-              //   ${COLORS['white-opacity']} 100%`,
-              // }}
               style={{
                 backgroundImage: getBarStyles(
                   COLORS.gold,

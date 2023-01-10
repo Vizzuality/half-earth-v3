@@ -9,7 +9,7 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import Button from 'components/button';
 import PieChart from 'components/charts/pie-chart';
 import HighLightedSpeciesList from 'components/highlighted-species-list';
-import SpeciesModal from 'components/species-modal';
+import SpeciesModal from 'components/species-modal-legacy';
 
 import { MODALS } from 'constants/ui-params';
 
