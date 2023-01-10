@@ -75,15 +75,20 @@ const getSortedData = createSelector(
     // SPI sorting is the default order
     const sortedCategory = categorySort && categorySort.split('-')[0];
     const direction = categorySort && categorySort.split('-')[1];
-    const sortField = {
+    const primarySortField = {
       species: 'endemic',
       humanModification: 'veryHigh',
       protection: 'protected',
-    };
-    const sortedData = sortBy(
-      data,
-      (d) => d[sortedCategory][sortField[sortedCategory]]
-    );
+    }[sortedCategory];
+    const secondarySortField = {
+      humanModification: 'totalMinusVeryHigh',
+      protection: 'protectionNeeded',
+    }[sortedCategory];
+    const sortedData = sortBy(data, [
+      (d) => d[sortedCategory][primarySortField] !== null, // Move the null data to the end
+      (d) => d[sortedCategory][primarySortField],
+      (d) => d[sortedCategory][secondarySortField],
+    ]);
     return direction === SORT.ASC ? sortedData.reverse() : sortedData;
   }
 );
