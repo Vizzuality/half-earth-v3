@@ -139,6 +139,7 @@ function SpeciesModalComponent({
   const tableHeight = height - PX_TO_TOP;
   const summaryText = useMemo(() => {
     const speciesNumber =
+      countryData &&
       countryData[
         vertebrateType === vertebrateTabs[0].slug
           ? 'landSpeciesTotal'

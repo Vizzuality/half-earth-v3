@@ -20,9 +20,9 @@ import CloseButton from 'components/close-button';
 import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import ShareModal from 'components/share-modal';
-// import SpeciesModal from 'components/species-modal';
+import SpeciesModal from 'components/species-modal';
 
-// import { MODALS } from 'constants/ui-params';
+import { MODALS } from 'constants/ui-params';
 
 import COLORS from 'styles/settings';
 
@@ -58,7 +58,7 @@ function NrcContent({
   scatterPlotData,
   fullRanking,
   toggleModal,
-  // openedModal,
+  openedModal,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -516,10 +516,12 @@ function NrcContent({
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}
       />
-      {/* <SpeciesModal
-        open={openedModal === MODALS.SPECIES}
-        handleModalClose={toggleModal}
-      /> */}
+      {countryData && (
+        <SpeciesModal
+          open={openedModal === MODALS.SPECIES}
+          handleModalClose={toggleModal}
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createSelector } from 'reselect';
 
 import { selectLangUrlState } from 'selectors/location-selectors';
 
@@ -14,6 +14,7 @@ const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 
 export const getSearchTerm = ({ location }) =>
   (location && get(location, 'query.ui.speciesModalSearch')) || null;
+
 export const getSpeciesModalSort = ({ location }) =>
   (location && get(location, 'query.ui.speciesModalSort')) || null;
 
@@ -69,9 +70,3 @@ export const getSortedSpeciesList = createSelector(
     return direction === SORT.DESC ? sortedData.reverse() : sortedData;
   }
 );
-
-export default createStructuredSelector({
-  countryData: getCountryData,
-  speciesModalSort: getSpeciesModalSort,
-  searchTerm: getSearchTerm,
-});
