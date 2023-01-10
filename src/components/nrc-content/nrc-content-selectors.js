@@ -54,9 +54,6 @@ const selectCountriesData = ({ countryData }) =>
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
 
-const getCountryChallengesSelectedKey = (state, props) =>
-  props && props.countryChallengesSelectedKey;
-
 const getAreaChartData = createSelector([getChartData], (chartData) => {
   if (!chartData) return null;
   const { land, marine } = chartData;
@@ -138,6 +135,18 @@ const getSelectedCountryRelations = createSelector(
   }
 );
 
+const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
+  return {
+    ...NRC_UI_DEFAULTS,
+    ...uiUrlState,
+  };
+});
+
+const getCountryChallengesSelectedKey = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.countryChallengesSelectedKey
+);
+
 const getFilteredData = createSelector(
   [
     getScatterplotRawData,
@@ -173,13 +182,6 @@ const getXAxisTicks = createSelector(
 const getYAxisTicks = createSelector([getFilteredData], (plotData) => {
   if (!plotData) return null;
   return [0, 100];
-});
-
-const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
-  return {
-    ...NRC_UI_DEFAULTS,
-    ...uiUrlState,
-  };
 });
 
 const getHalfEarthModalOpen = createSelector(

@@ -29,8 +29,8 @@ import ExpandedInfo from './expanded-info';
 import {
   getVertebrateTabs,
   SPECIES_GROUP_STYLE_CLASS_DICTIONARY,
-} from './species-modal-constants';
-import styles from './species-modal-styles.module.scss';
+} from './species-modal-legacy-constants';
+import styles from './species-modal-legacy-styles.module.scss';
 
 function SpeciesModalComponent({
   handleModalClose,
@@ -139,7 +139,6 @@ function SpeciesModalComponent({
   const tableHeight = height - PX_TO_TOP;
   const summaryText = useMemo(() => {
     const speciesNumber =
-      countryData &&
       countryData[
         vertebrateType === vertebrateTabs[0].slug
           ? 'landSpeciesTotal'

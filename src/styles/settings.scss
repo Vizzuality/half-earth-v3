@@ -1,6 +1,7 @@
 // Colors
   $white: #fff;
   $black: #000000;
+  $white-opacity: #FFFFFF0F;
   $elephant: #0F2B3B;
   $dark: #09141A73;
   $robins-egg-blue: #00BDB5;
@@ -94,6 +95,8 @@
   $protection-non-needed-color: #AFB8A0;
   $protected-areas: #008604;
   $protection-needed: #B3E74B;
+  $high-modification: #7D2EFC;
+  $some-modification: #B284FD;
   $future-places: $neon-carrot;
 
   // Continent colors
@@ -209,3 +212,14 @@
   $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
   $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
   $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
+
+  :export {
+    gold: $gold;
+    dark-text: $dark-text;
+    protected-areas: $protected-areas;
+    protection-needed:  $protection-needed;
+    high-modification: $high-modification;
+    some-modification: $some-modification;
+    white: $white;
+    white-opacity: $white-opacity;
+  }

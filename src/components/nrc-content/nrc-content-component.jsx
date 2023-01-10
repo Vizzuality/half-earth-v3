@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 
-import { useT, useLocale } from '@transifex/react';
+import { T, useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
@@ -20,9 +20,11 @@ import CloseButton from 'components/close-button';
 import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import ShareModal from 'components/share-modal';
-// import SpeciesModal from 'components/species-modal';
+import SpeciesModal from 'components/species-modal';
 
-// import { MODALS } from 'constants/ui-params';
+import { MODALS } from 'constants/ui-params';
+
+import COLORS from 'styles/settings';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
@@ -56,7 +58,7 @@ function NrcContent({
   scatterPlotData,
   fullRanking,
   toggleModal,
-  // openedModal,
+  openedModal,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -81,12 +83,15 @@ function NrcContent({
     protection_needed_mar,
     Global_SPI_ter,
     Global_SPI_mar,
+    hm_vh_ter,
+    hm_vh_mar,
+    hm_ter,
+    hm_mar,
   } = countryData || {};
 
   const { land: landData, marine: marineData } = areaChartData;
 
   const land = landMarineSelection === 'land';
-  const textLandMarineSelection = land ? 'land' : 'marine';
   const SPI = land ? SPI_ter : SPI_mar;
   const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
   const total_endemic = land ? total_endemic_ter : total_endemic_mar;
@@ -95,6 +100,8 @@ function NrcContent({
   const protection_needed = land
     ? protection_needed_ter
     : protection_needed_mar;
+  const hm_vh = land ? hm_vh_ter : hm_vh_mar;
+  const hm = land ? hm_ter : hm_mar;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
@@ -138,6 +145,25 @@ function NrcContent({
       icon: MammalsIcon,
     },
   ];
+
+  const getSpecieText = (txt) => `${txt}`;
+
+  const getBarStyles = (color1, value1, color2, value2) => {
+    const str = color2
+      ? `linear-gradient(to right,
+      ${color1},
+      ${color1} ${value1}%,
+      ${color2} ${value1}%,
+      ${color2} ${value2}%,
+      ${COLORS['white-opacity']} ${value2}%,
+      ${COLORS['white-opacity']} 100%`
+      : `linear-gradient(to right,
+        ${color1},
+        ${color1} ${value1}%,
+        ${COLORS['white-opacity']} ${value1}%,
+        ${COLORS['white-opacity']} 100%`;
+    return str;
+  };
 
   return (
     <div
@@ -197,98 +223,127 @@ function NrcContent({
             indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
             description={
               <p>
-                {t(
-                  `${
-                    textLandMarineSelection.charAt(0).toUpperCase() +
-                    textLandMarineSelection.slice(1)
-                  } Species Protection Index (SPI)`
-                )}
+                <T
+                  _str="{landMarineSelection} Species Protection Index (SPI)"
+                  landMarineSelection={land ? 'Land' : 'Marine'}
+                />
               </p>
             }
-            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
+            tooltipInfo={t(
+              'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all endemic species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
+            )}
           >
             <div>
               <p className={styles.spiAverageText}>
-                {'>'} Global SPI average:{' '}
-                {getLocaleNumber(Global_SPI, locale) || 0}
+                <T
+                  _str="{more} Global SPI average: {spiAverage}"
+                  more=">"
+                  spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
+                />
               </p>
             </div>
           </IndicatorCard>
           <IndicatorCard
-            color="#F8D300"
+            color={COLORS.gold}
             indicator={
               total_endemic_ter && getLocaleNumber(total_endemic, locale)
             }
             description={
               <p>
-                <b>{t('are endemic')}</b>{' '}
-                {t(
-                  `${textLandMarineSelection} vertebrate species of a total of`
-                )}{' '}
-                {getLocaleNumber(nspecies, locale)}{' '}
-                {t(`${textLandMarineSelection} vertebrates`)}
+                <T
+                  _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
+                  bold={
+                    <b>
+                      <T _str="are endemic" />
+                    </b>
+                  }
+                  landMarineSelection={land ? 'land' : 'marine'}
+                  totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                />
               </p>
             }
-            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
+            tooltipInfo={t(
+              'Endemic species are species unique to the region. A high number of endemic species involves more effort and highly customized networks of protected places.'
+            )}
           >
             <div
               className={styles.bar}
               style={{
-                backgroundImage: `linear-gradient(to right,
-                #F8D300,
-                #F8D300 ${(total_endemic * 100) / nspecies}%,
-                #FFFFFF0F ${(total_endemic * 100) / nspecies}%,
-                #FFFFFF0F 100%`,
+                backgroundImage: getBarStyles(
+                  COLORS.gold,
+                  (total_endemic * 100) / nspecies
+                ),
               }}
             />
           </IndicatorCard>
           <IndicatorCard
-            color="#008604"
+            color={COLORS['protected-areas']}
             indicator={prop_protected && `${Math.round(prop_protected)}%`}
             description={
               <p>
-                {t('of')} <b>{t(`${textLandMarineSelection} is protected`)}</b>{' '}
-                {t('and')} {getLocaleNumber(protection_needed, locale)}%{' '}
-                {t('needs protection')}
+                <T
+                  _str="of {bold} and {needsProtectionNumber}% needs protection"
+                  bold={
+                    <b>
+                      <T
+                        _str="{landMarineSelection} is protected"
+                        landMarineSelection={land ? 'land' : 'marine'}
+                      />
+                    </b>
+                  }
+                  needsProtectionNumber={getLocaleNumber(
+                    protection_needed,
+                    locale
+                  )}
+                />
               </p>
             }
-            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
+            tooltipInfo={t(
+              'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI.'
+            )}
           >
             <div
               className={styles.bar}
               style={{
-                backgroundImage: `linear-gradient(to right,
-                #008604,
-                #008604 ${prop_protected}%,
-                #B3E74B, ${prop_protected}%,
-                #B3E74B, ${prop_protected + protection_needed}%,
-                #FFFFFF0F ${prop_protected + protection_needed}%,
-                #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
+                backgroundImage: getBarStyles(
+                  COLORS['protected-areas'],
+                  prop_protected,
+                  COLORS['protection-needed'],
+                  prop_protected + protection_needed
+                ),
               }}
             />
           </IndicatorCard>
           <IndicatorCard
-            color="#7D2EFC"
-            indicator="46%"
+            color={COLORS['high-modification']}
+            indicator={`${Math.round(hm_vh)}%`}
             description={
               <p>
-                {t(`of ${textLandMarineSelection} has very`)}{' '}
-                <b>{t('high human modification')}</b>{' '}
-                {t('and 5% has some modification')}
+                <T
+                  _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
+                  bold={
+                    <b>
+                      <T _str="high human modification" />
+                    </b>
+                  }
+                  landMarineSelection={land ? 'land' : 'marine'}
+                  someModificationNumber={Math.round(hm)}
+                />
               </p>
             }
-            tooltipInfo="Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum."
+            tooltipInfo={t(
+              'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
+            )}
           >
             <div
               className={styles.bar}
               style={{
-                backgroundImage: `linear-gradient(to right,
-                #7D2EFC,
-                #7D2EFC 65%,
-                #B284FD, 65%,
-                #B284FD, 70%,
-                #FFFFFF0F 70%,
-                #FFFFFF0F 100%                                                                                                                                                                                                                                                  `,
+                backgroundImage: getBarStyles(
+                  COLORS['high-modification'],
+                  65,
+                  COLORS['some-modification'],
+                  70
+                ),
               }}
             />
           </IndicatorCard>
@@ -299,11 +354,25 @@ function NrcContent({
               <div className={styles.endemicCard} key={s.specie}>
                 <s.icon className={styles.endemicIcon} />
                 <p>
-                  <b>
-                    {getLocaleNumber(s.endemic || 0, locale)} {t('endemic')}
-                  </b>
-                  <br />
-                  {t(`${s.specie} of`)} {getLocaleNumber(s.total, locale)}
+                  <T
+                    _str="{bold} {specie} of {totalNumber}"
+                    endemicNumber={getLocaleNumber(s.endemic || 0, locale)}
+                    specie={getSpecieText(s.specie)}
+                    totalNumber={getLocaleNumber(s.total || 0, locale)}
+                    bold={
+                      <>
+                        <b>
+                          <T
+                            _str={`${getLocaleNumber(
+                              s.endemic || 0,
+                              locale
+                            )} endemic`}
+                          />
+                        </b>
+                        <br />
+                      </>
+                    }
+                  />
                 </p>
               </div>
             ))}
@@ -316,9 +385,12 @@ function NrcContent({
           />
         </div>
         <div className={styles.areaChartContainer}>
-          <div className={styles.areaChartHeader}>
-            <p className={styles.areaChartTitle}>
-              {t('Trend of the land SPI')}
+          <div className={styles.chartHeader}>
+            <p className={styles.chartTitle}>
+              <T
+                _str="Trend of the {landMarineSelection} SPI"
+                landMarineSelection={land ? 'Land' : 'Marine'}
+              />
             </p>
             <span>
               <Tooltip
@@ -339,12 +411,12 @@ function NrcContent({
           <AreaChart
             area1={{
               key: 'spi',
-              stroke: '#FFFFFF',
+              stroke: COLORS.white,
               strokeWidth: 0.5,
             }}
             area2={{
               key: 'protected',
-              stroke: '#FFFFFF',
+              stroke: COLORS.white,
               strokeWidth: 0.7,
               strokeDasharray: '3 3 3 3',
             }}
@@ -356,6 +428,29 @@ function NrcContent({
           />
         </div>
         <div className={styles.scatterPlotContainer}>
+          <div className={styles.chartHeader}>
+            <p className={styles.chartTitle}>
+              <T
+                _str="{landMarineSelection} SPI"
+                landMarineSelection={land ? 'Land' : 'Marine'}
+              />
+            </p>
+            <span>
+              <Tooltip
+                content={
+                  <div className={styles.titleTooltip}>
+                    {t(
+                      'The scatter plots illustrate some of the differences among countries, and the social challenges that must be considered to ensure equitable global biodiversity conservation.'
+                    )}
+                  </div>
+                }
+                delay={100}
+                placement="top"
+              >
+                <InfoIcon className={styles.icon} />
+              </Tooltip>
+            </span>
+          </div>
           <ScatterPlot
             data={scatterPlotData}
             countryISO={countryISO}
@@ -366,12 +461,39 @@ function NrcContent({
           />
         </div>
         <p className={styles.sourceText}>
-          {t('Source:')} <span>{t('Gross National Income')}</span>,{' '}
-          <span>{t('Population')}</span>,{' '}
-          <span>{t('proportion of very high human modification')}</span>,{' '}
-          <span>{t('number of endemic vertebrates')}</span>,{' '}
-          <span>{t('total number of vertebrate species')}</span> {t('and')}{' '}
-          <span>{t('SPI')}</span>.
+          <T
+            _str="Source:  {link1}, {link2}, {link3}, {link4}, {link5} and {link6}"
+            link1={
+              <a href="/">
+                <T _str="Gross National Income" />
+              </a>
+            }
+            link2={
+              <a href="/">
+                <T _str="Population" />
+              </a>
+            }
+            link3={
+              <a href="/">
+                <T _str="proportion of very high human modification" />
+              </a>
+            }
+            link4={
+              <a href="/">
+                <T _str="number of endemic vertebrates" />
+              </a>
+            }
+            link5={
+              <a href="/">
+                <T _str="total number of vertebrate species" />
+              </a>
+            }
+            link6={
+              <a href="/">
+                <T _str="SPI" />
+              </a>
+            }
+          />
         </p>
 
         <div className={styles.footer}>
@@ -394,10 +516,12 @@ function NrcContent({
         isOpen={isShareModalOpen}
         setShareModalOpen={setShareModalOpen}
       />
-      {/* <SpeciesModal
-        open={openedModal === MODALS.SPECIES}
-        handleModalClose={toggleModal}
-      /> */}
+      {countryData && (
+        <SpeciesModal
+          open={openedModal === MODALS.SPECIES}
+          handleModalClose={toggleModal}
+        />
+      )}
     </div>
   );
 }
