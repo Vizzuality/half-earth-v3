@@ -5,6 +5,7 @@
   display: flex;
   align-items: flex-start;
   margin-left: 4px;
+  width: 250px;
 
   .searchInput {
     @extend %subtitle;
@@ -12,14 +13,13 @@
     margin-left: 25px;
     background-color: transparent;
     color: $white;
-    min-width: 150px;
   }
 
   .searchIcon {
     color: $white;
     fill: currentColor;
     height: 14px;
-    width: 14px;
+    min-width: 14px;
     margin-top: 4px;
   }
 }

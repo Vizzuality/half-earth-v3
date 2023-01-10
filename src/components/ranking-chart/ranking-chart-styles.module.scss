@@ -2,11 +2,17 @@
 @import 'styles/typography-extends';
 @import 'styles/ui.module';
 
+$scroll-bar-width: 7px;
+$margin-left: 24px;
+$bars-width: 22%;
+$spi-index-width: 4rem;
+$spi-country-width: 250px;
+
 .chartTitle {
   @extend %bodyText;
   color: $white;
   margin: 0.4rem 1rem 0 0;
-  font-weight: 600;
+  font-weight: $font-weight-bold;
 
   &.filterTitle {
     margin-left: 1rem;
@@ -14,7 +20,7 @@
 }
 
 .chartTitleContainer {
-  margin: 0 0 8px 24px;
+  margin: 0 0 8px $margin-left;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,26 +37,59 @@
   margin: 0;
 }
 
-$chart-width-without-legend: calc(#{$country-scene-chart-width} + 50px);
-$scroll-bar-width: 7px;
+.legendContainer {
+  display: flex;
+  margin-top: 20px;
+  margin-left: $margin-left;
+  padding-right: $scroll-bar-width;
 
-%tableItem {
-  margin-right: 2rem;
-  min-width: calc(100vw - #{$sidebar-width} - 60px);
-  max-width: calc(100vw - #{$sidebar-width} - 60px);
+  .blank {
+    width: calc($spi-country-width + $spi-index-width);
+  }
+
+  .legendCategoryContainer {
+    height: 8vh;
+    margin: 0;
+    padding: 0;
+    color: white;
+    display: flex;
+    width: $bars-width;
+    margin-right: $scroll-bar-width;
+    flex-direction: column;
+
+    text-align: left;
+    padding: 0;
+    align-items: baseline;
+
+
+    .legendItem {
+      @extend %annotation;
+      align-items: center;
+      color: $grey-text;
+      display: flex;
+
+      .legendColor {
+        height: 16px;
+        width: 8px;
+        margin-right: 4px;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
 }
 
 .header {
-  margin-left: 24px;
-  width: $chart-width-without-legend;
+  margin-left: $margin-left;
   padding-right: $scroll-bar-width;
   display: flex;
   align-items: flex-end;
-  @extend %tableItem;
 
   .headerItem {
-    width: 19%;
-    margin: 0 7px 3px -3px;
+    width: $bars-width;
+    margin: 0 $scroll-bar-width 3px 0;
     text-align: left;
     padding: 0;
     align-items: baseline;
@@ -63,18 +102,14 @@ $scroll-bar-width: 7px;
   }
 
   .spiHeader {
-    width: 4rem;
+    width: $spi-index-width;
     margin-right: 0;
-  }
-
-  .searchInput {
-    width: calc(25% - 5px);
   }
 }
 
 .barContainer {
-  width: 19%;
-  margin-right: 7px;
+  width: $bars-width;
+  margin-right: $scroll-bar-width;
 }
 
 .fullBar {
@@ -93,7 +128,7 @@ $scroll-bar-width: 7px;
 
 .spiIndex {
   display: inline-block;
-  width: 4rem;
+  width: $spi-index-width;
 }
 
 .spiCountry {
@@ -106,7 +141,7 @@ $scroll-bar-width: 7px;
   line-height: $line-height;
   color: $grey-text;
   text-align: left;
-  width: 25%;
+  width: $spi-country-width;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -128,16 +163,15 @@ $scroll-bar-width: 7px;
 }
 
 .rankingChartContent {
-  @extend %tableItem;
   @extend %verticalScrollbar;
 
   padding-bottom: 2rem;
-  height: calc(100vh - 250px);
+  height: calc(100vh - 320px);
   flex-direction: column;
 }
 
 .row {
-  padding-left: 24px;
+  padding-left: $margin-left;
   display: flex;
   height: 20px;
 }
@@ -218,33 +252,4 @@ $scroll-bar-width: 7px;
 
 .noModification {
   background-color: $non-human-modification;
-}
-
-.legendContainer {
-  height: 8vh;
-  margin: 0;
-  padding: 0;
-  color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  margin: 20px 0 0 auto;
-  width: 39vw;
-
-  .legendItem {
-    @extend %annotation;
-    align-items: center;
-    color: $grey-text;
-    display: flex;
-    width: 39vw / 3;
-
-    .legendColor {
-      height: 16px;
-      width: 8px;
-      margin-right: 4px;
-    }
-
-    p {
-      margin: 0;
-    }
-  }
 }
