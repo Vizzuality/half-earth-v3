@@ -129,7 +129,6 @@ function RankingChart({
         />
         {categories.map((category) => {
           const title = RANKING_HEADER_LABELS[category];
-          console.log(title, categorySort);
           return (
             <div
               key={category}

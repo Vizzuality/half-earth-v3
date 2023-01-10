@@ -80,8 +80,6 @@ const getSortedData = createSelector(
       humanModification: 'veryHigh',
       protection: 'protected',
     };
-    console.log(categorySort, sortedCategory, sortField[sortedCategory]);
-    console.log(data);
     const sortedData = sortBy(
       data,
       (d) => d[sortedCategory][sortField[sortedCategory]]
