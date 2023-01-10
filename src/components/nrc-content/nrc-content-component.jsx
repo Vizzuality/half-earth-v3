@@ -62,7 +62,6 @@ function NrcContent({
 }) {
   const t = useT();
   const locale = useLocale();
-  console.log({ countryData });
   const {
     amphibians,
     birds,

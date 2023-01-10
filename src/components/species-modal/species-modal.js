@@ -15,7 +15,6 @@ import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 import Component from './species-modal-component';
 import { getVertebrateTabs } from './species-modal-constants';
 import {
-  getCountryData,
   getSearchTerm,
   getSpeciesModalSort,
   getSortedSpeciesList,
@@ -24,7 +23,6 @@ import {
 const actions = { ...urlActions };
 
 const mapStateToProps = (state) => ({
-  countryData: getCountryData(state),
   speciesModalSort: getSpeciesModalSort(state),
   searchTerm: getSearchTerm(state),
   state,

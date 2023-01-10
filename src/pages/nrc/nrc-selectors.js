@@ -34,10 +34,12 @@ const getHalfEarthModalOpen = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.openedModal
 );
-const getCountryChallengesSelectedKey = createSelector(
+
+export const getCountryChallengesSelectedKey = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.countryChallengesSelectedKey
 );
+
 export const getLocalSceneFilters = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.localSceneFilters
