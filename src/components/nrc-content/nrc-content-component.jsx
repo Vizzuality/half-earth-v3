@@ -62,6 +62,7 @@ function NrcContent({
 }) {
   const t = useT();
   const locale = useLocale();
+  console.log({ countryData });
   const {
     amphibians,
     birds,
@@ -83,6 +84,10 @@ function NrcContent({
     protection_needed_mar,
     Global_SPI_ter,
     Global_SPI_mar,
+    hm_vh_ter,
+    hm_vh_mar,
+    hm_ter,
+    hm_mar,
   } = countryData || {};
 
   const { land: landData, marine: marineData } = areaChartData;
@@ -96,6 +101,8 @@ function NrcContent({
   const protection_needed = land
     ? protection_needed_ter
     : protection_needed_mar;
+  const hm_vh = land ? hm_vh_ter : hm_vh_mar;
+  const hm = land ? hm_ter : hm_mar;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
@@ -310,17 +317,18 @@ function NrcContent({
           </IndicatorCard>
           <IndicatorCard
             color={COLORS['high-modification']}
-            indicator="46%"
+            indicator={`${Math.round(hm_vh)}%`}
             description={
               <p>
                 <T
-                  _str="of {landMarineSelection} has very {bold} and 5% has some modification"
+                  _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
                   bold={
                     <b>
                       <T _str="high human modification" />
                     </b>
                   }
                   landMarineSelection={land ? 'land' : 'marine'}
+                  someModificationNumber={Math.round(hm)}
                 />
               </p>
             }
