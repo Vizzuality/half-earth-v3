@@ -2,22 +2,13 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-.speciesModal {
-  // height: 100%;
-  border: 1px solid red;
-  right: 60px;
-  // overflow-y: scroll;
-  top: 140px;
-  // width: 100vw;
-  // z-index: 11;
-
-  @media #{$tablet-portrait} {
-    // background-color: $elephant;
-    // height: 100vh;
-    // overflow-y: unset;
-    position: absolute;
-    border: 1px solid red;
-  }
+.scrolleableArea {
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+  left: 20px;
+  right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+  overflow-y: scroll;
 
   .title {
     margin: 0;
@@ -50,10 +41,16 @@
     margin-bottom: 25px;
   }
 
-  .summary {
+  .tabs {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end
+    .tab {
+      color: $white;
+      text-transform: uppercase;
+    }
+    .selectedTab {
+      color: $brand-color-main;
+      text-decoration: underline;
+    }
   }
 
   .speciesTab {

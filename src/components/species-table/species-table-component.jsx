@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import ReactDOM from 'react-dom';
 import { Virtuoso } from 'react-virtuoso';
 
 import { T, useLocale, useT } from '@transifex/react';
@@ -13,7 +12,6 @@ import capitalize from 'lodash/capitalize';
 import useWindowSize from 'hooks/use-window-size';
 
 import HeaderItem from 'components/header-item';
-import Tabs from 'components/tabs';
 
 import { getSpeciesGroup } from 'constants/translation-constants';
 
@@ -44,6 +42,8 @@ function SpeciesTable({
   const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
+
+  const { landSpeciesTotal, marineSpeciesTotal } = countryData;
 
   const toggleExpand = (index) => {
     setExpandedRow(index === expandedRow ? null : index);
@@ -121,43 +121,9 @@ function SpeciesTable({
 
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
-  const summaryText = useMemo(() => {
-    const speciesNumber =
-      countryData &&
-      countryData[
-        vertebrateType === vertebrateTabs[0].slug
-          ? 'landSpeciesTotal'
-          : 'marineSpeciesTotal'
-      ];
 
-    // the list has been filtered
-    if (speciesList.length < speciesNumber) {
-      return (
-        <T
-          _str={
-            vertebrateType === vertebrateTabs[0].slug
-              ? '{number} of {totalNumber} land vertebrate species'
-              : '{number} of {totalNumber} marine vertebrate species'
-          }
-          totalNumber={getLocaleNumber(speciesNumber, locale)}
-          number={getLocaleNumber(speciesList.length, locale)}
-        />
-      );
-    }
-    return (
-      <T
-        _str={
-          vertebrateType === vertebrateTabs[0].slug
-            ? '{number} land vertebrate species'
-            : '{number} marine vertebrate species'
-        }
-        number={getLocaleNumber(speciesNumber, locale)}
-      />
-    );
-  }, [countryData, vertebrateType, speciesList, locale]);
-
-  const renderSpeciesModal = (
-    <div className={styles.speciesModal}>
+  return (
+    <div className={styles.scrolleableArea}>
       <section className={styles.section}>
         <div className={styles.search}>
           <SearchIcon className={styles.searchIcon} />
@@ -169,15 +135,39 @@ function SpeciesTable({
             value={searchTerm || ''}
           />
         </div>
-        <div className={styles.summary}>
-          <Tabs
-            disabled={!countryData.coastal}
-            tabs={vertebrateTabs}
-            onClick={handleVertebrateChange}
-            className={styles.speciesTab}
-            defaultTabSlug={vertebrateType}
-          />
-          <span className={styles.speciesTabTitle}>{summaryText}</span>
+        <div className={styles.tabs}>
+          <button
+            type="button"
+            onClick={() => handleVertebrateChange(vertebrateTabs[0].slug)}
+          >
+            <p
+              className={cx({
+                [styles.tab]: true,
+                [styles.selectedTab]: vertebrateType === vertebrateTabs[0].slug,
+              })}
+            >
+              <T
+                _str="land ({speciesNumber})"
+                speciesNumber={getLocaleNumber(landSpeciesTotal, locale)}
+              />
+            </p>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleVertebrateChange(vertebrateTabs[1].slug)}
+          >
+            <p
+              className={cx({
+                [styles.tab]: true,
+                [styles.selectedTab]: vertebrateType === vertebrateTabs[1].slug,
+              })}
+            >
+              <T
+                _str="marine ({speciesNumber})"
+                speciesNumber={getLocaleNumber(marineSpeciesTotal, locale)}
+              />
+            </p>
+          </button>
         </div>
       </section>
       <div>
@@ -219,12 +209,6 @@ function SpeciesTable({
       </div>
       <section />
     </div>
-  );
-
-  return ReactDOM.createPortal(
-    renderSpeciesModal,
-    // eslint-disable-next-line no-undef
-    document.getElementById('root')
   );
 }
 
