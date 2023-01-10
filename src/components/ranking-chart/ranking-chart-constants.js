@@ -1,22 +1,22 @@
 export const LEGEND_ITEMS = [
   {
-    legend: 'Endemic species',
-    color: '#F8D300',
-    category: 'species',
-  },
-  {
     legend: 'Non endemic species',
     color: '#F87200',
     category: 'species',
   },
   {
-    legend: 'Some modification',
-    color: '#B284FD',
-    category: 'humanModification',
+    legend: 'Endemic species',
+    color: '#F8D300',
+    category: 'species',
   },
   {
     legend: 'Very high modification',
     color: '#731CFF',
+    category: 'humanModification',
+  },
+  {
+    legend: 'Some modification',
+    color: '#B284FD',
     category: 'humanModification',
   },
   {
