@@ -57,6 +57,8 @@ function NrcContent({
   countryChallengesSelectedKey,
   scatterPlotData,
   fullRanking,
+  setNRCSidebarView,
+  NRCSidebarView,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -102,7 +104,6 @@ function NrcContent({
   const hm = land ? hm_ter : hm_mar;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
-  const [view, setView] = useState('main');
   const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
     onboardingType,
@@ -163,7 +164,7 @@ function NrcContent({
         tooltipText={t('Go back to the globe')}
         onboardingOverlay={onboardingOverlay}
       />
-      {view === 'main' && (
+      {NRCSidebarView === 'main' && (
         <>
           <header className={styles.header}>
             <div className={styles.flagWrapper}>
@@ -365,7 +366,7 @@ function NrcContent({
               </div>
               <Button
                 type="compound"
-                handleClick={() => setView('vertebrates')}
+                handleClick={() => setNRCSidebarView('vertebrates')}
                 label={t('All vertebrates')}
                 tooltipText={t('Open vertebrates list modal')}
               />
@@ -504,14 +505,14 @@ function NrcContent({
           />
         </>
       )}
-      {view === 'vertebrates' && (
+      {NRCSidebarView === 'vertebrates' && (
         <>
           <header className={styles.header}>
             <div className={styles.titleWrapper}>
               <button
                 className={styles.backBtn}
                 type="button"
-                onClick={() => setView('main')}
+                onClick={() => setNRCSidebarView('main')}
               >
                 <BackArrowIcon className={styles.arrowIcon} />
               </button>

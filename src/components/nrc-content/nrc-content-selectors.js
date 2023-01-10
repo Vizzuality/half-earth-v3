@@ -7,6 +7,7 @@ import {
   getLandMarineSelected,
   getCountryChallengesSelectedFilter,
 } from 'selectors/nrc-selectors';
+import { getNRCSidebarView } from 'selectors/ui-selectors';
 
 import {
   countryChallengesChartFormats,
@@ -190,6 +191,7 @@ export default createStructuredSelector({
   countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   landMarineSelection: getLandMarineSelected,
+  NRCSidebarView: getNRCSidebarView,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   scatterPlotData: getFilteredData,

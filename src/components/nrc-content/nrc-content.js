@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
+import uiActions from 'redux_modules/ui';
 
 import {
   NATIONAL_REPORT_CARD,
@@ -25,12 +26,19 @@ const actions = {
   ...urlActions,
   ...countryDataActions,
   ...metadataActions,
+  ...uiActions,
   downloadNrcPdfAnalytics,
 };
 
 function NrcContainer(props) {
-  const { browsePage, onboardingType, countryName, countryId, changeUI } =
-    props;
+  const {
+    browsePage,
+    onboardingType,
+    countryName,
+    countryId,
+    changeUI,
+    setNRCSidebarView,
+  } = props;
 
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
@@ -91,6 +99,7 @@ function NrcContainer(props) {
       handlePrintReport={handlePrintReport}
       goToAnalyzeAreas={goToAnalyzeAreas}
       countryName={localizedCountryName}
+      setNRCSidebarView={setNRCSidebarView}
     />
   );
 }

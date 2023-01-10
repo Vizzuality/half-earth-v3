@@ -46,10 +46,22 @@
     .tab {
       color: $white;
       text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      &:hover {
+        border-bottom: 1px solid transparent;
+        color: $grey-text;
+      }
+
     }
     .selectedTab {
       color: $brand-color-main;
-      text-decoration: underline;
+      border-bottom: 1px solid $brand-color-main;
+      padding-bottom: 3px;
+      &:hover {
+        border-bottom: 1px solid transparent;
+        color: $brand-color-main;
+      }
     }
   }
 
