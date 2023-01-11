@@ -303,7 +303,7 @@ function NrcContent({
               </IndicatorCard>
               <IndicatorCard
                 color={COLORS['high-modification']}
-                indicator={`${Math.round(hm_vh)}%`}
+                indicator={hm_vh && `${Math.round(hm_vh)}%`}
                 description={
                   <p>
                     <T

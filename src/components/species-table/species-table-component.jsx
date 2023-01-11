@@ -122,6 +122,9 @@ function SpeciesTable({
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
 
+  // const table = document?.querySelector('.table');
+
+  // console.log({ table: table?.offsetHeight });
   return (
     <div className={styles.scrolleableArea}>
       <section className={styles.section}>
@@ -170,7 +173,7 @@ function SpeciesTable({
           </button>
         </div>
       </section>
-      <div>
+      <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
         <div className={styles.tableHeaderContainer}>
           <div className={styles.tableHeader}>
             {headers.map((title) => (
@@ -201,7 +204,13 @@ function SpeciesTable({
           </div>
         ) : (
           <Virtuoso
-            style={{ width: '100%', height: tableHeight }}
+            style={{
+              width: '100%',
+              height: '100%',
+              overflowY: 'scroll',
+              paddingRight: '17px',
+              boxSizing: 'content-box',
+            }}
             totalCount={speciesList.length}
             item={renderRow}
           />
