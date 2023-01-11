@@ -91,11 +91,16 @@ function NrcContainer(props) {
     document.title = tempTitle;
   };
 
+  const handleFilterSelection = (selectedFilter) => {
+    changeUI({ countryChallengesSelectedFilter: selectedFilter.slug });
+  };
+
   return (
     <Component
       {...props}
       handleClose={handleClose}
       handleBubbleClick={handleBubbleClick}
+      handleFilterSelection={handleFilterSelection}
       handlePrintReport={handlePrintReport}
       goToAnalyzeAreas={goToAnalyzeAreas}
       countryName={localizedCountryName}

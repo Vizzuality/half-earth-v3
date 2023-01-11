@@ -18,6 +18,7 @@ import Button from 'components/button';
 import AreaChart from 'components/charts/area-chart';
 import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
+import Dropdown from 'components/dropdown';
 import AreaChartTooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
@@ -40,28 +41,31 @@ import styles from './nrc-content-styles.module.scss';
 import { getBarStyles } from './nrc-content-utils';
 
 function NrcContent({
+  areaChartData,
+  challengesFilterOptions,
   changeUI,
-  onboardingType,
-  onboardingStep,
-  waitingInteraction,
-  handleClose,
-  countryISO,
-  countryName,
-  handlePrintReport,
-  goToAnalyzeAreas,
-  handleBubbleClick,
+  countryChallengesSelectedKey,
   countryData,
   countryDescription,
+  countryISO,
+  countryName,
+  fullRanking,
+  goToAnalyzeAreas,
+  handleBubbleClick,
+  handleClose,
+  handleFilterSelection,
+  handlePrintReport,
   landMarineSelection,
-  areaChartData,
+  NRCSidebarView,
+  onboardingType,
+  onboardingStep,
+  scatterPlotData,
+  selectedFilterOption,
+  setNRCSidebarView,
   xAxisTicks,
   yAxisTicks,
-  countryChallengesSelectedKey,
-  scatterPlotData,
-  fullRanking,
-  setNRCSidebarView,
-  NRCSidebarView,
   selectedLandMarineOption,
+  waitingInteraction,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -445,12 +449,27 @@ function NrcContent({
             </div>
             <div className={styles.scatterPlotContainer}>
               <div className={styles.chartHeader}>
-                <p className={styles.chartTitle}>
-                  <T
-                    _str="{landMarineSelection} SPI"
-                    landMarineSelection={land ? 'Land' : 'Marine'}
-                  />
-                </p>
+                <div className={styles.chartTitleContainer}>
+                  <p className={styles.chartTitle}>
+                    <T
+                      _str="{landMarineSelection} SPI and"
+                      landMarineSelection={land ? 'Land' : 'Marine'}
+                    />
+                  </p>
+                  <p className={styles.chartTitle}>{t('of countries')}</p>
+                  <div style={{}}>
+                    <Dropdown
+                      width="full"
+                      parentWidth="330px"
+                      options={challengesFilterOptions}
+                      selectedOption={selectedFilterOption}
+                      handleOptionSelection={handleFilterSelection}
+                    />
+                  </div>
+                  <p className={styles.chartTitle}>
+                    <T _str="to {countryName}" countryName={countryName} />
+                  </p>
+                </div>
                 <span>
                   <Tooltip
                     content={
