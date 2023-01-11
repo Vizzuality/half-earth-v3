@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Tooltip from '@tippyjs/react';
+import cx from 'classnames';
 
 import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
@@ -12,23 +13,26 @@ function IndicatorCard({
   description,
   tooltipInfo,
   children,
+  className,
 }) {
   return (
-    <div className={styles.container}>
+    <div className={cx(styles.container, className)}>
       <p className={styles.indicator} style={{ color }}>
         {indicator}
       </p>
       <div className={styles.description}>{description}</div>
       <div className={styles.children}>{children}</div>
-      <span className={styles.iconWrapper}>
-        <Tooltip
-          content={<div className={styles.tooltip}>{tooltipInfo}</div>}
-          delay={100}
-          placement="top"
-        >
-          <InfoIcon className={styles.icon} />
-        </Tooltip>
-      </span>
+      {tooltipInfo && (
+        <span className={styles.iconWrapper}>
+          <Tooltip
+            content={<div className={styles.tooltip}>{tooltipInfo}</div>}
+            delay={100}
+            placement="top"
+          >
+            <InfoIcon className={styles.icon} />
+          </Tooltip>
+        </span>
+      )}
     </div>
   );
 }

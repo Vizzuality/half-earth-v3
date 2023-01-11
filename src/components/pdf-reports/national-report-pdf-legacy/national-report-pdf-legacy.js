@@ -29,21 +29,19 @@ const NationalReportPdfContainer = (props) => {
   };
 
   useEffect(() => {
-    if (view) {
-      watchHandle =
-        watchUtils &&
-        watchUtils
-          .whenOnce(() => !view.updating)
-          .then(() => {
-            getSceneImageUrl();
-          });
-    }
+    watchHandle =
+      watchUtils &&
+      watchUtils
+        .whenOnce(() => !view.updating)
+        .then(() => {
+          getSceneImageUrl();
+        });
     return function cleanUp() {
       if (watchHandle) {
         watchHandle.remove();
       }
     };
-  }, [watchUtils, countryISO, view]);
+  }, [watchUtils, countryISO]);
 
   return ReactDOM.createPortal(
     <Component

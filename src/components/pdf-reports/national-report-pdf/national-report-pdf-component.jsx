@@ -1,11 +1,17 @@
+/* eslint-disable camelcase */
 import React, { useMemo } from 'react';
 
-import { useT, useLocale } from '@transifex/react';
+import { T, useT, useLocale } from '@transifex/react';
+
+import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import HalfEarthLogo from 'components/half-earth-logo';
-import HighLightedSpeciesList from 'components/highlighted-species-list';
+import IndicatorCard from 'components/nrc-content/indicator-card';
+import { getBarStyles } from 'components/nrc-content/nrc-content-utils';
 
 import { getCountryNames } from 'constants/translation-constants';
+
+import COLORS from 'styles/settings';
 
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
@@ -15,7 +21,6 @@ import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 import styles from './national-report-pdf.module.scss';
 
 function NationalReportPdf({
-  SPI,
   birds,
   nrcUrl,
   mammals,
@@ -23,163 +28,271 @@ function NationalReportPdf({
   amphibians,
   countryISO,
   countryName,
+  countryData,
   birdsEndemic,
-  indexStatement,
   mammalsEndemic,
   reptilesEndemic,
-  vertebratesCount,
-  protectionNeeded,
   amphibiansEndemic,
-  currentProtection,
-  priorityAreasSentence,
-  sceneScreenshotUrl,
-  endemicVertebratesCount,
-  highlightedSpeciesSentence,
-  highlightedSpeciesRandomNumber,
+  landMarineSelection,
 }) {
   const t = useT();
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
+  const translatedCountryName = countryNames[countryName] || countryName;
+  const {
+    // endemic_amphibians,
+    // endemic_birds,
+    // endemic_mammals,
+    // endemic_reptiles,
+    SPI_ter,
+    SPI_mar,
+    total_endemic_mar,
+    total_endemic_ter,
+    prop_protected_ter,
+    prop_protected_mar,
+    nspecies_ter,
+    nspecies_mar,
+    protection_needed_ter,
+    protection_needed_mar,
+    Global_SPI_ter,
+    Global_SPI_mar,
+    hm_vh_ter,
+    hm_vh_mar,
+    hm_ter,
+    hm_mar,
+  } = countryData || {};
 
+  const renderIndicatorCards = () => {
+    const land = landMarineSelection === 'land';
+    const SPI = land ? SPI_ter : SPI_mar;
+    const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
+    const total_endemic = land ? total_endemic_ter : total_endemic_mar;
+    const prop_protected = land ? prop_protected_ter : prop_protected_mar;
+    const nspecies = land ? nspecies_ter : nspecies_mar;
+    const protection_needed = land
+      ? protection_needed_ter
+      : protection_needed_mar;
+    const hm_vh = land ? hm_vh_ter : hm_vh_mar;
+    const hm = land ? hm_ter : hm_mar;
+
+    return (
+      <section className={styles.indicatorCardsContainer}>
+        <IndicatorCard
+          className={styles.indicatorCard}
+          indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
+          description={
+            <p>
+              <T
+                _str="{landMarineSelection} Species Protection Index (SPI)"
+                landMarineSelection={land ? 'Land' : 'Marine'}
+              />
+            </p>
+          }
+        >
+          <div>
+            <p className={styles.spiAverageText}>
+              <T
+                _str="{more} Global SPI average: {spiAverage}"
+                more=">"
+                spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
+              />
+            </p>
+          </div>
+        </IndicatorCard>
+        <IndicatorCard
+          className={styles.indicatorCard}
+          color={COLORS.gold}
+          indicator={
+            total_endemic_ter && getLocaleNumber(total_endemic, locale)
+          }
+          description={
+            <p>
+              <T
+                _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
+                bold={
+                  <b>
+                    <T _str="are endemic" />
+                  </b>
+                }
+                landMarineSelection={land ? 'land' : 'marine'}
+                totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+              />
+            </p>
+          }
+        >
+          <div
+            className={styles.bar}
+            style={{
+              backgroundImage: getBarStyles(
+                COLORS.gold,
+                (total_endemic * 100) / nspecies
+              ),
+            }}
+          />
+        </IndicatorCard>
+        <IndicatorCard
+          className={styles.indicatorCard}
+          color={COLORS['protected-areas']}
+          indicator={prop_protected && `${Math.round(prop_protected)}%`}
+          description={
+            <p>
+              <T
+                _str="of {bold} and {needsProtectionNumber}% needs protection"
+                bold={
+                  <b>
+                    <T
+                      _str="{landMarineSelection} is protected"
+                      landMarineSelection={land ? 'land' : 'marine'}
+                    />
+                  </b>
+                }
+                needsProtectionNumber={getLocaleNumber(
+                  protection_needed,
+                  locale
+                )}
+              />
+            </p>
+          }
+        >
+          <div
+            className={styles.bar}
+            style={{
+              backgroundImage: getBarStyles(
+                COLORS['protected-areas'],
+                prop_protected,
+                COLORS['protection-needed'],
+                prop_protected + protection_needed
+              ),
+            }}
+          />
+        </IndicatorCard>
+        <IndicatorCard
+          className={styles.indicatorCard}
+          color={COLORS['high-modification']}
+          indicator={`${Math.round(hm_vh)}%`}
+          description={
+            <p>
+              <T
+                _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
+                bold={
+                  <b>
+                    <T _str="high human modification" />
+                  </b>
+                }
+                landMarineSelection={land ? 'land' : 'marine'}
+                someModificationNumber={Math.round(hm)}
+              />
+            </p>
+          }
+        >
+          <div
+            className={styles.bar}
+            style={{
+              backgroundImage: getBarStyles(
+                COLORS['high-modification'],
+                65,
+                COLORS['some-modification'],
+                70
+              ),
+            }}
+          />
+        </IndicatorCard>
+      </section>
+    );
+  };
+
+  const renderSpecies = () => (
+    <section className={styles.speciesComposition}>
+      <p className={styles.speciesTitle}>{t('Species composition')}</p>
+      <p className={styles.speciesCount}>
+        <div className={styles.speciesIcon}>
+          <AmphibiansIcon />
+        </div>
+        <div>
+          <T
+            _str="{endemic} amphibians of {number}"
+            endemic={
+              <div className={styles.endemic}>
+                {amphibiansEndemic} {t('endemic')}
+              </div>
+            }
+            number={amphibians}
+          />
+        </div>
+      </p>
+      <p className={styles.speciesCount}>
+        <div className={styles.speciesIcon}>
+          <BirdsIcon />
+        </div>
+        <div>
+          <T
+            _str="{endemic} birds of {number}"
+            endemic={
+              <div className={styles.endemic}>
+                {birdsEndemic} {t('endemic')}
+              </div>
+            }
+            number={birds}
+          />
+        </div>
+      </p>
+      <p className={styles.speciesCount}>
+        <div className={styles.speciesIcon}>
+          <ReptilesIcon />
+        </div>
+        <div>
+          <T
+            _str="{endemic} reptiles of {number}"
+            endemic={
+              <div className={styles.endemic}>
+                {reptilesEndemic} {t('endemic')}
+              </div>
+            }
+            number={reptiles}
+          />
+        </div>
+      </p>
+      <p className={styles.speciesCount}>
+        <div className={styles.speciesIcon}>
+          <MammalsIcon />
+        </div>
+        <div>
+          <T
+            _str="{endemic} mammals of {number}"
+            endemic={
+              <div className={styles.endemic}>
+                {mammalsEndemic} {t('endemic')}
+              </div>
+            }
+            number={mammals}
+          />
+        </div>
+      </p>
+    </section>
+  );
   return (
     <div className={styles.container}>
-      <section className={styles.nameWrapper}>
-        <img
-          className={styles.flag}
-          src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
-          alt=""
-        />
-        <span className={styles.countryName}>
-          {countryNames[countryName] || countryName}
-        </span>
-      </section>
-      <HalfEarthLogo withBackground className={styles.logo} />
-      <section className={styles.date}>
-        <span>
-          {Intl.DateTimeFormat('en-US', {
-            month: 'long',
-            year: 'numeric',
-          }).format(new Date())}
-        </span>
-      </section>
-      <section className={styles.indexWrapper}>
-        <p className={styles.overviewText}>{`${t(
-          'The national species protection index is: '
-        )}${SPI}`}</p>
-        <p className={styles.indexStatement}>{indexStatement}</p>
-      </section>
-      <p className={styles.indexIntro}>{t('This index is based on:')}</p>
-      <section className={styles.indexExplanation}>
-        <div className={styles.indexBaseNumbersWrapper}>
-          <div className={styles.indexBaseDataElement}>
-            <p className={styles.baseNumber}>{`${currentProtection || 25}`}</p>
-            <p className={styles.numberText}>{t('% of land')}</p>
-            <p className={styles.numberText}>{t('currently')}</p>
-            <p className={styles.numberText}>{t('protected')}</p>
-          </div>
-          <div className={styles.indexBaseDataElement}>
-            <p className={styles.baseNumber}>{`${vertebratesCount || 234}`}</p>
-            <p className={styles.numberText}>{t('total land')}</p>
-            <p className={styles.numberText}>{t('vertebrate')}</p>
-            <p className={styles.numberText}>{t('species')}</p>
-          </div>
-          <div className={styles.indexBaseDataElement}>
-            <p className={styles.baseNumber}>{`${
-              endemicVertebratesCount || 7
-            }`}</p>
-            <p className={styles.numberText}>{t('endemic land')}</p>
-            <p className={styles.numberText}>{t('vertebrated')}</p>
-            <p className={styles.numberText}>{t('species')}</p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.speciesSentence}>
-        <span>{highlightedSpeciesSentence}</span>
-        <p className={styles.datasetSource}>
-          <a href="https://mol.org/">{t('Source: Map of Life')}</a>
-        </p>
-      </section>
-      <section className={styles.speciesComposition}>
-        <p className={styles.title}>{t('species composition:')}</p>
-        <p className={styles.speciesCount}>
-          <span className={styles.speciesIcon}>
-            <AmphibiansIcon />
-          </span>{' '}
-          {`${amphibians} ${t('amphibians')} (${amphibiansEndemic} ${t(
-            'endemic)'
-          )}`}
-        </p>
-        <p className={styles.speciesCount}>
-          <span className={styles.speciesIcon}>
-            <BirdsIcon />
-          </span>{' '}
-          {`${birds} ${t('birds')} (${birdsEndemic} ${t('endemic')})`}
-        </p>
-        <p className={styles.speciesCount}>
-          <span className={styles.speciesIcon}>
-            <MammalsIcon />
-          </span>{' '}
-          {`${mammals} ${t('mammals')} (${mammalsEndemic} ${t('endemic')})`}
-        </p>
-        <p className={styles.speciesCount}>
-          <span className={styles.speciesIcon}>
-            <ReptilesIcon />
-          </span>{' '}
-          {`${reptiles} ${t('reptiles')} (${reptilesEndemic} ${t('endemic')})`}
-        </p>
-      </section>
-      <section className={styles.protectionLegend}>
-        <h3 className={styles.legendTitle}>{`${t(
-          'The current protection'
-        )}: ${currentProtection}%`}</h3>
-        <div className={styles.datasetWrapper}>
-          <div className={styles.wdpaIcon} />
-          <div className={styles.datasetMetadata}>
-            <span className={styles.datasetExplanation}>
-              {t(`The green areas on the map represent regions that are currently
-              recognized as being managed for the long-term conservation of
-              nature.`)}
-            </span>
-            <p className={styles.datasetSource}>
-              {t('Source:')} WDPA (Jan 2020), OECM (Jan 2020) & RAISG (2019).
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.priorityLegend}>
-        <h3 className={styles.legendTitle}>{`${t(
-          'Additional protection needed:'
-        )} ${protectionNeeded}%`}</h3>
-        <p className={styles.legendTag}>{t('higher priority')}</p>
-        <div className={styles.datasetWrapper}>
-          <div className={styles.priorityIcon} />
-          <div className={styles.datasetMetadata}>
-            <span className={styles.datasetExplanation}>
-              {priorityAreasSentence}
-            </span>
-            <p className={styles.datasetSource}>
-              <a href="https://www.biorxiv.org/content/10.1101/2020.02.05.936047v1.abstract">
-                Source: Rinnan DS and Jetz W, (2020).
-              </a>
-            </p>
-          </div>
-        </div>
-        <p className={styles.legendTag}>{t('lower priority')}</p>
-      </section>
-      <section className={styles.species}>
-        <HighLightedSpeciesList
-          countryISO={countryISO}
-          highlightedSpeciesRandomNumber={highlightedSpeciesRandomNumber}
-        />
-      </section>
-      <section className={styles.mapWrapper}>
-        {sceneScreenshotUrl && (
+      <section className={styles.title}>
+        <div className={styles.nameWrapper}>
           <img
-            src={sceneScreenshotUrl}
-            alt={`${countryNames[countryName] || countryName} map`}
+            className={styles.flag}
+            src={`${process.env.PUBLIC_URL}/flags/${countryISO}.svg`}
+            alt=""
           />
+          <span className={styles.countryName}>{translatedCountryName}</span>
+        </div>
+        {t(
+          `Summary of the National Report Card of ${translatedCountryName} regarding the calculations of the ${landMarineSelection.label}.`
         )}
       </section>
+      <HalfEarthLogo
+        withBackground
+        className={styles.logo}
+        linkClassName={styles.logoContainer}
+        pdf
+      />
+      {renderIndicatorCards()}
+      {renderSpecies()}
       <section className={styles.urlWrapper}>
         <a href={nrcUrl}>{nrcUrl}</a>
       </section>

@@ -13,7 +13,7 @@ import { LAYERS_URLS } from 'constants/layers-urls';
 export const useWatchUtils = () => {
   const [watchUtils, setWatchUtils] = useState(null);
   useEffect(() => {
-    loadModules(['esri/core/watchUtils']).then(([loadedWatchUtils]) => {
+    loadModules(['esri/core/reactiveUtils']).then(([loadedWatchUtils]) => {
       setWatchUtils(loadedWatchUtils);
     });
   }, []);

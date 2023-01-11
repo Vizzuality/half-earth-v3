@@ -36,6 +36,7 @@ import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import styles from './nrc-content-styles.module.scss';
+import { getBarStyles } from './nrc-content-utils';
 
 function NrcContent({
   changeUI,
@@ -147,23 +148,6 @@ function NrcContent({
   ];
 
   const getSpecieText = (txt) => `${txt}`;
-
-  const getBarStyles = (color1, value1, color2, value2) => {
-    const str = color2
-      ? `linear-gradient(to right,
-      ${color1},
-      ${color1} ${value1}%,
-      ${color2} ${value1}%,
-      ${color2} ${value2}%,
-      ${COLORS['white-opacity']} ${value2}%,
-      ${COLORS['white-opacity']} 100%`
-      : `linear-gradient(to right,
-        ${color1},
-        ${color1} ${value1}%,
-        ${COLORS['white-opacity']} ${value1}%,
-        ${COLORS['white-opacity']} 100%`;
-    return str;
-  };
 
   return (
     <div

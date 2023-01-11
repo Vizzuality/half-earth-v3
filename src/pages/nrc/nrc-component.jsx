@@ -14,6 +14,7 @@ import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks
 import Button from 'components/button';
 import HalfEarthLogo from 'components/half-earth-logo';
 import NrcContent from 'components/nrc-content';
+import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import RankingChart from 'components/ranking-chart';
 
 import uiStyles from 'styles/ui.module.scss';
@@ -87,6 +88,10 @@ function NationalReportCard({
 
   return (
     <>
+      <PdfNationalReport
+        countryISO={countryISO}
+        landMarineSelection={selectedLandMarineOption}
+      />
       <img
         title="NRC background"
         alt="NRC background"
