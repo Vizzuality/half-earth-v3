@@ -55,6 +55,7 @@ function NrcContent({
   handleClose,
   handleFilterSelection,
   handlePrintReport,
+  indicatorOptions,
   landMarineSelection,
   NRCSidebarView,
   onboardingType,
@@ -69,6 +70,7 @@ function NrcContent({
 }) {
   const t = useT();
   const locale = useLocale();
+  console.log({ challengesFilterOptions, indicatorOptions });
   const {
     amphibians,
     birds,
@@ -449,27 +451,40 @@ function NrcContent({
             </div>
             <div className={styles.scatterPlotContainer}>
               <div className={styles.chartHeader}>
-                <div className={styles.chartTitleContainer}>
-                  <p className={styles.chartTitle}>
-                    <T
-                      _str="{landMarineSelection} SPI and"
-                      landMarineSelection={land ? 'Land' : 'Marine'}
-                    />
-                  </p>
-                  <p className={styles.chartTitle}>{t('of countries')}</p>
-                  <div style={{}}>
-                    <Dropdown
-                      width="full"
-                      parentWidth="330px"
-                      options={challengesFilterOptions}
-                      selectedOption={selectedFilterOption}
-                      handleOptionSelection={handleFilterSelection}
-                    />
+                {countryName && (
+                  <div className={styles.chartTitleContainer}>
+                    <p className={styles.chartTitle}>
+                      <T
+                        _str="{landMarineSelection} SPI and"
+                        landMarineSelection={land ? 'Land' : 'Marine'}
+                      />
+                    </p>
+                    <div>
+                      {indicatorOptions && (
+                        <Dropdown
+                          width="full"
+                          parentWidth="330px"
+                          options={indicatorOptions}
+                          // selectedOption={selectedFilterOption}
+                          // handleOptionSelection={handleFilterSelection}
+                        />
+                      )}
+                    </div>
+                    <p className={styles.chartTitle}>{t('of countries')}</p>
+                    <div>
+                      <Dropdown
+                        width="full"
+                        parentWidth="330px"
+                        options={challengesFilterOptions}
+                        selectedOption={selectedFilterOption}
+                        handleOptionSelection={handleFilterSelection}
+                      />
+                    </div>
+                    <p className={styles.chartTitle}>
+                      <T _str="to {countryName}" countryName={countryName} />
+                    </p>
                   </div>
-                  <p className={styles.chartTitle}>
-                    <T _str="to {countryName}" countryName={countryName} />
-                  </p>
-                </div>
+                )}
                 <span>
                   <Tooltip
                     content={

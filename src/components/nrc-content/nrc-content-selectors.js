@@ -209,6 +209,20 @@ const getXAxisKeys = createSelector(
   }
 );
 
+const getIndicatorOptions = createSelector(
+  [selectCountryIso, getScatterplotRawData, selectLangUrlState],
+  // eslint-disable-next-line no-unused-vars
+  () => {
+    // locale is here to recompute indicatorLabels
+    const labels = Object.values(getIndicatorLabels());
+    const options = labels.map((l) => ({
+      label: l,
+    }));
+
+    return options;
+  }
+);
+
 const getChallengesDependantFilterOptions = createSelector(
   [getXAxisKeys, getLandMarineSelected, getChallengesFilterOptions],
   (keys, landMarineSelection, challengesFilterOptions) => {
@@ -246,6 +260,7 @@ export default createStructuredSelector({
   countryData: getCountryData,
   countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
+  indicatorOptions: getIndicatorOptions,
   landMarineSelection: getLandMarineSelected,
   NRCSidebarView: getNRCSidebarView,
   onboardingType: getOnboardingType,
