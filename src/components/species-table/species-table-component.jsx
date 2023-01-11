@@ -195,6 +195,7 @@ function SpeciesTable({
             ))}
           </div>
         </div>
+
         {!speciesList ? (
           <div
             className={styles.loader}

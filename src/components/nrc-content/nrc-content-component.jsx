@@ -249,16 +249,18 @@ function NrcContent({
                 }
                 description={
                   <p>
-                    <T
-                      _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
-                      bold={
-                        <b>
-                          <T _str="are endemic" />
-                        </b>
-                      }
-                      landMarineSelection={land ? 'land' : 'marine'}
-                      totalEndemicNumber={getLocaleNumber(nspecies, locale)}
-                    />
+                    {nspecies && (
+                      <T
+                        _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
+                        bold={
+                          <b>
+                            <T _str="are endemic" />
+                          </b>
+                        }
+                        landMarineSelection={land ? 'land' : 'marine'}
+                        totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                      />
+                    )}
                   </p>
                 }
                 tooltipInfo={t(
@@ -280,21 +282,23 @@ function NrcContent({
                 indicator={prop_protected && `${Math.round(prop_protected)}%`}
                 description={
                   <p>
-                    <T
-                      _str="of {bold} and {needsProtectionNumber}% needs protection"
-                      bold={
-                        <b>
-                          <T
-                            _str="{landMarineSelection} is protected"
-                            landMarineSelection={land ? 'land' : 'marine'}
-                          />
-                        </b>
-                      }
-                      needsProtectionNumber={getLocaleNumber(
-                        protection_needed,
-                        locale
-                      )}
-                    />
+                    {protection_needed && (
+                      <T
+                        _str="of {bold} and {needsProtectionNumber}% needs protection"
+                        bold={
+                          <b>
+                            <T
+                              _str="{landMarineSelection} is protected"
+                              landMarineSelection={land ? 'land' : 'marine'}
+                            />
+                          </b>
+                        }
+                        needsProtectionNumber={getLocaleNumber(
+                          protection_needed,
+                          locale
+                        )}
+                      />
+                    )}
                   </p>
                 }
                 tooltipInfo={t(
@@ -318,16 +322,18 @@ function NrcContent({
                 indicator={hm_vh && `${Math.round(hm_vh)}%`}
                 description={
                   <p>
-                    <T
-                      _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
-                      bold={
-                        <b>
-                          <T _str="high human modification" />
-                        </b>
-                      }
-                      landMarineSelection={land ? 'land' : 'marine'}
-                      someModificationNumber={Math.round(hm)}
-                    />
+                    {hm && (
+                      <T
+                        _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
+                        bold={
+                          <b>
+                            <T _str="high human modification" />
+                          </b>
+                        }
+                        landMarineSelection={land ? 'land' : 'marine'}
+                        someModificationNumber={Math.round(hm)}
+                      />
+                    )}
                   </p>
                 }
                 tooltipInfo={t(
@@ -407,24 +413,26 @@ function NrcContent({
                   </Tooltip>
                 </span>
               </div>
-              <AreaChart
-                area1={{
-                  key: 'spi',
-                  stroke: COLORS.white,
-                  strokeWidth: 0.5,
-                }}
-                area2={{
-                  key: 'protected',
-                  stroke: COLORS.white,
-                  strokeWidth: 0.7,
-                  strokeDasharray: '3 3 3 3',
-                }}
-                data={land ? landData : marineData}
-                height={240}
-                width="98%"
-                tooltip
-                tooltipContent={<AreaChartToooltip />}
-              />
+              {countryData && (
+                <AreaChart
+                  area1={{
+                    key: 'spi',
+                    stroke: COLORS.white,
+                    strokeWidth: 0.5,
+                  }}
+                  area2={{
+                    key: 'protected',
+                    stroke: COLORS.white,
+                    strokeWidth: 0.7,
+                    strokeDasharray: '3 3 3 3',
+                  }}
+                  data={land ? landData : marineData}
+                  height={240}
+                  width="98%"
+                  tooltip
+                  tooltipContent={<AreaChartToooltip />}
+                />
+              )}
             </div>
             <div className={styles.scatterPlotContainer}>
               <div className={styles.chartHeader}>

@@ -67,7 +67,7 @@ function AreaChartComponent({
           <Area
             type="monotone"
             dataKey={area2.key}
-            fill={area2.fill}
+            fill="url(#colorUv)"
             fillOpacity={area2.fillOpacity}
             stroke={area2.stroke}
             strokeWidth={area2.strokeWidth}
