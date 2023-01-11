@@ -20,6 +20,10 @@
     background: transparent;
   }
 
+  .motionView {
+    height: 100vh;
+  }
+
   .closeButton {
     top: $local-sidebar-top-margin;
     right: -16px;

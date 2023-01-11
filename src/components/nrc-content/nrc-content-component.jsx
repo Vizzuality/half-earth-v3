@@ -7,6 +7,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 import {
   useOnboardingTooltipRefs,
@@ -165,7 +166,18 @@ function NrcContent({
         onboardingOverlay={onboardingOverlay}
       />
       {NRCSidebarView === 'main' && (
-        <>
+        <motion.div
+          className={styles.motionView}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+        >
           <header className={styles.header}>
             <div className={styles.flagWrapper}>
               <img
@@ -503,10 +515,21 @@ function NrcContent({
             isOpen={isShareModalOpen}
             setShareModalOpen={setShareModalOpen}
           />
-        </>
+        </motion.div>
       )}
       {NRCSidebarView === 'vertebrates' && (
-        <>
+        <motion.div
+          className={styles.motionView}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+        >
           <header className={styles.header}>
             <div className={styles.titleWrapper}>
               <button
@@ -524,7 +547,7 @@ function NrcContent({
             </div>
           </header>
           <SpeciesTable />
-        </>
+        </motion.div>
       )}
     </div>
   );
