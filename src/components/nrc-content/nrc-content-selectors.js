@@ -1,6 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { selectUiUrlState } from 'selectors/location-selectors';
+import {
+  selectLangUrlState,
+  selectUiUrlState,
+} from 'selectors/location-selectors';
 import {
   getCountryData,
   getDescription,
@@ -30,6 +33,7 @@ import {
   getChallengesRelatedFilterOptions,
   LAND_MARINE,
   LAND_MARINE_COUNTRY_ATTRIBUTES,
+  getIndicatorLabels,
 } from 'constants/country-mode-constants';
 import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
@@ -185,8 +189,60 @@ const getYAxisTicks = createSelector([getFilteredData], (plotData) => {
   return [0, 100];
 });
 
+const getChallengesFilterOptions = createSelector(
+  [getLandMarineSelected],
+  getChallengesRelatedFilterOptions
+);
+
+const getXAxisKeys = createSelector(
+  [selectCountryIso, getScatterplotRawData, selectLangUrlState],
+  // eslint-disable-next-line no-unused-vars
+  (countryIso, rawData, locale) => {
+    // locale is here to recompute indicatorLabels
+    const AllXAxisKeys = Object.keys(getIndicatorLabels());
+    if (!rawData) return AllXAxisKeys;
+    const countryData = rawData.find((country) => country.iso === countryIso);
+    return AllXAxisKeys.filter(
+      (key) =>
+        countryData.xAxisValues[key] || countryData.xAxisValues[key] === 0
+    );
+  }
+);
+
+const getChallengesDependantFilterOptions = createSelector(
+  [getXAxisKeys, getLandMarineSelected, getChallengesFilterOptions],
+  (keys, landMarineSelection, challengesFilterOptions) => {
+    if (!keys) return [];
+    const attributes = LAND_MARINE_COUNTRY_ATTRIBUTES[landMarineSelection];
+    const indicatorDependantOptions = [
+      `filter_${COUNTRY_ATTRIBUTES.Pop2020}`,
+      `filter_${attributes.hm_vh}`,
+      'filter_GNI_PPP',
+      `filter_${attributes.total_endemic}`,
+      `filter_${attributes.nspecies}`,
+    ];
+    return challengesFilterOptions.filter((option) => {
+      // GNI_PPP is not available for marine
+      if (
+        landMarineSelection === LAND_MARINE.marine &&
+        option.slug === 'filter_GNI_PPP'
+      )
+        return false;
+      if (!indicatorDependantOptions.includes(option.slug)) return true;
+      return keys.some((key) => option.slug.endsWith(key));
+    });
+  }
+);
+
+const getSelectedFilterOption = createSelector(
+  [getSelectedFilterSlug, getChallengesFilterOptions],
+  (selectedFilter, challengesFilterOptions) =>
+    challengesFilterOptions.find((option) => option.slug === selectedFilter)
+);
+
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
+  challengesFilterOptions: getChallengesDependantFilterOptions,
   countryData: getCountryData,
   countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
@@ -195,6 +251,7 @@ export default createStructuredSelector({
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   scatterPlotData: getFilteredData,
+  selectedFilterOption: getSelectedFilterOption,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
   waitingInteraction: getOnWaitingInteraction,
