@@ -7,6 +7,7 @@ import {
   getLandMarineSelected,
   getCountryChallengesSelectedFilter,
 } from 'selectors/nrc-selectors';
+import { getNRCSidebarView } from 'selectors/ui-selectors';
 
 import {
   countryChallengesChartFormats,
@@ -184,20 +185,15 @@ const getYAxisTicks = createSelector([getFilteredData], (plotData) => {
   return [0, 100];
 });
 
-const getHalfEarthModalOpen = createSelector(
-  getUiSettings,
-  (uiSettings) => uiSettings.openedModal
-);
-
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
   countryData: getCountryData,
   countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   landMarineSelection: getLandMarineSelected,
+  NRCSidebarView: getNRCSidebarView,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
-  openedModal: getHalfEarthModalOpen,
   scatterPlotData: getFilteredData,
   xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,

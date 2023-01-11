@@ -5,6 +5,7 @@ import {
   selectUiUrlState,
   selectLangUrlState,
 } from 'selectors/location-selectors';
+import { getNRCSidebarView } from 'selectors/ui-selectors';
 
 import {
   LAND_MARINE,
@@ -116,4 +117,5 @@ export default createStructuredSelector({
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
   selectedLandMarineOption: getSelectedLandMarineOption,
+  NRCSidebarView: getNRCSidebarView,
 });

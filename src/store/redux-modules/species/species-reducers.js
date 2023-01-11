@@ -1,5 +1,6 @@
-import * as actions from './species-actions';
 import { isEqual } from 'lodash';
+
+import * as actions from './species-actions';
 
 export const initialState = {
   data: null,

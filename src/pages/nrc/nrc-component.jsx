@@ -31,7 +31,6 @@ function NationalReportCard({
   countryISO,
   countryName,
   chartData,
-  // openedModal,
   hasMetadata,
   onboardingType,
   onboardingStep,
@@ -42,6 +41,7 @@ function NationalReportCard({
   countryId,
   handleLandMarineSelection,
   selectedLandMarineOption,
+  NRCSidebarView,
 }) {
   useOnboardingOpenSection({
     onboardingStep,
@@ -53,6 +53,7 @@ function NationalReportCard({
     countryISO,
     locationRoute: NATIONAL_REPORT_CARD,
   });
+
   const t = useT();
   const { marine } = chartData;
   const [fullRanking, setFullRanking] = useState(false);
@@ -122,22 +123,24 @@ function NationalReportCard({
             [uiStyles.onboardingMode]: !!onboardingType,
           })}
         >
-          <motion.div
-            className={cx(styles.fullRankingButtonContainer, {
-              [styles.fullRanking]: fullRanking,
-            })}
-            initial={{ left: -4 }}
-            animate={{ left: fullRanking ? -26 : -4 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Button
-              type="rectangular-primary"
-              Icon={ArrowExpandIcon}
-              className={styles.fullRankingButton}
-              handleClick={() => setFullRanking(!fullRanking)}
-              label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
-            />
-          </motion.div>
+          {NRCSidebarView === 'main' && (
+            <motion.div
+              className={cx(styles.fullRankingButtonContainer, {
+                [styles.fullRanking]: fullRanking,
+              })}
+              initial={{ left: -4 }}
+              animate={{ left: fullRanking ? -26 : -4 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Button
+                type="rectangular-primary"
+                Icon={ArrowExpandIcon}
+                className={styles.fullRankingButton}
+                handleClick={() => setFullRanking(!fullRanking)}
+                label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
+              />
+            </motion.div>
+          )}
           <NrcContent
             chartData={chartData}
             countryISO={countryISO}

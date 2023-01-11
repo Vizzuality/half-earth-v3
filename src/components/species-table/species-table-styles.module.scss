@@ -2,26 +2,22 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
-.speciesModal {
+.scrolleableArea {
+  box-sizing: content-box;
   height: 100%;
-  left: 0;
   overflow-y: scroll;
-  top: 0;
-  width: 100vw;
-  z-index: 11;
+  padding-right: 67px;
+  width: 93%;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
 
-  @media #{$tablet-portrait} {
-    background-color: $elephant;
-    height: 100vh;
-    overflow-y: unset;
-    position: absolute;
-  }
-
-  .grid {
-    @media #{$tablet-portrait} {
-      padding: 70px 5% 50px;
-      height: 100%;
-    }
+  .rowsContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
   }
 
   .title {
@@ -52,13 +48,33 @@
   .section {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   }
 
-  .summary {
+  .tabs {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end
+    .tab {
+      color: $white;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      &:hover {
+        border-bottom: 1px solid transparent;
+        color: $grey-text;
+      }
+      &:last-of-type {
+        margin-left: 10px;
+      }
+    }
+    .selectedTab {
+      color: $brand-color-main;
+      border-bottom: 1px solid $brand-color-main;
+      padding-bottom: 3px;
+      &:hover {
+        border-bottom: 1px solid transparent;
+        color: $brand-color-main;
+      }
+    }
   }
 
   .speciesTab {
@@ -75,24 +91,33 @@
     color: $white;
   }
 
+  .tableContainer {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+
   .tableHeaderContainer {
-    min-height: 60px;
-    padding: 15px 74px 15px 40px;
-    background-color: $firefly;
-    padding-top: 30px;
+    padding: 10px 74px 10px 10px;
+    background-color: $elephant;
     border-radius: 5px 5px 0 0;
     margin-bottom: 2px;
   }
 
   .tableHeader {
     display: flex;
+    button {
+      padding: 0 25px 0 28px;
+      &:first-child {
+        padding: 0 25px 0 0;
+      }
+    }
   }
 
 
   .tableRowContainer {
     display: flex;
     position: relative;
-    min-height: 50px;
     width: 100%;
     border: 1px solid $firefly;
   }
@@ -101,7 +126,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: $elephant;
+    background-color: transparent;
 
     > button {
       padding: 0;
@@ -125,15 +150,17 @@
 
   .mainInfo {
     display: flex;
-    padding: 0 40px;
+    padding: 8px 40px;
     align-items: center;
-    min-height: 50px;
 
     @extend %bodyText;
     color: $_temporary-dark-text;
 
     &.isOpened, &:hover {
       background-color: $firefly;
+    }
+    &:first-of-type {
+      padding: 8px 40px 8px 10px;
     }
   }
 
@@ -154,6 +181,7 @@
     text-align: left;
     color: $white;
     padding: 0 25px 0 0;
+    font-size: 14px;
 
     &.bold {
       font-family: $font-family-1;
@@ -188,10 +216,12 @@
   }
 
   .searchIcon {
-    fill: $accent-grey;
+    fill: $white;
+    height: 15px;
+    width: 15px;
 
     g {
-      stroke: $_temporary-dark-text;
+      stroke: $white;
     }
   }
 

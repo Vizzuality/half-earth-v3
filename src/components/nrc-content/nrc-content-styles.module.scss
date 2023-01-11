@@ -20,6 +20,10 @@
     background: transparent;
   }
 
+  .motionView {
+    height: 100vh;
+  }
+
   .closeButton {
     top: $local-sidebar-top-margin;
     right: -16px;
@@ -29,10 +33,35 @@
   .header {
     padding-top: $local-sidebar-top-margin;
     padding-left: 40px;
+    padding-bottom: 12px;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    border-bottom: 1px solid $navy-he;
+    border-bottom: 1px solid $white-opacity;
+
+    .titleWrapper {
+      display: flex;
+
+      .title {
+        @extend %display2;
+        margin: 0;
+        padding-left: 10px;
+        color: $white;
+      }
+
+      .backBtn {
+        padding: 0;
+        margin-left: -10px;
+        .arrowIcon {
+          fill: $white;
+          height: 36px;
+          width: 34px;
+          &:hover {
+            fill: $grey-text;
+          }
+        }
+      }
+    }
   }
 
   .countryDescriptionContainer {

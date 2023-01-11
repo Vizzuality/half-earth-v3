@@ -5,7 +5,7 @@
 .headerItem {
   @extend %subtitle;
   display: flex;
-  align-items: center;
+  align-items: end;
   flex: 1 1 0;
   color: $white;
   text-align: left;
@@ -25,7 +25,7 @@
   .arrowUp {
     @include caret($_temporary-light-text, 'up');
     position: absolute;
-    top: 5px;
+    top: -6.5px;
     &.highlightedSort::after {
       border-top-color: $white;
     }
@@ -34,7 +34,7 @@
   .arrowDown {
     @include caret($_temporary-light-text, 'down');
     position: absolute;
-    bottom: 0;
+    bottom: 11px;
     &.highlightedSort::after {
       border-bottom-color: $white;
     }

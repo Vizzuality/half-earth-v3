@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
+import uiActions from 'redux_modules/ui';
 
 import {
   NATIONAL_REPORT_CARD,
@@ -11,15 +12,12 @@ import {
 
 import { useLocale } from '@transifex/react';
 
-import {
-  downloadNrcPdfAnalytics,
-  openSpeciesListAnalytics,
-} from 'actions/google-analytics-actions';
+import { downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 import { getCountryNames } from 'constants/translation-constants';
-import { MODALS, LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import Component from './nrc-content-component';
 import mapStateToProps from './nrc-content-selectors';
@@ -28,6 +26,7 @@ const actions = {
   ...urlActions,
   ...countryDataActions,
   ...metadataActions,
+  ...uiActions,
   downloadNrcPdfAnalytics,
 };
 
@@ -38,19 +37,12 @@ function NrcContainer(props) {
     countryName,
     countryId,
     changeUI,
-    openedModal,
+    setNRCSidebarView,
   } = props;
 
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
   const localizedCountryName = countryNames[countryName] || countryName;
-
-  const toggleModal = () => {
-    changeUI({ openedModal: !openedModal ? MODALS.SPECIES : null });
-    if (!openedModal) {
-      openSpeciesListAnalytics();
-    }
-  };
 
   const handleClose = () => {
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
@@ -106,8 +98,8 @@ function NrcContainer(props) {
       handleBubbleClick={handleBubbleClick}
       handlePrintReport={handlePrintReport}
       goToAnalyzeAreas={goToAnalyzeAreas}
-      toggleModal={toggleModal}
       countryName={localizedCountryName}
+      setNRCSidebarView={setNRCSidebarView}
     />
   );
 }

@@ -12,14 +12,14 @@ import { SORT } from 'components/header-item';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 
-import Component from './species-modal-component';
-import { getVertebrateTabs } from './species-modal-constants';
+import Component from './species-table-component';
+import { getVertebrateTabs } from './species-table-constants';
 import {
   getSearchTerm,
   getSpeciesModalSort,
   getSortedSpeciesList,
   getCountryData,
-} from './species-modal-selectors';
+} from './species-table-selectors';
 
 const actions = { ...urlActions };
 
