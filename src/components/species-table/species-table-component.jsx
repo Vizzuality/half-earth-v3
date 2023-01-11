@@ -133,7 +133,7 @@ function SpeciesTable({
           <input
             type="text"
             className={styles.searchInput}
-            placeholder={t('Search in table')}
+            placeholder={t('Search group or species')}
             onChange={handleSearchChange}
             value={searchTerm || ''}
           />
@@ -173,7 +173,7 @@ function SpeciesTable({
           </button>
         </div>
       </section>
-      <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+      <div className={styles.tableContainer}>
         <div className={styles.tableHeaderContainer}>
           <div className={styles.tableHeader}>
             {headers.map((title) => (
@@ -204,13 +204,7 @@ function SpeciesTable({
           </div>
         ) : (
           <Virtuoso
-            style={{
-              width: '100%',
-              height: '100%',
-              overflowY: 'scroll',
-              paddingRight: '17px',
-              boxSizing: 'content-box',
-            }}
+            className={styles.rowsContainer}
             totalCount={speciesList.length}
             item={renderRow}
           />

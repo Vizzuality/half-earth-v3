@@ -12,6 +12,14 @@
   margin-left: 40px;
   margin-right: 40px;
 
+  .rowsContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
+  }
+
   .title {
     margin: 0;
     font-family: $font-family-serif;
@@ -81,11 +89,15 @@
     color: $white;
   }
 
+  .tableContainer {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+
   .tableHeaderContainer {
-    min-height: 60px;
-    padding: 15px 74px 15px 40px;
+    padding: 10px 74px 10px 40px;
     background-color: $firefly;
-    padding-top: 30px;
     border-radius: 5px 5px 0 0;
     margin-bottom: 2px;
   }
@@ -114,6 +126,15 @@
     }
   }
 
+  // .arrowUp {
+  //   top: -5px;
+  // }
+  // .arrowDown {
+  //   bottom: 10px;
+  // }
+  // .headerItem {
+  //   align-items: end;
+  // }
   .arrowIcon {
     fill: $white;
     transform: rotate(90deg);
@@ -160,6 +181,7 @@
     text-align: left;
     color: $white;
     padding: 0 25px 0 0;
+    font-size: 12px;
 
     &.bold {
       font-family: $font-family-1;
