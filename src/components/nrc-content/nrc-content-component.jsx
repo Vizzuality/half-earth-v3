@@ -452,11 +452,12 @@ function NrcContent({
                         landMarineSelection={land ? 'Land' : 'Marine'}
                       />
                     </p>
-                    <div>
+                    <div className={styles.dropdownContainer}>
                       {indicatorOptions && (
                         <Dropdown
+                          theme="secondary-dark"
                           width="full"
-                          parentWidth="330px"
+                          parentWidth="230px"
                           options={indicatorOptions}
                           selectedOption={selectedIndicatorOption}
                           handleOptionSelection={handleSelectIndicator}
@@ -464,10 +465,11 @@ function NrcContent({
                       )}
                     </div>
                     <p className={styles.chartTitle}>{t('of countries')}</p>
-                    <div>
+                    <div className={styles.dropdownContainer}>
                       <Dropdown
+                        theme="secondary-dark"
                         width="full"
-                        parentWidth="330px"
+                        parentWidth="230px"
                         options={challengesFilterOptions}
                         selectedOption={selectedFilterOption}
                         handleOptionSelection={handleFilterSelection}

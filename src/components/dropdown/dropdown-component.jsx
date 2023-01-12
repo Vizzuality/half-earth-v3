@@ -88,6 +88,7 @@ function Component({
         [styles.open]: dropdownOpen,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
+        [styles.secondaryDark]: theme === 'secondary-dark',
         [styles.disabled]: disabled,
         [className]: !!className,
       })}
@@ -184,7 +185,7 @@ Component.propTypes = {
   onSearch: PropTypes.func,
   width: PropTypes.oneOf(['fluid', 'full']),
   parentWidth: PropTypes.string,
-  theme: PropTypes.oneOf(['light', 'dark']),
+  theme: PropTypes.oneOf(['light', 'dark', 'secondary-dark']),
   searchMode: PropTypes.bool,
 };
 
