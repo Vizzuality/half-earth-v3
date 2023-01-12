@@ -531,23 +531,38 @@ function NrcContent({
                     onBubbleClick={handleBubbleClick}
                     countryChallengesSelectedKey={countryChallengesSelectedKey}
                   />
-                  <div className={styles.xAxisContainer}>
-                    <div className={styles.xAxisLabelContainer}>
-                      <button
-                        type="button"
-                        onClick={handleSelectPreviousIndicator}
-                        style={{ transform: 'scaleX(-1)' }}
-                      >
-                        <ArrowButton className={styles.arrowButton} />
-                      </button>
-                      <span className={styles.xAxisIndicator}>
-                        {indicatorLabels[countryChallengesSelectedKey]}
-                      </span>
-                      <button type="button" onClick={handleSelectNextIndicator}>
-                        <ArrowButton className={styles.arrowButton} />
-                      </button>
+                  {fullRanking && (
+                    <div className={styles.xAxisContainer}>
+                      <div className={styles.xAxisLabelContainer}>
+                        <span className={styles.xAxisIndicator}>
+                          {indicatorLabels[countryChallengesSelectedKey]}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  )}
+                  {!fullRanking && (
+                    <div className={styles.xAxisContainer}>
+                      <div className={styles.xAxisLabelContainer}>
+                        <button
+                          type="button"
+                          onClick={handleSelectPreviousIndicator}
+                          style={{ transform: 'scaleX(-1)' }}
+                        >
+                          <ArrowButton className={styles.arrowButton} />
+                        </button>
+                        <span className={styles.xAxisIndicator}>
+                          {indicatorLabels[countryChallengesSelectedKey]}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={handleSelectNextIndicator}
+                        >
+                          <ArrowButton className={styles.arrowButton} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <div className={styles.yAxisContainer}>
                     <span className={styles.yAxisIndicator}>
                       <T

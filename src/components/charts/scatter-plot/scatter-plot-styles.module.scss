@@ -67,6 +67,7 @@ $chart-margin: 14px;
 
 .tick,
 .tickValue {
+  @extend %annotation;
   color: $alto;
 }
 

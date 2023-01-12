@@ -287,12 +287,15 @@
       }
     }
 
-
     .scatterPlotContainer {
       flex-direction: column;
 
       .scatterPlotChartWrapper {
         width: 100%;
+
+          .xAxisLabelContainer {
+            padding-left: calc(50% - 165px);
+          }
 
         .yAxisContainer {
           bottom: 300px;
@@ -316,8 +319,6 @@
         }
       }
     }
-
-
   }
 
   .actionButtons {
