@@ -215,12 +215,18 @@
   $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
   :export {
-    gold: $gold;
+    conifer: $conifer;
     dark-text: $dark-text;
+    gold: $gold;
+    french-rose: $french-rose;
+    medium-purple: $medium-purple;
+    picton-blue: $picton-blue;
     protected-areas: $protected-areas;
     protection-needed:  $protection-needed;
     high-modification: $high-modification;
+    shamrock: $shamrock;
     some-modification: $some-modification;
+    tango: $tango;
     white: $white;
     white-opacity: $white-opacity;
   }
