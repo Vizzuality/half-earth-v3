@@ -97,6 +97,26 @@ function NrcContainer(props) {
     changeUI({ countryChallengesSelectedFilter: selectedFilter.slug });
   };
 
+  const handleSelectNextIndicator = () => {
+    const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
+    if (currentIndex !== xAxisKeys.length - 1) {
+      changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
+    } else {
+      changeUI({ countryChallengesSelectedKey: xAxisKeys[0] });
+    }
+  };
+
+  const handleSelectPreviousIndicator = () => {
+    const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
+    if (currentIndex > 0) {
+      changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex - 1] });
+    } else {
+      changeUI({
+        countryChallengesSelectedKey: xAxisKeys[xAxisKeys.length - 1],
+      });
+    }
+  };
+
   const handleSelectIndicator = () => {
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
@@ -112,6 +132,8 @@ function NrcContainer(props) {
       handleFilterSelection={handleFilterSelection}
       handlePrintReport={handlePrintReport}
       handleSelectIndicator={handleSelectIndicator}
+      handleSelectNextIndicator={handleSelectNextIndicator}
+      handleSelectPreviousIndicator={handleSelectPreviousIndicator}
       setNRCSidebarView={setNRCSidebarView}
     />
   );

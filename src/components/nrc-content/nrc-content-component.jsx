@@ -27,6 +27,7 @@ import SpeciesTable from 'components/species-table';
 import COLORS from 'styles/settings';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
+import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
@@ -57,7 +58,10 @@ function NrcContent({
   handleClose,
   handleFilterSelection,
   handleSelectIndicator,
+  handleSelectPreviousIndicator,
+  handleSelectNextIndicator,
   handlePrintReport,
+  indicatorLabels,
   indicatorOptions,
   landMarineSelection,
   NRCSidebarView,
@@ -509,6 +513,23 @@ function NrcContent({
                     onBubbleClick={handleBubbleClick}
                     countryChallengesSelectedKey={countryChallengesSelectedKey}
                   />
+                  <div className={styles.xAxisContainer}>
+                    <div className={styles.xAxisLabelContainer}>
+                      <button
+                        type="button"
+                        onClick={handleSelectPreviousIndicator}
+                        style={{ transform: 'scaleX(-1)' }}
+                      >
+                        <ArrowButton className={styles.arrowButton} />
+                      </button>
+                      <span className={styles.xAxisIndicator}>
+                        {indicatorLabels[countryChallengesSelectedKey]}
+                      </span>
+                      <button type="button" onClick={handleSelectNextIndicator}>
+                        <ArrowButton className={styles.arrowButton} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div className={styles.scatterPlotLegendWrapper}>
                   <h5 className={styles.legendTitle}>{t('Continent')}</h5>
@@ -520,7 +541,9 @@ function NrcContent({
                           background: c.color,
                         }}
                       />
-                      <p className={styles.legendItemLabel}>{c.label}</p>
+                      <p className={styles.legendItemLabel}>
+                        <T _str="{country}" country={c.label} />
+                      </p>
                     </div>
                   ))}
                   <h5 className={styles.legendTitle}>
