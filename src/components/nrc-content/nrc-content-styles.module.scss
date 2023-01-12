@@ -175,8 +175,31 @@
       justify-content: space-between;
 
       .scatterPlotChartWrapper {
-        width: 75%;
+        width: 80%;
 
+        .xAxisContainer{
+          width: 100%;
+
+          .xAxisLabelContainer {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            left: calc(50% - 165px);
+            position: relative;
+            width: 330px;
+
+            .arrowButton {
+              fill: white;
+            }
+
+            .xAxisIndicator,
+            .yAxisIndicator {
+              @extend %bodyText;
+              color: $alto;
+            }
+
+          }
+        }
       }
 
       .scatterPlotLegendWrapper {

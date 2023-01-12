@@ -267,6 +267,7 @@ export default createStructuredSelector({
   countryData: getCountryData,
   countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
+  indicatorLabels: getIndicatorLabels,
   indicatorOptions: getIndicatorOptions,
   landMarineSelection: getLandMarineSelected,
   NRCSidebarView: getNRCSidebarView,
