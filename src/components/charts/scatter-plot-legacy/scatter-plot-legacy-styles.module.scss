@@ -32,7 +32,7 @@ $chart-margin: 14px;
 
 .bubbleText {
   @extend %title;
-  color: $white;
+  color: $challenges-view-background;
 }
 .bubbleValue {
   @extend %title;

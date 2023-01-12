@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
-import styles from './scatter-plot-styles.module.scss';
+import styles from './scatter-plot-legacy-styles.module.scss';
 
 function TickLines({
   tickLine,
@@ -182,7 +182,7 @@ function ScatterPlot({
                       exit={{ cx: 0 }}
                       cy={chartScale.yScale(bubble.yAxisValue)}
                       r={bubble.size}
-                      fill="#FFFFFF"
+                      fill={bubble.color}
                     />
                   )}
                   <motion.circle
@@ -197,8 +197,8 @@ function ScatterPlot({
                     cy={chartScale.yScale(bubble.yAxisValue)}
                     r={bubble.size}
                     fill={bubble.color}
-                    strokeWidth="1"
-                    stroke="#FFFFFF"
+                    strokeWidth="2"
+                    stroke="#040E14"
                   />
                 </AnimatePresence>
                 <foreignObject
