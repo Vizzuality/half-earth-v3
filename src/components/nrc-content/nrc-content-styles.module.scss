@@ -162,13 +162,56 @@
 
   }
 
-  .scatterPlotContainer {
+  .challenguesContainer {
     background: $dark;
     border: 1px solid $elephant;
     border-radius: 6px;
     margin: 8px 40px 8px 20px;
     position: relative;
     width: auto;
+
+    .scatterPlotContainer {
+      display: flex;
+      justify-content: space-between;
+
+      .scatterPlotChartWrapper {
+        width: 75%;
+
+      }
+
+      .scatterPlotLegendWrapper {
+        @extend %annotation;
+        margin: 24px;
+        align-self: flex-end;
+        .legendTitle {
+          color: $grey-text;
+          font-weight: 300;
+          font-size: 13px;
+        }
+
+        .legendItem {
+          align-items: center;
+          color: $white;
+          display: flex;
+          margin: 0;
+
+          .legendItemColor {
+            border-radius: 50%;
+            height: 8px;
+            margin-right: 7px;
+            width: 8px;
+          }
+
+          .legendItemLabel {
+            margin: 0;
+          }
+        }
+
+        .countryAreaImage {
+
+        }
+      }
+    }
 
     .dropdownContainer {
       margin-right: 13px;

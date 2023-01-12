@@ -37,6 +37,9 @@ import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
+import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
+
+import { COUNTRIES } from './nrc-content-constants';
 import styles from './nrc-content-styles.module.scss';
 import { getBarStyles } from './nrc-content-utils';
 
@@ -451,7 +454,7 @@ function NrcContent({
                 />
               )}
             </div>
-            <div className={styles.scatterPlotContainer}>
+            <div className={styles.challenguesContainer}>
               <div className={styles.chartHeader}>
                 {countryName && (
                   <div className={styles.chartTitleContainer}>
@@ -505,14 +508,36 @@ function NrcContent({
                   </Tooltip>
                 </span>
               </div>
-              <ScatterPlot
-                data={scatterPlotData}
-                countryISO={countryISO}
-                xAxisTicks={xAxisTicks}
-                yAxisTicks={yAxisTicks}
-                onBubbleClick={handleBubbleClick}
-                countryChallengesSelectedKey={countryChallengesSelectedKey}
-              />
+              <div className={styles.scatterPlotContainer}>
+                <div className={styles.scatterPlotChartWrapper}>
+                  <ScatterPlot
+                    data={scatterPlotData}
+                    countryISO={countryISO}
+                    xAxisTicks={xAxisTicks}
+                    yAxisTicks={yAxisTicks}
+                    onBubbleClick={handleBubbleClick}
+                    countryChallengesSelectedKey={countryChallengesSelectedKey}
+                  />
+                </div>
+                <div className={styles.scatterPlotLegendWrapper}>
+                  <h5 className={styles.legendTitle}>{t('Continent')}</h5>
+                  {COUNTRIES.map((c) => (
+                    <div key={c.color} className={styles.legendItem}>
+                      <div
+                        className={styles.legendItemColor}
+                        style={{
+                          background: c.color,
+                        }}
+                      />
+                      <p className={styles.legendItemLabel}>{c.label}</p>
+                    </div>
+                  ))}
+                  <h5 className={styles.legendTitle}>
+                    <T _str="Country area in km{sup}" sup={<sup>2</sup>} />
+                  </h5>
+                  <CountryAreaImage className={styles.countryAreaImage} />
+                </div>
+              </div>
             </div>
             <p className={styles.sourceText}>
               <T
