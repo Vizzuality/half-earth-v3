@@ -8,6 +8,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown/with-html';
 
 import {
   useOnboardingTooltipRefs,
@@ -47,6 +48,7 @@ import { getBarStyles } from './nrc-content-utils';
 function NrcContent({
   areaChartData,
   challengesFilterOptions,
+  challengesInfo,
   changeUI,
   countryChallengesSelectedKey,
   countryData,
@@ -109,6 +111,8 @@ function NrcContent({
 
   const { land: landData, marine: marineData } = areaChartData;
 
+  const { description: challengesTooltipInfo, source: challengesSources } =
+    challengesInfo;
   const land = landMarineSelection === 'land';
   const SPI = land ? SPI_ter : SPI_mar;
   const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
@@ -460,8 +464,8 @@ function NrcContent({
             </div>
             <div
               className={cx({
-                [styles.challenguesContainer]: true,
-                [styles.challenguesContainerShrunken]: fullRanking,
+                [styles.challengesContainer]: true,
+                [styles.challengesContainerShrunken]: fullRanking,
               })}
             >
               <div className={styles.chartHeader}>
@@ -509,9 +513,10 @@ function NrcContent({
                   <Tooltip
                     content={
                       <div className={styles.titleTooltip}>
-                        {t(
-                          'The scatter plots illustrate some of the differences among countries, and the social challenges that must be considered to ensure equitable global biodiversity conservation.'
-                        )}
+                        <T
+                          _str="{challengesTooltipInfo}"
+                          challengesTooltipInfo={challengesTooltipInfo}
+                        />
                       </div>
                     }
                     delay={100}
@@ -600,41 +605,14 @@ function NrcContent({
                 </div>
               </div>
             </div>
-            <p className={styles.sourceText}>
-              <T
-                _str="Source:  {link1}, {link2}, {link3}, {link4}, {link5} and {link6}"
-                link1={
-                  <a href="/">
-                    <T _str="Gross National Income" />
-                  </a>
-                }
-                link2={
-                  <a href="/">
-                    <T _str="Population" />
-                  </a>
-                }
-                link3={
-                  <a href="/">
-                    <T _str="proportion of very high human modification" />
-                  </a>
-                }
-                link4={
-                  <a href="/">
-                    <T _str="number of endemic vertebrates" />
-                  </a>
-                }
-                link5={
-                  <a href="/">
-                    <T _str="total number of vertebrate species" />
-                  </a>
-                }
-                link6={
-                  <a href="/">
-                    <T _str="SPI" />
-                  </a>
-                }
+            <div className={styles.sourceText}>
+              <p>{t('Source: ')}</p>
+              <ReactMarkdown
+                key={challengesSources}
+                source={challengesSources}
+                escapeHtml={false}
               />
-            </p>
+            </div>
 
             <div className={styles.footer}>
               <p className={styles.footerText}>

@@ -167,7 +167,7 @@
 
   }
 
-  .challenguesContainer {
+  .challengesContainer {
     background: $dark;
     border: 1px solid $elephant;
     border-radius: 6px;
@@ -261,7 +261,7 @@
     }
   }
 
-  .challenguesContainerShrunken {
+  .challengesContainerShrunken {
 
     .chartHeader {
       position: relative;
@@ -333,6 +333,7 @@
   .sourceText {
     @extend %annotation;
     color: $grey-text;
+    display: flex;
     margin: 0 40px 0 20px;
     border-bottom: 1px solid $grey-text;
     padding: 12px 0;
@@ -349,7 +350,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    margin: 10px 40px 10px 20px;
+    margin: 10px 40px 20px 20px;
     .footerText {
       @extend %annotation;
       color: $white;

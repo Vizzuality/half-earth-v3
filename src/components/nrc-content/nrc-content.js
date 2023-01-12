@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
@@ -15,7 +15,10 @@ import { useLocale } from '@transifex/react';
 import { downloadNrcPdfAnalytics } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
+import ContentfulService from 'services/contentful';
+
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
+import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
 import { getCountryNames } from 'constants/translation-constants';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
@@ -45,6 +48,16 @@ function NrcContainer(props) {
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
   const localizedCountryName = countryNames[countryName] || countryName;
+  const [challengesInfo, setChallengesInfo] = useState('');
+
+  useEffect(() => {
+    ContentfulService.getMetadata(
+      metadataConfig[CHALLENGES_CHART],
+      locale
+    ).then((data) => {
+      setChallengesInfo(data);
+    });
+  }, []);
 
   const handleClose = () => {
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
@@ -125,6 +138,7 @@ function NrcContainer(props) {
   return (
     <Component
       {...props}
+      challengesInfo={challengesInfo}
       countryName={localizedCountryName}
       goToAnalyzeAreas={goToAnalyzeAreas}
       handleClose={handleClose}
