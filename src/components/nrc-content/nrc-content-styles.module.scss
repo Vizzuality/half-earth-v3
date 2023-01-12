@@ -176,6 +176,7 @@
 
       .scatterPlotChartWrapper {
         width: 80%;
+        margin-left: 10px;
 
         .xAxisContainer{
           width: 100%;
@@ -200,6 +201,18 @@
 
           }
         }
+
+        .yAxisContainer {
+          @extend %bodyText;
+          color: $alto;
+          width: 330px;
+          transform-origin: left;
+          transform: rotate(-90deg);
+          position: relative;
+          bottom: 50%;
+          left: 15px;
+        }
+
       }
 
       .scatterPlotLegendWrapper {

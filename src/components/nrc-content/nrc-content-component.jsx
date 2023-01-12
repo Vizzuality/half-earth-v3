@@ -530,6 +530,14 @@ function NrcContent({
                       </button>
                     </div>
                   </div>
+                  <div className={styles.yAxisContainer}>
+                    <span className={styles.yAxisIndicator}>
+                      <T
+                        _str="{landMarineSelection} SPI"
+                        landMarineSelection={land ? 'Land' : 'Marine'}
+                      />
+                    </span>
+                  </div>
                 </div>
                 <div className={styles.scatterPlotLegendWrapper}>
                   <h5 className={styles.legendTitle}>{t('Continent')}</h5>
