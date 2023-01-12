@@ -352,9 +352,9 @@ function NrcContent({
                   style={{
                     backgroundImage: getBarStyles(
                       COLORS['high-modification'],
-                      65,
+                      hm_vh,
                       COLORS['some-modification'],
-                      70
+                      hm
                     ),
                   }}
                 />
