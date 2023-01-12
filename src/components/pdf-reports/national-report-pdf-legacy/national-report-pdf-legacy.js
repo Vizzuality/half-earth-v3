@@ -9,7 +9,6 @@ import mapStateToProps from 'containers/sidebars/national-report-sidebar/nationa
 import Component from './national-report-pdf-component';
 
 const NationalReportPdfContainer = (props) => {
-  let watchHandle;
   const { view, countryISO } = props;
   const watchUtils = useWatchUtils();
   const [sceneScreenshotUrl, setSceneScreenshotUrl] = useState();
@@ -29,16 +28,17 @@ const NationalReportPdfContainer = (props) => {
   };
 
   useEffect(() => {
-    watchHandle =
-      watchUtils &&
+    const abortController = new AbortController();
+    if (watchUtils) {
       watchUtils
-        .whenOnce(() => !view.updating)
+        .whenOnce(() => !view.updating, abortController.signal)
         .then(() => {
           getSceneImageUrl();
         });
+    }
     return function cleanUp() {
-      if (watchHandle) {
-        watchHandle.remove();
+      if (watchUtils) {
+        abortController.abort();
       }
     };
   }, [watchUtils, countryISO]);

@@ -11,7 +11,6 @@ import Component from './national-report-pdf-component';
 const PRODUCTION_DOMAIN = 'map.half-earthproject.org';
 
 const NationalReportPdfContainer = (props) => {
-  let watchHandle;
   const { view, countryISO } = props;
   const watchUtils = useWatchUtils();
   const [sceneScreenshotUrl, setSceneScreenshotUrl] = useState();
@@ -31,18 +30,17 @@ const NationalReportPdfContainer = (props) => {
   };
 
   useEffect(() => {
-    if (view) {
-      watchHandle =
-        watchUtils &&
-        watchUtils
-          .whenOnce(() => !view.updating)
-          .then(() => {
-            getSceneImageUrl();
-          });
+    const abortController = new AbortController();
+    if (view && watchUtils) {
+      watchUtils
+        .whenOnce(() => !view.updating, abortController.signal)
+        .then(() => {
+          getSceneImageUrl();
+        });
     }
     return function cleanUp() {
-      if (watchHandle) {
-        watchHandle.remove();
+      if (watchUtils) {
+        abortController.abort();
       }
     };
   }, [watchUtils, countryISO, view]);
