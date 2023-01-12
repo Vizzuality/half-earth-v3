@@ -157,6 +157,7 @@
       @extend %bodyText;
       color: $white;
       margin: 0 10px 0 0;
+      white-space: nowrap;
     }
 
   }
@@ -168,6 +169,11 @@
     margin: 8px 40px 8px 20px;
     position: relative;
     width: auto;
+
+    .dropdownContainer {
+      margin-right: 13px;
+      width: 100%;
+    }
   }
 
   .actionButtons {

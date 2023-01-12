@@ -106,7 +106,7 @@
   background-color: $white;
   list-style: none;
   padding: $sidebar-paddings 0;
-  margin-top: 6px;
+  margin-top: 4px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   border: 1px solid $dark-opacity;
@@ -154,6 +154,55 @@
   }
 
   .selectedOption {
+    text-transform: unset;
+  }
+
+  .arrowIcon {
+    height: 12px;
+    width: 16px;
+
+    path {
+      fill: $white;
+      stroke: $white;
+    }
+  }
+}
+
+.secondary-darkOptionsList {
+  border-radius: 6px;
+  text-transform: unset;
+  padding: 2px;
+  .option {
+    padding: 5px 6px;
+    color: $dark-text;
+    font-size: 14px;
+  }
+}
+
+.secondary-darkOptionsList::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+
+.secondaryDark {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid $white;
+  padding: 7px 0 13px 0;
+  height: 36px;
+  &:hover,
+  &.open {
+    background-color: transparent;
+  }
+
+  .selectedOptionLabel {
+    color: $white;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-transform: unset;
   }
 
