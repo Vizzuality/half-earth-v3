@@ -7,6 +7,12 @@
   width: 100vw;
 }
 
+@media print {
+  .background {
+    display: none;
+  }
+}
+
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
   position: absolute;

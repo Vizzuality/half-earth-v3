@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { MobileOnly } from 'constants/responsive';
 
+import styles from './app-styles.module.scss';
 import MobileDisclaimer from './components/mobile-disclaimer-modal';
 
 // Dynamic imports
@@ -74,7 +75,7 @@ function App(props) {
   return (
     <QueryClientProvider client={queryClient}>
       <div
-        className="App"
+        className={styles.app}
         style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
       >
         <MobileOnly>

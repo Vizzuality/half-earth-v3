@@ -13,16 +13,25 @@ $gap: 20pt;
   @extend %display2;
 }
 
-.speciesCount,
-.speciesSentence,
-.datasetExplanation {
+.speciesCount {
+  @extend %bodyText;
+  font-size: 14pt;
+}
+
+.subtitle {
   @extend %bodyText;
 }
 
-.speciesTitle {
+.sources, .urlWrapper {
+  @extend %bodyText;
+  color: rgba($navy-he, 0.5);
+}
+
+.sectionTitle {
   @extend %title;
   font-size: 12pt;
   letter-spacing: 0.1em;
+  margin-bottom: 8pt;
 }
 
 .spiAverageText {
@@ -31,7 +40,6 @@ $gap: 20pt;
 }
 
 @media print {
-
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -39,8 +47,8 @@ $gap: 20pt;
 
   @page {
     size: A4 landscape;
-    margin: 15pt;
-    margin-bottom: 0pt;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   a {
@@ -56,14 +64,11 @@ $gap: 20pt;
     page-break-inside: avoid;
   }
 
-  $page-padding: 15pt;
-
   .container {
-    overflow: auto;
+    margin: 30pt 15pt 0 15pt;
     position: absolute;
     top: 0;
     opacity: 1;
-    padding: $page-padding;
     width: 842pt;
     height: 595pt;
     background-color: $white;
@@ -71,12 +76,12 @@ $gap: 20pt;
     column-gap: 8pt;
     row-gap: $gap;
     grid-template-columns: repeat(8, 94.5pt);
-    grid-template-rows: 42pt 190pt 220pt 73pt 168pt;
+    grid-template-rows: 42pt 190pt 270pt 20pt;
     grid-template-areas:
     "hd hd hd hd hd hd hd logo"
     "ind ind ind ind ind ind ind ind"
-    "species species . . . . . ."
-    "sources sources . . . . url url";
+    "species species chart chart chart chart chart chart"
+    "sources sources . . . url url url";
 
     .title {
       grid-area: hd;
@@ -142,22 +147,21 @@ $gap: 20pt;
     .speciesComposition {
       grid-area: species;
       background-color: $white-opacity-pdf;
-
-      padding: 26pt 17pt;
+      padding: 16pt;
       border-radius: 8pt;
-
-      .speciesTitle {
-        margin-bottom: 8pt;
-      }
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .endemic {
       font-weight: $font-weight-bold;
+      margin-bottom: 5pt;
     }
 
     .speciesIcon {
       vertical-align: middle;
-      margin-right: 5pt;
+      margin: 5pt 5pt 0 0;
 
       svg {
         width: 26pt;
@@ -165,8 +169,24 @@ $gap: 20pt;
       }
     }
 
+    .areaChartContainer {
+      grid-area: chart;
+      background-color: $white-opacity-pdf;
+      padding: 16pt;
+      border-radius: 8pt;
+    }
+
+    .sources {
+      grid-area: sources;
+    }
+
     .urlWrapper {
       grid-area: url;
+      justify-self: flex-end;
+
+      .urlText {
+        color: $brand-color-main;
+      }
     }
 
   }

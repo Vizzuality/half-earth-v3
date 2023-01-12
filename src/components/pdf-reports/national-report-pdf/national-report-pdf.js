@@ -8,6 +8,8 @@ import mapStateToProps from 'containers/sidebars/national-report-sidebar/nationa
 
 import Component from './national-report-pdf-component';
 
+const PRODUCTION_DOMAIN = 'map.half-earthproject.org';
+
 const NationalReportPdfContainer = (props) => {
   let watchHandle;
   const { view, countryISO } = props;
@@ -16,7 +18,7 @@ const NationalReportPdfContainer = (props) => {
   const [nrcUrl, setNrcUrl] = useState();
 
   useEffect(() => {
-    setNrcUrl(`${window.location.origin}${window.location.pathname}`);
+    setNrcUrl(`${PRODUCTION_DOMAIN}${window.location.pathname}`);
   }, [countryISO]);
 
   const getSceneImageUrl = () => {

@@ -1,0 +1,13 @@
+@import 'styles/settings';
+
+@media print {
+  .app {
+    display: none;
+  }
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  background-color: $app-background;
+}

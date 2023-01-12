@@ -18,8 +18,9 @@ import Button from 'components/button';
 import AreaChart from 'components/charts/area-chart';
 import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
-import AreaChartToooltip from 'components/nrc-content/area-chart-tooltip';
+import AreaChartTooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
+import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
 
@@ -60,6 +61,7 @@ function NrcContent({
   fullRanking,
   setNRCSidebarView,
   NRCSidebarView,
+  selectedLandMarineOption,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -156,6 +158,11 @@ function NrcContent({
         [styles.nrcContentShrunken]: fullRanking,
       })}
     >
+      <PdfNationalReport
+        countryISO={countryISO}
+        areaChartData={areaChartData}
+        selectedLandMarineOption={selectedLandMarineOption}
+      />
       <CloseButton
         reference={(ref) => {
           tooltipRefs.current.closure = ref;
@@ -430,7 +437,7 @@ function NrcContent({
                   height={240}
                   width="98%"
                   tooltip
-                  tooltipContent={<AreaChartToooltip />}
+                  tooltipContent={<AreaChartTooltip />}
                 />
               )}
             </div>

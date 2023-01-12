@@ -5,10 +5,12 @@ import { T, useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
+import AreaChart from 'components/charts/area-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import { getBarStyles } from 'components/nrc-content/nrc-content-utils';
 
+import { LAND_MARINE } from 'constants/country-mode-constants';
 import { getCountryNames } from 'constants/translation-constants';
 
 import COLORS from 'styles/settings';
@@ -33,17 +35,14 @@ function NationalReportPdf({
   mammalsEndemic,
   reptilesEndemic,
   amphibiansEndemic,
-  landMarineSelection,
+  areaChartData,
+  selectedLandMarineOption,
 }) {
   const t = useT();
   const locale = useLocale();
   const countryNames = useMemo(getCountryNames, [locale]);
   const translatedCountryName = countryNames[countryName] || countryName;
   const {
-    // endemic_amphibians,
-    // endemic_birds,
-    // endemic_mammals,
-    // endemic_reptiles,
     SPI_ter,
     SPI_mar,
     total_endemic_mar,
@@ -61,9 +60,9 @@ function NationalReportPdf({
     hm_ter,
     hm_mar,
   } = countryData || {};
-
+  const { land: landData, marine: marineData } = areaChartData || {};
   const renderIndicatorCards = () => {
-    const land = landMarineSelection === 'land';
+    const land = selectedLandMarineOption.slug === LAND_MARINE.land;
     const SPI = land ? SPI_ter : SPI_mar;
     const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
     const total_endemic = land ? total_endemic_ter : total_endemic_mar;
@@ -203,8 +202,8 @@ function NationalReportPdf({
 
   const renderSpecies = () => (
     <section className={styles.speciesComposition}>
-      <p className={styles.speciesTitle}>{t('Species composition')}</p>
-      <p className={styles.speciesCount}>
+      <p className={styles.sectionTitle}>{t('Species composition')}</p>
+      <div className={styles.speciesCount}>
         <div className={styles.speciesIcon}>
           <AmphibiansIcon />
         </div>
@@ -219,8 +218,8 @@ function NationalReportPdf({
             number={amphibians}
           />
         </div>
-      </p>
-      <p className={styles.speciesCount}>
+      </div>
+      <div className={styles.speciesCount}>
         <div className={styles.speciesIcon}>
           <BirdsIcon />
         </div>
@@ -235,8 +234,8 @@ function NationalReportPdf({
             number={birds}
           />
         </div>
-      </p>
-      <p className={styles.speciesCount}>
+      </div>
+      <div className={styles.speciesCount}>
         <div className={styles.speciesIcon}>
           <ReptilesIcon />
         </div>
@@ -251,8 +250,8 @@ function NationalReportPdf({
             number={reptiles}
           />
         </div>
-      </p>
-      <p className={styles.speciesCount}>
+      </div>
+      <div className={styles.speciesCount}>
         <div className={styles.speciesIcon}>
           <MammalsIcon />
         </div>
@@ -267,7 +266,39 @@ function NationalReportPdf({
             number={mammals}
           />
         </div>
-      </p>
+      </div>
+    </section>
+  );
+
+  const renderChart = () => (
+    <section className={styles.areaChartContainer}>
+      <div className={styles.chartHeader}>
+        <p className={styles.sectionTitle}>
+          <T
+            _str="Trend of the {landMarineSelection}"
+            landMarineSelection={selectedLandMarineOption.label}
+          />
+        </p>
+      </div>
+      <AreaChart
+        area1={{
+          key: 'spi',
+          stroke: COLORS['dark-text'],
+          strokeWidth: 0.5,
+        }}
+        area2={{
+          key: 'protected',
+          stroke: COLORS['dark-text'],
+          strokeWidth: 0.7,
+          strokeDasharray: '3 3 3 3',
+        }}
+        data={selectedLandMarineOption.slug === 'land' ? landData : marineData}
+        variant="dark"
+        // We dont use responsive for PDF - It was not rendering
+        height={300}
+        width={760}
+        pdf
+      />
     </section>
   );
   return (
@@ -281,9 +312,11 @@ function NationalReportPdf({
           />
           <span className={styles.countryName}>{translatedCountryName}</span>
         </div>
-        {t(
-          `Summary of the National Report Card of ${translatedCountryName} regarding the calculations of the ${landMarineSelection.label}.`
-        )}
+        <div className={styles.subtitle}>
+          {t(
+            `Summary of the National Report Card of ${translatedCountryName} regarding the calculations of the ${selectedLandMarineOption.label}.`
+          )}
+        </div>
       </section>
       <HalfEarthLogo
         withBackground
@@ -293,8 +326,20 @@ function NationalReportPdf({
       />
       {renderIndicatorCards()}
       {renderSpecies()}
+      {renderChart()}
+      <section className={styles.sources}>
+        <T _str="Sources:" /> <T _str="Map of Life" />
+      </section>
       <section className={styles.urlWrapper}>
-        <a href={nrcUrl}>{nrcUrl}</a>
+        <T _str="Discover more:" />{' '}
+        <a
+          className={styles.urlText}
+          target="_blank"
+          href={`https://${nrcUrl}`}
+          rel="noreferrer"
+        >
+          {nrcUrl}
+        </a>
       </section>
     </div>
   );
