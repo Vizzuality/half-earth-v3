@@ -209,19 +209,15 @@ const getXAxisKeys = createSelector(
   }
 );
 
-const getIndicatorOptions = createSelector(
-  [selectCountryIso, getScatterplotRawData, selectLangUrlState],
-  // eslint-disable-next-line no-unused-vars
-  () => {
-    // locale is here to recompute indicatorLabels
-    const labels = Object.values(getIndicatorLabels());
-    const options = labels.map((l) => ({
-      label: l,
-    }));
+const getIndicatorOptions = createSelector([], () => {
+  const labels = Object.values(getIndicatorLabels());
+  const options = labels.map((l) => ({
+    slug: l,
+    label: l,
+  }));
 
-    return options;
-  }
-);
+  return options;
+});
 
 const getChallengesDependantFilterOptions = createSelector(
   [getXAxisKeys, getLandMarineSelected, getChallengesFilterOptions],
@@ -254,6 +250,17 @@ const getSelectedFilterOption = createSelector(
     challengesFilterOptions.find((option) => option.slug === selectedFilter)
 );
 
+const getSelectedIndicatorOption = createSelector(
+  [getIndicatorLabels, getIndicatorOptions, getCountryChallengesSelectedKey],
+  (indicatorLabels, indicatorOptions, countryChallengesSelectedKey) => {
+    const selectedOptionLabel = indicatorLabels[countryChallengesSelectedKey];
+    const selectedOption = indicatorOptions.find(
+      (i) => i.label === selectedOptionLabel
+    );
+    return selectedOption;
+  }
+);
+
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
   challengesFilterOptions: getChallengesDependantFilterOptions,
@@ -266,8 +273,10 @@ export default createStructuredSelector({
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   scatterPlotData: getFilteredData,
+  selectedIndicatorOption: getSelectedIndicatorOption,
   selectedFilterOption: getSelectedFilterOption,
   xAxisTicks: getXAxisTicks,
+  xAxisKeys: getXAxisKeys,
   yAxisTicks: getYAxisTicks,
   waitingInteraction: getOnWaitingInteraction,
 });

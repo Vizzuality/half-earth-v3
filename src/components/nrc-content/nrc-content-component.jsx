@@ -54,6 +54,7 @@ function NrcContent({
   handleBubbleClick,
   handleClose,
   handleFilterSelection,
+  handleSelectIndicator,
   handlePrintReport,
   indicatorOptions,
   landMarineSelection,
@@ -61,6 +62,7 @@ function NrcContent({
   onboardingType,
   onboardingStep,
   scatterPlotData,
+  selectedIndicatorOption,
   selectedFilterOption,
   setNRCSidebarView,
   xAxisTicks,
@@ -70,7 +72,7 @@ function NrcContent({
 }) {
   const t = useT();
   const locale = useLocale();
-  console.log({ challengesFilterOptions, indicatorOptions });
+
   const {
     amphibians,
     birds,
@@ -465,8 +467,8 @@ function NrcContent({
                           width="full"
                           parentWidth="330px"
                           options={indicatorOptions}
-                          // selectedOption={selectedFilterOption}
-                          // handleOptionSelection={handleFilterSelection}
+                          selectedOption={selectedIndicatorOption}
+                          handleOptionSelection={handleSelectIndicator}
                         />
                       )}
                     </div>

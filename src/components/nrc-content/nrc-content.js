@@ -38,6 +38,8 @@ function NrcContainer(props) {
     countryId,
     changeUI,
     setNRCSidebarView,
+    countryChallengesSelectedKey,
+    xAxisKeys,
   } = props;
 
   const locale = useLocale();
@@ -95,15 +97,21 @@ function NrcContainer(props) {
     changeUI({ countryChallengesSelectedFilter: selectedFilter.slug });
   };
 
+  const handleSelectIndicator = () => {
+    const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
+    changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
+  };
+
   return (
     <Component
       {...props}
+      countryName={localizedCountryName}
+      goToAnalyzeAreas={goToAnalyzeAreas}
       handleClose={handleClose}
       handleBubbleClick={handleBubbleClick}
       handleFilterSelection={handleFilterSelection}
       handlePrintReport={handlePrintReport}
-      goToAnalyzeAreas={goToAnalyzeAreas}
-      countryName={localizedCountryName}
+      handleSelectIndicator={handleSelectIndicator}
       setNRCSidebarView={setNRCSidebarView}
     />
   );
