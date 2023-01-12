@@ -40,7 +40,7 @@ import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
 
-import { COUNTRIES } from './nrc-content-constants';
+import { CONTINENTS } from './nrc-content-constants';
 import styles from './nrc-content-styles.module.scss';
 import { getBarStyles } from './nrc-content-utils';
 
@@ -458,42 +458,51 @@ function NrcContent({
                 />
               )}
             </div>
-            <div className={styles.challenguesContainer}>
+            <div
+              className={cx({
+                [styles.challenguesContainer]: true,
+                [styles.challenguesContainerShrunken]: fullRanking,
+              })}
+            >
               <div className={styles.chartHeader}>
                 {countryName && (
                   <div className={styles.chartTitleContainer}>
-                    <p className={styles.chartTitle}>
-                      <T
-                        _str="{landMarineSelection} SPI and"
-                        landMarineSelection={land ? 'Land' : 'Marine'}
-                      />
-                    </p>
-                    <div className={styles.dropdownContainer}>
-                      {indicatorOptions && (
+                    <div className={styles.chartTitleIndicators}>
+                      <p className={styles.chartTitle}>
+                        <T
+                          _str="{landMarineSelection} SPI and"
+                          landMarineSelection={land ? 'Land' : 'Marine'}
+                        />
+                      </p>
+                      <div className={styles.dropdownContainer}>
+                        {indicatorOptions && (
+                          <Dropdown
+                            theme="secondary-dark"
+                            width="full"
+                            parentWidth={fullRanking ? '180px' : '230px'}
+                            options={indicatorOptions}
+                            selectedOption={selectedIndicatorOption}
+                            handleOptionSelection={handleSelectIndicator}
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <div className={styles.chartTitleFilter}>
+                      <p className={styles.chartTitle}>{t('of countries')}</p>
+                      <div className={styles.dropdownContainer}>
                         <Dropdown
                           theme="secondary-dark"
                           width="full"
-                          parentWidth="230px"
-                          options={indicatorOptions}
-                          selectedOption={selectedIndicatorOption}
-                          handleOptionSelection={handleSelectIndicator}
+                          parentWidth={fullRanking ? '180px' : '230px'}
+                          options={challengesFilterOptions}
+                          selectedOption={selectedFilterOption}
+                          handleOptionSelection={handleFilterSelection}
                         />
-                      )}
+                      </div>
+                      <p className={styles.chartTitle}>
+                        <T _str="to {countryName}" countryName={countryName} />
+                      </p>
                     </div>
-                    <p className={styles.chartTitle}>{t('of countries')}</p>
-                    <div className={styles.dropdownContainer}>
-                      <Dropdown
-                        theme="secondary-dark"
-                        width="full"
-                        parentWidth="230px"
-                        options={challengesFilterOptions}
-                        selectedOption={selectedFilterOption}
-                        handleOptionSelection={handleFilterSelection}
-                      />
-                    </div>
-                    <p className={styles.chartTitle}>
-                      <T _str="to {countryName}" countryName={countryName} />
-                    </p>
                   </div>
                 )}
                 <span>
@@ -549,24 +558,30 @@ function NrcContent({
                   </div>
                 </div>
                 <div className={styles.scatterPlotLegendWrapper}>
-                  <h5 className={styles.legendTitle}>{t('Continent')}</h5>
-                  {COUNTRIES.map((c) => (
-                    <div key={c.color} className={styles.legendItem}>
-                      <div
-                        className={styles.legendItemColor}
-                        style={{
-                          background: c.color,
-                        }}
-                      />
-                      <p className={styles.legendItemLabel}>
-                        <T _str="{country}" country={c.label} />
-                      </p>
+                  <div className={styles.continentsLegendWrapper}>
+                    <h5 className={styles.legendTitle}>{t('Continent')}</h5>
+                    <div className={styles.legendItemsContainer}>
+                      {CONTINENTS.map((c) => (
+                        <div key={c.color} className={styles.legendItem}>
+                          <div
+                            className={styles.legendItemColor}
+                            style={{
+                              background: c.color,
+                            }}
+                          />
+                          <p className={styles.legendItemLabel}>
+                            <T _str="{country}" country={c.label} />
+                          </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                  <h5 className={styles.legendTitle}>
-                    <T _str="Country area in km{sup}" sup={<sup>2</sup>} />
-                  </h5>
-                  <CountryAreaImage className={styles.countryAreaImage} />
+                  </div>
+                  <div>
+                    <h5 className={styles.legendTitle}>
+                      <T _str="Country area in km{sup}" sup={<sup>2</sup>} />
+                    </h5>
+                    <CountryAreaImage className={styles.countryAreaImage} />
+                  </div>
                 </div>
               </div>
             </div>

@@ -152,6 +152,11 @@
     .chartTitleContainer {
       align-items: center;
       display: flex;
+      .chartTitleIndicators,
+      .chartTitleFilter {
+        align-items: center;
+        display: flex;
+      }
     }
     .chartTitle {
       @extend %bodyText;
@@ -244,7 +249,8 @@
         }
 
         .countryAreaImage {
-
+          height: 58px;
+          width: 100px;
         }
       }
     }
@@ -253,6 +259,65 @@
       margin-right: 13px;
       width: 100%;
     }
+  }
+
+  .challenguesContainerShrunken {
+
+    .chartHeader {
+      position: relative;
+      svg {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+      }
+      .chartTitleContainer {
+        align-items: flex-start;
+        flex-direction: column;
+        .dropdownContainer {
+          margin-right: 6px;
+          width: 180px;
+          span {
+            max-width: 145px;
+            text-overflow: ellipsis;
+          }
+        }
+        .chartTitle {
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+
+
+    .scatterPlotContainer {
+      flex-direction: column;
+
+      .scatterPlotChartWrapper {
+        width: 100%;
+
+        .yAxisContainer {
+          bottom: 300px;
+          width: 100px;
+        }
+      }
+
+      .scatterPlotLegendWrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -50px;
+        width: 90%;
+
+        .continentsLegendWrapper {
+
+          .legendItemsContainer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 10px;
+          }
+        }
+      }
+    }
+
+
   }
 
   .actionButtons {

@@ -1,6 +1,6 @@
 import COLORS from 'styles/settings';
 
-export const COUNTRIES = [
+export const CONTINENTS = [
   {
     label: 'Africa',
     color: COLORS.shamrock,
