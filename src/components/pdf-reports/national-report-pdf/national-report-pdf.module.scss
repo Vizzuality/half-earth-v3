@@ -13,48 +13,42 @@ $gap: 20pt;
   @extend %display2;
 }
 
-.baseNumber {
-  @extend %headline;
-  margin: 0;
+.speciesCount {
+  @extend %bodyText;
+  font-size: 14pt;
 }
 
-.date,
-.numberText,
-.speciesCount,
-.speciesSentence,
-.datasetExplanation {
+.subtitle {
   @extend %bodyText;
 }
 
-.title,
-.indexIntro,
-.legendTitle,
-.overviewText,
-.indexStatement {
+.sources, .urlWrapper {
+  @extend %bodyText;
+  color: rgba($navy-he, 0.5);
+}
+
+.sectionTitle {
   @extend %title;
+  font-size: 12pt;
+  letter-spacing: 0.1em;
+  margin-bottom: 8pt;
 }
 
-.numberText,
-.legendTag {
-  @extend %subtitle;
-}
-
-.datasetSource {
+.spiAverageText {
   @extend %annotation;
-  color: $_temporary-light-text;
+  color: $grey-text;
 }
 
 @media print {
-
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
- }
+  }
 
   @page {
     size: A4 landscape;
-    margin: 15pt;
-    margin-bottom: 0pt;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   a {
@@ -68,217 +62,130 @@ $gap: 20pt;
 
   section {
     page-break-inside: avoid;
- }
+  }
 
   .container {
+    margin: 30pt 15pt 0 15pt;
     position: absolute;
     top: 0;
     opacity: 1;
     width: 842pt;
-    height:595pt;
+    height: 595pt;
     background-color: $white;
     display: grid;
-    column-gap: 23pt;
+    column-gap: 8pt;
     row-gap: $gap;
-    grid-template-columns: repeat(10, 63pt);
-    grid-template-rows: 30pt 78pt 13pt 100pt 73pt 168pt 15pt;
+    grid-template-columns: repeat(8, 94.5pt);
+    grid-template-rows: 42pt 190pt 270pt 20pt;
     grid-template-areas:
-    "hd hd hd hd hd hd hd hd date logo"
-    "index index index index rg rg rg sp sp sp"
-    "intro intro intro intro cmp cmp cmp sp sp sp"
-    "exp exp exp exp cmp cmp cmp sp sp sp"
-    "map map map map prot prot prot prot prot prot"
-    "map map map map prior prior prior prior prior prior"
-    ". . . url url url url url url url";
+    "hd hd hd hd hd hd hd logo"
+    "ind ind ind ind ind ind ind ind"
+    "species species chart chart chart chart chart chart"
+    "sources sources . . . url url url";
+
+    .title {
+      grid-area: hd;
+    }
 
     .nameWrapper {
-      grid-area: hd;
       display: flex;
       align-items: center;
+      margin-bottom: 5pt;
+
       .countryName {
-        margin-left: $gap;
+        margin-left: $gap / 2;
       }
     }
 
-    .date {
-      grid-area: date;
-      text-align: right;
+    .flag {
+      height: 26pt;
+      border-radius: 30%;
+    }
+
+    .logoContainer {
+      align-self: center;
     }
 
     .logo {
       grid-area: logo;
-      width: $he-project-logo-size;
-      height: $he-project-logo-size;
+      height: 60pt;
+      width: 70pt;
     }
 
-    .indexWrapper {
-      grid-area: index;
-    }
+    .indicatorCardsContainer {
+      grid-area: ind;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-gap: $gap / 2;
 
-    .indexIntro {
-      grid-area: intro;
-      justify-self: center;
-      align-self: center;
-    }
+      .bar {
+        height: $gap / 2;
+        width: 100%;
+      }
 
-    .overviewText {
-      text-align: center;
-      font-weight: bold;
-    }
+      .spiAverageText {
+        margin: 0;
+      }
 
-    .indexStatement {
-      text-align: center;
-    }
+      .indicatorCard {
+        padding: 11pt 16pt;
+        background-color: $white-opacity-pdf;
+        border: none;
+        color: $dark-text;
 
-    .indexExplanation {
-      grid-area: exp;
-    }
-
-    .mapWrapper {
-      grid-area: map;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      img {
-        max-width: 100%;
+        .description {
+          font-size: 14pt;
+        }
       }
     }
 
-    .urlWrapper {
-      grid-area: url;
-      overflow: hidden;
-      text-align: right;
-    }
-
-    .species {
-      grid-area: sp;
-    }
-
-    .indexWrapper,
-    .indexExplanation {
-      background-color: $grey-text;
-      border-radius: 6px;
+    .speciesCount {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .indexBaseNumbersWrapper {
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .numberText {
-      margin: 0;
-    }
-
-    .indexBaseDataElement {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .speciesSentence {
-      grid-area: rg;
-      text-align: right;
+      margin-bottom: 8pt;
     }
 
     .speciesComposition {
-      grid-area: cmp;
+      grid-area: species;
+      background-color: $white-opacity-pdf;
+      padding: 16pt;
+      border-radius: 8pt;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .protectionLegend {
-      grid-area: prot;
-    }
-
-    .priorityLegend {
-      grid-area: prior;
-    }
-
-    .priorityLegend,
-    .protectionLegend {
-      position:relative;
-      padding-left: 13pt;
-      border-left: 1px solid $_temporary-dark-text;
-      &:before {
-        content: '';
-        width: 9pt;
-        height: 9pt;
-        position: absolute;
-        top: calc(50% - 9pt);
-        left: -4pt;
-        transform: rotate(45deg);
-        display: block;
-        background-color: $white;
-        border: 1px solid $_temporary-dark-text;
-        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-        border-radius: 0 0 0 3px;
-      }
-      &:after {
-        content: '';
-        content: '';
-        width: 9pt;
-        height: 9pt;
-        position: absolute;
-        top: calc(50% - 9pt);
-        left: -3pt;
-        transform: rotate(45deg);
-        display: block;
-        background-color: $white;
-        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-      }
-    }
-
-    .legendTitle {
-      margin: 0;
-    }
-
-    .datasetWrapper {
-      display: flex;
-    }
-
-    .wdpaIcon,
-    .priorityIcon {
-      min-width: 10pt;
-      margin-right: 10pt;
-    }
-
-    .wdpaIcon {
-      width: 12pt;
-      height: 12pt;
-      position: relative;
-      border-radius: 2px;
-      background-color: #008604;
+    .endemic {
+      font-weight: $font-weight-bold;
+      margin-bottom: 5pt;
     }
 
     .speciesIcon {
+      vertical-align: middle;
+      margin: 5pt 5pt 0 0;
+
       svg {
-        width: 12pt;
-        height: 12pt;
+        width: 26pt;
+        height: 26pt;
       }
     }
 
-    .priorityIcon {
-      height: 100pt;
-      width: 12pt;
-      background: $biodiversity-gradient;
+    .areaChartContainer {
+      grid-area: chart;
+      background-color: $white-opacity-pdf;
+      padding: 16pt;
+      border-radius: 8pt;
     }
 
-    .legendTag {
-      margin: 5pt 0;
+    .sources {
+      grid-area: sources;
     }
 
-    .priorityLegend {
-      .datasetWrapper {
-        padding: 5pt 0;
-        align-items: center;
+    .urlWrapper {
+      grid-area: url;
+      justify-self: flex-end;
+
+      .urlText {
+        color: $brand-color-main;
       }
     }
 

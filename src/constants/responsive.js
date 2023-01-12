@@ -3,8 +3,8 @@ import Responsive from 'react-responsive';
 
 export const baseUnit = 16;
 export const pixelBreakpoints = {
-  mobile: 599,
-  portrait: 600,
+  mobile: 719,
+  portrait: 720,
   landscape: 900,
   desktop: 1200,
 };

@@ -1,0 +1,70 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  background: $dark;
+  border: 1px solid $elephant;
+  border-radius: 8px;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 26px 17px;
+  position: relative;
+  width: auto;
+
+  .indicator {
+    @extend %display1;
+    font-weight: 100;
+    margin: 0;
+  }
+
+  .description {
+    @extend %bodyText;
+
+    @media print{
+      font-size: 14pt;
+      line-height: 22pt;
+    }
+  }
+
+  .children {
+    margin-top: auto;
+  }
+
+  .iconWrapper {
+    position: absolute;
+    top: 17px;
+    right: 24px;
+    .icon {
+      height: 15px;
+      width: 15px;
+    }
+    .tooltip {
+      color: $white;
+    }
+  }
+}
+
+.tooltip {
+  @extend %annotation;
+  border-radius: $border-radius-desktop;
+  background: $white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  color: $dark-text;
+  margin-bottom: 5px;
+  padding: 2px 6px;
+  width: 200px;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}

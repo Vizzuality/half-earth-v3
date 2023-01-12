@@ -1,0 +1,263 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.scrolleableArea {
+  box-sizing: content-box;
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 67px;
+  width: 93%;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+
+  .rowsContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
+  }
+
+  .title {
+    margin: 0;
+    font-family: $font-family-serif;
+    color: $white;
+    font-weight: 100;
+  }
+
+  .closeButton {
+    position: absolute;
+    top: $site-gutter;
+    right: $site-gutter;
+    fill: $white;
+    svg g {
+      fill: $brand-color-secondary;
+      stroke: $brand-color-secondary;
+      height: 22px;
+      width: 22px;
+    }
+
+    &:hover svg g {
+      fill: $brand-color-secondary-hover;
+      stroke: $brand-color-secondary-hover;
+    }
+  }
+
+  .section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .tabs {
+    display: flex;
+    .tab {
+      color: $white;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      &:hover {
+        border-bottom: 1px solid transparent;
+        color: $grey-text;
+      }
+      &:last-of-type {
+        margin-left: 10px;
+      }
+    }
+    .selectedTab {
+      color: $brand-color-main;
+      border-bottom: 1px solid $brand-color-main;
+      padding-bottom: 3px;
+      &:hover {
+        border-bottom: 1px solid transparent;
+        color: $brand-color-main;
+      }
+    }
+  }
+
+  .speciesTab {
+    width: 210px;
+  }
+
+  .speciesTabTitle {
+    display: inline-block;
+    margin-top: 15px;
+    font-family: $font-family-1;
+    font-size: $font-size-xxs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    color: $white;
+  }
+
+  .tableContainer {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .tableHeaderContainer {
+    padding: 10px 74px 10px 10px;
+    background-color: $elephant;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 2px;
+  }
+
+  .tableHeader {
+    display: flex;
+    button {
+      padding: 0 25px 0 28px;
+      &:first-child {
+        padding: 0 25px 0 0;
+      }
+    }
+  }
+
+
+  .tableRowContainer {
+    display: flex;
+    position: relative;
+    width: 100%;
+    border: 1px solid $firefly;
+  }
+
+  .tableRow {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: transparent;
+
+    > button {
+      padding: 0;
+    }
+  }
+
+  .arrowIcon {
+    fill: $white;
+    transform: rotate(90deg);
+
+    &.isOpened {
+      transform:rotate(-90deg);
+    }
+
+    transition: transform 0.2s ease;
+
+    > path {
+      fill: inherit;
+    }
+  }
+
+  .mainInfo {
+    display: flex;
+    padding: 8px 40px;
+    align-items: center;
+
+    @extend %bodyText;
+    color: $_temporary-dark-text;
+
+    &.isOpened, &:hover {
+      background-color: $firefly;
+    }
+    &:first-of-type {
+      padding: 8px 40px 8px 10px;
+    }
+  }
+
+  .expandedInfo {
+    max-height: 0;
+    opacity: 0;
+
+    &.isOpened {
+      opacity: 1;
+      max-height: 600px;
+    }
+
+    transition: all 0.5s ease;
+  }
+
+  .tableItem {
+    flex: 1 1 0;
+    text-align: left;
+    color: $white;
+    padding: 0 25px 0 0;
+    font-size: 14px;
+
+    &.bold {
+      font-family: $font-family-1;
+      font-weight: $font-weight-bold;
+    }
+    &.italic {
+      font-style: italic;
+    }
+  }
+
+  .loader {
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+  }
+
+  .searchInput {
+    background-color: transparent;
+    min-width: 300px;
+    border: none;
+    margin-left: 1em;
+    color: $white;
+    &::placeholder {
+      color: $accent-grey;
+      text-transform: uppercase;
+    }
+  }
+
+  .searchIcon {
+    fill: $white;
+    height: 15px;
+    width: 15px;
+
+    g {
+      stroke: $white;
+    }
+  }
+
+  .groupColor {
+    position: absolute;
+    width: 3px;
+    top: 0;
+    left: 0;
+    height: 100%;
+
+    &.mammals {
+      background-color: $mammals-color;
+    }
+
+    &.mar-mammals {
+      background-color: $mar-mammals-color;
+    }
+
+    &.amphibians {
+      background-color: $amphibians-color;
+    }
+
+    &.reptiles {
+      background-color: $reptiles-color;
+    }
+
+    &.birds {
+      background-color: $birds-color;
+    }
+
+    &.fishes {
+      background-color: $fishes-color;
+    }
+  }
+}
+
+.expandedButton {
+  padding: 0;
+}

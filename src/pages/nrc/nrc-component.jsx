@@ -4,20 +4,23 @@ import { NATIONAL_REPORT_CARD } from 'router';
 
 import loadable from '@loadable/component';
 
-import cx from 'classnames';
+import { useT } from '@transifex/react';
 
-import NationalReportCardScene from 'scenes/nrc-scene';
+import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
-import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
 
-import CountryChallengesChart from 'components/country-challenges-chart';
+import Button from 'components/button';
 import HalfEarthLogo from 'components/half-earth-logo';
+import NrcContent from 'components/nrc-content';
 import RankingChart from 'components/ranking-chart';
 
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
-
 import uiStyles from 'styles/ui.module.scss';
+
+import { ReactComponent as ArrowExpandIcon } from 'icons/arrow_expand.svg';
+
+import nrcBackground from 'images/nrc-background.png';
 
 import styles from './nrc-styles.module.scss';
 
@@ -25,27 +28,20 @@ const InfoModal = loadable(() => import('components/modal-metadata'));
 
 function NationalReportCard({
   countryISO,
-  chartData,
-  openedModal,
   countryName,
+  chartData,
   hasMetadata,
-  activeLayers,
-  sceneSettings,
-  handleMapLoad,
-  isFullscreenActive,
-  handleGlobeUpdating,
-  localSceneActiveTab,
-  countryTooltipDisplayFor,
-  countryChallengesSelectedKey,
   onboardingType,
   onboardingStep,
   waitingInteraction,
   browsePage,
   changeUI,
   changeGlobe,
+  countryId,
+  handleLandMarineSelection,
+  selectedLandMarineOption,
+  NRCSidebarView,
 }) {
-  const [map, setMap] = useState();
-
   useOnboardingOpenSection({
     onboardingStep,
     onboardingType,
@@ -55,78 +51,101 @@ function NationalReportCard({
     changeGlobe,
     countryISO,
     locationRoute: NATIONAL_REPORT_CARD,
-    localSceneActiveTab,
   });
 
+  const t = useT();
   const { marine } = chartData;
-  const coastal = !!marine;
+  const [fullRanking, setFullRanking] = useState(false);
+
+  const tabsData = {
+    land: {
+      text: t('Land SPI'),
+    },
+    marine: {
+      text: t('Marine SPI'),
+    },
+  };
+
+  const renderLandMarineSwitch = () => (
+    <div className={styles.switchDataButtons}>
+      {Object.keys(tabsData).map((key) => (
+        <button
+          key={key}
+          disabled={!marine}
+          type="button"
+          className={cx({
+            [styles.switchDataButton]: true,
+            [styles.switchDataActiveButton]:
+              selectedLandMarineOption.slug === key,
+          })}
+          onClick={() => handleLandMarineSelection(key)}
+        >
+          {tabsData[key].text}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <>
+      <img
+        title="NRC background"
+        alt="NRC background"
+        src={nrcBackground}
+        className={styles.background}
+      />
       <HalfEarthLogo
         className={cx(styles.hideOnPrint, uiStyles.halfEarthLogoTopLeft)}
       />
-      <NationalReportSidebar
-        chartData={chartData}
-        countryISO={countryISO}
-        countryName={countryName}
-        openedModal={openedModal}
-        map={map}
-        activeLayers={activeLayers}
-        className={cx(styles.sidebarContainer, styles.hideOnPrint)}
-        isFullscreenActive={isFullscreenActive}
-        handleGlobeUpdating={handleGlobeUpdating}
-        localSceneActiveTab={localSceneActiveTab}
-        onboardingType={onboardingType}
-        onboardingStep={onboardingStep}
-        waitingInteraction={waitingInteraction}
-      />
-      <NationalReportCardScene
-        chartData={chartData}
-        countryISO={countryISO}
-        openedModal={openedModal}
-        countryName={countryName}
-        activeLayers={activeLayers}
-        sceneSettings={sceneSettings}
-        isFullscreenActive={isFullscreenActive}
-        countryTooltipDisplayFor={countryTooltipDisplayFor}
-        onboardingType={onboardingType}
-        onboardingStep={onboardingStep}
-        onMapLoad={(loadedMap) => {
-          setMap(loadedMap);
-          handleMapLoad(loadedMap, activeLayers);
-        }}
-        isVisible={localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.OVERVIEW}
-      />
-      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.CHALLENGES && (
-        <div
-          className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
-            [uiStyles.onboardingMode]: !!onboardingType,
-          })}
-        >
-          <CountryChallengesChart
-            coastal={coastal}
-            countryISO={countryISO}
-            className={styles.challengesChart}
-            localSceneActiveTab={localSceneActiveTab}
-            countryChallengesSelectedKey={countryChallengesSelectedKey}
-          />
-        </div>
-      )}
-      {localSceneActiveTab === LOCAL_SCENE_TABS_SLUGS.RANKING && (
-        <div
-          className={cx(styles.hideOnPrint, styles.challengesViewContainer, {
+      <div className={styles.container}>
+        <motion.div
+          initial={{ width: 320 }}
+          animate={{ width: fullRanking ? '64vw' : '22vw' }}
+          transition={{ duration: 0.5 }}
+          className={cx(styles.hideOnPrint, styles.rankingContainer, {
             [uiStyles.onboardingMode]: !!onboardingType,
           })}
         >
           <RankingChart
-            coastal={coastal}
             countryISO={countryISO}
             className={styles.rankingChart}
-            localSceneActiveTab={localSceneActiveTab}
+            selectedLandMarineOption={selectedLandMarineOption}
           />
-        </div>
-      )}
+          {renderLandMarineSwitch()}
+        </motion.div>
+        <motion.div
+          className={cx(styles.hideOnPrint, styles.nrcContentContainer, {
+            [uiStyles.onboardingMode]: !!onboardingType,
+          })}
+        >
+          {NRCSidebarView === 'main' && (
+            <motion.div
+              className={cx(styles.fullRankingButtonContainer, {
+                [styles.fullRanking]: fullRanking,
+              })}
+              initial={{ left: -4 }}
+              animate={{ left: fullRanking ? -26 : -4 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Button
+                type="rectangular-primary"
+                Icon={ArrowExpandIcon}
+                className={styles.fullRankingButton}
+                handleClick={() => setFullRanking(!fullRanking)}
+                label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
+              />
+            </motion.div>
+          )}
+          <NrcContent
+            chartData={chartData}
+            countryISO={countryISO}
+            countryName={countryName}
+            countryId={countryId}
+            fullRanking={fullRanking}
+            selectedLandMarineOption={selectedLandMarineOption}
+          />
+        </motion.div>
+      </div>
       {hasMetadata && <InfoModal />}
     </>
   );

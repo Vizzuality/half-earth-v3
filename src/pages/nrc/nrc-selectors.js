@@ -1,36 +1,28 @@
 import { isEmpty } from 'lodash';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getDataGlobeLayers } from 'selectors/layers-selectors';
 import {
-  selectGlobeUrlState,
   selectUiUrlState,
+  selectLangUrlState,
 } from 'selectors/location-selectors';
+import { getNRCSidebarView } from 'selectors/ui-selectors';
 
-import nrcSceneConfig from 'scenes/nrc-scene/nrc-scene-config';
-
-import { LAND_MARINE } from 'constants/country-mode-constants';
+import {
+  LAND_MARINE,
+  getLandMarineOptions,
+} from 'constants/country-mode-constants';
 import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
 const selectBiodiversityData = ({ biodiversityData }) =>
   biodiversityData && (biodiversityData.data || null);
 const selectMetadataData = ({ metadata }) =>
   metadata && (!isEmpty(metadata.data) || null);
-const selectCountryExtent = ({ countryExtent }) =>
-  countryExtent ? countryExtent.data : null;
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+const selectCountriesData = ({ countryData }) =>
+  countryData && countryData.data;
+
 const selectActiveView = ({ location }) =>
   location.payload.view || NRC_UI_DEFAULTS.view;
-
-const getGlobeSettings = createSelector(
-  [selectGlobeUrlState],
-  (globeUrlState) => {
-    return {
-      ...nrcSceneConfig,
-      ...globeUrlState,
-    };
-  }
-);
 
 const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
   return {
@@ -39,26 +31,16 @@ const getUiSettings = createSelector([selectUiUrlState], (uiUrlState) => {
   };
 });
 
-export const getActiveLayers = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.activeLayers
-);
-export const getCountryTooltipDisplayFor = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.countryTooltipDisplayFor
-);
-const getGlobeUpdating = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.isGlobeUpdating
-);
 const getHalfEarthModalOpen = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.openedModal
 );
-const getCountryChallengesSelectedKey = createSelector(
+
+export const getCountryChallengesSelectedKey = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.countryChallengesSelectedKey
 );
+
 export const getLocalSceneFilters = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.localSceneFilters
@@ -71,10 +53,31 @@ export const getLandMarineSelected = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.landMarineSelection || LAND_MARINE.land
 );
-const getCountryName = createSelector(
-  getGlobeSettings,
-  (globeSettings) => globeSettings.countryName
+
+const getCountryData = createSelector(
+  [selectCountriesData, selectCountryIso],
+  (countriesData, countryISO) => {
+    if (!countriesData || !countryISO) {
+      return null;
+    }
+    return countriesData[countryISO];
+  }
 );
+
+const getCountryName = createSelector([getCountryData], (countryData) => {
+  if (!countryData) {
+    return null;
+  }
+  return countryData.NAME_0;
+});
+
+const getCountryId = createSelector([getCountryData], (countryData) => {
+  if (!countryData) {
+    return null;
+  }
+  return countryData.ObjectId;
+});
+
 export const getOnboardingType = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.onboardingType
@@ -88,21 +91,31 @@ export const getOnWaitingInteraction = createSelector(
   (uiSettings) => uiSettings.waitingInteraction
 );
 
+// locale is here to recompute landmarineOptions
+const getCalculatedlandMarineOptions = createSelector(
+  selectLangUrlState,
+  // eslint-disable-next-line no-unused-vars
+  (locale) => getLandMarineOptions()
+);
+
+const getSelectedLandMarineOption = createSelector(
+  [getLandMarineSelected, getCalculatedlandMarineOptions],
+  (landMarineSelection, landMarine) =>
+    landMarine.find((option) => option.slug === landMarineSelection)
+);
+
 export default createStructuredSelector({
   countryISO: selectCountryIso,
+  countryId: getCountryId,
   countryName: getCountryName,
-  sceneLayers: getDataGlobeLayers,
   openedModal: getHalfEarthModalOpen,
   hasMetadata: selectMetadataData,
-  activeLayers: getActiveLayers,
-  sceneSettings: getGlobeSettings,
-  countryExtent: selectCountryExtent,
-  isGlobeUpdating: getGlobeUpdating,
   speciesCategories: selectBiodiversityData,
   localSceneActiveTab: selectActiveView,
-  countryTooltipDisplayFor: getCountryTooltipDisplayFor,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   onboardingType: getOnboardingType,
   onboardingStep: getOnboardingStep,
   waitingInteraction: getOnWaitingInteraction,
+  selectedLandMarineOption: getSelectedLandMarineOption,
+  NRCSidebarView: getNRCSidebarView,
 });

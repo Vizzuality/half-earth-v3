@@ -6,9 +6,11 @@ import { NATIONAL_REPORT_CARD } from 'router';
 
 import * as urlActions from 'actions/url-actions';
 
+import camelCase from 'lodash/camelCase';
+
 import useDebounce from 'hooks/use-debounce';
 
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
+import { SORT } from 'components/header-item';
 
 import Component from './ranking-chart-component';
 import mapStateToProps from './ranking-chart-selectors';
@@ -16,7 +18,7 @@ import mapStateToProps from './ranking-chart-selectors';
 const actions = { ...metadataActions, ...urlActions };
 
 function RankingChartContainer(props) {
-  const { data } = props;
+  const { data, selectedLandMarineOption, categorySort, changeUI } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState(0);
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
@@ -37,16 +39,16 @@ function RankingChartContainer(props) {
     return undefined;
   }, [debouncedSearchTerm]);
 
-  const handleFilterSelection = (selectedFilter) => {
-    const { changeUI } = props;
-    changeUI({ sortRankingCategory: selectedFilter });
-  };
-
   const handleCountryClick = (countryISO) => {
     const { browsePage } = props;
     browsePage({
       type: NATIONAL_REPORT_CARD,
-      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.RANKING },
+      payload: {
+        iso: countryISO,
+      },
+    });
+    changeUI({
+      landMarineSelection: selectedLandMarineOption.slug,
     });
   };
 
@@ -54,20 +56,24 @@ function RankingChartContainer(props) {
     const { value } = event.target;
     setSearchTerm(value);
   };
-
-  const handleLandMarineSelection = (selectedFilter) => {
-    const { changeUI } = props;
-    changeUI({ landMarineSelection: selectedFilter.slug });
+  const handleSortClick = (category) => {
+    const parsedCategory = camelCase(category);
+    const sortedCategory = categorySort && categorySort.split('-')[0];
+    const direction = categorySort && categorySort.split('-')[1];
+    const sortDirection =
+      sortedCategory === parsedCategory && direction === SORT.DESC
+        ? SORT.ASC
+        : SORT.DESC;
+    changeUI({ categorySort: `${parsedCategory}-${sortDirection}` });
   };
-
   return (
     <Component
       handleCountryClick={handleCountryClick}
       handleSearchChange={handleSearchChange}
-      handleFilterSelection={handleFilterSelection}
-      handleLandMarineSelection={handleLandMarineSelection}
       scrollIndex={scrollIndex}
       searchTerm={searchTerm}
+      categorySort={categorySort}
+      handleSortClick={handleSortClick}
       {...props}
     />
   );

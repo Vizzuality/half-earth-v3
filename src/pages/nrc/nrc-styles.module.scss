@@ -1,6 +1,17 @@
 @import 'styles/settings';
 @import 'styles/common-animations.module';
 @import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.background {
+  width: 100vw;
+}
+
+@media print {
+  .background {
+    display: none;
+  }
+}
 
 .sidebarContainer {
   @include animationFunction($propertyToAnimate: all);
@@ -16,26 +27,106 @@
   bottom: 30px;
 }
 
-.challengesViewContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: $challenges-view-background;
-  width: 100vw;
-  height: 100vh;
-}
-
-
 .challengesChart {
   position: relative;
-  left: calc(#{$sidebar-width} + 120px);
-  top: 50px;
+}
+
+.container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  display: flex;
+}
+
+.nrcContentContainer {
+  position: relative;
+  flex: 1;
+  margin: 56px 40px 0 0;
+  background-color: rgba($navy-he, 0.8);
+  border: 1px solid $navy-he;
+  height: 88vh;
+  border-radius: 6px;
+}
+
+.switchDataButtons {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+}
+
+.switchDataButton {
+  @extend %subtitle;
+  border: 1px solid $white;
+  color: $white;
+  padding: 4px 8px;
+  text-transform: capitalize;
+  width: auto;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+
+  &:last-of-type {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.switchDataActiveButton {
+  @extend %subtitle;
+  background-color: $white;
+  color: $_temporary-dark-text;
+}
+
+.fullRankingButtonContainer {
+  position: absolute;
+  top: calc(50% - 140px / 2);
+
+  .fullRankingButton {
+    width: 24px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    background-color: $black;
+    color: $brand-color-main;
+    padding-bottom: 8px;
+
+    span {
+      letter-spacing: 0.2em;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+    }
+  }
+
+  &.fullRanking {
+    .fullRankingButton {
+      background-color: rgba($navy-he, 0.8);
+      transform: rotate(180deg);
+      padding-bottom: 0;
+    }
+  }
+}
+
+.rankingContainer {
+  position: relative;
+  margin-top: 92px;
+  margin-bottom: 36px;
+  margin-left: $site-gutter;
+  border: 1px solid $navy-he;
+  height: calc(100vh - 92px - 36px);
+  overflow: hidden;
 }
 
 .rankingChart {
+  padding: 16px 24px 0 0;
   position: relative;
-  left: calc(#{$sidebar-width} + 83px);
-  top: 50px;
+  width: 63vw;
+  max-height: 100vh;
 }
 
 @media print {

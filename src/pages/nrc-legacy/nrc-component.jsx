@@ -13,7 +13,7 @@ import NationalReportSidebar from 'containers/sidebars/national-report-sidebar';
 
 import CountryChallengesChart from 'components/country-challenges-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
-import RankingChart from 'components/ranking-chart';
+import RankingChart from 'components/ranking-chart-legacy';
 
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 

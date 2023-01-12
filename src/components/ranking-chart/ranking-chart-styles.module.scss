@@ -2,10 +2,17 @@
 @import 'styles/typography-extends';
 @import 'styles/ui.module';
 
+$scroll-bar-width: 7px;
+$margin-left: 24px;
+$bars-width: 22%;
+$spi-index-width: 4rem;
+$spi-country-width: 250px;
+
 .chartTitle {
-  @extend %headline;
-  color: $grey-text;
-  margin-right: 1rem;
+  @extend %bodyText;
+  color: $white;
+  margin: 0.4rem 1rem 0 0;
+  font-weight: $font-weight-bold;
 
   &.filterTitle {
     margin-left: 1rem;
@@ -13,13 +20,11 @@
 }
 
 .chartTitleContainer {
-  margin-bottom: 3rem;
+  margin: 0 0 8px $margin-left;
   display: flex;
   align-items: center;
-}
-
-.landMarineDropdownWrapper {
-  width: 130px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .dropdownWrapper {
@@ -27,65 +32,103 @@
 }
 
 .titleText {
-  @extend %title;
+  @extend %subtitle;
   color: $grey-text;
   margin: 0;
 }
 
-$chart-width-without-legend: calc(#{$country-scene-chart-width} + 50px);
-$scroll-bar-width: 7px;
+.legendContainer {
+  display: flex;
+  margin-top: 20px;
+  margin-left: $margin-left;
+  padding-right: $scroll-bar-width;
 
-%tableItem {
-  margin-right: 2rem;
-  min-width: calc(100vw - #{$sidebar-width} - 100px);
-  max-width: calc(100vw - #{$sidebar-width} - 100px);
+  .blank {
+    width: calc($spi-country-width + $spi-index-width);
+  }
+
+  .legendCategoryContainer {
+    height: 8vh;
+    margin: 0;
+    padding: 0;
+    color: white;
+    display: flex;
+    width: $bars-width;
+    margin-right: $scroll-bar-width;
+    flex-direction: column;
+
+    text-align: left;
+    padding: 0;
+    align-items: baseline;
+
+
+    .legendItem {
+      @extend %annotation;
+      align-items: center;
+      color: $grey-text;
+      display: flex;
+
+      .legendColor {
+        height: 16px;
+        width: 8px;
+        margin-right: 4px;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
 }
 
 .header {
-  width: $chart-width-without-legend;
+  margin-left: $margin-left;
   padding-right: $scroll-bar-width;
   display: flex;
   align-items: flex-end;
-  @extend %tableItem;
 
   .headerItem {
-    width: 19%;
-    margin-right: 7px;
-    margin-bottom: 10px;
+    width: $bars-width;
+    margin: 0 $scroll-bar-width 3px 0;
     text-align: left;
     padding: 0;
     align-items: baseline;
     cursor: default;
+
+    .titleText {
+      color: $white;
+      letter-spacing: 0.06em;
+    }
   }
 
   .spiHeader {
-    width: 4rem;
+    width: $spi-index-width;
     margin-right: 0;
-  }
-
-  .searchInput {
-    width: 25%;
   }
 }
 
 .barContainer {
-  width: 19%;
-  margin-right: 7px;
+  width: $bars-width;
+  margin-right: $scroll-bar-width;
 }
 
 .fullBar {
   width: 100%;
   cursor: default;
+
+  // To avoid overflow - Remove it to check errors
+  display: flex;
 }
 
 .bar {
   display: inline-block;
-  height: 19px;
+  height: 16px;
+  margin-top: 2px;
 }
 
 .spiIndex {
   display: inline-block;
-  width: 4rem;
+  width: $spi-index-width;
 }
 
 .spiCountry {
@@ -94,10 +137,11 @@ $scroll-bar-width: 7px;
 }
 
 .spiCountryButton {
-  @extend %title;
+  @extend %subtitle;
+  line-height: $line-height;
   color: $grey-text;
   text-align: left;
-  width: 25%;
+  width: $spi-country-width;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -119,41 +163,17 @@ $scroll-bar-width: 7px;
 }
 
 .rankingChartContent {
-  @extend %tableItem;
   @extend %verticalScrollbar;
 
   padding-bottom: 2rem;
-  height: calc(100vh - 250px);
+  height: calc(100vh - 320px);
   flex-direction: column;
 }
 
-.scrollHint {
-  position: absolute;
-  bottom: 0;
-  width: 80%;
-  height: 55px;
-  padding-left: 15px;
-  color: $white;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(rgba(9, 20, 26, 0) 0%, rgba(9, 20, 26, .9) 80%);
-  pointer-events: none;
-  opacity: 1;
-
-  .arrow {
-    transform: rotate(90deg);
-    fill: $grey-text;
-    margin-right: 1rem;
-  }
-
-  &.fade {
-    opacity: 0;
-  }
-}
-
 .row {
+  padding-left: $margin-left;
   display: flex;
-  align-items: flex-end;
+  height: 20px;
 }
 
 .found {
@@ -161,8 +181,14 @@ $scroll-bar-width: 7px;
 }
 
 .selectedCountry {
-  color: $brand-color-main;
-  font-weight: bold;
+  color: $white;
+  font-weight: $font-weight-bold;
+  background-color: $white-opacity;
+
+  .titleText, .spiCountryIndex, .spiCountryName {
+    color: $white;
+    font-weight: $font-weight-bold;
+  }
 }
 
 .tooltip {

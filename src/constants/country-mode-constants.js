@@ -274,11 +274,11 @@ export const LAND_MARINE = {
 
 export const getLandMarineOptions = () => [
   {
-    label: t('LAND SPI'),
+    label: t('land SPI'),
     slug: LAND_MARINE.land,
   },
   {
-    label: t('MARINE SPI'),
+    label: t('marine SPI'),
     slug: LAND_MARINE.marine,
   },
 ];

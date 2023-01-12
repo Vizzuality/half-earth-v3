@@ -249,6 +249,8 @@ $card-content-max-height: 220px;
 .backButton {
   position: absolute;
   top: -20px;
+  height: 42px;
+  width: 42px;
   left: calc(50% - #{$rounded-button-size} / 2);
   box-shadow: $box-shadow-soft;
   z-index: $bring-to-front;

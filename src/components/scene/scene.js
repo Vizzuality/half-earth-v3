@@ -7,6 +7,8 @@ import { loadModules } from 'esri-loader';
 
 import urlActions from 'actions/url-actions';
 
+import { useWatchUtils } from 'hooks/esri';
+
 import { SATELLITE_BASEMAP_LAYER } from 'constants/layers-slugs';
 import { useMobile } from 'constants/responsive';
 
@@ -162,16 +164,25 @@ function SceneContainer(props) {
     }
   }, [map, view]);
 
+  const watchUtils = useWatchUtils();
+
   // Update location in URL
   useEffect(() => {
     let watchHandle;
-    if (view && view.center && !urlParamsUpdateDisabled && !rotationActive) {
-      loadModules(['esri/core/watchUtils']).then(([watchUtils]) => {
-        watchHandle = watchUtils.whenTrue(view, 'stationary', () => {
+    if (
+      watchUtils &&
+      view &&
+      view.center &&
+      !urlParamsUpdateDisabled &&
+      !rotationActive
+    ) {
+      watchHandle = watchUtils.when(
+        () => view.stationary,
+        () => {
           const { longitude, latitude } = view.center;
           changeGlobe({ center: [longitude, latitude], zoom: view.zoom });
-        });
-      });
+        }
+      );
     }
 
     return function cleanUp() {
@@ -179,7 +190,7 @@ function SceneContainer(props) {
         watchHandle.remove();
       }
     };
-  }, [view, rotationActive]);
+  }, [view, rotationActive, watchUtils]);
 
   // Start rotation when loaded
   useEffect(() => {

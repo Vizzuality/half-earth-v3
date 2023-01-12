@@ -1,0 +1,20 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.closeButton {
+  height: 32px;
+  width: 32px;
+  transform: rotate(0deg);
+  transition: .5s cubic-bezier(0.6, 0.2, 0, 0.8);
+  color: $black;
+
+  &:hover {
+    color: $brand-color-main;
+    transform: rotate(90deg);
+  }
+
+  svg path {
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}

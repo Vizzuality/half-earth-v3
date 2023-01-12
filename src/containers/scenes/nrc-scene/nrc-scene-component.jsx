@@ -13,7 +13,7 @@ import OnboardingTooltip from 'containers/onboarding/tooltip';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import FuturePlaceTooltip from 'components/future-place-tooltip';
-import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
+import PdfNationalReport from 'components/pdf-reports/national-report-pdf-legacy';
 import Scene from 'components/scene';
 
 import {

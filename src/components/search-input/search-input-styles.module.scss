@@ -4,26 +4,22 @@
 .searchInputContainer {
   display: flex;
   align-items: flex-start;
+  margin-left: 4px;
+  width: 250px;
 
   .searchInput {
-    @extend %title;
-    background-color: $modal-light-background;
-    min-width: 300px;
+    @extend %subtitle;
     border: none;
-    margin-left: 1em;
-    color: $_temporary-dark-text;
+    margin-left: 25px;
+    background-color: transparent;
+    color: $white;
   }
 
-  &.transparent {
-    .searchInput {
-      background-color: transparent;
-      color: $white;
-      margin-bottom: 9px;
-      min-width: 150px;
-    }
-
-    .searchIcon {
-      transform: translate(-3px, -6px) scale(0.5);
-    }
+  .searchIcon {
+    color: $white;
+    fill: currentColor;
+    height: 14px;
+    min-width: 14px;
+    margin-top: 4px;
   }
 }

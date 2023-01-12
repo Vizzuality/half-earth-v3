@@ -1,7 +1,10 @@
 // Colors
   $white: #fff;
   $black: #000000;
+  $white-opacity: #FFFFFF0F;
+  $white-opacity-pdf: #FBFBFB;
   $elephant: #0F2B3B;
+  $dark: #09141A73;
   $robins-egg-blue: #00BDB5;
   $oslo-gray: #7B878D;
   $alto: #D8D8D8;
@@ -43,6 +46,7 @@
   $navy-he: $elephant;
 
   $brand-color-main: #18BAB4;
+  $app-background: #0a212e;
   $brand-color-secondary: $elephant;
   $brand-color-main-hover: darken($brand-color-main, 10);
   $brand-color-secondary-hover: lighten($elephant, 10);
@@ -93,6 +97,8 @@
   $protection-non-needed-color: #AFB8A0;
   $protected-areas: #008604;
   $protection-needed: #B3E74B;
+  $high-modification: #7D2EFC;
+  $some-modification: #B284FD;
   $future-places: $neon-carrot;
 
   // Continent colors
@@ -198,8 +204,8 @@
   $under-back: -1;
 
   // Breakpoints
-  $breakpoint-mobile-only: 37.4375rem; // 599px / 16px
-  $breakpoint-tablet-portrait: 37.5rem; // 600px / 16px
+  $breakpoint-mobile-only: 44.9375rem; // 719px / 16px
+  $breakpoint-tablet-portrait: 45rem; // 720px / 16px
   $breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
   $breakpoint-desktop: 75rem; // 1200px / 16px
 
@@ -208,3 +214,14 @@
   $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
   $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
   $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
+
+  :export {
+    gold: $gold;
+    dark-text: $dark-text;
+    protected-areas: $protected-areas;
+    protection-needed:  $protection-needed;
+    high-modification: $high-modification;
+    some-modification: $some-modification;
+    white: $white;
+    white-opacity: $white-opacity;
+  }

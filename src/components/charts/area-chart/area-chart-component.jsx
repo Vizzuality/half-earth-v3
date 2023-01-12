@@ -5,119 +5,91 @@ import {
   Area,
   XAxis,
   YAxis,
-  ReferenceLine,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from 'recharts';
+
+import styles from './area-chart-styles.module.scss';
 
 function AreaChartComponent({
   area1,
   area2,
   data,
-  strokeDasharray = '2 4',
-  gridStrokeColor = '#A0AFB8',
   tooltip = false,
+  tooltipContent,
   height,
   width,
+  variant = 'light',
+  pdf = false,
 }) {
+  const tickStroke = variant === 'light' ? 'white' : variant;
+
+  const renderAreaChart = () => (
+    <AreaChart
+      data={data}
+      margin={{
+        top: 0,
+        right: 0,
+        left: -30,
+        bottom: 0,
+      }}
+      width={pdf && width}
+      height={pdf && height}
+    >
+      <XAxis
+        axisLine={{ stroke: variant === 'light' ? '#0F2B3B' : 'white' }}
+        dataKey="year"
+        domain={['dataMin', 'dataMax']}
+        fontSize={9}
+        strokeWidth={0.9}
+        tick={{ stroke: tickStroke, strokeWidth: 0.4 }}
+        tickCount={3}
+        tickLine={false}
+        ticks={[1980, 2000, 2020]}
+        type="number"
+      />
+
+      <YAxis
+        axisLine={{ stroke: '#0F2B3B' }}
+        fontSize={9}
+        tick={{ stroke: tickStroke, strokeWidth: 0.4 }}
+        tickCount={3}
+        tickLine={false}
+      />
+      {tooltip && (
+        <RechartsTooltip
+          content={tooltipContent}
+          cursor={{ strokeDasharray: 1 }}
+          offset={0}
+          position={{ y: 0 }}
+        />
+      )}
+      <Area
+        type="linearOpen"
+        dataKey={area1.key}
+        fill="url(#colorUv)"
+        stroke={area1.stroke}
+        strokeWidth={area1.strokeWidth}
+      />
+      <Area
+        type="monotone"
+        dataKey={area2.key}
+        fill="url(#colorUv)"
+        fillOpacity={area2.fillOpacity}
+        stroke={area2.stroke}
+        strokeWidth={area2.strokeWidth}
+        strokeDasharray={area2.strokeDasharray}
+      />
+    </AreaChart>
+  );
+
   return (
-    <div style={{ width, height, margin: 0 }}>
-      <ResponsiveContainer>
-        <AreaChart
-          data={data}
-          margin={{
-            top: 0,
-            right: 0,
-            left: -30,
-            bottom: 0,
-          }}
-        >
-          {area1 && (
-            <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="1" y2="1">
-                <stop
-                  offset="20%"
-                  stopColor={area1.fill[0]}
-                  stopOpacity={area1.fillOpacity}
-                />
-                <stop
-                  offset="35%"
-                  stopColor={area1.fill[1]}
-                  stopOpacity={area1.fillOpacity}
-                />
-                <stop
-                  offset="45%"
-                  stopColor={area1.fill[2]}
-                  stopOpacity={area1.fillOpacity}
-                />
-                <stop
-                  offset="55%"
-                  stopColor={area1.fill[3]}
-                  stopOpacity={area1.fillOpacity}
-                />
-                <stop
-                  offset="65%"
-                  stopColor={area1.fill[4]}
-                  stopOpacity={area1.fillOpacity}
-                />
-                <stop
-                  offset="75%"
-                  stopColor={area1.fill[5]}
-                  stopOpacity={area1.fillOpacity}
-                />
-                <stop
-                  offset="90%"
-                  stopColor={area1.fill[6]}
-                  stopOpacity={area1.fillOpacity}
-                />
-              </linearGradient>
-            </defs>
-          )}
-          <ReferenceLine
-            y={60}
-            stroke={gridStrokeColor}
-            strokeDasharray={strokeDasharray}
-          />
-          <ReferenceLine
-            y={45}
-            stroke={gridStrokeColor}
-            strokeDasharray={strokeDasharray}
-          />
-          <ReferenceLine
-            y={30}
-            stroke={gridStrokeColor}
-            strokeDasharray={strokeDasharray}
-          />
-          <ReferenceLine
-            y={15}
-            stroke={gridStrokeColor}
-            strokeDasharray={strokeDasharray}
-          />
-          <XAxis
-            dataKey="year"
-            fontSize={9}
-            tickLine={false}
-            strokeWidth={0.5}
-          />
-          <YAxis axisLine={false} fontSize={9} tickLine={false} />
-          {tooltip && <Tooltip />}
-          <Area
-            type="monotone"
-            dataKey={area1.key}
-            fill="url(#colorUv)"
-            stroke={area1.stroke}
-            strokeWidth={area1.strokeWidth}
-          />
-          <Area
-            type="monotone"
-            dataKey={area2.key}
-            fill={area2.fill}
-            fillOpacity={area2.fillOpacity}
-            stroke={area2.stroke}
-            strokeWidth={area2.strokeWidth}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+    <div className={styles.areaChart} style={{ width, height }}>
+      {pdf ? (
+        renderAreaChart()
+      ) : (
+        <ResponsiveContainer>{renderAreaChart()}</ResponsiveContainer>
+      )}
     </div>
   );
 }

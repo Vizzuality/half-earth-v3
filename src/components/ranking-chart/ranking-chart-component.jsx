@@ -6,42 +6,40 @@ import PropTypes from 'prop-types';
 
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
+import camelCase from 'lodash/camelCase';
+import groupBy from 'lodash/groupBy';
 
-import Dropdown from 'components/dropdown';
+import HeaderItem from 'components/header-item';
 import SearchInput from 'components/search-input';
 
 import {
-  SORT_GROUPS,
-  getSortOptions,
   getRankingLegend,
   SORT_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
 
-import { ReactComponent as Arrow } from 'icons/arrow_right.svg';
-
+import { LEGEND_ITEMS } from './ranking-chart-constants';
 import styles from './ranking-chart-styles.module.scss';
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
+const ROW_HEIGHT = 20;
+
 function RankingChart({
   data,
-  coastal,
   className,
   countryISO,
-  handleFilterSelection,
-  selectedFilterOption,
   handleSearchChange,
   handleCountryClick,
   scrollIndex,
   searchTerm,
-  landMarineOptions,
   selectedLandMarineOption,
-  handleLandMarineSelection,
+  categorySort,
+  handleSortClick,
 }) {
-  const [hasScrolled, changeHasScrolled] = useState(false);
   const t = useT();
   const locale = useLocale();
+  const [hasScrolled, changeHasScrolled] = useState(false);
+
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
-  const sortOptions = useMemo(() => getSortOptions(), [locale]);
   const RANKING_HEADER_LABELS = {
     [SORT_GROUPS_SLUGS.species]: t('species'),
     [SORT_GROUPS_SLUGS.humanModification]: t('human modification'),
@@ -51,11 +49,18 @@ function RankingChart({
 
   const tableRef = useRef();
   useEffect(() => {
-    const ROW_HEIGHT = 23;
     if (scrollIndex > -1 && tableRef.current) {
       tableRef.current.scroll(0, ROW_HEIGHT * scrollIndex);
     }
   }, [scrollIndex, tableRef]);
+
+  useEffect(() => {
+    const selectedCountry = data.find((d) => d.iso === countryISO);
+    if (selectedCountry) {
+      const PADDING = 30;
+      tableRef.current.scroll(0, ROW_HEIGHT * selectedCountry.index - PADDING);
+    }
+  }, [selectedLandMarineOption]);
 
   const onScroll = () => {
     if (!hasScrolled) {
@@ -110,34 +115,10 @@ function RankingChart({
         </Tooltip>
       </div>
     );
-
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        <span className={styles.chartTitle}>{t('Show')}</span>
-        <div className={styles.landMarineDropdownWrapper}>
-          <Dropdown
-            disabled={!coastal}
-            width="full"
-            parentWidth="130px"
-            options={landMarineOptions}
-            selectedOption={selectedLandMarineOption}
-            handleOptionSelection={handleLandMarineSelection}
-          />
-        </div>
-        <span className={cx(styles.chartTitle, styles.filterTitle)}>
-          {t('sort countries')}
-        </span>
-        <div className={styles.dropdownWrapper}>
-          <Dropdown
-            width="full"
-            parentWidth="410px"
-            options={sortOptions}
-            groups={SORT_GROUPS}
-            selectedOption={selectedFilterOption}
-            handleOptionSelection={handleFilterSelection}
-          />
-        </div>
+        <span className={styles.chartTitle}>{t('Ranking by')}</span>
       </div>
       <div className={styles.header}>
         <SearchInput
@@ -145,23 +126,34 @@ function RankingChart({
           placeholder={t('Search country')}
           onChange={handleSearchChange}
           value={searchTerm}
-          type="transparent"
         />
-        {categories.map((category) => (
-          <div
-            key={category}
-            className={cx(styles.headerItem, {
-              [styles.spiHeader]: category === 'spi',
-            })}
-          >
-            {RANKING_HEADER_LABELS[category].split(' ').map((word) => (
-              <p
-                key={word}
-                className={styles.titleText}
-              >{`${word.toUpperCase()}`}</p>
-            ))}
-          </div>
-        ))}
+        {categories.map((category) => {
+          const title = RANKING_HEADER_LABELS[category];
+          return (
+            <div
+              key={category}
+              className={cx(styles.headerItem, {
+                [styles.spiHeader]: category === 'spi',
+              })}
+            >
+              <HeaderItem
+                title={title}
+                theme={{
+                  headerItem: styles.tableHeaderItem,
+                  arrowUp: styles.arrowUp,
+                }}
+                key={title}
+                isSortSelected={
+                  categorySort &&
+                  categorySort.split('-')[0] &&
+                  categorySort.split('-')[0] === camelCase(title)
+                }
+                sortDirection={categorySort && categorySort.split('-')[1]}
+                handleSortClick={handleSortClick}
+              />
+            </div>
+          );
+        })}
       </div>
       {data && data.length ? (
         <div
@@ -171,59 +163,67 @@ function RankingChart({
           onScroll={onScroll}
           ref={tableRef}
         >
-          <div className={styles.table}>
-            {data.map((d, i) => (
-              <div
-                className={cx(styles.row, {
-                  [styles.selectedCountry]: countryISO === d.iso,
-                })}
-                key={d.name}
+          {data.map((d, i) => (
+            <div
+              className={cx(styles.row, {
+                [styles.selectedCountry]: countryISO === d.iso,
+              })}
+              key={d.name}
+            >
+              <button
+                type="button"
+                className={styles.spiCountryButton}
+                onClick={() => handleCountryClick(d.iso, d.name)}
               >
-                <button
-                  type="button"
-                  className={styles.spiCountryButton}
-                  onClick={() => handleCountryClick(d.iso, d.name)}
+                <span
+                  className={cx(styles.spiCountryIndex, {
+                    [styles.found]: scrollIndex === i,
+                  })}
                 >
+                  {`${i + 1}.`}
+                </span>
+                <span
+                  className={cx(styles.spiCountryName, {
+                    [styles.found]: scrollIndex === i,
+                  })}
+                >
+                  {d.name}
+                </span>
+              </button>
+              {categories.map((category) =>
+                category === 'spi' ? (
                   <span
-                    className={cx(styles.spiCountryIndex, {
-                      [styles.found]: scrollIndex === i,
-                      [styles.selectedCountry]: countryISO === d.iso,
-                    })}
+                    key={category}
+                    className={cx(styles.titleText, styles.spiIndex)}
                   >
-                    {`${i + 1}.`}
+                    {d[category]}
                   </span>
-                  <span
-                    className={cx(styles.spiCountryName, {
-                      [styles.found]: scrollIndex === i,
-                      [styles.selectedCountry]: countryISO === d.iso,
-                    })}
-                  >
-                    {d.name}
-                  </span>
-                </button>
-                {categories.map((category) =>
-                  category === 'spi' ? (
-                    <span
-                      key={category}
-                      className={cx(styles.titleText, styles.spiIndex)}
-                    >
-                      {d[category]}
-                    </span>
-                  ) : (
-                    renderBar(category, d)
-                  )
-                )}
-              </div>
-            ))}
-          </div>
-          <div
-            className={cx(styles.scrollHint, { [styles.fade]: hasScrolled })}
-          >
-            <Arrow className={styles.arrow} />
-            {t('Scroll')}
-          </div>
+                ) : (
+                  renderBar(category, d)
+                )
+              )}
+            </div>
+          ))}
         </div>
       ) : null}
+      <div className={styles.legendContainer}>
+        <div className={styles.blank} />
+        {Object.values(groupBy(LEGEND_ITEMS, 'category')).map(
+          (categoryItems) => (
+            <div className={styles.legendCategoryContainer}>
+              {categoryItems.map((i) => (
+                <div className={styles.legendItem}>
+                  <div
+                    className={styles.legendColor}
+                    style={{ background: i.color }}
+                  />
+                  <p>{i.legend}</p>
+                </div>
+              ))}
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }

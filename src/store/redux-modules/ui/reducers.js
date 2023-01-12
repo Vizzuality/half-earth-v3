@@ -6,6 +6,7 @@ const sidebarTabs = getSidebarTabs();
 
 export const initialState = {
   sidebarTabActive: sidebarTabs[0].slug,
+  NRCSidebarView: 'main',
 };
 
 const setSidebarTabActive = (state, { payload }) => ({
@@ -13,6 +14,12 @@ const setSidebarTabActive = (state, { payload }) => ({
   sidebarTabActive: payload,
 });
 
+const setNRCSidebarView = (state, { payload }) => ({
+  ...state,
+  NRCSidebarView: payload,
+});
+
 export default {
   [actions.setSidebarTabActive]: setSidebarTabActive,
+  [actions.setNRCSidebarView]: setNRCSidebarView,
 };

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+
 import { useT } from '@transifex/react';
+
 import useEventListener from 'hooks/use-event-listener';
-import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
-import PartnersComponent from '../partners/partners';
-import MapInstructionsComponent from '../map-instructions/map-instructions-component';
+
 import { ABOUT_TABS } from 'constants/ui-params';
 
+import { ReactComponent as CloseIcon } from 'icons/menu-close.svg';
+
 import styles from '../about-styles.module.scss';
+import MapInstructionsComponent from '../map-instructions/map-instructions-component';
+import PartnersComponent from '../partners/partners';
 
 const AboutPage = ({ handleCloseAboutPage }) => {
   const [activeTab, setActiveTab] = useState(ABOUT_TABS.PARTNERS);

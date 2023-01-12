@@ -1,24 +1,21 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
-import { selectLangUrlState } from 'selectors/location-selectors';
-
 import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
 import { getLandMarineSelected } from 'pages/nrc/nrc-selectors';
 
+import { SORT } from 'components/header-item';
+
 import {
-  getSortOptions,
   RANKING_INDICATORS,
   RANKING_GROUPS_SLUGS,
-  RANKING_INDICATOR_GROUPS,
-  getLandMarineOptions,
   LAND_MARINE_COUNTRY_ATTRIBUTES,
 } from 'constants/country-mode-constants';
 
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
-const getSortRankingCategory = ({ location }) =>
-  (location && get(location, 'query.ui.sortRankingCategory')) || null;
+const getCategorySort = ({ location }) =>
+  (location && get(location, 'query.ui.categorySort')) || null;
 
 const getRankingData = createSelector(
   [selectCountriesData, getLandMarineSelected],
@@ -72,52 +69,33 @@ const getDataWithSPIOrder = createSelector([getRankingData], (data) => {
 });
 
 const getSortedData = createSelector(
-  [getDataWithSPIOrder, getSortRankingCategory],
-  (data, sortRankingCategory) => {
+  [getDataWithSPIOrder, getCategorySort],
+  (data, categorySort) => {
+    if (!categorySort) return data;
     // SPI sorting is the default order
-    if (!sortRankingCategory || sortRankingCategory === RANKING_INDICATORS.spi)
-      return data;
-    const sortRankingGroup = RANKING_INDICATOR_GROUPS[sortRankingCategory.slug];
-    return sortBy(data, (d) =>
-      sortRankingGroup
-        ? d[sortRankingGroup][sortRankingCategory.slug]
-        : d[sortRankingCategory]
-    ).reverse();
+    const sortedCategory = categorySort && categorySort.split('-')[0];
+    const direction = categorySort && categorySort.split('-')[1];
+    const primarySortField = {
+      species: 'endemic',
+      humanModification: 'veryHigh',
+      protection: 'protected',
+    }[sortedCategory];
+    const secondarySortField = {
+      humanModification: 'totalMinusVeryHigh',
+      protection: 'protectionNeeded',
+    }[sortedCategory];
+    const sortedData = sortBy(data, [
+      (d) => d[sortedCategory][primarySortField] !== null, // Move the null data to the end
+      (d) => d[sortedCategory][primarySortField],
+      (d) => d[sortedCategory][secondarySortField],
+    ]);
+    return direction === SORT.ASC ? sortedData.reverse() : sortedData;
   }
-);
-
-const getSelectedFilterOption = createSelector(
-  [getSortRankingCategory, selectLangUrlState],
-  // eslint-disable-next-line no-unused-vars
-  (sortRankingCategory, locale) => {
-    // locale is here to recompute sortOptions when locale changes
-    const sortOptions = getSortOptions();
-    if (!sortRankingCategory) return sortOptions[0];
-    return (
-      sortOptions.find((o) => o.slug === sortRankingCategory.slug) ||
-      sortOptions[0]
-    );
-  }
-);
-
-// locale is here to recompute landmarineOptions
-const getCalculatedlandMarineOptions = createSelector(
-  selectLangUrlState,
-  // eslint-disable-next-line no-unused-vars
-  (locale) => getLandMarineOptions()
-);
-
-const getSelectedLandMarineOption = createSelector(
-  [getLandMarineSelected, getCalculatedlandMarineOptions],
-  (landMarineSelection, landMarine) =>
-    landMarine.find((option) => option.slug === landMarineSelection)
 );
 
 const mapStateToProps = createStructuredSelector({
   data: getSortedData,
-  selectedFilterOption: getSelectedFilterOption,
-  selectedLandMarineOption: getSelectedLandMarineOption,
-  landMarineOptions: getCalculatedlandMarineOptions,
+  categorySort: getCategorySort,
 });
 
 export default mapStateToProps;

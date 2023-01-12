@@ -27,6 +27,7 @@ import {
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
+
 const getCountryChallengesSelectedKey = (state, props) =>
   props && props.countryChallengesSelectedKey;
 

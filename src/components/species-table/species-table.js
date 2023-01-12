@@ -12,14 +12,14 @@ import { SORT } from 'components/header-item';
 import { LAND_MARINE } from 'constants/country-mode-constants';
 import { SPECIES_LIST, MARINE_SPECIES_LIST } from 'constants/layers-slugs';
 
-import Component from './species-modal-component';
-import { getVertebrateTabs } from './species-modal-constants';
+import Component from './species-table-component';
+import { getVertebrateTabs } from './species-table-constants';
 import {
-  getCountryData,
   getSearchTerm,
   getSpeciesModalSort,
   getSortedSpeciesList,
-} from './species-modal-selectors';
+  getCountryData,
+} from './species-table-selectors';
 
 const actions = { ...urlActions };
 
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => ({
 });
 
 function SpeciesModalContainer(props) {
-  const { changeUI, countryData, speciesModalSort, state } = props;
+  const { changeUI, speciesModalSort, state } = props;
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
@@ -44,10 +44,10 @@ function SpeciesModalContainer(props) {
 
   useEffect(() => {
     const layer = vertebrateType === LAND_MARINE.land ? landLayer : marineLayer;
-    if (layer && countryData.iso) {
+    if (layer && state.location.payload.iso) {
       const getFeatures = async () => {
         const query = await layer.createQuery();
-        query.where = `iso3 = '${countryData.iso}'`;
+        query.where = `iso3 = '${state.location.payload.iso}'`;
         query.maxRecordCountFactor = '10000';
         const results = await layer.queryFeatures(query);
         const { features } = results;
@@ -56,9 +56,9 @@ function SpeciesModalContainer(props) {
         }
       };
 
-      getFeatures(countryData.iso);
+      getFeatures(state.location.payload.iso);
     }
-  }, [landLayer, marineLayer, countryData.iso, vertebrateType]);
+  }, [landLayer, marineLayer, state.location.payload.iso, vertebrateType]);
 
   const handleSearch = (event) => {
     const { value } = event.target;
