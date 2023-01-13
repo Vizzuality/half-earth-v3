@@ -189,9 +189,9 @@ function NationalReportPdf({
             style={{
               backgroundImage: getBarStyles(
                 COLORS['high-modification'],
-                65,
+                hm_vh,
                 COLORS['some-modification'],
-                70
+                hm
               ),
             }}
           />
@@ -285,12 +285,14 @@ function NationalReportPdf({
           key: 'spi',
           stroke: COLORS['dark-text'],
           strokeWidth: 0.5,
+          label: 'SPI',
         }}
         area2={{
           key: 'protected',
           stroke: COLORS['dark-text'],
           strokeWidth: 0.7,
           strokeDasharray: '3 3 3 3',
+          label: '% Protected areas',
         }}
         data={selectedLandMarineOption.slug === 'land' ? landData : marineData}
         variant="dark"
