@@ -210,13 +210,15 @@ const getXAxisKeys = createSelector(
 );
 
 const getIndicatorOptions = createSelector([], () => {
-  const labels = Object.values(getIndicatorLabels());
-  const options = labels.map((l) => ({
-    slug: l,
-    label: l,
+  const options = Object.entries(getIndicatorLabels()).map((e) => ({
+    [e[0]]: e[1],
+  }));
+  const parsedOptions = options.map((l) => ({
+    slug: Object.keys(l)[0],
+    label: l[Object.keys(l)[0]],
   }));
 
-  return options;
+  return parsedOptions;
 });
 
 const getChallengesDependantFilterOptions = createSelector(
@@ -251,13 +253,12 @@ const getSelectedFilterOption = createSelector(
 );
 
 const getSelectedIndicatorOption = createSelector(
-  [getIndicatorLabels, getIndicatorOptions, getCountryChallengesSelectedKey],
-  (indicatorLabels, indicatorOptions, countryChallengesSelectedKey) => {
-    const selectedOptionLabel = indicatorLabels[countryChallengesSelectedKey];
-    const selectedOption = indicatorOptions.find(
-      (i) => i.label === selectedOptionLabel
+  [getCountryChallengesSelectedKey, getIndicatorOptions],
+  (countryChallengesSelectedKey, indicatorOptions) => {
+    const selectedOptionLabel = indicatorOptions.find(
+      (option) => option.slug === countryChallengesSelectedKey
     );
-    return selectedOption;
+    return selectedOptionLabel;
   }
 );
 
