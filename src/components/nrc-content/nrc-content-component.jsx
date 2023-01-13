@@ -21,7 +21,7 @@ import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
 import Dropdown from 'components/dropdown';
 import AreaChartTooltip from 'components/nrc-content/area-chart-tooltip';
-import IndicatorCard from 'components/nrc-content/indicator-card';
+import Indicators from 'components/nrc-content/indicators';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
@@ -43,7 +43,6 @@ import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
 
 import { CONTINENTS } from './nrc-content-constants';
 import styles from './nrc-content-styles.module.scss';
-import { getBarStyles } from './nrc-content-utils';
 
 function NrcContent({
   areaChartData,
@@ -90,22 +89,6 @@ function NrcContent({
     endemic_birds,
     endemic_mammals,
     endemic_reptiles,
-    SPI_ter,
-    SPI_mar,
-    total_endemic_mar,
-    total_endemic_ter,
-    prop_protected_ter,
-    prop_protected_mar,
-    nspecies_ter,
-    nspecies_mar,
-    protection_needed_ter,
-    protection_needed_mar,
-    Global_SPI_ter,
-    Global_SPI_mar,
-    hm_vh_ter,
-    hm_vh_mar,
-    hm_ter,
-    hm_mar,
   } = countryData || {};
 
   const { land: landData, marine: marineData } = areaChartData;
@@ -113,16 +96,6 @@ function NrcContent({
   const { description: challengesTooltipInfo, source: challengesSources } =
     challengesInfo;
   const land = landMarineSelection === 'land';
-  const SPI = land ? SPI_ter : SPI_mar;
-  const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
-  const total_endemic = land ? total_endemic_ter : total_endemic_mar;
-  const prop_protected = land ? prop_protected_ter : prop_protected_mar;
-  const nspecies = land ? nspecies_ter : nspecies_mar;
-  const protection_needed = land
-    ? protection_needed_ter
-    : protection_needed_mar;
-  const hm_vh = land ? hm_vh_ter : hm_vh_mar;
-  const hm = land ? hm_ter : hm_mar;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
@@ -243,7 +216,7 @@ function NrcContent({
             <div className={styles.countryDescriptionContainer}>
               <p className={styles.countryDescription}>{countryDescription}</p>
             </div>
-            <div className={styles.indicatorCardsContainer}>
+            {/* <div className={styles.indicatorCardsContainer}>
               <IndicatorCard
                 indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
                 description={
@@ -378,7 +351,8 @@ function NrcContent({
                   }}
                 />
               </IndicatorCard>
-            </div>
+            </div> */}
+            <Indicators />
             <div className={styles.vertebratesContainer}>
               <div className={styles.endemicCardsContainer}>
                 {SPECIES_COMPOSITION.map((s) => (

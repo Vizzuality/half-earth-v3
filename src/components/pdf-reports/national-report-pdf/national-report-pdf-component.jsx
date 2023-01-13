@@ -7,7 +7,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import AreaChart from 'components/charts/area-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
-import IndicatorCard from 'components/nrc-content/indicator-card';
+import IndicatorCard from 'components/nrc-content/indicators/indicator-card';
 import { getBarStyles } from 'components/nrc-content/nrc-content-utils';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
