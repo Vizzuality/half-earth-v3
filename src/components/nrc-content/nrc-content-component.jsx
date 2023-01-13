@@ -484,7 +484,9 @@ function NrcContent({
                             width="full"
                             parentWidth={fullRanking ? '180px' : '230px'}
                             options={indicatorOptions}
-                            selectedOption={selectedIndicatorOption}
+                            selectedOption={
+                              selectedIndicatorOption || indicatorOptions[0]
+                            }
                             handleOptionSelection={handleSelectIndicator}
                           />
                         )}

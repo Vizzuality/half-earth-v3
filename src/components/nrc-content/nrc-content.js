@@ -18,6 +18,7 @@ import * as urlActions from 'actions/url-actions';
 import ContentfulService from 'services/contentful';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
+import { getIndicatorLabels } from 'constants/country-mode-constants';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
 import { getCountryNames } from 'constants/translation-constants';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
@@ -130,13 +131,10 @@ function NrcContainer(props) {
     }
   };
 
-  const handleSelectIndicator = () => {
-    const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
-    if (currentIndex !== xAxisKeys.length - 1) {
-      changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
-    } else {
-      changeUI({ countryChallengesSelectedKey: xAxisKeys[0] });
-    }
+  const handleSelectIndicator = (selection) => {
+    const AllXAxisKeys = Object.keys(getIndicatorLabels());
+    const currentIndex = AllXAxisKeys.indexOf(selection.slug);
+    changeUI({ countryChallengesSelectedKey: AllXAxisKeys[currentIndex] });
   };
 
   return (
