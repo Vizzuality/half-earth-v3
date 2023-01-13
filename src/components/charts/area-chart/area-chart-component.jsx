@@ -7,6 +7,8 @@ import {
   YAxis,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
+  ReferenceDot,
+  Label,
 } from 'recharts';
 
 import styles from './area-chart-styles.module.scss';
@@ -23,6 +25,32 @@ function AreaChartComponent({
   pdf = false,
 }) {
   const tickStroke = variant === 'light' ? 'white' : variant;
+  const labelColor = variant === 'light' ? 'white' : variant;
+
+  const lastData =
+    (area1.label || area2.label) && data && data[data.length - 1];
+
+  const renderLabel = (area) => {
+    const lastAreaY =
+      lastData && area.key && lastData[area.key] && lastData[area.key][0];
+    if (!lastAreaY && lastAreaY !== 0) return null;
+    return (
+      <ReferenceDot
+        y={lastAreaY}
+        x={2020}
+        stroke="transparent"
+        fill="transparent"
+      >
+        <Label
+          className={styles.label}
+          value={area.label}
+          position="insideTop"
+          offset={-5}
+          fill={labelColor}
+        />
+      </ReferenceDot>
+    );
+  };
 
   const renderAreaChart = () => (
     <AreaChart
@@ -51,6 +79,7 @@ function AreaChartComponent({
 
       <YAxis
         axisLine={{ stroke: '#0F2B3B' }}
+        domain={[0, 100]}
         fontSize={9}
         tick={{ stroke: tickStroke, strokeWidth: 0.4 }}
         tickCount={3}
@@ -71,6 +100,8 @@ function AreaChartComponent({
         stroke={area1.stroke}
         strokeWidth={area1.strokeWidth}
       />
+      {area1.label && renderLabel(area1)}
+      {area2.label && renderLabel(area2)}
       <Area
         type="monotone"
         dataKey={area2.key}

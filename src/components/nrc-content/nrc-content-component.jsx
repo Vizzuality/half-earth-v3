@@ -426,12 +426,14 @@ function NrcContent({
                     key: 'spi',
                     stroke: COLORS.white,
                     strokeWidth: 0.5,
+                    label: 'SPI',
                   }}
                   area2={{
                     key: 'protected',
                     stroke: COLORS.white,
                     strokeWidth: 0.7,
                     strokeDasharray: '3 3 3 3',
+                    label: '% Protected areas',
                   }}
                   data={land ? landData : marineData}
                   height={240}

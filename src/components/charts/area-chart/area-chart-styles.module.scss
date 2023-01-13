@@ -1,5 +1,16 @@
+@import 'styles/settings';
+
 .areaChart {
   display: block;
   position: relative;
   margin: 0;
+}
+
+.label {
+  font-size: 10px;
+  text-anchor: end;
+  font-family: $font-family-1;
+
+  // Readjust text. TODO: Improve positioning
+  transform: translate(18px, 0);
 }
