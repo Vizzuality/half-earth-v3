@@ -132,7 +132,11 @@ function NrcContainer(props) {
 
   const handleSelectIndicator = () => {
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
-    changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
+    if (currentIndex !== xAxisKeys.length - 1) {
+      changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
+    } else {
+      changeUI({ countryChallengesSelectedKey: xAxisKeys[0] });
+    }
   };
 
   return (

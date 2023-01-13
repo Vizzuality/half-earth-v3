@@ -81,7 +81,7 @@ function NrcContent({
 }) {
   const t = useT();
   const locale = useLocale();
-
+  console.log({ selectedIndicatorOption });
   const {
     amphibians,
     birds,

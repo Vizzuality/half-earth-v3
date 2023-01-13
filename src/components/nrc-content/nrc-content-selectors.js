@@ -255,10 +255,9 @@ const getSelectedFilterOption = createSelector(
 const getSelectedIndicatorOption = createSelector(
   [getCountryChallengesSelectedKey, getIndicatorOptions],
   (countryChallengesSelectedKey, indicatorOptions) => {
-    const selectedOptionLabel = indicatorOptions.find(
+    return indicatorOptions.find(
       (option) => option.slug === countryChallengesSelectedKey
     );
-    return selectedOptionLabel;
   }
 );
 
