@@ -149,21 +149,176 @@
     justify-content: space-between;
     padding: 16px;
     margin: 0;
-
+    .chartTitleContainer {
+      align-items: center;
+      display: flex;
+      .chartTitleIndicators,
+      .chartTitleFilter {
+        align-items: center;
+        display: flex;
+      }
+    }
     .chartTitle {
       @extend %bodyText;
       color: $white;
-      margin: 0;
+      margin: 0 10px 0 0;
+      white-space: nowrap;
     }
+
   }
 
-  .scatterPlotContainer {
+  .challengesContainer {
     background: $dark;
     border: 1px solid $elephant;
     border-radius: 6px;
     margin: 8px 40px 8px 20px;
     position: relative;
     width: auto;
+
+    .scatterPlotContainer {
+      display: flex;
+      justify-content: space-between;
+
+      .scatterPlotChartWrapper {
+        width: 80%;
+        margin-left: 10px;
+
+        .xAxisContainer{
+          width: 100%;
+
+          .xAxisLabelContainer {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            left: calc(50% - 165px);
+            position: relative;
+            width: 330px;
+
+            .arrowButton {
+              fill: white;
+            }
+
+            .xAxisIndicator,
+            .yAxisIndicator {
+              @extend %bodyText;
+              color: $alto;
+            }
+
+          }
+        }
+
+        .yAxisContainer {
+          @extend %bodyText;
+          color: $alto;
+          width: 330px;
+          transform-origin: left;
+          transform: rotate(-90deg);
+          position: relative;
+          bottom: 50%;
+          left: 15px;
+        }
+
+      }
+
+      .scatterPlotLegendWrapper {
+        @extend %annotation;
+        margin: 24px;
+        align-self: flex-end;
+        .legendTitle {
+          color: $grey-text;
+          font-weight: 300;
+          font-size: 13px;
+        }
+
+        .legendItem {
+          align-items: center;
+          color: $white;
+          display: flex;
+          margin: 0;
+
+          .legendItemColor {
+            border-radius: 50%;
+            height: 8px;
+            margin-right: 7px;
+            width: 8px;
+          }
+
+          .legendItemLabel {
+            margin: 0;
+          }
+        }
+
+        .countryAreaImage {
+          height: 58px;
+          width: 100px;
+        }
+      }
+    }
+
+    .dropdownContainer {
+      margin-right: 13px;
+      width: 100%;
+    }
+  }
+
+  .challengesContainerShrunken {
+
+    .chartHeader {
+      position: relative;
+      svg {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+      }
+      .chartTitleContainer {
+        align-items: flex-start;
+        flex-direction: column;
+        .dropdownContainer {
+          margin-right: 6px;
+          width: 180px;
+          span {
+            max-width: 145px;
+            text-overflow: ellipsis;
+          }
+        }
+        .chartTitle {
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+
+    .scatterPlotContainer {
+      flex-direction: column;
+
+      .scatterPlotChartWrapper {
+        width: 100%;
+
+          .xAxisLabelContainer {
+            padding-left: calc(50% - 165px);
+          }
+
+        .yAxisContainer {
+          bottom: 300px;
+          width: 100px;
+        }
+      }
+
+      .scatterPlotLegendWrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -50px;
+        width: 90%;
+
+        .continentsLegendWrapper {
+
+          .legendItemsContainer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 10px;
+          }
+        }
+      }
+    }
   }
 
   .actionButtons {
@@ -178,6 +333,7 @@
   .sourceText {
     @extend %annotation;
     color: $grey-text;
+    display: flex;
     margin: 0 40px 0 20px;
     border-bottom: 1px solid $grey-text;
     padding: 12px 0;
@@ -194,7 +350,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    margin: 10px 40px 10px 20px;
+    margin: 10px 40px 20px 20px;
     .footerText {
       @extend %annotation;
       color: $white;

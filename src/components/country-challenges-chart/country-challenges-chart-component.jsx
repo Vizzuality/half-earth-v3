@@ -4,7 +4,7 @@ import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 
-import ScatterPlot from 'components/charts/scatter-plot';
+import ScatterPlot from 'components/charts/scatter-plot-legacy';
 import Dropdown from 'components/dropdown';
 
 import { getIndicatorLabels } from 'constants/country-mode-constants';

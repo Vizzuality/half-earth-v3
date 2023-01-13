@@ -8,6 +8,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown/with-html';
 
 import {
   useOnboardingTooltipRefs,
@@ -18,6 +19,7 @@ import Button from 'components/button';
 import AreaChart from 'components/charts/area-chart';
 import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
+import Dropdown from 'components/dropdown';
 import AreaChartTooltip from 'components/nrc-content/area-chart-tooltip';
 import IndicatorCard from 'components/nrc-content/indicator-card';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
@@ -27,6 +29,7 @@ import SpeciesTable from 'components/species-table';
 import COLORS from 'styles/settings';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
+import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
@@ -36,32 +39,45 @@ import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
+import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
+
+import { CONTINENTS } from './nrc-content-constants';
 import styles from './nrc-content-styles.module.scss';
 import { getBarStyles } from './nrc-content-utils';
 
 function NrcContent({
+  areaChartData,
+  challengesFilterOptions,
+  challengesInfo,
   changeUI,
-  onboardingType,
-  onboardingStep,
-  waitingInteraction,
-  handleClose,
-  countryISO,
-  countryName,
-  handlePrintReport,
-  goToAnalyzeAreas,
-  handleBubbleClick,
+  countryChallengesSelectedKey,
   countryData,
   countryDescription,
+  countryISO,
+  countryName,
+  fullRanking,
+  goToAnalyzeAreas,
+  handleBubbleClick,
+  handleClose,
+  handleFilterSelection,
+  handleSelectIndicator,
+  handleSelectPreviousIndicator,
+  handleSelectNextIndicator,
+  handlePrintReport,
+  indicatorLabels,
+  indicatorOptions,
   landMarineSelection,
-  areaChartData,
+  NRCSidebarView,
+  onboardingType,
+  onboardingStep,
+  scatterPlotData,
+  selectedIndicatorOption,
+  selectedFilterOption,
+  setNRCSidebarView,
   xAxisTicks,
   yAxisTicks,
-  countryChallengesSelectedKey,
-  scatterPlotData,
-  fullRanking,
-  setNRCSidebarView,
-  NRCSidebarView,
   selectedLandMarineOption,
+  waitingInteraction,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -94,6 +110,8 @@ function NrcContent({
 
   const { land: landData, marine: marineData } = areaChartData;
 
+  const { description: challengesTooltipInfo, source: challengesSources } =
+    challengesInfo;
   const land = landMarineSelection === 'land';
   const SPI = land ? SPI_ter : SPI_mar;
   const Global_SPI = land ? Global_SPI_ter : Global_SPI_mar;
@@ -443,21 +461,63 @@ function NrcContent({
                 />
               )}
             </div>
-            <div className={styles.scatterPlotContainer}>
+            <div
+              className={cx({
+                [styles.challengesContainer]: true,
+                [styles.challengesContainerShrunken]: fullRanking,
+              })}
+            >
               <div className={styles.chartHeader}>
-                <p className={styles.chartTitle}>
-                  <T
-                    _str="{landMarineSelection} SPI"
-                    landMarineSelection={land ? 'Land' : 'Marine'}
-                  />
-                </p>
+                {countryName && (
+                  <div className={styles.chartTitleContainer}>
+                    <div className={styles.chartTitleIndicators}>
+                      <p className={styles.chartTitle}>
+                        <T
+                          _str="{landMarineSelection} SPI and"
+                          landMarineSelection={land ? 'Land' : 'Marine'}
+                        />
+                      </p>
+                      <div className={styles.dropdownContainer}>
+                        {indicatorOptions && (
+                          <Dropdown
+                            theme="secondary-dark"
+                            width="full"
+                            parentWidth={fullRanking ? '180px' : '230px'}
+                            options={indicatorOptions}
+                            selectedOption={
+                              selectedIndicatorOption || indicatorOptions[0]
+                            }
+                            handleOptionSelection={handleSelectIndicator}
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <div className={styles.chartTitleFilter}>
+                      <p className={styles.chartTitle}>{t('of countries')}</p>
+                      <div className={styles.dropdownContainer}>
+                        <Dropdown
+                          theme="secondary-dark"
+                          width="full"
+                          parentWidth={fullRanking ? '180px' : '230px'}
+                          options={challengesFilterOptions}
+                          selectedOption={selectedFilterOption}
+                          handleOptionSelection={handleFilterSelection}
+                        />
+                      </div>
+                      <p className={styles.chartTitle}>
+                        <T _str="to {countryName}" countryName={countryName} />
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <span>
                   <Tooltip
                     content={
                       <div className={styles.titleTooltip}>
-                        {t(
-                          'The scatter plots illustrate some of the differences among countries, and the social challenges that must be considered to ensure equitable global biodiversity conservation.'
-                        )}
+                        <T
+                          _str="{challengesTooltipInfo}"
+                          challengesTooltipInfo={challengesTooltipInfo}
+                        />
                       </div>
                     }
                     delay={100}
@@ -467,50 +527,93 @@ function NrcContent({
                   </Tooltip>
                 </span>
               </div>
-              <ScatterPlot
-                data={scatterPlotData}
-                countryISO={countryISO}
-                xAxisTicks={xAxisTicks}
-                yAxisTicks={yAxisTicks}
-                onBubbleClick={handleBubbleClick}
-                countryChallengesSelectedKey={countryChallengesSelectedKey}
+              <div className={styles.scatterPlotContainer}>
+                <div className={styles.scatterPlotChartWrapper}>
+                  <ScatterPlot
+                    data={scatterPlotData}
+                    countryISO={countryISO}
+                    xAxisTicks={xAxisTicks}
+                    yAxisTicks={yAxisTicks}
+                    onBubbleClick={handleBubbleClick}
+                    countryChallengesSelectedKey={countryChallengesSelectedKey}
+                  />
+                  {fullRanking && (
+                    <div className={styles.xAxisContainer}>
+                      <div className={styles.xAxisLabelContainer}>
+                        <span className={styles.xAxisIndicator}>
+                          {indicatorLabels[countryChallengesSelectedKey]}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!fullRanking && (
+                    <div className={styles.xAxisContainer}>
+                      <div className={styles.xAxisLabelContainer}>
+                        <button
+                          type="button"
+                          onClick={handleSelectPreviousIndicator}
+                          style={{ transform: 'scaleX(-1)' }}
+                        >
+                          <ArrowButton className={styles.arrowButton} />
+                        </button>
+                        <span className={styles.xAxisIndicator}>
+                          {indicatorLabels[countryChallengesSelectedKey]}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={handleSelectNextIndicator}
+                        >
+                          <ArrowButton className={styles.arrowButton} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={styles.yAxisContainer}>
+                    <span className={styles.yAxisIndicator}>
+                      <T
+                        _str="{landMarineSelection} SPI"
+                        landMarineSelection={land ? 'Land' : 'Marine'}
+                      />
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.scatterPlotLegendWrapper}>
+                  <div className={styles.continentsLegendWrapper}>
+                    <h5 className={styles.legendTitle}>{t('Continent')}</h5>
+                    <div className={styles.legendItemsContainer}>
+                      {CONTINENTS.map((c) => (
+                        <div key={c.color} className={styles.legendItem}>
+                          <div
+                            className={styles.legendItemColor}
+                            style={{
+                              background: c.color,
+                            }}
+                          />
+                          <p className={styles.legendItemLabel}>
+                            <T _str="{country}" country={c.label} />
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h5 className={styles.legendTitle}>
+                      <T _str="Country area in km{sup}" sup={<sup>2</sup>} />
+                    </h5>
+                    <CountryAreaImage className={styles.countryAreaImage} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.sourceText}>
+              <p>{t('Source: ')}</p>
+              <ReactMarkdown
+                key={challengesSources}
+                source={challengesSources}
+                escapeHtml={false}
               />
             </div>
-            <p className={styles.sourceText}>
-              <T
-                _str="Source:  {link1}, {link2}, {link3}, {link4}, {link5} and {link6}"
-                link1={
-                  <a href="/">
-                    <T _str="Gross National Income" />
-                  </a>
-                }
-                link2={
-                  <a href="/">
-                    <T _str="Population" />
-                  </a>
-                }
-                link3={
-                  <a href="/">
-                    <T _str="proportion of very high human modification" />
-                  </a>
-                }
-                link4={
-                  <a href="/">
-                    <T _str="number of endemic vertebrates" />
-                  </a>
-                }
-                link5={
-                  <a href="/">
-                    <T _str="total number of vertebrate species" />
-                  </a>
-                }
-                link6={
-                  <a href="/">
-                    <T _str="SPI" />
-                  </a>
-                }
-              />
-            </p>
 
             <div className={styles.footer}>
               <p className={styles.footerText}>
