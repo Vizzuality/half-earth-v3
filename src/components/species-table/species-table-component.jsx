@@ -122,9 +122,12 @@ function SpeciesTable({
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
 
-  // const table = document?.querySelector('.table');
-
-  // console.log({ table: table?.offsetHeight });
+  if (speciesList.length === 0 || !speciesList)
+    return (
+      <div className={styles.loader} style={{ height: tableHeight }}>
+        <Loading />
+      </div>
+    );
   return (
     <div className={styles.scrolleableArea}>
       <section className={styles.section}>
@@ -196,20 +199,11 @@ function SpeciesTable({
           </div>
         </div>
 
-        {!speciesList ? (
-          <div
-            className={styles.loader}
-            style={{ width: '100%', height: tableHeight }}
-          >
-            <Loading />
-          </div>
-        ) : (
-          <Virtuoso
-            className={styles.rowsContainer}
-            totalCount={speciesList.length}
-            item={renderRow}
-          />
-        )}
+        <Virtuoso
+          className={styles.rowsContainer}
+          totalCount={speciesList.length}
+          item={renderRow}
+        />
       </div>
       <section />
     </div>

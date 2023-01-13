@@ -192,12 +192,6 @@
     }
   }
 
-  .loader {
-    background-color: $white;
-    display: flex;
-    justify-content: center;
-  }
-
   .search {
     display: flex;
     align-items: center;
@@ -260,4 +254,9 @@
 
 .expandedButton {
   padding: 0;
+}
+
+.loader {
+  margin-top: 25%;
+  width: 100%,
 }
