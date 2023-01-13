@@ -173,6 +173,7 @@ function NrcContent({
     <div
       className={cx({
         [styles.nrcContent]: true,
+        [styles.nrcContentVertebrates]: NRCSidebarView === 'vertebrates',
         [styles.nrcContentShrunken]: fullRanking,
       })}
     >
