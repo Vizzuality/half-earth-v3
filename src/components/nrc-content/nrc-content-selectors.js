@@ -5,7 +5,6 @@ import {
   selectUiUrlState,
 } from 'selectors/location-selectors';
 import {
-  getCountryData,
   getDescription,
   getLandMarineSelected,
   getCountryChallengesSelectedFilter,
@@ -264,7 +263,6 @@ const getSelectedIndicatorOption = createSelector(
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
   challengesFilterOptions: getChallengesDependantFilterOptions,
-  countryData: getCountryData,
   countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   indicatorLabels: getIndicatorLabels,
