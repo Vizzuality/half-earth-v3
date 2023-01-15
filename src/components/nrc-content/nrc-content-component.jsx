@@ -19,6 +19,7 @@ import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
 import Dropdown from 'components/dropdown';
 import AreaChartTooltip from 'components/nrc-content/area-chart-tooltip';
+import Footer from 'components/nrc-content/footer';
 import Indicators from 'components/nrc-content/indicators';
 import Vertebrates from 'components/nrc-content/vertebrates';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
@@ -47,6 +48,7 @@ function NrcContent({
   countryChallengesSelectedKey,
   countryData,
   countryDescription,
+  countryId,
   countryISO,
   countryName,
   fullRanking,
@@ -375,8 +377,8 @@ function NrcContent({
                 escapeHtml={false}
               />
             </div>
-
-            <div className={styles.footer}>
+            <Footer countryId={countryId} />
+            {/* <div className={styles.footer}>
               <p className={styles.footerText}>
                 {t(
                   'For a detailed analysis check the country analysis of the Explore Data section.'
@@ -390,7 +392,7 @@ function NrcContent({
                 tooltipText={t('Go to Explore Data section')}
                 label={t('ANALYZE AREA')}
               />
-            </div>
+            </div> */}
           </div>
           <ShareModal
             isOpen={isShareModalOpen}
