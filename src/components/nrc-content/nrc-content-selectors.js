@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getDescription } from 'selectors/nrc-selectors';
+import { getCountryData, getDescription } from 'selectors/nrc-selectors';
 import { getNRCSidebarView } from 'selectors/ui-selectors';
 
 import sortBy from 'lodash/sortBy';
@@ -38,6 +38,7 @@ const getAreaChartData = createSelector([getChartData], (chartData) => {
 
 export default createStructuredSelector({
   areaChartData: getAreaChartData,
+  countryData: getCountryData,
   countryDescription: getDescription,
   NRCSidebarView: getNRCSidebarView,
   onboardingType: getOnboardingType,

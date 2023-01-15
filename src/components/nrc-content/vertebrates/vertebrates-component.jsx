@@ -67,17 +67,14 @@ function Indicators({ countryData, setNRCSidebarView }) {
             <p>
               <T
                 _str="{bold} {specie} of {totalNumber}"
-                endemicNumber={getLocaleNumber(s.endemic || 0, locale)}
+                endemicNumber={getLocaleNumber(s.endemic, locale)}
                 specie={getSpecieText(s.specie)}
-                totalNumber={getLocaleNumber(s.total || 0, locale)}
+                totalNumber={getLocaleNumber(s.total, locale)}
                 bold={
                   <>
                     <b>
                       <T
-                        _str={`${getLocaleNumber(
-                          s.endemic || 0,
-                          locale
-                        )} endemic`}
+                        _str={`${getLocaleNumber(s.endemic, locale)} endemic`}
                       />
                     </b>
                     <br />

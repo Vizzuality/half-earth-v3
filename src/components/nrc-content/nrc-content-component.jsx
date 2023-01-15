@@ -5,6 +5,7 @@ import { useT } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import { Loading } from 'he-components';
 import ReactMarkdown from 'react-markdown/with-html';
 
 import {
@@ -35,6 +36,7 @@ function NrcContent({
   challengesInfo,
   changeUI,
   chartData,
+  countryData,
   countryDescription,
   countryId,
   countryISO,
@@ -51,6 +53,9 @@ function NrcContent({
   waitingInteraction,
 }) {
   const t = useT();
+
+  const dataIsLoaded =
+    areaChartData && countryData && chartData && challengesInfo;
 
   const { source: challengesSources } = challengesInfo;
 
@@ -74,7 +79,8 @@ function NrcContent({
     <div
       className={cx({
         [styles.nrcContent]: true,
-        [styles.nrcContentVertebrates]: NRCSidebarView === 'vertebrates',
+        [styles.nrcContentVertebrates]:
+          NRCSidebarView === 'vertebrates' && countryData,
         [styles.nrcContentShrunken]: fullRanking,
       })}
     >
@@ -139,34 +145,42 @@ function NrcContent({
               />
             </div>
           </header>
-
-          <div className={styles.scrolleableArea}>
-            <div className={styles.countryDescriptionContainer}>
-              <p className={styles.countryDescription}>{countryDescription}</p>
+          {!dataIsLoaded && (
+            <div className={styles.loader} style={{ height: 200 }}>
+              <Loading />
             </div>
+          )}
+          {dataIsLoaded && (
+            <div className={styles.scrolleableArea}>
+              <div className={styles.countryDescriptionContainer}>
+                <p className={styles.countryDescription}>
+                  {countryDescription}
+                </p>
+              </div>
 
-            <Indicators />
+              <Indicators />
 
-            <Vertebrates />
+              <Vertebrates />
 
-            <Trend chartData={chartData} />
+              <Trend chartData={chartData} />
 
-            <Challenges
-              countryISO={countryISO}
-              countryName={countryName}
-              countryId={countryId}
-            />
-
-            <div className={styles.sourceText}>
-              <p>{t('Source: ')}</p>
-              <ReactMarkdown
-                key={challengesSources}
-                source={challengesSources}
-                escapeHtml={false}
+              <Challenges
+                countryISO={countryISO}
+                countryName={countryName}
+                countryId={countryId}
               />
+
+              <div className={styles.sourceText}>
+                <p>{t('Source: ')}</p>
+                <ReactMarkdown
+                  key={challengesSources}
+                  source={challengesSources}
+                  escapeHtml={false}
+                />
+              </div>
+              <Footer countryId={countryId} />
             </div>
-            <Footer countryId={countryId} />
-          </div>
+          )}
           <ShareModal
             isOpen={isShareModalOpen}
             setShareModalOpen={setShareModalOpen}

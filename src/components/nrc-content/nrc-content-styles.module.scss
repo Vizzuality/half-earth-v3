@@ -6,6 +6,11 @@
   height: 80vh;
   overflow: hidden;
 
+  .loader {
+    margin-top: 25%;
+    width: 100%,
+  }
+
   .scrolleableArea {
     position: absolute;
     top: 60px;
