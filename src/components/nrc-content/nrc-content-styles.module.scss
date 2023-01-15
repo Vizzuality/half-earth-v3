@@ -74,66 +74,6 @@
     }
   }
 
-  .indicatorCardsContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 10px;
-    padding-left: 20px;
-    padding-right: 40px;
-      .bar {
-        height: 17px;
-        width: 100%;
-      }
-      .spiAverageText {
-        @extend %annotation;
-        color: $grey-text;
-        margin: 0;
-      }
-  }
-
-  .vertebratesContainer {
-    background: $dark;
-    border: 1px solid $elephant;
-    border-radius: 8px;
-    color: $white;
-    display: flex;
-    justify-content: space-between;
-    margin: 8px 40px 8px 20px;
-    padding: 10px 16px;
-
-    .endemicCardsContainer {
-      @extend %bodyText;
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-
-      .endemicCard {
-        align-items: center;
-        display: flex;
-        margin-right: 15px;
-      }
-
-      .endemicIcon {
-        background-color: $white;
-        border-radius: 50%;
-        padding: 1px;
-        height: 32px;
-        width: 32px;
-        margin-right: 8px;
-      }
-    }
-    p {
-      margin: 0;
-    }
-
-    button {
-      border-radius: $border-radius-desktop;
-      margin-left: 20px;
-      padding: 10px 32px;
-      white-space: nowrap;
-    }
-  }
-
   .areaChartContainer {
     background: $dark;
     border: 1px solid $elephant;
