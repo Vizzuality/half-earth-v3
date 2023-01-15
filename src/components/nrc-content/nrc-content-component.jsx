@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 
-import { T, useT } from '@transifex/react';
+import { useT } from '@transifex/react';
 
-import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown/with-html';
@@ -14,9 +13,8 @@ import {
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
-import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
-import Dropdown from 'components/dropdown';
+import Challenges from 'components/nrc-content/challenges';
 import Footer from 'components/nrc-content/footer';
 import Indicators from 'components/nrc-content/indicators';
 import Trend from 'components/nrc-content/trend';
@@ -26,57 +24,35 @@ import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
-import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
-import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
-import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
-
-import { CONTINENTS } from './nrc-content-constants';
 import styles from './nrc-content-styles.module.scss';
 
 function NrcContent({
   areaChartData,
-  challengesFilterOptions,
   challengesInfo,
   changeUI,
   chartData,
-  countryChallengesSelectedKey,
   countryDescription,
   countryId,
   countryISO,
   countryName,
   fullRanking,
   goToAnalyzeAreas,
-  handleBubbleClick,
   handleClose,
-  handleFilterSelection,
-  handleSelectIndicator,
-  handleSelectPreviousIndicator,
-  handleSelectNextIndicator,
   handlePrintReport,
-  indicatorLabels,
-  indicatorOptions,
-  landMarineSelection,
   NRCSidebarView,
   onboardingType,
   onboardingStep,
-  scatterPlotData,
-  selectedIndicatorOption,
-  selectedFilterOption,
   setNRCSidebarView,
-  xAxisTicks,
-  yAxisTicks,
   selectedLandMarineOption,
   waitingInteraction,
 }) {
   const t = useT();
 
-  const { description: challengesTooltipInfo, source: challengesSources } =
-    challengesInfo;
-  const land = landMarineSelection === 'land';
+  const { source: challengesSources } = challengesInfo;
 
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const tooltipRefs = useOnboardingTooltipRefs({
@@ -168,157 +144,19 @@ function NrcContent({
             <div className={styles.countryDescriptionContainer}>
               <p className={styles.countryDescription}>{countryDescription}</p>
             </div>
+
             <Indicators />
 
             <Vertebrates />
 
             <Trend chartData={chartData} />
 
-            <div
-              className={cx({
-                [styles.challengesContainer]: true,
-                [styles.challengesContainerShrunken]: fullRanking,
-              })}
-            >
-              <div className={styles.chartHeader}>
-                {countryName && (
-                  <div className={styles.chartTitleContainer}>
-                    <div className={styles.chartTitleIndicators}>
-                      <p className={styles.chartTitle}>
-                        <T
-                          _str="{landMarineSelection} SPI and"
-                          landMarineSelection={land ? 'Land' : 'Marine'}
-                        />
-                      </p>
-                      <div className={styles.dropdownContainer}>
-                        {indicatorOptions && (
-                          <Dropdown
-                            theme="secondary-dark"
-                            width="full"
-                            parentWidth={fullRanking ? '180px' : '230px'}
-                            options={indicatorOptions}
-                            selectedOption={
-                              selectedIndicatorOption || indicatorOptions[0]
-                            }
-                            handleOptionSelection={handleSelectIndicator}
-                          />
-                        )}
-                      </div>
-                    </div>
-                    <div className={styles.chartTitleFilter}>
-                      <p className={styles.chartTitle}>{t('of countries')}</p>
-                      <div className={styles.dropdownContainer}>
-                        <Dropdown
-                          theme="secondary-dark"
-                          width="full"
-                          parentWidth={fullRanking ? '180px' : '230px'}
-                          options={challengesFilterOptions}
-                          selectedOption={selectedFilterOption}
-                          handleOptionSelection={handleFilterSelection}
-                        />
-                      </div>
-                      <p className={styles.chartTitle}>
-                        <T _str="to {countryName}" countryName={countryName} />
-                      </p>
-                    </div>
-                  </div>
-                )}
-                <span>
-                  <Tooltip
-                    content={
-                      <div className={styles.titleTooltip}>
-                        <T
-                          _str="{challengesTooltipInfo}"
-                          challengesTooltipInfo={challengesTooltipInfo}
-                        />
-                      </div>
-                    }
-                    delay={100}
-                    placement="top"
-                  >
-                    <InfoIcon className={styles.icon} />
-                  </Tooltip>
-                </span>
-              </div>
-              <div className={styles.scatterPlotContainer}>
-                <div className={styles.scatterPlotChartWrapper}>
-                  <ScatterPlot
-                    data={scatterPlotData}
-                    countryISO={countryISO}
-                    xAxisTicks={xAxisTicks}
-                    yAxisTicks={yAxisTicks}
-                    onBubbleClick={handleBubbleClick}
-                    countryChallengesSelectedKey={countryChallengesSelectedKey}
-                  />
-                  {fullRanking && (
-                    <div className={styles.xAxisContainer}>
-                      <div className={styles.xAxisLabelContainer}>
-                        <span className={styles.xAxisIndicator}>
-                          {indicatorLabels[countryChallengesSelectedKey]}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                  {!fullRanking && (
-                    <div className={styles.xAxisContainer}>
-                      <div className={styles.xAxisLabelContainer}>
-                        <button
-                          type="button"
-                          onClick={handleSelectPreviousIndicator}
-                          style={{ transform: 'scaleX(-1)' }}
-                        >
-                          <ArrowButton className={styles.arrowButton} />
-                        </button>
-                        <span className={styles.xAxisIndicator}>
-                          {indicatorLabels[countryChallengesSelectedKey]}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={handleSelectNextIndicator}
-                        >
-                          <ArrowButton className={styles.arrowButton} />
-                        </button>
-                      </div>
-                    </div>
-                  )}
+            <Challenges
+              countryISO={countryISO}
+              countryName={countryName}
+              countryId={countryId}
+            />
 
-                  <div className={styles.yAxisContainer}>
-                    <span className={styles.yAxisIndicator}>
-                      <T
-                        _str="{landMarineSelection} SPI"
-                        landMarineSelection={land ? 'Land' : 'Marine'}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div className={styles.scatterPlotLegendWrapper}>
-                  <div className={styles.continentsLegendWrapper}>
-                    <h5 className={styles.legendTitle}>{t('Continent')}</h5>
-                    <div className={styles.legendItemsContainer}>
-                      {CONTINENTS.map((c) => (
-                        <div key={c.color} className={styles.legendItem}>
-                          <div
-                            className={styles.legendItemColor}
-                            style={{
-                              background: c.color,
-                            }}
-                          />
-                          <p className={styles.legendItemLabel}>
-                            <T _str="{country}" country={c.label} />
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h5 className={styles.legendTitle}>
-                      <T _str="Country area in km{sup}" sup={<sup>2</sup>} />
-                    </h5>
-                    <CountryAreaImage className={styles.countryAreaImage} />
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className={styles.sourceText}>
               <p>{t('Source: ')}</p>
               <ReactMarkdown
@@ -328,21 +166,6 @@ function NrcContent({
               />
             </div>
             <Footer countryId={countryId} />
-            {/* <div className={styles.footer}>
-              <p className={styles.footerText}>
-                {t(
-                  'For a detailed analysis check the country analysis of the Explore Data section.'
-                )}
-              </p>
-              <Button
-                type="icon-square"
-                Icon={AnalyzeAreasIcon}
-                handleClick={goToAnalyzeAreas}
-                className={styles.analyzeBtn}
-                tooltipText={t('Go to Explore Data section')}
-                label={t('ANALYZE AREA')}
-              />
-            </div> */}
           </div>
           <ShareModal
             isOpen={isShareModalOpen}
