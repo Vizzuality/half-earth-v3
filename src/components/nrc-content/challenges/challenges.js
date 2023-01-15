@@ -66,7 +66,6 @@ function ChallengesContainer(props) {
   };
 
   const handleSelectNextIndicator = () => {
-    console.log('current index', xAxisKeys);
     const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
     if (currentIndex !== xAxisKeys.length - 1) {
       changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });

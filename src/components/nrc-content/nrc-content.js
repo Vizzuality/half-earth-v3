@@ -4,11 +4,7 @@ import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
 import uiActions from 'redux_modules/ui';
 
-import {
-  NATIONAL_REPORT_CARD,
-  NATIONAL_REPORT_CARD_LANDING,
-  AREA_OF_INTEREST,
-} from 'router';
+import { NATIONAL_REPORT_CARD_LANDING, AREA_OF_INTEREST } from 'router';
 
 import { useLocale } from '@transifex/react';
 
@@ -18,10 +14,8 @@ import * as urlActions from 'actions/url-actions';
 import ContentfulService from 'services/contentful';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
-import { getIndicatorLabels } from 'constants/country-mode-constants';
 import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
 import { getCountryNames } from 'constants/translation-constants';
-import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import Component from './nrc-content-component';
 import mapStateToProps from './nrc-content-selectors';
@@ -42,8 +36,6 @@ function NrcContainer(props) {
     countryId,
     changeUI,
     setNRCSidebarView,
-    countryChallengesSelectedKey,
-    xAxisKeys,
   } = props;
 
   const locale = useLocale();
@@ -68,17 +60,6 @@ function NrcContainer(props) {
         onboardingStep: 6,
         waitingInteraction: false,
       });
-  };
-
-  const handleBubbleClick = ({ countryISO }) => {
-    const { selectedFilterOption } = props;
-    browsePage({
-      type: NATIONAL_REPORT_CARD,
-      payload: { iso: countryISO, view: LOCAL_SCENE_TABS_SLUGS.CHALLENGES },
-      query: {
-        ui: { countryChallengesSelectedFilter: selectedFilterOption.slug },
-      },
-    });
   };
 
   const goToAnalyzeAreas = () => {
@@ -107,36 +88,6 @@ function NrcContainer(props) {
     document.title = tempTitle;
   };
 
-  const handleFilterSelection = (selectedFilter) => {
-    changeUI({ countryChallengesSelectedFilter: selectedFilter.slug });
-  };
-
-  const handleSelectNextIndicator = () => {
-    const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
-    if (currentIndex !== xAxisKeys.length - 1) {
-      changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex + 1] });
-    } else {
-      changeUI({ countryChallengesSelectedKey: xAxisKeys[0] });
-    }
-  };
-
-  const handleSelectPreviousIndicator = () => {
-    const currentIndex = xAxisKeys.indexOf(countryChallengesSelectedKey);
-    if (currentIndex > 0) {
-      changeUI({ countryChallengesSelectedKey: xAxisKeys[currentIndex - 1] });
-    } else {
-      changeUI({
-        countryChallengesSelectedKey: xAxisKeys[xAxisKeys.length - 1],
-      });
-    }
-  };
-
-  const handleSelectIndicator = (selection) => {
-    const AllXAxisKeys = Object.keys(getIndicatorLabels());
-    const currentIndex = AllXAxisKeys.indexOf(selection.slug);
-    changeUI({ countryChallengesSelectedKey: AllXAxisKeys[currentIndex] });
-  };
-
   return (
     <Component
       {...props}
@@ -144,12 +95,7 @@ function NrcContainer(props) {
       countryName={localizedCountryName}
       goToAnalyzeAreas={goToAnalyzeAreas}
       handleClose={handleClose}
-      handleBubbleClick={handleBubbleClick}
-      handleFilterSelection={handleFilterSelection}
       handlePrintReport={handlePrintReport}
-      handleSelectIndicator={handleSelectIndicator}
-      handleSelectNextIndicator={handleSelectNextIndicator}
-      handleSelectPreviousIndicator={handleSelectPreviousIndicator}
       setNRCSidebarView={setNRCSidebarView}
     />
   );
