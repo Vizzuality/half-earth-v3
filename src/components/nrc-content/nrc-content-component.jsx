@@ -14,19 +14,16 @@ import {
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
-import AreaChart from 'components/charts/area-chart';
 import ScatterPlot from 'components/charts/scatter-plot';
 import CloseButton from 'components/close-button';
 import Dropdown from 'components/dropdown';
-import AreaChartTooltip from 'components/nrc-content/area-chart-tooltip';
 import Footer from 'components/nrc-content/footer';
 import Indicators from 'components/nrc-content/indicators';
+import Trend from 'components/nrc-content/trend';
 import Vertebrates from 'components/nrc-content/vertebrates';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
-
-import COLORS from 'styles/settings';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as ArrowButton } from 'icons/arrow_right.svg';
@@ -45,8 +42,8 @@ function NrcContent({
   challengesFilterOptions,
   challengesInfo,
   changeUI,
+  chartData,
   countryChallengesSelectedKey,
-  countryData,
   countryDescription,
   countryId,
   countryISO,
@@ -76,8 +73,6 @@ function NrcContent({
   waitingInteraction,
 }) {
   const t = useT();
-
-  const { land: landData, marine: marineData } = areaChartData;
 
   const { description: challengesTooltipInfo, source: challengesSources } =
     challengesInfo;
@@ -177,53 +172,8 @@ function NrcContent({
 
             <Vertebrates />
 
-            <div className={styles.areaChartContainer}>
-              <div className={styles.chartHeader}>
-                <p className={styles.chartTitle}>
-                  <T
-                    _str="Trend of the {landMarineSelection} SPI"
-                    landMarineSelection={land ? 'Land' : 'Marine'}
-                  />
-                </p>
-                <span>
-                  <Tooltip
-                    content={
-                      <div className={styles.titleTooltip}>
-                        {t(
-                          'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
-                        )}
-                      </div>
-                    }
-                    delay={100}
-                    placement="top"
-                  >
-                    <InfoIcon className={styles.icon} />
-                  </Tooltip>
-                </span>
-              </div>
-              {countryData && (
-                <AreaChart
-                  area1={{
-                    key: 'spi',
-                    stroke: COLORS.white,
-                    strokeWidth: 0.5,
-                    label: 'SPI',
-                  }}
-                  area2={{
-                    key: 'protected',
-                    stroke: COLORS.white,
-                    strokeWidth: 0.7,
-                    strokeDasharray: '3 3 3 3',
-                    label: '% Protected areas',
-                  }}
-                  data={land ? landData : marineData}
-                  height={240}
-                  width="98%"
-                  tooltip
-                  tooltipContent={<AreaChartTooltip />}
-                />
-              )}
-            </div>
+            <Trend chartData={chartData} />
+
             <div
               className={cx({
                 [styles.challengesContainer]: true,
