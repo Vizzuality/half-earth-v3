@@ -286,33 +286,6 @@
     }
   }
 
-  .footer {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 40px 20px 20px;
-    .footerText {
-      @extend %annotation;
-      color: $white;
-      font-size: 14px;
-    }
-
-    .analyzeBtn {
-      background-color: $white;
-      white-space: nowrap;
-      padding: 5px 15px;
-      width: auto;
-      svg {
-        stroke: $dark-text;
-        margin-right: 10px;
-      }
-      &:hover {
-        background-color: $brand-color-main;
-      }
-
-    }
-  }
-
   .countryName {
     @extend %display2;
     margin: 0;
