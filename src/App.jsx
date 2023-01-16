@@ -7,6 +7,7 @@ import loadable from '@loadable/component';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import cx from 'classnames';
 
 import { useMobile, MobileOnly } from 'constants/responsive';
 
@@ -83,8 +84,10 @@ function App(props) {
   return (
     <QueryClientProvider client={queryClient}>
       <div
-        className={styles.app}
-        style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
+        className={cx({
+          [styles.app]: true,
+          [styles.mobile]: REACT_APP_FEATURE_MOBILE,
+        })}
       >
         {!REACT_APP_FEATURE_MOBILE && (
           <MobileOnly>

@@ -5,12 +5,10 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  height: 100vh;
   margin-top: 30px;
-
-  @media #{$tablet-landscape} {
-    margin-top: 70px;
-  }
+  position: relative;
+  width: 100vw;
 
   .subtitle {
     @extend %subtitle;
@@ -29,26 +27,31 @@
     line-height: 32px;
   }
 
-  .ctoText {
-    @extend %title;
-    color: $white;
-    text-align: center;
-    margin: 20px 10px;
+  .footer {
+    @extend %annotation;
+    color: $grey-text;
+    display: flex;
+    font-weight: 300;
+    margin: 0 20px 20px 20px;
+    position: absolute;
+    bottom: 0;
 
-    @media #{$tablet-landscape} {
-      margin: 61px 0 40px 0;
+    p {
+      text-align: center;
+    }
+
+    a {
+      color: $grey-text;
+      text-decoration: underline;
     }
   }
 
-  .audioCards {
+  .cards {
     align-self: center;
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 32px;
-
-    .audioCard {
-      display: flex;
-    }
+    gap: 8px;
+    margin: 32px 16px;
   }
 }

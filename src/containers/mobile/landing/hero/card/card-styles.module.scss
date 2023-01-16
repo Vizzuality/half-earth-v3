@@ -1,0 +1,51 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  display: flex;
+  width: 100%;
+  outline: 1px solid $elephant;
+  transition: 0.4s;
+  padding: 24px 0 16px 16px;
+
+  .content {
+    border-left: 1px solid transparent;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    text-align: left;
+    width: 75%;
+
+    .title {
+      @extend %bodyText;
+      color: $grey-text;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin: 0 0 4px 0;
+      line-height: 20px;
+    }
+
+    .description {
+      @extend %bodyText;
+      color: $white;
+      font-size: 16px;
+      margin: 0;
+      line-height: 22px;
+    }
+  }
+
+  .imageContainer {
+    height: 100%;
+    overflow: hidden;
+    width: 25%;
+
+
+    .image {
+      height: 100px;
+      margin-left: 10px;
+      width: 100px;
+    }
+  }
+}
