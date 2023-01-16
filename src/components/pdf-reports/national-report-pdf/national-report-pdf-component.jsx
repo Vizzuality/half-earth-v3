@@ -122,10 +122,11 @@ function NationalReportPdf({
           <div
             className={styles.bar}
             style={{
-              backgroundImage: getBarStyles(
-                COLORS.gold,
-                (total_endemic * 100) / nspecies
-              ),
+              backgroundImage: getBarStyles({
+                color1: COLORS.gold,
+                value1: (total_endemic * 100) / nspecies,
+                variant: 'light',
+              }),
             }}
           />
         </IndicatorCard>
@@ -156,12 +157,13 @@ function NationalReportPdf({
           <div
             className={styles.bar}
             style={{
-              backgroundImage: getBarStyles(
-                COLORS['protected-areas'],
-                prop_protected,
-                COLORS['protection-needed'],
-                prop_protected + protection_needed
-              ),
+              backgroundImage: getBarStyles({
+                color1: COLORS['protected-areas'],
+                value1: prop_protected,
+                color2: COLORS['protection-needed'],
+                value2: prop_protected + protection_needed,
+                variant: 'light',
+              }),
             }}
           />
         </IndicatorCard>
@@ -187,12 +189,13 @@ function NationalReportPdf({
           <div
             className={styles.bar}
             style={{
-              backgroundImage: getBarStyles(
-                COLORS['high-modification'],
-                hm_vh,
-                COLORS['some-modification'],
-                hm
-              ),
+              backgroundImage: getBarStyles({
+                color1: COLORS['high-modification'],
+                value1: hm_vh,
+                color2: COLORS['some-modification'],
+                value2: hm,
+                variant: 'light',
+              }),
             }}
           />
         </IndicatorCard>
