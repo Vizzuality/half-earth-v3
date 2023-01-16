@@ -8,6 +8,11 @@ import { motion } from 'framer-motion';
 import { Loading } from 'he-components';
 import ReactMarkdown from 'react-markdown/with-html';
 
+import Challenges from 'containers/nrc-content/nrc-challenges';
+import Footer from 'containers/nrc-content/nrc-footer';
+import Indicators from 'containers/nrc-content/nrc-indicators';
+import Trend from 'containers/nrc-content/nrc-trend';
+import Vertebrates from 'containers/nrc-content/nrc-vertebrates';
 import {
   useOnboardingTooltipRefs,
   getOnboardingProps,
@@ -15,11 +20,6 @@ import {
 
 import Button from 'components/button';
 import CloseButton from 'components/close-button';
-import Challenges from 'components/nrc-content/nrc-challenges';
-import Footer from 'components/nrc-content/nrc-footer';
-import Indicators from 'components/nrc-content/nrc-indicators';
-import Trend from 'components/nrc-content/nrc-trend';
-import Vertebrates from 'components/nrc-content/nrc-vertebrates';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';

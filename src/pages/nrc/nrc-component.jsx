@@ -9,11 +9,11 @@ import { useT } from '@transifex/react';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 
+import NrcContent from 'containers/nrc-content';
 import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
 import HalfEarthLogo from 'components/half-earth-logo';
-import NrcContent from 'components/nrc-content';
 import RankingChart from 'components/ranking-chart';
 
 import uiStyles from 'styles/ui.module.scss';

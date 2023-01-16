@@ -5,7 +5,7 @@ import { T, useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
-import IndicatorCard from 'components/nrc-content/nrc-indicators//indicator-card';
+import IndicatorCard from 'containers/nrc-content/nrc-indicators//indicator-card';
 
 import COLORS from 'styles/settings';
 

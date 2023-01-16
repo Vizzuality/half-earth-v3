@@ -4,8 +4,9 @@ import { T, useT } from '@transifex/react';
 
 import Tooltip from '@tippyjs/react';
 
+import AreaChartTooltip from 'containers/nrc-content/nrc-trend/area-chart-tooltip';
+
 import AreaChart from 'components/charts/area-chart';
-import AreaChartTooltip from 'components/nrc-content/nrc-trend/area-chart-tooltip';
 
 import COLORS from 'styles/settings';
 
