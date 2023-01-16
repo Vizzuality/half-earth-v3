@@ -8,13 +8,14 @@ import { tx, PseudoTranslationPolicy } from '@transifex/native';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { MobileOnly } from 'constants/responsive';
+import { useMobile, MobileOnly } from 'constants/responsive';
 
 import styles from './app-styles.module.scss';
 import MobileDisclaimer from './components/mobile-disclaimer-modal';
 
 // Dynamic imports
 const Landing = loadable(() => import('pages/landing'));
+const LandingMobile = loadable(() => import('pages/mobile/landing-mobile'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
 const NationalReportCardLegacy = loadable(() => import('pages/nrc-legacy'));
@@ -27,12 +28,19 @@ const mapStateToProps = ({ location }) => ({
   lang: location.query && location.query.lang,
 });
 
-const { REACT_APP_TRANSIFEX_TOKEN, REACT_APP_FEATURE_NEW_NRC_PAGE } =
-  process.env;
+const {
+  REACT_APP_TRANSIFEX_TOKEN,
+  REACT_APP_FEATURE_NEW_NRC_PAGE,
+  REACT_APP_FEATURE_MOBILE,
+} = process.env;
 
 function AppLayout(props) {
   const { route } = props;
   const { page } = route;
+  const isMobile = useMobile();
+
+  const isMobileFlag = isMobile && REACT_APP_FEATURE_MOBILE;
+
   switch (page) {
     case 'data-globe':
       return <DataGlobe />;
@@ -49,7 +57,7 @@ function AppLayout(props) {
     case 'aoi':
       return <AreaOfInterest />;
     default:
-      return <Landing />;
+      return isMobileFlag ? <LandingMobile /> : <Landing />;
   }
 }
 
@@ -78,9 +86,11 @@ function App(props) {
         className={styles.app}
         style={{ width: '100vw', height: '100vh', backgroundColor: '#0a212e' }}
       >
-        <MobileOnly>
-          <MobileDisclaimer />
-        </MobileOnly>
+        {!REACT_APP_FEATURE_MOBILE && (
+          <MobileOnly>
+            <MobileDisclaimer />
+          </MobileOnly>
+        )}
         <AppLayout {...props} />
       </div>
     </QueryClientProvider>
