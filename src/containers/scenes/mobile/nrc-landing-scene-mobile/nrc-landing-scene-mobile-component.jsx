@@ -2,6 +2,8 @@ import React from 'react';
 
 import loadable from '@loadable/component';
 
+import { useT } from '@transifex/react';
+
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
@@ -11,6 +13,10 @@ import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
 
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+
+import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
+
+import styles from './nrc-landing-scene-mobile-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -27,6 +33,8 @@ function NrcLandingComponent({
   sceneSettings,
   isGlobeUpdating,
 }) {
+  const t = useT();
+
   return (
     <Scene
       sceneName="nrc-landing-scene"
@@ -35,15 +43,16 @@ function NrcLandingComponent({
       onMapLoad={onMapLoad}
       initialRotation
     >
-      <haeder
-        style={{
-          border: '1px solid red',
-          position: 'absolute',
-          zIndex: 10,
-          top: 0,
-        }}
-      >
-        National resports cards
+      <haeder className={styles.header}>
+        <button
+          className={styles.backBtn}
+          type="button"
+          onClick={() => console.log('handle step back')}
+        >
+          <BackArrowIcon className={styles.arrowIcon} />
+        </button>
+
+        <p>{t('National resports cards')}</p>
       </haeder>
       <ArcgisLayerManager activeLayers={activeLayers} />
 

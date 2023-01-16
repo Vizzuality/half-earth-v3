@@ -1,0 +1,29 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.header {
+  align-items: center;
+  color: $white;
+  display: flex;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 20px;
+
+  .backBtn {
+    padding: 0;
+    margin-left: -10px;
+    .arrowIcon {
+      fill: $white;
+      height: 36px;
+      width: 34px;
+    }
+  }
+
+  p {
+    @extend %title;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin: 0 0 0 10px;
+  }
+}
