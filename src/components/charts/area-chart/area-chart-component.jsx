@@ -42,6 +42,11 @@ function AreaChartComponent({
         fill="transparent"
       >
         <Label
+          style={
+            area.labelOffset && {
+              transform: `translate(${area.labelOffset}px, 0)`,
+            }
+          }
           className={styles.label}
           value={area.label}
           position="insideTop"

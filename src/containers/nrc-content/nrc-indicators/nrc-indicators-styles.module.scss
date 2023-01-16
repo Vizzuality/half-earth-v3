@@ -3,19 +3,19 @@
 
 .indicatorCardsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
   grid-gap: 10px;
-  padding-left: 20px;
-  padding-right: 40px;
-    .bar {
-      height: 17px;
-      width: 100%;
-    }
-    .spiAverageText {
-      @extend %annotation;
-      color: $grey-text;
-      margin: 0;
-    }
+  padding-right: 16px;
+
+  .bar {
+    height: 17px;
+    width: 100%;
+  }
+  .spiAverageText {
+    @extend %annotation;
+    color: $grey-text;
+    margin: 0;
+  }
 }
 
 .titleTooltip {
@@ -40,4 +40,3 @@
   border-style: solid;
   border-color: white transparent transparent transparent;
 }
-

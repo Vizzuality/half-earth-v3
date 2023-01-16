@@ -1,9 +1,12 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
+$content-padding: 16px;
+$content-height: calc(100vh - 105px);
+
 .nrcContent {
   width: 100%;
-  height: 80vh;
+  height: $content-height;
   overflow: hidden;
 
   .loader {
@@ -12,11 +15,7 @@
   }
 
   .scrolleableArea {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 20px;
-    right: -17px;
+    padding-left: 20px;
     overflow-y: scroll;
   }
 
@@ -26,7 +25,9 @@
   }
 
   .motionView {
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: $content-height;
   }
 
   .closeButton {
@@ -37,7 +38,7 @@
 
   .header {
     padding-top: $local-sidebar-top-margin;
-    padding-left: 40px;
+    padding-left: $content-padding;
     padding-bottom: 12px;
     display: flex;
     justify-content: space-between;
@@ -71,7 +72,8 @@
 
   .countryDescriptionContainer {
     column-count: 2;
-    padding: $local-sidebar-top-margin 40px $local-sidebar-top-margin 20px;
+    padding: $local-sidebar-top-margin $content-padding $local-sidebar-top-margin 0;
+
     .countryDescription {
       @extend %bodyText;
       color: $grey-text;
@@ -82,6 +84,7 @@
   .actionButtons {
     display: flex;
     margin-right: 30px;
+    min-width: 96px;
   }
 
   .actionButton {
@@ -120,76 +123,44 @@
     width: 30px;
     position: relative;
   }
-}
 
-.nrcContentShrunken {
-  .countryDescriptionContainer {
-    column-count: 1;
-  }
 
-  .indicatorCardsContainer {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .vertebratesContainer {
-    flex-direction: column;
-    .endemicCardsContainer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 20px;
-      .endemicCard {
-        margin-right: 5px;
-      }
-    }
-    button {
-      display: flex;
-      justify-content: center;
-      margin-left: 0;
-      margin-top: 15px;
+  &.nrcContentShrunken {
+    .countryDescriptionContainer {
+      column-count: 1;
     }
   }
 
-  .footer {
-    flex-direction: column;
-    .footerText {
-      font-size: 12px;
-    }
-    .analyzeBtn {
-      width: 100%;
-    }
+  .titleTooltip {
+    @extend %annotation;
+    border-radius: $border-radius-desktop;
+    background: $white;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    color: $dark-text;
+    margin-bottom: 5px;
+    padding: 2px 6px;
+    width: 200px;
   }
-}
 
-.titleTooltip {
-  @extend %annotation;
-  border-radius: $border-radius-desktop;
-  background: $white;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  color: $dark-text;
-  margin-bottom: 5px;
-  padding: 2px 6px;
-  width: 200px;
-}
+  .titleTooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
 
-.titleTooltip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: white transparent transparent transparent;
-}
-
-.nrcContentVertebrates:before {
-  content: '';
-  position: absolute;
-  bottom: 60px;
-  width: 100%;
-  height: 50px;
-  z-index: 9;
-  background-image: linear-gradient(to top, $app-background 0%, rgba(9, 12, 20, 0) 100%);
+  .nrcContentVertebrates:before {
+    content: '';
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+    height: 50px;
+    z-index: 9;
+    background-image: linear-gradient(to top, $app-background 0%, rgba(9, 12, 20, 0) 100%);
+  }
 }

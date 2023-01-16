@@ -26,4 +26,15 @@
       background-color: $brand-color-main;
     }
   }
+
+  &.shrunken {
+    flex-direction: column;
+
+    .footerText {
+      font-size: 12px;
+    }
+    .analyzeBtn {
+      width: 100%;
+    }
+  }
 }

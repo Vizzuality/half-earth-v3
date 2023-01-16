@@ -31,6 +31,11 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
 import styles from './nrc-content-styles.module.scss';
 
+const NRCSidebar = {
+  main: 'main',
+  vertebrates: 'vertebrates',
+};
+
 function NrcContent({
   areaChartData,
   challengesInfo,
@@ -51,6 +56,7 @@ function NrcContent({
   setNRCSidebarView,
   selectedLandMarineOption,
   waitingInteraction,
+  setFullRanking,
 }) {
   const t = useT();
 
@@ -80,7 +86,7 @@ function NrcContent({
       className={cx({
         [styles.nrcContent]: true,
         [styles.nrcContentVertebrates]:
-          NRCSidebarView === 'vertebrates' && countryData,
+          NRCSidebarView === NRCSidebar.vertebrates && countryData,
         [styles.nrcContentShrunken]: fullRanking,
       })}
     >
@@ -98,7 +104,7 @@ function NrcContent({
         tooltipText={t('Go back to the globe')}
         onboardingOverlay={onboardingOverlay}
       />
-      {NRCSidebarView === 'main' && (
+      {NRCSidebarView === NRCSidebar.main && (
         <motion.div
           className={styles.motionView}
           initial={{
@@ -158,16 +164,20 @@ function NrcContent({
                 </p>
               </div>
 
-              <Indicators />
+              <Indicators isShrunken={fullRanking} />
 
-              <Vertebrates />
+              <Vertebrates
+                isShrunken={fullRanking}
+                setFullRanking={setFullRanking}
+              />
 
-              <Trend chartData={chartData} />
+              <Trend chartData={chartData} isShrunken={fullRanking} />
 
               <Challenges
                 countryISO={countryISO}
                 countryName={countryName}
                 countryId={countryId}
+                fullRanking={fullRanking}
               />
 
               <div className={styles.sourceText}>
@@ -178,7 +188,7 @@ function NrcContent({
                   escapeHtml={false}
                 />
               </div>
-              <Footer countryId={countryId} />
+              <Footer countryId={countryId} isShrunken={fullRanking} />
             </div>
           )}
           <ShareModal
@@ -187,7 +197,7 @@ function NrcContent({
           />
         </motion.div>
       )}
-      {NRCSidebarView === 'vertebrates' && (
+      {NRCSidebarView === NRCSidebar.vertebrates && (
         <motion.div
           className={styles.motionView}
           initial={{
@@ -205,7 +215,7 @@ function NrcContent({
               <button
                 className={styles.backBtn}
                 type="button"
-                onClick={() => setNRCSidebarView('main')}
+                onClick={() => setNRCSidebarView(NRCSidebar.main)}
               >
                 <BackArrowIcon className={styles.arrowIcon} />
               </button>

@@ -5,7 +5,7 @@
   background: $dark;
   border: 1px solid $elephant;
   border-radius: 6px;
-  margin: 8px 40px 8px 20px;
+  margin: 8px 16px 8px 0;
   position: relative;
   width: auto;
 
@@ -50,6 +50,10 @@
           left: calc(50% - 165px);
           position: relative;
           width: 330px;
+
+          &.shrunken {
+            left: 10px;
+          }
 
           .arrowButton {
             fill: white;
@@ -116,62 +120,67 @@
     margin-right: 13px;
     width: 100%;
   }
-}
 
-.challengesContainerShrunken {
+  &.shrunken {
+    .chartHeader {
+      position: relative;
+      svg {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+      }
 
-  .chartHeader {
-    position: relative;
-    svg {
-      position: absolute;
-      right: 16px;
-      top: 16px;
+      .chartTitleContainer {
+        align-items: flex-start;
+        flex-direction: column;
+        .dropdownContainer {
+          margin-right: 6px;
+          width: 180px;
+          span {
+            max-width: 145px;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .chartTitle {
+          margin: 0 5px 0 0;
+        }
+
+        .chartTitleFilter {
+          flex-wrap: wrap;
+        }
+      }
     }
-    .chartTitleContainer {
-      align-items: flex-start;
+
+    .scatterPlotContainer {
       flex-direction: column;
-      .dropdownContainer {
-        margin-right: 6px;
-        width: 180px;
-        span {
-          max-width: 145px;
-          text-overflow: ellipsis;
+
+      .scatterPlotChartWrapper {
+        width: 100%;
+
+          .xAxisLabelContainer {
+            padding-left: calc(50% - 165px);
+          }
+
+        .yAxisContainer {
+          bottom: 300px;
+          width: 100px;
         }
       }
-      .chartTitle {
-        margin: 0 5px 0 0;
-      }
-    }
-  }
 
-  .scatterPlotContainer {
-    flex-direction: column;
+      .scatterPlotLegendWrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -50px;
+        width: 90%;
 
-    .scatterPlotChartWrapper {
-      width: 100%;
+        .continentsLegendWrapper {
 
-        .xAxisLabelContainer {
-          padding-left: calc(50% - 165px);
-        }
-
-      .yAxisContainer {
-        bottom: 300px;
-        width: 100px;
-      }
-    }
-
-    .scatterPlotLegendWrapper {
-      display: flex;
-      justify-content: space-between;
-      margin-top: -50px;
-      width: 90%;
-
-      .continentsLegendWrapper {
-
-        .legendItemsContainer {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          column-gap: 10px;
+          .legendItemsContainer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 10px;
+          }
         }
       }
     }
@@ -200,4 +209,3 @@
   border-style: solid;
   border-color: white transparent transparent transparent;
 }
-

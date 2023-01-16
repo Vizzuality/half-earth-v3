@@ -1,11 +1,15 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
+import cx from 'classnames';
+
 import Button from 'components/button';
+
+import { getSpeciesGroup } from 'constants/translation-constants';
 
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
@@ -14,10 +18,16 @@ import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import styles from './nrc-vertebrates-styles.module.scss';
 
-function Indicators({ countryData, setNRCSidebarView }) {
+function NRCVertebrates({
+  countryData,
+  setNRCSidebarView,
+  isShrunken,
+  setFullRanking,
+}) {
   const t = useT();
   const locale = useLocale();
 
+  const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
   const {
     amphibians,
     birds,
@@ -56,10 +66,14 @@ function Indicators({ countryData, setNRCSidebarView }) {
     },
   ];
 
-  const getSpecieText = (txt) => `${txt}`;
+  const getSpecieText = (specie) => translatedSpeciesGroup[specie] || specie;
 
   return (
-    <div className={styles.vertebratesContainer}>
+    <div
+      className={cx(styles.vertebratesContainer, {
+        [styles.shrunken]: isShrunken,
+      })}
+    >
       <div className={styles.endemicCardsContainer}>
         {SPECIES_COMPOSITION.map((s) => (
           <div className={styles.endemicCard} key={s.specie}>
@@ -86,8 +100,12 @@ function Indicators({ countryData, setNRCSidebarView }) {
         ))}
       </div>
       <Button
+        className={styles.vertebratesButton}
         type="compound"
-        handleClick={() => setNRCSidebarView('vertebrates')}
+        handleClick={() => {
+          setFullRanking(false);
+          setNRCSidebarView('vertebrates');
+        }}
         label={t('All vertebrates')}
         tooltipText={t('Open vertebrates list modal')}
       />
@@ -95,4 +113,4 @@ function Indicators({ countryData, setNRCSidebarView }) {
   );
 }
 
-export default Indicators;
+export default NRCVertebrates;

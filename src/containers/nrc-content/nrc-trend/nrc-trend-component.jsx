@@ -14,7 +14,12 @@ import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
 import styles from './nrc-trend-styles.module.scss';
 
-function Trend({ areaChartData, countryData, landMarineSelection }) {
+function Trend({
+  areaChartData,
+  countryData,
+  landMarineSelection,
+  isShrunken,
+}) {
   const t = useT();
   const { land: landData, marine: marineData } = areaChartData;
   const land = landMarineSelection === 'land';
@@ -51,6 +56,7 @@ function Trend({ areaChartData, countryData, landMarineSelection }) {
             stroke: COLORS.white,
             strokeWidth: 0.5,
             label: 'SPI',
+            labelOffset: isShrunken ? 7 : 18,
           }}
           area2={{
             key: 'protected',
@@ -58,6 +64,7 @@ function Trend({ areaChartData, countryData, landMarineSelection }) {
             strokeWidth: 0.7,
             strokeDasharray: '3 3 3 3',
             label: '% Protected areas',
+            labelOffset: isShrunken ? 7 : 18,
           }}
           data={land ? landData : marineData}
           height={240}
