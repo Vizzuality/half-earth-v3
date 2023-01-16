@@ -75,16 +75,13 @@ export const getLocationRoute = createSelector(
 );
 
 export default createStructuredSelector({
-  sceneSettings: getGlobeSettings,
-  sceneLayers: getDataGlobeLayers,
   activeLayers: getActiveLayers,
+  countryExtent: selectCountryExtent,
   countryISO: getCountryISO,
   countryName: getCountryName,
   isGlobeUpdating: getGlobeUpdating,
-  sceneMode: getSceneMode,
-  countryExtent: selectCountryExtent,
-  onboardingType: getOnboardingType,
-  onboardingStep: getOnboardingStep,
-  waitingInteraction: getOnWaitingInteraction,
   locationRoute: getLocationRoute,
+  sceneSettings: getGlobeSettings,
+  sceneLayers: getDataGlobeLayers,
+  sceneMode: getSceneMode,
 });
