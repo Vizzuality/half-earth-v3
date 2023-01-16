@@ -99,8 +99,8 @@ function NationalReportCard({
       />
       <div className={styles.container}>
         <motion.div
-          initial={{ width: 320 }}
-          animate={{ width: fullRanking ? '64vw' : '22vw' }}
+          initial={{ width: 300 }}
+          animate={{ width: fullRanking ? '64vw' : 300 }}
           transition={{ duration: 0.5 }}
           className={cx(styles.hideOnPrint, styles.rankingContainer, {
             [uiStyles.onboardingMode]: !!onboardingType,
@@ -142,6 +142,7 @@ function NationalReportCard({
             countryName={countryName}
             countryId={countryId}
             fullRanking={fullRanking}
+            setFullRanking={setFullRanking}
             selectedLandMarineOption={selectedLandMarineOption}
           />
         </motion.div>

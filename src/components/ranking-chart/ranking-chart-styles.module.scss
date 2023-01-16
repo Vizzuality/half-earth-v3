@@ -3,10 +3,10 @@
 @import 'styles/ui.module';
 
 $scroll-bar-width: 7px;
-$margin-left: 24px;
+$margin-left: 16px;
 $bars-width: 22%;
-$spi-index-width: 4rem;
-$spi-country-width: 250px;
+$spi-index-width: 60px;
+$spi-country-width: 226px;
 
 .chartTitle {
   @extend %bodyText;
@@ -44,7 +44,8 @@ $spi-country-width: 250px;
   padding-right: $scroll-bar-width;
 
   .blank {
-    width: calc($spi-country-width + $spi-index-width);
+    min-width: calc($spi-country-width + $spi-index-width);
+    max-width: calc($spi-country-width + $spi-index-width);
   }
 
   .legendCategoryContainer {
@@ -102,7 +103,8 @@ $spi-country-width: 250px;
   }
 
   .spiHeader {
-    width: $spi-index-width;
+    min-width: $spi-index-width;
+    max-width: $spi-index-width;
     margin-right: 0;
   }
 }
@@ -128,7 +130,8 @@ $spi-country-width: 250px;
 
 .spiIndex {
   display: inline-block;
-  width: $spi-index-width;
+  min-width: $spi-index-width;
+  max-width: $spi-index-width;
 }
 
 .spiCountry {
@@ -141,7 +144,8 @@ $spi-country-width: 250px;
   line-height: $line-height;
   color: $grey-text;
   text-align: left;
-  width: $spi-country-width;
+  min-width: $spi-country-width;
+  max-width: $spi-country-width;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -165,7 +169,7 @@ $spi-country-width: 250px;
 .rankingChartContent {
   @extend %verticalScrollbar;
   padding-bottom: 2rem;
-  height: calc(100vh - 320px);
+  height: calc(100vh - 380px);
   flex-direction: column;
 
   &:before {
@@ -228,6 +232,11 @@ $spi-country-width: 250px;
       font-size: $font-size-xs;
     }
   }
+}
+
+.searchInput {
+  min-width: $spi-country-width;
+  max-width: $spi-country-width;
 }
 
 // Colors

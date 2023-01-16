@@ -5,6 +5,8 @@ import { T, useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
+import cx from 'classnames';
+
 import IndicatorCard from 'containers/nrc-content/nrc-indicators//indicator-card';
 
 import COLORS from 'styles/settings';
@@ -12,7 +14,7 @@ import COLORS from 'styles/settings';
 import styles from './nrc-indicators-styles.module.scss';
 import { getBarStyles } from './nrc-indicators-utils';
 
-function Indicators({ countryData, landMarineSelection }) {
+function Indicators({ countryData, landMarineSelection, isShrunken }) {
   const t = useT();
   const locale = useLocale();
   const {
@@ -47,7 +49,11 @@ function Indicators({ countryData, landMarineSelection }) {
   const hm = land ? hm_ter : hm_mar;
 
   return (
-    <div className={styles.indicatorCardsContainer}>
+    <div
+      className={cx(styles.indicatorCardsContainer, {
+        [styles.shrunken]: isShrunken,
+      })}
+    >
       <IndicatorCard
         indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
         description={

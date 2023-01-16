@@ -4,7 +4,8 @@
 @import 'styles/typography-extends';
 
 .background {
-  width: 100vw;
+  width: 100%;
+  height: 100%;
 }
 
 @media print {
@@ -42,6 +43,7 @@
 .nrcContentContainer {
   position: relative;
   flex: 1;
+  min-width: 300px;
   margin: 56px 40px 0 0;
   background-color: rgba($navy-he, 0.8);
   border: 1px solid $navy-he;
@@ -114,6 +116,7 @@
 
 .rankingContainer {
   position: relative;
+  width: 300px;
   margin-top: 92px;
   margin-bottom: 36px;
   margin-left: $site-gutter;

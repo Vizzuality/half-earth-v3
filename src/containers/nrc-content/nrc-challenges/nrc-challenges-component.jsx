@@ -45,7 +45,7 @@ function Challenges({
     <div
       className={cx({
         [styles.challengesContainer]: true,
-        [styles.challengesContainerShrunken]: fullRanking,
+        [styles.shrunken]: fullRanking,
       })}
     >
       <div className={styles.chartHeader}>
@@ -120,7 +120,7 @@ function Challenges({
           />
           {fullRanking && (
             <div className={styles.xAxisContainer}>
-              <div className={styles.xAxisLabelContainer}>
+              <div className={cx(styles.xAxisLabelContainer, styles.shrunken)}>
                 <span className={styles.xAxisIndicator}>
                   {indicatorLabels[countryChallengesSelectedKey]}
                 </span>

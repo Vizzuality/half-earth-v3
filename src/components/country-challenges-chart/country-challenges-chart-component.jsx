@@ -30,13 +30,18 @@ function CountryChallengesChartComponent({
   handleSelectNextIndicator,
   countryChallengesSelectedKey,
   handleSelectPreviousIndicator,
+  isShrunken,
 }) {
   const t = useT();
   const locale = useLocale();
   const indicatorLabels = useMemo(() => getIndicatorLabels(), [locale]);
 
   return (
-    <div className={className}>
+    <div
+      className={cx(className, {
+        [styles.shrunken]: isShrunken,
+      })}
+    >
       <div className={styles.headerContainer}>
         <span className={styles.chartTitle}>{t('Show')}</span>
         <div className={styles.landMarineDropdownWrapper}>
