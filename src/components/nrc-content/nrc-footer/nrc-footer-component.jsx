@@ -6,7 +6,7 @@ import Button from 'components/button';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 
-import styles from './footer-styles.module.scss';
+import styles from './nrc-footer-styles.module.scss';
 
 function Footer({ goToAnalyzeAreas }) {
   const t = useT();

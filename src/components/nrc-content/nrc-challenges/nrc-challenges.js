@@ -17,8 +17,8 @@ import metadataConfig, { CHALLENGES_CHART } from 'constants/metadata';
 import { getCountryNames } from 'constants/translation-constants';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
-import Component from './challenges-component';
-import mapStateToProps from './challenges-selectors';
+import Component from './nrc-challenges-component';
+import mapStateToProps from './nrc-challenges-selectors';
 
 const actions = {
   ...urlActions,

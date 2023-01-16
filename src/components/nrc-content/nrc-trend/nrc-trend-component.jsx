@@ -5,13 +5,13 @@ import { T, useT } from '@transifex/react';
 import Tooltip from '@tippyjs/react';
 
 import AreaChart from 'components/charts/area-chart';
-import AreaChartTooltip from 'components/nrc-content/trend/area-chart-tooltip';
+import AreaChartTooltip from 'components/nrc-content/nrc-trend/area-chart-tooltip';
 
 import COLORS from 'styles/settings';
 
 import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
-import styles from './trend-styles.module.scss';
+import styles from './nrc-trend-styles.module.scss';
 
 function Trend({ areaChartData, countryData, landMarineSelection }) {
   const t = useT();

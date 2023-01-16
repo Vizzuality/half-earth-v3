@@ -5,11 +5,12 @@ import { T, useT, useLocale } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
+import IndicatorCard from 'components/nrc-content/nrc-indicators//indicator-card';
+
 import COLORS from 'styles/settings';
 
-import IndicatorCard from './indicator-card';
-import styles from './indicators-styles.module.scss';
-import { getBarStyles } from './indicators-utils';
+import styles from './nrc-indicators-styles.module.scss';
+import { getBarStyles } from './nrc-indicators-utils';
 
 function Indicators({ countryData, landMarineSelection }) {
   const t = useT();

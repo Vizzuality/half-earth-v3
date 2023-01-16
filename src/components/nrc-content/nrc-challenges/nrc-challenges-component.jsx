@@ -13,8 +13,8 @@ import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
 import { ReactComponent as CountryAreaImage } from 'images/country-area.svg';
 
-import { CONTINENTS } from './challenges-constants';
-import styles from './challenges-styles.module.scss';
+import { CONTINENTS } from './nrc-challenges-constants';
+import styles from './nrc-challenges-styles.module.scss';
 
 function Challenges({
   challengesFilterOptions,

@@ -15,11 +15,11 @@ import {
 
 import Button from 'components/button';
 import CloseButton from 'components/close-button';
-import Challenges from 'components/nrc-content/challenges';
-import Footer from 'components/nrc-content/footer';
-import Indicators from 'components/nrc-content/indicators';
-import Trend from 'components/nrc-content/trend';
-import Vertebrates from 'components/nrc-content/vertebrates';
+import Challenges from 'components/nrc-content/nrc-challenges';
+import Footer from 'components/nrc-content/nrc-footer';
+import Indicators from 'components/nrc-content/nrc-indicators';
+import Trend from 'components/nrc-content/nrc-trend';
+import Vertebrates from 'components/nrc-content/nrc-vertebrates';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';

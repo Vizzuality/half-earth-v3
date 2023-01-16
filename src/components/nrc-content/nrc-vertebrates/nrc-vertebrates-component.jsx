@@ -12,7 +12,7 @@ import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
-import styles from './vertebrates-styles.module.scss';
+import styles from './nrc-vertebrates-styles.module.scss';
 
 function Indicators({ countryData, setNRCSidebarView }) {
   const t = useT();

@@ -7,7 +7,7 @@ import * as urlActions from 'actions/url-actions';
 
 import { PRECALCULATED_LAYERS_SLUG } from 'constants/analyze-areas-constants';
 
-import Component from './footer-component';
+import Component from './nrc-footer-component';
 
 const actions = {
   ...urlActions,
