@@ -1,0 +1,57 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-top: 30px;
+  position: relative;
+  width: 100vw;
+
+  .subtitle {
+    @extend %subtitle;
+    color: $robins-egg-blue;
+    text-align: center;
+  }
+
+  .title {
+    @extend %display1;
+    color: $white;
+    font-weight: 200;
+    margin: 6px 20px 0 20px;
+    text-align: center;
+    font-size: 24px;
+    padding: 0 10px;
+    line-height: 32px;
+  }
+
+  .footer {
+    @extend %annotation;
+    color: $grey-text;
+    display: flex;
+    font-weight: 300;
+    margin: 0 20px 20px 20px;
+    position: absolute;
+    bottom: 0;
+
+    p {
+      text-align: center;
+    }
+
+    a {
+      color: $grey-text;
+      text-decoration: underline;
+    }
+  }
+
+  .cards {
+    align-self: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 32px 16px;
+  }
+}

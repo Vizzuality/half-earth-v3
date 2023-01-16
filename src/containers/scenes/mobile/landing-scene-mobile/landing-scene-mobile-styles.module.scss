@@ -1,0 +1,23 @@
+@import 'styles/ui.module';
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+@import 'styles/typography-extends';
+
+.sceneContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - #{$nav-bar-height});
+  position: absolute;
+  top: $nav-bar-height;
+
+  @media #{$tablet-landscape} {
+    overflow: hidden;
+    font-size: 45px;
+  }
+
+  @media screen and (max-height: 670px) {
+    overflow: auto;
+  }
+
+}
