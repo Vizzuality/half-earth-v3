@@ -1,7 +1,5 @@
 import React from 'react';
 
-import loadable from '@loadable/component';
-
 import LandingScene from 'scenes/mobile/landing-scene-mobile';
 
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -11,9 +9,7 @@ import uiStyles from 'styles/ui.module.scss';
 
 import styles from './landing-mobile-styles.module.scss';
 
-const InfoModal = loadable(() => import('components/modal-metadata'));
-
-function LandingMobileComponent({ hasMetadata, sceneSettings }) {
+function LandingMobileComponent({ sceneSettings }) {
   return (
     <div className={styles.container}>
       <HalfEarthLogo className={uiStyles.halfEarthLogoTopLeft} />
@@ -23,7 +19,6 @@ function LandingMobileComponent({ hasMetadata, sceneSettings }) {
       </div>
 
       <LandingScene sceneSettings={sceneSettings} />
-      {hasMetadata && <InfoModal />}
     </div>
   );
 }
