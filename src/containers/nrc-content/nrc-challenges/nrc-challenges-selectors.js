@@ -5,12 +5,9 @@ import {
   selectUiUrlState,
 } from 'selectors/location-selectors';
 import {
-  getCountryData,
-  getDescription,
   getLandMarineSelected,
   getCountryChallengesSelectedFilter,
 } from 'selectors/nrc-selectors';
-import { getNRCSidebarView } from 'selectors/ui-selectors';
 
 import {
   countryChallengesChartFormats,
@@ -19,13 +16,6 @@ import {
 
 import * as d3 from 'd3';
 import kebabCase from 'lodash/kebabCase';
-import sortBy from 'lodash/sortBy';
-
-import {
-  getOnboardingType,
-  getOnboardingStep,
-  getOnWaitingInteraction,
-} from 'containers/onboarding/onboarding-selectors';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import {
@@ -37,35 +27,10 @@ import {
 } from 'constants/country-mode-constants';
 import { NRC_UI_DEFAULTS } from 'constants/pages-ui-defaults';
 
-const getChartData = (state, { chartData }) => chartData;
-
-const parseData = (data) => {
-  if (!data) return null;
-  const parsedData = data.map((i) => {
-    return {
-      year: i.year.toString(),
-      spi: [i.SPI_high, i.SPI_low],
-      protected: [
-        parseInt(i.percentprotected_high, 10),
-        parseInt(i.percentprotected_low, 10),
-      ],
-    };
-  });
-  return sortBy(parsedData, ['year']);
-};
-
 const selectCountriesData = ({ countryData }) =>
   (countryData && countryData.data) || null;
 
 const selectCountryIso = ({ location }) => location.payload.iso.toUpperCase();
-
-const getAreaChartData = createSelector([getChartData], (chartData) => {
-  if (!chartData) return null;
-  const { land, marine } = chartData;
-  const parsedLandData = parseData(land);
-  const parsedMarineData = parseData(marine);
-  return { land: parsedLandData, marine: parsedMarineData };
-});
 
 const getScatterplotRawData = createSelector(
   [selectCountriesData, getLandMarineSelected],
@@ -262,22 +227,15 @@ const getSelectedIndicatorOption = createSelector(
 );
 
 export default createStructuredSelector({
-  areaChartData: getAreaChartData,
   challengesFilterOptions: getChallengesDependantFilterOptions,
-  countryData: getCountryData,
-  countryDescription: getDescription,
   countryChallengesSelectedKey: getCountryChallengesSelectedKey,
   indicatorLabels: getIndicatorLabels,
   indicatorOptions: getIndicatorOptions,
   landMarineSelection: getLandMarineSelected,
-  NRCSidebarView: getNRCSidebarView,
-  onboardingType: getOnboardingType,
-  onboardingStep: getOnboardingStep,
   scatterPlotData: getFilteredData,
   selectedIndicatorOption: getSelectedIndicatorOption,
   selectedFilterOption: getSelectedFilterOption,
-  xAxisTicks: getXAxisTicks,
   xAxisKeys: getXAxisKeys,
+  xAxisTicks: getXAxisTicks,
   yAxisTicks: getYAxisTicks,
-  waitingInteraction: getOnWaitingInteraction,
 });
