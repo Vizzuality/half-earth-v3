@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {
-  AreaChart,
-  Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip as RechartsTooltip,
@@ -11,9 +11,9 @@ import {
   Label,
 } from 'recharts';
 
-import styles from './area-chart-styles.module.scss';
+import styles from './trend-chart-styles.module.scss';
 
-function AreaChartComponent({
+function TrendChartComponent({
   area1,
   area2,
   data,
@@ -21,14 +21,17 @@ function AreaChartComponent({
   tooltipContent,
   height,
   width,
+  variant = 'light',
   pdf = false,
 }) {
+  const tickStroke = variant === 'light' ? 'white' : variant;
+  const labelColor = variant === 'light' ? 'white' : variant;
+
   const lastData =
     (area1.label || area2.label) && data && data[data.length - 1];
 
   const renderLabel = (area) => {
-    const lastAreaY =
-      lastData && area.key && lastData[area.key] && lastData[area.key][0];
+    const lastAreaY = lastData && area.key && lastData[area.key];
     if (!lastAreaY && lastAreaY !== 0) return null;
     return (
       <ReferenceDot
@@ -47,14 +50,14 @@ function AreaChartComponent({
           value={area.label}
           position="insideTop"
           offset={-5}
-          fill="white"
+          fill={labelColor}
         />
       </ReferenceDot>
     );
   };
 
-  const renderAreaChart = () => (
-    <AreaChart
+  const renderLineChart = () => (
+    <LineChart
       data={data}
       margin={{
         top: 0,
@@ -66,12 +69,12 @@ function AreaChartComponent({
       height={pdf && height}
     >
       <XAxis
-        axisLine={{ stroke: '#0F2B3B' }}
+        axisLine={{ stroke: variant === 'light' ? '#0F2B3B' : 'white' }}
         dataKey="year"
         domain={['dataMin', 'dataMax']}
         fontSize={9}
         strokeWidth={0.9}
-        tick={{ stroke: '#A0AFB8', strokeWidth: 0.4 }}
+        tick={{ stroke: tickStroke, strokeWidth: 0.4 }}
         tickCount={3}
         tickLine={false}
         ticks={[1980, 2000, 2020]}
@@ -82,7 +85,7 @@ function AreaChartComponent({
         axisLine={{ stroke: '#0F2B3B' }}
         domain={[0, 100]}
         fontSize={9}
-        tick={{ stroke: '#A0AFB8', strokeWidth: 0.4 }}
+        tick={{ stroke: tickStroke, strokeWidth: 0.4 }}
         tickCount={3}
         tickLine={false}
       />
@@ -94,36 +97,38 @@ function AreaChartComponent({
           position={{ y: 0 }}
         />
       )}
-      <Area
+      <Line
         type="linearOpen"
         dataKey={area1.key}
-        fill={area1.fill}
+        fill="url(#colorUv)"
         stroke={area1.stroke}
         strokeWidth={area1.strokeWidth}
+        dot={false}
       />
       {area1.label && renderLabel(area1)}
       {area2.label && renderLabel(area2)}
-      <Area
+      <Line
         type="monotone"
         dataKey={area2.key}
-        fill={area2.fill}
+        fill="url(#colorUv)"
         fillOpacity={area2.fillOpacity}
         stroke={area2.stroke}
         strokeWidth={area2.strokeWidth}
         strokeDasharray={area2.strokeDasharray}
+        dot={false}
       />
-    </AreaChart>
+    </LineChart>
   );
 
   return (
-    <div className={styles.areaChart} style={{ width, height }}>
+    <div className={styles.trendChart} style={{ width, height }}>
       {pdf ? (
-        renderAreaChart()
+        renderLineChart()
       ) : (
-        <ResponsiveContainer>{renderAreaChart()}</ResponsiveContainer>
+        <ResponsiveContainer>{renderLineChart()}</ResponsiveContainer>
       )}
     </div>
   );
 }
 
-export default AreaChartComponent;
+export default TrendChartComponent;

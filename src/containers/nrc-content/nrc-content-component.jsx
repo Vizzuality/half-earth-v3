@@ -38,7 +38,7 @@ const NRCSidebar = {
 };
 
 function NrcContent({
-  areaChartData,
+  trendChartData,
   challengesInfo,
   changeUI,
   changeGlobe,
@@ -64,7 +64,7 @@ function NrcContent({
   const t = useT();
 
   const dataIsLoaded =
-    areaChartData && countryData && chartData && challengesInfo;
+    trendChartData && countryData && chartData && challengesInfo;
 
   const { source: challengesSources } = challengesInfo;
 
@@ -104,7 +104,7 @@ function NrcContent({
     >
       <PdfNationalReport
         countryISO={countryISO}
-        areaChartData={areaChartData}
+        trendChartData={trendChartData}
         selectedLandMarineOption={selectedLandMarineOption}
       />
       <CloseButton
@@ -183,7 +183,7 @@ function NrcContent({
                 setFullRanking={setFullRanking}
               />
 
-              <Trend chartData={chartData} isShrunken={fullRanking} />
+              <Trend chartData={trendChartData} isShrunken={fullRanking} />
 
               <Challenges
                 countryISO={countryISO}

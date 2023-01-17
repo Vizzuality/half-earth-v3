@@ -8,7 +8,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card';
 import { getBarStyles } from 'containers/nrc-content/nrc-indicators/nrc-indicators-utils';
 
-import AreaChart from 'components/charts/area-chart';
+import TrendChart from 'components/charts/trend-chart';
 import HalfEarthLogo from 'components/half-earth-logo';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
@@ -36,7 +36,7 @@ function NationalReportPdf({
   mammalsEndemic,
   reptilesEndemic,
   amphibiansEndemic,
-  areaChartData,
+  trendChartData,
   selectedLandMarineOption,
 }) {
   const t = useT();
@@ -61,7 +61,7 @@ function NationalReportPdf({
     hm_ter,
     hm_mar,
   } = countryData || {};
-  const { land: landData, marine: marineData } = areaChartData || {};
+  const { land: landData, marine: marineData } = trendChartData || {};
   const renderIndicatorCards = () => {
     const land = selectedLandMarineOption.slug === LAND_MARINE.land;
     const SPI = land ? SPI_ter : SPI_mar;
@@ -284,7 +284,7 @@ function NationalReportPdf({
           />
         </p>
       </div>
-      <AreaChart
+      <TrendChart
         area1={{
           key: 'spi',
           stroke: COLORS['dark-text'],

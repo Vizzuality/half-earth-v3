@@ -4,9 +4,9 @@ import { useLocale, useT } from '@transifex/react';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
-import styles from './area-chart-tooltip-styles.module.scss';
+import styles from './trend-chart-tooltip-styles.module.scss';
 
-function AreaChartTooltip({ active, payload }) {
+function TrendChartTooltip({ active, payload }) {
   const t = useT();
   const locale = useLocale();
   const SPI = payload[0];
@@ -17,17 +17,12 @@ function AreaChartTooltip({ active, payload }) {
       <div className={styles.container}>
         <div className={styles.SPIcontainer}>
           <p>
-            {t('SPI')}:{' '}
-            {getLocaleNumber(
-              Math.round(SPI.value[0] + SPI.value[1]) / 2,
-              locale
-            )}
+            {t('SPI')}: {getLocaleNumber(Math.round(SPI.value), locale)}
           </p>
         </div>
         <div className={styles.protectedAreasContainer}>
           <p>
-            {t('Protected areas')}:{' '}
-            {Math.round(protectedAreas.value[0] + protectedAreas.value[1]) / 2}%
+            {t('Protected areas')}: {Math.round(protectedAreas.value)}%
           </p>
         </div>
       </div>
@@ -37,4 +32,4 @@ function AreaChartTooltip({ active, payload }) {
   return null;
 }
 
-export default AreaChartTooltip;
+export default TrendChartTooltip;

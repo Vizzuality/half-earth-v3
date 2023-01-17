@@ -4,9 +4,9 @@ import { T, useT } from '@transifex/react';
 
 import Tooltip from '@tippyjs/react';
 
-import AreaChartTooltip from 'containers/nrc-content/nrc-trend/area-chart-tooltip';
+import TrendChartTooltip from 'containers/nrc-content/nrc-trend/trend-chart-tooltip';
 
-import AreaChart from 'components/charts/area-chart';
+import TrendChart from 'components/charts/trend-chart';
 
 import COLORS from 'styles/settings';
 
@@ -14,14 +14,9 @@ import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
 import styles from './nrc-trend-styles.module.scss';
 
-function Trend({
-  areaChartData,
-  countryData,
-  landMarineSelection,
-  isShrunken,
-}) {
+function Trend({ chartData, countryData, landMarineSelection, isShrunken }) {
   const t = useT();
-  const { land: landData, marine: marineData } = areaChartData;
+  const { land: landData, marine: marineData } = chartData;
   const land = landMarineSelection === 'land';
 
   return (
@@ -50,7 +45,7 @@ function Trend({
         </span>
       </div>
       {countryData && (
-        <AreaChart
+        <TrendChart
           area1={{
             key: 'spi',
             stroke: COLORS.white,
@@ -70,7 +65,7 @@ function Trend({
           height={240}
           width="98%"
           tooltip
-          tooltipContent={<AreaChartTooltip />}
+          tooltipContent={<TrendChartTooltip />}
         />
       )}
     </div>
