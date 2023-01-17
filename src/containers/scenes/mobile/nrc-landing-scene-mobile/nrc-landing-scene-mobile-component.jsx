@@ -44,7 +44,7 @@ const variants = {
   },
 };
 
-function NrcLandingComponent({
+function NrcLandingMobileComponent({
   // map,
   sceneMode,
   onMapLoad,
@@ -58,6 +58,7 @@ function NrcLandingComponent({
   direction,
   page,
   setPage,
+  selectedLayers,
 }) {
   const t = useT();
 
@@ -80,12 +81,12 @@ function NrcLandingComponent({
 
         <p>{t('National reports cards')}</p>
       </haeder>
-      <ArcgisLayerManager activeLayers={activeLayers} />
+      <ArcgisLayerManager activeLayers={selectedLayers} />
 
       {isGlobeUpdating && <Spinner floating />}
 
       <CountryLabelsLayer
-        activeLayers={activeLayers}
+        activeLayers={selectedLayers}
         countryISO={countryISO}
         countryName={countryName}
         sceneMode={sceneMode}
@@ -111,4 +112,4 @@ function NrcLandingComponent({
   );
 }
 
-export default NrcLandingComponent;
+export default NrcLandingMobileComponent;
