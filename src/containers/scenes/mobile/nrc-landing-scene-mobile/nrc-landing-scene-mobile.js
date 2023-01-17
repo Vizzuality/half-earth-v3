@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { LANDING } from 'router';
 
+import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
 import { wrap } from 'popmotion';
@@ -12,10 +13,10 @@ import { MARINE_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 import Component from './nrc-landing-scene-mobile-component';
 import { NRC_LANDING_CARDS } from './nrc-landing-scene-mobile-constants';
 
-const actions = { ...urlActions };
+const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function NrcLandingSceneMobileContainer(props) {
-  const { activeLayers, browsePage, changeUI } = props;
+  const { activeLayers, browsePage } = props;
 
   const [[page, direction], setPage] = useState([0, 0]);
 
@@ -54,7 +55,6 @@ function NrcLandingSceneMobileContainer(props) {
     <Component
       {...props}
       cardIndex={cardIndex}
-      changeUI={changeUI}
       direction={direction}
       handleStepBack={handleStepBack}
       page={page}

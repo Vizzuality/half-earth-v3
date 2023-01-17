@@ -64,6 +64,7 @@ function NrcLandingMobileComponent({
   sceneSettings,
   setPage,
   selectedLayers,
+  view,
 }) {
   const t = useT();
 
@@ -98,7 +99,7 @@ function NrcLandingMobileComponent({
           reference={(ref) => {
             tooltipRefs.current.nrcLandingSearch = ref;
           }}
-          // view={view}
+          view={view}
           theme="light"
           width="full"
           parentWidth="380px"
@@ -125,14 +126,15 @@ function NrcLandingMobileComponent({
       />
 
       <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
-
-      <Cards
-        cardIndex={cardIndex}
-        direction={direction}
-        page={page}
-        setPage={setPage}
-        variants={variants}
-      />
+      {!countryISO && (
+        <Cards
+          cardIndex={cardIndex}
+          direction={direction}
+          page={page}
+          setPage={setPage}
+          variants={variants}
+        />
+      )}
 
       <LabelsLayer activeLayers={activeLayers} />
     </Scene>
