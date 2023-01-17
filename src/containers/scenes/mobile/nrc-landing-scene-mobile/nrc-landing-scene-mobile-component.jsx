@@ -7,7 +7,7 @@ import { useT } from '@transifex/react';
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import NRCLandingSidebar from 'containers/sidebars/nrc-landing-sidebar';
+import Cards from 'containers/mobile/nrc-landing/cards';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
@@ -24,7 +24,7 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
 function NrcLandingComponent({
-  map,
+  // map,
   sceneMode,
   onMapLoad,
   countryISO,
@@ -52,7 +52,7 @@ function NrcLandingComponent({
           <BackArrowIcon className={styles.arrowIcon} />
         </button>
 
-        <p>{t('National resports cards')}</p>
+        <p>{t('National reports cards')}</p>
       </haeder>
       <ArcgisLayerManager activeLayers={activeLayers} />
 
@@ -72,7 +72,7 @@ function NrcLandingComponent({
 
       <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
-      <NRCLandingSidebar activeLayers={activeLayers} map={map} />
+      <Cards />
 
       <LabelsLayer activeLayers={activeLayers} />
     </Scene>

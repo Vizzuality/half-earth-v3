@@ -1,0 +1,62 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  bottom: 4px;
+  display: flex;
+  height: 45%;
+  left: 3%;
+  position: absolute;
+  width: 94vw;
+  z-index: 10;
+
+  .progress {
+    @extend %bodyText;
+    background: $app-mobile-background;
+    border: 1px solid $elephant;
+    border-radius: 2px;
+    color: $white;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    left: 16px;
+    margin: 0;
+    position: absolute;
+    top: -10px;
+    width: 34px;
+    z-index: 11;
+
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
+    gap: 20px;
+    position: relative;
+
+    .card {
+      border: 1px solid $elephant;
+      min-width: 94vw;
+      color: $white;
+      padding: 24px 16px;
+
+
+      h5 {
+        @extend %display1;
+        font-size: 16px;
+        line-height: 20px;
+        margin: 0;
+      }
+
+      p {
+        @extend %bodyText;
+      }
+    }
+  }
+}
