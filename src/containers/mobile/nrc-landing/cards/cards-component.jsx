@@ -1,46 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { T } from '@transifex/react';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { wrap } from 'popmotion';
 
+import { NRC_LANDING_CARDS } from 'containers/scenes/mobile/nrc-landing-scene-mobile/nrc-landing-scene-mobile-constants';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
-import { NRC_LANDING_CARDS } from './cards-constants';
 import styles from './cards-styles.module.scss';
-
-const variants = {
-  enter: (direction) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-};
 
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-function CardsComponent() {
-  const [[page, direction], setPage] = useState([0, 0]);
-
-  const cardIndex = wrap(0, NRC_LANDING_CARDS.length, page);
-
+function CardsComponent({ cardIndex, variants, page, direction, setPage }) {
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);
   };

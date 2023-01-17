@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import loadable from '@loadable/component';
 
 import { useT } from '@transifex/react';
+
+import { wrap } from 'popmotion';
 
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
@@ -16,12 +18,34 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 
+import { NRC_LANDING_CARDS } from './nrc-landing-scene-mobile-constants';
 import styles from './nrc-landing-scene-mobile-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
+
+const variants = {
+  enter: (direction) => {
+    return {
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+};
 
 function NrcLandingComponent({
   // map,
@@ -34,7 +58,14 @@ function NrcLandingComponent({
   isGlobeUpdating,
 }) {
   const t = useT();
-
+  const [[page, direction], setPage] = useState([0, 0]);
+  const cardIndex = wrap(0, NRC_LANDING_CARDS.length, page);
+  const backDirection = -1;
+  const handleStepBack = () => {
+    if (cardIndex !== 0) {
+      setPage([cardIndex - 1, backDirection]);
+    }
+  };
   return (
     <Scene
       sceneName="nrc-landing-scene"
@@ -47,7 +78,7 @@ function NrcLandingComponent({
         <button
           className={styles.backBtn}
           type="button"
-          onClick={() => console.log('handle step back')}
+          onClick={() => handleStepBack()}
         >
           <BackArrowIcon className={styles.arrowIcon} />
         </button>
@@ -72,7 +103,13 @@ function NrcLandingComponent({
 
       <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
-      <Cards />
+      <Cards
+        cardIndex={cardIndex}
+        direction={direction}
+        page={page}
+        setPage={setPage}
+        variants={variants}
+      />
 
       <LabelsLayer activeLayers={activeLayers} />
     </Scene>
