@@ -8,11 +8,15 @@ import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import Cards from 'containers/mobile/nrc-landing/cards';
+import { useOnboardingTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
+import SearchLocation from 'components/search-location';
 
+import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
+import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 
@@ -48,6 +52,7 @@ function NrcLandingMobileComponent({
   // map,
   activeLayers,
   cardIndex,
+  changeUI,
   countryISO,
   countryName,
   direction,
@@ -62,6 +67,10 @@ function NrcLandingMobileComponent({
 }) {
   const t = useT();
 
+  const tooltipRefs = useOnboardingTooltipRefs({
+    changeUI,
+  });
+
   return (
     <Scene
       sceneName="nrc-landing-scene"
@@ -70,7 +79,7 @@ function NrcLandingMobileComponent({
       onMapLoad={onMapLoad}
       initialRotation
     >
-      <haeder className={styles.header}>
+      <header className={styles.header}>
         <button
           className={styles.backBtn}
           type="button"
@@ -80,7 +89,25 @@ function NrcLandingMobileComponent({
         </button>
 
         <p>{t('National reports cards')}</p>
-      </haeder>
+      </header>
+
+      <div
+        style={{ position: 'absolute', top: '60px', left: '4%', width: '94vw' }}
+      >
+        <SearchLocation
+          reference={(ref) => {
+            tooltipRefs.current.nrcLandingSearch = ref;
+          }}
+          // view={view}
+          theme="light"
+          width="full"
+          parentWidth="380px"
+          placeholder={t('search location')}
+          searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
+          searchType={SEARCH_TYPES.country}
+        />
+      </div>
+
       <ArcgisLayerManager activeLayers={selectedLayers} />
 
       {isGlobeUpdating && <Spinner floating />}

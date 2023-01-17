@@ -15,7 +15,7 @@ import { NRC_LANDING_CARDS } from './nrc-landing-scene-mobile-constants';
 const actions = { ...urlActions };
 
 function NrcLandingSceneMobileContainer(props) {
-  const { activeLayers, browsePage } = props;
+  const { activeLayers, browsePage, changeUI } = props;
 
   const [[page, direction], setPage] = useState([0, 0]);
 
@@ -54,6 +54,7 @@ function NrcLandingSceneMobileContainer(props) {
     <Component
       {...props}
       cardIndex={cardIndex}
+      changeUI={changeUI}
       direction={direction}
       handleStepBack={handleStepBack}
       page={page}
