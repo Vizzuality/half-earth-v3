@@ -48,7 +48,7 @@ function Challenges({
         [styles.shrunken]: fullRanking,
       })}
     >
-      <div className={styles.chartHeader}>
+      <div id="nrc-challenges-header" className={styles.chartHeader}>
         {countryName && (
           <div className={styles.chartTitleContainer}>
             <div className={styles.chartTitleIndicators}>

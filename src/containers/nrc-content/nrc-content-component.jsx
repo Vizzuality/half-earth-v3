@@ -16,6 +16,7 @@ import Vertebrates from 'containers/nrc-content/nrc-vertebrates';
 import {
   useOnboardingTooltipRefs,
   getOnboardingProps,
+  useOnboardingOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
@@ -40,6 +41,8 @@ function NrcContent({
   areaChartData,
   challengesInfo,
   changeUI,
+  changeGlobe,
+  browsePage,
   chartData,
   countryData,
   countryDescription,
@@ -80,6 +83,15 @@ function NrcContent({
       onboardingStep,
       waitingInteraction,
     });
+
+  useOnboardingOpenSection({
+    onboardingStep,
+    onboardingType,
+    waitingInteraction,
+    changeUI,
+    browsePage,
+    changeGlobe,
+  });
 
   return (
     <div
@@ -157,7 +169,7 @@ function NrcContent({
             </div>
           )}
           {dataIsLoaded && (
-            <div className={styles.scrolleableArea}>
+            <div id="nrc-scrollable-area" className={styles.scrolleableArea}>
               <div className={styles.countryDescriptionContainer}>
                 <p className={styles.countryDescription}>
                   {countryDescription}

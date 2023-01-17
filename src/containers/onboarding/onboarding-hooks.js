@@ -8,6 +8,8 @@ import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
 import uiStyles from 'styles/ui.module.scss';
 
+const { REACT_APP_FEATURE_NEW_NRC_PAGE } = process.env;
+
 export const useOnboardingTooltipRefs = ({
   changeUI,
   onboardingType,
@@ -27,8 +29,15 @@ export const useOnboardingTooltipRefs = ({
     // This tooltip wil be positioned on the country-entry-tooltip-component
     nrcLandingButton: false,
     challenges:
-      onboardingType === 'national-report-cards' && onboardingStep === 3,
-    ranking: onboardingType === 'national-report-cards' && onboardingStep === 4,
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === REACT_APP_FEATURE_NEW_NRC_PAGE
+        ? 5
+        : 3,
+    ranking:
+      onboardingType === 'national-report-cards' &&
+      onboardingStep === REACT_APP_FEATURE_NEW_NRC_PAGE
+        ? 3
+        : 4,
     closure: onboardingType === 'national-report-cards' && onboardingStep === 5,
   };
   const activeSlug = useMemo(() => {
@@ -142,10 +151,14 @@ export const useOnboardingOpenSection = ({
         intro: 0,
         spi: 1,
         nrc: 2,
-        overview: 3,
+        ...(REACT_APP_FEATURE_NEW_NRC_PAGE
+          ? {}
+          : {
+              overview: 3,
+            }),
+        ranking: REACT_APP_FEATURE_NEW_NRC_PAGE ? 3 : 5,
         challenges: 4,
-        ranking: 5,
-        closure: 6,
+        closure: REACT_APP_FEATURE_NEW_NRC_PAGE ? 5 : 6,
       };
       const DEFAULT_ISO = 'BRA';
       const DEFAULT_COUNTRY_NAME = 'Brazil';
@@ -189,6 +202,7 @@ export const useOnboardingOpenSection = ({
 
       // Go to NRC page and open tab
       if (
+        !REACT_APP_FEATURE_NEW_NRC_PAGE &&
         [NRC_STEPS.overview, NRC_STEPS.challenges, NRC_STEPS.ranking].includes(
           onboardingStep
         ) &&
@@ -203,6 +217,37 @@ export const useOnboardingOpenSection = ({
           onboardingStep,
           waitingInteraction,
         });
+      }
+
+      // Set NRC page sidebar view position
+      if (
+        REACT_APP_FEATURE_NEW_NRC_PAGE &&
+        [NRC_STEPS.challenges, NRC_STEPS.ranking].includes(onboardingStep)
+      ) {
+        browsePage({
+          type: NATIONAL_REPORT_CARD,
+          payload: { iso: countryISO || DEFAULT_ISO },
+        });
+        changeUI({
+          onboardingType,
+          onboardingStep,
+          waitingInteraction,
+          fullRanking: NRC_STEPS.ranking === onboardingStep,
+        });
+
+        // Scroll to show section
+        if (NRC_STEPS.challenges === onboardingStep) {
+          const challengesElement = document.getElementById(
+            'nrc-challenges-header'
+          );
+
+          if (challengesElement) {
+            challengesElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest',
+            });
+          }
+        }
       }
     }
   }, [onboardingStep, setOpen, waitingInteraction, onboardingType]);

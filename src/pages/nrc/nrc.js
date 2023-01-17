@@ -24,6 +24,7 @@ function NrcContainer(props) {
     setCountryDataReady,
     setCountryDataError,
   } = props;
+
   // Get countries data on mount
   useEffect(() => {
     setCountryDataLoading();
@@ -67,12 +68,17 @@ function NrcContainer(props) {
     const { changeUI } = props;
     changeUI({ landMarineSelection });
   };
+  const handleSetFullRanking = (fullRanking) => {
+    const { changeUI } = props;
+    changeUI({ fullRanking });
+  };
 
   return (
     <NrcComponent
       {...props}
       chartData={{ land: chartLandData, marine: chartMarineData }}
       handleLandMarineSelection={handleLandMarineSelection}
+      handleSetFullRanking={handleSetFullRanking}
     />
   );
 }

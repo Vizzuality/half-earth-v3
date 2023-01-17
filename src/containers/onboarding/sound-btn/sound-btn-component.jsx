@@ -16,6 +16,7 @@ import priorityPlaces07 from 'sounds/tour1-track7-closure.mp3';
 import nationalReportCards01 from 'sounds/tour2-track1-intro.mp3';
 import nationalReportCards02 from 'sounds/tour2-track2-spi.mp3';
 import nationalReportCards03 from 'sounds/tour2-track3-nrc.mp3';
+// TODO: Remove overview when the new NRC page is live
 import nationalReportCards04 from 'sounds/tour2-track4-overview.mp3';
 import nationalReportCards05 from 'sounds/tour2-track5-challenges.mp3';
 import nationalReportCards06 from 'sounds/tour2-track6-ranking.mp3';
@@ -170,7 +171,7 @@ function SoundButtonComponent({
   const [pausedTime, setPausedTime] = useState(0);
   const [muted, setMuted] = useState(false);
 
-  // There is no autoplay on chrome and firefos. We always need a previous user click on the page.
+  // There is no autoplay on chrome and firefox. We always need a previous user click on the page.
   // We show a message if this hasn't happened (eg. reload)
   // https://developer.chrome.com/blog/autoplay/#webaudio
   // https://hacks.mozilla.org/2019/02/firefox-66-to-block-automatically-playing-audible-video-and-audio/
