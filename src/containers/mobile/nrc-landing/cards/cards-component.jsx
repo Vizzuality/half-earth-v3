@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
+import { T } from '@transifex/react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { wrap } from 'popmotion';
 
-// import { T } from '@transifex/react';
-
-import { images } from './cards-constants';
+import { NRC_LANDING_CARDS } from './cards-constants';
 import styles from './cards-styles.module.scss';
 
 const variants = {
@@ -37,11 +37,7 @@ const swipePower = (offset, velocity) => {
 function CardsComponent() {
   const [[page, direction], setPage] = useState([0, 0]);
 
-  // We only have 3 images, but we paginate them absolutely (ie 1, 2, 3, 4, 5...) and
-  // then wrap that within 0-2 to find our image ID in the array below. By passing an
-  // absolute page index as the `motion` component's `key` prop, `AnimatePresence` will
-  // detect it as an entirely new image. So you can infinitely paginate as few as 1 images.
-  const imageIndex = wrap(0, images.length, page);
+  const cardIndex = wrap(0, NRC_LANDING_CARDS.length, page);
 
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);
@@ -49,28 +45,9 @@ function CardsComponent() {
 
   return (
     <div className={styles.container}>
-      {/* <div className={styles.wrapper}>
-        {NRC_LANDING_CARDS.map((card, index) => {
-          return (
-            <div key={card.title} className={styles.card}>
-              <div className={styles.progress}>
-                <p>
-                  {index + 1} / {NRC_LANDING_CARDS.length}
-                </p>
-              </div>
-              <h5>{card.title}</h5>
-              <p>
-                <T _str="{description}" description={card.description} />
-              </p>
-            </div>
-          );
-        })}
-      </div> */}
-
       <AnimatePresence initial={false} custom={direction}>
-        <motion.img
+        <motion.div
           key={page}
-          src={images[imageIndex]}
           custom={direction}
           variants={variants}
           initial="enter"
@@ -93,7 +70,20 @@ function CardsComponent() {
               paginate(-1);
             }
           }}
-        />
+        >
+          <div className={styles.progress}>
+            <p>
+              {cardIndex + 1} / {NRC_LANDING_CARDS.length}
+            </p>
+          </div>
+          <h5>{NRC_LANDING_CARDS[cardIndex].title}</h5>
+          <p>
+            <T
+              _str="{description}"
+              description={NRC_LANDING_CARDS[cardIndex].description}
+            />
+          </p>
+        </motion.div>
       </AnimatePresence>
     </div>
   );

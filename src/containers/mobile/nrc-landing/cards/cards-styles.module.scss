@@ -9,6 +9,24 @@
   position: absolute;
   width: 94vw;
   z-index: 10;
+  .card {
+    border: 1px solid $elephant;
+    color: $white;
+    min-width: 94vw;
+    padding: 24px 16px;
+
+
+    h5 {
+      @extend %display1;
+      font-size: 16px;
+      line-height: 20px;
+      margin: 0;
+    }
+
+    p {
+      @extend %bodyText;
+    }
+  }
 
   .progress {
     @extend %bodyText;
@@ -29,34 +47,6 @@
     p {
       font-size: 12px;
       margin: 0;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-snap-stop: always;
-    gap: 20px;
-    position: relative;
-
-    .card {
-      border: 1px solid $elephant;
-      min-width: 94vw;
-      color: $white;
-      padding: 24px 16px;
-
-
-      h5 {
-        @extend %display1;
-        font-size: 16px;
-        line-height: 20px;
-        margin: 0;
-      }
-
-      p {
-        @extend %bodyText;
-      }
     }
   }
 }
