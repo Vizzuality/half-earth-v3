@@ -53,12 +53,7 @@ function CardsComponent({ cardIndex, variants, page, direction, setPage }) {
             </p>
           </div>
           <h5>{NRC_LANDING_CARDS[cardIndex].title}</h5>
-          <p>
-            <T
-              _str="{description}"
-              description={NRC_LANDING_CARDS[cardIndex].description}
-            />
-          </p>
+          <p>{NRC_LANDING_CARDS[cardIndex].description}</p>
 
           {cardIndex !== 0 && (
             <div className={styles.cardContainer}>
