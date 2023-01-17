@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import loadable from '@loadable/component';
 
 import { useT } from '@transifex/react';
-
-import { wrap } from 'popmotion';
 
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
@@ -18,7 +16,6 @@ import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 
-import { NRC_LANDING_CARDS } from './nrc-landing-scene-mobile-constants';
 import styles from './nrc-landing-scene-mobile-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
@@ -56,16 +53,14 @@ function NrcLandingComponent({
   activeLayers,
   sceneSettings,
   isGlobeUpdating,
+  handleStepBack,
+  cardIndex,
+  direction,
+  page,
+  setPage,
 }) {
   const t = useT();
-  const [[page, direction], setPage] = useState([0, 0]);
-  const cardIndex = wrap(0, NRC_LANDING_CARDS.length, page);
-  const backDirection = -1;
-  const handleStepBack = () => {
-    if (cardIndex !== 0) {
-      setPage([cardIndex - 1, backDirection]);
-    }
-  };
+
   return (
     <Scene
       sceneName="nrc-landing-scene"
