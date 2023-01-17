@@ -5,6 +5,8 @@ import { T } from '@transifex/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { wrap } from 'popmotion';
 
+import SidebarLegend from 'containers/sidebars/sidebar-legend';
+
 import { NRC_LANDING_CARDS } from './cards-constants';
 import styles from './cards-styles.module.scss';
 
@@ -83,6 +85,26 @@ function CardsComponent() {
               description={NRC_LANDING_CARDS[cardIndex].description}
             />
           </p>
+
+          {cardIndex !== 0 && (
+            <div className={styles.cardContainer}>
+              <div>
+                <p className={styles.legendTitle}>
+                  <T
+                    _str="{legendTitle}"
+                    legendTitle={NRC_LANDING_CARDS[cardIndex].legendTitle}
+                  />
+                </p>
+                <SidebarLegend className={styles.legend} legendItem="spi" />
+              </div>
+              <p className={styles.source}>
+                <T
+                  _str="{source}"
+                  source={NRC_LANDING_CARDS[cardIndex].source}
+                />
+              </p>
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>

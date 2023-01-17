@@ -67,5 +67,9 @@
   span {
     @extend %subtitle;
     color: inherit;
+
+    @media #{$mobile-only} {
+      font-size: 10px;
+    }
   }
 }

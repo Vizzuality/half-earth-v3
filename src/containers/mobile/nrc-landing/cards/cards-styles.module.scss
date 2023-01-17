@@ -26,6 +26,39 @@
     p {
       @extend %bodyText;
     }
+
+    .cardContainer {
+      display: flex;
+      flex-direction: column;
+      height: 50%;
+      justify-content: end;
+
+
+      .legendTitle,
+      .legend,
+      {
+        color: $white;
+        margin: 0;
+      }
+
+      .legendTitle {
+        @extend %bodyText;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+
+      .source {
+        @extend %annotation;
+        color: $grey-text;
+        font-size: 10px;
+        text-overflow: ellipsis;
+        max-width: 90vw;
+        margin: 8px 0 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
   }
 
   .progress {

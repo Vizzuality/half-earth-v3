@@ -8,10 +8,16 @@ export const NRC_LANDING_CARDS = [
     title: 'How is the Land SPI calculated?',
     description:
       'The Land SPI is calculated based on the protected land area, the total number of terrestrial vertebrates, and the amount of these species that are endemic to that nation.',
+    legendTitle: 'Land SPI',
+    source:
+      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)',
   },
   {
     title: 'How is the Marine SPI calculated?',
     description:
       'The Marine SPI is based on the protected marine area, the total number of marine vertebrates, and the amount of these species that are endemic to that nation.',
+    legendTitle: 'Marine SPI',
+    source:
+      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)',
   },
 ];
