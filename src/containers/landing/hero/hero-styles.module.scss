@@ -33,6 +33,12 @@
     }
   }
 
+  .disclaimer {
+    @extend %title;
+    color: $grey-text;
+    text-transform: initial;
+  }
+
   .ctoText {
     @extend %title;
     color: $white;
