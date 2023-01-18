@@ -44,7 +44,7 @@ export const getNRCLandingCards = () => [
     ),
     layer: GLOBAL_SPI_FEATURE_LAYER,
     legendTitle: t('Land SPI'),
-    legendColor: 'spi',
+    legendItem: 'spi',
     source: t(
       'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
     ),
@@ -75,7 +75,7 @@ export const getNRCLandingCards = () => [
     ),
     layer: MARINE_SPI_FEATURE_LAYER,
     legendTitle: t('Marine SPI'),
-    legendColor: 'spi',
+    legendItem: 'spi',
     source: t(
       'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
     ),

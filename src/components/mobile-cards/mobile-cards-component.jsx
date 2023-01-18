@@ -2,11 +2,12 @@ import React from 'react';
 
 import { T } from '@transifex/react';
 
+import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
-import styles from './cards-styles.module.scss';
+import styles from './mobile-cards-styles.module.scss';
 
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset, velocity) => {
@@ -24,7 +25,9 @@ function CardsComponent({
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);
   };
-
+  const card = cardsContent[cardIndex];
+  const { title, description, legendItem, legendColor, legendTitle } = card;
+  const isSingleLegend = !!legendColor;
   return (
     <div className={styles.container}>
       <AnimatePresence initial={false} custom={direction}>
@@ -53,30 +56,40 @@ function CardsComponent({
             }
           }}
         >
-          <div className={styles.progress}>
-            <p>
-              {cardIndex + 1} / {cardsContent.length}
-            </p>
+          <div>
+            <div className={styles.progress}>
+              <p>
+                {cardIndex + 1} / {cardsContent.length}
+              </p>
+            </div>
+            <h5>{title}</h5>
+            <p>{description}</p>
           </div>
-          <h5>{cardsContent[cardIndex].title}</h5>
-          <p>{cardsContent[cardIndex].description}</p>
-
-          {cardsContent[cardIndex].legendTitle && (
-            <div className={styles.cardContainer}>
-              <div>
-                <p className={styles.legendTitle}>
-                  <T
-                    _str="{legendTitle}"
-                    legendTitle={cardsContent[cardIndex].legendTitle}
+          {legendTitle && (
+            <div className={styles.legendContainer}>
+              <div
+                className={cx({
+                  [styles.withLegend]: legendColor,
+                })}
+              >
+                {isSingleLegend && (
+                  <span
+                    className={styles.singleLegend}
+                    style={{ backgroundColor: legendColor }}
                   />
+                )}
+                <p className={styles.legendTitle}>
+                  <T _str="{legendTitle}" legendTitle={legendTitle} />
                 </p>
-                <SidebarLegend
-                  className={styles.legend}
-                  legendItem={cardsContent[cardIndex].legendColor}
-                />
+                {!isSingleLegend && (
+                  <SidebarLegend
+                    className={styles.legend}
+                    legendItem={legendItem}
+                  />
+                )}
               </div>
               <p className={styles.source}>
-                <T _str="{source}" source={cardsContent[cardIndex].source} />
+                <T _str="{source}" source={card.source} />
               </p>
             </div>
           )}

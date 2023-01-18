@@ -1,5 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
+@import 'styles/ui.module';
 
 .container {
   bottom: 4px;
@@ -9,12 +10,17 @@
   position: absolute;
   width: 94vw;
   z-index: 10;
+
   .card {
     border: 1px solid $elephant;
     color: $white;
     min-width: 94vw;
     padding: 24px 16px;
-
+    background: rgba($navy-he, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include backdropBlur();
 
     h5 {
       @extend %display1;
@@ -27,16 +33,17 @@
       @extend %bodyText;
     }
 
-    .cardContainer {
+    .withLegend {
+      display: flex;
+    }
+
+    .legendContainer {
       display: flex;
       flex-direction: column;
-      height: 50%;
       justify-content: flex-end;
 
-
       .legendTitle,
-      .legend,
-      {
+      .legend {
         color: $white;
         margin: 0;
       }
@@ -46,6 +53,15 @@
         text-transform: uppercase;
         font-size: 12px;
         margin-bottom: 6px;
+      }
+
+      .singleLegend {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin: 3.5px 8px 0 0;
+        border: 1px solid $white;
+        border-radius: 2px;
       }
 
       .source {

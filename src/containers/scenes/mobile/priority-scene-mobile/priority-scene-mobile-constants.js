@@ -8,12 +8,13 @@ import {
   MARINE_COUNTRY_PRIORITY_LAYER,
   HALF_EARTH_FUTURE_TILE_LAYER,
 } from 'constants/layers-slugs';
+import { FUTURE_PLACES_COLOR } from 'constants/protected-areas';
 
 export const getPriorityMobileCards = () => [
   {
     title: t('Where are the priority areas for terrestrial vertebrates?'),
     description: (
-      <p>
+      <div>
         <T
           _str="This layers illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
           bold={
@@ -22,11 +23,11 @@ export const getPriorityMobileCards = () => [
             </b>
           }
         />
-      </p>
+      </div>
     ),
     layer: LAND_COUNTRY_PRIORITY_LAYER,
     legendTitle: t('ALL LAND VERTEBRATES PRIORITY'),
-    legendColor: 'biodiversity',
+    legendItem: 'biodiversity',
     source: t(
       'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
     ),
@@ -34,7 +35,7 @@ export const getPriorityMobileCards = () => [
   {
     title: t('Where are the priority areas for marine vertebrates?'),
     description: (
-      <p>
+      <div>
         <T
           _str="This layers illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
           bold={
@@ -43,11 +44,11 @@ export const getPriorityMobileCards = () => [
             </b>
           }
         />
-      </p>
+      </div>
     ),
     layer: MARINE_COUNTRY_PRIORITY_LAYER,
     legendTitle: t('ALL MARINE VERTEBRATES PRIORITY'),
-    legendColor: 'biodiversity',
+    legendItem: 'biodiversity',
     source: t(
       'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
     ),
@@ -55,7 +56,7 @@ export const getPriorityMobileCards = () => [
   {
     title: t('Where to protect next?'),
     description: (
-      <p>
+      <div>
         <T
           _str="This layer highlights the top regions in each country that would benefit from additional conservation action. These areas represent the top {bold} and can serve as important starting places for conservation efforts."
           bold={
@@ -64,11 +65,11 @@ export const getPriorityMobileCards = () => [
             </b>
           }
         />
-      </p>
+      </div>
     ),
     layer: HALF_EARTH_FUTURE_TILE_LAYER,
     legendTitle: t('Places for Half-Earth Future'),
-    legendColor: 'biodiversity',
+    legendColor: FUTURE_PLACES_COLOR,
     source: t(
       'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
     ),

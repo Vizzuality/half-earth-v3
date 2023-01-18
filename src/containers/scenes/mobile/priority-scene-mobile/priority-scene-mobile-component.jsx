@@ -7,10 +7,10 @@ import { useT } from '@transifex/react';
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import Cards from 'containers/mobile/nrc-landing/cards';
 import { useOnboardingTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
+import Cards from 'components/mobile-cards';
 import Scene from 'components/scene';
 import SearchLocation from 'components/search-location';
 
