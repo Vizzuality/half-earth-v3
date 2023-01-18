@@ -3,7 +3,7 @@ import React from 'react';
 import { t } from '@transifex/native';
 import { T } from '@transifex/react';
 
-export const NRC_LANDING_CARDS = () => [
+export const getNRCLandingCards = () => [
   {
     title: t('National Report Cards'),
     description: (

@@ -4,7 +4,7 @@ import { T, useLocale } from '@transifex/react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { NRC_LANDING_CARDS } from 'containers/scenes/mobile/nrc-landing-scene-mobile/nrc-landing-scene-mobile-constants';
+import { getNRCLandingCards } from 'containers/scenes/mobile/nrc-landing-scene-mobile/nrc-landing-scene-mobile-constants';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import styles from './cards-styles.module.scss';
@@ -16,7 +16,7 @@ const swipePower = (offset, velocity) => {
 
 function CardsComponent({ cardIndex, variants, page, direction, setPage }) {
   const locale = useLocale();
-  const cardsContent = useMemo(() => NRC_LANDING_CARDS(), [locale]);
+  const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
 
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);

@@ -13,7 +13,7 @@ import { wrap } from 'popmotion';
 import { MARINE_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 
 import Component from './nrc-landing-scene-mobile-component';
-import { NRC_LANDING_CARDS } from './nrc-landing-scene-mobile-constants';
+import { getNRCLandingCards } from './nrc-landing-scene-mobile-constants';
 import mapStateToProps from './nrc-landing-scene-mobile-selectors';
 
 const actions = { ...urlActions, ...aoiAnalyticsActions };
@@ -21,7 +21,7 @@ const actions = { ...urlActions, ...aoiAnalyticsActions };
 function NrcLandingSceneMobileContainer(props) {
   const { activeLayers, browsePage } = props;
   const locale = useLocale();
-  const cardsContent = useMemo(() => NRC_LANDING_CARDS(), [locale]);
+  const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
 
   const [[page, direction], setPage] = useState([0, 0]);
 
