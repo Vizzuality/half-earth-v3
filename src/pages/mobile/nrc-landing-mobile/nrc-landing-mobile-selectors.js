@@ -7,7 +7,7 @@ import {
   selectUiUrlState,
 } from 'selectors/location-selectors';
 
-import dataSceneConfig from 'scenes/nrc-landing-scene/scene-config';
+import dataSceneConfig from 'scenes/mobile/nrc-landing-scene-mobile/scene-config';
 
 const selectCountryExtent = ({ countryExtent }) =>
   countryExtent ? countryExtent.data : null;

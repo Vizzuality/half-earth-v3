@@ -16,11 +16,11 @@ export default {
       { title: LANDSCAPE_FEATURES_LABELS_LAYER },
       { title: GLOBAL_SPI_FEATURE_LAYER, opacity: BASEMAP_OPACITY },
     ],
-    zoom: 3.8,
+    zoom: 1.8,
     padding: {
-      left: 300,
+      left: 0,
+      top: -300,
     },
-    center: [-66.9515536, 0.116959],
     isGlobeUpdating: false,
     environment: {
       atmosphereEnabled: false,
