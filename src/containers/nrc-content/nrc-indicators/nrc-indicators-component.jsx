@@ -48,6 +48,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
   const hm_vh = land ? hm_vh_ter : hm_vh_mar;
   const hm = land ? hm_ter : hm_mar;
 
+  const isNumberOr0 = (value) => value === 0 || !!value;
   return (
     <div
       className={cx(styles.indicatorCardsContainer, {
@@ -116,7 +117,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
         indicator={prop_protected && `${Math.round(prop_protected)}%`}
         description={
           <p>
-            {protection_needed && (
+            {isNumberOr0(protection_needed) && (
               <T
                 _str="of {bold} and {needsProtectionNumber}% needs protection"
                 bold={

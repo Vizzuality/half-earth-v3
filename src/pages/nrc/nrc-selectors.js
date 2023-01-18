@@ -36,6 +36,11 @@ const getHalfEarthModalOpen = createSelector(
   (uiSettings) => uiSettings.openedModal
 );
 
+const getFullRanking = createSelector(
+  getUiSettings,
+  (uiSettings) => uiSettings.fullRanking
+);
+
 export const getCountryChallengesSelectedKey = createSelector(
   getUiSettings,
   (uiSettings) => uiSettings.countryChallengesSelectedKey
@@ -118,4 +123,5 @@ export default createStructuredSelector({
   waitingInteraction: getOnWaitingInteraction,
   selectedLandMarineOption: getSelectedLandMarineOption,
   NRCSidebarView: getNRCSidebarView,
+  fullRanking: getFullRanking,
 });

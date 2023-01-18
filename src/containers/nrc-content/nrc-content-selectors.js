@@ -18,17 +18,14 @@ const parseData = (data) => {
   const parsedData = data.map((i) => {
     return {
       year: i.year.toString(),
-      spi: [i.SPI_high, i.SPI_low],
-      protected: [
-        parseInt(i.percentprotected_high, 10),
-        parseInt(i.percentprotected_low, 10),
-      ],
+      spi: i.SPI_high,
+      protected: parseInt(i.percentprotected_high, 10),
     };
   });
   return sortBy(parsedData, ['year']);
 };
 
-const getAreaChartData = createSelector([getChartData], (chartData) => {
+const getTrendChartData = createSelector([getChartData], (chartData) => {
   if (!chartData) return null;
   const { land, marine } = chartData;
   const parsedLandData = parseData(land);
@@ -37,7 +34,7 @@ const getAreaChartData = createSelector([getChartData], (chartData) => {
 });
 
 export default createStructuredSelector({
-  areaChartData: getAreaChartData,
+  trendChartData: getTrendChartData,
   countryData: getCountryData,
   countryDescription: getDescription,
   NRCSidebarView: getNRCSidebarView,

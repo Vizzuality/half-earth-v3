@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -16,6 +16,7 @@ import Vertebrates from 'containers/nrc-content/nrc-vertebrates';
 import {
   useOnboardingTooltipRefs,
   getOnboardingProps,
+  useOnboardingOpenSection,
 } from 'containers/onboarding/onboarding-hooks';
 
 import Button from 'components/button';
@@ -23,6 +24,8 @@ import CloseButton from 'components/close-button';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
+
+import { NRC_STEPS } from 'constants/onboarding-constants';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
@@ -37,9 +40,11 @@ const NRCSidebar = {
 };
 
 function NrcContent({
-  areaChartData,
+  trendChartData,
   challengesInfo,
   changeUI,
+  changeGlobe,
+  browsePage,
   chartData,
   countryData,
   countryDescription,
@@ -61,7 +66,7 @@ function NrcContent({
   const t = useT();
 
   const dataIsLoaded =
-    areaChartData && countryData && chartData && challengesInfo;
+    trendChartData && countryData && chartData && challengesInfo;
 
   const { source: challengesSources } = challengesInfo;
 
@@ -81,6 +86,32 @@ function NrcContent({
       waitingInteraction,
     });
 
+  useOnboardingOpenSection({
+    onboardingStep,
+    onboardingType,
+    waitingInteraction,
+    changeUI,
+    browsePage,
+    changeGlobe,
+  });
+
+  const scrollableRef = useRef();
+  useEffect(() => {
+    if (scrollableRef.current && NRC_STEPS.challenges === onboardingStep) {
+      const challengesElement = document.getElementById('nrc-challenges');
+      if (challengesElement) {
+        const offsetTop = challengesElement.getBoundingClientRect().top;
+        const notScrolled = offsetTop > 400;
+        if (notScrolled) {
+          scrollableRef.current.scrollTo(
+            0,
+            offsetTop - scrollableRef.current.getBoundingClientRect().top
+          );
+        }
+      }
+    }
+  }, [onboardingStep, scrollableRef.current]);
+
   return (
     <div
       className={cx({
@@ -92,7 +123,7 @@ function NrcContent({
     >
       <PdfNationalReport
         countryISO={countryISO}
-        areaChartData={areaChartData}
+        trendChartData={trendChartData}
         selectedLandMarineOption={selectedLandMarineOption}
       />
       <CloseButton
@@ -157,7 +188,7 @@ function NrcContent({
             </div>
           )}
           {dataIsLoaded && (
-            <div className={styles.scrolleableArea}>
+            <div ref={scrollableRef} className={styles.scrolleableArea}>
               <div className={styles.countryDescriptionContainer}>
                 <p className={styles.countryDescription}>
                   {countryDescription}
@@ -171,7 +202,7 @@ function NrcContent({
                 setFullRanking={setFullRanking}
               />
 
-              <Trend chartData={chartData} isShrunken={fullRanking} />
+              <Trend chartData={trendChartData} isShrunken={fullRanking} />
 
               <Challenges
                 countryISO={countryISO}

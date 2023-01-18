@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { NATIONAL_REPORT_CARD } from 'router';
 
@@ -11,6 +11,8 @@ import { motion } from 'framer-motion';
 
 import NrcContent from 'containers/nrc-content';
 import { useOnboardingOpenSection } from 'containers/onboarding/onboarding-hooks';
+import SoundButton from 'containers/onboarding/sound-btn';
+import OnboardingTooltip from 'containers/onboarding/tooltip';
 
 import Button from 'components/button';
 import HalfEarthLogo from 'components/half-earth-logo';
@@ -41,6 +43,8 @@ function NationalReportCard({
   handleLandMarineSelection,
   selectedLandMarineOption,
   NRCSidebarView,
+  handleSetFullRanking,
+  fullRanking,
 }) {
   useOnboardingOpenSection({
     onboardingStep,
@@ -55,7 +59,6 @@ function NationalReportCard({
 
   const t = useT();
   const { marine } = chartData;
-  const [fullRanking, setFullRanking] = useState(false);
 
   const tabsData = {
     land: {
@@ -88,6 +91,8 @@ function NationalReportCard({
 
   return (
     <>
+      {!!onboardingType && <SoundButton />}
+      <OnboardingTooltip />
       <img
         title="NRC background"
         alt="NRC background"
@@ -131,7 +136,7 @@ function NationalReportCard({
                 type="rectangular-primary"
                 Icon={ArrowExpandIcon}
                 className={styles.fullRankingButton}
-                handleClick={() => setFullRanking(!fullRanking)}
+                handleClick={() => handleSetFullRanking(!fullRanking)}
                 label={fullRanking ? t('Default Ranking') : t('Full Ranking')}
               />
             </motion.div>
@@ -142,7 +147,7 @@ function NationalReportCard({
             countryName={countryName}
             countryId={countryId}
             fullRanking={fullRanking}
-            setFullRanking={setFullRanking}
+            setFullRanking={handleSetFullRanking}
             selectedLandMarineOption={selectedLandMarineOption}
           />
         </motion.div>
