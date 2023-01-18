@@ -8,9 +8,9 @@ import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 import Cards from 'containers/mobile/nrc-landing/cards';
-import CountryCard from 'containers/mobile/nrc-landing/country-card';
 import { useOnboardingTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 
+import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Scene from 'components/scene';
 import SearchLocation from 'components/search-location';
 
@@ -126,7 +126,10 @@ function NrcLandingMobileComponent({
       />
 
       {countryISO && (
-        <CountryCard countryISO={countryISO} countryName={countryName} />
+        <CountryEntryTooltip
+          countryISO={countryISO}
+          countryName={countryName}
+        />
       )}
 
       {!countryISO && (
