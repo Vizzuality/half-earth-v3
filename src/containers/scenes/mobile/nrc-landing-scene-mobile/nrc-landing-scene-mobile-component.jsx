@@ -49,7 +49,6 @@ const variants = {
 };
 
 function NrcLandingMobileComponent({
-  // map,
   activeLayers,
   cardIndex,
   changeUI,
@@ -104,6 +103,7 @@ function NrcLandingMobileComponent({
           placeholder={t('search location')}
           searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
           searchType={SEARCH_TYPES.country}
+          mobile
         />
       </div>
 
@@ -123,12 +123,7 @@ function NrcLandingMobileComponent({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
-      {countryISO && (
-        <CountryEntryTooltip
-          countryISO={countryISO}
-          countryName={countryName}
-        />
-      )}
+      <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
       {!countryISO && (
         <Cards

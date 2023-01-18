@@ -14,6 +14,7 @@ import { MARINE_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 
 import Component from './nrc-landing-scene-mobile-component';
 import { NRC_LANDING_CARDS } from './nrc-landing-scene-mobile-constants';
+import mapStateToProps from './nrc-landing-scene-mobile-selectors';
 
 const actions = { ...urlActions, ...aoiAnalyticsActions };
 
@@ -61,4 +62,7 @@ function NrcLandingSceneMobileContainer(props) {
   );
 }
 
-export default connect(null, actions)(NrcLandingSceneMobileContainer);
+export default connect(
+  mapStateToProps,
+  actions
+)(NrcLandingSceneMobileContainer);

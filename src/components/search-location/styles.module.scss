@@ -121,6 +121,12 @@
   }
 }
 
+.mobile {
+  .suggestion {
+    text-transform: uppercase;
+  }
+}
+
 .closeButton {
   height: 8px;
   position: absolute;
