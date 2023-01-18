@@ -15,13 +15,16 @@ import styles from './app-styles.module.scss';
 import MobileDisclaimer from './components/mobile-disclaimer-modal';
 
 // Dynamic imports
+const Landing = loadable(() => import('pages/landing'));
 const LandingMobile = loadable(() => import('pages/mobile/landing-mobile'));
+const DataGlobe = loadable(() => import('pages/data-globe'));
 const NationalReportCardLandingMobile = loadable(() =>
   import('pages/mobile/nrc-landing-mobile')
 );
-const Landing = loadable(() => import('pages/landing'));
+const PriorityMobileGlobe = loadable(() =>
+  import('pages/mobile/priority-mobile')
+);
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
-const DataGlobe = loadable(() => import('pages/data-globe'));
 const NationalReportCardLegacy = loadable(() => import('pages/nrc-legacy'));
 const NationalReportCard = loadable(() => import('pages/nrc'));
 const NationalReportCardLanding = loadable(() => import('pages/nrc-landing'));
@@ -47,7 +50,7 @@ function AppLayout(props) {
 
   switch (page) {
     case 'data-globe':
-      return <DataGlobe />;
+      return isMobileFlag ? <PriorityMobileGlobe /> : <DataGlobe />;
     case 'featured-globe':
       return <FeaturedGlobe />;
     case 'nrc':

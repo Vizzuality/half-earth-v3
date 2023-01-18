@@ -20,7 +20,7 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 
-import styles from './nrc-landing-scene-mobile-styles.module.scss';
+import styles from './priority-scene-mobile-styles.module.scss';
 
 const Spinner = loadable(() => import('components/spinner'));
 const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
@@ -48,7 +48,7 @@ const variants = {
   },
 };
 
-function NrcLandingMobileComponent({
+function PriorityMobileComponent({
   activeLayers,
   cardIndex,
   cardsContent,
@@ -74,7 +74,7 @@ function NrcLandingMobileComponent({
 
   return (
     <Scene
-      sceneName="nrc-landing-scene"
+      sceneName="priority-scene"
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
@@ -89,13 +89,13 @@ function NrcLandingMobileComponent({
           <BackArrowIcon className={styles.arrowIcon} />
         </button>
 
-        <p>{t('National report cards')}</p>
+        <p>{t('Priority places')}</p>
       </header>
 
       <div className={styles.searchContainer}>
         <SearchLocation
           reference={(ref) => {
-            tooltipRefs.current.nrcLandingSearch = ref;
+            tooltipRefs.current.prioritySearch = ref;
           }}
           view={view}
           theme="light"
@@ -128,8 +128,8 @@ function NrcLandingMobileComponent({
 
       {!countryISO && (
         <Cards
-          cardIndex={cardIndex}
           cardsContent={cardsContent}
+          cardIndex={cardIndex}
           direction={direction}
           page={page}
           setPage={setPage}
@@ -142,4 +142,4 @@ function NrcLandingMobileComponent({
   );
 }
 
-export default NrcLandingMobileComponent;
+export default PriorityMobileComponent;
