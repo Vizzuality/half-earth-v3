@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import NationalReportCardLandingScene from 'scenes/mobile/nrc-landing-scene-mobile';
 
 function NationalReportCardLandingMobile({
+  activeLayers,
   countryISO,
   countryName,
-  activeLayers,
-  sceneSettings,
   handleMapLoad,
   isFullscreenActive,
+  sceneSettings,
 }) {
   const [map, setMap] = useState();
 
