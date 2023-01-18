@@ -15,8 +15,11 @@ import styles from './app-styles.module.scss';
 import MobileDisclaimer from './components/mobile-disclaimer-modal';
 
 // Dynamic imports
-const Landing = loadable(() => import('pages/landing'));
 const LandingMobile = loadable(() => import('pages/mobile/landing-mobile'));
+const NationalReportCardLandingMobile = loadable(() =>
+  import('pages/mobile/nrc-landing-mobile')
+);
+const Landing = loadable(() => import('pages/landing'));
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
 const NationalReportCardLegacy = loadable(() => import('pages/nrc-legacy'));
@@ -54,7 +57,11 @@ function AppLayout(props) {
         <NationalReportCardLegacy />
       );
     case 'nrc-landing':
-      return <NationalReportCardLanding />;
+      return isMobileFlag ? (
+        <NationalReportCardLandingMobile />
+      ) : (
+        <NationalReportCardLanding />
+      );
     case 'aoi':
       return <AreaOfInterest />;
     default:

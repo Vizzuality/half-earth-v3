@@ -36,7 +36,7 @@
   background-color: transparent;
   padding: 10px;
   border: none;
-  color: $white;
+  color: $dark;
   &::placeholder {
     color: $grey-text;
     padding-left: 30px;
@@ -118,6 +118,12 @@
   &:last-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+  }
+}
+
+.mobile {
+  .suggestion {
+    text-transform: uppercase;
   }
 }
 

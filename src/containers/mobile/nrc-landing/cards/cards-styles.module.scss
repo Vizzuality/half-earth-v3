@@ -1,0 +1,85 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.container {
+  bottom: 4px;
+  display: flex;
+  height: 40%;
+  left: 3%;
+  position: absolute;
+  width: 94vw;
+  z-index: 10;
+  .card {
+    border: 1px solid $elephant;
+    color: $white;
+    min-width: 94vw;
+    padding: 24px 16px;
+
+
+    h5 {
+      @extend %display1;
+      font-size: 16px;
+      line-height: 20px;
+      margin: 0;
+    }
+
+    p {
+      @extend %bodyText;
+    }
+
+    .cardContainer {
+      display: flex;
+      flex-direction: column;
+      height: 50%;
+      justify-content: end;
+
+
+      .legendTitle,
+      .legend,
+      {
+        color: $white;
+        margin: 0;
+      }
+
+      .legendTitle {
+        @extend %bodyText;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+
+      .source {
+        @extend %annotation;
+        color: $grey-text;
+        font-size: 10px;
+        text-overflow: ellipsis;
+        max-width: 90vw;
+        margin: 8px 0 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .progress {
+    @extend %bodyText;
+    background: $app-mobile-background;
+    border: 1px solid $elephant;
+    border-radius: 2px;
+    color: $white;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    left: 16px;
+    margin: 0;
+    position: absolute;
+    top: -10px;
+    width: 34px;
+    z-index: 11;
+
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+}

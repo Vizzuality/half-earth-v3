@@ -55,6 +55,8 @@ function SearchLocation({
   className = {},
   setSearcherOpen,
   searchType,
+  placeholder,
+  mobile,
 }) {
   const t = useT();
   const searchOptionsListRef = useRef();
@@ -110,7 +112,7 @@ function SearchLocation({
     >
       <input
         type="text"
-        placeholder={t('search')}
+        placeholder={placeholder || t('search')}
         className={styles.input}
         ref={inputRef}
         onClick={handleOpenSearch}
@@ -122,6 +124,7 @@ function SearchLocation({
           [className.placeholderIcon]: className.placeholderIcon,
         })}
       />
+
       {isSearchResultVisible &&
         createPortal(
           <div
@@ -133,6 +136,7 @@ function SearchLocation({
             <ul
               className={cx(styles.optionsList, {
                 [styles.fullWidth]: width === 'full',
+                [styles.mobile]: mobile,
               })}
               ref={searchOptionsListRef}
             >
