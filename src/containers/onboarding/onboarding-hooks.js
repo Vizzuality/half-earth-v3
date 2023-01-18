@@ -3,6 +3,7 @@ import { useRef, useEffect, useMemo } from 'react';
 import { NATIONAL_REPORT_CARD, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import { LAYER_VARIANTS } from 'constants/biodiversity-layers-constants';
+import { NRC_STEPS, PRIORITY_STEPS } from 'constants/onboarding-constants';
 import { getCountryNames } from 'constants/translation-constants';
 import { LOCAL_SCENE_TABS_SLUGS } from 'constants/ui-params';
 
@@ -93,16 +94,6 @@ export const useOnboardingOpenSection = ({
 }) => {
   useEffect(() => {
     if (onboardingType === 'priority-places') {
-      const PRIORITY_STEPS = {
-        intro: 0,
-        priority: 1,
-        richness: 2,
-        rarity: 3,
-        protection: 4,
-        humanPressures: 5,
-        closure: 6,
-      };
-
       const stepsToOpen = {
         priority: [
           PRIORITY_STEPS.priority,
@@ -147,19 +138,6 @@ export const useOnboardingOpenSection = ({
     }
 
     if (onboardingType === 'national-report-cards') {
-      const NRC_STEPS = {
-        intro: 0,
-        spi: 1,
-        nrc: 2,
-        ...(REACT_APP_FEATURE_NEW_NRC_PAGE
-          ? {}
-          : {
-              overview: 3,
-            }),
-        ranking: REACT_APP_FEATURE_NEW_NRC_PAGE ? 3 : 5,
-        challenges: 4,
-        closure: REACT_APP_FEATURE_NEW_NRC_PAGE ? 5 : 6,
-      };
       const DEFAULT_ISO = 'BRA';
       const DEFAULT_COUNTRY_NAME = 'Brazil';
 

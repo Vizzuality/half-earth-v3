@@ -6,27 +6,30 @@ import { useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
-import priorityPlaces01 from 'sounds/tour1-track1-intro.mp3';
-import priorityPlaces02 from 'sounds/tour1-track2-priority.mp3';
-import priorityPlaces03 from 'sounds/tour1-track3-richness.mp3';
-import priorityPlaces04 from 'sounds/tour1-track4-rarity.mp3';
-import priorityPlaces05 from 'sounds/tour1-track5-protection.mp3';
-import priorityPlaces06 from 'sounds/tour1-track6-human-pressures.mp3';
-import priorityPlaces07 from 'sounds/tour1-track7-closure.mp3';
-import nationalReportCards01 from 'sounds/tour2-track1-intro.mp3';
-import nationalReportCards02 from 'sounds/tour2-track2-spi.mp3';
-import nationalReportCards03 from 'sounds/tour2-track3-nrc.mp3';
+import invert from 'lodash/invert';
+import priorityIntroFile from 'sounds/tour1-track1-intro.mp3';
+import priorityFile from 'sounds/tour1-track2-priority.mp3';
+import richnessFile from 'sounds/tour1-track3-richness.mp3';
+import rarityFile from 'sounds/tour1-track4-rarity.mp3';
+import protectionFile from 'sounds/tour1-track5-protection.mp3';
+import humanPressuresFile from 'sounds/tour1-track6-human-pressures.mp3';
+import priorityClosureFile from 'sounds/tour1-track7-closure.mp3';
+import NRCIntroFile from 'sounds/tour2-track1-intro.mp3';
+import spiFile from 'sounds/tour2-track2-spi.mp3';
+import nrcFile from 'sounds/tour2-track3-nrc.mp3';
 // TODO: Remove overview when the new NRC page is live
-import nationalReportCards04 from 'sounds/tour2-track4-overview.mp3';
-import nationalReportCards05 from 'sounds/tour2-track5-challenges.mp3';
-import nationalReportCards06 from 'sounds/tour2-track6-ranking.mp3';
-import nationalReportCards07 from 'sounds/tour2-track7-closure.mp3';
+import overviewFile from 'sounds/tour2-track4-overview.mp3';
+import challengesFile from 'sounds/tour2-track5-challenges.mp3';
+import rankingFile from 'sounds/tour2-track6-ranking.mp3';
+import NRCClosureFile from 'sounds/tour2-track7-closure.mp3';
 
 import Modal from 'containers/modals/onboarding-modal';
 
 import {
   getScripts,
   NO_INTERACTION_STEPS,
+  PRIORITY_STEPS,
+  NRC_STEPS,
 } from 'constants/onboarding-constants';
 
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -41,25 +44,24 @@ import StepsArcs from '../step-arcs';
 import AudioPlayer from './audio-player';
 import styles from './sound-btn-styles.module.scss';
 
-const files = {
-  'priority-places': [
-    priorityPlaces01,
-    priorityPlaces02,
-    priorityPlaces03,
-    priorityPlaces04,
-    priorityPlaces05,
-    priorityPlaces06,
-    priorityPlaces07,
-  ],
-  'national-report-cards': [
-    nationalReportCards01,
-    nationalReportCards02,
-    nationalReportCards03,
-    nationalReportCards04,
-    nationalReportCards05,
-    nationalReportCards06,
-    nationalReportCards07,
-  ],
+const priorityFiles = {
+  intro: priorityIntroFile,
+  priority: priorityFile,
+  richness: richnessFile,
+  rarity: rarityFile,
+  protection: protectionFile,
+  humanPressures: humanPressuresFile,
+  closure: priorityClosureFile,
+};
+
+const NRCFiles = {
+  intro: NRCIntroFile,
+  spi: spiFile,
+  nrc: nrcFile,
+  overview: overviewFile,
+  ranking: rankingFile,
+  challenges: challengesFile,
+  closure: NRCClosureFile,
 };
 
 const renderAudioBars = (setPauseIcon) => (
@@ -165,7 +167,6 @@ function SoundButtonComponent({
   const t = useT();
   const locale = useLocale();
   const scripts = useMemo(() => getScripts(), [locale]);
-
   const [playing, setPlaying] = useState(true);
   const [playedSeconds, setPlayedSeconds] = useState(0);
   const [pausedTime, setPausedTime] = useState(0);
@@ -198,7 +199,12 @@ function SoundButtonComponent({
     onboardingType &&
     scripts[onboardingType] &&
     Object.values(scripts[onboardingType])[onboardingStep];
-  const file = files[onboardingType][onboardingStep];
+  const invertedPrioritySteps = invert(PRIORITY_STEPS);
+  const invertedNRCSteps = invert(NRC_STEPS);
+  const file =
+    onboardingType === 'priority-places'
+      ? priorityFiles[invertedPrioritySteps[onboardingStep]]
+      : NRCFiles[invertedNRCSteps[onboardingStep]];
 
   const handleBack = () => {
     browsePage({ type: LANDING });

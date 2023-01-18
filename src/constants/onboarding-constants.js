@@ -13,6 +13,30 @@ export const ONBOARDING_TYPE_CENTER = {
   'priority-places': [-51.9, -14.2],
 };
 
+export const PRIORITY_STEPS = {
+  intro: 0,
+  priority: 1,
+  richness: 2,
+  rarity: 3,
+  protection: 4,
+  humanPressures: 5,
+  closure: 6,
+};
+
+export const NRC_STEPS = {
+  intro: 0,
+  spi: 1,
+  nrc: 2,
+  ...(REACT_APP_FEATURE_NEW_NRC_PAGE
+    ? {}
+    : {
+        overview: 3,
+      }),
+  ranking: REACT_APP_FEATURE_NEW_NRC_PAGE ? 3 : 5,
+  challenges: 4,
+  closure: REACT_APP_FEATURE_NEW_NRC_PAGE ? 5 : 6,
+};
+
 export const getScripts = () => {
   const ranking = [
     {
@@ -152,7 +176,7 @@ export const getScripts = () => {
       ? [
           {
             startTime: 85,
-            endTime: 90,
+            endTime: 89,
             text: t('explore relationships between various indicators.'),
           },
         ]
