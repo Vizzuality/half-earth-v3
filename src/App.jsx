@@ -15,6 +15,7 @@ import styles from './app-styles.module.scss';
 import MobileDisclaimer from './components/mobile-disclaimer-modal';
 
 // Dynamic imports
+const Landing = loadable(() => import('pages/landing'));
 const LandingMobile = loadable(() => import('pages/mobile/landing-mobile'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
 const NationalReportCardLandingMobile = loadable(() =>
