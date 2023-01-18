@@ -29,14 +29,20 @@ function NrcLandingSceneMobileContainer(props) {
 
   const cardIndex = wrap(0, cardsContent.length, page);
 
+  const CARDS_INDEX = {
+    intro: 0,
+    land: 1,
+    marine: 2,
+  };
+
   useEffect(() => {
-    if (cardIndex === 2) {
+    if (cardIndex === CARDS_INDEX.marine) {
       setSelectedLayers([
         ...selectedLayers,
         { title: MARINE_SPI_FEATURE_LAYER },
       ]);
     }
-    if (cardIndex !== 2) {
+    if (cardIndex !== CARDS_INDEX.marine) {
       setSelectedLayers(
         selectedLayers.filter(
           (layer) => layer.title !== MARINE_SPI_FEATURE_LAYER

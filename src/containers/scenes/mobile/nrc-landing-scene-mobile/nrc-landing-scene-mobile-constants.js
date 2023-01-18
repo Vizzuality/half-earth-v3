@@ -5,6 +5,7 @@ import { T } from '@transifex/react';
 
 export const getNRCLandingCards = () => [
   {
+    intro: 0,
     title: t('National Report Cards'),
     description: (
       <p>
@@ -13,6 +14,7 @@ export const getNRCLandingCards = () => [
     ),
   },
   {
+    land: 1,
     title: t('How is the Land SPI calculated?'),
     description: (
       <p>
@@ -42,6 +44,7 @@ export const getNRCLandingCards = () => [
     ),
   },
   {
+    marine: 2,
     title: t('How is the Marine SPI calculated?'),
     description: (
       <p>
