@@ -60,9 +60,9 @@ function NrcLandingMobileComponent({
   onMapLoad,
   page,
   sceneMode,
-  sceneSettings,
   setPage,
   selectedLayers,
+  sceneSettings,
   view,
 }) {
   const t = useT();
@@ -128,6 +128,8 @@ function NrcLandingMobileComponent({
         countryName={countryName}
         mobile
       />
+
+      {/* cuando no hay countryISO las setting a zoom default */}
 
       {!countryISO && (
         <Cards

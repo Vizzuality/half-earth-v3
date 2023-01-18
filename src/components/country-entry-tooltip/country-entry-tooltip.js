@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // Services
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
-import { NATIONAL_REPORT_CARD } from 'router';
+import { NATIONAL_REPORT_CARD, NATIONAL_REPORT_CARD_LANDING } from 'router';
 
 import { useLocale } from '@transifex/react';
 
@@ -26,7 +26,8 @@ import Component from './country-entry-tooltip-component';
 const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions };
 
 function CountryEntryTooltipContainer(props) {
-  const { mapTooltipIsVisible, countryISO, changeUI } = props;
+  const { browsePage, countryISO, changeUI, mobile, mapTooltipIsVisible } =
+    props;
   const locale = useLocale();
 
   const [tooltipPosition, setTooltipPosition] = useState(null);
@@ -74,6 +75,13 @@ function CountryEntryTooltipContainer(props) {
     const { setTooltipIsVisible, setTooltipContent } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
+
+    if (mobile) {
+      browsePage({
+        type: NATIONAL_REPORT_CARD_LANDING,
+        payload: { iso: null },
+      });
+    }
   };
 
   const handleExploreCountryClick = () => {
@@ -81,7 +89,6 @@ function CountryEntryTooltipContainer(props) {
       setTooltipIsVisible,
       countryISO: _countryISO,
       setTooltipContent,
-      browsePage,
       countryName,
       enterNrcAnalytics: _enterNrcAnalytics,
       onboardingStep,

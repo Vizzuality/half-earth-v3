@@ -20,6 +20,7 @@ const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function NrcLandingSceneMobileContainer(props) {
   const { activeLayers, browsePage } = props;
+
   const locale = useLocale();
   const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
 
