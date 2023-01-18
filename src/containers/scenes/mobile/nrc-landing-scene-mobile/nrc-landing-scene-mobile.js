@@ -24,8 +24,6 @@ function NrcLandingSceneMobileContainer(props) {
 
   const cardIndex = wrap(0, NRC_LANDING_CARDS.length, page);
 
-  const backDirection = -1;
-
   useEffect(() => {
     if (cardIndex === 2) {
       setSelectedLayers([
@@ -43,12 +41,7 @@ function NrcLandingSceneMobileContainer(props) {
   }, [page]);
 
   const handleStepBack = () => {
-    if (cardIndex !== 0) {
-      setPage([cardIndex - 1, backDirection]);
-    }
-    if (cardIndex === 0) {
-      browsePage({ type: LANDING });
-    }
+    browsePage({ type: LANDING });
   };
 
   return (
