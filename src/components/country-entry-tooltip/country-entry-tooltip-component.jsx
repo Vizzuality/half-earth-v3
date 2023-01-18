@@ -2,14 +2,13 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 
 import { loadModules } from 'esri-loader';
 
+import { NATIONAL_REPORT_CARD_LANDING } from 'router';
+
 import { T, useT, useLocale } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion } from 'framer-motion';
 
-// Assets
-
-// styles
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
@@ -33,6 +32,7 @@ function CountryEntryTooltipComponent({
   onboardingType,
   waitingInteraction,
   mobile,
+  browsePage,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -157,6 +157,12 @@ function CountryEntryTooltipComponent({
         onClick={() => {
           handleTooltipClose();
           setActiveTab('land');
+          if (mobile) {
+            browsePage({
+              type: NATIONAL_REPORT_CARD_LANDING,
+              payload: { iso: null },
+            });
+          }
         }}
       />
       {mobile && (
