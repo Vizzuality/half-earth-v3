@@ -202,30 +202,24 @@ export const useOnboardingOpenSection = ({
         REACT_APP_FEATURE_NEW_NRC_PAGE &&
         [NRC_STEPS.challenges, NRC_STEPS.ranking].includes(onboardingStep)
       ) {
-        browsePage({
-          type: NATIONAL_REPORT_CARD,
-          payload: { iso: countryISO || DEFAULT_ISO },
-        });
-        changeUI({
-          onboardingType,
-          onboardingStep,
-          waitingInteraction,
-          fullRanking: NRC_STEPS.ranking === onboardingStep,
-        });
-
-        // Scroll to show section
-        if (NRC_STEPS.challenges === onboardingStep) {
-          const challengesElement = document.getElementById(
-            'nrc-challenges-header'
-          );
-
-          if (challengesElement) {
-            challengesElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'nearest',
-            });
-          }
+        if (locationRoute !== NATIONAL_REPORT_CARD) {
+          browsePage({
+            type: NATIONAL_REPORT_CARD,
+            payload: { iso: countryISO || DEFAULT_ISO },
+          });
+          changeUI({
+            onboardingType,
+            onboardingStep,
+            waitingInteraction,
+            fullRanking: NRC_STEPS.ranking === onboardingStep,
+          });
+        } else {
+          changeUI({
+            fullRanking: NRC_STEPS.ranking === onboardingStep,
+          });
         }
+
+        // Scroll to show section: This is currently on NRC content component
       }
     }
   }, [onboardingStep, setOpen, waitingInteraction, onboardingType]);

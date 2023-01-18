@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -24,6 +24,8 @@ import CloseButton from 'components/close-button';
 import PdfNationalReport from 'components/pdf-reports/national-report-pdf';
 import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
+
+import { NRC_STEPS } from 'constants/onboarding-constants';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
@@ -92,6 +94,23 @@ function NrcContent({
     browsePage,
     changeGlobe,
   });
+
+  const scrollableRef = useRef();
+  useEffect(() => {
+    if (scrollableRef.current && NRC_STEPS.challenges === onboardingStep) {
+      const challengesElement = document.getElementById('nrc-challenges');
+      if (challengesElement) {
+        const offsetTop = challengesElement.getBoundingClientRect().top;
+        const notScrolled = offsetTop > 400;
+        if (notScrolled) {
+          scrollableRef.current.scrollTo(
+            0,
+            offsetTop - scrollableRef.current.getBoundingClientRect().top
+          );
+        }
+      }
+    }
+  }, [onboardingStep, scrollableRef.current]);
 
   return (
     <div
@@ -169,7 +188,7 @@ function NrcContent({
             </div>
           )}
           {dataIsLoaded && (
-            <div id="nrc-scrollable-area" className={styles.scrolleableArea}>
+            <div ref={scrollableRef} className={styles.scrolleableArea}>
               <div className={styles.countryDescriptionContainer}>
                 <p className={styles.countryDescription}>
                   {countryDescription}
