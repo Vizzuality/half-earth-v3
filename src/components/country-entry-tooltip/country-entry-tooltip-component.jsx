@@ -32,6 +32,7 @@ function CountryEntryTooltipComponent({
   changeUI,
   onboardingType,
   waitingInteraction,
+  mobile,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -114,7 +115,13 @@ function CountryEntryTooltipComponent({
   if (!tooltipPosition || !tooltip) return null;
 
   return (
-    <div ref={tooltipref} className={styles.tooltipContainer}>
+    <div
+      ref={tooltipref}
+      className={cx({
+        [styles.tooltipContainer]: true,
+        [styles.mobile]: mobile,
+      })}
+    >
       <section className={styles.tooltipSection}>
         <div>
           <img
@@ -126,7 +133,34 @@ function CountryEntryTooltipComponent({
             {countryNames[countryName] || countryName}
           </span>
         </div>
-        <div>
+        {!mobile && (
+          <div>
+            {Object.keys(tabsData).map((key) => (
+              <button
+                key={key}
+                disabled={!coastal}
+                type="button"
+                className={cx({
+                  [styles.switchDataButton]: true,
+                  [styles.switchDataActiveButton]: activeTab === key,
+                })}
+                onClick={() => setActiveTab(key)}
+              >
+                {tabsData[key].text}
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+      <CloseIcon
+        className={styles.tooltipClose}
+        onClick={() => {
+          handleTooltipClose();
+          setActiveTab('land');
+        }}
+      />
+      {mobile && (
+        <section className={styles.switchDataButtonsContainer}>
           {Object.keys(tabsData).map((key) => (
             <button
               key={key}
@@ -141,15 +175,8 @@ function CountryEntryTooltipComponent({
               {tabsData[key].text}
             </button>
           ))}
-        </div>
-      </section>
-      <CloseIcon
-        className={styles.tooltipClose}
-        onClick={() => {
-          handleTooltipClose();
-          setActiveTab('land');
-        }}
-      />
+        </section>
+      )}
       <section className={styles.spiInfo}>
         <p className={styles.spi}>
           {landTab ? Math.round(spiLand) : Math.round(spiMar)}
@@ -208,7 +235,7 @@ function CountryEntryTooltipComponent({
           className={styles.tooltipExplore}
           onClick={onExploreCountryClick}
         >
-          {t('explore')}
+          {mobile ? t('national report card') : t('explore')}
         </button>
       </motion.div>
     </div>

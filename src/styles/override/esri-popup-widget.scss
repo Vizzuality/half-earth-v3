@@ -19,6 +19,10 @@
   max-height: 500px !important;
   border-radius: 2px;
   background-color: $firefly;
+
+  @media #{$mobile-only} {
+    min-width: 94vw;
+  }
 }
 
 .esri-popup__content {
@@ -29,6 +33,11 @@
   background-color: $firefly;
   color: $white;
   padding: 16px;
+
+  @media #{$mobile-only} {
+    background-color: $elephant;
+    border-radius: 8px;
+  }
 }
 
 .esri-popup__pointer-direction {
