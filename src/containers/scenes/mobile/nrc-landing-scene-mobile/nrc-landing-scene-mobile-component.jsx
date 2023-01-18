@@ -129,8 +129,6 @@ function NrcLandingMobileComponent({
         mobile
       />
 
-      {/* cuando no hay countryISO las setting a zoom default */}
-
       {!countryISO && (
         <Cards
           cardIndex={cardIndex}
