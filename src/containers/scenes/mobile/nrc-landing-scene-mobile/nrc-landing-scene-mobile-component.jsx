@@ -92,9 +92,7 @@ function NrcLandingMobileComponent({
         <p>{t('National reports cards')}</p>
       </header>
 
-      <div
-        style={{ position: 'absolute', top: '60px', left: '4%', width: '94vw' }}
-      >
+      <div className={styles.searchContainer}>
         <SearchLocation
           reference={(ref) => {
             tooltipRefs.current.nrcLandingSearch = ref;

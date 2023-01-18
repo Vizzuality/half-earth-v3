@@ -55,6 +55,7 @@ function SearchLocation({
   className = {},
   setSearcherOpen,
   searchType,
+  placeholder,
 }) {
   const t = useT();
   const searchOptionsListRef = useRef();
@@ -110,7 +111,7 @@ function SearchLocation({
     >
       <input
         type="text"
-        placeholder={t('search')}
+        placeholder={placeholder || t('search')}
         className={styles.input}
         ref={inputRef}
         onClick={handleOpenSearch}

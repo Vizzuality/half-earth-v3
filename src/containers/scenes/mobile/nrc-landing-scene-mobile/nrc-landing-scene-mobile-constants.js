@@ -1,10 +1,11 @@
 import React from 'react';
 
+import { t } from '@transifex/native';
 import { T } from '@transifex/react';
 
-export const NRC_LANDING_CARDS = [
+export const NRC_LANDING_CARDS = () => [
   {
-    title: 'National Report Cards',
+    title: t('National Report Cards'),
     description: (
       <p>
         <T _str="The SPI (Species Protection Index) provides an estimation of how well each country is meeting conservation targets and is the basis for a National Report Card on every country in the world. Countries with the highest SPI scores tend to host very few endemic species. They earn a higher score because it is easier to build protected area networks when richness is the primary factor to consider." />
@@ -12,7 +13,7 @@ export const NRC_LANDING_CARDS = [
     ),
   },
   {
-    title: 'How is the Land SPI calculated?',
+    title: t('How is the Land SPI calculated?'),
     description: (
       <p>
         <T
@@ -35,12 +36,13 @@ export const NRC_LANDING_CARDS = [
         />
       </p>
     ),
-    legendTitle: 'Land SPI',
-    source:
-      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)',
+    legendTitle: t('Land SPI'),
+    source: t(
+      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
+    ),
   },
   {
-    title: 'How is the Marine SPI calculated?',
+    title: t('How is the Marine SPI calculated?'),
     description: (
       <p>
         <T
@@ -63,8 +65,9 @@ export const NRC_LANDING_CARDS = [
         />
       </p>
     ),
-    legendTitle: 'Marine SPI',
-    source:
-      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)',
+    legendTitle: t('Marine SPI'),
+    source: t(
+      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
+    ),
   },
 ];
