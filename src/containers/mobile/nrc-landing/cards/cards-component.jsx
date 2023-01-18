@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import { T, useLocale } from '@transifex/react';
+import { T } from '@transifex/react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { getNRCLandingCards } from 'containers/scenes/mobile/nrc-landing-scene-mobile/nrc-landing-scene-mobile-constants';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import styles from './cards-styles.module.scss';
@@ -14,10 +13,14 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-function CardsComponent({ cardIndex, variants, page, direction, setPage }) {
-  const locale = useLocale();
-  const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
-
+function CardsComponent({
+  cardIndex,
+  variants,
+  page,
+  direction,
+  setPage,
+  cardsContent,
+}) {
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);
   };
@@ -58,7 +61,7 @@ function CardsComponent({ cardIndex, variants, page, direction, setPage }) {
           <h5>{cardsContent[cardIndex].title}</h5>
           <p>{cardsContent[cardIndex].description}</p>
 
-          {cardIndex !== 0 && (
+          {cardsContent[cardIndex].legendTitle && (
             <div className={styles.cardContainer}>
               <div>
                 <p className={styles.legendTitle}>
@@ -67,7 +70,10 @@ function CardsComponent({ cardIndex, variants, page, direction, setPage }) {
                     legendTitle={cardsContent[cardIndex].legendTitle}
                   />
                 </p>
-                <SidebarLegend className={styles.legend} legendItem="spi" />
+                <SidebarLegend
+                  className={styles.legend}
+                  legendItem={cardsContent[cardIndex].legendColor}
+                />
               </div>
               <p className={styles.source}>
                 <T _str="{source}" source={cardsContent[cardIndex].source} />

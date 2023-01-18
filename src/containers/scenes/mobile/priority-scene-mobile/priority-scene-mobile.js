@@ -10,17 +10,16 @@ import * as urlActions from 'actions/url-actions';
 
 import { wrap } from 'popmotion';
 
-import Component from './nrc-landing-scene-mobile-component';
-import { getNRCLandingCards } from './nrc-landing-scene-mobile-constants';
-import mapStateToProps from './nrc-landing-scene-mobile-selectors';
+import Component from './priority-scene-mobile-component';
+import { getPriorityMobileCards } from './priority-scene-mobile-constants';
+import mapStateToProps from './priority-scene-mobile-selectors';
 
 const actions = { ...urlActions, ...aoiAnalyticsActions };
 
-function NrcLandingSceneMobileContainer(props) {
+function PrioritySceneMobileContainer(props) {
   const { activeLayers, browsePage } = props;
   const locale = useLocale();
-  const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
-
+  const cardsContent = useMemo(() => getPriorityMobileCards(), [locale]);
   const [[page, direction], setPage] = useState([0, 0]);
 
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
@@ -52,7 +51,4 @@ function NrcLandingSceneMobileContainer(props) {
   );
 }
 
-export default connect(
-  mapStateToProps,
-  actions
-)(NrcLandingSceneMobileContainer);
+export default connect(mapStateToProps, actions)(PrioritySceneMobileContainer);
