@@ -19,13 +19,10 @@ import mapStateToProps from './nrc-landing-scene-mobile-selectors';
 const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function NrcLandingSceneMobileContainer(props) {
-  const { activeLayers, browsePage, sceneSettings, countryISO } = props;
+  const { activeLayers, browsePage } = props;
 
   const locale = useLocale();
   const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
-
-  const [updatedSceneSettings, setUpdatedSceneSettings] =
-    useState(sceneSettings);
 
   const [[page, direction], setPage] = useState([0, 0]);
 
@@ -55,10 +52,6 @@ function NrcLandingSceneMobileContainer(props) {
     }
   }, [page]);
 
-  useEffect(() => {
-    setUpdatedSceneSettings({ ...sceneSettings, zoom: 1.8 });
-  }, [countryISO]);
-
   const handleStepBack = () => {
     browsePage({ type: LANDING });
   };
@@ -72,7 +65,6 @@ function NrcLandingSceneMobileContainer(props) {
       page={page}
       setPage={setPage}
       selectedLayers={selectedLayers}
-      sceneSettings={updatedSceneSettings}
     />
   );
 }
