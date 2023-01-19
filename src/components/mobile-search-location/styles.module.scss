@@ -1,0 +1,30 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.container {
+  background-color: $white;
+  position: absolute;
+  width: 100vw;
+  height: 100dvb;
+  top: 0;
+  left: 0;
+  z-index: 11;
+
+  .searcherContainer {
+    position: fixed;
+    top: 50px;
+    z-index: 11;
+    left: 5;
+    width: 90vw;
+  }
+
+  .closeButton {
+    position: fixed;
+    top: $site-gutter;
+    right: $site-gutter;
+  }
+}
+
+
+
+

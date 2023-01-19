@@ -18,6 +18,10 @@
 
 .searchResultsList {
   z-index: $bring-to-front;
+  @media #{$mobile-only} {
+    z-index: 11;
+  }
+
 }
 
 .placeholderIcon {
