@@ -69,7 +69,7 @@
     color: inherit;
 
     @media #{$mobile-only} {
-      font-size: 10px;
+      font-size: $font-size-xxs;
     }
   }
 }

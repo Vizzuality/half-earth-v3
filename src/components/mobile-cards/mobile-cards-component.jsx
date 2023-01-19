@@ -4,6 +4,7 @@ import { T } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown/with-html';
 
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
@@ -14,18 +15,16 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-function CardsComponent({
-  cardIndex,
-  variants,
-  page,
-  direction,
-  setPage,
-  cardsContent,
-}) {
+function CardsComponent({ variants, page, direction, setPage, cardsContent }) {
   const paginate = (newDirection) => {
-    setPage([page + newDirection, newDirection]);
+    const isNotOutsideBounds =
+      (newDirection > 0 && page < cardsContent.length - 1) ||
+      (newDirection < 0 && page > 0);
+    if (isNotOutsideBounds) {
+      setPage([page + newDirection, newDirection]);
+    }
   };
-  const card = cardsContent[cardIndex];
+  const card = cardsContent[page];
   const { title, description, legendItem, legendColor, legendTitle } = card;
   const isSingleLegend = !!legendColor;
   return (
@@ -57,13 +56,11 @@ function CardsComponent({
           }}
         >
           <div>
-            <div className={styles.progress}>
-              <p>
-                {cardIndex + 1} / {cardsContent.length}
-              </p>
-            </div>
-            <h5>{title}</h5>
-            <p>{description}</p>
+            <p className={styles.progress}>
+              {page + 1} / {cardsContent.length}
+            </p>
+            <h5 className={styles.title}>{title}</h5>
+            <p className={styles.description}>{description}</p>
           </div>
           {legendTitle && (
             <div className={styles.legendContainer}>
@@ -78,9 +75,7 @@ function CardsComponent({
                     style={{ backgroundColor: legendColor }}
                   />
                 )}
-                <p className={styles.legendTitle}>
-                  <T _str="{legendTitle}" legendTitle={legendTitle} />
-                </p>
+                <p className={styles.legendTitle}>{legendTitle}</p>
                 {!isSingleLegend && (
                   <SidebarLegend
                     className={styles.legend}
@@ -89,7 +84,14 @@ function CardsComponent({
                 )}
               </div>
               <p className={styles.source}>
-                <T _str="{source}" source={card.source} />
+                <span className={styles.sourceIntro}>
+                  <T _str="Source:" />{' '}
+                </span>
+                <ReactMarkdown
+                  key={`source-${page}`}
+                  source={card.source}
+                  escapeHtml={false}
+                />
               </p>
             </div>
           )}

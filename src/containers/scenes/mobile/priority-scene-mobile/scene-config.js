@@ -16,7 +16,7 @@ export default {
     zoom: 1.8,
     padding: {
       left: 0,
-      top: -300,
+      top: -220,
     },
     isGlobeUpdating: false,
     environment: {

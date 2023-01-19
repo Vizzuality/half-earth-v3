@@ -28,9 +28,6 @@ export const getPriorityMobileCards = () => [
     layer: LAND_COUNTRY_PRIORITY_LAYER,
     legendTitle: t('ALL LAND VERTEBRATES PRIORITY'),
     legendItem: 'biodiversity',
-    source: t(
-      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
-    ),
   },
   {
     title: t('Where are the priority areas for marine vertebrates?'),
@@ -49,9 +46,6 @@ export const getPriorityMobileCards = () => [
     layer: MARINE_COUNTRY_PRIORITY_LAYER,
     legendTitle: t('ALL MARINE VERTEBRATES PRIORITY'),
     legendItem: 'biodiversity',
-    source: t(
-      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
-    ),
   },
   {
     title: t('Where to protect next?'),
@@ -70,8 +64,5 @@ export const getPriorityMobileCards = () => [
     layer: HALF_EARTH_FUTURE_TILE_LAYER,
     legendTitle: t('Places for Half-Earth Future'),
     legendColor: FUTURE_PLACES_COLOR,
-    source: t(
-      'Source: (1) Rinnan DS et al., 2021a (2) Rinnan DS et al., 2021b (Map of Life - Yale University)'
-    ),
   },
 ];

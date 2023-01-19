@@ -29,7 +29,6 @@
     "localforage": "^1.10.0",
     "lodash": "4.17.21",
     "node-sass": "yarn:sass",
-    "popmotion": "^11.0.5",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
     "rc-slider": "^9.7.2",

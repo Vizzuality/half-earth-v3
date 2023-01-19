@@ -50,7 +50,6 @@ const variants = {
 
 function PriorityMobileComponent({
   activeLayers,
-  cardIndex,
   cardsContent,
   changeUI,
   countryISO,
@@ -129,7 +128,6 @@ function PriorityMobileComponent({
       {!countryISO && (
         <Cards
           cardsContent={cardsContent}
-          cardIndex={cardIndex}
           direction={direction}
           page={page}
           setPage={setPage}

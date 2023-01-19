@@ -37,6 +37,14 @@
       display: flex;
     }
 
+    .title {
+      margin-bottom: 8px;
+    }
+
+    .description {
+      margin: 2px 0;
+    }
+
     .legendContainer {
       display: flex;
       flex-direction: column;
@@ -67,12 +75,26 @@
       .source {
         @extend %annotation;
         color: $grey-text;
-        font-size: 10px;
-        text-overflow: ellipsis;
+        font-size: $font-size-xxs;
         max-width: 90vw;
-        margin: 8px 0 0 0;
-        white-space: nowrap;
-        overflow: hidden;
+        margin: 2px 0 0 0;
+        line-height: 6px;
+
+
+        .sourceIntro {
+          display: inline;
+        }
+
+        a {
+          color: $grey-text;
+        }
+
+        p {
+          display: inline;
+          margin-bottom: 0;
+          font-size: $font-size-xxs;
+          line-height: 1rem;
+        }
       }
     }
   }
