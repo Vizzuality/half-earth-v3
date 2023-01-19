@@ -3,7 +3,7 @@
 
 .container {
   @extend %bodyText;
-  font-size: 10px;
+  font-size: $font-size-xxs;
 
   .SPIcontainer {
     background: $white;

@@ -27,7 +27,7 @@
     @extend %subtitle;
     border: 1px solid #E9E9E9;
     color: #E9E9E9;
-    font-size: 10px;
+    font-size: $font-size-xxs;
     height: 25px;
     text-transform: capitalize;
     width: 50px;
@@ -90,7 +90,7 @@
 
   .subtitle {
     @extend %subtitle;
-    font-size: 10px;
+    font-size: $font-size-xxs;
     letter-spacing: 1.2px;
     margin: 0;
     padding-bottom: 10px;
