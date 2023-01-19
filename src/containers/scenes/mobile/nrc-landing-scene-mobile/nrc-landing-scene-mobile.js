@@ -10,6 +10,10 @@ import * as urlActions from 'actions/url-actions';
 
 import { wrap } from 'popmotion';
 
+import ContentfulService from 'services/contentful';
+
+import metadataConfig, { SPECIES_PROTECTION_INDEX } from 'constants/metadata';
+
 import Component from './nrc-landing-scene-mobile-component';
 import { getNRCLandingCards } from './nrc-landing-scene-mobile-constants';
 import mapStateToProps from './nrc-landing-scene-mobile-selectors';
@@ -27,6 +31,25 @@ function NrcLandingSceneMobileContainer(props) {
 
   const cardIndex = wrap(0, cardsContent.length, page);
 
+  const [cardsContentWithSources, setCardsContentWithSources] =
+    useState(cardsContent);
+
+  useEffect(() => {
+    ContentfulService.getMetadata(
+      metadataConfig[SPECIES_PROTECTION_INDEX],
+      locale
+    ).then((data) => {
+      const cardsWithSources = cardsContent.map((c) => {
+        const source = data && data.source;
+        return {
+          ...c,
+          ...(source ? { source } : {}),
+        };
+      });
+      setCardsContentWithSources(cardsWithSources);
+    });
+  }, [locale, cardsContent]);
+
   useEffect(() => {
     setSelectedLayers([
       ...activeLayers,
@@ -42,7 +65,7 @@ function NrcLandingSceneMobileContainer(props) {
     <Component
       {...props}
       cardIndex={cardIndex}
-      cardsContent={cardsContent}
+      cardsContent={cardsContentWithSources}
       direction={direction}
       handleStepBack={handleStepBack}
       page={page}

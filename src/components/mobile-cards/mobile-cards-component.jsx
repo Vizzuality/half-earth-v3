@@ -4,6 +4,7 @@ import { T } from '@transifex/react';
 
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown/with-html';
 
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
@@ -78,9 +79,7 @@ function CardsComponent({
                     style={{ backgroundColor: legendColor }}
                   />
                 )}
-                <p className={styles.legendTitle}>
-                  <T _str="{legendTitle}" legendTitle={legendTitle} />
-                </p>
+                <p className={styles.legendTitle}>{legendTitle}</p>
                 {!isSingleLegend && (
                   <SidebarLegend
                     className={styles.legend}
@@ -89,7 +88,14 @@ function CardsComponent({
                 )}
               </div>
               <p className={styles.source}>
-                <T _str="{source}" source={card.source} />
+                <span className={styles.sourceIntro}>
+                  <T _str="Source:" />{' '}
+                </span>
+                <ReactMarkdown
+                  key={`source-${cardIndex}`}
+                  source={card.source}
+                  escapeHtml={false}
+                />
               </p>
             </div>
           )}

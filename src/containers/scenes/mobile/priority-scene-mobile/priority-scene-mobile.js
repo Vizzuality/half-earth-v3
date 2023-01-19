@@ -10,6 +10,10 @@ import * as urlActions from 'actions/url-actions';
 
 import { wrap } from 'popmotion';
 
+import ContentfulService from 'services/contentful';
+
+import metadataConfig from 'constants/metadata';
+
 import Component from './priority-scene-mobile-component';
 import { getPriorityMobileCards } from './priority-scene-mobile-constants';
 import mapStateToProps from './priority-scene-mobile-selectors';
@@ -21,8 +25,28 @@ function PrioritySceneMobileContainer(props) {
   const locale = useLocale();
   const cardsContent = useMemo(() => getPriorityMobileCards(), [locale]);
   const [[page, direction], setPage] = useState([0, 0]);
-
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
+
+  const [cardsContentWithSources, setCardsContentWithSources] =
+    useState(cardsContent);
+
+  useEffect(() => {
+    const promises = cardsContent.map(
+      (c) =>
+        c.layer &&
+        ContentfulService.getMetadata(metadataConfig[c.layer], locale)
+    );
+    Promise.all(promises).then((data) => {
+      const cardsWithSources = cardsContent.map((c, i) => {
+        const source = data[i] && data[i].source;
+        return {
+          ...c,
+          ...(source ? { source } : {}),
+        };
+      });
+      setCardsContentWithSources(cardsWithSources);
+    });
+  }, [locale, cardsContent]);
 
   const cardIndex = wrap(0, cardsContent.length, page);
 
@@ -41,7 +65,7 @@ function PrioritySceneMobileContainer(props) {
     <Component
       {...props}
       cardIndex={cardIndex}
-      cardsContent={cardsContent}
+      cardsContent={cardsContentWithSources}
       direction={direction}
       handleStepBack={handleStepBack}
       page={page}
