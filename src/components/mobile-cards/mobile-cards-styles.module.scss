@@ -37,6 +37,14 @@
       display: flex;
     }
 
+    .title {
+      margin-bottom: 8px;
+    }
+
+    .description {
+      margin: 2px 0;
+    }
+
     .legendContainer {
       display: flex;
       flex-direction: column;
@@ -69,7 +77,9 @@
         color: $grey-text;
         font-size: $font-size-xxs;
         max-width: 90vw;
-        margin: 8px 0 0 0;
+        margin: 2px 0 0 0;
+        line-height: 6px;
+
 
         .sourceIntro {
           display: inline;
@@ -83,6 +93,7 @@
           display: inline;
           margin-bottom: 0;
           font-size: $font-size-xxs;
+          line-height: 1rem;
         }
       }
     }

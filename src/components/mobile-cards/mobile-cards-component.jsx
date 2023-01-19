@@ -57,12 +57,10 @@ function CardsComponent({ variants, page, direction, setPage, cardsContent }) {
         >
           <div>
             <div className={styles.progress}>
-              <p>
-                {page + 1} / {cardsContent.length}
-              </p>
+              {page + 1} / {cardsContent.length}
             </div>
-            <h5>{title}</h5>
-            <p>{description}</p>
+            <h5 className={styles.title}>{title}</h5>
+            <p className={styles.description}>{description}</p>
           </div>
           {legendTitle && (
             <div className={styles.legendContainer}>
