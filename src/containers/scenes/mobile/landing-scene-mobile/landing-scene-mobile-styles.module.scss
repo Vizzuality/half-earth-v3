@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - #{$nav-bar-height});
+  height: calc(100dvb - #{$nav-bar-height});
   position: absolute;
   top: $nav-bar-height;
 
