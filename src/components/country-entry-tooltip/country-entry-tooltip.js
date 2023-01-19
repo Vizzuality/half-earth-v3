@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// Services
 import mapTooltipActions from 'redux_modules/map-tooltip';
 
 import { NATIONAL_REPORT_CARD, NATIONAL_REPORT_CARD_LANDING } from 'router';
@@ -14,10 +13,10 @@ import * as urlActions from 'actions/url-actions';
 
 import { getLocaleNumber } from 'utils/data-formatting-utils';
 
-import EsriFeatureService from 'services/esri-feature-service';
-// utils
+import initialState from 'containers/scenes/mobile/nrc-landing-scene-mobile/scene-config';
 
-// Constants
+import EsriFeatureService from 'services/esri-feature-service';
+
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
 
@@ -26,8 +25,14 @@ import Component from './country-entry-tooltip-component';
 const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions };
 
 function CountryEntryTooltipContainer(props) {
-  const { browsePage, countryISO, changeUI, mobile, mapTooltipIsVisible } =
-    props;
+  const {
+    browsePage,
+    countryISO,
+    changeUI,
+    mobile,
+    mapTooltipIsVisible,
+    view,
+  } = props;
   const locale = useLocale();
 
   const [tooltipPosition, setTooltipPosition] = useState(null);
@@ -81,6 +86,7 @@ function CountryEntryTooltipContainer(props) {
         type: NATIONAL_REPORT_CARD_LANDING,
         payload: { iso: null },
       });
+      view.goTo({ zoom: initialState.globe.zoom });
     }
   };
 
