@@ -8,8 +8,6 @@ import { useLocale } from '@transifex/react';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
-import { wrap } from 'popmotion';
-
 import ContentfulService from 'services/contentful';
 
 import metadataConfig, { SPECIES_PROTECTION_INDEX } from 'constants/metadata';
@@ -28,8 +26,6 @@ function NrcLandingSceneMobileContainer(props) {
   const [[page, direction], setPage] = useState([0, 0]);
 
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
-
-  const cardIndex = wrap(0, cardsContent.length, page);
 
   const [cardsContentWithSources, setCardsContentWithSources] =
     useState(cardsContent);
@@ -51,11 +47,8 @@ function NrcLandingSceneMobileContainer(props) {
   }, [locale, cardsContent]);
 
   useEffect(() => {
-    setSelectedLayers([
-      ...activeLayers,
-      { title: cardsContent[cardIndex].layer },
-    ]);
-  }, [page, cardsContent, cardIndex]);
+    setSelectedLayers([...activeLayers, { title: cardsContent[page].layer }]);
+  }, [page, cardsContent, page]);
 
   const handleStepBack = () => {
     browsePage({ type: LANDING });
@@ -64,7 +57,6 @@ function NrcLandingSceneMobileContainer(props) {
   return (
     <Component
       {...props}
-      cardIndex={cardIndex}
       cardsContent={cardsContentWithSources}
       direction={direction}
       handleStepBack={handleStepBack}

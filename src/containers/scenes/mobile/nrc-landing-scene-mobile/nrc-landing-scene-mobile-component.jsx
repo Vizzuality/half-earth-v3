@@ -50,7 +50,6 @@ const variants = {
 
 function NrcLandingMobileComponent({
   activeLayers,
-  cardIndex,
   cardsContent,
   changeUI,
   countryISO,
@@ -128,7 +127,6 @@ function NrcLandingMobileComponent({
 
       {!countryISO && (
         <Cards
-          cardIndex={cardIndex}
           cardsContent={cardsContent}
           direction={direction}
           page={page}

@@ -8,8 +8,6 @@ import { useLocale } from '@transifex/react';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
-import { wrap } from 'popmotion';
-
 import ContentfulService from 'services/contentful';
 
 import metadataConfig from 'constants/metadata';
@@ -48,14 +46,9 @@ function PrioritySceneMobileContainer(props) {
     });
   }, [locale, cardsContent]);
 
-  const cardIndex = wrap(0, cardsContent.length, page);
-
   useEffect(() => {
-    setSelectedLayers([
-      ...activeLayers,
-      { title: cardsContent[cardIndex].layer },
-    ]);
-  }, [page, cardsContent, cardIndex]);
+    setSelectedLayers([...activeLayers, { title: cardsContent[page].layer }]);
+  }, [page, cardsContent]);
 
   const handleStepBack = () => {
     browsePage({ type: LANDING });
@@ -64,7 +57,6 @@ function PrioritySceneMobileContainer(props) {
   return (
     <Component
       {...props}
-      cardIndex={cardIndex}
       cardsContent={cardsContentWithSources}
       direction={direction}
       handleStepBack={handleStepBack}

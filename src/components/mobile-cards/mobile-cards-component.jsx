@@ -15,18 +15,16 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-function CardsComponent({
-  cardIndex,
-  variants,
-  page,
-  direction,
-  setPage,
-  cardsContent,
-}) {
+function CardsComponent({ variants, page, direction, setPage, cardsContent }) {
   const paginate = (newDirection) => {
-    setPage([page + newDirection, newDirection]);
+    const isNotOutsideBounds =
+      (newDirection > 0 && page < cardsContent.length - 1) ||
+      (newDirection < 0 && page > 0);
+    if (isNotOutsideBounds) {
+      setPage([page + newDirection, newDirection]);
+    }
   };
-  const card = cardsContent[cardIndex];
+  const card = cardsContent[page];
   const { title, description, legendItem, legendColor, legendTitle } = card;
   const isSingleLegend = !!legendColor;
   return (
@@ -60,7 +58,7 @@ function CardsComponent({
           <div>
             <div className={styles.progress}>
               <p>
-                {cardIndex + 1} / {cardsContent.length}
+                {page + 1} / {cardsContent.length}
               </p>
             </div>
             <h5>{title}</h5>
@@ -92,7 +90,7 @@ function CardsComponent({
                   <T _str="Source:" />{' '}
                 </span>
                 <ReactMarkdown
-                  key={`source-${cardIndex}`}
+                  key={`source-${page}`}
                   source={card.source}
                   escapeHtml={false}
                 />
