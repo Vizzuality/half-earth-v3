@@ -118,7 +118,9 @@ function RankingChart({
   return (
     <div className={className}>
       <div className={styles.chartTitleContainer}>
-        <span className={styles.chartTitle}>{t('Ranking by')}</span>
+        <span className={styles.chartTitle}>
+          {t('Ranking by', { _comment: '{Ranking by}: Land SPI' })}
+        </span>
       </div>
       <div className={styles.header}>
         <SearchInput

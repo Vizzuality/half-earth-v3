@@ -177,7 +177,10 @@ export const getScripts = () => {
           {
             startTime: 85,
             endTime: 89,
-            text: t('explore relationships between various indicators.'),
+            text: t('explore relationships between various indicators.', {
+              _comment:
+                'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
+            }),
           },
         ]
       : [
@@ -185,7 +188,11 @@ export const getScripts = () => {
             startTime: 85,
             endTime: 92.4,
             text: t(
-              'explore relationships between various indicators. Finally click on the "ranking" tab.'
+              'explore relationships between various indicators. Finally click on the "ranking" tab.',
+              {
+                _comment:
+                  'Use the top drop down menu to modify the grouping of countries. Use the right and left arrows at the bottom to change the horizontal x-axis to (explore relationships between various indicators.)',
+              }
             ),
           },
         ]),

@@ -55,6 +55,7 @@ function Challenges({
               <p className={styles.chartTitle}>
                 <T
                   _str="{landMarineSelection} SPI and"
+                  _comment="(Land SPI and) Number of vertebrate species of countries with shared stewardship to Sudan"
                   landMarineSelection={land ? 'Land' : 'Marine'}
                 />
               </p>
@@ -74,7 +75,12 @@ function Challenges({
               </div>
             </div>
             <div className={styles.chartTitleFilter}>
-              <p className={styles.chartTitle}>{t('of countries')}</p>
+              <p className={styles.chartTitle}>
+                {t('of countries', {
+                  _comment:
+                    'Land SPI and Number of vertebrate species (of countries) with shared stewardship to Sudan',
+                })}
+              </p>
               <div className={styles.dropdownContainer}>
                 <Dropdown
                   theme="secondary-dark"
@@ -86,7 +92,11 @@ function Challenges({
                 />
               </div>
               <p className={styles.chartTitle}>
-                <T _str="to {countryName}" countryName={countryName} />
+                <T
+                  _str="to {countryName}"
+                  _comment="Land SPI and Number of vertebrate species of countries with shared stewardship (to Sudan)"
+                  countryName={countryName}
+                />
               </p>
             </div>
           </div>

@@ -100,7 +100,7 @@ function PriorityMobileComponent({
           theme="light"
           width="full"
           parentWidth="380px"
-          placeholder={t('search location')}
+          placeholder={t('search location', { _comment: 'Search placeholder' })}
           searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
           searchType={SEARCH_TYPES.country}
           mobile

@@ -99,13 +99,17 @@ function HeroComponent({ className, changeUI, browsePage }) {
         <p>
           <T
             _str="Explore areas of interest, human pressures, species and much more in our desktop version. To know more about the project {contact}"
+            _comment="(To know more about the project) contact us"
             contact={
               <a
                 href="https://www.half-earthproject.org/contact-us"
                 target="_blank"
                 rel="noreferrer"
               >
-                <T _str="contact us" />
+                <T
+                  _str="contact us"
+                  _comment="To know more about the project (contact us)"
+                />
               </a>
             }
           />
