@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useT } from '@transifex/react';
 
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 import SearchLocation from 'components/search-location';
 
@@ -16,26 +17,30 @@ import { ReactComponent as IconSearch } from 'icons/search.svg';
 
 function MobileSearchLocation({ view }) {
   const t = useT();
-  const [searchLocationIsOpen, setSearchLocationIsOpen] = useState(false);
+  const [searchLocationModal, setSearchLocationModal] = useState(false);
 
   return (
     <>
-      <button
+      <motion.button
         type="button"
+        animate={{ opacity: searchLocationModal ? 0 : 1 }}
+        transition={{ duration: 0.5 }}
         className={cx({
           [styles.initialSearcher]: true,
-          [styles.initialSearcherHidden]: searchLocationIsOpen,
+          [styles.initialSearcherHidden]: searchLocationModal,
         })}
-        onClick={() => setSearchLocationIsOpen(true)}
+        onClick={() => setSearchLocationModal(true)}
       >
         <IconSearch className={styles.placeholderIcon} />
         <p className={styles.placeholderText}>{t('Search location')}</p>
-      </button>
+      </motion.button>
 
-      <div
+      <motion.div
+        animate={{ opacity: searchLocationModal ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
         className={cx({
           [styles.container]: true,
-          [styles.containerHidden]: !searchLocationIsOpen,
+          [styles.containerHidden]: !searchLocationModal,
         })}
       >
         <div className={styles.searcherContainer}>
@@ -49,18 +54,18 @@ function MobileSearchLocation({ view }) {
             searchType={SEARCH_TYPES.country}
             hasResetButton
             mobile
-            setSearchLocationIsOpen={setSearchLocationIsOpen}
+            setSearchLocationModal={setSearchLocationModal}
           />
         </div>
 
         <button
           className={styles.backBtn}
           type="button"
-          onClick={() => setSearchLocationIsOpen(false)}
+          onClick={() => setSearchLocationModal(false)}
         >
           <BackArrowIcon className={styles.arrowIcon} />
         </button>
-      </div>
+      </motion.div>
     </>
   );
 }

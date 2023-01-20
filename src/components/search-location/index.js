@@ -46,7 +46,7 @@ function SearchLocationContainer(props) {
     searchSourceLayerSlug,
     changeGlobe,
     searchType,
-    setSearchLocationIsOpen,
+    setSearchLocationModal,
   } = props;
 
   const [searchResults, setSearchResults] = useState(false);
@@ -156,7 +156,7 @@ function SearchLocationContainer(props) {
   const onOptionSelection = (selectedOption) => {
     handleSearchSuggestionClick(selectedOption);
     setIsSearchResultsVisible(false);
-    setSearchLocationIsOpen(false);
+    setSearchLocationModal(false);
   };
   const handleCloseOptionList = () => setIsSearchResultsVisible(false);
 

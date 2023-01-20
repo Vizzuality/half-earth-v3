@@ -98,6 +98,7 @@ function SearchLocation({
       </div>
     );
   };
+
   return (
     <motion.div
       ref={reference}
