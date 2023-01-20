@@ -9,6 +9,8 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module.scss';
 
+import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
+import { ReactComponent as CloseIcon } from 'icons/close.svg';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
 
 function MobileSearchLocation({ view }) {
@@ -32,7 +34,7 @@ function MobileSearchLocation({ view }) {
           <div className={styles.searcherContainer}>
             <SearchLocation
               view={view}
-              theme="light"
+              theme="mobile"
               width="full"
               parentWidth="380px"
               placeholder={t('search location')}
@@ -44,9 +46,16 @@ function MobileSearchLocation({ view }) {
           <button
             type="button"
             className={styles.closeButton}
+            onClick={() => console.log('Close')}
+          >
+            <CloseIcon className={styles.closeIcon} />
+          </button>
+          <button
+            className={styles.backBtn}
+            type="button"
             onClick={() => setSearchLocationIsOpen(false)}
           >
-            CLOSE
+            <BackArrowIcon className={styles.arrowIcon} />
           </button>
         </div>
       )}

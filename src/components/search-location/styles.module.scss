@@ -129,6 +129,17 @@
   .suggestion {
     text-transform: uppercase;
   }
+  .placeholderIcon {
+    display: none;
+  }
+  .input {
+    border: 1px solid $grey-text;
+    border-radius: 4px;
+    padding-left: 48px;
+    &::placeholder {
+      padding-left: 0px;
+    }
+  }
 }
 
 .closeButton {

@@ -105,6 +105,7 @@ function SearchLocation({
         [styles.stacked]: stacked,
         [styles.fullWidth]: width === 'full',
         [styles.dark]: theme === 'dark',
+        [styles.mobile]: theme === 'mobile',
         [styles.disabled]: disabled,
         [className.inputContainer]: className.inputContainer,
       })}
