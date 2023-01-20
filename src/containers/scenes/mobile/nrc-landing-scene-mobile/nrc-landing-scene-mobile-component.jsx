@@ -60,9 +60,9 @@ function NrcLandingMobileComponent({
   onMapLoad,
   page,
   sceneMode,
-  sceneSettings,
   setPage,
   selectedLayers,
+  sceneSettings,
   view,
 }) {
   const t = useT();
@@ -123,7 +123,11 @@ function NrcLandingMobileComponent({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
-      <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
+      <CountryEntryTooltip
+        countryISO={countryISO}
+        countryName={countryName}
+        mobile
+      />
 
       {!countryISO && (
         <Cards

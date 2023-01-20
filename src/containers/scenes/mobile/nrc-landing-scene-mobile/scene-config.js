@@ -17,6 +17,7 @@ export default {
       { title: GLOBAL_SPI_FEATURE_LAYER, opacity: BASEMAP_OPACITY },
     ],
     zoom: 1.8,
+    center: [16.9515536, 0.116959],
     padding: {
       left: 0,
       top: -220,

@@ -130,3 +130,81 @@
     }
   }
 }
+
+.mobile {
+
+  .tooltipSection {
+    margin: 0;
+
+    .tooltipName {
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+  }
+
+  .spiInfo {
+    .spi {
+      padding-bottom: 0;
+    }
+    .subtitle {
+      font-size: 12px;
+      padding-bottom: 0;
+    }
+  }
+
+  .switchDataButtonsContainer {
+    margin-top: 8px;
+    width: 86vw;
+
+    .switchDataButton {
+      @extend %subtitle;
+      border: 1px solid #E9E9E9;
+      color: #E9E9E9;
+      font-size: 12px;
+      height: 32px;
+      width: 50%;
+      text-transform: capitalize;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    .switchDataActiveButton {
+      @extend %subtitle;
+      background-color: #E9E9E9;
+      color: $_temporary-dark-text;
+    }
+  }
+
+  .countryInfo {
+    background: transparent;
+    margin-bottom: 0;
+    padding: 18px 10% 10px 10%;
+
+    .infoPill {
+      padding-bottom: 8px;
+      align-items: baseline;
+
+      .text {
+        width: 75%;
+        font-weight: 600;
+        line-height: 16px;
+      }
+    }
+  }
+
+  .tooltipExplore {
+    height: 38px;
+    width: 86vw;
+  }
+
+  .tooltipClose {
+    width: 16px;
+    height: 16px;
+    right: 18px;
+    top: 20px;
+
+  }
+}
