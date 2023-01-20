@@ -264,7 +264,10 @@ function NrcContent({
               </button>
               {countryName && (
                 <p className={styles.title}>
-                  {t('Vertebrates in')} {countryName}
+                  {t('Vertebrates in', {
+                    _comment: 'Number of (vertebrates in) a country',
+                  })}{' '}
+                  {countryName}
                 </p>
               )}
             </div>

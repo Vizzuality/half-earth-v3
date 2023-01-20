@@ -23,20 +23,30 @@ export const getNRCLandingCards = () => [
     description: (
       <p>
         <T
-          _str="The Land SPI is calculated based on the {bold1} area, the total number of {bold2}, and the amount of these species that are {bold3} to that nation.'"
+          _str="The Land SPI is calculated based on the {bold1} area, the total number of {bold2}, and the amount of these species that are {bold3} to that nation."
+          _comment="(The Land SPI is calculated based on the ) protected land (area, the total number of ) terrestrial vertebrates(, and the amount of these species that are ) endemic ( to that nation."
           bold1={
             <b>
-              <T _str="protected land" />
+              <T
+                _str="protected land"
+                _comment="The Land SPI is calculated based on the (protected land) area, ..."
+              />
             </b>
           }
           bold2={
             <b>
-              <T _str="terrestrial vertebrates" />
+              <T
+                _str="terrestrial vertebrates"
+                _comment="The Land SPI is calculated based on the protected land area, the total number of (terrestrial vertebrates), ..."
+              />
             </b>
           }
           bold3={
             <b>
-              <T _str="endemic" />
+              <T
+                _str="endemic"
+                _comment="(The Land SPI is calculated based on the protected land area ..., and the amount of these species that are ( endemic ) to that nation."
+              />
             </b>
           }
         />
@@ -51,20 +61,30 @@ export const getNRCLandingCards = () => [
     description: (
       <p>
         <T
-          _str="The Marine SPI is based on the {bold1} area, the total number of {bold2}, and the amount of these species that are {bold3} to that nation."
-          bold1={
+          _str="The Marine SPI is based on the {protectedMarine} area, the total number of {marineVertebrates}, and the amount of these species that are {endemic} to that nation."
+          _comment="{The Marine SPI is based on the} protected marine { area, the total number of } marine vertebrates, {and the amount of these species that are} endemic to that nation."
+          protectedMarine={
             <b>
-              <T _str="protected marine" />
+              <T
+                _str="protected marine"
+                _comment="The Marine SPI is based on the (protected marine) area, ..."
+              />
             </b>
           }
-          bold2={
+          marineVertebrates={
             <b>
-              <T _str="marine vertebrates" />
+              <T
+                _str="marine vertebrates"
+                _comment="The Marine SPI is based on the protected marine area, the (marine vertebrates), ..."
+              />
             </b>
           }
-          bold3={
+          endemic={
             <b>
-              <T _str="endemic" />
+              <T
+                _str="endemic"
+                _comment="The Marine SPI is based on the protected marine area, ... and the amount of these species that are (endemic) to that nation"
+              />
             </b>
           }
         />

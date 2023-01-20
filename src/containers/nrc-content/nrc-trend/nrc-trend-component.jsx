@@ -25,6 +25,7 @@ function Trend({ chartData, countryData, landMarineSelection, isShrunken }) {
         <p className={styles.chartTitle}>
           <T
             _str="Trend of the {landMarineSelection} SPI"
+            _comment="{Trend of the} landMarineSelection {SPI}"
             landMarineSelection={land ? 'Land' : 'Marine'}
           />
         </p>

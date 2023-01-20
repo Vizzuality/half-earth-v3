@@ -17,9 +17,13 @@ export const getPriorityMobileCards = () => [
       <div>
         <T
           _str="This layers illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
+          _comment="(This layers illustrates where conservation efforts should be directed to )achieve the most rapid gains in terrestrial vertebrate ( conservation at a global scale.)"
           bold={
             <b>
-              <T _str="achieve the most rapid gains in terrestrial vertebrate" />
+              <T
+                _str="achieve the most rapid gains in terrestrial vertebrate"
+                _comment="This layers illustrates where conservation efforts should be directed to (achieve the most rapid gains in terrestrial vertebrate) conservation at a global scale."
+              />
             </b>
           }
         />
@@ -35,9 +39,13 @@ export const getPriorityMobileCards = () => [
       <div>
         <T
           _str="This layers illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
+          _comment="(This layers illustrates where conservation efforts should be directed to )achieve the most rapid gains in marine vertebrate ( conservation at a global scale.)"
           bold={
             <b>
-              <T _str="achieve the most rapid gains in marine vertebrate" />
+              <T
+                _str="achieve the most rapid gains in marine vertebrate"
+                _comment="This layers illustrates where conservation efforts should be directed to (achieve the most rapid gains in marine vertebrate) conservation at a global scale."
+              />
             </b>
           }
         />
@@ -52,17 +60,20 @@ export const getPriorityMobileCards = () => [
     description: (
       <div>
         <T
-          _str="This layer highlights the top regions in each country that would benefit from additional conservation action. These areas represent the top {bold} and can serve as important starting places for conservation efforts."
-          bold={
+          _str="This layer highlights the top regions in each country that would benefit from additional conservation action. These areas represent the top {percentageOfCountry} and can serve as important starting places for conservation efforts."
+          percentageOfCountry={
             <b>
-              <T _str="10% of each country’s priority areas" />
+              <T
+                _str="10% of each country’s priority areas"
+                _comment="This layer highlights the top regions in each country that would benefit from additional conservation action. These areas represent the top {percentageOfCountry} and can serve as important starting places for conservation efforts. (10% of each country’s priority areas)"
+              />
             </b>
           }
         />
       </div>
     ),
     layer: HALF_EARTH_FUTURE_TILE_LAYER,
-    legendTitle: t('Places for Half-Earth Future'),
+    legendTitle: t('Places for a Half-Earth Future'),
     legendColor: FUTURE_PLACES_COLOR,
   },
 ];

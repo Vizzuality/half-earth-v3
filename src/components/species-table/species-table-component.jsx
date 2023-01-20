@@ -112,11 +112,11 @@ function SpeciesTable({
   };
 
   const headers = [
-    t('Group'),
-    t('Species'),
-    t('Range within country protected'),
-    t('SPS'),
-    t('Stewardship'),
+    t('Group', { _comment: 'Table header' }),
+    t('Species', { _comment: 'Table header' }),
+    t('Range within country protected', { _comment: 'Table header' }),
+    t('SPS', { _comment: 'Table header' }),
+    t('Stewardship', { _comment: 'Table header' }),
   ];
 
   const PX_TO_TOP = 300;
@@ -136,7 +136,9 @@ function SpeciesTable({
           <input
             type="text"
             className={styles.searchInput}
-            placeholder={t('Search group or species')}
+            placeholder={t('Search group or species', {
+              _comment: 'Search placeholder',
+            })}
             onChange={handleSearchChange}
             value={searchTerm || ''}
           />
@@ -154,6 +156,7 @@ function SpeciesTable({
             >
               <T
                 _str="land ({speciesNumber})"
+                _comment="Land (1222)"
                 speciesNumber={getLocaleNumber(landSpeciesTotal, locale)}
               />
             </p>
@@ -170,6 +173,7 @@ function SpeciesTable({
             >
               <T
                 _str="marine ({speciesNumber})"
+                _comment="Marine (1222)"
                 speciesNumber={getLocaleNumber(marineSpeciesTotal, locale)}
               />
             </p>

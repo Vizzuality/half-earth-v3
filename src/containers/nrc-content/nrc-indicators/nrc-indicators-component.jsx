@@ -61,6 +61,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
           <p>
             <T
               _str="{landMarineSelection} Species Protection Index (SPI)"
+              _comment="Land Species Protection Index (SPI)"
               landMarineSelection={land ? 'Land' : 'Marine'}
             />
           </p>
@@ -73,6 +74,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
           <p className={styles.spiAverageText}>
             <T
               _str="{more} Global SPI average: {spiAverage}"
+              _comment="> Global SPI average: 100"
               more=">"
               spiAverage={getLocaleNumber(Global_SPI, locale) || 0}
             />
@@ -87,9 +89,13 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
             {nspecies && (
               <T
                 _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
+                _comment="8 are endemic land (vertebrate species of a total of) 10 land vertebrates"
                 bold={
                   <b>
-                    <T _str="are endemic" />
+                    <T
+                      _str="are endemic"
+                      _comment="8 {are endemic} land vertebrate species of a total of 10 land vertebrates"
+                    />
                   </b>
                 }
                 landMarineSelection={land ? 'land' : 'marine'}
@@ -120,6 +126,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
             {isNumberOr0(protection_needed) && (
               <T
                 _str="of {bold} and {needsProtectionNumber}% needs protection"
+                _comment="10% (of) land is protected (and) 2% (needs protection)"
                 bold={
                   <b>
                     <T
@@ -160,9 +167,13 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
             {hm && (
               <T
                 _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
+                _comment="27% { of } land {has very} high human modification and 10% has some modification"
                 bold={
                   <b>
-                    <T _str="high human modification" />
+                    <T
+                      _str="high human modification"
+                      _comment="27% of land has very {high human modification} and 10% has some modification"
+                    />
                   </b>
                 }
                 landMarineSelection={land ? 'land' : 'marine'}
