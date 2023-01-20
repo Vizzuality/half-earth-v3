@@ -25,8 +25,8 @@
 
   .switchDataButton {
     @extend %subtitle;
-    border: 1px solid #E9E9E9;
-    color: #E9E9E9;
+    border: 1px solid $white;
+    color: $white;
     font-size: $font-size-xxs;
     height: 25px;
     text-transform: capitalize;
@@ -39,7 +39,7 @@
 
   .switchDataActiveButton {
     @extend %subtitle;
-    background-color: #E9E9E9;
+    background-color: $white;
     color: $_temporary-dark-text;
   }
 }
