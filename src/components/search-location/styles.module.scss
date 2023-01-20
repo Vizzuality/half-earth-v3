@@ -126,8 +126,13 @@
 }
 
 .mobile {
+  .optionsList {
+    padding: 20px 10vw;
+  }
   .suggestion {
     text-transform: uppercase;
+    padding: 0 5vw;
+    width: 90vw;
   }
   .placeholderIcon {
     display: none;
