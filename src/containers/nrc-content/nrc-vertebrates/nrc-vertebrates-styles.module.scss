@@ -70,6 +70,15 @@
     }
   }
 
+  &.mobile {
+    .endemicCardsContainer {
+      flex-direction: column;
+    }
+
+    .endemicCard {
+      margin-bottom: 8px;
+    }
+  }
 }
 
 .titleTooltip {

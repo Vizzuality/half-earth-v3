@@ -1,0 +1,60 @@
+@import 'styles/settings';
+@import 'styles/common-animations.module';
+@import 'styles/ui.module';
+@import 'styles/typography-extends';
+
+.container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvb;
+  top: 0;
+  display: flex;
+}
+
+.nrcContentContainer {
+  position: relative;
+  flex: 1;
+  min-width: 300px;
+  margin: 56px 40px 0 0;
+  background-color: rgba($navy-he, 0.8);
+  border: 1px solid $navy-he;
+  height: 88vh;
+  border-radius: 6px;
+}
+
+.switchDataButtons {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.switchDataButton {
+  @extend %subtitle;
+  border: 1px solid $white;
+  color: $white;
+  font-size: $font-size-xs;
+  text-transform: capitalize;
+  width: calc(50% - 8px);
+  height: 40px;
+  border-radius: 2px;
+
+  &:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.switchDataActiveButton {
+  @extend %subtitle;
+  background-color: $white;
+  color: $_temporary-dark-text;
+}

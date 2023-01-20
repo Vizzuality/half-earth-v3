@@ -9,6 +9,7 @@ import styles from './trend-chart-tooltip-styles.module.scss';
 function TrendChartTooltip({ active, payload }) {
   const t = useT();
   const locale = useLocale();
+
   const SPI = payload && payload[0];
   const protectedAreas = payload && payload[1];
 

@@ -101,7 +101,6 @@
 
   .progress {
     @extend %bodyText;
-    background: $app-mobile-background;
     border: 1px solid $elephant;
     border-radius: 2px;
     color: $white;

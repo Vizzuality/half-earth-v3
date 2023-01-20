@@ -126,7 +126,7 @@
 
   .switchAreaChartButton {
     @extend %subtitle;
-    border: 1px solid #E9E9E9;
+    border: 1px solid $white;
     color: $_temporary-dark-text;
     height: 30px;
     text-transform: capitalize;
@@ -140,7 +140,7 @@
 
   .switchAreaChartActiveButton {
     @extend %subtitle;
-    background-color: #E9E9E9;
+    background-color: $white;
     opacity: 1;
   }
 }

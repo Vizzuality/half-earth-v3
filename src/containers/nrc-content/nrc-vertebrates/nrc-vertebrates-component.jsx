@@ -9,6 +9,7 @@ import cx from 'classnames';
 
 import Button from 'components/button';
 
+import { useMobile } from 'constants/responsive';
 import { getSpeciesGroup } from 'constants/translation-constants';
 
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
@@ -25,6 +26,7 @@ function NRCVertebrates({
   setFullRanking,
 }) {
   const t = useT();
+  const isMobile = useMobile();
   const locale = useLocale();
 
   const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
@@ -72,6 +74,7 @@ function NRCVertebrates({
     <div
       className={cx(styles.vertebratesContainer, {
         [styles.shrunken]: isShrunken,
+        [styles.mobile]: isMobile,
       })}
     >
       <div className={styles.endemicCardsContainer}>
@@ -99,16 +102,18 @@ function NRCVertebrates({
           </div>
         ))}
       </div>
-      <Button
-        className={styles.vertebratesButton}
-        type="compound"
-        handleClick={() => {
-          setFullRanking(false);
-          setNRCSidebarView('vertebrates');
-        }}
-        label={t('All vertebrates')}
-        tooltipText={t('Open vertebrates list modal')}
-      />
+      {!isMobile && (
+        <Button
+          className={styles.vertebratesButton}
+          type="compound"
+          handleClick={() => {
+            setFullRanking(false);
+            setNRCSidebarView('vertebrates');
+          }}
+          label={t('All vertebrates')}
+          tooltipText={t('Open vertebrates list modal')}
+        />
+      )}
     </div>
   );
 }

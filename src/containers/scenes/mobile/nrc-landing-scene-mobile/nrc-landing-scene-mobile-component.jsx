@@ -102,11 +102,7 @@ function NrcLandingMobileComponent({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
-      <CountryEntryTooltip
-        countryISO={countryISO}
-        countryName={countryName}
-        mobile
-      />
+      <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
       {!countryISO && (
         <Cards

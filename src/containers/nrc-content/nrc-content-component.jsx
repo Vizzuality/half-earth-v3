@@ -26,6 +26,7 @@ import ShareModal from 'components/share-modal';
 import SpeciesTable from 'components/species-table';
 
 import { NRC_STEPS } from 'constants/onboarding-constants';
+import { useMobile } from 'constants/responsive';
 
 import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
@@ -62,9 +63,10 @@ function NrcContent({
   selectedLandMarineOption,
   waitingInteraction,
   setFullRanking,
+  landMarineSwitch,
 }) {
   const t = useT();
-
+  const isMobile = useMobile();
   const dataIsLoaded =
     trendChartData && countryData && chartData && challengesInfo;
 
@@ -119,6 +121,7 @@ function NrcContent({
         [styles.nrcContentVertebrates]:
           NRCSidebarView === NRCSidebar.vertebrates && countryData,
         [styles.nrcContentShrunken]: fullRanking,
+        [styles.mobile]: isMobile,
       })}
     >
       <PdfNationalReport
@@ -159,28 +162,30 @@ function NrcContent({
                 <p className={styles.countryName}>{countryName}</p>
               )}
             </div>
-            <div className={styles.actionButtons}>
-              <Button
-                type="icon-square"
-                Icon={AnalyzeAreasIcon}
-                className={styles.actionButton}
-                handleClick={goToAnalyzeAreas}
-                tooltipText={t('Go to analyze area')}
-              />
-              <Button
-                type="icon-square"
-                Icon={ShareIcon}
-                className={styles.actionButton}
-                handleClick={setShareModalOpen}
-                tooltipText={t('Share the URL to this view')}
-              />
-              <Button
-                type="icon-square"
-                Icon={DownloadIcon}
-                handleClick={handlePrintReport}
-                tooltipText={t('Download national report')}
-              />
-            </div>
+            {!isMobile && (
+              <div className={styles.actionButtons}>
+                <Button
+                  type="icon-square"
+                  Icon={AnalyzeAreasIcon}
+                  className={styles.actionButton}
+                  handleClick={goToAnalyzeAreas}
+                  tooltipText={t('Go to analyze area')}
+                />
+                <Button
+                  type="icon-square"
+                  Icon={ShareIcon}
+                  className={styles.actionButton}
+                  handleClick={setShareModalOpen}
+                  tooltipText={t('Share the URL to this view')}
+                />
+                <Button
+                  type="icon-square"
+                  Icon={DownloadIcon}
+                  handleClick={handlePrintReport}
+                  tooltipText={t('Download national report')}
+                />
+              </div>
+            )}
           </header>
           {!dataIsLoaded && (
             <div className={styles.loader} style={{ height: 200 }}>
@@ -189,6 +194,7 @@ function NrcContent({
           )}
           {dataIsLoaded && (
             <div ref={scrollableRef} className={styles.scrolleableArea}>
+              {isMobile && landMarineSwitch}
               <div className={styles.countryDescriptionContainer}>
                 <p className={styles.countryDescription}>
                   {countryDescription}
@@ -204,22 +210,28 @@ function NrcContent({
 
               <Trend chartData={trendChartData} isShrunken={fullRanking} />
 
-              <Challenges
-                countryISO={countryISO}
-                countryName={countryName}
-                countryId={countryId}
-                fullRanking={fullRanking}
-              />
-
-              <div className={styles.sourceText}>
-                <p>{t('Source: ')}</p>
-                <ReactMarkdown
-                  key={challengesSources}
-                  source={challengesSources}
-                  escapeHtml={false}
+              {!isMobile && (
+                <Challenges
+                  countryISO={countryISO}
+                  countryName={countryName}
+                  countryId={countryId}
+                  fullRanking={fullRanking}
                 />
-              </div>
-              <Footer countryId={countryId} isShrunken={fullRanking} />
+              )}
+
+              {!isMobile && (
+                <div className={styles.sourceText}>
+                  <p>{t('Source: ')}</p>
+                  <ReactMarkdown
+                    key={challengesSources}
+                    source={challengesSources}
+                    escapeHtml={false}
+                  />
+                </div>
+              )}
+              {!isMobile && (
+                <Footer countryId={countryId} isShrunken={fullRanking} />
+              )}
             </div>
           )}
           <ShareModal

@@ -19,22 +19,16 @@ import EsriFeatureService from 'services/esri-feature-service';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { COUNTRIES_DATA_SERVICE_URL } from 'constants/layers-urls';
+import { useMobile } from 'constants/responsive';
 
 import Component from './country-entry-tooltip-component';
 
 const actions = { enterNrcAnalytics, ...urlActions, ...mapTooltipActions };
 
 function CountryEntryTooltipContainer(props) {
-  const {
-    browsePage,
-    countryISO,
-    changeUI,
-    mobile,
-    mapTooltipIsVisible,
-    view,
-  } = props;
+  const { browsePage, countryISO, changeUI, mapTooltipIsVisible, view } = props;
   const locale = useLocale();
-
+  const isMobile = useMobile();
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [tooltipContent, setContent] = useState({});
 
@@ -76,12 +70,20 @@ function CountryEntryTooltipContainer(props) {
     }
   }, [countryISO, locale]);
 
+  // Hide tooltip if we dont have a country selected
+  useEffect(() => {
+    if (!countryISO) {
+      const { setTooltipIsVisible } = props;
+      setTooltipIsVisible(false);
+    }
+  }, [countryISO]);
+
   const handleTooltipClose = () => {
     const { setTooltipIsVisible, setTooltipContent } = props;
     setTooltipIsVisible(false);
     setTooltipContent({});
 
-    if (mobile) {
+    if (isMobile) {
       browsePage({
         type: NATIONAL_REPORT_CARD_LANDING,
         payload: { iso: null },
@@ -120,6 +122,7 @@ function CountryEntryTooltipContainer(props) {
       tooltipPosition={tooltipPosition}
       handleTooltipClose={handleTooltipClose}
       onExploreCountryClick={handleExploreCountryClick}
+      isMobile={isMobile}
       {...props}
     />
   );

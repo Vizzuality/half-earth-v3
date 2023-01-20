@@ -29,7 +29,7 @@ function CountryEntryTooltipComponent({
   changeUI,
   onboardingType,
   waitingInteraction,
-  mobile,
+  isMobile,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -109,6 +109,7 @@ function CountryEntryTooltipComponent({
   };
 
   const landTab = activeTab === LAND_MARINE.land;
+
   if (!tooltipPosition || !tooltip) return null;
 
   return (
@@ -116,7 +117,7 @@ function CountryEntryTooltipComponent({
       ref={tooltipref}
       className={cx({
         [styles.tooltipContainer]: true,
-        [styles.mobile]: mobile,
+        [styles.mobile]: isMobile,
       })}
     >
       <section className={styles.tooltipSection}>
@@ -130,7 +131,7 @@ function CountryEntryTooltipComponent({
             {countryNames[countryName] || countryName}
           </span>
         </div>
-        {!mobile && (
+        {!isMobile && (
           <div>
             {Object.keys(tabsData).map((key) => (
               <button
@@ -156,7 +157,7 @@ function CountryEntryTooltipComponent({
           setActiveTab('land');
         }}
       />
-      {mobile && (
+      {isMobile && (
         <section className={styles.switchDataButtonsContainer}>
           {Object.keys(tabsData).map((key) => (
             <button
@@ -232,7 +233,7 @@ function CountryEntryTooltipComponent({
           className={styles.tooltipExplore}
           onClick={onExploreCountryClick}
         >
-          {mobile ? t('national report card') : t('explore')}
+          {isMobile ? t('National Report Card') : t('explore')}
         </button>
       </motion.div>
     </div>
