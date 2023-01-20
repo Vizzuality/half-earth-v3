@@ -66,7 +66,6 @@ function NrcLandingMobileComponent({
   view,
 }) {
   const t = useT();
-
   const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
   });
@@ -123,11 +122,7 @@ function NrcLandingMobileComponent({
         spatialReference={LOCAL_SPATIAL_REFERENCE}
       />
 
-      <CountryEntryTooltip
-        countryISO={countryISO}
-        countryName={countryName}
-        mobile
-      />
+      <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
       {!countryISO && (
         <Cards
