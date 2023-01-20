@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as IconSearch } from 'icons/search.svg';
 
-function MobileSearchLocation({ view }) {
+function MobileSearchLocation({ countryName, view }) {
   const t = useT();
   const [searchLocationModal, setSearchLocationModal] = useState(false);
 
@@ -32,7 +32,9 @@ function MobileSearchLocation({ view }) {
         onClick={() => setSearchLocationModal(true)}
       >
         <IconSearch className={styles.placeholderIcon} />
-        <p className={styles.placeholderText}>{t('Search location')}</p>
+        <p className={styles.placeholderText}>
+          {countryName ? countryName.toUpperCase() : t('Search location')}
+        </p>
       </motion.button>
 
       <motion.div

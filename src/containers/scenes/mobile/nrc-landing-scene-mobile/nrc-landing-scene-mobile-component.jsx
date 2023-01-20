@@ -84,7 +84,7 @@ function NrcLandingMobileComponent({
         <p>{t('National report cards')}</p>
       </header>
 
-      <MobileSearchLocation view={view} />
+      <MobileSearchLocation countryName={countryName} view={view} />
 
       <ArcgisLayerManager activeLayers={selectedLayers} />
 
