@@ -18,21 +18,6 @@
     width: 90vw;
   }
 
-  .closeButton {
-    position: fixed;
-    top: $site-gutter;
-    right: $site-gutter;
-    z-index: 11;
-    .closeIcon {
-      fill: $grey-text;
-      height: 10px;
-      position: absolute;
-      right: calc(6px + 4vw);
-      width: 10px;
-      top: 11px;
-    }
-  }
-
   .backBtn {
     padding: 0;
     position: fixed;
@@ -45,6 +30,10 @@
       width: 34px;
     }
   }
+}
+
+.containerHidden {
+  display: none;
 }
 
 .initialSearcher {
@@ -77,5 +66,7 @@
   }
 }
 
-
+.initialSearcherHidden {
+  display: none;
+}
 

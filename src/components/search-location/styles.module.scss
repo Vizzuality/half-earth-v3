@@ -137,6 +137,14 @@
   .placeholderIcon {
     display: none;
   }
+  .closeButton {
+    fill: $grey-text;
+    height: 12px;
+    position: absolute;
+    right: calc(6px + 4vw);
+    top: 14px;
+    width: 12px;
+  }
   .input {
     border: 1px solid $grey-text;
     border-radius: 4px;
@@ -148,6 +156,7 @@
 }
 
 .closeButton {
+  fill: $white;
   height: 8px;
   position: absolute;
   right: 10px;

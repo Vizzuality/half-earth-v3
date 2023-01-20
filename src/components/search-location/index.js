@@ -41,7 +41,13 @@ const getSearchedLayerData = (layerSlug, molId) =>
   });
 
 function SearchLocationContainer(props) {
-  const { view, searchSourceLayerSlug, changeGlobe, searchType } = props;
+  const {
+    view,
+    searchSourceLayerSlug,
+    changeGlobe,
+    searchType,
+    setSearchLocationIsOpen,
+  } = props;
 
   const [searchResults, setSearchResults] = useState(false);
   const [searchWidgetConfig, setSearchWidgetConfig] = useState({});
@@ -150,6 +156,7 @@ function SearchLocationContainer(props) {
   const onOptionSelection = (selectedOption) => {
     handleSearchSuggestionClick(selectedOption);
     setIsSearchResultsVisible(false);
+    setSearchLocationIsOpen(false);
   };
   const handleCloseOptionList = () => setIsSearchResultsVisible(false);
 

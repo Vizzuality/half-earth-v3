@@ -172,7 +172,12 @@ function SearchLocation({
           document.getElementById('root')
         )}
       {hasResetButton && (
-        <button type="button" onClick={handleCloseButton}>
+        <button
+          type="button"
+          onClick={() => {
+            handleCloseButton();
+          }}
+        >
           <CloseIcon className={styles.closeButton} />
         </button>
       )}
