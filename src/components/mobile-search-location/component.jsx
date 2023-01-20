@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useT } from '@transifex/react';
-
-import PropTypes from 'prop-types';
 
 import SearchLocation from 'components/search-location';
 
@@ -11,40 +9,52 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module.scss';
 
-function MobileSearchLocation({ isOpen, setSearchLocationIsOpen, view }) {
-  const t = useT();
+import { ReactComponent as IconSearch } from 'icons/search.svg';
 
-  console.log({ view });
+function MobileSearchLocation({ view }) {
+  const t = useT();
+  const [searchLocationIsOpen, setSearchLocationIsOpen] = useState(false);
   return (
-    isOpen && (
-      <div className={styles.container}>
-        <div className={styles.searcherContainer}>
-          <SearchLocation
-            view={view}
-            theme="light"
-            width="full"
-            parentWidth="380px"
-            placeholder={t('search location')}
-            searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
-            searchType={SEARCH_TYPES.country}
-            mobile
-          />
-        </div>
+    <>
+      {!searchLocationIsOpen && (
         <button
           type="button"
-          className={styles.closeButton}
-          onClick={() => setSearchLocationIsOpen(false)}
+          className={styles.initialSearcher}
+          onClick={() => setSearchLocationIsOpen(true)}
         >
-          CLOSE
+          <IconSearch className={styles.placeholderIcon} />
+          <p className={styles.placeholderText}>{t('Search location')}</p>
         </button>
-      </div>
-    )
+      )}
+
+      {searchLocationIsOpen && (
+        <div className={styles.container}>
+          <div className={styles.searcherContainer}>
+            <SearchLocation
+              view={view}
+              theme="light"
+              width="full"
+              parentWidth="380px"
+              placeholder={t('search location')}
+              searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
+              searchType={SEARCH_TYPES.country}
+              mobile
+            />
+          </div>
+          <button
+            type="button"
+            className={styles.closeButton}
+            onClick={() => setSearchLocationIsOpen(false)}
+          >
+            CLOSE
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 
-MobileSearchLocation.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-};
+MobileSearchLocation.propTypes = {};
 
 MobileSearchLocation.defaultProps = {};
 

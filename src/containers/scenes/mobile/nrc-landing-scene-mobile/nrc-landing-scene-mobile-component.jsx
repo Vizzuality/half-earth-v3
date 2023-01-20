@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import loadable from '@loadable/component';
 
@@ -60,10 +60,9 @@ function NrcLandingMobileComponent({
   setPage,
   selectedLayers,
   sceneSettings,
-  // view,
+  view,
 }) {
   const t = useT();
-  const [searchLocationIsOpen, setSearchLocationIsOpen] = useState(false);
 
   return (
     <Scene
@@ -85,17 +84,7 @@ function NrcLandingMobileComponent({
         <p>{t('National report cards')}</p>
       </header>
 
-      <button
-        type="button"
-        className={styles.searchContainer}
-        onClick={() => setSearchLocationIsOpen(true)}
-      >
-        aqui
-      </button>
-      <MobileSearchLocation
-        isOpen={searchLocationIsOpen}
-        setSearchLocationIsOpen={setSearchLocationIsOpen}
-      />
+      <MobileSearchLocation view={view} />
 
       <ArcgisLayerManager activeLayers={selectedLayers} />
 
