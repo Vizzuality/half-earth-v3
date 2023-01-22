@@ -100,89 +100,87 @@ function SearchLocation({
   };
 
   return (
-    <motion.div
-      ref={reference}
-      className={cx(styles.inputContainer, {
-        [styles.stacked]: stacked,
-        [styles.fullWidth]: width === 'full',
-        [styles.dark]: theme === 'dark',
-        [styles.mobile]: theme === 'mobile',
-        [styles.disabled]: disabled,
-        [className.inputContainer]: className.inputContainer,
-      })}
-      {...onboardingOverlay}
-    >
-      <input
-        type="text"
-        placeholder={placeholder || t('search')}
-        className={styles.input}
-        ref={inputRef}
-        onClick={handleOpenSearch}
-        onChange={handleInputChange}
-      />
-
-      <IconSearch
-        className={cx(styles.placeholderIcon, {
-          [className.placeholderIcon]: className.placeholderIcon,
+    <form>
+      <motion.div
+        ref={reference}
+        className={cx(styles.inputContainer, {
+          [styles.stacked]: stacked,
+          [styles.fullWidth]: width === 'full',
+          [styles.dark]: theme === 'dark',
+          [styles.mobile]: theme === 'mobile',
+          [styles.disabled]: disabled,
+          [className.inputContainer]: className.inputContainer,
         })}
-      />
+        {...onboardingOverlay}
+      >
+        <input
+          type="text"
+          placeholder={placeholder || t('search')}
+          className={styles.input}
+          ref={inputRef}
+          onClick={handleOpenSearch}
+          onChange={handleInputChange}
+        />
 
-      {isSearchResultVisible &&
-        createPortal(
-          <div
-            ref={setPopperElement}
-            style={{ ...popperStyles.popper, width: parentWidth }}
-            className={styles.searchResultsList}
-            {...attributes.popper}
-          >
-            <ul
-              className={cx(styles.optionsList, {
-                [styles.fullWidth]: width === 'full',
-                [styles.mobile]: mobile,
-              })}
-              ref={searchOptionsListRef}
+        <IconSearch
+          className={cx(styles.placeholderIcon, {
+            [className.placeholderIcon]: className.placeholderIcon,
+          })}
+        />
+
+        {isSearchResultVisible &&
+          createPortal(
+            <div
+              ref={setPopperElement}
+              style={{ ...popperStyles.popper, width: parentWidth }}
+              className={styles.searchResultsList}
+              {...attributes.popper}
             >
-              {searchResults.length > 0 ? (
-                searchResults.map((option) => (
-                  <li
-                    className={styles.option}
-                    key={option.key}
-                    onClick={() => {
-                      onOptionSelection(option);
-                      if (setSearcherOpen) {
-                        setSearcherOpen(false);
-                      }
-                      onNextonboardingStep(option);
-                    }}
-                  >
-                    {renderSuggestion(option.text)}
+              <ul
+                className={cx(styles.optionsList, {
+                  [styles.fullWidth]: width === 'full',
+                  [styles.mobile]: mobile,
+                })}
+                ref={searchOptionsListRef}
+              >
+                {searchResults.length > 0 ? (
+                  searchResults.map((option) => (
+                    <li
+                      className={styles.option}
+                      key={option.key}
+                      onClick={() => {
+                        onOptionSelection(option);
+                        if (setSearcherOpen) {
+                          setSearcherOpen(false);
+                        }
+                        onNextonboardingStep(option);
+                      }}
+                    >
+                      {renderSuggestion(option.text)}
+                    </li>
+                  ))
+                ) : (
+                  <li className={styles.emptyOption}>
+                    {searchType === 'full'
+                      ? t(
+                          'No results found. Please search another place or draw a custom area.'
+                        )
+                      : t('No results found. Please search another place.')}
                   </li>
-                ))
-              ) : (
-                <li className={styles.emptyOption}>
-                  {searchType === 'full'
-                    ? t(
-                        'No results found. Please search another place or draw a custom area.'
-                      )
-                    : t('No results found. Please search another place.')}
-                </li>
-              )}
-            </ul>
-          </div>,
-          // eslint-disable-next-line no-undef
-          document.getElementById('root')
+                )}
+              </ul>
+            </div>,
+            // eslint-disable-next-line no-undef
+            document.getElementById('root')
+          )}
+        {hasResetButton && (
+          <button type="button" onClick={() => handleCloseButton()}>
+            <input type="reset" value="" className={styles.resetBtn} />
+            <CloseIcon className={styles.closeIcon} />
+          </button>
         )}
-      {hasResetButton && (
-        <button
-          type="button"
-          onClick={() => {
-            handleCloseButton();
-          }}
-        >
-          <CloseIcon className={styles.closeButton} />
-        </button>
-      )}
-    </motion.div>
+      </motion.div>
+    </form>
   );
 }
 

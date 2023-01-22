@@ -136,7 +136,7 @@
   .placeholderIcon {
     display: none;
   }
-  .closeButton {
+  .closeIcon {
     fill: $grey-text;
     height: 12px;
     position: absolute;
@@ -144,6 +144,17 @@
     top: 14px;
     width: 12px;
   }
+  .resetBtn {
+    background: transparent;
+    border: none;
+    height: 36px;
+    position: absolute;
+    right: 12px;
+    top: 0;
+    width: 30px;
+    z-index: 11;
+  }
+
   .input {
     border: 1px solid $grey-text;
     border-radius: 4px;
@@ -154,7 +165,7 @@
   }
 }
 
-.closeButton {
+.closeIcon {
   fill: $white;
   height: 8px;
   position: absolute;
