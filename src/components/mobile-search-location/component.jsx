@@ -56,6 +56,7 @@ function MobileSearchLocation({ countryName, view }) {
             searchType={SEARCH_TYPES.country}
             hasResetButton
             mobile
+            searchLocationModal={searchLocationModal}
             setSearchLocationModal={setSearchLocationModal}
           />
         </div>
