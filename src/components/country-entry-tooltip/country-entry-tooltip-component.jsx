@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { getOnboardingProps } from 'containers/onboarding/onboarding-hooks';
 
 import { LAND_MARINE } from 'constants/country-mode-constants';
+import { useLandscape } from 'constants/responsive';
 import { getCountryNames } from 'constants/translation-constants';
 
 import { ReactComponent as CloseIcon } from 'icons/close.svg';
@@ -33,6 +34,7 @@ function CountryEntryTooltipComponent({
 }) {
   const t = useT();
   const locale = useLocale();
+  const isLandscape = useLandscape();
 
   const countryNames = useMemo(getCountryNames, [locale]);
   const tooltipref = useRef(null);
@@ -118,6 +120,7 @@ function CountryEntryTooltipComponent({
       className={cx({
         [styles.tooltipContainer]: true,
         [styles.mobile]: isMobile,
+        [styles.landscape]: isLandscape,
       })}
     >
       <section className={styles.tooltipSection}>
