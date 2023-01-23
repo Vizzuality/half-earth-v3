@@ -88,7 +88,7 @@ function SearchLocation({
   });
 
   useEffect(() => {
-    inputRef.current.focus();
+    if (mobile) inputRef.current.focus();
   }, [searchLocationModal]);
 
   const renderSuggestion = (text) => {
