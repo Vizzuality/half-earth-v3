@@ -74,8 +74,8 @@ function NrcLandingMobileComponent({
       setUpdatedSceneSettings({
         ...sceneSettings,
         padding: {
-          left: 50,
-          top: 0,
+          left: -450,
+          top: 50,
         },
       });
     }
