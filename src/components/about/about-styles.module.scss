@@ -72,4 +72,7 @@
   position: fixed;
   top: $site-gutter;
   right: $site-gutter;
+  svg {
+    fill: $white;
+  }
 }

@@ -21,8 +21,14 @@ export const getActiveLayers = createSelector(
   (globeSettings) => globeSettings.activeLayers
 );
 
+const getCountryName = createSelector(
+  getGlobeSettings,
+  (globeSettings) => globeSettings.countryName
+);
+
 export default createStructuredSelector({
   activeLayers: getActiveLayers,
+  countryName: getCountryName,
   sceneSettings: getGlobeSettings,
   sceneLayers: getDataGlobeLayers,
 });
