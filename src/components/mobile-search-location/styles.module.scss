@@ -1,0 +1,72 @@
+@import 'styles/settings';
+@import 'styles/ui.module';
+
+.container {
+  background-color: $white;
+  position: absolute;
+  width: 100vw;
+  height: 100dvb;
+  top: 0;
+  left: 0;
+  z-index: $over-front;
+
+  .searcherContainer {
+    position: fixed;
+    top: 16px;
+    z-index: $over-front;
+    left: 5vw;
+    width: 90vw;
+  }
+
+  .backBtn {
+    padding: 0;
+    position: fixed;
+    top: 17px;
+    left: calc(17px + 4vw);
+    z-index: $over-front;
+    .arrowIcon {
+      fill: $black;
+      height: 36px;
+      width: 34px;
+    }
+  }
+}
+
+.containerHidden {
+  display: none;
+}
+
+.initialSearcher {
+  background-color: $white;
+  border-radius: 4px;
+  height: 32px;
+  left: 4vw;
+  position: absolute;
+  top: 60px;
+  width: 92vw;
+
+  .placeholderIcon {
+    fill: $grey-text;
+    pointer-events: none;
+    position: absolute;
+    height: 15px;
+    left: 14px;
+    top: 8px;
+    width: 15px;
+  }
+
+  .placeholderText {
+    color: $grey-text;
+    opacity: 1;
+    position: absolute;
+    left: 36px;
+    margin: 0;
+    top: 9px;
+    text-transform: uppercase;
+  }
+}
+
+.initialSearcherHidden {
+  display: none;
+}
+
