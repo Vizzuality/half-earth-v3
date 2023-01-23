@@ -10,6 +10,10 @@
   position: relative;
   width: 100vw;
 
+  @media (orientation: landscape) {
+    margin-top: 0px;
+  }
+
   .subtitle {
     @extend %subtitle;
     color: $robins-egg-blue;
@@ -36,6 +40,10 @@
     position: absolute;
     bottom: 0;
 
+    @media (orientation: landscape) {
+      bottom: 30px;
+    }
+
     p {
       text-align: center;
     }
@@ -56,8 +64,9 @@
 
     @media (orientation: landscape) {
       flex-direction: row;
-      border: 1px solid red;
-
+      flex-wrap: nowrap;
+      gap: 24px;
+      margin: 32px 16px 0 16px;
     }
   }
 }

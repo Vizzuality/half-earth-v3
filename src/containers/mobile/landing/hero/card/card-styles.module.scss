@@ -18,10 +18,6 @@
     text-align: left;
     width: 75%;
 
-    @media (orientation: landscape) {
-      width: 45%;
-    }
-
     .title {
       @extend %bodyText;
       color: $grey-text;
@@ -39,7 +35,7 @@
       line-height: 22px;
 
       @media (orientation: landscape) {
-        max-width: 60%;
+        max-width: 75%;
       }
     }
   }

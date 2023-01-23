@@ -18,5 +18,7 @@
 
   @media (orientation: landscape) {
     flex-direction: row;
+    height: calc(100dvb - 30px);
+    overflow-y: hidden;
   }
 }
