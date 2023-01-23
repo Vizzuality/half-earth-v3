@@ -12,13 +12,11 @@
   position: absolute;
   top: $nav-bar-height;
 
-  @media #{$tablet-landscape} {
-    overflow: hidden;
-    font-size: 45px;
-  }
-
   @media screen and (max-height: 670px) {
     overflow: auto;
   }
 
+  @media (orientation: landscape) {
+    flex-direction: row;
+  }
 }

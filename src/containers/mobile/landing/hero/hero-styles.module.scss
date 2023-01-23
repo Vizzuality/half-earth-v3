@@ -53,5 +53,11 @@
     justify-content: center;
     gap: 8px;
     margin: 32px 16px;
+
+    @media (orientation: landscape) {
+      flex-direction: row;
+      border: 1px solid red;
+
+    }
   }
 }
