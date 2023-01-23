@@ -24,6 +24,9 @@ There are three different scripts that use the transifex cli:
 `yarn transifex:refresh` Refreshes the strings translated on transifex to show them on develop. It can take a couple minutes to show the changes.
 `yarn transifex:purge` This command purges the strings on transifex so we only have the ones present on the code. The he strings no used anymore will be deleted.
 
+If the purge is not working correctly try to use it directly from terminal:
+
+`npx txjs-cli push src/ --purge --token=[TX TOKEN HERE] --secret=[TX SECRET HERE]`
 
 
 ## Selecting the translation locale
