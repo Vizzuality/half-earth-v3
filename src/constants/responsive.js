@@ -26,6 +26,9 @@ export const useMobile = () =>
 // TODO: This doesn't work because we are not using the width meta tag. And so media queries wont work
 // useMediaQuery({ maxWidth: remBreakpoints.mobile });
 
+export const useLandscape = () =>
+  window.matchMedia('(orientation: landscape)').matches;
+
 export function Desktop(props) {
   return <Responsive {...props} minWidth={remBreakpoints.desktop} />;
 }

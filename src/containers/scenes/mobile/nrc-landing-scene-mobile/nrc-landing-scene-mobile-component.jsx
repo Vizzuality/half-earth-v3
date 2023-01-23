@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import loadable from '@loadable/component';
 
@@ -15,6 +15,7 @@ import Scene from 'components/scene';
 import SearchLocation from 'components/search-location';
 
 import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
+import { useLandscape } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 import { SEARCH_TYPES } from 'constants/search-location-constants';
 
@@ -69,11 +70,36 @@ function NrcLandingMobileComponent({
   const tooltipRefs = useOnboardingTooltipRefs({
     changeUI,
   });
+  const isLandscape = useLandscape();
+
+  const [updatedSceneSettings, setUpdatedSceneSettings] =
+    useState(sceneSettings);
+
+  useEffect(() => {
+    if (isLandscape) {
+      setUpdatedSceneSettings({
+        ...sceneSettings,
+        padding: {
+          left: 50,
+          top: 0,
+        },
+      });
+    }
+    if (!isLandscape) {
+      setUpdatedSceneSettings({
+        ...sceneSettings,
+        padding: {
+          left: 0,
+          top: -220,
+        },
+      });
+    }
+  }, [isLandscape]);
 
   return (
     <Scene
       sceneName="nrc-landing-scene"
-      sceneSettings={sceneSettings}
+      sceneSettings={updatedSceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
       initialRotation
