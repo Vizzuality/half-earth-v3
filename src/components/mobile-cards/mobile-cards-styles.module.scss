@@ -11,6 +11,13 @@
   width: 94vw;
   z-index: 10;
 
+    @media (orientation: landscape) {
+      height: 70%;
+      right: 3%;
+      left: auto;
+      width: 45vw;
+    }
+
   .card {
     border: 1px solid $elephant;
     color: $white;
@@ -21,6 +28,10 @@
     flex-direction: column;
     justify-content: space-between;
     @include backdropBlur();
+
+    @media (orientation: landscape) {
+      min-width: 45vw;
+    }
 
     h5 {
       @extend %display1;
