@@ -175,7 +175,9 @@ function SearchLocation({
           )}
         {hasResetButton && (
           <button type="button" onClick={() => handleCloseButton()}>
-            <input type="reset" value="" className={styles.resetBtn} />
+            {mobile && (
+              <input type="reset" value="" className={styles.resetBtn} />
+            )}
             <CloseIcon className={styles.closeIcon} />
           </button>
         )}

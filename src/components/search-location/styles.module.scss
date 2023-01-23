@@ -19,7 +19,7 @@
 .searchResultsList {
   z-index: $bring-to-front;
   @media #{$mobile-only} {
-    z-index: 11;
+    z-index: $over-front;
   }
 }
 
@@ -152,7 +152,7 @@
     right: 12px;
     top: 0;
     width: 30px;
-    z-index: 11;
+    z-index: $over-front;
   }
 
   .input {

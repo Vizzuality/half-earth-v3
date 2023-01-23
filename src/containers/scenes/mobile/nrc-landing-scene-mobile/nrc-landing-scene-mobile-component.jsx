@@ -48,7 +48,6 @@ const variants = {
 function NrcLandingMobileComponent({
   activeLayers,
   cardsContent,
-  // changeUI,
   countryISO,
   countryName,
   direction,

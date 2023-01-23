@@ -7,16 +7,13 @@ import { useT } from '@transifex/react';
 import CountriesBordersLayer from 'containers/layers/countries-borders-layer';
 import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
-import { useOnboardingTooltipRefs } from 'containers/onboarding/onboarding-hooks';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
 import Cards from 'components/mobile-cards';
+import MobileSearchLocation from 'components/mobile-search-location';
 import Scene from 'components/scene';
-import SearchLocation from 'components/search-location';
 
-import { GLOBAL_SPI_FEATURE_LAYER } from 'constants/layers-slugs';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
-import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 
@@ -51,7 +48,6 @@ const variants = {
 function PriorityMobileComponent({
   activeLayers,
   cardsContent,
-  changeUI,
   countryISO,
   countryName,
   direction,
@@ -66,10 +62,6 @@ function PriorityMobileComponent({
   view,
 }) {
   const t = useT();
-
-  const tooltipRefs = useOnboardingTooltipRefs({
-    changeUI,
-  });
 
   return (
     <Scene
@@ -91,21 +83,7 @@ function PriorityMobileComponent({
         <p>{t('Priority places')}</p>
       </header>
 
-      <div className={styles.searchContainer}>
-        <SearchLocation
-          reference={(ref) => {
-            tooltipRefs.current.prioritySearch = ref;
-          }}
-          view={view}
-          theme="light"
-          width="full"
-          parentWidth="380px"
-          placeholder={t('search location', { _comment: 'Search placeholder' })}
-          searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
-          searchType={SEARCH_TYPES.country}
-          mobile
-        />
-      </div>
+      <MobileSearchLocation countryName={countryName} view={view} />
 
       <ArcgisLayerManager activeLayers={selectedLayers} />
 
