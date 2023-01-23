@@ -3,7 +3,7 @@
 
 $content-padding: 16px;
 $content-height: calc(100vh - 105px);
-$content-height-mobile: 100vh;
+$content-height-mobile: 100dvb;
 
 .nrcContent {
   width: 100%;
@@ -168,9 +168,11 @@ $content-height-mobile: 100vh;
   }
 
   &.mobile {
+    height: 100%; // Fallback for browsers that do not support the `dvb` property
     height: $content-height-mobile;
 
     .motionView {
+      height: 100%; // Fallback for browsers that do not support the `dvb` property
       height: $content-height-mobile;
     }
 
