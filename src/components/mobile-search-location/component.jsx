@@ -23,7 +23,7 @@ function MobileSearchLocation({ countryName, view }) {
 
   useEffect(() => {
     setParentWidth(searchContainerRef.current.offsetWidth);
-  }, [searchContainerRef.current]);
+  }, [searchContainerRef]);
 
   return (
     <>
