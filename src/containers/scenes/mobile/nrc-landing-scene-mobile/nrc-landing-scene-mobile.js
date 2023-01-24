@@ -25,6 +25,7 @@ function NrcLandingSceneMobileContainer(props) {
   const { activeLayers, browsePage, sceneSettings } = props;
 
   const isLandscape = useLandscape();
+
   const locale = useLocale();
   const cardsContent = useMemo(() => getNRCLandingCards(), [locale]);
 

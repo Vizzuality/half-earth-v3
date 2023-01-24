@@ -153,6 +153,13 @@ function SceneContainer(props) {
     }
   }, [map]);
 
+  // This is to solve globe settings when orientation changes
+  useEffect(() => {
+    if (sceneSettings && view) {
+      view.padding = sceneSettings.padding;
+    }
+  }, [sceneSettings.padding, view]);
+
   useEffect(() => {
     if (map && view) {
       setLoadState('loaded');

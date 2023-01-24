@@ -65,7 +65,7 @@ function PriorityMobileComponent({
 
   return (
     <Scene
-      sceneName="priority-scene"
+      sceneName="priority-scene-mobile"
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}

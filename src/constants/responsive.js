@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Responsive from 'react-responsive';
 
 export const baseUnit = 16;
@@ -29,8 +29,11 @@ export const useMobile = () =>
 // TODO: This doesn't work because we are not using the width meta tag. And so media queries wont work
 // useMediaQuery({ maxWidth: remBreakpoints.mobile });
 
-export const useLandscape = () =>
-  window.matchMedia('(orientation: landscape)').matches;
+export const useLandscape = () => {
+  return useMemo(() => {
+    return window.matchMedia('(orientation: landscape)').matches;
+  }, [window.matchMedia('(orientation: landscape)').matches]);
+};
 
 export const useMobileLandscape = () =>
   REACT_APP_FEATURE_MOBILE &&

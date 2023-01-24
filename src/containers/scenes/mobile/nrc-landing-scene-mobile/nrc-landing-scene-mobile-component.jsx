@@ -65,7 +65,7 @@ function NrcLandingMobileComponent({
 
   return (
     <Scene
-      sceneName="nrc-landing-scene"
+      sceneName="nrc-landing-mobile-scene"
       sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
