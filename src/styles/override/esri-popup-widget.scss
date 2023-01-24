@@ -2,6 +2,12 @@
 @import 'styles/ui.module';
 @import 'styles/typography-extends';
 
+.esri-popup {
+  @media (orientation: landscape) {
+    bottom: 0 !important;
+  }
+}
+
 .esri-popup__header, .esri-popup__footer {
   display: none;
 }
