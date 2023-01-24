@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
 
 export const baseUnit = 16;
@@ -30,16 +30,27 @@ export const useMobile = () =>
 // useMediaQuery({ maxWidth: remBreakpoints.mobile });
 
 export const useLandscape = () => {
-  return useMemo(() => {
+  const match = () => {
+    if (!window.matchMedia) {
+      return false;
+    }
     return window.matchMedia('(orientation: landscape)').matches;
-  }, [window.matchMedia('(orientation: landscape)').matches]);
-};
+  };
 
-export const useMobileLandscape = () =>
-  REACT_APP_FEATURE_MOBILE &&
-  window.screen.height &&
-  window.screen.height < pixelBreakpoints.mobile &&
-  window.matchMedia('(orientation: landscape)').matches;
+  const [value, set] = useState(match);
+
+  useEffect(() => {
+    // Update state on window `resize` event.
+    // Usage of `match` function defined outside of `useEffect`
+    // ensures that it has current values of arguments.
+    const handler = () => set(match);
+    window.addEventListener('resize', handler);
+    // Remove event listener on cleanup.
+    return () => window.removeEventListener('resize', handler);
+  });
+
+  return value;
+};
 
 export function Desktop(props) {
   return <Responsive {...props} minWidth={remBreakpoints.desktop} />;
