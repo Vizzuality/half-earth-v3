@@ -29,6 +29,9 @@
     font-size: 24px;
     padding: 0 10px;
     line-height: 32px;
+    @media (orientation: landscape) {
+      margin-top: 0;
+    }
   }
 
   .footer {
@@ -41,7 +44,8 @@
     bottom: 0;
 
     @media (orientation: landscape) {
-      bottom: 30px;
+      bottom: 20px;
+      font-size: 12px;
     }
 
     p {
@@ -66,7 +70,7 @@
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 24px;
-      margin: 32px 16px 0 16px;
+      margin: 16px 16px 0 16px;
     }
   }
 }
