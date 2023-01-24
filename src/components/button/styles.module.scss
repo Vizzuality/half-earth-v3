@@ -31,6 +31,20 @@
   }
 }
 
+.rectangular-secondary {
+  @extend .rectangular-primary;
+  color: $light-text;
+  background-color: $brand-color-secondary;
+  padding: 10px;
+  margin-top: 10px;
+
+
+  &:hover {
+    background-color: $white;
+    background-color: $firefly;
+  }
+}
+
 .rectangular {
   @extend %title;
   width: 100%;
