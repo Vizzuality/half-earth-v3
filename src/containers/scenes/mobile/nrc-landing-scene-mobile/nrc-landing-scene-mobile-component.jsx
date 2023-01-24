@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import loadable from '@loadable/component';
 
@@ -13,7 +13,6 @@ import Cards from 'components/mobile-cards';
 import MobileSearchLocation from 'components/mobile-search-location';
 import Scene from 'components/scene';
 
-import { useLandscape } from 'constants/responsive';
 import { LOCAL_SPATIAL_REFERENCE } from 'constants/scenes-constants';
 
 import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
@@ -64,36 +63,10 @@ function NrcLandingMobileComponent({
 }) {
   const t = useT();
 
-  const isLandscape = useLandscape();
-
-  const [updatedSceneSettings, setUpdatedSceneSettings] =
-    useState(sceneSettings);
-
-  useEffect(() => {
-    if (isLandscape) {
-      setUpdatedSceneSettings({
-        ...sceneSettings,
-        padding: {
-          left: -450,
-          top: 50,
-        },
-      });
-    }
-    if (!isLandscape) {
-      setUpdatedSceneSettings({
-        ...sceneSettings,
-        padding: {
-          left: 0,
-          top: -220,
-        },
-      });
-    }
-  }, [isLandscape]);
-
   return (
     <Scene
       sceneName="nrc-landing-scene"
-      sceneSettings={updatedSceneSettings}
+      sceneSettings={sceneSettings}
       loaderOptions={{ url: `https://js.arcgis.com/${API_VERSION}` }}
       onMapLoad={onMapLoad}
       initialRotation

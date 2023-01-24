@@ -25,8 +25,6 @@ function CardsComponent({ variants, page, direction, setPage, cardsContent }) {
     }
   };
 
-  console.log({ cardsContent });
-
   const card = cardsContent[page];
 
   const { title, description, legendItem, legendColor, legendTitle } = card;
