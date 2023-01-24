@@ -210,6 +210,7 @@
   $breakpoint-desktop: 75rem; // 1200px / 16px
 
   // Media queries
+  $mobile-landscape: 'screen screen and (max-height:#{$breakpoint-mobile-only}) and (orientation:landscape)';
   $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
   $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
   $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';
