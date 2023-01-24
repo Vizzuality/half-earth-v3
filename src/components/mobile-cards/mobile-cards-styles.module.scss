@@ -12,7 +12,8 @@
   z-index: 10;
 
     @media (orientation: landscape) {
-      height: 70%;
+      bottom: 12px;
+      height: 68%;
       right: 3%;
       left: auto;
       width: 45vw;
@@ -31,6 +32,10 @@
 
     @media (orientation: landscape) {
       min-width: 45vw;
+
+      p {
+        font-size: 12px;
+      }
     }
 
     h5 {
@@ -42,6 +47,9 @@
 
     p {
       @extend %bodyText;
+      @media (orientation: landscape) {
+        margin-top: 4px;
+      }
     }
 
     .withLegend {
@@ -50,10 +58,17 @@
 
     .title {
       margin-bottom: 8px;
+      @media (orientation: landscape) {
+        margin-bottom: 0;
+       }
     }
 
     .description {
+      @extend %bodyText;
       margin: 2px 0;
+      @media (orientation: landscape) {
+        margin: 0;
+      }
     }
 
     .legendContainer {
