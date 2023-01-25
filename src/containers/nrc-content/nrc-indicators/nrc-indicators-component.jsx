@@ -59,11 +59,11 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
         indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
         description={
           <p>
-            <T
-              _str="{landMarineSelection} Species Protection Index (SPI)"
-              _comment="Land Species Protection Index (SPI)"
-              landMarineSelection={land ? 'Land' : 'Marine'}
-            />
+            {land ? (
+              <T _str="Land Species Protection Index (SPI)" />
+            ) : (
+              <T _str="Marine Species Protection Index (SPI)" />
+            )}
           </p>
         }
         tooltipInfo={t(
@@ -98,7 +98,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                     />
                   </b>
                 }
-                landMarineSelection={land ? 'land' : 'marine'}
+                landMarineSelection={land ? t('land') : t('marine')}
                 totalEndemicNumber={getLocaleNumber(nspecies, locale)}
               />
             )}
@@ -131,7 +131,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                   <b>
                     <T
                       _str="{landMarineSelection} is protected"
-                      landMarineSelection={land ? 'land' : 'marine'}
+                      landMarineSelection={land ? t('land') : t('marine')}
                     />
                   </b>
                 }
@@ -176,7 +176,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                     />
                   </b>
                 }
-                landMarineSelection={land ? 'land' : 'marine'}
+                landMarineSelection={land ? t('land') : t('marine')}
                 someModificationNumber={Math.round(hm)}
               />
             )}
