@@ -98,7 +98,11 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                     />
                   </b>
                 }
-                landMarineSelection={land ? t('land') : t('marine')}
+                landMarineSelection={
+                  land
+                    ? t('land', { _comment: 'land vertebrate species' })
+                    : t('marine', { _comment: 'marine vertebrate species' })
+                }
                 totalEndemicNumber={getLocaleNumber(nspecies, locale)}
               />
             )}
@@ -131,7 +135,11 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                   <b>
                     <T
                       _str="{landMarineSelection} is protected"
-                      landMarineSelection={land ? t('land') : t('marine')}
+                      landMarineSelection={
+                        land
+                          ? t('land', { _comment: 'land vertebrate species' })
+                          : t('marine')
+                      }
                     />
                   </b>
                 }
@@ -176,7 +184,11 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                     />
                   </b>
                 }
-                landMarineSelection={land ? t('land') : t('marine')}
+                landMarineSelection={
+                  land
+                    ? t('land', { _comment: 'land vertebrate species' })
+                    : t('marine')
+                }
                 someModificationNumber={Math.round(hm)}
               />
             )}
