@@ -32,7 +32,7 @@
       color: $white;
       font-size: 16px;
       margin: 0;
-      line-height: 22px;
+      line-height: $line-height-lg;
 
       @media (orientation: landscape) {
         font-size: 14px;

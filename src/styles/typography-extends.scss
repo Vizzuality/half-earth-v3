@@ -61,7 +61,7 @@
   font-family: $font-family-sans-serif;
   font-size: 12px;
   font-weight: 400;
-  line-height: 22px;
+  line-height: $line-height-lg;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   @media print {
@@ -75,7 +75,7 @@
   font-family: $font-family-sans-serif;
   font-size: $font-size-sm;
   font-weight: 300;
-  line-height: 22px;
+  line-height: $line-height-lg;
   letter-spacing: 0px;
   @media print{
     font-size: 10pt;
@@ -89,7 +89,7 @@
   font-family: $font-family-sans-serif;
   font-size: 12px;
   font-weight: 300;
-  line-height: 22px;
+  line-height: $line-height-lg;
   letter-spacing: 0px;
 }
 
