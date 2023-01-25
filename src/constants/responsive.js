@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
 
+const { REACT_APP_FEATURE_MOBILE } = process.env;
+
 export const baseUnit = 16;
 export const pixelBreakpoints = {
   mobile: 719,
@@ -16,18 +18,30 @@ export const remBreakpoints = {
   desktop: getRems(pixelBreakpoints.desktop),
 };
 
-const { REACT_APP_FEATURE_MOBILE } = process.env;
+export const useMobile = () => {
+  const match = () => {
+    if (!window.matchMedia && !window.screen) {
+      return false;
+    }
+    return (
+      (REACT_APP_FEATURE_MOBILE &&
+        window.screen.width < pixelBreakpoints.mobile) ||
+      (REACT_APP_FEATURE_MOBILE &&
+        window.screen.height < pixelBreakpoints.mobile &&
+        window.matchMedia('(orientation: landscape)').matches)
+    );
+  };
 
-export const useMobile = () =>
-  (REACT_APP_FEATURE_MOBILE &&
-    window.screen.width &&
-    window.screen.width < pixelBreakpoints.mobile) ||
-  (REACT_APP_FEATURE_MOBILE &&
-    window.screen.height &&
-    window.screen.height < pixelBreakpoints.mobile &&
-    window.matchMedia('(orientation: landscape)').matches);
-// TODO: This doesn't work because we are not using the width meta tag. And so media queries wont work
-// useMediaQuery({ maxWidth: remBreakpoints.mobile });
+  const [value, set] = useState(match);
+
+  useEffect(() => {
+    const handler = () => set(match);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  });
+
+  return value;
+};
 
 export const useLandscape = () => {
   const match = () => {
@@ -40,12 +54,8 @@ export const useLandscape = () => {
   const [value, set] = useState(match);
 
   useEffect(() => {
-    // Update state on window `resize` event.
-    // Usage of `match` function defined outside of `useEffect`
-    // ensures that it has current values of arguments.
     const handler = () => set(match);
     window.addEventListener('resize', handler);
-    // Remove event listener on cleanup.
     return () => window.removeEventListener('resize', handler);
   });
 
@@ -68,7 +78,7 @@ export function TabletLandscapeOnly(props) {
   return <Responsive {...props} maxWidth={remBreakpoints.desktop} />;
 }
 export function MobileOnly(props) {
-  const { children } = props;
+  const { children, view, map } = props;
   if (window.screen.width && window.screen.width < pixelBreakpoints.mobile) {
     return children;
   }
@@ -78,16 +88,15 @@ export function MobileOnly(props) {
     window.matchMedia('(orientation: landscape)').matches
   )
     return children;
-  return null;
-  // TODO: This doesn't work because we are not using the width meta tag
-  // return (
-  //   <Responsive {...props} maxWidth={remBreakpoints.mobile}>
-  //     {React.Children.map(children || null, (child, i) => {
-  //       return (
-  //         // eslint-disable-next-line react/no-array-index-key
-  //         child && <child.type {...child.props} key={i} view={view} map={map} />
-  //       );
-  //     })}
-  //   </Responsive>
-  // );
+
+  return (
+    <Responsive {...props} maxWidth={remBreakpoints.mobile}>
+      {React.Children.map(children || null, (child, i) => {
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          child && <child.type {...child.props} key={i} view={view} map={map} />
+        );
+      })}
+    </Responsive>
+  );
 }

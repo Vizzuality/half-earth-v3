@@ -23,11 +23,6 @@
     justify-content: space-between;
     width: 100%;
 
-    @media (orientation: landscape) {
-      flex-direction: row !important;
-    }
-
-
     .endemicCard {
       align-items: center;
       display: flex;
@@ -78,6 +73,10 @@
   &.mobile {
     .endemicCardsContainer {
       flex-direction: column;
+
+      @media (orientation: landscape) {
+        flex-direction: row;
+      }
     }
 
     .endemicCard {

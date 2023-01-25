@@ -22,10 +22,6 @@
 
 .searchResultsListMobile {
   z-index: $over-front;
-
-  @media (orientation: landscape) {
-    z-index: $over-front;
-  }
 }
 
 .placeholderIcon {
