@@ -82,11 +82,11 @@
 
   span {
     width: 179px;
-    color: $white;	
+    color: $white;
     font-family: $font-family-1;
     font-size: $font-size-sm;
     font-weight: $font-weight-light;
-    line-height: 22px;
+    line-height: $line-height-lg;
     margin-left: 20px;
   }
 }

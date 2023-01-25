@@ -56,12 +56,7 @@ function HeroComponent({ className, changeUI, browsePage }) {
         }}
       >
         {!isMobile && (
-          <>
-            <T _str="SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT" />
-            <div className={styles.disclaimer}>
-              <T _str="Please notice that the tours might not be 100% accurate due to recent updates." />
-            </div>
-          </>
+          <T _str="SELECT ONE OF THE AUDIO TOURS BELOW TO LEARN MORE ABOUT IT" />
         )}
       </motion.p>
 
