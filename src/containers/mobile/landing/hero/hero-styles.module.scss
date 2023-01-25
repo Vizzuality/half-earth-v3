@@ -9,15 +9,21 @@
   margin-top: 30px;
   position: relative;
   width: 100vw;
+  justify-content: space-between;
 
   @media (orientation: landscape) {
     margin-top: 0px;
+    justify-content: start;
   }
 
   .subtitle {
     @extend %subtitle;
     color: $robins-egg-blue;
     text-align: center;
+
+    @media (orientation: landscape) {
+      margin-bottom: 0;
+    }
   }
 
   .title {
@@ -41,12 +47,12 @@
     display: flex;
     font-weight: 300;
     margin: 0 20px 0 20px;
-    position: absolute;
-    bottom: 0;
 
     @media (orientation: landscape) {
-      bottom: 50px;
+      bottom: 40px;
+      position: absolute;
       font-size: 12px;
+      line-height: normal;
     }
 
     p {
@@ -71,7 +77,7 @@
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 24px;
-      margin: 16px 16px 0 16px;
+      margin: 0 16px 0 16px;
     }
   }
 }
