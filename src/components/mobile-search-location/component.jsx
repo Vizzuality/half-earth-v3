@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useT } from '@transifex/react';
 
@@ -17,7 +17,13 @@ import { ReactComponent as IconSearch } from 'icons/search.svg';
 
 function MobileSearchLocation({ countryName, view }) {
   const t = useT();
+  const searchContainerRef = useRef(null);
+  const [parentWidth, setParentWidth] = useState(0);
   const [searchLocationModal, setSearchLocationModal] = useState(false);
+
+  useEffect(() => {
+    setParentWidth(searchContainerRef.current.offsetWidth);
+  }, [searchContainerRef, searchLocationModal]);
 
   return (
     <>
@@ -45,12 +51,12 @@ function MobileSearchLocation({ countryName, view }) {
           [styles.containerHidden]: !searchLocationModal,
         })}
       >
-        <div className={styles.searcherContainer}>
+        <div className={styles.searcherContainer} ref={searchContainerRef}>
           <SearchLocation
             view={view}
             theme="mobile"
             width="full"
-            parentWidth="380px"
+            parentWidth={parentWidth}
             placeholder={t('search location')}
             searchSourceLayerSlug={GLOBAL_SPI_FEATURE_LAYER}
             searchType={SEARCH_TYPES.country}

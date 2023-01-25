@@ -10,6 +10,10 @@
   position: relative;
   width: 100vw;
 
+  @media (orientation: landscape) {
+    margin-top: 0px;
+  }
+
   .subtitle {
     @extend %subtitle;
     color: $robins-egg-blue;
@@ -25,6 +29,9 @@
     font-size: 24px;
     padding: 0 10px;
     line-height: 32px;
+    @media (orientation: landscape) {
+      margin-top: 0;
+    }
   }
 
   .footer {
@@ -35,6 +42,11 @@
     margin: 0 20px 20px 20px;
     position: absolute;
     bottom: 0;
+
+    @media (orientation: landscape) {
+      bottom: 20px;
+      font-size: 12px;
+    }
 
     p {
       text-align: center;
@@ -53,5 +65,12 @@
     justify-content: center;
     gap: 8px;
     margin: 32px 16px;
+
+    @media (orientation: landscape) {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 24px;
+      margin: 16px 16px 0 16px;
+    }
   }
 }

@@ -33,6 +33,11 @@
       font-size: 16px;
       margin: 0;
       line-height: 22px;
+
+      @media (orientation: landscape) {
+        font-size: 14px;
+        max-width: 90%;
+      }
     }
   }
 

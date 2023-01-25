@@ -12,7 +12,7 @@
   padding: 10px 16px;
   flex-direction: column;
 
-  @media #{$tablet-landscape} {
+  @media (orientation: landscape) {
     flex-direction: row;
   }
 
@@ -73,6 +73,10 @@
   &.mobile {
     .endemicCardsContainer {
       flex-direction: column;
+
+      @media (orientation: landscape) {
+        flex-direction: row;
+      }
     }
 
     .endemicCard {

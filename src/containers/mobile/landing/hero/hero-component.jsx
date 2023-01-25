@@ -14,7 +14,7 @@ import globeNRC from 'images/globe-NRC.png';
 
 import styles from './hero-styles.module.scss';
 
-function HeroComponent({ className, changeUI, browsePage }) {
+function HeroComponent({ className, browsePage }) {
   const t = useT();
 
   return (
@@ -63,10 +63,6 @@ function HeroComponent({ className, changeUI, browsePage }) {
             image={globeExplore}
             handleClick={() => {
               browsePage({ type: DATA });
-              changeUI({
-                onboardingType: 'priority-places',
-                onboardingStep: 0,
-              });
             }}
           />
         </motion.div>
@@ -87,10 +83,6 @@ function HeroComponent({ className, changeUI, browsePage }) {
             image={globeNRC}
             handleClick={() => {
               browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
-              changeUI({
-                onboardingType: 'national-report-cards',
-                onboardingStep: 0,
-              });
             }}
           />
         </motion.div>

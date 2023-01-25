@@ -8,9 +8,12 @@ import { useLocale } from '@transifex/react';
 import { aoiAnalyticsActions } from 'actions/google-analytics-actions';
 import * as urlActions from 'actions/url-actions';
 
+import prioritySceneConfig from 'scenes/mobile/priority-scene-mobile/scene-config';
+
 import ContentfulService from 'services/contentful';
 
 import metadataConfig from 'constants/metadata';
+import { useLandscape } from 'constants/responsive';
 
 import Component from './priority-scene-mobile-component';
 import { getPriorityMobileCards } from './priority-scene-mobile-constants';
@@ -19,14 +22,39 @@ import mapStateToProps from './priority-scene-mobile-selectors';
 const actions = { ...urlActions, ...aoiAnalyticsActions };
 
 function PrioritySceneMobileContainer(props) {
-  const { activeLayers, browsePage } = props;
+  const { activeLayers, browsePage, sceneSettings } = props;
+
   const locale = useLocale();
+  const isLandscape = useLandscape();
+
   const cardsContent = useMemo(() => getPriorityMobileCards(), [locale]);
   const [[page, direction], setPage] = useState([0, 0]);
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
+  const [updatedSceneSettings, setUpdatedSceneSettings] =
+    useState(sceneSettings);
 
   const [cardsContentWithSources, setCardsContentWithSources] =
     useState(cardsContent);
+
+  const landscapeScenePadding = {
+    left: -450,
+    top: 50,
+  };
+
+  useEffect(() => {
+    if (isLandscape) {
+      setUpdatedSceneSettings({
+        ...sceneSettings,
+        padding: landscapeScenePadding,
+      });
+    }
+    if (!isLandscape) {
+      setUpdatedSceneSettings({
+        ...sceneSettings,
+        padding: prioritySceneConfig.globe.padding,
+      });
+    }
+  }, [isLandscape, sceneSettings]);
 
   useEffect(() => {
     const promises = cardsContent.map(
@@ -61,6 +89,7 @@ function PrioritySceneMobileContainer(props) {
       direction={direction}
       handleStepBack={handleStepBack}
       page={page}
+      sceneSettings={updatedSceneSettings}
       setPage={setPage}
       selectedLayers={selectedLayers}
     />

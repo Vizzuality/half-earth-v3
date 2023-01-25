@@ -138,7 +138,10 @@ function SearchLocation({
             <div
               ref={setPopperElement}
               style={{ ...popperStyles.popper, width: parentWidth }}
-              className={styles.searchResultsList}
+              className={cx({
+                [styles.searchResultsList]: true,
+                [styles.searchResultsListMobile]: mobile,
+              })}
               {...attributes.popper}
             >
               <ul

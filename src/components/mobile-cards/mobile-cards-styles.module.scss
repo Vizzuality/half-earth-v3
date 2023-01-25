@@ -11,6 +11,14 @@
   width: 94vw;
   z-index: 10;
 
+    @media (orientation: landscape) {
+      bottom: 12px;
+      height: 68%;
+      right: 3%;
+      left: auto;
+      width: 45vw;
+    }
+
   .card {
     border: 1px solid $elephant;
     color: $white;
@@ -22,6 +30,17 @@
     justify-content: space-between;
     @include backdropBlur();
 
+    @media (orientation: landscape) {
+      min-width: 45vw;
+
+      p {
+        font-size: 12px;
+        div {
+          font-size: 12px;
+        }
+      }
+    }
+
     h5 {
       @extend %display1;
       font-size: 16px;
@@ -31,6 +50,9 @@
 
     p {
       @extend %bodyText;
+      @media (orientation: landscape) {
+        margin-top: 4px;
+      }
     }
 
     .withLegend {
@@ -39,10 +61,17 @@
 
     .title {
       margin-bottom: 8px;
+      @media (orientation: landscape) {
+        margin-bottom: 0;
+       }
     }
 
     .description {
+      @extend %bodyText;
       margin: 2px 0;
+      @media (orientation: landscape) {
+        margin: 0;
+      }
     }
 
     .legendContainer {

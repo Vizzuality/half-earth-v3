@@ -24,7 +24,9 @@ function CardsComponent({ variants, page, direction, setPage, cardsContent }) {
       setPage([page + newDirection, newDirection]);
     }
   };
+
   const card = cardsContent[page];
+
   const { title, description, legendItem, legendColor, legendTitle } = card;
   const isSingleLegend = !!legendColor;
   return (
