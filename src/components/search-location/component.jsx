@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 
@@ -57,7 +57,6 @@ function SearchLocation({
   searchType,
   placeholder,
   mobile,
-  searchLocationModal,
 }) {
   const t = useT();
   const searchOptionsListRef = useRef();
@@ -87,9 +86,11 @@ function SearchLocation({
     waitingInteraction,
   });
 
-  useEffect(() => {
-    if (mobile) inputRef.current.focus();
-  }, [searchLocationModal]);
+  // useEffect(() => {
+  //   if (mobile) {
+  //     inputRef.current.focus();
+  //   }
+  // }, [searchLocationModal]);
 
   const renderSuggestion = (text) => {
     const [name, layer] = text.split('|');
