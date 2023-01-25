@@ -206,6 +206,7 @@ function NrcContent({
               <Vertebrates
                 isShrunken={fullRanking}
                 setFullRanking={setFullRanking}
+                selectedLandMarineOption={selectedLandMarineOption}
               />
 
               <Trend chartData={trendChartData} isShrunken={fullRanking} />

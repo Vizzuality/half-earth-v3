@@ -9,6 +9,7 @@ import cx from 'classnames';
 
 import Button from 'components/button';
 
+import { LAND_MARINE } from 'constants/country-mode-constants';
 import { useMobile } from 'constants/responsive';
 import { getSpeciesGroup } from 'constants/translation-constants';
 
@@ -21,15 +22,18 @@ import styles from './nrc-vertebrates-styles.module.scss';
 
 function NRCVertebrates({
   countryData,
-  setNRCSidebarView,
   isShrunken,
+  selectedLandMarineOption,
   setFullRanking,
+  setNRCSidebarView,
 }) {
   const t = useT();
   const isMobile = useMobile();
   const locale = useLocale();
+  const land = selectedLandMarineOption.slug === LAND_MARINE.land;
 
   const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
+
   const {
     amphibians,
     birds,
@@ -38,6 +42,7 @@ function NRCVertebrates({
     endemic_amphibians,
     endemic_birds,
     endemic_mammals,
+    endemic_mammals_mar,
     endemic_reptiles,
   } = countryData || {};
 
@@ -62,7 +67,7 @@ function NRCVertebrates({
     },
     {
       specie: 'mammals',
-      endemic: endemic_mammals,
+      endemic: land ? endemic_mammals : endemic_mammals_mar,
       total: mammals,
       icon: MammalsIcon,
     },
