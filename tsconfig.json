@@ -41,6 +41,6 @@
     "@sounds": ["sounds/*"],
     "@store-middleware": ["store/store-middleware/*"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  "include": ["declarations.d.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts"],
   "exclude": ["node_modules", ".storybook", "cypress"]
 }
