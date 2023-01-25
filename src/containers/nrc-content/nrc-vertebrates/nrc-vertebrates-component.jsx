@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { T, useT, useLocale } from '@transifex/react';
 
@@ -10,7 +10,6 @@ import cx from 'classnames';
 import Button from 'components/button';
 
 import { useMobile } from 'constants/responsive';
-import { getSpeciesGroup } from 'constants/translation-constants';
 
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
@@ -29,7 +28,6 @@ function NRCVertebrates({
   const isMobile = useMobile();
   const locale = useLocale();
 
-  const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
   const {
     amphibians,
     birds,
@@ -68,8 +66,6 @@ function NRCVertebrates({
     },
   ];
 
-  const getSpecieText = (specie) => translatedSpeciesGroup[specie] || specie;
-
   return (
     <div
       className={cx(styles.vertebratesContainer, {
@@ -78,29 +74,50 @@ function NRCVertebrates({
       })}
     >
       <div className={styles.endemicCardsContainer}>
-        {SPECIES_COMPOSITION.map((s) => (
-          <div className={styles.endemicCard} key={s.specie}>
-            <s.icon className={styles.endemicIcon} />
-            <p>
+        {SPECIES_COMPOSITION.map((s) => {
+          const endemicSpecieString = {
+            mammals: (
               <T
-                _str="{bold} {specie} of {totalNumber}"
-                endemicNumber={getLocaleNumber(s.endemic, locale)}
-                specie={getSpecieText(s.specie)}
-                totalNumber={getLocaleNumber(s.total, locale)}
-                bold={
-                  <>
-                    <b>
-                      <T
-                        _str={`${getLocaleNumber(s.endemic, locale)} endemic`}
-                      />
-                    </b>
-                    <br />
-                  </>
-                }
+                _str="endemic mammals"
+                _comment="10 {endemic mammals} of 200"
               />
-            </p>
-          </div>
-        ))}
+            ),
+            birds: (
+              <T _str="endemic birds" _comment="10 {endemic mammals} of 200" />
+            ),
+            reptiles: (
+              <T
+                _str="endemic reptiles"
+                _comment="10 {endemic mammals} of 200"
+              />
+            ),
+            amphibians: (
+              <T
+                _str="endemic amphibians"
+                _comment="10 {endemic mammals} of 200"
+              />
+            ),
+          }[s.specie];
+          return (
+            <div className={styles.endemicCard} key={s.specie}>
+              <s.icon className={styles.endemicIcon} />
+              <p>
+                <T
+                  _str="{localNumber} {endemicSpecie} of {totalNumber}"
+                  endemicNumber={getLocaleNumber(s.endemic, locale)}
+                  localNumber={getLocaleNumber(s.endemic, locale)}
+                  totalNumber={getLocaleNumber(s.total, locale)}
+                  endemicSpecie={
+                    <>
+                      <b>{endemicSpecieString}</b>
+                      <br />
+                    </>
+                  }
+                />
+              </p>
+            </div>
+          );
+        })}
       </div>
       {!isMobile && (
         <Button

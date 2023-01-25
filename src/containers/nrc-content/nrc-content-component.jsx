@@ -220,7 +220,7 @@ function NrcContent({
 
               {!isMobile && (
                 <div className={styles.sourceText}>
-                  <p>{t('Source: ')}</p>
+                  <p>{t('Source:')}</p>{' '}
                   <ReactMarkdown
                     key={challengesSources}
                     source={challengesSources}

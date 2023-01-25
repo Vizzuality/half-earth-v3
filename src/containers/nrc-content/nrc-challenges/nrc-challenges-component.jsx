@@ -54,9 +54,9 @@ function Challenges({
             <div className={styles.chartTitleIndicators}>
               <p className={styles.chartTitle}>
                 <T
-                  _str="{landMarineSelection} SPI and"
+                  _str="{landMarineSPI} and"
                   _comment="(Land SPI and) Number of vertebrate species of countries with shared stewardship to Sudan"
-                  landMarineSelection={land ? 'Land' : 'Marine'}
+                  landMarineSPI={land ? t('Land SPI') : t('Marine SPI')}
                 />
               </p>
               <div className={styles.dropdownContainer}>
