@@ -127,7 +127,7 @@
       }
     }
 
-    span {
+    .indicatorBg {
       @include backdropBlur();
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
@@ -136,7 +136,6 @@
       width: 34px;
       z-index: 2;
       top: -10px;
-
     }
   }
 

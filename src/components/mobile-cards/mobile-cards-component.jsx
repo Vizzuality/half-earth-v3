@@ -58,7 +58,7 @@ function CardsComponent({ variants, page, direction, setPage, cardsContent }) {
           }}
         >
           <div>
-            <span />
+            <div className={styles.indicatorBg} />
             <p className={styles.progress}>
               {page + 1} / {cardsContent.length}
             </p>
