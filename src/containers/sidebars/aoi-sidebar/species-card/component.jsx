@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
@@ -7,8 +7,10 @@ import {
   roundGlobalRange,
 } from 'utils/data-formatting-utils';
 
+import SpeciesAnalysisModal from 'containers/modals/species-analysis-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
+import Button from 'components/button';
 import SpeciesBar from 'components/charts/species-bar';
 import Dropdown from 'components/dropdown';
 
@@ -24,6 +26,8 @@ import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
+
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 function Component({
   area,
@@ -46,7 +50,8 @@ function Component({
   contextualData,
 }) {
   const { speciesNumbers } = contextualData;
-
+  const [isDetailedAnalysisModalOpen, handleDetailedAnalysisModalToggle] =
+    useState(false);
   const t = useT();
   const locale = useLocale();
   const sidebarCardsConfig = useMemo(
@@ -220,6 +225,22 @@ function Component({
               <p className={styles.iucnStatus}>
                 {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}
               </p>
+              {REACT_APP_FEATURE_AOI_CHANGES && (
+                <div>
+                  <Button
+                    type="rectangular-secondary"
+                    handleClick={() => handleDetailedAnalysisModalToggle(true)}
+                    label={t('DETAILED ANALYSIS')}
+                  />
+                  <SpeciesAnalysisModal
+                    isOpen={isDetailedAnalysisModalOpen}
+                    handleModalClose={() =>
+                      handleDetailedAnalysisModalToggle(false)
+                    }
+                    contextualData={contextualData}
+                  />
+                </div>
+              )}
             </section>
           )}
         </div>
