@@ -19,25 +19,17 @@ export const remBreakpoints = {
 };
 
 export const useMobile = () => {
-  const match = () => {
-    if (!window.matchMedia && !window.screen) {
-      return false;
-    }
-    return (
+  const [value, set] = useState(false);
+
+  useEffect(() => {
+    if (
       (REACT_APP_FEATURE_MOBILE &&
         window.screen.width < pixelBreakpoints.mobile) ||
       (REACT_APP_FEATURE_MOBILE &&
         window.screen.height < pixelBreakpoints.mobile &&
         window.matchMedia('(orientation: landscape)').matches)
-    );
-  };
-
-  const [value, set] = useState(match);
-
-  useEffect(() => {
-    const handler = () => set(match);
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
+    )
+      set(true);
   });
 
   return value;
