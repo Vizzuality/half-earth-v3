@@ -49,19 +49,19 @@ function NRCVertebrates({
   const SPECIES_COMPOSITION = [
     {
       specie: 'amphibians',
-      endemic: endemic_amphibians,
+      endemic: land && endemic_amphibians,
       total: amphibians,
       icon: AmphibiansIcon,
     },
     {
       specie: 'birds',
-      endemic: endemic_birds,
+      endemic: land && endemic_birds,
       total: birds,
       icon: BirdsIcon,
     },
     {
       specie: 'reptiles',
-      endemic: endemic_reptiles,
+      endemic: land && endemic_reptiles,
       total: reptiles,
       icon: ReptilesIcon,
     },
@@ -83,29 +83,35 @@ function NRCVertebrates({
       })}
     >
       <div className={styles.endemicCardsContainer}>
-        {SPECIES_COMPOSITION.map((s) => (
-          <div className={styles.endemicCard} key={s.specie}>
-            <s.icon className={styles.endemicIcon} />
-            <p>
-              <T
-                _str="{bold} {specie} of {totalNumber}"
-                endemicNumber={getLocaleNumber(s.endemic, locale)}
-                specie={getSpecieText(s.specie)}
-                totalNumber={getLocaleNumber(s.total, locale)}
-                bold={
-                  <>
-                    <b>
-                      <T
-                        _str={`${getLocaleNumber(s.endemic, locale)} endemic`}
-                      />
-                    </b>
-                    <br />
-                  </>
-                }
-              />
-            </p>
-          </div>
-        ))}
+        {SPECIES_COMPOSITION.map(
+          (s) =>
+            s.endemic !== false && (
+              <div className={styles.endemicCard} key={s.specie}>
+                <s.icon className={styles.endemicIcon} />
+                <p>
+                  <T
+                    _str="{bold} {specie} of {totalNumber}"
+                    endemicNumber={getLocaleNumber(s.endemic, locale)}
+                    specie={getSpecieText(s.specie)}
+                    totalNumber={getLocaleNumber(s.total, locale)}
+                    bold={
+                      <>
+                        <b>
+                          <T
+                            _str={`${getLocaleNumber(
+                              s.endemic,
+                              locale
+                            )} endemic`}
+                          />
+                        </b>
+                        <br />
+                      </>
+                    }
+                  />
+                </p>
+              </div>
+            )
+        )}
       </div>
       {!isMobile && (
         <Button
