@@ -120,7 +120,6 @@ function NrcContent({
         [styles.nrcContent]: true,
         [styles.nrcContentVertebrates]:
           NRCSidebarView === NRCSidebar.vertebrates && countryData,
-        [styles.nrcContentShrunken]: fullRanking,
         [styles.mobile]: isMobile,
       })}
     >
