@@ -27,7 +27,6 @@ function IndicatorCard({
           <Tooltip
             content={<div className={styles.tooltip}>{tooltipInfo}</div>}
             position="top"
-            arrow
           >
             <InfoIcon className={styles.icon} />
           </Tooltip>
