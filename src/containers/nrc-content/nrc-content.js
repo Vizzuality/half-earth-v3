@@ -4,7 +4,7 @@ import countryDataActions from 'redux_modules/country-data';
 import metadataActions from 'redux_modules/metadata';
 import uiActions from 'redux_modules/ui';
 
-import { NATIONAL_REPORT_CARD_LANDING, AREA_OF_INTEREST } from 'router';
+import { NATIONAL_REPORT_CARD_LANDING, AREA_OF_INTEREST, routes } from 'router';
 
 import { useLocale } from '@transifex/react';
 
@@ -62,14 +62,14 @@ function NrcContainer(props) {
       });
   };
 
-  const goToAnalyzeAreas = () => {
-    browsePage({
-      type: AREA_OF_INTEREST,
-      payload: { id: countryId },
-      query: {
-        precalculatedLayerSlug: PRECALCULATED_LAYERS_SLUG.national,
-      },
-    });
+  const openAnalyzeArea = () => {
+    const aoiPath = routes[AREA_OF_INTEREST].path.replace(':id?', countryId);
+    const aoiUrl = new URL(`${window.location.origin}${aoiPath}`);
+    aoiUrl.searchParams.append(
+      'precalculatedLayerSlug',
+      PRECALCULATED_LAYERS_SLUG.national
+    );
+    window.open(aoiUrl);
   };
 
   const handlePrintReport = () => {
@@ -93,7 +93,7 @@ function NrcContainer(props) {
       {...props}
       challengesInfo={challengesInfo}
       countryName={localizedCountryName}
-      goToAnalyzeAreas={goToAnalyzeAreas}
+      openAnalyzeArea={openAnalyzeArea}
       handleClose={handleClose}
       handlePrintReport={handlePrintReport}
       setNRCSidebarView={setNRCSidebarView}

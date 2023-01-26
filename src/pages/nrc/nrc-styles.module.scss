@@ -91,12 +91,14 @@
 
   .fullRankingButton {
     width: 24px;
-    height: 160px;
+    min-height: 160px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     background-color: $black;
     color: $brand-color-main;
     padding-bottom: 8px;
+    border-radius: 0 6px 6px 0;
 
     span {
       letter-spacing: 0.2em;
