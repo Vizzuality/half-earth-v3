@@ -29,15 +29,15 @@ function NrcLandingMobileComponent({
   cardsContent,
   countryISO,
   countryName,
+  currentCard,
   handleStepBack,
   isGlobeUpdating,
   onMapLoad,
   sceneMode,
-  selectedLayers,
   sceneSettings,
-  view,
-  currentCard,
+  selectedLayers,
   setCurrentCard,
+  view,
 }) {
   const t = useT();
 

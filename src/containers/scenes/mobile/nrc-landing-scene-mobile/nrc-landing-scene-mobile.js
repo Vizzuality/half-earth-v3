@@ -88,10 +88,10 @@ function NrcLandingSceneMobileContainer(props) {
     <Component
       {...props}
       cardsContent={cardsContentWithSources}
+      currentCard={currentCard}
       handleStepBack={handleStepBack}
       sceneSettings={updatedSceneSettings}
       selectedLayers={selectedLayers}
-      currentCard={currentCard}
       setCurrentCard={setCurrentCard}
     />
   );

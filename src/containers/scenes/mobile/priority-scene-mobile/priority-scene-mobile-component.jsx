@@ -24,41 +24,19 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const variants = {
-  enter: (direction) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-};
-
 function PriorityMobileComponent({
   activeLayers,
   cardsContent,
   countryISO,
   countryName,
-  direction,
+  currentCard,
   handleStepBack,
   isGlobeUpdating,
   onMapLoad,
-  page,
   sceneMode,
   sceneSettings,
-  setPage,
   selectedLayers,
+  setCurrentCard,
   view,
 }) {
   const t = useT();
@@ -106,10 +84,8 @@ function PriorityMobileComponent({
       {!countryISO && (
         <Cards
           cardsContent={cardsContent}
-          direction={direction}
-          page={page}
-          setPage={setPage}
-          variants={variants}
+          setCurrent={setCurrentCard}
+          current={currentCard}
         />
       )}
 
