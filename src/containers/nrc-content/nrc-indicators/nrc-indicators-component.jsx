@@ -9,12 +9,14 @@ import cx from 'classnames';
 
 import IndicatorCard from 'containers/nrc-content/nrc-indicators//indicator-card';
 
+import { useMobile } from 'constants/responsive';
+
 import COLORS from 'styles/settings';
 
 import styles from './nrc-indicators-styles.module.scss';
 import { getBarStyles } from './nrc-indicators-utils';
 
-function Indicators({ countryData, landMarineSelection, isShrunken }) {
+function Indicators({ countryData, landMarineSelection }) {
   const t = useT();
   const locale = useLocale();
   const {
@@ -49,10 +51,12 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
   const hm = land ? hm_ter : hm_mar;
 
   const isNumberOr0 = (value) => value === 0 || !!value;
+  const isMobile = useMobile();
+
   return (
     <div
       className={cx(styles.indicatorCardsContainer, {
-        [styles.shrunken]: isShrunken,
+        [styles.mobile]: isMobile,
       })}
     >
       <IndicatorCard
