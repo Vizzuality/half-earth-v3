@@ -9,7 +9,7 @@ import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
-import Cards from 'components/mobile-cards-test';
+import Cards from 'components/mobile-cards';
 import MobileSearchLocation from 'components/mobile-search-location';
 import Scene from 'components/scene';
 
@@ -24,39 +24,15 @@ const LabelsLayer = loadable(() => import('containers/layers/labels-layer'));
 
 const { REACT_APP_ARGISJS_API_VERSION: API_VERSION } = process.env;
 
-const variants = {
-  enter: (direction) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-};
-
 function NrcLandingMobileComponent({
   activeLayers,
   cardsContent,
   countryISO,
   countryName,
-  direction,
   handleStepBack,
   isGlobeUpdating,
   onMapLoad,
-  page,
   sceneMode,
-  setPage,
   selectedLayers,
   sceneSettings,
   view,
@@ -103,15 +79,7 @@ function NrcLandingMobileComponent({
 
       <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
-      {!countryISO && (
-        <Cards
-          cardsContent={cardsContent}
-          direction={direction}
-          page={page}
-          setPage={setPage}
-          variants={variants}
-        />
-      )}
+      {!countryISO && <Cards cardsContent={cardsContent} />}
 
       <LabelsLayer activeLayers={activeLayers} />
     </Scene>
