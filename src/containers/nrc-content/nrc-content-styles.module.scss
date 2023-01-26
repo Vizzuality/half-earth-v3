@@ -92,6 +92,11 @@ $content-height-mobile: 100svh;
 
   .actionButton {
     margin-right: 8px;
+    color: $white;
+
+    svg {
+      fill: currentColor;
+    }
   }
 
   .sourceText {

@@ -18,10 +18,13 @@
     white-space: nowrap;
     padding: 5px 15px;
     width: auto;
+    color: $dark-text;
+
     svg {
-      stroke: $dark-text;
+      fill: currentColor;
       margin-right: 10px;
     }
+
     &:hover {
       background-color: $brand-color-main;
     }
