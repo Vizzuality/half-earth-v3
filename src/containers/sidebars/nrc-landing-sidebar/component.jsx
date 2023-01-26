@@ -24,6 +24,8 @@ import { SEARCH_TYPES } from 'constants/search-location-constants';
 
 import styles from './styles.module.scss';
 
+const { REACT_APP_FEATURE_NEW_NRC_PAGE } = process.env;
+
 function NRCLandingSidebar({
   activeLayers,
   className,
@@ -93,18 +95,48 @@ function NRCLandingSidebar({
       {...onboardingOnClick}
     >
       <p className={styles.title}>{t('National Report Cards')}</p>
-      <p className={styles.body}>
-        {t(`The Species Protection Index (SPI) reflects the average amount of
-        area-based conservation targets that have been met for all endemic species within the
-        country each year, weighted by a country's stewardship of those species (the
-        proportion of the species population present in that country).
-        Strategic and targeted protection of species habitat will generally result in
-        an increase in a country's SPI, but once a country meets an individual species'
-        target, additional habitat protection for that species will not increase the
-        country's SPI. Likewise, any protection of land that does not also protect species
-        habitat will not increase a country's SPI.
-        `)}
-      </p>
+      <div className={styles.body}>
+        {REACT_APP_FEATURE_NEW_NRC_PAGE ? (
+          <>
+            <p>
+              {t(
+                `The Half-Earth Project calls to protect half of the land and sea to safeguard the bulk of Earth's biodiversity and preserve the bulk of species.`
+              )}
+            </p>
+            <p>
+              {t(
+                `To achieve this ambitious goal, every nation on earth has an essential role. We’re using a metric we’ve developed, the {spiText}. The SPI provides an estimation of how well each country is meeting conservation targets and is the basis for a National Report Card on every country in the world.`,
+                {
+                  spiText: (
+                    <span className={styles.bold}>
+                      Species Protection Index or SPI
+                    </span>
+                  ),
+                }
+              )}
+            </p>
+            <p>
+              {t(
+                `Report cards make it possible to see the varied conservation opportunities and challenges faced by each country in the world.`
+              )}
+            </p>
+          </>
+        ) : (
+          <p>
+            {t(`The Species Protection Index (SPI) reflects the average amount of
+            area-based conservation targets that have been met for all endemic
+            species within the country each year, weighted by a country's
+            stewardship of those species (the proportion of the species
+            population present in that country). Strategic and targeted
+            protection of species habitat will generally result in an increase
+            in a country's SPI, but once a country meets an individual species'
+            target, additional habitat protection for that species will not
+            increase the country's SPI. Likewise, any protection of land that
+            does not also protect species habitat will not increase a country's
+            SPI. `)}{' '}
+          </p>
+        )}
+      </div>
       <p className={styles.legendTitle}>
         {t('National Species Protection Index')}
       </p>
