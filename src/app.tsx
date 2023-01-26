@@ -18,14 +18,14 @@ import MobileDisclaimer from './components/mobile-disclaimer-modal';
 const Landing = loadable(() => import('pages/landing'));
 const LandingMobile = loadable(() => import('pages/mobile/landing-mobile'));
 const DataGlobe = loadable(() => import('pages/data-globe'));
-const NationalReportCardLandingMobile = loadable(() =>
-  import('pages/mobile/nrc-landing-mobile')
+const NationalReportCardLandingMobile = loadable(
+  () => import('pages/mobile/nrc-landing-mobile')
 );
-const NationalReportCardMobile = loadable(() =>
-  import('pages/mobile/nrc-mobile')
+const NationalReportCardMobile = loadable(
+  () => import('pages/mobile/nrc-mobile')
 );
-const PriorityMobileGlobe = loadable(() =>
-  import('pages/mobile/priority-mobile')
+const PriorityMobileGlobe = loadable(
+  () => import('pages/mobile/priority-mobile')
 );
 const FeaturedGlobe = loadable(() => import('pages/featured-globe'));
 const NationalReportCardLegacy = loadable(() => import('pages/nrc-legacy'));
