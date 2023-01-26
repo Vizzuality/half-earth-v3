@@ -73,8 +73,6 @@ $content-height-mobile: 100svh;
   }
 
   .countryDescriptionContainer {
-    column-count: 2;
-
     padding: $local-sidebar-top-margin $content-padding $local-sidebar-top-margin 0;
 
     .countryDescription {
@@ -125,13 +123,6 @@ $content-height-mobile: 100svh;
   .flag {
     width: 30px;
     position: relative;
-  }
-
-
-  &.nrcContentShrunken {
-    .countryDescriptionContainer {
-      column-count: 1;
-    }
   }
 
   .titleTooltip {

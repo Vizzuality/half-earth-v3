@@ -74,6 +74,7 @@ function NationalReportPdf({
       : protection_needed_mar;
     const hm_vh = land ? hm_vh_ter : hm_vh_mar;
     const hm = land ? hm_ter : hm_mar;
+    const isNumberOr0 = (value) => value === 0 || !!value;
 
     return (
       <section className={styles.indicatorCardsContainer}>
@@ -82,11 +83,11 @@ function NationalReportPdf({
           indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
           description={
             <p>
-              <T
-                _str="{landMarineSelection} Species Protection Index (SPI)"
-                _comment="Land Species Protection Index (SPI)"
-                landMarineSelection={land ? 'Land' : 'Marine'}
-              />
+              {land ? (
+                <T _str="Land Species Protection Index (SPI)" />
+              ) : (
+                <T _str="Marine Species Protection Index (SPI)" />
+              )}
             </p>
           }
         >
@@ -109,20 +110,35 @@ function NationalReportPdf({
           }
           description={
             <p>
-              <T
-                _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
-                _comment="8 are endemic land {vertebrate species of a total of} 10 land vertebrates"
-                bold={
-                  <b>
-                    <T
-                      _str="are endemic"
-                      _comment="8 {are endemic} land vertebrate species of a total of 10 land vertebrates"
-                    />
-                  </b>
-                }
-                landMarineSelection={land ? 'land' : 'marine'}
-                totalEndemicNumber={getLocaleNumber(nspecies, locale)}
-              />
+              {land ? (
+                <T
+                  _str="{bold} of a total of {totalEndemicNumber} land vertebrates"
+                  _comment="8 are endemic land vertebrate species (of a total of) 10 land vertebrates"
+                  bold={
+                    <b>
+                      <T
+                        _str="are endemic vertebrate species"
+                        _comment="8 {are endemic vertebrate species} land vertebrate species of a total of 10 land vertebrates"
+                      />
+                    </b>
+                  }
+                  totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                />
+              ) : (
+                <T
+                  _str="{bold} of a total of {totalEndemicNumber} marine vertebrates"
+                  _comment="8 are endemic marine vertebrate species (of a total of) 10 marine vertebrates"
+                  bold={
+                    <b>
+                      <T
+                        _str="are endemic vertebrate species"
+                        _comment="8 {are endemic vertebrate species} land vertebrate species of a total of 10 land vertebrates"
+                      />
+                    </b>
+                  }
+                  totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                />
+              )}
             </p>
           }
         >
@@ -143,20 +159,31 @@ function NationalReportPdf({
           indicator={prop_protected && `${Math.round(prop_protected)}%`}
           description={
             <p>
-              <T
-                _str="of {landOrMarineIsProtected} and {number}% needs protection"
-                _comment="10% (of) land is protected (and) 2% (needs protection)"
-                landOrMarineIsProtected={
-                  <b>
-                    <T
-                      _str="{landMarineSelection} is protected"
-                      _comment="10% of land (is protected) and 2% needs protection"
-                      landMarineSelection={land ? 'land' : 'marine'}
-                    />
-                  </b>
-                }
-                number={getLocaleNumber(protection_needed, locale)}
-              />
+              {isNumberOr0(protection_needed) && (
+                <T
+                  _str="of {bold} and {needsProtectionNumber}% needs protection"
+                  _comment="10% (of) land is protected (and) 2% (needs protection)"
+                  bold={
+                    <b>
+                      {land ? (
+                        <T
+                          _str="land is protected"
+                          _comment="10% of {land is protected} and 2% needs protection"
+                        />
+                      ) : (
+                        <T
+                          _str="marine is protected"
+                          _comment="10% of {land is protected} and 2% needs protection"
+                        />
+                      )}
+                    </b>
+                  }
+                  needsProtectionNumber={getLocaleNumber(
+                    protection_needed,
+                    locale
+                  )}
+                />
+              )}
             </p>
           }
         >
@@ -179,17 +206,35 @@ function NationalReportPdf({
           indicator={`${Math.round(hm_vh)}%`}
           description={
             <p>
-              <T
-                _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
-                _comment="10% (of) land (has very) high human modification (and) 2% (has some modification)"
-                bold={
-                  <b>
-                    <T _str="high human modification" />
-                  </b>
-                }
-                landMarineSelection={land ? 'land' : 'marine'}
-                someModificationNumber={Math.round(hm)}
-              />
+              {land ? (
+                <T
+                  _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } land has {very high human modification} and 10% has some modification"
+                  veryHighHumanModification={
+                    <b>
+                      <T
+                        _str="very high human modification"
+                        _comment="27% of land has {very high human modification} and 10% has some modification"
+                      />
+                    </b>
+                  }
+                  someModificationNumber={Math.round(hm)}
+                />
+              ) : (
+                <T
+                  _str="of marine has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } marine has {very high human modification} and 10% has some modification"
+                  veryHighHumanModification={
+                    <b>
+                      <T
+                        _str="very high human modification"
+                        _comment="27% of land has {very high human modification} and 10% has some modification"
+                      />
+                    </b>
+                  }
+                  someModificationNumber={Math.round(hm)}
+                />
+              )}
             </p>
           }
         >
@@ -219,11 +264,11 @@ function NationalReportPdf({
         </div>
         <div>
           <T
-            _str="{endemic} amphibians of {number}"
+            _str="{endemic} of {number}"
             _comment="10 amphibians of 200"
             endemic={
               <div className={styles.endemic}>
-                {amphibiansEndemic} {t('endemic')}
+                {amphibiansEndemic} {t('endemic amphibians')}
               </div>
             }
             number={amphibians}
@@ -236,11 +281,11 @@ function NationalReportPdf({
         </div>
         <div>
           <T
-            _str="{endemic} birds of {number}"
+            _str="{endemic} of {number}"
             _comment="10 birds of 200"
             endemic={
               <div className={styles.endemic}>
-                {birdsEndemic} {t('endemic')}
+                {birdsEndemic} {t('endemic birds')}
               </div>
             }
             number={birds}
@@ -253,11 +298,11 @@ function NationalReportPdf({
         </div>
         <div>
           <T
-            _str="{endemic} reptiles of {number}"
+            _str="{endemic} of {number}"
             _comment="10 reptiles of 200"
             endemic={
               <div className={styles.endemic}>
-                {reptilesEndemic} {t('endemic')}
+                {reptilesEndemic} {t('endemic reptiles')}
               </div>
             }
             number={reptiles}
@@ -270,11 +315,11 @@ function NationalReportPdf({
         </div>
         <div>
           <T
-            _str="{endemic} mammals of {number}"
+            _str="{endemic} of {number}"
             _comment="10 mammals of 200"
             endemic={
               <div className={styles.endemic}>
-                {mammalsEndemic} {t('endemic')}
+                {mammalsEndemic} {t('endemic mammals')}
               </div>
             }
             number={mammals}
@@ -289,9 +334,9 @@ function NationalReportPdf({
       <div className={styles.chartHeader}>
         <p className={styles.sectionTitle}>
           <T
-            _str="Trend of the {landMarineSelection}"
+            _str="Trend of the {landMarineSPI}"
             _comment="{Trend of the} land SPI"
-            landMarineSelection={selectedLandMarineOption.label}
+            landMarineSPI={selectedLandMarineOption.label}
           />
         </p>
       </div>
@@ -330,9 +375,12 @@ function NationalReportPdf({
           <span className={styles.countryName}>{translatedCountryName}</span>
         </div>
         <div className={styles.subtitle}>
-          {t(
-            `Summary of the National Report Card of ${translatedCountryName} regarding the calculations of the ${selectedLandMarineOption.label}.`
-          )}
+          <T
+            _str="Summary of the National Report Card of {translatedCountryName} regarding the calculations of the {landMarineLabel}."
+            _comment="Summary of the National Report Card of Spain regarding the calculations of the land SPI."
+            landMarineLabel={selectedLandMarineOption.label}
+            translatedCountryName={translatedCountryName}
+          />
         </div>
       </section>
       <HalfEarthLogo

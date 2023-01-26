@@ -36,7 +36,7 @@ function Component({
                 ),
               }}
             >
-              {`${t('Source: ')}${metaDataSources}`}
+              {`${t('Source:')} ${metaDataSources}`}
             </ReactMarkdown>
           )}
           {isJSX && (
@@ -49,7 +49,7 @@ function Component({
       )}
       {sources && (
         <span className={styles.sourcesWrapper}>
-          {t('Source: ')}
+          {t('Source:')}{' '}
           {sources.map((source, index) => (
             <>
               {isMultiSource && index === lastSource && <span> and </span>}

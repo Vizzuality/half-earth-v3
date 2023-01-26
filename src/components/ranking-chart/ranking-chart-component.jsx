@@ -17,7 +17,7 @@ import {
   SORT_GROUPS_SLUGS,
 } from 'constants/country-mode-constants';
 
-import { LEGEND_ITEMS } from './ranking-chart-constants';
+import { getLegendItems } from './ranking-chart-constants';
 import styles from './ranking-chart-styles.module.scss';
 
 const categories = Object.keys(SORT_GROUPS_SLUGS);
@@ -38,7 +38,7 @@ function RankingChart({
   const t = useT();
   const locale = useLocale();
   const [hasScrolled, changeHasScrolled] = useState(false);
-
+  const LEGEND_ITEMS = useMemo(() => getLegendItems(), [locale]);
   const rankingLegend = useMemo(() => getRankingLegend(), [locale]);
   const RANKING_HEADER_LABELS = {
     [SORT_GROUPS_SLUGS.species]: t('species'),

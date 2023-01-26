@@ -120,7 +120,6 @@ function NrcContent({
         [styles.nrcContent]: true,
         [styles.nrcContentVertebrates]:
           NRCSidebarView === NRCSidebar.vertebrates && countryData,
-        [styles.nrcContentShrunken]: fullRanking,
         [styles.mobile]: isMobile,
       })}
     >
@@ -222,7 +221,7 @@ function NrcContent({
 
               {!isMobile && (
                 <div className={styles.sourceText}>
-                  <p>{t('Source: ')}</p>
+                  <p>{t('Source:')}</p>{' '}
                   <ReactMarkdown
                     key={challengesSources}
                     source={challengesSources}
