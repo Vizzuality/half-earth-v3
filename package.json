@@ -24,6 +24,7 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-react": "^7.30.1",
     "esri-loader": "^3.7.0",
+    "framer": "^2.2.1",
     "framer-motion": "6.5.1",
     "he-components": "github:vizzuality/half-earth-components#0.2.1",
     "localforage": "^1.10.0",

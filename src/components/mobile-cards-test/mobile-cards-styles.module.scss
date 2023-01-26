@@ -1,0 +1,162 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+@import 'styles/ui.module';
+
+.container {
+  bottom: 5svh;
+  display: flex;
+  height: 40svh;
+  left: 3%;
+  position: absolute;
+  width: 94vw;
+  z-index: 10;
+
+    @media (orientation: landscape) {
+      bottom: 12px;
+      height: 68%;
+      right: 3%;
+      left: auto;
+      width: 45vw;
+    }
+
+  .card {
+    border: 1px solid $elephant;
+    color: $white;
+    min-width: 94vw;
+    padding: 24px 16px;
+    background: rgba($navy-he, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include backdropBlur();
+
+    @media (orientation: landscape) {
+      min-width: 45vw;
+
+      p {
+        font-size: 12px;
+        div {
+          font-size: 12px;
+        }
+      }
+    }
+
+    h5 {
+      @extend %display1;
+      font-size: 16px;
+      line-height: 20px;
+      margin: 0;
+    }
+
+    p {
+      @extend %bodyText;
+      @media (orientation: landscape) {
+        margin-top: 4px;
+      }
+    }
+
+    .withLegend {
+      display: flex;
+    }
+
+    .title {
+      margin-bottom: 8px;
+      @media (orientation: landscape) {
+        margin-bottom: 0;
+       }
+    }
+
+    .description {
+      @extend %bodyText;
+      margin: 2px 0;
+      @media (orientation: landscape) {
+        margin: 0;
+      }
+    }
+
+    .legendContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      .legendTitle,
+      .legend {
+        color: $white;
+        margin: 0;
+      }
+
+      .legendTitle {
+        @extend %bodyText;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+
+      .singleLegend {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin: 3.5px 8px 0 0;
+        border: 1px solid $white;
+        border-radius: 2px;
+      }
+
+      .source {
+        @extend %annotation;
+        color: $grey-text;
+        font-size: $font-size-xxs;
+        max-width: 90vw;
+        margin: 2px 0 0 0;
+        line-height: 6px;
+
+
+        .sourceIntro {
+          display: inline;
+        }
+
+        a {
+          color: $grey-text;
+        }
+
+        p {
+          display: inline;
+          margin-bottom: 0;
+          font-size: $font-size-xxs;
+          line-height: 1rem;
+        }
+      }
+    }
+
+    .indicatorBg {
+      @include backdropBlur();
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      position: absolute;
+      height: 9px;
+      width: 34px;
+      z-index: 2;
+      top: -10px;
+    }
+  }
+
+  .progress {
+    @extend %bodyText;
+    border: 1px solid $elephant;
+    border-radius: 2px;
+    color: $white;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    left: 16px;
+    margin: 0;
+    position: absolute;
+    top: -10px;
+    width: 34px;
+    z-index: 11;
+
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+}

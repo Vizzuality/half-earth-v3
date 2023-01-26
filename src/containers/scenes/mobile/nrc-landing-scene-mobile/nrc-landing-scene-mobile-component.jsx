@@ -9,7 +9,7 @@ import CountryLabelsLayer from 'containers/layers/country-labels-layer';
 import ArcgisLayerManager from 'containers/managers/arcgis-layer-manager';
 
 import CountryEntryTooltip from 'components/country-entry-tooltip';
-import Cards from 'components/mobile-cards';
+import Cards from 'components/mobile-cards-test';
 import MobileSearchLocation from 'components/mobile-search-location';
 import Scene from 'components/scene';
 
