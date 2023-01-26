@@ -22,6 +22,7 @@ function CardsComponent({ cardsContent }) {
         center
         currentPage={current}
         onChangePage={(e) => setCurrent(e)}
+        className={styles.cardPage}
       >
         {cardsContent.map((card, index) => {
           const { title, description, legendItem, legendColor, legendTitle } =
