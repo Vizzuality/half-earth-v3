@@ -9,11 +9,13 @@ import {
 
 import orderBy from 'lodash/orderBy';
 
-// constants
+import EsriFeatureService from 'services/esri-feature-service';
 import MolService from 'services/mol';
 
 import { getSpeciesFilters } from 'constants/analyze-areas-constants';
 import { getIUCNList } from 'constants/iucn-list';
+import { AOI_SPS_TABLE } from 'constants/layers-slugs.js';
+import { LAYERS_URLS } from 'constants/layers-urls';
 
 import DEFAULT_PLACEHOLDER_IMAGE from 'images/no-bird.png';
 
@@ -52,6 +54,8 @@ function SpeciesCardContainer(props) {
     speciesToDisplay[selectedSpeciesIndex]
   );
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null);
+  const [SPSData, setSPSData] = useState(null);
+
   // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
@@ -136,6 +140,20 @@ function SpeciesCardContainer(props) {
         : selectedSpeciesIndex - 1
     );
   };
+
+  useEffect(() => {
+    EsriFeatureService.getFeatures({
+      url: LAYERS_URLS[AOI_SPS_TABLE],
+      returnGeometry: false,
+    }).then((results) => {
+      const { attributes } = results[0];
+      const amphibians = JSON.parse(attributes.amphibians);
+      const birds = JSON.parse(attributes.birds);
+      const mammals = JSON.parse(attributes.mammals);
+      const reptiles = JSON.parse(attributes.reptiles);
+      setSPSData({ amphibians, birds, mammals, reptiles });
+    });
+  }, []);
 
   useEffect(() => {
     if (
@@ -280,6 +298,16 @@ function SpeciesCardContainer(props) {
 
       MolService.getSpecies(selectedSpecies.name, language).then((results) => {
         if (results.length > 0) {
+          const getCategory = () => {
+            const categories = ['mammals', 'birds', 'reptiles', 'amphibians'];
+            const currentCategory = categories.find((cat) =>
+              selectedSpecies.category.includes(cat)
+            );
+
+            return currentCategory;
+          };
+          const mainCategory = getCategory();
+
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
@@ -288,8 +316,8 @@ function SpeciesCardContainer(props) {
               : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
-            SPS_global: 65,
-            SPS_aoi: 49,
+            SPS_global: SPSData[mainCategory][0].SPS_global || 0,
+            SPS_aoi: SPSData[mainCategory][0].SPS_aoi || 0,
           });
           if (results[0].image) {
             setPlaceholderText(null);
@@ -301,7 +329,7 @@ function SpeciesCardContainer(props) {
         }
       });
     }
-  }, [selectedSpecies, locale]);
+  }, [selectedSpecies, locale, SPSData]);
 
   return (
     <Component
