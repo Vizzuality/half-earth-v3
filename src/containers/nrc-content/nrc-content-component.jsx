@@ -53,7 +53,7 @@ function NrcContent({
   countryISO,
   countryName,
   fullRanking,
-  goToAnalyzeAreas,
+  openAnalyzeArea,
   handleClose,
   handlePrintReport,
   NRCSidebarView,
@@ -168,7 +168,7 @@ function NrcContent({
                   type="icon-square"
                   Icon={AnalyzeAreasIcon}
                   className={styles.actionButton}
-                  handleClick={goToAnalyzeAreas}
+                  handleClick={openAnalyzeArea}
                   tooltipText={t('Go to analyze area')}
                 />
                 <Button
@@ -230,7 +230,11 @@ function NrcContent({
                 </div>
               )}
               {!isMobile && (
-                <Footer countryId={countryId} isShrunken={fullRanking} />
+                <Footer
+                  countryId={countryId}
+                  isShrunken={fullRanking}
+                  openAnalyzeArea={openAnalyzeArea}
+                />
               )}
             </div>
           )}
