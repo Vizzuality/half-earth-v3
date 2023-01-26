@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import App from './App.jsx';
+import App from './app';
 import * as serviceWorker from './serviceWorker';
-import store from './store';
+import store from './store/store';
 import 'styles/base';
 
 function Root() {
