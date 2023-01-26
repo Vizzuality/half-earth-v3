@@ -32,8 +32,8 @@ function NrcLandingSceneMobileContainer(props) {
   const [updatedSceneSettings, setUpdatedSceneSettings] =
     useState(sceneSettings);
 
-  // const [selectedLayers, setSelectedLayers] = useState(activeLayers);
-
+  const [selectedLayers, setSelectedLayers] = useState(activeLayers);
+  const [currentCard, setCurrentCard] = useState(0);
   const [cardsContentWithSources, setCardsContentWithSources] =
     useState(cardsContent);
 
@@ -73,9 +73,12 @@ function NrcLandingSceneMobileContainer(props) {
     });
   }, [locale, cardsContent]);
 
-  // useEffect(() => {
-  //   setSelectedLayers([...activeLayers, { title: cardsContent[page].layer }]);
-  // }, [page, cardsContent, page]);
+  useEffect(() => {
+    setSelectedLayers([
+      ...activeLayers,
+      { title: cardsContent[currentCard].layer },
+    ]);
+  }, [currentCard, cardsContent]);
 
   const handleStepBack = () => {
     browsePage({ type: LANDING });
@@ -87,8 +90,9 @@ function NrcLandingSceneMobileContainer(props) {
       cardsContent={cardsContentWithSources}
       handleStepBack={handleStepBack}
       sceneSettings={updatedSceneSettings}
-      // selectedLayers={selectedLayers}
-      selectedLayers={activeLayers}
+      selectedLayers={selectedLayers}
+      currentCard={currentCard}
+      setCurrentCard={setCurrentCard}
     />
   );
 }

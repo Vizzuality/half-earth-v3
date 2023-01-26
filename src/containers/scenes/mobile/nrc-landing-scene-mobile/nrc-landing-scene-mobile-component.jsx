@@ -36,6 +36,8 @@ function NrcLandingMobileComponent({
   selectedLayers,
   sceneSettings,
   view,
+  currentCard,
+  setCurrentCard,
 }) {
   const t = useT();
 
@@ -79,7 +81,13 @@ function NrcLandingMobileComponent({
 
       <CountryEntryTooltip countryISO={countryISO} countryName={countryName} />
 
-      {!countryISO && <Cards cardsContent={cardsContent} />}
+      {!countryISO && (
+        <Cards
+          cardsContent={cardsContent}
+          setCurrent={setCurrentCard}
+          current={currentCard}
+        />
+      )}
 
       <LabelsLayer activeLayers={activeLayers} />
     </Scene>

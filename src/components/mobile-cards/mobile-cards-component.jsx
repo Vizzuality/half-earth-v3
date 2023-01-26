@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { T } from '@transifex/react';
 
@@ -10,9 +10,7 @@ import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import styles from './mobile-cards-styles.module.scss';
 
-function CardsComponent({ cardsContent }) {
-  const [current, setCurrent] = useState(0);
-
+function CardsComponent({ cardsContent, setCurrent, current }) {
   return (
     <div className={styles.container}>
       <Page
