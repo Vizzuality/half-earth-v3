@@ -26,8 +26,8 @@ function IndicatorCard({
         <span className={styles.iconWrapper}>
           <Tooltip
             content={<div className={styles.tooltip}>{tooltipInfo}</div>}
-            delay={100}
-            placement="top"
+            position="top"
+            arrow
           >
             <InfoIcon className={styles.icon} />
           </Tooltip>

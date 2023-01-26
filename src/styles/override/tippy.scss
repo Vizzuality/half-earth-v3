@@ -1,0 +1,15 @@
+@import 'styles/settings';
+
+.tippy-arrow {
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: $white transparent transparent transparent;
+  }
+}
