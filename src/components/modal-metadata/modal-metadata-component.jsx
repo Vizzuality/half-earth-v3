@@ -67,7 +67,7 @@ function ModalMetadata({
                   ),
                 }}
               >
-                {`${t('Source: ')}${metadata.source}`}
+                {`${t('Source:')} ${metadata.source}`}
               </ReactMarkdown>
             </div>
           )}

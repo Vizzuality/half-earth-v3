@@ -24,18 +24,16 @@ function Trend({ chartData, countryData, landMarineSelection, isShrunken }) {
       <div className={styles.chartHeader}>
         <p className={styles.chartTitle}>
           <T
-            _str="Trend of the {landMarineSelection} SPI"
-            _comment="{Trend of the} landMarineSelection {SPI}"
-            landMarineSelection={land ? 'Land' : 'Marine'}
+            _str="Trend of the {landMarineSPI}"
+            _comment="{Trend of the} land SPI"
+            landMarineSPI={land ? t('land SPI') : t('marine SPI')}
           />
         </p>
         <span>
           <Tooltip
             content={
               <div className={styles.titleTooltip}>
-                {t(
-                  'Lorem ipsum dolor sit amet consectetur. Tincidunt ipsum habitasse lacus dolor ullamcorper lacinia feugiat. Ut senectus bibendum massa nibh quis magna diam ipsum fermentum. '
-                )}
+                {/* TODO: ADD TREND TOOLTIP */}
               </div>
             }
             delay={100}
@@ -59,7 +57,7 @@ function Trend({ chartData, countryData, landMarineSelection, isShrunken }) {
             stroke: COLORS.white,
             strokeWidth: 0.7,
             strokeDasharray: '3 3 3 3',
-            label: '% Protected areas',
+            label: t('% Protected areas'),
             labelOffset: isShrunken ? 7 : 18,
           }}
           data={land ? landData : marineData}

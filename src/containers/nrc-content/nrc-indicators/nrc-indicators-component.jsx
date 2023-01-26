@@ -59,11 +59,11 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
         indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
         description={
           <p>
-            <T
-              _str="{landMarineSelection} Species Protection Index (SPI)"
-              _comment="Land Species Protection Index (SPI)"
-              landMarineSelection={land ? 'Land' : 'Marine'}
-            />
+            {land ? (
+              <T _str="Land Species Protection Index (SPI)" />
+            ) : (
+              <T _str="Marine Species Protection Index (SPI)" />
+            )}
           </p>
         }
         tooltipInfo={t(
@@ -86,22 +86,36 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
         indicator={total_endemic_ter && getLocaleNumber(total_endemic, locale)}
         description={
           <p>
-            {nspecies && (
-              <T
-                _str="{bold} {landMarineSelection} vertebrate species of a total of {totalEndemicNumber} {landMarineSelection} vertebrates"
-                _comment="8 are endemic land (vertebrate species of a total of) 10 land vertebrates"
-                bold={
-                  <b>
-                    <T
-                      _str="are endemic"
-                      _comment="8 {are endemic} land vertebrate species of a total of 10 land vertebrates"
-                    />
-                  </b>
-                }
-                landMarineSelection={land ? 'land' : 'marine'}
-                totalEndemicNumber={getLocaleNumber(nspecies, locale)}
-              />
-            )}
+            {nspecies &&
+              (land ? (
+                <T
+                  _str="{bold} of a total of {totalEndemicNumber} land vertebrates"
+                  _comment="8 are endemic land vertebrate species (of a total of) 10 land vertebrates"
+                  bold={
+                    <b>
+                      <T
+                        _str="are endemic vertebrate species"
+                        _comment="8 {are endemic vertebrate species} land vertebrate species of a total of 10 land vertebrates"
+                      />
+                    </b>
+                  }
+                  totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                />
+              ) : (
+                <T
+                  _str="{bold} of a total of {totalEndemicNumber} marine vertebrates"
+                  _comment="8 are endemic marine vertebrate species (of a total of) 10 marine vertebrates"
+                  bold={
+                    <b>
+                      <T
+                        _str="are endemic vertebrate species"
+                        _comment="8 {are endemic vertebrate species} land vertebrate species of a total of 10 land vertebrates"
+                      />
+                    </b>
+                  }
+                  totalEndemicNumber={getLocaleNumber(nspecies, locale)}
+                />
+              ))}
           </p>
         }
         tooltipInfo={t(
@@ -129,10 +143,17 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                 _comment="10% (of) land is protected (and) 2% (needs protection)"
                 bold={
                   <b>
-                    <T
-                      _str="{landMarineSelection} is protected"
-                      landMarineSelection={land ? 'land' : 'marine'}
-                    />
+                    {land ? (
+                      <T
+                        _str="land is protected"
+                        _comment="10% of {land is protected} and 2% needs protection"
+                      />
+                    ) : (
+                      <T
+                        _str="marine is protected"
+                        _comment="10% of {land is protected} and 2% needs protection"
+                      />
+                    )}
                   </b>
                 }
                 needsProtectionNumber={getLocaleNumber(
@@ -164,22 +185,36 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
         indicator={hm_vh && `${Math.round(hm_vh)}%`}
         description={
           <p>
-            {hm && (
-              <T
-                _str="of {landMarineSelection} has very {bold} and {someModificationNumber}% has some modification"
-                _comment="27% { of } land {has very} high human modification and 10% has some modification"
-                bold={
-                  <b>
-                    <T
-                      _str="high human modification"
-                      _comment="27% of land has very {high human modification} and 10% has some modification"
-                    />
-                  </b>
-                }
-                landMarineSelection={land ? 'land' : 'marine'}
-                someModificationNumber={Math.round(hm)}
-              />
-            )}
+            {hm &&
+              (land ? (
+                <T
+                  _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } land has {very high human modification} and 10% has some modification"
+                  veryHighHumanModification={
+                    <b>
+                      <T
+                        _str="very high human modification"
+                        _comment="27% of land has {very high human modification} and 10% has some modification"
+                      />
+                    </b>
+                  }
+                  someModificationNumber={Math.round(hm)}
+                />
+              ) : (
+                <T
+                  _str="of marine has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } marine has {very high human modification} and 10% has some modification"
+                  veryHighHumanModification={
+                    <b>
+                      <T
+                        _str="very high human modification"
+                        _comment="27% of land has {very high human modification} and 10% has some modification"
+                      />
+                    </b>
+                  }
+                  someModificationNumber={Math.round(hm)}
+                />
+              ))}
           </p>
         }
         tooltipInfo={t(
