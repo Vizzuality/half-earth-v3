@@ -154,7 +154,7 @@ function SpeciesCardContainer(props) {
       const reptiles = JSON.parse(attributes.reptiles);
       setSPSData({ amphibians, birds, mammals, reptiles });
     });
-  }, []);
+  }, [selectedSpecies]);
 
   useEffect(() => {
     if (
