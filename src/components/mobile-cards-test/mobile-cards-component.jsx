@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { T } from '@transifex/react';
 
@@ -16,30 +16,10 @@ const transition = {
 };
 const range = [-1, 0, 1];
 
-function Page({ index, renderPage, x, onDragEnd }) {
-  const child = useMemo(() => renderPage({ index }), [index, renderPage]);
-
-  return (
-    <motion.div
-      style={{
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        x,
-        left: `${index * 100}%`,
-        right: `${index * 100}%`,
-      }}
-      draggable
-      drag="x"
-      dragElastic={1}
-      onDragEnd={onDragEnd}
-    >
-      {child}
-    </motion.div>
-  );
-}
-
-function VirtualizedPage({ children }) {
+function CardsComponent({
+  cardsContent,
+  /* , setCurrent, current */
+}) {
   const x = useMotionValue(0);
   const containerRef = useRef(null);
   const [index, setIndex] = useState(0);
@@ -71,99 +51,96 @@ function VirtualizedPage({ children }) {
   }, [index]);
 
   return (
-    <motion.div
-      ref={containerRef}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        overflowX: 'hidden',
-      }}
-    >
-      {range.map((rangeValue) => {
-        return (
-          <Page
-            key={rangeValue + index}
-            x={x}
-            onDragEnd={handleEndDrag}
-            index={rangeValue + index}
-            renderPage={children}
-          />
-        );
-      })}
-    </motion.div>
-  );
-}
-
-function CardsComponent({ cardsContent, setCurrent, current }) {
-  console.log({ setCurrent, current });
-  return (
     <div className={styles.container}>
-      <VirtualizedPage>
-        {({ index }) => {
-          const modulo = index % cardsContent.length;
+      <motion.div
+        ref={containerRef}
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          overflowX: 'hidden',
+        }}
+      >
+        {range.map((rangeValue) => {
+          const indexRange = rangeValue + index;
+          const modulo = indexRange % cardsContent.length;
           const cardIndex = modulo < 0 ? cardsContent.length + modulo : modulo;
           const isSingleLegend = !!cardsContent[cardIndex].legendColor;
-
           return (
-            <div className={styles.cardPage}>
-              <div draggable={false} className={styles.card}>
-                <div>
-                  <div className={styles.indicatorBg} />
-                  <p className={styles.progress}>
-                    {cardIndex + 1} / {cardsContent.length}
-                  </p>
-                  <h5 className={styles.title}>
-                    {cardsContent[cardIndex].title}
-                  </h5>
-                  <p className={styles.description}>
-                    {cardsContent[cardIndex].description}
-                  </p>
-                </div>
-                {cardsContent[cardIndex].legendTitle && (
-                  <div className={styles.legendContainer}>
-                    <div
-                      className={cx({
-                        [styles.withLegend]:
-                          cardsContent[cardIndex].legendColor,
-                      })}
-                    >
-                      {isSingleLegend && (
-                        <span
-                          className={styles.singleLegend}
-                          style={{
-                            backgroundColor:
-                              cardsContent[cardIndex].legendColor,
-                          }}
-                        />
-                      )}
-                      <p className={styles.legendTitle}>
-                        {cardsContent[cardIndex].legendTitle}
-                      </p>
-                      {!isSingleLegend && (
-                        <SidebarLegend
-                          className={styles.legend}
-                          legendItem={cardsContent[cardIndex].legendItem}
-                        />
-                      )}
-                    </div>
-                    <p className={styles.source}>
-                      <span className={styles.sourceIntro}>
-                        <T _str="Source:" />{' '}
-                      </span>
-                      <ReactMarkdown
-                        key={`source-${index + 1}`}
-                        source={cardsContent[cardIndex].source}
-                        escapeHtml={false}
-                      />
+            <motion.div
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                x,
+                left: `${indexRange * 100}%`,
+                right: `${indexRange * 100}%`,
+              }}
+              key={rangeValue}
+              draggable
+              drag="x"
+              dragElastic={1}
+              onDragEnd={handleEndDrag}
+            >
+              <div className={styles.cardPage}>
+                <div className={styles.card} draggable={false}>
+                  <div>
+                    <div className={styles.indicatorBg} />
+                    <p className={styles.progress}>
+                      {cardIndex + 1} / {cardsContent.length}
+                    </p>
+                    <h5 className={styles.title}>
+                      {cardsContent[cardIndex].title}
+                    </h5>
+                    <p className={styles.description}>
+                      {cardsContent[cardIndex].description}
                     </p>
                   </div>
-                )}
+                  {cardsContent[cardIndex].legendTitle && (
+                    <div className={styles.legendContainer}>
+                      <div
+                        className={cx({
+                          [styles.withLegend]:
+                            cardsContent[cardIndex].legendColor,
+                        })}
+                      >
+                        {isSingleLegend && (
+                          <span
+                            className={styles.singleLegend}
+                            style={{
+                              backgroundColor:
+                                cardsContent[cardIndex].legendColor,
+                            }}
+                          />
+                        )}
+                        <p className={styles.legendTitle}>
+                          {cardsContent[cardIndex].legendTitle}
+                        </p>
+                        {!isSingleLegend && (
+                          <SidebarLegend
+                            className={styles.legend}
+                            legendItem={cardsContent[cardIndex].legendItem}
+                          />
+                        )}
+                      </div>
+                      <p className={styles.source}>
+                        <span className={styles.sourceIntro}>
+                          <T _str="Source:" />{' '}
+                        </span>
+                        <ReactMarkdown
+                          key={`source-${index + 1}`}
+                          source={cardsContent[cardIndex].source}
+                          escapeHtml={false}
+                        />
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </motion.div>
           );
-        }}
-      </VirtualizedPage>
+        })}
+      </motion.div>
     </div>
   );
 }

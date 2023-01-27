@@ -206,7 +206,7 @@ SearchLocation.propTypes = {
   onOptionSelection: Proptypes.func.isRequired,
   reference: Proptypes.func,
   searchType: Proptypes.oneOf(['simple', 'country', 'full']),
-  theme: Proptypes.oneOf(['light', 'dark']),
+  theme: Proptypes.oneOf(['light', 'dark', 'mobile']),
   width: Proptypes.oneOf(['fluid', 'full']),
 };
 
