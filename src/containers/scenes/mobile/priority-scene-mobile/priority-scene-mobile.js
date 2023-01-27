@@ -28,6 +28,7 @@ function PrioritySceneMobileContainer(props) {
   const isLandscape = useLandscape();
 
   const cardsContent = useMemo(() => getPriorityMobileCards(), [locale]);
+
   const [[page, direction], setPage] = useState([0, 0]);
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
   const [updatedSceneSettings, setUpdatedSceneSettings] =
