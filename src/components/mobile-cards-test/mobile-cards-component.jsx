@@ -16,10 +16,7 @@ const transition = {
 };
 const range = [-1, 0, 1];
 
-function CardsComponent({
-  cardsContent,
-  /* , setCurrent, current */
-}) {
+function CardsComponent({ cardsContent /* setCurrent,  */ /* current */ }) {
   const x = useMotionValue(0);
   const containerRef = useRef(null);
   const [index, setIndex] = useState(0);
@@ -36,9 +33,12 @@ function CardsComponent({
       return;
     }
 
-    if (offset.x > clientWidth / 4) {
+    const validIndexNext = index >= -1 && index <= 1;
+    const validIndexBack = index > 0 && index <= 2;
+
+    if (offset.x > clientWidth / 4 && validIndexBack) {
       setIndex(index - 1);
-    } else if (offset.x < -clientWidth / 4) {
+    } else if (offset.x < -clientWidth / 4 && validIndexNext) {
       setIndex(index + 1);
     } else {
       animate(x, calculateNewX(), transition);
@@ -63,6 +63,7 @@ function CardsComponent({
       >
         {range.map((rangeValue) => {
           const indexRange = rangeValue + index;
+          console.log({ indexRange });
           const modulo = indexRange % cardsContent.length;
           const cardIndex = modulo < 0 ? cardsContent.length + modulo : modulo;
           const isSingleLegend = !!cardsContent[cardIndex].legendColor;
