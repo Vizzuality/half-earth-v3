@@ -109,7 +109,7 @@ function NRCLandingSidebar({
                 {
                   spiText: (
                     <span className={styles.bold}>
-                      Species Protection Index or SPI
+                      {t('Species Protection Index or SPI')}
                     </span>
                   ),
                 }
