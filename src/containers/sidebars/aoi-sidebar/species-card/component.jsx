@@ -7,6 +7,8 @@ import {
   roundGlobalRange,
 } from 'utils/data-formatting-utils';
 
+import Tooltip from '@tippyjs/react';
+
 import SpeciesAnalysisModal from 'containers/modals/species-analysis-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
@@ -23,6 +25,7 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
 import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
+import { ReactComponent as InfoIcon } from 'icons/infoLegend.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
@@ -222,14 +225,33 @@ function Component({
                   capPercentage(individualSpeciesData.presenceInArea)
                 )}
               />
-
-              <div className={styles.SPScontainer}>
-                <p>{t('Global SPS | Area SPS')}</p>
-                <div>
-                  {individualSpeciesData.SPS_global} |{' '}
-                  {individualSpeciesData.SPS_aoi}
-                </div>
-              </div>
+              {REACT_APP_FEATURE_AOI_CHANGES &&
+                individualSpeciesData.SPS_global &&
+                individualSpeciesData.SPS_aoi && (
+                  <div className={styles.SPScontainer}>
+                    <div className={styles.SPStitle}>
+                      <p>{t('Global SPS | Area SPS')}</p>
+                      <span className={styles.iconWrapper}>
+                        <Tooltip
+                          content={
+                            <div className={styles.tooltip}>
+                              {t('More info')}
+                            </div>
+                          }
+                          delay={100}
+                          placement="top"
+                        >
+                          <InfoIcon className={styles.icon} />
+                        </Tooltip>
+                      </span>
+                    </div>
+                    <div>
+                      {' '}
+                      {individualSpeciesData.SPS_global} |{' '}
+                      {individualSpeciesData.SPS_aoi}
+                    </div>
+                  </div>
+                )}
 
               <p className={styles.iucnStatus}>
                 {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}

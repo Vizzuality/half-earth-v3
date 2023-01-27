@@ -221,8 +221,38 @@
 }
 
 .SPScontainer {
-  @extend %bodyText;
+  @extend %annotation;
   align-items: center;
   display: flex;
   justify-content: space-between;
+
+  .SPStitle {
+    align-items: center;
+    display: flex;
+  }
+
+  .iconWrapper {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    margin-left: 9px;
+    border: 1.5px solid $black;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    .icon {
+      stroke: $black;
+      height: 14px;
+      min-width: 14px;
+    }
+  }
+}
+
+.tooltip {
+  @extend %annotation;
+  background-color: $white;
+  border-radius: 2px;
+  box-shadow: 0 2px 10px 0 rgba(23, 27, 48, 0.15);
+  color: $black;
+  padding: 2px 4px;
 }
