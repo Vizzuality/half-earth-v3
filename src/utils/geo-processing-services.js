@@ -268,6 +268,7 @@ export const getPrecalculatedContextualData = ({
     },
     area: data.AREA_KM2,
     areaName: areaName || getAreaName(data),
+    iso: data.GID_0,
     pressures,
     population: data.population_sum,
     ...(includeProtectedAreasList && { ...data.protectedAreasList }),

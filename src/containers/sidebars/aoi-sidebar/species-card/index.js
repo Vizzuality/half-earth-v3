@@ -144,6 +144,7 @@ function SpeciesCardContainer(props) {
   useEffect(() => {
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[AOI_SPS_TABLE],
+      whereClause: `GID_0 = '${contextualData.iso}'`,
       returnGeometry: false,
     }).then((results) => {
       const { attributes } = results[0];
