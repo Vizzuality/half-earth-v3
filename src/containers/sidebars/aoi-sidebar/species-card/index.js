@@ -141,6 +141,7 @@ function SpeciesCardContainer(props) {
     );
   };
 
+  // TODO: ATM it only has data by country. It will be necessary to obtain SPS data for all AOIs
   useEffect(() => {
     EsriFeatureService.getFeatures({
       url: LAYERS_URLS[AOI_SPS_TABLE],
@@ -321,8 +322,8 @@ function SpeciesCardContainer(props) {
               : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
-            SPS_global: currentSPSData.SPS_global || 0,
-            SPS_aoi: currentSPSData.SPS_aoi || 0,
+            SPS_global: currentSPSData.SPS_global || undefined,
+            SPS_aoi: currentSPSData.SPS_aoi || undefined,
           });
           if (results[0].image) {
             setPlaceholderText(null);
