@@ -10,7 +10,6 @@ import {
 
 export const getNRCLandingCards = () => [
   {
-    id: 1,
     title: t('National Report Cards'),
     description: (
       <p>
@@ -20,7 +19,6 @@ export const getNRCLandingCards = () => [
     layer: GLOBAL_SPI_FEATURE_LAYER,
   },
   {
-    id: 2,
     title: t('How is the Land SPI calculated?'),
     description: (
       <p>
@@ -59,7 +57,6 @@ export const getNRCLandingCards = () => [
     legendItem: 'spi',
   },
   {
-    id: 3,
     title: t('How is the Marine SPI calculated?'),
     description: (
       <p>

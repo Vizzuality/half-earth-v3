@@ -23,6 +23,9 @@ function CardsComponent({ cardsContent, setCurrent }) {
 
   const calculateNewX = () => -index * (containerRef.current?.clientWidth || 0);
 
+  const validIndexNext = index >= -1 && index <= 1;
+  const validIndexBack = index > 0 && index <= 2;
+
   const handleEndDrag = (e, dragProps) => {
     const clientWidth = containerRef.current?.clientWidth || 0;
 
@@ -32,9 +35,6 @@ function CardsComponent({ cardsContent, setCurrent }) {
       animate(x, calculateNewX(), transition);
       return;
     }
-
-    const validIndexNext = index >= -1 && index <= 1;
-    const validIndexBack = index > 0 && index <= 2;
 
     if (offset.x > clientWidth / 4 && validIndexBack) {
       setIndex(index - 1);
