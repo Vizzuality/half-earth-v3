@@ -309,6 +309,10 @@ function SpeciesCardContainer(props) {
           };
           const mainCategory = getCategory();
 
+          const currentSPSData = SPSData[mainCategory].find(
+            (obj) => obj.SliceNumber === selectedSpecies.sliceNumber
+          );
+
           setIndividualSpeciesData({
             ...selectedSpecies,
             commonname: results[0].commonname,
@@ -317,8 +321,8 @@ function SpeciesCardContainer(props) {
               : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
-            SPS_global: SPSData[mainCategory][0].SPS_global || 0,
-            SPS_aoi: SPSData[mainCategory][0].SPS_aoi || 0,
+            SPS_global: currentSPSData.SPS_global,
+            SPS_aoi: currentSPSData.SPS_aoi,
           });
           if (results[0].image) {
             setPlaceholderText(null);
