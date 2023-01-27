@@ -13,6 +13,8 @@
 }
 
 .mobile {
-  height: 100svh;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
   background-image: url('./assets/images/landing-bg.png');
 }

@@ -23,6 +23,7 @@
   .cardPage {
     position: relative;
     padding-top: 10px;
+    height: 100%;
     .card {
       border: 1px solid $elephant;
       color: $white;
@@ -31,6 +32,7 @@
       background: rgba($navy-he, 0.5);
       display: flex;
       flex-direction: column;
+      height: 100%;
       justify-content: space-between;
       @include backdropBlur();
 

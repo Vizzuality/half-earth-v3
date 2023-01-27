@@ -12,6 +12,7 @@ import { FUTURE_PLACES_COLOR } from 'constants/protected-areas';
 
 export const getPriorityMobileCards = () => [
   {
+    id: 1,
     title: t('Where are the priority areas for terrestrial vertebrates?'),
     description: (
       <div>
@@ -34,6 +35,7 @@ export const getPriorityMobileCards = () => [
     legendItem: 'biodiversity',
   },
   {
+    id: 2,
     title: t('Where are the priority areas for marine vertebrates?'),
     description: (
       <div>
@@ -56,6 +58,7 @@ export const getPriorityMobileCards = () => [
     legendItem: 'biodiversity',
   },
   {
+    id: 3,
     title: t('Where to protect next?'),
     description: (
       <div>
