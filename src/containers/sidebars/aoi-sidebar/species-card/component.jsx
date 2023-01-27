@@ -225,6 +225,7 @@ function Component({
                   capPercentage(individualSpeciesData.presenceInArea)
                 )}
               />
+
               {REACT_APP_FEATURE_AOI_CHANGES &&
                 individualSpeciesData.SPS_global &&
                 individualSpeciesData.SPS_aoi && (
