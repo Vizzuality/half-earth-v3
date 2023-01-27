@@ -222,6 +222,15 @@ function Component({
                   capPercentage(individualSpeciesData.presenceInArea)
                 )}
               />
+
+              <div className={styles.SPScontainer}>
+                <p>{t('Global SPS | Area SPS')}</p>
+                <div>
+                  {individualSpeciesData.SPS_global} |{' '}
+                  {individualSpeciesData.SPS_aoi}
+                </div>
+              </div>
+
               <p className={styles.iucnStatus}>
                 {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}
               </p>

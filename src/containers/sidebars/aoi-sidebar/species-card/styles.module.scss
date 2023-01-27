@@ -219,3 +219,10 @@
   fill: $warning;
   margin-right: 10px;
 }
+
+.SPScontainer {
+  @extend %bodyText;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}

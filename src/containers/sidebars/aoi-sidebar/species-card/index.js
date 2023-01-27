@@ -321,8 +321,8 @@ function SpeciesCardContainer(props) {
               : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
-            SPS_global: currentSPSData.SPS_global,
-            SPS_aoi: currentSPSData.SPS_aoi,
+            SPS_global: currentSPSData.SPS_global || 0,
+            SPS_aoi: currentSPSData.SPS_aoi || 0,
           });
           if (results[0].image) {
             setPlaceholderText(null);
