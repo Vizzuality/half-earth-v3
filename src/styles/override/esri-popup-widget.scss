@@ -3,8 +3,9 @@
 @import 'styles/typography-extends';
 
 .esri-popup {
+  bottom: auto;
   @media (orientation: landscape) {
-    bottom: 0 !important;
+    bottom: 0;
   }
 }
 
