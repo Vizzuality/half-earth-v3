@@ -18,9 +18,9 @@
 
   .endemicCardsContainer {
     @extend %bodyText;
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
 
     .endemicCard {
@@ -35,6 +35,11 @@
       padding: 1px;
       width: 32px;
       margin-right: 8px;
+    }
+
+    @media #{$tablet-portrait} {
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
     }
   }
   p {
@@ -60,6 +65,11 @@
       .endemicCard {
         margin-right: 5px;
       }
+
+      @media #{$tablet-portrait} {
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+      }
     }
 
     .vertebratesButton {
@@ -72,10 +82,12 @@
 
   &.mobile {
     .endemicCardsContainer {
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
 
       @media (orientation: landscape) {
-        flex-direction: row;
+        grid-template-columns: 1fr 1fr;
       }
     }
 
