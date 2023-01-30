@@ -17,23 +17,23 @@
   .bar {
     position: relative;
     width: 78%;
-    height: 16px;
+    height: 8px;
     border-radius: 4px;
     background-color: $dark-opacity;
   }
 
   .value {
     height: 100%;
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
+    background-color: $elephant;
+    border-radius: 4px;
   }
 
   .annotationBar {
     position: absolute;
-    top: -2px;
+    top: -5.5px;
     width: 2px;
     height: 20px;
-    background-color: $dark-text;
+    background-color: $brand-color-main;
   }
   .annotationTitle {
     @extend %annotation;
@@ -47,16 +47,8 @@
   }
 }
 
-.localRange {
+.dark {
   .value {
-    background-color: rgba(255, 222, 0, 0.6);
-    border: 1px solid rgba(255, 222, 0, 1);
-  }
-}
-
-.globalRange {
-  .value {
-    background-color: rgba(52, 189, 146, 0.6);
-    border: 1px solid rgba(52, 189, 146, 1);
+    background-color: $white;
   }
 }

@@ -220,7 +220,6 @@ function Component({
                     barAnnotationTitle={t('Protection target')}
                   />
                   <SpeciesBar
-                    scale="local"
                     title={t('Portion of global range in this area')}
                     className={styles.speciesBarContainer}
                     percentage={capPercentage(

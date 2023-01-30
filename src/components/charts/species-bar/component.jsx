@@ -13,7 +13,7 @@ function Component({
   percentageLabel,
   barAnnotation,
   barAnnotationTitle,
-  scale = 'global',
+  theme = 'light',
 }) {
   let titlePosition = barAnnotation;
   let updatedBarAnnotation = barAnnotation;
@@ -25,8 +25,7 @@ function Component({
   return (
     <section
       className={cx(className, styles.container, {
-        [styles.globalRange]: scale === 'global',
-        [styles.localRange]: scale === 'local',
+        [styles.dark]: theme === 'dark',
       })}
     >
       <p className={styles.barTitle}>{title}</p>
