@@ -14,7 +14,12 @@ const transition = {
   type: 'spring',
   bounce: 0,
 };
-const range = [-1, 0, 1];
+const DIRECTION = {
+  LEFT: -1,
+  CURRENT: 0,
+  RIGHT: 1,
+};
+const range = [DIRECTION.LEFT, DIRECTION.CURRENT, DIRECTION.RIGHT];
 
 function CardsComponent({ cardsContent, setCurrent }) {
   const x = useMotionValue(0);
@@ -68,6 +73,15 @@ function CardsComponent({ cardsContent, setCurrent }) {
           const modulo = indexRange % cardsContent.length;
           const cardIndex = modulo < 0 ? cardsContent.length + modulo : modulo;
           const isSingleLegend = !!cardsContent[cardIndex].legendColor;
+
+          if (
+            (rangeValue === DIRECTION.LEFT && indexRange < 0) ||
+            (rangeValue === DIRECTION.RIGHT &&
+              indexRange > cardsContent.length - 1)
+          ) {
+            return null;
+          }
+
           return (
             <motion.div
               style={{
