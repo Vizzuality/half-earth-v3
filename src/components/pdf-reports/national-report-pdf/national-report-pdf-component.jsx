@@ -172,8 +172,8 @@ function NationalReportPdf({
                         />
                       ) : (
                         <T
-                          _str="marine is protected"
-                          _comment="10% of {land is protected} and 2% needs protection"
+                          _str="marine area is protected"
+                          _comment="10% of {marine area is protected} and 2% needs protection"
                         />
                       )}
                     </b>
@@ -222,8 +222,8 @@ function NationalReportPdf({
                 />
               ) : (
                 <T
-                  _str="of marine has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } marine has {very high human modification} and 10% has some modification"
+                  _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
                   veryHighHumanModification={
                     <b>
                       <T
