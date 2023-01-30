@@ -1,16 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { useT, useLocale } from '@transifex/react';
 
-import { roundGlobalRange } from 'utils/data-formatting-utils';
+import {
+  roundRangeInArea,
+  roundGlobalRange,
+} from 'utils/data-formatting-utils';
 
-import Tooltip from '@tippyjs/react';
-
-import SpeciesAnalysisModal from 'containers/modals/species-analysis-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
-import Button from 'components/button';
-import SpeciesBar from 'components/charts/species-bar';
+import SpeciesBarLegacy from 'components/charts/species-bar-legacy';
 import Dropdown from 'components/dropdown';
 
 import {
@@ -22,7 +21,6 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
 import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
@@ -48,8 +46,7 @@ function Component({
   contextualData,
 }) {
   const { speciesNumbers } = contextualData;
-  const [isDetailedAnalysisModalOpen, handleDetailedAnalysisModalToggle] =
-    useState(false);
+
   const t = useT();
   const locale = useLocale();
   const sidebarCardsConfig = useMemo(
@@ -205,59 +202,26 @@ function Component({
                 </p>
               </div>
 
-              <SpeciesBar
-                title={t('Portion of global range protected')}
+              <SpeciesBarLegacy
+                title={t('Portion of global range under protection')}
                 className={styles.speciesBarContainer}
                 percentage={individualSpeciesData.globalProtectedPercentage}
                 barAnnotation={individualSpeciesData.protectionTarget}
+                barAnnotationTitle={t('Protection target')}
               />
-              <SpeciesBar
+              <SpeciesBarLegacy
+                scale="local"
                 title={t('Portion of global range in this area')}
                 className={styles.speciesBarContainer}
                 percentage={capPercentage(individualSpeciesData.presenceInArea)}
+                percentageLabel={roundRangeInArea(
+                  capPercentage(individualSpeciesData.presenceInArea)
+                )}
               />
-
-              <div className={styles.SPScontainer}>
-                <div className={styles.SPStitle}>
-                  <p>{t('Global SPS | Area SPS')}</p>
-                  <span className={styles.iconWrapper}>
-                    <Tooltip
-                      className="light"
-                      content={
-                        <div className={styles.tooltip}>{t('More info')}</div>
-                      }
-                      delay={100}
-                      position="bottom"
-                    >
-                      <InfoIcon className={styles.icon} />
-                    </Tooltip>
-                  </span>
-                </div>
-                <div>
-                  {' '}
-                  {individualSpeciesData.SPS_global} |{' '}
-                  {individualSpeciesData.SPS_aoi}
-                </div>
-              </div>
 
               <p className={styles.iucnStatus}>
                 {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}
               </p>
-
-              <div>
-                <Button
-                  type="rectangular-secondary"
-                  handleClick={() => handleDetailedAnalysisModalToggle(true)}
-                  label={t('DETAILED ANALYSIS')}
-                />
-                <SpeciesAnalysisModal
-                  isOpen={isDetailedAnalysisModalOpen}
-                  handleModalClose={() =>
-                    handleDetailedAnalysisModalToggle(false)
-                  }
-                  contextualData={contextualData}
-                />
-              </div>
             </section>
           )}
         </div>

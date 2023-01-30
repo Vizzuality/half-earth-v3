@@ -3,10 +3,16 @@
 
 .container{
   @extend %bodyText;
+  align-items: center;
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+
   .barTitle {
     margin: 0;
   }
 }
+
 .barWrapper {
   display: flex;
   position: relative;
@@ -15,11 +21,11 @@
   align-items: center;
 
   .bar {
-    position: relative;
-    width: 78%;
-    height: 8px;
-    border-radius: 4px;
     background-color: $dark-opacity;
+    border-radius: 4px;
+    height: 8px;
+    position: relative;
+    width: 102px;
   }
 
   .value {
@@ -35,15 +41,12 @@
     height: 20px;
     background-color: $brand-color-main;
   }
-  .annotationTitle {
+  .annotation {
     @extend %annotation;
     position: absolute;
     top: 5px;
     width: 100px;
     transform: translateX(-50%);
-  }
-  .percentage {
-    @extend %title;
   }
 }
 

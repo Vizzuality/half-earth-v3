@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { percentageFormat } from 'utils/data-formatting-utils';
-
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
@@ -10,9 +8,9 @@ function Component({
   title,
   className,
   percentage,
-  percentageLabel,
+
   barAnnotation,
-  barAnnotationTitle,
+
   theme = 'light',
 }) {
   let titlePosition = barAnnotation;
@@ -38,18 +36,11 @@ function Component({
               style={{ left: `${updatedBarAnnotation}%` }}
             />
           )}
-          {barAnnotationTitle && (
-            <p
-              className={styles.annotationTitle}
-              style={{ left: `${titlePosition}%` }}
-            >
-              {barAnnotationTitle}
-            </p>
-          )}
+          <div
+            className={styles.annotation}
+            style={{ left: `${titlePosition}%` }}
+          />
         </div>
-        <span className={styles.percentage}>
-          {percentageLabel || `~${percentageFormat(percentage)}%`}
-        </span>
       </div>
     </section>
   );
