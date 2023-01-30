@@ -90,6 +90,11 @@ $content-height-mobile: 100svh;
 
   .actionButton {
     margin-right: 8px;
+    color: $white;
+
+    svg {
+      fill: currentColor;
+    }
   }
 
   .sourceText {
@@ -134,18 +139,6 @@ $content-height-mobile: 100svh;
     margin-bottom: 5px;
     padding: 2px 6px;
     width: 200px;
-  }
-
-  .titleTooltip::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: white transparent transparent transparent;
   }
 
   .nrcContentVertebrates:before {
