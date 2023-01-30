@@ -237,11 +237,12 @@
     justify-items: center;
     align-items: center;
     margin-left: 9px;
-    border: 1.2px solid $black;
-    border-radius: 50%;
+
     height: 15px;
     width: 15px;
     .icon {
+      color: $black;
+      fill: $black;
       stroke: $black;
       height: 14px;
       min-width: 14px;

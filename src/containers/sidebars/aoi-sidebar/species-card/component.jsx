@@ -14,6 +14,7 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 
 import Button from 'components/button';
 import SpeciesBar from 'components/charts/species-bar';
+import SpeciesBarLegacy from 'components/charts/species-bar-legacy';
 import Dropdown from 'components/dropdown';
 
 import {
@@ -25,7 +26,7 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
 import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
-import { ReactComponent as InfoIcon } from 'icons/infoLegend.svg';
+import { ReactComponent as InfoIcon } from 'icons/info.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
@@ -209,22 +210,50 @@ function Component({
                   <sup>2</sup>
                 </p>
               </div>
-              <SpeciesBar
-                title={t('Portion of global range under protection')}
-                className={styles.speciesBarContainer}
-                percentage={individualSpeciesData.globalProtectedPercentage}
-                barAnnotation={individualSpeciesData.protectionTarget}
-                barAnnotationTitle={t('Protection target')}
-              />
-              <SpeciesBar
-                scale="local"
-                title={t('Portion of global range in this area')}
-                className={styles.speciesBarContainer}
-                percentage={capPercentage(individualSpeciesData.presenceInArea)}
-                percentageLabel={roundRangeInArea(
-                  capPercentage(individualSpeciesData.presenceInArea)
-                )}
-              />
+              {REACT_APP_FEATURE_AOI_CHANGES && (
+                <>
+                  <SpeciesBar
+                    title={t('Portion of global range under protection')}
+                    className={styles.speciesBarContainer}
+                    percentage={individualSpeciesData.globalProtectedPercentage}
+                    barAnnotation={individualSpeciesData.protectionTarget}
+                    barAnnotationTitle={t('Protection target')}
+                  />
+                  <SpeciesBar
+                    scale="local"
+                    title={t('Portion of global range in this area')}
+                    className={styles.speciesBarContainer}
+                    percentage={capPercentage(
+                      individualSpeciesData.presenceInArea
+                    )}
+                    percentageLabel={roundRangeInArea(
+                      capPercentage(individualSpeciesData.presenceInArea)
+                    )}
+                  />
+                </>
+              )}
+              {!REACT_APP_FEATURE_AOI_CHANGES && (
+                <>
+                  <SpeciesBarLegacy
+                    title={t('Portion of global range under protection')}
+                    className={styles.speciesBarContainer}
+                    percentage={individualSpeciesData.globalProtectedPercentage}
+                    barAnnotation={individualSpeciesData.protectionTarget}
+                    barAnnotationTitle={t('Protection target')}
+                  />
+                  <SpeciesBarLegacy
+                    scale="local"
+                    title={t('Portion of global range in this area')}
+                    className={styles.speciesBarContainer}
+                    percentage={capPercentage(
+                      individualSpeciesData.presenceInArea
+                    )}
+                    percentageLabel={roundRangeInArea(
+                      capPercentage(individualSpeciesData.presenceInArea)
+                    )}
+                  />
+                </>
+              )}
 
               {REACT_APP_FEATURE_AOI_CHANGES && (
                 <div className={styles.SPScontainer}>
