@@ -20,6 +20,7 @@ import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
 import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
+import { ReactComponent as MammalsMarIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import styles from './national-report-pdf.module.scss';
@@ -265,120 +266,121 @@ function NationalReportPdf({
     return (
       <section className={styles.speciesComposition}>
         <p className={styles.sectionTitle}>{t('Species composition')}</p>
-        {land && (
-          <div className={styles.speciesCount}>
-            <div className={styles.speciesIcon}>
-              <AmphibiansIcon />
+        <div>
+          {land && (
+            <div className={styles.speciesCount}>
+              <div className={styles.speciesIcon}>
+                <AmphibiansIcon />
+              </div>
+              <div>
+                <T
+                  _str="{endemic} of {number}"
+                  _comment="10 amphibians of 200"
+                  endemic={
+                    <div className={styles.endemic}>
+                      {amphibiansEndemic} {t('endemic amphibians')}
+                    </div>
+                  }
+                  number={amphibians}
+                />
+              </div>
             </div>
-            <div>
-              <T
-                _str="{endemic} of {number}"
-                _comment="10 amphibians of 200"
-                endemic={
-                  <div className={styles.endemic}>
-                    {amphibiansEndemic} {t('endemic amphibians')}
-                  </div>
-                }
-                number={amphibians}
-              />
+          )}
+          {land && (
+            <div className={styles.speciesCount}>
+              <div className={styles.speciesIcon}>
+                <BirdsIcon />
+              </div>
+              <div>
+                <T
+                  _str="{endemic} of {number}"
+                  _comment="10 birds of 200"
+                  endemic={
+                    <div className={styles.endemic}>
+                      {birdsEndemic} {t('endemic birds')}
+                    </div>
+                  }
+                  number={birds}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        {land && (
-          <div className={styles.speciesCount}>
-            <div className={styles.speciesIcon}>
-              <BirdsIcon />
+          )}
+          {land && (
+            <div className={styles.speciesCount}>
+              <div className={styles.speciesIcon}>
+                <ReptilesIcon />
+              </div>
+              <div>
+                <T
+                  _str="{endemic} of {number}"
+                  _comment="10 reptiles of 200"
+                  endemic={
+                    <div className={styles.endemic}>
+                      {reptilesEndemic} {t('endemic reptiles')}
+                    </div>
+                  }
+                  number={reptiles}
+                />
+              </div>
             </div>
-            <div>
-              <T
-                _str="{endemic} of {number}"
-                _comment="10 birds of 200"
-                endemic={
-                  <div className={styles.endemic}>
-                    {birdsEndemic} {t('endemic birds')}
-                  </div>
-                }
-                number={birds}
-              />
+          )}
+          {land ? (
+            <div className={styles.speciesCount}>
+              <div className={styles.speciesIcon}>
+                <MammalsIcon />
+              </div>
+              <div>
+                <T
+                  _str="{endemic} of {number}"
+                  _comment="10 mammals of 200"
+                  endemic={
+                    <div className={styles.endemic}>
+                      {mammalsEndemic} {t('endemic mammals')}
+                    </div>
+                  }
+                  number={mammals}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        {land && (
-          <div className={styles.speciesCount}>
-            <div className={styles.speciesIcon}>
-              <ReptilesIcon />
+          ) : (
+            <div className={styles.speciesCount}>
+              <div className={styles.speciesIcon}>
+                <MammalsMarIcon />
+              </div>
+              <div>
+                <T
+                  _str="{endemic} of {number}"
+                  _comment="10 mammals of 200"
+                  endemic={
+                    <div className={styles.endemic}>
+                      {mammalsMarEndemic} {t('endemic sea mammals')}
+                    </div>
+                  }
+                  number={mammalsMar}
+                />
+              </div>
             </div>
-            <div>
-              <T
-                _str="{endemic} of {number}"
-                _comment="10 reptiles of 200"
-                endemic={
-                  <div className={styles.endemic}>
-                    {reptilesEndemic} {t('endemic reptiles')}
-                  </div>
-                }
-                number={reptiles}
-              />
+          )}
+          {!land && (
+            <div className={styles.speciesCount}>
+              <div className={styles.speciesIcon}>
+                <FishesIcon />
+              </div>
+              <div>
+                <T
+                  _str="{endemic} of {number}"
+                  _comment="10 mammals of 200"
+                  endemic={
+                    <div className={styles.endemic}>
+                      {fishesEndemic} {t('endemic fishes')}
+                    </div>
+                  }
+                  number={fishes}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        {land ? (
-          <div className={styles.speciesCount}>
-            <div className={styles.speciesIcon}>
-              <MammalsIcon />
-            </div>
-            <div>
-              <T
-                _str="{endemic} of {number}"
-                _comment="10 mammals of 200"
-                endemic={
-                  <div className={styles.endemic}>
-                    {mammalsEndemic} {t('endemic mammals')}
-                  </div>
-                }
-                number={mammals}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className={styles.speciesCount}>
-            <div className={styles.speciesIcon}>
-              <MammalsIcon />
-            </div>
-            <div>
-              <T
-                _str="{endemic} of {number}"
-                _comment="10 mammals of 200"
-                endemic={
-                  <div className={styles.endemic}>
-                    {mammalsMarEndemic} {t('endemic sea mammals')}
-                  </div>
-                }
-                number={mammalsMar}
-              />
-            </div>
-          </div>
-        )}
-
-        {!land && (
-          <div className={styles.speciesCount}>
-            <div className={styles.speciesIcon}>
-              <FishesIcon />
-            </div>
-            <div>
-              <T
-                _str="{endemic} of {number}"
-                _comment="10 mammals of 200"
-                endemic={
-                  <div className={styles.endemic}>
-                    {fishesEndemic} {t('endemic fishes')}
-                  </div>
-                }
-                number={fishes}
-              />
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </section>
     );
   };
