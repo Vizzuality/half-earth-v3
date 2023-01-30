@@ -1,9 +1,46 @@
 module.exports = {
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+      parserOptions: {
+        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+        tsconfigRootDir: __dirname,
+      },
+      plugins: ['cypress', 'import', 'prettier', '@typescript-eslint'],
+      rules: {
+        // Place to specify Typescript specific ESLint rules.
+        // Can be used to overwrite rules specified from the extended configs
+        // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+        'import/no-unresolved': 'off',
+        // ! enabling @typescript-eslint/recommended-requiring-type-checking triggers a lot of errors
+        // ! as type-checking is more strict than usual. In order to fix those errors progressively,
+        // ! we have changed the configuration rules from error to warning for now to avoid crashing the deploy.
+        // ! This does not mean the below rules are meant to stay as if, the warning must be fixed until
+        // ! linter does not complain about a specific rule and can be safely removed from below.
+        '@typescript-eslint/no-unsafe-assignment': 'warn',
+        '@typescript-eslint/no-unsafe-member-access': 'warn',
+        '@typescript-eslint/no-unsafe-call': 'warn',
+        '@typescript-eslint/no-unsafe-argument': 'warn',
+        '@typescript-eslint/no-floating-promises': 'warn',
+        '@typescript-eslint/restrict-template-expressions': 'warn',
+        '@typescript-eslint/no-unsafe-return': 'warn',
+        '@typescript-eslint/ban-ts-comment': 'warn',
+        '@typescript-eslint/no-misused-promises': 'warn',
+        '@typescript-eslint/require-await': 'warn',
+        '@typescript-eslint/no-unused-vars': 'warn',
+        // ---
+        'no-unused-vars': 'off',
+      }
+    },
+  ],
   parserOptions: {
     ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
-    tsconfigRootDir: __dirname,
-    // project: './config-overrides.js',
     ecmaFeatures: {
       jsx: true, // Allows for the parsing of JSX
     },
@@ -16,18 +53,13 @@ module.exports = {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
     },
-    // 'import/resolver': {
-    //   node: {
-    //     paths: ['src'],
-    //   },
-    // },
   },
-  extends: ['airbnb', 'prettier'],
+  extends: [
+    'airbnb',
+    'prettier',
+  ],
   plugins: ['cypress', 'import', 'prettier'],
   rules: {
-    // Place to specify ESLint rules.
-    // Can be used to overwrite rules specified from the extended configs
-    // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'react/jsx-filename-extension': 'off',

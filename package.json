@@ -15,6 +15,12 @@
     "@types/node": "^18.11.15",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
+    "@visx/axis": "^3.0.0",
+    "@visx/gradient": "^3.0.0",
+    "@visx/grid": "^3.0.0",
+    "@visx/group": "^3.0.0",
+    "@visx/mock-data": "^3.0.0",
+    "@visx/scale": "^3.0.0",
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "contentful": "^7.6.0",
@@ -25,8 +31,6 @@
     "directory-named-webpack-plugin": "^4.0.1",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^5.1.0",
-    "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-react": "^7.30.1",
     "esri-loader": "^3.7.0",
     "framer-motion": "6.5.1",
     "he-components": "github:vizzuality/half-earth-components#0.2.1",
@@ -56,7 +60,6 @@
     "redux-tools": "github:vizzuality/redux-tools#3.4.1",
     "reselect": "^4.0.0",
     "sha1": "^1.1.1",
-    "typescript": "^4.9.4",
     "workbox-build": "^4.3.1"
   },
   "resolutions": {
@@ -73,7 +76,7 @@
     "transifex:push": "dotenv cross-var ./node_modules/.bin/txjs-cli push src/ --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
     "transifex:purge": "dotenv cross-var npx txjs-cli push src/ --purge --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
     "transifex:refresh": "dotenv cross-var ./node_modules/.bin/txjs-cli invalidate --token=%REACT_APP_TRANSIFEX_TOKEN% --secret=%REACT_APP_TRANSIFEX_SECRET%",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,jsx}' --quiet --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -87,23 +90,28 @@
   "devDependencies": {
     "@babel/preset-env": "^7.5.3",
     "@babel/preset-react": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "cypress": "^6.3.0",
-    "eslint": "^8.2.0",
+    "eslint": "^8.26.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "process": "^0.11.10",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.52.1",
-    "sass-loader": "^13.0.0"
+    "sass-loader": "^13.0.0",
+    "typescript": "^4.9.4"
   },
   "node": {
     "process": false
