@@ -241,6 +241,7 @@ function Component({
                           }
                           delay={100}
                           placement="top"
+                          arrow
                         >
                           <InfoIcon className={styles.icon} />
                         </Tooltip>
