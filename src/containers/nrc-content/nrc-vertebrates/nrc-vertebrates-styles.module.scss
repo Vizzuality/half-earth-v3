@@ -23,10 +23,9 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
 
-    @media #{$tablet-portrait} {
-      grid-template-columns: 1fr;
-      grid-gap: 10px;
-      margin-bottom: 20px;
+
+    @media #{$tablet-only} {
+      grid-template-columns: 1fr 1fr;
     }
 
     .endemicCard {
@@ -53,8 +52,9 @@
     padding: 10px 32px;
     white-space: nowrap;
 
-    @media #{$tablet-portrait} {
+    @media #{$tablet-only} {
       margin-left: 0;
+      align-self: center;
     }
   }
 
@@ -71,7 +71,7 @@
         margin-right: 5px;
       }
 
-      @media #{$tablet-portrait} {
+      @media #{$tablet-only} {
         grid-template-columns: 1fr;
         grid-gap: 10px;
         margin-bottom: 0;
