@@ -8,6 +8,8 @@ import { Modal } from 'he-components';
 
 import styles from './styles.module';
 
+import SrsChart from './srs-chart';
+
 const Spinner = loadable(() => import('components/spinner'));
 
 function SpeciesAnalysisModal({ isOpen, handleModalClose, loading }) {
@@ -17,6 +19,8 @@ function SpeciesAnalysisModal({ isOpen, handleModalClose, loading }) {
       <div className={styles.modalContainer}>
         {loading && <Spinner floating />}
         <h1>{t('Which species need more protection?')}</h1>
+
+        <SrsChart />
       </div>
     </Modal>
   );
