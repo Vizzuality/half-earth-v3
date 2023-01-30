@@ -23,6 +23,12 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
 
+    @media #{$tablet-portrait} {
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
+      margin-bottom: 20px;
+    }
+
     .endemicCard {
       align-items: center;
       display: flex;
@@ -36,11 +42,6 @@
       width: 32px;
       margin-right: 8px;
     }
-
-    @media #{$tablet-portrait} {
-      grid-template-columns: 1fr;
-      grid-gap: 10px;
-    }
   }
   p {
     margin: 0;
@@ -51,6 +52,10 @@
     margin-left: 20px;
     padding: 10px 32px;
     white-space: nowrap;
+
+    @media #{$tablet-portrait} {
+      margin-left: 0;
+    }
   }
 
   &.shrunken {
@@ -69,6 +74,11 @@
       @media #{$tablet-portrait} {
         grid-template-columns: 1fr;
         grid-gap: 10px;
+        margin-bottom: 0;
+
+        button {
+          margin-left: 0;
+        }
       }
     }
 
