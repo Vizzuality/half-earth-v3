@@ -15,7 +15,8 @@ import { useMobile } from 'constants/responsive';
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
 import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
-import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
+import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
+import { ReactComponent as MammalsMarIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import styles from './nrc-vertebrates-styles.module.scss';
@@ -63,14 +64,20 @@ function NRCVertebrates({
     },
     {
       specie: 'reptiles',
-      endemic: endemic_reptiles,
+      endemic: land && endemic_reptiles,
       total: reptiles,
       icon: ReptilesIcon,
     },
     {
+      specie: 'mammalsMar',
+      endemic: !land && endemic_mammals_mar,
+      total: mammals_mar,
+      icon: MammalsMarIcon,
+    },
+    {
       specie: 'mammals',
-      endemic: land ? endemic_mammals : endemic_mammals_mar,
-      total: land ? mammals : mammals_mar,
+      endemic: land && endemic_mammals,
+      total: mammals,
       icon: MammalsIcon,
     },
     {
@@ -97,6 +104,12 @@ function NRCVertebrates({
                 _comment="10 {endemic mammals} of 200"
               />
             ),
+            mammalsMar: (
+              <T
+                _str="endemic sea mammals"
+                _comment="10 {endemic mammals} of 200"
+              />
+            ),
             birds: (
               <T _str="endemic birds" _comment="10 {endemic mammals} of 200" />
             ),
@@ -116,7 +129,7 @@ function NRCVertebrates({
               <T _str="endemic fishes" _comment="10 {endemic mammals} of 200" />
             ),
           }[s.specie];
-          if (!s.endemic) return null;
+          if (s.endemic === false) return null;
           return (
             <div className={styles.endemicCard} key={s.specie}>
               <s.icon className={styles.endemicIcon} />
