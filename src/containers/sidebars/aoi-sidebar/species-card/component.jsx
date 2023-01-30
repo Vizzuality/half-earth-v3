@@ -226,34 +226,30 @@ function Component({
                 )}
               />
 
-              {REACT_APP_FEATURE_AOI_CHANGES &&
-                individualSpeciesData.SPS_global &&
-                individualSpeciesData.SPS_aoi && (
-                  <div className={styles.SPScontainer}>
-                    <div className={styles.SPStitle}>
-                      <p>{t('Global SPS | Area SPS')}</p>
-                      <span className={styles.iconWrapper}>
-                        <Tooltip
-                          content={
-                            <div className={styles.tooltip}>
-                              {t('More info')}
-                            </div>
-                          }
-                          delay={100}
-                          placement="top"
-                          arrow
-                        >
-                          <InfoIcon className={styles.icon} />
-                        </Tooltip>
-                      </span>
-                    </div>
-                    <div>
-                      {' '}
-                      {individualSpeciesData.SPS_global} |{' '}
-                      {individualSpeciesData.SPS_aoi}
-                    </div>
+              {REACT_APP_FEATURE_AOI_CHANGES && (
+                <div className={styles.SPScontainer}>
+                  <div className={styles.SPStitle}>
+                    <p>{t('Global SPS | Area SPS')}</p>
+                    <span className={styles.iconWrapper}>
+                      <Tooltip
+                        className="light"
+                        content={
+                          <div className={styles.tooltip}>{t('More info')}</div>
+                        }
+                        delay={100}
+                        position="bottom"
+                      >
+                        <InfoIcon className={styles.icon} />
+                      </Tooltip>
+                    </span>
                   </div>
-                )}
+                  <div>
+                    {' '}
+                    {individualSpeciesData.SPS_global} |{' '}
+                    {individualSpeciesData.SPS_aoi}
+                  </div>
+                </div>
+              )}
 
               <p className={styles.iucnStatus}>
                 {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}

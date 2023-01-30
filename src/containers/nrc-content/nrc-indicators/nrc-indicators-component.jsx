@@ -7,7 +7,7 @@ import { getLocaleNumber } from 'utils/data-formatting-utils';
 
 import cx from 'classnames';
 
-import IndicatorCard from 'containers/nrc-content/nrc-indicators//indicator-card';
+import IndicatorCard from 'containers/nrc-content/nrc-indicators/indicator-card';
 
 import { useMobile } from 'constants/responsive';
 

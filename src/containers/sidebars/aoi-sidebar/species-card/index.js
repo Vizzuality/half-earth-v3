@@ -55,7 +55,6 @@ function SpeciesCardContainer(props) {
   );
   const [individualSpeciesData, setIndividualSpeciesData] = useState(null);
   const [SPSData, setSPSData] = useState(null);
-
   // Carousel images
   const [previousImage, setPreviousImage] = useState(null);
   const [nextImage, setNextImage] = useState(null);
@@ -322,8 +321,8 @@ function SpeciesCardContainer(props) {
               : getPlaceholderSpeciesImage(results[0].taxa),
             iucnCategory: iucnList[results[0].redlist],
             molLink: `https://mol.org/species/${selectedSpecies.name}`,
-            SPS_global: currentSPSData.SPS_global || undefined,
-            SPS_aoi: currentSPSData.SPS_aoi || undefined,
+            SPS_global: currentSPSData.SPS_global,
+            SPS_aoi: currentSPSData.SPS_aoi,
           });
           if (results[0].image) {
             setPlaceholderText(null);
