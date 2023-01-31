@@ -32,9 +32,13 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 'warn',
         '@typescript-eslint/no-misused-promises': 'warn',
         '@typescript-eslint/require-await': 'warn',
-        '@typescript-eslint/no-unused-vars': 'warn',
         // ---
         'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [1, {
+            varsIgnorePattern: '^_',
+            argsIgnorePattern: '^_',
+            ignoreRestSiblings: true,
+        }],
       }
     },
   ],
