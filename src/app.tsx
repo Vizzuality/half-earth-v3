@@ -79,6 +79,9 @@ function AppLayout(props) {
 const queryClient = new QueryClient();
 
 function App(props) {
+  const { route } = props;
+  const { page } = route;
+
   useEffect(() => {
     tx.init({
       token: REACT_APP_TRANSIFEX_TOKEN,
@@ -100,7 +103,7 @@ function App(props) {
       <div
         className={cx({
           [styles.app]: true,
-          [styles.mobile]: REACT_APP_FEATURE_MOBILE,
+          [styles.mobileLanding]: REACT_APP_FEATURE_MOBILE && page === 'landing',
         })}
       >
         {!REACT_APP_FEATURE_MOBILE && (
