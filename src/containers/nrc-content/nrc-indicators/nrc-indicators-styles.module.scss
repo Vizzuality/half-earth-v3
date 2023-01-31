@@ -7,7 +7,7 @@
   grid-gap: 10px;
   padding-right: 16px;
 
-  @media (orientation: landscape) {
+  @media #{$mobile-landscape} {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 

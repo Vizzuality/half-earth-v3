@@ -12,7 +12,7 @@
   width: 94vw;
   z-index: 10;
 
-    @media (orientation: landscape) {
+   @media #{$mobile-landscape} {
       bottom: 12px;
       height: 68%;
       right: 3%;
@@ -36,7 +36,7 @@
       justify-content: space-between;
       @include backdropBlur();
 
-      @media (orientation: landscape) {
+      @media #{$mobile-landscape} {
         min-width: 45vw;
 
         p {
@@ -56,7 +56,8 @@
 
       p {
         @extend %bodyText;
-        @media (orientation: landscape) {
+
+        @media #{$mobile-landscape} {
           margin-top: 4px;
         }
       }
@@ -67,15 +68,17 @@
 
       .title {
         margin-bottom: 8px;
-        @media (orientation: landscape) {
+
+        @media #{$mobile-landscape} {
           margin-bottom: 0;
-         }
+        }
       }
 
       .description {
         @extend %bodyText;
         margin: 2px 0;
-        @media (orientation: landscape) {
+
+        @media #{$mobile-landscape} {
           margin: 0;
         }
       }
