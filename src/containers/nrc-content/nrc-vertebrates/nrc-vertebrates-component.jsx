@@ -14,7 +14,9 @@ import { useMobile } from 'constants/responsive';
 
 import { ReactComponent as AmphibiansIcon } from 'icons/taxa_amphibians.svg';
 import { ReactComponent as BirdsIcon } from 'icons/taxa_birds.svg';
-import { ReactComponent as MammalsIcon } from 'icons/taxa_marine_mammals.svg';
+import { ReactComponent as FishesIcon } from 'icons/taxa_fishes.svg';
+import { ReactComponent as MammalsIcon } from 'icons/taxa_mammals.svg';
+import { ReactComponent as MammalsMarIcon } from 'icons/taxa_marine_mammals.svg';
 import { ReactComponent as ReptilesIcon } from 'icons/taxa_reptiles.svg';
 
 import styles from './nrc-vertebrates-styles.module.scss';
@@ -34,10 +36,13 @@ function NRCVertebrates({
   const {
     amphibians,
     birds,
+    fishes_mar,
     mammals,
+    mammals_mar,
     reptiles,
     endemic_amphibians,
     endemic_birds,
+    endemic_fishes_mar,
     endemic_mammals,
     endemic_mammals_mar,
     endemic_reptiles,
@@ -63,10 +68,22 @@ function NRCVertebrates({
       icon: ReptilesIcon,
     },
     {
+      specie: 'mammalsMar',
+      endemic: !land && endemic_mammals_mar,
+      total: mammals_mar,
+      icon: MammalsMarIcon,
+    },
+    {
       specie: 'mammals',
-      endemic: land ? endemic_mammals : endemic_mammals_mar,
+      endemic: land && endemic_mammals,
       total: mammals,
       icon: MammalsIcon,
+    },
+    {
+      specie: 'fishes',
+      endemic: !land && endemic_fishes_mar,
+      total: fishes_mar,
+      icon: FishesIcon,
     },
   ];
 
@@ -86,6 +103,12 @@ function NRCVertebrates({
                 _comment="10 {endemic mammals} of 200"
               />
             ),
+            mammalsMar: (
+              <T
+                _str="endemic sea mammals"
+                _comment="10 {endemic mammals} of 200"
+              />
+            ),
             birds: (
               <T _str="endemic birds" _comment="10 {endemic mammals} of 200" />
             ),
@@ -101,7 +124,11 @@ function NRCVertebrates({
                 _comment="10 {endemic mammals} of 200"
               />
             ),
+            fishes: (
+              <T _str="endemic fishes" _comment="10 {endemic mammals} of 200" />
+            ),
           }[s.specie];
+          if (s.endemic === false) return null;
           return (
             s.endemic !== false && (
               <div className={styles.endemicCard} key={s.specie}>

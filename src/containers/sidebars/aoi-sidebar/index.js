@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import uiActions from 'redux_modules/ui';
 
 import { DATA } from 'router';
 
@@ -19,7 +20,7 @@ import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
 
 import Component from './component';
 
-const actions = { ...urlActions, ...aoiAnalyticsActions };
+const actions = { ...urlActions, ...uiActions, ...aoiAnalyticsActions };
 
 function AoiSidebarContainer(props) {
   const {
@@ -36,6 +37,7 @@ function AoiSidebarContainer(props) {
 
   const locale = useLocale();
 
+  // Effect to set parsed values TODO: move to selector
   useEffect(() => {
     if (Object.keys(contextualData).length > 0) {
       // Custom AOIs rely on percentage instead of protectionPercentage

@@ -100,7 +100,6 @@ $chart-margin: 14px;
       @extend %title;
       color: $_temporary-dark-text;
       letter-spacing: 0;
-      text-transform: initial;
     }
   }
 }

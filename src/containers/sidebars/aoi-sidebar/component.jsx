@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { DATA } from 'router';
@@ -65,6 +65,7 @@ function AOISidebar({
   shareAoiAnalytics,
   handleClose,
   sidebarTabActive,
+  setSidebarTabActive,
   isShareModalOpen,
   setShareModalOpen,
   dataLoaded,
@@ -78,6 +79,13 @@ function AOISidebar({
   const [mapLayersTab, analyzeAreasTab] = getSidebarTabs();
   const t = useT();
   const locale = useLocale();
+
+  // If we have an active area go to the analyze areas tab first
+  useEffect(() => {
+    if (sidebarTabActive === mapLayersTab.slug && aoiId) {
+      setSidebarTabActive(analyzeAreasTab.slug);
+    }
+  }, []);
 
   const WDPALayers = useMemo(() => getWDPALayers(), [locale]);
 

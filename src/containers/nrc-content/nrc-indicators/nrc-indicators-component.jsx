@@ -9,12 +9,14 @@ import cx from 'classnames';
 
 import IndicatorCard from 'containers/nrc-content/nrc-indicators//indicator-card';
 
+import { useMobile } from 'constants/responsive';
+
 import COLORS from 'styles/settings';
 
 import styles from './nrc-indicators-styles.module.scss';
 import { getBarStyles } from './nrc-indicators-utils';
 
-function Indicators({ countryData, landMarineSelection, isShrunken }) {
+function Indicators({ countryData, landMarineSelection }) {
   const t = useT();
   const locale = useLocale();
   const {
@@ -49,10 +51,12 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
   const hm = land ? hm_ter : hm_mar;
 
   const isNumberOr0 = (value) => value === 0 || !!value;
+  const isMobile = useMobile();
+
   return (
     <div
       className={cx(styles.indicatorCardsContainer, {
-        [styles.shrunken]: isShrunken,
+        [styles.mobile]: isMobile,
       })}
     >
       <IndicatorCard
@@ -67,7 +71,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
           </p>
         }
         tooltipInfo={t(
-          'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all endemic species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
+          'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
         )}
       >
         <div>
@@ -150,8 +154,8 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                       />
                     ) : (
                       <T
-                        _str="marine is protected"
-                        _comment="10% of {land is protected} and 2% needs protection"
+                        _str="marine area is protected"
+                        _comment="10% of {marine area is protected} and 2% needs protection"
                       />
                     )}
                   </b>
@@ -165,7 +169,7 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
           </p>
         }
         tooltipInfo={t(
-          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI.'
+          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI, only if areas aid in achieving species protection targets.'
         )}
       >
         <div
@@ -202,8 +206,8 @@ function Indicators({ countryData, landMarineSelection, isShrunken }) {
                 />
               ) : (
                 <T
-                  _str="of marine has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } marine has {very high human modification} and 10% has some modification"
+                  _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
                   veryHighHumanModification={
                     <b>
                       <T

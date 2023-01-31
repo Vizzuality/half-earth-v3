@@ -18,10 +18,15 @@
 
   .endemicCardsContainer {
     @extend %bodyText;
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
+
+
+    @media #{$tablet-only} {
+      grid-template-columns: 1fr 1fr;
+    }
 
     .endemicCard {
       align-items: center;
@@ -46,6 +51,11 @@
     margin-left: 20px;
     padding: 10px 32px;
     white-space: nowrap;
+
+    @media #{$tablet-only} {
+      margin-left: 0;
+      align-self: center;
+    }
   }
 
   &.shrunken {
@@ -60,6 +70,16 @@
       .endemicCard {
         margin-right: 5px;
       }
+
+      @media #{$tablet-only} {
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+        margin-bottom: 0;
+
+        button {
+          margin-left: 0;
+        }
+      }
     }
 
     .vertebratesButton {
@@ -72,7 +92,9 @@
 
   &.mobile {
     .endemicCardsContainer {
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
 
       @media #{$mobile-landscape} {
         flex-direction: row;
@@ -94,18 +116,6 @@
   margin-bottom: 5px;
   padding: 2px 6px;
   width: 200px;
-}
-
-.titleTooltip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: white transparent transparent transparent;
 }
 
 .nrcContentVertebrates:before {

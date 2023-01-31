@@ -10,7 +10,7 @@ import { ReactComponent as AnalyzeAreasIcon } from 'icons/analyze_areas.svg';
 
 import styles from './nrc-footer-styles.module.scss';
 
-function Footer({ goToAnalyzeAreas, isShrunken }) {
+function Footer({ openAnalyzeArea, isShrunken }) {
   const t = useT();
   return (
     <div className={cx(styles.footer, { [styles.shrunken]: isShrunken })}>
@@ -22,7 +22,7 @@ function Footer({ goToAnalyzeAreas, isShrunken }) {
       <Button
         type="icon-square"
         Icon={AnalyzeAreasIcon}
-        handleClick={goToAnalyzeAreas}
+        handleClick={openAnalyzeArea}
         className={styles.analyzeBtn}
         tooltipText={t('Go to Explore Data section')}
         label={t('ANALYZE AREA')}

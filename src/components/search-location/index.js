@@ -71,7 +71,14 @@ function SearchLocationContainer(props) {
     const { title, subtitle, id, iso } = tooltipConfig;
     const { geometry, attributes } = feature;
 
-    if (searchType !== SEARCH_TYPES.simple) {
+    // National Report Card search
+    if (iso) {
+      setCountryTooltip({
+        countryIso: attributes[iso],
+        countryName: countryNames[attributes[title]] || attributes[title],
+        changeGlobe,
+      });
+    } else if (searchType !== SEARCH_TYPES.simple) {
       setBatchTooltipData({
         isVisible: true,
         geometry,
@@ -80,16 +87,10 @@ function SearchLocationContainer(props) {
       });
     }
 
-    flyToCentroid(view, geometry, 4);
-
-    // National Report Card search
-    if (iso) {
-      setCountryTooltip({
-        countryIso: attributes[iso],
-        countryName: countryNames[attributes[title]] || attributes[title],
-        changeGlobe,
-      });
-    }
+    flyToCentroid(view, geometry, 5, { maxDuration: 100000 }).catch(() => {
+      // If it fails just go without animation
+      flyToCentroid(view, geometry, 5, { animate: false });
+    });
   };
 
   const getSearchResults = (e) => {
@@ -156,7 +157,9 @@ function SearchLocationContainer(props) {
   const onOptionSelection = (selectedOption) => {
     handleSearchSuggestionClick(selectedOption);
     setIsSearchResultsVisible(false);
-    setSearchLocationModal(false);
+    if (setSearchLocationModal) {
+      setSearchLocationModal(false);
+    }
   };
   const handleCloseOptionList = () => setIsSearchResultsVisible(false);
 
