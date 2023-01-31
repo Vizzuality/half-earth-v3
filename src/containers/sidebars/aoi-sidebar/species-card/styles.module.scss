@@ -237,15 +237,13 @@
     justify-items: center;
     align-items: center;
     margin-left: 9px;
-
-    height: 15px;
-    width: 15px;
     .icon {
-      color: $black;
-      fill: $black;
-      stroke: $black;
-      height: 14px;
-      min-width: 14px;
+      color: $white-opacity;
+      stroke: $white-opacity;
+      stroke-width: 0.6px;
+      height: 16px;
+      min-width: 16px;
+      margin-bottom: 2px;
     }
   }
 }

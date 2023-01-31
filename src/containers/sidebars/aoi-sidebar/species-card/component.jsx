@@ -22,7 +22,7 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as ArrowIconLeft } from 'icons/arrow_left.svg';
 import { ReactComponent as ArrowIconRight } from 'icons/arrow_right.svg';
-import { ReactComponent as InfoIcon } from 'icons/info.svg';
+import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
 
 const capPercentage = (percentage) => (percentage > 100 ? 100 : percentage);
