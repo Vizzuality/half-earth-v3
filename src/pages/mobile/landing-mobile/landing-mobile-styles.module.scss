@@ -1,5 +1,11 @@
 .container {
   position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-image: url('../../../assets/images/landing-background.png');
+  height: 100%;
+  width: 100%;
 
   .switcherWrapper {
     position: absolute;
