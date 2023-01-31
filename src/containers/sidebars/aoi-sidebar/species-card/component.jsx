@@ -190,11 +190,7 @@ function Component({
                 </div>
               </div>
               <div className={styles.globalRangeArea}>
-                <span>
-                  {t(
-                    'Area of habitat-suitable range for this species available globally'
-                  )}
-                </span>
+                <span>{t('Global habitat-suitable range')}</span>
                 <p>
                   {`${roundGlobalRange(
                     individualSpeciesData.globaldRangeArea,
@@ -218,7 +214,7 @@ function Component({
               />
 
               <div className={styles.SPScontainer}>
-                <div className={styles.SPStitle}>
+                <div className={styles.SPStitleWrapper}>
                   <p>{t('Global SPS | Area SPS')}</p>
                   <span className={styles.iconWrapper}>
                     <Tooltip
@@ -240,9 +236,24 @@ function Component({
                 </div>
               </div>
 
-              <p className={styles.iucnStatus}>
-                {`${t('IUCN status')}: ${individualSpeciesData.iucnCategory}`}
-              </p>
+              <div className={styles.iucnStatusContainer}>
+                <div className={styles.iucnStatusTitleWrapper}>
+                  <p>{t('Global Red List status')}</p>
+                  <span className={styles.iconWrapper}>
+                    <Tooltip
+                      className="light"
+                      content={
+                        <div className={styles.tooltip}>{t('More info')}</div>
+                      }
+                      delay={100}
+                      position="bottom"
+                    >
+                      <InfoIcon className={styles.icon} />
+                    </Tooltip>
+                  </span>
+                </div>
+                <p>{individualSpeciesData.iucnCategory}</p>
+              </div>
 
               <div>
                 <Button

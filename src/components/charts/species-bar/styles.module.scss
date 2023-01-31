@@ -8,15 +8,17 @@
   font-size: 12px;
   justify-content: space-between;
 
-  .barTitle {
-    margin: 0;
+  .barTitleWrapper {
+    display: flex;
+    .barTitle {
+      margin: 0;
+    }
   }
 }
 
 .barWrapper {
   display: flex;
   position: relative;
-  padding-top: 5px;
   justify-content: space-between;
   align-items: center;
 
@@ -25,7 +27,7 @@
     border-radius: 4px;
     height: 8px;
     position: relative;
-    width: 102px;
+    width: 98px;
   }
 
   .value {
@@ -48,6 +50,34 @@
     width: 100px;
     transform: translateX(-50%);
   }
+
+}
+.iconWrapper {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  margin-left: 5px;
+
+  .icon {
+    color: $white-opacity;
+    stroke: $white-opacity;
+    stroke-width: 0.6px;
+    height: 16px;
+    min-width: 16px;
+    margin-bottom: 2px;
+
+  }
+}
+
+.tooltip {
+  @extend %annotation;
+  background-color: $white;
+  border-radius: $border-radius-desktop;
+  box-shadow: $box-shadow-light-bottom-large;
+  color: $dark-text;
+  padding: 2px 6px;
+  width: 65px;
+  margin-bottom: 5px;
 }
 
 .dark {

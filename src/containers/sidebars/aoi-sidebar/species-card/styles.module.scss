@@ -95,7 +95,7 @@
 }
 
 .speciesBarContainer {
-  padding-bottom: $site-gutter;
+  padding-bottom: 16px;
 }
 
 
@@ -201,10 +201,7 @@
   }
 }
 
-.iucnStatus {
-  @extend %bodyText;
-  text-align: center;
-}
+
 
 .warningContainer {
   display: flex;
@@ -220,31 +217,50 @@
   margin-right: 10px;
 }
 
+.iucnStatusContainer {
+  @extend %annotation;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  .iucnStatusTitleWrapper {
+    align-items: center;
+    display: flex;
+    position: relative;
+    p {
+      margin: 0;
+    }
+  }
+}
+
 .SPScontainer {
   @extend %annotation;
   align-items: center;
   display: flex;
   justify-content: space-between;
 
-  .SPStitle {
+  .SPStitleWrapper {
     align-items: center;
     display: flex;
     position: relative;
-  }
-
-  .iconWrapper {
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    margin-left: 9px;
-    .icon {
-      color: $white-opacity;
-      stroke: $white-opacity;
-      stroke-width: 0.6px;
-      height: 16px;
-      min-width: 16px;
-      margin-bottom: 2px;
+    p {
+      margin: 0;
     }
+  }
+}
+
+.iconWrapper {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  margin-left: 5px;
+  .icon {
+    color: $white-opacity;
+    stroke: $white-opacity;
+    stroke-width: 0.6px;
+    height: 16px;
+    min-width: 16px;
+    margin-bottom: 2px;
   }
 }
 

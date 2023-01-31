@@ -1,16 +1,18 @@
 import React from 'react';
 
+import Tooltip from '@tippyjs/react';
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
+
+import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 
 function Component({
   title,
   className,
   percentage,
-
   barAnnotation,
-
+  tooltipContent = 'More info',
   theme = 'light',
 }) {
   let titlePosition = barAnnotation;
@@ -26,7 +28,19 @@ function Component({
         [styles.dark]: theme === 'dark',
       })}
     >
-      <p className={styles.barTitle}>{title}</p>
+      <div className={styles.barTitleWrapper}>
+        <p className={styles.barTitle}>{title}</p>
+        <span className={styles.iconWrapper}>
+          <Tooltip
+            className="light"
+            content={<div className={styles.tooltip}>{tooltipContent}</div>}
+            delay={100}
+            position="bottom"
+          >
+            <InfoIcon className={styles.icon} />
+          </Tooltip>
+        </span>
+      </div>
       <div className={styles.barWrapper}>
         <div className={styles.bar}>
           <div className={styles.value} style={{ width: `${percentage}%` }} />
