@@ -206,6 +206,7 @@
 
   // Breakpoints
   $breakpoint-mobile-only: 44.9375rem; // 719px / 16px
+  $breakpoint-mobile-landscape: 57.125rem; // 914px
   $breakpoint-tablet-portrait: 45rem; // 720px / 16px
   $breakpoint-tablet-landscape: 56.25rem; // 900px / 16px
   $breakpoint-tablet-only: 74.9375rem; // 1199px
@@ -213,6 +214,7 @@
 
   // Media queries
   $mobile-only: 'screen and (max-width: #{$breakpoint-mobile-only})';
+  $mobile-landscape: 'screen and (max-width: #{$breakpoint-mobile-landscape}) and (orientation:landscape)';
   $tablet-only: 'screen and (max-width: #{$breakpoint-tablet-only})';
   $tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet-portrait})';
   $tablet-landscape: 'screen and (min-width: #{$breakpoint-tablet-landscape})';

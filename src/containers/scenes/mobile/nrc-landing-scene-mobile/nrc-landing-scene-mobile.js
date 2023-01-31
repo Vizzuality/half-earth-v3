@@ -32,10 +32,8 @@ function NrcLandingSceneMobileContainer(props) {
   const [updatedSceneSettings, setUpdatedSceneSettings] =
     useState(sceneSettings);
 
-  const [[page, direction], setPage] = useState([0, 0]);
-
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
-
+  const [currentCard, setCurrentCard] = useState(0);
   const [cardsContentWithSources, setCardsContentWithSources] =
     useState(cardsContent);
 
@@ -76,8 +74,11 @@ function NrcLandingSceneMobileContainer(props) {
   }, [locale, cardsContent]);
 
   useEffect(() => {
-    setSelectedLayers([...activeLayers, { title: cardsContent[page].layer }]);
-  }, [page, cardsContent, page]);
+    setSelectedLayers([
+      ...activeLayers,
+      { title: cardsContent[currentCard].layer },
+    ]);
+  }, [currentCard, cardsContent]);
 
   const handleStepBack = () => {
     browsePage({ type: LANDING });
@@ -87,12 +88,11 @@ function NrcLandingSceneMobileContainer(props) {
     <Component
       {...props}
       cardsContent={cardsContentWithSources}
-      direction={direction}
+      currentCard={currentCard}
       handleStepBack={handleStepBack}
-      page={page}
       sceneSettings={updatedSceneSettings}
-      setPage={setPage}
       selectedLayers={selectedLayers}
+      setCurrentCard={setCurrentCard}
     />
   );
 }

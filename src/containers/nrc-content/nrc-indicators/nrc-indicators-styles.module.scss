@@ -7,10 +7,8 @@
   grid-gap: 10px;
   padding-right: 16px;
 
-  &.mobile {
-    @media (orientation: landscape) {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
+  @media #{$mobile-landscape} {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .bar {

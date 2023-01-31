@@ -10,9 +10,12 @@
   justify-content: space-between;
   margin: 8px 16px 8px 0;
   padding: 10px 16px;
-  flex-direction: column;
 
-  @media (orientation: landscape) {
+  @media #{$tablet-only} {
+    flex-direction: column;
+  }
+
+  @media #{$mobile-landscape} {
     flex-direction: row;
   }
 
@@ -96,8 +99,8 @@
       grid-template-columns: 1fr;
       grid-gap: 10px;
 
-      @media (orientation: landscape) {
-        grid-template-columns: 1fr 1fr;
+      @media #{$mobile-landscape} {
+        flex-direction: row;
       }
     }
 

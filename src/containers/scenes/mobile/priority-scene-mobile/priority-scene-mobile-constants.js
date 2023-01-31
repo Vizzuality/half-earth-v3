@@ -16,13 +16,13 @@ export const getPriorityMobileCards = () => [
     description: (
       <div>
         <T
-          _str="This layers illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
-          _comment="(This layers illustrates where conservation efforts should be directed to )achieve the most rapid gains in terrestrial vertebrate ( conservation at a global scale.)"
+          _str="This layer illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
+          _comment="(This layer illustrates where conservation efforts should be directed to )achieve the most rapid gains in terrestrial vertebrate ( conservation at a global scale.)"
           bold={
             <b>
               <T
                 _str="achieve the most rapid gains in terrestrial vertebrate"
-                _comment="This layers illustrates where conservation efforts should be directed to (achieve the most rapid gains in terrestrial vertebrate) conservation at a global scale."
+                _comment="This layer illustrates where conservation efforts should be directed to (achieve the most rapid gains in terrestrial vertebrate) conservation at a global scale."
               />
             </b>
           }
@@ -38,13 +38,13 @@ export const getPriorityMobileCards = () => [
     description: (
       <div>
         <T
-          _str="This layers illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
-          _comment="(This layers illustrates where conservation efforts should be directed to )achieve the most rapid gains in marine vertebrate ( conservation at a global scale.)"
+          _str="This layer illustrates where conservation efforts should be directed to {bold} conservation at a global scale."
+          _comment="(This layer illustrates where conservation efforts should be directed to )achieve the most rapid gains in marine vertebrate ( conservation at a global scale.)"
           bold={
             <b>
               <T
                 _str="achieve the most rapid gains in marine vertebrate"
-                _comment="This layers illustrates where conservation efforts should be directed to (achieve the most rapid gains in marine vertebrate) conservation at a global scale."
+                _comment="This layer illustrates where conservation efforts should be directed to (achieve the most rapid gains in marine vertebrate) conservation at a global scale."
               />
             </b>
           }

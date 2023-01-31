@@ -23,15 +23,14 @@ import styles from './nrc-vertebrates-styles.module.scss';
 
 function NRCVertebrates({
   countryData,
-  setNRCSidebarView,
   isShrunken,
   selectedLandMarineOption,
   setFullRanking,
+  setNRCSidebarView,
 }) {
   const t = useT();
   const isMobile = useMobile();
   const locale = useLocale();
-
   const land = selectedLandMarineOption.slug === LAND_MARINE.land;
 
   const {
@@ -131,23 +130,25 @@ function NRCVertebrates({
           }[s.specie];
           if (s.endemic === false) return null;
           return (
-            <div className={styles.endemicCard} key={s.specie}>
-              <s.icon className={styles.endemicIcon} />
-              <p>
-                <T
-                  _str="{localNumber} {endemicSpecie} of {totalNumber}"
-                  endemicNumber={getLocaleNumber(s.endemic, locale)}
-                  localNumber={getLocaleNumber(s.endemic, locale)}
-                  totalNumber={getLocaleNumber(s.total, locale)}
-                  endemicSpecie={
-                    <>
-                      <b>{endemicSpecieString}</b>
-                      <br />
-                    </>
-                  }
-                />
-              </p>
-            </div>
+            s.endemic !== false && (
+              <div className={styles.endemicCard} key={s.specie}>
+                <s.icon className={styles.endemicIcon} />
+                <p>
+                  <T
+                    _str="{localNumber} {endemicSpecie} of {totalNumber}"
+                    endemicNumber={getLocaleNumber(s.endemic, locale)}
+                    localNumber={getLocaleNumber(s.endemic, locale)}
+                    totalNumber={getLocaleNumber(s.total, locale)}
+                    endemicSpecie={
+                      <>
+                        <b>{endemicSpecieString}</b>
+                        <br />
+                      </>
+                    }
+                  />
+                </p>
+              </div>
+            )
           );
         })}
       </div>

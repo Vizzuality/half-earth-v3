@@ -19,31 +19,33 @@ function HeroComponent({ className, browsePage }) {
 
   return (
     <div className={cx(styles.container, className)}>
-      <motion.h3
-        className={styles.subtitle}
-        initial={{ opacity: 0.5, x: 250 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 0.5,
-        }}
-      >
-        <T _str="Welcome to the Half-Earth Project® Map" />
-      </motion.h3>
+      <div>
+        <motion.h3
+          className={styles.subtitle}
+          initial={{ opacity: 0.5, x: 250 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.5,
+          }}
+        >
+          <T _str="Welcome to the Half-Earth Project® Map" />
+        </motion.h3>
 
-      <motion.h1
-        className={styles.title}
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
-          delay: 0.5,
-        }}
-      >
-        <T
-          _str="Explore where species conservation {br} activities are the most needed"
-          br={<br />}
-        />
-      </motion.h1>
+        <motion.h1
+          className={styles.title}
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+          }}
+        >
+          <T
+            _str="Explore where species conservation {br} activities are the most needed"
+            br={<br />}
+          />
+        </motion.h1>
+      </div>
 
       <div className={styles.cards}>
         <motion.div
@@ -87,6 +89,7 @@ function HeroComponent({ className, browsePage }) {
           />
         </motion.div>
       </div>
+
       <div className={styles.footer}>
         <p>
           <T

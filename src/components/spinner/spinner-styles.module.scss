@@ -65,6 +65,13 @@ $size: 100px;
   height: 100vh;
   display: flex;
   align-items: center;
+  @media #{$mobile-only} {
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: transparent;
+    z-index: $over-front;
+  }
 }
 
 .initialLoading {

@@ -133,7 +133,8 @@
     text-transform: uppercase;
     padding: 0 5vw;
     width: 90vw;
-    @media (orientation: landscape) {
+
+    @media #{$mobile-landscape} {
       padding: 0 7vw 0 3vw;
     }
   }
@@ -147,7 +148,8 @@
     right: calc(6px + 4vw);
     top: 14px;
     width: 12px;
-    @media (orientation: landscape) {
+
+    @media #{$mobile-landscape} {
       right: 3vw;
     }
   }
@@ -161,7 +163,7 @@
     width: 30px;
     z-index: $over-front;
 
-    @media (orientation: landscape) {
+    @media #{$mobile-landscape} {
       right: 0;
       width: 60px;
     }
