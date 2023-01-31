@@ -81,7 +81,7 @@ function Component({
               title={sidebarCardsConfig[SPECIES_SLUG].hint}
             >
               {' '}
-              {t('land vertebrate species')}
+              {t('terrestrial vertebrates')}
             </span>
           </p>
           <Dropdown
@@ -106,8 +106,8 @@ function Component({
             handleCloseSearch={handleCloseSearch}
           />
           {individualSpeciesData && (
-            <section className={styles.speciesDataContainer}>
-              <div>
+            <section>
+              <div className={styles.speciesDataContainer}>
                 <div className={styles.speciesCarousel}>
                   {previousImage && (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/control-has-associated-label
@@ -160,18 +160,18 @@ function Component({
                     </div>
                   )}
                   <div className={styles.speciesNames}>
+                    <span className={styles.scientificName}>
+                      {individualSpeciesData.commonname ||
+                        individualSpeciesData.name}
+                    </span>
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.commonName}
                       href={individualSpeciesData.molLink}
                     >
-                      {individualSpeciesData.commonname ||
-                        individualSpeciesData.name}
-                    </a>
-                    <span className={styles.scientificName}>
                       {individualSpeciesData.name}{' '}
-                    </span>
+                    </a>
                   </div>
                   {showCarouselArrows && (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events

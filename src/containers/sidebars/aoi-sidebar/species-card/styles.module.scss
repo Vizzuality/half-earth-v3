@@ -151,7 +151,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: baseline;
-  margin-top: $site-gutter;
+  margin-top: 8px;
 
   .speciesNames {
     display: flex;
@@ -161,18 +161,25 @@
     width: 70%;
 
     .commonName {
-      @extend %title;
+      @extend %annotation;
       color: $dark-text;
       text-align: center;
-
+      font-style: italic;
+      text-transform: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-top: 4px;
       &:hover {
         color: $dark-text-hover;
+        text-decoration: none;
       }
     }
 
     .scientificName {
-      @extend %annotation;
-      font-style: italic;
+      @extend %title;
+      text-transform: uppercase;
+
+
     }
   }
 
@@ -212,7 +219,8 @@
 }
 
 .speciesDataContainer {
-  margin: 16px 0 8px 0;
+  margin: 16px 0 24px 0;
+
 
   .sectionContainer {
     @extend %annotation;
