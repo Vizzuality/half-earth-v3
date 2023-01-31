@@ -10,7 +10,10 @@
   justify-content: space-between;
   margin: 8px 16px 8px 0;
   padding: 10px 16px;
-  flex-direction: column;
+
+  @media #{$tablet-only} {
+    flex-direction: column;
+  }
 
   @media #{$mobile-landscape} {
     flex-direction: row;
