@@ -1,6 +1,7 @@
 .esri-ui {
   z-index: $default-z-index;
-  @media (orientation: landscape) {
+
+  @media #{$mobile-landscape} {
     top: 0 !important;
     z-index: $over-front;
   }

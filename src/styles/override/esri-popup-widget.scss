@@ -4,8 +4,13 @@
 
 .esri-popup {
   bottom: auto;
-  @media (orientation: landscape) {
+
+  @media #{$mobile-only} {
     bottom: 0;
+  }
+
+  @media #{$mobile-landscape} {
+    bottom: 0 !important;
   }
 }
 

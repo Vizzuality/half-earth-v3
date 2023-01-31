@@ -16,7 +16,7 @@
     overflow: auto;
   }
 
-  @media (orientation: landscape) {
+  @media #{$mobile-landscape} {
     flex-direction: row;
     height: calc(100dvb - 30px);
     overflow-y: hidden;

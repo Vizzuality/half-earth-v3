@@ -28,10 +28,13 @@ function PrioritySceneMobileContainer(props) {
   const isLandscape = useLandscape();
 
   const cardsContent = useMemo(() => getPriorityMobileCards(), [locale]);
+
   const [[page, direction], setPage] = useState([0, 0]);
   const [selectedLayers, setSelectedLayers] = useState(activeLayers);
   const [updatedSceneSettings, setUpdatedSceneSettings] =
     useState(sceneSettings);
+
+  const [currentCard, setCurrentCard] = useState(0);
 
   const [cardsContentWithSources, setCardsContentWithSources] =
     useState(cardsContent);
@@ -75,8 +78,11 @@ function PrioritySceneMobileContainer(props) {
   }, [locale, cardsContent]);
 
   useEffect(() => {
-    setSelectedLayers([...activeLayers, { title: cardsContent[page].layer }]);
-  }, [page, cardsContent]);
+    setSelectedLayers([
+      ...activeLayers,
+      { title: cardsContent[currentCard].layer },
+    ]);
+  }, [currentCard, cardsContent]);
 
   const handleStepBack = () => {
     browsePage({ type: LANDING });
@@ -86,12 +92,14 @@ function PrioritySceneMobileContainer(props) {
     <Component
       {...props}
       cardsContent={cardsContentWithSources}
+      currentCard={currentCard}
       direction={direction}
       handleStepBack={handleStepBack}
       page={page}
       sceneSettings={updatedSceneSettings}
       setPage={setPage}
       selectedLayers={selectedLayers}
+      setCurrentCard={setCurrentCard}
     />
   );
 }

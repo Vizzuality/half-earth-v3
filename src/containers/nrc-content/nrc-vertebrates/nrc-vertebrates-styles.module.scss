@@ -10,18 +10,26 @@
   justify-content: space-between;
   margin: 8px 16px 8px 0;
   padding: 10px 16px;
-  flex-direction: column;
 
-  @media (orientation: landscape) {
+  @media #{$tablet-only} {
+    flex-direction: column;
+  }
+
+  @media #{$mobile-landscape} {
     flex-direction: row;
   }
 
   .endemicCardsContainer {
     @extend %bodyText;
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
+
+
+    @media #{$tablet-only} {
+      grid-template-columns: 1fr 1fr;
+    }
 
     .endemicCard {
       align-items: center;
@@ -46,6 +54,11 @@
     margin-left: 20px;
     padding: 10px 32px;
     white-space: nowrap;
+
+    @media #{$tablet-only} {
+      margin-left: 0;
+      align-self: center;
+    }
   }
 
   &.shrunken {
@@ -60,6 +73,16 @@
       .endemicCard {
         margin-right: 5px;
       }
+
+      @media #{$tablet-only} {
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+        margin-bottom: 0;
+
+        button {
+          margin-left: 0;
+        }
+      }
     }
 
     .vertebratesButton {
@@ -72,9 +95,11 @@
 
   &.mobile {
     .endemicCardsContainer {
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
 
-      @media (orientation: landscape) {
+      @media #{$mobile-landscape} {
         flex-direction: row;
       }
     }

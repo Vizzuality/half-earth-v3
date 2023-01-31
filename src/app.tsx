@@ -7,8 +7,6 @@ import loadable from '@loadable/component';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import cx from 'classnames';
-
 import { useMobile, MobileOnly } from 'constants/responsive';
 
 import styles from './app-styles.module.scss';
@@ -79,6 +77,7 @@ function AppLayout(props) {
 const queryClient = new QueryClient();
 
 function App(props) {
+
   useEffect(() => {
     tx.init({
       token: REACT_APP_TRANSIFEX_TOKEN,
@@ -97,12 +96,7 @@ function App(props) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div
-        className={cx({
-          [styles.app]: true,
-          [styles.mobile]: REACT_APP_FEATURE_MOBILE,
-        })}
-      >
+      <div className={styles.app}>
         {!REACT_APP_FEATURE_MOBILE && (
           <MobileOnly>
             <MobileDisclaimer />

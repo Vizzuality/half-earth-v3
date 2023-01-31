@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 import { T, useLocale, useT } from '@transifex/react';
@@ -38,12 +38,18 @@ function SpeciesTable({
   const t = useT();
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
-
   const translatedSpeciesGroup = useMemo(getSpeciesGroup, [locale]);
   const { height } = useWindowSize();
   const [expandedRow, setExpandedRow] = useState(null);
-
+  const [landTab, marineTab] = vertebrateTabs;
   const { landSpeciesTotal, marineSpeciesTotal } = countryData;
+
+  // Select the land tab if we dont have marine species
+  useEffect(() => {
+    if (vertebrateType === marineTab.slug && marineSpeciesTotal === 0) {
+      handleVertebrateChange(landTab.slug);
+    }
+  }, [vertebrateTabs, vertebrateType, marineSpeciesTotal]);
 
   const toggleExpand = (index) => {
     setExpandedRow(index === expandedRow ? null : index);
@@ -146,12 +152,12 @@ function SpeciesTable({
         <div className={styles.tabs}>
           <button
             type="button"
-            onClick={() => handleVertebrateChange(vertebrateTabs[0].slug)}
+            onClick={() => handleVertebrateChange(landTab.slug)}
           >
             <p
               className={cx({
                 [styles.tab]: true,
-                [styles.selectedTab]: vertebrateType === vertebrateTabs[0].slug,
+                [styles.selectedTab]: vertebrateType === landTab.slug,
               })}
             >
               <T
@@ -163,12 +169,13 @@ function SpeciesTable({
           </button>
           <button
             type="button"
-            onClick={() => handleVertebrateChange(vertebrateTabs[1].slug)}
+            onClick={() => handleVertebrateChange(marineTab.slug)}
+            disabled={marineSpeciesTotal === 0}
           >
             <p
               className={cx({
                 [styles.tab]: true,
-                [styles.selectedTab]: vertebrateType === vertebrateTabs[1].slug,
+                [styles.selectedTab]: vertebrateType === marineTab.slug,
               })}
             >
               <T

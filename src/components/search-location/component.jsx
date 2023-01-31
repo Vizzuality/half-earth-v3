@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 
@@ -88,7 +88,9 @@ function SearchLocation({
   });
 
   useEffect(() => {
-    if (mobile) inputRef.current.focus();
+    if (mobile) {
+      inputRef.current.focus();
+    }
   }, [searchLocationModal]);
 
   const renderSuggestion = (text) => {
@@ -124,7 +126,8 @@ function SearchLocation({
           className={styles.input}
           ref={inputRef}
           onClick={handleOpenSearch}
-          onChange={handleInputChange}
+          onFocus={handleOpenSearch}
+          onChange={(e) => handleInputChange(e)}
         />
 
         <IconSearch
@@ -203,7 +206,7 @@ SearchLocation.propTypes = {
   onOptionSelection: Proptypes.func.isRequired,
   reference: Proptypes.func,
   searchType: Proptypes.oneOf(['simple', 'country', 'full']),
-  theme: Proptypes.oneOf(['light', 'dark']),
+  theme: Proptypes.oneOf(['light', 'dark', 'mobile']),
   width: Proptypes.oneOf(['fluid', 'full']),
 };
 

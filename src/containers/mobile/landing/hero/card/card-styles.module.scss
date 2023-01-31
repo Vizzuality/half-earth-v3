@@ -34,7 +34,7 @@
       margin: 0;
       line-height: $line-height-lg;
 
-      @media (orientation: landscape) {
+      @media #{$mobile-landscape} {
         font-size: 14px;
         max-width: 90%;
       }
