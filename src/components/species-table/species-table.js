@@ -31,7 +31,8 @@ const mapStateToProps = (state) => ({
 });
 
 function SpeciesModalContainer(props) {
-  const { changeUI, speciesModalSort, state } = props;
+  const { changeUI, speciesModalSort, state, countryData } = props;
+  const { marineSpeciesTotal } = countryData || {};
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
@@ -41,10 +42,11 @@ function SpeciesModalContainer(props) {
 
   const landLayer = useFeatureLayer({ layerSlug: SPECIES_LIST });
   const marineLayer = useFeatureLayer({ layerSlug: MARINE_SPECIES_LIST });
-
   useEffect(() => {
     const layer = vertebrateType === LAND_MARINE.land ? landLayer : marineLayer;
-    if (layer && state.location.payload.iso) {
+    const isMarineAndEmpty =
+      vertebrateType === LAND_MARINE.marine && marineSpeciesTotal === 0;
+    if (!isMarineAndEmpty && layer && state.location.payload.iso) {
       const getFeatures = async () => {
         const query = await layer.createQuery();
         query.where = `iso3 = '${state.location.payload.iso}'`;

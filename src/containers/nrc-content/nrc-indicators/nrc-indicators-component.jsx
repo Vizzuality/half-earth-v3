@@ -71,7 +71,7 @@ function Indicators({ countryData, landMarineSelection }) {
           </p>
         }
         tooltipInfo={t(
-          'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all endemic species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
+          'The Species Protection Index (SPI) reflects the average amount of area-based conservation targets that have been met for all species within the country each year, weighted by a country`s stewardship of those species (the proportion of the species population present in that country).'
         )}
       >
         <div>
@@ -154,8 +154,8 @@ function Indicators({ countryData, landMarineSelection }) {
                       />
                     ) : (
                       <T
-                        _str="marine is protected"
-                        _comment="10% of {land is protected} and 2% needs protection"
+                        _str="marine area is protected"
+                        _comment="10% of {marine area is protected} and 2% needs protection"
                       />
                     )}
                   </b>
@@ -169,7 +169,7 @@ function Indicators({ countryData, landMarineSelection }) {
           </p>
         }
         tooltipInfo={t(
-          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI.'
+          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI, only if areas aid in achieving species protection targets.'
         )}
       >
         <div
@@ -206,8 +206,8 @@ function Indicators({ countryData, landMarineSelection }) {
                 />
               ) : (
                 <T
-                  _str="of marine has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } marine has {very high human modification} and 10% has some modification"
+                  _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                  _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
                   veryHighHumanModification={
                     <b>
                       <T
