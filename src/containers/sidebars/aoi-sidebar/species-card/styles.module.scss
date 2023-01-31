@@ -83,15 +83,11 @@
 }
 
 .globalRangeArea {
-  @extend %bodyText;
-  display: flex;
-  flex-direction: column;
+  @extend %annotation;
   align-items: center;
-  margin-top: $site-gutter;
-  p {
-    font-weight: 500;
-    margin: 0 0 10px;
-  }
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .speciesBarContainer {
@@ -201,8 +197,6 @@
   }
 }
 
-
-
 .warningContainer {
   display: flex;
   align-items: flex-start;
@@ -217,50 +211,38 @@
   margin-right: 10px;
 }
 
-.iucnStatusContainer {
-  @extend %annotation;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+.speciesDataContainer {
+  margin: 16px 0 8px 0;
 
-  .iucnStatusTitleWrapper {
+  .sectionContainer {
+    @extend %annotation;
     align-items: center;
     display: flex;
-    position: relative;
-    p {
-      margin: 0;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    .sectionTitleWrapper {
+      align-items: center;
+        display: flex;
+        position: relative;
+        p {
+          margin: 0;
+        }
     }
   }
-}
 
-.SPScontainer {
-  @extend %annotation;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-
-  .SPStitleWrapper {
-    align-items: center;
+  .iconWrapper {
     display: flex;
-    position: relative;
-    p {
-      margin: 0;
+    justify-items: center;
+    align-items: center;
+    margin-left: 5px;
+    .icon {
+      color: $white-opacity;
+      stroke: $white-opacity;
+      stroke-width: 0.6px;
+      height: 16px;
+      min-width: 16px;
+      margin-bottom: 2px;
     }
-  }
-}
-
-.iconWrapper {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  margin-left: 5px;
-  .icon {
-    color: $white-opacity;
-    stroke: $white-opacity;
-    stroke-width: 0.6px;
-    height: 16px;
-    min-width: 16px;
-    margin-bottom: 2px;
   }
 }
 

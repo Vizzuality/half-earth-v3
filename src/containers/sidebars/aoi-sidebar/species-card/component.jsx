@@ -110,7 +110,6 @@ function Component({
               <div>
                 <div className={styles.speciesCarousel}>
                   {previousImage && (
-                    // eslint-disable-next-line max-len
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/control-has-associated-label
                     <div
                       role="button"
@@ -150,7 +149,6 @@ function Component({
                 </div>
                 <div className={styles.sliderControls}>
                   {showCarouselArrows && (
-                    // eslint-disable-next-line max-len
                     // eslint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/click-events-have-key-events
                     <div
                       role="button"
@@ -176,8 +174,7 @@ function Component({
                     </span>
                   </div>
                   {showCarouselArrows && (
-                    // eslint-disable-next-line max-len
-                    // eslint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/click-events-have-key-events
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                     <div
                       role="button"
                       tabIndex={0}
@@ -189,70 +186,89 @@ function Component({
                   )}
                 </div>
               </div>
-              <div className={styles.globalRangeArea}>
-                <span>{t('Global habitat-suitable range')}</span>
-                <p>
-                  {`${roundGlobalRange(
-                    individualSpeciesData.globaldRangeArea,
-                    locale,
-                    t
-                  )}${t(' km')}`}
-                  <sup>2</sup>
-                </p>
-              </div>
+              <div className={styles.speciesDataContainer}>
+                <div className={styles.sectionContainer}>
+                  <div className={styles.sectionTitleWrapper}>
+                    <p>{t('Global habitat-suitable range')}</p>
+                    <span className={styles.iconWrapper}>
+                      <Tooltip
+                        className="light"
+                        content={
+                          <div className={styles.tooltip}>{t('More info')}</div>
+                        }
+                        delay={100}
+                        position="bottom"
+                      >
+                        <InfoIcon className={styles.icon} />
+                      </Tooltip>
+                    </span>
+                  </div>
 
-              <SpeciesBar
-                title={t('Portion of global range protected')}
-                className={styles.speciesBarContainer}
-                percentage={individualSpeciesData.globalProtectedPercentage}
-                barAnnotation={individualSpeciesData.protectionTarget}
-              />
-              <SpeciesBar
-                title={t('Portion of global range in this area')}
-                className={styles.speciesBarContainer}
-                percentage={capPercentage(individualSpeciesData.presenceInArea)}
-              />
+                  <div>
+                    {`${roundGlobalRange(
+                      individualSpeciesData.globaldRangeArea,
+                      locale,
+                      t
+                    )}${t(' km')}`}
+                    <sup>2</sup>
+                  </div>
+                </div>
 
-              <div className={styles.SPScontainer}>
-                <div className={styles.SPStitleWrapper}>
-                  <p>{t('Global SPS | Area SPS')}</p>
-                  <span className={styles.iconWrapper}>
-                    <Tooltip
-                      className="light"
-                      content={
-                        <div className={styles.tooltip}>{t('More info')}</div>
-                      }
-                      delay={100}
-                      position="bottom"
-                    >
-                      <InfoIcon className={styles.icon} />
-                    </Tooltip>
-                  </span>
-                </div>
-                <div>
-                  {' '}
-                  {individualSpeciesData.SPS_global} |{' '}
-                  {individualSpeciesData.SPS_aoi}
-                </div>
-              </div>
+                <SpeciesBar
+                  title={t('Portion of global range protected')}
+                  className={styles.speciesBarContainer}
+                  percentage={individualSpeciesData.globalProtectedPercentage}
+                  barAnnotation={individualSpeciesData.protectionTarget}
+                />
+                <SpeciesBar
+                  title={t('Portion of global range in this area')}
+                  className={styles.speciesBarContainer}
+                  percentage={capPercentage(
+                    individualSpeciesData.presenceInArea
+                  )}
+                />
 
-              <div className={styles.iucnStatusContainer}>
-                <div className={styles.iucnStatusTitleWrapper}>
-                  <p>{t('Global Red List status')}</p>
-                  <span className={styles.iconWrapper}>
-                    <Tooltip
-                      className="light"
-                      content={
-                        <div className={styles.tooltip}>{t('More info')}</div>
-                      }
-                      delay={100}
-                      position="bottom"
-                    >
-                      <InfoIcon className={styles.icon} />
-                    </Tooltip>
-                  </span>
+                <div className={styles.sectionContainer}>
+                  <div className={styles.sectionTitleWrapper}>
+                    <p>{t('Global SPS | Area SPS')}</p>
+                    <span className={styles.iconWrapper}>
+                      <Tooltip
+                        className="light"
+                        content={
+                          <div className={styles.tooltip}>{t('More info')}</div>
+                        }
+                        delay={100}
+                        position="bottom"
+                      >
+                        <InfoIcon className={styles.icon} />
+                      </Tooltip>
+                    </span>
+                  </div>
+                  <div>
+                    {' '}
+                    {individualSpeciesData.SPS_global} |{' '}
+                    {individualSpeciesData.SPS_aoi}
+                  </div>
                 </div>
-                <p>{individualSpeciesData.iucnCategory}</p>
+
+                <div className={styles.sectionContainer}>
+                  <div className={styles.sectionTitleWrapper}>
+                    <p>{t('Global Red List status')}</p>
+                    <span className={styles.iconWrapper}>
+                      <Tooltip
+                        className="light"
+                        content={
+                          <div className={styles.tooltip}>{t('More info')}</div>
+                        }
+                        delay={100}
+                        position="bottom"
+                      >
+                        <InfoIcon className={styles.icon} />
+                      </Tooltip>
+                    </span>
+                  </div>
+                  <div>{individualSpeciesData.iucnCategory}</div>
+                </div>
               </div>
 
               <div>
