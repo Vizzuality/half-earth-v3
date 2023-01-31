@@ -19,8 +19,7 @@ function SpeciesAnalysisModal({ isOpen, handleModalClose, loading }) {
       <div className={styles.modalContainer}>
         {loading && <Spinner floating />}
         <h1>{t('Which species need more protection?')}</h1>
-
-        <SrsChart />
+        <SrsChart width={800} height={500} />
       </div>
     </Modal>
   );
