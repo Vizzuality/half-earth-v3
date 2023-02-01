@@ -8,7 +8,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+
+import { useT } from '@transifex/react';
 
 import * as d3 from 'd3';
 
@@ -16,58 +18,60 @@ import data from './brazil-mock.json';
 import { LineRadialProps } from './index.d';
 
 const innerRadius = 56;
+const arcGenerator = (outerR, innerR = 0) =>
+  d3
+    .arc()
+    .outerRadius(outerR)
+    .innerRadius(innerR)
+    .startAngle(-Math.PI / 2)
+    .endAngle(Math.PI / 2);
+// Colors
+const white = '#ebebeb';
+const navy = '#0A212E';
+const backgroundColor = '#0F2B3B';
+
 function SrsChart({ width, height }: LineRadialProps) {
+  const t = useT();
+
+  const radius = useMemo(
+    () => Math.min(width, height) / 2 - 30,
+    [width, height]
+  );
+
+  // Radial scale
+  const r = d3.scaleLinear().range([radius, innerRadius]).domain([100, 0]);
+
+  // Linear scale
+  const l = d3.scaleLinear().domain([0, 100]).range([-180, 0]);
+
   useEffect(() => {
-    const arcGenerator = (outerR, innerR = 0) =>
-      d3
-        .arc()
-        .outerRadius(outerR)
-        .innerRadius(innerR)
-        .startAngle(-Math.PI / 2)
-        .endAngle(Math.PI / 2);
-
-    const renderBackgroundArc = (svg, radialAxis, radius) => {
-      // TODO adjust gradient
-
-      const gradient = svg
-        .append('svg:defs')
-        .append('svg:linearGradient')
-        .attr('id', 'gradient')
-        .attr('x1', '0%')
-        .attr('y1', '0%')
-        .attr('x2', '100%')
-        .attr('y2', '0%');
-      // .attr('spreadMethod', 'pad');
-
-      // Define the gradient colors
-      gradient
-        .append('svg:stop')
-        .attr('offset', '0%')
-        .attr('stop-color', '#a00000')
-        .attr('stop-opacity', 1);
-
-      gradient
-        .append('svg:stop')
-        .attr('offset', '50%')
-        .attr('stop-color', '#aaaa00')
-        .attr('stop-opacity', 1);
-      gradient
-        .append('svg:stop')
-        .attr('offset', '100%')
-        .attr('stop-color', '#00A548')
-        .attr('stop-opacity', 1);
-
+    const renderBackgroundArc = (radialAxis) => {
       radialAxis
         .append('path')
         .attr('fill', 'url(#gradient)')
         .style('opacity', 0.5)
         .attr('d', arcGenerator(radius));
+
+      // Second element just for extra gradient
+      radialAxis
+        .append('path')
+        .attr('fill', 'url(#radial-gradient)')
+        .attr('mix-blend-mode', 'multiply')
+        .style('opacity', 1)
+        .attr('d', arcGenerator(radius));
     };
 
-    const renderAngleAxis = (svg, radius, l) => {
-      const angleAxis = svg
-        .append('g')
-        .attr('class', 'a-axis')
+    const renderAngleAxis = () => {
+      const angleAxis = d3.select('#a-axis');
+
+      // Labels arc
+      angleAxis
+        .append('path')
+        .attr('fill', navy)
+        .attr('id', 'label-arc')
+        .attr('d', arcGenerator(radius + 25, radius));
+
+      const angleAxisGroups = angleAxis
         .selectAll('g')
         .data([25, 50, 75])
         .enter()
@@ -76,84 +80,94 @@ function SrsChart({ width, height }: LineRadialProps) {
           return `rotate(${l(d)})`;
         });
 
-      angleAxis
+      // Angle ticks
+      angleAxisGroups
         .append('line')
         .attr('x1', innerRadius)
-        .attr('x2', radius)
-        .attr('stroke', 'white');
+        .attr('x2', radius + 25)
+        .attr('stroke', backgroundColor);
 
-      angleAxis
+      const angleAxisLabelGroups = angleAxis
+        .append('g')
+        .selectAll('g')
+        .data([25, 50, 75, 100])
+        .enter()
+        .append('g');
+      // .attr('transform', (d) => {
+      //   return `rotate(${l(d) - 180})`;
+      // });
+
+      const texts = {
+        25: t('Very low SPS'),
+        50: t('Low SPS'),
+        75: t('Medium SPS'),
+        100: t('High SPS'),
+      };
+
+      // Angle labels
+      angleAxisLabelGroups
         .append('text')
-        .attr('x', radius + 6)
-        .attr('dy', '.35em')
-        // .style('text-anchor', (d) => {
-        //   return l(d) < 270 && l(d) > 90 ? 'end' : null;
-        // })
-        .style('fill', '#ebebeb')
-        .attr('transform', (d) => {
-          return l(d) < 270 && l(d) > 90 ? `rotate(180 ${radius + 6},0)` : null;
-        })
+        // .style('text-anchor', 'middle')
+        .style('fill', white)
+        .attr('x', (d) => l(d * 4) + 180) // Fix Label positioning
+        .attr('dy', '1em')
+        .append('textPath')
+        .attr('xlink:href', '#label-arc')
         .text((d) => {
-          return d;
+          return texts[d];
         });
     };
 
-    const radius = Math.min(width, height) / 2 - 30;
-    const sizeVariable = 'FREQUENCY';
-
-    // radius
-    const r = d3.scaleLinear().range([radius, innerRadius]).domain([0, 100]);
-
-    // Line
-    const l = d3.scaleLinear().domain([0, 100]).range([-180, 0]);
-
-    const size = d3.scaleLinear().range([3, 20]);
-
     // Just for debugging
-    d3.selectAll('svg > *').remove();
+    d3.selectAll('#r-axis > *').remove();
+    d3.selectAll('#a-axis > *').remove();
 
-    const svg = d3
-      .select('#srs-chart')
-      .append('g')
-      .attr('transform', `translate(${width / 2},${height / 2})`);
+    const svg = d3.select('#srs-group');
 
-    size.domain(
-      d3.extent(data, (d) => {
-        return parseFloat(d[sizeVariable]);
-      })
-    );
-
-    const radialAxis = svg.append('g').attr('class', 'r-axis');
-
+    const radialAxis = d3.select('#r-axis');
     const radialAxisGroups = radialAxis
       .selectAll('g')
-      .data([0, 25, 50, 75])
+      .data([0, 25, 50, 75, 100])
       .enter()
       .append('g');
 
-    renderBackgroundArc(svg, radialAxis, radius);
+    // Background arc
+    renderBackgroundArc(radialAxis);
 
-    // radial number values ticks
+    // Center arc
+    radialAxis
+      .append('path')
+      .attr('fill', backgroundColor)
+      .attr('d', arcGenerator(innerRadius, 0));
+
+    // Radial number values
     radialAxisGroups
       .append('text')
       .attr('x', (d) => {
         return -r(d) + 10;
       })
-      .attr('translate', '')
-      .style('fill', '#ebebeb')
+      .style('fill', white)
       .style('stroke', 'transparent')
       .style('text-anchor', 'middle')
-      .text((d) => d);
+      .text((d) => d)
+      .raise();
 
-    // radial arcs ticks
+    // Radial arcs ticks
     radialAxisGroups
       .append('path')
-      .attr('stroke', '#ebebeb')
-      .attr('d', (d) => arcGenerator((radius * d) / 100, (radius * d) / 100)());
+      .attr('stroke', white)
+      .attr('stroke-opacity', 0.5)
+      .attr('stroke-dasharray', '0 2 0')
+      .attr('d', (d) => {
+        if (d === 0 || d === 100) return null;
+        return arcGenerator(r(d), r(d))();
+      });
 
-    renderAngleAxis(svg, radius, l);
+    // Angle axis
+    renderAngleAxis();
     radialAxisGroups.raise(); // Move up on the order rendering
 
+    // Points
     const points = svg.append('g').attr('class', 'points');
 
     points
@@ -162,6 +176,7 @@ function SrsChart({ width, height }: LineRadialProps) {
       .enter()
       .append('g')
       .attr('class', 'cpoint')
+      .attr('id', (d) => `point-${d.OBJECTID}`)
       .attr('transform', (d) => {
         // get angle and radius
         const angle = l(d.SPS); // angle given  by SPS
@@ -172,28 +187,34 @@ function SrsChart({ width, height }: LineRadialProps) {
       })
       .append('circle')
       .attr('class', 'point')
-      .attr('r', 1.2)
-      .attr('fill', () => {
-        return 'white';
-      })
+      .attr('r', 2)
+      .attr('fill', white)
+      .attr('stroke', white)
+      .attr('stroke-width', 2)
+      .style('fill-opacity', 0.5)
+      .style('stroke-opacity', 0.2)
       .attr('mix-blend-mode', 'multiply');
+  }, [width, height, t]);
 
-    // Point interaction
-    points.selectAll('g').on('click', (d) => {
-      console.info(
-        `${d.scientific_name}-  SPS:${d.SPS}; Range:${d.per_global} CC:${d.conservation_concern}`
-      );
-    });
-
-    // Center arc
-    radialAxis
-      .append('path')
-      .attr('fill', '#0F2B3B')
-      .attr('d', arcGenerator(innerRadius, 0))
-      .raise();
-  }, [width, height]);
-
-  return <svg id="srs-chart" width={width} height={height} />;
+  return (
+    <svg id="srs-chart" width={width} height={height}>
+      <g id="srs-group" transform={`translate(${width / 2},${height / 2})`}>
+        <g id="r-axis" />
+        <g id="a-axis" />
+      </g>
+      <defs>
+        <linearGradient id="gradient">
+          <stop offset="0%" stopColor="#a00000" />
+          <stop offset="50%" stopColor="#aaaa00" />
+          <stop offset="100%" stopColor="#00A548" />
+        </linearGradient>
+        <radialGradient cy="100%" id="radial-gradient">
+          <stop offset="15%" stopColor={navy} />
+          <stop offset="100%" stopColor="transparent" />
+        </radialGradient>
+      </defs>
+    </svg>
+  );
 }
 
 export default SrsChart;
