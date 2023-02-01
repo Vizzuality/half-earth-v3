@@ -34,6 +34,8 @@ function SpeciesTable({
   speciesList,
   searchTerm,
   vertebrateType,
+  loaded,
+  hasData,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -127,6 +129,38 @@ function SpeciesTable({
 
   const PX_TO_TOP = 300;
   const tableHeight = height - PX_TO_TOP;
+
+  const renderTable = () => {
+    if (!loaded) {
+      return (
+        <div className={styles.loader} style={{ height: tableHeight }}>
+          <Loading />
+        </div>
+      );
+    }
+    if (!hasData) {
+      return (
+        <p className={styles.message}>
+          <T _str="No data" />
+        </p>
+      );
+    }
+    if (speciesList.length === 0) {
+      return (
+        <p className={styles.message}>
+          <T _str="No data for this search" />
+        </p>
+      );
+    }
+    return (
+      <Virtuoso
+        className={styles.rowsContainer}
+        totalCount={speciesList.length}
+        item={renderRow}
+      />
+    );
+  };
+
   return (
     <div className={styles.scrolleableArea}>
       <section className={styles.section}>
@@ -202,17 +236,7 @@ function SpeciesTable({
             ))}
           </div>
         </div>
-        {speciesList.length === 0 || !speciesList ? (
-          <div className={styles.loader} style={{ height: tableHeight }}>
-            <Loading />
-          </div>
-        ) : (
-          <Virtuoso
-            className={styles.rowsContainer}
-            totalCount={speciesList.length}
-            item={renderRow}
-          />
-        )}
+        {renderTable()}
       </div>
       <section />
     </div>
