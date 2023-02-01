@@ -60,7 +60,7 @@ function Indicators({ countryData, landMarineSelection }) {
       })}
     >
       <IndicatorCard
-        indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
+        indicator={getLocaleNumber(SPI, locale)}
         description={
           <p>
             {land ? (
