@@ -31,13 +31,22 @@ const mapStateToProps = (state) => ({
 });
 
 function SpeciesModalContainer(props) {
-  const { changeUI, speciesModalSort, state, countryData } = props;
+  const {
+    changeUI,
+    speciesModalSort,
+    state,
+    countryData,
+    selectedLandMarineOption,
+  } = props;
   const { marineSpeciesTotal } = countryData || {};
+  const isLandSelected = selectedLandMarineOption.slug === LAND_MARINE.land;
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
 
-  const [vertebrateType, setVertebrateType] = useState(vertebrateTabs[0].slug);
+  const [vertebrateType, setVertebrateType] = useState(
+    isLandSelected ? vertebrateTabs[0].slug : vertebrateTabs[1].slug
+  );
   const [loaded, setLoaded] = useState(false);
   const [hasData, setHasData] = useState(false);
   const [speciesList, setSpeciesList] = useState([]);

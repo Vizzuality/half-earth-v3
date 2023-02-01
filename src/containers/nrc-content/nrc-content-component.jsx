@@ -272,7 +272,7 @@ function NrcContent({
               )}
             </div>
           </header>
-          <SpeciesTable />
+          <SpeciesTable selectedLandMarineOption={selectedLandMarineOption} />
         </motion.div>
       )}
     </div>
