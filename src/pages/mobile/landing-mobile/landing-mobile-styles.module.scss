@@ -1,3 +1,5 @@
+@import 'styles/settings';
+
 .container {
   position: relative;
   background-size: cover;
@@ -11,5 +13,6 @@
     position: absolute;
     right: 20px;
     top: 5px;
+    z-index: $over-front;
   }
 }
