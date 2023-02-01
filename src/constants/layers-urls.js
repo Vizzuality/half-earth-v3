@@ -147,7 +147,7 @@ const GADM_1_ADMIN_AREAS_FEATURE_LAYER_URL =
   'https://utility.arcgis.com/usrsvcs/servers/bdebda73091e47a1bda9805831339779/rest/services/gadm1_precalculated_all/FeatureServer';
 export const LAYERS_URLS = {
   [GLOBAL_SPI_FEATURE_LAYER]:
-    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm/FeatureServer',
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_gadm_v2/FeatureServer',
   [MARINE_SPI_FEATURE_LAYER]:
     'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/Global_SPI_EEZ/FeatureServer',
   [AOIS_HISTORIC_PRODUCTION]:
