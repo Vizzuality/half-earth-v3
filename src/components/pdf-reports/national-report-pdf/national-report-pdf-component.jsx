@@ -86,7 +86,7 @@ function NationalReportPdf({
       <section className={styles.indicatorCardsContainer}>
         <IndicatorCard
           className={styles.indicatorCard}
-          indicator={SPI ? getLocaleNumber(SPI, locale) : ''}
+          indicator={!!SPI || SPI === 0 ? getLocaleNumber(SPI, locale) : ''}
           description={
             <p>
               {land ? (
