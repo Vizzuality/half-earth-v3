@@ -28,6 +28,11 @@ const actions = {
   downloadNrcPdfAnalytics,
 };
 
+export const NRCSidebar = {
+  main: 'main',
+  vertebrates: 'vertebrates',
+};
+
 function NrcContainer(props) {
   const {
     browsePage,
@@ -36,6 +41,7 @@ function NrcContainer(props) {
     countryId,
     changeUI,
     setNRCSidebarView,
+    NRCSidebarView,
   } = props;
 
   const locale = useLocale();
@@ -53,6 +59,11 @@ function NrcContainer(props) {
   }, []);
 
   const handleClose = () => {
+    // Close vertebrates table if its open
+    if (NRCSidebarView !== NRCSidebar.main) {
+      setNRCSidebarView(NRCSidebar.main);
+    }
+
     browsePage({ type: NATIONAL_REPORT_CARD_LANDING });
     if (onboardingType)
       changeUI({

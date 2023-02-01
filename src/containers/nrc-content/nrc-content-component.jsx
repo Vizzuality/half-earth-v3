@@ -33,12 +33,8 @@ import { ReactComponent as BackArrowIcon } from 'icons/back_arrow.svg';
 import { ReactComponent as DownloadIcon } from 'icons/download.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
 
+import { NRCSidebar } from './nrc-content';
 import styles from './nrc-content-styles.module.scss';
-
-const NRCSidebar = {
-  main: 'main',
-  vertebrates: 'vertebrates',
-};
 
 function NrcContent({
   trendChartData,
