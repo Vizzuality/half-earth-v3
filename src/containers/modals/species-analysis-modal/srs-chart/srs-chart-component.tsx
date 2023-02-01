@@ -18,6 +18,7 @@ import data from './brazil-mock.json';
 import { LineRadialProps } from './index.d';
 
 const innerRadius = 56;
+const arcLabelPadding = 25;
 const arcGenerator = (outerR, innerR = 0) =>
   d3
     .arc()
@@ -49,14 +50,13 @@ function SrsChart({ width, height }: LineRadialProps) {
       radialAxis
         .append('path')
         .attr('fill', 'url(#gradient)')
-        .style('opacity', 0.5)
+        .style('opacity', 1)
         .attr('d', arcGenerator(radius));
 
       // Second element just for extra gradient
       radialAxis
         .append('path')
         .attr('fill', 'url(#radial-gradient)')
-        .attr('mix-blend-mode', 'multiply')
         .style('opacity', 1)
         .attr('d', arcGenerator(radius));
     };
@@ -69,7 +69,7 @@ function SrsChart({ width, height }: LineRadialProps) {
         .append('path')
         .attr('fill', navy)
         .attr('id', 'label-arc')
-        .attr('d', arcGenerator(radius + 25, radius));
+        .attr('d', arcGenerator(radius + arcLabelPadding, radius));
 
       const angleAxisGroups = angleAxis
         .selectAll('g')
@@ -84,7 +84,7 @@ function SrsChart({ width, height }: LineRadialProps) {
       angleAxisGroups
         .append('line')
         .attr('x1', innerRadius)
-        .attr('x2', radius + 25)
+        .attr('x2', radius + arcLabelPadding)
         .attr('stroke', backgroundColor);
 
       const angleAxisLabelGroups = angleAxis
@@ -109,7 +109,7 @@ function SrsChart({ width, height }: LineRadialProps) {
         .append('text')
         // .style('text-anchor', 'middle')
         .style('fill', white)
-        .attr('x', (d) => l(d * 4) + 180) // Fix Label positioning
+        .attr('x', (d) => 1000) // Fix Label positioning
         .attr('dy', '1em')
         .append('textPath')
         .attr('xlink:href', '#label-arc')
@@ -208,9 +208,9 @@ function SrsChart({ width, height }: LineRadialProps) {
           <stop offset="50%" stopColor="#aaaa00" />
           <stop offset="100%" stopColor="#00A548" />
         </linearGradient>
-        <radialGradient cy="100%" id="radial-gradient">
-          <stop offset="15%" stopColor={navy} />
-          <stop offset="100%" stopColor="transparent" />
+        <radialGradient id="radial-gradient" cy="100%">
+          <stop offset="30%" stopColor={navy} />
+          <stop offset="100%" stopOpacity={0.3} stopColor={navy} />
         </radialGradient>
       </defs>
     </svg>
