@@ -48,6 +48,8 @@ function SpeciesModalContainer(props) {
       vertebrateType === LAND_MARINE.marine && marineSpeciesTotal === 0;
     if (!isMarineAndEmpty && layer && state.location.payload.iso) {
       const getFeatures = async () => {
+        // Set empty species so we show the loading spinner
+        setSpeciesList([]);
         const query = await layer.createQuery();
         query.where = `iso3 = '${state.location.payload.iso}'`;
         query.maxRecordCountFactor = '10000';

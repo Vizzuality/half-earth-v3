@@ -62,9 +62,9 @@ export const getSortedSpeciesList = createSelector(
     const direction = speciesModalSort && speciesModalSort.split('-')[1];
     const category =
       {
-        'species group': 'speciesgroup',
+        group: 'speciesgroup',
         'range within country protected': 'percentprotected',
-        'species protection score': 'NSPS',
+        sps: 'NSPS',
       }[sortedCategory] || sortedCategory;
     const sortedData = sortBy(filteredSpeciesList, (d) => d[category]);
     return direction === SORT.DESC ? sortedData.reverse() : sortedData;
