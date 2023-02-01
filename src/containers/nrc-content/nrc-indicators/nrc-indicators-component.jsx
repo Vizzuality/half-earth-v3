@@ -36,11 +36,7 @@ function Indicators({ countryData, landMarineSelection }) {
     hm_vh_mar,
     hm_ter,
     hm_mar,
-
-    hm_no_ter,
   } = countryData || {};
-
-  console.log({ some: hm_ter, no: hm_no_ter, vh: hm_vh_ter });
 
   const land = landMarineSelection === 'land';
   const SPI = land ? SPI_ter : SPI_mar;
@@ -53,8 +49,6 @@ function Indicators({ countryData, landMarineSelection }) {
     : protection_needed_mar;
   const hm_vh = land ? hm_vh_ter : hm_vh_mar;
   const hm = land ? hm_ter : hm_mar;
-
-  console.log({ someHM: Math.round(hm) });
 
   const isNumberOr0 = (value) => value === 0 || !!value;
   const isMobile = useMobile();
@@ -248,7 +242,7 @@ function Indicators({ countryData, landMarineSelection }) {
         </IndicatorCard>
       )}
       {/* Some human modification zero cases */}
-      {Math.round(hm) === 0 && (
+      {Math.round(hm) === 0 && Math.round(hm_vh) !== 0 && (
         <IndicatorCard
           color={COLORS['high-modification']}
           indicator={`${Math.round(hm_vh)}%`}
@@ -297,7 +291,7 @@ function Indicators({ countryData, landMarineSelection }) {
         </IndicatorCard>
       )}
       {/* Very high human modification zero cases */}
-      {Math.round(hm_vh) === 0 && (
+      {Math.round(hm_vh) === 0 && Math.round(hm) !== 0 && (
         <IndicatorCard
           color={COLORS['high-modification']}
           indicator={`${Math.round(hm)}%`}
