@@ -189,7 +189,7 @@ function Indicators({ countryData, landMarineSelection }) {
       {Math.round(hm_vh) !== 0 && Math.round(hm) !== 0 && (
         <IndicatorCard
           color={COLORS['high-modification']}
-          indicator={`${Math.round(hm)}%`}
+          indicator={`${Math.round(hm_vh)}%`}
           description={
             <p>
               {land && (
