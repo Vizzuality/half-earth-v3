@@ -6,11 +6,11 @@
   bottom: auto;
 
   @media #{$mobile-only} {
-    bottom: 0;
+    bottom: 60px;
   }
 
   @media #{$mobile-landscape} {
-    bottom: 0 !important;
+    bottom: 60px !important;
   }
 }
 
