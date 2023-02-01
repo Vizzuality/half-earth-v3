@@ -212,9 +212,14 @@ function RankingChart({
         <div className={styles.blank} />
         {Object.values(groupBy(LEGEND_ITEMS, 'category')).map(
           (categoryItems) => (
-            <div className={styles.legendCategoryContainer}>
+            <div
+              key={
+                categoryItems && categoryItems[0] && categoryItems[0].category
+              }
+              className={styles.legendCategoryContainer}
+            >
               {categoryItems.map((i) => (
-                <div className={styles.legendItem}>
+                <div key={i.legend} className={styles.legendItem}>
                   <div
                     className={styles.legendColor}
                     style={{ background: i.color }}
