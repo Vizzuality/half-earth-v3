@@ -36,7 +36,11 @@ function Indicators({ countryData, landMarineSelection }) {
     hm_vh_mar,
     hm_ter,
     hm_mar,
+
+    hm_no_ter,
   } = countryData || {};
+
+  console.log({ some: hm_ter, no: hm_no_ter, vh: hm_vh_ter });
 
   const land = landMarineSelection === 'land';
   const SPI = land ? SPI_ter : SPI_mar;
@@ -49,6 +53,8 @@ function Indicators({ countryData, landMarineSelection }) {
     : protection_needed_mar;
   const hm_vh = land ? hm_vh_ter : hm_vh_mar;
   const hm = land ? hm_ter : hm_mar;
+
+  console.log({ someHM: Math.round(hm) });
 
   const isNumberOr0 = (value) => value === 0 || !!value;
   const isMobile = useMobile();
@@ -184,41 +190,69 @@ function Indicators({ countryData, landMarineSelection }) {
           }}
         />
       </IndicatorCard>
+      {console.log(Math.round(hm) > 0)}
       <IndicatorCard
         color={COLORS['high-modification']}
-        indicator={hm_vh && `${Math.round(hm_vh)}%`}
+        indicator={
+          Math.round(hm_vh) > 0 ? `${Math.round(hm_vh)}%` : `${Math.round(hm)}%`
+        }
         description={
           <p>
-            {hm &&
-              (land ? (
-                <T
-                  _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } land has {very high human modification} and 10% has some modification"
-                  veryHighHumanModification={
-                    <b>
-                      <T
-                        _str="very high human modification"
-                        _comment="27% of land has {very high human modification} and 10% has some modification"
-                      />
-                    </b>
-                  }
-                  someModificationNumber={Math.round(hm)}
-                />
-              ) : (
-                <T
-                  _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
-                  veryHighHumanModification={
-                    <b>
-                      <T
-                        _str="very high human modification"
-                        _comment="27% of land has {very high human modification} and 10% has some modification"
-                      />
-                    </b>
-                  }
-                  someModificationNumber={Math.round(hm)}
-                />
-              ))}
+            {Math.round(hm_vh) > 0 && land && (
+              <T
+                _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                _comment="27% { of } land has {very high human modification} and 10% has some modification"
+                veryHighHumanModification={
+                  <b>
+                    <T
+                      _str="very high human modification"
+                      _comment="27% of land has {very high human modification} and 10% has some modification"
+                    />
+                  </b>
+                }
+                someModificationNumber={Math.round(hm)}
+              />
+            )}
+            {Math.round(hm_vh) > 0 && !land && (
+              <T
+                _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+                _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
+                veryHighHumanModification={
+                  <b>
+                    <T
+                      _str="very high human modification"
+                      _comment="27% of land has {very high human modification} and 10% has some modification"
+                    />
+                  </b>
+                }
+                someModificationNumber={Math.round(hm)}
+              />
+            )}
+
+            {/* Some human modification zero cases */}
+            {Math.round(hm_vh) === 0 && land && (
+              <T
+                _str="of land has {someModification}"
+                _comment="27% { of } land has {some human modification}"
+                someModification={
+                  <b>
+                    <T _str="some human modification" />
+                  </b>
+                }
+              />
+            )}
+
+            {Math.round(hm_vh) === 0 && !land && (
+              <T
+                _str="of marine area has {someModification}"
+                _comment="27% { of } marine area has {some human modification}"
+                someModification={
+                  <b>
+                    <T _str="some human modification" />
+                  </b>
+                }
+              />
+            )}
           </p>
         }
         tooltipInfo={t(
