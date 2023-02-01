@@ -83,15 +83,19 @@
 }
 
 .globalRangeArea {
-  @extend %annotation;
-  align-items: center;
+  @extend %bodyText;
   display: flex;
-  justify-content: space-between;
-
+  flex-direction: column;
+  align-items: center;
+  margin-top: $site-gutter;
+  p {
+    font-weight: 500;
+    margin: 0 0 10px;
+  }
 }
 
 .speciesBarContainer {
-  padding-bottom: 16px;
+  padding-bottom: $site-gutter;
 }
 
 
@@ -151,7 +155,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: baseline;
-  margin-top: 8px;
+  margin-top: $site-gutter;
 
   .speciesNames {
     display: flex;
@@ -161,25 +165,18 @@
     width: 70%;
 
     .commonName {
-      @extend %annotation;
+      @extend %title;
       color: $dark-text;
       text-align: center;
-      font-style: italic;
-      text-transform: inherit;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      margin-top: 4px;
+
       &:hover {
         color: $dark-text-hover;
-        text-decoration: none;
       }
     }
 
     .scientificName {
-      @extend %title;
-      text-transform: uppercase;
-
-
+      @extend %annotation;
+      font-style: italic;
     }
   }
 
@@ -204,6 +201,11 @@
   }
 }
 
+.iucnStatus {
+  @extend %bodyText;
+  text-align: center;
+}
+
 .warningContainer {
   display: flex;
   align-items: flex-start;
@@ -218,38 +220,32 @@
   margin-right: 10px;
 }
 
-.speciesDataContainer {
-  margin: 16px 0 24px 0;
+.SPScontainer {
+  @extend %annotation;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 
-
-  .sectionContainer {
-    @extend %annotation;
+  .SPStitle {
     align-items: center;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    .sectionTitleWrapper {
-      align-items: center;
-        display: flex;
-        position: relative;
-        p {
-          margin: 0;
-        }
-    }
+    position: relative;
   }
 
   .iconWrapper {
     display: flex;
     justify-items: center;
     align-items: center;
-    margin-left: 5px;
+    margin-left: 9px;
+
+    height: 15px;
+    width: 15px;
     .icon {
-      color: $white-opacity;
-      stroke: $white-opacity;
-      stroke-width: 0.6px;
-      height: 16px;
-      min-width: 16px;
-      margin-bottom: 2px;
+      color: $black;
+      fill: $black;
+      stroke: $black;
+      height: 14px;
+      min-width: 14px;
     }
   }
 }

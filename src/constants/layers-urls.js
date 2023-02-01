@@ -112,6 +112,7 @@ import {
   REPTILES_LOOKUP,
   EEZ_MARINE_BORDERS,
   SEARCH_LOOKUP_TABLE,
+  AOI_SPS_TABLE,
 } from 'constants/layers-slugs';
 
 const { REACT_APP_VERCEL_ENV } = process.env;
@@ -394,6 +395,9 @@ export const LAYERS_URLS = {
     'https://utility.arcgis.com/usrsvcs/servers/7c7e6649a44e423ab52083b65823c310/rest/services/Test_Mammal_CRF_species_table/FeatureServer/0',
   [REPTILES_LOOKUP]:
     'https://utility.arcgis.com/usrsvcs/servers/f0b987e051844fd78b05c813ba251548/rest/services/Test_Reptile_CRF_species_table/FeatureServer/0',
+  [AOI_SPS_TABLE]:
+    'https://services9.arcgis.com/IkktFdUAcY3WrH25/arcgis/rest/services/gadm0_fakecontextual/FeatureServer',
+
   // AOIs precalculated layers
   [ADMIN_AREAS_FEATURE_LAYER]: [
     GADM_0_ADMIN_AREAS_FEATURE_LAYER_URL,

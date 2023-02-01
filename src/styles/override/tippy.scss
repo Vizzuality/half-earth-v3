@@ -25,12 +25,18 @@
   bottom: 0;
 }
 
+.light.tippy-box[data-placement^=top]>.tippy-arrow{
+  box-shadow: -0.5px 7px 2px rgba(0, 0, 0, 0.05);
+  z-index: $over-all;
+}
+
 .tippy-box[data-placement^=top]>.tippy-arrow:before{
   bottom: -7px;
   left: 0;
   border-width: 8px 8px 0;
   border-top-color: initial;
   transform-origin: center top;
+
 }
 
 .tippy-box[data-placement^=bottom]>.tippy-arrow {
@@ -82,3 +88,4 @@
   width: 16px;
   color: $white;
 }
+

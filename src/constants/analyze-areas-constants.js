@@ -110,13 +110,14 @@ export const getSidebarCardsConfig = (locale) => ({
     title: (speciesCount) =>
       !locale || locale === 'en' ? (
         <T
-          _str="This area has {br} up to {speciesCount}"
+          _str="This area is expected {br} to have {speciesCount} {br}"
           br={<br />}
           speciesCount={speciesCount}
         />
       ) : (
         <T
-          _str="This area has up to {speciesCount}"
+          _str="This area is expected to have {speciesCount} {br}"
+          br={<br />}
           speciesCount={speciesCount}
         />
       ),

@@ -1,19 +1,19 @@
 import React from 'react';
 
-import Tooltip from '@tippyjs/react';
+import { percentageFormat } from 'utils/data-formatting-utils';
+
 import cx from 'classnames';
 
 import styles from './styles.module.scss';
-
-import { ReactComponent as InfoIcon } from 'icons/infoTooltip.svg';
 
 function Component({
   title,
   className,
   percentage,
+  percentageLabel,
   barAnnotation,
-  tooltipContent = 'More info',
-  theme = 'light',
+  barAnnotationTitle,
+  scale = 'global',
 }) {
   let titlePosition = barAnnotation;
   let updatedBarAnnotation = barAnnotation;
@@ -25,22 +25,11 @@ function Component({
   return (
     <section
       className={cx(className, styles.container, {
-        [styles.dark]: theme === 'dark',
+        [styles.globalRange]: scale === 'global',
+        [styles.localRange]: scale === 'local',
       })}
     >
-      <div className={styles.barTitleWrapper}>
-        <p className={styles.barTitle}>{title}</p>
-        <span className={styles.iconWrapper}>
-          <Tooltip
-            className="light"
-            content={<div className={styles.tooltip}>{tooltipContent}</div>}
-            delay={100}
-            position="bottom"
-          >
-            <InfoIcon className={styles.icon} />
-          </Tooltip>
-        </span>
-      </div>
+      <p className={styles.barTitle}>{title}</p>
       <div className={styles.barWrapper}>
         <div className={styles.bar}>
           <div className={styles.value} style={{ width: `${percentage}%` }} />
@@ -50,11 +39,18 @@ function Component({
               style={{ left: `${updatedBarAnnotation}%` }}
             />
           )}
-          <div
-            className={styles.annotation}
-            style={{ left: `${titlePosition}%` }}
-          />
+          {barAnnotationTitle && (
+            <p
+              className={styles.annotationTitle}
+              style={{ left: `${titlePosition}%` }}
+            >
+              {barAnnotationTitle}
+            </p>
+          )}
         </div>
+        <span className={styles.percentage}>
+          {percentageLabel || `~${percentageFormat(percentage)}%`}
+        </span>
       </div>
     </section>
   );

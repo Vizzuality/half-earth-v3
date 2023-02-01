@@ -48,6 +48,9 @@ import { ReactComponent as ShareIcon } from 'icons/share.svg';
 import mapStateToProps from './selectors';
 import SidebarCard from './sidebar-card-content';
 import SpeciesCard from './species-card';
+import SpeciesCardLegacy from './species-card-legacy';
+
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 function AOISidebar({
   activeCategory,
@@ -258,11 +261,21 @@ function AOISidebar({
                   </span>
                 </div>
               </div>
-              <SpeciesCard
-                area={area}
-                speciesData={speciesData}
-                contextualData={contextualData}
-              />
+              {REACT_APP_FEATURE_AOI_CHANGES && (
+                <SpeciesCard
+                  area={area}
+                  speciesData={speciesData}
+                  contextualData={contextualData}
+                />
+              )}
+
+              {!REACT_APP_FEATURE_AOI_CHANGES && (
+                <SpeciesCardLegacy
+                  area={area}
+                  speciesData={speciesData}
+                  contextualData={contextualData}
+                />
+              )}
               <SidebarCard
                 map={map}
                 toggleType="radio"
