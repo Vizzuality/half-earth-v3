@@ -9,11 +9,40 @@ import {
   ResponsiveContainer,
   ReferenceDot,
   Label,
+  Text,
 } from 'recharts';
 
 import { useMobile } from 'constants/responsive';
 
 import styles from './trend-chart-styles.module.scss';
+
+function CustomCursor(props) {
+  const { payload, points, chartHeight } = props;
+  const { year } = payload && payload[0] && payload[0].payload;
+  const { x } = points && points[0];
+
+  // Correction to show last points
+  const correctionPadding = year > 2019 ? 30 : 0;
+  return (
+    <g>
+      <line
+        x1={x}
+        x2={x}
+        y1="0"
+        y2={chartHeight - 30}
+        className={styles.cursorLine}
+      />
+      <Line y={year} stroke="green" label="Min PAGE" />
+      <Text
+        x={x - correctionPadding}
+        y={chartHeight}
+        className={styles.cursorText}
+      >
+        {year}
+      </Text>
+    </g>
+  );
+}
 
 function TrendChartComponent({
   area1,
@@ -79,9 +108,9 @@ function TrendChartComponent({
         fontSize={9}
         strokeWidth={0.9}
         tick={{ stroke: tickStroke, strokeWidth: 0.4 }}
-        tickCount={3}
+        tickCount={5}
         tickLine={false}
-        ticks={[1980, 2000, 2020]}
+        ticks={[1980, 1990, 2000, 2010, 2020]}
         type="number"
       />
 
@@ -96,7 +125,7 @@ function TrendChartComponent({
       {tooltip && (
         <RechartsTooltip
           content={tooltipContent}
-          cursor={{ strokeDasharray: 1 }}
+          cursor={<CustomCursor chartHeight={height} />}
           offset={0}
           position={{ y: 0 }}
         />
