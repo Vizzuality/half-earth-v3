@@ -14,7 +14,13 @@ import { ReactComponent as InfoIcon } from 'icons/infoDark.svg';
 
 import styles from './nrc-trend-styles.module.scss';
 
-function Trend({ chartData, countryData, landMarineSelection, isShrunken }) {
+function Trend({
+  chartData,
+  countryData,
+  landMarineSelection,
+  isShrunken,
+  metadataInfo,
+}) {
   const t = useT();
   const { land: landData, marine: marineData } = chartData;
   const land = landMarineSelection === 'land';
@@ -31,11 +37,7 @@ function Trend({ chartData, countryData, landMarineSelection, isShrunken }) {
         </p>
         <span>
           <Tooltip
-            content={
-              <div className={styles.titleTooltip}>
-                {/* TODO: ADD TREND TOOLTIP */}
-              </div>
-            }
+            content={<div className={styles.titleTooltip}>{metadataInfo}</div>}
             delay={100}
             placement="top"
           >
