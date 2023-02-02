@@ -114,6 +114,7 @@ function NationalReportCard({
           <RankingChart
             countryISO={countryISO}
             className={styles.rankingChart}
+            fullRanking={fullRanking}
             selectedLandMarineOption={selectedLandMarineOption}
           />
           {renderLandMarineSwitch()}
