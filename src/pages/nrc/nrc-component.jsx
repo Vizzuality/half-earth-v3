@@ -28,6 +28,8 @@ import styles from './nrc-styles.module.scss';
 
 const InfoModal = loadable(() => import('components/modal-metadata'));
 
+export const rankingTransitionDuration = 500;
+
 function NationalReportCard({
   countryISO,
   countryName,
@@ -106,7 +108,7 @@ function NationalReportCard({
         <motion.div
           initial={{ width: 300 }}
           animate={{ width: fullRanking ? '64vw' : 300 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: rankingTransitionDuration / 1000 }}
           className={cx(styles.hideOnPrint, styles.rankingContainer, {
             [uiStyles.onboardingMode]: !!onboardingType,
           })}
