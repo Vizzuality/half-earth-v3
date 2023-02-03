@@ -127,6 +127,7 @@ function Challenges({
             yAxisTicks={yAxisTicks}
             onBubbleClick={handleBubbleClick}
             countryChallengesSelectedKey={countryChallengesSelectedKey}
+            fullRanking={fullRanking}
           />
           {fullRanking && (
             <div className={styles.xAxisContainer}>

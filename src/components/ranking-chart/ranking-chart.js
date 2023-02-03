@@ -18,7 +18,13 @@ import mapStateToProps from './ranking-chart-selectors';
 const actions = { ...metadataActions, ...urlActions };
 
 function RankingChartContainer(props) {
-  const { data, selectedLandMarineOption, categorySort, changeUI } = props;
+  const {
+    data,
+    selectedLandMarineOption,
+    categorySort,
+    changeUI,
+    fullRanking,
+  } = props;
   const [searchTerm, setSearchTerm] = useState();
   const [scrollIndex, setScrollIndex] = useState(0);
   const debouncedSearchTerm = useDebounce(searchTerm, 30);
@@ -49,6 +55,7 @@ function RankingChartContainer(props) {
     });
     changeUI({
       landMarineSelection: selectedLandMarineOption.slug,
+      fullRanking,
     });
   };
 
@@ -56,6 +63,7 @@ function RankingChartContainer(props) {
     const { value } = event.target;
     setSearchTerm(value);
   };
+
   const handleSortClick = (category) => {
     const parsedCategory = camelCase(category);
     const sortedCategory = categorySort && categorySort.split('-')[0];

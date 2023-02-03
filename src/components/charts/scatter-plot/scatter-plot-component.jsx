@@ -8,6 +8,7 @@ import cx from 'classnames';
 import * as d3 from 'd3';
 import { format } from 'd3-format';
 import { motion, AnimatePresence } from 'framer-motion';
+import { rankingTransitionDuration } from 'pages/nrc/nrc-component';
 
 import { COUNTRY_ATTRIBUTES } from 'constants/country-data-constants';
 import { getCountryNames } from 'constants/translation-constants';
@@ -52,6 +53,7 @@ function ScatterPlot({
   onBubbleClick,
   handleContainerClick,
   countryChallengesSelectedKey,
+  fullRanking,
 }) {
   const locale = useLocale();
   const chartSurfaceRef = useRef(null);
@@ -116,17 +118,29 @@ function ScatterPlot({
         .scaleLinear()
         .domain([0, 100])
         .range([chartSurfaceRef.current.offsetHeight - padding, padding]);
-
       setChartScale({ xScale, yScale });
     }
   };
 
   useEffect(() => {
+    window.addEventListener('resize', calculateScale);
+    return () => {
+      window.removeEventListener('resize', calculateScale);
+    };
+  }, []);
+
+  useEffect(() => {
     calculateScale();
-    window.addEventListener('resize', () => {
-      calculateScale();
-    });
-  }, [data, countryChallengesSelectedKey, chartSurfaceRef.current]);
+  }, [data, countryChallengesSelectedKey]);
+
+  // Delay calculation of chart width until the animation has ended
+  useEffect(() => {
+    if (chartSurfaceRef.current) {
+      setTimeout(() => {
+        calculateScale();
+      }, rankingTransitionDuration);
+    }
+  }, [chartSurfaceRef.current, fullRanking]);
 
   const animationTransitionConfig = {
     type: 'spring',
