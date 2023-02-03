@@ -302,7 +302,7 @@ function Indicators({ countryData, landMarineSelection }) {
         indicator={total_endemic_ter && getLocaleNumber(total_endemic, locale)}
         description={
           <p>
-            {nspecies &&
+            {isNumberOr0(nspecies) &&
               (land ? (
                 <T
                   _str="{bold} of a total of {totalEndemicNumber} land vertebrates"
