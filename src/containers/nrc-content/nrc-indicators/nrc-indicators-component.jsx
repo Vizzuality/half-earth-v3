@@ -53,6 +53,123 @@ function Indicators({ countryData, landMarineSelection }) {
   const isNumberOr0 = (value) => value === 0 || !!value;
   const isMobile = useMobile();
 
+  const renderModificationIndicator = () => {
+    const noSomeHumanModification =
+      Math.round(hm) === 0 && Math.round(hm_vh) !== 0;
+    const noVeryHighHumanModification =
+      Math.round(hm_vh) === 0 && Math.round(hm) !== 0;
+
+    const getIndicator = () => {
+      if (noVeryHighHumanModification) {
+        return `${Math.round(hm)}%`;
+      }
+      return `${Math.round(hm_vh)}%`;
+    };
+
+    const getDescription = () => {
+      const boldVeryHighText = (
+        <b>
+          <T
+            _str="very high human modification"
+            _comment="27% of land has {very high human modification} and 10% has some modification"
+          />
+        </b>
+      );
+      const boldSomeHumanText = (
+        <b>
+          <T _str="some human modification" />
+        </b>
+      );
+
+      if (noSomeHumanModification) {
+        return (
+          <p>
+            {land && (
+              <T
+                _str="of land has {veryHighModification}"
+                _comment="27% { of } land has {very high human modification}"
+                veryHighModification={boldVeryHighText}
+              />
+            )}
+            {!land && (
+              <T
+                _str="of marine area has {veryHighModification}"
+                _comment="27% { of } marine area has {very high human modification}"
+                veryHighModification={boldVeryHighText}
+              />
+            )}
+          </p>
+        );
+      }
+
+      if (noVeryHighHumanModification) {
+        return (
+          <p>
+            {land && (
+              <T
+                _str="of land has {someModification}"
+                _comment="27% { of } land has {some human modification}"
+                someModification={boldSomeHumanText}
+              />
+            )}
+
+            {!land && (
+              <T
+                _str="of marine area has {someModification}"
+                _comment="27% { of } marine area has {some human modification}"
+                someModification={boldSomeHumanText}
+              />
+            )}
+          </p>
+        );
+      }
+
+      return (
+        <p>
+          {land && (
+            <T
+              _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+              _comment="27% { of } land has {very high human modification} and 10% has some modification"
+              veryHighHumanModification={boldVeryHighText}
+              someModificationNumber={Math.round(hm)}
+            />
+          )}
+          {!land && (
+            <T
+              _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+              _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
+              veryHighHumanModification={boldVeryHighText}
+              someModificationNumber={Math.round(hm)}
+            />
+          )}
+        </p>
+      );
+    };
+
+    return (
+      <IndicatorCard
+        color={COLORS['high-modification']}
+        indicator={getIndicator()}
+        description={getDescription()}
+        tooltipInfo={t(
+          'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
+        )}
+      >
+        <div
+          className={styles.bar}
+          style={{
+            backgroundImage: getBarStyles({
+              color1: COLORS['high-modification'],
+              value1: hm_vh,
+              color2: COLORS['some-modification'],
+              value2: hm,
+            }),
+          }}
+        />
+      </IndicatorCard>
+    );
+  };
+
   return (
     <div
       className={cx(styles.indicatorCardsContainer, {
@@ -184,161 +301,7 @@ function Indicators({ countryData, landMarineSelection }) {
           }}
         />
       </IndicatorCard>
-
-      {/* Very high human modification and some human modification up to zero cases */}
-      {Math.round(hm_vh) !== 0 && Math.round(hm) !== 0 && (
-        <IndicatorCard
-          color={COLORS['high-modification']}
-          indicator={`${Math.round(hm_vh)}%`}
-          description={
-            <p>
-              {land && (
-                <T
-                  _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } land has {very high human modification} and 10% has some modification"
-                  veryHighHumanModification={
-                    <b>
-                      <T
-                        _str="very high human modification"
-                        _comment="27% of land has {very high human modification} and 10% has some modification"
-                      />
-                    </b>
-                  }
-                  someModificationNumber={Math.round(hm)}
-                />
-              )}
-              {!land && (
-                <T
-                  _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
-                  veryHighHumanModification={
-                    <b>
-                      <T
-                        _str="very high human modification"
-                        _comment="27% of land has {very high human modification} and 10% has some modification"
-                      />
-                    </b>
-                  }
-                  someModificationNumber={Math.round(hm)}
-                />
-              )}
-            </p>
-          }
-          tooltipInfo={t(
-            'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
-          )}
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: getBarStyles({
-                color1: COLORS['high-modification'],
-                value1: hm_vh,
-                color2: COLORS['some-modification'],
-                value2: hm,
-              }),
-            }}
-          />
-        </IndicatorCard>
-      )}
-      {/* Some human modification zero cases */}
-      {Math.round(hm) === 0 && Math.round(hm_vh) !== 0 && (
-        <IndicatorCard
-          color={COLORS['high-modification']}
-          indicator={`${Math.round(hm_vh)}%`}
-          description={
-            <p>
-              {land && (
-                <T
-                  _str="of land has {veryHighModification}"
-                  _comment="27% { of } land has {very high human modification}"
-                  veryHighModification={
-                    <b>
-                      <T _str="very high human modification" />
-                    </b>
-                  }
-                />
-              )}
-
-              {!land && (
-                <T
-                  _str="of marine area has {veryHighModification}"
-                  _comment="27% { of } marine area has {very high human modification}"
-                  veryHighModification={
-                    <b>
-                      <T _str="very high human modification" />
-                    </b>
-                  }
-                />
-              )}
-            </p>
-          }
-          tooltipInfo={t(
-            'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
-          )}
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: getBarStyles({
-                color1: COLORS['high-modification'],
-                value1: hm_vh,
-                color2: COLORS['some-modification'],
-                value2: hm,
-              }),
-            }}
-          />
-        </IndicatorCard>
-      )}
-      {/* Very high human modification zero cases */}
-      {Math.round(hm_vh) === 0 && Math.round(hm) !== 0 && (
-        <IndicatorCard
-          color={COLORS['high-modification']}
-          indicator={`${Math.round(hm)}%`}
-          description={
-            <p>
-              {land && (
-                <T
-                  _str="of land has {someModification}"
-                  _comment="27% { of } land has {some human modification}"
-                  someModification={
-                    <b>
-                      <T _str="some human modification" />
-                    </b>
-                  }
-                />
-              )}
-
-              {!land && (
-                <T
-                  _str="of marine area has {someModification}"
-                  _comment="27% { of } marine area has {some human modification}"
-                  someModification={
-                    <b>
-                      <T _str="some human modification" />
-                    </b>
-                  }
-                />
-              )}
-            </p>
-          }
-          tooltipInfo={t(
-            'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
-          )}
-        >
-          <div
-            className={styles.bar}
-            style={{
-              backgroundImage: getBarStyles({
-                color1: COLORS['high-modification'],
-                value1: hm_vh,
-                color2: COLORS['some-modification'],
-                value2: hm,
-              }),
-            }}
-          />
-        </IndicatorCard>
-      )}
+      {renderModificationIndicator()}
     </div>
   );
 }
