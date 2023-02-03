@@ -54,13 +54,13 @@ function Indicators({ countryData, landMarineSelection }) {
   const isMobile = useMobile();
 
   const renderProtectionIndicator = () => {
-    const protectionNeeded = prop_protected + protection_needed;
+    const protectionNeeded = Math.round(prop_protected + protection_needed);
     const noProtectedAreas =
       Math.round(prop_protected) === 0 && Math.round(protectionNeeded) !== 0;
 
     const getIndicator = () => {
       if (noProtectedAreas) {
-        return `${Math.round(protectionNeeded)}%`;
+        return `${protectionNeeded}%`;
       }
       return `${Math.round(prop_protected)}%`;
     };
@@ -142,9 +142,9 @@ function Indicators({ countryData, landMarineSelection }) {
           style={{
             backgroundImage: getBarStyles({
               color1: COLORS['protected-areas'],
-              value1: prop_protected,
+              value1: Math.round(prop_protected),
               color2: COLORS['protection-needed'],
-              value2: prop_protected + protection_needed,
+              value2: protectionNeeded,
             }),
           }}
         />
