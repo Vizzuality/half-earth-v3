@@ -53,6 +53,101 @@ function Indicators({ countryData, landMarineSelection }) {
   const isNumberOr0 = (value) => value === 0 || !!value;
   const isMobile = useMobile();
 
+  const renderProtectionIndicator = () => {
+    const protectionNeeded = prop_protected + protection_needed;
+    const noProtectedAreas =
+      Math.round(prop_protected) === 0 && Math.round(protectionNeeded) !== 0;
+
+    const getIndicator = () => {
+      if (noProtectedAreas) {
+        return `${Math.round(protectionNeeded)}%`;
+      }
+      return `${Math.round(prop_protected)}%`;
+    };
+
+    const getDescription = () => {
+      const needsProtectionNumber = getLocaleNumber(protection_needed, locale);
+      if (noProtectedAreas) {
+        return (
+          <p>
+            {isNumberOr0(protection_needed) && (
+              <T
+                _str="of {areaNeedsProtection}"
+                _comment="10% (of) land needs protection"
+                areaNeedsProtection={
+                  <b>
+                    {land ? (
+                      <T
+                        _str="land needs protection"
+                        _comment="10% of {land needs protection} and 2% needs protection"
+                      />
+                    ) : (
+                      <T
+                        _str="marine area needs protection"
+                        _comment="10% of {marine area needs protection} and 2% needs protection"
+                      />
+                    )}
+                  </b>
+                }
+                needsProtectionNumber={needsProtectionNumber}
+              />
+            )}
+          </p>
+        );
+      }
+
+      return (
+        <p>
+          {isNumberOr0(protection_needed) && (
+            <T
+              _str="of {bold} and {needsProtectionNumber}% needs protection"
+              _comment="10% (of) land is protected (and) 2% (needs protection)"
+              bold={
+                <b>
+                  {land ? (
+                    <T
+                      _str="land is protected"
+                      _comment="10% of {land is protected} and 2% needs protection"
+                    />
+                  ) : (
+                    <T
+                      _str="marine area is protected"
+                      _comment="10% of {marine area is protected} and 2% needs protection"
+                    />
+                  )}
+                </b>
+              }
+              needsProtectionNumber={needsProtectionNumber}
+            />
+          )}
+        </p>
+      );
+    };
+
+    return (
+      <IndicatorCard
+        color={COLORS['protected-areas']}
+        indicator={getIndicator()}
+        description={getDescription()}
+        tooltipInfo={t(
+          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI, only if areas aid in achieving species protection targets.'
+        )}
+      >
+        <div
+          className={styles.bar}
+          style={{
+            backgroundImage: getBarStyles({
+              color1: COLORS['protected-areas'],
+              value1: prop_protected,
+              color2: COLORS['protection-needed'],
+              value2: prop_protected + protection_needed,
+            }),
+          }}
+        />
+      </IndicatorCard>
+    );
+  };
+
   const renderModificationIndicator = () => {
     const noSomeHumanModification =
       Math.round(hm) === 0 && Math.round(hm_vh) !== 0;
@@ -253,54 +348,8 @@ function Indicators({ countryData, landMarineSelection }) {
           }}
         />
       </IndicatorCard>
-      <IndicatorCard
-        color={COLORS['protected-areas']}
-        indicator={prop_protected && `${Math.round(prop_protected)}%`}
-        description={
-          <p>
-            {isNumberOr0(protection_needed) && (
-              <T
-                _str="of {bold} and {needsProtectionNumber}% needs protection"
-                _comment="10% (of) land is protected (and) 2% (needs protection)"
-                bold={
-                  <b>
-                    {land ? (
-                      <T
-                        _str="land is protected"
-                        _comment="10% of {land is protected} and 2% needs protection"
-                      />
-                    ) : (
-                      <T
-                        _str="marine area is protected"
-                        _comment="10% of {marine area is protected} and 2% needs protection"
-                      />
-                    )}
-                  </b>
-                }
-                needsProtectionNumber={getLocaleNumber(
-                  protection_needed,
-                  locale
-                )}
-              />
-            )}
-          </p>
-        }
-        tooltipInfo={t(
-          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI, only if areas aid in achieving species protection targets.'
-        )}
-      >
-        <div
-          className={styles.bar}
-          style={{
-            backgroundImage: getBarStyles({
-              color1: COLORS['protected-areas'],
-              value1: prop_protected,
-              color2: COLORS['protection-needed'],
-              value2: prop_protected + protection_needed,
-            }),
-          }}
-        />
-      </IndicatorCard>
+
+      {renderProtectionIndicator()}
       {renderModificationIndicator()}
     </div>
   );
