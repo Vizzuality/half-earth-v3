@@ -50,8 +50,8 @@
     width: 100px;
     transform: translateX(-50%);
   }
-
 }
+
 .iconWrapper {
   display: flex;
   justify-items: center;
@@ -83,5 +83,9 @@
 .dark {
   .value {
     background-color: $white;
+  }
+
+  .bar {
+    background-color: $white-opacity;
   }
 }
