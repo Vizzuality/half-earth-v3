@@ -53,6 +53,226 @@ function Indicators({ countryData, landMarineSelection }) {
   const isNumberOr0 = (value) => value === 0 || !!value;
   const isMobile = useMobile();
 
+  const renderProtectionIndicator = () => {
+    const protectionNeeded = Math.round(prop_protected + protection_needed);
+    const noProtectedAreas =
+      Math.round(prop_protected) === 0 && Math.round(protectionNeeded) !== 0;
+
+    const getIndicator = () => {
+      if (noProtectedAreas) {
+        return `${protectionNeeded}%`;
+      }
+      return `${Math.round(prop_protected)}%`;
+    };
+
+    const getDescription = () => {
+      const needsProtectionNumber = getLocaleNumber(protection_needed, locale);
+      if (noProtectedAreas) {
+        return (
+          <p>
+            {isNumberOr0(protection_needed) && (
+              <T
+                _str="of {areaNeedsProtection}"
+                _comment="10% (of) land needs protection"
+                areaNeedsProtection={
+                  <b>
+                    {land ? (
+                      <T
+                        _str="land needs protection"
+                        _comment="10% of {land needs protection} and 2% needs protection"
+                      />
+                    ) : (
+                      <T
+                        _str="marine area needs protection"
+                        _comment="10% of {marine area needs protection} and 2% needs protection"
+                      />
+                    )}
+                  </b>
+                }
+                needsProtectionNumber={needsProtectionNumber}
+              />
+            )}
+          </p>
+        );
+      }
+
+      return (
+        <p>
+          {isNumberOr0(protection_needed) && (
+            <T
+              _str="of {bold} and {needsProtectionNumber}% needs protection"
+              _comment="10% (of) land is protected (and) 2% (needs protection)"
+              bold={
+                <b>
+                  {land ? (
+                    <T
+                      _str="land is protected"
+                      _comment="10% of {land is protected} and 2% needs protection"
+                    />
+                  ) : (
+                    <T
+                      _str="marine area is protected"
+                      _comment="10% of {marine area is protected} and 2% needs protection"
+                    />
+                  )}
+                </b>
+              }
+              needsProtectionNumber={needsProtectionNumber}
+            />
+          )}
+        </p>
+      );
+    };
+
+    return (
+      <IndicatorCard
+        color={
+          noProtectedAreas
+            ? COLORS['protection-needed']
+            : COLORS['protected-areas']
+        }
+        indicator={getIndicator()}
+        description={getDescription()}
+        tooltipInfo={t(
+          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI, only if areas aid in achieving species protection targets.'
+        )}
+      >
+        <div
+          className={styles.bar}
+          style={{
+            backgroundImage: getBarStyles({
+              color1: COLORS['protected-areas'],
+              value1: Math.round(prop_protected),
+              color2: COLORS['protection-needed'],
+              value2: protectionNeeded,
+            }),
+          }}
+        />
+      </IndicatorCard>
+    );
+  };
+
+  const renderModificationIndicator = () => {
+    const noVeryHighHumanModification =
+      Math.round(hm_vh) === 0 && Math.round(hm) !== 0;
+    const noSomeHumanModification =
+      Math.round(hm) === 0 && Math.round(hm_vh) !== 0;
+
+    const getIndicator = () => {
+      if (noVeryHighHumanModification) {
+        return `${Math.round(hm)}%`;
+      }
+      return `${Math.round(hm_vh)}%`;
+    };
+
+    const getDescription = () => {
+      const boldVeryHighText = (
+        <b>
+          <T
+            _str="very high human modification"
+            _comment="27% of land has {very high human modification} and 10% has some modification"
+          />
+        </b>
+      );
+      const boldSomeHumanText = (
+        <b>
+          <T _str="some human modification" />
+        </b>
+      );
+
+      if (noSomeHumanModification) {
+        return (
+          <p>
+            {land && (
+              <T
+                _str="of land has {veryHighModification}"
+                _comment="27% { of } land has {very high human modification}"
+                veryHighModification={boldVeryHighText}
+              />
+            )}
+            {!land && (
+              <T
+                _str="of marine area has {veryHighModification}"
+                _comment="27% { of } marine area has {very high human modification}"
+                veryHighModification={boldVeryHighText}
+              />
+            )}
+          </p>
+        );
+      }
+
+      if (noVeryHighHumanModification) {
+        return (
+          <p>
+            {land && (
+              <T
+                _str="of land has {someModification}"
+                _comment="27% { of } land has {some human modification}"
+                someModification={boldSomeHumanText}
+              />
+            )}
+
+            {!land && (
+              <T
+                _str="of marine area has {someModification}"
+                _comment="27% { of } marine area has {some human modification}"
+                someModification={boldSomeHumanText}
+              />
+            )}
+          </p>
+        );
+      }
+
+      return (
+        <p>
+          {land && (
+            <T
+              _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+              _comment="27% { of } land has {very high human modification} and 10% has some modification"
+              veryHighHumanModification={boldVeryHighText}
+              someModificationNumber={Math.round(hm)}
+            />
+          )}
+          {!land && (
+            <T
+              _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
+              _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
+              veryHighHumanModification={boldVeryHighText}
+              someModificationNumber={Math.round(hm)}
+            />
+          )}
+        </p>
+      );
+    };
+
+    return (
+      <IndicatorCard
+        color={
+          noVeryHighHumanModification
+            ? COLORS['some-modification']
+            : COLORS['high-modification']
+        }
+        indicator={getIndicator()}
+        description={getDescription()}
+        tooltipInfo={t(
+          'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
+        )}
+      >
+        <div
+          className={styles.bar}
+          style={{
+            backgroundImage: getBarStyles({
+              color1: COLORS['high-modification'],
+              value1: hm_vh,
+              color2: COLORS['some-modification'],
+              value2: hm,
+            }),
+          }}
+        />
+      </IndicatorCard>
+    );
+  };
+
   return (
     <div
       className={cx(styles.indicatorCardsContainer, {
@@ -90,7 +310,7 @@ function Indicators({ countryData, landMarineSelection }) {
         indicator={total_endemic_ter && getLocaleNumber(total_endemic, locale)}
         description={
           <p>
-            {nspecies &&
+            {isNumberOr0(nspecies) &&
               (land ? (
                 <T
                   _str="{bold} of a total of {totalEndemicNumber} land vertebrates"
@@ -136,107 +356,9 @@ function Indicators({ countryData, landMarineSelection }) {
           }}
         />
       </IndicatorCard>
-      <IndicatorCard
-        color={COLORS['protected-areas']}
-        indicator={prop_protected && `${Math.round(prop_protected)}%`}
-        description={
-          <p>
-            {isNumberOr0(protection_needed) && (
-              <T
-                _str="of {bold} and {needsProtectionNumber}% needs protection"
-                _comment="10% (of) land is protected (and) 2% (needs protection)"
-                bold={
-                  <b>
-                    {land ? (
-                      <T
-                        _str="land is protected"
-                        _comment="10% of {land is protected} and 2% needs protection"
-                      />
-                    ) : (
-                      <T
-                        _str="marine area is protected"
-                        _comment="10% of {marine area is protected} and 2% needs protection"
-                      />
-                    )}
-                  </b>
-                }
-                needsProtectionNumber={getLocaleNumber(
-                  protection_needed,
-                  locale
-                )}
-              />
-            )}
-          </p>
-        }
-        tooltipInfo={t(
-          'Regions that are recognized as currently being managed for long-term nature conservation. An increase of protected areas will result in an increase of the SPI, only if areas aid in achieving species protection targets.'
-        )}
-      >
-        <div
-          className={styles.bar}
-          style={{
-            backgroundImage: getBarStyles({
-              color1: COLORS['protected-areas'],
-              value1: prop_protected,
-              color2: COLORS['protection-needed'],
-              value2: prop_protected + protection_needed,
-            }),
-          }}
-        />
-      </IndicatorCard>
-      <IndicatorCard
-        color={COLORS['high-modification']}
-        indicator={hm_vh && `${Math.round(hm_vh)}%`}
-        description={
-          <p>
-            {hm &&
-              (land ? (
-                <T
-                  _str="of land has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } land has {very high human modification} and 10% has some modification"
-                  veryHighHumanModification={
-                    <b>
-                      <T
-                        _str="very high human modification"
-                        _comment="27% of land has {very high human modification} and 10% has some modification"
-                      />
-                    </b>
-                  }
-                  someModificationNumber={Math.round(hm)}
-                />
-              ) : (
-                <T
-                  _str="of marine area has {veryHighHumanModification} and {someModificationNumber}% has some modification"
-                  _comment="27% { of } marine area has {very high human modification} and 10% has some modification"
-                  veryHighHumanModification={
-                    <b>
-                      <T
-                        _str="very high human modification"
-                        _comment="27% of land has {very high human modification} and 10% has some modification"
-                      />
-                    </b>
-                  }
-                  someModificationNumber={Math.round(hm)}
-                />
-              ))}
-          </p>
-        }
-        tooltipInfo={t(
-          'How much human encroachment occurs from urbanization and other economic activities. Some species are less tolerant than others to human disturbances.'
-        )}
-      >
-        <div
-          className={styles.bar}
-          style={{
-            backgroundImage: getBarStyles({
-              color1: COLORS['high-modification'],
-              value1: hm_vh,
-              color2: COLORS['some-modification'],
-              value2: hm,
-            }),
-          }}
-        />
-      </IndicatorCard>
+
+      {renderProtectionIndicator()}
+      {renderModificationIndicator()}
     </div>
   );
 }
