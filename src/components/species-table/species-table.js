@@ -31,13 +31,24 @@ const mapStateToProps = (state) => ({
 });
 
 function SpeciesModalContainer(props) {
-  const { changeUI, speciesModalSort, state, countryData } = props;
+  const {
+    changeUI,
+    speciesModalSort,
+    state,
+    countryData,
+    selectedLandMarineOption,
+  } = props;
   const { marineSpeciesTotal } = countryData || {};
+  const isLandSelected = selectedLandMarineOption.slug === LAND_MARINE.land;
 
   const locale = useLocale();
   const vertebrateTabs = useMemo(() => getVertebrateTabs(), [locale]);
 
-  const [vertebrateType, setVertebrateType] = useState(vertebrateTabs[0].slug);
+  const [vertebrateType, setVertebrateType] = useState(
+    isLandSelected ? vertebrateTabs[0].slug : vertebrateTabs[1].slug
+  );
+  const [loaded, setLoaded] = useState(false);
+  const [hasData, setHasData] = useState(false);
   const [speciesList, setSpeciesList] = useState([]);
 
   const landLayer = useFeatureLayer({ layerSlug: SPECIES_LIST });
@@ -49,6 +60,7 @@ function SpeciesModalContainer(props) {
     if (!isMarineAndEmpty && layer && state.location.payload.iso) {
       const getFeatures = async () => {
         // Set empty species so we show the loading spinner
+        setLoaded(false);
         setSpeciesList([]);
         const query = await layer.createQuery();
         query.where = `iso3 = '${state.location.payload.iso}'`;
@@ -57,6 +69,14 @@ function SpeciesModalContainer(props) {
         const { features } = results;
         if (features) {
           setSpeciesList(features.map((f) => f.attributes));
+          if (features.length) {
+            setHasData(true);
+            setLoaded(true);
+          } else {
+            setHasData(false);
+          }
+        } else {
+          setHasData(false);
         }
       };
 
@@ -92,6 +112,8 @@ function SpeciesModalContainer(props) {
       sortCategory={speciesModalSort}
       handleVertebrateChange={handleVertebrateChange}
       vertebrateType={vertebrateType}
+      loaded={loaded}
+      hasData={hasData}
     />
   );
 }

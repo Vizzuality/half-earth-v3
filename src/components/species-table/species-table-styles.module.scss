@@ -260,3 +260,8 @@
   margin-top: 25%;
   width: 100%,
 }
+
+.message {
+  @extend %bodyText;
+  color: $white;
+}
