@@ -126,7 +126,11 @@ function Indicators({ countryData, landMarineSelection }) {
 
     return (
       <IndicatorCard
-        color={COLORS['protected-areas']}
+        color={
+          noProtectedAreas
+            ? COLORS['protection-needed']
+            : COLORS['protected-areas']
+        }
         indicator={getIndicator()}
         description={getDescription()}
         tooltipInfo={t(
@@ -149,10 +153,10 @@ function Indicators({ countryData, landMarineSelection }) {
   };
 
   const renderModificationIndicator = () => {
-    const noSomeHumanModification =
-      Math.round(hm) === 0 && Math.round(hm_vh) !== 0;
     const noVeryHighHumanModification =
       Math.round(hm_vh) === 0 && Math.round(hm) !== 0;
+    const noSomeHumanModification =
+      Math.round(hm) === 0 && Math.round(hm_vh) !== 0;
 
     const getIndicator = () => {
       if (noVeryHighHumanModification) {
@@ -243,7 +247,11 @@ function Indicators({ countryData, landMarineSelection }) {
 
     return (
       <IndicatorCard
-        color={COLORS['high-modification']}
+        color={
+          noVeryHighHumanModification
+            ? COLORS['some-modification']
+            : COLORS['high-modification']
+        }
         indicator={getIndicator()}
         description={getDescription()}
         tooltipInfo={t(
