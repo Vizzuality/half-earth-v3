@@ -187,7 +187,17 @@ function ProtectedAreasTable({ data, handleSortChange }) {
           data.map((row, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <tr key={`wdpa-row-${row.NAME}-${index}`}>
-              <td className={styles.firstColumn}>{row.NAME}</td>
+              <td className={styles.firstColumn}>
+                <a
+                  href={
+                    row.WDPA_PID
+                      ? `https://www.protectedplanet.net/${row.WDPA_PID}`
+                      : 'https://www.protectedplanet.net'
+                  }
+                >
+                  {row.NAME}
+                </a>
+              </td>
               <td>{translateString(row.GOV_TYP)}</td>
               <td>{translateString(row.DESIG)}</td>
               <td>{translateString(row.DESIG_T)}</td>
