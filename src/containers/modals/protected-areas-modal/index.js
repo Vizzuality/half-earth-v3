@@ -46,6 +46,7 @@ function Container(props) {
   const handleNameClick = (pid) => {
     if (pid) {
       handleModalClose();
+
       browsePage({
         type: AREA_OF_INTEREST,
         payload: { id: pid },
