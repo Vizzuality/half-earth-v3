@@ -1,64 +1,60 @@
 import React from 'react';
 
-import STYLES from 'styles/settings';
+import {
+  RadialBar,
+  RadialBarChart,
+  ResponsiveContainer,
+  PolarAngleAxis,
+} from 'recharts';
+
+import COLORS from 'styles/settings';
 
 // import styles from './arc-chart-styles.module.scss';
 
 function ArcChartComponent({
-  color = STYLES['protected-areas'],
+  color = COLORS['protected-areas'],
   paPercentage = 30,
   strokeWidth = 8,
 }) {
-  const getStrokeDasharray = () => {
-    const strokeDasharray = `${(240 * paPercentage) / 100} 300`;
-    return strokeDasharray;
-  };
-
+  const DATA = [{ percentage: paPercentage / 10, fill: color }];
   return (
-    <div>
-      <svg
-        id="paths"
-        style={{
-          width: 270,
-          height: 150,
-          transform: 'scale(1.2)',
-          border: '1px solid red',
-        }}
+    <ResponsiveContainer width="95%" aspect={1}>
+      <RadialBarChart
+        width={243}
+        height={243}
+        data={DATA}
+        // cx={30}
+        // cy={30}
+        innerRadius={25}
+        // outerRadius={300}
+        barSize={strokeWidth}
+        startAngle={180}
+        endAngle={0}
       >
-        <path
-          d="M100 100 A 40 40 90 0 1 250 100"
-          style={{
-            fill: 'transparent',
-            fillOpacity: 1,
-            stroke: STYLES['athens-gray'],
-            strokeWidth,
-            strokeLinecap: 'round',
-          }}
+        <PolarAngleAxis
+          type="number"
+          domain={[0, 10]}
+          angleAxisId={0}
+          tick={false}
         />
-        <path
-          d="M100 100 A 40 40 90 0 1 250 100"
-          style={{
-            fill: 'transparent',
-            fillOpacity: 1,
-            stroke: color,
-            strokeDasharray: getStrokeDasharray(),
-            strokeWidth,
-            strokeLinecap: 'round',
-          }}
+        <RadialBar
+          background
+          dataKey="percentage"
+          cornerRadius={30 / 2}
+          fill={COLORS['athens-gray']}
         />
-        <text
-          x="175"
-          y="70"
-          fill="black"
-          textAnchor="middle"
-          fontSize="24px"
-          fontFamily={STYLES['font-family-serif']}
-          fontWeight="lighter"
-        >
-          {paPercentage}%
-        </text>
-      </svg>
-    </div>
+
+        {/* <text
+        x={30 / 2}
+        y={33 / 2}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        className="progress-label"
+      >
+        89
+      </text> */}
+      </RadialBarChart>
+    </ResponsiveContainer>
   );
 }
 
