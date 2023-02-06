@@ -47,3 +47,12 @@
     fill: $warning;
   }
 }
+
+.protectedAreaChartContainer {
+  margin-top: 4px;
+  .protectedAreaChartLegend {
+    @extend %bodyText;
+    text-align: center;
+    margin: 6px 0 44px 0;
+  }
+}
