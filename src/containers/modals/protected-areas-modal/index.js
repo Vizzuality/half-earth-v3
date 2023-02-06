@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import { AREA_OF_INTEREST } from 'router';
+
+import * as urlActions from 'actions/url-actions';
+
 import useDebounce from 'hooks/use-debounce';
 
 import EsriFeatureService from 'services/esri-feature-service';
@@ -13,8 +17,17 @@ import {
 import Component from './component';
 import mapStateToProps from './selectors';
 
+const actions = { ...urlActions };
+
 function Container(props) {
-  const { aoiId, contextualData, precalculatedLayerSlug } = props;
+  const {
+    aoiId,
+    browsePage,
+    contextualData,
+    handleModalClose,
+    precalculatedLayerSlug,
+  } = props;
+
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(null);
   const [sorting, setSorting] = useState({ value: 'NAME', ascending: 'true' });
@@ -28,6 +41,20 @@ function Container(props) {
 
   const handleSortChange = (value) => {
     setSorting(value);
+  };
+
+  const handleNameClick = (pid) => {
+    if (pid) {
+      handleModalClose();
+
+      browsePage({
+        type: AREA_OF_INTEREST,
+        payload: { id: pid },
+        query: {
+          precalculatedLayerSlug: PRECALCULATED_LAYERS_SLUG.protectedAreas,
+        },
+      });
+    }
   };
 
   const sortFunction = (a, b) => {
@@ -154,6 +181,7 @@ function Container(props) {
   return (
     <Component
       data={filteredData}
+      handleNameClick={handleNameClick}
       handleSearchInputChange={handleSearch}
       handleSortChange={handleSortChange}
       loading={loading}
@@ -162,4 +190,4 @@ function Container(props) {
   );
 }
 
-export default connect(mapStateToProps, null)(Container);
+export default connect(mapStateToProps, actions)(Container);

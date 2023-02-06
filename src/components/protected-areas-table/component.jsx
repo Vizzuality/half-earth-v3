@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 
@@ -13,8 +14,9 @@ import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
 
 import styles from './protected-areas-table-styles.module.scss';
 
-function ProtectedAreasTable({ data, handleSortChange }) {
+function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
   const t = useT();
+
   const locale = useLocale();
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
   const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
@@ -187,7 +189,14 @@ function ProtectedAreasTable({ data, handleSortChange }) {
           data.map((row, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <tr key={`wdpa-row-${row.NAME}-${index}`}>
-              <td className={styles.firstColumn}>{row.NAME}</td>
+              <td className={styles.firstColumn}>
+                <button
+                  type="button"
+                  onClick={() => handleNameClick(row.MOL_ID)}
+                >
+                  <p className={styles.nameLink}>{row.NAME}</p>
+                </button>
+              </td>
               <td>{translateString(row.GOV_TYP)}</td>
               <td>{translateString(row.DESIG)}</td>
               <td>{translateString(row.DESIG_T)}</td>
