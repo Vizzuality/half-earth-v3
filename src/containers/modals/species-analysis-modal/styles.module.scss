@@ -21,4 +21,21 @@
 
 .cardContainer {
   padding-right: 0px;
+  min-width: 30%;
+}
+
+.chartContainer {
+  margin: 0 100px;
+}
+
+.title {
+  @extend %display2;
+}
+
+.subtitle {
+  @extend %bodyText;
+}
+
+.bold {
+  font-weight: $font-weight-bold;
 }

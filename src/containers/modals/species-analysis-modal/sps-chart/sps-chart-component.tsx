@@ -14,8 +14,9 @@ import { useT } from '@transifex/react';
 
 import * as d3 from 'd3';
 
-import data from './brazil-mock.json';
-import { LineRadialProps } from './index.d';
+import styles from './styles.module.scss';
+
+import { LineRadialProps } from '.';
 
 const innerRadius = 56;
 const arcLabelPadding = 25;
@@ -31,9 +32,11 @@ const white = '#ebebeb';
 const navy = '#0A212E';
 const backgroundColor = '#0F2B3B';
 
-function SrsChart({ width, height }: LineRadialProps) {
+function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
   const t = useT();
+  const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
 
+  if (!data) return null;
   const radius = useMemo(
     () => Math.min(width, height) / 2 - 30,
     [width, height]
@@ -61,9 +64,7 @@ function SrsChart({ width, height }: LineRadialProps) {
         .attr('d', arcGenerator(radius));
     };
 
-    const renderAngleAxis = () => {
-      const angleAxis = d3.select('#a-axis');
-
+    const renderAngleAxis = (angleAxis) => {
       // Labels arc
       angleAxis
         .append('path')
@@ -107,38 +108,47 @@ function SrsChart({ width, height }: LineRadialProps) {
       // Angle labels
       angleAxisLabelGroups
         .append('text')
-        // .style('text-anchor', 'middle')
         .style('fill', white)
-        .attr('x', (d) => 1000) // Fix Label positioning
+        .attr('x', (d) => (d * 10) - 85) // TODO: Improve label positioning
         .attr('dy', '1em')
         .append('textPath')
+        .style('text-anchor', 'middle')
         .attr('xlink:href', '#label-arc')
         .text((d) => {
           return texts[d];
         });
     };
 
-    // Just for debugging
+    // Recalculate on change
     d3.selectAll('#r-axis > *').remove();
     d3.selectAll('#a-axis > *').remove();
+    d3.selectAll('#points > *').remove();
 
-    const svg = d3.select('#srs-group');
-
+    const svg = d3.select('#sps-group');
     const radialAxis = d3.select('#r-axis');
-    const radialAxisGroups = radialAxis
-      .selectAll('g')
-      .data([0, 25, 50, 75, 100])
-      .enter()
-      .append('g');
+    const angleAxis = d3.select('#a-axis');
+
+
+    // BACKGROUND
 
     // Background arc
     renderBackgroundArc(radialAxis);
 
     // Center arc
     radialAxis
-      .append('path')
-      .attr('fill', backgroundColor)
-      .attr('d', arcGenerator(innerRadius, 0));
+    .append('path')
+    .attr('fill', backgroundColor)
+    .attr('d', arcGenerator(innerRadius, 0));
+
+
+    // RADIAL AXIS
+
+    const radialAxisGroups = radialAxis
+      .selectAll('g')
+      .data([0, 25, 50, 75, 100])
+      .enter()
+      .append('g');
+
 
     // Radial number values
     radialAxisGroups
@@ -149,7 +159,7 @@ function SrsChart({ width, height }: LineRadialProps) {
       .style('fill', white)
       .style('stroke', 'transparent')
       .style('text-anchor', 'middle')
-      .text((d) => d)
+      .text(d => d)
       .raise();
 
     // Radial arcs ticks
@@ -163,12 +173,15 @@ function SrsChart({ width, height }: LineRadialProps) {
         return arcGenerator(r(d), r(d))();
       });
 
-    // Angle axis
-    renderAngleAxis();
     radialAxisGroups.raise(); // Move up on the order rendering
 
-    // Points
-    const points = svg.append('g').attr('class', 'points');
+    // ANGLE AXIS
+
+    renderAngleAxis(angleAxis);
+
+
+    // POINTS
+    const points = d3.select('#points');
 
     points
       .selectAll('g')
@@ -176,31 +189,32 @@ function SrsChart({ width, height }: LineRadialProps) {
       .enter()
       .append('g')
       .attr('class', 'cpoint')
-      .attr('id', (d) => `point-${d.OBJECTID}`)
+      .attr('id', (d) => `point-${d.SliceNumber}`)
       .attr('transform', (d) => {
         // get angle and radius
-        const angle = l(d.SPS); // angle given  by SPS
-        const pointRadius = r(d.group);
+        const angle = l(d.SPS_global);
+        const pointRadius = r(d.per_global);
         const x = pointRadius * Math.cos((angle * Math.PI) / 180);
         const y = pointRadius * Math.sin((angle * Math.PI) / 180);
         return `translate(${[x, y]})`;
       })
       .append('circle')
       .attr('class', 'point')
-      .attr('r', 2)
+      .attr('r', (d) => d.SliceNumber === selectedSpeciesSliceNumber ?  5 : 2)
       .attr('fill', white)
       .attr('stroke', white)
-      .attr('stroke-width', 2)
-      .style('fill-opacity', 0.5)
-      .style('stroke-opacity', 0.2)
+      .attr('stroke-width',(d) => d.SliceNumber === selectedSpeciesSliceNumber ?  10 : 3)
+      .style('fill-opacity', 1)
+      .style('stroke-opacity', 0.5)
       .attr('mix-blend-mode', 'multiply');
-  }, [width, height, t]);
+  }, [width, height, t, selectedSpeciesSliceNumber]);
 
   return (
-    <svg id="srs-chart" width={width} height={height}>
-      <g id="srs-group" transform={`translate(${width / 2},${height / 2})`}>
+    <svg id="sps-chart" className={styles.chart} width={width} height={height}>
+      <g id="sps-group" transform={`translate(${width / 2},${height / 2})`}>
         <g id="r-axis" />
         <g id="a-axis" />
+        <g id="points" className='points' />
       </g>
       <defs>
         <linearGradient id="gradient">
@@ -217,4 +231,4 @@ function SrsChart({ width, height }: LineRadialProps) {
   );
 }
 
-export default SrsChart;
+export default SpsChart;
