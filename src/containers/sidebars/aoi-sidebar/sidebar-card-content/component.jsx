@@ -4,26 +4,20 @@ import { useT, useLocale } from '@transifex/react';
 
 import ReactMarkdown from 'react-markdown/with-html';
 
-// icons
-
-// components
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
+import ArcChart from 'components/charts/arc-chart';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
-// containers
-
-// constants
 import {
   PROTECTION_SLUG,
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
 
-// styles
 import styles from './styles.module.scss';
 
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
@@ -56,6 +50,7 @@ function SidebarCard({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
+        <ArcChart />
         {hasLegend && (
           <SidebarLegend
             legendItem={cardCategory}
