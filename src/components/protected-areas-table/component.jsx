@@ -190,16 +190,14 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
             // eslint-disable-next-line react/no-array-index-key
             <tr key={`wdpa-row-${row.NAME}-${index}`}>
               <td className={styles.firstColumn}>
-                <a href="" target="_blank">
-                  <button
-                    type="button"
-                    style={{ color: 'white' }}
-                    onClick={() => handleNameClick(row.MOL_ID)}
-                    target="_blank"
-                  >
-                    {row.NAME}
-                  </button>
-                </a>
+                <button
+                  type="button"
+                  style={{ color: 'white' }}
+                  onClick={() => handleNameClick(row.MOL_ID)}
+                  target="_blank"
+                >
+                  {row.NAME}
+                </button>
               </td>
               <td>{translateString(row.GOV_TYP)}</td>
               <td>{translateString(row.DESIG)}</td>
