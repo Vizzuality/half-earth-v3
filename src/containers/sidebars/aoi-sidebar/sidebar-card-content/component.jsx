@@ -115,7 +115,7 @@ function SidebarCard({
           className={styles.sourceContainer}
         />
       </div>
-      {displayWarning ? (
+      {displayWarning && (
         <div className={styles.warningWrapper}>
           <WarningIcon className={styles.warning} />
           <ReactMarkdown
@@ -123,7 +123,8 @@ function SidebarCard({
             source={sidebarCardsConfig[cardCategory].warning}
           />
         </div>
-      ) : (
+      )}
+      {!displayWarning && !REACT_APP_FEATURE_AOI_CHANGES && (
         <div className={styles.togglesContainer}>
           {layers.map((layer) => (
             <LayerToggle
