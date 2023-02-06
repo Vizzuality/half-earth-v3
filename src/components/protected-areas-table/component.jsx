@@ -192,11 +192,10 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
               <td className={styles.firstColumn}>
                 <button
                   type="button"
-                  style={{ color: 'white' }}
                   onClick={() => handleNameClick(row.MOL_ID)}
                   target="_blank"
                 >
-                  {row.NAME}
+                  <p className={styles.nameLink}>{row.NAME}</p>
                 </button>
               </td>
               <td>{translateString(row.GOV_TYP)}</td>
