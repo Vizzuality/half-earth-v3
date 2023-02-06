@@ -10,21 +10,16 @@ import ProtectedAreasTable from 'components/protected-areas-table';
 
 import { getCountryNames } from 'constants/translation-constants';
 
-// components
-
-// icons
 import styles from './styles.module';
 
 import { ReactComponent as SearchIcon } from 'icons/search-species.svg';
 
-// styles
-
-// Dynamic imports
 const Spinner = loadable(() => import('components/spinner'));
 
 function ProtectedAreasModal({
   isOpen,
   handleModalClose,
+  handleNameClick,
   handleSearchInputChange,
   handleSortChange,
   data,
@@ -62,6 +57,7 @@ function ProtectedAreasModal({
           <ProtectedAreasTable
             data={data}
             handleSortChange={handleSortChange}
+            handleNameClick={handleNameClick}
           />
         </div>
       </div>

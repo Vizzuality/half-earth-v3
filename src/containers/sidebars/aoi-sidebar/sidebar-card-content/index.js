@@ -55,6 +55,7 @@ function Container(props) {
 
   const [cardDescription, setCardDescription] = useState(null);
   const [protectedAreasModalOpen, setProtectedAreasModalOpen] = useState(false);
+
   const { description: getDescription, title } =
     sidebarCardsConfig[cardCategory];
   const [metadata, setMetadata] = useState(null);

@@ -13,8 +13,9 @@ import { ReactComponent as ArrowUp } from 'icons/arrow_up.svg';
 
 import styles from './protected-areas-table-styles.module.scss';
 
-function ProtectedAreasTable({ data, handleSortChange }) {
+function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
   const t = useT();
+
   const locale = useLocale();
   const WDPATranslations = useMemo(() => getWDPATranslations(), [locale]);
   const CountryNamesTranslations = useMemo(() => getCountryNames(), [locale]);
@@ -188,15 +189,13 @@ function ProtectedAreasTable({ data, handleSortChange }) {
             // eslint-disable-next-line react/no-array-index-key
             <tr key={`wdpa-row-${row.NAME}-${index}`}>
               <td className={styles.firstColumn}>
-                <a
-                  href={
-                    row.WDPA_PID
-                      ? `https://www.protectedplanet.net/${row.WDPA_PID}`
-                      : 'https://www.protectedplanet.net'
-                  }
+                <button
+                  type="button"
+                  style={{ color: 'white' }}
+                  onClick={() => handleNameClick(row.MOL_ID)}
                 >
                   {row.NAME}
-                </a>
+                </button>
               </td>
               <td>{translateString(row.GOV_TYP)}</td>
               <td>{translateString(row.DESIG)}</td>
