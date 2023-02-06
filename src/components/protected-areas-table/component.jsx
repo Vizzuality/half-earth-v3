@@ -193,7 +193,6 @@ function ProtectedAreasTable({ data, handleSortChange, handleNameClick }) {
                 <button
                   type="button"
                   onClick={() => handleNameClick(row.MOL_ID)}
-                  target="_blank"
                 >
                   <p className={styles.nameLink}>{row.NAME}</p>
                 </button>
