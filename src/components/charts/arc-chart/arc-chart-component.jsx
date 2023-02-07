@@ -45,22 +45,14 @@ function ArcChartComponent({
           fill={COLORS['athens-gray']}
         />
         {paPercentage && (
-          <>
-            <text
-              x={parentWidth / 2}
-              y={parentHeight / 2 + 40}
-              className={styles.label}
-            >
-              {paPercentage.toFixed()}
-            </text>
-            <text
-              x={parentWidth / 2 + 14}
-              y={parentHeight / 2 + 40}
-              className={styles.labelPercentage}
-            >
-              %
-            </text>
-          </>
+          <text
+            x={parentWidth / 2 + 6}
+            y={parentHeight / 2 + 40}
+            className={styles.label}
+          >
+            {paPercentage.toFixed()}
+            <tspan className={styles.labelPercentage}>%</tspan>
+          </text>
         )}
       </RadialBarChart>
     </ResponsiveContainer>
