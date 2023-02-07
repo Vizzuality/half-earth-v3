@@ -21,7 +21,7 @@ function CustomizedAxisTick(props) {
   );
 }
 function AreaChartComponent({
-  area1,
+  area,
   data,
   height,
   margin,
@@ -31,6 +31,12 @@ function AreaChartComponent({
 }) {
   const renderAreaChart = () => (
     <AreaChart data={data} margin={margin} width={width} height={height}>
+      <defs>
+        <linearGradient id="gradientColor" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor={area.stroke} stopOpacity={0.2} />
+          <stop offset="95%" stopColor={area.stroke} stopOpacity={0.05} />
+        </linearGradient>
+      </defs>
       <XAxis
         axisLine={false}
         dataKey="year"
@@ -53,11 +59,11 @@ function AreaChartComponent({
       />
 
       <Area
-        type={area1.type}
-        dataKey={area1.key}
-        fill={area1.fill}
-        stroke={area1.stroke}
-        strokeWidth={area1.strokeWidth}
+        type={area.type}
+        dataKey={area.key}
+        fill={area.fill}
+        stroke={area.stroke}
+        strokeWidth={area.strokeWidth}
       />
     </AreaChart>
   );

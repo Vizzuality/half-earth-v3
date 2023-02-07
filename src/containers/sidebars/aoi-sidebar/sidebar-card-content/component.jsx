@@ -19,6 +19,8 @@ import {
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
 
+import COLORS from 'styles/settings';
+
 import styles from './styles.module.scss';
 
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
@@ -164,15 +166,13 @@ function SidebarCard({
                   )}
                   <div className={styles.hpChartContainer}>
                     <AreaChart
-                      area1={{
+                      area={{
                         key: 'value',
-                        stroke: '#F9BF23',
-                        fill: '#F9BF23',
-                        fillOpacity: 0.4,
+                        stroke: COLORS.gold,
+                        fill: 'url(#gradientColor)',
                         strokeWidth: 2,
                         type: 'natural',
                       }}
-                      area2={{}}
                       data={hp.byYear}
                       xTicks={hpXAxis}
                       margin={{
@@ -181,7 +181,6 @@ function SidebarCard({
                         left: -60,
                         bottom: 0,
                       }}
-                      hideXAxis
                       height={66}
                       width={161}
                     />
