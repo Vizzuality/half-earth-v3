@@ -7,12 +7,12 @@ import {
   PolarAngleAxis,
 } from 'recharts';
 
-import STYLES from 'styles/settings';
+import COLORS from 'styles/settings';
 
-// import styles from './arc-chart-styles.module.scss';
+import styles from './arc-chart-styles.module.scss';
 
 function ArcChartComponent({
-  color = STYLES['protected-areas'],
+  color = COLORS['protected-areas'],
   parentHeight,
   parentWidth,
   paPercentage,
@@ -42,29 +42,21 @@ function ArcChartComponent({
           background
           dataKey="percentage"
           cornerRadius={30 / 2}
-          fill={STYLES['athens-gray']}
+          fill={COLORS['athens-gray']}
         />
         {paPercentage && (
           <>
             <text
               x={parentWidth / 2}
-              y={parentHeight / 2 + 28}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize={45}
-              fontFamily={STYLES['font-family-serif']}
-              fontWeight="lighter"
+              y={parentHeight / 2 + 40}
+              className={styles.label}
             >
               {paPercentage.toFixed()}
             </text>
             <text
               x={parentWidth / 2 + 14}
-              y={parentHeight / 2 + 33.5}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize={24}
-              fontFamily={STYLES['font-family-serif']}
-              fontWeight="lighter"
+              y={parentHeight / 2 + 40}
+              className={styles.labelPercentage}
             >
               %
             </text>
