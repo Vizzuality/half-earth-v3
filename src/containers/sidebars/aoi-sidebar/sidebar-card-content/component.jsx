@@ -65,9 +65,9 @@ function SidebarCard({
       byYear: [
         { year: 1980, value: 2.1 },
         { year: 1990, value: 22.5 },
-        { year: 2000, value: 24.3 },
-        { year: 2010, value: 25.3 },
-        { year: 2020, value: 30.3 },
+        { year: 2000, value: 54.3 },
+        { year: 2010, value: 75.3 },
+        { year: 2020, value: 80.3 },
       ],
     },
     {
@@ -78,7 +78,7 @@ function SidebarCard({
         { year: 1990, value: 22.5 },
         { year: 2000, value: 24.3 },
         { year: 2010, value: 25.3 },
-        { year: 2020, value: 30.3 },
+        { year: 2020, value: 50.3 },
       ],
     },
     {
@@ -89,7 +89,7 @@ function SidebarCard({
         { year: 1990, value: 22.5 },
         { year: 2000, value: 24.3 },
         { year: 2010, value: 25.3 },
-        { year: 2020, value: 30.3 },
+        { year: 2020, value: 60.3 },
       ],
     },
     {
@@ -100,7 +100,7 @@ function SidebarCard({
         { year: 1990, value: 22.5 },
         { year: 2000, value: 24.3 },
         { year: 2010, value: 25.3 },
-        { year: 2020, value: 30.3 },
+        { year: 2020, value: 78.3 },
       ],
     },
     {
@@ -111,7 +111,7 @@ function SidebarCard({
         { year: 1990, value: 22.5 },
         { year: 2000, value: 24.3 },
         { year: 2010, value: 25.3 },
-        { year: 2020, value: 30.3 },
+        { year: 2020, value: 68.3 },
       ],
     },
   ];
@@ -154,7 +154,7 @@ function SidebarCard({
           <div className={styles.humanPressureIndicators}>
             {HUMAN_PRESSURE_DATA.map((hp) => {
               return (
-                <div>
+                <div className={styles.humanPressureIndicator}>
                   <p className={styles.title}>{hp.title}</p>
 
                   {hp.percentage !== undefined && (
@@ -162,29 +162,30 @@ function SidebarCard({
                       {Math.trunc(hp.percentage)}%
                     </p>
                   )}
-
-                  <AreaChart
-                    area1={{
-                      key: 'value',
-                      stroke: '#F9BF23',
-                      fill: '#F9BF23',
-                      fillOpacity: 0.4,
-                      strokeWidth: 2,
-                      type: 'natural',
-                    }}
-                    area2={{}}
-                    data={hp.byYear}
-                    xTicks={hpXAxis}
-                    margin={{
-                      top: 0,
-                      right: 0,
-                      left: -60,
-                      bottom: 0,
-                    }}
-                    hideXAxis
-                    height={100}
-                    width="100%"
-                  />
+                  <div className={styles.hpChartContainer}>
+                    <AreaChart
+                      area1={{
+                        key: 'value',
+                        stroke: '#F9BF23',
+                        fill: '#F9BF23',
+                        fillOpacity: 0.4,
+                        strokeWidth: 2,
+                        type: 'natural',
+                      }}
+                      area2={{}}
+                      data={hp.byYear}
+                      xTicks={hpXAxis}
+                      margin={{
+                        top: 0,
+                        right: 0,
+                        left: -60,
+                        bottom: 0,
+                      }}
+                      hideXAxis
+                      height={66}
+                      width={161}
+                    />
+                  </div>
                 </div>
               );
             })}

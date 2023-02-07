@@ -4,6 +4,22 @@ import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 import styles from './area-chart-styles.module.scss';
 
+function CustomizedAxisTick(props) {
+  const { x = 0, y, payload, lastTick } = props;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text
+        x={0}
+        y={0}
+        dy={10}
+        textAnchor={payload.value === lastTick ? 'middle' : 'start'}
+        className={styles.xAxisTick}
+      >
+        {payload.value}
+      </text>
+    </g>
+  );
+}
 function AreaChartComponent({
   area1,
   data,
@@ -18,14 +34,14 @@ function AreaChartComponent({
       <XAxis
         axisLine={false}
         dataKey="year"
-        domain={['dataMin', 'dataMax']}
+        domain={[1975, 2020]}
         fontSize={9}
-        strokeWidth={0.9}
-        tick={{ stroke: '#A0AFB8', strokeWidth: 0.4 }}
+        strokeWidth={2}
         tickCount={xTicks.length}
         tickLine={false}
         ticks={xTicks}
         type="number"
+        tick={<CustomizedAxisTick lastTick={xTicks[xTicks.length - 1]} />}
       />
 
       <YAxis
