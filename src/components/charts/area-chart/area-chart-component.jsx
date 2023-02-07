@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 import styles from './area-chart-styles.module.scss';
 
 function CustomizedAxisTick(props) {
-  const { x = 0, y, payload, lastTick } = props;
+  const { x = 0, y, payload, firstTick, lastTick } = props;
+
+  const tickAnchor = useMemo(() => {
+    if (payload.value === lastTick) return 'end';
+    if (payload.value === firstTick) return 'start';
+    return 'middle';
+  }, [payload.value]);
+
   return (
     <g transform={`translate(${x},${y})`}>
       <text
         x={0}
         y={0}
         dy={10}
-        textAnchor={payload.value === lastTick ? 'middle' : 'start'}
+        textAnchor={tickAnchor}
         className={styles.xAxisTick}
       >
         {payload.value}
@@ -47,7 +54,13 @@ function AreaChartComponent({
         tickLine={false}
         ticks={xTicks}
         type="number"
-        tick={<CustomizedAxisTick lastTick={xTicks[xTicks.length - 1]} />}
+        interval={0}
+        tick={
+          <CustomizedAxisTick
+            firstTick={xTicks[0]}
+            lastTick={xTicks[xTicks.length - 1]}
+          />
+        }
       />
 
       <YAxis
