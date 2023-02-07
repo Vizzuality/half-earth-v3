@@ -17,6 +17,7 @@ function AreaChartComponent({
   area1,
   area2,
   data,
+  hasYAxis,
   tooltip = false,
   tooltipContent,
   height,
@@ -77,15 +78,16 @@ function AreaChartComponent({
         ticks={[1980, 2000, 2020]}
         type="number"
       />
-
-      <YAxis
-        axisLine={{ stroke: '#0F2B3B' }}
-        domain={[0, 100]}
-        fontSize={9}
-        tick={{ stroke: '#A0AFB8', strokeWidth: 0.4 }}
-        tickCount={3}
-        tickLine={false}
-      />
+      {hasYAxis && (
+        <YAxis
+          axisLine={{ stroke: '#0F2B3B' }}
+          domain={[0, 100]}
+          fontSize={9}
+          tick={{ stroke: '#A0AFB8', strokeWidth: 0.4 }}
+          tickCount={3}
+          tickLine={false}
+        />
+      )}
       {tooltip && (
         <RechartsTooltip
           content={tooltipContent}

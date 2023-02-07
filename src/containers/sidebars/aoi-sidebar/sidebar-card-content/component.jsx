@@ -4,29 +4,26 @@ import { useT, useLocale } from '@transifex/react';
 
 import ReactMarkdown from 'react-markdown/with-html';
 
-// icons
-
-// components
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
+import AreaChart from 'components/charts/area-chart';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
-// containers
-
-// constants
 import {
+  LAND_HUMAN_PRESSURES_SLUG,
   PROTECTION_SLUG,
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
 
-// styles
 import styles from './styles.module.scss';
 
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 function SidebarCard({
   map,
@@ -82,13 +79,36 @@ function SidebarCard({
             />
           </div>
         )}
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
+          <AreaChart
+            area1={{
+              key: 'spi',
+              stroke: '#000000',
+              fill: [
+                '#FFBF00',
+                '#A74815',
+                '#821213',
+                '#371033',
+                '#250F3B',
+                '#1D1135',
+                '#060B2B',
+              ],
+              fillOpacity: 0.4,
+              strokeWidth: 0.5,
+            }}
+            area2={{}}
+            data={[]}
+            height={200}
+            width="100%"
+          />
+        )}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}
           className={styles.sourceContainer}
         />
       </div>
-      {displayWarning ? (
+      {displayWarning && (
         <div className={styles.warningWrapper}>
           <WarningIcon className={styles.warning} />
           <ReactMarkdown
@@ -96,7 +116,8 @@ function SidebarCard({
             source={sidebarCardsConfig[cardCategory].warning}
           />
         </div>
-      ) : (
+      )}
+      {!displayWarning && !REACT_APP_FEATURE_AOI_CHANGES && (
         <div className={styles.togglesContainer}>
           {layers.map((layer) => (
             <LayerToggle

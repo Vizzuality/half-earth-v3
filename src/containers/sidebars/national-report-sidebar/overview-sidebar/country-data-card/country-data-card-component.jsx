@@ -209,6 +209,7 @@ function CountryDataCardComponent({
                 strokeWidth: 1,
               }}
               data={tabsData[activeTab].data}
+              hasYAxis
               height={200}
               width="100%"
             />

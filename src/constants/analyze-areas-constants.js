@@ -70,6 +70,8 @@ export const {
 
 export const DEFAULT_SOURCE = ADMINISTRATIVE_BOUNDARIES;
 
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
+
 export const getPrecalculatedAOIOptions = () => [
   {
     title: ADMINISTRATIVE_BOUNDARIES,
@@ -167,7 +169,9 @@ export const getSidebarCardsConfig = (locale) => ({
     warning: null,
   },
   [LAND_HUMAN_PRESSURES_SLUG]: {
-    title: t('Human impact'),
+    title: REACT_APP_FEATURE_AOI_CHANGES
+      ? t('How much do humans affect this area?')
+      : t('Human impact'),
     description: ({ pressures }) =>
       pressures
         ? `${t('Of the current area, ')}__${roundUpPercentage(
