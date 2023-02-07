@@ -13,11 +13,10 @@ import {
 
 import styles from './area-chart-styles.module.scss';
 
-function AreaChartComponent({
+function AreaChartLegacy({
   area1,
   area2,
   data,
-
   height,
   margin = {
     top: 0,
@@ -69,7 +68,7 @@ function AreaChartComponent({
       height={pdf && height}
     >
       <XAxis
-        axisLine={false}
+        axisLine={{ stroke: '#0F2B3B' }}
         dataKey="year"
         domain={['dataMin', 'dataMax']}
         fontSize={9}
@@ -79,6 +78,17 @@ function AreaChartComponent({
         tickLine={false}
         ticks={xTicks}
         type="number"
+      />
+
+      <YAxis
+        axisLine={{
+          stroke: '#0F2B3B',
+        }}
+        domain={[0, 100]}
+        fontSize={9}
+        tick={{ stroke: '#A0AFB8', strokeWidth: 0.4 }}
+        tickCount={3}
+        tickLine={false}
       />
 
       <YAxis
@@ -129,4 +139,4 @@ function AreaChartComponent({
   );
 }
 
-export default AreaChartComponent;
+export default AreaChartLegacy;

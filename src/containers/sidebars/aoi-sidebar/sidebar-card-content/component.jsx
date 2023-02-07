@@ -9,6 +9,7 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
+import AreaChart from 'components/charts/area-chart';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
@@ -57,6 +58,68 @@ function SidebarCard({
     hpUrban,
   } = humanPressuresData || {};
 
+  const HUMAN_PRESSURE_DATA = [
+    {
+      title: 'Agriculture',
+      percentage: hpAgriculture,
+      byYear: [
+        { year: 1980, value: 2.1 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 30.3 },
+      ],
+    },
+    {
+      title: 'Energy',
+      percentage: hpEnergy,
+      byYear: [
+        { year: 1980, value: 2.1 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 30.3 },
+      ],
+    },
+    {
+      title: 'Human Intrusion',
+      percentage: hpHumanIntrusion,
+      byYear: [
+        { year: 1980, value: 2.1 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 30.3 },
+      ],
+    },
+    {
+      title: 'Transportation',
+      percentage: hpTransportation,
+      byYear: [
+        { year: 1980, value: 2.1 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 30.3 },
+      ],
+    },
+    {
+      title: 'Urban',
+      percentage: hpUrban,
+      byYear: [
+        { year: 1980, value: 2.1 },
+        { year: 1990, value: 22.5 },
+        { year: 2000, value: 24.3 },
+        { year: 2010, value: 25.3 },
+        { year: 2020, value: 30.3 },
+      ],
+    },
+  ];
+
+  const hpXAxis = useMemo(() => {
+    return HUMAN_PRESSURE_DATA[0].byYear.map((obj) => obj.year);
+  }, []);
+
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
@@ -88,12 +151,43 @@ function SidebarCard({
           </div>
         )}
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
-          <div>
-            {hpAgriculture && <p>{Math.trunc(hpAgriculture)}%</p>}
-            {hpEnergy && <p>{Math.trunc(hpEnergy)}%</p>}
-            {hpHumanIntrusion && <p>{Math.trunc(hpHumanIntrusion)}%</p>}
-            {hpTransportation && <p>{Math.trunc(hpTransportation)}%</p>}
-            {hpUrban && <p>{Math.trunc(hpUrban)}%</p>}
+          <div className={styles.humanPressureIndicators}>
+            {HUMAN_PRESSURE_DATA.map((hp) => {
+              return (
+                <div>
+                  <p className={styles.title}>{hp.title}</p>
+
+                  {hp.percentage !== undefined && (
+                    <p className={styles.percentage}>
+                      {Math.trunc(hp.percentage)}%
+                    </p>
+                  )}
+
+                  <AreaChart
+                    area1={{
+                      key: 'value',
+                      stroke: '#F9BF23',
+                      fill: '#F9BF23',
+                      fillOpacity: 0.4,
+                      strokeWidth: 2,
+                      type: 'natural',
+                    }}
+                    area2={{}}
+                    data={hp.byYear}
+                    xTicks={hpXAxis}
+                    margin={{
+                      top: 0,
+                      right: 0,
+                      left: -60,
+                      bottom: 0,
+                    }}
+                    hideXAxis
+                    height={100}
+                    width="100%"
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
         <SourceAnnotation
