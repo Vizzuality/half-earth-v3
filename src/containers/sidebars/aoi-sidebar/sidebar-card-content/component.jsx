@@ -40,6 +40,7 @@ function SidebarCard({
   handleProtectedAreasModalToggle,
   contextualData,
   metadata,
+  humanPressuresData,
 }) {
   const t = useT();
   const locale = useLocale();
@@ -47,6 +48,14 @@ function SidebarCard({
     () => getSidebarCardsConfig(locale),
     [locale]
   );
+
+  const {
+    hpAgriculture,
+    hpEnergy,
+    hpHumanIntrusion,
+    hpTransportation,
+    hpUrban,
+  } = humanPressuresData || {};
 
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
@@ -78,7 +87,15 @@ function SidebarCard({
             />
           </div>
         )}
-        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && <p> PERCENTAGES</p>}
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
+          <div>
+            {hpAgriculture && <p>{Math.trunc(hpAgriculture)}%</p>}
+            {hpEnergy && <p>{Math.trunc(hpEnergy)}%</p>}
+            {hpHumanIntrusion && <p>{Math.trunc(hpHumanIntrusion)}%</p>}
+            {hpTransportation && <p>{Math.trunc(hpTransportation)}%</p>}
+            {hpUrban && <p>{Math.trunc(hpUrban)}%</p>}
+          </div>
+        )}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}
