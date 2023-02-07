@@ -9,7 +9,6 @@ import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
-import AreaChart from 'components/charts/area-chart';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
@@ -79,29 +78,7 @@ function SidebarCard({
             />
           </div>
         )}
-        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
-          <AreaChart
-            area1={{
-              key: 'spi',
-              stroke: '#000000',
-              fill: [
-                '#FFBF00',
-                '#A74815',
-                '#821213',
-                '#371033',
-                '#250F3B',
-                '#1D1135',
-                '#060B2B',
-              ],
-              fillOpacity: 0.4,
-              strokeWidth: 0.5,
-            }}
-            area2={{}}
-            data={[]}
-            height={200}
-            width="100%"
-          />
-        )}
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && <p> PERCENTAGES</p>}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}

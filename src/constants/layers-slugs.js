@@ -199,6 +199,7 @@ export const BIRDS_LOOKUP = 'birds-lookup-table';
 export const MAMMALS_LOOKUP = 'mammals-lookup-table';
 export const REPTILES_LOOKUP = 'reptiles-lookup-table';
 export const AOI_SPS_TABLE = 'aoi-sps-table';
+export const AOI_HUMAN_PRESSURES_TABLE = 'aoi-human-pressures-table';
 
 // NRC Landing Layers
 export const NRC_LANDING_LAYERS_SLUG = 'nrc-landing-layers';
