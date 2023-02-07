@@ -38,8 +38,8 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
 
   if (!data) return null;
   const radius = useMemo(
-    () => Math.min(width, height) / 2 - 30,
-    [width, height]
+    () => height - innerRadius - arcLabelPadding,
+    [height]
   );
 
   // Radial scale
@@ -124,7 +124,6 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
     d3.selectAll('#a-axis > *').remove();
     d3.selectAll('#points > *').remove();
 
-    const svg = d3.select('#sps-group');
     const radialAxis = d3.select('#r-axis');
     const angleAxis = d3.select('#a-axis');
 
@@ -211,7 +210,7 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
 
   return (
     <svg id="sps-chart" className={styles.chart} width={width} height={height}>
-      <g id="sps-group" transform={`translate(${width / 2},${height / 2})`}>
+      <g id="sps-group" transform={`translate(${width / 2},${height})`}>
         <g id="r-axis" />
         <g id="a-axis" />
         <g id="points" className='points' />

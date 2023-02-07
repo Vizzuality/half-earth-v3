@@ -25,7 +25,12 @@
 }
 
 .chartContainer {
+  position: relative;
   margin: 0 100px;
+}
+
+.chartResponsive {
+  width: 100%;
 }
 
 .title {

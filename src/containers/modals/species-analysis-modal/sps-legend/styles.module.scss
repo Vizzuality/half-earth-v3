@@ -1,0 +1,75 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.legend {
+  display: flex;
+  justify-content: space-between;
+}
+
+.slider {
+  width: 45%;
+}
+
+.title {
+  @extend %bodyText;
+}
+
+.subtitle {
+  @extend %bodyText;
+  color: $grey-text;
+}
+
+.bars {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 320px;
+}
+
+.bar {
+  display: block;
+  width: 80px;
+  background-color: $grey-text;
+  margin-right: 2px;
+
+  .xAxisTick {
+    top: 60px;
+    position: absolute;
+    @extend %bodyText;
+    color: $grey-text;
+    min-width: 30px;
+    margin-left: -6px;
+  }
+
+  .tickHighlighted {
+    color: $white;
+  }
+
+  &.highlighted {
+    background-color: $white;
+  }
+}
+
+.handle {
+  position: absolute;
+  display: block;
+  cursor: grabbing;
+  margin-bottom: -15px;
+  // margin-left: -6px;
+
+  .circle {
+    display: block;
+    transform: translate(-50%, 0);
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    border: 1px solid $white;
+  }
+
+  .line {
+    display: block;
+    width: 1px;
+    height: 40px;
+    border-left: 1px dashed $white;
+  }
+}
