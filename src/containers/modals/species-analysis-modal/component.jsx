@@ -24,9 +24,9 @@ function SpeciesAnalysisModal({
 }) {
   const [globalRangeSelected, setGlobalRangeSelected] = useState({
     min: 0,
-    max: 2,
+    max: 1,
   });
-  const [SPSSelected, setSPSSelected] = useState({ min: 1, max: 3 });
+  const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 4 });
   const [chartSize, setChartSize] = useState({ width: 700, height: 400 });
 
   const chartResponsiveRef = useRef();
