@@ -106,17 +106,6 @@ function Slider({ title, subtitle, min, max, bucketValues, setFunction }) {
       <div ref={constraintsRef} className={styles.bars}>
         <DragHandle isMin {...dragHandleProps} />
         <DragHandle {...dragHandleProps} />
-        {/* <div className={styles.xAxisTicks}>
-          {[0, 25, 50, 75, 100].map((x) => (
-            <div
-              key={`x-axis-${x}`}
-              className={styles.xAxisTick}
-              style={{ left: `${x}%` }}
-            >
-              {x}
-            </div>
-          ))}
-        </div> */}
         {bucketValues.map((barHeight, i) => {
           const isHighlighted = i >= min && i < max;
           const renderTick = (index) => (
@@ -158,18 +147,29 @@ function SpsLegend({
   SPSSelected,
 }: SPSLegendProps) {
   const bucketValue = [30, 4, 27, 18];
+  const dragToSelectText = (
+    <T _str="( {icon} Drag to select interval)" icon="i" />
+  );
   return (
     <div className={styles.legend}>
       <Slider
         title={<T _str="Portion of global range (%)" />}
-        subtitle={<T _str="Nº of species per range" />}
+        subtitle={
+          <>
+            <T _str="Nº of species per range" /> {dragToSelectText}
+          </>
+        }
         {...globalRangeSelected}
         bucketValues={bucketValue}
         setFunction={setGlobalRangeSelected}
       />
       <Slider
         title={<T _str="Global SPS" />}
-        subtitle={<T _str="Nº of species per SPS" />}
+        subtitle={
+          <>
+            <T _str="Nº of species per SPS" /> {dragToSelectText}
+          </>
+        }
         {...SPSSelected}
         bucketValues={bucketValue}
         setFunction={setSPSSelected}

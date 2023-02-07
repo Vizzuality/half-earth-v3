@@ -11,11 +11,12 @@
 }
 
 .title {
-  @extend %bodyText;
+  @extend %annotation;
+  line-height: $line-height;
 }
 
 .subtitle {
-  @extend %bodyText;
+  @extend %annotation;
   color: $grey-text;
 }
 
@@ -30,12 +31,13 @@
   display: block;
   width: 80px;
   background-color: $grey-text;
-  margin-right: 2px;
+  margin: 10px 2px 0 0;
 
   .xAxisTick {
+    @extend %annotation;
+
     top: 60px;
     position: absolute;
-    @extend %bodyText;
     color: $grey-text;
     min-width: 30px;
     margin-left: -6px;

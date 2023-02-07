@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
@@ -29,10 +30,31 @@ const arcGenerator = (outerR, innerR = 0) =>
     .endAngle(Math.PI / 2);
 // Colors
 const white = '#ebebeb';
+const gray = '#777';
 const navy = '#0A212E';
 const backgroundColor = '#0F2B3B';
 
-function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
+const indexToPercentage = (n) => (n * 100) / 4;
+const isHighlighted = (
+  SPS_global,
+  perGlobal,
+  SPSSelected,
+  globalRangeSelected
+) =>
+  SPS_global >= indexToPercentage(SPSSelected.min) &&
+  SPS_global <= indexToPercentage(SPSSelected.max) &&
+  perGlobal >= indexToPercentage(globalRangeSelected.min) &&
+  perGlobal <= indexToPercentage(globalRangeSelected.max);
+
+function SpsChart({
+  width,
+  height,
+  data,
+  selectedSpecies,
+  SPSSelected,
+  globalRangeSelected,
+}: LineRadialProps) {
+  console.log(SPSSelected, globalRangeSelected);
   const t = useT();
   const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
 
@@ -109,7 +131,7 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
       angleAxisLabelGroups
         .append('text')
         .style('fill', white)
-        .attr('x', (d) => (d * 10) - 85) // TODO: Improve label positioning
+        .attr('x', (d) => d * 10 - 85) // TODO: Improve label positioning
         .attr('dy', '1em')
         .append('textPath')
         .style('text-anchor', 'middle')
@@ -127,7 +149,6 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
     const radialAxis = d3.select('#r-axis');
     const angleAxis = d3.select('#a-axis');
 
-
     // BACKGROUND
 
     // Background arc
@@ -135,10 +156,9 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
 
     // Center arc
     radialAxis
-    .append('path')
-    .attr('fill', backgroundColor)
-    .attr('d', arcGenerator(innerRadius, 0));
-
+      .append('path')
+      .attr('fill', backgroundColor)
+      .attr('d', arcGenerator(innerRadius, 0));
 
     // RADIAL AXIS
 
@@ -147,7 +167,6 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
       .data([0, 25, 50, 75, 100])
       .enter()
       .append('g');
-
 
     // Radial number values
     radialAxisGroups
@@ -158,7 +177,7 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
       .style('fill', white)
       .style('stroke', 'transparent')
       .style('text-anchor', 'middle')
-      .text(d => d)
+      .text((d) => d)
       .raise();
 
     // Radial arcs ticks
@@ -177,7 +196,6 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
     // ANGLE AXIS
 
     renderAngleAxis(angleAxis);
-
 
     // POINTS
     const points = d3.select('#points');
@@ -199,21 +217,51 @@ function SpsChart({ width, height, data, selectedSpecies }: LineRadialProps) {
       })
       .append('circle')
       .attr('class', 'point')
-      .attr('r', (d) => d.SliceNumber === selectedSpeciesSliceNumber ?  5 : 2)
-      .attr('fill', white)
-      .attr('stroke', white)
-      .attr('stroke-width',(d) => d.SliceNumber === selectedSpeciesSliceNumber ?  10 : 3)
+      .attr('r', (d) => (d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2))
+      .attr('fill', (d) => {
+        const { per_global, SPS_global } = d;
+        return isHighlighted(
+          per_global,
+          SPS_global,
+          SPSSelected,
+          globalRangeSelected
+        )
+          ? white
+          : gray;
+      })
+      .attr('stroke', (d) => {
+        const { per_global, SPS_global } = d;
+        return isHighlighted(
+          per_global,
+          SPS_global,
+          SPSSelected,
+          globalRangeSelected
+        )
+          ? white
+          : gray;
+      })
+      .attr('stroke-width', (d) =>
+        d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
+      )
       .style('fill-opacity', 1)
       .style('stroke-opacity', 0.5)
       .attr('mix-blend-mode', 'multiply');
-  }, [width, height, t, selectedSpeciesSliceNumber]);
+  }, [
+    width,
+    height,
+    t,
+    selectedSpeciesSliceNumber,
+    SPSSelected,
+    globalRangeSelected,
+    data,
+  ]);
 
   return (
     <svg id="sps-chart" className={styles.chart} width={width} height={height}>
       <g id="sps-group" transform={`translate(${width / 2},${height})`}>
         <g id="r-axis" />
         <g id="a-axis" />
-        <g id="points" className='points' />
+        <g id="points" className="points" />
       </g>
       <defs>
         <linearGradient id="gradient">
