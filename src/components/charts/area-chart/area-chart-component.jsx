@@ -47,7 +47,8 @@ function AreaChartComponent({
       <XAxis
         axisLine={false}
         dataKey="year"
-        domain={[1975, 2020]}
+        // first number of domain is 20 years below the range for all numbers to fit on the axis
+        domain={[1960, 2020]}
         fontSize={9}
         strokeWidth={2}
         tickCount={xTicks.length}
