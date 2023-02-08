@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { DATA } from 'router';
 
-import { useT, useLocale } from '@transifex/react';
+import { T, useT, useLocale } from '@transifex/react';
 
 import { writeToForageItem } from 'utils/local-forage-utils';
 
@@ -41,6 +41,7 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
+import { ReactComponent as GoalGlobeIcon } from 'icons/goal-globe.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
@@ -307,15 +308,21 @@ function AOISidebar({
                 metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
               />
               {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
-                <div
-                  style={{
-                    height: '600px',
-                    color: 'white',
-                    width: '100%',
-                    border: '4px solid red',
-                  }}
-                >
-                  GOAL SENTENCE
+                <div className={styles.goalSection}>
+                  <div className={styles.goalTitle}>
+                    <GoalGlobeIcon />
+                    <h3>{t('HALF-EARTH GOAL')}</h3>
+                  </div>
+                  <p className={styles.goalSentence}>
+                    <T
+                      _str="Protecting the appropriate habitats in this area would help satisfy the {highlight} representing 50% of the species found here."
+                      highlight={
+                        <span>
+                          <T _str="conservation targets of 120 species," />
+                        </span>
+                      }
+                    />
+                  </p>
                 </div>
               )}
               <section className={styles.completeDatabaseWrapper}>
