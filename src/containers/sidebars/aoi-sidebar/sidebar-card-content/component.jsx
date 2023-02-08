@@ -52,40 +52,42 @@ function SidebarCard({
 
   const isCustom = contextualData?.isCustom;
 
+  const underProtectionPercentage = isCustom
+    ? contextualData?.percentage
+    : contextualData?.protectionPercentage;
+
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
-        {cardCategory === PROTECTION_SLUG && REACT_APP_FEATURE_AOI_CHANGES && (
-          <div className={styles.protectedAreaChartContainer}>
-            <div
-              style={{
-                height: protectedAreaChartHeight,
-                width: protectedAreaChartWidth,
-              }}
-            >
-              <ArcChart
-                parentHeight={protectedAreaChartHeight}
-                parentWidth={protectedAreaChartWidth}
-                paPercentage={
-                  isCustom
-                    ? contextualData?.percentage
-                    : contextualData?.protectionPercentage
-                }
-              />
+        {cardCategory === PROTECTION_SLUG &&
+          REACT_APP_FEATURE_AOI_CHANGES &&
+          underProtectionPercentage && (
+            <div className={styles.protectedAreaChartContainer}>
+              <div
+                style={{
+                  height: protectedAreaChartHeight,
+                  width: protectedAreaChartWidth,
+                }}
+              >
+                <ArcChart
+                  parentHeight={protectedAreaChartHeight}
+                  parentWidth={protectedAreaChartWidth}
+                  paPercentage={underProtectionPercentage}
+                />
+              </div>
+              <p className={styles.protectedAreaChartLegend}>
+                <T
+                  _str="Of the current area is {bold}"
+                  bold={
+                    <b>
+                      <T _str="under protection" />
+                    </b>
+                  }
+                />
+              </p>
             </div>
-            <p className={styles.protectedAreaChartLegend}>
-              <T
-                _str="Of the current area is {bold}"
-                bold={
-                  <b>
-                    <T _str="under protection" />
-                  </b>
-                }
-              />
-            </p>
-          </div>
-        )}
+          )}
         {hasLegend && (
           <SidebarLegend
             legendItem={cardCategory}
