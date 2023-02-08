@@ -21,6 +21,7 @@
 
 .description {
   @extend %bodyText;
+  margin: 10px 0 0 0;
 
   p {
     margin: 0;
@@ -46,6 +47,12 @@
     margin-right: $paragraph-gutter;
     fill: $warning;
   }
+}
+
+.hpLegendTitle {
+  @extend %bodyText;
+  color: $dark-text;
+  margin: 0px 0 8px 0;
 }
 
 .humanPressureIndicators {

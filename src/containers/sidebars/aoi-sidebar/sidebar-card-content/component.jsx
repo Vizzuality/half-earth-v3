@@ -126,6 +126,9 @@ function SidebarCard({
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
+          <p className={styles.hpLegendTitle}>LAND PRESSURES</p>
+        )}
         {hasLegend && (
           <SidebarLegend
             legendItem={cardCategory}
