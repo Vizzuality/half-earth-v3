@@ -46,6 +46,13 @@ const isHighlighted = (
   perGlobal >= indexToPercentage(globalRangeSelected.min) &&
   perGlobal <= indexToPercentage(globalRangeSelected.max);
 
+const getHighlightedColor = (d, SPSSelected, globalRangeSelected) => {
+  const { per_global, SPS_global } = d;
+  return isHighlighted(per_global, SPS_global, SPSSelected, globalRangeSelected)
+    ? white
+    : gray;
+};
+
 function SpsChart({
   width,
   height,
@@ -114,10 +121,10 @@ function SpsChart({
         .selectAll('g')
         .data([25, 50, 75, 100])
         .enter()
-        .append('g');
-      // .attr('transform', (d) => {
-      //   return `rotate(${l(d) - 180})`;
-      // });
+        .append('g')
+        .attr('transform', (d) => {
+          return `rotate(${l(d - 25) + 180})`;
+        });
 
       const texts = {
         25: t('Very low SPS'),
@@ -130,10 +137,12 @@ function SpsChart({
       angleAxisLabelGroups
         .append('text')
         .style('fill', white)
-        .attr('x', (d) => d * 10 - 85) // TODO: Improve label positioning
+        .attr('x', '15%')
         .attr('dy', '1em')
         .append('textPath')
-        .style('text-anchor', 'middle')
+        // .attr('textLength', '100')
+        // .attr('lengthAdjust', 'spacingAndGlyphs')
+        // .style('text-anchor', 'middle')
         .attr('xlink:href', '#label-arc')
         .text((d) => {
           return texts[d];
@@ -207,7 +216,6 @@ function SpsChart({
       .attr('class', 'cpoint')
       .attr('id', (d) => `point-${d.SliceNumber}`)
       .attr('transform', (d) => {
-        // get angle and radius
         const angle = l(d.SPS_global);
         const pointRadius = r(d.per_global);
         const x = pointRadius * Math.cos((angle * Math.PI) / 180);
@@ -217,28 +225,12 @@ function SpsChart({
       .append('circle')
       .attr('class', 'point')
       .attr('r', (d) => (d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2))
-      .attr('fill', (d) => {
-        const { per_global, SPS_global } = d;
-        return isHighlighted(
-          per_global,
-          SPS_global,
-          SPSSelected,
-          globalRangeSelected
-        )
-          ? white
-          : gray;
-      })
-      .attr('stroke', (d) => {
-        const { per_global, SPS_global } = d;
-        return isHighlighted(
-          per_global,
-          SPS_global,
-          SPSSelected,
-          globalRangeSelected
-        )
-          ? white
-          : gray;
-      })
+      .attr('fill', (d) =>
+        getHighlightedColor(d, SPSSelected, globalRangeSelected)
+      )
+      .attr('stroke', (d) =>
+        getHighlightedColor(d, SPSSelected, globalRangeSelected)
+      )
       .attr('stroke-width', (d) =>
         d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
       )
