@@ -188,44 +188,45 @@ function SidebarCard({
             />
           </div>
         )}
-        {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
-          <div className={styles.humanPressureIndicators}>
-            {HUMAN_PRESSURE_DATA.map((hp) => {
-              return (
-                <div className={styles.humanPressureIndicator}>
-                  <p className={styles.title}>{hp.title}</p>
+        {cardCategory === LAND_HUMAN_PRESSURES_SLUG &&
+          REACT_APP_FEATURE_AOI_CHANGES && (
+            <div className={styles.humanPressureIndicators}>
+              {HUMAN_PRESSURE_DATA.map((hp) => {
+                return (
+                  <div className={styles.humanPressureIndicator}>
+                    <p className={styles.title}>{hp.title}</p>
 
-                  {hp.percentage !== undefined && (
-                    <p className={styles.percentage}>
-                      {Math.trunc(hp.percentage)}%
-                    </p>
-                  )}
-                  <div className={styles.hpChartContainer}>
-                    <AreaChart
-                      area={{
-                        key: 'value',
-                        stroke: COLORS.gold,
-                        fill: 'url(#gradientColor)',
-                        strokeWidth: 2,
-                        type: 'natural',
-                      }}
-                      data={hp.byYear}
-                      xTicks={hpXAxis}
-                      margin={{
-                        top: 0,
-                        right: 0,
-                        left: -114,
-                        bottom: 0,
-                      }}
-                      height={66}
-                      width={161}
-                    />
+                    {hp.percentage !== undefined && (
+                      <p className={styles.percentage}>
+                        {Math.trunc(hp.percentage)}%
+                      </p>
+                    )}
+                    <div className={styles.hpChartContainer}>
+                      <AreaChart
+                        area={{
+                          key: 'value',
+                          stroke: COLORS.gold,
+                          fill: 'url(#gradientColor)',
+                          strokeWidth: 2,
+                          type: 'natural',
+                        }}
+                        data={hp.byYear}
+                        xTicks={hpXAxis}
+                        margin={{
+                          top: 0,
+                          right: 0,
+                          left: -114,
+                          bottom: 0,
+                        }}
+                        height={66}
+                        width={161}
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                );
+              })}
+            </div>
+          )}
         <SourceAnnotation
           theme="dark"
           metaDataSources={metadata && metadata.source}
