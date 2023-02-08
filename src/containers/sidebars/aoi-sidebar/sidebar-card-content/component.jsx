@@ -66,9 +66,9 @@ function SidebarCard({
       percentage: hpAgriculture,
       byYear: [
         { year: 1980, value: 12.5 },
-        { year: 1990, value: 22.5 },
-        { year: 2000, value: 54.3 },
-        { year: 2010, value: 75.3 },
+        { year: 1990, value: 12.5 },
+        { year: 2000, value: 14.3 },
+        { year: 2010, value: 55.3 },
         { year: 2020, value: 80.3 },
       ],
     },
@@ -88,9 +88,9 @@ function SidebarCard({
       percentage: hpHumanIntrusion,
       byYear: [
         { year: 1980, value: 12.5 },
-        { year: 1990, value: 22.5 },
-        { year: 2000, value: 24.3 },
-        { year: 2010, value: 25.3 },
+        { year: 1990, value: 12.5 },
+        { year: 2000, value: 14.3 },
+        { year: 2010, value: 15.3 },
         { year: 2020, value: 60.3 },
       ],
     },
@@ -99,9 +99,9 @@ function SidebarCard({
       percentage: hpTransportation,
       byYear: [
         { year: 1980, value: 12.5 },
-        { year: 1990, value: 22.5 },
-        { year: 2000, value: 24.3 },
-        { year: 2010, value: 25.3 },
+        { year: 1990, value: 12.5 },
+        { year: 2000, value: 14.3 },
+        { year: 2010, value: 15.3 },
         { year: 2020, value: 78.3 },
       ],
     },
@@ -178,7 +178,7 @@ function SidebarCard({
                       margin={{
                         top: 0,
                         right: 0,
-                        left: -120,
+                        left: -114,
                         bottom: 0,
                       }}
                       height={66}

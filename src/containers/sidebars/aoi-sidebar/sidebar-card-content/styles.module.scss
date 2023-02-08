@@ -52,7 +52,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 14px;
-  row-gap: 20px;
+  row-gap: 6px;
   margin: 24px 0;
 
   .humanPressureIndicator {
@@ -74,6 +74,7 @@
     .hpChartContainer {
       position: absolute;
       left: -18px;
+      top: 50px;
     }
   }
 }
