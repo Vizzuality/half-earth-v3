@@ -1,32 +1,28 @@
 import React, { useMemo } from 'react';
 
-import { useT, useLocale } from '@transifex/react';
+import { T, useT, useLocale } from '@transifex/react';
 
 import ReactMarkdown from 'react-markdown/with-html';
 
-// icons
-
-// components
 import ProtectedAreasModal from 'containers/modals/protected-areas-modal';
 import SidebarCardWrapper from 'containers/sidebars/sidebar-card-wrapper';
 import SidebarLegend from 'containers/sidebars/sidebar-legend';
 
 import Button from 'components/button';
+import ArcChart from 'components/charts/arc-chart';
 import LayerToggle from 'components/layer-toggle';
 import SourceAnnotation from 'components/source-annotation';
 
-// containers
-
-// constants
 import {
   PROTECTION_SLUG,
   getSidebarCardsConfig,
 } from 'constants/analyze-areas-constants';
 
-// styles
 import styles from './styles.module.scss';
 
 import { ReactComponent as WarningIcon } from 'icons/warning.svg';
+
+const { REACT_APP_FEATURE_AOI_CHANGES } = process.env;
 
 function SidebarCard({
   map,
@@ -51,11 +47,38 @@ function SidebarCard({
     () => getSidebarCardsConfig(locale),
     [locale]
   );
-
+  const protectedAreaChartHeight = 100;
+  const protectedAreaChartWidth = 320;
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
         <p className={styles.title}>{cardTitle}</p>
+        {cardCategory === PROTECTION_SLUG && REACT_APP_FEATURE_AOI_CHANGES && (
+          <div className={styles.protectedAreaChartContainer}>
+            <div
+              style={{
+                height: protectedAreaChartHeight,
+                width: protectedAreaChartWidth,
+              }}
+            >
+              <ArcChart
+                parentHeight={protectedAreaChartHeight}
+                parentWidth={protectedAreaChartWidth}
+                paPercentage={contextualData?.protectionPercentage}
+              />
+            </div>
+            <p className={styles.protectedAreaChartLegend}>
+              <T
+                _str="Of the current area is {bold}"
+                bold={
+                  <b>
+                    <T _str="under protection" />
+                  </b>
+                }
+              />
+            </p>
+          </div>
+        )}
         {hasLegend && (
           <SidebarLegend
             legendItem={cardCategory}
@@ -73,7 +96,11 @@ function SidebarCard({
               type="rectangular"
               className={styles.fullwidthButton}
               handleClick={handleAllProtectedAreasClick}
-              label={t('ALL PROTECTED AREAS')}
+              label={
+                REACT_APP_FEATURE_AOI_CHANGES
+                  ? t('EXPLORE PROTECTED AREAS')
+                  : t('ALL PROTECTED AREAS')
+              }
             />
             <ProtectedAreasModal
               isOpen={isProtectedAreasModalOpen}
@@ -88,7 +115,7 @@ function SidebarCard({
           className={styles.sourceContainer}
         />
       </div>
-      {displayWarning ? (
+      {displayWarning && (
         <div className={styles.warningWrapper}>
           <WarningIcon className={styles.warning} />
           <ReactMarkdown
@@ -96,7 +123,8 @@ function SidebarCard({
             source={sidebarCardsConfig[cardCategory].warning}
           />
         </div>
-      ) : (
+      )}
+      {!displayWarning && !REACT_APP_FEATURE_AOI_CHANGES && (
         <div className={styles.togglesContainer}>
           {layers.map((layer) => (
             <LayerToggle
