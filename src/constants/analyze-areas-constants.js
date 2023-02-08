@@ -172,16 +172,29 @@ export const getSidebarCardsConfig = (locale) => ({
     title: REACT_APP_FEATURE_AOI_CHANGES
       ? t('How much do humans affect this area?')
       : t('Human impact'),
-    description: ({ pressures }) =>
-      pressures
-        ? `${t('Of the current area, ')}__${roundUpPercentage(
-            getTotalPressures(pressures)
-          )}${t('% is currently experiencing human pressures__')},
-    ${t('the majority of which are pressures from ')}${
-            getLandPressuresTranslatedLabels(t)[getMainPressure(pressures)] ||
-            getMainPressure(pressures)
-          }.`
-        : '',
+    description: ({ pressures }) => {
+      if (pressures && !REACT_APP_FEATURE_AOI_CHANGES) {
+        return `${t('Of the current area, ')}__${roundUpPercentage(
+          getTotalPressures(pressures)
+        )}${t('% is currently experiencing human pressures__')}, ${t(
+          'the majority of which are pressures from '
+        )}${
+          getLandPressuresTranslatedLabels(t)[getMainPressure(pressures)] ||
+          getMainPressure(pressures)
+        }.`;
+      }
+      if (pressures && REACT_APP_FEATURE_AOI_CHANGES) {
+        return `${t('Of the current area, ')}__${roundUpPercentage(
+          getTotalPressures(pressures)
+        )}${t('%__ is under human pressures')}, ${t(
+          'the majority of which are pressures from'
+        )}__ ${
+          getLandPressuresTranslatedLabels(t)[getMainPressure(pressures)] ||
+          getMainPressure(pressures)
+        }__.`;
+      }
+      return '';
+    },
     warning: null,
   },
 });
