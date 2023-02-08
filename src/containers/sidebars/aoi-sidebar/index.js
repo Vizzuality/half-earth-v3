@@ -17,8 +17,10 @@ import intersectionBy from 'lodash/intersectionBy';
 
 import { STRINGIFIED_ATTRIBUTES } from 'constants/aois';
 import { CATEGORY_LAYERS } from 'constants/category-layers-constants';
+import { WDPA_OECM_FEATURE_LAYER } from 'constants/layers-slugs';
 
 import Component from './component';
+import mapStateToProps from './selectors';
 
 const actions = { ...urlActions, ...uiActions, ...aoiAnalyticsActions };
 
@@ -30,12 +32,18 @@ function AoiSidebarContainer(props) {
     browsePage,
     changeUI,
     activeLayers,
+    precalculatedLayerSlug,
     view,
   } = props;
+
   const [isShareModalOpen, setShareModalOpen] = useState(false);
   const [values, setFormattedValues] = useState({});
 
   const locale = useLocale();
+
+  const isProtectedAreaAOI = precalculatedLayerSlug === WDPA_OECM_FEATURE_LAYER;
+
+  const PA_DEFAULT_ZOOM = 6;
 
   // Effect to set parsed values TODO: move to selector
   useEffect(() => {
@@ -90,7 +98,7 @@ function AoiSidebarContainer(props) {
             geometry && view.center.longitude,
             geometry && view.extent.center.latitude,
           ],
-          zoom: view.zoom,
+          zoom: isProtectedAreaAOI ? PA_DEFAULT_ZOOM : view.zoom,
         },
       },
     });
@@ -119,4 +127,4 @@ function AoiSidebarContainer(props) {
   );
 }
 
-export default connect(null, actions)(AoiSidebarContainer);
+export default connect(mapStateToProps, actions)(AoiSidebarContainer);
