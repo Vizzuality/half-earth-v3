@@ -105,6 +105,8 @@ function AOISidebar({
   const [isEditingName, setIsEditingName] = useState(false);
   const [updatedAreaName, setUpdatedAreaName] = useState(false);
 
+  const isCustomArea = contextualData?.isCustom;
+
   const handleShareModalOpen = () => {
     shareAoiAnalytics();
     setShareModalOpen(true);
@@ -276,6 +278,7 @@ function AOISidebar({
                   contextualData={contextualData}
                 />
               )}
+
               <SidebarCard
                 map={map}
                 toggleType="radio"
@@ -303,6 +306,18 @@ function AOISidebar({
                 cardCategory={LAND_HUMAN_PRESSURES_SLUG}
                 metadataSlug={MERGED_LAND_HUMAN_PRESSURES}
               />
+              {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
+                <div
+                  style={{
+                    height: '600px',
+                    color: 'white',
+                    width: '100%',
+                    border: '4px solid red',
+                  }}
+                >
+                  GOAL SENTENCE
+                </div>
+              )}
               <section className={styles.completeDatabaseWrapper}>
                 <p>
                   {t(

@@ -49,6 +49,9 @@ function SidebarCard({
   );
   const protectedAreaChartHeight = 100;
   const protectedAreaChartWidth = 320;
+
+  const isCustom = contextualData?.isCustom;
+
   return (
     <SidebarCardWrapper className={styles.cardWrapper}>
       <div>
@@ -64,7 +67,11 @@ function SidebarCard({
               <ArcChart
                 parentHeight={protectedAreaChartHeight}
                 parentWidth={protectedAreaChartWidth}
-                paPercentage={contextualData?.protectionPercentage}
+                paPercentage={
+                  isCustom
+                    ? contextualData?.percentage
+                    : contextualData?.protectionPercentage
+                }
               />
             </div>
             <p className={styles.protectedAreaChartLegend}>
