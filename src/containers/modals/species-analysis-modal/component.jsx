@@ -73,6 +73,29 @@ function SpeciesAnalysisModal({
                   }
                 />
               </div>
+              <p className={styles.moreProtectionSentence}>
+                {globalRangeSelected.max === 1 && (
+                  <T
+                    _str="Currently {highlighted} in the chart are the species that {needMoreProtection}."
+                    highlighted={
+                      <span className={styles.bold}>
+                        <T
+                          _str="highlighted"
+                          _comment="Currently (highlighted) in the chart are the species that {need more protection}."
+                        />
+                      </span>
+                    }
+                    needMoreProtection={
+                      <span className={styles.bold}>
+                        <T
+                          _str="need more protection"
+                          _comment="Currently highlighted in the chart are the species that {need more protection}."
+                        />
+                      </span>
+                    }
+                  />
+                )}
+              </p>
               <div ref={chartResponsiveRef} className={styles.chartResponsive}>
                 <SpsChart
                   data={cardProps && cardProps.SPSData}
@@ -83,6 +106,7 @@ function SpeciesAnalysisModal({
                 />
               </div>
               <SpsLegend
+                data={cardProps && cardProps.SPSData}
                 globalRangeSelected={globalRangeSelected}
                 setGlobalRangeSelected={setGlobalRangeSelected}
                 SPSSelected={SPSSelected}

@@ -7,148 +7,45 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React, { useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { T } from '@transifex/react';
 
-import cx from 'classnames';
-import { motion } from 'framer-motion';
+import * as d3 from 'd3';
+import groupBy from 'lodash/groupBy';
 
 import styles from './styles.module.scss';
 
+import { ReactComponent as DragIcon } from 'icons/hand-drag.svg';
+
 import SPSLegendProps from './index.d';
+import Slider from './slider';
 
-function DragHandle({
-  isMin = false,
-  constraintsRef,
-  setFunction,
-  min,
-  max,
-  valuesLength,
-}) {
-  const xPercentage = useMemo(
-    () => `${((isMin ? min : max) * 100) / valuesLength}%`,
-    [isMin, min, max]
-  );
-  const stepWidth = 80;
-  const updateMinMax = (target) => {
-    const indexChange = Math.round(target / stepWidth);
-    if (indexChange !== 0) {
-      const updatedMaxValue = () => {
-        if (max + indexChange < min + 1) {
-          return min + 1;
-        }
-        if (max + indexChange > valuesLength) {
-          return valuesLength;
-        }
-        return max + indexChange;
-      };
-
-      const updatedMinValue = () => {
-        if (min + indexChange > max - 1) {
-          return max - 1;
-        }
-        if (min + indexChange < 0) {
-          return 0;
-        }
-        return min + indexChange;
-      };
-
-      setFunction({
-        min,
-        max,
-        ...(isMin ? { min: updatedMinValue() } : { max: updatedMaxValue() }),
-      });
-    }
-
-    // The position change will be made on the animate prop
-    return 0;
-  };
-
-  return (
-    <motion.div
-      drag="x"
-      whileHover={{ scale: 1.1 }}
-      dragConstraints={constraintsRef}
-      dragElastic={0}
-      dragMomentum={false}
-      animate={{ left: xPercentage }}
-      transition={{ duration: 0 }}
-      className={styles.handle}
-      dragTransition={{
-        modifyTarget: updateMinMax,
-        power: 0,
-        timeConstant: 50,
-      }}
-      onDrag={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <span className={styles.line} />
-      <span className={styles.circle} />
-    </motion.div>
-  );
-}
-
-function Slider({ title, subtitle, min, max, bucketValues, setFunction }) {
-  const constraintsRef = useRef(null);
-  const dragHandleProps = {
-    constraintsRef,
-    setFunction,
-    min,
-    max,
-    valuesLength: bucketValues.length,
-  };
-  return (
-    <div className={styles.slider}>
-      <div className={styles.title}>{title}</div>
-      <div className={styles.subtitle}>{subtitle}</div>
-      <div ref={constraintsRef} className={styles.bars}>
-        <DragHandle isMin {...dragHandleProps} />
-        <DragHandle {...dragHandleProps} />
-        {bucketValues.map((barHeight, i) => {
-          const isHighlighted = i >= min && i < max;
-          const renderTick = (index) => (
-            <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={`x-tick-${title}-${index}`}
-              className={cx(styles.xAxisTick, {
-                [styles.tickHighlighted]: isHighlighted || index === max,
-              })}
-              style={{ left: `${(index * 100) / bucketValues.length}%` }}
-            >
-              {(index * 100) / bucketValues.length}
-            </div>
-          );
-
-          return (
-            <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={`bar${title}-${i}`}
-              className={cx(styles.bar, {
-                [styles.highlighted]: isHighlighted,
-              })}
-              style={{ height: barHeight }}
-            >
-              {renderTick(i)}
-              {i === bucketValues.length - 1 && renderTick(i + 1)}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+const bucketScale = d3.scaleQuantize().domain([0, 100]).range([0, 1, 2, 3]);
+const getBucketValues = (data, key) =>
+  Object.values(groupBy(data, (d) => bucketScale(d[key]))).map((d) => d.length);
 
 function SpsLegend({
   setGlobalRangeSelected,
   setSPSSelected,
   globalRangeSelected,
   SPSSelected,
+  data,
 }: SPSLegendProps) {
-  const bucketValue = [30, 4, 27, 18];
+  const spsBucketValues = useMemo(
+    () => getBucketValues(data, 'SPS_global'),
+    [data]
+  );
+  const globalRangeBucketValues = useMemo(
+    () => getBucketValues(data, 'per_global'),
+    [data]
+  );
+
   const dragToSelectText = (
-    <T _str="( {icon} Drag to select interval)" icon="i" />
+    <T
+      _str="( {icon} Drag to select interval)"
+      icon={<DragIcon className={styles.dragIcon} />}
+    />
   );
   return (
     <div className={styles.legend}>
@@ -160,7 +57,7 @@ function SpsLegend({
           </>
         }
         {...globalRangeSelected}
-        bucketValues={bucketValue}
+        bucketValues={spsBucketValues}
         setFunction={setGlobalRangeSelected}
       />
       <Slider
@@ -171,7 +68,7 @@ function SpsLegend({
           </>
         }
         {...SPSSelected}
-        bucketValues={bucketValue}
+        bucketValues={globalRangeBucketValues}
         setFunction={setSPSSelected}
       />
     </div>

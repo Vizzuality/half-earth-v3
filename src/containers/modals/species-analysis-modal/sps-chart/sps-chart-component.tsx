@@ -54,7 +54,6 @@ function SpsChart({
   SPSSelected,
   globalRangeSelected,
 }: LineRadialProps) {
-  console.log(SPSSelected, globalRangeSelected);
   const t = useT();
   const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
 

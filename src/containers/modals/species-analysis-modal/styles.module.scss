@@ -45,3 +45,10 @@
 .bold {
   font-weight: $font-weight-bold;
 }
+
+.moreProtectionSentence {
+  @extend %annotation;
+  min-height: 26px;
+  color: $grey-text;
+  margin-top: 20px;
+}

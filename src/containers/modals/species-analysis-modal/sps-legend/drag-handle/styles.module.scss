@@ -1,0 +1,26 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.handle {
+  position: absolute;
+  display: block;
+  cursor: grabbing;
+  margin-bottom: -15px;
+  // margin-left: -6px;
+
+  .circle {
+    display: block;
+    transform: translate(-50%, 0);
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    border: 1px solid $white;
+  }
+
+  .line {
+    display: block;
+    width: 1px;
+    height: 40px;
+    border-left: 1px dashed $white;
+  }
+}
