@@ -61,6 +61,7 @@ function SidebarCard({
     hpUrban,
   } = humanPressuresData || {};
 
+  // !TODO: byYear data is mocked. Please, change it as possible.
   const HUMAN_PRESSURE_DATA = [
     {
       title: 'Agriculture',
@@ -130,7 +131,7 @@ function SidebarCard({
       <div>
         <p className={styles.title}>{cardTitle}</p>
         {cardCategory === LAND_HUMAN_PRESSURES_SLUG && (
-          <p className={styles.hpLegendTitle}>LAND PRESSURES</p>
+          <p className={styles.hpLegendTitle}>{t('Land pressures')}</p>
         )}
         {cardCategory === PROTECTION_SLUG && REACT_APP_FEATURE_AOI_CHANGES && (
           <div className={styles.protectedAreaChartContainer}>

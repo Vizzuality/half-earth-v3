@@ -52,6 +52,7 @@
 .hpLegendTitle {
   @extend %bodyText;
   color: $dark-text;
+  text-transform: uppercase;
   margin: 0px 0 8px 0;
 }
 
