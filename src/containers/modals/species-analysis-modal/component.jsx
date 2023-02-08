@@ -15,7 +15,6 @@ import SpsLegend from './sps-legend';
 
 const Spinner = loadable(() => import('components/spinner'));
 
-const CHART_RATIO = 1.8;
 function SpeciesAnalysisModal({
   isOpen,
   handleModalClose,
@@ -27,14 +26,14 @@ function SpeciesAnalysisModal({
     max: 1,
   });
   const [SPSSelected, setSPSSelected] = useState({ min: 0, max: 4 });
-  const [chartSize, setChartSize] = useState({ width: 700, height: 400 });
+  const [chartWidth, setChartWidth] = useState(700);
 
   const chartResponsiveRef = useRef();
   useEffect(() => {
     const onChartResize = () => {
       if (chartResponsiveRef && chartResponsiveRef.current) {
         const { width } = chartResponsiveRef.current.getBoundingClientRect();
-        setChartSize({ width, height: width / CHART_RATIO });
+        setChartWidth(width);
       }
     };
 
@@ -99,7 +98,7 @@ function SpeciesAnalysisModal({
               <div ref={chartResponsiveRef} className={styles.chartResponsive}>
                 <SpsChart
                   data={cardProps && cardProps.SPSData}
-                  {...chartSize}
+                  width={chartWidth}
                   selectedSpecies={cardProps && cardProps.individualSpeciesData}
                   globalRangeSelected={globalRangeSelected}
                   SPSSelected={SPSSelected}

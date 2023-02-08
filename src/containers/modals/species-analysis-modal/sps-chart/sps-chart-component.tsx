@@ -56,7 +56,6 @@ const getHighlightedColor = (
 
 function SpsChart({
   width,
-  height,
   data,
   selectedSpecies,
   SPSSelected,
@@ -64,7 +63,7 @@ function SpsChart({
 }: LineRadialProps) {
   const t = useT();
   const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
-
+  const height = useMemo(() => width / 2, [width]);
   if (!data) return null;
   const radius = useMemo(() => width / 2 - arcLabelPadding, [width]);
 
@@ -224,7 +223,6 @@ function SpsChart({
       .attr('mix-blend-mode', 'multiply');
   }, [
     width,
-    height,
     t,
     selectedSpeciesSliceNumber,
     SPSSelected,
