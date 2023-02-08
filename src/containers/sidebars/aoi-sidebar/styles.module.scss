@@ -219,21 +219,19 @@ $sidebar-content-top: 180px;
   margin-top: 20px;
   padding: 16px 20px;
   width: 100%;
-  .goalTitle {
+  .goalHeader {
     align-items: center;
     display: flex;
 
-    h3 {
+    .goalTitle {
       @extend %bodyText;
       color: $brand-color-main;
       margin-left: 16px;
-      font-weight: 400;
+      font-weight: $font-weight;
     }
   }
   .goalSentence {
-    @extend %display2;
-    font-size: 24px;
-    font-style: italic;
+    @extend %display3;
     margin: 15px 0 0 0;
     span {
       color: $brand-color-main;

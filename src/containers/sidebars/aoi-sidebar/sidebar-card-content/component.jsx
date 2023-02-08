@@ -156,6 +156,7 @@ function SidebarCard({
               <p className={styles.protectedAreaChartLegend}>
                 <T
                   _str="Of the current area is {bold}"
+                  _comment="{Of the current area is} under protection"
                   bold={
                     <b>
                       <T _str="under protection" />

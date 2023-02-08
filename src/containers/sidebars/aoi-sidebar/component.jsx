@@ -41,10 +41,11 @@ import styles from './styles.module.scss';
 
 import { ReactComponent as ClimateRegimeIcon } from 'icons/climate-regime.svg';
 import { ReactComponent as EditIcon } from 'icons/edit.svg';
-import { ReactComponent as GoalGlobeIcon } from 'icons/goal-globe.svg';
 import { ReactComponent as LandCoverIcon } from 'icons/land-cover.svg';
 import { ReactComponent as PopulationIcon } from 'icons/population.svg';
 import { ReactComponent as ShareIcon } from 'icons/share.svg';
+
+import goalGlobe from 'images/goal-globe.png';
 
 import mapStateToProps from './selectors';
 import SidebarCard from './sidebar-card-content';
@@ -309,13 +310,14 @@ function AOISidebar({
               />
               {isCustomArea && REACT_APP_FEATURE_AOI_CHANGES && (
                 <div className={styles.goalSection}>
-                  <div className={styles.goalTitle}>
-                    <GoalGlobeIcon />
-                    <h3>{t('HALF-EARTH GOAL')}</h3>
+                  <div className={styles.goalHeader}>
+                    <img src={goalGlobe} alt={t('Half-Earth Goal')} />
+                    <h3 className={styles.goalTitle}>{t('HALF-EARTH GOAL')}</h3>
                   </div>
                   <p className={styles.goalSentence}>
                     <T
                       _str="Protecting the appropriate habitats in this area would help satisfy the {highlight} representing 50% of the species found here."
+                      _comment="{Protecting the appropriate habitats in this area would help satisfy the} conservation targets of 120 species, {representing 50% of the species found here.}"
                       highlight={
                         <span>
                           <T _str="conservation targets of 120 species," />
