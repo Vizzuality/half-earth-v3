@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { DATA } from 'router';
 
-import { T, useT, useLocale } from '@transifex/react';
+import { useT, useLocale } from '@transifex/react';
 
 import { writeToForageItem } from 'utils/local-forage-utils';
 
@@ -315,15 +315,10 @@ function AOISidebar({
                     <h3 className={styles.goalTitle}>{t('HALF-EARTH GOAL')}</h3>
                   </div>
                   <p className={styles.goalSentence}>
-                    <T
-                      _str="Protecting the appropriate habitats in this area would help satisfy the {highlight} representing 50% of the species found here."
-                      _comment="{Protecting the appropriate habitats in this area would help satisfy the} conservation targets of 120 species, {representing 50% of the species found here.}"
-                      highlight={
-                        <span>
-                          <T _str="conservation targets of 120 species," />
-                        </span>
-                      }
-                    />
+                    {/* // !TODO: Please, exchange when is possible.  */}
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,{' '}
+                    <span>ed do eiusmod tempor incididunts</span> ut labore et
+                    dolore magna aliqua.
                   </p>
                 </div>
               )}
