@@ -147,7 +147,9 @@ export const getSidebarCardsConfig = (locale) => ({
     ),
   },
   [PROTECTION_SLUG]: {
-    title: t('Current protection status'),
+    title: REACT_APP_FEATURE_AOI_CHANGES
+      ? t('What is already protected in this area?')
+      : t('Current protection status'),
     description: ({ protectionPercentage, percentage, DESIG }) => {
       const isProtectedArea = !!DESIG;
       if (isProtectedArea) return null;

@@ -1,0 +1,15 @@
+@import 'styles/settings';
+@import 'styles/typography-extends';
+
+.label {
+  @extend %display1;
+  font-size: 45px;
+  font-weight: 100;
+  text-anchor: middle;
+}
+
+.labelPercentage {
+  @extend %display2;
+  font-size: 24px;
+  font-weight: 100;
+}

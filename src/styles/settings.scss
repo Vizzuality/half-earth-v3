@@ -223,6 +223,7 @@
   $desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
   :export {
+    // COLORS
     conifer: $conifer;
     dark-text: $dark-text;
     gold: $gold;
@@ -238,4 +239,7 @@
     white: $white;
     white-opacity: $white-opacity;
     athens-gray: $athens-gray;
+
+    // FONT FAMILIES
+    font-family-serif: $font-family-serif;
   }
