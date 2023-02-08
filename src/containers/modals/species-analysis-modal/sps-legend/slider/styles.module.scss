@@ -22,7 +22,7 @@
 .bar {
   display: block;
   width: 80px;
-  background-color: $white-opacity-2;
+  background-color: $white-opacity-20;
   margin: 10px 2px 0 0;
 
   .xAxisTick {
@@ -30,7 +30,7 @@
     top: 80px;
     position: absolute;
     font-size: $font-size-xxs;
-    color: $white-opacity-2;
+    color: $white-opacity-20;
     min-width: 30px;
     margin-left: -6px;
   }

@@ -51,7 +51,7 @@ const getHighlightedColor = (
   const { per_global, SPS_global } = d;
   return isHighlighted(per_global, SPS_global, SPSSelected, globalRangeSelected)
     ? COLORS.white
-    : COLORS['white-opacity-2'];
+    : COLORS['white-opacity-20'];
 };
 
 function SpsChart({

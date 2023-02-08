@@ -23,7 +23,7 @@
   $french-rose: #EB588F;
   $neon-carrot: #FF9C32;
   $white-opacity: rgba(255, 255, 255, 0.1);
-  $white-opacity-2: rgba($white, 0.2);
+  $white-opacity-20: rgba($white, 0.2);
 
   // Project colors
   $space-background: #09141A;
@@ -218,6 +218,6 @@
     navy: $navy-he;
     white: $white;
     white-opacity: $white-opacity;
-    white-opacity-2: $white-opacity-2;
+    white-opacity-20: $white-opacity-20;
     athens-gray: $athens-gray;
   }
