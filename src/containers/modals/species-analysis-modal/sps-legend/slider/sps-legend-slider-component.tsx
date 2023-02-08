@@ -18,7 +18,14 @@ import DragHandle from '../drag-handle';
 
 import SPSSliderProps from './index.d';
 
-function Slider({ title, subtitle, min, max, bucketValues, setFunction }) {
+function Slider({
+  title,
+  subtitle,
+  min,
+  max,
+  bucketValues,
+  setFunction,
+}: SPSSliderProps) {
   const constraintsRef = useRef(null);
   const dragHandleProps = {
     constraintsRef,
@@ -39,7 +46,7 @@ function Slider({ title, subtitle, min, max, bucketValues, setFunction }) {
       <div ref={constraintsRef} className={styles.bars}>
         <DragHandle isMin {...dragHandleProps} />
         <DragHandle {...dragHandleProps} />
-        {bucketValues.map((barHeight, i) => {
+        {bucketValues.map((_, i) => {
           const isHighlighted = i >= min && i < max;
           const renderTick = (index) => (
             <div

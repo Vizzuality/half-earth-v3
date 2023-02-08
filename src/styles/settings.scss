@@ -64,6 +64,7 @@
   $priority-blue: #0664F6;
   $half-earth-meter-green: $screamin-green;
   $half-earth-meter-blue: $lochmara;
+  $white-opacity-2: rgba($white, 0.2);
 
   $mammals-color: $medium-purple;
   $mar-mammals-color: $picton-blue;
@@ -237,5 +238,6 @@
     tango: $tango;
     white: $white;
     white-opacity: $white-opacity;
+    white-opacity-2: $white-opacity-2;
     athens-gray: $athens-gray;
   }

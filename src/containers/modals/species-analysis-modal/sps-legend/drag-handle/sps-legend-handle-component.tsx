@@ -9,27 +9,27 @@
 // @ts-nocheck
 import React, { useMemo } from 'react';
 
+import cx from 'classnames';
 import { motion } from 'framer-motion';
 
 import styles from './styles.module.scss';
 
-import SPSHandleProps from '.';
+import SPSHandleProps from './index.d';
 
+const STEP_WIDTH = 80;
 function DragHandle({
   isMin = false,
-  constraintsRef,
   setFunction,
   min,
   max,
   valuesLength,
-}) {
+}: SPSHandleProps) {
   const xPercentage = useMemo(
     () => `${((isMin ? min : max) * 100) / valuesLength}%`,
     [isMin, min, max]
   );
-  const stepWidth = 80;
   const updateMinMax = (target) => {
-    const indexChange = Math.round(target / stepWidth);
+    const indexChange = Math.round(target / STEP_WIDTH);
     if (indexChange !== 0) {
       const updatedMaxValue = () => {
         if (max + indexChange < min + 1) {
@@ -66,12 +66,18 @@ function DragHandle({
     <motion.div
       drag="x"
       whileHover={{ scale: 1.1 }}
-      dragConstraints={constraintsRef}
+      dragConstraints={{
+        left: isMin ? -STEP_WIDTH * min : -STEP_WIDTH * max,
+        right: isMin
+          ? STEP_WIDTH * (valuesLength - min)
+          : STEP_WIDTH * (valuesLength - max),
+      }}
       dragElastic={0}
       dragMomentum={false}
+      initial={{ transform: 'translateX(0)' }}
       animate={{ left: xPercentage }}
-      transition={{ duration: 0 }}
-      className={styles.handle}
+      transition={{ duration: 0, type: 'spring' }}
+      className={cx(styles.handle, { [styles.handleMin]: isMin })}
       dragTransition={{
         modifyTarget: updateMinMax,
         power: 0,

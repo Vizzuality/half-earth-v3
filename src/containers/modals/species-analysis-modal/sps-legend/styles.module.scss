@@ -4,6 +4,10 @@
 .legend {
   display: flex;
   justify-content: space-between;
+
+  > :first-child {
+    margin-right: 25px;
+  }
 }
 
 .dragIcon {

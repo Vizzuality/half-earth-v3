@@ -1,7 +1,7 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-.container{
+.container {
   @extend %bodyText;
   align-items: center;
   display: flex;
@@ -10,6 +10,7 @@
 
   .barTitleWrapper {
     display: flex;
+
     .barTitle {
       margin: 0;
     }
@@ -21,6 +22,7 @@
   position: relative;
   justify-content: space-between;
   align-items: center;
+  margin-left: 10px;
 
   .bar {
     background-color: $dark-opacity;

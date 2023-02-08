@@ -1,10 +1,6 @@
 @import 'styles/settings';
 @import 'styles/typography-extends';
 
-.slider {
-  width: 45%;
-}
-
 .title {
   @extend %annotation;
   line-height: $line-height;
@@ -19,14 +15,14 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  width: 320px;
+  max-width: 320px;
   padding-bottom: 20px;
 }
 
 .bar {
   display: block;
   width: 80px;
-  background-color: $grey-text;
+  background-color: $white-opacity-2;
   margin: 10px 2px 0 0;
 
   .xAxisTick {
@@ -34,7 +30,7 @@
 
     top: 80px;
     position: absolute;
-    color: $grey-text;
+    color: $white-opacity-2;
     min-width: 30px;
     margin-left: -6px;
   }

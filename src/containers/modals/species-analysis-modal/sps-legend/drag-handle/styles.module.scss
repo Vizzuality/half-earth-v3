@@ -3,10 +3,14 @@
 
 .handle {
   position: absolute;
-  display: block;
+  display: inline-block;
   cursor: grabbing;
   margin-bottom: -15px;
-  // margin-left: -6px;
+  margin-left: 0;
+
+  &.handleMin {
+    margin-left: -3px;
+  }
 
   .circle {
     display: block;

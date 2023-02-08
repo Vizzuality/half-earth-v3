@@ -65,10 +65,7 @@ function SpsChart({
   const { sliceNumber: selectedSpeciesSliceNumber } = selectedSpecies;
 
   if (!data) return null;
-  const radius = useMemo(
-    () => height - innerRadius - arcLabelPadding,
-    [height]
-  );
+  const radius = useMemo(() => width / 2 - arcLabelPadding, [width]);
 
   // Radial scale
   const r = d3.scaleLinear().range([radius, innerRadius]).domain([100, 0]);
