@@ -10,36 +10,20 @@
   $alto: #D8D8D8;
   $athens-gray: #ECEFF2;
   $firefly: #0A212E;
-  $vida-loca: #4B9217;
-  $cobalt: #0041B1;
-  $lochmara: #0272BA;
-  $biloba-flower: #BCACE8;
-  $port-gore: #282052;
-  $blue: #0E2B3B;
-  $inactive-purple: #5E5C7A;
-  $active-purple: #3F3576;
-  $mandalay: #A47916;
-  $marzipan: #F7DEA1;
-  $color-facebook: #39579a;
-  $color-twitter: #69ace0;
-  $screamin-green: #93FF5F;
-  $persimmon: #FF6C47;
-  $vivid-tangerine: #FF9D85;
   $saffron-mango: #FCC44A;
-  $peach-yellow: #FAE3B3;
-  $pickled-bluewood: #354D5B;
-  $slate-gray: #6C828F;
-  $catalina-blue: #0C2C84;
   $wild-sand: #f5f5f5;
-  $sulu: #BFF78D;
   $shamrock: #34BD92;
   $conifer: #92EB57;
+  $screamin-green: #93FF5F;
+  $priority-blue: #0664F6;
   $picton-blue: #3AA8EE;
   $gold: #F8D300;
   $medium-purple: #8B62E9;
   $tango: #E87926;
   $french-rose: #EB588F;
   $neon-carrot: #FF9C32;
+  $white-opacity: rgba(255, 255, 255, 0.1);
+  $white-opacity-2: rgba($white, 0.2);
 
   // Project colors
   $space-background: #09141A;
@@ -50,21 +34,17 @@
   $brand-color-secondary: $elephant;
   $brand-color-main-hover: darken($brand-color-main, 10);
   $brand-color-secondary-hover: lighten($elephant, 10);
+
   $dark-text: #222;
   $dark-text-hover: darken($dark-text, 30%);
   $grey-text: #A0AFB8;
   $grey-text-hover: lighten($grey-text, 10%);
-  $light-text: $white;
-  $white-opacity: rgba(255, 255, 255, 0.1);
   $dark-opacity: rgba(34, 34, 34, 0.1);
+  $accent-grey: #a0afb8;
   $_temporary-dark-text: #222;
   $_temporary-light-text: #747474;
-  $accent-grey: #a0afb8;
   $logos-text: $oslo-gray;
-  $priority-blue: #0664F6;
-  $half-earth-meter-green: $screamin-green;
-  $half-earth-meter-blue: $lochmara;
-  $white-opacity-2: rgba($white, 0.2);
+  $light-text: $white;
 
   $mammals-color: $medium-purple;
   $mar-mammals-color: $picton-blue;
@@ -78,9 +58,6 @@
 
   $biodiversity-gradient: linear-gradient(0deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
   $biodiversity-gradient-rotated: linear-gradient(90deg, rgba(9, 0, 114, .25) 0%, rgba(0, 133, 170, .6) 50%, rgba(0, 226, 136, .8) 80%, rgb(236, 255, 26) 100%);
-  $human-pressure-high: #F3E0F7;
-  $human-pressure-mid: #9F82CE;
-  $human-pressure-low: #282052;
   $human-pressures-gradient: linear-gradient(90deg, rgba(0, 77, 168, 0.1) 0%, rgba(166, 0, 212, 0.2) 15%, rgba(255, 0, 0, 0.5) 54%, rgb(255, 191, 0) 100%);
   $marine-pressures-gradient: linear-gradient(90deg, rgba(86, 0, 115, 0.15) 0%, rgba(0, 14, 224, 0.25) 50%, rgb(0, 197, 255) 94%, rgb(0, 255, 230) 100%);
   $carbon-layer-gradient: linear-gradient(90deg, rgba($navy-he, 0.1) 0%, #A838004D 30%, $carbon-layer 100%);
