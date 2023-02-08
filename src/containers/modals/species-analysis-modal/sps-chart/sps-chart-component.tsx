@@ -15,42 +15,43 @@ import { useT } from '@transifex/react';
 
 import * as d3 from 'd3';
 
+import COLORS from 'styles/settings';
+
 import styles from './styles.module.scss';
 
 import { LineRadialProps } from '.';
 
 const innerRadius = 56;
 const arcLabelPadding = 25;
-const arcGenerator = (outerR, innerR = 0) =>
+const arcGenerator = (outerR: number, innerR = 0) =>
   d3
     .arc()
     .outerRadius(outerR)
     .innerRadius(innerR)
     .startAngle(-Math.PI / 2)
     .endAngle(Math.PI / 2);
-// Colors
-const white = '#ebebeb';
-const gray = '#777';
-const navy = '#0A212E';
-const backgroundColor = '#0F2B3B';
 
-const indexToPercentage = (n) => (n * 100) / 4;
+const indexToPercentage = (n: number) => (n * 100) / 4;
 const isHighlighted = (
-  SPS_global,
-  perGlobal,
-  SPSSelected,
-  globalRangeSelected
+  SPS_global: number,
+  perGlobal: number,
+  SPSSelected: number,
+  globalRangeSelected: number
 ) =>
   SPS_global >= indexToPercentage(SPSSelected.min) &&
   SPS_global <= indexToPercentage(SPSSelected.max) &&
   perGlobal >= indexToPercentage(globalRangeSelected.min) &&
   perGlobal <= indexToPercentage(globalRangeSelected.max);
 
-const getHighlightedColor = (d, SPSSelected, globalRangeSelected) => {
+const getHighlightedColor = (
+  d: number,
+  SPSSelected: number,
+  globalRangeSelected: number
+) => {
   const { per_global, SPS_global } = d;
   return isHighlighted(per_global, SPS_global, SPSSelected, globalRangeSelected)
-    ? white
-    : gray;
+    ? COLORS.white
+    : COLORS['white-opacity-2'];
 };
 
 function SpsChart({
@@ -73,19 +74,25 @@ function SpsChart({
   // Linear scale
   const l = d3.scaleLinear().domain([0, 100]).range([-180, 0]);
 
+  const getPointPosition = (d) => {
+    const angle = l(d.SPS_global);
+    const pointRadius = r(d.per_global);
+    const x = pointRadius * Math.cos((angle * Math.PI) / 180);
+    const y = pointRadius * Math.sin((angle * Math.PI) / 180);
+    return `translate(${[x, y]})`;
+  };
+
   useEffect(() => {
     const renderBackgroundArc = (radialAxis) => {
       radialAxis
         .append('path')
         .attr('fill', 'url(#gradient)')
-        .style('opacity', 1)
         .attr('d', arcGenerator(radius));
 
       // Second element just for extra gradient
       radialAxis
         .append('path')
         .attr('fill', 'url(#radial-gradient)')
-        .style('opacity', 1)
         .attr('d', arcGenerator(radius));
     };
 
@@ -93,7 +100,7 @@ function SpsChart({
       // Labels arc
       angleAxis
         .append('path')
-        .attr('fill', navy)
+        .attr('fill', COLORS.firefly)
         .attr('id', 'label-arc')
         .attr('d', arcGenerator(radius + arcLabelPadding, radius));
 
@@ -102,16 +109,14 @@ function SpsChart({
         .data([25, 50, 75])
         .enter()
         .append('g')
-        .attr('transform', (d) => {
-          return `rotate(${l(d)})`;
-        });
+        .attr('transform', (d: number) => `rotate(${l(d)})`);
 
       // Angle ticks
       angleAxisGroups
         .append('line')
         .attr('x1', innerRadius)
         .attr('x2', radius + arcLabelPadding)
-        .attr('stroke', backgroundColor);
+        .attr('stroke', COLORS.navy);
 
       const angleAxisLabelGroups = angleAxis
         .append('g')
@@ -119,9 +124,7 @@ function SpsChart({
         .data([25, 50, 75, 100])
         .enter()
         .append('g')
-        .attr('transform', (d) => {
-          return `rotate(${l(d - 25) + 180})`;
-        });
+        .attr('transform', (d: number) => `rotate(${l(d - 25) + 180})`);
 
       const texts = {
         25: t('Very low SPS'),
@@ -133,17 +136,12 @@ function SpsChart({
       // Angle labels
       angleAxisLabelGroups
         .append('text')
-        .style('fill', white)
+        .attr('class', styles.angleLabels)
         .attr('x', '15%')
-        .attr('dy', '1em')
+        .attr('dy', '16px')
         .append('textPath')
-        // .attr('textLength', '100')
-        // .attr('lengthAdjust', 'spacingAndGlyphs')
-        // .style('text-anchor', 'middle')
         .attr('xlink:href', '#label-arc')
-        .text((d) => {
-          return texts[d];
-        });
+        .text((d: number) => texts[d]);
     };
 
     // Recalculate on change
@@ -162,7 +160,7 @@ function SpsChart({
     // Center arc
     radialAxis
       .append('path')
-      .attr('fill', backgroundColor)
+      .attr('fill', COLORS.navy)
       .attr('d', arcGenerator(innerRadius, 0));
 
     // RADIAL AXIS
@@ -176,19 +174,16 @@ function SpsChart({
     // Radial number values
     radialAxisGroups
       .append('text')
-      .attr('x', (d) => {
-        return -r(d) + 10;
-      })
-      .style('fill', white)
-      .style('stroke', 'transparent')
-      .style('text-anchor', 'middle')
-      .text((d) => d)
+      .attr('class', styles.radialLabels)
+      .attr('x', (d: number) => -r(d) + 10)
+      .attr('dy', '-2px')
+      .text((d: number) => d)
       .raise();
 
     // Radial arcs ticks
     radialAxisGroups
       .append('path')
-      .attr('stroke', white)
+      .attr('stroke', COLORS.white)
       .attr('stroke-opacity', 0.5)
       .attr('stroke-dasharray', '0 2 0')
       .attr('d', (d) => {
@@ -210,29 +205,22 @@ function SpsChart({
       .data(data)
       .enter()
       .append('g')
-      .attr('class', 'cpoint')
-      .attr('id', (d) => `point-${d.SliceNumber}`)
-      .attr('transform', (d) => {
-        const angle = l(d.SPS_global);
-        const pointRadius = r(d.per_global);
-        const x = pointRadius * Math.cos((angle * Math.PI) / 180);
-        const y = pointRadius * Math.sin((angle * Math.PI) / 180);
-        return `translate(${[x, y]})`;
-      })
+      .attr('id', (d: number) => `point-${d.SliceNumber}`)
+      .attr('transform', getPointPosition)
       .append('circle')
-      .attr('class', 'point')
-      .attr('r', (d) => (d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2))
-      .attr('fill', (d) =>
+      .attr('class', styles.point)
+      .attr('r', (d: number) =>
+        d.SliceNumber === selectedSpeciesSliceNumber ? 5 : 2
+      )
+      .attr('fill', (d: number) =>
         getHighlightedColor(d, SPSSelected, globalRangeSelected)
       )
-      .attr('stroke', (d) =>
+      .attr('stroke', (d: number) =>
         getHighlightedColor(d, SPSSelected, globalRangeSelected)
       )
-      .attr('stroke-width', (d) =>
+      .attr('stroke-width', (d: number) =>
         d.SliceNumber === selectedSpeciesSliceNumber ? 10 : 3
       )
-      .style('fill-opacity', 1)
-      .style('stroke-opacity', 0.5)
       .attr('mix-blend-mode', 'multiply');
   }, [
     width,
@@ -258,8 +246,8 @@ function SpsChart({
           <stop offset="100%" stopColor="#00A548" />
         </linearGradient>
         <radialGradient id="radial-gradient" cy="100%">
-          <stop offset="30%" stopColor={navy} />
-          <stop offset="100%" stopOpacity={0.3} stopColor={navy} />
+          <stop offset="30%" stopColor={COLORS.firefly} />
+          <stop offset="100%" stopOpacity={0.3} stopColor={COLORS.firefly} />
         </radialGradient>
       </defs>
     </svg>

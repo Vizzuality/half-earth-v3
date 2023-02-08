@@ -27,9 +27,9 @@
 
   .xAxisTick {
     @extend %annotation;
-
     top: 80px;
     position: absolute;
+    font-size: $font-size-xxs;
     color: $white-opacity-2;
     min-width: 30px;
     margin-left: -6px;

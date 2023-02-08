@@ -4,3 +4,22 @@
 .chart {
   width: 100%;
 }
+
+.angleLabels {
+  @extend %subtitle;
+  fill: currentColor;
+  font-size: $font-size-xxs;
+}
+
+.radialLabels {
+  @extend %subtitle;
+  fill: currentColor;
+  font-size: $font-size-xs;
+  stroke: transparent;
+  text-anchor: middle;
+}
+
+.point {
+  fill-opacity: 1;
+  stroke-opacity: 0.5;
+}

@@ -119,10 +119,11 @@
   $transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
   // Font sizes
-  $font-size-base: 1rem;
   $font-size-xxs: 10px;
   $font-size-xs: 12px;
   $font-size-sm: 14px;
+  $font-size-base: 1rem;
+  $font-size-rg: 24px;
   $font-size-xl: 32px;
   $font-size-xxl: 40px;
 
@@ -236,6 +237,8 @@
     shamrock: $shamrock;
     some-modification: $some-modification;
     tango: $tango;
+    firefly: $firefly;
+    navy: $navy-he;
     white: $white;
     white-opacity: $white-opacity;
     white-opacity-2: $white-opacity-2;
